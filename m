@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2573" "Sunday" "23" "October" "2016" "12:51:01" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20161023165101.0AA6E6C4F04@smtpvmsrv1.mitre.org>" "56" "[oss-security] Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)" nil nil nil "10" "2016102316:51:01" "[oss-security] Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)" (number mark "U       cve-assign@m Oct 23   56/2573  " thread-indent "\"[oss-security] Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)\"\n") "<1754691.K3Z88V5ftk@arcadia>" ("<1754691.K3Z88V5ftk@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15549 invoked by uid 550); 23 Oct 2016 16:51:13 -0000
+Received: (qmail 30682 invoked by uid 550); 2 Jun 2025 18:07:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15528 invoked from network); 23 Oct 2016 16:51:13 -0000
-From: cve-assign@mitre.org
-To: ago@gentoo.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1754691.K3Z88V5ftk@arcadia>
-Message-Id: <20161023165101.0AA6E6C4F04@smtpvmsrv1.mitre.org>
-Date: Sun, 23 Oct 2016 12:51:01 -0400 (EDT)
-Subject: [oss-security] Re: jasper: two NULL pointer dereference in bmp_getdata (bmp_dec.c) (Incomplete fix for CVE-2016-8690)
+x-ms-reactions: disallow
+Received: (qmail 30643 invoked from network); 2 Jun 2025 18:07:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1748887610;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=dGYeN1YQ1wEmu6JLNQo6i1mq2uwmuTqWPfug+Afvgno=;
+	b=dWwdcHOpAsj/5PRkHdtPpmkjkeNrN2jQPA/uUQcqpzWtGIlYhuW+5DIDRAMG25flbZo472
+	+DmgewIYt2+Im/fSP3CkvadqxE93/JDi4CQHYCe39AtJ2dNlU3UJGyntthppTZbCj/Dhw4
+	LS8B+BePeXzntzlnoV6qbbjEAgkjcow=
+X-MC-Unique: 7plVXE08NQGgf4kgNsP9-w-1
+X-Mimecast-MFC-AGG-ID: 7plVXE08NQGgf4kgNsP9-w_1748887606
+From: Florian Weimer <fweimer@redhat.com>
+To: Leon Timmermans <fawaka@gmail.com>
+Cc: Stig Palmquist <stig@stig.io>,  perl5-porters@perl.org,
+  oss-security@lists.openwall.com
+In-Reply-To: <CAHhgV8hQR51pP=ioqw8Q2YFCcTZUOs7JaQv8Wq1gW=r2PyKP-A@mail.gmail.com>
+	(Leon Timmermans's message of "Mon, 2 Jun 2025 19:22:49 +0200")
+References: <omnnpezilawlern5txh6xnng26fmenimxl7ijy6oykuxlurfbg@yo2pvsq3q6v6>
+	<87y0uaeeod.fsf@oldenburg.str.redhat.com>
+	<CAHhgV8hQR51pP=ioqw8Q2YFCcTZUOs7JaQv8Wq1gW=r2PyKP-A@mail.gmail.com>
+Date: Mon, 02 Jun 2025 20:06:40 +0200
+Message-ID: <87jz5uauhb.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: QNL43x2ounIazmrK5nsQuPCPu7XrYdm6j1bVNF1lF98_1748887606
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: CVE-2025-40909: Perl threads have a working directory race
+ condition where file operations may target unintended paths
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+* Leon Timmermans:
 
-> the previous assignment on this issue was about only one CVE ( see
-> http://www.openwall.com/lists/oss-security/2016/10/16/18 )
-> 
-> We sayd that the cause of the two null pointer access was the same.
-> 
-> Now for completeness I posted the stacktrace of both locations in bmp_dec.c
-> but I guess that the root cause remains the same.
-> 
-> Do you need to reject one of these two or it is fine as is?
+> On Mon, Jun 2, 2025 at 10:22=E2=80=AFAM Florian Weimer via perl5-porters
+> <perl5-porters@perl.org> wrote:
+>>
+>> * Stig Palmquist:
+>>
+>> > References
+>> > ----------
+>> > https://github.com/Perl/perl5/commit/918bfff86ca8d6d4e4ec5b30994451e0b=
+d74aba9.patch
+>>
+>> Is this fix really correct?
+>>
+>> +    ret =3D fdopendir(dup(my_dirfd(dp)));
+>>
+>> This does not create a separate open file description, only a second
+>> descriptor that shares the read position of the directory stream with
+>> the original directory stream.  I think you have to use something like
+>> this:
+>>
+>>      ret =3D fdopendir(openat(my_dirfd(dp), ".", O_DIRECTORY | O_CLOEXEC=
+));
+>
+> Our thread cloning in general is a terribly awkward business, where
+> "what is the correct behavior" isn't always well defined or possible;
+> I can see the arguments for both to be honest.
+>
+> For file descriptors we don't create new file descriptions either (we
+> don't even create new file descriptors, we refcount them), so why
+> should we do so for directory handles? I'm not sure that expectation
+> makes sense in that context.
 
-We believe it is fine as is. The two issues could be fixed
-independently, although it is unlikely that anyone would do that:
+That's a fair point.  It's more like fork in this regard, which has
+similar failure cases for DIR * objects (shared file description, but
+unshared buffers and a separate descriptor).
 
-                        if (numcmpts == 3) {
-                                jas_matrix_setv(cmpts[0], j, red);
-                                jas_matrix_setv(cmpts[1], j, grn);
-                                jas_matrix_setv(cmpts[2], j, blu);
-                        } else {
-                                jas_matrix_setv(cmpts[0], j, red);
+> And if we did go the openat way, I don't think that seekdir on the new
+> handle with the telldir of the old one is necessarily valid if the
+> directory has been changed (I mean even a rewinddir can invalidate
+> telldir's return value). I don't think we can do a fully correct copy
+> here.
 
-394 is the first "red" line; 398 is the second.
+Ugh, I had not considered that.  Yes, glibc will have to switch to an
+implementation where telldir offsets are specific to a DIR * for certain
+file systems on 32-bit architectures (because telldir returns long, not
+off_t).
 
-In future cases, if you have additional analysis suggesting that two
-findings are best represented with one CVE ID, then please include
-that additional analysis in your first posting about the issue.
-Otherwise, we often won't know, and there could be a perception that
-the number of assigned IDs is inconsistent. Here, neither
-https://blogs.gentoo.org/ago/2016/10/18/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c-incomplete-fix-for-cve-2016-8690
-nor http://www.openwall.com/lists/oss-security/2016/10/18/5 explicitly
-says that "two NULL pointer dereference" ought to have one CVE ID.
+Hopefully sharing the description isn't much of a problem in practice.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Thanks,
+Florian
 
-iQIcBAEBCAAGBQJYDOoQAAoJEHb/MwWLVhi2lD8P/iNGYbRzanD6MBGinuytNLub
-LtFCRYCGRIGOWM8a9jFZlDTuqxGLVekgUp7oil9VT8hYd1q9E8nJyWCZALjA0HHD
-cq8ZvKIF43dKn9Ohp33UXWN5icBgsiLBg1bV8wf3gN8PtRINoR+y07K5aZJc5aCN
-4fG67UNUVD/OZ0NnW171dcJpwx9JD2D92ogU18U99Oy195eO4DrSZFFNQHgFeAGh
-jSFDm3r/0HfjEHI54FVGVKAH85RHOkRvDMpjI4J8O12biabUO0S8s/m13N7EYtmD
-9bGalKIdIv/ArK75zfqNrJY+zJ5hddeL2hw5iDTICagR27a7lgVdpid3q0WAnWVE
-5dq86+4fu4K+KWvZZAgT/P7DOt0alnwLsL3LEJEH/uWdscPnCNPmE1NtW4JCTdrR
-3RhkEbgJIozC50yxqw1hHyZP0DDLR/oAS+Fg5gEgY42eurVW9NInXGdl+8bPut81
-g3oGMtggaiZhJ5o6OSRPrNNfc39Jqs/E6on9LfQj3w0krZ7px4sztsWCOC+DCqBU
-/QRPbTt/AbC5bGYfkUUcdgBAIXyvzihAwYrhEnmXlfmcZKKze8+29UumzALEw1Tp
-VTi4fNv3LFOJAUS4NUjItMJ0ivtNtFIogiruXnVRkV4KdU7lu1coCoCfKHaD4wzN
-2XLFOaL8yZZu5tmRhbNK
-=z2oX
------END PGP SIGNATURE-----
