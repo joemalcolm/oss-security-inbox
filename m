@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2752" "Monday" "5" "December" "2016" "17:13:43" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<55378cfd01cb465480674eec75226bf6@imshyb02.MITRE.ORG>" "74" "[oss-security] Re: CVE Request: zlib security issues found during audit" nil nil nil "12" "2016120522:13:43" "[oss-security] Re: CVE Request: zlib security issues found during audit" (number mark "U       cve-assign@m Dec  5   74/2752  " thread-indent "\"[oss-security] Re: CVE Request: zlib security issues found during audit\"\n") "<20161205071509.GB26169@suse.de>" ("<20161205071509.GB26169@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5995 invoked by uid 550); 5 Dec 2016 22:13:56 -0000
+Received: (qmail 22466 invoked by uid 550); 3 Jun 2025 03:00:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +7,136 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5976 invoked from network); 5 Dec 2016 22:13:54 -0000
-From: <cve-assign@mitre.org>
-To: <meissner@suse.de>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20161205071509.GB26169@suse.de>
-Message-ID: <55378cfd01cb465480674eec75226bf6@imshyb02.MITRE.ORG>
-Date: Mon, 5 Dec 2016 17:13:43 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: zlib security issues found during audit
+x-ms-reactions: disallow
+Received: (qmail 21739 invoked from network); 3 Jun 2025 03:00:47 -0000
+Date: Tue, 3 Jun 2025 04:59:19 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Muhammed =?utf-8?B?SMO8c2Ft?= Alzeyyat <hussamalzeyyat@gmail.com>,
+	Attila Szasz <szasza.contact@gmail.com>
+Message-ID: <20250603025919.GA11183@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Linux kernel: HFS+ filesystem implementation issues, exposure in distros
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://wiki.mozilla.org/MOSS/Secure_Open_Source/Completed#zlib
-> https://wiki.mozilla.org/images/0/09/Zlib-report.pdf
-> https://docs.google.com/document/d/10i1KZS5so8xDqH2rplRa2xet0tyTvvJlLbQQmZIUIKE/edit
+Muhammed Hüsam Alzeyya, CC'ed here, (kind of) brought an issue in the
+Linux kernel's HFS+ filesystem implementation to s@k.o and linux-distros
+at once.  This is against both Linux kernel's and linux-distros' current
+instructions, which ask to "notify the kernel security team first, wait
+for the fix, and only then notify linux-distros or oss-security".  The
+message didn't actually get through to linux-distros for a technical
+reason, but a reply quoting its portion did.  I promptly sent a reply to
+Muhammed (CC'ing linux-distros) to explain the situation and ask a few
+questions, but got no reply.  I saw no further communication on this.
+(I also checked our server logs, and as far as I can tell there were no
+further rejected/filtered messages from Muhammed's address, neither to
+linux-distros nor to my address.)  I am now bringing this to
+oss-security for the sake of transparency and not to make an exception,
+as well as possibly to have a discussion of the general issues.
 
-> had some findings (1 medium, 4 low)
+There was another issue in the same driver publicized a few months ago,
+with a lot of detail on its exploitation (and the exploit itself):
 
-Here are 4 CVE IDs; it is not a one-to-one mapping.
+https://ssd-disclosure.com/ssd-advisory-linux-kernel-hfsplus-slab-out-of-bounds-write/
 
-> Finding 1: Incompatible declarations for external linkage function deflate (Medium)
-> Fix: https://github.com/madler/zlib/commit/3fb251b363866417122fe54a158a1ac5a7837101
+The above post is very lengthy.  I'll quote just some pieces below:
 
-We feel that the scope of CVE should, ideally, omit unexploitable
-code-quality issues. The PDF report has a number of comments about
-Finding 1; however, one comment is "current compilers process this
-code without issues." A finding can be important to the practice of
-software development without being important for vulnerability
-management. For now, the answer is that there is no CVE ID.
+> SSD Advisory - Linux kernel hfsplus slab-out-of-bounds Write
+> March 18, 2025
+> SSD Secure Disclosure technical team
+> Vulnerability publication
+> 
+> Summary
+> This advisory describes an out-of-bounds write vulnerability in the Linux kernel that achieves local privilege escalation on Ubuntu 22.04 for active user sessions.
+> 
+> Credit
+> An independent security researcher working with SSD Secure Disclosure.
+> 
+> Vendor Response
+> Ubuntu has released the following advisory and fix: https://ubuntu.com/security/CVE-2025-0927
+> 
+> Affected Versions
+> Linux Kernel, up to 6.12.0
+> Ubuntu 22.04 with Linux Kernel 6.5.0-18-generic
+> 
+> CVE
+> CVE-2025-0927
 
+>  * Attila Szasz <szasza.contact@gmail.com>
+>  * @4ttil4sz1a
+>  *
+>  * Exploit for hfs+ slab out of bounds write
+>  * targeting Linux kernel 6.5
 
-> Finding 2: Accessing a buffer of char via a pointer to unsigned int (Low)
-> UNRESOLVED:This issue remains under discussion
+So I'm also CC'ing Attila Szasz here.
 
-There is no CVE ID. The PDF report mentions, for example, "There are several
-possible fixes ... Do nothing."
+The kernel security team ended up rejecting the CVE:
 
+https://lore.kernel.org/linux-cve-announce/2025033057-CVE-2025-0927-1436@gregkh/T/#u
 
-> Finding 3: Out-of-bounds pointer arithmetic in inftrees.c (Low)
+> Filesystem bugs due to corrupt images are not considered a CVE for any
+> filesystem that is only mountable by CAP_SYS_ADMIN in the initial user
+> namespace. That includes delegated mounting.
 
-> https://github.com/madler/zlib/commit/6a043145ca6e9c55184013841a67b2fef87e44c0
+However, Ubuntu fixed the issue in many of their kernels, with note:
 
-Use CVE-2016-9840.
+> While the upstream kernel developers don't consider exploitable
+> corrupted filesystem images to be a security issue, Ubuntu ships with a
+> polkit rule allowing console users to automount removable media, so we
+> do want to fix this issue for our users.
 
+An issue here is that "allowing console users to automount removable
+media" is a high risk, especially if upstream doesn't intend the code to
+be robust and secure against corrupt or malicious filesystem images.
+Maybe there should at least be an allow-list of filesystem types, which
+would be focused on filesystems most commonly used on removable media?
 
-> https://github.com/madler/zlib/commit/9aaec95e82117c1cb0f9624264c3618fc380cecb
+Another issue is the disconnect on what's CVE-worthy between upstream
+and the distro.  This will keep coming up.  Maybe a solution for such
+cases is to assign CVEs against the distro rather than against upstream?
 
-Use CVE-2016-9841.
+The linux-cve-announce thread above suggests that upstream may assign
+CVEs to filesystem implementation issues for corruptions that pass fsck.
+So theoretically a way for a distro to avoid relying on robustness and
+security of kernel code beyond what upstream cares about would be to
+force fsck before mounting a filesystem.  However, doing that even for
+filesystems that claim to be clean (as it would be required for
+security) is impractical.  Also, would the CVEs (and eventual fixes) be
+against (for) the kernel or fsck then?
 
+Anyway, now the current report by Muhammed is for another issue in
+almost the same place.  While Attila's was an out of bounds write, the
+new one is reported as an out of bounds read.  So its security relevance
+is not obvious even on systems like Ubuntu that expose this code for
+attack.  This depends on what's done with the value read out of bounds.
 
-> Finding 4: Undefined left shift of negative number (Low)
-> Fix: https://github.com/madler/zlib/commit/e54e1299404101a5a9d0cf5e45512b543967f958
+Below is the portion of Muhammed's message that got to linux-distros:
 
-Use CVE-2016-9842.
+> Re: VULNERABILITY REPORT: Out-of-Bounds Read in HFS+ Filesystem's hfsplus_bnode_read Function
 
+On Sun, May 25, 2025 at 01:30:18PM +0800, Muhammed Hüsam Alzeyya wrote:
+> ## Summary
+> 
+> A buffer overflow vulnerability exists in the Linux kernel's HFS+
+> filesystem implementation. Specifically, the vulnerability is located in
+> the `hfsplus_bnode_read` function in `fs/hfsplus/bnode.c`. When handling an
+> HFS+ filesystem, this vulnerability allows reading beyond the bounds of an
+> allocated memory region. The issue is triggered when the kernel attempts to
+> delete a file on a specially crafted HFS+ filesystem, which can lead to
+> memory corruption, information leakage, and potential privilege escalation.
 
-> Finding 5: Big-endian out-of-bounds pointer (Low)
-> Fix: https://github.com/madler/zlib/commit/d1d577490c15a0c6862473d7576352a9f18ef811
+> ## Affected Environments
+> 
+> This vulnerability affects:
+> - Linux kernel 6.15.0-rc2 (confirmed)
+> - Potentially earlier versions that include the HFS+ filesystem
+> implementation
+> - Any system that allows mounting of HFS+ filesystems, especially if
+> untrusted users can provide filesystem images
 
-Use CVE-2016-9843.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYReVZAAoJEHb/MwWLVhi22fMP/j6Pw7FkFDrKLjy/okWP/QoM
-imxWROlUse9/xACgcA+9eMiGbkm54ntx20bpEWOAUA8+H1KW+bvCrcFX3a6d1IuE
-vVrI0XcKQiKwVngem5XPEcvtAwFa85U4RUFZmYcqPYe7n0Yo7LoWwH9HI6/8Mziq
-yGIKgcPfY88FA8YM0DeSmkwQJ7WByKF4TzoChd6pK2NlwP1SFa2lMgrg4JhM9PAs
-9d2ye1OkVvVV1BPnjhVFe8S0Ze8IeOy1jeKS4lUbpgIZn4WdbERQ3ORAPuhRxAdZ
-mn7/MbulenkQKd3vnEKmA8qK5p/h6E8jnCUCbasgAtsareZHgPmDd7NON3LmmAYG
-q0X8Rrk13i2h+gpGVJlT7D4Gx/n3gIEBbSKNmBIPjQmXH/sOQN/0XLls/Cock4Pm
-mjw3mIFLu/CQ1JNBdMQpY9zMpAHQzMX0qAfiJa0f/UfaN4k8A6uQAJWWskl48aBs
-xp/dz2nOVJcCwmbmkKsfied610QLC8yXwXGmh+TTPxpSXxkr0+o3r5m8S7sjkMJA
-Uuctv6UEKx6wqJum1G7UDcpkQVzSJOXvZ2TKzMhHirjfrUlg7Bfg31kQj0IfKicn
-VeLM3IBnrvl08u1Dpi9A62YSPtuQQZ+8XqcVfUB/0Wf+0uaV/Wp5as0ylPWMlpBK
-9foWchAV8inhIVAMDbwQ
-=P6rB
------END PGP SIGNATURE-----
+Alexander
