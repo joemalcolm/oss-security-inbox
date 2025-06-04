@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1042" "Thursday" "24" "August" "2017" "01:26:14" "+0000" "=?utf-8?B?d2luc29ubGl1KOWImOenkSk=?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F712D4B511@EXMBX-TJ002.tencent.com>" "18" "RE: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)" "^CC:" nil nil "8" "2017082401:26:14" "[oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)" (number mark "        winsonliu@te Aug 24   18/1042  " thread-indent "\"RE: [oss-security] CVE Request: Multiple security issues inOpenJPEG(Internet mail)\"\n") "<275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>" "<90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>" "<275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21995 invoked by uid 550); 24 Aug 2017 01:26:29 -0000
+Received: (qmail 5867 invoked by uid 550); 4 Jun 2025 05:52:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21974 invoked from network); 24 Aug 2017 01:26:28 -0000
-Thread-Topic: [oss-security] CVE Request: Multiple security issues
- inOpenJPEG(Internet mail)
-Thread-Index: AQHTHAZyqTs3EdeJq0OGN3NPJoWWXKKStnqQ
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F712D4B511@EXMBX-TJ002.tencent.com>
-References: <1F2D4DA31CA62740BFF46830A0E6A4F7066F14D7@EXMBX-TJ002.tencent.com>
- <90a93b0c-f36a-7a69-03cb-2203b9167d68@oracle.com>
- <275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>
-In-Reply-To: <275699042.1103140.1503489204622.JavaMail.zimbra@redhat.com>
-Accept-Language: zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.8]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-CC: cve-assign <cve-assign@mitre.org>
-Date: Thu, 24 Aug 2017 01:26:14 +0000
-From: =?utf-8?B?d2luc29ubGl1KOWImOenkSk=?= <winsonliu@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: RE: [oss-security] CVE Request: Multiple security issues
- inOpenJPEG(Internet mail)
-To: Vladis Dronov <vdronov@redhat.com>, "oss-security@lists.openwall.com"
-	<oss-security@lists.openwall.com>, Alan Coopersmith
-	<alan.coopersmith@oracle.com>
+x-ms-reactions: disallow
+Received: (qmail 5847 invoked from network); 4 Jun 2025 05:52:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1749016367; bh=Mbz8sWfcqIZZ3XUvw0Czp4FOoaMU/rEFBOzlvx0fopM=;
+	h=Date:From:To:Subject:From;
+	b=E54zmmwljnOoGn4gEHcMU3Ow0Rde8JwfoQVSGeMDhpiZIiLQj565M8L0D2KyQ+Bad
+	 hWpPbTUUyUj9sOEn7Eb6xambVuOMtcAUequQtGWMGtI/OhWiSDDvGZsexYhfG0Caew
+	 Pckwk59fzWzdkx66RJQmrz5obnf4OXHMw9RRzIfm6zfziocaWgNURmZLbm4VoGD3kl
+	 CV3XAR0hwT6ww5Rk8WjJgbBO7cqH7OdAWNHUoV2Twc0jnf84g1drO7JNH9lyFlMuRt
+	 UCS+KLzU4E9RJqPTdv9eP5cjiyj/zuIKdTLwehd78GHgs14WodraMYtuYV93SdSpiZ
+	 SoIXUZ6R7goYw==
+Date: Wed, 4 Jun 2025 07:52:47 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <os8027r9-2440-1srn-0ps7-60n9n9p4ooq1@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY AVISORY] curl: CVE-2025-5399: WebSocket endless loop
 
-SSdtIGFmcmFpZCBubyBDVkVzIHdlcmUgYXNzaWduZWQuIEF0IGxlYXN0IEkg
-ZGlkIG5vdCBzdWJtaXQgdGhlc2UgaXNzdWVzIHRvIGh0dHBzOi8vY3ZlZm9y
-bS5taXRyZS5vcmcvIA0KDQpSZWdhcmRzLA0KS2UNCg0KLS0tLS1PcmlnaW5h
-bCBNZXNzYWdlLS0tLS0NCkZyb206IFZsYWRpcyBEcm9ub3YgW21haWx0bzp2
-ZHJvbm92QHJlZGhhdC5jb21dIA0KU2VudDogMjAxN+W5tDjmnIgyM+aXpSAx
-OTo1Mw0KVG86IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb20NCkNj
-OiB3aW5zb25saXUo5YiY56eRKSA8d2luc29ubGl1QHRlbmNlbnQuY29tPjsg
-Y3ZlLWFzc2lnbiA8Y3ZlLWFzc2lnbkBtaXRyZS5vcmc+DQpTdWJqZWN0OiBS
-ZTogW29zcy1zZWN1cml0eV0gQ1ZFIFJlcXVlc3Q6IE11bHRpcGxlIHNlY3Vy
-aXR5IGlzc3VlcyBpbk9wZW5KUEVHKEludGVybmV0IG1haWwpDQoNCj4gTW9z
-dCBvZiB0aGVzZSBzZWVtIHRvIGJlIGZpeGVkIG5vdyBpbiBPcGVuSlBFRydz
-IHJlY2VudCAyLjIuMCByZWxlYXNlLg0KPiBEaWQgQ1ZFIGlkJ3MgZXZlciBn
-ZXQgYXNzaWduZWQgZm9yIHRoZW0/DQoNCklmIG5vIG9uZSByZXBvcnRlZCB0
-aGVtIGFuZCByZXF1ZXN0ZWQgQ1ZFLWlkcyB2aWEgaHR0cHM6Ly9jdmVmb3Jt
-Lm1pdHJlLm9yZy8gdGhlbiBJIHN1cHBvc2Ugbm90LCBubyBDVkUtaWRzIHdl
-cmUgYXNzaWduZWQuDQoNCkJlc3QgcmVnYXJkcywNClZsYWRpcyBEcm9ub3Yg
-fCBSZWQgSGF0LCBJbmMuIHwgUHJvZHVjdCBTZWN1cml0eSBFbmdpbmVlcg0K
-DQo=
+WebSocket endless loop
+======================
+
+Project curl Security Advisory, June 4 2025 -
+[Permalink](https://curl.se/docs/CVE-2025-5399.html)
+
+VULNERABILITY
+-------------
+
+Due to a mistake in libcurl's WebSocket code, a malicious server can send a
+particularly crafted packet which makes libcurl get trapped in an endless
+busy-loop.
+
+There is no other way for the application to escape or exit this loop other
+than killing the thread/process.
+
+This might be used to DoS libcurl-using application.
+
+INFO
+----
+
+The problem does not occur if "auto-pong" is disabled with the
+`CURLWS_NOAUTOPONG` option.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-5399 to this issue.
+
+CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')
+
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 8.13.0 to and including 8.14.0
+- Not affected versions: curl < 8.13.0 and >= 8.14.1
+- Introduced-in: https://github.com/curl/curl/commit/3588df9478d7c270
+
+libcurl is used by many applications, but not always advertised as such!
+
+This bug is **not** considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw does not affect the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.14.1, this mistake is fixed.
+
+- Fixed-in: https://github.com/curl/curl/commit/d1145df24de8f80e6b16
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.14.1
+
+  B - Apply the patch to your local version
+
+  C - Avoid using WebSocket
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on May 30, 2025. We contacted
+distros@openwall on June 2, 2025.
+
+curl 8.14.1 was released on June 4 2025 around 07:00 UTC, coordinated with the
+publication of this advisory.
+
+The curl security team is not aware of any active exploits using this
+vulnerability.
+
+CREDITS
+-------
+
+- Reported-by: z2_ on hackerone
+- Patched-by: z2_ on hackerone
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
