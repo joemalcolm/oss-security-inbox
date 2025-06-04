@@ -1,4 +1,4 @@
-Received: (qmail 12257 invoked by uid 550); 16 Aug 2024 21:18:29 -0000
+Received: (qmail 5558 invoked by uid 550); 4 Jun 2025 16:26:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,113 +7,248 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1483 invoked from network); 16 Aug 2024 21:15:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=xX6l2yxF17F82g2yZfnAyBsL0IG9ImaKV3uhV/FdXWE=; b=Lo2usM9rpKOpZDm8YHNTFce249
-	hfMNl8GYP7FBtFN0akZRd7KnS4BvvV+GcVrTvb889OXYkUzaYL76FBKaY3qNin4G6/7w/RQyNJiDm
-	216sAvTT6jjzUU7Fdwt/Kj9hr/3RUS4P5eAztH7KgSfE3GuUGfRagTuuVhzmF1lv6OoaZL2JMdGsn
-	orndVN8wvKLn7wCDiafWh/4g+fxshx3JwWC31P/GizJ35feBUWm36ScZcQ4G5e2qZiNELa2dIDB9x
-	IGQuT8JScwpfjtchbgkcgj0xKlW/VN+4MhrBxxbmtzfruFevuvorF2QA4uxTpcnIUOXMT0QIxNNpS
-	a7PlUdDA==;
-Date: Sat, 17 Aug 2024 00:15:04 +0300
-Message-ID: <20240817001504.GD2647915@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+x-ms-reactions: disallow
+Received: (qmail 30197 invoked from network); 4 Jun 2025 14:15:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=djangoproject-com.20230601.gappssmtp.com; s=20230601; t=1749046547; x=1749651347; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=7vNTRFoyhVh5NejBxpQuPSDihgIXd01laxuF1vqXttE=;
+        b=WE8bvhKDTUUaZs64l6xBfhVmOdzzWKgCp2RXL4Tu5H5keu5Nl1tO43jJR+QAcbVhlA
+         YjdvOcIRcjJdRN8lfyN01H6dYKNrPjKvYjXR3DdTe8fAJOeTa/qIHMDNZE/wKpPMHRYR
+         a0VJki6TeE3Y+cX88AhTTgu+elPUHkTZ+H3ToStB9nXSDkCePQyIx7EjCvoEgMPjG/Lt
+         dUTc4LjPsd+tHlDW344wKuJGi9Os+67g2dutjHn4bUB/tYzsvNYe9wlNfuF/wylOCis5
+         s28hGOTyL0Ve6dkorHQqB8gXYJtfr+1wLIBLWPsroG6wFwcdr8+yCne4Qgo4pIdcVM0W
+         wj4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749046548; x=1749651348;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7vNTRFoyhVh5NejBxpQuPSDihgIXd01laxuF1vqXttE=;
+        b=iAzSY8ZtToGNWe7WM+vYlzsf74JP4hfkl0QziwIJdSVc8rd/MW8w1CcXhzXdkZb9OD
+         DkVdcl0+fXsdblEcXzeNuzJlaBqMMKMjHN0R3hjfmMTgG11gIfhBGH7a9CJgmxawqwaK
+         Oat9cJO+URWn1WuYC3OT2K2F8bG8opjYsXxmf3RdUyCjcg07USWYRC7ncE+ogdu2ar/q
+         AWdFjkun+jP5XfNYoSoylnYJT89wI4iFBAzHiuaAuhotfRpLMv6cwE+UZXmEnbP4naOs
+         iWBkOib7ixYNocwjSMqEZzufalsE1tASR2W3QC9ZQ0i8rk/n5H6q3G43SVocN8Bj1yin
+         3kMQ==
+X-Gm-Message-State: AOJu0YxyNUjBji3nNXGRZNvwt0ui2socgFkzGb9FxrXDIFFAwfe7TjOZ
+	QKrbFB97AJz/yONfm3SYGySTvlgghC/6Pt2NDuTl64E2NAMXtWjFuDbkJ4FvtYBeKpR0Ud0yrzu
+	2aqOnrE11BSFD5Pa6xQHegI+fSZ6ESavMfJgriC1uAdV3jDDG2uqUa/w=
+X-Gm-Gg: ASbGncu6nArYD+wJJn+J2M0DEOJNAvZjD4OOZnR1KimGBjjniTGxBJXuxMVEiiBlvls
+	KCbJiwYdGw00S4DdGB31oWP1/qKwV2GyrH+7hATp3WoKpOO5ikTGOIbtxYvocSiB/OCE6OSEE1y
+	fzXuhEpAiQ7lFrLmvmqsxGxfdgWrnO+4SZTw==
+X-Google-Smtp-Source: AGHT+IGicnrB73STCGUcRBHoFDJjGSJuyRk2kPsMrb4/yEXnl4G05tWzbVKttDUqws/xk37Rcn01KXECY328QuDc7cw=
+X-Received: by 2002:a05:6512:ace:b0:553:27cb:a0f with SMTP id
+ 2adb3069b0e04-55356df2d2amr867008e87.57.1749046547274; Wed, 04 Jun 2025
+ 07:15:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="UbkuSlT0q76e+ol3"; micalg="pgp-ripemd160"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2024-0004
+From: Natalia Bidart <nataliabidart@djangoproject.com>
+Date: Wed, 4 Jun 2025 11:15:31 -0300
+X-Gm-Features: AX0GCFujTM43mZDLWzJseHZXMN4dB5deMoKDIs-7dQ-ziPLnGziJNkRj8ctWawI
+Message-ID: <CAJVoTUuPqc9C=onmpcRr9B_jacywyW3_B+y6C7XOwi4qu0AH7w@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Django Security Team <security@djangoproject.com>
+Content-Type: multipart/alternative; boundary="0000000000002571d20636bfa2bf"
+Subject: [oss-security] CVE-2025-48432: Django: Potential log injection via unescaped request path
 
---UbkuSlT0q76e+ol3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+--0000000000002571d20636bfa2bf
+Content-Type: text/plain; charset="UTF-8"
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjQtMDAwNAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogQXVndXN0IDE3LCAyMDI0CkFkdmlzb3J5IElEICAgICAgICAgICAg
-IDogV1NBLTIwMjQtMDAwNApXZWJLaXRHVEsgQWR2aXNvcnkgVVJMICA6IGh0dHBzOi8vd2Via2l0
-Z3RrLm9yZy9zZWN1cml0eS9XU0EtMjAyNC0wMDA0Lmh0bWwKV1BFIFdlYktpdCBBZHZpc29yeSBV
-UkwgOiBodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjQtMDAwNC5odG1sCkNW
-RSBpZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMjQtNDA3NzYsIENWRS0yMDI0LTQwNzc5LAog
-ICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI0LTQwNzgwLCBDVkUtMjAyNC00MDc4MiwK
-ICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNC00MDc4NSwgQ1ZFLTIwMjQtNDA3ODks
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjQtNDA3OTQsIENWRS0yMDI0LTQ1NTgu
-CgpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2NvdmVyZWQgaW4gV2ViS2l0R1RLIGFu
-ZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjQtNDA3NzYKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJL
-aXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDQuMy4KICAgIENyZWRpdCB0byBIdWFuZyBY
-aWxpbiBvZiBBbnQgR3JvdXAgTGlnaHQtWWVhciBTZWN1cml0eSBMYWIuCiAgICBJbXBhY3Q6IFBy
-b2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgog
-ICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogQSB1c2UtYWZ0ZXItZnJl
-ZSBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1lbW9yeSBtYW5hZ2VtZW50
-LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNzMxNzYKCkNWRS0yMDI0LTQwNzc5CiAgICBWZXJzaW9u
-cyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ0LjMuCiAgICBD
-cmVkaXQgdG8gSHVhbmcgWGlsaW4gb2YgQW50IEdyb3VwIExpZ2h0LVllYXIgU2VjdXJpdHkgTGFi
-LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQg
-bWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVzY3JpcHRpb246
-IEFuIG91dC1vZi1ib3VuZHMgcmVhZCB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIGJv
-dW5kcyBjaGVja2luZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjc1NDMxCgpDVkUtMjAyNC00MDc4
-MAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUg
-Mi40NC4zLgogICAgQ3JlZGl0IHRvIEh1YW5nIFhpbGluIG9mIEFudCBHcm91cCBMaWdodC1ZZWFy
-IFNlY3VyaXR5IExhYi4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVk
-IHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2gu
-IERlc2NyaXB0aW9uOiBBbiBvdXQtb2YtYm91bmRzIHJlYWQgd2FzCiAgICBhZGRyZXNzZWQgd2l0
-aCBpbXByb3ZlZCBib3VuZHMgY2hlY2tpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI3NTI3MwoK
-Q1ZFLTIwMjQtNDA3ODIKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBX
-ZWJLaXQgYmVmb3JlIDIuNDQuMy4KICAgIENyZWRpdCB0byBNYWtzeW1pbGlhbiBNb3R5bC4KICAg
-IEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBs
-ZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2guIERlc2NyaXB0aW9uOiBBIHVz
-ZS1hZnRlci1mcmVlIGlzc3VlIHdhcwogICAgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5
-IG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI2ODc3MAoKQ1ZFLTIwMjQtNDA3ODUK
-ICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIu
-NDQuMy4KICAgIENyZWRpdCB0byBKb2hhbiBDYXJsc3NvbiAoam9heGNhcikuCiAgICBJbXBhY3Q6
-IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBh
-CiAgICBjcm9zcyBzaXRlIHNjcmlwdGluZyBhdHRhY2suIERlc2NyaXB0aW9uOiBUaGlzIGlzc3Vl
-IHdhcyBhZGRyZXNzZWQKICAgIHdpdGggaW1wcm92ZWQgY2hlY2tzLgogICAgV2ViS2l0IEJ1Z3pp
-bGxhOiAyNzM4MDUKCkNWRS0yMDI0LTQwNzg5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0
-R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ0LjMuCiAgICBDcmVkaXQgdG8gU2V1bmdoeXVu
-IExlZSAoQDB4MTBuKSBvZiBLQUlTVCBIYWNraW5nIExhYiB3b3JraW5nIHdpdGggVHJlbmQgTWlj
-cm8KICAgIFplcm8gRGF5IEluaXRpYXRpdmUuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNp
-b3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBw
-cm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogQW4gb3V0LW9mLWJvdW5kcyBhY2Nlc3MgaXNzdWUK
-ICAgIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBib3VuZHMgY2hlY2tpbmcuCiAgICAKCkNW
-RS0yMDI0LTQwNzk0CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IGJlZm9yZSAyLjQ0LjMuCiAgICBDcmVkaXQgdG8gTWF0dGhldyBCdXRsZXIuCiAgICBJbXBh
-Y3Q6IFByaXZhdGUgQnJvd3NpbmcgdGFicyBtYXkgYmUgYWNjZXNzZWQgd2l0aG91dAogICAgYXV0
-aGVudGljYXRpb24uIERlc2NyaXB0aW9uOiBUaGlzIGlzc3VlIHdhcyBhZGRyZXNzZWQgdGhyb3Vn
-aAogICAgaW1wcm92ZWQgc3RhdGUgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTogMjc1
-MjcyCgpDVkUtMjAyNC00NTU4CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBX
-UEUgV2ViS2l0IGJlZm9yZSAyLjQ0LjMuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2Vh
-cmNoZXIuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29u
-dGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlw
-dGlvbjogVXNlIGFmdGVyIGZyZWUgaW4gQU5HTEUKICAgIGFsbG93ZWQgYSByZW1vdGUgYXR0YWNr
-ZXIgdG8gcG90ZW50aWFsbHkgZXhwbG9pdCBoZWFwIGNvcnJ1cHRpb24gdmlhCiAgICBhIGNyYWZ0
-ZWQgSFRNTCBwYWdlLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNzQxNjUKCldlIHJlY29tbWVuZCB1
-cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBXZWJLaXRHVEsgYW5kIFdQ
-RQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5p
-bmcgc2FmZSB2ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMgZm9y
-IGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2VzLgoKRnVydGhlciBp
-bmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNv
-cmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1s
-IG9yCmh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KCi0tClRoZSBXZWJLaXRHVEsgYW5k
-IFdQRSBXZWJLaXQgdGVhbS4K
+* Announce link:
+https://www.djangoproject.com/weblog/2025/jun/04/security-releases/
 
---UbkuSlT0q76e+ol3
-Content-Type: application/pgp-signature; name="signature.asc"
+* Announce content: In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing releases for
+`Django 5.2.2 <https://docs.djangoproject.com/en/dev/releases/5.2.2/>`_,
+`Django 5.1.10 <https://docs.djangoproject.com/en/dev/releases/5.1.10/>`_,
+and
+`Django 4.2.22 <https://docs.djangoproject.com/en/dev/releases/4.2.22/>`_.
+These releases address the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
------BEGIN PGP SIGNATURE-----
+CVE-2025-48432: Potential log injection via unescaped request path
+==================================================================
 
-iF0EABEDAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCZr/BWAAKCRCRxVnb5MkS
-O1t5AJ995t5Bwirl9alQDiuvd3lZ8C1SXACffQrBIt1jxwUKpPtW/y6qMAKyNgw=
-=jHKb
------END PGP SIGNATURE-----
+Internal HTTP response logging used ``request.path`` directly, allowing
+control
+characters (e.g. newlines or ANSI escape sequences) to be written unescaped
+into logs. This could enable log injection or forgery, letting attackers
+manipulate log appearance or structure, especially in logs processed by
+external systems or viewed in terminals.
 
---UbkuSlT0q76e+ol3--
+Although this does not directly impact Django's security model, it poses
+risks
+when logs are consumed or interpreted by other tools. To fix this, the
+internal
+``django.utils.log.log_response()`` function now escapes all positional
+formatting arguments using a safe encoding.
+
+Thanks to Seokchan Yoon (https://ch4n3.kr/) for the report.
+
+This issue has severity "moderate" according to the Django security policy.
+
+
+Affected supported versions
+===========================
+
+* Django main
+* Django 5.2
+* Django 5.1
+* Django 4.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's
+main, 5.2, 5.1, and 4.2 branches.
+The patches may be obtained from the following changesets.
+
+CVE-2025-48432: Potential log injection via unescaped request path
+------------------------------------------------------------------
+
+* On the `main branch <
+https://github.com/django/django/commit/a07ebec5591e233d8bbb38b7d63f35c5479eef0e
+>`__
+* On the `5.2 branch <
+https://github.com/django/django/commit/7456aa23dafa149e65e62f95a6550cdb241d55ad
+>`__
+* On the `5.1 branch <
+https://github.com/django/django/commit/596542ddb46cdabe011322917e1655f0d24eece2
+>`__
+* On the `4.2 branch <
+https://github.com/django/django/commit/ac03c5e7df8680c61cdb0d3bdb8be9095dba841e
+>`__
+
+
+The following releases have been issued
+=======================================
+
+* Django 5.2.2 (`download Django 5.2.2
+  <https://www.djangoproject.com/download/5.2.2/tarball/>`_ |
+  `5.2.2 checksums
+  <https://www.djangoproject.com/download/5.2.2/checksum/>`_)
+* Django 5.1.10 (`download Django 5.1.10
+  <https://www.djangoproject.com/download/5.1.10/tarball/>`_ |
+  `5.1.10 checksums
+  <https://www.djangoproject.com/download/5.1.10/checksum/>`_)
+* Django 4.2.22 (`download Django 4.2.22
+  <https://www.djangoproject.com/download/4.2.22/tarball/>`_ |
+  `4.2.22 checksums
+  <https://www.djangoproject.com/download/4.2.22/checksum/>`_)
+
+The PGP key ID used for this release is Natalia Bidart: `2EE82A8D9470983E <
+https://github.com/nessita.gpg>`_
+
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via private
+email
+to ``security@djangoproject.com``, and not via Django's Trac instance, nor
+via
+the Django Forum. Please see `our security policies
+<https://www.djangoproject.com/security/>`_ for further information.
+
+* Machine-readable CVE data for CVE-2025-48432:
+
+
+{
+  "affected": [
+    {
+      "collectionURL": "https://github.com/django/django/",
+      "defaultStatus": "affected",
+      "packageName": "django",
+      "versions": [
+        {
+          "lessThan": "5.2.2",
+          "status": "affected",
+          "version": "5.2.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.2.*",
+          "status": "unaffected",
+          "version": "5.2.2",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.1.10",
+          "status": "affected",
+          "version": "5.1.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.1.*",
+          "status": "unaffected",
+          "version": "5.1.10",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "4.2.22",
+          "status": "affected",
+          "version": "4.2.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "4.2.*",
+          "status": "unaffected",
+          "version": "4.2.22",
+          "versionType": "semver"
+        }
+      ]
+    }
+  ],
+  "credits": [
+    {
+      "lang": "en",
+      "type": "reporter",
+      "value": "Django would like to thank Seokchan Yoon
+(https://ch4n3.kr/) for reporting this issue."
+    }
+  ],
+  "datePublic": "06/04/2025",
+  "descriptions": [
+    {
+      "lang": "en",
+      "value": "Internal HTTP response logging in Django does not
+escape `request.path`, which allows remote attackers to potentially
+manipulate log output via crafted URLs. This may lead to log injection
+or forgery when logs are viewed in terminals or processed by external
+systems."
+    }
+  ],
+  "metrics": [
+    {
+      "other": {
+        "content": {
+          "namespace":
+"https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels",
+          "value": "moderate"
+        },
+        "type": "Django severity rating"
+      }
+    }
+  ],
+  "references": [
+    {
+      "name": "Django security releases issued: 5.2.2, 5.1.10, and 4.2.22",
+      "tags": [
+        "vendor-advisory"
+      ],
+      "url": "https://www.djangoproject.com/weblog/2025/jun/04/security-releases/"
+    }
+  ],
+  "timeline": [
+    {
+      "lang": "en",
+      "time": "2025-06-04T14:00:00+00:00",
+      "value": "Made public."
+    }
+  ],
+  "title": "Potential log injection via unescaped request path"
+}
+
+--0000000000002571d20636bfa2bf--
