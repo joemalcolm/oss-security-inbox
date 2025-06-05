@@ -1,4 +1,4 @@
-Received: (qmail 5627 invoked by uid 550); 14 Aug 2024 17:19:28 -0000
+Received: (qmail 24328 invoked by uid 550); 5 Jun 2025 18:17:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,134 +7,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23621 invoked from network); 14 Aug 2024 17:12:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723655537; x=1724260337; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kdgZhsW2zZj54+RaxbTbrHYNWJIMpUtCPD1Q/bKbO2A=;
-        b=l2aEL3WVzXeKMdD1amEY/PzH/sE0jq7m/C8gmQWZqsaUoU0JjrZfA8A2RZQRoHHOFQ
-         4aXD8RsRM4DE7w4yEid7ycFFwev1kXYNZae4Uy36AYnpvxFlwr+jSw8gZUo4JelapgfK
-         aX5MP8MQwWSVKlDlzo3T2BoEgSqE/K2uU4MR3ysOGsgDczP+JgY/My5ng3PBtAdH9IBE
-         WJ1sWLTNN05QNMSXwDHFBz5npMBPR9DiDgImXVEPUOqrlGFXkaU2PJoyEVmF54bZlpHw
-         Zyqj6VP+GdCfCEyO0vFxFVVZxussX1Yas2viYqmVdvWXbhYy7jv9ibpkUyRqX/tNmD8/
-         NfNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723655537; x=1724260337;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kdgZhsW2zZj54+RaxbTbrHYNWJIMpUtCPD1Q/bKbO2A=;
-        b=U3FP8Z5vQ+OtRfzyepGrC8TpeAIB013KIJPC4orRU24UVOSclI+qzogTUm0JOwtlqK
-         uHx76EutNdAIgf78PkbjsSwT6eAT6txASapkyCAoij89fv89GILNCrntVgR3fIcgLFg6
-         whnZ0sl6aCVCy5oHynp4hyyh6RTHlrkkaU3DUmoVs8XktECnn0FKiFYehZ2cvdZtADJZ
-         rTM/nkN0668PsHFG1G2zn0PrtziY0X75AKDJMCn1RVdSp674qri3nn8NYK0IRs/jNZnv
-         dXQ0cxPwmemXSylvfioCtrMvkFenKIK7yJ8+6sEaV5gb0oy8x4HmM79eV4DhmOanyKmg
-         yHwg==
-X-Gm-Message-State: AOJu0Yw0m601QoUufFUo8MCmPDzGH5qOZkjL1wTrylgCIcbqF8nRM7jd
-	pUfcuHvm+1ZgfUEe+vjVa6ch1UOWpzKtRTXenOkkeYweX75XFDA0AuNypzx09KW8uIu3t9oiPXh
-	M8ub4UJ9PGC7A7giJB1DIUzvK/aAUIg==
-X-Google-Smtp-Source: AGHT+IGlQdouXwvAwemkSF52rUADXiR3AM2EloKxatuadhemWKSSctj1d5856/Y1KC91MVmPrDLzv+uhyeqgp8/vgbY=
-X-Received: by 2002:a05:690c:c85:b0:651:ee07:76c with SMTP id
- 00721157ae682-6af1f307e95mr3656977b3.15.1723655537418; Wed, 14 Aug 2024
- 10:12:17 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 24009 invoked from network); 5 Jun 2025 12:00:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1749124842;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=NSqF+w02mFV2uvGV2BbDUIVKS3JMRDoigWqTFHWzhnA=;
+	b=X9DhncSQMY/OP3WWDcxrfRf5JhtKeB0Frs+qOElJ0Qyx+a6jQ+UP/NICUynOZAsy4Nr/UO
+	81t2P7cRWPxv7MOJWsjKFCOCJlseDZTRSOubhzU8lEmN5YztU5bUH6q4cNgeBAzy5k7tSR
+	raf6wIWRrlleY0dqbqdCLN2sMIA3k2MQbhNmKIkeIgDELe+yedwS8mrv6B71xSSfsSTUxP
+	jiJh+ptCZkFZgUHRHhOahCCl4kgYQNxMPyCgXojfhsen+iatLmoamhwOGt5gGg2+3fcYm3
+	EG9uOcedavNIRvo0D+95yfLE7rXHudpyykW9l/RDNfn95iZKt4GSsqR0SlDCYQ==
 MIME-Version: 1.0
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <ZrwJHjO8c5IFN-JZ@dojo.mi.org>
-In-Reply-To: <ZrwJHjO8c5IFN-JZ@dojo.mi.org>
-From: Pat Gunn <pgunn01@gmail.com>
-Date: Wed, 14 Aug 2024 13:12:06 -0400
-Message-ID: <CADz+4x8E0Mj287TGUMkDss9V7FrnTQsHu17aK+vc3GpHoOLsuw@mail.gmail.com>
+Date: Thu, 05 Jun 2025 09:00:42 -0300
+From: Timothy Legge <timlegge@cpansec.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000005eac5061fa7d401"
-Subject: Re: [oss-security] feedback requested regarding deprecation of TLS 1.0/1.1
+Message-ID: <af08b59edaa5fd29007603e146a3a43e@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: multipart/mixed;
+ boundary="=_098a4ed6955856d6ec51b3c3f4a1d913"
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefiedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecunecujfgurhepggffhffvuffkgigtsehmtdhjredttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeekhfejtdfhvdelffelgfefudffhfeugffgvedvgfejiedugfekhfetleekueelkeenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhdprhhulhgvrdhpmhdptghprghnrdhorhhgnecukfhppedutddrvddttddrvddtuddrvddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddtrddvtddtrddvtddurddvuddphhgvlhhopeifvggsmhgrihhlrdhgrghnughirdhnvghtpdhmrghilhhfrhhomhepthhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+X-GND-Sasl: timlegge@cpansec.org
+Subject: [oss-security] CVE-2011-10007: File::Find::Rule through 0.34 for Perl is vulnerable
+ to Arbitrary Code Execution when `grep()` encounters a crafted file name
 
---00000000000005eac5061fa7d401
-Content-Type: text/plain; charset="UTF-8"
+--=_098a4ed6955856d6ec51b3c3f4a1d913
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 
-OpenSSL is an important and security-critical piece of software; it's
-important that it be maintainable, analysable for security properties, and
-that at runtime people don't have to worry about weird old code paths
-leading to breaches or instability.
+========================================================================
+CVE-2011-10007                                       CPAN Security Group
+========================================================================
 
-Keeping these old code paths around (and particularly enabled) in "relative
-perpetuity" is bad for OpenSSL and bad for its users because it prioritises
-the long tail (that presumably see very little legitimate use nowadays)
-over the main use; there needs to be some kind of cut-off and acceptance
-that even if a few historical relics are cut off, it's better for the
-mainstream. There are other things that will make those legacies harder to
-use anyhow - cert chains, IPv6, potentially physical connectivity. Given
-the weights of the interests involved, it's not that hard to peel the relic
-cases from the it-works-automatically status into the
-you-may-need-to-take-extra-steps status.
+         CVE ID:  CVE-2011-10007
+   Distribution:  File-Find-Rule
+       Versions:  through 0.34
 
-The Linux kernel removes support for old architectures for similar reasons.
-
-If someone were to argue a metric apart from relative perpituity, that'd be
-different, but I think any reasonable metrics of that flavour would have
-lines that have already been crossed in terms of usage numbers or any other
-measurable.
+       MetaCPAN:  https://metacpan.org/dist/File-Find-Rule
+       VCS Repo:  https://github.com/richardc/perl-file-find-rule
 
 
-On Wed, 14 Aug 2024 at 07:37, Mike O'Connor <mjo@dojo.mi.org> wrote:
+File::Find::Rule through 0.34 for Perl is vulnerable to Arbitrary Code
+Execution when `grep()` encounters a crafted file name
 
-> :OpenSSL is currently considering the deprecation of the TLS 1.0/1.1
-> :protocols.  Currently TLS1.1 and TLS 1.0 are disabled at run time, and
-> :requires enablement by reducing the ssl security level value.
-> :
-> :The current proposal under consideration is to explicitly disable TLS
-> :1.0/1.1 at build time, in our 4.0 release (tentatively scheduled to
-> release
-> :in the next 12-18 months), with an eye to completely remove the impacted
-> :code in a future major release.  The default configuration could be
-> :overridden to re-enable TLS 1.0/1.1 at build time.
-> :
-> :Questions to the community are:
-> :
-> :1) Are distributions/users comfortable with this approach in the time
-> frame
-> :proposed?
->
-> Not really.  Entities who control the OpenSSL they run on their
-> systems, OSes, etc. don't necessarily control all the broken things
-> that said systems/OSes need to interact with.
->
-> :2) Would builders of OpenSSL consider using the default configuration
-> (with
-> :TLS1.0/1.1 disabled in 4.0), or would they ship with these protocols
-> :re-enabled in their builds?
->
-> Either it'd be re-enabled in the build, or there'll be a fork that
-> supports TLS 1.0/1.1 in relative perpetuity.  It was only recently
-> that some mainstream Linuxes stopped shipping a compat openssl 0.9.8
-> and all the stale protocol baggage that goes along with that, for
-> support of some "business critical" commercial apps.
->
-> :3) If the deprecated protocols are re-enabled, what would constitute a
-> :reasonable warning mechanism to inform users that these protocols are
-> going
-> :away at some point in the future to pressure users to update to a newer,
-> :more secure protocol?
->
-> I'd be inclined to position such a move and associated warning message
-> in terms of PQC, which AFAIK doesn't and won't support TLS 1.0/1.1.
-> As PQC gets "refined", it wouldn't surprise me to see the quantum
-> computing boogeyman drive out TLS 1.0/1.1 in critical applications.
-> Let PQC be the spike that kills TLS 1.0/1.1 dead.
->
-> I've been leery to post this for fear of going too far down some
-> "quantum" rat's nest.  So please, be gentle.
->
->
-> Take FWIW...
-> -Mike
->
-> --
->  Michael J. O'Connor
-> mjo@dojo.mi.org
->
->  =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
-> "You can't teach an old dogma new tricks."                    -Dorothy
-> Parker
->
+Description
+-----------
+File::Find::Rule through 0.34 for Perl is vulnerable to Arbitrary Code
+Execution when `grep()` encounters a crafted filename.
 
---00000000000005eac5061fa7d401--
+A file handle is opened with the 2 argument form of `open()` allowing
+an attacker controlled filename to provide the MODE parameter to
+`open()`, turning the filename into a command to be executed.
+
+Example:
+
+$ mkdir /tmp/poc; echo > "/tmp/poc/|id"
+$ perl -MFile::Find::Rule \
+     -E 'File::Find::Rule->grep("foo")->in("/tmp/poc")'
+uid=1000(user) gid=1000(user) groups=1000(user),100(users)
+
+Problem types
+-------------
+- CWE-78 Improper Neutralization of Special Elements used in an OS
+   Command ('OS Command Injection')
+
+Solutions
+---------
+Users should update to a fixed version when available, or apply the
+patch provided in the references section, or use a patched version
+provided by their OS distribution
+
+
+References
+----------
+https://metacpan.org/release/RCLAMP/File-Find-Rule-0.34/source/lib/File/Find/Rule.pm#L423
+https://rt.cpan.org/Public/Bug/Display.html?id=64504
+https://github.com/richardc/perl-file-find-rule/pull/4
+https://github.com/richardc/perl-file-find-rule/commit/df58128bcee4c1da78c34d7f3fe1357e575ad56f.patch
+
+Timeline
+--------
+- 2011-01-04: A bug was reported by Kevin Ryde to the upstream RT
+   bugtracker described as "grep() can truncate files".
+- 2025-06-04: CPANSec became aware of the bug and started triage. Code
+   execution impact was confirmed, a patch was made, and the author, the
+   distros list and additional downstream vendors were notified.
+
+--=_098a4ed6955856d6ec51b3c3f4a1d913
+Content-Transfer-Encoding: base64
+Content-Type: text/x-diff; charset=us-ascii;
+ name=0001-Fix-CVE-2011-10007-for-File-Find-Rule.patch
+Content-Disposition: attachment;
+ filename=0001-Fix-CVE-2011-10007-for-File-Find-Rule.patch;
+ size=680
+
+RnJvbSBlMzg5MjMxNzliODg5ZTdiMDNlNTQ5MTMwYTM4ZWM0ZTRhMjhiN2Q4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBTdGlnIFBhbG1xdWlzdCA8c3RpZ0BzdGlnLmlvPgpEYXRlOiBU
+aHUsIDUgSnVuIDIwMjUgMDM6NDU6NTAgKzAyMDAKU3ViamVjdDogW1BBVENIXSBGaXggQ1ZFLTIw
+MTEtMTAwMDcgZm9yIEZpbGU6OkZpbmQ6OlJ1bGUKCi0tLQogbGliL0ZpbGUvRmluZC9SdWxlLnBt
+IHwgMiArLQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0aW9uKCspLCAxIGRlbGV0aW9uKC0pCgpk
+aWZmIC0tZ2l0IGEvbGliL0ZpbGUvRmluZC9SdWxlLnBtIGIvbGliL0ZpbGUvRmluZC9SdWxlLnBt
+CmluZGV4IGZlY2NjNzYuLmQ0ZGM0NzUgMTAwNjQ0Ci0tLSBhL2xpYi9GaWxlL0ZpbmQvUnVsZS5w
+bQorKysgYi9saWIvRmlsZS9GaW5kL1J1bGUucG0KQEAgLTQyMCw3ICs0MjAsNyBAQCBzdWIgZ3Jl
+cCB7CiAKICAgICAkc2VsZi0+ZXhlYyggc3ViIHsKICAgICAgICAgbG9jYWwgKkZJTEU7Ci0gICAg
+ICAgIG9wZW4gRklMRSwgJF8gb3IgcmV0dXJuOworICAgICAgICBvcGVuIEZJTEUsICc8JywgJF8g
+b3IgcmV0dXJuOwogICAgICAgICBsb2NhbCAoJF8sICQuKTsKICAgICAgICAgd2hpbGUgKDxGSUxF
+PikgewogICAgICAgICAgICAgZm9yIG15ICRwIChAcGF0dGVybikgewotLSAKMi40OS4wCgo=
+
+--=_098a4ed6955856d6ec51b3c3f4a1d913--
