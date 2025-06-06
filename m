@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1996" "Monday" "30" "August" "2021" "21:45:53" "+0300" "Jussi Hietanen" "jussi.hietanen@tuxera.com" nil "47" "[oss-security] NTFS3G-SA-2021-0001: Multiple buffer overflows in all versions of NTFS-3G" nil nil nil "8" nil nil (number mark "U       jussi.hietan Aug 30   47/1996  " thread-indent "\"[oss-security] NTFS3G-SA-2021-0001: Multiple buffer overflows in all versions of NTFS-3G\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] NTFS3G-SA-2021-0001: Multiple buffer overflows in all versions of NTFS-3G" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7301 invoked by uid 550); 30 Aug 2021 19:38:44 -0000
+Received: (qmail 22262 invoked by uid 550); 6 Jun 2025 13:28:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15582 invoked from network); 30 Aug 2021 18:46:05 -0000
-To: <oss-security@lists.openwall.com>
-CC: Szabolcs Szakacsits <szaka@tuxera.com>,
-        =?UTF-8?Q?Jean-Pierre_Andr=c3=a9?=
-	<jean-pierre.andre@wanadoo.fr>
-From: Jussi Hietanen <jussi.hietanen@tuxera.com>
-Message-ID: <6a9f2b22-ca6d-24e5-5eb3-3b1bc7da2805@tuxera.com>
-Date: Mon, 30 Aug 2021 21:45:53 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [194.100.106.176]
-X-ClientProxiedBy: tuxera-exch.ad.tuxera.com (10.20.48.11) To
- tuxera-exch.ad.tuxera.com (10.20.48.11)
-X-Proofpoint-GUID: 8jj3rhG5M-wjzgFbuK2TOFS1c8LArTMj
-X-Proofpoint-ORIG-GUID: 8jj3rhG5M-wjzgFbuK2TOFS1c8LArTMj
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:6.0.391,18.0.790
- definitions=2021-08-30_06:2021-08-30,2021-08-30 signatures=0
-X-Proofpoint-Spam-Details: rule=mpy_notspam policy=mpy score=0 bulkscore=0 mlxscore=0 spamscore=0
- suspectscore=0 malwarescore=0 mlxlogscore=999 adultscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2107140000
- definitions=main-2108300122
-Subject: [oss-security] NTFS3G-SA-2021-0001: Multiple buffer overflows in all versions of
- NTFS-3G
+x-ms-reactions: disallow
+Received: (qmail 22175 invoked from network); 6 Jun 2025 13:28:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=beckweb.net
+	; s=he112721; h=To:Date:Message-Id:Subject:Mime-Version:
+	Content-Transfer-Encoding:Content-Type:From:From:Sender:Reply-To:Subject:Date
+	:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=gIDhAdePtRCqNyprbAwCUW3jDtb4wlCuKBFe3lrKlao=; t=1749216483; x=1749648483; 
+	b=IW2VcO13dr0S3+5JqzytSS3LwZW6uSSdU/2n6zsRpRmp5zPzsmTdSvldyivjOCgHML5fgoOm8XV
+	QCQiXAF7eS8PukmpFwMftkr9E51nMDU+6Cne8ScTTy+MNNCjW+mYZsfqjm+r/bLiFReHajSCLbyhV
+	i9b5clanVZgpqGLp0q/MdX87a/qnZ4c9TSpM4CKXs62+Q2UFvD93NfS8iJNJYxBf2Mm2964izIX5L
+	kyjvILkwZP1v9fAJm0yCONDZdcwIRnW++eTZIfKVQvxHkbiwXp0GKrRoUbT9quYb7RLIHKUxhuYcd
+	YmIpcvXbo9+yWzws4w5GaJNVRwkNuUEdAiOQ==;
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Message-Id: <0364D6FB-A2DE-4EA5-9A7A-53E1BC71A544@beckweb.net>
+Date: Fri, 6 Jun 2025 15:27:41 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
+X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1749216483;9b1f2ff5;
+X-HE-SMSGID: 1uNX6t-003dao-2M
+Subject: [oss-security] Vulnerability in Jenkins Gatling Plugin
 
-Security vulnerabilities were identified in the open source NTFS-3G and 
-NTFSPROGS software. These vulnerabilities were confirmed and resolved. 
-To our knowledge, these vulnerabilities have not been exploited.
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-These vulnerabilities may allow an attacker using a maliciously crafted 
-NTFS-formatted image file or external storage to potentially execute 
-arbitrary privileged code, if the attacker has either local access and 
-the ntfs-3g binary is setuid root, or if the attacker has physical 
-access to an external port to a computer which is configured to run the 
-ntfs-3g binary or one of the ntfsprogs tools when the external storage 
-is plugged into the computer. These vulnerabilities result from 
-incorrect validation of some of the NTFS metadata that could potentially 
-cause buffer overflows, which could be exploited by an attacker. Common 
-ways for attackers to gain physical access to a machine is through 
-social engineering or an evil maid attack on an unattended computer.
+We announce unresolved security issues in the following plugins:
 
-We recommend installing and applying the update with the security fixes, 
-and advise to follow security guidance and frameworks such as NIST for 
-assessing and improving an organization’s abilities to prevent, detect, 
-and respond to security threats and cyber attacks.
+* Gatling Plugin
 
-AFFECTED PRODUCTS: All previous versions of open source NTFS-3G and 
-NTFSPROGS.
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2025-06-06/
 
-WORKAROUND: None
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
-SOLUTION: Upgrade to 2021.8.22
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-PROJECT URL: https://github.com/tuxera/ntfs-3g
+---
 
-ADVISORY ID: NTFS3G-SA-2021-0001
+SECURITY-3588 / CVE-2025-5806
+Gatling Plugin 136.vb_9009b_3d33a_e serves Gatling reports in a manner that
+bypasses the `Content-Security-Policy` protection introduced in Jenkins
+1.641 and 1.625.3.
 
-ISSUE DATE: 2021-08-30
+This results in a cross-site scripting (XSS) vulnerability exploitable by
+users able to change report content.
 
-SEVERITY: Moderate
+As of publication of this advisory, there is no fix.
 
-CVEs: CVE-2021-33285, CVE-2021-35269, CVE-2021-35268, CVE-2021-33289, 
-CVE-2021-33286, CVE-2021-35266, CVE-2021-33287, CVE-2021-35267, 
-CVE-2021-39251, CVE-2021-39252, CVE-2021-39253, CVE-2021-39254, 
-CVE-2021-39255, CVE-2021-39256, CVE-2021-39257, CVE-2021-39258, 
-CVE-2021-39259, CVE-2021-39260, CVE-2021-39261, CVE-2021-39262, 
-CVE-2021-39263
 
-CVSS SCORE: 3.9-6.7
 
-ACKNOWLEDGMENT: Jeremy Galindo, Akshay Ajayan, Kyle Zeng and Fish Wang 
-for reporting these vulnerabilities.
