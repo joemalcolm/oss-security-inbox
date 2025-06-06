@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1728" "Thursday" "26" "January" "2017" "21:52:43" "+0100" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20170126215243.58355x6p4o9cc7ks@webmail.alunos.dcc.fc.up.pt>" "54" "Re: [oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux" nil nil nil "1" "2017012620:52:43" "[oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux" (number mark "U       up201407890@ Jan 26   54/1728  " thread-indent "\"Re: [oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in 6.8-6.9) can lead to local privesc on Linux\"\n") "<CAA_Lw39mq10gPSpsFTvCgvug-Ewgjeisj14bDrwvftV-QTeuSg@mail.gmail.com>" ("<20170126100724.99313jlcg64zbaec@webmail.alunos.dcc.fc.up.pt>" "<CAA_Lw39mq10gPSpsFTvCgvug-Ewgjeisj14bDrwvftV-QTeuSg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1551 invoked by uid 550); 27 Jan 2017 05:36:19 -0000
+Received: (qmail 3762 invoked by uid 550); 6 Jun 2025 03:35:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22002 invoked from network); 27 Jan 2017 01:11:53 -0000
-Message-ID: <20170126215243.58355x6p4o9cc7ks@webmail.alunos.dcc.fc.up.pt>
-Date: Thu, 26 Jan 2017 21:52:43 +0100
-From: up201407890@alunos.dcc.fc.up.pt
-To: oss-security@lists.openwall.com, Noryungi <noryungi@gmail.com>
-References: <20170126100724.99313jlcg64zbaec@webmail.alunos.dcc.fc.up.pt>
-	<CAA_Lw39mq10gPSpsFTvCgvug-Ewgjeisj14bDrwvftV-QTeuSg@mail.gmail.com>
-In-Reply-To: 	<CAA_Lw39mq10gPSpsFTvCgvug-Ewgjeisj14bDrwvftV-QTeuSg@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 28464 invoked from network); 6 Jun 2025 03:25:03 -0000
+Message-ID: <f85fe431-9400-4262-a5d0-71697abd9e31@gentoo.org>
+Date: Thu, 5 Jun 2025 23:24:51 -0400
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <20250603025919.GA11183@openwall.com>
+ <705c9747-27f1-4988-98bb-568db4e7cd74@gmail.com>
+ <20250606022448.GA718@openwall.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <20250606022448.GA718@openwall.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------hWRycEkMslRkLM0Mcbf1lzeX"
+Subject: Re: [oss-security] Re: Linux kernel: HFS+ filesystem implementation
+ issues, exposure in distros
+
+--------------hWRycEkMslRkLM0Mcbf1lzeX
+Content-Type: multipart/mixed; boundary="------------8f2RruY3evCR83pG47PJa03c";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f85fe431-9400-4262-a5d0-71697abd9e31@gentoo.org>
+Subject: Re: [oss-security] Re: Linux kernel: HFS+ filesystem implementation
+ issues, exposure in distros
+References: <20250603025919.GA11183@openwall.com>
+ <705c9747-27f1-4988-98bb-568db4e7cd74@gmail.com>
+ <20250606022448.GA718@openwall.com>
+In-Reply-To: <20250606022448.GA718@openwall.com>
+
+--------------8f2RruY3evCR83pG47PJa03c
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Internet Messaging Program (IMP) H3 (4.2)
-X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
-Subject: Re: [oss-security] Re: OpenSSH: CVE-2015-6565 (pty issue in
-	6.8-6.9) can lead to local privesc on Linux
 
-Quoting Noryungi <noryungi@gmail.com>:
-
-The PTY slave must be root owned to get root obviously, for example=20=20
-when root logs in via ssh.
-
-> Does not work on centos 7.1 (unpatched) running stock openssh.
->
-> TTY capture works, /tmp/sh is created but user is unprivileged.
->
-> On Jan 26, 2017 5:52 PM, <up201407890@alunos.dcc.fc.up.pt> wrote:
->
->> Hi list,
->>
->> I know I'm late to the party, but I was bored, so I decided to write an
->> exploit for CVE-2015-6565 which affects OpenSSH 6.8-6.9
->> It is mostly considered to be a "DoS", even though Jann Horn publicly to=
-ld
->> how it could be exploited for local privilege escalation, but I guess its
->> either PoC||GTFO for users to update.
->>
->> From https://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-6565
->>
->> "sshd in OpenSSH 6.8 and 6.9 uses world-writable permissions for TTY
->> devices, which allows local users to cause a denial of service (terminal
->> disruption) or possibly have unspecified other impact by writing to a
->> device, as demonstrated by writing an escape sequence."
->>
->> I think the description should be updated.
->>
->> $ gcc not_an_sshnuke.c -o not_an_sshnuke
->> $ ./not_an_sshnuke /dev/pts/3
->> [*] Waiting for slave device /dev/pts/3
->> [+] Got PTY slave /dev/pts/3
->> [+] Making PTY slave the controlling terminal
->> [+] SUID shell at /tmp/sh
->> $ /tmp/sh --norc --noprofile -p
->> # id
->> euid=3D0(root) groups=3D0(root)
->>
->> Thanks,
->> Federico Bento.
->>
->>
->>
->> ----------------------------------------------------------------
->> This message was sent using IMP, the Internet Messaging Program.
->>
->
+On 6/5/25 10:24 PM, Solar Designer wrote:
+> On Tue, Jun 03, 2025 at 12:38:11PM +0200, Attila Szasz wrote:
+>> 3) The mismatch in CVE criteria between upstream and downstream distros =
+is
+>> a real issue. During the handling of my case, a certain CNA rule was
+>> repeatedly cited=E2=80=94without being specified=E2=80=94which led to CV=
+E-2025-0927,
+>> initially allocated for Canonical Ubuntu Linux, being reassigned under
+>> kernel.org=E2=80=99s CNA. I understand that MITRE's rules around CNA ter=
+ritories=20
+>> and
+>> ownership were originally designed to distribute workload and filter out
+>> noise, but they should be revisited as they can be ambiguous and=20
+>> misinterpreted.
+>> Especially in cases where one CNA=E2=80=99s product embeds another=E2=80=
+=99s. According=20
+>> to my
+>> experience, this creates more confusion than clarity.
 
 
+Presumably the kernel.org stance is that MITRE's territory rules are
+working as intended as it allowed them to filter out your "noise", per
+their analysis.
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
 
+> Yes, this appears problematic.  I think a distro got to be able to
+> assign a CVE against their whole product or a component they have
+> without this implying upstream is also affected or agrees the issue is a
+> vulnerability, as long as they make it very clear that the CVE is for
+> their specific usage of the component.  As you wrote in:
+>=20
+> https://lore.kernel.org/lkml/6191c255-84cc-4721-91d1-1884472989f7@gmail.c=
+om/
+> [...]
+> Wow.
+>=20
+> To be fair, a kernel bug does not imply a kernel vulnerability, which I
+> assume is the point the kernel CNA is making by rejecting the CVE.
+>=20
+> But them precluding Ubuntu from acknowledging their distro vulnerability
+> by having a CVE against Ubuntu feels inappropriate anyhow.
+>=20
+> Where you write "obfuscate", I wrote "make it very clear that the CVE is
+> for their specific usage of the component".  Maybe that's the way to go.
+
+
+If it is genuinely not a kernel vulnerability, but only a Ubuntu one for
+using the kernel outside of its supported operating parameters, then
+"make it very clear" does indeed sound correct.
+
+If Ubuntu (or others) believe the kernel.org CNA is incorrect and a)
+abusing their authority / b) simply lacking good judgement on security
+matters, for something that is a legit kernel vulnerability, isn't that
+what the appeals arbitration process is for? Raise the dispute with the
+appropriate root, and have them overturn the kernel.org decision.
+
+It is, anyways, inappropriate "cowboy justice" for a CNA to violate its
+scope and assign a CVE number they aren't authorized for, just because
+they disagree with the other CNA's decision. If Ubuntu (knowingly) isn't
+going through the correct process then for that reason alone Ubuntu is
+the bad actor here and should be penalized.
+
+
+--=20
+Eli Schwartz
+
+--------------8f2RruY3evCR83pG47PJa03c--
+
+--------------hWRycEkMslRkLM0Mcbf1lzeX
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaEJfgwUDAAAAAAAKCRCEp9ErcA0vV80b
+AQCkv9MwzxQiXkyPxHyF6pKbx+77hEYyl4CqpkI4Rx66bgEAiDhsOWcQQiQGp9UG2YjAFQUbWFl/
+b3dWFVq6uyGk5gA=
+=mvW+
+-----END PGP SIGNATURE-----
+
+--------------hWRycEkMslRkLM0Mcbf1lzeX--
