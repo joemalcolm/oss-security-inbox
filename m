@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3255" "Thursday" "23" "December" "2021" "23:06:59" "+0500" "Alexander E. Patrakov" "patrakov@gmail.com" nil "65" "[oss-security] CVE-2021-44273: e2guardian did not validate TLS hostnames" nil nil nil "12" nil nil (number mark "U       patrakov@gma Dec 23   65/3255  " thread-indent "\"[oss-security] CVE-2021-44273: e2guardian did not validate TLS hostnames\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-44273: e2guardian did not validate TLS hostnames" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17567 invoked by uid 550); 23 Dec 2021 18:07:49 -0000
+Received: (qmail 29962 invoked by uid 550); 6 Jun 2025 16:52:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,218 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17543 invoked from network); 23 Dec 2021 18:07:48 -0000
+x-ms-reactions: disallow
+Received: (qmail 15459 invoked from network); 6 Jun 2025 16:00:21 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bAkK2CvU5i50k3V3cfsK0CWytnLsICJ8O9djCBCJsJ4=;
-        b=SqvQBQWLV+Z5hLa5ghYxk+oqkQ3roSucahLoYsCmjnXtA3L8blPe9aB0tnatHTqjhg
-         s2QLd1WXijfhU44DdP6+Lrk/uwUqegx1rxEtxC3C2+ko7UHPY+49/y0LwKA6QYIrc9az
-         HRxsIKrcuIM6VARmeF3J2Ns2DGIW+V3FNtPC1xQga3Uro/3nd88RBpypO+nJAcla7SBG
-         szB6HarNjWTzKNRYCbd9AN9iTLEHmw3dlZYeam0Wu8cl5JZCG8dt6IZHe6Zwz1Vs7Tjj
-         Z/CyZvjKx3ziOJdyJVIjWTGZZNbbNvuWMIU13KT1IK1DrdXsYq02tZ78OzaSkwz9a1jx
-         o3CA==
+        d=gmail.com; s=20230601; t=1749225611; x=1749830411; darn=lists.openwall.com;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/C83j64jOkAn6zHtcK8katJFVjWsojoFttb3ttPocHI=;
+        b=CzkC7s73t0RiWuEFyMqCbNhcB0trSMF60LjQ9EO8hy0qzpKQg9CUodw909ZT/JSH1J
+         WcNOeAJpTbq+jpT7AjQfObwU9uWUNXCG5Oz1vAeSMhYnqEBM1+rzSB1CCxH7bpsroVDT
+         rl0QB0jLNyjeNXtbMPrYcuUrwBwjS2poOme2XTOTsrL4wtFOLT5XyIebLmNB8AGSbefa
+         nIdgnszdNNnKhBYeMfXsbOeCoTZI7sueplIXsfHZgJTysQjaZVMtqhkEOf+5KoRa4hDi
+         7UYVLFLiBrxRCF+KjqeRG8aFyDYCTDn5CLTmvXEZbitO5I4yW+WCK5lhbghxldrPNch/
+         kCQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bAkK2CvU5i50k3V3cfsK0CWytnLsICJ8O9djCBCJsJ4=;
-        b=BtjoZEsjXAcYI4Z0yvd8UShKYCTV31u2mUUkjQ+QdBQGkBazalQKhDrAUdnmRlq4B+
-         v5XVvq6EboJkih2Ds4sHS3oSyj00Qv5gl1vNYYZJQ4+MljM8xBs9xc1fdFM3XKoO+0J4
-         qw3UIOChRaTUzuyPXhqWLDCdGkhKp1z26aQfbXpN0U1wofI1cA+kIoNv6nnD7eXhv1aH
-         Np7WjIHdt/aSJy3Kpo9ekR/Jk+Vn+QX3jmQqNPueu4NVWNZTyvHwx+3jOtWJ8BN10TS2
-         uVelv7yFcNyoaSuKTHu1S/BRhT7rQf633EyTjHBonpO9fv83H9mRukSCBvrPX9sSPW5c
-         oTpQ==
-X-Gm-Message-State: AOAM5337P0aRBkv8+2TAh+3rVaGXWUzpALs8A6u5/aAppu6idwjkTXmr
-	teMr3acG8lsdJKYH3FTQGds5aEghzh8fnQ3x7m3hyeOKco0=
-X-Google-Smtp-Source: ABdhPJxpfNgTztLVW/Zq7akZXLw+PmspQBkOQjD51Wi0+EJ6q3cQiyWI5kMxvrnPy2nBNL1j5CWyCrDCkmCWj2fcPk0=
-X-Received: by 2002:a05:6638:251:: with SMTP id w17mr1958150jaq.315.1640282856040;
- Thu, 23 Dec 2021 10:07:36 -0800 (PST)
+        d=1e100.net; s=20230601; t=1749225611; x=1749830411;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/C83j64jOkAn6zHtcK8katJFVjWsojoFttb3ttPocHI=;
+        b=UIp14LSNOJxFPwGRuqSEVMjxHamfRdyHSaaY5bYJeN8EZOCJeNFl6fP7HxaCImywR5
+         2eAQG8pzGkNDg19mjiL4+pf4MZVmOZAjZJwl5ZMR1wTtB6t1REh5v9N/w6hzlMZuSVZN
+         JTBE7guxm/kJT/+DK3gH6mVOKVmYiloUqwi+gc3rt4WtE9i2+k97XZ3DktGrtlPn/4wi
+         /S1cWwB/8FQ0d0GXQz/5De3/J+PI8a0bbs897eWpnpJ4zFE/DL3R6aFUxzIuifkVh08c
+         a6qNCyv4ZFpO6yMizAOWGHDrRc/h0/qmnVrXiyayW7Vh43k2dhs3uNZjrmyKM7R9po8x
+         E3kg==
+X-Forwarded-Encrypted: i=1; AJvYcCUIdwBJat7x1yQkdwU5Tafa4AaHqQx3IFNuhi8Ifi+eHYoSC503mN5JyaNFQtC1TP3w0xTHXM72VlAPtbQ=@lists.openwall.com
+X-Gm-Message-State: AOJu0Yz6a4fqIbUgkQ6lQmBvPInZvBm5SM39/vbKE0f++XmUpmXSiIN7
+	PxM+vlc82tIbvGz0FYKEz1f87Aerb9vr1Fj3YpmOfP+sQ0nsCKwSAHL4/ATIQ0Fp
+X-Gm-Gg: ASbGncvvYiTBGSxLP/S47mR4ZK21hJo+YBfEe98KIUHpMPMRVqpxoH+vHZnCVjsbVQT
+	m8BsMjUy1LKiSio5NDFU+myL5ULMW6GtysisYsapwBKHvXrS2mWZNkofAioL6vY4z+1yTAq4xRH
+	iKCeyasangsv3L6hkJi0HP0OJMdWL1cp01alB8Grb1HXsm6INfHwZ6bItXLG9/RbMF/6p+W/sQ6
+	nsiZfd7/ijxho5lfnIRaBlxrSKujgFqPYWPnkeGZBCqnd+co5n0p3YO/YkZr6pKhux1sms4YbUc
+	hZifKVK5phi0PDxG87afIgtlxOsM0Pfn1D9P0MLl+mU1PlaEWgsY3z1QVYEgeoU=
+X-Google-Smtp-Source: AGHT+IHOhCCJYVz+6gk5cM/AgSDqxeS/9AfH7eFnYXoxssVVBH1qMptR5NKP34rgll0yM4r/0Dxcxg==
+X-Received: by 2002:a05:600c:8116:b0:442:f904:1305 with SMTP id 5b1f17b1804b1-45201507546mr41547335e9.6.1749225611016;
+        Fri, 06 Jun 2025 09:00:11 -0700 (PDT)
+Message-ID: <07bdaddb-1414-492b-a178-93b38f8ac3a0@gmail.com>
+Date: Fri, 6 Jun 2025 18:00:09 +0200
 MIME-Version: 1.0
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
-Date: Thu, 23 Dec 2021 23:06:59 +0500
-Message-ID: <CAN_LGv3XWN9ptJL-FpHpzYdO8CatqW0ZJ7xo=yQt+d-07cAcbQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000f737a805d3d41c92"
-Subject: [oss-security] CVE-2021-44273: e2guardian did not validate TLS hostnames
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: eschwartz@gentoo.org, oss-security@lists.openwall.com
+From: Attila Szasz <szasza.contact@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] Re: Re: Linux kernel: HFS+ filesystem implementation, issues,
+ exposure in distros
 
---000000000000f737a805d3d41c92
-Content-Type: text/plain; charset="UTF-8"
+ > If it is genuinely not a kernel vulnerability, but only a Ubuntu one for
+ > using the kernel outside of its supported operating parameters, then
+ > "make it very clear" does indeed sound correct.
 
-Hello!
+ > If Ubuntu (or others) believe the kernel.org CNA is incorrect and a)
+ > abusing their authority / b) simply lacking good judgement on security
+ > matters, for something that is a legit kernel vulnerability, isn't that
+ > what the appeals arbitration process is for? Raise the dispute with the
+ > appropriate root, and have them overturn the kernel.org decision.
 
-Some time ago I was trying to make a certain Arch Linux system compliant
-with CyberEssentials security requirements from the UK [1], and this
-includes the requirement for anti-virus scanning of all web browser
-traffic. I interpreted this literally: break TLS using MITM on the
-(transparent) proxy, scan everything with ClamAV. Note: I may be
-mis-interpreting and over-complying, there is an unverified opinion that
-anti-malware browser extensions are enough and that it is not needed to
-break TLS. I don't know.
+ > It is, anyways, inappropriate "cowboy justice" for a CNA to violate its
+ > scope and assign a CVE number they aren't authorized for, just because
+ > they disagree with the other CNA's decision. If Ubuntu (knowingly) isn't
+ > going through the correct process then for that reason alone Ubuntu is
+ > the bad actor here and should be penalized.
 
-Anyway, I have decided to try e2guardian 5.4.3r and later a 5.5 git
-snapshot, in the standalone mode (where it functions as a transparent
-proxy, as opposed to an ICAP server), because of the apparent simplicity of
-its setup. While testing it, I found that it significantly lowered the
-security of the system it purported to protect: I was able to access,
-through this transparent proxy, a significant amount of badssl.com
-subdomains that should not be accessible.
 
-In particular, I was able to access wrong.host.badssl.com, which meant that
-SSL certificate hostname validation was not working, and an attacker could
-trivially MITM the connection from the origin server to e2guardian. I have
-reported this [2], and it is now fixed in the v5.4 branch [3]. There is
-still no formal release with the fix.
+I don't see how Canonical Product Security is a bad actor here for caring
+about the actual security of downstream users and acting in a timely
+manner about an issue that they considered to impact Ubuntu Linux,
+correctly.
 
-I do not see anything relevant on the v5.5dev branch, though, and I have
-not tested any other branches. The issue exists only if e2guardian is
-compiled against OpenSSL 1.1.x, and is operating in the standalone mode.
-Builds using OpenSSL 1.0.2 or operating as ICAP servers (as opposed to
-standalone transparent proxies) are not affected.
+Canonical has a scope of
+"All Canonical issues (including Ubuntu Linux) only."
 
-This issue with missing TLS hostname validation is now known as
-CVE-2021-44273. Distribution package maintainers, please see if your
-e2guardian package is vulnerable.
+kernel.rg has a scope of
+"Any vulnerabilities in the Linux kernel as listed on kernel.org, excluding
+end-of-life (EOL) versions."
 
-I have also reported [4] another issue, that certain badssl.com subdomains
-that implement bad crypto (dh2048, dh-small-subgroup, dh-composite,
-tls-v1-0, tls-v1-1), normally rejected by browsers, are still accessible
-through the e2guardian transparent proxy. However, we have agreed that it
-is not a bug in e2guardian, but just insecure OpenSSL defaults (and no
-user-oriented documentation how to change them via openssl.cnf), because
-the same subdomains can be accessed via curl. Interestingly, Squid (with
-ssl-bump enabled) does disallow such bad crypto.
+Both of them were contacted.
 
-In my personal opinion (which may be different from the official opinion of
-any company that I work or worked for), the incident described above, plus
-a similar recent incident with Squid (CVE-2021-41611), should be treated as
-an evidence that such "please MITM all SSL traffic" requirements actually
-lower the security and should be abandoned, merely because browsers
-de-facto have the best available quality of TLS implementations.
+4.2.2.1 CNAs SHOULD assign a CVE ID if:
 
-[1]
-https://www.ncsc.gov.uk/files/Cyber-Essentials-Requirements-for-IT-infrastructure-2-2.pdf
-[2] https://github.com/e2guardian/e2guardian/issues/707
-[3]
-https://github.com/e2guardian/e2guardian/commit/eae46a7e2a57103aadca903c4a24cca94dc502a2
-[4] https://github.com/e2guardian/e2guardian/issues/708
+     the CNA has reasonable evidence to determine the existence of a
+     Vulnerability (4.1), and
+     the Vulnerability has been or is expected to be Publicly Disclosed, 
+and
+     the CNA has appropriate scope (3.1).
 
--- 
-Alexander E. Patrakov
+On 3rd Nov, 2024, Kees Cook writes:
+"The hfsplus filesystem currently has no maintainer, and since we don't
+view filesystem corruption flaws to be particularly sensitive, probably
+the best thing to do would be to send the patch like normal to the public
+linux-fsdevel@vger.kernel.org (please keep me and other others in this
+email's CC now on the CC for your patch).
 
---000000000000f737a805d3d41c92--
+Let's see if the VFS maintainers have any other thoughts on this?
+(I am forwarding them a copy of the original email now.)"
+
+This is pretty much the last update—no patch is introduced, nor is a CVE
+issued. The issue is not viewed as sensitive.
+
+My understanding is that 4.1 was not satisfied according to them.
+
+CVE-2025-0927 was reserved by Canonical on 31st January, 2025, around the
+time they fixed the issue internally.
+
+At this point, Canonical, as per 4.2.2.1, assigned a CVE for Canonical
+Ubuntu Linux for the issue they deemed a vulnerability in Ubuntu Linux.
+
+The kernel neither assigned nor fixed anything regarding the email that was
+sent to them.
+
+After Canonical’s fix went live, the public advisory was published on
+18 March, 2025.
+
+Now, according to:
+
+4.2.1.2 For Publicly Disclosed Vulnerabilities, if the CNA with the most
+appropriate scope:
+
+     preemptively documents that it will not assign, or
+     responds within 72 hours that it will not assign, or
+     does not respond within 72 hours,
+
+then an appropriate Root MUST make a Vulnerability determination.
+
+So the kernel.org CNA team would have had 72 hours to respond to the public
+disclosure if they thought that the issue was in their scope—but they 
+didn’t.
+
+I don't know about the Root CNA, but it is not like anybody reached out 
+to me.
+
+So what the hell happens to consumers of the Ubuntu Linux product
+that don't want their boxes rooted by non-sudoers according to the CNA?
+
+How could Canonical be the bad cowboy here? Someone please enlighten me.
+
+In fact, I'm not even sure upstream would have ever fixed this unless 
+Salvatore
+reached out from Debian basically asking what had happened:
+
+https://lore.kernel.org/lkml/Z9xsx-w4YCBuYjx5@eldamar.lan/
+
+Note that the initial report was received by security@ early November, 
+2024.
+Salvatore's message is dated 20th March.
+
+After that, Canonical helps Debian by sharing the fix they used in the
+Ubuntu kernel.
+
+Then, on 24th March, 2024, the Linux CNA finally expresses interest in
+owning the CVE—that is, 6 days after the disclosure and 72 hours past the
+deadline defined in 4.2.1.2.
+
+Only then is the bug finally fixed, on 7th April—156 days after the report,
+156 days after receiving the complete writeup and exploit code in the 
+first place.
+The CVE, now transferred to kernel.org's scope is rejected on the
+8th of April UTC 4am - from my timezone, on the same day.
+
+
+Canonical addressed everything within 90 days. What's the problem?
+
+Prioritizing the misinterpretation of a piece of bureaucratic text just 
+to label a
+legitimate Product Security team as a "bad actor" and to focus on
+hypothetical penalties—rather than caring about the actual security of 
+real-world
+systems and users—is categorically *stupid*.
+
+The real priority should be ensuring that users and businesses are:
+
+  *
+
+    properly informed about the risks, and
+
+  *
+
+    provided with the necessary remediation steps.
+
+Anything else is a distraction from what truly matters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
