@@ -1,4 +1,4 @@
-Received: (qmail 30261 invoked by uid 550); 10 May 2023 11:43:57 -0000
+Received: (qmail 22242 invoked by uid 550); 6 Jun 2025 16:51:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,237 +7,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31943 invoked from network); 10 May 2023 07:17:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1683703047; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qPSosGp1vaqoT2FMSJGpPIRxGjCXm4c7TFf93SfXv00=;
-	b=nBsBgyn7Tp8Y7kbZUAvLITCJ7bG31Y+PDbBtCwvUhfEOXxVRNl8+EHmiRtB0JcB/42js0f
-	n2E+X2CQE/2NQQyYMnwMDDzlWZBiKy8BKq+GPLevL0tZtFyJwivvHh9jnI1NRGYzECbMcs
-	y58+pxXpkVkg1Qo6TjOyjq8NDRuZWY4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1683703047;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qPSosGp1vaqoT2FMSJGpPIRxGjCXm4c7TFf93SfXv00=;
-	b=mIxTgTIIgGdBAx2JYyCbZc9BNkpecwmVTKSylpkXHK0YkJORh4S7qVA9AHhQp9af3K5ISY
-	ggmUVCVwSAJIKrBQ==
-Message-ID: <80a16fe009b363a5f3b2fdd3219a1435001c3e43.camel@suse.de>
-From: Cathy Hu <cahu@suse.de>
-To: oss-security@lists.openwall.com
-Date: Wed, 10 May 2023 09:17:26 +0200
-In-Reply-To: <006a66843d1c12eb1c1ee187b764e570d2623932.camel@suse.de>
-References: <006a66843d1c12eb1c1ee187b764e570d2623932.camel@suse.de>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-fCVSpbqduSARaTTLoeN2"
-User-Agent: Evolution 3.46.4 
+x-ms-reactions: disallow
+Received: (qmail 1672 invoked from network); 6 Jun 2025 13:40:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749217222; x=1749822022; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ADsn3gME+xdae0bV2S/vs6DfBNQIrdkHZhhEsoPYP5Q=;
+        b=VUO3KkoAPfNxoRbGgB/Qr78pn8hUIMOrru8lFbzdsLvD93YOZcR0HYgBg1rYXbWBPJ
+         Xb8Qi8sbi7CyZ981NLBAWQ92AoljueWpqsw12j/6ZPhNHGA2MfdgD6E7PoO6OrpOxviT
+         l0x1YWM89IpgEfRxmHDINdK6e2xqAWNb+6Nazjo7X2bT7IEbA+J5/gQGzAOsE/rHdgJ6
+         koDeujcTltzm3OCfKuoIQ5qauM9y/nzVOXKUSq7WO3TEBw1E+n5zHDMbGElqy6JgLf7s
+         /wg7lZCq0bQ6ELOozYPZcrE0SUGflOrg8V+G1rP+9iiynoRiAsYjIAmuW+zcSrx+4+n1
+         pHzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749217222; x=1749822022;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ADsn3gME+xdae0bV2S/vs6DfBNQIrdkHZhhEsoPYP5Q=;
+        b=wAD5QeUTvPnIiw0GVZWP193ABjv8ssCCFETT42Et+TmSkTXDAMsaOvbWqrYUtMet2e
+         YHw0Z4VkAxZNileuaqbS7LZJpdgoV9Ugq9bmbpp8u79pB7ea1TqcwTMzJipH+JCGCUvA
+         xsfheGGi0jlRU+zzKJUa7pgzJ48QYUXKsMFT+iomMrK+AD6o1pFrklBrQm/J5D22dzXi
+         K93SWORDnMPQGTR/CdujRrFmNj8waNYQ8Z55V4OiXxpjEEpq3KJBnV8Z33KlaX3PYjIA
+         KQ/bRrLeulL00jM35QN3SfdP18R+HYOni6GZwJ5bCNOFFeRwEZKIPTjuHbvx2PiW7y0/
+         t9ug==
+X-Forwarded-Encrypted: i=1; AJvYcCWJU53rlrFg6ze/3uAb0UT0ild6CnXE9CDPiq0NqZVKGqx+xbAFBti8U5GYW+nqzyy3Yg7m/oTsbL2/EIg=@lists.openwall.com
+X-Gm-Message-State: AOJu0YweLegmhOGiIxdq/rCkrD5QvAy/u2sSySD557Clp0R74HgvZ/wX
+	KHvODfulK5XYtgaxcYSULPqElK5+yhWLzkmdNVd3/iPXE0eSjtlWly7x
+X-Gm-Gg: ASbGncuPqsmLOb0QHBQ3FIHMePhkDZT6wP+wZXZWuFsnpdQcSetIfa+RZpZ4M6VU3sP
+	1+gIeBaP42w67vr+ZwSL9m8RSj1sGJOo4jiOT7gsiJDjiKjMnw6AufnGSWfZUdnwXlVhbb3IfNo
+	4IgOjkvIChIlJwYpCsHIop4SqKRsZUNk6j+0Yv4/zKrd23HbWMRWBVekVCVvEQiISZXU4bAMrif
+	AlWfK9J6TqkqdLQqJ37SRYSkhlAMJkxo+N+nqKf/du0qXaao+ustGSbJTA/ljO20cL7qqSLsQmb
+	V+AvZGsbGs/o7bAwdlILWSgVsGa6pQ+pZ/EGEz5UKBFoWG99bPPNCrySzrs+Y9o=
+X-Google-Smtp-Source: AGHT+IEY8tZvepRNpd5eorIr4PWeMDJVeA4m+0kWowd8ccT/cAtn4WKYMMKO2Lwvk8E3OwpdBTlD7Q==
+X-Received: by 2002:a05:6000:188f:b0:3a4:f52d:8b05 with SMTP id ffacd0b85a97d-3a531cc5c8amr3070861f8f.35.1749217221924;
+        Fri, 06 Jun 2025 06:40:21 -0700 (PDT)
+Message-ID: <7d8815b7-a417-4407-87a3-fb0dc7c4f81f@gmail.com>
+Date: Fri, 6 Jun 2025 15:40:20 +0200
 MIME-Version: 1.0
-Subject: Re: [oss-security] CVE-2023-2253: distribution/distribution:
- Catalog API endpoint can lead to OOM via malicious user input
+User-Agent: Mozilla Thunderbird
+From: Attila Szasz <szasza.contact@gmail.com>
+To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
+Cc: =?UTF-8?Q?Muhammed_H=C3=BCsam_Alzeyyat?= <hussamalzeyyat@gmail.com>
+References: <20250603025919.GA11183@openwall.com>
+ <b379213c-55d1-4564-90aa-591edf3097c7@gmail.com>
+ <20250606030239.GA897@openwall.com>
+Content-Language: en-US
+In-Reply-To: <20250606030239.GA897@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Linux kernel: HFS+ filesystem implementation
+ issues, exposure in distros
 
---=-fCVSpbqduSARaTTLoeN2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> OTOH, is there other significant security impact?  As I understood, on
+> Ubuntu a privileged logged in user could use this bug to obtain root.
+> However, is that user perhaps privileged enough to also sudo to root by
+> default?  So is this only a bypass of the need to re-enter the user's
+> password for sudo?  That sudo from user to root is only a nominal
+> protection mechanism anyway, more against inadvertent mistakes than
+> against malicious attacks.
 
-Update:=20
+I didn't make this explicit in the video, but this works when
+running as a non-sudoer user, and also on Ubuntu Server. I think
+Canonical Product Security might have better estimates on this, but
+I'm guessing many of the corporate, gov, academic, HPC cluster, etc
+use cases are impacted practically in such a setting.
 
-The github advisory is public now:
-https://github.com/distribution/distribution/security/advisories/GHSA-hqxw-=
-f8mx-cpmw
+Also, many customers ofhttps://ubuntu.com/pro, I think.
+Incidentally, I don't know how active user sessions in polkit and the
+state of being a sudoer vs non-sudoer works when you hook up workstations
+to AD, but it might be interesting.
 
-Please refer to the advisory for more information and the affected
-versions and fixing commits.
+On 6/2/25 22:59, Solar Designer wrote:
+[..]
 
-On Tue, 2023-05-09 at 17:17 +0200, Cathy Hu wrote:
-> Publishing to oss-security as our agreed maximum embargo date has
-> passed now
->=20
-> Summary
-> =3D=3D=3D=3D=3D=3D=3D
->=20
-> distribution/distribution
-> (https://github.com/distribution/distribution) is the Open Source
-> Registry implementation for storing and distributing container images
-> using the OCI Distribution Specification.
->=20
-> Systems that run distribution/distribution on memory-restricted
-> environments can suffer from denial of service by a crafted malicious
-> /v2/_catalog API endpoint request.
->=20
->=20
-> Affected software
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> - CVE ID: CVE-2023-2253
-> - CVSS Score: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-> (important)
-> - Affected: distribution/distribution < 2.8.2-beta.1 tentatively (!)
-> (not public yet, see timeline section below)
-> - Commit introducing the issue:
-> https://github.com/distribution/distribution/blob/b7e26bac741c76cb792f8e1=
-4c41a2163b5dae8df/registry/handlers/catalog.go#L45
->=20
-> The OCI Distribution Specification is *not* affected since the
-> catalog
-> endpoint was moved to a reserved extension:
-> https://github.com/opencontainers/distribution-spec/blob/c3e48b9d94b104d5=
-e3db2f984bb83a55fb7ac023/extensions/README.md?plain=3D1#L20
->=20
->=20
-> Fix/Patches
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> Fixes for main and v2.8 are attached to this email.
->=20
-> Patches are available to upstream in the private github advisory (see
-> timeline section below) but not published yet.
->=20
->=20
-> General Recommendation
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> The /v2/_catalog endpoint was designed specifically to do registry
-> syncs with search or other API systems. Such an endpoint would create
-> a
-> lot of load on the backend system, due to overfetch required to serve
-> a
-> request in certain implementations.
->=20
-> Because of this, we strongly recommend to always this API endpoint
-> behind heightened privilege and avoid leaving it exposed to the
-> internet.
->=20
->=20
-> Background
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->=20
-> /v2/_catalog endpoint accepts a parameter to control the maximum
-> amount
-> of records returned (query string: n).
->=20
-> When not given the default n=3D100 is used. The server trusts that n
-> has
-> an acceptable value, however when using a
-> maliciously large value, it allocates an array/slice of n of strings
-> before filling the slice with data.
->=20
->=20
-> Steps to reproduce (provided by Jose Gomez (SUSE))
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->=20
-> Have a running registry with at least one image on it. and pass a=20
-> sufficiently long
-> `n` to the `/v2/_catalog`.
->=20
-> ---
-> $=C2=A0 =3D host machine shell A
-> %=C2=A0 =3D host machine shell B
-> #=C2=A0 =3D container
-> -- =3D comment
->=20
-> Tested against main branch (commit-sha:=20
-> 362910506bc213e9bfc3e3e8999e0cfc757d34ba):
->=20
-> -- build distribution
-> $ git clone git@github.com:distribution/distribution distribution
-> $ cd $_
-> $ make bin/registry
-> $ cat >bin/registry-configuration.yml <<EOF
-> version: 0.1
-> log:
-> =C2=A0level: info
-> storage:
-> =C2=A0filesystem:
-> =C2=A0rootdirectory: /var/lib/docker-registry
-> http:
-> =C2=A0addr: 0.0.0.0:5000
-> EOF
-> $ docker run --memory "512M" -v $(pwd)/bin:/upstream --rm -it -p=20
-> 5000:5000 registry.suse.com/suse/sle15:15.4 /upstream/registry serve=20
-> /upstream/registry-configuration.yml
->=20
-> -- on another shell:
-> % docker pull registry.suse.com/bci/bci-busybox
-> % docker tag $_ localhost:5000/busybox
-> % docker push $_
-> % curl localhost:5000/v2/_catalog?n=3D4294967297
-> -- See the registry process dead.
-> ---
->=20
-> Timeline
-> =3D=3D=3D=3D=3D=3D=3D=3D
-> - 2023-01-27: Issue was reported by Jose Gomez (SUSE) to upstream via
-> email to the cncf-distribution-security list
-> - 2023-02-06: Response from upstream, they created a private github
-> advisory repository to work collaboratively on a fix
-> - 2023-02-07: Coordinated release date set to 2023-04-27 13:00 UTC
-> (90
-> days)
-> - 2023-02-10: Initial fix provided by Jose Gomez in the private
-> github
-> advisory for main branch, discussions and improvements
-> - 2023-03-21: Backport provided by Jose Gomez in the private v2.8
-> branch, discussions and improvements
-> - 2023-04-07: I asked upstream in the github advisory for a CVE, no
-> response
-> - 2023-04-24: I posted to distros to ask for a CVE, new CRD agreed
-> with
-> upstream to 2023-05-08 13:00 UTC (max 14 days as per distros list
-> policy); also pre-notified quay and the OCI security contact
-> - 2023-04-25: The OCI security contact provided insight into the OCI
-> spec, upstream added recommendation to advisory to block the
-> endpoint;
-> OCI spec itself is not affected
-> - 2023-05-08: Upstream asked to move coordinated release date +1 day
-> due to bank holiday, we agreed to new CRD: 2023-05-09 15:00 UTC
-> - 2023-05-09 15:00 UTC: Publish to oss-security since the maximum
-> agreed embargo period has passed
->=20
->=20
-> Credits
-> =3D=3D=3D=3D=3D=3D=3D
->=20
-> Found and fixes provided by: Jose Gomez (SUSE)
->=20
->=20
+ > If nothing else, this can be used to bypass UEFI Secure Boot.
 
---=20
-Cathy Hu <cahu@suse.de>
-Security Engineer
-GPG: 5873 CFD1 8C0E A6D4 9CBB F6C4 062A 1016 1505 A08A
+Could be. Also, I know that Debian wanted to disable hfs/hfsplus
+altogether in kernel config, but it was pointed out that
+powerpc and ppc64 still needs that - I guess for booting properly.
 
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146
-90461 N=C3=BCrnberg
+https://salsa.debian.org/kernel-team/linux/-/merge_requests/1422
+https://github.com/AOSC-Tracking/debian-kernel-team-linux/commit/9b5d19e4bb14e65ff3295e7af394f4048a3bfba0
+https://salsa.debian.org/kernel-team/linux/-/commit/d522d84d1b39689b31030eda65b33b29bada5a9a
 
-Gesch=C3=A4ftsf=C3=BChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Martje
-Boudien Moerman (HRB 36809, AG N=C3=BCrnberg)
+> Do I correctly read "(any<=5.6)" as indicating that the filesystem 
+> corruption bug has been fixed for a long time now?
+
+Yeah, so there was a fix for something that was reported as a
+stability problem*, and that, combined with the slab OOB write
+could result in the vector that I'm discussing there. The one
+without the need to mount a corrupted state.
+
+Incidentally, this also means that if the kernel had actually refused
+to fix the issue — which they did for about 5–6 months, only upstreaming
+the fix on the same day the CVE was rejected — then the stable 5.4
+release would have been affected by that vector
+even though the whole thing was kinda dismissed as a non-CVE.
+
+I'll let the reader judge whether this is the right way to
+do conservative defense-in-depth or not.
+
+* this was actually the commit that piqued my interest,
+because it indicated that something really fishy was going on
+about manipulating the B-tree's on disk.
+I talked about this for a smaller group of audience, but
+I ran into this whole mess through an IoT security evaluation
+of sorts by noticing that the company Tuxera used to sell
+their HFS+ 'on steroids' solution for Asus, Linksys and a bunch
+of manufacturers where the kernel module was essentially just the
+upstream driver. Even from the decompiled snippets it was clear that
+that driver was somewhat unstable.
 
 
 
---=-fCVSpbqduSARaTTLoeN2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEWHPP0YwOptScu/bEBioQFhUFoIoFAmRbRQYACgkQBioQFhUF
-oIpbLw/9Ep13K4qnEI1z4ThREeeUm+Ei4OsptnwjWHmbkKE0n+k0UjgXWfksm7Rb
-N0evDtiM7Rbe+jgDRDeAuEvmOeGF7H0141burNCZhIwbIlxs5paNTo2Zsq438yR9
-6adgtWeSfk8QLK1UVxkrambLTySrnykCOtkSsFpbuLxUtRKrkHJGz5avyRkujcsx
-arq5EsrzebE9LusNOK9m/v7AmD+Aqtej4bBYz8FFd+4xghZSivVRq9uXUNrkQe9B
-yHgIgeVTO5ZvJc+XV1DSk6FLISkArcVZG75zlrTlFhjLuPTeJkyJBnTI5loX0y8j
-3JeQBJN7UnxYo1OUSdQ2645fSD3p3jcX+BhBff2UJ9rWPjB594TVIBK3viAXYSZg
-+PAvxeCSNbfVD+fnBRfloq1grATHaaarrATurZ/YEeDn2j8VvXRasvJGOsY1dfRQ
-GWhtqfDQk5SZob5sNEmCDPsABXx6ZI+VBmDMkxWmXXZm0qQoHVGMdxG7Rq+hf2Aq
-ijsFvcNvYRSyJjlMKJuZSyDdnThKb9d1J0adRIcbaV3z4WMIM0BL057YeZhZS9ju
-IPsB7yeIad+Bf0pVVGuglg8l4NUCiePR3JCOxL0sZCTKFQ94YdaP1PJFvLeee4eV
-HLDhix5LCuHKKf/ExRvqDR5Sbn7MC3xFNqVhjnBXfQsJ6Ad+06Y=
-=Jk83
------END PGP SIGNATURE-----
-
---=-fCVSpbqduSARaTTLoeN2--
