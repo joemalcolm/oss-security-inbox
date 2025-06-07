@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["327" "Friday" "16" "June" "2017" "21:02:31" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>" "12" "Re: [oss-security] two vulns in uClibc-0.9.33.2" "^Date:" nil nil "6" "2017061702:02:31" "[oss-security] two vulns in uClibc-0.9.33.2" (number mark "        bfriesen@sim Jun 16   12/327   " thread-indent "\"Re: [oss-security] two vulns in uClibc-0.9.33.2\"\n") "<CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>" ("<tencent_18C312B86EA079DA42B11D83@qq.com>" "<20170616204437.GC2269@hunt>" "<CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25701 invoked by uid 550); 17 Jun 2017 02:02:45 -0000
+Received: (qmail 16308 invoked by uid 550); 7 Jun 2025 14:56:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +6,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25674 invoked from network); 17 Jun 2017 02:02:44 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-In-Reply-To: <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1706162101560.12810@freddy.simplesystems.org>
-References: <tencent_18C312B86EA079DA42B11D83@qq.com> <20170616204437.GC2269@hunt> <CALx_OUAtt5gbRP+imZfXJwvgfs+Y5hrYqdmLhJHS7SRN5z_VCQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Fri, 16 Jun 2017 21:02:31 -0500 (CDT)
-Date: Fri, 16 Jun 2017 21:02:31 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] two vulns in uClibc-0.9.33.2
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 29964 invoked from network); 7 Jun 2025 14:53:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=thinkmo.de; h=
+	in-reply-to:content-disposition:content-type:content-type
+	:mime-version:references:message-id:subject:subject:from:from
+	:date:date:received:received; s=mail202312; t=1749307990; bh=veK
+	ORQLdRaEo/uUinLsQ+O9nAR4Um/dtRGYbxzEsqGA=; b=zFxK9Ahc6wTjMsGFgzH
+	fZTYjY480egYKtRJFl2x91EM6lZRol0ygDDPa4OBWQIeDdbKiXDaL6lI5Cm1tkt3
+	kZovVL4R+r+SHIhOPw7DmnLnbiZ53xcenYnelQMijswwKA7CI0v4DHcFq342BVJb
+	cog8xacYSp4z3vQOSBpZIfuteGoxO/ieOQ19vSKm0jkkJP7F6VhOBN9ijtEEoT2O
+	RoUkwLZ5OriBvSkN8QxwnY4S+Fu3B8G4Bt6VCiA478IPyVtNDm/2Cbw/u98bSiOI
+	XGjF7qVzMdspF9RUF/JcQlTc/Cugj26+mRARb5ZdlPSKghBp37i+9bLd7JKLSeHZ
+	J+Q==
+X-Virus-Scanned: Debian amavis at 
+Date: Sat, 7 Jun 2025 16:53:07 +0200
+From: Bastian Blank <bblank@thinkmo.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20250607145307.owt2hpb3xkqsdxjt@shell.thinkmo.de>
+Mail-Followup-To: Bastian Blank <bblank@thinkmo.de>,
+	oss-security@lists.openwall.com
+References: <07bdaddb-1414-492b-a178-93b38f8ac3a0@gmail.com>
+ <2025060713-aloe-decency-a74c@gregkh>
+ <aEROmObEfB-k2IW7@lappy>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aEROmObEfB-k2IW7@lappy>
+Subject: Re: [oss-security] Re: Re: Linux kernel: HFS+ filesystem
+ implementation, issues, exposure in distros
 
-On Fri, 16 Jun 2017, Michal Zalewski wrote:
->
-> Probably no JS engine using uclibc, though.
+On Sat, Jun 07, 2025 at 10:37:12AM -0400, Sasha Levin wrote:
+> The scope, which I assume was quoted from
+> https://www.cve.org/PartnerInformation/ListofPartners/partner/Linux also
+> lists cve@kernel.org as the right email to contact.
 
-Uclibc is a C library like GNU libc.  Why would a JS engine not use 
-it?
+This page also links as step one to
+https://www.kernel.org/doc/html/latest/process/security-bugs.html, which
+does _not_ list cve@kernel.org anywhere.
 
-Bob
+> Note that this isn't just a technicality: for example, I'm a member of
+> cve@k.o, but *NOT* of security@k.o.
+
+But it already reached the right organisation.  Did security@k.o respond
+with a referal?
+
+Bastian
+
 -- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+There are some things worth dying for.
+		-- Kirk, "Errand of Mercy", stardate 3201.7
