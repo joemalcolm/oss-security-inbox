@@ -1,4 +1,4 @@
-Received: (qmail 1668 invoked by uid 550); 25 Apr 2023 12:03:23 -0000
+Received: (qmail 1795 invoked by uid 550); 11 Jun 2025 17:36:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,188 +7,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1641 invoked from network); 25 Apr 2023 12:03:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=xen.org;
-	s=20200302mail; h=Date:Message-Id:Subject:CC:From:To:MIME-Version:
-	Content-Transfer-Encoding:Content-Type;
-	bh=ibj/UWzx5+E1wzwy1jgTCdemR93SZRFrGnLb7SZfK7o=; b=vnYZJVaE4MkyrFov4K7A4irp1b
-	80DgsXynVJoKBr13ljg7brKClUpR2FxOIqLU+DhZCv38d+6+feq+xArL67pLgNYS4fm2/BjVFFEE4
-	RRKv+tRFOcE8y9MleNpUcQZDu7rMQHclo59cnQ+AgDZU4LVZZdAY1MU8XgdF4R5ZveBQ=;
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+x-ms-reactions: disallow
+Received: (qmail 1768 invoked from network); 11 Jun 2025 17:36:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=2+T/8gzG5WxClzyJuAe6u/D+CmGbSz/Pd6vK+PhJpOQ=; b=NG80qe3xU/NRlVB/jyMUa7J1+f
+	hRNEwlAtYLwUZq9nWV6skP3lF0LDy05mWTMU+r/wrsTZn4wPOiqGeoJaMJrbx5tXr8BT4KEakR6Eq
+	/xY6tx27n/qtFjseCbVq4vTkukNdEZr35sW20tA35wJ5+ULWdKDPlUD6zNDZCb93t8JpRQVjU91Wb
+	IxOua+Zd3dksjgZlV6cqacWUmdkQOthNH7InhKVdtZZke4l67nRnc/hgj0CIvmmtVFRlv+vhXCSaX
+	Afi3YKBVJMFeASSyfPXHD7LBOj4sAPBe+fbPDuqOAnuUgun5GmBfWXwxDo4p7zBPOWYl4hSaxqPeT
+	OhrMKSGA==;
+Date: Wed, 11 Jun 2025 18:35:56 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Cc: Marc Deslauriers <marc.deslauriers@canonical.com>
+Message-ID: <aEm-fINS0Wyn2GXH@remnant.pseudorandom.co.uk>
+References: <20250603025919.GA11183@openwall.com>
+ <b379213c-55d1-4564-90aa-591edf3097c7@gmail.com>
+ <20250606030239.GA897@openwall.com>
+ <7d8815b7-a417-4407-87a3-fb0dc7c4f81f@gmail.com>
+ <9b5117a0-6220-43da-b377-6ec28220b576@canonical.com>
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.509 (Entity 5.509)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1prHNo-0005by-4j@xenbits.xenproject.org>
-Date: Tue, 25 Apr 2023 12:02:56 +0000
-Subject: [oss-security] Xen Security Advisory 430 v2 (CVE-2022-42335) - x86 shadow paging
- arbitrary pointer dereference
-
---=separator
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <9b5117a0-6220-43da-b377-6ec28220b576@canonical.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Linux kernel: HFS+ filesystem implementation
+ issues, exposure in distros
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Wed, 11 Jun 2025 at 12:14:36 -0400, Marc Deslauriers wrote:
+>On 2025-06-06 09:40, Attila Szasz wrote:
+>>I didn't make this explicit in the video, but this works when
+>>running as a non-sudoer user, and also on Ubuntu Server. I think
+>>Canonical Product Security might have better estimates on this, but
+>>I'm guessing many of the corporate, gov, academic, HPC cluster, etc
+>>use cases are impacted practically in such a setting.
+>
+>This isn't supposed to work for non-privileged users, and not on 
+>servers. We allow mounting usb drives for admin users sitting at the 
+>console by shipping a package called "policykit-desktop-privileges" 
+>which contains the following polkit rule:
+>
+>[Mounting, checking, etc. of internal drives]
+>Identity=unix-group:admin;unix-group:sudo
+>Action=org.freedesktop.udisks2.filesystem-mount-system;org.freedesktop.udisks2.e
+>ncrypted-unlock-system;org.freedesktop.udisks2.filesystem-fstab;
+>ResultActive=yes
 
-            Xen Security Advisory CVE-2022-42335 / XSA-430
-                               version 2
+I don't think that stanza is relevant here, because it's about "system" 
+or "internal" disks. udisks2 has a concept of whether a disk is "system" 
+or not: see the source code for full details, but a short version is 
+that internal HDDs/SSDs are "system" and USB thumb drives are not, 
+possibly modulo some corner cases like running your OS from a USB thumb 
+drive.
 
-             x86 shadow paging arbitrary pointer dereference
+The policy for non-"system" disks is different, and more permissive, 
+with the expectation that users of a laptop/desktop-class system will 
+expect to be able to plug in a USB thumb drive and access its contents. 
+By default this policy applies to anyone with an active local session, 
+not just admins.
 
-UPDATES IN VERSION 2
-====================
+The files in actions/ define actions, and for convenience, also define 
+default policies for those actions that are intended to be "usually what 
+you want" for three commonly-distinguished classes of session: active local 
+sessions, inactive local sessions, and everything else. The files in 
+rules.d/ (or localauthority.d/ for old versions of polkit) override 
+those default policies according to the requirements of the OS 
+integrator or the sysadmin, and can make use of finer-grained inputs.
 
-Public release.
+In this case, /usr/share/polkit-1/actions/org.freedesktop.UDisks2.policy 
+defines org.freedesktop.udisks2.filesystem-mount for removable media 
+that are physically located in the same "seat" grouping as the user's 
+active local session, with a default policy of <allow_active>yes</>. 
+Compare with org.freedesktop.udisks2.filesystem-mount-system and 
+org.freedesktop.udisks2.filesystem-mount-other-seat in the same file, 
+which are considered to be dangerous and by default require 
+authentication with a sysadmin's credentials (auth_admin or 
+auth_admin_keep). This might vary a bit on older distros but should be 
+fairly similar on anything from the last decade.
 
-ISSUE DESCRIPTION
-=================
+However, on a server-class or HPC system, I would not normally expect an 
+untrusted user to be able to sit at the console and log in to a text or 
+GUI session; instead the server would usually be somewhere that the user 
+cannot physically access, and they would be logging in remotely via ssh 
+or VNC/RFB or something. So their session would not be considered to be 
+"active and local", and it is *that* that would usually protect servers 
+from those users being allowed to plug in removable media. The polkit 
+default policy for remote users would come from <allow_any>, instead of 
+<allow_active> or <allow_inactive>, and the default for <allow_any> is 
+usually "auth_admin", "auth_admin_keep" or "no" for all but the most benign 
+actions.
 
-In environments where host assisted address translation is necessary
-but Hardware Assisted Paging (HAP) is unavailable, Xen will run guests
-in so called shadow mode.  Due to too lax a check in one of the hypervisor
-routines used for shadow page handling it is possible for a guest with a PCI
-device passed through to cause the hypervisor to access an arbitrary pointer
-partially under guest control.
+A second line of defence is that filesystem-mount normally only applies 
+to removable devices associated with the same seat as the user's 
+session, but remote logins aren't associated with a seat at all, so it's 
+impossible to find a device that belongs to the same seat; so even if a 
+drive is not considered to be "system", and even if the <allow_any> 
+policy is quite permissive, the user would be attempting the 
+filesystem-mount-other-seat action, which is more restricted than 
+plain filesystem-mount.
 
-IMPACT
-======
+udisks2 might also consider some filesystems (the higher-risk ones) to 
+be inherently "system" even if they are located on removable media; or 
+if it doesn't already do that, it might be reasonable to teach it that 
+only an allowlist of known-robust filesystems like FAT are candidates 
+for the org.freedesktop.udisks2.filesystem-mount action, with a 
+different action that has a more restrictive default policy used for the 
+higher-risk filesystems.
 
-Guests running in shadow mode and having a PCI device passed through may be
-able to cause Denial of Service and other problems, escalation of privilege
-cannot be ruled out.
+I believe there is already code to ensure that filesystems mounted by 
+unprivileged users are mounted with options like nosuid and nodev (if 
+they support multiple users at all), whereas root-equivalent users 
+mounting system drives can probably bypass that restriction.
 
-VULNERABLE SYSTEMS
-==================
-
-Only Xen version 4.17 is vulnerable.
-
-Only x86 systems are vulnerable.  The vulnerability can be leveraged only
-by HVM guests running with shadow paging and having a PCI device passed
-through.
-
-MITIGATION
-==========
-
-Not passing through PCI devices to HVM guests will avoid the vulnerability.
-
-Running HVM guests only in HAP (Hardware Assisted Paging) mode will also
-avoid the vulnerability.
-
-CREDITS
-=======
-
-This issue was discovered by Roger Pau Monné of XenServer.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa430.patch           xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa430*
-c861cabdf546ec7583f2193f9c4f8a62579047315e5fe9eca3e9e944b67ca852  xsa430.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmRHr/4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ6UsH/ib0ei76XtojIl9eaNCPoAotcGBXLDQScV133z5e
-7UhW3JPUEG79+p22ACL52Km7wVtWwuL5QzbBDJaw47hTD1IwvoOTQ8Dx+KwyZGsK
-H8VW8WM70XyqxRJVfA+sEIEfRnxXKfWz6qWV5n2085XzFFwbF9c+ZZ6NafGv/Jd3
-75eUwyGaR0o4YEnzKpLzqYFihK56YyJmZ0+rdYYydHKUy+oVcWjrNEh41Xa6lCJX
-OdZ60inTu8rizItE+xEsKLatvoKVrO9q/zhAtLm+iWldf8PTgY9tq4S89DRMD/BN
-uYIAL1xBCS2HC/IyUXI63PMwHg6fYzq+0JLjtYV0IYDfYE8=
-=tInZ
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa430.patch"
-Content-Disposition: attachment; filename="xsa430.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbSA1N2IzYTJhY2U1YzRhNzgxMThiMzcyYzk1ZjY5YWY0ZjA1ODViNDhk
-IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBSb2dlciBQYXUgTW9u
-bmUgPHJvZ2VyLnBhdUBjaXRyaXguY29tPgpEYXRlOiBNb24sIDIwIE1hciAy
-MDIzIDEyOjA4OjUyICswMTAwClN1YmplY3Q6IFtQQVRDSF0geDg2L3NoYWRv
-dzogcmVzdG9yZSBkcm9wcGVkIGNoZWNrIGluCiBzaF91bnNoYWRvd19mb3Jf
-cDJtX2NoYW5nZSgpCk1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQtVHlwZTog
-dGV4dC9wbGFpbjsgY2hhcnNldD1VVEYtOApDb250ZW50LVRyYW5zZmVyLUVu
-Y29kaW5nOiA4Yml0CgpBcyBhIHJlc3VsdCBvZiAyNDE3MDJlMDY0NjA0ZGJi
-M2UwZDliNzMxYWE4ZjQ1YmU0NDgyNDNiIHRoZQptZm5fdmFsaWQoKSBjaGVj
-ayBpbiBzaF91bnNoYWRvd19mb3JfcDJtX2NoYW5nZSgpIHdhcyBsb3N0LiAg
-VGhhdAphbGxvd3Mgc2hfcmVtb3ZlX3NoYWRvd3MoKSB0byBiZSBjYWxsZWQg
-d2l0aCBnZm5zIHRoYXQgaGF2ZSBubyBiYWNraW5nCnBhZ2UsIGNhdXNpbmcg
-YW4gQVNTRVJUIHRvIHRyaWdnZXIgaW4gZGVidWcgYnVpbGRzIG9yIGRlcmVm
-ZXJlbmNpbmcgYW4KYXJiaXRyYXJ5IHBvaW50ZXIgcGFydGlhbGx5IHVuZGVy
-IGd1ZXN0IGNvbnRyb2wgaW4gbm9uLWRlYnVnIGJ1aWxkczoKClJJUDogICAg
-ZTAwODpbPGZmZmY4MmQwNDAyZGNmMmM+XSBzaF9yZW1vdmVfc2hhZG93cysw
-eDE5Zi8weDcyMgpSRkxBR1M6IDAwMDAwMDAwMDAwMTAyNDYgICBDT05URVhU
-OiBoeXBlcnZpc29yIChkMHYyKQpbLi4uXQpYZW4gY2FsbCB0cmFjZToKICAg
-WzxmZmZmODJkMDQwMmRjZjJjPl0gUiBzaF9yZW1vdmVfc2hhZG93cysweDE5
-Zi8weDcyMgogICBbPGZmZmY4MmQwNDAyZTI4ZjQ+XSBGIGFyY2gveDg2L21t
-L3NoYWRvdy9odm0uYyNzaF91bnNoYWRvd19mb3JfcDJtX2NoYW5nZSsweGFi
-LzB4MmI3CiAgIFs8ZmZmZjgyZDA0MDMxMTkzMT5dIEYgYXJjaC94ODYvbW0v
-cDJtLXB0LmMjd3JpdGVfcDJtX2VudHJ5KzB4MTliLzB4NGQzCiAgIFs8ZmZm
-ZjgyZDA0MDMxMzFiMj5dIEYgYXJjaC94ODYvbW0vcDJtLXB0LmMjcDJtX3B0
-X3NldF9lbnRyeSsweDY3Yi8weGE4ZQogICBbPGZmZmY4MmQwNDAzMDJjOTI+
-XSBGIHAybV9zZXRfZW50cnkrMHhjYy8weDE0OQogICBbPGZmZmY4MmQwNDAz
-MDVhNTA+XSBGIHVubWFwX21taW9fcmVnaW9ucysweDE3Yi8weDJjOQogICBb
-PGZmZmY4MmQwNDAyNDFlNWU+XSBGIGRvX2RvbWN0bCsweDExZjMvMHgxOTVl
-CiAgIFs8ZmZmZjgyZDA0MDJjN2UxMD5dIEYgaHZtX2h5cGVyY2FsbCsweDVi
-MS8weGEyZAogICBbPGZmZmY4MmQwNDAyYWRjNzI+XSBGIHZteF92bWV4aXRf
-aGFuZGxlcisweDEzMGYvMHgxY2Q1CiAgIFs8ZmZmZjgyZDA0MDIwMzYwMj5d
-IEYgdm14X2FzbV92bWV4aXRfaGFuZGxlcisweGYyLzB4MjEwCgoqKioqKioq
-KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqClBhbmljIG9uIENQ
-VSAxOgpBc3NlcnRpb24gJ21mbl92YWxpZChnbWZuKScgZmFpbGVkIGF0IGFy
-Y2gveDg2L21tL3NoYWRvdy9jb21tb24uYzoyMjAzCioqKioqKioqKioqKioq
-KioqKioqKioqKioqKioqKioqKioqKioqKioKCkZpeCB0aGlzIGJ5IHJlc3Rv
-cmluZyB0aGUgbWZuX3ZhbGlkKCkgY2hlY2sgaW4Kc2hfdW5zaGFkb3dfZm9y
-X3AybV9jaGFuZ2UoKSwgdW5pZnlpbmcgaXQgd2l0aCB0aGUgcmVzdCBvZiB0
-aGUgY2hlY2tzCnRoYXQgYXJlIGRvbmUgYXQgdGhlIHN0YXJ0IG9mIHRoZSBm
-dW5jdGlvbi4KClRoaXMgaXMgWFNBLTQzMCAvIENWRS0yMDIyLTQyMzM1CgpG
-aXhlczogMjQxNzAyZTA2NCAoJ3g4Ni9zaGFkb3c6IHNsaWdodGx5IGNvbnNv
-bGlkYXRlIHNoX3Vuc2hhZG93X2Zvcl9wMm1fY2hhbmdlKCkgKHBhcnQgSUkp
-JykKU2lnbmVkLW9mZi1ieTogUm9nZXIgUGF1IE1vbm7DqSA8cm9nZXIucGF1
-QGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBKYW4gQmV1bGljaCA8amJldWxp
-Y2hAc3VzZS5jb20+Ci0tLQogeGVuL2FyY2gveDg2L21tL3NoYWRvdy9odm0u
-YyB8IDMgKystCiAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspLCAx
-IGRlbGV0aW9uKC0pCgpkaWZmIC0tZ2l0IGEveGVuL2FyY2gveDg2L21tL3No
-YWRvdy9odm0uYyBiL3hlbi9hcmNoL3g4Ni9tbS9zaGFkb3cvaHZtLmMKaW5k
-ZXggODhjM2MxNjMyMi4uNmRlNDc5YzAwOCAxMDA2NDQKLS0tIGEveGVuL2Fy
-Y2gveDg2L21tL3NoYWRvdy9odm0uYworKysgYi94ZW4vYXJjaC94ODYvbW0v
-c2hhZG93L2h2bS5jCkBAIC04MTQsNyArODE0LDggQEAgc3RhdGljIHZvaWQg
-Y2ZfY2hlY2sgc2hfdW5zaGFkb3dfZm9yX3AybV9jaGFuZ2UoCiAKICAgICAv
-KiBPbmx5IHByZXZpb3VzbHkgcHJlc2VudCAvIHZhbGlkIGVudHJpZXMgbmVl
-ZCBwcm9jZXNzaW5nLiAqLwogICAgIGlmICggIShvZmxhZ3MgJiBfUEFHRV9Q
-UkVTRU5UKSB8fAotICAgICAgICAgKCFwMm1faXNfdmFsaWQocDJtdCkgJiYg
-IXAybV9pc19ncmFudChwMm10KSkgKQorICAgICAgICAgKCFwMm1faXNfdmFs
-aWQocDJtdCkgJiYgIXAybV9pc19ncmFudChwMm10KSkgfHwKKyAgICAgICAg
-ICFtZm5fdmFsaWQob21mbikgKQogICAgICAgICByZXR1cm47CiAKICAgICBz
-d2l0Y2ggKCBsZXZlbCApCi0tIAoyLjQwLjAKCg==
-
---=separator--
+     smcv
