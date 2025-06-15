@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["414" "Thursday" "16" "July" "2015" "02:50:05" "+0000" "Nitin Venkatesh" "venkatesh.nitin@gmail.com" "<CAARZ5vqxeGdw0-WeGeRue9845KF5K7Se2qp96JT5pTQ-aXFU4A@mail.gmail.com>" "18" "[oss-security] CVE Request - Arbitrary File Download vulnerability in WP Attachment Export Wordpress Plugin v0.2.3" nil nil nil "7" "2015071602:50:05" "[oss-security] CVE Request - Arbitrary File Download vulnerability in WP Attachment Export Wordpress Plugin v0.2.3" (number mark "        venkatesh.ni Jul 16   18/414   " thread-indent "\"[oss-security] CVE Request - Arbitrary File Download vulnerability in WP Attachment Export Wordpress Plugin v0.2.3\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7199 invoked by uid 550); 16 Jul 2015 02:50:28 -0000
+Received: (qmail 1024 invoked by uid 550); 15 Jun 2025 01:54:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +6,60 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7176 invoked from network); 16 Jul 2015 02:50:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=xZuvoLeSNx6SljmC2U8fUaxOJJqg6/yyL7hJFaw2PG0=;
-        b=PcMjqHWb0me2uUxq9sVLVOTL2U1+ESvYxWgrvnEOAGwgfziYkB0kCYHX4DmzuCddkW
-         JxHlx7gtrWNwS3rtkkOcc4gyMeZi/PskFeYrQkHdbUFWw/rOcugLw+wdySxYbk57k1AW
-         PtztFS5cyD7x4ofFHPiUG0Y8lVimlA/mTytYmhn04TE8bZmY1o/Xvnurz00MaM8SpCBZ
-         3iEMw5piU5JA+9kAs4hGXTE7rXtp076yzDH6l6wuEwrGb8ZfYtAn3KoBQLX/TiSKFLD6
-         eEoSAW48SiPLs+lLK1UiuDf1NLVZ8DlAwCrI0nDcbzCsV+/f64uSk+MLJMmt+9XeUHgB
-         gtQQ==
-X-Received: by 10.107.32.73 with SMTP id g70mr9578519iog.23.1437015015369;
- Wed, 15 Jul 2015 19:50:15 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAARZ5vqxeGdw0-WeGeRue9845KF5K7Se2qp96JT5pTQ-aXFU4A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140407887312c051af5215a
-Date: Thu, 16 Jul 2015 02:50:05 +0000
-From: Nitin Venkatesh <venkatesh.nitin@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - Arbitrary File Download vulnerability in WP Attachment
- Export Wordpress Plugin v0.2.3
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-
---001a1140407887312c051af5215a
-Content-Type: text/plain; charset=UTF-8
+x-ms-reactions: disallow
+Received: (qmail 31817 invoked from network); 15 Jun 2025 01:54:10 -0000
+Date: Sun, 15 Jun 2025 03:54:05 +0200
+From: Solar Designer <solar@openwall.com>
+To: Zbigniew =?utf-8?Q?J=C4=99drzejewski-Szmek?= <zbyszek@in.waw.pl>
+Cc: oss-security@lists.openwall.com,
+	Qualys Security Advisory <qsa@qualys.com>
+Message-ID: <20250615015405.GA29260@openwall.com>
+References: <20250529171556.GA9260@localhost.localdomain> <20250606012027.GA31670@openwall.com> <aEfZkqA92Jxx0SBW@kawka3.in.waw.pl>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aEfZkqA92Jxx0SBW@kawka3.in.waw.pl>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Local information disclosure in apport and systemd-coredump
 
 Hi,
 
-I discovered Arbitrary File Download vulnerability in WP Attachment Export
-Wordpress Plugin v0.2.3 which was responsibly disclosed to the vendor who
-fixed the issues in v0.2.4.
+Regarding the missing patch:
 
-I request a CVE for the same.
+On Tue, Jun 10, 2025 at 07:06:58AM +0000, Zbigniew Jędrzejewski-Szmek wrote:
+> On Fri, Jun 06, 2025 at 03:20:27AM +0200, Solar Designer wrote:
+> > In your message to linux-distros, you shared these two patches:
+> > 
+> > 0001-coredump-get-rid-of-_META_MANDATORY_MAX.patch
+> > 0003-coredump-also-stop-forwarding-non-dumpable-processes.patch
+> > 
+> > So it looks like you omitted patch number 2.  Yet to me that omitted
+> > patch would have been the most important part of the fix.  Was this
+> > omission inadvertent, or am I missing some reason to skip that patch?
+> 
+> Hmmm, the mail I see here in my mail folder has the middle patch too
+> (Message-ID: <aDRxuOl3_j0infhz@kawka3.in.waw.pl>). I'm not subscribed
+> to linux-distros so I didn't see the message as it was received on
+> the mailing list.
+> 
+> > I think it's these 3 commits (as they appear in the main branch, and I
+> > see equivalent ones are also in v257-stable and v256-stable):
+> > commit 8fc7b2a211eb13ef1a94250b28e1c79cab8bdcb9
+> > commit 0c49e0049b7665bb7769a13ef346fef92e1ad4d6
+> > commit 49f1f2d4a7612bbed5211a73d11d6a94fbe3bb69
+> 
+> Yep, that's correct.
+> 
+> As you can see, we made a bunch of follow-up later on. But those
+> three patches are enough to resolve the issue.
 
-References:
-http://seclists.org/fulldisclosure/2015/Jul/73
+Thank you!
 
-Thanks & regards,
-Nitin Venkatesh
+I tried investigating what may have happened, and while I do now suspect
+it was incorrect processing on the list server, I couldn't identify a
+specific cause nor confirm this guess based on the logs.  Re-encrypting
+a MIME message is unfortunately non-trivial.
 
---001a1140407887312c051af5215a--
+Alexander
