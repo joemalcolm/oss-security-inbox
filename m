@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["751" "Wednesday" "3" "May" "2017" "14:25:09" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1705031422560.32279@wniryva>" "25" "[oss-security] CVE-2017-8380 Qemu: scsi: megasas: out-of-bounds read in megasas_mmio_write" "^cc:" nil nil "5" "2017050308:55:09" "[oss-security] CVE-2017-8380 Qemu: scsi: megasas: out-of-bounds read in megasas_mmio_write" (number mark "U       ppandit@redh May  3   25/751   " thread-indent "\"[oss-security] CVE-2017-8380 Qemu: scsi: megasas: out-of-bounds read in megasas_mmio_write\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14321 invoked by uid 550); 3 May 2017 08:55:26 -0000
+Received: (qmail 7627 invoked by uid 550); 16 Jun 2025 17:14:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14300 invoked from network); 3 May 2017 08:55:25 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com EF1797704
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx09.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com EF1797704
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1705031422560.32279@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.11
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.38]); Wed, 03 May 2017 08:55:14 +0000 (UTC)
-cc: YY Z <bigbird475958471@gmail.com>
-Date: Wed, 3 May 2017 14:25:09 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2017-8380 Qemu: scsi: megasas: out-of-bounds read in
- megasas_mmio_write
-To: oss security list <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3299 invoked from network); 16 Jun 2025 15:33:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=maennchen.ch; s=google; t=1750088029; x=1750692829; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=KlBpc3WnHX0nbNjMKD9Xn89rMl9bylP6PcCnBrntmpw=;
+        b=SntzZA/ycpmhfAsCkLnLPjg5XIRQsMRsGfTdZ0UDaSjEqRCTglXDXnDSFlef3aYQys
+         SOfV8pFRotGcK0sgqf/RDwRrvTXHIpPOj2pv6LwFKM0ygW52gXVa+/PTB9TprFfDre6f
+         +1/GTI3/RZdWbajy2rKWgMr8KjRCaV6N3KZVEyvwX5yIlNYyV1G81KMJazZZKjjAStXj
+         qcpoTwSPnGclNsEOn4BuIE+2Xref0carM5GZYKCIsBWWGld3ClZU594EPKj25OK0pAWl
+         dA/Gkv10QKPsFM98xZJvi4SZC2ZTc0orrz5yCDSZazrN0wKm3Uqj3mIiomoM91kJL9uW
+         OR4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750088029; x=1750692829;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KlBpc3WnHX0nbNjMKD9Xn89rMl9bylP6PcCnBrntmpw=;
+        b=O/8CIRi/dKu3XGN357ppuf7H18vYkVdm0WPlF7MM/5dgEuwLPbxaAD54J1xGt66OPs
+         e5mmo3nLCj4shXVA5a/zjIERv/bAbXlHRINpVFxF2Pp5pVsB8+TV8hA2ibAbSiYqBASM
+         XnHNduIJTHy2LsHmvoxWc7tgzV3iPN9z26jSCXJgFmb6bhthmM7xEZucbs5h3LNV4NFZ
+         FXdKmPc4U9Bh5RKpENQNiwfEjC5KXBixHxp3YRFPx98ZpaknOC3v1i6fgJLsGHVZJUCl
+         19+kAFCaVU9JZCHqrCPfvs85H3p3Le88uSZb075EZPz1DlxGuoYNRkP31d0oxCgsqolj
+         1cJg==
+X-Gm-Message-State: AOJu0Yycxst7/GqauBO5rxwcy8lOGj9uGYaLplU6DaqyOl3AM2B57K9F
+	dmSfRdlFee+K6FttQbxEnPvn0qBBvNjc+hRloipT7AJDqBnitk45H/Dyl2DuItRZsf1NbXbWiuc
+	iphBbugeFoNWLPkkSVCY8guMqmh0V67zge/t7aPPXv3U83Ma+NDW/3FEpIw==
+X-Gm-Gg: ASbGncsd3mwWwQINX7WVuBozkUQ8g5WJrez80yVyH6xIjIu1XF85WEkXhruGq3fMdNR
+	UZFd9IAAigse8N+LhprPmLbt5Itf3elUYnWvLRdN2V3S3OEQ/4qlIKsTmP7A39kAvdBF4kgSZtb
+	Grne8MVNNJoY9hnM2KmpoKbqdOwhFSEWDvhGENaoYd/vaazQSvkzDPx4kVgHxnk4U12R7uUuVb
+X-Google-Smtp-Source: AGHT+IEy/PmmhAgWfbC2kBwqMlU7Tf5ICml8OZuKZjEf8Jh++ozrxxRlHUCUNl912lc56xL+0QO3f23wjZDi8zOX00w=
+X-Received: by 2002:a05:6a00:ac3:b0:736:89bd:ffb9 with SMTP id
+ d2e1a72fcca58-7489cd5b5b2mr4592379b3a.0.1750088028859; Mon, 16 Jun 2025
+ 08:33:48 -0700 (PDT)
+MIME-Version: 1.0
+From: =?UTF-8?Q?Jonatan_M=C3=A4nnchen?= <jonatan@maennchen.ch>
+Date: Mon, 16 Jun 2025 17:33:37 +0200
+X-Gm-Features: AX0GCFskLGC2-qUS3x2sH0t9glVX3bWXPjsuuViGn-dB8efql5yMlfbZ40Qxr24
+Message-ID: <CACupubOH0Lbk0f001JiFmdCn6mCvgUZ14KR2RUrVXK--7fyffg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] =?UTF-8?Q?CVE=2D2025=2D4748=3A_Erlang=2FOTP_17=2E0=E2=80=9328=2E0=2E0_absolute=2Dpat?=
+	=?UTF-8?Q?h_traversal_in_zip=3Aunzip=2Fzip=3Aextract?=
 
-   Hello,
+Hi all,
 
-Quick Emulator(Qemu) built with the MegaRAID SAS 8708EM2 Host Bus Adapter 
-emulation support is vulnerable to an out-of-bounds read access issue. It 
-could occur while performing a MMIO write operation.
+An absolute-path traversal flaw has been found in the Erlang/OTP
+standard-library ZIP routines `zip:unzip/1,2` and `zip:extract/1,2`.
+If the caller does **not** supply the `memory` option, archive entries whose
+file names start with "/" are written to disk verbatim. An attacker can
+therefore create or overwrite arbitrary files writable by the Erlang VM. The
+issue is tracked as **CVE-2025-4748**.
 
-A privileged user inside guest could use this flaw to read host memory leading 
-to potentially crash the Qemu process on the host.
+### Affected releases
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-04/msg04147.html
+* 17.0 up to 28.0.0 (fixed in 28.0.1)
+* 27.x up to 27.3.4 (fixed in 27.3.4.1)
+* 26.x up to 26.2.5 (fixed in 26.2.5.13)
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1446577
+### Impact
 
-This issue was reported by YY Z(researcher)
+When the zip module is used to extract files to disk and the archive is
+maliciously corrupted by including absolute file paths, the zip module would
+extract them as absolute paths instead of stripping the leading /, drive or
+device letter.
 
-'CVE-2017-8380' assigned via -> http://cveform.mitre.org/
+This vulnerability is associated with program files `lib/stdlib/src/zip.erl=
+` and
+program routines `zip:unzip/1`, `zip:unzip/2`, `zip:extract/1`, `zip:extrac=
+t/2`
+unless the `memory` option is passed.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+### Mitigation / Fix
+
+Upgrade to one of the fixed releases listed above, or cherry-pick the upstr=
+eam
+patch. The patch is available in unified diff form at:
+
+https://patch-diff.githubusercontent.com/raw/erlang/otp/pull/9941.patch
+
+Until you can upgrade, you have two work-arounds:
+
+1. Pass the `memory` option and perform your own validation before writing =
+files
+to disk.
+2. Call `zip:list_dir/1` first, reject archives that contain absolute paths,
+then proceed with extraction.
+
+### Credits
+
+* Reported by **Wander Nauta**
+* Patch by **Lukas Backstr=C3=B6m**
+* Reviewed by **Bj=C3=B6rn Gustavsson**
+
+### References
+
+* Vendior advisory:
+https://github.com/erlang/otp/security/advisories/GHSA-9g37-pgj9-wrhc
+* CNA Advisory: https://cna.erlef.org/cves/cve-2025-4748.html
+* CVE record: https://cve.org/CVERecord?id=3DCVE-2025-4748
+* Patch PR: https://github.com/erlang/otp/pull/9941
+
+Best Regards,
+Jonatan M=C3=A4nnchen
+CISO @ Erlang Ecosystem Foundation
