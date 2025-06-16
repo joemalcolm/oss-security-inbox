@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["632" "Wednesday" "29" "June" "2016" "09:13:12" "+0200" "Lucian Cojocar" "lucian@cojocar.com" "<3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>" "19" "[oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution" nil nil nil "6" "2016062907:13:12" "[oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution" (number mark "U       lucian@cojoc Jun 29   19/632   " thread-indent "\"[oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15883 invoked by uid 550); 29 Jun 2016 07:23:31 -0000
+Received: (qmail 32026 invoked by uid 550); 16 Jun 2025 17:14:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10112 invoked from network); 29 Jun 2016 07:13:34 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=simple; d=cojocar.com; h=from:subject
-	:to:message-id:date:mime-version:content-type
-	:content-transfer-encoding; s=mail; bh=+MiDRlNGE0ystTQmtmOnVzgid
-	4M=; b=pFS9G+weq7CsVa8Ydu2oT99/NBwWqoHBJL0PeviY6NsT7VY+D+2oveJLX
-	Ck3eNzIhWWpnfZx0hvJRvzV5mfklICKcKv4XkljjWNzTt8e+Q5FcuSrjSlXQadjb
-	B8vWyNPuvCNvsnuVsI7a264UyRoO0HyQte6hAZfROwWEsac0a4=
-DomainKey-Signature: a=rsa-sha1; c=simple; d=cojocar.com; h=from:subject
-	:to:message-id:date:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=mail; b=1wkry0aTA0QV0CPV4nD
-	FBaQers80N/LV6u7/WV1NVxrafnIcQ8t0/KHfCDtAihXxETQSA3rtWc5ctBDV+UA
-	Nk0gIqtm6AamXS5sySRJ7YB3zEtgZygIeFayimVFR6IlOzED73oYCYN+7CblUH52
-	wgCK7B9ZbDPaqo0Ze4WKJP8A=
-From: Lucian Cojocar <lucian@cojocar.com>
-To: oss-security@lists.openwall.com
-Message-ID: <3f71b0bd-71dd-723e-eed8-925bf2e2c8f7@cojocar.com>
-Date: Wed, 29 Jun 2016 09:13:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.1.0
+x-ms-reactions: disallow
+Received: (qmail 30463 invoked from network); 16 Jun 2025 14:27:03 -0000
+Authentication-Results: apache.org; auth=none
+Message-ID: <6f098cf1-6aba-4e35-b72f-af8994cef75d@apache.org>
+Date: Mon, 16 Jun 2025 15:18:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE Request: uclibc-ng (and uclibc): ARM arch: code execution
+Subject: [oss-security] CVE-2025-49125: Apache Tomcat: Security constraint bypass for
+ pre/post-resources
 
-Hi all,
+Severity: moderate
 
-u-clibc and uclibc-ng is used in several projects[4, 5].
+Affected versions:
 
-As described here[3], an attacker that controls the length parameter of
-the `memset' can also control the value of the PC register. The issue is
-similar to CVE-2011-2702. A patch has been proposed for uclibc-ng[1]. A
-denial of service proof of concept is available[2].
+- Apache Tomcat 11.0.0-M1 through 11.0.7
+- Apache Tomcat 10.1.0-M1 through 10.1.41
+- Apache Tomcat 9.0.0.M1 through 9.0.105
 
-Thanks,
-Lucian
+Description:
 
-[1]http://repo.or.cz/uclibc-ng.git/commit/e3848e3dd64a8d6437531488fe341354bc02eaed
-[2]http://article.gmane.org/gmane.comp.lib.uclibc-ng/27
-[3]http://mailman.uclibc-ng.org/pipermail/devel/2016-May/000890.html
-[4]https://www.uclibc.org/products.html
-[5]http://www.uclibc-ng.org/
+Authentication Bypass Using an Alternate Path or Channel vulnerability 
+in Apache Tomcat.  When using PreResources or PostResources mounted 
+other than at the root of the web application, it was possible to access 
+those resources via an unexpected path. That path was likely not to be 
+protected by the same security constraints as the expected path, 
+allowing those security constraints to be bypassed.
 
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 
+10.1.0-M1 through 10.1.41, from 9.0.0.M1 through 9.0.105.
 
+Users are recommended to upgrade to version 11.0.8, 10.1.42 or 9.0.106, 
+which fix the issue.
+
+Credit:
+
+Greg K (https://github.com/gregk4sec) (finder)
+
+References:
+
+https://lists.apache.org/thread/m66cytbfrty9k7dc4cg6tl1czhsnbywk
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2025-49125
