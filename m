@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4206" "Saturday" "2" "April" "2016" "22:32:53" "-0400" "Theodore Ts'o" "tytso@mit.edu" "<20160403023253.GB3334@thunk.org>" "92" "Re: [oss-security] ext4 data corruption due to punch hole races" "^Cc:" nil nil "4" "2016040302:32:53" "[oss-security] ext4 data corruption due to punch hole races" (number mark "        tytso@mit.ed Apr  2   92/4206  " thread-indent "\"Re: [oss-security] ext4 data corruption due to punch hole races\"\n") "<1459647465.2704.96.camel@decadent.org.uk>" ("<20160331151128.GK26612@suse.de>" "<1459602897.9149.3.camel@debian.org>" "<20160402154634.GA3334@thunk.org>" "<1459647465.2704.96.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20160 invoked by uid 550); 3 Apr 2016 02:33:19 -0000
+Received: (qmail 10053 invoked by uid 550); 17 Jun 2025 14:11:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,120 +6,167 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20142 invoked from network); 3 Apr 2016 02:33:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=uWwTONbHylQklWI0eXtQoiAbHH0dL+SD+FoXO7FTCic=;
-	b=F1KpxCXAV+8sJwyhfVxnzrSEOwGhv9nqatVh5DL/FwtwXICXSG3VrQgpoSy6p5PgtLOI87dOKFtNyHQkCwXy/vL2lGIvXjTAUBAKb7Rl7ax1NfAgt8T2koiU+oX4MdNqm6qeW5vfXHZh9DN9CwWR47Qf58rQj34kJzpwYxlT0sQ=;
-Message-ID: <20160403023253.GB3334@thunk.org>
-References: <20160331151128.GK26612@suse.de>
- <1459602897.9149.3.camel@debian.org>
- <20160402154634.GA3334@thunk.org>
- <1459647465.2704.96.camel@decadent.org.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1459647465.2704.96.camel@decadent.org.uk>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
-Cc: Yves-Alexis Perez <corsac@debian.org>, oss-security@lists.openwall.com,
-	Johannes Segitz <jsegitz@suse.com>
-Date: Sat, 2 Apr 2016 22:32:53 -0400
-From: Theodore Ts'o <tytso@mit.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ext4 data corruption due to punch hole races
-To: Ben Hutchings <ben@decadent.org.uk>
+x-ms-reactions: disallow
+Received: (qmail 22086 invoked from network); 17 Jun 2025 13:50:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1750168191;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Q8N5xIo+F51R0b1QCzlkPxC7ApzsWu34/cC+9H4vCWI=;
+	b=YNhwIo+/m8EqdIkI5t/csUIJKq8Ysh59a38sN7HJYSKJYPuR/uluzS7ZDSLwAzNe1WZvih
+	K2y+SFhgIwk8OXUeok9WdlRx+ZDgMbRBFGTAY0xuz+Z7Xkqbpm46o59kQAZj7+qFgkR8Mc
+	nUYsi2ud8c/VvCTVuOw+r8JTxYksXes=
+X-MC-Unique: NnaDXjFkMaiNmHsn4TV1AA-1
+X-Mimecast-MFC-AGG-ID: NnaDXjFkMaiNmHsn4TV1AA_1750168190
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750168190; x=1750772990;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q8N5xIo+F51R0b1QCzlkPxC7ApzsWu34/cC+9H4vCWI=;
+        b=E6T4kYfCxRtl2ryFXJSV2X2buWBuZMOhvpDQ5N6nnKY308aNJW7Ksrbne/03J4+eyP
+         X2wKPYdY2in/NGeG3gw1ibCYWTAUZaLpVGvHOITf42bEtBkAM1Bwa4uBuCEJDB8k8kDa
+         I66TuEKVQ0ap65R91Ai0IC2U42YP6Il7NhZepCYbcQjyLIUkK+fSd1zD9cmABpnx9mIz
+         cji50qat6KH3fNz3+FDmVjZmKjW8KNjZ+HeSXoQ7ctMyNEV4hxYMXiK0azB4h9EnTJx9
+         rBtzd4TvW8oXJuCafEWA9K83eiE+RdUESGL+yWDlDeul8Wd1eElEj625m7DFtiWSM9jk
+         D/BA==
+X-Gm-Message-State: AOJu0Yzk6lRjNjWzovQlYzENZ5LF69jDOloed8uPECXPm9VSoaJpjJjj
+	thY0sHS0Qxoiv2JcU187Ua0O/ZJUEJV5WRi09QMFMquQ04cUaUHlnV9S5SUB0VN7Bq1FuisCGJe
+	7RiWmyH9jD56vX5Crb4CRcPbTntDpWgp0xmANz2NbGcW6h3EMhbfuSgtXhy89yr6Ep3Ouz7BpH7
+	1ozfwCGms9gHiIkpkaS36k7NuNkRDhekhnTi5xgbJrqIrgs6O7hgjs
+X-Gm-Gg: ASbGncsOwuNyeuU3T0KubRXJ8B4QdIzlwBbpeIkqmqxILVktBsLtlXWuQn8EoVfUo7p
+	z/yxBUKaeICrc2qx58pCYEfpSMM0oSpRpnJiN1+lvqmYAT4SEUY/17+rcX6RxnUNvef/4cvFLHr
+	z7F0I=
+X-Received: by 2002:a05:6870:219e:b0:2e9:42a9:be4a with SMTP id 586e51a60fabf-2eaf070b91emr7427349fac.2.1750168189881;
+        Tue, 17 Jun 2025 06:49:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxBRUyQyDs+cF9FdcoCQxuYiAPCtVB0OQ44LJZplZSn+j1RByFg2cjtChEBv3pFjmBlxzlrPTC0Wkf/86YXpo=
+X-Received: by 2002:a05:6870:219e:b0:2e9:42a9:be4a with SMTP id
+ 586e51a60fabf-2eaf070b91emr7427336fac.2.1750168189434; Tue, 17 Jun 2025
+ 06:49:49 -0700 (PDT)
+MIME-Version: 1.0
+References: <3663e7ee-4599-4d11-ae62-900477cc48d9@redhat.com>
+In-Reply-To: <3663e7ee-4599-4d11-ae62-900477cc48d9@redhat.com>
+From: Olivier Fourdan <ofourdan@redhat.com>
+Date: Tue, 17 Jun 2025 15:49:13 +0200
+X-Gm-Features: AX0GCFtl5zQCUoKr2VGKk0b_1ZoCWzsDpWKErlgnbAjVz29LQhY9aXQrGkVa_oE
+Message-ID: <CAP=2yyTBW52sNxVMwBsGwKU8HPxr=U4ZfbGdNJcihJks45PLPQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: yULtQ6NH3kga0fLR_jKwoIrxP1SVuHkd_kAS_C9wUJI_1750168190
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Fwd: X.Org Security Advisory: multiple security issues X.Org X server
+ and Xwayland
 
-On Sun, Apr 03, 2016 at 02:37:45AM +0100, Ben Hutchings wrote:
-> Regardless of how difficult it is, we probably need to fix the bugs
-> somehow in Debian stable.  It looks like the commits are:
-> 
-> ea3d7209ca01 fix for PUNCH_HOLE (3.0+)
-> 17048e8a083f fix for default fallocate (all) and ZERO_RANGE (3.15+)
-> 32ebffd3bbb4 fix for COLLAPSE_RANGE (3.15+) and INSERT_RANGE (4.2+)
-> 011278485ecc fix for PUNCH_HOLE (3.0+) and ZERO_RANGE (3.15+)
-> 
-> So the third would not be needed for stable branches up to 3.14 but
-> otherwise they're all needed (at least in part) for all live stable
-> branches - right?
-> 
-> (As there are clearly multiple bugs here; why only one CVE ID?)
+======================================================================
+X.Org Security Advisory: June 17, 2025
 
-Commit ea3d7209ca01 fixes the only bug that could result in the
-overwriting of another file or directory (which could belong to
-someone else, or in the case of a directory could lead to a file
-system corruption.)
+Issues in X.Org X server prior to 21.1.17 and Xwayland prior to 24.1.7
+======================================================================
 
-The other bugs fixes races which could lead to the user's file being
-corrupted (some data regions getting replaced by zeros), but it's
-strictly speaking not a vulnerability per se, since the user would
-have to be trying very hard to hit the race, and it would only result
-in the user's own file being corrupted.  Hence, it's probably fair to
-consider them as not being vulernabilities, and hence not needing a
-CVE.
+Multiple issues have been found in the X server and Xwayland implementations
+published by X.Org for which we are releasing security fixes for in
+xorg-server-21.1.17 and xwayland-24.1.7.
 
-Furthermore, very few applications call ZERO_RANGE, COLLAPSE_RANGE, or
-INSERT_RANGE at all, and those that do are not likely to be trying to
-issue racing writes or truncates while they operate on the file using
-these fallocate modes.  Hence, I'd consider them low priority bug
-fixes to backport.
+1) CVE-2025-49175: Out-of-bounds access in X Rendering extension
+(Animated cursors)
 
-To the extent that ea3d7209ca01 could result in file system corruption
-or another user's file being corrupted, it's clearly the higher
-priority one to backport.  Using this as a viable exploit would be
-tricky, since you would have to try to hit the race while the other
-user was trying to allocate blocks to the file or directory that you
-are trying to corrupt.
+The X Rendering extension allows creating animated cursors providing a
+list of cursors.
 
-Still, in a highly specialized circumstance where you had some ACL
-that was getting regularly updated at a predictable time interval
-(say, /root/.ssh/authorized_keys, from some contralized databased), if
-you could manage to arrange to allocate and punch holes in the same
-block group as the ACL file would be written to, it probably could be
-leveraged into a privilege escalation attack.  While I suspect that
-most cyber criminals and the NSA have zero days stocked up that would
-allow them to escalate a non-privileged shell up to root access that
-would be far easier and less noisy to exploit, it would be good to
-backport this commit.
+By default, the Xserver assumes at least one cursor is provided while a
+client may actually pass no cursor at all, which causes an out-of-bound
+read creating the animated cursor and a crash of the Xserver.
 
-> > If anyone is interested, please contact me.  Otherwise, I'll get to it
-> > eventually.
-> 
-> Since I do most of the security backports for Debian, of course I am
-> interested.
+Introduced in: X11R6.7 (originally from XFree86 4.3.0)
+Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/0885e0b2
+Found by: This issue was discovered by Nils Emmerich and reported by
+           Julian Suleder via ERNW Vulnerability Disclosure.
 
-That would be great, thanks!  It's been two months since the last time
-I've done a comprehensive test of the stable kernels.  Typically
-xfstests gets updated with repros of the more critical bugs, so I try
-to rerun xfstests on the stable kernels to make sure we haven't missed
-any critical backports.  The last time I did the survey, there is one
-upstream commit that still needs to be backported to the stable
-kernel:
+2) CVE-2025-49176: Integer overflow in Big Requests Extension
 
-commit 3da40c7b089810ac9cf2bb1e59633f619f3a7312
-Author: Josef Bacik <jbacik@fb.com>
-Date:   Mon Jun 22 00:31:26 2015 -0400
+The Big Requests extension allows requests larger than the 16-bit length
+limit.
 
-    ext4: only call ext4_truncate when size <= isize
-    
-    At LSF we decided that if we truncate up from isize we shouldn't trim
-    fallocated blocks that were fallocated with KEEP_SIZE and are past the
-    new i_size.  This patch fixes ext4 to do this.
-    
-    [ Completely reworked patch so that i_disksize would actually get set
-      when truncating up.  Also reworked the code for handling truncate so
-      that it's easier to handle. -- tytso ]
-    
-    Signed-off-by: Josef Bacik <jbacik@fb.com>
-    Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-    Reviewed-by: Lukas Czerner <lczerner@redhat.com>
+It uses integers for the request length and checks for the size not to
+exceed the maxBigRequestSize limit, but does so after translating the
+length to integer by multiplying the given size in bytes by 4.
 
-This is not security critical, but it makes ext4's behavior consistent
-with the other file systems, and it fixes an xfstest failure.  With
-this exception, the regression test runs were quite clean the last
-time I checked, about two months ago.
+In doing so, it might overflow the integer size limit before actually
+checking for the overflow, defeating the purpose of the test.
 
-Cheers,
+Introduced in: X11R6.0
+Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/03731b32
+Found by: This issue was discovered by Nils Emmerich and reported by
+           Julian Suleder via ERNW Vulnerability Disclosure.
 
-						 - Ted
+3) CVE-2025-49177: Data leak in XFIXES Extension 6
+(XFixesSetClientDisconnectMode)
+
+The handler of XFixesSetClientDisconnectMode does not check the client
+request length.
+
+A client could send a shorter request and read data from a former
+request.
+
+Introduced in: Xwayland-22.0.99.1 (22.1 RC1)
+                Xorg server 21.0.99.1 (21.1 RC1)
+Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/ab02fb96
+Found by: This issue was discovered by Nils Emmerich and reported by
+           Julian Suleder via ERNW Vulnerability Disclosure.
+
+4) CVE-2025-49178: Unprocessed client request via bytes to ignore
+
+When reading requests from the clients, the input buffer might be shared
+and used between different clients.
+
+If a given client sends a full request with non-zero bytes to ignore,
+the bytes to ignore may still be non-zero even though the request is
+full, in which case the buffer could be shared with another client who's
+request will not be processed because of those bytes to ignore, leading
+to a possible hang of the other client request.
+
+Introduced in: Xorg 1.10.0
+Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/d55c54ce
+Found by: This issue was discovered by Nils Emmerich and reported by
+           Julian Suleder via ERNW Vulnerability Disclosure.
+
+5) CVE-2025-49179: Integer overflow in X Record extension
+
+The RecordSanityCheckRegisterClients() function in the X Record extension
+implementation of the Xserver checks for the request length, but does not
+check for integer overflow.
+
+A client might send a very large value for either the number of clients
+or the number of protocol ranges that will cause an integer overflow in
+the request length computation, defeating the check for request length.
+
+Introduced in: X11R6.1
+Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/2bde9ca4
+Found by: This issue was discovered by Nils Emmerich and reported by
+           Julian Suleder via ERNW Vulnerability Disclosure.
+
+6) CVE-2025-49180: Integer overflow in RandR extension
+(RRChangeProviderProperty)
+
+A client might send a request causing an integer overflow when computing
+the total size to allocate in RRChangeProviderProperty().
+
+Introduced in: Xorg server version 1.12.99.901 (1.13 RC1)
+Fixed in: xorg-server-21.1.17 and xwayland-24.1.7
+Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/3c3a4b76
+      https://gitlab.freedesktop.org/xorg/xserver/-/commit/0235121c
+Found by: This issue was discovered by Nils Emmerich and reported by
+           Julian Suleder via ERNW Vulnerability Disclosure.
+
+------------------------------------------------------------------------
+
+X.Org thanks all of those who reported and fixed these issues, and those
+who helped with the review and release of this advisory and these fixes.
+
