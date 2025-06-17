@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2497" "Saturday" "7" "August" "2021" "04:49:39" "+0200" "Axel Beckert" "abe@debian.org" nil "74" "[oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil "8" nil nil (number mark "U       abe@debian.o Aug  7   74/2497  " thread-indent "\"[oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in clear text via SNI (under some circumstances)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1499 invoked by uid 550); 7 Aug 2021 12:23:46 -0000
+Received: (qmail 32232 invoked by uid 550); 17 Jun 2025 13:19:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,102 +7,209 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3388 invoked from network); 7 Aug 2021 02:49:53 -0000
-Date: Sat, 7 Aug 2021 04:49:39 +0200
-From: Axel Beckert <abe@debian.org>
-To: Thorsten Glaser <tg@mirbsd.de>
-Cc: oss-security@lists.openwall.com, security@debian.org
-Message-ID: <20210807024937.g43ooqppdm7zozbh@sym.noone.org>
-Mail-Followup-To: Thorsten Glaser <tg@mirbsd.de>,
-	oss-security@lists.openwall.com, security@debian.org
-References: <Pine.BSM.4.64L.2108061711590.28219@herc.mirbsd.org>
- <20210807015102.ea4f5immh2l5ku4n@sym.noone.org>
- <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
+x-ms-reactions: disallow
+Received: (qmail 5635 invoked from network); 17 Jun 2025 10:05:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ssi.gouv.fr;
+	s=20240601; t=1750154706;
+	bh=pr9x+oXC0qorfH2Ltp43DI9Tyh22mJj4UZzK8Pqskn8=;
+	h=From:To:Subject:Date:From:Subject;
+	b=EvtOqQ9lwCQ/D6fythtbYl8A5ocBbHMHFAtX6K6c+Cfa7YVLh8L/8gBJJylp5Rd1a
+	 w0e8q/68QjaH07wnbYjP1ry/n4KxBDvq39qFUQb9PoMGuhkjbJRjMwvgo7l28DIKCI
+	 TDT70p/I7HMsS+hcb+B/L+U9UP6H4AZCLUew+4m/VWjqoMvR3z+hU+0HKAOTftHqaP
+	 F3h8nM0SXWZOkLw99wdKm1hF4u1hrKUA7Ij2brDOnbAZ6u0upyCfq1KdvqSoRPIRTu
+	 Ia4HuZHqd3adgjyY6cKnqudFU98KIEKMqZbQUbc1M6NUt/91uw+frbbSJwhPzMy+Un
+	 jHzgA0Q2RYAqg==
+From: BAL-PETRE Olivier <Olivier.Bal-Petre@ssi.gouv.fr>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: pam: pam_namespace local privilege escalation (CVE-2025-6020)
+Thread-Index: Advem4pwpk9KUULHRl+LwfPz4rrg6A==
+Date: Tue, 17 Jun 2025 10:05:05 +0000
+Message-ID: <610246365f5341c8b3588e207b85042e@ssi.gouv.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+	micalg=pgp-sha256; boundary="=-=lmVlO1F3uWjd58=-="
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ml6qlbhhymoycc7e"
-Content-Disposition: inline
-In-Reply-To: <Pine.BSM.4.64L.2108070210210.904@herc.mirbsd.org>
-X-Operating-System: Linux 4.9.0-16-amd64
-X-Machine: sym2 x86_64
-X-Editor: GNU Emacs 25.1.1
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAAAAAC3mUtaAAAABGdBTUEAALGPC/xhBQAAADh0RVh0U29mdHdhcmUAWFYgVmVyc2lvbiAzLjEwYSAgUmV2OiAxMi8yOS85NCAoUE5HIHBhdGNoIDEuMindFS5JAAACGElEQVQ4jXXQMU8UYRDG8f8shNjdDH4AbpfGDjAWlKiJiZ0ajL1aGCvsNCbGaCGG1koLaztaTYz6ATy+gOyehYmF3MxVxgg3FnDsHcTpJr/M+8w7Rf6nCsaVTTDqxbg9hoOXmw83H71+Eyfg4E1d7/Z2fG9rGkZbTQiu+K+3U/C+76lmkvAhJuDndnoAiftou4V84okAGclop4U/jYACZDTxrYWP0gkxVfAm/W//GLZpxIzwIN0Hn8dw0B+IWkZmQmRsj2HfhwokEklHfNCCiQCRgAR7YyhQVRVTCKCzP4Y5zBBE0t0zY3Q8oQaBqqAMlVEcgVQd9706zGirAFium8HXumlMIeMwqQCInju+2+uB6MRENupdpMt8pRlHZyuAW0F+Mb6XSIVqtxjD+iVmVqqystLEzFTGT92YqRaXpNT5eTVjeJhbALPnrTxLUZUKZsgxcNm64hAOYisT/xhF+oKTGU5RegtC3Rt6eEDi/QnIevdTx9Md2EMmYBRmCQR1026FCGQQJJExsRUqgkMGaWSbwYLnoO4T6VgpbQbdELPMBAHWWrhYrcxXnYgAsatPWygkFCBD4K62MAsOTqA6szYRPpsu6e6Y8mPiVrBMNuGIMrgwBUu4p2DgG1Ownu6hpuTv7hScefHAzAC/yRRw5U5pALMbJ4AUALvHSZhxgHPXTsHcdWD1GadAHr9avP+c0wCr7263Df8ASLwXWHWs+KIAAAAHdElNRQfYBQEBODPr
-Organization: The Debian Project
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: [oss-security] Re: bug in Lynx' SSL certificate validation -> leaks password in
- clear text via SNI (under some circumstances)
+Subject: [oss-security] pam: pam_namespace local privilege escalation (CVE-2025-6020)
 
---ml6qlbhhymoycc7e
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--=-=lmVlO1F3uWjd58=-=
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Thorsten,
+Hello,
 
-I'm dropping the lynx-specific recipients, i.e. lynx-dev and the bug
-report=E2=80=A6
+This is a report about a potential privilege escalation in the
+pam_namespace.so PAM module. This module is one of the core PAM
+modules from the linux-pam project [1].
 
-Thorsten Glaser wrote:
-> Axel Beckert dixit:
-> > This is more severe than it initially looked like: Due to TLS Server
-> > Name Indication (SNI) the hostname as parsed by Lynx (i.e with
-> > "user:pass@" included) is sent in _clear_ text over the wire even
->=20
-> I *ALWAYS* SAID SNI IS A SHIT THING [=E2=80=A6]
+The vulnerability has been fixed in linux-pam v1.7.1 [2] and is tracked
+as CVE-2025-6020 and GHSA-f9p8-gjr4-j9gx [3].
 
-Don't blame the messenger. ;-)
+In addition to upgrading to the latest version, users of pam_namespace
+may want to update their namespace.init script if they do not use the
+one provided by their distribution. See section "Patches and mitigation"
+for more details.
 
-> Other browsers also need checking.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The vulnerability
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Good idea.
+When setting up the polyinstantiation of directories, the module
+pam_namespace may access files and directories owned by unprivileged
+users. This is for instance the case when configuring polyinstantiated
+home directories for the users in the following way, inspired by the
+example in man namespace.conf(5):
 
-I just checked in Debian Unstable those tools I'd mostly expect with
-such URLs and commandline usage:
+    $HOME  $HOME/$USER.inst/  user  root
 
-* Axel (sic! :-) 2.17.10-2
-* ELinks 0.13.2-1+b1
-* LibWWW-Perl (aka LWP) 6.53-1 via /usr/bin/GET
-* Links/Links2 2.21-1+b1
-* Wget (1.21-1+b1)
-* Wget2 (1.99.1-2.2)
+When accessing a directory owned by a user or writable by a user,
+pam_namespace does it with great care. It resorts to two techniques:
 
-I didn't find any such issue in any of these tools. All cases verified
-via Wireshark's "follow TCP stream" against an Apache 2.4.48 (from
-Debian Unstable as well).
+1. Using file descriptors and relative paths instead of absolute paths.
 
-But yeah, there are probably many more to check. But so far it looks
-like a lynx-specific issue.
+2. Bind mounting on themselves all the directories that can be modified
+   by an unprivileged user and are part of the given path. The goal is
+   to forbid changes on these directories while operating on the path.
+   This is what functions protect_dir() and protect_mount() do.
 
-> Thanks for the detective work,
+The first technique is used in some parts of the code, but some
+operations are also made on user-controlled paths using absolute paths.
+Thus, these operations are safe only if the second technique is reliable.
 
-You're welcome. Thanks for stumbling over this issue and triggering my
-digging. :-)
+At the time the pam_namespace module was written, the second technique
+was effective against a malicious user operating in any mount namespace.
+However, since Linux 3.18, it's only effective if the malicious user is
+operating *in the same mount namespace* as the one the mount was made
+in. Indeed, as man mount_namespaces(7) states:
 
-		Regards, Axel
---=20
- ,''`.  |  Axel Beckert <abe@debian.org>, https://people.debian.org/~abe/
-: :' :  |  Debian Developer, ftp.ch.debian.org Admin
-`. `'   |  4096R: 2517 B724 C5F6 CA99 5329  6E61 2FF9 CD59 6126 16B5
-  `-    |  1024D: F067 EA27 26B9 C3FC 1486  202E C09E 1D89 9593 0EDE
+    A file or directory that is a mount point in one namespace that is
+    not a mount point in another namespace, may be renamed, unlinked,
+    or removed (rmdir(2)) in the mount namespace in which it is not
+    a mount point [...]. Consequently, the mount point is removed in
+    the mount namespace where it was a mount point.
 
---ml6qlbhhymoycc7e
-Content-Type: application/pgp-signature; name="signature.asc"
+    Previously (before Linux 3.18), attempting to unlink, rename,
+    or remove a file or directory that was a mount point in another
+    mount namespace would result in the error EBUSY.
+
+Therefore, if a user can launch a process outside of the mount namespace
+created by pam_namespace (i.e. outside of their PAM session), they are
+able to alter the paths on which pam_namespace is operating as root.
+Doing so, they can launch symlink attacks, race the other security
+checks in the code, and elevate their privileges to root.
+
+It may be complicated to launch a process outside of a mount namespace
+as an unprivileged user, but the context can help an attacker to do so.
+For instance:
+
+* If two users are colluding or are compromised on the same system, the
+  first one can mess with the paths used to polyinstantiate directories
+  for the second user. Indeed, they will not be restricted by
+  pam_namespace, as they will be in their own PAM session and therefore
+  in their own mount namespace with their own mounts.
+
+* A PAM service is misconfigured and do not call pam_namespace when
+  creating a new PAM session. This can be found in the wild, especially
+  because some packages come with PAM service files that do not include
+  the common PAM service files of their distribution (common-session,
+  system-auth, ...). This easily leads to misconfigurations, and in this
+  case, can be turned into a local privilege escalation to root.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Patches and mitigation
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+In order to fix the issue, the following changes were made:
+
+* All the functions that may operate on a user-controlled path were
+  converted to operate on file descriptors instead of absolute path.
+
+* The existing bind-mount protection provided by protect_mount() is kept
+  as a defense in depth measure.
+
+* Protecting the shell script namespace.init against symlink attacks and
+  race conditions was deemed too complicated, especially because its
+  content can be modified by vendors and users. Instead, it now
+  receives two additional flags as arguments to indicate if the polydir
+  path and the instance path are safe to operate on as root.
+
+  If they provide their own script in place of the default one, vendors
+  and users are expected to update their script to check for these
+  flags and not operate on user-controlled paths.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2025-01-29: The vulnerability is reported to the maintainers. A PoC
+            demonstrating the LPE to root and a draft of a patch are
+            provided as well.
+
+2025-02-17: An upstream maintainer acknowledge the issue and provides
+            the first comments on the patch.
+
+2025-06-05: After successive iterations and reviews, the patch is ready.
+
+2025-06-11: Issue shared with the linux-distro mailing list.
+            CVE-2025-6020 is assigned.
+
+2025-06-17: Upstream linux-pam releases v1.7.1 containing the fix.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://github.com/linux-pam/linux-pam
+[2]: https://github.com/linux-pam/linux-pam/releases/tag/v1.7.1
+[3]: https://github.com/linux-pam/linux-pam/security/advisories/GHSA-f9p8-g=
+jr4-j9gx
+
+--
+
+Best regards,
+
+Olivier BAL-PETRE
+ANSSI - French Cybersecurity Agency
+https://cyber.gouv.fr/
+
+--=-=lmVlO1F3uWjd58=-=
+Content-Type: application/pgp-signature;
+	name="openpgp-digital-signature.asc"
+Content-Transfer-Encoding: 7Bit
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEERoyJeTtCmBnp12Ema+Zjx1o1yXUFAmEN9LoACgkQa+Zjx1o1
-yXVYaRAAlloegg8x4NXmkkyP8EHZUiTZ2CRmSAA/DnQWzFHT2USBCEI+XoYR4YVI
-5pjN//xXd1+NdX4yIzSD/oSpi6akbzJo+WauJtjCsSVnKS64QKuRUsUkhBzovx6J
-mtbS1dVE4ZAjAliOLNlSpksaP94TXLa+e0F4YDEQ7Xb2Ah2CkYWk7NujGJEJFKFv
-p9tMrLc7Dwaf3Cqh5ZROcd6uF1rENwWsK9mPfLGciOmoMHQ3pMWc/g2woPcQiD0Y
-leohPLThlWYAjVRM4ozmjV7Vg/9+kz0YDXmVyZihToZWAHYpvefuw/Su4lE2jUKv
-bBgrEupHRUn+SdcpuPC7Mu/4McL6yZxSL8iDL+uMh3Hw3bcJaN8hdabW43McRSls
-agci6DtqLqSIysOUBbbQybneJICX9f9XfR7UY/5tYUWprsh1jo7DOsnjBCARvFD2
-fyJSRHmPBy+/F2YFunsMLo+zlxtOZeCftOm9EVZ9EhldvWQfHeQs/Y11NWdfHlkF
-cnMtZV3e8dcK+yCIMFp95kLFuzZtK3WE/ypn6/XRUTjsxfRWwoU+9FWhPE/RjxYl
-7pAcEPzAubb7GYAPQLkfEMPbqel8pTGhp2gqV6CTe7cOZy5JAkVZbsqW0LccR/EA
-0F80a5QjrMxW/5jYZCms4Tv+F9d0NGxrFp+3g3vwSiVXsTenRe4=
-=C4/p
+iQGzBAEBCAAdFiEE0ftIAyz7k8fVDUlh1duLaXH3c0wFAmhRPcgACgkQ1duLaXH3
+c0wBWAwAlo/AxVUoyXKkxx+eOqp0BNOdM9z1zWoGVx2ZoNxammuTF14RDrFPEZXL
+xo0WvytE8GpQbIIcHzJISeG4B8/0ndbZja9RmmareBEldeFsKdzOlmEar0nt0895
+4atCCVx+RjIkmavCPBEfotu6IHpVsMHzj07/HYo9IfKwnxhl/EUamkfEfeIwxDu4
+233tdv6xHdJ0rsoJ6oiQbZFU3bFcvuN38qFQhA2MAAQ/MWFzS6vKuUZi1+v21Ech
+mtWe4hY/5OypiHuUvmvQEeVcCHitWNCBPjxquqY0kgoGa90JSlOunBnfdOI4JBlV
+35v68RBI6t4V628xJieZhTP0FNpC0E5IOYldoA6iOHx3XjzMe9ONW6ebktOiSMRJ
+sQ25us2ALJqj8Gve3tQml67znW7xEKcnQWVPXWAWJDJ5HgscGtk32U0yvU/uHBAy
+uR1M6TxmGaqfvCYiFhNUtqzfv49ijQ3wBRZNbBEztZYBbP/9KjS/kcuNK8lFdPYJ
+v087UhpG
+=Jdp3
 -----END PGP SIGNATURE-----
 
---ml6qlbhhymoycc7e--
+
+--=-=lmVlO1F3uWjd58=-=--
