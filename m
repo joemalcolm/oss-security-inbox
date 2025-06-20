@@ -1,4 +1,4 @@
-Received: (qmail 24118 invoked by uid 550); 3 Mar 2025 15:56:10 -0000
+Received: (qmail 13925 invoked by uid 550); 20 Jun 2025 21:22:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,34 +8,31 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 24095 invoked from network); 3 Mar 2025 15:56:10 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Velmurugan Periasamy <vel@apache.org>
+Received: (qmail 3708 invoked from network); 20 Jun 2025 21:05:01 -0000
+Date: Fri, 20 Jun 2025 22:04:52 +0100
 To: oss-security@lists.openwall.com
-Message-ID: <4f638a6e-c146-dee4-7e55-2184a1b9d685@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 03 Mar 2025 15:54:01 +0000
+References: <CAN1eSkue9p8=qkJdEFrczVwc1nfUhG7w6Z2dMHhxHc47T+sv=A@mail.gmail.com>
+ <20250620135051.xkt6yzanpy67jeqe@jwilk.net>
+In-Reply-To: <20250620135051.xkt6yzanpy67jeqe@jwilk.net>
+User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-55532: Apache Ranger: Improper Neutralization of Formula
- Elements in a CSV File 
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250620210452.F39EF41C@notatla.org.uk>
+From: lists@notatla.org.uk
+Subject: Re: [oss-security] path traversal in tar extract in intel
+ cve-bin-tool
 
-Severity: low
+> But the custom filter wouldn't be sound even with the typo fixed, 
+> because str.startswith() and Path.resolve() are wrong tools for the job.
 
-Affected versions:
+> Anyway, I suspect that cve-bin-tool's extractors for other file formats 
+> are still vulnerable to path traversal, so I wouldn't recommend running 
+> it against untrusted files.
 
-- Apache Ranger through 2.5.0
 
-Description:
+`We must first agree that software security is not security
+software', writes Gary McGraw in the first chapter ..
 
-Improper Neutralization of Formula Elements in Export CSV feature of Apache=
- Ranger in Apache Ranger Version < 2.6.0.
-Users are recommended to upgrade to version 2.6.0, which fixes this issue.
 
-References:
-
-https://cwiki.apache.org/confluence/display/RANGER/Vulnerabilities+found+in=
-+Ranger
-https://ranger.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-55532
-
+http://swsec.com/press/ra-ieeesp.php
