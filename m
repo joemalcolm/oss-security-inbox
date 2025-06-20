@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1471" "Thursday" "12" "April" "2018" "12:01:06" "-0700" "Russ Allbery" "eagle@eyrie.org" "<87efjkntal.fsf@hope.eyrie.org>" "30" "Re: [oss-security] Re: Terminal Control Chars" nil nil nil "4" "2018041219:01:06" "[oss-security] Re: Terminal Control Chars" (number mark "U       eagle@eyrie. Apr 12   30/1471  " thread-indent "\"Re: [oss-security] Re: Terminal Control Chars\"\n") "<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>" ("<20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>" "<1523346797.16686.6@smtp.gmail.com>" "<20180412171327.vc5epogdi7ryc3te@jwilk.net>" "<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7988 invoked by uid 550); 12 Apr 2018 19:06:34 -0000
+Received: (qmail 27660 invoked by uid 550); 20 Jun 2025 13:51:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31845 invoked from network); 12 Apr 2018 19:01:19 -0000
-From: Russ Allbery <eagle@eyrie.org>
+x-ms-reactions: disallow
+Received: (qmail 26607 invoked from network); 20 Jun 2025 13:51:02 -0000
+Authentication-Results:garm.ovh; auth=pass (GARM-113S0075638fc1d-b0e6-4532-af59-ff1a11d8905f,
+                    AA318F909AB52CDA134F90F032C2BF35D21C9541) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:31.0.177.249
+Date: Fri, 20 Jun 2025 15:50:51 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
-In-Reply-To: <20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com> (Ian
-	Zimmerman's message of "Thu, 12 Apr 2018 11:07:20 -0700")
-Organization: The Eyrie
-References: <20180305175024.16801hoj775zje4g@webmail.alunos.dcc.fc.up.pt>
-	<1523346797.16686.6@smtp.gmail.com>
-	<20180412171327.vc5epogdi7ryc3te@jwilk.net>
-	<20180412180720.qmtilbpi27kxa3dm@matica.foolinux.mooo.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
-Date: Thu, 12 Apr 2018 12:01:06 -0700
-Message-ID: <87efjkntal.fsf@hope.eyrie.org>
+Message-ID: <20250620135051.xkt6yzanpy67jeqe@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAN1eSkue9p8=qkJdEFrczVwc1nfUhG7w6Z2dMHhxHc47T+sv=A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Re: Terminal Control Chars
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAN1eSkue9p8=qkJdEFrczVwc1nfUhG7w6Z2dMHhxHc47T+sv=A@mail.gmail.com>
+X-Ovh-Tracer-Id: 7438820685220818129
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekheejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepfffgffegieevveejtdduhedvfffgtdfhgefhleehfeeujeffudfgveetheffuefgnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfkphepuddvjedrtddrtddruddpfedurddtrddujeejrddvgeelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdpoffvtefjohhsthepmhhoheeffegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=hX0K/2DJsPw+d8toDQGLoGqd/cNrJ32Lh2Pfeb15rHs=;
+ c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
+ t=1750427453; v=1;
+ b=T6UPmYHZfE2ydmjf7mTb57E8H0W8rEwoYRYA0PkdlhAoiV431mD9U71TXA0Vf+r+ZXofqmVe
+ 4QJ/KcTNgf6Us+7ieDuVdLURPmmcEaArDdLsZ12gcH80HHr2+rR+breGL8FQQufcg6ZZwGMht0t
+ F+M7RVWcNZLbRvnnO3dVyEj2A4fYr9zNtQkHLPnmKj+RXINlsrdqLqpbNf7nbhZMd3SKcoi3SCG
+ TmWBF7mif0Hx7oiurMuArhDOvzJ7/U8lUwcIgKLu1meKAksXxSJQFJnQ5nAukWyBVJYVhPgAVtK
+ ePHKDP0E7GfF26Hu50K/0Lpv5XXaOWCYEtgFFXGWFVlFQ==
+Subject: Re: [oss-security] path traversal in tar extract in intel
+ cve-bin-tool
 
-Ian Zimmerman <itz@very.loosely.org> writes:
+This is the committed fix:
+https://github.com/intel/cve-bin-tool/commit/b4feb03f19acecc1
 
-> The term "invisible character" has some obvious (if perhaps informal)
-> meaning.  But I don't really know what "control character" means.  Is a
-> page separator (^L) a control character, for example?  Is DEL one (ASCII
-> 127)?
+The fix is twofold:
 
-I think a useful definition of "control character" in this context (and I
-realize this doesn't exactly match the ASCII definition) is a character
-that results in an action other than insertion being taken, as opposed to
-a glyph (possibly invisible) being inserted (and not counting contexts
-such as vi outside of insert mode where basically all characters are
-interpreted as actions).
+1) If tarfile extraction filters are available (initially added in 
+Python 3.12, but also backported to 3.11.4, 3.10.12, 3.9.17 and 3.8.17) 
+in the standard library, the code makes use of that.
 
-CR and LF would not be control characters in that definition, since they
-insert a newline and don't cause an action.  Similarly, TAB wouldn't be a
-control character in that definition.  DEL would be if it deleted a
-character as opposed to inserting a ^? sequence.  ESC would be if it
-changed terminal modes or colors or did all the other things escape
-sequences can do.  BEL would be if it rung the terminal bell.  And so
-forth.
+2) Otherwise, it tries to sanitize tar files on its own, like this:
 
-I think it's reasonable to expect that pasting something into a terminal
-will cause insertion of text, including whitespace, but will not cause the
-terminal to take *actions* that are not the insertion of text.  Certainly,
-I think there are a lot of people in the world who do have that
-assumption.
+     for tarmember in members:
+         if tarmember.isfile() and str(
+             Path(extraction_path, tarmember.name).resolve()
+         ).startsWith(extraction_path):
+             yield tarmember
+
+This cleverly sidesteps path traversal by not extracting anything at 
+all, because...
+
+     AttributeError: 'str' object has no attribute 'startsWith'. Did you mean: 'startswith'?
+
+But the custom filter wouldn't be sound even with the typo fixed, 
+because str.startswith() and Path.resolve() are wrong tools for the job.
+
+
+Anyway, I suspect that cve-bin-tool's extractors for other file formats 
+are still vulnerable to path traversal, so I wouldn't recommend running 
+it against untrusted files.
 
 -- 
-Russ Allbery (eagle@eyrie.org)              <http://www.eyrie.org/~eagle/>
+Jakub Wilk
