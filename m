@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2337" "Tuesday" "14" "April" "2015" "21:46:32" "+0100" "Ben Hutchings" "ben@decadent.org.uk" "<1429044392.3211.72.camel@decadent.org.uk>" "59" "[oss-security] Buffer overruns in Linux kernel RFC4106 implementation using AESNI" nil nil nil "4" "2015041420:46:32" "[oss-security] Buffer overruns in Linux kernel RFC4106 implementation using AESNI" (number mark "        ben@decadent Apr 14   59/2337  " thread-indent "\"[oss-security] Buffer overruns in Linux kernel RFC4106 implementation using AESNI\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20253 invoked by uid 550); 14 Apr 2015 21:07:13 -0000
+Received: (qmail 27687 invoked by uid 550); 23 Jun 2025 14:33:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,78 +6,138 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5694 invoked from network); 14 Apr 2015 20:46:54 -0000
-Message-ID: <1429044392.3211.72.camel@decadent.org.uk>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-aRMsAd3H1YlKDLHKqo9F"
-X-Mailer: Evolution 3.12.9-1+b1 
-Mime-Version: 1.0
-X-SA-Exim-Connect-IP: 192.168.4.249
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on shadbolt.decadent.org.uk); SAEximRunCond expanded to false
-Cc: 782561@bugs.debian.org
-Date: Tue, 14 Apr 2015 21:46:32 +0100
-From: Ben Hutchings <ben@decadent.org.uk>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Buffer overruns in Linux kernel RFC4106 implementation using AESNI
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 11792 invoked from network); 23 Jun 2025 12:00:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750679998; x=1751284798; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VJzOd/3jhPo9M+lAe8AvooMMrWgAwhIOSiXtVvZP0Qw=;
+        b=FFXFuHoCTO+njdUtnD7HqkrXi+EVqnaK7DRuDKPDbez+dhs9AU7uzmvLw6eOYqkuqb
+         KG8dvzruMSbMK4FhPOI7wHdOXzMQqAddi4/hJy0mK4J3UvFNdn4ld7IM1H+xohFSBWlM
+         VrDN0adzaFM/+9/U703D3tBkFkOky1KUJsABKiVl8jIAEN47jGWByIiKUDoaAB5XRy1m
+         TmQS9S1uET7fHBxlEtTUDRAnuybaeupig7IdmGXtXpexUQrM6KcSq4L2mXW5ronwKlwL
+         AJxZ539nExGU3uulj4yQIC4nAG2yP2VIjK0ub4Dh5E1F5jgJKnxkykZLcZuWZQR/hq6/
+         I77w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750679998; x=1751284798;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VJzOd/3jhPo9M+lAe8AvooMMrWgAwhIOSiXtVvZP0Qw=;
+        b=W0w/Upicj3GDp3q1LinGQ4mVnnYFFt2unWQABNB33e0E+ASp6IgudJXxxZS0S1WgBg
+         LV6PyJ+MPN8EZw6DcqM6vVeG/6MqnZkFmkrzRpxcLi36908IXZbbGKvroae1cafvE0tO
+         UQLzw5mm37wu91q39t33apoXhVl/+1Slux/EWwI2jT5z7YKsnyYrfhgH7n62psAfLVGY
+         g6F5UZh1si/1isMxNwSWrWlDlPCenfhXc8z+qw1sGej0J97pDh1QAfG9NeQUAX9qauzj
+         kziWxxR8r2QI6nokMyzGMP5/cVMRa5NTSmc45ev5IDo2SPge1HOrPkXj1u1AuimqLf0L
+         92FQ==
+X-Gm-Message-State: AOJu0Yx25pOXPodbstJBF0K6yY0jKMiUlxtTWEEknV0Sub0LamFg9rbA
+	qn+6DpzSxT7/FZA8I8/AoELw6prSHJz9rOBCnu0fvGaWo32q9krl0NjYAGR6GcEySkMEMGfxkeX
+	28ukwVbcnCmY3Ky6K3IHpOs7yKAxyUnwvsBecQP4=
+X-Gm-Gg: ASbGnctljzx5T2Fx9YHkndJwyNyvyuxthZ87AyfqIrcAedmOSqp8PLX6qZOxODjMX07
+	Jv9hnAW4F2TT/LkXUx5r3WhPoCtjcb9unpC5hwiZ2QbDRmeA/bCbLV0HtiUOrOpKxJ4VFD46+r4
+	ZrgfLlKX9OlwafNMSNz5UxMDwc/BsDak7whxjwuZqPwg==
+X-Google-Smtp-Source: AGHT+IHwuO45SnTjILN5XAp4RWiaYxvr82T8LJCRh45aNcYImBF930CnA9335YePqCfg9LHmqozsLn6PtwPAS4RmP38=
+X-Received: by 2002:a05:690c:6209:b0:70d:f6ff:cc6f with SMTP id
+ 00721157ae682-712c6386f45mr171965107b3.4.1750679997693; Mon, 23 Jun 2025
+ 04:59:57 -0700 (PDT)
+MIME-Version: 1.0
+From: grape mingijung <mingijung.grape@gmail.com>
+Date: Mon, 23 Jun 2025 20:59:46 +0900
+X-Gm-Features: Ac12FXwodefW7-ZIpJxtKGUooOw5z5SBxPEOp9EcuKYUne1VWMsI_jS_Y8nHXNM
+Message-ID: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000060c4c606383bf307"
+Subject: [oss-security] xdg-open bypassing SameSite=Strict
 
---=-aRMsAd3H1YlKDLHKqo9F
+--00000000000060c4c606383bf307
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Linux kernel commit ccfe8c3f7e52 ("crypto: aesni - fix memory usage in
-GCM decryption") fixes two bugs in pointer arithmetic that lead to
-buffer overruns (even with valid parameters!):
+Hello,
 
-https://git.kernel.org/linus/ccfe8c3f7e52ae83155cb038753f4c75b774ca8a
+I would like to share a security concern involving the behavior of the
+xdg-open command, which is widely used in operating systems. This behavior
+may allow bypassing the SameSite=3DStrict cookie policy enforced by modern
+browsers.
 
-These are described as resulting in DoS (local or remote), but are
-presumably also exploitable for privilege escalation.
+This issue has already been reported to distros under embargo, which has
+now expired, making public disclosure appropriate at this time.
 
-The bugs appear to have been introduced by commit 0bd82f5f6355 ("crypto:
-aesni-intel - RFC4106 AES-GCM Driver Using Intel New Instructions") in
-Linux 2.6.38.
+The reason this issue was initially reported to Linux distros is that it
+resides in a *gray area between the OS, the xdg-open utility, and browser
+security policies*=E2=80=94making it unclear where the mitigation responsib=
+ility
+lies.
+------------------------------
+=E2=96=A0 Summary:
 
-The above fix is included in Linux 4.0 and the following stable updates:
+xdg-open is commonly used by desktop applications to open URLs in the
+system's default web browser. Many applications=E2=80=94such as email clien=
+ts and
+messaging tools=E2=80=94rely on this mechanism to handle external links.
 
-v3.10.73: 31c06b946ce6 crypto: aesni - fix memory usage in GCM decryption
-v3.12.40: 0585664d1732 crypto: aesni - fix memory usage in GCM decryption
-v3.14.37: e9b15363c101 crypto: aesni - fix memory usage in GCM decryption
-v3.18.11: 3b389956156c crypto: aesni - fix memory usage in GCM decryption
-v3.19.3: b90935f1d9a0 crypto: aesni - fix memory usage in GCM decryption
-v3.13.11-ckt19: 40e073009626 crypto: aesni - fix memory usage in GCM decryp=
-tion
+However, when a browser launches via xdg-open to open a URL, it interprets
+the navigation as if the user *manually typed the URL into the address bar*.
+As a result, SameSite=3DStrict cookies are included in the request.
 
-Please assign a CVE ID for this.
+This behavior differs from in-browser link navigation (e.g., clicking a <a>
+tag), where SameSite=3DStrict cookies are intentionally excluded to enforce
+CSRF protections.
+------------------------------
+=E2=96=A0 Security Impact:
 
-Ben.
+Consider the following example: an email client parses a DOM element such as
 
---=20
-Ben Hutchings
-Editing code like this is akin to sticking plasters on the bleeding stump
-of a severed limb. - me, 29 June 1999
+<a href=3D"https://evil.com?csrf=3Dstrict_cookie">,
 
---=-aRMsAd3H1YlKDLHKqo9F
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+and the user clicks this link. The application uses xdg-open to launch the
+browser.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+In this case, the browser treats the request as a user-initiated top-level
+navigation, and SameSite=3DStrict cookies are sent=E2=80=94allowing the CSR=
+F attack
+to succeed.
 
-iQIVAwUAVS18ree/yOyVhhEJAQq0SA/+LlPYb3r2EcY2cxvmfZHRwSTMpYDYdqwj
-l1hADYI65/o/iV4165gzPYD/wWwNVQGpkZm9K1egGgR7XP0kW2teaLdOV/QTiR2b
-mKj2QSXp7+Nl4PZg5DWMeBXETH+yLfJ0EPo20Iuz9pgvU9MLPZGMl/AOCbUM7FMh
-mjNwXNp4w17WtadIIcjNiE1Y7iInqFD/WoW9lg3iGCiyl8ZF64YOZeGuXzkBlA93
-7cUX3w1tqA2UYI4oJEAIZ/A0cu2IPHF2iEg+A3eyhP4gsbV/SF9VqJWWHc3pnHvj
-4QhZJ5ROhi6wtmFc+2ilaUhILOsJK83FJIpKaAOQ01u4u3e47Rm6aF7FnDNuBjZL
-FJaQuPdA2pnsgRKIss+/uNdMqbB5dxfzZLJqJpgPyXOCRgUrlK1GiV7ypn8/jXe8
-IyVjFPzJoccCAv5et0qLYYq6WWxVmuApgqn33MIZTZ43lkQ8g/iZ4J8O3HXAuxwn
-NRzdi6QzJiHhgJ1Vu1bsWCtcPBC/uMrYajAOlQub2LltHjLafGuB622fay0sPQLe
-9uwUlBNVUsBTzsqDmJnCjcKYK1s39anlX/6of1sGAexblUCr3JjjVoyEdQBfMZDr
-bp5GQMoKML3FxoGRUmRlcg4p8/j74K4L88Q1oq26mQOIhQCHLBSf6/2FZIwRinnS
-g4DZa6zZZ9o=
-=XnTh
------END PGP SIGNATURE-----
+In contrast, if the same email is opened directly in the browser and the
+same <a> tag is clicked, SameSite=3DStrict cookies are *not* sent, and the
+CSRF attempt fails.
 
---=-aRMsAd3H1YlKDLHKqo9F--
+This creates an inversion of expected behavior: *navigating via xdg-open
+can result in weaker security than navigating from within the browser
+itself.*
+------------------------------
+=E2=96=A0 Recommendations:
+
+During discussions with several Linux distro security teams, the following
+suggestions were raised:
+
+   1. Introduce an "untrusted" mode or flag in browser CLI tools for
+   opening external URLs
+   2. Extend xdg-open to support passing this "untrusted" flag or context
+   to the browser
+   3. Modify desktop environments or applications to invoke xdg-open with
+   the "untrusted" option when appropriate
+
+In summary, it was suggested that the *browser should be updated first*,
+followed by gradual support at the xdg-open and system levels.
+
+Accordingly, the issue has been forwarded to *browser vendors*, who are
+currently reviewing it and exploring potential fixes.
+------------------------------
+=E2=96=A0 Current Status:
+
+Major browser vendors have been notified and are aware of the issue.
+Discussions are ongoing to determine an appropriate solution.
+
+Although no specific fix has been finalized, the need for action is
+acknowledged.
+
+We will continue to share updates on this issue, including browser-side
+responses or mitigation strategies, via the oss-security mailing list.
+
+Best regards,
+
+Mingi Jung
+
+--00000000000060c4c606383bf307--
