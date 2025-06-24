@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4490" "Monday" "1" "May" "2017" "11:24:52" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<854490.759407298-sendEmail@localhost>" "99" "[oss-security] libsndfile: global buffer overflow in flac_buffer_copy (flac.c)" nil nil nil "5" "2017050111:24:52" "[oss-security] libsndfile: global buffer overflow in flac_buffer_copy (flac.c)" (number mark "U       ago@gentoo.o May  1   99/4490  " thread-indent "\"[oss-security] libsndfile: global buffer overflow in flac_buffer_copy (flac.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17463 invoked by uid 550); 1 May 2017 11:25:12 -0000
+Received: (qmail 13828 invoked by uid 550); 24 Jun 2025 09:43:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +7,140 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17439 invoked from network); 1 May 2017 11:25:11 -0000
-Message-ID: <854490.759407298-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:24:52 +0000
+x-ms-reactions: disallow
+Received: (qmail 13802 invoked from network); 24 Jun 2025 09:43:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=LNYo1Sjejy0yAARgS03o52okSCjYM+1B/ZKKS5/f+NM=; b=jlfgwk6eq2wn9vfyLIukLreHEJ
+	4SbiGa0+isoGJRxQ7Qn22itvJ/ODrX+Rro/S0FLjMwnkvgubCXjf77uFpc+3EEU8LUvMyMrqvqpkB
+	MppaeWzALtVPAqI7dE4we6fTl9TbDibY4qB2x8RNEr6sbV7YP4hjj8MVH3gL1JP4Jwcro+892yuVU
+	VYnEUH+2S54rMHSi6oxtYAGDm0FpOpLkpIWCJA8YoonLGwXTvK0h8RhEYeB3u+ykVDU8UbN/9Z3tC
+	A9uyaAoRi3K6fc/AOt3Jty80nyoHyCqWpU1fPAca9+vOmMAS7knTRnQ2G2AtjXFlbBomUTxdotS8x
+	vOi1hpsw==;
+Date: Tue, 24 Jun 2025 10:43:41 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Cc: grape mingijung <mingijung.grape@gmail.com>
+Message-ID: <aFpzTcjE2tInK2sb@remnant.pseudorandom.co.uk>
+References: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-187071.318113343"
-Subject: [oss-security] libsndfile: global buffer overflow in flac_buffer_copy (flac.c)
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
 
-------MIME delimiter for sendEmail-187071.318113343
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+On Mon, 23 Jun 2025 at 20:59:46 +0900, grape mingijung wrote:
+>During discussions with several Linux distro security teams, the following
+>suggestions were raised:
+>
+>   1. Introduce an "untrusted" mode or flag in browser CLI tools for
+>   opening external URLs
+>   2. Extend xdg-open to support passing this "untrusted" flag or context
+>   to the browser
+>   3. Modify desktop environments or applications to invoke xdg-open with
+>   the "untrusted" option when appropriate
 
-Description:
-libsndfile is a C library for reading and writing files containing sampled sound.
+Please bear in mind that there is nothing special or magic about 
+xdg-open. xdg-open is just one of many possible tools that open a 
+caller-specified URL, and it's considered equally valid to use it or 
+not use it. If a solution to this is specific to xdg-open, then it can 
+only ever be a partial solution.
 
-The complete ASan output of the issue:
+In an application that opens a URL (like the email client that you 
+described as your example), a simple implementation of opening a URL 
+would be to delegate it to xdg-open, but many applications will do 
+something simpler or more direct instead, like calling 
+g_app_info_launch_default_for_uri() or gtk_uri_launcher_launch() in the 
+GLib/GTK ecosystem, or the equivalent in Qt or SDL or any similar toolkit 
+library. These often don't go through the xdg-open shell script: 
+instead, they launch the URL handler directly.
 
-# sndfile-convert $FILE out.wav
-==24715==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000013cc140 at pc 0x7f4f387e75ee bp 0x7ffe9d102370 sp 0x7ffe9d102368
-WRITE of size 4 at 0x0000013cc140 thread T0
-    #0 0x7f4f387e75ed in flac_buffer_copy /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:27
-    #1 0x7f4f387db2fa in sf_flac_write_callback /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:390:2
-    #2 0x7f4f3748f6ad in write_audio_frame_to_client_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2981
-    #3 0x7f4f3748f6ad in read_frame_ /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:2152
-    #4 0x7f4f37491aef in FLAC__stream_decoder_process_single /tmp/portage/media-libs/flac-1.3.2-r1/work/flac-1.3.2/src/libFLAC/stream_decoder.c:1027
-    #5 0x7f4f387e7fbb in flac_read_loop /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:932:8
-    #6 0x7f4f387d31fb in flac_read_flac2i /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:979:13
-    #7 0x7f4f3872b3a2 in sf_readf_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:1835:10
-    #8 0x514b5d in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:87:16
-    #9 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3
-    #10 0x7f4f376c678f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #11 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
+Sometimes these functions have a place to put arbitrary "options" (for 
+example g_app_info_launch_default_for_uri() takes an optional 
+GAppLaunchContext object containing parameters to modify behaviour) but 
+sometimes they don't (for example SDL_OpenURL() takes exactly one 
+parameter, the URL to open as a string), and in any case their default 
+behaviour needs to be something reasonable (for example 
+g_app_info_launch_default_for_uri() is normally given a NULL 
+GAppLaunchContext pointer if its caller doesn't have any specific 
+requirements).
 
-0x0000013cc140 is located 0 bytes to the right of global variable 'data' defined in '/tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:80:14' 
-(0x13c8140) of size 16384
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/flac.c:267:27 in flac_buffer_copy
-Shadow bytes around the buggy address:
-  0x0000802717d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802717e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0000802717f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271800: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271810: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x000080271820: 00 00 00 00 00 00 00 00[f9]f9 f9 f9 f9 f9 f9 f9
-  0x000080271830: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271840: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271850: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271860: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271870: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24715==ABORTING
+Even if the xdg-open shell script is used, it often delegates the actual 
+launching to a desktop-environment-specific program. For example, in the 
+GLib/GTK ecosystem (GNOME, MATE or similar), xdg-open just wraps `gio 
+open`, which is a simple command-line wrapper for the 
+g_app_info_launch_default_for_uri() function that does the actual work.
 
-Affected version:
-1.0.28
+xdg-open and `gio open` are primarily designed to be something that a 
+user can run interactively at a command-line, and are only secondarily 
+something that an application would launch non-interactively to handle a 
+URL; the preferred way for an application to handle a URL is whatever is 
+the equivalent of g_app_info_launch_default_for_uri() in the libraries 
+that it uses, which will often involve fewer layers of indirection.
 
-Fixed version:
-N/A
+The URL handler registration protocol on Linux/Unix/freedesktop.org 
+platforms looks like this:
 
-Commit fix:
-https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
+- the URL handler's .desktop file (e.g. firefox.desktop) lists
+   x-scheme-handler/http (or https or ftp or any other scheme) as a
+   pseudo-MIME-type in its MimeType field
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+- there is a mechanism for choosing one of several suitable URL handlers 
+   to be the default, which is out-of-scope here; assume that we have 
+   been able to choose one specific URL handler
 
-CVE:
-CVE-2017-8361
+- the URL handler's Exec field includes %u (placeholder for 0 or 1 URLs)
+   or %U (0 or more URLs) as described in
+   https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html,
+   and optionally the URL handler also implements the
+   org.freedesktop.Application D-Bus interface described in
+   https://specifications.freedesktop.org/desktop-entry-spec/latest/dbus.html
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00265-libsndfile-globaloverflow-flac_buffer_copy
+- the caller (for example g_app_info_launch_default_for_uri() called by
+   the email client) execs the program specified by the Exec field,
+   replacing %u or %U with the desired URL, or calls the Open() D-Bus
+   method with a list containing the desired URL as first argument
 
-Timeline:
-2017-04-12: bug discovered and reported to upstream
-2017-04-12: upstream released a patch
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
+The major desktop environments will often prefer to use the D-Bus 
+interface where possible, because that results in the URL handler being 
+exec'd in a predictable environment by a piece of centralized 
+infrastructure like dbus-daemon or systemd, rather than inheriting 
+various aspects of the execution environment such as environment 
+variables and resource limits from whatever program happens to have 
+launched the URL handler.
 
-Note:
-This bug was found with American Fuzzy Lop.
+There is currently no defined place in that specification to put a 
+boolean flag for whether the URL is or isn't "trusted" in some way. To 
+pass an extra command-line argument to Exec, the .desktop file 
+specification would need to define a way for the caller to discover 
+whether the program supports it (perhaps a new % variable, or a new 
+field alongside Exec). To pass extra information to the Open() D-Bus 
+method (for URL handlers that support it), the .desktop file 
+specification would need to define a new key in the `platform_data` 
+dict alongside the desktop-startup-id and/or activation-token.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libsndfile-global-buffer-overflow-in-flac_buffer_copy-flac-c/
+How does this work on other platforms like Windows and macOS? On 
+Windows, the implementation details are different, but the general 
+"shape" of the API seems like it's the same: the URL handler registers 
+itself with the system by saying "I can handle http URLs" and storing a 
+command-line with some placeholders (on Windows I think this is done via 
+the registry), the caller (e.g. email client) passes the URL to an API 
+function like ShellExecute() or a command-line tool like `start`, and OS 
+libraries are responsible for figuring out which URL handler is the 
+correct one and launching it with suitable options. On Windows, does the 
+URL handler (e.g. browser) treat the URLs it receives from the OS as 
+though they had been typed into the address bar, or as though a link had 
+been followed?
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+I'm inclined to agree with Solar Designer that if there is a "safe" and 
+an "unsafe" way to open URLs, then browsers should make the "safe" way be 
+the default, with the more-powerful but less-safe way being an opt-in. 
+That would make the overall system "fail safe", especially if it is not 
+straightforward to add more information to the whole route from caller 
+to URL handler (for example SDL_OpenURL() has nowhere that it could put 
+this extra information).
 
-
-------MIME delimiter for sendEmail-187071.318113343--
-
+     smcv
