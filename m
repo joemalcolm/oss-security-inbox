@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1397" "Saturday" "10" "October" "2015" "13:14:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151010171429.25B8D1BEC0C@smtpvbsrv1.mitre.org>" "39" "[oss-security] Re: CVE request: issues fixed in PHP 5.6.14 and 5.5.30" nil nil nil "10" "2015101017:14:29" "[oss-security] Re: CVE request: issues fixed in PHP 5.6.14 and 5.5.30" (number mark "U       cve-assign@m Oct 10   39/1397  " thread-indent "\"[oss-security] Re: CVE request: issues fixed in PHP 5.6.14 and 5.5.30\"\n") "<87vbal3114.fsf@redhat.com>" ("<87vbal3114.fsf@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5979 invoked by uid 550); 10 Oct 2015 17:14:41 -0000
+Received: (qmail 16006 invoked by uid 550); 24 Jun 2025 16:02:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5954 invoked from network); 10 Oct 2015 17:14:40 -0000
-From: cve-assign@mitre.org
-To: mprpic@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <87vbal3114.fsf@redhat.com>
-Message-Id: <20151010171429.25B8D1BEC0C@smtpvbsrv1.mitre.org>
-Date: Sat, 10 Oct 2015 13:14:29 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: issues fixed in PHP 5.6.14 and 5.5.30
+x-ms-reactions: disallow
+Received: (qmail 1611 invoked from network); 24 Jun 2025 15:59:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sijanec.eu; s=mail;
+	t=1750780766; bh=4tokXVcunN5V0wnD0k4Th+d3nv0bclz8+As/Pt1V98A=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=h5DK43d8Wh+9NhHV6UCTzLbKU0BcKRIl91/bX/81NMr1ClLrKeNTyFiBhUuejMhwM
+	 VbcanA0sgCZc1GKy4E/9hWtRx2u5Ql5vhh8Mh13/09eEtpKnWgcqxm/o3eYn4NggQD
+	 8nQ1vpVfQSYrsoef1gNnOF2EpUzyoWjPozqrRqwOwOiFUJKrftA4zCWy2WuST/14PH
+	 dqmuMreTZhSDtJ0qAp3kT5iNbGSuIMum3ESW+xMVmGgju8IApMwz1z6cYdzbpW4BRi
+	 f2Qm/pshmYK4OeKaZQN4ioufAQMMAJek/DPJkm7c3zTF3NMy1I1NpIituEEutwdFb1
+	 01lK6i/EiBaqQ==
+Message-ID: <3da9fe15-c26f-46c8-9087-12685eb119e7@sijanec.eu>
+Date: Tue, 24 Jun 2025 17:59:25 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+ <aFpzTcjE2tInK2sb@remnant.pseudorandom.co.uk>
+Content-Language: sl
+From: =?UTF-8?Q?Anton_Luka_=C5=A0ijanec?= <anton@sijanec.eu>
+In-Reply-To: <aFpzTcjE2tInK2sb@remnant.pseudorandom.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi!
 
-> the changelog for PHP 5.6.14 and 5.5.30 lists these two issues that
-> have a security impact:
+Simon McVittie je 24. 6. 25 ob 11:43 napisal:
+> How does this work on other platforms like Windows and macOS? On 
+> Windows, the implementation details are different, but the general 
+> "shape" of the API seems like it's the same: the URL handler registers 
+> itself with the system by saying "I can handle http URLs" and storing a 
+> command-line with some placeholders (on Windows I think this is done via 
+> the registry), the caller (e.g. email client) passes the URL to an API 
+> function like ShellExecute() or a command-line tool like `start`, and OS 
+> libraries are responsible for figuring out which URL handler is the 
+> correct one and launching it with suitable options. On Windows, does the 
+> URL handler (e.g. browser) treat the URLs it receives from the OS as 
+> though they had been typed into the address bar, or as though a link had 
+> been followed?
 
-> Null pointer dereference in phar_get_fp_offset()
-> https://bugs.php.net/bug.php?id=69720
+I tested if the same behavior is also present on Windows for reference 
+and it is. Tested with Firefox 138.0.1 (64-bit) and Edge 129.0.2792.52 
+on Windows 11 Home 23H2.
 
-Use CVE-2015-7803.
+I opened WordPad with the document https://ass.si/f/nosmr.rtf and 
+clicked the first link to set the samesite cookie, then closed the 
+browser, then clicked the second link and the cookie was sent, despite 
+SameSite being set to strict. Then I changed the default browser and the 
+same behavior was present.
 
+The cookie was correctly not sent to the server when navigating via an 
+<a> tag from a different domain in both browsers.
 
-> Uninitialized pointer in phar_make_dirstream when zip entry filename is "/"
-> https://bugs.php.net/bug.php?id=70433
-
-Use CVE-2015-7804.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWGUcBAAoJEL54rhJi8gl5sTgQAK10QPBUELp73MG9/oNZuBvU
-StOfUjxvuassZxtgqn3w0cnujL2USo4YK0OyJIecurbJSlnb2mFNM9HR6DN5XDXq
-Z7DxcB3TCjy7tqBCzNTyhtEErs2eEfHJ6nMFXPVznby44hxV8Q6ywfvA0HsWcyfe
-AFqwM2EwjdB4iulpS2ICRG8Pv86trEO6nulDQAqPJXUQhRQgE/B6P8v9BU5/K9oi
-mJ8IEq6eYQaQAG8O/pC20tdHRfcxoHmpwmPLGsKSGtg3Xqnsyq5I4Q3PLy9YqI57
-73E3B2OQFbCeqmxIOgeP5wxtlB0Ocaa68wthQYBQgD2rzz/AID208EpyIinMRkSB
-6vsQYf79LNP92H2ZG7Alua/eNQGkDDhKKLLKd9agi1kosdl5VZEm12OLHBipqytk
-QZ0hiBwzVbIOIVkWEgcVStJ7j138IIzHzGozH1rCFznmu2WeAYzm/WwuJtRyPiM+
-aDV8vPBfT7MlWiPTnA6PtUp3zZAP+0GNSdqKE3Mao+0GTKxaAfL0pvs0f+xjzHJ3
-Lil+jiRzCw7taCU6RLrkwBA4qOg6haOE3L7BN7t9QNLDo0dsreSzaNvqSGz9PjY+
-56gxGj5OQrhQPoAEz4L5TFGrEFBXfDO8NO35OpHshHhA84lMxn1DB52gzvvoDfy3
-4lbpHx4iI5IZQcJBjVmt
-=lyc/
------END PGP SIGNATURE-----
+Regards
+Anton
