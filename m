@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["335" "Tuesday" "8" "March" "2016" "15:43:02" "+0000" "Hoz de la Hoz Enrique de la" "enrique.delahoz@uah.es" "<A19277CE-0378-4415-A28E-7BB8F7CE00A9@uah.es>" "9" "[oss-security] CVE request: simpleSAMLphp 1.14 information leakage" nil nil nil "3" "2016030815:43:02" "[oss-security] CVE request: simpleSAMLphp 1.14 information leakage" (number mark "U       enrique.dela Mar  8    9/335   " thread-indent "\"[oss-security] CVE request: simpleSAMLphp 1.14 information leakage\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9536 invoked by uid 550); 8 Mar 2016 16:15:20 -0000
+Received: (qmail 19654 invoked by uid 550); 24 Jun 2025 20:25:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20066 invoked from network); 8 Mar 2016 15:43:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=universidaddealcala.onmicrosoft.com; s=selector1-uah-es;
- h=From:To:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=NumXShRoLzl64O5qUWHVIBMOuZzVNYByu0GlRJMe9rw=;
- b=QcfrDVvHQ90H9SegCgTWQdmyejl0Qeli92e7cwHKWOtamAoTQ0UmXoylO7kBhxf59KN2WARg+LGpTF81pjoQy9T7UNuISYM83JNULrmFgicfx57IAhDoGZWXFXWLFpfNzBc9nY1BJMk66vbqjtPNK8tVBZU1zwUfPMBXxP+127E=
-Thread-Topic: CVE request: simpleSAMLphp 1.14 information leakage
-Thread-Index: AQHReVEyF/8Vb+WjdkqXIXsSxVKvrw==
-Message-ID: <A19277CE-0378-4415-A28E-7BB8F7CE00A9@uah.es>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-user-agent: Microsoft-MacOutlook/0.0.0.160212
-authentication-results: lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=none action=none header.from=uah.es;
-x-ms-exchange-messagesentrepresentingtype: 1
-x-originating-ip: [193.146.8.4]
-x-microsoft-exchange-diagnostics: 1;VI1PR03MB1422;5:sxbNWDrXvrpLe1LqkL3Q0xy+b0swmRGJGVZ/qnpMRULZgEk+mF4K5OVxRXXwrkmLLp1OMlEuNtwfo5cSJWeg5GrzS4Z2AmqGQqzE1ZS5JP7JNnSxbCqut/ONbmcWFVW2MtiOHZfNEKpV2D4bJaHQrA==;24:UZDYESqqZ26Oe8Nn136N1exblhB+Ps6kXlFyZOeOV5+hCtGpxYdPItS1QHtu7nE15YoiUjiWhhxKx84EAfhhM/utGgPhCKCq8OaHWV3mpOg=
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:VI1PR03MB1422;
-x-ms-office365-filtering-correlation-id: a941a4fa-5c8c-4578-4106-08d347685575
-x-microsoft-antispam-prvs: <VI1PR03MB14227F9EFD1A87E432191B9790B20@VI1PR03MB1422.eurprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(2401047)(8121501046)(5005006)(10201501046)(3002001);SRVR:VI1PR03MB1422;BCL:0;PCL:0;RULEID:;SRVR:VI1PR03MB1422;
-x-forefront-prvs: 08756AC3C8
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(53754006)(36756003)(2900100001)(558084003)(83506001)(11100500001)(82746002)(87936001)(77096005)(19617315012)(106116001)(2906002)(92566002)(83716003)(586003)(450100001)(2351001)(33656002)(5002640100001)(15975445007)(5004730100002)(86362001)(16236675004)(74482002)(66066001)(5008740100001)(2501003)(3280700002)(189998001)(3660700001)(50986999)(19580395003)(54356999)(6116002)(110136002)(229853001)(10400500002)(40100003)(1220700001)(1096002)(81166005)(122556002)(102836003)(107886002)(3846002)(104396002);DIR:OUT;SFP:1102;SCL:1;SRVR:VI1PR03MB1422;H:VI1PR03MB1423.eurprd03.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:23
-spamdiagnosticmetadata: NSPM
-Content-Type: multipart/alternative;
-	boundary="_000_A19277CE03784415A28E7BB8F7CE00A9uahes_"
-MIME-Version: 1.0
-X-OriginatorOrg: uah.es
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Mar 2016 15:43:02.3727
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: ced2c552-7d1f-4731-aa3a-2f0ec9629e26
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR03MB1422
-Date: Tue, 8 Mar 2016 15:43:02 +0000
-From: Hoz de la Hoz Enrique de la <enrique.delahoz@uah.es>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: simpleSAMLphp 1.14 information leakage
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3441 invoked from network); 24 Jun 2025 20:22:16 -0000
+Message-ID: <444d6a57-53cb-4391-9853-aaf71b2968bf@free.fr>
+Date: Tue, 24 Jun 2025 22:22:06 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+Content-Language: fr, en-US
+From: Gabriel Corona <gabriel.corona@free.fr>
+In-Reply-To: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------060arbdM050G32UbvQ0zQMxd"
+Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
 
---_000_A19277CE03784415A28E7BB8F7CE00A9uahes_
-Content-Type: text/plain; charset="utf-8"
+--------------060arbdM050G32UbvQ0zQMxd
+Content-Type: multipart/mixed; boundary="------------jWwf2jiQ3MyFRi67ms0X0rDA";
+ protected-headers="v1"
+From: Gabriel Corona <gabriel.corona@free.fr>
+To: oss-security@lists.openwall.com
+Message-ID: <444d6a57-53cb-4391-9853-aaf71b2968bf@free.fr>
+Subject: Re: [oss-security] xdg-open bypassing SameSite=Strict
+References: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+In-Reply-To: <CAFyT70jJBgFDN1nreS1D6xp5QdXjJ8aLiJSbGfN8PTo5F1tChw@mail.gmail.com>
+
+--------------jWwf2jiQ3MyFRi67ms0X0rDA
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: base64
 
-SGkgYWxsLA0KDQpJcyBpdCBwb3NzaWJsZSB0byBnZXQgYSBDVkUgZm9yIHRo
-aXM/DQpodHRwczovL3NpbXBsZXNhbWxwaHAub3JnL3NlY3VyaXR5LzIwMTYw
-My0wMQ0KDQpUaGFua3MgaW4gYWR2YW5jZS4NCg==
+SGksDQoNCiA+IDEuIEludHJvZHVjZSBhbiAidW50cnVzdGVkIiBtb2RlIG9yIGZsYWcgaW4gYnJv
+d3NlciBDTEkgdG9vbHMgZm9yDQogPiBvcGVuaW5nIGV4dGVybmFsIFVSTHMNCiA+IDIuIEV4dGVu
+ZCB4ZGctb3BlbiB0byBzdXBwb3J0IHBhc3NpbmcgdGhpcyAidW50cnVzdGVkIiBmbGFnIG9yIGNv
+bnRleHQNCiA+IHRvIHRoZSBicm93c2VyDQogPiAzLiBNb2RpZnkgZGVza3RvcCBlbnZpcm9ubWVu
+dHMgb3IgYXBwbGljYXRpb25zIHRvIGludm9rZSB4ZGctb3BlbiB3aXRoDQogPiB0aGUgInVudHJ1
+c3RlZCIgb3B0aW9uIHdoZW4gYXBwcm9wcmlhdGUNCg0KQXMgd2FzIHNhaWQgYnkgU29sYXIgRGVz
+aWduZXIsIGlmIGEgInNhZmUiIHZlcnNpb24gaXMgbmVlZGVkLA0KaXQgc2hvdWxkIHByb2JhYmx5
+IGJlIHRoZSBkZWZhdWx0IHdoZW4gZ29pbmcgdGhyb3VnaCBVUkkgc2NoZW1lDQpyZWdpc3RyYXRp
+b25zLiBUaGlzIGlzIGJlY2F1c2UsIGFzIHlvdSBzYWlkLCB0aGlzIGtpbmQgb2YgaXNzdWUNCmxp
+ZXMgaW4gdGhlIGludGVyYWN0aW9uIGJldHdlZW4gc2V2ZXJhbCBjb21wb25lbnRzIChVUkkgc291
+cmNlcywNClVSSSBzaW5rcyBhbmQgVVJJIGdvLWJldHdlZW5zIHN1Y2ggYXMgeGRnLW9wZW4pIGFu
+ZCBpdCB3b3VsZA0KY2VydGFpbmx5IGJlIHBvc3NpYmxlIHRvIGZpbmQgYSB3YXkgdG8gYnlwYXNz
+IHRoZSBiZWhhdmlvcg0Kb3RoZXJ3aXNlLg0KDQpGb3IgdGhlIHNha2Ugb2YgYXJndW1lbnQsIHdl
+IGNvdWxkIG1pdGlnYXRlIHJpZ2h0IG5vdyB3aXRoIGENCndyYXBwZXIgc2NyaXB0IHN1Y2ggYXMg
+KGh0dHAtb3Blbi13cmFwcGVyLnB5KToNCg0KICAgICAjIS91c3IvYmluL3B5dGhvbjMNCg0KICAg
+ICBpbXBvcnQgc3lzDQogICAgIGZyb20gaHRtbCBpbXBvcnQgZXNjYXBlDQogICAgIGltcG9ydCBv
+cw0KICAgICBmcm9tIHRlbXBmaWxlIGltcG9ydCBOYW1lZFRlbXBvcmFyeUZpbGUNCg0KICAgICBh
+cmd2ID0gc3lzLmFyZ3ZbMTpdDQogICAgIHVyaSA9IGFyZ3ZbLTFdDQoNCiAgICAgaWYgdXJpLnN0
+YXJ0c3dpdGgoImh0dHA6Ly8iKSBvciB1cmkuc3RhcnRzd2l0aCgiaHR0cHM6Ly8iKToNCiAgICAg
+ICAgIGJvZHkgPSBmJzxhIGhyZWY9Intlc2NhcGUodXJpKX0iPkZvbGxvdyBsaW5rPC9hPicNCiAg
+ICAgICAgIGJvZHkgKz0gJzxzY3JpcHQ+ZG9jdW1lbnQucXVlcnlTZWxlY3RvcigiYSIpLmNsaWNr
+KCk8L3NjcmlwdD4nDQogICAgICAgICBmID0gTmFtZWRUZW1wb3JhcnlGaWxlKGRlbGV0ZT1GYWxz
+ZSwgZGVsZXRlX29uX2Nsb3NlPUZhbHNlLCANCnN1ZmZpeD0iLmh0bWwiLCBtb2RlPSJ3dCIpDQog
+ICAgICAgICBmLndyaXRlKGJvZHkpDQogICAgICAgICBmLmZsdXNoKCkNCiAgICAgICAgIGFyZ3Zb
+LTFdID0gZi5uYW1lDQogICAgIG9zLmV4ZWN2cChhcmd2WzBdLCBhcmd2KQ0KICAgICBvcy5fZXhp
+dCgyNTUpDQoNCndpdGggdGhlIGNhdmVhdCB0aGF0IHlvdSBub3cgaGF2ZSBhIGRhbmdsaW5nIC5o
+dG1sIGZpbGUgaGFuZ2luZw0KYXJvdW5kLg0KDQpZb3Ugd291bGQgb3ZlcndyaXRlIHRoZSBleGlz
+dGluZyBNSU1FIHR5cGUgcmVnaXN0cmF0aW9uczoNCg0KICBbRGVza3RvcCBFbnRyeV0NCiAgQ29t
+bWVudD0NCi1FeGVjPS9ob21lL2pvaG4vZmlyZWZveC9maXJlZm94DQorRXhlYz0vaG9tZS9qb2hu
+L2h0dHAtb3Blbi13cmFwcGVyLnB5IC9ob21lL2pvaG4vZmlyZWZveC9maXJlZm94DQogIEljb249
+L2hvbWUvam9obi9maXJlZm94L2Jyb3dzZXIvY2hyb21lL2ljb25zL2RlZmF1bHQvZGVmYXVsdDEy
+OC5wbmcNCiAgTmFtZT1GaXJlZm94DQogIE5vRGlzcGxheT1mYWxzZQ0KICBQYXRoPQ0KICBTdGFy
+dHVwTm90aWZ5PXRydWUNCiAgVGVybWluYWw9ZmFsc2UNCiAgVGVybWluYWxPcHRpb25zPQ0KICBU
+eXBlPUFwcGxpY2F0aW9uDQogIFN0YXJ0dXBXTUNsYXNzPWZpcmVmb3gtbmlnaHRseQ0KICBYLUtE
+RS1TdWJzdGl0dXRlVUlEPWZhbHNlDQogIFgtS0RFLVVzZXJuYW1lPQ0KDQpIb3dldmVyIHRoaXMg
+a2luZCBvZiAic2FmZXIiIFVSSSBvcGVuaW5nIHdvdWxkIHdvdWxkIGJyZWFrICptYW55Kg0KbGVn
+aXRpbWF0ZSB1c2UgY2FzZXMsIHJpZ2h0PyBUaGlzIGlzIGV4ZW1wbGlmaWVkIGJ5Og0KDQouL2h0
+dHAtb3Blbi13cmFwcGVyLnB5IGh0dHBzOi8vc2V0Y29va2llLm5ldC8NCg0Kd2ljaCBkb2VzIG5v
+dCByZWNlaXZlIFNhbWVTaXRlPVN0cmljdCBjb29raWVzIChhcyBleHBlY3RlZCkuDQoNClNjZW5h
+cmlvOg0KDQoxLiB5b3UgcmVjZWl2ZSBhIGxlZ2l0aW1hdGUgZW1haWwgZnJvbSBhIHdlYmFwcCB3
+aXRoIGEgbGluaywNCiAgICBodHRwczovL215YXBwLmV4YW1wbGUuY29tL2ZvbzsNCjIuIHlvdSBj
+bGljayBvbiB0aGUgbGluazsNCjMuIHlvdSBvcGVucyAieGRnLW9wZW4gLS11bnRydXN0ZWQgaHR0
+cHM6Ly9teWFwcC5leGFtcGxlLmNvbS9mb28iOw0KNC4gdGhpcyAoc29tZWhvdykgdHJpZ2dlcnMg
+bm9uLXNhbWUtc2l0ZSBuYXZpZ2F0aW9uOw0KNS4gYmVjYXVzZSB5b3UgZGlkIG5vdCBzZW5kIHRo
+ZSBTYW1lU2l0ZT1TdHJpY3QgY29va2llLA0KICAgIHlvdSBhcHBlYXIgdG8gYmUgbG9nZ2VkIG91
+dCBvZiB0aGUgd2ViYXBwOw0KNi4gYmVjYXVzZSB5b3UgYXJlIG5vbi10ZWNoLXNhdnksIHlvdSBh
+cmUgbGVmdCB3b25kZXJpbmcgd2hhdCBpcw0KICAgIHRoZSBpc3N1ZS4NCg0KVGhpcyBhc3N1bWVz
+IHRoYXQgdGhlIHdlYmFwcCBpcyBub3QgY29tcGxldGVseSB3ZWxsLWJlaGF2ZWQNCmluIHJlZ2Fy
+ZCB0byBpdHMgY29va2llIGhhbmRsaW5nIGJ1dCB0aGlzIGlzIHRoZSBraW5kIG9mDQp3ZWJhcHAg
+U2FtZVNpdGUgcHJvdGVjdGlvbnMgYXJlIGludGVuZGVkIHRvIGNhdGVyIGZvci4NCg0KUmVnYXJk
+cywNCg0KR2FicmllbA0K
 
---_000_A19277CE03784415A28E7BB8F7CE00A9uahes_--
+--------------jWwf2jiQ3MyFRi67ms0X0rDA--
+
+--------------060arbdM050G32UbvQ0zQMxd
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmhbCO8FAwAAAAAACgkQIWPS9KpGc+jQ
+7w/9Ed1hLOoPk5n8C6Lu+7hNoy9Y8BFPpBnQXQekHA5DmtaYDAhnoN/36/PYA2zExaI8yGuOk5K0
+3s21Beb0sY4IUlblovbSoj+d51PVlV9M+PcnrxEogLfj4vQHVz1Ch3f6s/vP9Pgfc9V7tvrulkWh
++MhweTq+Tdem642dYlP5eiV5nUH8dl4EtsNW/RuaG05TE3ewaGIP4eZA/7jDQhktsvwnzzT141ZB
+o+pT+1KAHplJQNpR4oF0mtwDC4MgX9fffKM4C1pXouhEBCmTKMyawDwC3K2n8vgrLp6DlOF2nuGZ
+bpvjU4UkKNRXaUA/TY1ittNkN6QWtr34YPFHC/LrPkBK5uY/Y4TeWIGm34lIfUyh8IXhmuwysQZh
+7Y2SJbGjRpJ7YIkw6gB563jIxK76PBt9292SJ1Lwfwfg4yeK3IWiqG06vO3dtj5e/1O/Qo9/DGWi
+u/sMKKozQxKAKNFgZRdCIXKB4CukVdITWr3cdCpV/b7WZ+ClpyJalt3cPSz0NaT8ISD9phogCg2L
+/0Du+7c9IeDq7cVw7i53sfwP5x09qC5crTuPq1CpcCVQtJcw4sWtsc6XM4OFvq1kVx9loNVXfDLi
+b6NhXjss3um0hKsP0dK50m7Z47FzHHhsAWnJvE1kOaIlY0DfLgLBYAjMJyF3vO6kr+579vaShxwD
+C9c=
+=nbzQ
+-----END PGP SIGNATURE-----
+
+--------------060arbdM050G32UbvQ0zQMxd--
