@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4582" "Friday" "2" "March" "2018" "21:42:30" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>" "124" "Re: [oss-security] memcached UDP amplification attacks" "^Date:" nil nil "3" "2018030304:42:30" "[oss-security] memcached UDP amplification attacks" (number mark "        kseifried@re Mar  2  124/4582  " thread-indent "\"Re: [oss-security] memcached UDP amplification attacks\"\n") "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>" ("<20180302124428.440b9c3b@pc1>" "<CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11498 invoked by uid 550); 3 Mar 2018 04:42:44 -0000
+Received: (qmail 14245 invoked by uid 550); 1 Jul 2025 12:00:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,155 +6,233 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11474 invoked from network); 3 Mar 2018 04:42:43 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=pLS46dxgJrC76KnKIOzLRX1MyxD5vD6JQBFKwpilgak=;
-        b=t1wDF8xmTwR+lEApbVr6wnNCvD69tSxi7JUcv5jVf20mb+uafZ7A9lY9b+I3/xi+0/
-         SP+RW/2TXIpdAJ2PcjiMmN0tdC7Jtxxs6DzlaoskYNp1WQA8EFCCRXtZbP/gbSji1Ybd
-         QyYZ0W+PoQ+mHMhHvAha+yvHdos8SYhPFIDEg5bfKgPUiutNvYxCFpQecnx8UqZGzUSQ
-         /sXn7Hfomyq+oKNPyg8ukviqznXk2Ppb3VNr4uJVvPXPTWTQG8hc/P9UdAQAH54sVBmg
-         JkAW7Z3df5RSlPvrFVjzaukFgmW7vDMqJpbcDFO+Wi5vdGi4wO/HNB9/xjKZaAoMXDEb
-         VCaA==
-X-Gm-Message-State: APf1xPCdsRVAlJPc8Um3mVQfi/n27OCTuldyl0xefPugCPRQFWnR66Wd
-	gOR4/71G5k/uY2lNzWG6F6LLDevAVDDwXV1Zg4UZVj/Cjf4=
-X-Google-Smtp-Source: AG47ELt3TFo7ODvv3Vyv/tCXWpN5yMt3/JIFvnVYd7k4/1/j1SDqG3LTJOHRJ1qKXUaTiWt4cTLk9zabNA03e7dDEWg=
-X-Received: by 10.157.29.154 with SMTP id y26mr5788295otd.66.1520052151086;
- Fri, 02 Mar 2018 20:42:31 -0800 (PST)
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
-References: <20180302124428.440b9c3b@pc1> <CANO=Ty09HPfSbp8QsZHU24EnEyzOw1H1C-Zr+7mqwDhOG6=HYg@mail.gmail.com>
-Message-ID: <CANO=Ty0X6iVTG=BUhdUgxYSLN9XnA-NcvH96DgTALQRvsNnn4Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="001a113cfd06818bbc05667ab87d"
-Date: Fri, 2 Mar 2018 21:42:30 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] memcached UDP amplification attacks
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 14208 invoked from network); 1 Jul 2025 12:00:49 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.510 (Entity 5.510)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1uWZf3-004MTf-2x@xenbits.xenproject.org>
+Date: Tue, 01 Jul 2025 12:00:29 +0000
+Subject: [oss-security] Xen Security Advisory 470 v2 (CVE-2025-27465) - x86: Incorrect
+ stubs exception handling for flags recovery
 
---001a113cfd06818bbc05667ab87d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-So long story short:
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-A CVE is assigned when a security vulnerability "crosses a trust boundary",
-so for something that is easy, e.g. remote RCE, or "ping of death" (a
-single ICMP packet that crashes the remote system, that was a fun week).
+            Xen Security Advisory CVE-2025-27465 / XSA-470
+                               version 2
 
-For a lot of things like encryption and denial of service the line in the
-sand is somewhat arbitrary. For example a traffic amplification attack that
-is 1:1 is probably not going to get a CVE today, but for example a 1:50000
-traffic amplification (so 1 megabit/sec turns into ~=3D 50 gigabits/second)
-is clearly a problem, especially if it's via UDP which can 1) be spoofed
-and 2) can result in the remote end just firing the traffic off blindly.
+       x86: Incorrect stubs exception handling for flags recovery
 
-I am told this memcached attack is causing traffic reflection well past 1:5
-(an arbitrary line I've drawn in the sand, 1:2 isn't enough to really worry
-about with some exceptions, and 1:10 is clearly a problem, so because of
-how many fingers we mostly have, 1:5 seems fair), in fact this attack is
-seeing amplification by several orders of magnitude past 1:5. Also memached
-has fixed this in release 1.5.6 by disabling UDP by default (one metric for
-CVE is "can this be fixed", if yes that's a good sign we didn't want the
-previous behavior).
+UPDATES IN VERSION 2
+====================
 
-I have assigned CVE-2018-1000115 to this issue:
+Public release.
 
-Memcached version 1.5.5 contains an Insufficient Control of Network Message
-Volume (Network Amplification, CWE-406) vulnerability in the UDP support of
-the memcached server that can result in denial of service via network flood
-(traffic amplification of 1:50,000 has been reported by reliable sources).
-This attack appear to be exploitable via network connectivity to port 11211
-UDP. This vulnerability appears to have been fixed in 1.5.6 due to the
-disabling of the UDP protocol by default.
+ISSUE DESCRIPTION
+=================
 
-References:
+Certain instructions need intercepting and emulating by Xen.  In some
+cases Xen emulates the instruction by replaying it, using an executable
+stub.  Some instructions may raise an exception, which is supposed to be
+handled gracefully.  Certain replayed instructions have additional logic
+to set up and recover the changes to the arithmetic flags.
 
-     "url": "https://github.com/memcached/memcached/wiki/ReleaseNotes156"
-        "url": "
-https://blogs.akamai.com/2018/03/memcached-fueled-13-tbps-attacks.html"
-        "url": "https://twitter.com/dormando/status/968579781729009664"
-        "url": "
-https://github.com/memcached/memcached/commit/dbb7a8af90054bf4ef51f5814ef7c=
-eb17d83d974
-"
+For replayed instructions where the flags recovery logic is used, the
+metadata for exception handling was incorrect, preventing Xen from
+handling the the exception gracefully, treating it as fatal instead.
 
+IMPACT
+======
 
+An unprivileged guest can cause a hypervisor crash, causing a Denial of
+Service (DoS) of the entire host.
 
+VULNERABLE SYSTEMS
+==================
 
+Xen 4.9 and onwards are vulnerable.  Xen 4.8 and older are not
+vulnerable.
 
-On Fri, Mar 2, 2018 at 4:58 AM, Kurt Seifried <kseifried@redhat.com> wrote:
+Only x86 systems are vulnerable.  ARM systems are not vulnerable.
 
->
->
-> On Fri, Mar 2, 2018 at 4:44 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
->
->> Hi,
->>
->> In the past days there have been reports about some DDoS attacks
->> abusing the memcached UDP protocol:
->> https://blog.cloudflare.com/memcrashed-major-amplification-
->> attacks-from-port-11211/
->> https://www.wired.com/story/github-ddos-memcached/
->>
->>
->> The issue: memcached has an UDP protocol that allows getting a much
->> larger reply than the query sent, thus allowing amplification attacks
->> with forged sender IPs.
->>
->>
->> Upstream memcached reacted by disabling the UDP-based protocol by
->> default:
->> https://github.com/memcached/memcached/wiki/ReleaseNotes156
->> This is good, however one could argue that they should also default to
->> localhost only.
->>
->>
->> Most distros I checked right now default to enabling UDP, but
->> restricting connections to 127.0.0.1. While this is not directly
->> vulnerable it's only a minor change away from being so. The memcached
->> announcement sounds like the UDP protocol is rarely used and should be
->> considered deprecated and replaced by the TCP-based one.
->>
->> I recommend all distributions consider changing their defaults to
->> disabling the UDP-based memcached protocol by default.
->>
->>
-> I think in general ALL network applications that support UDP need to think
-> about hardening their default configurations due to the potential for
-> amplification attacks.
->
-> While it is not yet CVE worthy I can see the bar moving (much like it has
-> for default passwords, and crypto) in the near future as this is clearly
-> becoming a problem. Please note that this problem is already covered by
-> CWE-406 (to some degree) which makes the case for CVE assignment stronger.
->
->
->> --
->> Hanno B=C3=B6ck
->> https://hboeck.de/
->>
->> mail/jabber: hanno@hboeck.de
->> GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
->>
->
->
->
-> --
->
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-> Red Hat Product Security contact: secalert@redhat.com
->
+Only HVM or PVH guests can leverage the vulnerability.  PV guests cannot
+leverage the vulnerability.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+CREDITS
+=======
+
+This issue was discovered by Andrew Cooper of XenServer.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa470.patch           xen-unstable - Xen 4.18.x
+xsa470-4.17.patch      Xen 4.17.x
+
+$ sha256sum xsa470*
+99d7fbe6acb27aa13c586acbc8d15d00b04bb040bb0cb5f8feca495f0f414a10  xsa470.patch
+2c6490978bd1ba1578a4c1102a521cf4d01d99792a363708bb1e6a1b879b1f5c  xsa470-4.17.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
---=20
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmhjzN0MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ6skIAMivsvi9wpvpoaQubdbG3iUFoK4ocOZHdywJbfOQ
+OjUK23585BZo45xIp/myqbbmIjQ4PsN4JFh9D9F3xv3xVfSD1RYS8qMPm/pcpY60
+dDrk2SeLqqhQzdxguDrQ97qiPtanfDEvkwBUzu2Z7rDgbv/7hBCDURVgwaprs/d6
+hvF/K+FIT7rBFFfPJmCzO8RCMO7o3iKia77q7QScFSmm4AeJ+E9NQdPsa2Po9aJG
+reHCDEeWaPgktVV/M8nS0an/K6Oavf2jI18hkoweSnok2xAz0t9Me5gQ3UcaOdlz
+iNk3ItZ/41ja2+3xO6dFlwOdVSnk3KvWZJxjJMySeWLRTQI=
+=uDlQ
+-----END PGP SIGNATURE-----
 
---001a113cfd06818bbc05667ab87d--
+--=separator
+Content-Type: application/octet-stream; name="xsa470.patch"
+Content-Disposition: attachment; filename="xsa470.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU3ViamVjdDog
+eDg2L2VtdWw6IEZpeCBleHRhYmxlIHJlZ2lzdHJhdGlvbiBpbiBpbnZva2Vfc3R1YigpCgpGb3Ig
+ZXhjZXB0aW9uIHJlY292ZXJ5IGluIHRoZSBzdHVicywgdGhlIHJlZ2lzdGVyZWQgYWRkcmVzcyBm
+b3IgZml4dXAgaXMgdGhlCnJldHVybiBhZGRyZXNzIG9mIHRoZSBDQUxMIGVudGVyaW5nIHRoZSBz
+dHViLgoKSW4gaW52b2tlX3N0dWIoKSwgdGhlICcuTHJldCU9OicgbGFiZWwgaXMgdGhlIHdyb25n
+IHNpZGUgb2YgdGhlICdwb3N0JwpwYXJhbWV0ZXIuICBUaGUgJ3Bvc3QnIHBhcmFtZXRlciBpcyBu
+b24tZW1wdHkgaW4gY2FzZXMgd2hlcmUgdGhlIGFyaXRobWV0aWMKZmxhZ3Mgb2YgdGhlIG9wZXJh
+dGlvbiBuZWVkIHJlY292ZXJpbmcuCgpTcGxpdCB0aGUgbGluZSB0byBzZXBhcmF0ZSAncHJlJyBh
+bmQgJ3Bvc3QnLCBtYWtpbmcgaXQgbW9yZSBvYnZpb3VzIHRoYXQgdGhlCnJldHVybiBhZGRyZXNz
+IGxhYmVsIHdhcyBpbiB0aGUgd3JvbmcgcG9zaXRpb24uCgpIb3dldmVyLCBpbiB0aGUgY2FzZSB0
+aGF0IGFuIGV4Y2VwdGlvbiBkaWQgb2NjdXIsIHdlIHdhbnQgdG8gc2tpcCAncG9zdCcgYXMKaXQn
+cyBsb2dpY2FsbHkgcGFydCBvZiB0aGUgb3BlcmF0aW9uIHdoaWNoIGhhZCBhbHJlYWR5IGZhaWxl
+ZC4gIFRoZXJlZm9yZSwgYWRkCmEgbmV3IHNraXAgbGFiZWwgYW5kIHVzZSB0aGF0IGZvciB0aGUg
+ZXhjZXB0aW9uIHJlY292ZXJ5IHBhdGguCgpUaGlzIGlzIFhTQS00NzAgLyBDVkUtMjAyNS0yNzQ2
+NQoKRml4ZXM6IDc5OTAzZTUwZGJhOSAoIng4NmVtdWw6IGNhdGNoIGV4Y2VwdGlvbnMgb2NjdXJy
+aW5nIGluIHN0dWJzIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
+cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNv
+bT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUvcHJpdmF0ZS5oIGIveGVu
+L2FyY2gveDg2L3g4Nl9lbXVsYXRlL3ByaXZhdGUuaAppbmRleCA0NjdiY2UzYzg0YjguLmE0YmEx
+YjNjMzkxOSAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L3g4Nl9lbXVsYXRlL3ByaXZhdGUuaAor
+KysgYi94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUvcHJpdmF0ZS5oCkBAIC03MTQsMTIgKzcxNCwx
+NSBAQCBzdHJ1Y3Qgc3R1Yl9leG4gewogICAgIHN0dWJfZXhuLmluZm8gPSAodW5pb24gc3R1Yl9l
+eGNlcHRpb25fdG9rZW4pIHsgLnJhdyA9IH4wIH07ICAgICAgICAgXAogICAgIHN0dWJfZXhuLmxp
+bmUgPSBfX0xJTkVfXzsgLyogVXRpbGl0eSBvdXR3ZWlnaHMgbGl2ZXBhdGNoaW5nIGNvc3QgKi8g
+XAogICAgIGJsb2NrX3NwZWN1bGF0aW9uKCk7IC8qIFNDU0IgKi8gICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgXAotICAgIGFzbSB2b2xhdGlsZSAoIHByZSAiXG5cdElORElSRUNU
+X0NBTEwgJVtzdHViXVxuXHQiIHBvc3QgIlxuIiAgICAgICAgXAorICAgIGFzbSB2b2xhdGlsZSAo
+IHByZSAiXG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAor
+ICAgICAgICAgICAgICAgICAgICJJTkRJUkVDVF9DQUxMICVbc3R1Yl1cbiIgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTHJldCU9OlxuXHQiICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgIHBv
+c3QgIlxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAg
+ICAgICAgICAgICAgICAgICIuTHNraXAlPTpcblx0IiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIucHVzaHNlY3Rpb24gLmZpeHVwLFwi
+YXhcIlxuIiAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTGZp
+eCU9OlxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAg
+ICAgICAgICAgICAgICJwb3AgJVtleG5dXG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgXAotICAgICAgICAgICAgICAgICAgICJqbXAgLkxyZXQlPVxuXHQiICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgICJqbXAgLkxz
+a2lwJT1cblx0IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAg
+ICAgICAgICAgICIucG9wc2VjdGlvblxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgXAogICAgICAgICAgICAgICAgICAgIF9BU01fRVhUQUJMRSguTHJldCU9LCAuTGZpeCU9
+KSAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgIDogW2V4bl0gIitn
+IiAoc3R1Yl9leG4uaW5mbykgQVNNX0NBTExfQ09OU1RSQUlOVCwgICAgXAo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa470-4.17.patch"
+Content-Disposition: attachment; filename="xsa470-4.17.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU3ViamVjdDog
+eDg2L2VtdWw6IEZpeCBleHRhYmxlIHJlZ2lzdHJhdGlvbiBpbiBpbnZva2Vfc3R1YigpCgpGb3Ig
+ZXhjZXB0aW9uIHJlY292ZXJ5IGluIHRoZSBzdHVicywgdGhlIHJlZ2lzdGVyZWQgYWRkcmVzcyBm
+b3IgZml4dXAgaXMgdGhlCnJldHVybiBhZGRyZXNzIG9mIHRoZSBDQUxMIGVudGVyaW5nIHRoZSBz
+dHViLgoKSW4gaW52b2tlX3N0dWIoKSwgdGhlICcuTHJldCU9OicgbGFiZWwgaXMgdGhlIHdyb25n
+IHNpZGUgb2YgdGhlICdwb3N0JwpwYXJhbWV0ZXIuICBUaGUgJ3Bvc3QnIHBhcmFtZXRlciBpcyBu
+b24tZW1wdHkgaW4gY2FzZXMgd2hlcmUgdGhlIGFyaXRobWV0aWMKZmxhZ3Mgb2YgdGhlIG9wZXJh
+dGlvbiBuZWVkIHJlY292ZXJpbmcuCgpTcGxpdCB0aGUgbGluZSB0byBzZXBhcmF0ZSAncHJlJyBh
+bmQgJ3Bvc3QnLCBtYWtpbmcgaXQgbW9yZSBvYnZpb3VzIHRoYXQgdGhlCnJldHVybiBhZGRyZXNz
+IGxhYmVsIHdhcyBpbiB0aGUgd3JvbmcgcG9zaXRpb24uCgpIb3dldmVyLCBpbiB0aGUgY2FzZSB0
+aGF0IGFuIGV4Y2VwdGlvbiBkaWQgb2NjdXIsIHdlIHdhbnQgdG8gc2tpcCAncG9zdCcgYXMKaXQn
+cyBsb2dpY2FsbHkgcGFydCBvZiB0aGUgb3BlcmF0aW9uIHdoaWNoIGhhZCBhbHJlYWR5IGZhaWxl
+ZC4gIFRoZXJlZm9yZSwgYWRkCmEgbmV3IHNraXAgbGFiZWwgYW5kIHVzZSB0aGF0IGZvciB0aGUg
+ZXhjZXB0aW9uIHJlY292ZXJ5IHBhdGguCgpUaGlzIGlzIFhTQS00NzAgLyBDVkUtMjAyNS0yNzQ2
+NQoKRml4ZXM6IDc5OTAzZTUwZGJhOSAoIng4NmVtdWw6IGNhdGNoIGV4Y2VwdGlvbnMgb2NjdXJy
+aW5nIGluIHN0dWJzIikKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3Bl
+cjNAY2l0cml4LmNvbT4KUmV2aWV3ZWQtYnk6IEphbiBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNv
+bT4KCmRpZmYgLS1naXQgYS94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUveDg2X2VtdWxhdGUuYyBi
+L3hlbi9hcmNoL3g4Ni94ODZfZW11bGF0ZS94ODZfZW11bGF0ZS5jCmluZGV4IGI1ZWNhMTM0MTBj
+ZC4uNWE2MWJhNjEzNjBkIDEwMDY0NAotLS0gYS94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUveDg2
+X2VtdWxhdGUuYworKysgYi94ZW4vYXJjaC94ODYveDg2X2VtdWxhdGUveDg2X2VtdWxhdGUuYwpA
+QCAtMTI1OCwxMiArMTI1OCwxNSBAQCBzdGF0aWMgaW5saW5lIGludCBta2VjKHVpbnQ4X3QgZSwg
+aW50MzJfdCBlYywgLi4uKQogICAgIHN0dWJfZXhuLmluZm8gPSAodW5pb24gc3R1Yl9leGNlcHRp
+b25fdG9rZW4pIHsgLnJhdyA9IH4wIH07ICAgICAgICAgXAogICAgIHN0dWJfZXhuLmxpbmUgPSBf
+X0xJTkVfXzsgLyogVXRpbGl0eSBvdXR3ZWlnaHMgbGl2ZXBhdGNoaW5nIGNvc3QgKi8gXAogICAg
+IGJsb2NrX3NwZWN1bGF0aW9uKCk7IC8qIFNDU0IgKi8gICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgXAotICAgIGFzbSB2b2xhdGlsZSAoIHByZSAiXG5cdElORElSRUNUX0NBTEwg
+JVtzdHViXVxuXHQiIHBvc3QgIlxuIiAgICAgICAgXAorICAgIGFzbSB2b2xhdGlsZSAoIHByZSAi
+XG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAg
+ICAgICAgICAgICAgICJJTkRJUkVDVF9DQUxMICVbc3R1Yl1cbiIgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTHJldCU9OlxuXHQiICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgIHBvc3QgIlxu
+XHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAg
+ICAgICAgICAgICIuTHNraXAlPTpcblx0IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgXAogICAgICAgICAgICAgICAgICAgICIucHVzaHNlY3Rpb24gLmZpeHVwLFwiYXhcIlxu
+IiAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgICIuTGZpeCU9Olxu
+XHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAg
+ICAgICAgICJwb3AgJVtleG5dXG5cdCIgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgXAotICAgICAgICAgICAgICAgICAgICJqbXAgLkxyZXQlPVxuXHQiICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgXAorICAgICAgICAgICAgICAgICAgICJqbXAgLkxza2lwJT1c
+blx0IiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAg
+ICAgICIucG9wc2VjdGlvblxuXHQiICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+XAogICAgICAgICAgICAgICAgICAgIF9BU01fRVhUQUJMRSguTHJldCU9LCAuTGZpeCU9KSAgICAg
+ICAgICAgICAgICAgICAgICAgXAogICAgICAgICAgICAgICAgICAgIDogW2V4bl0gIitnIiAoc3R1
+Yl9leG4uaW5mbykgQVNNX0NBTExfQ09OU1RSQUlOVCwgICAgXAo=
+
+--=separator--
