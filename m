@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1519" "Wednesday" "18" "March" "2015" "11:17:47" "+0300" "Solar Designer" "solar@openwall.com" "<20150318081747.GA18610@openwall.com>" "33" "Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" nil nil nil "3" "2015031808:17:47" "[oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases" (number mark "        solar@openwa Mar 18   33/1519  " thread-indent "\"Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases\"\n") "<20150317000005.GA3041@openwall.com>" ("<20150317000005.GA3041@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19946 invoked by uid 550); 18 Mar 2015 08:17:51 -0000
+Received: (qmail 4042 invoked by uid 550); 2 Jul 2025 13:05:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19927 invoked from network); 18 Mar 2015 08:17:50 -0000
-Message-ID: <20150318081747.GA18610@openwall.com>
-References: <20150317000005.GA3041@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150317000005.GA3041@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: Mark J Cox <mjc@redhat.com>
-Date: Wed, 18 Mar 2015 11:17:47 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fwd: [openssl-announce] Forthcoming OpenSSL releases
+x-ms-reactions: disallow
+Received: (qmail 27977 invoked from network); 2 Jul 2025 09:42:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751449314; x=1752054114; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cyaIFMTvsDnIp0tBlEgaQpKbsABXy1WjysFgpCWrBkQ=;
+        b=Azsr+QPGNyD0v3tyf6GUFAdcmkXlzVcLBH9tIdArm6n3nkLDI3BNgTx7Eac+Pc+RR+
+         CUQuLYn4ZKPi1wgrMpNriztMnGL/QA0WJM0HJUISPC0+p2tQchs0PpZJioI4BeMlhbiy
+         7DoiM0650HSL6ppp9Tg74xEegTlTi7VgyAwBgs5pA2pLJQIhDIP2WYWx7ETlOwsdsi6B
+         G6QMUELb43GB7W0RZXrXB2SAHoxNDg9r4RRtWZEag1vGV3Lz1WqVg+yexv0x/8fJrE0H
+         o8ZGHlgjlVu+wLcwtOfZbcq67HyKfIqCkJ7JveKo+3xSMibYi5GjX0dvOZJ2s9gI8mnT
+         Hacg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751449314; x=1752054114;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cyaIFMTvsDnIp0tBlEgaQpKbsABXy1WjysFgpCWrBkQ=;
+        b=lCYRjOA8h7/7KYiCJrN7q5BJ6cACbuDx8vUG4nq6sgHUXGmV9KLZgI/fEJ299+SxV9
+         wWKo2p9rdm55dOA1mEiuNVPRtt8sU8fpuETZGbYK02G3MCegN8+phlPHqVHHmPbxwjw/
+         6xLAbx9r40FjpB1QqMBtYHMj75NRHoc1Dni2VUkN5HDZwMeZ3eshVrJwZ+ASyXTuGig2
+         KS3tDhO1uVnuIecUX7qUz3Y6yZ378ze9RiznvTEtmhOwfj+ZUPjCryirRnEk6uTwIaVl
+         1k69JLFWSgkC8BdT9KUOXfoqaNn4ELDWIh6BLsGaN2fLjMDE9DdK6qmMWvAjd3uwo4It
+         EIEQ==
+X-Gm-Message-State: AOJu0YxmXAIpNqh549A8v24+GvMkiampA4OdCjHcySSNbj2p5YTvFYYn
+	QycnMcsUZPcq4FzTu7MsxcaJItOjDRkODNNRhuVcMy73XScKC2LowPRFfd5q0iAtcyG49DLVs5K
+	OKW4gNFC/8osHz5R+IbxMFwTZPpMYxo3Sgg3SrCxpOuAD
+X-Gm-Gg: ASbGnctRoyxFLkfSo9oinBZhZGzXJeqbALjVx5oFpvptA7xogLjJhYNy3cUL7R0wbtE
+	dtGqZOnvonlGqXcofmW7Oy49kogfERen4V7QTBv57Fu/23GRgbmXWdt/5/DhqZHAJJXnCmJT+Oz
+	ovFER3XwwKx5KZr2+KAY2t2ZzRMYp/vc+smDfPsmXa2Q==
+X-Google-Smtp-Source: AGHT+IFU/N4FDzxD9xqP40I2kU6LbsDQYZD6+ugmAzaMoTKeiK+NHZGheRv15VvKtC2I7PRZJR9IRp9Ac6t+D6qXYYk=
+X-Received: by 2002:a17:90b:58c7:b0:311:eb85:96ea with SMTP id
+ 98e67ed59e1d1-31a90b368c9mr3784401a91.9.1751449313446; Wed, 02 Jul 2025
+ 02:41:53 -0700 (PDT)
+MIME-Version: 1.0
+From: tianshuo han <hantianshuo233@gmail.com>
+Date: Wed, 2 Jul 2025 17:41:42 +0800
+X-Gm-Features: Ac12FXwArVeJZ1rvaCeSN2rUumbVGBxexuKc9S5zxRFGdqLaU8iq2lxBMl1qbeE
+Message-ID: <CAG=tWCQOnWd+7OBpc6RciWTeZbB91=sWSpANRhZOZY9PG-Lgow@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2025-38089: Linux kernel: NFS server remote DoS via NULL pointer dereference
 
-Mark -
+Hello,
 
-It was suggested to me off-list that it'd be helpful to publicly specify
-not only the date, but also the time (and timezone) of the forthcoming
-OpenSSL releases.  Can you?
+A security vulnerability in the Linux kernel SUNRPC subsystem has been
+assigned CVE-2025-38089. This issue allows a remote attacker to
+trigger a kernel crash (NULL pointer dereference) by sending a
+specially crafted RPC request to an affected NFS server.
 
-All -
+Details:
+- CVE: CVE-2025-38089
+- Subsystem: NFS/SUNRPC
+- Impact: Remote Denial of Service (kernel crash)
+- Affected versions: Mainline Linux kernel since commit
+29cd2927fb914cc53b5ba4f67d2b74695c994ba4 up to and including versions
+before the fix
+- Fixed in: Upstream commit 94d10a4dba0bc482f2b01e39f06d5513d0f75742
 
-On Tue, Mar 17, 2015 at 03:00:05AM +0300, Solar Designer wrote:
-> I think the limited public info on this should be in here ASAP, hence
-> the forward.
+Description:
+A remote attacker can cause a NULL pointer dereference and crash the
+kernel by sending a specially crafted RPC request to a vulnerable NFS
+server. The vulnerability is due to improper handling of the
+`rqstp->rq_accept_statp` pointer, which may remain NULL and be
+dereferenced in error handling code paths. In some cases, this could
+also result in a use-after-free.
 
-References to commits for CVE-2015-0209, CVE-2015-0285, CVE-2015-0288:
+Reproducer:
+A public proof-of-concept (PoC) is available at:
+https://github.com/keymaker-arch/NFSundown
 
-https://twitter.com/Sh1bumi/status/577904223444168704
+Timeline:
+- Reported to Linux kernel community: 2025-06-16
+- Patch merged upstream: 2025-06-22
+- CVE assigned and public: 2025-06-30
 
-Mark's reply:
-
-<@iamamoose> @Sh1bumi those are all "low severity" classification, previously committed issues, which will be included in roll up on Thursday too.
-
-<@iamamoose> @Sp1l As per the security policy, low severity issues (and some moderates) get fixed in public as and when -- those issues are known public
-<@iamamoose> @Sp1l CVE-2015-0285 is https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=e1b568dd2462f7cacf98f3d117936c34e2849a6b CVE-2015-0288 https://git.openssl.org/gitweb/?p=openssl.git;a=commit;h=28a00bcd8e318da18031b2ac8778c64147cd54f9
-
-On vendor notifications so far:
-
-<iamamoose> Per https://www.openssl.org/about/secpolicy.html we've provided details of the #openssl vulns to distros@ vendors on request, also now to LibreSSL.
-<@iamamoose> @iamamoose we've also provided details today to Apple and IBM who are not currently distros@ members #openssl
-
-BTW, OpenSSL Security Policy at
-https://www.openssl.org/about/secpolicy.html specifies what kind of
-issues the three severity classifications may correspond to.
-
-Alexander
+Best regards,
+Tianshuo Han
