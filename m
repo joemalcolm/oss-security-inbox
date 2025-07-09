@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["980" "Tuesday" "1" "March" "2016" "17:11:55" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160301161155.GA4786@eldamar.local>" "31" "[oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols" "^Cc:" nil nil "3" "2016030116:11:55" "[oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols" (number mark "        carnil@debia Mar  1   31/980   " thread-indent "\"[oss-security] CVE Request: Linux: aio write triggers integer overflow in some network protocols\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30191 invoked by uid 550); 1 Mar 2016 16:12:11 -0000
+Received: (qmail 12116 invoked by uid 550); 9 Jul 2025 06:48:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30173 invoked from network); 1 Mar 2016 16:12:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=l78j5JPRx2vKk7WUDJbUkwzj+l8d+E1OrrQRS05N9MU=;
-        b=pgiCzxydcV6yp9u/b6U6l7XPTp/rBzqUjUD1TqKIOjhA2dcheUEITPNAnYL5AtTyAe
-         gyWyLdS0b1OOgPwxTGFgG/IeuLRP+GG1YZPUNXQO+vl5AEZhzjsfFC7vO0S/Nob3MJrk
-         d+BMhFB9rZFlnYK8Z27bQOhRtTO7qX7TEm4VZSzLCC0r+liZQvNYWoYuSn+LEPEd3Pp+
-         C78jZFxUpvHwmgBe+AdW42tZ7x5fEUWTz6I4dIB8X9kvMNO86ANfbkE0X/uGs1qBi56S
-         WFB1y983ZSCibjUjxBS4q2zq14hQjVxIUSiEWvaJG2Ipbk/HyuXAHoh6wwpB2waP9hRz
-         OG2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=l78j5JPRx2vKk7WUDJbUkwzj+l8d+E1OrrQRS05N9MU=;
-        b=aSGW+2xKt+iw/aDDbJJXqwFrOEG/RPh1272UCT/IDnCq6cY1MfQ37Vj2KLQgeWd7NQ
-         CapGfypOVVu7awvz6k4F2RV1EN+YUUqOrgari4Bo53fXYP1lpTmShSKFc3zCWS4hqYNV
-         vZGcAEPQeCDfxCg9vq/gGmJW/luo7TJmSfPdqjLFFYLe3xlr2r1+GX1vF8L6CzPdAPU+
-         SJ0MxPbJ+OmV0QOBKej9DzGsGigT60iLObNp37+sdvGb3eR/5XDJf+HWjW5wHQN3Qgzy
-         ApfbSw1Q7FzVV1hbJH3LVVoI4ZPtVKrcXDaZIdV/PamvWmpzn8kWuXNG9OWmBeNF/+Ep
-         DcwQ==
-X-Gm-Message-State: AD7BkJKb4L1+t4o+tbvNRUOw4rRdpjl+RM8eO+qv7sMwuehHVlefFyfOAMyjnRDhx/q+Cw==
-X-Received: by 10.28.98.84 with SMTP id w81mr4477384wmb.57.1456848719395;
-        Tue, 01 Mar 2016 08:11:59 -0800 (PST)
-Message-ID: <20160301161155.GA4786@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Ben Hutchings <benh@debian.org>
-Date: Tue, 1 Mar 2016 17:11:55 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 12082 invoked from network); 9 Jul 2025 06:48:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752043729; x=1752648529; darn=lists.openwall.com;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:sender:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vE9roNcxEJtpPXVXAndZXYpRnjqhYsjaB9p4w/gyYqI=;
+        b=WWVCVLGbxaOJC/rWblAFA1UB36U3OsiviDBHcSevfNmXcH3m/DijR2Q2zkv1JCFqHU
+         q4wk5CIvqQDVCKJeF2d671wL11dISXvQPOSexb0vlLgHghGXcm6uyqK/vA5vmdvIUX4g
+         IY8pZuiXd7N+5/y3JL6ZSS7imr/UqIpPUkpSens1qg1EOV+2+eOzWF4/FqD57Zgu0xFx
+         AiHeU4akgVxZWdJTu8EU/iQprmU979VALKDC3CK8woAvZ1OTkkJhfuFZ9XDwRRtqAEKc
+         g+EYY7+HVVfsjZlgc/Tqawcbt++00KoLK2F5Q79a87kVzYjkwvTYVoZhb8Rw/fAvEZv0
+         CaYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752043729; x=1752648529;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vE9roNcxEJtpPXVXAndZXYpRnjqhYsjaB9p4w/gyYqI=;
+        b=nIfMYRivl3uIKYODP5pBE7j2modaMcfxGNAvAxKhiq6oObVdc5qdCm2V6z07et9qJG
+         JIJGwrdxsrALCRTOCwYIuF0gLOW3us2tdaVRIbfxkQr0sVG2dsGqCHx2Wk3MpGpb5y+1
+         l9m3y5C34q3fuJuWfCGqYppfl7Omhy5BB9IUMoOFTlmOTtsXRAHRMU4WSxMux903Kd/x
+         lefpojQfIh5Gj2zaCx0TbKNNshxpkNxoLnTp2HHYUhy7cLK5cmjp5HHbzV+v1XYrLMUf
+         bFMdAYyVymHn5WW9O6aeiIyjmEi2g741Ww8fvNv3Ug/80IWdKSAVRLBbXidRdUITDH9U
+         qEpg==
+X-Gm-Message-State: AOJu0YwoEFsHunhgx6AYTT7DepUkXrmo28xAXwfsfpBDAMjt+J17rirV
+	tSc4sltbNym+OZkc1i0klGT/tkSYGzqUVC+tz4EVPUPtCUlSkNNWqNR37QzIj6Mt
+X-Gm-Gg: ASbGncuO/qSQ39CFYot1Giu7LBFqhDpB5smRIDJTen8e6JIeYZBBHlkuIzz46CF+rSM
+	YJVcgqeIaES0/zLBRD7zrYtu5YxEiKa2QtguRckq0TWWZlcMVxDSepnFljNamMmaUq65qisDTfc
+	KoeId7xAYY99M8X8aWHAzkJYBN+mKvQa4q1kDpYZ6VeUehG58HLsHDFN8+DmjFvS5ofadjQRRna
+	wsp08VgQmWfaLLde2kkb6sEvDnizwMPStf1ioQAYVhe9V1DgmSCt9D1HnNErRVN12fJRYLEoo5L
+	rEAVaLbOhiLFOL6GF+1h29TlJbDzSDUk81r4rG1g1v2QXOqPRX/IVMMkQkwH/4C877GfA+MJpGT
+	l+GV0/ozKc6GLSalsFOidaRV9XrV8fA==
+X-Google-Smtp-Source: AGHT+IFt6LYiWKC4sdnmdviuFOcEZW0Zr3blMjIuBWFVJ/z1mI/65be/049woi2pxRbk7l+J6CfwQQ==
+X-Received: by 2002:a05:600c:45d2:b0:43c:e7ae:4bcf with SMTP id 5b1f17b1804b1-454d5245a1cmr10789675e9.0.1752043728375;
+        Tue, 08 Jul 2025 23:48:48 -0700 (PDT)
 Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] CVE Request: Linux: aio write triggers integer overflow in some
- network protocols
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+Date: Wed, 9 Jul 2025 08:48:46 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aG4Qznvr7VelIZMA@eldamar.lan>
+References: <1914b7d5-1e22-4c3d-94f8-ca2814a1853an@googlegroups.com>
+ <14ea0e60-36d4-4267-8614-3d6b455b7fabn@googlegroups.com>
+ <90a34ec4-4572-4e9e-9076-cd3e9d5540c4n@googlegroups.com>
+ <ce22eb2a-b13c-4a58-9175-6900615b8187n@googlegroups.com>
+ <20250709005400.GA17181@openwall.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250709005400.GA17181@openwall.com>
+Subject: Re: [oss-security] Fwd: Node.js security updates for all active
+ release lines, May 2025
 
-Hi
+Hi,
 
-We would like to request a CVE for the following issue in the Linux
-kernel:
+On Wed, Jul 09, 2025 at 02:54:00AM +0200, Solar Designer wrote:
+> On Tue, Jul 08, 2025 at 08:16:19AM -0700, Rafael Gonzaga wrote:
+> > ---------- Mensagem encaminhada ---------
+> > De: Rafael Gonzaga <work@rafaelgss.dev>
+> > Data: quarta-feira, 14 de maio de 2025 às 18:47:12 UTC-3
+> > Assunto: Re: Node.js security updates for all active release lines, May 2025
+> > Para: nodejs-sec <nodejs-sec@googlegroups.com>
+> > 
+> > The planned security releases are now available. You can read more about 
+> > the details at 
+> > https://nodejs.org/en/blog/vulnerability/may-2025-security-releases
+> 
+> I am puzzled.  Didn't we bring this to oss-security already back in May? -
+> 
+> https://www.openwall.com/lists/oss-security/2025/05/14/10
 
-https://git.kernel.org/linus/4c185ce06dca14f5cea192f5a2c981ef50663f2b (v4.1-rc1)
+I guess the intention was to forward the heads-up for the july
+updates?
 
-For the linux-stable:
-
-https://git.kernel.org/cgit/linux/kernel/git/stable/linux-stable.git/commit?id=c4f4b82694fe48b02f7a881a1797131a6dad1364
-
-For an upcoming Linux DSA in Debian we would use something like:
-
-> Ben Hawkes of Google Project Zero reported that the AIO interface
-> permitted reading or writing 2 GiB of data or more in a single
-> chunk, which could lead to an integer overflow when applied to
-> certain filesystems, socket or device types.  The full security
-> impact has not been evaluated.
-
-The issue was initially already addressed via
-
-https://git.kernel.org/linus/a70b52ec1aaeaf60f4739edb1b422827cb6f3893 (v3.5-rc1)
-
-but then opened again due to
-
-https://git.kernel.org/linus/41ef4eb8eef8d06bc1399e7b00c940d771554711 (v3.10-rc1)
-
-Can you please assign a CVE id for this issue?
+https://nodejs.org/en/blog/vulnerability/july-2025-security-releases/
 
 Regards,
 Salvatore
