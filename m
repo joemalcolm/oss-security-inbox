@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2227" "Tuesday" "7" "April" "2015" "10:49:21" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<55240A91.8010506@redhat.com>" "61" "Re: [oss-security] ntp security release today" nil nil nil "4" "2015040716:49:21" "[oss-security] ntp security release today" (number mark "        kseifried@re Apr  7   61/2227  " thread-indent "\"Re: [oss-security] ntp security release today\"\n") "<20150407154845.GE23958@suse.de>" ("<20150407154845.GE23958@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16267 invoked by uid 550); 7 Apr 2015 16:49:36 -0000
+Received: (qmail 19682 invoked by uid 550); 10 Jul 2025 17:35:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +6,49 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16238 invoked from network); 7 Apr 2015 16:49:35 -0000
-Message-ID: <55240A91.8010506@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-References: <20150407154845.GE23958@suse.de>
-In-Reply-To: <20150407154845.GE23958@suse.de>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Date: Tue, 07 Apr 2015 10:49:21 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ntp security release today
+x-ms-reactions: disallow
+Received: (qmail 3407 invoked from network); 10 Jul 2025 17:17:13 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
 To: oss-security@lists.openwall.com
-
---0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva
-Content-Type: text/plain; charset=windows-1252
+Message-ID: <4b5a13c9-7e55-f0cd-cf17-289b92faeab0@apache.org>
 Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Jul 2025 17:13:54 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-47252: Apache HTTP Server: mod_ssl error log variable
+ escaping 
 
-On 04/07/2015 09:48 AM, Marcus Meissner wrote:
-> Hi,
->=20
-> ntp.org has released ntp advisories today, CVE-2015-1798 and CVE-2015-179=
-9, CERT VU#374268
->=20
-> http://support.ntp.org/bin/view/Main/SecurityNotice#Recent_Vulnerabilities
->=20
-> CVE-2015-1798 seems version limited to
-> Affects: All NTP4 releases starting with ntp-4.2.5p99 up to but not inclu=
-ding ntp-4.2.8p2 where the installation uses symmetric keys to authenticate=
- remote associations. .
->=20
-> Ciao, Marcus
+Severity: low=20
 
-Was just about to post a note about this, you beat me to it =3D)
+Affected versions:
 
-These issues were discovered by Miroslav Lichv=E1r of Red Hat, more info
-in our BZ's:
+- Apache HTTP Server 2.4 through 2.4.63
 
-https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1798
-https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1799
+Description:
 
-Also note that CVE-2015-1799 also affects chrony, different code base so
-different CVE:
+Insufficient escaping of user-supplied data in mod_ssl in Apache HTTP Serve=
+r 2.4.63 and earlier allows an untrusted SSL/TLS client to insert escape ch=
+aracters into log files in some configurations.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=3DCVE-2015-1853
+In a logging configuration where CustomLog is used with "%{varname}x" or "%=
+{varname}c" to log variables provided by mod_ssl such as SSL_TLS_SNI, no es=
+caping is performed by either mod_log_config or mod_ssl and unsanitized dat=
+a provided by the client may appear in log files.
 
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
+Credit:
 
+John Runyon (finder)
 
---0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+References:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-47252
 
-iQIcBAEBAgAGBQJVJAqRAAoJEBYNRVNeJnmTOBgP/0Za0dLa5KqbYRuzY6RKgcYH
-lq/2Zv38mfos1gcE4KoBb9oj6u+Ludp/CXtZTPgJtI+sS+57e/OGloI0uKhjkrMP
-XSuyI8X9uoBd/ndAXosOxKb6yMFL4i8zwDcBdKFKZQ9A3DrG5IcmdbCZF7Fye2qI
-DPwZtLfEnOCtdgfL//72M0ngCCUwvBiwRPW+TZ9RQrt5zcmFY66wdv+QG36bknxo
-SqZhvd3PvPbxoIfhdlvs6X4haJlLOI5j5ILBaIVMt0KGG/YpXdVgIZCa1qnYl6rW
-6SMYNxr0MHqJ7zBE+FtZ/orLpiLfrZEtvN2cQrQM2sbaVWHVc+YyN4Ar+yJVWkXV
-YeuEol+jh9R4IpkAOo0rKLyg7tFA2sUkOYbpmbJPDF/GZYGFNoBITe2kWKzMKl3O
-G8qiq6EX5doEDSxL46HPE8/wxrkov6Ym3D6T60Ywxz6NqilXagWQ5vx/YVmxz81g
-ArKjgN7Mn+K5omG/FZw//MBFonLtwWYUMPJRzinUizZ+qadYtwg2zycTbEo+szuq
-AYdJO0iOLbauZWPQxuwSL3CiipC1RoGQgQ8dwOVsTxvUpUb8MZaSERhn0pwVGqFy
-pZUjhH3kp9RKSqAaXh8p6C3rO4n1Kr6hY/8XMaOEA76P0a2mTJwDB/kXGr3ErZKL
-+Ri2xr95R1RQ4xzOR3gk
-=g0uL
------END PGP SIGNATURE-----
+Timeline:
 
---0DvCXoNLbL7kIw0Ro9BT9C22VaFbQflva--
+2024-09-18: reported
+2025-07-07: 2.4.x revision 1927042
+
