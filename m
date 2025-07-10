@@ -1,4 +1,4 @@
-Received: (qmail 1709 invoked by uid 550); 8 Mar 2023 12:02:07 -0000
+Received: (qmail 24550 invoked by uid 550); 10 Jul 2025 17:36:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +7,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23583 invoked from network); 8 Mar 2023 11:37:41 -0000
-Message-ID: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
-Date: Wed, 8 Mar 2023 12:37:29 +0100
+x-ms-reactions: disallow
+Received: (qmail 3723 invoked from network); 10 Jul 2025 17:22:32 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <5bbebf77-c7f8-fe13-223e-6d0a9eb85779@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Jul 2025 17:14:18 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-From: Gabriel Corona <gabriel.corona@free.fr>
-Content-Language: fr, en-US
-To: oss-security@lists.openwall.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------OOxcastI84GadyiX0810tE39"
-Subject: [oss-security] Shell command and Emacs Lisp code injection in
- emacsclient-mail.desktop
+Subject: [oss-security] CVE-2025-49812: Apache HTTP Server: mod_ssl TLS upgrade attack 
 
---------------OOxcastI84GadyiX0810tE39
-Content-Type: multipart/mixed; boundary="------------ODgiXUWhDc0RXcqNN9r05W99";
- protected-headers="v1"
-From: Gabriel Corona <gabriel.corona@free.fr>
-To: oss-security@lists.openwall.com
-Message-ID: <80616781-a635-02a0-2aa3-a8afc60e6c4c@free.fr>
-Subject: Shell command and Emacs Lisp code injection in
- emacsclient-mail.desktop
+Severity: moderate=20
 
---------------ODgiXUWhDc0RXcqNN9r05W99
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Affected versions:
 
-ZW1hY3NjbGllbnQtbWFpbC5kZXNrdG9wIGlzIHZ1bG5lcmFibGUgdG8gc2hl
-bGwgY29tbWFuZA0KaW5qZWN0aW9ucyBhbmQgRW1hY3MgTGlzcCBpbmplY3Rp
-b25zIHRocm91Z2ggYSBjcmFmdGVkDQptYWlsdG86IFVSSS4NCg0KVGhpcyBo
-YXMgYmVlbiBpbnRyb2R1Y2VkIGluIEVtYWNzIDI4LjE6DQoNCmh0dHA6Ly9n
-aXQuc2F2YW5uYWguZ251Lm9yZy9jZ2l0L2VtYWNzLmdpdC9jb21taXQvP2g9
-ZW1hY3MtMjkmaWQ9YjFiMDVjODI4ZDY3OTMwYmIzYjg5N2ZlOThlMTk5MmRi
-NDJjZjIzYw0KDQpBIGZpeCBmb3Igc2hlbGwgY29tbWFuZCBpbmplY3Rpb24g
-aXMgY3VycmVudGx5IGluY2x1ZGVkDQppbiB0aGUgdXBjb21pbmcgMjguMyBi
-cmFuY2g6DQoNCmh0dHA6Ly9naXQuc2F2YW5uYWguZ251Lm9yZy9jZ2l0L2Vt
-YWNzLmdpdC9jb21taXQvP2g9ZW1hY3MtMjkmaWQ9ZDMyMDkxMTk5YWU1ZGU1
-OTBhODNmMTU0MmEwMWQ3NWZiYTAwMDQ2Nw0KDQpBIGZpeCBmb3IgYm90aCBp
-cyBjdXJyZW50bHkgaW5jbHVkZWQgaW4gdGhlIHVwY29taW5nIDI5LjEgYnJh
-bmNoOg0KDQpodHRwOi8vZ2l0LnNhdmFubmFoLmdudS5vcmcvY2dpdC9lbWFj
-cy5naXQvY29tbWl0Lz9oPWVtYWNzLTI5JmlkPTNjMTY5M2QwOGIwYTcxZDQw
-YTc3ZTdiNDBjMGViYzQyZGNhMmQyY2MNCg==
+- Apache HTTP Server through 2.4.63
 
---------------ODgiXUWhDc0RXcqNN9r05W99--
+Description:
 
---------------OOxcastI84GadyiX0810tE39
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+In some mod_ssl configurations on Apache HTTP Server versions through to 2.=
+4.63, an HTTP desynchronisation attack allows a man-in-the-middle attacker =
+to hijack an HTTP session via a TLS upgrade.
 
------BEGIN PGP SIGNATURE-----
+Only configurations using "SSLEngine optional" to enable TLS upgrades are a=
+ffected. Users are recommended to upgrade to version 2.4.64, which removes =
+support for TLS upgrade.
 
-wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmQIc3kFAwAAAAAACgkQIWPS9KpGc+iq
-+BAAhIks6pZJivB4euEeu8jnYEZzX0v9XGJZgyUXkFrfZHjJKFpcjAYRpSIIIfSSefTLJspH6/Lf
-hZng/tHDztJNYWmZMfY+5JXnpoFeRG/SW/qkHEfebUOZWHfykPFER6ELPeCU5mGYjNXyil2Skg1P
-bbJQYn6SxntdHWtrlMrdf1tetiGu7p8tnqhZnS0svhlxOXzL36y79d1Ee3MFlJgCrm5Wew9hnhkL
-25ov+Xe7k6Gh8GYMEgQfzS5PfAo8x2KSL8TjDW4WgBaoYG/lQtF/ru+q8t6aA3K2llNOxuNQGdvq
-wzzBbT7GNNYzt5kvm1YlE6hhzg6bjpMM65N4zRr1qhtTy5tg8PkL8wfUuoFm+CunUrGbpGKqRXD4
-B/z2T4gYJl4rp6pmCnrBPM1i8oIJWaPJotQxcMf5tSgRYT1TQldtF26rkcXI2zmsTj+UXzr1QhIX
-GgxIM2f+7jNnYOYAGDpUJYZs1PWZaEM43EGSNVqFUWLDKrNz9WCxISX2c6f9oPr1Q1Jbum4SWp2d
-DmGbX9ity7LF3Ij9DQjyMBmD98kqaXT+qoKWrf+1cjLXyrkAf0sSItObYql6jwy/yDYvt0GRl9hg
-nVpMm5+Dswqdtdz9t9Kh1P0UpzmkZFqtaRf3QLC3EWYGz+crUZ9ngz1fyW1hr9T/Zj/ZbOFZwjNg
-NTI=
-=5cQt
------END PGP SIGNATURE-----
+Credit:
 
---------------OOxcastI84GadyiX0810tE39--
+Robert Merget (Technology Innovation Institute) (finder)
+Nurullah Erinola (Ruhr University Bochum) (finder)
+Marcel Maehren (Ruhr University Bochum) (finder)
+Lukas Knittel (Ruhr University Bochum) (finder)
+Sven Hebrok (Paderborn University) (finder)
+Marcus Brinkmann (Ruhr University Bochum) (finder)
+Juraj Somorovsky (Paderborn University) (finder)
+J=C3=B6rg Schwenk (Ruhr University Bochum) (finder)
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-49812
+
+Timeline:
+
+2025-04-22: Report received
+2025-07-07: 2.4.x revision 1927045
+
