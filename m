@@ -1,4 +1,4 @@
-Received: (qmail 31909 invoked by uid 550); 11 Dec 2023 00:43:26 -0000
+Received: (qmail 16293 invoked by uid 550); 10 Jul 2025 17:35:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,121 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30215 invoked from network); 10 Dec 2023 22:59:43 -0000
-From: Peter Korsgaard <peter@korsgaard.com>
+x-ms-reactions: disallow
+Received: (qmail 18261 invoked from network); 10 Jul 2025 17:14:16 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
 To: oss-security@lists.openwall.com
-Date: Sun, 10 Dec 2023 23:59:47 +0100
-Message-ID: <87edftoe8s.fsf@48ers.dk>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+Message-ID: <84cbcd48-3bf5-0623-0d72-97008c12add1@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 10 Jul 2025 17:12:36 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-GND-Sasl: peter@korsgaard.com
-Subject: [oss-security] Buildroot: Talos download hash verification vulnerabilities
+Subject: [oss-security] CVE-2024-43204: Apache HTTP Server: SSRF with mod_headers setting
+ Content-Type header 
 
-Hello,
+Severity: low=20
 
-Talos recently published two vulnerability reports related to the hash
-verification of sources downloaded by Buildroot. These issues are fixed
-in Buildroot 2023.02.8 / 2023.08.4 / 2023.11.
+Affected versions:
 
-The reports are:
+- Apache HTTP Server 2.4.0 through 2.4.63
 
-https://talosintelligence.com/vulnerability_reports/TALOS-2023-1844
+Description:
 
-CVE-2023-45841,CVE-2023-45842,CVE-2023-45838,CVE-2023-45839,CVE-2023-45840
+SSRF in Apache HTTP Server with mod_proxy loaded allows an attacker to send=
+ outbound proxy requests to a URL controlled by the attacker.=C2=A0 Require=
+s an unlikely configuration where mod_headers is configured to modify the C=
+ontent-Type request or response header with a value provided in the HTTP re=
+quest.
 
-Multiple data integrity vulnerabilities exist in the package hash
-checking functionality of Buildroot 2023.08.1 and Buildroot dev commit
-622698d7847. A specially crafted man-in-the-middle attack can lead to
-arbitrary command execution in the builder.
+Users are recommended to upgrade to version 2.4.64 which fixes this issue.
 
-And:
+References:
 
-https://talosintelligence.com/vulnerability_reports/TALOS-2023-1845
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-43204
 
-CVE-2023-43608
+Timeline:
 
-A data integrity vulnerability exists in the BR_NO_CHECK_HASH_FOR
-functionality of Buildroot 2023.08.1 and dev commit 622698d7847. A
-specially crafted man-in-the-middle attack can lead to arbitrary command
-execution in the builder.
+2024-08-07: reported
+2025-07-07: 2.4.x revision
 
-
-A summary describing the fixes and new features for handling download
-hashes for custom package locations and versions has been posted to the
-mailing list:
-
-https://lore.kernel.org/buildroot/87y1e7sq4u.fsf@48ers.dk/T/#u
-
-(Included here in full):
-
-Talos recently reported a number of security vulnerabilities in the
-package download hash checking in Buildroot, and these are now public
-at:
-
-https://talosintelligence.com/vulnerability_reports/TALOS-2023-1844
-https://talosintelligence.com/vulnerability_reports/TALOS-2023-1845
-
-A small number of packages did not have a .hash file, meaning that the
-downloaded sources were not verified - And for aufs + aufs-util they
-were downloaded from a http:// site, so conceptually vulnerable to a man
-in the middle attack.
-
-aufs/aufs-utils were changed to fetch from https by:
-
-https://gitlab.com/buildroot.org/buildroot/-/commit/f2a590750f5bedcee48ce7beb8f35356b42eda11
-https://gitlab.com/buildroot.org/buildroot/-/commit/99d525028f969220719a4e6bcd694f7d9cfd5b67
-
-The fallback download location on source.buildroot.net was changed to
-use https:// by:
-
-https://gitlab.com/buildroot.org/buildroot/-/commit/05296ced369bab8877efa624f3d9b4d201ba5b38
-
-Hash files for riscv64-elf-toolchain and mxsldr were added by:
-
-https://gitlab.com/buildroot.org/buildroot/-/commit/cf2dcaa1ecede670a0bc54841652a0e3bea5c744
-https://gitlab.com/buildroot.org/buildroot/-/commit/fefcfddc5e6a265c66adbdff615558f99133f148
-
-Which are all included in 2023.02.7 / 2023.08.3 / 2023.11.
-
-
-Some packages allow a custom version or even a custom upstream location
-(E.G. Linux, U-Boot, versal-firmware, ..). For those custom versions
-Buildroot naturally cannot provide the expected hash, so instead we have
-added support for providing hashes for those files in the
-BR2_GLOBAL_PATCH_DIR location and added a
-BR2_DOWNLOAD_FORCE_CHECK_HASHES option to enforce hash checking (and
-fail if missing/invalid) for all downloads. This was added by:
-
-https://gitlab.com/buildroot.org/buildroot/-/commit/5d36710e36fc4698c8fae71675bcff7395246006
-https://gitlab.com/buildroot.org/buildroot/-/commit/e091e31831122b60b084bd755e94df4dfe7188d2
-
-To make it easier to manage these custom hash files a
-utils/add-custom-hashes helper script has been added by:
-
-https://gitlab.com/buildroot.org/buildroot/-/commit/4984d0f230d0962270beb195966603f1d5a56300
-
-Which are all included in 2023.02.7 / 2023.08.3 / 2023.11.
-
-See the documentation for further details about this feature:
-
-https://buildroot.org/downloads/manual/manual.html#_adding_project_specific_patches_and_hashes
-
-Notice that it is up to the user of Buildroot to use this feature to
-protect their custom downloads!
-
-
-Finally the toradex_apalis_imx6_defconfig fetched Linux and U-Boot from
-a git:// URL, so custom hashes were added in the BR2_GLOBAL_PATCH_DIR
-for those by:
-
-https://gitlab.com/buildroot.org/buildroot/-/commit/cdc9b8a3a75c4c39f23feb4e3b0e296786e0132c
-
-Which is included in 2023.02.8 / 2023.08.4 / 2023.11.
-
-
-Thanks to Talos for discovering and reporting these issues to us and to
-Yann E. MORIN for implementing the custom hash logic.
-
--- 
-Bye, Peter Korsgaard
