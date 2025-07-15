@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3350" "Saturday" "6" "October" "2018" "10:26:09" "+0800" "luo" "a4651386@163.com" "<35327fc3.2a64.166473248b9.Coremail.a4651386@163.com>" "60" "Re: [oss-security] CVE-2018-17977: CentOS ipsec remote denial of service vulnerability" "^Cc:" nil nil "10" "2018100602:26:09" "[oss-security] CVE-2018-17977: CentOS ipsec remote denial of service vulnerability" (number mark "        a4651386@163 Oct  6   60/3350  " thread-indent "\"Re: [oss-security] CVE-2018-17977: CentOS ipsec remote denial of service vulnerability\"\n") "<20181005165406.GA22722@openwall.com>" ("<3a997e85.7dd9.16644e8508d.Coremail.a4651386@163.com>" "<20181005165406.GA22722@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16243 invoked by uid 550); 6 Oct 2018 10:17:36 -0000
+Received: (qmail 32703 invoked by uid 550); 16 Jul 2025 09:48:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,94 +6,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28452 invoked from network); 6 Oct 2018 02:26:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=1FBww
-	Kj+z0MRpLroUvBBhBHgQqMdcOtuu3kUOsyai8A=; b=mg2Nj6XMCt9jSzZrf3/W3
-	lcVze3g2tVI6+Qfc8Z75qY6NxkDQ8Fki5fO9Z8fEk6ZNzQic+Jvsew7E6Q2O2r4K
-	Xlogx5wy9ZtGburzTr0osFZi4AUnKgnkRRXdyz73DJPQuijLL2fCwoAx4qA742Nr
-	2AQHBYzo00iOzSfnAdJtzI=
-X-Originating-IP: [223.72.96.160]
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version SP_ntes V3.5 build
- 20160729(86883.8884) Copyright (c) 2002-2018 www.mailtech.cn 163com
-In-Reply-To: <20181005165406.GA22722@openwall.com>
-References: <3a997e85.7dd9.16644e8508d.Coremail.a4651386@163.com>
- <20181005165406.GA22722@openwall.com>
-X-CM-CTRLDATA: I+nU8mZvb3Rlcl9odG09MjgyNzo1Ng==
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_41879_94296762.1538792769721"
-MIME-Version: 1.0
-Message-ID: <35327fc3.2a64.166473248b9.Coremail.a4651386@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:BsGowAB39+RBHbhboj6tAA--.62133W
-X-CM-SenderInfo: zduwkiqtywqiywtou0bp/1tbiOwHXpFXlf1aKdAAAsu
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Cc: oss-security@lists.openwall.com
-Date: Sat, 6 Oct 2018 10:26:09 +0800 (CST)
-From: luo  <a4651386@163.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2018-17977: CentOS ipsec remote denial of
- service vulnerability
-To: "Solar Designer" <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 28529 invoked from network); 15 Jul 2025 22:39:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rafaelgss.dev; s=google; t=1752619149; x=1753223949; darn=lists.openwall.com;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LegplgykZJRT0XpxAjxr8Kpe3zLo2A4VN21DY+Nduyw=;
+        b=df6xzYs40ZL3E5X35ss3MnebEfCN9ir3WdiptOJHr2YT6fsa7NlAz6CSFM1yX0zFPf
+         w49FZ9B2DSfCljP8NdiqefaDBrZ97nXCaYysefjy2CQYhE/CXM71M3i1IC7MlkZ6s9NF
+         Y1l1OTw2iUa2E/Thbc9VVyuyvxImrKtH9rAOHRYUKS8mBXYQ9w04PZogcj4EfM4ByI5g
+         CTHe2wCpw0Z7C9YfizlZdAsng3rGk4emu45LLRa4htWB+T0l0dXHtKBZK8bTPJ0HYMw+
+         P0kT6Y33kAHcSqsDvHA81fUzFNgdZ1eB0OyFGWgBJB4t7QBaYNl934qUCgwC9Ub/hkrT
+         9GiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752619149; x=1753223949;
+        h=mime-version:subject:references:in-reply-to:message-id:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LegplgykZJRT0XpxAjxr8Kpe3zLo2A4VN21DY+Nduyw=;
+        b=ZAv50VVdRMrs5ozYI1GXoITXJUB/PC/RcFaRATJuXfoBfYGB/GCXefSvPNvEdIje8D
+         9vyznHVRhya7ZEgL5DaJ984adqrgbNEDyOA0yg66sHd6pAKlCdoOQhzCY9d9IhJB4E2w
+         zngbg8IJBglzwTJ+LJZV6P5wImpG1rF7283TyVHvQ2JuFtA4oOGOnQUHp+Nq6wSa72cc
+         HbgdAHnmNH1dqqRu7mSRiM9aGIMrjW+dGazjc8LyRhkDzdq/chY61qHkabkw3bFrT4Tj
+         NrBia8ZfDPErIkt9jr5Jl0FlVFmgq6AfWGmWIOBoo8Z4cctb7yAKFd3lOrrLM6SWHKL3
+         DTjg==
+X-Gm-Message-State: AOJu0YzegsTxm68GJzQwV3FQPa6Vz9fVhrywyBiiyZEVkO61ENV9fHCo
+	oFgsJ6uu9rW1ZA4KNA9mDlRa6ds9ho/2od5Rk+9aJ3nL58qQ6glGVhXTkFepwbz0oT8ygFgv9Ve
+	F2c+sQ+891Hx6DI7BkX7FaA==
+X-Google-Smtp-Source: AGHT+IECGcTM/Kt4WTXUP6eNaKtzrfq7lDkrE8QREK6wE6bHvQwXCoBk1Zhq10T0q/TJ/lQADWB6yfK/2A==
+X-Received: by 2002:a05:6808:2120:b0:41c:e002:9bee with SMTP id 5614622812f47-41d038d83a9mr357709b6e.15.1752619148708;
+        Tue, 15 Jul 2025 15:39:08 -0700 (PDT)
+Date: Tue, 15 Jul 2025 15:39:08 -0700 (PDT)
+From: Rafael Gonzaga <work@rafaelgss.dev>
+To:  <oss-security@lists.openwall.com>
+Message-Id: <cddfe5d3-7852-4dd7-b72a-a66eaad89ce3n@googlegroups.com>
+In-Reply-To: <d3e03d37-ce0e-4aed-a060-c736fda4f073n@googlegroups.com>
+References: <30ff7c11-717d-479a-9c49-356a796c20abn@googlegroups.com>
+ <d3e03d37-ce0e-4aed-a060-c736fda4f073n@googlegroups.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_36432_1961546164.1752619148492"
+Subject: [oss-security] Fwd: Node.js security updates for all active release lines, July
+ 2025
 
-------=_Part_41879_94296762.1538792769721
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+------=_Part_36432_1961546164.1752619148492
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_36433_11833453.1752619148492"
 
-CgpPaCwgc29ycnksIG1heWJlIEkgZGlkbid0IGV4cGxhaW4gaXQuCgoKSSBh
-bSBkZW1vbnN0cmF0aW5nIHRoZSByZW1vdGUgZGVuaWFsIG9mIHNlcnZpY2Ug
-dnVsbmVyYWJpbGl0eSBpbiB0aGUgY2VudG9zIGRlc2t0b3AgdmVyc2lvbiBv
-ZiB0aGUgaXBzZWMgZmVhdHVyZS5JcHNlYyBpcyBjdXJyZW50bHkgdGhlIG1v
-c3Qgd2lkZWx5IHVzZWQgdnBuIHRlY2hub2xvZ3ksIGl0IHVzZXMgYWggcHJv
-dG9jb2wgb3IgZXNwIHByb3RvY29sIHRvIGVuY3J5cHQgb3IgYXV0aGVudGlj
-YXRlIGlwIHBhY2tldHMuCgoKTXkgdGVzdCBpcyBkaXZpZGVkIGludG8gdHdv
-IHBhcnRzLiBUaGUgZmlyc3QgcGFydCBpcyB0byBvcGVuIHRoZSBpcHNlYyBm
-dW5jdGlvbiwgd2hpY2ggaXMgd2hhdCBhaF9hZGQuYyBkb2VzLiBIZSBkaWRu
-J3QgZG8gdG9vIG11Y2gsIGp1c3Qgb3BlbmVkIGEgdHJhbnNmZXIgbW9kZSBh
-aCBwcm90b2NvbCwgaXBzZWMgaXMgZGl2aWRlZCBpbnRvIGFoIHByb3RvY29s
-IGFuZCBlc3AgUHJvdG9jb2wsIGZvciBzaW1wbGljaXR5LCBJIHNldCB0aGUg
-ZW5jcnlwdGlvbiBsZW5ndGggdG8gMCwgd2hpY2ggaXMgbXkgb25seSBub24t
-bWFpbnN0cmVhbSBvcGVyYXRpb24uCgoKVGhlIHNlY29uZCBwYXJ0IHNlbmRz
-IGEgc3BlY2lhbCBhaCBwcm90b2NvbCBwYWNrZXQsIHRyaWdnZXJpbmcgdGhl
-IGRlbGF5ZWQgcmVsZWFzZSBvZiB0aGUgc2tiIGVmZmVjdCwgY2F1c2luZyB0
-aGUgbWVtb3J5IHRvIGJlIHJlbGVhc2VkIGluIHRpbWUsIGNhdXNpbmcgYWNj
-dW11bGF0aW9uLCBhbmQgZmluYWxseSBsZWFkaW5nIHRvIGRlbmlhbCBvZiBz
-ZXJ2aWNlLgoKCgoKCgpUaGUgcHVycG9zZSBvZiBhaF9hZGQuYyBpcyBqdXN0
-IHRvIHJlZ2lzdGVyIGFuIElQU2VjIGVuY3J5cHRlZCBjaGFubmVsLiBGb3Ig
-c2ltcGxpY2l0eSwgSSBzZXQgdGhlIGVuY3J5cHRpb24gYXV0aGVudGljYXRp
-b24gbGVuZ3RoIHRvIDAuCgoKSW4gdGhlb3J5LCBhcyBsb25nIGFzIHRoZSB0
-YXJnZXQgbWFjaGluZSBzdGFydHMgdGhlIGlwc2VjIGZ1bmN0aW9uIGFuZCBh
-bGxvd3MgaXBzZWMgbWVzc2FnZSBpbnRlcmFjdGlvbiB3aXRoIHRoZSB0YXJn
-ZXQgbWFjaGluZSwgaXQgY2FuIGNhdXNlIHRoZSB0YXJnZXQgbWFjaGluZSB0
-byByZWZ1c2Ugc2VydmljZSBieSBzZW5kaW5nIGEgZGF0YSBwYWNrZXQuCgoK
-CgpBaF9hZGQgaXMganVzdCBhbiBvcGVyYXRpb24gdGhhdCBzdGFydHMgdGhl
-IGlwc2VjIHNlcnZpY2UgYW5kIGFsbG93cyB0aGUgaW50ZXJhY3Rpb24gd2l0
-aCB0aGUgdGFyZ2V0IHRvIGJlIGVuY3J5cHRlZCB3aXRoIGEgbGVuZ3RoIG9m
-IDAuCgoKCgoKCgpBdCAyMDE4LTEwLTA2IDAwOjU0OjA2LCAiU29sYXIgRGVz
-aWduZXIiIDxzb2xhckBvcGVud2FsbC5jb20+IHdyb3RlOgo+T24gRnJpLCBP
-Y3QgMDUsIDIwMTggYXQgMTE6NDY6MDdQTSArMDgwMCwgbHVvIHdyb3RlOgo+
-PiBJIGRvbid0IGtub3cgaWYgaXQgaXMgY29ycmVjdCB0byBwdWJsaXNoIHRo
-ZSBjb21wbGV0ZSBpbmZvcm1hdGlvbi4KPgo+SXQgaXMuICBMaW5raW5nIHRv
-IHRlbXBvcmFyeSByZXNvdXJjZXMgbGlrZSBHb29nbGUgRHJpdmUgaXNuJ3Qg
-Z3JlYXQsCj5idXQgbHVja2lseSB5b3VyIG1lc3NhZ2UgaXRzZWxmIGluY2x1
-ZGVzIHNvbWUgZGV0YWlsLgo+Cj4+ID4gVGhlIExpbnV4IGtlcm5lbCA0LjE0
-LjY3IG1pc2hhbmRsZXMgY2VydGFpbiBpbnRlcmFjdGlvbiBhbW9uZyBYRlJN
-Cj4+ID4gTmV0bGluayBtZXNzYWdlcywgSVBQUk9UT19BSCBwYWNrZXRzLCBh
-bmQgSVBQUk9UT19JUCBwYWNrZXRzLCB3aGljaAo+PiA+IGFsbG93cyBsb2Nh
-bCB1c2VycyB0byBjYXVzZSBhIGRlbmlhbCBvZiBzZXJ2aWNlIChtZW1vcnkg
-Y29uc3VtcHRpb24KPj4gPiBhbmQgc3lzdGVtIGhhbmcpIGJ5IGxldmVyYWdp
-bmcgcm9vdCBhY2Nlc3MgdG8gZXhlY3V0ZSBjcmFmdGVkCj4+ID4gYXBwbGlj
-YXRpb25zLCBhcyBkZW1vbnN0cmF0ZWQgb24gQ2VudE9TIDcuCj4KPlNpbmNl
-IHlvdSBzYXkgdGhhdCAibGV2ZXJhZ2luZyByb290IGFjY2VzcyB0byBleGVj
-dXRlIGNyYWZ0ZWQKPmFwcGxpY2F0aW9ucyIgaXMgcmVxdWlyZWQsIGhvdyBp
-cyB0aGlzIGEgc2VjdXJpdHkgaXNzdWU/ICBBbHNvLCBzaW5jZQo+dGhpcyBz
-ZXR1cCBoYXMgdG8gYmUgcHJlcGFyZWQgbG9jYWxseSwgaG93IGlzIHRoZSBh
-dHRhY2sgInJlbW90ZSI/Cj4KPkluIG90aGVyIHdvcmRzLCB3b3VsZCBhIHN5
-c2FkbWluIHBsYXVzaWJseSBtYWtlIHRoaXMga2luZCBvZiBjdXN0b20KPmxv
-Y2FsIHNldHVwLCBhbmQgd2h5PyAgSWYgdGhlIGFuc3dlciBpcyBubywgdGhl
-biBJIHRoaW5rIHRoZXJlJ3Mgbm8KPnNlY3VyaXR5IGlzc3VlIGhlcmUuCj4K
-PkFsZXhhbmRlcgo=
+------=_Part_36433_11833453.1752619148492
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-------=_Part_41879_94296762.1538792769721--
 
+
+---------- Mensagem encaminhada ---------
+De: Rafael Gonzaga <work@rafaelgss.dev>
+Data: ter=C3=A7a-feira, 15 de julho de 2025 =C3=A0s 19:38:50 UTC-3
+Assunto: Re: Node.js security updates for all active release lines, July=20
+2025
+Para: nodejs-sec <nodejs-sec@googlegroups.com>
+
+
+
+The planned security releases are now available. You can read more about=20
+the details at=20
+https://nodejs.org/en/blog/vulnerability/july-2025-security-releases
+
+Em ter=C3=A7a-feira, 8 de julho de 2025 =C3=A0s 12:14:03 UTC-3, Rafael Gonz=
+aga=20
+escreveu:
+
+The Node.js project will release new versions of all supported release=20
+lines on or shortly after July 15th, 2025
+
+For more information, see:=20
+https://nodejs.org/en/blog/vulnerability/july-2025-security-releases/
+
+
+------=_Part_36433_11833453.1752619148492
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<br /><br /><div><div dir=3D"auto">---------- Mensagem encaminhada --------=
+-<br />De: <span dir=3D"auto">Rafael Gonzaga &lt;work@rafaelgss.dev&gt;</sp=
+an><br />Data: ter=C3=A7a-feira, 15 de julho de 2025 =C3=A0s 19:38:50 UTC-3=
+<br />Assunto: Re: Node.js security updates for all active release lines, J=
+uly 2025<br />Para: <span dir=3D"auto">nodejs-sec &lt;nodejs-sec@googlegrou=
+ps.com&gt;</span><br /></div><br /><br /><br />The planned security release=
+s are now available. You can read more about the details at <a href=3D"http=
+s://nodejs.org/en/blog/vulnerability/july-2025-security-releases" target=3D=
+"_blank" rel=3D"nofollow">https://nodejs.org/en/blog/vulnerability/july-202=
+5-security-releases</a><div><div><br /></div></div><div><div dir=3D"auto">E=
+m ter=C3=A7a-feira, 8 de julho de 2025 =C3=A0s 12:14:03 UTC-3, Rafael Gonza=
+ga escreveu:<br /></div><blockquote style=3D"margin: 0px 0px 0px 0.8ex; bor=
+der-left: 1px solid rgb(204, 204, 204); padding-left: 1ex;">The Node.js pro=
+ject will release new versions of all supported release lines on or shortly=
+ after July 15th, 2025<br /><br />For more information, see:=C2=A0<a href=
+=3D"https://nodejs.org/en/blog/vulnerability/july-2025-security-releases/" =
+rel=3D"nofollow" target=3D"_blank">https://nodejs.org/en/blog/vulnerability=
+/july-2025-security-releases/</a></blockquote></div></div>=
+
+------=_Part_36433_11833453.1752619148492--
+
+------=_Part_36432_1961546164.1752619148492--
