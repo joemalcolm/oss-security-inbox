@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1818" "Thursday" "14" "May" "2015" "19:55:08" "+0300" "DaKnOb" "daknob.mac@gmail.com" "<22512F4A-315E-40A6-825C-C61DEC4FC14E@gmail.com>" "43" "[oss-security] Re: Request 2 CVE-IDs for Zeus Voting System" nil nil nil "5" "2015051416:55:08" "[oss-security] Re: Request 2 CVE-IDs for Zeus Voting System" (number mark "        daknob.mac@g May 14   43/1818  " thread-indent "\"[oss-security] Re: Request 2 CVE-IDs for Zeus Voting System\"\n") "<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>" ("<63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24203 invoked by uid 550); 14 May 2015 16:55:29 -0000
+Received: (qmail 22086 invoked by uid 550); 16 Jul 2025 16:09:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24138 invoked from network); 14 May 2015 16:55:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:content-type:message-id:mime-version:subject:date:references
-         :to:in-reply-to;
-        bh=wTWwKcc63zHsyhpC49hC3uh7665hyxusapKswprjeAY=;
-        b=iRRzslRpXj0+bgsqPLvZkJt21ZAVorDW2brAJQoSZhBG+8CywUPRFqlH8Et7S9cvHJ
-         j3BLTsgxyZbfFW/R6Y60oPqUa2eZ5dAd6Np2nURYuAfjUAZB/wZiccYJomY1oZK2xtvD
-         sq9exS/xXEU1D4SeSyt6r3KVBcSm1J8E/X56KbLUki0FYLVkY/pxhBzFwWcqg13DUhZ+
-         iEqv5J/r5sCjeUliH0PZR89ZhMZ52Mxcc4WxSwk1IEd7zOYPBm8gXseHq5ZOInYfKVSf
-         eQuE2Rjh7oRORHoQxyZ7TxJpnI157zxxv/cH/B6ZB3YVG2A9qHgLsNN0O6sfgxlUWstI
-         o5IA==
-X-Received: by 10.180.78.65 with SMTP id z1mr8684053wiw.14.1431622511083;
-        Thu, 14 May 2015 09:55:11 -0700 (PDT)
-Content-Type: multipart/alternative; boundary="Apple-Mail=_31BA3057-52E6-479C-A086-BBA8322520D0"
-Message-Id: <22512F4A-315E-40A6-825C-C61DEC4FC14E@gmail.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-References: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>
-In-Reply-To: <63E299CE-40BE-4F1D-BFC0-5278B8E51C57@gmail.com>
-X-Mailer: Apple Mail (2.1878.6)
-Date: Thu, 14 May 2015 19:55:08 +0300
-From: DaKnOb <daknob.mac@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Request 2 CVE-IDs for Zeus Voting System
-To: OSS Security List <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 21916 invoked from network); 16 Jul 2025 13:18:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752671899; x=1752758299; bh=sLuO9R7XGaDvBAmPGXf8W14BAYSMskyAz5l
+	nTiZ9PMQ=; b=TtDutdpbddWnHSXaiAlSqtt/XOjP+G3rxeyauIyO6rZj+ceumVD
+	x38rFmbygVUBZ8X0MBZwigmK/KfSkqUDZmdq3g7LOoTWtumnjMKKhqlC9XG6/BFs
+	tyH08Jtdqw65wWwaPaocmQZGhqiviu1MLmiaF0ea5uBg/PJtJDDVuUT9a0EFQX+9
+	z5gGne0p/dzUDom7NTcbjB7yX1M+IggsjiWFSRkVNV/S1Bf+7UXpFC7YULHQTK4w
+	Hk3haqB695wKKL3U89ld0PHrPrhtIhvYNDNkWXQ7Y+vM/TdBMvJEHHmur1YaEtGZ
+	LVvwBhUvUj/RTbpT93TZR9GC0U/z9qzjnbg==
+X-ME-Sender: <xms:m6Z3aMlXp-C09Wtx70EVL0EUmCZIpe0RkY1u_9nt1Y_QLkf0lBrXmg>
+    <xme:m6Z3aN1hjbdaLIrKuOOsf7mPKt5Pfx1F3G6MhrA6X969TBH7h7hHLaRkdKDxZzUXB
+    ybMZJ2NOb9J3h4L>
+X-ME-Received: <xmr:m6Z3aEC6UHNJjkBwIkXGy9fC_FaXVadXTS2dGMKqyUzVXnjMm5-ujo71IxWMD4630OA2hL2cxQ33NXwRFcsQaGdG3JSYZ4x8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehjeekudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfvffhufgtgfesthekredttddvje
+    enucfhrhhomheptfhosggvrhhtucftohhthhgvnhgsvghrghcuoehrrhifohestghprghn
+    rdhorhhgqeenucggtffrrghtthgvrhhnpeeutdeuvedujedtudefveejjeeljeevvdevue
+    ffgfehtedtgeevveegleeuleetgeenucffohhmrghinhepmhgvthgrtghprghnrdhorhhg
+    pdhgihhthhhusgdrtghomhdpshhtrghtvgdrphhmnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomheprhhrfihosegtphgrnhdrohhrghdpnhgspghr
+    tghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhsshdqshgvtg
+    hurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+X-ME-Proxy: <xmx:m6Z3aKzC2XRn03alp0gCpAOsT8zQn2gnbCRJyEAj-nNlV2-aFud0Mg>
+    <xmx:m6Z3aClY2cXmYunRsK10yZ4UUmaRo0Jp1oredunCfZfpILztMoJLgA>
+    <xmx:m6Z3aPFoimUtYtmImA66tz68B8yYRr8xUoq8JIFTlfbFjY-WzPH9GQ>
+    <xmx:m6Z3aCXU9iosGZs7J-mHmRU3kR2EtpmPBmHmEGrilUD_PzaWF2jchw>
+    <xmx:m6Z3aOyHFurgj1RiUKjEezr9EY91vUfVYod9Xky0nqfUnjfHx-8ZaQ>
+    <xmx:m6Z3aOsw4JAzWt73mcCIY7XAyWQ0PPXLTwTUFFhkub7M0Liuid51Cp1rT_FQ>
+Feedback-ID: ia0f04183:Fastmail
+Message-ID: <296f9f08-7ef9-4948-8913-ce542b2aa9f9@cpan.org>
+Date: Wed, 16 Jul 2025 14:18:13 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Robert Rothenberg <rrwo@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2025-40923: Plack-Middleware-Session before version 0.35 for Perl
+ generates session ids insecurely
 
---Apple-Mail=_31BA3057-52E6-479C-A086-BBA8322520D0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=windows-1252
+========================================================================
+CVE-2025-40923                                       CPAN Security Group
+========================================================================
 
-I would like to update the topic below on some information I got.
-I admit that it was a mistake of me saying that the developers said some th=
-ings, mainly because I read really quickly a related blog post somewhere by=
- a person working in the same company, so after a talk with the blog post a=
-uthor and the development team of Zeus, I=92d like to let you know that Zeu=
-s development team does not consider the mathematical proof of the technolo=
-gy the same as the implementation and additionally:
+         CVE ID:  CVE-2025-40923
+   Distribution:  Plack-Middleware-Session
+       Versions:  from 0.01 before 0.35
 
-=93We have not requested real security audits because there are not funds f=
-or Zeus, so no money to pay for the auditor. Of course we welcome work pro =
-bono. Our argument is that you can have verifiable elections by using stron=
-g cryptography, but of course algorithms may be perfect but systems are not=
-, and humans even less so=94.
-
-Additionally, the two XSS vulnerabilities have been patched in the master b=
-ranch in less than 24 hours.
-
-Sincerely,
-Antonios A. Chariton
-
-On May 13, 2015, at 19:09, DaKnOb <daknob.mac@gmail.com> wrote:
-
-> Zeus (https://github.com/grnet/zeus) is a fork of Helios that is actively=
- developed by GRNET (http://www.grnet.gr/) and is considered to be used in =
-Greek Elections (starts with small and rolls out to larger elections).=20
->=20
-> Two XSS vulnerabilities that allow JavaScript Execution have been found, =
-one of which has a PoC running JavaScript / Modifying HTML in the voter=92s=
- browser during the voting process.
->=20
-> XSS #1 - https://github.com/grnet/zeus/issues/28
-> XSS #2 - https://github.com/grnet/zeus/issues/29
->=20
-> Thank you,
-> Antonios A. Chariton
+       MetaCPAN:  https://metacpan.org/dist/Plack-Middleware-Session
+       VCS Repo:  https://github.com/plack/Plack-Middleware-Session
 
 
---Apple-Mail=_31BA3057-52E6-479C-A086-BBA8322520D0--
+Plack-Middleware-Session before version 0.35 for Perl generates session
+ids insecurely
+
+Description
+-----------
+Plack-Middleware-Session before version 0.35 for Perl generates session
+ids insecurely.
+
+The default session id generator returns a SHA-1 hash seeded with the
+built-in rand function, the epoch time, and the PID. The PID will come
+from a small set of numbers, and the epoch time may be guessed, if it
+is not leaked from the HTTP Date header. The built-in rand function is
+unsuitable for cryptographic usage.
+
+Predicable session ids could allow an attacker to gain access to
+systems.
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Users who are unable to upgrade are advised to change the sid_generator
+attribute of Plack::Session::State to a function that returns a
+securely generated session id based on a secure source of entropy from
+the system.
+
+
+Solutions
+---------
+Users are advised to upgrade to Plack-Middleware-Session v0.35 or
+later.
+
+
+References
+----------
+https://metacpan.org/release/MIYAGAWA/Plack-Middleware-Session-0.34/source/lib/Plack/Session/State.pm#L22
+https://github.com/plack/Plack-Middleware-Session/pull/52
+https://github.com/plack/Plack-Middleware-Session/commit/1fbfbb355e34e7f4b3906f66cf958cedadd2b9be.patch
+https://security.metacpan.org/docs/guides/random-data-for-security.html
+
+
+
