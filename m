@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5211" "Friday" "8" "January" "2021" "10:11:22" "+0000" "Stefan Pietsch" "s.pietsch@trovent.io" "<nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>" "172" "[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" nil nil nil "1" "2021010810:11:22" "[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" (number mark "U       s.pietsch@tr Jan  8  172/5211  " thread-indent "\"[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24444 invoked by uid 550); 8 Jan 2021 11:00:33 -0000
+Received: (qmail 15380 invoked by uid 550); 22 Jul 2025 21:32:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,194 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14126 invoked from network); 8 Jan 2021 10:11:39 -0000
-Date: Fri, 08 Jan 2021 10:11:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trovent.io;
-	s=protonmail2; t=1610100687;
-	bh=wwpcxok3m/DTnQMCHjyUeMwIQM72OaOXfezVp7w0OxU=;
-	h=Date:To:From:Reply-To:Subject:From;
-	b=sSTqez++vIGza0UIxbGHCpuNHfg/1whnyQSZKK5ShMuKnBw+suwh2VuRzrTdtJu12
-	 7v8FQ2DZlyRGhO1tDxb4X4c99uC+ZqybUr1UE8VkTbVGzhdrXbuOg3vfF0vVn7R4yZ
-	 fsb8FhAcucB0JyDhqm6odvhNZdSlFthUeFyAJAm2QzpEwflN/VrCPiWPSQaTuuA50i
-	 bpoyFSymoYTcuJLRtATOw9YcLmO3mI/w7JPUHW/H9mbLWGn0WgTzMV5X5YgSSB4L3l
-	 RZT4JWztszLgLw+17XCr2QCxOq2A+GI9IXNPjpsQ1zt8qOBeZGyRfKWwc0Hf9hoG4F
-	 //dRHsalcYYgQ==
-To: "fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, "submissions@packetstormsecurity.com" <submissions@packetstormsecurity.com>
-From: Stefan Pietsch <s.pietsch@trovent.io>
-Message-ID: <nOtVB6IX8HgEDMTZRoSF8T27q70YAYS_B_0y9-R3vMdfdPNlhYXTJ9VZ78Q-K0OVzg4QuofyWufiLNnN-sjThgbinm-sWfVGnPLtJ_ovWL8=@trovent.io>
-MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="---------------------8b1bc5714d641665f012c6906d482359"; charset=utf-8
-Subject: [oss-security] Re: Trovent Security Advisory 2010-01 [updated] / CVE-2020-28208: Rocket.Chat email address enumeration vulnerability
+x-ms-reactions: disallow
+Received: (qmail 13834 invoked from network); 22 Jul 2025 21:32:33 -0000
+Date: Tue, 22 Jul 2025 23:31:39 +0200
+From: Solar Designer <solar@openwall.com>
+To: Rafael Gonzaga <work@rafaelgss.dev>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20250722213139.GA8508@openwall.com>
+References: <30ff7c11-717d-479a-9c49-356a796c20abn@googlegroups.com> <d3e03d37-ce0e-4aed-a060-c736fda4f073n@googlegroups.com> <cddfe5d3-7852-4dd7-b72a-a66eaad89ce3n@googlegroups.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cddfe5d3-7852-4dd7-b72a-a66eaad89ce3n@googlegroups.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Fwd: Node.js security updates for all active release lines, July 2025
 
------------------------8b1bc5714d641665f012c6906d482359
-Content-Type: multipart/mixed;boundary=---------------------7f2448a748505027571f874186f31f04
+On Tue, Jul 15, 2025 at 03:39:08PM -0700, Rafael Gonzaga wrote:
+> The planned security releases are now available. You can read more about 
+> the details at 
+> https://nodejs.org/en/blog/vulnerability/july-2025-security-releases
 
------------------------7f2448a748505027571f874186f31f04
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;charset=utf-8
+I include below the full content from:
 
-# Trovent Security Advisory 2010-01 #
-#####################################
+https://raw.githubusercontent.com/nodejs/nodejs.org/refs/heads/main/apps/site/pages/en/blog/vulnerability/july-2025-security-releases.md
 
+Alexander
 
-Email address enumeration in reset password
-###########################################
+---
+date: 2025-07-15T00:00:00.000Z
+category: vulnerability
+title: Tuesday, July 15, 2025 Security Releases
+slug: july-2025-security-releases
+layout: blog-post
+author: The Node.js Project
+---
 
+## Security releases available
 
-Overview
-########
+Updates are now available for the 24.x, 22.x, 20.x Node.js release lines for the
+following issues.
 
-Advisory ID: TRSA-2010-01
-Advisory version: 1.1
-Advisory status: Public
-Advisory URL: https://trovent.io/security-advisory-2010-01
-Affected product: Web application Rocket.Chat
-Affected version: <=3D 3.7.1
-Vendor: Rocket.Chat Technologies Corp., https://rocket.chat
-Credits: Trovent Security GmbH, Nick Decker, Stefan Pietsch
+## Windows Device Names (CON, PRN, AUX) Bypass Path Traversal Protection in path.normalize() (CVE-2025-27210) - (high)
 
+An incomplete fix has been identified for CVE-2025-23084 in Node.js, specifically affecting Windows device names like CON, PRN, and AUX.
 
-Detailed description
-####################
+This vulnerability affects Windows users of `path.join` API.
 
-Trovent Security GmbH discovered an email address enumeration vulnerability
-in the password reset function of the chat application Rocket.Chat. This vu=
-lnerability lets
-an unauthorized user enumerate registered email addresses on the instance o=
-f Rocket.Chat.
+Impact:
 
-Severity: Medium
-CVSS Score: 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N)
-CVE ID: CVE-2020-28208
-CWE ID: CWE-204
+- This vulnerability affects all users in active release lines: 20.x, 22.x, 24.x
 
+Thank you, to oblivionsage for reporting this vulnerability and thank you RafaelGSS for fixing it.
 
-Proof of concept
-################
+## HashDoS in V8 (CVE-2025-27209) - (high)
 
-Sample HTTP request sent with a registered email address:
+The V8 release used in Node.js v24.0.0 has changed how string hashes are computed using rapidhash.
+This implementation re-introduces the HashDoS vulnerability as an attacker who can control the strings to be hashed can generate
+many hash collisions - an attacker can generate collisions even without knowing the hash-seed.
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 122
-Accept: */*
-Content-Type: application/json
+While the V8 team does not classify this as a security vulnerability, the Node.js project considers it one due to its potential
+impact in real-world scenarios.
 
+- This vulnerability affects Node.js v24.x users.
 
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"pa=
-rams\":[\"positive@test.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
+Impact:
 
-The server response to a valid email address:
+- This vulnerability affects all users in active release lines: 24.x
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:01:25 GMT
-Connection: keep-alive
-Content-Length: 78
+Thank you, to sharp_edged for reporting this vulnerability and thank you targos for fixing it.
 
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":true}","success":tr=
-ue}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
+## Downloads and release details
 
-Sample HTTP request sent with a non registered email address:
+- [Node.js v20.19.4](/blog/release/v20.19.4/)
+- [Node.js v22.17.1](/blog/release/v22.17.1/)
+- [Node.js v24.4.1](/blog/release/v24.4.1/)
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-POST /api/v1/method.callAnon/sendForgotPasswordEmail HTTP/1.1
-Host: localhost:3000
-Content-Length: 119
-Accept: */*
-Content-Type: application/json
+# Summary
 
+The Node.js project will release new versions of the 24.x, 22.x, 20.x
+releases lines on or shortly after, Tuesday, July 15, 2025 in order to address:
 
-{"message":"{\"msg\":\"method\",\"method\":\"sendForgotPasswordEmail\",\"pa=
-rams\":[\"false@test.de\"],\"id\":\"3\"}"}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
+- 2 high severity issues.
 
-The server response to an invalid email address:
+## Impact
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
-HTTP/1.1 200 OK
-X-XSS-Protection: 1
-X-Content-Type-Options: nosniff
-X-Frame-Options: sameorigin
-X-Instance-ID: DQDfuEfNLdbZr3zYH
-Cache-Control: no-store
-Pragma: no-cache
-content-type: application/json
-Vary: Accept-Encoding
-Date: Tue, 03 Nov 2020 12:03:08 GMT
-Connection: keep-alive
-Content-Length: 79
+The 24.x release line of Node.js is vulnerable to 2 high severity issues.
+The 22.x release line of Node.js is vulnerable to 1 high severity issues.
+The 20.x release line of Node.js is vulnerable to 1 high severity issues.
 
-{"message":"{\"msg\":\"result\",\"id\":\"3\",\"result\":false}","success":t=
-rue}
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~~~~
+It's important to note that End-of-Life versions are always affected when a security release occurs.
+To ensure your system's security, please use an up-to-date version as outlined in our
+[Release Schedule](https://github.com/nodejs/release#release-schedule).
 
+## Release timing
 
-Solution / Workaround
-#####################
+Releases will be available on, or shortly after, Tuesday, July 15, 2025.
 
-Ensure the application returns consistent generic server responses independ=
-ent
-of the email address entered during the password reset process.
+## Contact and future updates
 
-Fixed in Rocket.Chat version 3.9.2.
+The current Node.js security policy can be found at <https://nodejs.org/en/security/>.
+Please follow the process outlined in <https://github.com/nodejs/node/blob/master/SECURITY.md> if you wish to report a vulnerability in Node.js.
 
-
-History
-#######
-
-2020-10-27: Vulnerability found
-2020-11-03: Advisory created and CVE ID requested
-2020-11-06: Vendor contacted and informed about planned disclosure date
-2020-11-06: Vendor confirmed vulnerability, working on a fix
-2021-01-07: Advisory published
-2021-01-08: Vendor sent us information about fixed version
-
------------------------7f2448a748505027571f874186f31f04--
-
------------------------8b1bc5714d641665f012c6906d482359
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: ProtonMail
-
-wsFzBAEBCAAGBQJf+C+7ACEJEM8er/4ehY63FiEE0wArIZvu5AKY9ZSXzx6v
-/h6FjreQWw//U5cUoJ2oo+XG+YKYGGvz8witEG0lUMA43eeqG5Tj9tBIDVCe
-BKJbhrNHXOUD1Gtc7tM+owOoNjqgOY6EwPO3i/S+bKRQbNhXm8PwfPl/63GG
-v0KwwnxlFGyA79YbkBHvLJAfq3uQelUJROM9AtAgi17QwpWc9p07DFmR3Hyc
-w8EVi0aE6Q7Vs+lOOt4RyklKd+4xp3rn5KTjUNN8/ZfXTQaRe5YFeFojg9LR
-qcS/DJF7QkAsxePAB/ufILbhmIdeXn1cd3MLFLZM8m6OcO1MLnVdiwgeP5MW
-2WDHEUmNu/+6ZMRMFCvFYDi3zW7gFGDDDYpoXAbcsNGRlHlDemiaBfaNw9wQ
-bNvvT7Y94uK8jUqKDHI/4ckCtfusU5lcftpzU3I67ljHCWnidXkMUD2m08YP
-MZg18tBXUDS7OZSDVpiG618YbBoCWhHqRg6cnMkLJE6z98EBdDuZ9Oes/fgE
-lUaqQlbzhjfGtxmqCLn89JIa8xCWBkMi2pNQcmV4CmO9mQh7fsyPbxKwtbde
-tSJEhWlZvVSY5+w9NY6cKzqoIP76tnyx/mFxVuCOHDZNk1aJpq/GwTeKMc3m
-0cz8whaxmHiyhnLFWUhyF6HPYnK3vXX4zZeyioYCylzO6b0ZzDGS6hpEj7JX
-e3/+FjBJ8dnrPig15RahTMAq81TOWvztlF8=
-=LAJk
------END PGP SIGNATURE-----
-
-
------------------------8b1bc5714d641665f012c6906d482359--
-
+Subscribe to the low-volume announcement-only nodejs-sec mailing list at <https://groups.google.com/forum/#!forum/nodejs-sec> to stay up to date on security vulnerabilities and security-related releases of Node.js and the projects maintained in the nodejs GitHub organization.
