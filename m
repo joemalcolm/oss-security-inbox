@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["769" "Monday" "7" "January" "2019" "17:36:08" "+0100" "Marcus Meissner" "meissner@suse.de" "<20190107163608.24ovdibadervqvqe@suse.de>" "20" "Re: [oss-security] New pagecache based sidechannel attack published" nil nil nil "1" "2019010716:36:08" "[oss-security] New pagecache based sidechannel attack published" (number mark "U       meissner@sus Jan  7   20/769   " thread-indent "\"Re: [oss-security] New pagecache based sidechannel attack published\"\n") "<20190107074340.GA14850@suse.de>" ("<20190107074340.GA14850@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19926 invoked by uid 550); 7 Jan 2019 16:36:20 -0000
+Received: (qmail 20289 invoked by uid 550); 24 Jul 2025 13:59:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,40 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19903 invoked from network); 7 Jan 2019 16:36:20 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 7 Jan 2019 17:36:08 +0100
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>
-Message-ID: <20190107163608.24ovdibadervqvqe@suse.de>
-References: <20190107074340.GA14850@suse.de>
+x-ms-reactions: disallow
+Received: (qmail 29728 invoked from network); 23 Jul 2025 12:15:08 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f6570ff8-883e-377f-aaa8-e8e06311ef4d@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 23 Jul 2025 12:14:07 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190107074340.GA14850@suse.de>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: NeoMutt/20170421 (1.8.2)
-Subject: Re: [oss-security] New pagecache based sidechannel attack published
+Subject: [oss-security] CVE-2025-54090: Apache HTTP Server: 'RewriteCond expr' always
+ evaluates to true in 2.4.64 
 
-On Mon, Jan 07, 2019 at 08:43:40AM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> https://www.theregister.co.uk/2019/01/05/boffins_beat_page_cache/
-> https://arxiv.org/abs/1901.01161
-> 
-> Daniel Gruss, Erik Kraft, Trishita Tiwari, Michael Schwarz, Ari Trachtenberg, Jason Hennessey, Alex Ionescu, Anders Fogh
-> have published a paper describing side channels attacks using OS pagecache statistics, allowing looking at
-> things like keystroke timing and others.
-> 
-> This affects not just Linux, but also Windows and potentially other OS.
-> 
-> Linux mainline patch:
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=574823bfab82d9d8fa47f422778043fbb4b4f50e
-> 
-> I have requested a Linux specific CVE.
+Severity: moderate=20
 
-CVE-2019-5489 was assigned.
+Affected versions:
 
-Ciao, Marcus
+- Apache HTTP Server 2.4.64
+
+Description:
+
+A bug in Apache HTTP Server 2.4.64 results in all "RewriteCond expr ..." te=
+sts evaluating as "true".
+
+
+
+Users are recommended to upgrade to version 2.4.65, which fixes the issue.
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-54090
+
+Timeline:
+
+2025-07-16: reported
+2025-07-23: fixed in 2.4.x by r1927361
+
