@@ -1,4 +1,4 @@
-Received: (qmail 32495 invoked by uid 550); 9 Apr 2026 15:28:40 -0000
+Received: (qmail 18171 invoked by uid 550); 28 Jul 2025 23:35:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,65 +8,104 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 7566 invoked from network); 9 Apr 2026 06:30:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deepin.org;
-	s=ukjg2408; t=1775716203;
-	bh=CGZmoPFN06o6OgytzHaucSQGCMv6ZKef5zL+450fRlY=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version;
-	b=yyqgO1L9xrRR1RudKLIupmWAqGU2iPwBNL7fnopynoR1VfqnIzmv4Fq61bfazxttJ
-	 AB35MhY51gMY0DU7FfRcXZs9YC7afAv4uxMY6lz66C4cvuXeLxctNSbqrJvnuWe98j
-	 AJo83YiZ4ykAntFiq+7dlQsnqg1uE46sXecpjkMg=
-X-QQ-mid: zesmtpip3t1775716198t7355362e
-X-QQ-Originating-IP: zhxdxx/klF913w4lKiTDhRYHHTKWRcN2SCBjFCSMLIw=
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 7514892915362823764
-Date: Thu, 9 Apr 2026 14:29:55 +0800
-From: Tianyu Chen <sweetyfish@deepin.org>
-To: oss-security@lists.openwall.com
-Cc: morgan@kernel.org, elirazamumtaz@gmail.com
-Message-ID: <FF535D49DCDE0939+addHY0xl6rD04Ddg@ut005408-PC>
-References: <CACmP8U+CbkozUQ1OqxsXMxLgMYvQS85QsWaGtVGBD8BFox34=w@mail.gmail.com>
- <fa4662c4-ce58-48ec-85a4-b0272ca9931a@seltendoof.de>
- <20260409013620.GA13098@openwall.com>
- <CACmP8UKMsyDGzMSbuu_tORKR9p2EUhCE_qY6YcFf_w19ZcZaqw@mail.gmail.com>
- <20260409035050.GA14884@openwall.com>
+Received: (qmail 28455 invoked from network); 28 Jul 2025 23:00:41 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wichmann.us; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1753743632;
+	 x=1753830032; bh=C16TOcWxIIh6Pk+5RmLubp0M0/E+bNm8tD7bge2uOLw=; b=
+	Omzt7Oi6Wg2BPxdo09eW0kOaS3K03nDgN/GAsZDaKY515FhTb/H5fOoCKYj2qOge
+	bsuYVwLi0TZPiO6U0fOytV1DE+vXyPeC9ND6bB6tqPsf9WGEh2dRB6/v2n9nEuye
+	HBzhPURalHzrZrUp0OWlERWYQgh2+6H7Vf9bwS+fAPFLHie2v/Y4A/9TfaS4AF4N
+	Q5NoGI5ASkOrQdaxH2wplsj8GF75wzMEaiQ+yx1FT587xJQgjzrTzTsCb4gOiZJL
+	whfyovZPMZ1urXe1Pn6Aos59y98W4/+wilnfdC/zV4qwGqDNrFWrpG8Yh+6xkgYc
+	7iIe8vD2DGWaoAPsbW/xuQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1753743632; x=1753830032; bh=C
+	16TOcWxIIh6Pk+5RmLubp0M0/E+bNm8tD7bge2uOLw=; b=nzjmQpXScTtquRGYF
+	zNrvUZ7DFxYMR0DILB+GbuHKZ6/gWLcSep6+kMYcndtyKGprHpF6Z0DD8BnPxKsj
+	rbJ73kHo74gQBM5NBRwLo6/g/BcJcUQE5PSm5FAlbJ0iMURIIBqd8O4cwwnjCvwl
+	vDFAzZv9Cs85PJ/+P8Sw/FQk/Iz/V2gMS/BKvLieIhN7ldiVrX1nnXRKL6/I4Vqx
+	X1dKnoYumIhE4D5UuIjpQ5OPGieDHN3wgAUAF4m3sIQ+seVaRcemqpS3DIsNZBE7
+	6bapO/xFOXTcgkvumf316sG/MDt9bq+qZmlEFAEm+a9tJ2V9uWOhIcpCOo/wBA3d
+	KnhaA==
+X-ME-Sender: <xms:DwGIaPQEOOR73-M1k036m_wMOILyr8OVxFHZmbYdw6nmrfMn3Nsv4g>
+    <xme:DwGIaA9Kht0rof1weRpc248m2RviQgezYerrmG1URbemRHRmyo9URZ-EKjlkslqB1
+    eQCWJkilzwpkUqdM54>
+X-ME-Received: <xmr:DwGIaGpLZWjWUogl-bQ4jQae6Hw_CtT7kywEaIKLcFkV82LPMgDpYXCCMDlIPyivn1_ZvKdNsU1z8SC317aC-nrgy4DrKV2ahA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelfeeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfuffvfhfhjggtgfesthejredttd
+    dvjeenucfhrhhomhepofgrthhsucghihgthhhmrghnnhcuoehmrghtshesfihitghhmhgr
+    nhhnrdhusheqnecuggftrfgrthhtvghrnhepteejvefhfeelffeiveduuddvheekheehud
+    elhfevtedvheehveeuffeukedvvdetnecuffhomhgrihhnpegtvhgvrdhorhhgnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrthhsseifih
+    gthhhmrghnnhdruhhspdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrd
+    gtohhmpdhrtghpthhtohepshgvtghurhhithihsehphihthhhonhdrohhrgh
+X-ME-Proxy: <xmx:DwGIaNnVYNDaVYITM8W6Hw58v4y0CHWRAgSw2qz40yzg3YQJgykhcg>
+    <xmx:DwGIaNLu_6jEmTtex4GpgBHHYCIUw-ZBnUudeAmV7IdYoXH5sySAqw>
+    <xmx:DwGIaCwOtgbQAumo50vD6ldKM9YU3RTuiUZ-uqS94wad1M4r2nshKg>
+    <xmx:DwGIaFuIoVYE6PL-1ilInrTg6daYnnwU9fV8RHpwnjnKH_slz37LOQ>
+    <xmx:EAGIaDCaWTaumK4THPi1NiLvVfw2u1DvUdxgSbYB7dsoRYx8xoDf88Bl>
+Feedback-ID: i387144f0:Fastmail
+Message-ID: <94d43c9f-1280-4247-bef2-556190620d84@wichmann.us>
+Date: Mon, 28 Jul 2025 17:00:29 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260409035050.GA14884@openwall.com>
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:deepin.org:qybglogicsvrgz:qybglogicsvrgz3a-1
-X-QQ-XMAILINFO: OW3qjH3bC/TAnozFat2MHXmqPdtgD2iWEW6kztT32vXExWb3HRpF6tYB
-	BgIWTYXhFwlmsz+GbuZYV5RLt2tzgjVlC/C7XNx3WEQuZRKuKs6ctL9QF2z3VGdDUtYl40M
-	CEUE0JH8H2S/uh21tRg6hkW8Rf4KCZ5qmmpw62sHnuNxap/ipyoyXFkdRDArV4D1kynzRWU
-	eOOa+MKHERZ4CjB1Xa673L8uyYOJbIIdDDERzCRhDVytj8XLXlwD20Be15H4hky3xqZpNPv
-	OD+nn05z2jbPVw0iBiCQ4GQuugBc37B4gZxpZx3OEk/2Ko8Cj685axZ6qLeg1Wgk+A9Os1C
-	zWRgFplu5EE6ZJU/EOGxJbfZREZtQTQv5rZuNECqqqqW78/nWk7Vk0S8Nq5DfrVY4/SVPlG
-	uzsXIOZkG3p4vC3Gx1nsQ9UmxcBT9jQwyruKJhj7Hfgmdqy0HTEbZEKk7QgN2f1C3RtxDUB
-	ZgwIZBTBDrNRRAUbzqwZRHOEact+t6EO/6KXduR4yoVfKqK5nwYIhZGkWTZfgc9aE4BrGU5
-	0UaoIJdDJ37y8XqiU8xsXX8rGiO48eeaIKXiiObKsnB3N+uT+4UxTzUYsbfx2utn3FzL4G1
-	D2uuXq4ISCXqRCPzpkNuDqs5bP+x2/pK+tYk5uKBlZGxfDVB4376+mYaOqxZhyN107pfpbn
-	MUKaD/yWlPZcK5dETdKWuLy8MJsqOv27I3fWb5XX60mT9Pj0M21RppJbkBiaUV+RZGx0lOD
-	EvOX6fluSBCbV4uCpAYjZ4O9v/9vTBtD478P1bKjFIK/+ZV3S26CU1QmcN4fgwQLmfnqSNV
-	XVoXwJMgdk8kNgFNNXqEnkKZy4Gz4W9AVADWDUgP4KdTUocjetd6oJvGK9J1NvzoXqK7FL7
-	5pHh5BYmNyCuHlS74b6Gk49cPqXHqJ42/NS+LDqGKH4c9iJEiJ7I5tae9T8DruqOH9EI2SY
-	HKAbW40tlFxqNM68m0z2UuGvNjgiWOCewSnNRxOIX4g5g8aTaQvFbYHqK9mopXVGFo+AMlD
-	hifLnae6xy98okgBAi
-X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
-X-QQ-RECHKSPAM: 0
-Subject: Re: [oss-security] libcap-2.77 (since libcap-2.04) has TOCTOU
- privilege escalation issue
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <CAADqWPT33dBPg2cba1h39veP-_C4bpmsn-On8mEXio0Nz_gcEg@mail.gmail.com>
+ <c1d8d50a-9e67-411e-8f1e-cb2de457a637@oracle.com>
+From: Mats Wichmann <mats@wichmann.us>
+Content-Language: en-US
+Autocrypt: addr=mats@wichmann.us;
+ keydata= xsDiBD9xp6oRBAC1vd3YI8Gcr1CxpV1gldNQu0uQsNaICDk+Ai3+R163s/P83JOYG+SBEA3P
+ v7iZx70qpQ3RzP7KrjF1Nm6j0em9ccUX2fPQUCAxXw5Hiq7CSMiwQQZRI6shcnyMh9XTKViT
+ WK5MrKDyvjDEn7epjKzKwPS5SG039l6XaOKU0A4uGwCgsNqUQqC0gMMcbKlJV8ql58iKmbMD
+ /ii8FPQrXmyS/FnsPs7UddV5qMHKm7NUH5oiKuMVyakInRyq9iIxuu3D4Ec6mWRKcGsjmIkW
+ HXCSz0aefs6dsqNqpU54cYioJ3wP5LzHK7oclgJPryVt5Qezbdutf8SQf8gVkaNIlkxwGUzi
+ bKTZ6CHzwlz9nNgeel0XPUcZzFxGA/4paeCg2rMSVuAhUQbsLYHu4XzTs9P16zaXkrtxc4m5
+ b+BF5xsLgTpyO5l859XudS2Gp+7/Y37dAU4QlyGGOboWmF1y9U5DnzBwG8ghsnym+ga58MJh
+ LdRdQQ6xQolCpEXOuzm40f2r5uMxF3KOJ7WpIPuGAkeCPru9BmlATH+zOs0gTWF0cyBXaWNo
+ bWFubiA8bWF0c0B3aWNobWFubi51cz7CYQQTEQIAIQIbAwYLCQgHAwIDFQIDAxYCAQIeAQIX
+ gAUCT0VyZwIZAQAKCRDAMaCQc9hUxiZBAJ9cWziGp7hVfsu5T+cQptc3rLNndQCgrZh8u5LW
+ BfJ5e/Y+3PwZ8UEm+ELOwE0EP5is8BAEAMtwzcA8TYf5UTjDMgwcSNoErTc9ag+IX05QFgL8
+ aF8sfJRv5atcitqQy0gSIsOzI+L/AFdPN/+QQI3dL1tCq14t32KPDtigDhzm6jVPXX5z+V9u
+ xnD8XTp+ZvNcWoHXjViM8aXeLLEiCpiVCho307h3XShvqoKINWRQWeAsKKDDAAMFA/48zaey
+ wiiEyvI0meJ1KkNHxdLP0yLODr1WV6j9xkPkLWOaIDw7dlwEOlF1N1YtZ2wa0p1wsttdIbIx
+ ffgwXmcH4zrdxUIMz3U0BqYzk5H+5cYFXECXTFVOmweS+JECYMj80PjRoKCO1eVO1N30zksB
+ 36NnhZWPRWIhjK3ZarIYH8JGBBgRAgAGBQI/mKzwAAoJEMAxoJBz2FTG6VEAoKDYHfDp5Q3q
+ PuPvPahCE9HsXMgAAJ9INTqcLSJrOfyJ8q95nBO1T26H2Q==
+In-Reply-To: <c1d8d50a-9e67-411e-8f1e-cb2de457a637@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Fwd:[CVE-2025-8194] Cpython Tarfile infinite loop
+ during parsing with negative member offset
 
-On Thu, Apr 09, 2026 at 05:50:50AM +0200, Solar Designer wrote:
-> I would still like to know if there's a way I could extract Markdown
-> source from third-party GitHub advisories, if anyone knows.
+On 7/28/25 13:55, Alan Coopersmith forwarded a cPython security issue:
 
-GitHub's REST API can be used for that:
+some unfortunate glitches here. first, a template failure:
 
-$ curl -s https://api.github.com/repos/AndrewGMorgan/libcap_mirror/security-advisories/GHSA-f78v-p5hx-m7hh | jq -r .description
+> There is a HIGH severity vulnerability affecting {project}.
 
-https://docs.github.com/en/rest/security-advisories/repository-advisories
+second and third:
 
-Best regards,
-Tianyu Chen @ deepin
+> Please see the linked CVE ID for the latest information on affected 
+> versions:
+> 
+> * https://www.cve.org/CVERecord?id=CVE-2025-8194
+The CVE contents suggest nothing is broken:
+
+ > affected
+
+ >    affected from 0 before 3.14.0
+
+(3.14 still being unreleased).  But patches for this were backported to 
+all supported cPython versions, so the effect must be a bit wider than that.
+
+
+And in the cve record itself, the patch suggestion comes out mangled.
