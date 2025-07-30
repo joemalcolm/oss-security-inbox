@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8695" "Monday" "14" "March" "2016" "06:51:56" "+0000" "=?gb2312?B?d2luc29ubGl1KA==?==?gb2312?B?wfU=?==?gb2312?B?v8Yp?=" "winsonliu@tencent.com" "<1F2D4DA31CA62740BFF46830A0E6A4F7064F6983@EXMBX-TJ002.tencent.com>" "149" "[oss-security] CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function" nil nil nil "3" "2016031406:51:56" "[oss-security] CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function" (number mark "U       winsonliu@te Mar 14  149/8695  " thread-indent "\"[oss-security] CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile function\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3615 invoked by uid 550); 14 Mar 2016 12:03:30 -0000
+Received: (qmail 24180 invoked by uid 550); 30 Jul 2025 19:06:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,171 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3509 invoked from network); 14 Mar 2016 06:52:10 -0000
-From: =?gb2312?B?d2luc29ubGl1KMH1v8Yp?= <winsonliu@tencent.com>
-To: oss-security <oss-security@lists.openwall.com>
-Thread-Topic: CVE request - OpenJPEG : Out-Of-Bounds Read in
- opj_tcd_free_tile function
-Thread-Index: AdF9vCrRncSrJoBDSKGmg78w0wcZKw==
-Date: Mon, 14 Mar 2016 06:51:56 +0000
-Message-ID: <1F2D4DA31CA62740BFF46830A0E6A4F7064F6983@EXMBX-TJ002.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.4.75.15]
-Content-Type: multipart/mixed;
-	boundary="_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6983EXMBXTJ002tence_"
+x-ms-reactions: disallow
+Received: (qmail 21617 invoked from network); 30 Jul 2025 18:54:12 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1753901643; bh=FA/vpTEhZovK7tdhSeyMe3+B9cSTcEAIt37VwBnkF6g=;
+	h=From:Date:Subject:To:From;
+	b=pa7fjA6M1+kyTzxP+eONNTeASb0fTPQOezYDUnQ8PROBaG3G6Ztwbtg0huQaesQgs
+	 QGRplGrZFZjK7DNJWHYIAZt+BhYWRulA8HqtQYUBTN9OoI8f1skDB76uIwlSGzu1K7
+	 +w21xDpJo5RaZYvRH18+drtRTIs+HOy1xJHqRsf4iL6sZbZUYgpIVCJmx+VB/P2xva
+	 8+po6A1FRU20q4ylM5s/Vmby0pvMcTQbcqYCrhc8F+AWjzAFUN945L3QzAns5/gtJH
+	 1Y9BaHbXVzZtxJD+0NN87ybIpjnQbdnQ5uo5+aFxWIEcNW+YastYc6fgjvWsKUobIO
+	 hjRdMcVwjYinQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUOcM1NxbILHr6uL3oeZCD4jThQmC7ZkP/AJktlruPUGR5t+rhVFkGDV6Md2NS3InWTJwPlS1ImhhoRIMo=@lists.openwall.com
+X-Gm-Message-State: AOJu0Yz2eiv4OL3efpJIDIENhTQZs9vJ+7JVHMsrxN9tN8kTUalHitPX
+	iTGVeqihAIUs4fcAvpBpl129P0a+YGLMCEwaCirvHG9eOfCiwHAUrr2Yd2dBMPEmBjSA+4Xaniu
+	KTd/e1VEcrUzIFIlunngW+LzmHTqvzJU=
+X-Google-Smtp-Source: AGHT+IHkBNhBSWAIHMelm4binAvVA+sN6tgFRSOHY56qF8KqvwPzW0Yio0bRysIaVRjTDsN6ELMeWxfvNEUukOdLqFQ=
+X-Received: by 2002:a17:906:8318:b0:af9:1063:1c1c with SMTP id
+ a640c23a62f3a-af9106322c7mr107622866b.41.1753901643064; Wed, 30 Jul 2025
+ 11:54:03 -0700 (PDT)
 MIME-Version: 1.0
-Subject: [oss-security] CVE request - OpenJPEG : Out-Of-Bounds Read in opj_tcd_free_tile
- function
+From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
+Date: Wed, 30 Jul 2025 20:53:52 +0200
+X-Gmail-Original-Message-ID: <CAMufup4hq2o4BoBJh10T6QEOGrJUzm6VmhRd1pXY_tAOvn3NNg@mail.gmail.com>
+X-Gm-Features: Ac12FXy1W76bh7oAS0b5Pe1CmSRmiicEyOMrGa5nddP075GkTGXU_LXJBSuJv1M
+Message-ID: <CAMufup4hq2o4BoBJh10T6QEOGrJUzm6VmhRd1pXY_tAOvn3NNg@mail.gmail.com>
+To: user@jspwiki.apache.org, dev@jspwiki.apache.org, announce@apache.org, 
+	Apache Security Team <security@apache.org>, XBOW Security <bb@xbow.com>, Hamy <0x.hamy.1@gmail.com>, 
+	oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2025-24854: Apache JSPWiki: Cross-Site Scripting (XSS) in JSPWiki
+ Image plugin
 
---_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6983EXMBXTJ002tence_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Severity: Medium
 
-SGkgYWxsLA0KDQpJIGZpbmQgYSB2dWxuZXJhYmlsaXR5IG9mIE9wZW5KUEVH
-LiBUaGUgc3BlY2lmaWMgZmxhdyBleGlzdHMgd2l0aGluIHRoZSBvcGpfdGNk
-X2ZyZWVfdGlsZSBmdW5jdGlvbi4gQSBzcGVjaWFsbHkgY3JhZnRlZCBKUEVH
-MjAwMCBpbWFnZSBmaWxlIGNhbiBmb3JjZSBPdXQtT2YtQm91bmRzIFJlYWQg
-b2NjdXJyaW5nIGluIE9wZW5KUEVHLiBUaGlzIGlzc3VlIGNhbiBiZSByZXBy
-b2R1Y2VkIGluIHRoZSBsYXRlc3QgdmVyc2lvbiBvZiBPcGVuSlBFRyAoaHR0
-cHM6Ly9naXRodWIuY29tL3VjbG91dmFpbi9vcGVuanBlZyAyMDE2LjAzLjE0
-KS4NCg0KVGhlIGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IHRoaXMgaXNz
-dWUgY2FuIGJlIGRlc2NyaWJlZCBhcyBmb2xsb3dzLg0KLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tDQp3aW5zb25AdWJ1bnR1On4vRGVza3Rv
-cC9yZXBvL29wZW5qcGVnL2JpbiQgZ2RiIG9wal9kZWNvbXByZXNzIC1xDQpS
-ZWFkaW5nIHN5bWJvbHMgZnJvbSBvcGpfZGVjb21wcmVzcy4uLihubyBkZWJ1
-Z2dpbmcgc3ltYm9scyBmb3VuZCkuLi5kb25lLg0KDQooZ2RiKSByIC1vIGlt
-YWdlLnBnbSAtaSBvcGpfdGNkX2ZyZWVfdGlsZS5qcDIgDQpTdGFydGluZyBw
-cm9ncmFtOiAvaG9tZS93aW5zb24vRGVza3RvcC9yZXBvL29wZW5qcGVnL2Jp
-bi9vcGpfZGVjb21wcmVzcyAtbyBpbWFnZS5wZ20gLWkgb29iX29wal90Y2Rf
-ZnJlZV90aWxlLmpwMg0KDQpbSU5GT10gU3RhcnQgdG8gcmVhZCBqMmsgbWFp
-biBoZWFkZXIgKDEzMSkuDQpbSU5GT10gTWFpbiBoZWFkZXIgaGFzIGJlZW4g
-Y29ycmVjdGx5IGRlY29kZWQuDQpbSU5GT10gTm8gZGVjb2RlZCBhcmVhIHBh
-cmFtZXRlcnMsIHNldCB0aGUgZGVjb2RlZCBhcmVhIHRvIHRoZSB3aG9sZSBp
-bWFnZQ0KW1dBUk5JTkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0g
-MCwgbm8gdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5vIGluY2x0cmVlIGNy
-ZWF0ZWQuDQpbV0FSTklOR10gdGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9
-PSAwLCBubyB0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gTm8gaW1zYnRyZWUg
-Y3JlYXRlZC4NCltXQVJOSU5HXSB0Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVz
-ID09IDAsIG5vIHRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSBObyBpbmNsdHJl
-ZSBjcmVhdGVkLg0KW1dBUk5JTkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9k
-ZXMgPT0gMCwgbm8gdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5vIGltc2J0
-cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gdGd0X2NyZWF0ZSB0cmVlLT5udW1u
-b2RlcyA9PSAwLCBubyB0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gTm8gaW5j
-bHRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSB0Z3RfY3JlYXRlIHRyZWUtPm51
-bW5vZGVzID09IDAsIG5vIHRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSBObyBp
-bXNidHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIHRndF9jcmVhdGUgdHJlZS0+
-bnVtbm9kZXMgPT0gMCwgbm8gdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5v
-IGluY2x0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gdGd0X2NyZWF0ZSB0cmVl
-LT5udW1ub2RlcyA9PSAwLCBubyB0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10g
-Tm8gaW1zYnRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSB0Z3RfY3JlYXRlIHRy
-ZWUtPm51bW5vZGVzID09IDAsIG5vIHRyZWUgY3JlYXRlZC4NCltXQVJOSU5H
-XSBObyBpbmNsdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIHRndF9jcmVhdGUg
-dHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8gdHJlZSBjcmVhdGVkLg0KW1dBUk5J
-TkddIE5vIGltc2J0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gdGd0X2NyZWF0
-ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBubyB0cmVlIGNyZWF0ZWQuDQpbV0FS
-TklOR10gTm8gaW5jbHRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSB0Z3RfY3Jl
-YXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5vIHRyZWUgY3JlYXRlZC4NCltX
-QVJOSU5HXSBObyBpbXNidHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIHRndF9j
-cmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8gdHJlZSBjcmVhdGVkLg0K
-W1dBUk5JTkddIE5vIGluY2x0cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gdGd0
-X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBubyB0cmVlIGNyZWF0ZWQu
-DQpbV0FSTklOR10gTm8gaW1zYnRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSB0
-Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5vIHRyZWUgY3JlYXRl
-ZC4NCltXQVJOSU5HXSBObyBpbmNsdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkdd
-IHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8gdHJlZSBjcmVh
-dGVkLg0KW1dBUk5JTkddIE5vIGltc2J0cmVlIGNyZWF0ZWQuDQpbV0FSTklO
-R10gdGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBubyB0cmVlIGNy
-ZWF0ZWQuDQpbV0FSTklOR10gTm8gaW5jbHRyZWUgY3JlYXRlZC4NCltXQVJO
-SU5HXSB0Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5vIHRyZWUg
-Y3JlYXRlZC4NCltXQVJOSU5HXSBObyBpbXNidHJlZSBjcmVhdGVkLg0KW1dB
-Uk5JTkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwgbm8gdHJl
-ZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5vIGluY2x0cmVlIGNyZWF0ZWQuDQpb
-V0FSTklOR10gdGd0X2NyZWF0ZSB0cmVlLT5udW1ub2RlcyA9PSAwLCBubyB0
-cmVlIGNyZWF0ZWQuDQpbV0FSTklOR10gTm8gaW1zYnRyZWUgY3JlYXRlZC4N
-CltXQVJOSU5HXSB0Z3RfY3JlYXRlIHRyZWUtPm51bW5vZGVzID09IDAsIG5v
-IHRyZWUgY3JlYXRlZC4NCltXQVJOSU5HXSBObyBpbmNsdHJlZSBjcmVhdGVk
-Lg0KW1dBUk5JTkddIHRndF9jcmVhdGUgdHJlZS0+bnVtbm9kZXMgPT0gMCwg
-bm8gdHJlZSBjcmVhdGVkLg0KW1dBUk5JTkddIE5vIGltc2J0cmVlIGNyZWF0
-ZWQuDQpbSU5GT10gSGVhZGVyIG9mIHRpbGUgMSAvIDEgaGFzIGJlZW4gcmVh
-ZC4NCltJTkZPXSBUaWxlIDEvMSBoYXMgYmVlbiBkZWNvZGVkLg0KW0lORk9d
-IEltYWdlIGRhdGEgaGFzIGJlZW4gdXBkYXRlZCB3aXRoIHRpbGUgMS4NCg0K
-W0lORk9dIFN0cmVhbSByZWFjaGVkIGl0cyBlbmQgIQ0KL2hvbWUvd2luc29u
-L0Rlc2t0b3AvcmVwby9vcGVuanBlZy9zcmMvYmluL2pwMi9jb252ZXJ0LmM6
-MTc2NTppbWFnZXRvcG5tDQpwcmVjaXNpb24gMzEgaXMgbGFyZ2VyIHRoYW4g
-MTYNCjogcmVmdXNlZC4NCltFUlJPUl0gT3V0ZmlsZSBpbWFnZS5wZ20gbm90
-IGdlbmVyYXRlZA0KDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdW
-LCBTZWdtZW50YXRpb24gZmF1bHQuDQoweGI3ZmM2MWFlIGluIG9wal90Y2Rf
-ZnJlZV90aWxlICgpIGZyb20gL2hvbWUvd2luc29uL0Rlc2t0b3AvcmVwby9v
-cGVuanBlZy9iaW4vbGlib3BlbmpwMi5zby43DQoNCihnZGIpIGJ0DQojMCAg
-MHhiN2ZjNjFhZSBpbiBvcGpfdGNkX2ZyZWVfdGlsZSAoKSBmcm9tIC9ob21l
-L3dpbnNvbi9EZXNrdG9wL3JlcG8vb3BlbmpwZWcvYmluL2xpYm9wZW5qcDIu
-c28uNw0KIzEgIDB4YjdmYzNmZmEgaW4gb3BqX3RjZF9kZXN0cm95ICgpIGZy
-b20gL2hvbWUvd2luc29uL0Rlc2t0b3AvcmVwby9vcGVuanBlZy9iaW4vbGli
-b3BlbmpwMi5zby43DQojMiAgMHhiN2ZhNmNlYSBpbiBvcGpfajJrX2Rlc3Ry
-b3kgKCkgZnJvbSAvaG9tZS93aW5zb24vRGVza3RvcC9yZXBvL29wZW5qcGVn
-L2Jpbi9saWJvcGVuanAyLnNvLjcNCiMzICAweGI3ZmI0YjM4IGluIG9wal9q
-cDJfZGVzdHJveSAoKSBmcm9tIC9ob21lL3dpbnNvbi9EZXNrdG9wL3JlcG8v
-b3BlbmpwZWcvYmluL2xpYm9wZW5qcDIuc28uNw0KIzQgIDB4YjdmYjc0YWMg
-aW4gb3BqX2Rlc3Ryb3lfY29kZWMgKCkgZnJvbSAvaG9tZS93aW5zb24vRGVz
-a3RvcC9yZXBvL29wZW5qcGVnL2Jpbi9saWJvcGVuanAyLnNvLjcNCiM1ICAw
-eDA4MDRjYTgyIGluIG1haW4gKCkNCg0KKGdkYikgeCAvaSAkZWlwDQo9PiAw
-eGI3ZmM2MWFlIDxvcGpfdGNkX2ZyZWVfdGlsZSsyODg+OiBtb3YgICAgMHgy
-MCglZWF4KSwlZWF4DQooZ2RiKSBpIHINCmVheCAgICAgICAgICAgIDB4NDBm
-NzJkMTEgMTA4OTk0MDc1Mw0KZWN4ICAgICAgICAgICAgMHgzMCA0OA0KZWR4
-ICAgICAgICAgICAgMHgzNjJlODhjNSA5MDkwMTkzMzMNCmVieCAgICAgICAg
-ICAgIDB4YjdmZDYwMDAgLTEyMDgxMzE1ODQNCmVzcCAgICAgICAgICAgIDB4
-YmZmZjllODAgMHhiZmZmOWU4MA0KZWJwICAgICAgICAgICAgMHhiZmZmOWVj
-OCAweGJmZmY5ZWM4DQplc2kgICAgICAgICAgICAweDAgMA0KZWRpICAgICAg
-ICAgICAgMHgwIDANCmVpcCAgICAgICAgICAgIDB4YjdmYzYxYWUgMHhiN2Zj
-NjFhZSA8b3BqX3RjZF9mcmVlX3RpbGUrMjg4Pg0KZWZsYWdzICAgICAgICAg
-MHgxMDI5MyBbIENGIEFGIFNGIElGIFJGIF0NCmNzICAgICAgICAgICAgIDB4
-NzMgMTE1DQpzcyAgICAgICAgICAgICAweDdiIDEyMw0KZHMgICAgICAgICAg
-ICAgMHg3YiAxMjMNCmVzICAgICAgICAgICAgIDB4N2IgMTIzDQpmcyAgICAg
-ICAgICAgICAweDAgMA0KZ3MgICAgICAgICAgICAgMHgzMyA1MQ0KDQooZ2Ri
-KSB4IC80MHhiICRlYXgNCjB4NDBmNzJkMTE6IENhbm5vdCBhY2Nlc3MgbWVt
-b3J5IGF0IGFkZHJlc3MgMHg0MGY3MmQxMQ0KDQooZ2RiKSB4IC80MHhiICRl
-YXgtMHgyMA0KMHg0MGY3MmNmMTogQ2Fubm90IGFjY2VzcyBtZW1vcnkgYXQg
-YWRkcmVzcyAweDQwZjcyY2YxDQoNCg0KVGhlIGF0dGFjaG1lbnQgaXMgdGhl
-IHByb29mLW9mLWNvbmNlcHQgZmlsZS4NCkFsdGVybmF0aXZlbHksIHlvdSBj
-YW4gZGVjb2RlIHRoZSBmb2xsb3dpbmcgc3RyaW5nIHVzaW5nIGJhc2U2NCBh
-bmQgc2F2ZSB0aGUgZGVjb2RlZCBjb250ZW50IHRvIGEgLmpwMiBmaWxlLg0K
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpBQUFBREdwUUlD
-QU5Db2NLQUFBQUZHWjBlWEJxY0RJZ0FBQUFBR3B3TWlBQUFBQmJhbkF5YUFB
-QUFCWnBhR1J5QUFBQUlBQUFBQ0FBDQpCUDhIQUFBQUFBQU1ZbkJqWXdRRUJB
-QUFBQUFQWTI5c2NnRUFBQUFBQUJnQUFBQWlZMlJsWmdBRUFBQUFBQUFDQUFF
-QUFBQURBQUlBDQpBQUFEQUFNQUFRQUFBQUFCSTJwd01tUC9ULzlSQURJQUFB
-QUFBQ0FBQUFBZ0FBQUFBQUFBQUFBQUFBQWdBQUFBSUFBQUFBQUFBQUFBDQpB
-QVFFQ3hXZUFRRUVBUUVBQVFIL1VnQU1BQUFBQVFFRkJBUUFBZjljQUJOQUtE
-QXdPREF3T0RBd09EQXdPREF3T1A5a0FDVUFBVU55DQpaV0YwWldRZ1lua2dU
-M0JsYmtwUVJVY2dkbVZ5YzJsdmJpQXlMakV1TVArUUFBb0FBQUFBQUprQUFm
-K1R3UWdEejRBUUNjT0JBNENoDQo4QUlFcDhZSUJyK3ZwQkFKMThoQUE2UGpD
-QU9YcFUrdnBDQUxIbElQb2VEQUN6clhnS1BrQ2dEUDFUeC9wODRjQTMvZFJ0
-d2lmNmZPDQpIQU4vM1ZEeWZIK0FvZkNLUG1LaXFTNmo1Qkk5cGpSWjJaNE5v
-b2FqNHhBOXBqUloyWjROdjRDZzZNQ2RscWo0RzEraDhJNmRyQ2xBDQo5VmZX
-b2ZDTW5hd3BRUGxuZ1AvWg0KDQoNCkNSRURJVDoNClRoaXMgdnVsbmVyYWJp
-bGl0eSB3YXMgZGlzY292ZXJlZCBieSBLZSBMaXUgb2YgVGVuY2VudCdzIFh1
-YW53dSBMQUIuDQoNCg==
+Affected versions:
 
---_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6983EXMBXTJ002tence_
-Content-Type: application/octet-stream; name="oob_opj_tcd_free_tile.jp2"
-Content-Description: oob_opj_tcd_free_tile.jp2
-Content-Disposition: attachment; filename="oob_opj_tcd_free_tile.jp2";
-	size=414; creation-date="Mon, 14 Mar 2016 06:51:56 GMT";
-	modification-date="Mon, 14 Mar 2016 06:51:56 GMT"
-Content-Transfer-Encoding: base64
+- Apache JSPWiki  before Apache JSPWiki up to 2.12.2
 
-AAAADGpQICANCocKAAAAFGZ0eXBqcDIgAAAAAGpwMiAAAABbanAyaAAAABZp
-aGRyAAAAIAAAACAABP8HAAAAAAAMYnBjYwQEBAAAAAAPY29scgEAAAAAABgA
-AAAiY2RlZgAEAAAAAAACAAEAAAADAAIAAAADAAMAAQAAAAABI2pwMmP/T/9R
-ADIAAAAAACAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAAAAAAAAAAQECxWeAQEE
-AQEAAQH/UgAMAAAAAQEFBAQAAf9cABNAKDAwODAwODAwODAwODAwOP9kACUA
-AUNyZWF0ZWQgYnkgT3BlbkpQRUcgdmVyc2lvbiAyLjEuMP+QAAoAAAAAAJkA
-Af+TwQgDz4AQCcOBA4Ch8AIEp8YIBr+vpBAJ18hAA6PjCAOXpU+vpCALHlIP
-oeDACzrXgKPkCgDP1Tx/p84cA3/dRtwif6fOHAN/3VDyfH+AofCKPmKiqS6j
-5BI9pjRZ2Z4Nooaj4xA9pjRZ2Z4Nv4Cg6MCdlqj4G1+h8I6drClA9VfWofCM
-nawpQPlngP/Z
+Description:
 
---_002_1F2D4DA31CA62740BFF46830A0E6A4F7064F6983EXMBXTJ002tence_--
+A carefully crafted request using the Image plugin could trigger an XSS
+vulnerability on Apache JSPWiki, which could allow the attacker to
+execute javascript in the victim's browser and get some sensitive
+information about the victim.
+
+Apache JSPWiki users should upgrade to 2.12.3 or later.
+
+Credit:
+
+The issue was separately discovered by both XBOW
+(https://github.com/xbow-security, https://xbow.com) and Hamed Kohi
+(finders)
+
+References:
+
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2025-24854
+https://www.cve.org/CVERecord?id=CVE-2025-24854
