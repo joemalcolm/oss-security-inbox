@@ -1,4 +1,4 @@
-Received: (qmail 9501 invoked by uid 550); 20 Mar 2023 07:26:19 -0000
+Received: (qmail 11777 invoked by uid 550); 30 Jul 2025 18:50:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,101 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9425 invoked from network); 20 Mar 2023 07:26:18 -0000
-Date: Mon, 20 Mar 2023 08:26:06 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
-    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
-    oss-security@lists.openwall.com
-Message-ID: <677r5sr8-q659-pq78-587-n42q2q86oqs0@unkk.fr>
-X-fromdanielhimself: yes
+x-ms-reactions: disallow
+Received: (qmail 22145 invoked from network); 30 Jul 2025 18:49:23 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1753901353; bh=egpWx9tKZPYAWe9tbi2+/4MUGmS6VyH5PLmM+Hrgpxc=;
+	h=From:Date:Subject:To:From;
+	b=OEkK8a1Epw9V1xZcQirrp+jBy41yZTCE6NA744Au80YbJeM9xBCM/yh3qJpoSAAYF
+	 0ElGp6JTIF4r8HzGv51/i83HYDopfT/R4dtRyXrExiY9LSWFwn+x6vgRwTNHuwFXEi
+	 5OmNt1+k8ibPdpUBGc5GAadmQVvQ0hamM1X0exMlUM8lBf84x0siVQQs7o5s4+fUo6
+	 sgpXGXROivXwTiCFy/Q++4VoMb2osSIhG78AzvJpKs24Qng3Zpa3Qp0G2Uos8oweUX
+	 Y0/T7wIA5QaQ1OkOirBKo8sq+0I25z5D+E/aDT9zM4SPphvz1OW0sRQWNG7dd4TcNS
+	 mbeCVcee3O2tA==
+X-Forwarded-Encrypted: i=1; AJvYcCXy9uUoS9xEILKk8vDQlfB+gI0q+iaOz4wN6RteDv86shyGmKb5gILFNHERL1aCN50mQ3YaKDY3BqaRkrw=@lists.openwall.com
+X-Gm-Message-State: AOJu0Yz9DlzYHyfa+zzpVtYE/3CnnTmbkbmqS6kI0jUJcZ8mcF0Kbo/Q
+	/siUh9SR4oKjR2eDh9Lhl8U38mMYs6akd4B4ciNkDC6wLnIUGyUXv39dugXRlTCYGJ6w5XcF+Tm
+	4VvxAMtcxxual3USuKTm+Tt+wG+3GgvM=
+X-Google-Smtp-Source: AGHT+IFPsuVXzaWFJflwBxk7k2/eqtFvaQfIBKIYl2QXmcjBcZrWNAzvuNJV9kIhAB3IQM2GQ+AnmrTzqgx73csJlzA=
+X-Received: by 2002:a17:906:b84f:b0:af9:14cf:d808 with SMTP id
+ a640c23a62f3a-af914cffeaamr36510966b.55.1753901353452; Wed, 30 Jul 2025
+ 11:49:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] curl: CVE-2023-27534: SFTP path ~ resolving
- discrepancy
+From: =?UTF-8?Q?Juan_Pablo_Santos_Rodr=C3=ADguez?= <juanpablo@apache.org>
+Date: Wed, 30 Jul 2025 20:49:02 +0200
+X-Gmail-Original-Message-ID: <CAMufup6S_bp8Z0dmz2CSzzxVC-sqrsBy22mkO0vhhhnyof49jw@mail.gmail.com>
+X-Gm-Features: Ac12FXxmUP8vdbJnfBrwUCgKDpZMz2OJNpA-MNU9tdxINDXgbOWNxFHLbUOl-c4
+Message-ID: <CAMufup6S_bp8Z0dmz2CSzzxVC-sqrsBy22mkO0vhhhnyof49jw@mail.gmail.com>
+To: announce@apache.org, dev@jspwiki.apache.org, user@jspwiki.apache.org, 
+	Apache Security Team <security@apache.org>, oss-security@lists.openwall.com, 
+	XBOW Security <bb@xbow.com>
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2025-24853: Apache JSPWiki: Cross-Site Scripting (XSS) in JSPWiki
+ Header Link processing
 
-CVE-2023-27534: SFTP path ~ resolving discrepancy
-=================================================
+Severity: Medium
 
-Project curl Security Advisory, March 20th 2023 -
-[Permalink](https://curl.se/docs/CVE-2023-27534.html)
+Affected versions:
 
-VULNERABILITY
--------------
+- Apache JSPWiki  before Apache JSPWiki up to 2.12.2
 
-curl supports SFTP transfers. curl's SFTP implementation offers a special
-feature in the path component of URLs: a tilde (`~`) character as the first
-path element in the path to denotes a path relative to the user's home
-directory. This is supported because of wording in the [once proposed
-to-become RFC
-draft](https://datatracker.ietf.org/doc/html/draft-ietf-secsh-scp-sftp-ssh-uri-04)
-that was to dictate how SFTP URLs work.
+Description:
 
-Due to a bug, the handling of the tilde in SFTP path did however not only
-replace it when it is used stand-alone as the first path element but also
-wrongly when used as a mere prefix in the first element.
+A carefully crafted request when creating a header link using the
+wiki markup syntax, which could allow the attacker to execute javascript
+ in the victim's browser and get some sensitive information about the
+victim.
 
-Using a path like `/~2/foo` when accessing a server using the user `dan` (with
-home directory `/home/dan`) would then quite surprisingly access the file
-`/home/dan2/foo`.
+Further research by the JSPWiki team showed that the markdown parser
+allowed this kind of attack too.
 
-This can be taken advantage of to circumvent filtering or worse.
+Apache JSPWiki users should upgrade to 2.12.3 or later.
 
-We are not aware of any exploit of this flaw.
+Credit:
 
-INFO
-----
+The issue was discovered by XBOW (https://github.com/xbow-security,
+https://xbow.com) (finder)
 
-CVE-2023-27534 was introduced in [commit
-ba6f20a244](https://github.com/curl/curl/commit/ba6f20a244), shipped in curl
-7.18.0.
+References:
 
-CWE-22: Improper Limitation of a Pathname to a Restricted Directory
-
-Severity: Low
-
-AFFECTED VERSIONS
------------------
-
-- Affected versions: curl 7.18.0 to and including 7.88.1
-- Not affected versions: curl < 7.18.0 and curl >= 8.0.0
-
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-A [fix for CVE-2023-27534](https://github.com/curl/curl/commit/4e2b52b5f7a3bf50a)
-
-RECOMMENDATIONS
---------------
-
-  A - Upgrade curl to version 8.0.0
-
-  B - Apply the patch to your local version
-
-  C - Avoid using tilde in SFTP URL paths.
-
-TIMELINE
---------
-
-This issue was reported to the curl project on March 5, 2023. We contacted
-distros@openwall on March 13, 2023.
-
-curl 8.0.0 was released on March 20 2023, coordinated with the publication of
-this advisory.
-
-CREDITS
--------
-
-- Reported-by: Harry Sintonen
-- Patched-by: Daniel Stenberg
-
-Thanks a lot!
-
--- 
-
-  / daniel.haxx.se
-  | Commercial curl support up to 24x7 is available!
-  | Private help, bug fixes, support, ports, new features
-  | https://curl.se/support.html
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2025-24853
+https://www.cve.org/CVERecord?id=CVE-2025-24853
