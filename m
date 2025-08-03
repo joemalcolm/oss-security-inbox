@@ -1,4 +1,4 @@
-Received: (qmail 26589 invoked by uid 550); 17 Apr 2026 15:55:29 -0000
+Received: (qmail 8054 invoked by uid 550); 3 Aug 2025 17:48:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,47 +8,42 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 3255 invoked from network); 17 Apr 2026 10:30:18 -0000
-Date: Fri, 17 Apr 2026 12:30:04 +0200
-From: Matthias Ferdinand <ml.oss-security@mfedv.net>
-To: oss-security@lists.openwall.com
-Message-ID: <aeILrE9J6sYYPmEh@xoff>
-References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
- <20260410025803.GA20948@openwall.com>
-MIME-Version: 1.0
+Received: (qmail 18003 invoked from network); 3 Aug 2025 09:59:32 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260410025803.GA20948@openwall.com>
-Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
- security fixes
+From: PJ Fanning <fanningpj@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <3319dcff-5d41-ff72-7b1f-d32e553d8f54@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 03 Aug 2025 09:59:20 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2024-52279: Apache Zeppelin: Arbitrary file read by adding
+ malicious JDBC connection string 
 
-On Fri, Apr 10, 2026 at 04:58:03AM +0200, Solar Designer wrote:
-> On Wed, Apr 08, 2026 at 04:24:34PM -0700, Alan Coopersmith wrote:
-> > https://groups.google.com/g/golang-announce/c/0uYbvbPZRWU announces:
-> > >We have just released Go versions 1.26.2 and 1.25.9, minor point releases.
-> > >
-> > >These releases include 10 security fixes following the security policy:
-> 
-> This includes 2 issues in the compiler itself, which made some Go
-> programs not memory safe:
-  ...
+Severity: moderate=20
 
+Affected versions:
 
-I did not see any Linux distribution advisories for compiled Go programs
-yet, but some projects using Go have released upates:
+- Apache Zeppelin (org.apache.zeppelin:zeppelin-jdbc) 0.11.1 before 0.12.0
 
-  - https://rclone.org/changelog/#v1-73-4-2026-04-08
-        Update to go 1.25.9 to fix multiple CVEs
+Description:
 
-  - https://github.com/grafana/grafana/releases/tag/v12.4.3
-        2026-04-14: Go: Update to 1.25.9
+Improper Input Validation vulnerability in Apache Zeppelin. The fix for JDB=
+C URL validation in CVE-2024-31864 did not account for URL encoded input.
 
-I looked at https://github.com/gopasspw/gopass and
-https://github.com/restic/restic, but they have not yet issued updated
-releases.
+This issue affects Apache Zeppelin: from 0.11.1 before 0.12.0.
 
-Perhaps the message did not spread wide enough. Or are many Go programs
-just not affected?
+Users are recommended to upgrade to version 0.12.0, which fixes the issue.
 
+Credit:
 
-Matthias
+H Ming (finder)
+
+References:
+
+https://github.com/apache/zeppelin/pull/4838
+https://issues.apache.org/jira/browse/ZEPPELIN-6095
+https://www.cve.org/CVERecord?id=3DCVE-2024-31864
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2024-52279
+
