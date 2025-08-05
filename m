@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1828" "Monday" "7" "May" "2018" "09:53:04" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1525704784.21704.0@mail.igalia.com>" "45" "[oss-security] WebKitGTK+ Security Advisory WSA-2018-0004" nil nil nil "5" "2018050714:53:04" "[oss-security] WebKitGTK+ Security Advisory WSA-2018-0004" (number mark "U       mcatanzaro@i May  7   45/1828  " thread-indent "\"[oss-security] WebKitGTK+ Security Advisory WSA-2018-0004\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26400 invoked by uid 550); 7 May 2018 15:18:29 -0000
+Received: (qmail 15822 invoked by uid 550); 5 Aug 2025 14:03:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20429 invoked from network); 7 May 2018 14:53:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:Message-Id:Cc:To:Subject:From:Date; bh=tJhLoUvnOvSEfEjwOngNzetuRTE9y8lnFgvW0sE4RRI=;
-	b=YjjN+0Fr9R9dJ0jFN+2rx7I56AvKGJ3gYSx7qvbPrUkc3d4hTd0/FgoTtq8aC4wvtMK1U8Hk62iEQCu2DJQWZ7w7L8Ed9h1ivKEMXitF0Y6SKnPAxExirrizP9UoII3Ax+AgUpqXOtBXgEAv8F+gORXwC/iI1U0TqOoa2JA1qhvKQzh3lgWohvi6cUtAxtDJ2PkB4VmViIH6gXnOkBkgT7mu3mDmXU++8JEsA5/LbVEvpHpvgQiu8f8eofE8q2ojGgukgCPV4cugnXHEq+WQ/0ZzcJe3zHgATABl/25bTdmMHDcii2FHmw33BGoyhzliAKEfcRsTo2n9I8N+8WT7fA==;
-Date: Mon, 07 May 2018 09:53:04 -0500
-From: Michael Catanzaro <mcatanzaro@igalia.com>
-To: webkit-gtk@lists.webkit.org
-Cc: security@webkit.org, distributor-list@gnome.org,
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Message-Id: <1525704784.21704.0@mail.igalia.com>
-X-Mailer: geary/0.12.2
+x-ms-reactions: disallow
+Received: (qmail 19572 invoked from network); 5 Aug 2025 06:46:48 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Nicolas Malin <nmalin@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <e1370190-2485-bbef-bd90-e86cf6e4bb5f@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 05 Aug 2025 06:46:35 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Subject: [oss-security] WebKitGTK+ Security Advisory WSA-2018-0004
+Subject: [oss-security] CVE-2025-54466: Apache OFBiz: RCE Vulnerability in scrum plugin 
 
-------------------------------------------------------------------------
-WebKitGTK+ Security Advisory                               WSA-2018-0004
-------------------------------------------------------------------------
+Severity: moderate=20
 
-Date reported      : May 07, 2018
-Advisory ID        : WSA-2018-0004
-Advisory URL       : https://webkitgtk.org/security/WSA-2018-0004.html
-CVE identifiers    : CVE-2018-4121, CVE-2018-4200, CVE-2018-4204.
+Affected versions:
 
-Several vulnerabilities were discovered in WebKitGTK+.
+- Apache OFBiz before 24.09.02
 
-CVE-2018-4121
-    Versions affected: WebKitGTK+ before 2.20.0.
-    Credit to Natalie Silvanovich of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: Multiple memory corruption
-    issues were addressed with improved memory handling.
+Description:
 
-CVE-2018-4200
-    Versions affected: WebKitGTK+ before 2.20.2.
-    Credit to Ivan Fratric of Google Project Zero.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved state management.
+Improper Control of Generation of Code ('Code Injection') vulnerability lea=
+ding to a possible RCE in Apache OFBiz=C2=A0scrum plugin.
 
-CVE-2018-4204
-    Versions affected: WebKitGTK+ before 2.20.1.
-    Credit to Richard Zhu (fluorescence) working with Trend Micro's Zero
-    Day Initiative, found by OSS-Fuzz.
-    Impact: Processing maliciously crafted web content may lead to
-    arbitrary code execution. Description: A memory corruption issue was
-    addressed with improved memory handling.
+This issue affects Apache OFBiz: before 24.09.02=C2=A0only when the=C2=A0sc=
+rum plugin is used.
 
+Even=C2=A0unauthenticated attackers can exploit this=C2=A0vulnerability.
 
-We recommend updating to the last stable version of WebKitGTK+. It is
-the best way of ensuring that you are running a safe version of
-WebKitGTK+. Please check our website for information about the last
-stable releases.
+Users are recommended to upgrade to version 24.09.02, which fixes the issue.
 
-Further information about WebKitGTK+ Security Advisories can be found
-at: https://webkitgtk.org/security.html
+This issue is being tracked as OFBIZ-13276=20
 
-The WebKitGTK+ team,
-May 07, 2018
+Credit:
+
+Teeramet Eakwilai <teeramet@datafarm.co.th> (finder)
+Thanasin Luangpipat (finder)
+Jarukit Auikritskul (finder)
+
+References:
+
+https://ofbiz.apache.org/download.html
+https://ofbiz.apache.org/security.html
+https://ofbiz.apache.org/release-notes-24.09.02.html
+https://https://issues.apache.org/jira/browse/OFBIZ-13276
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-54466
+https://issues.apache.org/jira/browse/OFBIZ-13276
 
