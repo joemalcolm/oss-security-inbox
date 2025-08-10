@@ -1,4 +1,4 @@
-Received: (qmail 20283 invoked by uid 550); 25 Dec 2022 16:54:48 -0000
+Received: (qmail 3971 invoked by uid 550); 10 Aug 2025 03:13:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,133 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14290 invoked from network); 25 Dec 2022 16:45:39 -0000
+x-ms-reactions: disallow
+Received: (qmail 11996 invoked from network); 10 Aug 2025 03:10:48 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8rfc/97XAxZet0kSO2ffKwWbV3yY1UXe/9PtHdqWaAc=;
-        b=EQHeMInvMRHUFP5L+OEVd8wgHekAQVPQwqQMYot+ObfpABAxwRQvs9SuJS7eQQ6xoe
-         dMlKgX8/iE/B349TH8q8vRpIDyc3HcX7Rq2MhXHtcImBHWoTQnP06E7JOhoTNdShZ6Mg
-         4l/fMJott9QH2pgwaZlfcc0LwD+XKCBYBOexhQWPwlZKBx+bv3YbWzroTJff2rZqrCK0
-         hrBcNaAZ8PmLoPtz2oOHUhGDFtjP+DvFfg3pa4xIxl7KJxQQzwxSO5xiPAMPmmf1AeUU
-         0DqDsFduTAH2FUA52zDgJkpRSOQ7sspSnCzd0jhPq8tiLhAfa2EY1T6HWlqnHUu0aaiD
-         VXXQ==
+        d=gmail.com; s=20230601; t=1754795440; x=1755400240; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GKONsbkzmG77V2Z2k1a31djXGZvoe4v7n8P4qeUaW/s=;
+        b=Gw4p0TcVmItKCRzbAWsdrFgxiwaOLoLVsAY9syiocm6YNirzMCJjDmOeFvbVpjlQh3
+         Y7h+VKDW4Uh2dzJCbk6nMC771F1fu7BguUu+SSKXYzMCKxGcQX4MHFcuNMITi5GV9y3M
+         Et7YE6LbBGMyJB7zHJe43wmlmPqLsXdimsPpfQTFrQ089uWVa3UcrhAFmMsO+wfopmkd
+         CpUeYVrshbZ95G/3EqgozwYi9ZidEeQQZTMvnqON4f/Ds67kS9sTnzLfv3xzBoLgD4k5
+         BLKh69+QRGdwzDuYvLNcEsE/kFvrUVeK1wjDtqtToGO5lf8VTE9q8diNzHgfXiamnpLX
+         CUZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8rfc/97XAxZet0kSO2ffKwWbV3yY1UXe/9PtHdqWaAc=;
-        b=sBlx78i0MnE5IbWIPs5RHWtoy9/9+u6gBS90wFaQsLJb6hhky9f+ek9Lzu4k/WQtHn
-         W1UE3/yKwgwXJKe0HZ+6uc/Cl6o8W4loYyyQ0roh0ANWC++xycxCa3DvViHqNqcnPEmh
-         rtHNrcPqB4pmVyFNK7+HwxG8QdWrGn2cuhmtauoGLKUUz7lB2gzoWs0eROXfStaj8FJC
-         6wrQP2d6qpyaBY7XnYROprNfb4TwCTKow5uxQefJUyYj2QyinRqmXDkk01Ke/7LesWP+
-         VexjNZps2EnOogvR8g594//lUZcrN9X23yEihlDUdlj1G8kCgoNSTlVkoKBHNnv5lraj
-         f3Yg==
-X-Gm-Message-State: AFqh2kq6flVCRJoZzCAagOErAK+N4Pn2ciC116t8azQ5ldq3nX7T0MhO
-	kVg3DXTa+tDYVZ+Y8sCkMM0EH9Qz4K4yCCOCfUSuJSET
-X-Google-Smtp-Source: AMrXdXuBhsa0LKrxbcdupoBVwL9PW/BhlXz+k++bjtX+CCRH/XSBfhwrMy+Xy7gR1PYGvOBREL4sMondHYG9pdAJskM=
-X-Received: by 2002:a17:906:c794:b0:7c0:f9eb:61fd with SMTP id
- cw20-20020a170906c79400b007c0f9eb61fdmr1191874ejb.562.1671986727001; Sun, 25
- Dec 2022 08:45:27 -0800 (PST)
+        d=1e100.net; s=20230601; t=1754795440; x=1755400240;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GKONsbkzmG77V2Z2k1a31djXGZvoe4v7n8P4qeUaW/s=;
+        b=f7he+xEfLvPs0M9leLtDZar3sn3Edtr7+VGjz+yaHm4WqardFJUeRw4w+GZ2+nZU3A
+         wE+FsrkmOhIITetrfynBDn6a4RUZYbqnmuQAPkfunXPAEbSFzbMMQoduB0brxfpv+XmJ
+         2B7unJaT9n4+V0jwBQvZeXeQP2FPrmm2vBWwj0uSOQQObEbN2usA7BnbqF1aQeas0pb8
+         af9x08r6LWV57i6Y672weePegKFW/9SdNolDyKAO2AF83PO9y6kKJTwYRTT70bHx085j
+         3Ieqm0LksvSVZQraDJ0XW5O2ymxWpC5c9uLe1e6z7Lfnd+C0erl4UNP6rIlcCHXlfkWj
+         Le+Q==
+X-Gm-Message-State: AOJu0YzmpaYe/viNuWbwJpg6xkZQrwbE/l51U71SvTeXu37c2tZXr3Bk
+	TZuYYayjJ5+eyfHOp4Rkad5ufoWj826xQwcXs4s3f/9Mzvg2qa6774ApyKUrRtxM
+X-Gm-Gg: ASbGnctheNI8+8cpL3F0rFkG5KwFKNoI5zPj+Kwf7YUqMcSe5hs/pAaNmZJ8x3Ku/N5
+	wS+fYgufXj67nOX8vonsGyDB0vNXL+4Co4pil7ALIN5ItutKO/EnUd9pEbS6v7tKVVoMVaz71MD
+	kbp6ziIXySl/kh24YCDY3e7PPZm4N6GsjCjVkbD9XD4VrAdzjJLfk+nPPb3SE5p1kqqxbM31jev
+	J68XFiyqGXfdgdSLW1YYnlL/FuMhw8oqCYM7zySewRDzbwkSJ0WHqYKOW9PN/qTWAu59WlL2Twr
+	RXWvE33WL9AmVW1R64jkLqMumiolx3T+B3h2ZmGoxL7FZkqKDp2gf2ujKF35VMDW7WzRDtKt6Y4
+	shJPHc8JueJSZuu74ZP8PtqFGVQW69Q==
+X-Google-Smtp-Source: AGHT+IESwV+tYhUyosBJ4r24UBaCOW3Z7GSZU84tvpAXaf9tOaGEBGWP4GPKK10icADMJv/8mOALyA==
+X-Received: by 2002:a05:6870:158f:b0:2c2:3eb4:e53 with SMTP id 586e51a60fabf-30c213983demr4335567fac.37.1754795439649;
+        Sat, 09 Aug 2025 20:10:39 -0700 (PDT)
+Message-ID: <a7169751-2b66-4123-b2b5-09e35623ff80@gmail.com>
+Date: Sat, 9 Aug 2025 22:10:29 -0500
 MIME-Version: 1.0
-References: <CACT4Y+aqb9V=WO0gsN1DgqimrjHiY3x+KvKGiz7b95jh9gubhw@mail.gmail.com>
- <20221222144445.i6z7fifqily6uej5@jwilk.net> <20221222150448.5wyrhot7ikhp75j7@mutt-hbsd>
- <Y6XcJ+tcf1Cg1jkZ@momentum.pseudorandom.co.uk>
-In-Reply-To: <Y6XcJ+tcf1Cg1jkZ@momentum.pseudorandom.co.uk>
-From: Dominik Czarnota <dominik.b.czarnota@gmail.com>
-Date: Sun, 25 Dec 2022 17:44:50 +0100
-Message-ID: <CABEVAa1OxWqS9UAMZCLH7-9oLgHurv+bfRG1gsvYikuZv6CAXQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] [Linux] /proc/pid/stat parsing bugs
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, lunbun <lunbun021@gmail.com>
+References: <CAMqWyhi=xW2sq2+Hb2aJ=ta-zfi_Zay6CztQ9mvDqgjbKr1HpQ@mail.gmail.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <CAMqWyhi=xW2sq2+Hb2aJ=ta-zfi_Zay6CztQ9mvDqgjbKr1HpQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] CVE-2025-55188: 7-Zip: Arbitrary file write on
+ extraction, may lead to code execution
 
-> To me this seems like a parsing problem, not a VFS problem. (...)
-
-Indeed, it is a parsing problem, but if you have to split by ')'
-or/and read data from the end of file in order to parse it properly,
-that's not the best design.
-
-It is probably the lack of proper documentation and examples that
-causes devs to make those mistakes since it is hard to think or account
-for all edge cases. Escaping the rendered output or using a standard
-format like json/xml would probably cause less mistakes like this.
-
-> Others have a simple and well-defined format
-> (like /proc/self/environ and /proc/self/cmdline, which are sequences of
-> \0-terminated bytestrings), and those also seem fine.
-
-The format may seem to be well-defined, but it isn't. Nothing stops a
-process from changing what is rendered in their /proc/$pid/cmdline and
-/proc/$pid/environ files.
-The data in those files is rendered from mm->arg_start and
-mm->env_start user-space pointers respectively [0][1] and it can be
-changed either by:
-1) modifying the underlying data, e.g. overwriting the memory under
-argv[n] envp[n] in main
-2) changing those pointers with the prctl syscall with
-PR_SET_MM_ARG_{START,END} and PR_SET_MM_ENV_{START,END} flags [2]
-3) or by the setproctitle (3bsd) function [3]
-
-The `man procfs` page mentions that the `environ` file content may
-change, but it doesn't do so for the `cmdline` file:
-
-```
-   /proc/[pid]/cmdline
-      This read-only file holds the complete command line for the
-process, unless the process is a zom=E2=80=90
-      bie.  In the latter case, there is nothing in this file: that
-is, a read on this file will return
-      0  characters.   The  command-line arguments appear in this file
-as a set of strings separated by
-      null bytes ('\0'), with a further null byte after the last string.
-```
-
-I understand we may not want to change what is already there to not
-break existing applications. But adding new files with well-defined
-formats and extending existing man pages sounds like a reasonable
-solution.
-
-[0] get_mm_cmdline -
-https://elixir.bootlin.com/linux/v6.1.1/source/fs/proc/base.c#L255
-[1] environ_read -
-https://elixir.bootlin.com/linux/v6.1.1/source/fs/proc/base.c#L941
-[2] https://man7.org/linux/man-pages/man2/prctl.2.html#:~:text=3Dsince%20Li=
-nux%203.5.-,PR_SET_MM_ARG_START,-Set%20the%20address
-[3] https://www.freebsd.org/cgi/man.cgi?query=3Dsetproctitle&sektion=3D3
-
-Best regards,
-Dominik 'Disconnect3d' Czarnota
-
-
-
-On Fri, 23 Dec 2022 at 17:50, Simon McVittie <smcv@debian.org> wrote:
+On 8/9/25 15:46, lunbun wrote:
+> [...]
 >
-> On Thu, 22 Dec 2022 at 10:04:48 -0500, Shawn Webb wrote:
-> > We knew way back then the dangers of VFS-based wizardry. Did we lose
-> > that knowledge somehow?
+> ## Details
 >
-> To me this seems like a parsing problem, not a VFS problem. Some
-> pseudo-files in Linux /proc are one file per item (/proc/self/oom_adj,
-> /proc/self/sessionid, most of /proc/sys) and those are fine[1]: the
-> structure is implicit in the filesystem layout, and the file contents
-> are trivial to "parse". Others have a simple and well-defined format
-> (like /proc/self/environ and /proc/self/cmdline, which are sequences of
-> \0-terminated bytestrings), and those also seem fine.
+> 7-Zip before 25.01 does not always properly handle symbolic links during
+> extraction. Prior to 25.01, it was possible for a maliciously-crafted 
+> archive
+> to create an unsafe symbolic link. 7-Zip follows symbolic links when
+> extracting, so this leads to arbitrary file write.
 >
-> It's the pseudo-files that contain more than one item, particularly
-> those with a semi-consistent format that aims for human-readability, that
-> can easily get into escaping and parsing issues. If those pseudo-files
-> made *more* use of the VFS (one new file in /proc/self for each field
-> in the current /proc/self/stat?) then they would suffer from different
-> issues instead, like inability to read all fields atomically and maybe
-> performance issues for heavy users, but parsing would become a non-issue.
->
->     smcv
->
-> [1] or when they're not fine, the issues are around things like how to
->     separate an AppArmor enforcement mode from the label, which again is
->     a matter of parsing a human-readable format with structure
+> An attacker may leverage this arbitrary file write to achieve unauthorized
+> access/code execution, such as by overwriting a user's SSH keys or 
+> .bashrc file
+> [1]. In one extraction, an attacker may attempt several times to 
+> leverage this
+> vulnerability to write to sensitive files.
+
+How much does the attacker have to guess here?  Somehow I doubt that 
+7-Zip resolves "~" in file names or symlink targets.  (I understand that 
+the attacker can simply pack multiple symlinks into the archive.)
+
+To target .bashrc or replace the SSH authorized_keys file, does the 
+attacker need to know the user's login name, or is it possible to simply 
+list relative symlink targets using .., ../.., ../../.., etc. and hope 
+that the archive is being extracted somewhere below the user's home 
+directory, as opposed to somewhere under /tmp?
+
+Does a malicious archive produce suspicious output when listed with `7z 
+l`?  Is this more of a concern for systems that automatically extract 
+archives and incautious users or is this actually a general problem?
+
+
+-- Jacob
+
+
