@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["547" "Tuesday" "4" "January" "2022" "05:55:27" "+0000" "Benoit Tellier" "btellier@apache.org" nil "20" "[oss-security] CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS " nil nil nil "1" nil nil (number mark "U       btellier@apa Jan  4   20/547   " thread-indent "\"[oss-security] CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16207 invoked by uid 550); 4 Jan 2022 06:56:10 -0000
+Received: (qmail 11343 invoked by uid 550); 10 Aug 2025 13:49:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,33 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21519 invoked from network); 4 Jan 2022 05:55:40 -0000
-Content-Type: text/plain; charset=utf-8
-From: Benoit Tellier <btellier@apache.org>
+x-ms-reactions: disallow
+Received: (qmail 11295 invoked from network); 10 Aug 2025 13:49:57 -0000
+Date: Sun, 10 Aug 2025 15:49:46 +0200
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
-Message-ID: <7d7a8e28-8cb4-4938-f7c9-9bfd2d3f0fec@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 04 Jan 2022 05:55:27 +0000
+Message-ID: <aJijevEkuGrUVYAK@256bit.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-40110: Apache James IMAP vulnerable to a ReDoS 
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] heap use-after-free was found in Vim < 9.1.1400
 
-Severity: moderate
+Note: I have been asked to created a security advisory for the issue 
+mentioned below. The actual issue has already been fixed on May 21st.
 
-Description:
+A heap use-after-free was found in Vim >v9.1.1231 and < 9.1.1400
+================================================================
+Date: 10.08.2025
+Severity: Medium
+CVE: *not yet assigned*
+CWE: Use-after-free (CWE-416)
 
-Using Jazzer fuzzer, we identified that an IMAP user can craft IMAP LIST co=
-mmands to orchestrate a Denial Of Service using a vulnerable Regular expres=
-sion.  This affected Apache James prior to 3.6.1
+Vim gained support for the "tuple" data type in patch v9.1.1232.
 
-This issue is being tracked as JAMES-3635
+When processing nested tuples in Vim script, an error during evaluation
+can trigger a use-after-free in Vim’s internal tuple reference
+management. Specifically, the tuple_unref() function may access already
+freed memory due to improper lifetime handling, leading to memory
+corruption.
 
-Mitigation:
+While the most likely outcome is a denial-of-service (application
+crash), the underlying memory corruption could, in theory, be leveraged
+for more severe consequences depending on the environment in which Vim
+is running. The exploit requires direct user interaction, as the script
+must be explicitly executed within Vim and therefore the severity of
+this impact is rated **medium**.
 
-We recommend upgrading to Apache James 3.6.1 or higher , which enforce the =
-use of RE2J regular expression engine to execute regex in linear time witho=
-ut back-tracking.
+This issue was discovered via fuzz testing with AFL++ and confirmed
+using AddressSanitizer.
 
-Credit:
+The Vim project would like to thank Yang Luo and Yanju Chen from the
+Security Team @ Riema Labs for reporting this issue and Yegappan
+Lakshmanan for fixing this vulnerability.
 
-Apache James PMC would like to thanks Benoit TELLIER for this report.
+The issue has been fixed as of Vim patch v9.1.1400
 
+References:
+https://github.com/vim/vim/commit/1307743697bbc46e1518abfea7f89caa95bcaf97
+https://github.com/vim/vim/security/advisories/GHSA-3r4f-mm4w-wgg6
+
+Thanks,
+Chris
+-- 
+Manchen gibt man das Gefühl, wodurch man es andern nimmt, durch
+Schlüsse.
+		-- Jean Paul
