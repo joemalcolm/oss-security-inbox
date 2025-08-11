@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["26648" "Thursday" "31" "October" "2019" "12:29:09" "+0000" "Xen.org security team" "security@xen.org" "<E1iQ9Zd-0002pV-Ht@xenbits.xenproject.org>" "500" "[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS" nil nil nil "10" "2019103112:29:09" "[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS" (number mark "U       security@xen Oct 31  500/26648 " thread-indent "\"[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9980 invoked by uid 550); 31 Oct 2019 12:29:27 -0000
+Received: (qmail 26616 invoked by uid 550); 11 Aug 2025 13:31:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,516 +7,328 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9962 invoked from network); 31 Oct 2019 12:29:26 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
+x-ms-reactions: disallow
+Received: (qmail 5237 invoked from network); 11 Aug 2025 00:04:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1754870678; x=1755475478; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=B+kl7iEHP4tJs3IlYqEsJj+tv2GMwQrKt0cHSiMQpqA=;
+        b=jP7BmJNJpmygbWG3PJQLvlEP+iGpZk7J7QKoFi1JnjfvFO5DcUgxMVz0iIdjQx56XY
+         3ty8GtbTEDkIzQmDaU/Rb8qEZv77TnT61IGjyb4BNqXwBkLIzxXb8w6Ginyy9zQM0N+J
+         G8btsWydNmss6vEiNEprlMUNIuRWxwtPzGwlp4ZjTfCBEQ7GrTFvxjfJOgtungFL/f8+
+         XqYQzLpoDrT2p1JWf9obdrrGDkLivpwtj4jKUvHGERfK6PxtmOdoXDUL9v5YzKFPRUlN
+         wDL+Pjn8iNQct35scQxADllsnRd5K6qwQ00vFvYjj1OWMc6lrClHKH84WplFk3udhaSt
+         B6Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754870678; x=1755475478;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B+kl7iEHP4tJs3IlYqEsJj+tv2GMwQrKt0cHSiMQpqA=;
+        b=mcpZYnpx69sihUaifaBALllc0bVIBi1Xf+X8L9eTOrF7ofS6tQ4Cj2g9t1fNX7LguX
+         tAixDk0xW3aAhO++v/e8cUC4fSRZR1uN4hI/dwkqzQ7YjhkzUlviTCIf+3gZM5PFpqpq
+         Gb2Q6IvLeKuqTbbPHCE3YyEKfeCJjnX1aCPfqErRgvZXP5U8ADEcny7AET4CVRlWDBPX
+         PgDP847XLvgkXKkAB/o2MdQ4A/Z7NQeqEUiv/7fzRSJGQdTXDxVNPKtv0+2pROOOMFEt
+         bjhE0Bi9u0QBwfUGZzqe0bW2CXeF5Ue0xD2CZkRAeWvyFk3gx3I9jQpbzQmAER2Y3I0Q
+         0Jwg==
+X-Gm-Message-State: AOJu0YzVLkZ8+PuPkYGE0HsY/mguenHHYinAGcMGvP0mtFOzQHNmAp+x
+	IDXUavmo+yGLg/58Mpav8KXrRv/+OLs38iYZmhzfl/04QT21TUx8yILL2TOztJ0l2hsgbs+HDSj
+	fxAaYpCTsWHDS7B/BbLvvZhp0v3K+eJ2HMr9iO6A=
+X-Gm-Gg: ASbGncutfncg3hT2FcmzQjeqoYq7dnMOR1O3yezxNyJsgAHtMoxIVZIs/A9+FAgEA1z
+	OdSItM7m0YRP0bGWTPP1psOjTgB6O22JURAsr1SuCcnpA/I5ifuIE55xu4IAp8n6myVjxwFLnPt
+	yDZ9rbbLXsDU1NQpqCH3V1wc4E/jUPNtRkYg601xD5VEZ4sYtvqOcmuydol+y6lp0Q7OGkXAsMM
+	+T61GHyCCPPzo6j11V7O27UOQ==
+X-Google-Smtp-Source: AGHT+IHXP51noOnbDEOmMjNnO4lhr1d5H6we/ORYknRJkcKJhq8KcnmUX35yXbBY2vjL3dlfshNz7G42miLE8CgcbFk=
+X-Received: by 2002:a17:907:3f15:b0:ad8:914b:7d0b with SMTP id
+ a640c23a62f3a-af9c634f6d9mr959200266b.11.1754870677439; Sun, 10 Aug 2025
+ 17:04:37 -0700 (PDT)
 MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
-From: Xen.org security team <security@xen.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Message-Id: <E1iQ9Zd-0002pV-Ht@xenbits.xenproject.org>
-Date: Thu, 31 Oct 2019 12:29:09 +0000
-Subject: [oss-security] Xen Security Advisory 296 v4 (CVE-2019-18420) - VCPUOP_initialise DoS
+References: <CAMqWyhi=xW2sq2+Hb2aJ=ta-zfi_Zay6CztQ9mvDqgjbKr1HpQ@mail.gmail.com>
+ <a7169751-2b66-4123-b2b5-09e35623ff80@gmail.com> <CAMqWyhhFgATrYJtxFP-hGLR3FN2XhnvZLHVyNtxpWdAp6fFJNQ@mail.gmail.com>
+ <5d16e4d9-a25d-4b5e-946b-4c5243a54bcb@gmail.com>
+In-Reply-To: <5d16e4d9-a25d-4b5e-946b-4c5243a54bcb@gmail.com>
+From: lunbun <lunbun021@gmail.com>
+Date: Sun, 10 Aug 2025 17:04:24 -0700
+X-Gm-Features: Ac12FXyYnz8IlOCpmRSsFJybtPmnX_-dF6MFQgBeo7G0UQpzK-MCbB5bY3Lh-R0
+Message-ID: <CAMqWyhgUK+4dW=jxztFYopDxv5apLYsGcWN=1sbfHmmUfePduw@mail.gmail.com>
+To: jcb62281@gmail.com
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="0000000000005b08b6063c0bab4f"
+Subject: Re: [oss-security] CVE-2025-55188: 7-Zip: Arbitrary file write on
+ extraction, may lead to code execution
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+--0000000000005b08b6063c0bab4f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> What does 7-Zip do if the symlink implies a nonexistent directory?
+> (Example:  attack targeting ~/.ssh/authorized_keys is unpacked in
+> ~/Downloads/foo/bar and unpacks a symlink to /proc/self/cwd/../../.ssh
+> which maps to ~/Downloads/.ssh which probably does not exist.)
 
-            Xen Security Advisory CVE-2019-18420 / XSA-296
-                               version 4
+If a symlink targets a nonexistent directory, the write will fail. 7-Zip by
+default will print an error message, like:
+```
+ERROR: Cannot open output file : errno=3D2 : No such file or directory :
+./malicious_link/file.txt
+```
 
-                         VCPUOP_initialise DoS
+This applies similarly to other filesystem errors, like insufficient
+permissions or unwritable directory.
 
-UPDATES IN VERSION 4
-====================
+However, 7-Zip by default continues with extraction regardless of the
+error, which is why an attacker can use this "shotgun" strategy. These
+errors, though, would hopefully help notify the user that something
+suspicious is happening.
 
-Public release.
+> Do I gather correctly that the malicious link must point to the
+> directory (e.g. ~ or ~/.ssh) that is to contain the attacker's file
+> rather than the file itself?
 
-ISSUE DESCRIPTION
-=================
+Yes, the malicious link must point to the directory that contains the
+attacker's file/directory.
 
-hypercall_create_continuation() is a variadic function which uses a
-printf-like format string to interpret its parameters.  Error handling
-for a bad format character was done using BUG(), which crashes Xen.
+> Can the malicious link be silently replaced or does extracting a
+> malicious archive leave links to every directory that the attack hit?
+> (That could at least make cleaning out the attack relatively
+> straightforward.)
 
-One path, via the VCPUOP_initialise hypercall, has a bad format
-character.  The BUG() can be hit if VCPUOP_initialise executes for a
-sufficiently long period of time for a continuation to be created.
+I could be wrong, but I don't think there is any way for an attacker to
+silently remove or replace a malicious link.
 
-IMPACT
-======
+I don't know what the general policy is for releasing exploit PoCs after a
+patch is released. If it is okay, I can post one on this thread (publicly)
+so you can play around with it.
 
-Malicious guests may cause a hypervisor crash, resulting in a Denial of
-Service (Dos).
+On Sun, Aug 10, 2025 at 4:13=E2=80=AFPM Jacob Bachmeyer <jcb62281@gmail.com=
+> wrote:
 
-VULNERABLE SYSTEMS
-==================
+> On 8/10/25 00:55, lunbun wrote:
+> > Hi Jacob,
+> >
+> > Thanks for asking.
+> >
+> > For all of the following results, I have tested on 7-Zip 25.00 on Debia=
+n.
+> >
+> > [...]
+> >
+> > Symlink targets are relative to the extraction directory, so if the
+> > user extracts to somewhere in their home directory, an attacker could
+> > use the .., ../.., ../../.., etc... strategy to reliably point to
+> > `~/.bashrc` or `~/.ssh/authorized_keys`.
+>
+> What does 7-Zip do if the symlink implies a nonexistent directory?
+> (Example:  attack targeting ~/.ssh/authorized_keys is unpacked in
+> ~/Downloads/foo/bar and unpacks a symlink to /proc/self/cwd/../../.ssh
+> which maps to ~/Downloads/.ssh which probably does not exist.)
+>
+> > If, say, the archive is extracted to `/tmp` and the CWD is `/tmp`,
+> > then yes, the best an attacker can do is guess the user's login name.
+>
+> That would at least limit this to targeted attacks.  Suppose the
+> attacker guesses wrong or tries a "shotgun" approach.  What does 7-Zip
+> do if the symlink points to a nonexistent directory that cannot be
+> created?  (Example:  /home/alice on Bob's computer or /home/bob on
+> Alice's computer.)
+>
+> What does 7-Zip do if the symlink points to an unwritable directory?
+> (Example:  one "../" too many while aiming for ~/.bashrc and the symlink
+> resolves to /home.)
+>
+> > However, only specifying the extraction directory with `-o` cannot be
+> > used to mitigate this as a malicious actor could use `/proc/self/cwd`.
+> > The CWD also needs to be set to a safe directory.
+> >
+> > Say that a malicious actor is able to point to `~/.bashrc`. By
+> > default, `7z x` will present the user with a `Y/n` prompt asking if
+> > they want to overwrite `.bashrc`. However, 7-Zip displays the path of
+> > `.bashrc` before symlink resolution, so an attacker can hide every
+> > part of the path except for the file basename. Here is a sample message:
+> > ```
+> > Would you like to replace the existing file:
+> >   Path:     ./malicious_link/.bashrc
+> >   Size:     3526 bytes (4 KiB)
+> >   Modified: 2025-04-18 22:47:34
+> > with the file from archive:
+> >   Path:     malicious_link/.bashrc
+> >   Size:     5 bytes (1 KiB)
+> >   Modified: 1970-01-01 00:00:00
+> > ? (Y)es / (N)o / (A)lways / (S)kip all / A(u)to rename all / (Q)uit?
+> > ```
+> >
+> > Of course, this prompt is not displayed if the targeted file does not
+> > already exist.
+>
+> Fortunately, ".bashrc" and "authorized_keys" are (or should be) highly
+> suspicious basenames, but an inattentive user could miss that detail.
+> However, ~/.ssh/authorized_keys is not likely to exist on a system not
+> normally accessed using SSH, such as a user's desktop, so the attacker
+> gets to drop it "free" in that typical situation.  Add that
+> distributions often run sshd by default and... well... is there a
+> firewall blocking inbound port 22?
+>
+> Do I gather correctly that the malicious link must point to the
+> directory (e.g. ~ or ~/.ssh) that is to contain the attacker's file
+> rather than the file itself?
+>
+> Can the malicious link be silently replaced or does extracting a
+> malicious archive leave links to every directory that the attack hit?
+> (That could at least make cleaning out the attack relatively
+> straightforward.)
+>
+> > Similarly, for `7z l`, symlinks targets are not listed, so an attacker
+> > can hide every part of the path except for the file basename.
+>
+> This should probably be considered a bug in 7-Zip, although it is
+> excusable due to 7-Zip's origin on Windows, which did not have symlinks
+> when 7-Zip was invented.
+>
+>
+> -- Jacob
+>
+>
 
-Xen versions 4.6 and newer are vulnerable.  Xen versions 4.5 and earlier
-are not vulnerable.
+--0000000000005b08b6063c0bab4f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Only x86 PV guests can exploit the vulnerability.  HVM and PVH guests,
-and guests on ARM systems, cannot exploit the vulnerability.
+<div dir=3D"ltr">&gt; What does 7-Zip do if the symlink implies a nonexiste=
+nt directory? <br>&gt; (Example: =C2=A0attack targeting ~/.ssh/authorized_k=
+eys is unpacked in<br>&gt; ~/Downloads/foo/bar and unpacks a symlink to /pr=
+oc/self/cwd/../../.ssh<br>&gt; which maps to ~/Downloads/.ssh which probabl=
+y does not exist.)<br><br>If a symlink targets a nonexistent directory, the=
+ write will fail. 7-Zip by default will print an error message, like:<br>``=
+`<br>ERROR: Cannot open output file : errno=3D2 : No such file or directory=
+ : ./malicious_link/file.txt<br>```<br><br>This applies similarly to other =
+filesystem errors, like insufficient permissions or unwritable directory.<b=
+r><br>However, 7-Zip by default continues with extraction regardless of the=
+ error, which is why an attacker can use this &quot;shotgun&quot; strategy.=
+ These errors, though, would hopefully help notify the user that something =
+suspicious is happening.<br><br>&gt; Do I gather correctly that the malicio=
+us link must point to the<br>&gt; directory (e.g. ~ or ~/.ssh) that is to c=
+ontain the attacker&#39;s file<br>&gt; rather than the file itself?<br><br>=
+Yes, the malicious link must point to the directory that contains the attac=
+ker&#39;s file/directory.<br><br>&gt; Can the malicious link be silently re=
+placed or does extracting a<br>&gt; malicious archive leave links to every =
+directory that the attack hit? <br>&gt; (That could at least make cleaning =
+out the attack relatively<br>&gt; straightforward.)<br><br>I could be wrong=
+, but I don&#39;t think there is any way for an attacker to silently remove=
+ or replace a malicious link.<br><br>I don&#39;t know what the general poli=
+cy is for releasing exploit PoCs after a patch is released. If it is okay, =
+I can post one on this thread (publicly) so you can play around with it.<br=
+></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr=
+" class=3D"gmail_attr">On Sun, Aug 10, 2025 at 4:13=E2=80=AFPM Jacob Bachme=
+yer &lt;<a href=3D"mailto:jcb62281@gmail.com">jcb62281@gmail.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 8/10/25 =
+00:55, lunbun wrote:<br>
+&gt; Hi Jacob,<br>
+&gt;<br>
+&gt; Thanks for asking.<br>
+&gt;<br>
+&gt; For all of the following results, I have tested on 7-Zip 25.00 on Debi=
+an.<br>
+&gt;<br>
+&gt; [...]<br>
+&gt;<br>
+&gt; Symlink targets are relative to the extraction directory, so if the <b=
+r>
+&gt; user extracts to somewhere in their home directory, an attacker could =
+<br>
+&gt; use the .., ../.., ../../.., etc... strategy to reliably point to <br>
+&gt; `~/.bashrc` or `~/.ssh/authorized_keys`.<br>
+<br>
+What does 7-Zip do if the symlink implies a nonexistent directory?=C2=A0 <b=
+r>
+(Example:=C2=A0 attack targeting ~/.ssh/authorized_keys is unpacked in <br>
+~/Downloads/foo/bar and unpacks a symlink to /proc/self/cwd/../../.ssh <br>
+which maps to ~/Downloads/.ssh which probably does not exist.)<br>
+<br>
+&gt; If, say, the archive is extracted to `/tmp` and the CWD is `/tmp`, <br>
+&gt; then yes, the best an attacker can do is guess the user&#39;s login na=
+me.<br>
+<br>
+That would at least limit this to targeted attacks.=C2=A0 Suppose the <br>
+attacker guesses wrong or tries a &quot;shotgun&quot; approach.=C2=A0 What =
+does 7-Zip <br>
+do if the symlink points to a nonexistent directory that cannot be <br>
+created?=C2=A0 (Example:=C2=A0 /home/alice on Bob&#39;s computer or /home/b=
+ob on <br>
+Alice&#39;s computer.)<br>
+<br>
+What does 7-Zip do if the symlink points to an unwritable directory?=C2=A0 =
+<br>
+(Example:=C2=A0 one &quot;../&quot; too many while aiming for ~/.bashrc and=
+ the symlink <br>
+resolves to /home.)<br>
+<br>
+&gt; However, only specifying the extraction directory with `-o` cannot be =
+<br>
+&gt; used to mitigate this as a malicious actor could use `/proc/self/cwd`.=
+ <br>
+&gt; The CWD also needs to be set to a safe directory.<br>
+&gt;<br>
+&gt; Say that a malicious actor is able to point to `~/.bashrc`. By <br>
+&gt; default, `7z x` will present the user with a `Y/n` prompt asking if <b=
+r>
+&gt; they want to overwrite `.bashrc`. However, 7-Zip displays the path of =
+<br>
+&gt; `.bashrc` before symlink resolution, so an attacker can hide every <br>
+&gt; part of the path except for the file basename. Here is a sample messag=
+e:<br>
+&gt; ```<br>
+&gt; Would you like to replace the existing file:<br>
+&gt; =C2=A0 Path: =C2=A0 =C2=A0 ./malicious_link/.bashrc<br>
+&gt; =C2=A0 Size: =C2=A0 =C2=A0 3526 bytes (4 KiB)<br>
+&gt; =C2=A0 Modified: 2025-04-18 22:47:34<br>
+&gt; with the file from archive:<br>
+&gt; =C2=A0 Path: =C2=A0 =C2=A0 malicious_link/.bashrc<br>
+&gt; =C2=A0 Size: =C2=A0 =C2=A0 5 bytes (1 KiB)<br>
+&gt; =C2=A0 Modified: 1970-01-01 00:00:00<br>
+&gt; ? (Y)es / (N)o / (A)lways / (S)kip all / A(u)to rename all / (Q)uit?<b=
+r>
+&gt; ```<br>
+&gt;<br>
+&gt; Of course, this prompt is not displayed if the targeted file does not =
+<br>
+&gt; already exist.<br>
+<br>
+Fortunately, &quot;.bashrc&quot; and &quot;authorized_keys&quot; are (or sh=
+ould be) highly <br>
+suspicious basenames, but an inattentive user could miss that detail.=C2=A0=
+ <br>
+However, ~/.ssh/authorized_keys is not likely to exist on a system not <br>
+normally accessed using SSH, such as a user&#39;s desktop, so the attacker =
+<br>
+gets to drop it &quot;free&quot; in that typical situation.=C2=A0 Add that =
+<br>
+distributions often run sshd by default and... well... is there a <br>
+firewall blocking inbound port 22?<br>
+<br>
+Do I gather correctly that the malicious link must point to the <br>
+directory (e.g. ~ or ~/.ssh) that is to contain the attacker&#39;s file <br>
+rather than the file itself?<br>
+<br>
+Can the malicious link be silently replaced or does extracting a <br>
+malicious archive leave links to every directory that the attack hit?=C2=A0=
+ <br>
+(That could at least make cleaning out the attack relatively <br>
+straightforward.)<br>
+<br>
+&gt; Similarly, for `7z l`, symlinks targets are not listed, so an attacker=
+ <br>
+&gt; can hide every part of the path except for the file basename.<br>
+<br>
+This should probably be considered a bug in 7-Zip, although it is <br>
+excusable due to 7-Zip&#39;s origin on Windows, which did not have symlinks=
+ <br>
+when 7-Zip was invented.<br>
+<br>
+<br>
+-- Jacob<br>
+<br>
+</blockquote></div>
 
-MITIGATION
-==========
-
-There are no mitigations.
-
-CREDITS
-=======
-
-This issue was discovered by Andrew Cooper of Citrix.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-xsa296.patch           Xen 4.9 ... unstable
-xsa296-4.8.patch       Xen 4.7 ... 4.8
-
-$ sha256sum xsa296*
-71bd433f788dd511fad90165bc5ba9bcabe949eecd912f2a616e3c996960d67d  xsa296.meta
-ccfd81b162b8535d952f56b1f87dfdd960e71bf07c1cf8388976e78e2e86cde5  xsa296.patch
-b283be3df6789402553172b7fd582bfffb4fa72a6b33543439bd2fb1b87bfbd4  xsa296-4.8.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAl2600kMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZn10IAKQhLY9RfkgZhY/6cACYnXqFGWhS6MvyeZrVs1L4
-BaojMJilpAo7kc9Xcf+0ThxKI5M/eEeDUdGjFHfBtOUrjOAhaZjaYI1paJwX0JEV
-QoAMQERTtopFnkCNtvykrMiKZQ2xp6hiios+32PvDdVnjO+rkrKESRNoBVNYlC1f
-qN8SbZ6m0C5jP4C82ifDEeJHJsVJtfYQSeRl95pgCmsmxxd3x7q7ubPcR6kizT5t
-Bu4sAtrWNF5zaBrb5kL29yohn4oBLmMV5NO0hSlCbR3FgeFZ7LTwiz8y4d7tVSHg
-fjbsvhmhfhYO1OnZWFea3QXMgfZjsg6qq9jBnpmGu35WVMY=
-=xUlU
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa296.meta"
-Content-Disposition: attachment; filename="xsa296.meta"
-Content-Transfer-Encoding: base64
-
-ewogICJYU0EiOiAyOTYsCiAgIlN1cHBvcnRlZFZlcnNpb25zIjogWwogICAg
-Im1hc3RlciIsCiAgICAiNC4xMiIsCiAgICAiNC4xMSIsCiAgICAiNC4xMCIs
-CiAgICAiNC45IiwKICAgICI0LjgiCiAgXSwKICAiVHJlZXMiOiBbCiAgICAi
-eGVuIgogIF0sCiAgIlJlY2lwZXMiOiB7CiAgICAiNC4xMCI6IHsKICAgICAg
-IlJlY2lwZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFi
-bGVSZWYiOiAiMzEzMWJmOTU2YWIxNTkyOTVlY2RkZTBjNWFkMDAzZDBjNWFm
-NDY5NSIsCiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBh
-dGNoZXMiOiBbXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICI0LjEx
-IjogewogICAgICAiUmVjaXBlcyI6IHsKICAgICAgICAieGVuIjogewogICAg
-ICAgICAgIlN0YWJsZVJlZiI6ICIzMzQyZWU5MzE4Y2QzOGJhMDA2MjU1YjY4
-N2FiN2ExNDUzOTllYTkyIiwKICAgICAgICAgICJQcmVyZXFzIjogW10sCiAg
-ICAgICAgICAiUGF0Y2hlcyI6IFtdCiAgICAgICAgfQogICAgICB9CiAgICB9
-LAogICAgIjQuMTIiOiB7CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4
-ZW4iOiB7CiAgICAgICAgICAiU3RhYmxlUmVmIjogIjU5OWQ2ZDIzY2JiNzkw
-YTc4OGY3YTQ5YWI0ZjExZjFhM2I1YjQyOWUiLAogICAgICAgICAgIlByZXJl
-cXMiOiBbXSwKICAgICAgICAgICJQYXRjaGVzIjogW10KICAgICAgICB9CiAg
-ICAgIH0KICAgIH0sCiAgICAiNC44IjogewogICAgICAiUmVjaXBlcyI6IHsK
-ICAgICAgICAieGVuIjogewogICAgICAgICAgIlN0YWJsZVJlZiI6ICJjNjcy
-MTBmNjBkZmE4MzU2NWQyNmFlNzEwZTRmNWU3MjlhOTVkY2U1IiwKICAgICAg
-ICAgICJQcmVyZXFzIjogW10sCiAgICAgICAgICAiUGF0Y2hlcyI6IFsKICAg
-ICAgICAgICAgInhzYTI5Ni00LjgucGF0Y2giCiAgICAgICAgICBdCiAgICAg
-ICAgfQogICAgICB9CiAgICB9LAogICAgIjQuOSI6IHsKICAgICAgIlJlY2lw
-ZXMiOiB7CiAgICAgICAgInhlbiI6IHsKICAgICAgICAgICJTdGFibGVSZWYi
-OiAiOGQyYTY4ODAxNTE5M2UyMGFlNDdmZTNjMjA4Zjk5MTI4MjQwZjgyMSIs
-CiAgICAgICAgICAiUHJlcmVxcyI6IFtdLAogICAgICAgICAgIlBhdGNoZXMi
-OiBbXQogICAgICAgIH0KICAgICAgfQogICAgfSwKICAgICJtYXN0ZXIiOiB7
-CiAgICAgICJSZWNpcGVzIjogewogICAgICAgICJ4ZW4iOiB7CiAgICAgICAg
-ICAiU3RhYmxlUmVmIjogIjU1YWIyOTJjNDJkYjQxYjA1Y2ZkYmEwMTI2ODBi
-ZjFlMGVhMDJmN2EiLAogICAgICAgICAgIlByZXJlcXMiOiBbXSwKICAgICAg
-ICAgICJQYXRjaGVzIjogWwogICAgICAgICAgICAieHNhMjk2LnBhdGNoIgog
-ICAgICAgICAgXQogICAgICAgIH0KICAgICAgfQogICAgfQogIH0KfQ==
-
---=separator
-Content-Type: application/octet-stream; name="xsa296.patch"
-Content-Disposition: attachment; filename="xsa296.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeGVuL2h5cGVyY2FsbDogRG9uJ3QgdXNlIEJVRygpIGZv
-ciBwYXJhbWV0ZXIgY2hlY2tpbmcgaW4gaHlwZXJjYWxsX2NyZWF0ZV9jb250
-aW51YXRpb24oKQoKU2luY2UgYy9zIDFkNDI5MDM0ICJoeXBlcmNhbGw6IHVw
-ZGF0ZSB2Y3B1X29wIHRvIHRha2UgYW4gdW5zaWduZWQgdmNwdWlkIiwKd2hp
-Y2ggaW5jb3JyZWN0bHkgc3dhcHBlZCAnaScgZm9yICd1JyBpbiB0aGUgcGFy
-YW1ldGVyIHR5cGUgbGlzdCwgZ3Vlc3RzIGhhdmUKYmVlbiBhYmxlIHRvIGhp
-dCB0aGUgQlVHKCkgaW4gbmV4dF9hcmdzKCkncyBkZWZhdWx0IGNhc2UuCgpD
-b3JyZWN0IHRoZXNlIGJhY2sgdG8gJ2knLgoKSW4gYWRkaXRpb24sIG1ha2Ug
-YWRqdXN0bWVudHMgdG8gcHJldmVudCB0aGlzIGNsYXNzIG9mIGlzc3VlIGZy
-b20gb2NjdXJyaW5nIGluCnRoZSBmdXR1cmUgLSBjcmFzaGluZyBYZW4gaXMg
-bm90IGFuIGFwcHJvcHJpYXRlIGZvcm0gb2YgcGFyYW1ldGVyIGNoZWNraW5n
-LgoKQ2FwaXRhbGlzZSBORVhUX0FSRygpIHRvIGNhdGNoIGFsbCB1c2VzLCB0
-byBoaWdobGlnaHQgdGhhdCBpdCBpcyBhIG1hY3JvIGRvaW5nCm5vbi1mdW5j
-dGlvbi1saWtlIHRoaW5ncyBiZWhpbmQgdGhlIHNjZW5lcywgYW5kIHVuZGVm
-IGl0IHdoZW4gYXBwcm9wcmlhdGUuCkltcGxlbWVudCBhIGJhZF9mbXQ6IGJs
-b2NrIHdoaWNoIHByaW50cyBhbiBlcnJvciwgYXNzZXJ0cyB1bnJlYWNoYWJs
-ZSwgYW5kCmNyYXNoZXMgdGhlIGd1ZXN0LgoKT24gdGhlIEFSTSBzaWRlLCBk
-cm9wIGFsbCBwYXJhbWV0ZXIgY2hlY2tpbmcgb2YgcC4gIEl0IGlzIGFzeW1t
-ZXRyaWMgd2l0aCB0aGUKeDg2IHNpZGUsIGFuZCBha2luIHRvIGV4cGVjdGlu
-ZyBtZW1jcHkoKSBvciBzcHJpbnRmKCkgdG8gY2hlY2sgdGhlaXIgc3JjL2Zt
-dApwYXJhbWV0ZXIgYmVmb3JlIHVzZS4gIEEgY2FsbGVyIHBhc3NpbmcgIiIg
-b3Igc29tZXRoaW5nIG90aGVyIHRoYW4gYSBzdHJpbmcKbGl0ZXJhbCB3aWxs
-IGJlIG9idmlvdXMgZHVyaW5nIGNvZGUgcmV2aWV3LgoKVGhpcyBpcyBYU0Et
-Mjk2LgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
-b3BlcjNAY2l0cml4LmNvbT4KQWNrZWQtYnk6IEp1bGllbiBHcmFsbCA8anVs
-aWVuLmdyYWxsQGFybS5jb20+CgpkaWZmIC0tZ2l0IGEveGVuL2FyY2gvYXJt
-L2RvbWFpbi5jIGIveGVuL2FyY2gvYXJtL2RvbWFpbi5jCmluZGV4IDk0MWJi
-ZmY0ZmUuLmEzZGE4ZTljMDggMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL2FybS9k
-b21haW4uYworKysgYi94ZW4vYXJjaC9hcm0vZG9tYWluLmMKQEAgLTM4Mywx
-NCArMzgzLDE1IEBAIHZvaWQgc3luY192Y3B1X2V4ZWNzdGF0ZShzdHJ1Y3Qg
-dmNwdSAqdikKICAgICAvKiBOb3RoaW5nIHRvIGRvIC0tIG5vIGxhenkgc3dp
-dGNoaW5nICovCiB9CiAKLSNkZWZpbmUgbmV4dF9hcmcoZm10LCBhcmdzKSAo
-eyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICBcCisjZGVmaW5lIE5FWFRfQVJHKGZtdCwgYXJncykgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorKHsgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICB1bnNpZ25lZCBsb25n
-IF9fYXJnOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBcCiAgICAgc3dpdGNoICggKihmbXQpKysgKSAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgXAogICAgIHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBj
-YXNlICdpJzogX19hcmcgPSAodW5zaWduZWQgbG9uZyl2YV9hcmcoYXJncywg
-dW5zaWduZWQgaW50KTsgIGJyZWFrOyAgICBcCiAgICAgY2FzZSAnbCc6IF9f
-YXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJnKGFyZ3MsIHVuc2lnbmVkIGxv
-bmcpOyBicmVhazsgICAgXAogICAgIGNhc2UgJ2gnOiBfX2FyZyA9ICh1bnNp
-Z25lZCBsb25nKXZhX2FyZyhhcmdzLCB2b2lkICopOyAgICAgICAgYnJlYWs7
-ICAgIFwKLSAgICBkZWZhdWx0OiAgX19hcmcgPSAwOyBCVUcoKTsgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCisgICAg
-ZGVmYXVsdDogIGdvdG8gYmFkX2ZtdDsgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgIH0gICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIFwKICAgICBfX2FyZzsgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBcCiB9KQpAQCAtNDA1LDkgKzQwNiw2IEBAIHVuc2lnbmVkIGxvbmcg
-aHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgdW5zaWduZWQg
-aW50IGk7CiAgICAgdmFfbGlzdCBhcmdzOwogCi0gICAgLyogQWxsIGh5cGVy
-Y2FsbHMgdGFrZSBhdCBsZWFzdCBvbmUgYXJndW1lbnQgKi8KLSAgICBCVUdf
-T04oICFwIHx8ICpwID09ICdcMCcgKTsKLQogICAgIGN1cnJlbnQtPmhjYWxs
-X3ByZWVtcHRlZCA9IHRydWU7CiAKICAgICB2YV9zdGFydChhcmdzLCBmb3Jt
-YXQpOwpAQCAtNDE1LDcgKzQxMyw3IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJj
-YWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgaWYgKCBtY3MtPmZsYWdz
-ICYgTUNTRl9pbl9tdWx0aWNhbGwgKQogICAgIHsKICAgICAgICAgZm9yICgg
-aSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCi0gICAgICAgICAgICBtY3MtPmNh
-bGwuYXJnc1tpXSA9IG5leHRfYXJnKHAsIGFyZ3MpOworICAgICAgICAgICAg
-bWNzLT5jYWxsLmFyZ3NbaV0gPSBORVhUX0FSRyhwLCBhcmdzKTsKIAogICAg
-ICAgICAvKiBSZXR1cm4gdmFsdWUgZ2V0cyB3cml0dGVuIGJhY2sgdG8gbWNz
-LT5jYWxsLnJlc3VsdCAqLwogICAgICAgICByYyA9IG1jcy0+Y2FsbC5yZXN1
-bHQ7CkBAIC00MzEsNyArNDI5LDcgQEAgdW5zaWduZWQgbG9uZyBoeXBlcmNh
-bGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKIAogICAgICAgICAgICAgZm9yICgg
-aSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAgICAgICAgICAgICB7Ci0gICAg
-ICAgICAgICAgICAgYXJnID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAgICAg
-ICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwgYXJncyk7CiAKICAgICAgICAg
-ICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CkBAIC00
-NTQsNyArNDUyLDcgQEAgdW5zaWduZWQgbG9uZyBoeXBlcmNhbGxfY3JlYXRl
-X2NvbnRpbnVhdGlvbigKIAogICAgICAgICAgICAgZm9yICggaSA9IDA7ICpw
-ICE9ICdcMCc7IGkrKyApCiAgICAgICAgICAgICB7Ci0gICAgICAgICAgICAg
-ICAgYXJnID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAgICAgICAgICAgICAg
-YXJnID0gTkVYVF9BUkcocCwgYXJncyk7CiAKICAgICAgICAgICAgICAgICBz
-d2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CkBAIC00NzUsOCArNDcz
-LDE2IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51
-YXRpb24oCiAgICAgdmFfZW5kKGFyZ3MpOwogCiAgICAgcmV0dXJuIHJjOwor
-CisgYmFkX2ZtdDoKKyAgICBncHJpbnRrKFhFTkxPR19FUlIsICJCYWQgaHlw
-ZXJjYWxsIGNvbnRpbnVhdGlvbiBmb3JtYXQgJyVjJ1xuIiwgKnApOworICAg
-IEFTU0VSVF9VTlJFQUNIQUJMRSgpOworICAgIGRvbWFpbl9jcmFzaChjdXJy
-ZW50LT5kb21haW4pOworICAgIHJldHVybiAwOwogfQogCisjdW5kZWYgTkVY
-VF9BUkcKKwogdm9pZCBzdGFydHVwX2NwdV9pZGxlX2xvb3Aodm9pZCkKIHsK
-ICAgICBzdHJ1Y3QgdmNwdSAqdiA9IGN1cnJlbnQ7CmRpZmYgLS1naXQgYS94
-ZW4vYXJjaC94ODYvaHlwZXJjYWxsLmMgYi94ZW4vYXJjaC94ODYvaHlwZXJj
-YWxsLmMKaW5kZXggZDQ4M2RiYWE2Yi4uNDY0M2U1ZWI0MyAxMDA2NDQKLS0t
-IGEveGVuL2FyY2gveDg2L2h5cGVyY2FsbC5jCisrKyBiL3hlbi9hcmNoL3g4
-Ni9oeXBlcmNhbGwuYwpAQCAtODAsMTQgKzgwLDE1IEBAIGNvbnN0IGh5cGVy
-Y2FsbF9hcmdzX3QgaHlwZXJjYWxsX2FyZ3NfdGFibGVbTlJfaHlwZXJjYWxs
-c10gPQogI3VuZGVmIENPTVAKICN1bmRlZiBBUkdTCiAKLSNkZWZpbmUgbmV4
-dF9hcmcoZm10LCBhcmdzKSAoeyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBcCisjZGVmaW5lIE5FWFRfQVJHKGZtdCwg
-YXJncykgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgXAorKHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwK
-ICAgICB1bnNpZ25lZCBsb25nIF9fYXJnOyAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCiAgICAgc3dpdGNo
-ICggKihmbXQpKysgKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgXAogICAgIHsgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIFwKICAgICBjYXNlICdpJzogX19hcmcgPSAodW5zaWduZWQg
-bG9uZyl2YV9hcmcoYXJncywgdW5zaWduZWQgaW50KTsgIGJyZWFrOyAgICBc
-CiAgICAgY2FzZSAnbCc6IF9fYXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJn
-KGFyZ3MsIHVuc2lnbmVkIGxvbmcpOyBicmVhazsgICAgXAogICAgIGNhc2Ug
-J2gnOiBfX2FyZyA9ICh1bnNpZ25lZCBsb25nKXZhX2FyZyhhcmdzLCB2b2lk
-ICopOyAgICAgICAgYnJlYWs7ICAgIFwKLSAgICBkZWZhdWx0OiAgX19hcmcg
-PSAwOyBCVUcoKTsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBcCisgICAgZGVmYXVsdDogIGdvdG8gYmFkX2ZtdDsgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-XAogICAgIH0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBfX2Fy
-ZzsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICBcCiB9KQpAQCAtMTA5LDcgKzExMCw3
-IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRp
-b24oCiAgICAgaWYgKCBtY3MtPmZsYWdzICYgTUNTRl9pbl9tdWx0aWNhbGwg
-KQogICAgIHsKICAgICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkr
-KyApCi0gICAgICAgICAgICBtY3MtPmNhbGwuYXJnc1tpXSA9IG5leHRfYXJn
-KHAsIGFyZ3MpOworICAgICAgICAgICAgbWNzLT5jYWxsLmFyZ3NbaV0gPSBO
-RVhUX0FSRyhwLCBhcmdzKTsKICAgICB9CiAgICAgZWxzZQogICAgIHsKQEAg
-LTEyMSw3ICsxMjIsNyBAQCB1bnNpZ25lZCBsb25nIGh5cGVyY2FsbF9jcmVh
-dGVfY29udGludWF0aW9uKAogICAgICAgICB7CiAgICAgICAgICAgICBmb3Ig
-KCBpID0gMDsgKnAgIT0gJ1wwJzsgaSsrICkKICAgICAgICAgICAgIHsKLSAg
-ICAgICAgICAgICAgICBhcmcgPSBuZXh0X2FyZyhwLCBhcmdzKTsKKyAgICAg
-ICAgICAgICAgICBhcmcgPSBORVhUX0FSRyhwLCBhcmdzKTsKICAgICAgICAg
-ICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CiAgICAg
-ICAgICAgICAgICAgY2FzZSAwOiByZWdzLT5yZGkgPSBhcmc7IGJyZWFrOwpA
-QCAtMTM3LDcgKzEzOCw3IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2Ny
-ZWF0ZV9jb250aW51YXRpb24oCiAgICAgICAgIHsKICAgICAgICAgICAgIGZv
-ciAoIGkgPSAwOyAqcCAhPSAnXDAnOyBpKysgKQogICAgICAgICAgICAgewot
-ICAgICAgICAgICAgICAgIGFyZyA9IG5leHRfYXJnKHAsIGFyZ3MpOworICAg
-ICAgICAgICAgICAgIGFyZyA9IE5FWFRfQVJHKHAsIGFyZ3MpOwogICAgICAg
-ICAgICAgICAgIHN3aXRjaCAoIGkgKQogICAgICAgICAgICAgICAgIHsKICAg
-ICAgICAgICAgICAgICBjYXNlIDA6IHJlZ3MtPnJieCA9IGFyZzsgYnJlYWs7
-CkBAIC0xNTQsOCArMTU1LDE2IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxs
-X2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgdmFfZW5kKGFyZ3MpOwogCiAg
-ICAgcmV0dXJuIG9wOworCisgYmFkX2ZtdDoKKyAgICBncHJpbnRrKFhFTkxP
-R19FUlIsICJCYWQgaHlwZXJjYWxsIGNvbnRpbnVhdGlvbiBmb3JtYXQgJyVj
-J1xuIiwgKnApOworICAgIEFTU0VSVF9VTlJFQUNIQUJMRSgpOworICAgIGRv
-bWFpbl9jcmFzaChjdXJyLT5kb21haW4pOworICAgIHJldHVybiAwOwogfQog
-CisjdW5kZWYgTkVYVF9BUkcKKwogaW50IGh5cGVyY2FsbF94bGF0X2NvbnRp
-bnVhdGlvbih1bnNpZ25lZCBpbnQgKmlkLCB1bnNpZ25lZCBpbnQgbnIsCiAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVuc2lnbmVkIGludCBt
-YXNrLCAuLi4pCiB7CmRpZmYgLS1naXQgYS94ZW4vY29tbW9uL2NvbXBhdC9k
-b21haW4uYyBiL3hlbi9jb21tb24vY29tcGF0L2RvbWFpbi5jCmluZGV4IDM5
-ODc3YjNhYjIuLjI1MzFmYTc0MjEgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24v
-Y29tcGF0L2RvbWFpbi5jCisrKyBiL3hlbi9jb21tb24vY29tcGF0L2RvbWFp
-bi5jCkBAIC04MSw3ICs4MSw3IEBAIGludCBjb21wYXRfdmNwdV9vcChpbnQg
-Y21kLCB1bnNpZ25lZCBpbnQgdmNwdWlkLCBYRU5fR1VFU1RfSEFORExFX1BB
-UkFNKHZvaWQpIGFyCiAgICAgICAgIH0KIAogICAgICAgICBpZiAoIHJjID09
-IC1FUkVTVEFSVCApCi0gICAgICAgICAgICByYyA9IGh5cGVyY2FsbF9jcmVh
-dGVfY29udGludWF0aW9uKF9fSFlQRVJWSVNPUl92Y3B1X29wLCAiaXVoIiwK
-KyAgICAgICAgICAgIHJjID0gaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRp
-b24oX19IWVBFUlZJU09SX3ZjcHVfb3AsICJpaWgiLAogICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjbWQsIHZjcHVp
-ZCwgYXJnKTsKIAogICAgICAgICBicmVhazsKZGlmZiAtLWdpdCBhL3hlbi9j
-b21tb24vZG9tYWluLmMgYi94ZW4vY29tbW9uL2RvbWFpbi5jCmluZGV4IDIz
-MDg1ODgwNTIuLjY1YmNkODVlMzQgMTAwNjQ0Ci0tLSBhL3hlbi9jb21tb24v
-ZG9tYWluLmMKKysrIGIveGVuL2NvbW1vbi9kb21haW4uYwpAQCAtMTQxMSw3
-ICsxNDExLDcgQEAgbG9uZyBkb192Y3B1X29wKGludCBjbWQsIHVuc2lnbmVk
-IGludCB2Y3B1aWQsIFhFTl9HVUVTVF9IQU5ETEVfUEFSQU0odm9pZCkgYXJn
-KQogCiAgICAgICAgIHJjID0gYXJjaF9pbml0aWFsaXNlX3ZjcHUodiwgYXJn
-KTsKICAgICAgICAgaWYgKCByYyA9PSAtRVJFU1RBUlQgKQotICAgICAgICAg
-ICAgcmMgPSBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbihfX0hZUEVS
-VklTT1JfdmNwdV9vcCwgIml1aCIsCisgICAgICAgICAgICByYyA9IGh5cGVy
-Y2FsbF9jcmVhdGVfY29udGludWF0aW9uKF9fSFlQRVJWSVNPUl92Y3B1X29w
-LCAiaWloIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgY21kLCB2Y3B1aWQsIGFyZyk7CiAKICAgICAgICAgYnJl
-YWs7Cg==
-
---=separator
-Content-Type: application/octet-stream; name="xsa296-4.8.patch"
-Content-Disposition: attachment; filename="xsa296-4.8.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KU3ViamVjdDogeGVuL2h5cGVyY2FsbDogRG9uJ3QgdXNlIEJVRygpIGZv
-ciBwYXJhbWV0ZXIgY2hlY2tpbmcgaW4gaHlwZXJjYWxsX2NyZWF0ZV9jb250
-aW51YXRpb24oKQoKU2luY2UgYy9zIDFkNDI5MDM0ICJoeXBlcmNhbGw6IHVw
-ZGF0ZSB2Y3B1X29wIHRvIHRha2UgYW4gdW5zaWduZWQgdmNwdWlkIiwKd2hp
-Y2ggaW5jb3JyZWN0bHkgc3dhcHBlZCAnaScgZm9yICd1JyBpbiB0aGUgcGFy
-YW1ldGVyIHR5cGUgbGlzdCwgZ3Vlc3RzIGhhdmUKYmVlbiBhYmxlIHRvIGhp
-dCB0aGUgQlVHKCkgaW4gbmV4dF9hcmdzKCkncyBkZWZhdWx0IGNhc2UuCgpD
-b3JyZWN0IHRoZXNlIGJhY2sgdG8gJ2knLgoKSW4gYWRkaXRpb24sIG1ha2Ug
-YWRqdXN0bWVudHMgdG8gcHJldmVudCB0aGlzIGNsYXNzIG9mIGlzc3VlIGZy
-b20gb2NjdXJyaW5nIGluCnRoZSBmdXR1cmUgLSBjcmFzaGluZyBYZW4gaXMg
-bm90IGFuIGFwcHJvcHJpYXRlIGZvcm0gb2YgcGFyYW1ldGVyIGNoZWNraW5n
-LgoKQ2FwaXRhbGlzZSBORVhUX0FSRygpIHRvIGNhdGNoIGFsbCB1c2VzLCB0
-byBoaWdobGlnaHQgdGhhdCBpdCBpcyBhIG1hY3JvIGRvaW5nCm5vbi1mdW5j
-dGlvbi1saWtlIHRoaW5ncyBiZWhpbmQgdGhlIHNjZW5lcywgYW5kIHVuZGVm
-IGl0IHdoZW4gYXBwcm9wcmlhdGUuCkltcGxlbWVudCBhIGJhZF9mbXQ6IGJs
-b2NrIHdoaWNoIHByaW50cyBhbiBlcnJvciwgYXNzZXJ0cyB1bnJlYWNoYWJs
-ZSwgYW5kCmNyYXNoZXMgdGhlIGd1ZXN0LgoKT24gdGhlIEFSTSBzaWRlLCBk
-cm9wIGFsbCBwYXJhbWV0ZXIgY2hlY2tpbmcgb2YgcC4gIEl0IGlzIGFzeW1t
-ZXRyaWMgd2l0aCB0aGUKeDg2IHNpZGUsIGFuZCBha2luIHRvIGV4cGVjdGlu
-ZyBtZW1jcHkoKSBvciBzcHJpbnRmKCkgdG8gY2hlY2sgdGhlaXIgc3JjL2Zt
-dApwYXJhbWV0ZXIgYmVmb3JlIHVzZS4gIEEgY2FsbGVyIHBhc3NpbmcgIiIg
-b3Igc29tZXRoaW5nIG90aGVyIHRoYW4gYSBzdHJpbmcKbGl0ZXJhbCB3aWxs
-IGJlIG9idmlvdXMgZHVyaW5nIGNvZGUgcmV2aWV3LgoKVGhpcyBpcyBYU0Et
-Mjk2LgoKU2lnbmVkLW9mZi1ieTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNv
-b3BlcjNAY2l0cml4LmNvbT4KQWNrZWQtYnk6IEp1bGllbiBHcmFsbCA8anVs
-aWVuLmdyYWxsQGFybS5jb20+CgpkaWZmIC0tZ2l0IGEveGVuL2FyY2gvYXJt
-L2RvbWFpbi5jIGIveGVuL2FyY2gvYXJtL2RvbWFpbi5jCmluZGV4IGQ5ZTc5
-NmRjYmUuLmY2Njc4ZDIyMjcgMTAwNjQ0Ci0tLSBhL3hlbi9hcmNoL2FybS9k
-b21haW4uYworKysgYi94ZW4vYXJjaC9hcm0vZG9tYWluLmMKQEAgLTMzNiwx
-NCArMzM2LDE1IEBAIHZvaWQgc3luY192Y3B1X2V4ZWNzdGF0ZShzdHJ1Y3Qg
-dmNwdSAqdikKICAgICAvKiBOb3RoaW5nIHRvIGRvIC0tIG5vIGxhenkgc3dp
-dGNoaW5nICovCiB9CiAKLSNkZWZpbmUgbmV4dF9hcmcoZm10LCBhcmdzKSAo
-eyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICBcCisjZGVmaW5lIE5FWFRfQVJHKGZtdCwgYXJncykgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAorKHsgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICB1bnNpZ25lZCBsb25n
-IF9fYXJnOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBcCiAgICAgc3dpdGNoICggKihmbXQpKysgKSAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgXAogICAgIHsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBj
-YXNlICdpJzogX19hcmcgPSAodW5zaWduZWQgbG9uZyl2YV9hcmcoYXJncywg
-dW5zaWduZWQgaW50KTsgIGJyZWFrOyAgICBcCiAgICAgY2FzZSAnbCc6IF9f
-YXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJnKGFyZ3MsIHVuc2lnbmVkIGxv
-bmcpOyBicmVhazsgICAgXAogICAgIGNhc2UgJ2gnOiBfX2FyZyA9ICh1bnNp
-Z25lZCBsb25nKXZhX2FyZyhhcmdzLCB2b2lkICopOyAgICAgICAgYnJlYWs7
-ICAgIFwKLSAgICBkZWZhdWx0OiAgX19hcmcgPSAwOyBCVUcoKTsgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcCisgICAg
-ZGVmYXVsdDogIGdvdG8gYmFkX2ZtdDsgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAgIH0gICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIFwKICAgICBfX2FyZzsgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBcCiB9KQpAQCAtMzczLDkgKzM3NCw2IEBAIHVuc2lnbmVkIGxvbmcg
-aHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgdW5zaWduZWQg
-aW50IGk7CiAgICAgdmFfbGlzdCBhcmdzOwogCi0gICAgLyogQWxsIGh5cGVy
-Y2FsbHMgdGFrZSBhdCBsZWFzdCBvbmUgYXJndW1lbnQgKi8KLSAgICBCVUdf
-T04oICFwIHx8ICpwID09ICdcMCcgKTsKLQogICAgIHZhX3N0YXJ0KGFyZ3Ms
-IGZvcm1hdCk7CiAKICAgICBpZiAoIG1jcy0+ZmxhZ3MgJiBNQ1NGX2luX211
-bHRpY2FsbCApCkBAIC0zODMsNyArMzgxLDcgQEAgdW5zaWduZWQgbG9uZyBo
-eXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKICAgICAgICAgX19zZXRf
-Yml0KF9NQ1NGX2NhbGxfcHJlZW1wdGVkLCAmbWNzLT5mbGFncyk7CiAKICAg
-ICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCi0gICAgICAg
-ICAgICBtY3MtPmNhbGwuYXJnc1tpXSA9IG5leHRfYXJnKHAsIGFyZ3MpOwor
-ICAgICAgICAgICAgbWNzLT5jYWxsLmFyZ3NbaV0gPSBORVhUX0FSRyhwLCBh
-cmdzKTsKIAogICAgICAgICAvKiBSZXR1cm4gdmFsdWUgZ2V0cyB3cml0dGVu
-IGJhY2sgdG8gbWNzLT5jYWxsLnJlc3VsdCAqLwogICAgICAgICByYyA9IG1j
-cy0+Y2FsbC5yZXN1bHQ7CkBAIC00MDIsNyArNDAwLDcgQEAgdW5zaWduZWQg
-bG9uZyBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKIAogICAgICAg
-ICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAgICAgICAg
-ICAgICB7Ci0gICAgICAgICAgICAgICAgYXJnID0gbmV4dF9hcmcocCwgYXJn
-cyk7CisgICAgICAgICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwgYXJncyk7
-CiAKICAgICAgICAgICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAg
-ICAgICB7CkBAIC00MjUsNyArNDIzLDcgQEAgdW5zaWduZWQgbG9uZyBoeXBl
-cmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKIAogICAgICAgICAgICAgZm9y
-ICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAgICAgICAgICAgICB7Ci0g
-ICAgICAgICAgICAgICAgYXJnID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAg
-ICAgICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwgYXJncyk7CiAKICAgICAg
-ICAgICAgICAgICBzd2l0Y2ggKCBpICkKICAgICAgICAgICAgICAgICB7CkBA
-IC00NDYsOCArNDQ0LDE2IEBAIHVuc2lnbmVkIGxvbmcgaHlwZXJjYWxsX2Ny
-ZWF0ZV9jb250aW51YXRpb24oCiAgICAgdmFfZW5kKGFyZ3MpOwogCiAgICAg
-cmV0dXJuIHJjOworCisgYmFkX2ZtdDoKKyAgICBncHJpbnRrKFhFTkxPR19F
-UlIsICJCYWQgaHlwZXJjYWxsIGNvbnRpbnVhdGlvbiBmb3JtYXQgJyVjJ1xu
-IiwgKnApOworICAgIEFTU0VSVF9VTlJFQUNIQUJMRSgpOworICAgIGRvbWFp
-bl9jcmFzaChjdXJyZW50LT5kb21haW4pOworICAgIHJldHVybiAwOwogfQog
-CisjdW5kZWYgTkVYVF9BUkcKKwogdm9pZCBzdGFydHVwX2NwdV9pZGxlX2xv
-b3Aodm9pZCkKIHsKICAgICBzdHJ1Y3QgdmNwdSAqdiA9IGN1cnJlbnQ7CmRp
-ZmYgLS1naXQgYS94ZW4vYXJjaC94ODYvZG9tYWluLmMgYi94ZW4vYXJjaC94
-ODYvZG9tYWluLmMKaW5kZXggZGRlYjY4Zjk2Ny4uMzk0NmVhMzhmZCAxMDA2
-NDQKLS0tIGEveGVuL2FyY2gveDg2L2RvbWFpbi5jCisrKyBiL3hlbi9hcmNo
-L3g4Ni9kb21haW4uYwpAQCAtMjQwMywxNCArMjQwMywxNSBAQCB2b2lkIHN5
-bmNfdmNwdV9leGVjc3RhdGUoc3RydWN0IHZjcHUgKnYpCiAgICAgZmx1c2hf
-dGxiX21hc2sodi0+dmNwdV9kaXJ0eV9jcHVtYXNrKTsKIH0KIAotI2RlZmlu
-ZSBuZXh0X2FyZyhmbXQsIGFyZ3MpICh7ICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIFwKKyNkZWZpbmUgTkVYVF9BUkco
-Zm10LCBhcmdzKSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBcCisoeyAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgXAogICAgIHVuc2lnbmVkIGxvbmcgX19hcmc7ICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKICAgICBz
-d2l0Y2ggKCAqKGZtdCkrKyApICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICBcCiAgICAgeyAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgXAogICAgIGNhc2UgJ2knOiBfX2FyZyA9ICh1bnNp
-Z25lZCBsb25nKXZhX2FyZyhhcmdzLCB1bnNpZ25lZCBpbnQpOyAgYnJlYWs7
-ICAgIFwKICAgICBjYXNlICdsJzogX19hcmcgPSAodW5zaWduZWQgbG9uZyl2
-YV9hcmcoYXJncywgdW5zaWduZWQgbG9uZyk7IGJyZWFrOyAgICBcCiAgICAg
-Y2FzZSAnaCc6IF9fYXJnID0gKHVuc2lnbmVkIGxvbmcpdmFfYXJnKGFyZ3Ms
-IHZvaWQgKik7ICAgICAgICBicmVhazsgICAgXAotICAgIGRlZmF1bHQ6ICBf
-X2FyZyA9IDA7IEJVRygpOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIFwKKyAgICBkZWZhdWx0OiAgZ290byBiYWRfZm10
-OyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBcCiAgICAgfSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXAogICAg
-IF9fYXJnOyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwKIH0pCkBAIC0yNDQ5LDcg
-KzI0NTAsNyBAQCB1bnNpZ25lZCBsb25nIGh5cGVyY2FsbF9jcmVhdGVfY29u
-dGludWF0aW9uKAogICAgICAgICBfX3NldF9iaXQoX01DU0ZfY2FsbF9wcmVl
-bXB0ZWQsICZtY3MtPmZsYWdzKTsKIAogICAgICAgICBmb3IgKCBpID0gMDsg
-KnAgIT0gJ1wwJzsgaSsrICkKLSAgICAgICAgICAgIG1jcy0+Y2FsbC5hcmdz
-W2ldID0gbmV4dF9hcmcocCwgYXJncyk7CisgICAgICAgICAgICBtY3MtPmNh
-bGwuYXJnc1tpXSA9IE5FWFRfQVJHKHAsIGFyZ3MpOwogICAgIH0KICAgICBl
-bHNlCiAgICAgewpAQCAtMjQ3MCw3ICsyNDcxLDcgQEAgdW5zaWduZWQgbG9u
-ZyBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKICAgICAgICAgewog
-ICAgICAgICAgICAgZm9yICggaSA9IDA7ICpwICE9ICdcMCc7IGkrKyApCiAg
-ICAgICAgICAgICB7Ci0gICAgICAgICAgICAgICAgYXJnID0gbmV4dF9hcmco
-cCwgYXJncyk7CisgICAgICAgICAgICAgICAgYXJnID0gTkVYVF9BUkcocCwg
-YXJncyk7CiAgICAgICAgICAgICAgICAgc3dpdGNoICggaSApCiAgICAgICAg
-ICAgICAgICAgewogICAgICAgICAgICAgICAgIGNhc2UgMDogcmVncy0+cmRp
-ID0gYXJnOyBicmVhazsKQEAgLTI0ODYsNyArMjQ4Nyw3IEBAIHVuc2lnbmVk
-IGxvbmcgaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oCiAgICAgICAg
-IHsKICAgICAgICAgICAgIGZvciAoIGkgPSAwOyAqcCAhPSAnXDAnOyBpKysg
-KQogICAgICAgICAgICAgewotICAgICAgICAgICAgICAgIGFyZyA9IG5leHRf
-YXJnKHAsIGFyZ3MpOworICAgICAgICAgICAgICAgIGFyZyA9IE5FWFRfQVJH
-KHAsIGFyZ3MpOwogICAgICAgICAgICAgICAgIHN3aXRjaCAoIGkgKQogICAg
-ICAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICBjYXNlIDA6IHJlZ3Mt
-PmVieCA9IGFyZzsgYnJlYWs7CkBAIC0yNTAzLDggKzI1MDQsMTYgQEAgdW5z
-aWduZWQgbG9uZyBoeXBlcmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbigKICAg
-ICB2YV9lbmQoYXJncyk7CiAKICAgICByZXR1cm4gb3A7CisKKyBiYWRfZm10
-OgorICAgIGdwcmludGsoWEVOTE9HX0VSUiwgIkJhZCBoeXBlcmNhbGwgY29u
-dGludWF0aW9uIGZvcm1hdCAnJWMnXG4iLCAqcCk7CisgICAgQVNTRVJUX1VO
-UkVBQ0hBQkxFKCk7CisgICAgZG9tYWluX2NyYXNoKGN1cnJlbnQtPmRvbWFp
-bik7CisgICAgcmV0dXJuIDA7CiB9CiAKKyN1bmRlZiBORVhUX0FSRworCiBp
-bnQgaHlwZXJjYWxsX3hsYXRfY29udGludWF0aW9uKHVuc2lnbmVkIGludCAq
-aWQsIHVuc2lnbmVkIGludCBuciwKICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgdW5zaWduZWQgaW50IG1hc2ssIC4uLikKIHsKZGlmZiAtLWdp
-dCBhL3hlbi9jb21tb24vY29tcGF0L2RvbWFpbi5jIGIveGVuL2NvbW1vbi9j
-b21wYXQvZG9tYWluLmMKaW5kZXggODhiZmRjODM2ZC4uZDQ0NmVkMTMxYiAx
-MDA2NDQKLS0tIGEveGVuL2NvbW1vbi9jb21wYXQvZG9tYWluLmMKKysrIGIv
-eGVuL2NvbW1vbi9jb21wYXQvZG9tYWluLmMKQEAgLTgxLDcgKzgxLDcgQEAg
-aW50IGNvbXBhdF92Y3B1X29wKGludCBjbWQsIHVuc2lnbmVkIGludCB2Y3B1
-aWQsIFhFTl9HVUVTVF9IQU5ETEVfUEFSQU0odm9pZCkgYXIKICAgICAgICAg
-fQogCiAgICAgICAgIGlmICggcmMgPT0gLUVSRVNUQVJUICkKLSAgICAgICAg
-ICAgIHJjID0gaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRpb24oX19IWVBF
-UlZJU09SX3ZjcHVfb3AsICJpdWgiLAorICAgICAgICAgICAgcmMgPSBoeXBl
-cmNhbGxfY3JlYXRlX2NvbnRpbnVhdGlvbihfX0hZUEVSVklTT1JfdmNwdV9v
-cCwgImlpaCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIGNtZCwgdmNwdWlkLCBhcmcpOwogCiAgICAgICAgIGJy
-ZWFrOwpkaWZmIC0tZ2l0IGEveGVuL2NvbW1vbi9kb21haW4uYyBiL3hlbi9j
-b21tb24vZG9tYWluLmMKaW5kZXggNzQwMTYzZWU3Ny4uMjhkNzkwM2E5NiAx
-MDA2NDQKLS0tIGEveGVuL2NvbW1vbi9kb21haW4uYworKysgYi94ZW4vY29t
-bW9uL2RvbWFpbi5jCkBAIC0xMjc3LDcgKzEyNzcsNyBAQCBsb25nIGRvX3Zj
-cHVfb3AoaW50IGNtZCwgdW5zaWduZWQgaW50IHZjcHVpZCwgWEVOX0dVRVNU
-X0hBTkRMRV9QQVJBTSh2b2lkKSBhcmcpCiAKICAgICAgICAgcmMgPSBhcmNo
-X2luaXRpYWxpc2VfdmNwdSh2LCBhcmcpOwogICAgICAgICBpZiAoIHJjID09
-IC1FUkVTVEFSVCApCi0gICAgICAgICAgICByYyA9IGh5cGVyY2FsbF9jcmVh
-dGVfY29udGludWF0aW9uKF9fSFlQRVJWSVNPUl92Y3B1X29wLCAiaXVoIiwK
-KyAgICAgICAgICAgIHJjID0gaHlwZXJjYWxsX2NyZWF0ZV9jb250aW51YXRp
-b24oX19IWVBFUlZJU09SX3ZjcHVfb3AsICJpaWgiLAogICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjbWQsIHZjcHVp
-ZCwgYXJnKTsKIAogICAgICAgICBicmVhazsK
-
---=separator--
+--0000000000005b08b6063c0bab4f--
