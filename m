@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["670" "Friday" "7" "July" "2017" "14:50:25" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1707071448440.951@wniryva>" "23" "[oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object" nil nil nil "7" "2017070709:20:25" "[oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object" (number mark "U       ppandit@redh Jul  7   23/670   " thread-indent "\"[oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating gpu object\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15933 invoked by uid 550); 7 Jul 2017 09:20:42 -0000
+Received: (qmail 25666 invoked by uid 550); 13 Aug 2025 13:05:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15915 invoked from network); 7 Jul 2017 09:20:41 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com EA5D5C060208
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=ppandit@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com EA5D5C060208
-Date: Fri, 7 Jul 2017 14:50:25 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: Li Qiang <liqiang6-s@360.cn>
-Message-ID: <alpine.LFD.2.20.1707071448440.951@wniryva>
+x-ms-reactions: disallow
+Received: (qmail 2019 invoked from network); 13 Aug 2025 12:41:09 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1755088859; bh=e7xYwR0K2wxwXa9m3ojsNd4sVTHHtb8RvRAEDNc1xJ4=;
+	h=Date:To:From:Subject:From;
+	b=P1YWzQKhu4S1RwFFWGL/GBUOgTQzU3I7tJZcleWcblKKEI2z6J0dlu/ZsnVIu9jii
+	 v33VsCYIZKvOgPjK2UOpM9A8YusPhFAAsoieD//1gPVDdO32gll9pPzJMTiGFNzNQQ
+	 JxJe0SYFAAY3Ib7LTpYPU0ot6jeI5WtPolbcoy06mMzE43CimM7zA4iONlm3mXyydG
+	 RP+rzxatCFBbABjQqZUSYbDdwemZD1g84kbAYDlrKTFvIPmHQuy9J/dEkJ5FkH6CCa
+	 9yD3aUbQQqqfyrhVwE9nsrNAVFYkUy+BQKyOjSNExMP0jwObkj2ZfNVSzbiFf5AzeQ
+	 aZw7v9ndfxUoA==
+Message-ID: <7ff6a9b1-2c7d-4fd0-9fdc-b079ff3f3556@apache.org>
+Date: Wed, 13 Aug 2025 13:40:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Fri, 07 Jul 2017 09:20:30 +0000 (UTC)
-Subject: [oss-security] CVE-2017-10810 Kernel: virtio-gpu: memory leakage while creating
- gpu object
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Autocrypt: addr=markt@apache.org; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-48989: Apache Tomcat: h2 DoS - Made You Reset
 
-   Hello,
+Severity: important
 
-Linux kernel built with the VirtIO GPU driver(CONFIG_DRM_VIRTIO_GPU) support 
-is vulnerable to a memory leakage issue. It could occur while creating a 
-virtio gpu object in virtio_gpu_object_create().
+Affected versions:
 
-A user/process could use this flaw to leak host kernel memory potentially 
-resulting in DoS.
+- Apache Tomcat 11.0.0-M1 through 11.0.9
+- Apache Tomcat 10.1.0-M1 through 10.1.43
+- Apache Tomcat 9.0.0.M1 through 9.0.107
+- Apache Tomcat 8.5.0 through 8.5.100 unknown
 
-Upstream patch:
----------------
-   -> https://git.kernel.org/linus/385aee965b4e4c36551c362a334378d2985b722a
+Description:
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1468023
+Improper Resource Shutdown or Release vulnerability in Apache Tomcat 
+made Tomcat vulnerable to the made you reset attack.
 
-This issue was reported by Li Qiang of Qihoo 360 Gear Team.
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.9, from 
+10.1.0-M1 through 10.1.43 and from 9.0.0.M1 through 9.0.107. Older, EOL 
+versions may also be affected.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Users are recommended to upgrade to one of versions 11.0.10, 10.1.44 or 
+9.0.108 which fix the issue.
+
+Credit:
+
+Gal Bar Nahum, Anat Bremler-Barr, and Yaniv Harel of Tel Aviv University 
+(finder)
+
+References:
+
+https://lists.apache.org/thread/9ydfg0xr0tchmglcprhxgwhj0hfwxlyf
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2025-48989
