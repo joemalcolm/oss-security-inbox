@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2001" "Thursday" "2" "April" "2015" "16:39:05" "+0000" "Shachar Raindel" "raindel@mellanox.com" "<AM2PR05MB09290399282201D960BAE8D2DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>" "33" "[oss-security] RE: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" nil nil nil "4" "2015040216:39:05" "[oss-security] RE: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access" (number mark "        raindel@mell Apr  2   33/2001  " thread-indent "\"[oss-security] RE: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical memory access\"\n") "<CAL1RGDWtbEzepxbmHUzteJ-+dcW=VxmTshGzsSN219Tgx3bMvQ@mail.gmail.com>" ("<AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<CAL1RGDXQh2+WQxf9w2Qvo-Npr2MnBZYObyfYfy7fn-Pfue=Odg@mail.gmail.com>" "<AM3PR05MB0935CC450033AE6DFF0B14B3DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>" "<CAL1RGDWtbEzepxbmHUzteJ-+dcW=VxmTshGzsSN219Tgx3bMvQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1614 invoked by uid 550); 2 Apr 2015 16:39:45 -0000
+Received: (qmail 6056 invoked by uid 550); 13 Aug 2025 13:41:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,80 +6,97 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1528 invoked from network); 2 Apr 2015 16:39:40 -0000
-Thread-Topic: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical
- memory access
-Thread-Index: AQHQbKFSAJ8uYP/xzk2HjJ6PPOPj8Z05V7qAgACUXACAAABiUA==
-Deferred-Delivery: Thu, 2 Apr 2015 16:38:56 +0000
-Message-ID: <AM2PR05MB09290399282201D960BAE8D2DCF20@AM2PR05MB0929.eurprd05.prod.outlook.com>
-References: <AM3PR05MB0935AABF569F15EA846B8E72DC000@AM3PR05MB0935.eurprd05.prod.outlook.com>
- <CAL1RGDXQh2+WQxf9w2Qvo-Npr2MnBZYObyfYfy7fn-Pfue=Odg@mail.gmail.com>
- <AM3PR05MB0935CC450033AE6DFF0B14B3DCF20@AM3PR05MB0935.eurprd05.prod.outlook.com>
- <CAL1RGDWtbEzepxbmHUzteJ-+dcW=VxmTshGzsSN219Tgx3bMvQ@mail.gmail.com>
-In-Reply-To: <CAL1RGDWtbEzepxbmHUzteJ-+dcW=VxmTshGzsSN219Tgx3bMvQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [193.47.165.251]
-authentication-results: purestorage.com; dkim=none (message not signed)
- header.d=none;
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:;SRVR:AM2PR05MB0932;
-x-forefront-antispam-report: BMV:1;SFV:NSPM;SFS:(10009020)(6009001)(24454002)(13464003)(51704005)(377454003)(164054003)(110136001)(2900100001)(122556002)(2656002)(87936001)(66066001)(74316001)(2950100001)(46102003)(93886004)(33656002)(230783001)(86362001)(102836002)(76576001)(92566002)(50986999)(106116001)(19580405001)(19580395003)(54356999)(77156002)(76176999)(62966003);DIR:OUT;SFP:1101;SCL:1;SRVR:AM2PR05MB0932;H:AM2PR05MB0929.eurprd05.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-x-microsoft-antispam-prvs: <AM2PR05MB09329A4C9F8A82BA6DF4C46FDCF20@AM2PR05MB0932.eurprd05.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(601004)(5002010)(5005006);SRVR:AM2PR05MB0932;BCL:0;PCL:0;RULEID:;SRVR:AM2PR05MB0932;
-x-forefront-prvs: 0534947130
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-OriginatorOrg: Mellanox.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Apr 2015 16:39:28.9530
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a652971c-7d2e-4d9b-a6a4-d149256f461b
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM2PR05MB0932
-CC: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-	"<linux-rdma@vger.kernel.org> (linux-rdma@vger.kernel.org)"
-	<linux-rdma@vger.kernel.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-Date: Thu, 2 Apr 2015 16:39:05 +0000
-From: Shachar Raindel <raindel@mellanox.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] RE: CVE-2014-8159 kernel: infiniband: uverbs: unprotected physical
- memory access
-To: Roland Dreier <roland@purestorage.com>
+x-ms-reactions: disallow
+Received: (qmail 3602 invoked from network); 13 Aug 2025 13:23:58 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1755091330; bh=ggJr2s+AF/Hw+OekcjaRCjsY79fpnhSEfb2x9ToOhuE=;
+	h=Date:To:From:Subject:From;
+	b=HfJ3nZcmZurMw0hP1sxD+atT5IZkz89q+QCSOSH99afLB84apVwwLDqVTd5o4Ir3X
+	 6xn2F5DFcMg2kdT6+L9+ePonv6nxEpACxF7w/K+ZAiVRPza/eVbyeK9fZ0KAUpK8ue
+	 6L5YmWNO7xsQWmq3rF1mTz0JtT/6JrFd2gX4bSoGClPWVj1k8eh8WBcdJgzcsrwi6/
+	 B5XDp5Z1NDElZUaKUM1aZ66iwQw+YuFDNpI92f1bavbjRWa3T/66YTXNBQjzpAowzJ
+	 sH/meQz1RVvi4iUrYcNvK3VkXVEll3YqPskP0LodOu6il6gRxwn9bc79tOR3SQKU1L
+	 ppKn8wvtHUV2w==
+Message-ID: <a2cb17c1-f777-4e69-94c6-801c6d38b63c@apache.org>
+Date: Wed, 13 Aug 2025 14:22:10 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Autocrypt: addr=markt@apache.org; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-55668: Apache Tomcat: session fixation via rewrite valve
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUm9s
-YW5kIERyZWllciBbbWFpbHRvOnJvbGFuZEBwdXJlc3RvcmFnZS5jb21dDQo+
-IFNlbnQ6IFRodXJzZGF5LCBBcHJpbCAwMiwgMjAxNSA3OjMzIFBNDQo+IFRv
-OiBTaGFjaGFyIFJhaW5kZWwNCj4gQ2M6IG9zcy1zZWN1cml0eUBsaXN0cy5v
-cGVud2FsbC5jb207IDxsaW51eC1yZG1hQHZnZXIua2VybmVsLm9yZz4NCj4g
-KGxpbnV4LXJkbWFAdmdlci5rZXJuZWwub3JnKTsgc3RhYmxlQHZnZXIua2Vy
-bmVsLm9yZw0KPiBTdWJqZWN0OiBSZTogQ1ZFLTIwMTQtODE1OSBrZXJuZWw6
-IGluZmluaWJhbmQ6IHV2ZXJiczogdW5wcm90ZWN0ZWQNCj4gcGh5c2ljYWwg
-bWVtb3J5IGFjY2Vzcw0KPiANCj4gT24gVGh1LCBBcHIgMiwgMjAxNSBhdCAx
-Mjo1MiBBTSwgU2hhY2hhciBSYWluZGVsIDxyYWluZGVsQG1lbGxhbm94LmNv
-bT4NCj4gd3JvdGU6DQo+ID4gVGhpcyBpcyBhIGNvbW1vbiBwcmFjdGljZSBp
-biB0aGUgc2VjdXJpdHkgaW5kdXN0cnksIGNhbGxlZA0KPiA+ICJyZXNwb25z
-aWJsZSBkaXNjbG9zdXJlLiINCj4gPg0KPiA+IEZvbGxvd2luZyB0aGUga2Vy
-bmVsICBzZWN1cml0eSBidWdzIHBvbGljeSBbMV0sIHdlIHJlcG9ydGVkIGl0
-IHRvDQo+ID4gdGhlIGtlcm5lbCBzZWN1cml0eSBjb250YWN0cyBmZXcgZGF5
-cyBiZWZvcmUgbWFraW5nIHRoZSBpc3N1ZSBwdWJsaWMuDQo+ID4gRmV3IGRh
-eXMgYWZ0ZXIgaXNzdWUgYmVjYW1lIHB1YmxpYywgd2UgcHVibGlzaGVkIGEg
-Y2xlYXIgcmVwb3J0IHRvIGFsbA0KPiA+IG9mIHRoZSByZWxldmFudCBtYWls
-aW5nIGxpc3RzLg0KPiANCj4gSXNuJ3QgdGhlIHBvaW50IG9mIHJlc3BvbnNp
-YmxlIGRpc2Nsb3N1cmUgdG8gZGVsYXkgZGlzY2xvc3VyZSB1bnRpbCBhDQo+
-IGZpeCBpcyBpbiBwbGFjZT8gIFdoYXQncyB0aGUgcG9pbnQgb2Ygc2VuZGlu
-ZyBhIG5vdGlmaWNhdGlvbiB0byB0aGUNCj4ga2VybmVsIHNlY3VyaXR5IHRl
-YW0gaWYgeW91J3JlIGdvaW5nIHRvIGRpc2Nsb3NlIHB1YmxpY2x5IGJlZm9y
-ZSB0aGUNCj4gdXBzdHJlYW0ga2VybmVsIGlzIGZpeGVkPw0KPiANCg0KV2Ug
-ZGVsYXllZCB0aGUgZGlzY2xvc3VyZSB1bnRpbCBtb3N0IG1ham9yIExpbnV4
-IHZlbmRvcnMgcmVsZWFzZWQgYSBmaXggZm9yDQp0aGUgaXNzdWUsIGdpdmUg
-b3IgdGFrZSBpbiBzeW5jaHJvbml6YXRpb24uDQoNClRoZSBMaW51eCBzZWN1
-cml0eSBjb250YWN0IGxpc3Qgb25seSBndWFyYW50ZWUgc2VjcmVjeSBmb3Ig
-NyBkYXlzLiBXZQ0KdGhlcmVmb3JlIGNvbnRhY3RlZCB0aGVtIG9ubHkgY2xv
-c2UgdG8gdGhlIGRhdGUgYXQgd2hpY2ggZml4ZXMgd2VyZSBnb2luZyB0bw0K
-YmUgcmVsZWFzZWQsIHRvIGZvbGxvdyB0aGVpciBleHBlY3RhdGlvbnMgZm9y
-IHBlcmlvZCBvZiB0aW1lIGJldHdlZW4gY29udGFjdA0KYW5kIHB1YmxpYyBk
-aXNjbG9zdXJlLg0KDQpUaGFua3MsDQotLVNoYWNoYXINCg==
+Severity: moderate
+
+Affected versions:
+
+- Apache Tomcat 11.0.0-M1 through 11.0.7
+- Apache Tomcat 10.1.0-M1 through 10.1.41
+- Apache Tomcat 9.0.0.M1 through 9.0.105
+- Apache Tomcat 8 before 9.0.0.M1 unknown
+
+Description:
+
+Session Fixation vulnerability in Apache Tomcat via rewrite valve.
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.7, from 
+10.1.0-M1 through 10.1.41, from 9.0.0.M1 through 9.0.105.
+Older, EOL versions may also be affected.
+
+Users are recommended to upgrade to version 11.0.8, 10.1.42 or 9.0.106, 
+which fix the issue.
+
+Credit:
+
+Greg K (https://github.com/gregk4sec) (finder)
+
+References:
+
+https://lists.apache.org/thread/v6bknr96rl7l1qxkl1c03v0qdvbbqs47
+https://www.cve.org/CVERecord?id=CVE-2025-55668
