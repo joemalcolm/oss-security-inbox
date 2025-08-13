@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4982" "Monday" "4" "June" "2018" "14:37:28" "+0200" "Daniel Beck" "ml@beckweb.net" "<13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>" "136" "[oss-security] Multiple vulnerabilities in Jenkins plugins" "^Date:" nil nil "6" "2018060412:37:28" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun  4  136/4982  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26341 invoked by uid 550); 4 Jun 2018 12:37:41 -0000
+Received: (qmail 25624 invoked by uid 550); 13 Aug 2025 18:12:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,153 +6,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26317 invoked from network); 4 Jun 2018 12:37:40 -0000
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <13E3F1F3-822B-405C-A12B-CB6BB2E62F4C@beckweb.net>
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1528115860;166c0772;
-X-HE-SMSGID: 1fPojo-00048e-SU
-Date: Mon, 4 Jun 2018 14:37:28 +0200
-From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+x-ms-reactions: disallow
+Received: (qmail 23650 invoked from network); 13 Aug 2025 18:12:39 -0000
+Date: Wed, 13 Aug 2025 20:12:28 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Sergey Kandaurov <pluknet@nginx.com>
+Message-ID: <20250813181228.GA2940@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2025-53859: nginx: ngx_mail_smtp_module buffer over-read potentially resulting in sensitive information leak
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+Changes with nginx 1.29.1 include:
 
-* AbsInt Astr=C3=A9e 1.0.7
-* Black Duck Detect 1.4.1
-* Black Duck Hub 4.0.1
-* CAS 1.4.2
-* Git 3.9.1
-* GitHub 1.29.1
-* GitHub Branch Source 2.3.5
-* GitHub Pull Request Builder 1.42.0
-* Kubernetes 1.7.1
+    *) Security: processing of a specially crafted login/password when using
+       the "none" authentication method in the ngx_mail_smtp_module might
+       cause worker process memory disclosure to the authentication server
+       (CVE-2025-53859).
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-06-04/
+----- Forwarded message from Sergey Kandaurov <pluknet@nginx.com> -----
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+From: Sergey Kandaurov <pluknet@nginx.com>
+Date: Wed, 13 Aug 2025 21:19:56 +0400
+To: nginx-announce@nginx.org
+Subject: [nginx-announce] nginx security advisory (CVE-2025-53859)
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+A security issue was identified in ngx_mail_smtp_module,
+which might allow an attacker to cause buffer over-read,
+potentially resulting in sensitive information leak
+in a HTTP request to the authentication server (CVE-2025-53859).
 
----
+The issue happens during the SMTP authentication process and requires
+the attacker to make preparations against the target system to extract
+the leaked data.
 
-SECURITY-810
-Various form validation methods in Git Plugin did not check the permission=
-=20
-of the user accessing them, allowing anyone with Overall/Read access to=20
-Jenkins to cause Jenkins to send a GET request to a specified URL.
+The issue affects nginx 0.7.22-1.29.0.
+The issue is fixed in nginx 1.29.1.
 
-Additionally, these form validation methods did not require POST requests,=
-=20
-resulting in a CSRF vulnerability.
+For older versions, any of the following measures can be used
+as a temporary workaround:
 
+(1) disable the "none" parameter in the "smtp_auth" directive.
+(2) remove the "Auth-Wait" header line in the authentication server response.
 
-SECURITY-799
-A form validation method in GitHub Plugin did not check the permission of=20
-the user accessing it, allowing anyone with Overall/Read access to Jenkins=
-=20
-to cause Jenkins to send a POST request to a specified URL.
+Patch for the issue can be found here:
 
-If that request=E2=80=99s HTTP response code indicates success, the form=20
-validation is returning a generic success message, otherwise the HTTP=20
-status code is returned.
+https://nginx.org/download/patch.2025.smtp.txt
 
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
+-- 
+Sergey Kandaurov
+_______________________________________________
+nginx-announce mailing list
+nginx-announce@nginx.org
+https://mailman.nginx.org/mailman/listinfo/nginx-announce
 
-
-SECURITY-804
-GitHub Plugin did not perform permission checks on a method implementing=20
-form validation. This allowed users with Overall/Read access to Jenkins to=
-=20
-connect to an attacker-specified URL using attacker-specified credentials=20
-IDs obtained through another method, capturing credentials stored in=20
-Jenkins.
-
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-806
-A form validation method in GitHub Branch Source Plugin did not check the=20
-permission of the user accessing them, allowing anyone with Overall/Read=20
-access to Jenkins to cause Jenkins to send a GET request to a specified URL.
-
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-805
-GitHub Pull Request Builder Plugin did not perform permission checks on=20
-methods implementing form validation. This allowed users with Overall/Read=
-=20
-access to Jenkins to connect to an attacker-specified URL using attacker-
-specified credentials IDs obtained through another method, capturing=20
-credentials stored in Jenkins, and to cause Jenkins to submit HTTP=20
-requests to attacker-specified URLs.
-
-Additionally, these form validation methods did not require POST requests,=
-=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-883
-Kubernetes Plugin printed sensitive build variables, like passwords, to=20
-the build log and master log, when using pipeline steps like
-withDockerRegistry.
-
-
-SECURITY-809
-A form validation method in GitHub Branch Source Plugin did not check the=20
-permission of the user accessing them, allowing anyone with Overall/Read=20
-access to Jenkins to cause Jenkins to send a GET request to a specified URL.
-
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-807
-AbsInt Astr=C3=A9e Plugin did not perform permission checks on a method=20
-implementing form validation. This allowed users with Overall/Read access=20
-to Jenkins to run a user-specified program on the Jenkins master.
-
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-865
-Black Duck Hub Plugin did not perform permission checks on methods=20
-implementing form validation. This allowed users with Overall/Read access=20
-to Jenkins to connect to an attacker-specified URL using attacker-
-specified credentials IDs obtained through another method, capturing=20
-credentials stored in Jenkins, and to cause Jenkins to submit HTTP=20
-requests to attacker-specified URLs.=20
-
-Additionally, these form validation methods did not require POST requests,=
-=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-866
-Black Duck Detect Plugin did not perform permission checks on methods=20
-implementing form validation. This allowed users with Overall/Read access=20
-to Jenkins to connect to an attacker-specified URL using attacker-
-specified credentials IDs obtained through another method, capturing=20
-credentials stored in Jenkins, and to cause Jenkins to submit HTTP=20
-requests to attacker-specified URLs.=20
-
-Additionally, these form validation methods did not require POST requests,=
-=20
-resulting in a CSRF vulnerability.
-
+----- End forwarded message -----
