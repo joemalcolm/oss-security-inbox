@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1732" "Wednesday" "25" "November" "2015" "22:21:03" "+0100" "Gsunde Orangen" "gsunde.orangen@gmail.com" "<5656263F.80101@gmail.com>" "57" "Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" "^Date:" nil nil "11" "2015112521:21:03" "[oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/" (number mark "        gsunde.orang Nov 25   57/1732  " thread-indent "\"Re: [oss-security] Announcing https://github.com/RedHatProductSecurity/Certificates-Shipped/\"\n") "<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>" ("<CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>" "<20151125180702.6d3d075d@pc1>" "<CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9870 invoked by uid 550); 25 Nov 2015 21:21:15 -0000
+Received: (qmail 8027 invoked by uid 550); 16 Aug 2025 20:47:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9849 invoked from network); 25 Nov 2015 21:21:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=aLveemrz3Nci0ABb/i1HljnI3vzozpdvv/pahBnXf/I=;
-        b=N1kgYO+IjEC1fOQPBL1qXlqkj9uVs290tgIo25LMXDCW0bJMIDFoHfD8ahyoLGweUk
-         usc17YFXAMv71BpRNx2d/dLoW+fLiAw4101QM2WSxiQ/VgR4wkJdTfU/tlVzNeW8huGZ
-         NSHWgDUQMqthN1vE5Hgsx0GDZ260hcj/RJtl2AO8XhTDecf9LOCvwYxRfJ3T7ZgyQvRF
-         jpuUgpB5GKHBRthBSuvFBtrqrzeRjdJy1YzxsT5WZrdAtr4D7CAyYy3HfPPHJxYUgaIJ
-         /M16LN2nzEI/L4LvGV7agq5amKLp9t7wifs1TkqFD/kCH/ImJKQKcG/MMflSHsYbMtjz
-         MwfA==
-X-Received: by 10.28.46.137 with SMTP id u131mr6690152wmu.61.1448486464019;
-        Wed, 25 Nov 2015 13:21:04 -0800 (PST)
-References: <CANO=Ty2=+8uiYPoe06j3DEVd6uSBCNiaH5LoWyCqg18jWTZu6w@mail.gmail.com>
- <20151125180702.6d3d075d@pc1>
- <CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <5656263F.80101@gmail.com>
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-Version: 1.0
-In-Reply-To: <CANO=Ty3=D5hum6sjTJhN4NjuhAH9yjLNDgDdsL3FXSeVwMOVdw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Wed, 25 Nov 2015 22:21:03 +0100
-From: Gsunde Orangen <gsunde.orangen@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Announcing
- https://github.com/RedHatProductSecurity/Certificates-Shipped/
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 1283 invoked from network); 16 Aug 2025 18:47:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755370065; x=1755974865; darn=lists.openwall.com;
+        h=mime-version:user-agent:message-id:date:in-reply-to:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=trD4/G5ATRI30RFG60y4az3Y7b+zCH6Hpn4m6id5tLc=;
+        b=iHYvDYf7084X8dRZzk+Cu2sHOGXaVMBpBtVrLzqWj28WZOBAYRu/Y7IykdN+0Frzc9
+         8mrNhqP6YM6Sy29tP8sbrcBQRPLEc4jkYV3Zfmk8A3k071jtl+9KrlREctp+1vOrAuBQ
+         O7K+Qjwr3l2e5O+nBCeBv+ikG6uZ96z/BMdI8q+dTSXn0G1zgAccxfWkJhMHC3c7m+wa
+         z/V50aGdn6l2wt+9iwb1vlCfobKp3OTQgzZquT6UGsc07NqO9o0BFmYmJfPf5EyddZff
+         BB/hqG5MqaZNgarrtcSyLoIyVWA+eor3GUsALrOrrSlea9PFUNJvRV6xQz/PcqYRKpez
+         fcfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755370065; x=1755974865;
+        h=mime-version:user-agent:message-id:date:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=trD4/G5ATRI30RFG60y4az3Y7b+zCH6Hpn4m6id5tLc=;
+        b=MyEPAIoOQ3pOsAwLwSb8P9dI6hYivV6coKMBQAI0CJS5Ex2hAzGiwtrRHT9YThVNO4
+         jnZaHEH+h705usaeMsl7By9CdLYy5TkZW0YRQPlaR3UkCIm8cpprsYoaqQwmW+gpSccq
+         1YqfPx7HEw5rRIpk/TUXxkE0dr+mkukvVBesSReszbzw8HpaxzLn1TYOvHG5Na+pzxM4
+         BY0+wU+nxWzkscJ/gwPHnb825ykoJeipDz1LEyxcBLp7C9hbb6BCrR6iRI6z6FF2wOh3
+         tiIkZleRQJjwdWkqqfaOyUtTOkpv5jk6Pjd4k30RC0kJHwz8Dfy6uFpRb94xPgLJvzir
+         mWOQ==
+X-Gm-Message-State: AOJu0Ywl2vClJQOwaPA3vNc0AiswF1Pyw4wI080ZO+wK8Edg2P464rL1
+	YDCjtbBPffYJy+Jnrqzsv3ZNtOw6LTkllPSeS+JssWWhlioX+emvbEXgbyeKYugL
+X-Gm-Gg: ASbGncubhm5b77ezYlDhspfysKVNVEk60OeKBhzvWEQ1vOxL9hwce2n70C5huxM+ofB
+	Icx/7R6xyUx2u8DurP7kOPsXx5wTDH4NySmIFks8J1L3Ct1EtYxjGOIijDk+Zvd9wp101x6U5BZ
+	bs/FHww55X/ANrTauCRTdQJV4G2JLBg9XlGOgpjQRUxFUu75V6SdxiKCLQNbS+LzKyzmfWxmPzY
+	fC/N9evl7A42a2xkZkhC2r8XaklVmTwUq014rzm/MUeg/FWDFolUCtuFBZdBMacbBFgq4DjwYit
+	YcSYjM9XDWfVz/vCDuBYREL77YEPIT52vq7atrNTenkNOexMoHITkbj7MH5lG1/HE8OlNEfCSCp
+	new==
+X-Google-Smtp-Source: AGHT+IEDIumxrenoVjay4vgL3MdNWy/G460rjlUKPbrDUHDI/WLINyMbpMfQWAt04WESBE7TVsBKJg==
+X-Received: by 2002:a17:90b:1646:b0:311:e8cc:4253 with SMTP id 98e67ed59e1d1-32341df8fd0mr9166588a91.2.1755370065098;
+        Sat, 16 Aug 2025 11:47:45 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <20250813203857.GA11693@unix-ag.uni-kl.de>
+Date: Sat, 16 Aug 2025 11:47:43 -0700
+Message-ID: <87a53zyugg.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: Re: [oss-security] xterm terminal crash due to malicious character
+ sequences in file name
 
-Totally reasonable, Kurt.
-Where would you actually see the border between what's in and what's
-out? Actually there are lots of (proprietary source) vendor products out
-there that are heavily built on open source (e.g. virtually all linux
-kernel based embedded devices)
-Not saying someone should go through the hassles to chase for it - but
-if the info is brought to you/to the repository...
+Hi Erik,
 
-Gsunde
+Erik Auerswald <auerswal@unix-ag.uni-kl.de> said:
 
+> On Wed, Aug 13, 2025 at 07:00:58PM +0200, Vincent Lefevre wrote:
+> > The following makes the xterm terminal crash
+> > 
+> >   touch "$(printf "file\e[H\e[c\n\b")"
+> >   gunzip file*
+> > 
+> > due to malicious character sequences in the file name and a bug in
+> > xterm. Same issue with bunzip2 instead of gunzip.
+> 
+> I do not expect this to only happen with gunzip and bzip2.  Does this
+> happen with any program that prints the filename without any escaping,
+> e.g., "echo file*", and most programs that print the provided filename
+> when reporting any associated problem (i.e., all that do not escape or
+> suppress non-printable filename characters or bytes)?
 
-On 2015-11-2, 18:37 Kurt Seifried wrote:> On Wed, Nov 25, 2015 at 10:07
-AM, Hanno Böck <hanno@hboeck.de> wrote:
-> 
->> On Tue, 24 Nov 2015 21:38:35 -0700
->> Kurt Seifried <kseifried@redhat.com> wrote:
->>
->>> https://github.com/RedHatProductSecurity/Certificates-Shipped/
->>>
->>> The idea is to create a comprehensive list of shipped certs/keys/etc
->>> by open source vendors/distributions/projects so that:
->>
->> That's good, but in this case why limit to open source vendors?
->>
-> 
-> Because this is the Open Source Security mailing list, and I work for a
-> company (Red Hat) that does Open Source and because I have no interest in
-> the hassles of dealing with proprietary software (legal
-> threats/licensing/DMCA/etc.).
-> 
-> If you would like to work with proprietary vendors on such an effort I
-> welcome you to try, you can easily setup a project on GitHUB and move ahead
-> without any need to coordinate with the Open Source effort.
-> 
-> 
->>
->> Actually the MS certs are probably the most interesting for
->> superfish/edell-like scenarios. And I see no reason why they shouldn't
->> be transparent.
->>
-> 
-> Talk to Microsoft then, OSS-Security is not the forum for dealing with this
-> Microsoft related issue.
-> 
-> 
->>
->> --
->> Hanno Böck
->> http://hboeck.de/
->>
->> mail/jabber: hanno@hboeck.de
->> GPG: BBB51E42
->>
-> 
-> 
-> 
+Yep, any program will print non-printable characters unless it has some
+logic to not do so.
 
+Many GNU programs (from Coreutils and Findutils, for example) use the
+'quote' module from Gnulib to print file names in a way that can be
+copy-pasted in a shell shell command [1]. Here is an example using ls
+from Coreutils:
+
+    $ touch 'first
+    file'
+    $ touch 'second file'
+    $ ls
+    'first'$'\n''file'  'second file'
+
+Generally this is an extra program feature. The real issue here was the
+xterm crash.
+
+I guess it would be nice for gzip to quote file names nicely. I'll have
+a look at sending a patch. The only reason tjat it doesn't already do it
+is probably because it is changed less frequently than other GNU
+programs.
+
+Collin
+
+[1] https://www.gnu.org/software/gnulib/manual/gnulib.html#Quoting-1
