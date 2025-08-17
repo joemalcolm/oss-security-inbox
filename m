@@ -1,4 +1,4 @@
-Received: (qmail 16197 invoked by uid 550); 11 Jul 2023 16:20:53 -0000
+Received: (qmail 3761 invoked by uid 550); 17 Aug 2025 01:21:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,53 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5596 invoked from network); 11 Jul 2023 15:51:03 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Dave Fisher <wave@apache.org>
+x-ms-reactions: disallow
+Received: (qmail 22353 invoked from network); 17 Aug 2025 01:10:07 -0000
+Date: Sun, 17 Aug 2025 03:09:58 +0200
+From: Vincent Lefevre <vincent@vinc17.net>
 To: oss-security@lists.openwall.com
-Message-ID: <593dd14d-afef-1ced-dda0-db0ff16d6f12@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 11 Jul 2023 15:50:50 +0000
+Message-ID: <20250817010958.GA607521@qaa.vinc17.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20250813203857.GA11693@unix-ag.uni-kl.de>
+ <87a53zyugg.fsf@gmail.com>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-37579: Apache Pulsar Function Worker: Incorrect
- Authorization for Function Worker Can Leak Sink/Source Credentials 
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a53zyugg.fsf@gmail.com>
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.2.13+86 (bb2064ae) vl-169878 (2025-02-08)
+Subject: Re: [oss-security] xterm terminal crash due to malicious character
+ sequences in file name
 
-Affected versions:
+Note: I didn't receive Erik's message. The logs of my mail server
+says that 193.110.157.244 was blacklisted by zen.spamhaus.org and
+dnsbl.ahbl.org. Rather annoying...
 
-- Apache Pulsar Function Worker before 2.10.4
-- Apache Pulsar Function Worker 2.11.0
+On 2025-08-16 11:47:43 -0700, Collin Funk wrote:
+> Hi Erik,
+> 
+> Erik Auerswald <auerswal@unix-ag.uni-kl.de> said:
+> 
+> > On Wed, Aug 13, 2025 at 07:00:58PM +0200, Vincent Lefevre wrote:
+> > > The following makes the xterm terminal crash
+> > > 
+> > >   touch "$(printf "file\e[H\e[c\n\b")"
+> > >   gunzip file*
+> > > 
+> > > due to malicious character sequences in the file name and a bug in
+> > > xterm. Same issue with bunzip2 instead of gunzip.
+> > 
+> > I do not expect this to only happen with gunzip and bzip2.  Does this
+> > happen with any program that prints the filename without any escaping,
+> > e.g., "echo file*", and most programs that print the provided filename
 
-Description:
+Note that "echo file*" is under the control of the user, who should
+never use "echo" or "printf" on unsanitized data. Concerning gunzip
+and bzip2, it is the choice of these programs to output the file name
+without filtering first (in particular when the output is done to a
+terminal).
 
-Incorrect Authorization vulnerability in Apache Software Foundation Apache =
-Pulsar Function Worker.
+> > when reporting any associated problem (i.e., all that do not escape or
+> > suppress non-printable filename characters or bytes)?
+> 
+> Yep, any program will print non-printable characters unless it has some
+> logic to not do so.
+> 
+> Many GNU programs (from Coreutils and Findutils, for example) use the
+> 'quote' module from Gnulib to print file names in a way that can be
+> copy-pasted in a shell shell command [1]. Here is an example using ls
+> from Coreutils:
+> 
+>     $ touch 'first
+>     file'
+>     $ touch 'second file'
+>     $ ls
+>     'first'$'\n''file'  'second file'
+> 
+> Generally this is an extra program feature.
 
-This issue affects Apache Pulsar: before 2.10.4, and 2.11.0.
+I see this more than a feature, at least in the case the output
+is done to a terminal. As a general rule, programs are expected
+to sanitize output data in such as a case.
 
-Any authenticated user can retrieve a source's configuration or a sink's co=
-nfiguration without authorization. Many sources and sinks contain credentia=
-ls in the configuration, which could lead to leaked credentials. This vulne=
-rability is mitigated by the fact that there is not a known way for an auth=
-enticated user to enumerate another tenant's sources or sinks, meaning the =
-source or sink name would need to be guessed in order to exploit this vulne=
-rability.
+> The real issue here was the xterm crash.
 
-The recommended mitigation for impacted users is to upgrade the Pulsar Func=
-tion Worker to a patched version.
+That's a second issue. The combination of both makes then worse.
 
-2.10 Pulsar Function Worker users should upgrade to at least 2.10.4.
-2.11 Pulsar Function Worker users should upgrade to at least 2.11.1.
-3.0 Pulsar Function Worker users are unaffected.
-Any users running the Pulsar Function Worker for 2.9.* and earlier should u=
-pgrade to one of the above patched versions.
+Note that arbitrary escape sequences from file names can do things
+unexpected by the user, such as clearing the screen, changing the
+terminal width or other terminal settings, though normally with
+limited loss. A crash is worse as one loses the shell session and
+all information related to it.
 
-Credit:
+> I guess it would be nice for gzip to quote file names nicely. I'll have
+> a look at sending a patch. The only reason tjat it doesn't already do it
+> is probably because it is changed less frequently than other GNU
+> programs.
+> 
+> Collin
+> 
+> [1] https://www.gnu.org/software/gnulib/manual/gnulib.html#Quoting-1
 
-Michael Marshall of DataStax (finder)
+I've just seen that lzip and plzip has the same issue.
 
-References:
-
-https://pulsar.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2023-37579
-
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
