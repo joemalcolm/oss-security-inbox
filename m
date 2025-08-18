@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["789" "Friday" "19" "January" "2018" "11:40:09" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<1505981632.2048745.1516380009804.JavaMail.zimbra@redhat.com>" "26" "[oss-security] CVE-2018-1049: systemd: automount: access to automounted volumes can lock up" nil nil nil "1" "2018011916:40:09" "[oss-security] CVE-2018-1049: systemd: automount: access to automounted volumes can lock up" (number mark "U       vdronov@redh Jan 19   26/789   " thread-indent "\"[oss-security] CVE-2018-1049: systemd: automount: access to automounted volumes can lock up\"\n") "<266996105.2048140.1516379803305.JavaMail.zimbra@redhat.com>" ("<266996105.2048140.1516379803305.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 18295 invoked by uid 550); 19 Jan 2018 16:40:22 -0000
+Received: (qmail 32678 invoked by uid 550); 18 Aug 2025 00:29:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18277 invoked from network); 19 Jan 2018 16:40:21 -0000
-Date: Fri, 19 Jan 2018 11:40:09 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1505981632.2048745.1516380009804.JavaMail.zimbra@redhat.com>
-In-Reply-To: <266996105.2048140.1516379803305.JavaMail.zimbra@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 23991 invoked from network); 18 Aug 2025 00:17:41 -0000
+Date: Mon, 18 Aug 2025 02:17:32 +0200
+From: Vincent Lefevre <vincent@vinc17.net>
+To: Erik Auerswald <auerswal@unix-ag.uni-kl.de>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20250818001732.GK607521@qaa.vinc17.org>
+Mail-Followup-To: Erik Auerswald <auerswal@unix-ag.uni-kl.de>,
+	oss-security@lists.openwall.com
+References: <20250813203857.GA11693@unix-ag.uni-kl.de>
+ <87a53zyugg.fsf@gmail.com>
+ <20250817010958.GA607521@qaa.vinc17.org>
+ <20250817140937.GA16226@unix-ag.uni-kl.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.4.209, 10.4.195.15]
-Thread-Topic: CVE-2018-1049: systemd: automount: access to automounted volumes can lock up
-Thread-Index: ZCPxeO95ixI7NAc38GTBPUOOSE70yQ==
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.16
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.25]); Fri, 19 Jan 2018 16:40:09 +0000 (UTC)
-Subject: [oss-security] CVE-2018-1049: systemd: automount: access to automounted volumes
- can lock up
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250817140937.GA16226@unix-ag.uni-kl.de>
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.2.13+86 (bb2064ae) vl-169878 (2025-02-08)
+Subject: Re: [oss-security] xterm terminal crash due to malicious character
+ sequences in file name
 
-Heololo,
+Hi Erik,
 
-In systemd prior to v234 a race exists between .mount and .automount units such
-that automount requests from kernel may not be serviced by systemd resulting in
-kernel holding the mountpoint and any processes that try to use said mount will
-hang. A race like this may lead to denial of service, until mount points are
-unmounted. This race is easily reproducible.
+On 2025-08-17 16:09:37 +0200, Erik Auerswald wrote:
+> On Sun, Aug 17, 2025 at 03:09:58AM +0200, Vincent Lefevre wrote:
+> > I see this more than a feature, at least in the case the output
+> > is done to a terminal. As a general rule, programs are expected
+> > to sanitize output data in such as a case.
+> 
+> I'd expect most programs to not change the filename printed in their
+> output.  POSIX does not even expect "ls" to sanitize its output without
+> "-q", but it does allow it[0].
 
-References:
+Probably because of historical behavior. But nowadays, one should be
+stricter concerning security.
 
-https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1709649
+> Two more example programs that do not sanitize filenames in their
+> output would be "file", at least version "5.41",
 
-https://github.com/coreos/bugs/issues/1630
+file 5.46 sanitizes filenames:
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1534701
+$ file --version
+file-5.46
+magic file from /etc/magic:/usr/share/misc/magic
+$ file file*
+file\033[H\033[c\012\010: empty
 
-An upstream issue:
+> and "dash", at least the version[1] included in Ubuntu GNU/Linux
+> 22.04.5 LTS.
 
-https://github.com/systemd/systemd/pull/5916
+Ditto for dash 0.5.12-12 (with "chmod 0 file*" then "dash file*").
 
-An upstream patch:
+> I'd expect that you can find many more examples. Getting every
+> program changed to follow your expectation seems like a Sisyphean
+> task to me.
 
-https://github.com/systemd/systemd/commit/e7d54bf58789545a9eb0b3964233defa0b007318
+This is less an issue for dash, because the user will probably not
+run a script that he hasn't written or controled in some other way.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+> I am quite sure that there are many more such programs.
+
+GNU ed too. It outputs the file name unsanitized in its error message
+saying that control characters 1-31 are not allowed in file name!
+
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
