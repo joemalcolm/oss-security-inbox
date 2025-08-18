@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2218" "Tuesday" "6" "October" "2020" "16:17:06" "+0100" "Simon McVittie" "smcv@debian.org" "<20201006151706.GB45857@espresso.pseudorandom.co.uk>" "40" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020100615:17:06" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       smcv@debian. Oct  6   40/2218  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<5643462.lOV4Wx5bFT@x2>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>" "<5643462.lOV4Wx5bFT@x2>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15591 invoked by uid 550); 6 Oct 2020 15:17:22 -0000
+Received: (qmail 32006 invoked by uid 550); 18 Aug 2025 01:45:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,68 +7,96 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15573 invoked from network); 6 Oct 2020 15:17:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	 s=smtpauto.master; h=In-Reply-To:Content-Type:MIME-Version:References:
-	Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:
-	Content-ID:Content-Description;
-	bh=RY8tkVdQVqUUaJM2GyL039l7tz3LTt+EK9iVUbu6q7c=; b=CXWRil1w5q+FK9iCzZHXBDmGIh
-	WInB0GLLPBwxh51+fjBQ7mr7mQQd90hiFamyBW8lxetEqYC2VyGPnksNbl9mcNE33R2WSu4YcbmcS
-	NgSISLvAnmzjB+2hvRAm/EdPNixN0xnZztL8Mz8dXiJ+sUkwq9TQvcT0/OBLxZJBM51mMvQ/kydux
-	Ol/rEcScevusGi76viYBXat7D1gC3MKaU9vV/kAenLSvXNmFooOVXdnJ7GUKkExV6cNotRoM1xGJH
-	D6Ob1bCHMlE73ayLTH59KEvfaeJClJi1hnIrRlTVFO/7l+XOV5gAIfizjx6HBRvKkP+7cLLQBqNtC
-	tshJMmKQ==;
-Date: Tue, 6 Oct 2020 16:17:06 +0100
-From: Simon McVittie <smcv@debian.org>
+x-ms-reactions: disallow
+Received: (qmail 31982 invoked from network); 18 Aug 2025 01:45:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=dwheeler.com; s=selector2; h=To:References:Message-Id:
+	Content-Transfer-Encoding:Cc:Date:In-Reply-To:From:Subject:Mime-Version:
+	Content-Type; bh=6Ebp0NSEpurgdZ/ywLh2P/89Dip5gnxY9DP6gr6vjpM=; b=lvinTn0ry0aq
+	HYQ3RrTgOjn49il/ZmzLc/FOQ1CH9rPnP92ak2Cql4q+CNBqBWX6ubnzMTZ+5oxnZiFCj1Gfr3Ptb
+	xRAcGQeibg0YMsulALsuMm6G/tyiWCgqKe82eJy3IGbhsTjl0IoCEjb7iESDLzG7tS1t6B2Q+oZRR
+	Mk0z6NBrfp3ZMeqZQZfQ1EBApL5vCR3N0msMkL3deFBqh/f14vNRnXVq3cTWsok8D3+6p8aGgZXN7
+	KC3d48pAbJ/RoxcUUVexJlAdXHz16MTBgFq4+1DrXdPMr402I0Bz798TQxe0CftpbeiT6KVYFoozo
+	13qHsAQS+D5GTbRZ1u1INg==;
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.21\))
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+In-Reply-To: <20250817140937.GA16226@unix-ag.uni-kl.de>
+Date: Sun, 17 Aug 2025 21:44:29 -0400
+Cc: Vincent Lefevre <vincent@vinc17.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B13F08EE-9A89-4D37-AD66-0772C042781D@dwheeler.com>
+References: <20250813203857.GA11693@unix-ag.uni-kl.de>
+ <87a53zyugg.fsf@gmail.com> <20250817010958.GA607521@qaa.vinc17.org>
+ <20250817140937.GA16226@unix-ag.uni-kl.de>
 To: oss-security@lists.openwall.com
-Message-ID: <20201006151706.GB45857@espresso.pseudorandom.co.uk>
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>
- <20201005204820.GA8410@openwall.com>
- <5643462.lOV4Wx5bFT@x2>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5643462.lOV4Wx5bFT@x2>
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop
- and/or mobile market?
+X-Mailer: Apple Mail (2.3731.700.6.1.21)
+Subject: Re: [oss-security] xterm terminal crash due to malicious character
+ sequences in file name
 
-On Mon, 05 Oct 2020 at 22:36:14 -0400, Steve Grubb wrote:
-> I will skip the whole discussion on access control. However to prove security 
-> requires going through a Common Criteria certification. The biggest issue is 
-> that the desktoptop uses dbus instantiation which does not have the auid of 
-> the requesting process. Meaning audit cannot work.
-> 
-> The fix was kdus. That was rejected. But the issue remains. There cannot be a 
-> secure desktop without auditing.
 
-That depends on your threat model. If the attack you are defending against
-is local user Alice being attacked by malicious privileged local user Bob,
-then, yes, knowing which processes belong to Bob is necessary.
+>>>> On Wed, Aug 13, 2025 at 07:00:58PM +0200, Vincent Lefevre wrote:
+>>>>>=20
+>>>>> The following makes the xterm terminal crash
+>>>>>=20
+>>>>>  touch "$(printf "file\e[H\e[c\n\b")"
+>>>>>  gunzip file*
+>>>>>=20
+>>>>> due to malicious character sequences in the file name and a bug
+>>>>> in xterm. Same issue with bunzip2 instead of gunzip.
+>>>>=20
+>>>> I do not expect this to only happen with gunzip and bzip2.
+>>>> Does this happen with any program that prints the filename without
+>>>> any escaping, e.g., "echo file*", and most programs that print
+>>>> the provided filename
+...
 
-However, if the attack you are defending against is Alice's email client
-being attacked by a malicious or compromised game that is also running
-as Alice, then auids (and uids in general) are not interesting. This is
-the security boundary that Flatpak, Snap, Firejail are trying to put up.
+On Aug 17, 2025, at 10:09 AM, Erik Auerswald <auerswal@unix-ag.uni-kl.de> w=
+rote:
+> I'd expect most programs to not change the filename printed in their
+> output.  POSIX does not even expect "ls" to sanitize its output without
+> "-q", but it does allow it[0].  Two more example programs that do not
+> sanitize filenames in their output would be "file", at least version
+> "5.41", and "dash", at least the version[1] included in Ubuntu GNU/Linux
+> 22.04.5 LTS.  I'd expect that you can find many more examples.  Getting
+> every program changed to follow your expectation seems like a Sisyphean
+> task to me.
+>=20
+> Please note that I am not opposed to adding that feature to every
+> existing and future program, it just seems foolish to rely on it, at
+> least currently.
 
-With dbus maintainer hat on, if there are facts that I can know about
-the (AF_UNIX socket belonging to the) requesting process in a way that
-does not involve race conditions, I'm happy to review patches to plumb
-them through D-Bus and make them available to other processes. This
-would have to look a lot like the recent addition of SO_PEERGROUPS
-(D-Bus representation: UnixGroupIDs) and less recently, SO_PEERSEC
-(LinuxSecurityLabel), so the prerequisite is the Linux kernel adding new
-SO_PEERTHING options that give the necessary information (or a *BSD, etc.
-kernel providing an analogous interface).
+I agree. It'd be *much* more secure
+if the operating simply prevented the creation of filenames
+with certain names, e.g,. containing control characters and leading dashes.
+I wrote an essay here specifically about this:
+https://dwheeler.com/essays/fixing-unix-linux-filenames.html
+See section 1.3, "Oh, and don=E2=80=99t display filenames. Filenames could =
+contain
+control characters that control the terminal (and X-windows), causing nasty=
+=20
+side-effects on display. Displaying filenames can even cause a security vul=
+nerability =E2=80=94
+and who expects printing a filename to be a vulnerability?!?"
+It's not a new problem, I knew about this in the 1980s and I'm sure others =
+did too.
 
-If audit is important to you, a new SO_PEERAUDIT that looks like
-SO_PEERCRED but carries a struct { session ID, loginuid } would make sense?
+I proposed forbidding such characters to POSIX. They *did* add a few mechan=
+isms to POSIX
+to make it somewhat easier to handle filenames with control characters
+(e.g., find -print0 and xargs -0). However, although they do not *require*
+that operating systems allow these filenames, they are not forbidden either.
 
-As far as I'm aware, reading /proc is not suitable for this purpose,
-because the dbus-daemon retrieving this information for a particular pid
-can race with the process exiting and its pid being reused. If there was
-a SO_PEERPIDFD that provided race-free access to a pidfd for the initiator
-of the connection, that would maybe work? (As long as there's no mechanism
-by which a process can exec a setuid or otherwise privileged binary that
-can reset its audit session ID and/or loginuid.)
+I have a draft Linux Security Module (LSM) that lets you determine
+what kind of filenames are allowed to be created. By default it would requi=
+re
+non-control-chars, no leading '-', no trailing ' ', and UTF-8 encoding,
+but it would let you configure further. I intend to go back to that
+to finish it off & propose it. My original proposal merely prevented creati=
+on;
+it would be possible to hide them entirely, but that comes with its own iss=
+ues.
 
-    smcv
+--- David A. Wheeler
+
