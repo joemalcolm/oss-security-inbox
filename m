@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["818" "Wednesday" "5" "July" "2017" "22:09:40" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20170705220939.GC2409@yuggoth.org>" "20" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070522:09:40" "[oss-security] systemd fails to parse user that should run service" (number mark "        fungi@yuggot Jul  5   20/818   " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>" ("<20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>" "<9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22486 invoked by uid 550); 5 Jul 2017 22:09:55 -0000
+Received: (qmail 7357 invoked by uid 550); 19 Aug 2025 15:50:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,43 +6,159 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22462 invoked from network); 5 Jul 2017 22:09:54 -0000
-Message-ID: <20170705220939.GC2409@yuggoth.org>
-References: <20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>
- <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9a2c8b5b-aeee-7e39-099e-3ee706de7b73@gentoo.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Wed, 5 Jul 2017 22:09:40 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+x-ms-reactions: disallow
+Received: (qmail 30386 invoked from network); 19 Aug 2025 12:05:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hexsys.org;
+	s=protonmail3; t=1755605147; x=1755864347;
+	bh=LoR5AKZyv6IbzT80939a+vWnk+BualcFLHMKwXFdUyA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=URoMh4ARxeVfBRpgNCGxFIMlX7vX5aukauw03983PAdQ0uRrDhS6Lv4siX9kFIeBZ
+	 4u0W382qJf+QehJbCw1UmBU7AqySUQTMLfKCl38Iup02Apx65DOfxeprdX2twU9jpe
+	 i2aVqAAUJDkCyktWVhO3a05BpLzZjfKR+OwgQiYKib7OBxQiSlqPblUh90u3IY0mER
+	 Ca9MG0hycbBPHTEauQAcHJ23rLvyq5n78SFWgSSdR+A2/7KxT0JVJIdPs5Rf/Qfgfa
+	 LhOxfjI3yxhh5ZQXj5eChLfNRHK908O/AEOqlqr90YpIhmYO9hEDLwQQ4lYyhLKA3L
+	 saRiFJ1mAgTCQ==
+Date: Tue, 19 Aug 2025 12:05:40 +0000
 To: oss-security@lists.openwall.com
+From: Ali Polatel <alip@hexsys.org>
+Cc: "David A. Wheeler" <dwheeler@dwheeler.com>, Vincent Lefevre <vincent@vinc17.net>
+Message-ID: <f6K0A_kST8iSTV9cEJTcRN9oJcT2JeOo4rQUZEzWIfeTp1hdOgs5XR0ZRhpdXHwrVzcbbup6mfvyOZ2rwQiciWRAoC7Hx0Iy1HCiP1CekLw=@hexsys.org>
+In-Reply-To: <a6370d77-36a6-4b26-85a8-4fc8d2354cf3@gmail.com>
+References: <20250813203857.GA11693@unix-ag.uni-kl.de> <87a53zyugg.fsf@gmail.com> <20250817010958.GA607521@qaa.vinc17.org> <20250817140937.GA16226@unix-ag.uni-kl.de> <B13F08EE-9A89-4D37-AD66-0772C042781D@dwheeler.com> <a6370d77-36a6-4b26-85a8-4fc8d2354cf3@gmail.com>
+Feedback-ID: 105281019:user:proton
+X-Pm-Message-ID: 4cb0d89508058dd9026e29f7006023567f71c0da
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512; boundary="------201ea4389f60e11c706405970fb52576ec383d5be4db2e38afec2b1a4805a48c"; charset=utf-8
+Subject: Re: [oss-security] blocking weird file names (was: xterm terminal crash due to malicious character sequences in file name)
 
-On 2017-07-06 00:02:58 +0200 (+0200), Kristian Fiskerstrand wrote:
-> On 07/05/2017 11:58 PM, Simon McVittie wrote:
-> > systemd does have a (public, and publically-archived) mailing
-> > list, which has a current thread on the subject of this issue.
-> > 
-> > In particular the mail in that thread from Felipe Sateler, and
-> > some of the discussion on the upstream bug, touches on reasons
-> > why neither "if anything is not as expected, reject the whole
-> > unit" nor the current behaviour is right. I suspect the
-> > resolution is likely to be something in between.
-> 
-> It would be useful with a reference to the thread in question so
-> this can be further looked into.
+--------201ea4389f60e11c706405970fb52576ec383d5be4db2e38afec2b1a4805a48c
+Content-Type: multipart/mixed;boundary=---------------------1c968f8309187b178ac255c298b8906d
 
-Please see the thread starting with this message:
+-----------------------1c968f8309187b178ac255c298b8906d
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
 
-https://lists.freedesktop.org/archives/systemd-devel/2017-July/039154.html
+On Tuesday, 19 August 2025 at 04:46, Jacob Bachmeyer <jcb62281@gmail.com> w=
+rote:
 
--- 
-Jeremy Stanley
+> On 8/17/25 20:44, David A. Wheeler wrote:
+>=20
+
+> > [...]
+> >=20
+
+> > I proposed forbidding such characters to POSIX. They *did* add a few me=
+chanisms to POSIX
+> > to make it somewhat easier to handle filenames with control characters
+> > (e.g., find -print0 and xargs -0). However, although they do not *requi=
+re*
+> > that operating systems allow these filenames, they are not forbidden ei=
+ther.
+>=20
+
+> My understanding is that POSIX allows almost any syscall to return EPERM.
+>=20
+
+> > I have a draft Linux Security Module (LSM) that lets you determine
+> > what kind of filenames are allowed to be created. By default it would r=
+equire
+> > non-control-chars, no leading '-', no trailing ' ', and UTF-8 encoding,
+> > but it would let you configure further. I intend to go back to that
+> > to finish it off & propose it. My original proposal merely prevented cr=
+eation;
+> > it would be possible to hide them entirely, but that comes with its own=
+ issues.
+>=20
+
+> If you do that, please make absolutely certain that any processes running=
+ from files that would be hidden (and therefore blocked from exec(2)) are k=
+illed when the policy becomes effective. I once (years ago) cleaned out a b=
+ackdoor that was named 'syslogd ' (with the trailing space). (Clever, excep=
+t that the real syslogd does not open a raw socket and *does* open the log =
+files...)
+>=20
+
+> Also, if you want to block trailing whitespace, please do not forget the =
+various *other* Unicode space characters and their UTF-8 forms.
+>=20
+
+> Could you allow those files to appear in directory listings (including st=
+at(2)) but open(2)/exec(2)/etc. would return EPERM? I suggest that unlink(2=
+) should be unrestricted, and perhaps also open(..., O_WRONLY) (to allow su=
+ch files to be shredded if the admin desires).
+>=20
+
+> Would a per-process category be feasible? This would allow an admin to "u=
+nlock" any such files found for a limited subset of processes (presumably t=
+he admin's shell) to facilitate forensic collection and/or secure deletion.
+
+You may also consider the syd sandbox for an unprivileged, per-process solu=
+tion
+which has filename limitations since version 3.17.4, see:
+https://man.exherbo.org/syd.7.html#Enhanced_Path_Integrity_Measures
+
+I noticed syd's implementation, which is largely based on Safename LSM of M=
+r. Wheeler (huge thanks!),
+does not include any checks for Unicode space characters. I'll look into im=
+proving that.
+Thank you very much for the idea!
+
+> Does this need to be an entirely new module or could it be an extension t=
+o SELinux?
+>=20
+
+>=20
+
+>=20
+
+> -- Jacob
+>=20
+
+>=20
+
+
+Best,
+alip=
+
+-----------------------1c968f8309187b178ac255c298b8906d
+Content-Type: application/pgp-keys; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey - alip@hexsys.org - 0xC22DA9DE.asc"; name="publickey - alip@hexsys.org - 0xC22DA9DE.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgp4ak1FWmdRSmRSWUpLd1lCQkFI
+YVJ3OEJBUWRBbjlaVnJMbi9tclpseThqTE9qVklwTmRWSXhTSVZ4WmUKL2ZDeDZpcTNPM1hOSVdG
+c2FYQkFhR1Y0YzNsekxtOXlaeUE4WVd4cGNFQm9aWGh6ZVhNdWIzSm5Qc0tNCkJCQVdDZ0ErQllK
+bUJBbDFCQXNKQndnSmtCY2phUTFHWTNTNkF4VUlDZ1FXQUFJQkFoa0JBcHNEQWg0QgpGaUVFd2ky
+cDNrbUo2K2VhOUErdEZ5TnBEVVpqZExvQUFFaDlBUUNVRlB2YytPL1FzYzdpVDF0STcvMTAKakJW
+aklPa2xyL01DU2lzZ2w0SzRqQUQvZkRaejVuVStqbzBmcjh3QXNLdFU0M1UrVWd5alVuNHhuczVQ
+CnVzcFViZy9PT0FSbUJBbDFFZ29yQmdFRUFaZFZBUVVCQVFkQXFrait2ejdsbjQyNmhmQS9wSWZz
+elJKbQpWWHpLc1VJOWJQd3dqZEdQUlNRREFRZ0h3bmdFR0JZS0FDb0ZnbVlFQ1hVSmtCY2phUTFH
+WTNTNkFwc00KRmlFRXdpMnAza21KNitlYTlBK3RGeU5wRFVaamRMb0FBTHNMQVAwWUVEUkw1OVdi
+UndSTFdpN0RlRjY2ClRCSzZtdmZGeG5maG9rM3JKSU1lWXdFQTZGNi85c1J6SzJqbExCRk9kbHlu
+ZGdZbEpxUFVpZk1CZGU5ego2QkZFY1FnPQo9NFhXSgotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
+TE9DSy0tLS0tCg==
+
+-----------------------1c968f8309187b178ac255c298b8906d--
+
+--------201ea4389f60e11c706405970fb52576ec383d5be4db2e38afec2b1a4805a48c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wrsEARYKAG0FgmikaHwJkBcjaQ1GY3S6RRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmfLjkuvbsJbU55xHr43c3MawBfZmknUgPGDdFwr
+XdC7EhYhBMItqd5JievnmvQPrRcjaQ1GY3S6AACvuQEA3mka1cGds4nzG3/t
+Bs4/2jppIrOdbJHqFlo3uMMgfBEA/2168HM7po47Ro+HGhZTpyGKwJDmRfTz
+mHolNQsrfK8K
+=QPy9
+-----END PGP SIGNATURE-----
+
+
+--------201ea4389f60e11c706405970fb52576ec383d5be4db2e38afec2b1a4805a48c--
+
