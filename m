@@ -1,4 +1,4 @@
-Received: (qmail 1106 invoked by uid 550); 19 May 2026 21:40:16 -0000
+Received: (qmail 7614 invoked by uid 550); 21 Aug 2025 05:51:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,91 +8,61 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 19631 invoked from network); 19 May 2026 21:32:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1779226317;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=QH9skFookOd4vZeqNaQRGb8PmstDma4CWsJbOEMtH20=;
-	b=ZQYYIcYCkjpMOVayeH05P8Rml7yTHvRkPabmcDz2gnDn+60AZpzeNGO83U92ZME4t5d+ft
-	6PV62z/c1fHM+b76sp2oFAYcOuCXIO+W6GrjoLAVbmpYTrPBSsVdhuoDHE/5tlDDa/9kyd
-	GSuDQB11kQ+Dn5+qf2COacBHlwZjPu1To9FxIdgvQt+gDhU8LbuIRwvVlC4wCpouNp3TqS
-	hhUb5Rcy3F/3RYC2Z3HkWBMUTp8Aakpm6MT9VRKfBqJ1/zKN3BxYU+S1Z048ovxpN/LryZ
-	NUc6YiDUydamDNT1BC/HBzq0R5HdsJKPSwZDJxY6Ohz79lyzgwSaTgwzJM3CEQ==
-Message-ID: <04f8498a-b9a8-4189-8c6f-9a4f3e386aa1@cpansec.org>
-Date: Tue, 19 May 2026 22:31:55 +0100
+Received: (qmail 7595 invoked from network); 21 Aug 2025 05:51:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1755755467; bh=GkTQzaOCHsRlKQWp1MMLK/FO6iE+N8Y8SvaShnJC/kE=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=c0J2TQYqaLXN2z7bceW7KX7IXAleNn12KF9vz0IegiFyqm870uoZzYVL3rWsx18/Q
+	 2s4ZZStKt/MG8KPOb+nQ2VKDrH061pIWrUq5NG7oLdrYH+lTdSDp0reMBUyEQx4BZy
+	 GxH8dsmvyRdxSIp12KH+qQJ2dawIjNy2xWSMD7v3B0vm+kxH+BFpuSKPD4kvjkY75w
+	 Kl2b1Z/IMNafKzFOlXz2pHD7mdMQ/HbSDB1Y9REuD1QIMafxG1jSqeO7sq1Hw9PLhG
+	 6OyP/gvTRyIPLjkq4J6+5iZwkhZTLHeZixjDxNWx/eBId8ZHs4TCdt9hHUaoddBUGY
+	 78fNkjh31gbmg==
+Original-Subject: Re: [oss-security] CVE-2025-54988: Apache Tika PDF parser module:
+ XXE vulnerability in PDFParser's handling of XFA
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Thu, 21 Aug 2025 07:51:06 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20250821075106.64dd7887@hboeck.de>
+In-Reply-To: 
+ <CAC1dCwVM3rxqS=KQf3=kWScQE5=NQ5ZvRH=srcF72JZROMb4hA@mail.gmail.com>
+References: 
+ <CAC1dCwVM3rxqS=KQf3=kWScQE5=NQ5ZvRH=srcF72JZROMb4hA@mail.gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.50; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Robert Rothenberg <rrwo@cpansec.org>
-Content-Language: en-GB, en-ZA
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-Cause: dmFkZTGCoGqlETkA9/yxtdjj8O4c42Ro3ZcjYrtrnluTiw7Y8+IQOkUfGGLXoZ/9oNPtviwN2KWxzHNpHARWwVLClvV6SYYrn2JlVXJdhuQVHK7gOY+9Zb2zMYnDS8y0mca7cGXfNpItRJ7R5eH+D9mQist7+xdqUqUOYXfgkBcW6QSTt4HREEF1QEgO9t04bjYXrL/kq5fd8p5WTqHp9+qIpHs8/lrbVQqPKthqv6X2iBLjrJs/FAcbuBhw+hInlnDiFEj4mGgqVdkl4DOkj2eMVlc9qf039bxcufS9GzGg4Yd4fCJwOO3z9kJS4TWy4huCvJkCmIsFHuj245vhiE9U1UM5RfLatgeJFFL6vMf30FWQsPQqVABs1155v/3XKuX2qx3xfRROVpaVgrOKcDVlnRwehGDXuo4Pa5QvXoyk5Vks+0EOypMJEee0MeEsaPHfs8OTbQFgOPUhHZo3dgX+WMT5ctQfBGDzLHijnntZWV3vexRDP/gKh4kr1Wga+vg56YV3Ow9osGqvvLVj2w7FFiuuESVKcSw9d7vBi6KgHR7xgKCu1YmYdyU0y8pFafcj6r0AKSKjJNC1fISJqTTfVy7lWLgFsCZ1QFL/0MqlTwkKgOqzmvu4BA52Q27F54+Kgu0rVsXlGH6z21dA86S7jiH5zYfAl2ne4wWK6Sf0K2jibw
-X-GND-State: clean
-X-GND-Score: 0
-Subject: [oss-security] CVE-2026-5090: Template::Plugin::HTML versions through 3.102 for Perl
- allows HTML and JavaScript to be injected
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2025-54988: Apache Tika PDF parser module:
+ XXE vulnerability in PDFParser's handling of XFA
 
-========================================================================
-CVE-2026-5090                                        CPAN Security Group
-========================================================================
+On Wed, 20 Aug 2025 15:45:33 -0400
+Tim Allison <tallison@apache.org> wrote:
 
-         CVE ID:  CVE-2026-5090
-   Distribution:  Template-Toolkit
-       Versions:  through 3.102
+> Critical XXE in Apache Tika (tika-parser-pdf-module) in Apache Tika
 
-       MetaCPAN:  https://metacpan.org/dist/Template-Toolkit
-       VCS Repo:  https://github.com/abw/Template2
+Probably this commit:
+https://github.com/apache/tika/commit/bfee6d5569fe9197c4ea947a96e212825184c=
+a33
 
+I recently looked into XXE vulnerabilities, and I believe this is
+primarily a vulnerabiltiy in Java's standard library, not in any
+single piece of software. I also consider it to be a flaw in the XML
+spec itself.
 
-Template::Plugin::HTML versions through 3.102 for Perl allows HTML and
-JavaScript to be injected
+XXE vulnerabilities are a well-known problem, and overwhelmingly, XML
+libraries and APIs have adopted safer defaults, which is the right thing
+to address this. Java is the exception, where XML parsing is still
+insecure-by-default. (That XXE and other XML security flaws aren't
+addressed in the XML spec itself is also a problem.)
 
-Description
------------
-Template::Plugin::HTML versions through 3.102 for Perl allows HTML and
-JavaScript to be injected.
+The idea that any parsing of an untrusted XML file automatically opens
+a can of security vulnerability worms, and expecting that every software
+using an XML parsing API has to do something extra to avoid it is an
+absurd security footgun.
 
-The html_filter function did not escape single quotes. HTML attributes
-inside of single quotes could be have code injected.  For example, the
-variable "var" in
-
-     <a id='ref' title='[% var | html %]'>
-
-would not be properly escaped. An attacker could insert some limited
-HTML and JavaScript, for example,
-
-     var = " ' onclick='while (true) { alert(1) }'"
-
-Note that arbitrary HTML and JavaScript would be difficult to inject,
-because angle brackets, ampersands and double-quotes would still be
-escaped.
-
-Problem types
--------------
-- CWE-79 Improper Neutralization of Input During Web Page Generation
-
-Workarounds
------------
-Attribute values in templates that contain escaped HTML should use
-double quotes instead of single quotes.
-
-
-References
-----------
-https://github.com/abw/Template2/issues/327
-https://github.com/abw/Template2/pull/337/changes/11c78a7a771d4af505efeb754a0b8775689c2eae
-
-Timeline
---------
-- 2024-12-01: Issue reported in GitHub.
-- 2026-02-21: Pull request submitted.
-- 2026-03-22: Pull request merged.
-- 2026-03-22: Issue reported to CPANSec.
-- 2026-03-28: CVE assigned.
-
-
-
+--=20
+Hanno B=C3=B6ck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
