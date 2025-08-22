@@ -1,4 +1,4 @@
-Received: (qmail 5943 invoked by uid 550); 14 Mar 2026 19:27:54 -0000
+Received: (qmail 15939 invoked by uid 550); 22 Aug 2025 18:21:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,75 +8,66 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 5286 invoked from network); 14 Mar 2026 19:27:37 -0000
-Date: Sat, 14 Mar 2026 20:27:29 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 14128 invoked from network); 22 Aug 2025 18:15:45 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Piotr Karwasz <pkarwasz@apache.org>
 To: oss-security@lists.openwall.com
-Cc: Justin Swartz <justin.swartz@risingedge.co.za>
-Message-ID: <20260314192729.GA4355@openwall.com>
-References: <20260313043738.8600-1-justin.swartz@risingedge.co.za> <abQO9W_P5gstPcXT@symphytum.spacehopper.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <abQO9W_P5gstPcXT@symphytum.spacehopper.org>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Some telnet clients leak environment variables
+Message-ID: <f3026326-18ae-6aa6-2f4c-e94e177be962@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 22 Aug 2025 18:15:35 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-54812: Apache Log4cxx: Improper HTML escaping in
+ HTMLLayout 
 
-On Fri, Mar 13, 2026 at 01:19:49PM +0000, Stuart Henderson wrote:
-> On 2026/03/13 06:37, Justin Swartz wrote:
-> >   OpenBSD 7.8 [PARTIAL LEAKAGE]
-> >   
-> >   The client blocks most variables which have not been explicitly
-> >   exported, but potentially sensitive variables such as DISPLAY,
-> >   XAUTHORITY and PRINTER are leaked without prior export.
-> 
-> ha, we've had that for a long time.
-> 
-> ---------------------
-> Date: 2005/02/27 15:46:42
-> Author: otto
-> Branch: HEAD
-> Tag: OPENBSD_3_7_BASE
-> Log:
-> - only send exported vars (based on a diff from Solar Designer)
-> - fix some buffer overflows (also some Solar Designer input)
-> 
-> ok deraadt@ cloder@
-> 
-> Members:
->         authenc.c:1.6->1.7
->         commands.c:1.47->1.48
->         externs.h:1.13->1.14
->         telnet.c:1.18->1.19
-> ---------------------
+Severity: low=20
 
-Oh, I didn't recall.
+Affected versions:
 
-Looking at this now:
+- Apache Log4cxx before 1.5.0
 
-https://cvsweb.openbsd.org/src/usr.bin/telnet
+Description:
 
-I see that these exports are explicit in commands.c:
+Improper Output Neutralization for Logs vulnerability in Apache Log4cxx.
 
-	env_export("DISPLAY");
-	env_export("PRINTER");
-	env_export("XAUTHORITY");
 
-Also, there's support for the TERMINAL-TYPE (RFC 1091) and
-X-DISPLAY-LOCATION (RFC 1096) telnet protocol options in telnet.c, which
-would send TERM and DISPLAY even if these are not exported.
+When using HTMLLayout, logger names are not properly escaped when writing o=
+ut to the HTML file.
+If untrusted data is used to retrieve the name of a logger, an attacker cou=
+ld theoretically inject HTML or Javascript in order to hide information fro=
+m logs or steal data from the user.
+In order to activate this, the following sequence must occur:
 
-Looking at RHEL 9 telnet-0.17-85.el9's telnet-0.17-env.patch against
-Linux NetKit, I see it also deliberately allows TERM and DISPLAY to be
-sent via these protocol options even if not exported.
 
-Perhaps these default exports once made sense, but not anymore... except
-maybe for TERM, which still needs to work out of the box?
 
-I also found there's OpenBSD-derived telnet-bsd package in Gentoo
-(client and server) and OpenWrt (client only), originally ported by
-Thorsten Kukuk of SUSE.  I didn't check when it was forked, nor whether
-it already contains the 2005 fixes mentioned above or equivalent.
-Someone (perhaps involved with those distros) could want to check.
+  *  Log4cxx is configured to use HTMLLayout.
 
-Alexander
+  *  Logger name comes from an untrusted string
+
+  *  Logger with compromised name logs a message
+
+  *  User opens the generated HTML log file in their browser, leading to po=
+tential XSS
+
+
+Because logger names are generally constant strings, we assess the impact t=
+o users as LOW
+
+
+This issue affects Apache Log4cxx: before 1.5.0.
+
+
+Users are recommended to upgrade to version 1.5.0, which fixes the issue.
+
+Credit:
+
+Sovereign Tech Agency (sponsor)
+
+References:
+
+https://logging.apache.org/security.html#CVE-2025-54812
+https://github.com/apache/logging-log4cxx/pull/509
+https://github.com/apache/logging-log4cxx/pull/514
+https://logging.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-54812
+
