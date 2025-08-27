@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3517" "Wednesday" "5" "July" "2017" "22:58:14" "+0100" "Simon McVittie" "smcv@debian.org" "<20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>" "64" "Re: [oss-security] systemd fails to parse user that should run service" "^Date:" nil nil "7" "2017070521:58:14" "[oss-security] systemd fails to parse user that should run service" (number mark "        smcv@debian. Jul  5   64/3517  " thread-indent "\"Re: [oss-security] systemd fails to parse user that should run service\"\n") "<a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>" ("<a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24325 invoked by uid 550); 5 Jul 2017 21:58:48 -0000
+Received: (qmail 27876 invoked by uid 550); 27 Aug 2025 19:34:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +6,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24304 invoked from network); 5 Jul 2017 21:58:48 -0000
-Message-ID: <20170705215814.4wyzvq2deid4ln7q@perpetual.pseudorandom.co.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a8a90fab-58af-da5e-2697-e17ef034e906@oracle.com>
- <20170705200345.GA1671@pali>
-User-Agent: NeoMutt/20170609 (1.8.3)
-Date: Wed, 5 Jul 2017 22:58:14 +0100
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] systemd fails to parse user that should run
- service
+x-ms-reactions: disallow
+Received: (qmail 3992 invoked from network); 27 Aug 2025 19:31:03 -0000
+ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org BA7D14D1660
+Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
+ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1756323053; cv=none; b=cI68Zrl+lk6YXnQh/ygPGxfr3rEnkrUq0s/yGBXNTx13cBGxtyxbvT0vAlPJZjnBo3uzhdlJOOVM09wluTOJkHKwGVkHf2NR/NIZc/wHwW1g+1Zu2tKNIhGy96HTJnsugubKy+Zr9mgNxxMLVF/Abu7Uy+w+pt3bnsh/m5cL5zE=
+ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1756323053;
+	c=relaxed/relaxed; bh=ZYNBoZdU6254RarQ+vJYI6vU/JALB54qW13GOZabxhY=;
+	h=DKIM-Signature:DKIM-Signature:Message-ID:Date:MIME-Version:From:
+	 Subject:To; b=f1f/zsux9mZt9SFhsUt/BA3e3WSnronBBDuFTur1nSglIe1U6oCmhXz6NG4ubMQv5l+NZCmvYArMPTUKM0RV/q6s7/tTRdb104kkJmmYbTSP4l06bvuwzL2a2m7Rj5JXzCXLy+N8K4LHFecI/EP7Tr5epIL921PBzKveQ5PlwuU=
+ARC-Authentication-Results: i=1; mx.pao1.isc.org
+DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org BA7D14D1660
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1756323053; bh=Pt/v8w77N9cKnSNskUjn6A6G+S3klbPzBO8f8K1R9SY=;
+	h=Date:From:Subject:To:Cc;
+	b=gKrls2+l312gc/uKkworC4lTbhTsixPifm/EId8mnN+RzE1bM/2U1u5eEdIudlo9G
+	 idXapxOuXsOsCxxd64vNul7E62dfCBbHaGYWpRC+0pdJSk2Hz6kiMax5xcbL62bQul
+	 pI/ctnBdgqP93zzM930W+kr/QZPfi2yO9pefnRYc=
+DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org A2B942E60129
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1756323053;
+	bh=ZYNBoZdU6254RarQ+vJYI6vU/JALB54qW13GOZabxhY=;
+	h=Message-ID:Date:MIME-Version:From:To;
+	b=XXzQfe/mXSFEp43SP+gyBsVrlwqvFIKffZ1dM7WMtXmpLfe9puZsZ0XVQ0oMYLvei
+	 V1mNfL6PRKMz7hEwxv8lINCqkGqRK5PQywTgMjzAXWqvozoJPDO17HMsPlSY2aaTNJ
+	 x4uCxOFEtc0ahGHMndYxP6JXAONhCUiWmO4DX32I=
+Message-ID: <e969cce7-9c38-4b6e-85be-2046be464452@isc.org>
+Date: Wed, 27 Aug 2025 15:30:52 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Ben Scott <bscott@isc.org>
 To: oss-security@lists.openwall.com
+Cc: security-officer@isc.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] ISC has disclosed one vulnerability in Kea (CVE-2025-40779)
 
-On Wed, 05 Jul 2017 at 22:03:45 +0200, Pali Rohár wrote:
-> The worst is that fact that discussion about this problem was locked in
-> upstream bugtracker. Therefore there is no other option as continue
-> discussion about this, which I think security issue, here at
-> oss-security list.
 
-systemd does have a (public, and publically-archived) mailing list, which
-has a current thread on the subject of this issue.
+On 27 August 2025 we (Internet Systems Consortium) disclosed one 
+vulnerability affecting our Kea software:
 
-In particular the mail in that thread from Felipe Sateler, and some of
-the discussion on the upstream bug, touches on reasons why neither
-"if anything is not as expected, reject the whole unit" nor the current
-behaviour is right. I suspect the resolution is likely to be something
-in between.
+- CVE-2025-40779: Kea crash upon interaction between specific client 
+options and subnet selection https://kb.isc.org/docs/cve-2025-40779
 
-I agree that it's a bug that a "syntactically invalid" User is handled
-the way it is, because the result does not follow the principle
-of least astonishment, and it would be easy for it to have bad
-consequences. (Please don't try to convince me that the current behaviour
-is a bug. I already think that, and I have no more influence over
-systemd's behaviour than you do.)
+New versions of Kea are available at the following URLs:
 
-However, (the relevant part of) systemd is pid 1, executing commands
-defined by system-wide-installed files, with the highest possible
-privileges. It makes no claim to be designed to process untrusted units
-safely, and it would be foolish for a component in its position to make
-that claim. In a sense it's a specialized interpreter, for a language
-that happens to be partly declarative rather than entirely imperative. If
-someone you don't trust gives you a systemd system unit, it needs to be
-checked just as carefully as a traditional (e.g. LSB) init script, because
-it can do all the same powerful and dangerous operations that the init
-script can (dangerous is just another word for powerful, and vice versa).
+Stable: https://downloads.isc.org/isc/kea/3.0.1/
 
-Not every bug is a security vulnerability (not even the really bad
-ones). At the moment, there is a strong correlation between security
-vulnerabilities with CVE IDs, and issues for which there is consensus
-among relevant upstream and downstream developers that the issue is in
-fact a vulnerability for which a prompt security update is necessary. I'm
-becoming concerned that if the working definition of a vulnerability
-gets stretched too far towards things that are "just a bug", it will
-reduce the perceived importance of fixing CVEs promptly, harming the
-overall level of security in software.
+Development: https://downloads.isc.org/isc/kea/3.1.1/
 
-On Wed, 05 Jul 2017 at 13:27:17 -0700, Alan Coopersmith wrote:
-> Honestly, given the level of flaming and trolling that happens on issues
-> like this, locking the report is the only sane option I can see once
-> everyone started piling on.   Forcing FOSS maintainers to accept infinite
-> amounts of shitposting is a horrible way to reduce security by burning
-> out all FOSS maintainers quickly and leaving software abandoned.
+With the public announcement of these vulnerabilities, the embargo 
+period is ended and any updated software packages that have been 
+prepared may be released.
 
-I have little to add to this, but I couldn't resist a "me too" here,
-because I think Alan's point is very important. Maintainers can't be
-expected to behave in a professional and effective way if their working
-environment is consistently hostile.
-
-Using something with as large a user-base as Github for bug tracking
-makes it very easy for people to contribute their comments to bugs,
-which is great as long as those comments are helpful (remembering that a
-bug tracker is there to make the tracked software better, not to make its
-users feel better). When the comments become unconstructive, maintainers
-need to have the tools to manage them, and locking bug reports is one
-of those tools.
-
-    S
+-- 
+Ben Scott <bscott@isc.org>
+Support Engineer
+Internet Systems Consortium
