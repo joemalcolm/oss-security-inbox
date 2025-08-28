@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2286" "Thursday" "14" "July" "2016" "14:09:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160714180943.CEF62B2E017@smtpvbsrv1.mitre.org>" "54" "[oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures" nil nil nil "7" "2016071418:09:43" "[oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures" (number mark "U       cve-assign@m Jul 14   54/2286  " thread-indent "\"[oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures\"\n") "<5785E1FC.8090907@canonical.com>" ("<5785E1FC.8090907@canonical.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21676 invoked by uid 550); 14 Jul 2016 18:09:57 -0000
+Received: (qmail 25683 invoked by uid 550); 28 Aug 2025 15:48:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,66 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21654 invoked from network); 14 Jul 2016 18:09:56 -0000
-From: cve-assign@mitre.org
-To: tyhicks@canonical.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5785E1FC.8090907@canonical.com>
-Message-Id: <20160714180943.CEF62B2E017@smtpvbsrv1.mitre.org>
-Date: Thu, 14 Jul 2016 14:09:43 -0400 (EDT)
-Subject: [oss-security] Re: CVE Requests: Information exposure caused by ecryptfs-setup-swap failures
+x-ms-reactions: disallow
+Received: (qmail 26086 invoked from network); 28 Aug 2025 15:11:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=plone-org.20230601.gappssmtp.com; s=20230601; t=1756393864; x=1756998664; darn=lists.openwall.com;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8Mzssd1uEqWso5B+N8c81DOn1eVqDUjsCUTdOVDqv70=;
+        b=u6RipSe5EmtW2Ohm0o0c7ljZkTmBcL06/+OKhnVPo2DhgK5+eyQSrL8Eo601Bomm+L
+         eEmM/bXatD6ZCs9VHHn39hIoPfsulcx89aYOAaMccgY5V3x0DML452nXT9gsj5W78O3I
+         +GsyZptnt/V1Kt88SZ65mssx1x3WWpfdKGbzCh3x5o0lvFmyi8mtB6jrHegL2QIuDkma
+         JexWny6BQhhzj/10LBkmK4U0XOEE2/srEi5C9xJgNP/CmwCiqZYoDEkTVkMdbPPUdAKW
+         XB0terZj5ATubSegQ266aZCXYWx+iAFFkR1zS/YIFVo66H6qExHLZK7W0rqS3/wMSunv
+         j1+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756393864; x=1756998664;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8Mzssd1uEqWso5B+N8c81DOn1eVqDUjsCUTdOVDqv70=;
+        b=bXRDJG/xatDRM9uiQV0n085KQ4ttasR4nLXWwiMC2Yg50BUYN9bzXqRWRKLqjrFT9i
+         Yv9zIdReEUcmdvnkCD7lypd2dPzAqqZuBwcP7Agp2plZ5f9TJHQpQf3XV6er/wlyz1FI
+         ItEEgAjDdCNjCQ/CIdp2uILgTA1fSkoQUkHNd8hU7VmkcXToRpKjAYgc82Niz9prBK6N
+         3T6fkzPNctDZn7QtfbgqtsDASvFB5vewxRyVi+yglOj7V2OcBbqKxu1XqcKitqESmIXc
+         lxI/MCRO+LTDGLlh66zsR+u7O8vCuqJbnvvOaKhklEQVcnB3FlNyPHPBKhAxcTgm+XcH
+         o0sw==
+X-Gm-Message-State: AOJu0Yx0kz7beGJbKuVI5zv891mLguAq+zHGLbx0xUZfeBZiP/7XqPo5
+	JantX0Xqz8NayScsEhxmszw6j5iZEDD4h+/ZKtZD9t2Pjpz6N/zTSmrhHm3IoJCPNT2XcDVTCAz
+	ebdqR
+X-Gm-Gg: ASbGncsT9wXk83r+9gNDqPl99WgUgWnivFBf/U+wZhOHY5E4xGR/IjPpq5z+/SawnMP
+	3uSsvXTSF+sprGdq+fi1u1AwGljKT7HyjWhepV8XBg4KOmetQVdlLu0EYpR87iY0KcIaSA7iC+p
+	7KTbs7qMXTjkgTe2xT7HxF3HvuRyuno1XqM/IdCabWc5ZgC4hLYR3LyrgQ5FPKCiRzlupFN9Dcr
+	ncRIeY6LhGqfF8WmFrmN/9XDznKDcXOAXsjOvpBNkWHOLwzUB5Fxo0JJSAyjoC7veg8q7acwr0m
+	pCeHMj70JwtCXoha7UUxt/D9C2h0hAUFF2IlH1w+yuLusskVP2ZuuDq1i2QS4t6YTOBwvwkHHNC
+	pm/KussIyXa95uZSC9ScdkAgETV3Nh6BCtVSXwLoaq4g7iJrdp2H0s1cKHYevZ75RnMuijoddnB
+	JLP9JuuUAx
+X-Google-Smtp-Source: AGHT+IF8Dwlb0Rlj0/kExd4Ng0Oq0p+t0OAITVoxpnYRf5IEUGUlxRwhNB3FjXDnDefP9TD8WP9+LA==
+X-Received: by 2002:a05:6000:178b:b0:3c9:a722:e189 with SMTP id ffacd0b85a97d-3c9a722e3e6mr10875310f8f.62.1756393864212;
+        Thu, 28 Aug 2025 08:11:04 -0700 (PDT)
+Message-ID: <b1209946-938c-4b87-8fae-df9212a064d3@plone.org>
+Date: Thu, 28 Aug 2025 17:11:02 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: "Maurits van Rees (Plone)" <maurits@plone.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-58047: DoS in Volto (Plone CMS)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+A vulnerability has been discovered in Volto, the default NodeJS 
+frontend for the Plone CMS.
 
-> ecryptfs-setup-swap script that is provided by the upstream
-> ecryptfs-utils project. The script can be used to convert an existing,
-> unencrypted swap partition into a swap partition that is encrypted.
-> System admins may use this tool and the Ubuntu installer uses it when
-> the user opts into home directory encryption.
-> 
-> On systems using systemd 211 or newer and GPT partitioning, the
-> unencrypted swap partition was being automatically activated during boot
-> and the encrypted swap was not used. This was due to ecryptfs-setup-swap
-> not marking the swap partition as "no-auto", as defined by the
-> Discoverable Partitions Spec
+### Impact
 
-> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
-> partitioning
-> Bug: https://launchpad.net/bugs/1447282
-> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/857
-> (Please ignore the inaccurate commit message for commit 857)
+When visiting a specific URL, an anonymous user could cause the NodeJS 
+server part of Volto to quit with an error.
 
-Use CVE-2015-8946.
+### Patches
+
+The problem has been patched and the patch has been backported to Volto 
+major versions down until 16. It is advised to upgrade to the latest 
+patch release of your respective current major version:
+
+* Volto 16: [16.34.0](https://github.com/plone/volto/releases/tag/16.34.0)
+* Volto 17: [17.22.1](https://github.com/plone/volto/releases/tag/17.22.1)
+* Volto 18: [18.24.0](https://github.com/plone/volto/releases/tag/18.24.0)
+* Volto 19: 
+[19.0.0-alpha4](https://github.com/plone/volto/releases/tag/19.0.0-alpha.4)
+
+### Workarounds
+
+Make sure your setup automatically restarts processes that quit with an 
+error. This won't prevent a crash, but it minimises downtime.
+
+### Report
+
+The problem was discovered by FHNW, a client of Plone provider 
+kitconcept, who shared it with the Plone Zope Security Team 
+(security@plone.org).
+
+### Github Advisory
+
+The same information was published to GitHub in this 
+[advisory](https://github.com/plone/volto/security/advisories/GHSA-xjhf-7833-3pm5).
+
+Maurits van Rees
+Plone/Zope Security Team
 
 
-> ecryptfs-setup-swap improperly configures encrypted swap when using GPT
-> partitioning on a NVMe or MMC drive. This bug is due to an incomplete
-> fix for bug 1447282.
-> Bug: https://launchpad.net/bugs/1597154
-> Fix: https://bazaar.launchpad.net/~ecryptfs/ecryptfs/trunk/revision/882
 
-Use CVE-2016-6224.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXh9TcAAoJEHb/MwWLVhi2VUAP/RibsMY5eaJJQfehovvPDDZL
-N4qZ33Rn347WoQnvnHm+dSaxC6Jys2jtGCyqJZ4xTxJXUFIZzsBDyIVONpuUd6Sz
-mrnLDSPtBAvfzrBYcUbVoJLMYAoYWC27I9NcnwttE4MTLBvlDLhws2ncZJ+werph
-bSVzBS8qGPj7LFJGTP1YiFj9qTbnbJwxRAvPIIz2wAcTyOljKcQTmpGXYoqSZIOV
-oE6jSlA9HIsvgLS+VHuOzqWJTfABcjEtN6VHJEQovp0DI8EfrWenYMpGH8kFCgtO
-KW3Y45IgJeEksbfIfX2ehlWkOEABZsRsg9sjFZGlVrLUCDsN35ooVLOLIvE+yebU
-StESPy77rxhkjS709PBr+JeKMS276AIqoK/5TRu9B7Y5Lmz5FuPLhlOn79JJfoLW
-XUoFrF9U9MeJk8EV1Hm+x3uU0EvVvWOXvtpL4VdrOfLBhihvUf8SXn3e2IkYxbuj
-erfnb/0EIILAj+oulMAmyQ2gcN0JNso4nDWNFua+0+TBd1Ep5OPV5AgogxXemew8
-L5Z3hQkSwFGbXrIkdUSYm+MD/VyxMC7lwSOIYs2S3hwtnN/m1eILOzgYGqTt6Tls
-/sjTgi2l1v+sJeQPoFTo7Riuzqe7F+kUlBCjg8lyi9QF5evvlrWIhxS1kHmlrQlI
-we6cyqgnjlYJRq+QWyvm
-=11vA
------END PGP SIGNATURE-----
