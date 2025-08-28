@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["728" "Tuesday" "30" "May" "2017" "09:03:33" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<1496149413.941.3.camel@gmail.com>" "13" "Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" "^Cc:" nil nil "5" "2017053013:03:33" "[oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function" (number mark "        danielmicay@ May 30   13/728   " thread-indent "\"Re: [oss-security] Linux kernel: stack buffer overflow with controlled payload in get_options() function\"\n") "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>" ("<EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>" "<20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>" "<1496145073.1459.1.camel@gmail.com>" "<3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32447 invoked by uid 550); 30 May 2017 13:04:18 -0000
+Received: (qmail 15961 invoked by uid 550); 28 Aug 2025 17:56:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32046 invoked from network); 30 May 2017 13:03:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kSKAKs+klOf4Shotpno6g7gU7nYfjcEVzTJTo23CUGE=;
-        b=Y1T+UFoD56fgcfXTA//2Ot7IEAxTaevPUap+vxqENLZe8datkPItGZ3xXm3bBgWoHI
-         Xnf1BTE+PsQuwgaAUskMq72M8n+g0iPsllEdNDMSA0fbbTefgQbU/ke3TBn/FC4G73DZ
-         1x0DwWMjQa6LJK3E5i2Wm3EjDqmZ3VLPNqjeXII0g9fp4zCPld81W1KDTXdLFOv7hNQw
-         LeD7x9pK2OAx3Vs9RN0XJuLduzhaY0mCE7PnDa4AudFQINd+UC0KR+HPJj1RPsYxNDj2
-         EbHrSeHm8GcNjsK0hnSn+F4qm4lzlR60p0YN0YFIoNHIjkMjk5ehfpiJMheKGuO+YYfc
-         G00g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kSKAKs+klOf4Shotpno6g7gU7nYfjcEVzTJTo23CUGE=;
-        b=sAqg5aRafxlF0zY8u7bLGcAPnHwtZnZDCgJkQCI7zOKbNZqsjG5yW3N+cC4nOLCoYQ
-         Ej8Na2o3qhoSSogCfnFrMt5p9iYcpiaXjwaiubn3ZBKl0/7sQszVKDYuAQk8hNfElDsW
-         ZfKrEZj6aymlE1RuZhHG9svMzQEbEPjLxk6sYZWDSuYWPkzBXaSmnfAo5pPTF9pRUoIH
-         OsPki+VOKekoQeICPlwRVrIURPapxwHQrUERaEEaFpxysFc1isDNrr9A8WouMgRRmmhi
-         WIo2ZXHphcl/hqjXJtqnO1IC0Vlb1C2Kdf7cKejeNtz3znLFMJjIAV5X5xh3htm1wypW
-         w7Aw==
-X-Gm-Message-State: AODbwcC5yVVOSC5Ks6/nAZx53K6sC35DKOv0bZceSkO29q4j2vb9Vtql
-	r16P+tQ/OVB5qoGoY6I=
-X-Received: by 10.36.228.8 with SMTP id o8mr1841358ith.37.1496149414788;
-        Tue, 30 May 2017 06:03:34 -0700 (PDT)
-Message-ID: <1496149413.941.3.camel@gmail.com>
-In-Reply-To: <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
-References: <EBDB967B-92F8-47B9-AC79-CBF338A835F2@gmail.com>
-	 <20170530114138.jpcppn4j67niqhyb@perpetual.pseudorandom.co.uk>
-	 <1496145073.1459.1.camel@gmail.com>
-	 <3f12105e-11d8-abe6-762b-c5b762cf6b31@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.24.2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Cc: Roee Hay <roeehay@gmail.com>
-Date: Tue, 30 May 2017 09:03:33 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: stack buffer overflow with
- controlled payload in get_options() function
-To: Florian Weimer <fweimer@redhat.com>, oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 14219 invoked from network); 28 Aug 2025 17:55:48 -0000
+Date: Thu, 28 Aug 2025 19:55:40 +0200
+From: Solar Designer <solar@openwall.com>
+To: Marco Benatto <mbenatto@redhat.com>
+Cc: oss-security@lists.openwall.com, Tomas Bzatek <tbzatek@redhat.com>,
+	Marc Deslauriers <marc.deslauriers@canonical.com>
+Message-ID: <20250828175540.GA16855@openwall.com>
+References: <CAOGQQ28=RumQ21g-PFw=hNX3qpkyViYzCjPPqZLVJu8SWry05A@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOGQQ28=RumQ21g-PFw=hNX3qpkyViYzCjPPqZLVJu8SWry05A@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2025-8067 - UDisks
 
-On Tue, 2017-05-30 at 14:52 +0200, Florian Weimer wrote:
-> On 05/30/2017 01:51 PM, Daniel Micay wrote:
-> > It's unreasonable to consider the kernel line untrusted. A CVE being
-> > issued for one of these issues didn't make sense.
+Hi,
+
+Thank you Marco and Tomášor handling this disclosure so well!
+
+I'll add below a little piece of discussion from the distros list, which
+I think may be helpful to a wider audience.
+
+On Thu, Aug 28, 2025 at 04:41:50PM +0200, Tomáš Bžatek wrote:
+> On Wed, 2025-08-27 at 23:01 +0200, Solar Designer wrote:
+> > I looked a bit into exposure of this vulnerability for attack:
+> > 
+> > I checked a few Linux server systems, and I do not see udisks running
+> > anywhere by default, but simply running:
+> > 
+> > $ udisksctl monitor
+> > Monitoring the udisks daemon. Press Ctrl+C to exit.
+> > 22:49:43.365: The udisks-daemon is running (name-owner :1.49).
+> > 
+> > as an unprivileged user ssh'ed in remotely gets udisksd started as root
+> > e.g. on Rocky Linux 9 and on an old Fedora, so it's exposed for attack
+> > anyway.  The user isn't a sudoer and isn't in group wheel.
 > 
-> It's a potential Secure Boot bypass, so it matters in some theoretical
-> sense to some downstreams which carry those Secure Boot patches.
+> UDisks is primarily a D-Bus daemon and set for autoactivation through
+> its well-known name and there's a D-Bus service policy file for that.
+> It can be started via an initscript/systemd unit as well, that's up to
+> distro discretion.
+> 
+> > The below also works to get udisksd started as root, but requires the
+> > user to be in group wheel and to re-authenticate:
+> > 
+> > $ systemctl start udisks2
+> > ==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ====
+> > Authentication is required to start 'udisks2.service'.
+> > Authenticating as: user
+> > Password: 
+> > ==== AUTHENTICATION COMPLETE ====
+> > 
+> > Trying to actually trigger the bug from the provided Python script (the
+> > crash one) as a user ssh'ed in remotely to Rocky Linux 9, I get:
+> > 
+> > gi.repository.GLib.GError: g-io-error-quark: GDBus.Error:org.freedesktop.UDisks2.Error.NotAuthorizedCanObtain: Not authorized to perform operation (36)
+> > 
+> > So maybe it's not fully exposed even if the user can start udisksd on
+> > demand.  When I ran the script as root, it crashed udisksd just fine.
+> > 
+> > What are the permissions commonly required for this?
+> 
+> Access is guarded through Polkit rules, in this case:
 
-Also not sure what you mean by patches. Secure boot doesn't require
-applying patches. The kernel has to be verified by an early boot chain
-and dm-verity is in mainline for verifying the rest of the OS as Android
-and ChromeOS do. Android does have some tweaks for dm-verity but they're
-workarounds for bureaucracy rather than true technical requirements.
+Tomáš provided a link to latest revision, but here's one updated to
+point to the current revision specifically (so that it stays valid):
+
+https://github.com/storaged-project/udisks/blob/b495ae587662747b373b5d32c284529e048aebf8/data/org.freedesktop.UDisks2.policy.in#L183-L192
+
+  <action id="org.freedesktop.udisks2.loop-setup">
+    <description>Manage loop devices</description>
+    <message>Authentication is required to set up a loop device</message>
+    <defaults>
+      <allow_any>auth_admin</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <!-- NOTE: this is not a DoS because we are using /dev/loop-control -->
+      <allow_active>yes</allow_active>
+    </defaults>
+  </action>
+
+> So really depends how is your session classified and yes, the attack
+> surface is slightly lower for non-local seats. However, combine it with
+> other CVEs, notably CVE-2025-6018, and you have a bigger problem.
+
+CVE-2025-6018: LPE from unprivileged to allow_active in *SUSE 15's PAM
+https://www.openwall.com/lists/oss-security/2025/06/17/4
+
+> > For the potential privilege escalation attack, is the negatively indexed
+> > fd located within the same heap object or a different one?  Would e.g. a
+> > guard page before the allocation, such as planted by hardened_malloc,
+> > affect the ability to mount this attack?  (We're actually running with
+> > hardened_malloc in CIQ's RLC-H product.)
+> 
+> I'm not a security expert and this spans to the glib code
+> (g_unix_fd_list_get) as well.
+> 
+> > Would it be good practice to exclude udisks2 from default installs of
+> > server systems?  I tried "rpm -e udisks2" on Rocky Linux 9 and it just
+> > completed, meaning there were no dependencies on this package (at least
+> > known to RPM).
+> 
+> It's not really needed for minimal installs, it's used primarily by
+> desktop environments and server management consoles like Cockpit. For
+> RHEL specifically, its inclusion by default AND udisks2.service being
+> enabled by default is mostly historic relic I guess.
+
+Thanks again,
+
+Alexander
