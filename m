@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9411" "Friday" "22" "February" "2019" "17:42:52" "+0000" "Xen.org security team" "security@xen.org" "<E1gxEqa-0004hp-RY@xenbits.xenproject.org>" "203" "[oss-security] Xen Security Advisory 283 v2 - Withdrawn Xen Security Advisory number" "^CC:" nil nil "2" "2019022217:42:52" "[oss-security] Xen Security Advisory 283 v2 - Withdrawn Xen Security Advisory number" (number mark "U       security@xen Feb 22  203/9411  " thread-indent "\"[oss-security] Xen Security Advisory 283 v2 - Withdrawn Xen Security Advisory number\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30356 invoked by uid 550); 22 Feb 2019 17:43:11 -0000
+Received: (qmail 26242 invoked by uid 550); 6 Sep 2025 16:10:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,220 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30325 invoked from network); 22 Feb 2019 17:43:11 -0000
-Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
-Content-Transfer-Encoding: binary
-MIME-Version: 1.0
-X-Mailer: MIME-tools 5.508 (Entity 5.508)
-Message-Id: <E1gxEqa-0004hp-RY@xenbits.xenproject.org>
-CC: Xen.org security team <security-team-members@xen.org>
-Date: Fri, 22 Feb 2019 17:42:52 +0000
-From: Xen.org security team <security@xen.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Xen Security Advisory 283 v2 - Withdrawn Xen Security Advisory number
-To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
- xen-users@lists.xen.org, oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 3610 invoked from network); 5 Sep 2025 15:24:48 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Chao Gong <gongchao@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <9a48a4b7-0766-eac5-343d-8e5bfba2d069@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 05 Sep 2025 15:21:58 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-24404: Apache HertzBeat (incubating): RCE by parse http
+ sitemap xml response 
 
---=separator
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+Severity: moderate=20
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Affected versions:
 
-                 Xen Security Advisory XSA-283
-                           version 2
+- Apache HertzBeat (incubating) before 1.7.0
 
-              Withdrawn Xen Security Advisory number
+Description:
 
-SUMMARY
-=======
+XML Injection RCE by parse http sitemap xml response vulnerability in Apach=
+e HertzBeat.
 
-The advisory XSA-283 has been withdrawn.
+This issue affects Apache HertzBeat (incubating): before 1.7.0.
 
-This is because, on further analysis, we have determined that the
-advisory was issued in error: there is no security issue.
+Users are recommended to upgrade to version 1.7.0, which fixes the issue.
 
-UPDATES IN VERSION 2
-====================
+Credit:
 
-Advisory withdrawn.
+unam4 (finder)
+springkill (finder)
+Zoiltin (finder)
 
-DESCRIPTION
-===========
+References:
 
-XSA-283 stated:
+https://hertzbeat.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2025-24404
 
-        VT-d: Incorrect accesses into the Interrupt Remapping table
-
-   A VT-d IOMMU has several tables in main RAM, which are configured by the
-   driver when it starts.  The tables are required to be aligned on a 4k
-   boundary, and the control registers in the IOMMU which point to them use
-   the bottom 12 bits for additional metadata.
-
-   Unfortunately, Xen's VT-d driver includes this metadata in its base
-   pointer to the table, resulting in incorrect calculations when indexing
-   into the table.
-
-Upon closer inspection, due to the particular way the calculations are
-implemented, the "metadata" components end up being eliminated without
-affecting the final result.
-
-IMPLICATIONS
-============
-
-XSA-283 does not describe any security or functional issue.
-
-The previously declared embargo for XSA-283 is vacated.
-Anyone who has information relating to XSA-283 may publish it.
-
-NB: there are other advisories are with the same embargo date.
-Those advisories stand, and their embargoes REMAIN IN FORCE.
-
-STATUS OF THE PATCHES
-=====================
-
-The patch previously published under embargo in XSA-283 is not
-necessary.  However, it is harmless; indeed it improves code clarity
-and is likely to be included in future Xen releases in some form.
-
-In the interests of transparency, the patch is attached:
-
-$ sha256sum xsa283*
-97069456b91064450b6da1e9834f0ab91270f3b93962ca66f2eb9315cf133055  xsa283.patch-withdrawn
-$
-
-There is no need to apply this patch.
-If you have already applied it, there is no need to revert it.
-
-CREDITS
-=======
-
-Thanks to Pawel Wieczorkiewicz and Uwe Dannowski, both of Amazon, for
-pointing out that there was no actual security issue.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAlxwNH8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ9TkH/iGiPQgUhfvBOQamhBAbeCJ4877+lM+HSln3UiUy
-hBvsA6mQCOsNKS2qUXQ8txE2w459V6DYbsmqFPRXLAaF7B+QMK6zPfICxwbCkyii
-24qoITatBKvPpEhqzoM6VvkjpuUOi9+n41d/JVcyE53yAuA4R+bR9c36cz1j+j8J
-Sd1Betvb5C51V6VQXjL/2zVb/v/fz5tuutIDC+jc7J1eHi7rN31TqizvuF19DQUu
-YvSyUjfX2tSlzSp2oJ/uG1wZrAd0Ah+scViSZd6FUsCZyCiHsU02kG0zKfhXCsQ2
-+3UkI+WylK2n664uUJAtvvYBkpnGejg224jqasrzGhjZASI=
-=+3TC
------END PGP SIGNATURE-----
-
---=separator
-Content-Type: application/octet-stream; name="xsa283.patch-withdrawn"
-Content-Disposition: attachment; filename="xsa283.patch-withdrawn"
-Content-Transfer-Encoding: base64
-
-RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNv
-bT4KRGF0ZTogVHVlLCAyNyBOb3YgMjAxOCAxNzoyMToxNyArMDAwMApTdWJq
-ZWN0OiBJT01NVS9WVC1kOiBDb3JyZWN0IHRoZSBjYWxjdWxhdGlvbiBvZiB3
-aGljaCBJUlRFIHRvIHVzZQoKVGhpcyBoYXMgYmVlbiBicm9rZW4gc2luY2Ug
-Yy9zIDEyNjk3NDI2OTcgIlZULWQ6IEFsbG9jYXRlcyBwYWdlIHRhYmxlIHBn
-ZCwKcm9vdF9lbnRyeSwgaXJlbWFwIGFuZCBxaW52YWwgZnJvbSBkb21oZWFw
-IHJhdGhlciB0aGFuIHhlbmhlYXAiIGluIFhlbiAzLjMuCgpUaGUgVlQtZCBm
-aWVsZHMgaXJlbWFwX21hZGRyIGFuZCBxaW52YWxfbWFkZHIgcG9pbnQgdG8g
-dGhlIGJhc2Ugb2YgYSBibG9jayBvZgpjb250aWd1b3VzIFJBTSwgYWxsb2Nh
-dGVkIGJ5IHRoZSBkcml2ZXIsIGhvbGRpbmcgdGhlIEludGVycnVwdCBSZW1h
-cHBpbmcKdGFibGUsIGFuZCB0aGUgUXVldWVkIEludmFsaWRhdGlvbiByaW5n
-LgoKVGhlIGxvZ2ljIHRvIHBpY2sgYSBzcGVjaWZpYyBlbnRyeSBkZXBlbmRz
-IG9uIHRoZW0gYmVpbmcgcGFnZSBhbGlnbmVkIChhcwpleHBlY3RlZCBnaXZl
-biB0aGVpciBuYW1lKSwgYnV0IHRoZSBlbmFibGUgZnVuY3Rpb25zIE9SIGV4
-dHJhIGJpdHMgb2YKY29udHJvbC1yZWdpc3RlciBtZXRhZGF0YSBpbnRvIHRo
-ZW0uCgpUaGlzIGVuZHMgdXAgYmVpbmcgb2sgaW4gdGhlIHFpbnZhbCBjYXNl
-LCBiZWNhdXNlIFFJTlZBTF9QQUdFX09SREVSICh2YWx1ZSAyKQppcyBzbWFs
-bGVyIHRoYW4gdGhlIHNpemUgb2YgYSBRSU5WQUwgZW50cnkgKDE2IGJ5dGVz
-KSwgYW5kIHRoZSBlbnRyeQpjYWxjdWxhdGlvbiBkb2Vzbid0IG92ZXJmbG93
-IGludG8gdGhlIGZvbGxvd2luZyBwYWdlIHdoZW4gcmVmZXJlbmNpbmcgdGhl
-CmVudHJ5IGF0IHRoZSBlbmQgb2YgdGhlIHBhZ2UuCgpIb3dldmVyIGZvciB0
-aGUgaW50cmVtYXAgY2FzZSwgdGhlIG1ldGFkYXRhIGlzIElSVEFfUkVHX1RB
-QkxFX1NJWkUgKHZhbHVlIDB4ZiwKYWdhaW4gZmluZSkgYW5kIG9wdGlvbmFs
-bHkgSVJUQV9FSU1FICh2YWx1ZSAweDgwMCkuCgpJbiBwcmFjdGljZSwgd2hl
-biB1c2luZyBFeHRlbmRlZCBJbnRlcnJ1cHQgTW9kZSwgYWNjZXNzZXMgdG8g
-dGhlIHNlY29uZCBoYWxmCm9mIElSVEVzIGluIGVhY2ggcGFnZSBlbmQgdXAg
-ZWRpdGluZyB0aGUgd3JvbmcgcGFydCBvZiB0aGUgaW50ZXJydXB0IHJlbWFw
-cGluZwp0YWJsZS4gIEZvciBhY2Nlc3NlcyBpbnRlbmRpbmcgdG8gdGFyZ2V0
-IHRoZSBmaW5hbCBwYWdlIG9mIHRoZSByZW1hcHBpbmcKdGFibGUsIHRoaXMg
-ZXJyb3IgY2F1c2VzIHRoZSBhY2Nlc3NlcyB0byBhY3R1YWxseSBoaXQgdGhl
-IG5leHQgc2VxdWVudGlhbCBiaXQKb2YgUkFNLCB3aGF0ZXZlciB0aGF0IGhh
-cHBlbnMgdG8gYmUuCgpOb3RoaW5nIHJlYWRzIHRoZSBtZXRhZGF0YSBvdXQg
-b2YgdGhlICpfbWFkZHIgZmllbGRzLCBzbyBmaXggdGhlIGlzc3VlIGJ5Cmxl
-YXZpbmcgdGhlIGZpZWxkcyBwcm9wZXJseSBhbGlnbmVkIGFuZCBvbmx5IGlu
-Y2x1ZGluZyB0aGUgbWV0YWRhdGEgd2hlbgp3cml0aW5nIHRvIHRoZSBJT01N
-VSBjb250cm9sIHJlZ2lzdGVycy4KCldoaWxlIG5vdCBhIHNlY3VyaXR5IGl0
-c2VsZiwgZm9yIGNvbnNpc3RlbmN5IGZpeCB0aGUgc2FtZSBsb2dpY2FsIGJ1
-ZyB3aGVuCnJlYWRpbmcgdGhlIElSVEEgcmVnaXN0ZXIgYW5kIGZvbGxvd2lu
-ZyBpdCB0byBkdW1wIHRoZSBJbnRlcnJ1cHQgUmVtYXBwaW5nCnRhYmxlLgoK
-VGhpcyBpcyBYU0EtMjgzCgpTaWduZWQtb2ZmLWJ5OiBBbmRyZXcgQ29vcGVy
-IDxhbmRyZXcuY29vcGVyM0BjaXRyaXguY29tPgpSZXZpZXdlZC1ieTogSmFu
-IEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpSZXZpZXdlZC1ieTogUGF1
-bCBEdXJyYW50IDxwYXVsLmR1cnJhbnRAY2l0cml4LmNvbT4KCmRpZmYgLS1n
-aXQgYS94ZW4vZHJpdmVycy9wYXNzdGhyb3VnaC92dGQvaW50cmVtYXAuYyBi
-L3hlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3Z0ZC9pbnRyZW1hcC5jCmluZGV4
-IGEwNjYzZWMuLjIxZDFiMTkgMTAwNjQ0Ci0tLSBhL3hlbi9kcml2ZXJzL3Bh
-c3N0aHJvdWdoL3Z0ZC9pbnRyZW1hcC5jCisrKyBiL3hlbi9kcml2ZXJzL3Bh
-c3N0aHJvdWdoL3Z0ZC9pbnRyZW1hcC5jCkBAIC04MDIsMTQgKzgwMiwxNSBA
-QCBpbnQgZW5hYmxlX2ludHJlbWFwKHN0cnVjdCBpb21tdSAqaW9tbXUsIGlu
-dCBlaW0pCiAgICAgICAgIGlyX2N0cmwtPmlyZW1hcF9udW0gPSAwOwogICAg
-IH0KIAotICAgIC8qIHNldCBleHRlbmRlZCBpbnRlcnJ1cHQgbW9kZSBiaXQg
-Ki8KLSAgICBpcl9jdHJsLT5pcmVtYXBfbWFkZHIgfD0gZWltID8gSVJUQV9F
-SU1FIDogMDsKLQogICAgIHNwaW5fbG9ja19pcnFzYXZlKCZpb21tdS0+cmVn
-aXN0ZXJfbG9jaywgZmxhZ3MpOwogCi0gICAgLyogc2V0IHNpemUgb2YgdGhl
-IGludGVycnVwdCByZW1hcHBpbmcgdGFibGUgKi8KLSAgICBpcl9jdHJsLT5p
-cmVtYXBfbWFkZHIgfD0gSVJUQV9SRUdfVEFCTEVfU0laRTsKLSAgICBkbWFy
-X3dyaXRlcShpb21tdS0+cmVnLCBETUFSX0lSVEFfUkVHLCBpcl9jdHJsLT5p
-cmVtYXBfbWFkZHIpOworICAgIC8qCisgICAgICogU2V0IHNpemUgb2YgdGhl
-IGludGVycnVwdCByZW1hcHBpbmcgdGFibGUgYW5kIG9wdGlvbmFsbHkgRXh0
-ZW5kZWQKKyAgICAgKiBJbnRlcnJ1cHQgTW9kZS4KKyAgICAgKi8KKyAgICBk
-bWFyX3dyaXRlcShpb21tdS0+cmVnLCBETUFSX0lSVEFfUkVHLAorICAgICAg
-ICAgICAgICAgIGlyX2N0cmwtPmlyZW1hcF9tYWRkciB8IElSVEFfUkVHX1RB
-QkxFX1NJWkUgfAorICAgICAgICAgICAgICAgIChlaW0gPyBJUlRBX0VJTUUg
-OiAwKSk7CiAKICAgICAvKiBzZXQgU0lSVFAgKi8KICAgICBnY21kID0gZG1h
-cl9yZWFkbChpb21tdS0+cmVnLCBETUFSX0dTVFNfUkVHKTsKZGlmZiAtLWdp
-dCBhL3hlbi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3Z0ZC9xaW52YWwuYyBiL3hl
-bi9kcml2ZXJzL3Bhc3N0aHJvdWdoL3Z0ZC9xaW52YWwuYwppbmRleCBlOTVk
-YzU0Li4wMTQ0N2NmIDEwMDY0NAotLS0gYS94ZW4vZHJpdmVycy9wYXNzdGhy
-b3VnaC92dGQvcWludmFsLmMKKysrIGIveGVuL2RyaXZlcnMvcGFzc3Rocm91
-Z2gvdnRkL3FpbnZhbC5jCkBAIC00MjgsNiArNDI4LDggQEAgaW50IGVuYWJs
-ZV9xaW52YWwoc3RydWN0IGlvbW11ICppb21tdSkKICAgICBmbHVzaC0+Y29u
-dGV4dCA9IGZsdXNoX2NvbnRleHRfcWk7CiAgICAgZmx1c2gtPmlvdGxiID0g
-Zmx1c2hfaW90bGJfcWk7CiAKKyAgICBzcGluX2xvY2tfaXJxc2F2ZSgmaW9t
-bXUtPnJlZ2lzdGVyX2xvY2ssIGZsYWdzKTsKKwogICAgIC8qIFNldHVwIElu
-dmFsaWRhdGlvbiBRdWV1ZSBBZGRyZXNzKElRQSkgcmVnaXN0ZXIgd2l0aCB0
-aGUKICAgICAgKiBhZGRyZXNzIG9mIHRoZSBwYWdlIHdlIGp1c3QgYWxsb2Nh
-dGVkLiAgUVMgZmllbGQgYXQKICAgICAgKiBiaXRzWzI6MF0gdG8gaW5kaWNh
-dGUgc2l6ZSBvZiBxdWV1ZSBpcyBvbmUgNEtCIHBhZ2UuCkBAIC00MzUsMTAg
-KzQzNyw4IEBAIGludCBlbmFibGVfcWludmFsKHN0cnVjdCBpb21tdSAqaW9t
-bXUpCiAgICAgICogcmVnaXN0ZXJzIGFyZSBhdXRvbWF0aWNhbGx5IHJlc2V0
-IHRvIDAgd2l0aCB3cml0ZQogICAgICAqIHRvIElRQSByZWdpc3Rlci4KICAg
-ICAgKi8KLSAgICBxaV9jdHJsLT5xaW52YWxfbWFkZHIgfD0gUUlOVkFMX1BB
-R0VfT1JERVI7Ci0KLSAgICBzcGluX2xvY2tfaXJxc2F2ZSgmaW9tbXUtPnJl
-Z2lzdGVyX2xvY2ssIGZsYWdzKTsKLSAgICBkbWFyX3dyaXRlcShpb21tdS0+
-cmVnLCBETUFSX0lRQV9SRUcsIHFpX2N0cmwtPnFpbnZhbF9tYWRkcik7Cisg
-ICAgZG1hcl93cml0ZXEoaW9tbXUtPnJlZywgRE1BUl9JUUFfUkVHLAorICAg
-ICAgICAgICAgICAgIHFpX2N0cmwtPnFpbnZhbF9tYWRkciB8IFFJTlZBTF9Q
-QUdFX09SREVSKTsKIAogICAgIGRtYXJfd3JpdGVxKGlvbW11LT5yZWcsIERN
-QVJfSVFUX1JFRywgMCk7CiAKZGlmZiAtLWdpdCBhL3hlbi9kcml2ZXJzL3Bh
-c3N0aHJvdWdoL3Z0ZC91dGlscy5jIGIveGVuL2RyaXZlcnMvcGFzc3Rocm91
-Z2gvdnRkL3V0aWxzLmMKaW5kZXggODVlMGY0MS4uOTRhNmU0ZSAxMDA2NDQK
-LS0tIGEveGVuL2RyaXZlcnMvcGFzc3Rocm91Z2gvdnRkL3V0aWxzLmMKKysr
-IGIveGVuL2RyaXZlcnMvcGFzc3Rocm91Z2gvdnRkL3V0aWxzLmMKQEAgLTIw
-NCw4ICsyMDQsOSBAQCB2b2lkIHZ0ZF9kdW1wX2lvbW11X2luZm8odW5zaWdu
-ZWQgY2hhciBrZXkpCiAgICAgICAgIGlmICggc3RhdHVzICYgRE1BX0dTVFNf
-SVJFUyApCiAgICAgICAgIHsKICAgICAgICAgICAgIC8qIER1bXAgaW50ZXJy
-dXB0IHJlbWFwcGluZyB0YWJsZS4gKi8KLSAgICAgICAgICAgIHU2NCBpcmVt
-YXBfbWFkZHIgPSBkbWFyX3JlYWRxKGlvbW11LT5yZWcsIERNQVJfSVJUQV9S
-RUcpOwotICAgICAgICAgICAgaW50IG5yX2VudHJ5ID0gMSA8PCAoKGlyZW1h
-cF9tYWRkciAmIDB4RikgKyAxKTsKKyAgICAgICAgICAgIHVpbnQ2NF90IGly
-dGEgPSBkbWFyX3JlYWRxKGlvbW11LT5yZWcsIERNQVJfSVJUQV9SRUcpOwor
-ICAgICAgICAgICAgdWludDY0X3QgaXJlbWFwX21hZGRyID0gaXJ0YSAmIFBB
-R0VfTUFTSzsKKyAgICAgICAgICAgIHVuc2lnbmVkIGludCBucl9lbnRyeSA9
-IDEgPDwgKChpcnRhICYgMHhGKSArIDEpOwogICAgICAgICAgICAgc3RydWN0
-IGlyZW1hcF9lbnRyeSAqaXJlbWFwX2VudHJpZXMgPSBOVUxMOwogICAgICAg
-ICAgICAgaW50IHByaW50X2NudCA9IDA7CiAK
-
---=separator--
