@@ -1,4 +1,4 @@
-Received: (qmail 13947 invoked by uid 550); 19 May 2026 17:55:27 -0000
+Received: (qmail 24329 invoked by uid 550); 8 Sep 2025 17:46:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,119 +8,87 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 12144 invoked from network); 19 May 2026 17:23:56 -0000
-From: Sam James <sam@gentoo.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <8733znjrjv.fsf@gentoo.org>
-Organization: Gentoo
-References: <87bjebjwkq.fsf@gentoo.org> <8733znjrjv.fsf@gentoo.org>
-User-Agent: mu4e 1.14.1; emacs 31.0.60
-Date: Tue, 19 May 2026 18:23:42 +0100
-Message-ID: <87tss3ia8x.fsf@gentoo.org>
+Received: (qmail 20221 invoked from network); 8 Sep 2025 15:42:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757346131; x=1757432531; bh=5vbdc0meTzPfo3W6kPYKpmJHlRyDC5vXwp4
+	atzuJLUg=; b=S3WhP8UzDZcxw2pwCiWQzpb3/fJ64ZEKO38J2Kp3/ch9Z01IUuo
+	T24m6VmeBP8rV9Pt09xQ+ccl1mkVQ8k7MQ76J2CqGxqCercNkdEkUNsQAcf8npO1
+	HkgGhDJXHnsXUCxlWN54+LR7k9bu5Fw2lw8nRswZSLFGKMjyyWtoec/Sd8FdIgPr
+	C/7ccMa42/pgdGJj1+acjT7mCCArdQHD/hc4iEWDBcEaZiwndVbmOpjmIFup7EXY
+	Djz1fy91L+ZEiPMLNR/lFh4QEXtMF7IXfL1/WFYckJ48rsZT4VHYHHTSooxPCDRE
+	/Ivy3f7R+toRKzyg2Rsm7iYpWhWvakVrNyg==
+X-ME-Sender: <xms:Uvm-aG__d6Z-mu2Vo7PKbP4yFDcLvI6sLV2IinJovYwfgfmY9zabhQ>
+    <xme:Uvm-aIvnC-lG3xJp8R4hbeY3-VFEXtdhaFcP_yboknCexijROjXmxyCVWntpN1kkN
+    GqpqNcMevt8MFk8>
+X-ME-Received: <xmr:Uvm-aFb5sVJaeD3K7sM5xHywhawcf4VQ0zVJaTjSuURh7qwmgy4Qsp9lG9DlraEinxBvONQZx6fe46IiTzNSP9gIg3mlOxfU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeelvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfvffhufgtgfesthekredttddvje
+    enucfhrhhomheptfhosggvrhhtucftohhthhgvnhgsvghrghcuoehrrhifohestghprghn
+    rdhorhhgqeenucggtffrrghtthgvrhhnpedtjeeuueduvefflefgjeehgeffffevueeule
+    eitddutdeggefgjeetgedtveehgfenucffohhmrghinhepmhgvthgrtghprghnrdhorhhg
+    pdhstghhmhhorhhprdguvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehrrhifohestghprghnrdhorhhgpdhnsggprhgtphhtthhopedupdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhish
+    htshdrohhpvghnfigrlhhlrdgtohhm
+X-ME-Proxy: <xmx:Uvm-aApjNyyAtCSAma_UizPA_5GN-Y5MIQenUZD-RIa0pXmo2TPRJg>
+    <xmx:Uvm-aC8Uc1ElI0ykd-yknDVUR2F1IRV_Ukiym2QfcZDkN3SQZ7eZcg>
+    <xmx:Uvm-aH_bdH6vnwxpciKSTMPZXQ6r3ZXE5_0XXPn8tcePrYxxtVLMKQ>
+    <xmx:Uvm-aJsunSjBxb0Dl1vE1jYYqiUWGjeCiLcWRF-3ceKFGqRWrS5PuQ>
+    <xmx:Uvm-aCoQ-RfBxyKLqwHE2dWE_vR7dDcSY4JzUlXelgOduXk_zKRszQ>
+    <xmx:U_m-aDFluk9tvOJwN4plInTnNc9z88QLo9nPHBfrOmAixMK_Fg2gqNAxuAvn>
+Feedback-ID: ia0f04183:Fastmail
+Message-ID: <37b51746-e74b-48c4-8181-46b3a1c47c42@cpan.org>
+Date: Mon, 8 Sep 2025 16:42:08 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: Re: [oss-security] PinTheft Linux LPE
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+Content-Language: en-GB
+From: Robert Rothenberg <rrwo@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2025-40928: JSON::XS before version 4.04 for Perl has an integer
+ buffer overflow causing a segfault when parsing crafted JSON, enabling
+ denial-of-service attacks or other unspecified
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+========================================================================
+CVE-2025-40928                                       CPAN Security Group
+========================================================================
 
-Sam James <sam@gentoo.org> writes:
+         CVE ID:  CVE-2025-40928
+   Distribution:  JSON-XS
+       Versions:  before 4.04
 
-> Sam James <sam@gentoo.org> writes:
->
->> v12-security have shared a new Linux LPE today, PinTheft [0].
->>
->> Quoting their abstract:
->>> PinTheft is a Linux local privilege escalation exploit for an RDS
->>> zerocopy double-free that can be turned into a page-cache overwrite
->>> through io_uring fixed buffers.
->>>
->>> PinTheft was discovered with V12 by Aaron Esau of the V12 security
->>> team. We duped on this bug with some other teams and a patch is
->>> available so we are releasing our PoC.
->>>
->>> The bug lived in the RDS zerocopy send
->>> path. rds_message_zcopy_from_user() pins user pages one at a time. If
->>> a later page faults, the error path drops the pages it already pinned,
->>> and later RDS message cleanup drops them again because the scatterlist
->>> entries and entry count remain live after the zcopy notifier is
->>> cleared. Each failed zerocopy send can steal one reference from the fir=
-st page.
->>>
->>> The PoC uses io_uring to make that refcount bug useful. It registers
->>> an anonymous page as a fixed buffer, giving the page a FOLL_PIN bias
->>> of 1024 references. It then steals those references with failing RDS
->>> zerocopy sends, frees the page, reclaims it as page cache for a
->>> SUID-root binary, and uses the stale io_uring fixed-buffer page
->>> pointer to overwrite that page cache with a small ELF
->>> payload. Executing the SUID binary drops into a root shell.
->>>
->>> Sadly, the RDS kernel module this requires is only default on Arch
->>> Linux among the common distributions we tested.
->
-> While of course I can't know what distros they tested, this does
-> seem to be on in at least Fedora too? https://oracle.github.io/kconfigs/
-> seems to agree with that.
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
 
-Debian has this to prevent autoloading:
-https://salsa.debian.org/kernel-team/linux/-/blob/debian/6.12/trixie-securi=
-ty/debian/patches/debian/rds-Disable-auto-loading-as-mitigation-against-loc=
-al.patch
+JSON::XS before version 4.04 for Perl has an integer buffer overflow
+causing a segfault when parsing crafted JSON, enabling
+denial-of-service attacks or other unspecified impact
 
-Ubuntu installs a few blacklist files from their kmod package (*):
-```
-/tmp/kmod/debian/modprobe.d $ cat blacklist-rare-network.conf
-# Many less commonly used network protocols have recently had various
-# security flaws discovered. In an effort to reduce the scope of future
-# vulnerability exploitations, they are being blacklisted here so that
-# unprivileged users cannot use them by default. System owners can still
-# either modify this file, or specifically modprobe any needed protocols.
+Description
+-----------
+JSON::XS before version 4.04 for Perl has an integer buffer overflow
+causing a segfault when parsing crafted JSON, enabling
+denial-of-service attacks or other unspecified impact
 
-# ax25
-alias net-pf-3 off
-# netrom
-alias net-pf-6 off
-# x25
-alias net-pf-9 off
-# rose
-alias net-pf-11 off
-# decnet
-alias net-pf-12 off
-# econet
-alias net-pf-19 off
-# rds
-alias net-pf-21 off
-# af_802154
-alias net-pf-36 off
-```
+Problem types
+-------------
+- CWE-122 Heap-based Buffer Overflow
 
-(*) I can't link to the actual patches as their viewer seems down, but
-you can get there from https://code.launchpad.net/~git-ubuntu-import/ubuntu=
-/+source/kmod/+git/kmod/+ref/ubuntu/jammy-devel
--> git clone -b ubuntu/jammy-devel https://git.launchpad.net/ubuntu/+source=
-/kmod
-=20=20=20=20
->
->> [...]
->
-> sam
+Solutions
+---------
+Update to 4.04, or apply the provided patch
 
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.03/source/XS.xs#L256
+https://security.metacpan.org/patches/J/JSON-XS/4.03/CVE-2025-40928-r1.patch
 
-sam
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmoMnJ4bFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
-Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
-QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkAqa
-AQCnWPDLbvz3KlociAOzXdF226onkuGiIgtkg1lYWduwVwD/crSMBSwR15PMDg3r
-2e+ypJn+CiP/1t4HzL6/yj1N0QA=
-=VMJz
------END PGP SIGNATURE-----
---=-=-=--
+Credits
+-------
+Michael Hudak of rasotec, reporter
