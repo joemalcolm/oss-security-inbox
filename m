@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1593" "Tuesday" "22" "September" "2015" "16:51:17" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150922205117.F1154B2E1BC@smtpvbsrv1.mitre.org>" "41" "[oss-security] Re: CVE request: Use-after-free in Linux kernel with aufs mmap patch" nil nil nil "9" "2015092220:51:17" "[oss-security] Re: CVE request: Use-after-free in Linux kernel with aufs mmap patch" (number mark "        cve-assign@m Sep 22   41/1593  " thread-indent "\"[oss-security] Re: CVE request: Use-after-free in Linux kernel with aufs mmap patch\"\n") "<1441913190.17007.15.camel@decadent.org.uk>" ("<1441913190.17007.15.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 4039 invoked by uid 550); 22 Sep 2015 20:51:31 -0000
+Received: (qmail 24307 invoked by uid 550); 8 Sep 2025 17:46:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 4014 invoked from network); 22 Sep 2015 20:51:30 -0000
-In-Reply-To: <1441913190.17007.15.camel@decadent.org.uk>
-Message-Id: <20150922205117.F1154B2E1BC@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, sfjro@users.sourceforge.net
-Date: Tue, 22 Sep 2015 16:51:17 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Use-after-free in Linux kernel with aufs mmap patch
-To: ben@decadent.org.uk
+x-ms-reactions: disallow
+Received: (qmail 27785 invoked from network); 8 Sep 2025 15:43:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1757346207; x=1757432607; bh=IJ8c6pz6DqzCYBUbAB4aSWPbExgaAtZ/FPx
+	3tX3+WHo=; b=Dn+AfTDLTdwwjgE3EeXS+B5kIwiywNIuAAW4gZGOJshEdoBWN5s
+	9TfsAxKztA5AQFIMCUpQW6zugVpHjd3kew3brVh9jeR3mL3TNnCYNcufN/eWNkmP
+	hkrH7SG3MBBDuPWuqW9t0k5ePMO03GSA29wiyDwyDDNQ6UH/F6sTxbhaBovUJRvH
+	sf8cZR/+7IhO4ZSxa7PK9jIpfGJ8CeDVCk9bXbtswIX0pVuOyjEkuvj1MVkjNZ9o
+	vmi+1jhg7UnX0DapXoC9jQwoxY2LpJu7nsv1Oj95DLVABmB9qgYwP88FvO4sZg75
+	FDednyxMPetqO7rnJldLQLoFM7/1CTrtuPw==
+X-ME-Sender: <xms:n_m-aCCmES_9ReD6_-MfewbG882REad5x5-78bgsCRJ3deA3nsgdXA>
+    <xme:n_m-aOjmZkdX6PC7g6bR0bwLzjmpK0jYp8JgEvj7MeJe3vqdp0zXsp1scUlJCXC6F
+    S_nOcPh5PFEBQOe>
+X-ME-Received: <xmr:n_m-aO9BmlDWWtq0YBpE96KxuVmuHxdAN5bykid0hGK5JhTtJa465pJUXUewaA49ZB5nOeltUW3NIOe928NGh2m7OrbgkBAy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddujeelvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepkfffgggfvffhufgtgfesthekredttddvje
+    enucfhrhhomheptfhosggvrhhtucftohhthhgvnhgsvghrghcuoehrrhifohestghprghn
+    rdhorhhgqeenucggtffrrghtthgvrhhnpeejgfduleelgeelgfeigeeigfdvjeeghfduve
+    fhgeefvefghedttddvjeeklefhvdenucffohhmrghinhepmhgvthgrtghprghnrdhorhhg
+    pdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehrrhifohestghprghnrdhorhhgpdhnsggprhgtphhtthhopedupdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhish
+    htshdrohhpvghnfigrlhhlrdgtohhm
+X-ME-Proxy: <xmx:n_m-aC_CY5RhZM13On6NWcpq4lkgr2hObhRZGGfg6DsXO7FSQ9HpCQ>
+    <xmx:n_m-aPDU7lXDmThKJq9WX9EeHStOqwskWjtZt5eXUj7GH854IilCbA>
+    <xmx:n_m-aKxTP6bGNZNfKTRFThtRjlcIIKvacY4h-SI9oq7qkKsVzQgk7A>
+    <xmx:n_m-aMTHRtEcHfbTAgeYb4MSsIkN7CfT6RA7XnU9kqFRAqyP8k4ThQ>
+    <xmx:n_m-aJ8clgdY37o1TwPqrus4G2LGrO6nlUkNF59XwIm1uew-1bqK2Q>
+    <xmx:n_m-aFLX3DK94nwN3ps927A79aBY35OgkfVENZpylpmiKQdSfnhwRZ-O5g8i>
+Feedback-ID: ia0f04183:Fastmail
+Message-ID: <d8715cdb-d2be-4fd7-aafe-502e74ebd585@cpan.org>
+Date: Mon, 8 Sep 2025 16:43:26 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
+To: oss-security@lists.openwall.com
+From: Robert Rothenberg <rrwo@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2025-40929: Cpanel::JSON::XS before version 4.40 for Perl has an
+ integer buffer overflow causing a segfault when parsing crafted JSON,
+ enabling denial-of-service attacks or other unspecified impact
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+========================================================================
+CVE-2025-40929                                       CPAN Security Group
+========================================================================
 
-> The aufs (Advanced Union Filesystem) project provides an optional patch
-> for the Linux kernel
+         CVE ID:  CVE-2025-40929
+   Distribution:  Cpanel-JSON-XS
+       Versions:  before 4.40
 
-> introduces later uses of the vma, resulting
-> in a potential use-after-free.  This is certainly exploitable for a
-> minor denial of service (BUG in process context, so the task can't be
-> cleaned up properly but the system does not panic) but might also be
-> usable for privilege escalation.
+       MetaCPAN:  https://metacpan.org/dist/Cpanel-JSON-XS
+       VCS Repo:  https://github.com/rurban/Cpanel-JSON-XS
 
->> Date: Sat, 19 Sep 2015 07:08:18 +0900
->> From: sfjro@users.sourceforge.net
+Cpanel::JSON::XS before version 4.40 for Perl has an integer buffer
+overflow causing a segfault when parsing crafted JSON, enabling
+denial-of-service attacks or other unspecified impact
 
->> I confirmed that Ben Hutchings' patch is correct
+Description
+-----------
+Cpanel::JSON::XS before version 4.40 for Perl has an integer buffer
+overflow causing a segfault when parsing crafted JSON, enabling
+denial-of-service attacks or other unspecified impact
 
-Use CVE-2015-7312.
+Problem types
+-------------
+- CWE-122 Heap-based Buffer Overflow
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Solutions
+---------
+Update to 4.40 or later, or apply the provided patch
 
-iQIcBAEBCAAGBQJWAbyjAAoJEL54rhJi8gl5Rj8P/0rVG/qRVeS8kTjUUz7YtuFM
-d8CAJzjsPPXSnIUNpITumwrRaqjWcVRx00AZyUfOIY2aalEz1O9tvbsaMj3+vsw1
-ON3pi/JbYUYVoBfEpCIJvhvYVY2496xyk7Tk2ZlWdoVcinuT30i5DHtWzNMQn8ck
-xdjuq2FCBvYmWnso2oPV9t0JeqSYZ88w1/3D0v0bq1ZnTQlxr25Q7zEGMcfYjwWk
-AhUMSB4lOCdrD3Y0BLgcADAPmvw9EP0dhk/EIDs0OROtcyLsDZ0ExWLqea+saNGo
-AOIGadh51YKMZtiYDl3KEuYFeU2RcLLKwe0MwKT4KB2pFsndMZUOqYdMsYB+nVXU
-/T9LBmWc8+gKdi7IU9zwBvs1LkSfSPfFdEAUwSLqOZhENldFLzUOU3Nqa6eL/SsV
-BllfhNMLUJ9wKH0EJtZW13Pg1So0ErjzNGj6MXqtpb4KGnIG/JzzLdebKMd/hmLT
-Wm/fk4ZBM3PG1n6Fu2tY0gcwqErFiun/9jS3LbzsqWscXJpIpqREFM9mogjWoPL1
-BK6ZtqP3AGscRcj2qz0wPgH402THtssmnxAU07qrp7be9NnYXFVAmIacWo9wXaP+
-Pqrre2J7SWGhkQ3bpss+/rCSMlZ+QT0goQ2JeHZwpJfr7MV3tQhjA+euzZejH1R8
-eArssm9Y7c1hXOKtVGgZ
-=fSPy
------END PGP SIGNATURE-----
+References
+----------
+https://metacpan.org/release/RURBAN/Cpanel-JSON-XS-4.39/source/XS.xs#L713
+https://metacpan.org/release/RURBAN/Cpanel-JSON-XS-4.40/changes
+https://github.com/rurban/Cpanel-JSON-XS/commit/378236219eaa35742c3962ecbdee364903b0a1f2.patch
+
+Credits
+-------
+Michael Hudak of rasotec, reporter
+
