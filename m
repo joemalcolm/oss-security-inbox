@@ -1,4 +1,4 @@
-Received: (qmail 11566 invoked by uid 550); 24 Jan 2023 16:08:33 -0000
+Received: (qmail 32629 invoked by uid 550); 10 Sep 2025 19:08:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,130 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11478 invoked from network); 24 Jan 2023 16:08:32 -0000
-Date: Tue, 24 Jan 2023 16:08:18 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
+x-ms-reactions: disallow
+Received: (qmail 23757 invoked from network); 10 Sep 2025 15:13:57 -0000
+ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org 05F544D075A
+Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
+ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1757517227; cv=none; b=J8RRpggozXM6fawMPi4sk7nlRFV8ng6c99lz7jJJX9TR2sihJDF09b193WafzD+rFNt3Iwgt+S2Meh1ypNyJPiNAZ7sGHclv9qERvrqx3wGcSXcskt/piq4rKkHbvsMwaRW22WqRagMARdIrJ8Uq990Uu7I1pg3huq7hqmbelpI=
+ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1757517227;
+	c=relaxed/relaxed; bh=0tfwoqPltCFRlFnSSKf+KRxFYRkSq0Gpgnukkou1/OE=;
+	h=DKIM-Signature:DKIM-Signature:Date:From:To:Message-ID:Subject:
+	 MIME-Version; b=qrmCxM8+lz4085OBcKjCY7Fuztmf88f8g6xV071qRpzHEQE7TC8ifsMNKqb0hkojxejSR1AFlXLKudnU3jPNmYvwwrFg3oEL2UdefQgD/zIeHwai1msLyFlFVL36Xyrrn6zAyZvskzt1e8IAnHWiUVlMV52Yjem0qEWBZdQEJiQ=
+ARC-Authentication-Results: i=1; mx.pao1.isc.org
+DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 05F544D075A
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1757517227; bh=GfwMNLoWIRM6jZYTBU6NX2C+xTgJfPTOTfEJZyns0PY=;
+	h=Date:From:To:Cc:Subject;
+	b=ZRhGtyFZvSSLl19hws3uf1sNTCG+Nx4U7b619QuITGD6CggELhrPMGqrMEN0xSJM0
+	 N3KCfP6G1/FjMSVZ00hIIkt6fDmxG5a3oPFa5rvW/2Q1HSoCTiXaDdl9hZUedQ93Y8
+	 ptLwpZZ+TAGdBtJnZ/fGJeVgxwzUW1hjZ9XWc0bg=
+DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org E212E2E600A9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1757517226;
+	bh=0tfwoqPltCFRlFnSSKf+KRxFYRkSq0Gpgnukkou1/OE=;
+	h=Date:From:To:Message-ID:MIME-Version;
+	b=Wufy0rwKO/K9rgEvjlz0Ve+bCLcAyh08vrTBRRd8+OWrYnWWlaOEbkGnT6ndQ5XIy
+	 oKopzSZSLnp+KxGEbiKbo1GS/PMMpILO2DRlDp4PjVBVIKAt/rBrZZQCRGYbZLGFAa
+	 /ybVUHad6l/9xlo51kzS0angJZiYXRnG3XZIO/mY=
+Date: Wed, 10 Sep 2025 15:13:46 +0000 (UTC)
+From: Ben Scott <bscott@isc.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20230124160818.wlaspet7jsmths2p@yuggoth.org>
+Cc: security-officer@isc.org
+Message-ID: <1232558782.642728.1757517226656.JavaMail.zimbra@isc.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tcfhvreqzy74jjfa"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Subject: [oss-security] [OSSA-2023-002] Cinder, Glance, Nova: Arbitrary file access through
- custom VMDK flat descriptor (CVE-2022-47951)
-
---tcfhvreqzy74jjfa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2023-002: Arbitrary file access through custom VMDK flat descriptor
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-:Date: January 24, 2023
-:CVE: CVE-2022-47951
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [50.187.20.181]
+X-Mailer: Zimbra 10.1.10_GA_4785 (ZimbraWebClient - FF142 (Linux)/10.1.10_GA_4785)
+Thread-Index: eYsWAPH1Zqj0PJgCSgNuCytt83djPw==
+Thread-Topic: ISC has disclosed one vulnerability in Stork (CVE-2025-8696)
+Subject: [oss-security] ISC has disclosed one vulnerability in Stork (CVE-2025-8696)
 
 
-Affects
-~~~~~~~
-- Cinder, glance, nova:
-  Cinder <19.1.2, >=3D20.0.0 <20.0.2, =3D=3D21.0.0;
-  Glance <23.0.1, >=3D24.0.0 <24.1.1, =3D=3D25.0.0;
-  Nova <24.1.2, >=3D25.0.0 <25.0.2, =3D=3D26.0.0
+On 10 September 2025 we (Internet Systems Consortium) disclosed one vulnerability affecting our Stork software:
 
+- CVE-2025-8696:        DoS attack against the Stork UI from an unauthorized user https://kb.isc.org/docs/cve-2025-8696
 
-Description
-~~~~~~~~~~~
-Guillaume Espanel, Pierre Libeau, Arnaud Morin and Damien Rannou
-(OVH) reported a vulnerability in VMDK image processing for Cinder,
-Glance and Nova. By supplying a specially created VMDK flat image
-which references a specific backing file path, an authenticated user
-may convince systems to return a copy of that file's contents from
-the server resulting in unauthorized access to potentially sensitive
-data. All Cinder deployments are affected; only Glance deployments
-with image conversion enabled are affected; all Nova deployments are
-affected.
+New version(s) of Stork are available at the following URL(s):
 
+Stable: https://downloads.isc.org/isc/stork/2.2.1/
 
-Patches
-~~~~~~~
-- https://review.opendev.org/871631 (Train(cinder))
-- https://review.opendev.org/871630 (Train(glance))
-- https://review.opendev.org/871629 (Ussuri(cinder))
-- https://review.opendev.org/871626 (Ussuri(glance))
-- https://review.opendev.org/871628 (Victoria(cinder))
-- https://review.opendev.org/871623 (Victoria(glance))
-- https://review.opendev.org/871627 (Wallaby(cinder))
-- https://review.opendev.org/871621 (Wallaby(glance))
-- https://review.opendev.org/871625 (Xena(cinder))
-- https://review.opendev.org/871619 (Xena(glance))
-- https://review.opendev.org/871622 (Xena(nova))
-- https://review.opendev.org/871620 (Yoga(cinder))
-- https://review.opendev.org/871617 (Yoga(glance))
-- https://review.opendev.org/871624 (Yoga(nova))
-- https://review.opendev.org/871618 (Zed(cinder))
-- https://review.opendev.org/871614 (Zed(glance))
-- https://review.opendev.org/871616 (Zed(nova))
-- https://review.opendev.org/871615 (2023.1/antelope(cinder))
-- https://review.opendev.org/871613 (2023.1/antelope(glance))
-- https://review.opendev.org/871612 (2023.1/antelope(nova))
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
 
+Please note that CVE-2025-8696 also affects the current Stork development version, 2.3.0. Anyone who has Stork 2.3.0 deployed is advised to employ mitigations until 2.3.1 is released, currently planned for October 6, 2025.
 
-Credits
-~~~~~~~
-- Guillaume Espanel from OVH (CVE-2022-47951)
-- Pierre Libeau from OVH (CVE-2022-47951)
-- Arnaud Morin from OVH (CVE-2022-47951)
-- Damien Rannou from OVH (CVE-2022-47951)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1996188
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2022-47951
-
-
-Notes
-~~~~~
-- The stable/wallaby, stable/victoria, stable/ussuri, and
-  stable/train branches are under extended maintenance and will
-  receive no new point releases, but patches for them are provided
-  as a courtesy where possible.
-
---=20
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
---tcfhvreqzy74jjfa
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmPQAnJfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCkKaBAAoZ/1MXtKKPoxKbud710naWI7qubPnibgjmt/wHzlZg3wo/4MXWESsFA/
-G/oFib9WxzkmGbbLyHzwObzrOoPsetBsLt3hKhHK26+osg0FA07LpZMByE7ME2h+
-75WEXLSTGuNizKA+XfnhSdIFTLgZq9o33aFP3ODZW6C+Bk9evbGHLAr0xVw3xRSR
-tyKYr/BOzD5y1XGWqjtK2eUvgxay5qIDsSm5K6JqQgUNDFBRjPL1P08K1+rgOYox
-oG9vIArcW1aDfYwV9WvAaFANA8VeYZCuEY9Vb8f5eS0TuFR34SCiTdKlHvF6qm0n
-l7aXP7SCI40cXA81gzs2HBtRx3oR6Qh/Z5QxOYfD97ihB50W+50/wxn8In9rjX2U
-S+QX07Z+Ds1PBBrI9OdhT6Wo7Y1hCNTdVTle4pJbA5SUvTf7wqsSdsYbP7Z5zARq
-R1PTFR1g1usbIu+TkilzunVQQ+pnawV0+y7Gg+0JW3wV1EIrJ8ddrM73pKCBaev8
-GrZ7B/IjdUKPSKH35GFvO03qsPu0+TiRMMQjFD2C2o6ci/ZELa5G8JE/dqHXwB2K
-WhZhY1Di2VhjcvUs7Z+8JFeD8omAXLaNqmkKy32N/oMs2pJrDq2lSIdwbjSgPN3E
-El4qEO7XJoLtxuIANMis6gYqx647TF9Kxp2di9EpLGfzWNhJpBU=
-=mRDN
------END PGP SIGNATURE-----
-
---tcfhvreqzy74jjfa--
+-- 
+Ben Scott 
+Support Engineer
+Internet Systems Consortium
