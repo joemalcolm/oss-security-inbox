@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1005" "Friday" "8" "November" "2019" "10:03:44" "+0200" "Georgi Guninski" "gguninski@gmail.com" "<CAGUWgD9si-9cayWBzt+AUi8iyb0hY=8fExf6-mLDr-C+mcqiyg@mail.gmail.com>" "43" "[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|" "^Date:" nil nil "11" "2019110808:03:44" "[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|" (number mark "        gguninski@gm Nov  8   43/1005  " thread-indent "\"[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19826 invoked by uid 550); 8 Nov 2019 08:48:10 -0000
+Received: (qmail 5892 invoked by uid 550); 11 Sep 2025 15:30:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7592 invoked from network); 8 Nov 2019 08:04:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=FqvsErNWJ4ntBj1wLojzdXmRZhRiB44Bdh2USJmFb90=;
-        b=HNBD7KFCI1GJAuv9Wjvk4aRWDC+2txQ7ImopbpRgm4FcuxvpUqmcvXJzZ6C1b+Ru/V
-         FDmeGYzdjgDisTa6+myPBOAOea0Au7Ie6wEcX98XsanCBJ7yAvGjPoZJmpuq3Lq/03O8
-         knhDc7sOJKnSPM2CdybF/NUhje2mEGm1e1hhUhbX5nAMdTJ+iA67i2F8zp4ohELDAwGW
-         7Rm3XJoXvG91yPELVSBV2qjIJSNsYiipdkiQsi3W7T5LzffJIuFizo+OBYejTS00Ua+S
-         f1Xu4U03G0h5qP8DCKeNC60rEMvedjs9o1H/K45HYym3AfoJoFL3IGRN/we73QJJ5mdV
-         29rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=FqvsErNWJ4ntBj1wLojzdXmRZhRiB44Bdh2USJmFb90=;
-        b=HPD3pWV44ZruyvnDsWs2MjW3ev5U8woXNu2ms8bgIechKjzd8vPDPFTBfyYudHMP61
-         bNlKjoMYYjIozi+KkqWR6nmyOK53n5OrPnnMZi83RzqzT//1NJLqyGg7J029/8yNRWZV
-         U06bOEshbFlevnZFqV8yMi6Cg71KfUQYNEzb/5EkloDyZe7SyWplKdpppy4nWSCScccW
-         vgBPqcZkHKyYVUeXj/TzM8JJr0EK7XBfx/fepgcj8/RhjPBdZsWC/55BkUrqlWiz0Wu1
-         g09nyN5KteFrgFkAw8R5disQeAoL48P77gxUaoRlZTy+sBFm1RmFXm80Vdr4Ci15GshA
-         x2TA==
-X-Gm-Message-State: APjAAAVkm2/Ji7mLfMcKnL7goTqcnGwq4Vkh7Ou+XASrQBe9FHKao0na
-	Xg5btTuc8zHKCRFJAtwZ4WhIBBjsFcoF3gghNzCP4U4w1vY=
-X-Google-Smtp-Source: APXvYqy2rzwGou56RmS2wJ5tU9uZpN6N+7MD4qFupzoZbuavGk4SUIjV6saciZ+DBOB+V8MXnSTgDX3duksyG8qBUbY=
-X-Received: by 2002:a6b:ce0b:: with SMTP id p11mr8939353iob.72.1573200236438;
- Fri, 08 Nov 2019 00:03:56 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAGUWgD9si-9cayWBzt+AUi8iyb0hY=8fExf6-mLDr-C+mcqiyg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Fri, 8 Nov 2019 10:03:44 +0200
-From: Georgi Guninski <gguninski@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+x-ms-reactions: disallow
+Received: (qmail 26063 invoked from network); 11 Sep 2025 13:05:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1757595935;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=t/wpM5h9diNKGWFSouR0xWMPeMeYmdKu5HtbCjy2XyQ=;
+	b=a1Z8Yj7kyHIuwYbgH7GZENjabzvxUQqo6WQv1+g2VTP2tZ5OBptoJkIue7/WRz9R+8O6SA
+	yvqSKfmlBRTsbe+jhcR3NY9yUhuXNPrRt1zwvKI4tunsDIjcSjQHL08fd5OxFJxHZYozKf
+	XZJzGtWUSF6TT3Q++xqx/dKSJ7qDZs0=
+X-MC-Unique: iD3g0_WaPoytdvLr5cAaig-1
+X-Mimecast-MFC-AGG-ID: iD3g0_WaPoytdvLr5cAaig_1757595933
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757595932; x=1758200732;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=t/wpM5h9diNKGWFSouR0xWMPeMeYmdKu5HtbCjy2XyQ=;
+        b=RZpoN8MG/U/Wk4tF7t6+FapH2SS1t0oc6yG3U+EbvlwUXmtiz2p6Y0wl4GUI7e4/k+
+         BckzHrj4wbqpmOs13XQxSA+gT9FrsZ1jcw/P9ZrTapTXL4e6Jzjgz7rrYnm6J9ANUcda
+         MP6qssDs90zTiu8zGXjnRJRwMQ5/ftd8i2cyx8QxUy1HcL/9V56+svVeHNGwg0mX1+DB
+         wep14vrbcTwYCM5YNBLIfawYK1V0HVO2P+HRMsEoV+zslBWletHeTysfKe+2uaG1s4aJ
+         V3e5dHruNNj/VMjOrrhOvB1219rNPRpGP0LAp3uv3nohKyc5a4rzs1Qv7othAX8n2Y51
+         dgLQ==
+X-Gm-Message-State: AOJu0Yx8zZ7DNtk1/+FTMuVYGJhDwDbB6yL0HsfwRiK0uNLtPukVzlv6
+	h2afKluXIyTZBZh9Wu36GBcoOE5bJmbBeEW2AOlVJcuXo5ct4bt/yg4302xbgiXt5jW0KF9qiAu
+	zqeN34WHqhpZtcISC6F/go5dBZhykUBVmlfGxJXDLhWcLZQtsVHfgwfXGejGIyiVDJr9B5j1Hqp
+	cGVTN6stvRdM+2hp7TSTyfSHaI5Tzy3q0yruyxntGqcKynrrlz8nHz
+X-Gm-Gg: ASbGncua4dc1iuPu/Ix1ObF6d/L6vHQmWi9S7Prd3F2eo4Se2p9uVRpRDI1od9gsy8o
+	FejDVzZkMc9AJ0B8IX1UQAi9luYjmw9mmRiPYVgjAIourLO6FgtsoTulWUVscC6yIhK/4mff/Aw
+	QfIwNNSbJPgviLfPjBwQWTU5oSRM8am1K3BelIaO/KzIrxfCFhX4MLcgKKKK8rwIOkwqTD2QJDC
+	HkpdmM1b8q++l4BwWCVKqnvXiFnDXScuI2R2eXI6WE7n+XKGDbPTyYj4nh8b2rZwyN0hlq63Q4+
+	6q3tNh1lANWoP1GEsKBOEYt06NgFNmdOz2PThA==
+X-Received: by 2002:a5d:64c3:0:b0:3ce:f9b7:4db with SMTP id ffacd0b85a97d-3e642f92844mr14124375f8f.24.1757595932056;
+        Thu, 11 Sep 2025 06:05:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDiqcjAjLGjy1rXQ3W76jdpt+47QWALOLDxz51NsVKSc/V5lcu71hp/EzRgPAFnaycZwVMhQ==
+X-Received: by 2002:a5d:64c3:0:b0:3ce:f9b7:4db with SMTP id ffacd0b85a97d-3e642f92844mr14124339f8f.24.1757595931452;
+        Thu, 11 Sep 2025 06:05:31 -0700 (PDT)
+Message-ID: <84d27667-812b-4cde-8d26-132296ae25cf@redhat.com>
+Date: Thu, 11 Sep 2025 15:05:30 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+From: Zdenek Dohnal <zdohnal@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: bGlDGYVRQGrej6E4A60bZKhR0_NKeu_WmppiIVj1138_1757595933
+X-Mimecast-Originator: redhat.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2025-58060 cups: Authentication bypass with AuthType Negotiate
 
-Controversy and exploitability of gcc issue 30475 |assert(int+100 > int)|
+Hi all,
 
-There is heated discussion on gcc's bugzilla starting from 2007:
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=30475
-and clang is also affected, depending on optimization flags.
-
-poc is the program at end.
-
-gcc with all optimization flags optimizes away |assert(a+100 > a)|
-even if there is no integer overflow, only signed overflow.
-
-clang fires the assertion with -O0, but also optimizes it away
-with -O3
-
-The formal verifier CBMC fires the assertion, which might of
-interest about formally verified programs.
-
-Signed integer arithmetic is commonly used even without integer
-overflows.
-
-Could this compiler issue be security problem?
-
-Any workarounds?
-
-===poc===
-#include <assert.h>
-
-int foo(int a) {
-  assert(a+100 > a);
-  printf("%d %d\n",a+100,a);
-  return a;
-}
-
-int main() {
-  foo(100);
-  foo(0x7fffffff);
-}
-=========
+there is important security vulnerability in CUPS:
 
 
-CV:    https://j.ludost.net/resumegg.pdf
-site:  http://www.guninski.com
-blog:  https://j.ludost.net/blog
+    Description
+
+
+      Summary
+
+When the |AuthType| is set to anything but |Basic|, if the request 
+contains an |Authorization: Basic ...| header, the password is not checked.
+
+
+      Details
+
+When the |Authorization| header is set to |Basic|, but in 
+|scheduler/auth.c| |cupsdAuthorize| |type| is not |CUPSD_AUTH_BASIC|, 
+the step with checking the password is skipped.
+
+
+      PoC
+
+- Configure CUPS with |DefaultAuthType Negotiate|.
+- Start CUPS
+- curl -v -X PUT -d 'haha' -H "Authorization: Basic $(echo -n root:x | 
+base64)" http://127.0.0.1:631/admin/conf/cupsd.conf
+- cat /etc/cups/cupsd.conf
+haha
+
+
+      Impact
+
+Authentication bypass. Any configuration that allows an |AuthType| that 
+is not |Basic| is affected.
+
+Versions lower than 2.4.3 are affected in less serious way - if attacker 
+provides valid credentials for Basic authentication  and cupsd requires 
+Kerberos authentication on resource (and vice versa), the attack is 
+still possible because cupsd ignores its own authentication settings if 
+the creds are valid. In those cases, the prerequisite for the attack is 
+the attacker would obtain allowed user credentials/Kerberos ticket, 
+which is more difficult.
+
+Patch
+https://github.com/OpenPrinting/cups/commit/595d691075b1d39
+
+
+
+Have a nice day,
+
+
+Zdenek Dohnal
+
+-- 
+Zdenek Dohnal
+Senior Software Engineer
+Red Hat, BRQ-TPBC
+
