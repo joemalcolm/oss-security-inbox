@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1974" "Thursday" "7" "January" "2016" "11:05:02" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160107160502.5193472E077@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: CVE id request: dhcpcd" nil nil nil "1" "2016010716:05:02" "[oss-security] Re: CVE id request: dhcpcd" (number mark "U       cve-assign@m Jan  7   50/1974  " thread-indent "\"[oss-security] Re: CVE id request: dhcpcd\"\n") "<20160107111037.GO8020@coredump>" ("<20160107111037.GO8020@coredump>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32486 invoked by uid 550); 7 Jan 2016 16:05:19 -0000
+Received: (qmail 32471 invoked by uid 550); 15 Sep 2025 14:19:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32426 invoked from network); 7 Jan 2016 16:05:14 -0000
-From: cve-assign@mitre.org
-To: oss-security+ml@ngolde.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160107111037.GO8020@coredump>
-Message-Id: <20160107160502.5193472E077@smtpvbsrv1.mitre.org>
-Date: Thu,  7 Jan 2016 11:05:02 -0500 (EST)
-Subject: [oss-security] Re: CVE id request: dhcpcd
+x-ms-reactions: disallow
+Received: (qmail 29830 invoked from network); 15 Sep 2025 02:27:11 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Chaokun Yang <chaokunyang@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <e491456b-3b97-6165-3ce6-fee5f76df4aa@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 15 Sep 2025 02:26:59 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-59328: Apache Fory: Denial of Service (DoS) due to
+ Deserialization of Untrusted malicious large Data 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate=20
 
-> http://roy.marples.name/projects/dhcpcd/info/76a1609352263bd9def1300d7ba990679571fa30
+Affected versions:
 
-> dhcp_optlen now returns the length of the data we can sanely work on
-> given the option definition and data length. Call dhcp_optlen in
-> dhcp_envoption1 to take into ensure these bounds are not overstepped.
-> Fixes an issue reported by Nico Golde where extra undersized data was
-> present in the option. An example of this would be an array of
-> uint16's with a trailing byte.
+- Apache Fory (org.apache.fory:fory-core) 0.5.0 before 0.12.1
 
->> can lead to a heap overflow via malformed dhcp responses later in
->> print_option (via dhcp_envoption1) due to incorrect option length
->> values
+Description:
 
-Use CVE-2016-1503.
+A vulnerability in Apache Fory allows a remote attacker to cause a Denial o=
+f Service (DoS). The issue stems from the insecure deserialization of untru=
+sted data. An attacker can supply a large, specially crafted data payload=
+=C2=A0that, when processed, consumes an excessive amount of CPU resources d=
+uring the deserialization process. This leads to CPU exhaustion, rendering =
+the application or system using the Apache Fory library unresponsive and un=
+available to legitimate users.
 
+Users of Apache Fory are strongly advised to upgrade to version 0.12.2 or l=
+ater=C2=A0to mitigate this vulnerability. Developers of libraries and appli=
+cations that depend on Apache Fory should update their dependency requireme=
+nts to Apache Fory 0.12.2 or later=C2=A0and release new versions of their s=
+oftware.
 
-> http://roy.marples.name/projects/dhcpcd/info/595883e2a431f65d8fabf33059aa4689cca17403
+Credit:
 
-> Ensure that option length fits inside data length less option size.
-> Thanks to Nico Golde for the report.
+r00t4dm of meituan security (reporter)
 
->> can lead to an invalid read/crash via malformed dhcp responses
+References:
 
-Use CVE-2016-1504.
+https://fory.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2025-59328
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWjovzAAoJEL54rhJi8gl5qPoP/09Wz1OS85Nf+AvNIW+/8W2p
-K/P2rZtH5LFO5Q372bnGNqwJZchiWn2GF/luo5WNv9tD8YnGOc4FpG/q3Ib7OimO
-3ZlREA6SmpCis0Xm/coLp8OeKyKJyBnLzPY2F0f3fzNvxMm7+bLT+qNcl/gxUv3K
-uPbRsSJlm7pJGX/mDIhEzlsgbVFJAxEa6/DMPnPMQYt6nRE84h7E5+baha7kTss2
-FCSI0fvDM6pM0424hF2tJ7KxVjatpr89gs8GM/esJ/7O84dSxbfuHIuhRnO3Cdz2
-GZshNjPg1mVg5PVZ8KlgKHR7K16cGjCBg6MVvZ4PO1R+gCJeWTEUuwIZstNYNLr5
-86ikcvgmLIA6gBv4urTq5f4qk9cMd9bT9HoTuGEvcNjQUkXxH3r2b2m6Z5iFTBHA
-Yz3V2+qC667Dz2Cc6u7XRbdytFDHBdRVdN75kL4e49i3T1h2e1hL6OUywh9mcTVW
-WRBFUMfjb/6ygG1e8uAt11dvu0hPKFLjhra3kupnkvsPSoS7Q+cFIpZp8wxI178n
-yyjRJtXJg1SwQgxAvjz/mxdDVaNYy+/l9DROO/PtJkvLapnXBSGr6X7ETRbbt3bp
-wIiDA3XsCx89wdg04BroekQQj2LuTqal0ka7deq2zlESe8Lp318ZvddHydNvhLBP
-v+u2ckznzWdtquNvh3Fe
-=4+1K
------END PGP SIGNATURE-----
