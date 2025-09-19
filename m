@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4592" "Tuesday" "23" "August" "2016" "06:48:55" "-0400" "Greg KH" "greg@kroah.com" "<20160823104855.GA10508@kroah.com>" "105" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" "^Cc:" nil nil "8" "2016082310:48:55" "[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices" (number mark "        greg@kroah.c Aug 23  105/4592  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in malicious USB devices\"\n") "<20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>" ("<20160822205542.GB12931@kroah.com>" "<20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23800 invoked by uid 550); 23 Aug 2016 10:48:59 -0000
+Received: (qmail 5185 invoked by uid 550); 19 Sep 2025 15:54:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,133 +6,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23779 invoked from network); 23 Aug 2016 10:48:58 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=otN7uMtC3eT9YUA82i+ZXZu0+lE=; b=VjIjy
-	AzoKY0CDYtSoVO6DhAFxMnA3m6DCgkmr10WgcWo+zYovxWZdppSSB5Hy6ipVDM8C
-	wWbSP+Rz+RFkuEj3sWxvxs+Tb7qTJD/v8oHbiLEqc8s5hhCzVR4cWJ3Pc/XceKv1
-	JtVXthMkmfeO270WGEmIjLGzZcHp6/OZ6Fay9c=
-X-Sasl-enc: 02UsoYbLDtIMAHUuRCDmno881u060HURqhYIPku9+rId 1471949326
-Message-ID: <20160823104855.GA10508@kroah.com>
-References: <20160822205542.GB12931@kroah.com>
- <20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20160822225753.7B160B2E005@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.7.0 (2016-08-17)
-Cc: oss-security@lists.openwall.com, meissner@suse.de
-Date: Tue, 23 Aug 2016 06:48:55 -0400
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: Linux kernel crash of OHCI when plugging in
- malicious USB devices
-To: cve-assign@mitre.org
+x-ms-reactions: disallow
+Received: (qmail 3850 invoked from network); 19 Sep 2025 05:46:45 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Chen Xia <casion@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ce7fbc40-401a-cb12-bad4-aa107e340bc4@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 19 Sep 2025 05:46:31 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-29847: Apache Linkis: Arbitrary File Read via Double URL
+ Encoding Bypass 
 
-On Mon, Aug 22, 2016 at 06:57:53PM -0400, cve-assign@mitre.org wrote:
-> > What "tool" was assigned this CVE for other operating systems
-> > that do the same thing (all BSDs, OS-X, Windows, etc.)?
-> 
-> We didn't find any information about a tool name and thus simply
-> listed the OS itself (CVE-2011-0638, CVE-2011-0639).
-> 
-> 
-> >>   - the Linux kernel does not require a configuration in which a newly
-> >>     connected USB device is recognized in any way
-> 
-> > I don't understand this statement, can you clarify?
-> 
-> To clarify: the ability of an attacker to connect a USB device and
-> trigger potentially unsafe device communication (e.g., injecting text
-> into an application) does not mean that the Linux kernel is missing an
-> access-control feature.
+Severity: moderate=20
 
-Ok, but then why is this somehow CVE related if a Linux system can "not
-handle" such a device?
+Affected versions:
 
-> >>    - a Linux distribution may ship with a default configuration in
-> >>      which a newly connected USB device can operate as a keyboard and
-> >>      inject text into an application
-> 
-> > Yes, but I don't understand, perhaps what you really mean to say is:
-> >        A Linux distribution may ship with a default configuration of
-> >        trusting all new devices that are plugged in without any form of
-> >        userspace authentication before they begin to operate.
-> 
-> Agreed. If it is trusting all new devices in this way, it would also
-> be trusting all new devices that wish to operate as keyboards.
+- Apache Linkis 1.3.0 through 1.7.0
 
-So can you agree that the USB specification requires the OS to trust all
-new devices (it only requires "authorized" functionality for wireless
-USB devices.)  So if an operating system were to not trust new USB
-devices, it could then probably not be USB compliant.
+Description:
 
-Are you going to start filing CVEs against hardware specifications?
-(personally, I would love that...)
+A vulnerability in Apache Linkis.
 
-> >>     there is no comprehensive method
-> >>     for "asking a user" about a new USB device in a way that is
-> >>     compatible with all use cases
-> 
-> > Huh?
-> 
-> A Linux distribution cannot expect that there is a logged-in user who
-> can provide sane answers to questions about each new USB device at the
-> instant that that device is connected.
+Problem Description
+When using the JDBC engine and da
+When using the JDBC engine and data source functionality, if the URL parame=
+ter configured on the frontend has undergone multiple rounds of URL encodin=
+g, it may bypass the system's checks. This bypass can trigger a vulnerabili=
+ty that allows unauthorized access to system files via JDBC parameters.
 
-No multi-user operating system can.
+Scope of Impact
 
-> For example, there isn't a comprehensive solution of the form "a
-> distribution must ensure that an application pops up a dialog asking
-> about each new device."
 
-I agree.  So how could this ever be something that an operating system
-could implement?
+This issue affects Apache Linkis: from 1.3.0 through 1.7.0.
 
-> >>   - if anyone (whether a Linux distribution or other type of product)
-> >>     is announcing a required security update, in which software or
-> >>     configuration is being changed to address malicious keyboard
-> >>     attacks, then we can assign a CVE ID to associate with the update
-> >>     announcement
-> 
-> > Why would a CVE be needed for a "my distro decides to not trust USB
-> > devices as much as your distro does" type decision?
-> 
-> To improve the usability of CVE for patch management, we allow a CVE
-> mapping for an issue where the author of the code has announced a
-> required security patch, even if the issue is not universally
-> recognized as an exploitable vulnerability.
+Severity level
 
-Ok, but you are not doing this for where the "author of the code" is
-saying this.  If so, you need to go delete a bunch of Linux CVEs, as I
-sure as heck didn't want them created for my code :)
 
-Are you really saying that you need authorship permission here in order
-to create a CVE?  That seems new to me...
+moderate
+Solution
+Continuously check if the connection information contains the "%" character=
+; if it does, perform URL decoding.
 
-> This can be helpful in situations where a vendor has direct knowledge
-> of advertised use cases or customer expectations. For example, if
-> there's a Linux distro designed specifically for connecting
-> compromised mobile phones over USB and initiating forensic analysis,
-> then it's perhaps reasonable to say that unrestricted acceptance of
-> new USB keyboards is a CVE-worthy vulnerability for that one distro.
+Users are recommended to upgrade to version 1.8.0, which fixes the issue.
 
-But given that we know of no such distro, why are you all creating new
-CVEs for these types of things?
+Credit:
 
-And, like Willy keeps pointing out, it's easy to break the hardware with
-USB with a bad devices.  I accidentally purchased such a thing in Japan
-a few months ago, and now am no longer able to use one of the USB ports
-in my laptop as the "magic smoke" escaped from it when the device was
-plugged in.  If we could get a CVE issued for that hardware design
-fault, that would be great :)
+Le1a and A1kaid from Threatbook (finder)
+kinghao (analyst)
+Le1a from Threatbook (remediation developer)
+kinghao (remediation reviewer)
 
-In summary, yes, this is a mess where the physical world hits the
-software world, and unless you all draw a _very_ clear line, this is
-only going to get worse and worse.
+References:
 
-good luck!
+https://linkis.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2025-29847
 
-greg k-h
