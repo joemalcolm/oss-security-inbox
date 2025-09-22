@@ -1,4 +1,4 @@
-Received: (qmail 26024 invoked by uid 550); 29 Dec 2025 17:05:15 -0000
+Received: (qmail 7224 invoked by uid 550); 22 Sep 2025 23:01:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,39 +8,85 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 30078 invoked from network); 29 Dec 2025 05:21:27 -0000
-References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com> <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
+Received: (qmail 10115 invoked from network); 22 Sep 2025 22:55:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=6ej4uOxj73HNdxwy73B6MBEklnGlRZYJArdDrXD0AsU=; b=JGjqQGsVIGr5M4ylOrvubmNJ1g
+	5J6g6R57bYGnlGHoPgnMf2V0OT+SJU1d7Zs54zFDev7tncH4h6te2Y+JTvvCj6OMT4n6Jjv3hARcX
+	KJ+Q3PAP9v6jxF/lkxyDEuSTUR8BiamGXwNURARoMtEbkvrCnbIXeie4xH3ax1+vDCIoiD3gmTODd
+	iHhlhEcQCJ7y6UngU2CuvuSTL7Y9VCbre4bIDQAKGUT/oVwojxJgB0Zdg2sRIC331jN/9h88yyJuG
+	3YrnZvimYwW/vx3T5Xb4459XIyiEJuXlo93hOgM5N995WUWpvXXLvRGcMchnkKElkrwtIbtP08sV0
+	6i+AGArA==;
+Date: Tue, 23 Sep 2025 01:54:57 +0300
+Message-ID: <20250923015457.GD155456@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Message-ID: <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
-Date: Mon, 29 Dec 2025 00:21:16 -0500
-From: kf503bla@duck.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=duck.com; h=From:
- Date: Message-ID: To: Content-Transfer-Encoding: Content-Type:
- MIME-Version: References: Subject; q=dns/txt; s=postal-KpyQVw;
- t=1766985677; bh=uf7muC30NG3PObLvbxCs95WRzNKch7TrgPhbQAm3IxM=;
- b=GRlTPY8gtdzLwICjg9rpFyX5w5ISm0Pg81a6d4fOjNUqTzA2iXdn1qPgUOUOaWviPXrCIVzUS
- 7r8N6p8eEorKYahESir45hfngWZ1D1HIlxXykVi37Bx0+vkHkKZhfRbyUaEJzFoyUJV4AktsF8q
- eeP1v+a+dZMp2ld3D/cNUoc=
-Subject: [oss-security] Re: Best practices for signature verifcation
+Content-Type: multipart/signed; boundary="nYcfC2MTG33IU/dB"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0006
 
-then what do you suggest to use? i hear it all the time "pgp sucks" but wha=
-t's the alternative huh?
+--nYcfC2MTG33IU/dB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
->=20
-> In light of the recent GnuPG vulnerabilities, I remembered that OpenPGP
-> is almost never the right choice. CMS/PKCS#7 isn't any better, and
-> X.509 is also bad except that its extremely wide deployment in TLS
-> keeps it alive.
->=20
-> See https://www.latacora/com/blog/2019/07/16/the-pgp-problem/
->=20
-> and https://soatok.blog/2024/11/15/what-to-use-instead-of-pgp/.
->=20
-> --
-> Sincerely,
-> Demi Marie Obenour (she/her/hers)
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwNgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogU2VwdGVtYmVyIDIzLCAyMDI1CkFkdmlzb3J5IElEICAgICAgICAg
+ICAgIDogV1NBLTIwMjUtMDAwNgpXZWJLaXRHVEsgQWR2aXNvcnkgVVJMICA6IGh0dHBzOi8vd2Vi
+a2l0Z3RrLm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDA2Lmh0bWwKV1BFIFdlYktpdCBBZHZpc29y
+eSBVUkwgOiBodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwNi5odG1s
+CkNWRSBpZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMjUtNDMyNzIsIENWRS0yMDI1LTQzMzQy
+LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQzMzU2LCBDVkUtMjAyNS00MzM2
+OC4KClNldmVyYWwgdnVsbmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsg
+YW5kIFdQRSBXZWJLaXQuCgpDVkUtMjAyNS00MzI3MgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdl
+YktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC43LgogICAgQ3JlZGl0IHRvIEJpZyBC
+ZWFyLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRl
+bnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgU2FmYXJpIGNyYXNoLiBEZXNjcmlwdGlv
+bjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRs
+aW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTQ1NTAKCkNWRS0yMDI1LTQzMzQyCiAgICBWZXJz
+aW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ4LjcuCiAg
+ICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIuCiAgICBJbXBhY3Q6IFByb2Nlc3Np
+bmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5l
+eHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogQSBjb3JyZWN0bmVzcyBpc3N1ZSB3
+YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIGNoZWNrcy4KICAgIFdlYktpdCBCdWd6aWxs
+YTogMjk2MDQyCgpDVkUtMjAyNS00MzM1NgogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdU
+SyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC43LgogICAgQ3JlZGl0IHRvIEpheWRldiBBaGly
+ZS4KICAgIEltcGFjdDogQSB3ZWJzaXRlIG1heSBiZSBhYmxlIHRvIGFjY2VzcyBzZW5zb3IgaW5m
+b3JtYXRpb24gd2l0aG91dAogICAgdXNlciBjb25zZW50LiBEZXNjcmlwdGlvbjogVGhlIGlzc3Vl
+IHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZAogICAgaGFuZGxpbmcgb2YgY2FjaGVzLgogICAg
+V2ViS2l0IEJ1Z3ppbGxhOiAyOTYxNTMKCkNWRS0yMDI1LTQzMzY4CiAgICBWZXJzaW9ucyBhZmZl
+Y3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjQ4LjcuCiAgICBDcmVkaXQg
+dG8gUGF3ZWwgV3lsZWNpYWwgb2YgUkVEVEVBTS5QTCB3b3JraW5nIHdpdGggVHJlbmQgTWljcm8g
+WmVybyBEYXkKICAgIEluaXRpYXRpdmUuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3Vz
+bHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBTYWZh
+cmkgY3Jhc2guIERlc2NyaXB0aW9uOiBBIHVzZS1hZnRlci1mcmVlIGlzc3VlIHdhcwogICAgYWRk
+cmVzc2VkIHdpdGggaW1wcm92ZWQgbWVtb3J5IG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemls
+bGE6IDI5NjI3NgoKV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIHRoZSBsYXRlc3Qgc3RhYmxlIHZl
+cnNpb25zIG9mIFdlYktpdEdUSyBhbmQgV1BFCldlYktpdC4gSXQgaXMgdGhlIGJlc3Qgd2F5IHRv
+IGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVubmluZyBzYWZlIHZlcnNpb25zCm9mIFdlYktpdC4gUGxl
+YXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBmb3IgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGxhdGVzdApz
+dGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVyIGluZm9ybWF0aW9uIGFib3V0IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBzZWN1cml0eSBhZHZpc29yaWVzCmNhbiBiZSBmb3VuZCBhdDogaHR0cHM6Ly93
+ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0bWwgb3IKaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3Vy
+aXR5LgoKVGhlIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCB0ZWFtLAo=
 
+--nYcfC2MTG33IU/dB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaNHTwgAKCRCRxVnb5MkS
+O6m3AJ42NWJjrNgOLX9tG+rZzQrl1lKjagCfdvw+hN7ob5GbtngRWfShU4UFdxA=
+=lMma
+-----END PGP SIGNATURE-----
+
+--nYcfC2MTG33IU/dB--
