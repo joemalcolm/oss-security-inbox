@@ -1,4 +1,4 @@
-Received: (qmail 6016 invoked by uid 550); 16 Aug 2024 13:57:05 -0000
+Received: (qmail 5356 invoked by uid 550); 23 Sep 2025 15:28:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +7,145 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23962 invoked from network); 16 Aug 2024 04:04:07 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723781036; x=1724385836; darn=lists.openwall.com;
-        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
-         :mime-version:user-agent:reply-to:from:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4b8BsDuS38R/ELS6/MpuQUiTcpSiHpfWzSmTayZnXuA=;
-        b=QlA1AyXzIb7WMsH6+6s70HU/2zRCWQEfMVN0VWTWZymWfagSAIHXwaBwUjU1RPHckz
-         9tVmpUHfj3joJxVQ2hZyXCbo1PEfm9YySln+jJC83BqOD87Z5GIY3U7qY/kEBo98UxOA
-         6EJ7tn1J85dkhZNgl/wIQr51qFjNct38rwAB0BxNM3ZseyNZnjPdh6bm2BTNfXvvBkko
-         NNYous0HT5kMzSdUBWbveU+hamjG1pMFKNDuhx5Ny2Mk8h+Amf6vXpSzUAleVmYJrPHF
-         orZYF9KB/mBcCwG87roW/QhRaziBJh1X1wP3YbS3SWZXMqwmGvqVr3ope65RNn3gmumE
-         EaeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723781036; x=1724385836;
-        h=content-transfer-encoding:in-reply-to:references:subject:cc:to
-         :mime-version:user-agent:reply-to:from:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4b8BsDuS38R/ELS6/MpuQUiTcpSiHpfWzSmTayZnXuA=;
-        b=fEEaIBLp0VeDoOnmPxjdnVkdtnClqE7c4figj+e0iUQJmXAaUHPvwAvwRblmnb0S5d
-         SkgTiuJ0hOwuLaEXnxR/vFJOpXopIKhF+p1sUpUGO5xc1hF4THjI0qu+z5UgyVZUpTDl
-         ue/GcZSD+XVkBWjZFEVzygD3QGldguUTOHr8fxTEEaazNP6gi4Uw8JxStGVN5druOaaI
-         PQzzwRsGpTAnT74fVGMz24qBUFpoWvTvJyLZf1LwpahLVVar9i0sZwJEhPpG1XVaazvY
-         EEXhZv36M5vxAQGsBuQVDC0yIbgPCUAlp7MneEXW3paCyQhebqOgCvbDxanB9e4dJS4F
-         aFmw==
-X-Gm-Message-State: AOJu0Yw+X2KnMXn3iP0SvFFPBVNFK9MDDXpKJRs5DtSdeZz69+GiASk3
-	jC8u5a2ztAT8ZF6JpqTlzgsmfDpUYUF7Xo1jwuq8jel3iM7QiTzrVbM9aw==
-X-Google-Smtp-Source: AGHT+IGKNawUW5PYrjq/uUZXTfT1bXbYFjPywJtfQhBMTsmEA4M+MJZX/Qr9qg0QSbCpGsu8L9YWBQ==
-X-Received: by 2002:a05:6820:168a:b0:5c6:9320:53a3 with SMTP id 006d021491bc7-5da9800e818mr2217531eaf.4.1723781036183;
-        Thu, 15 Aug 2024 21:03:56 -0700 (PDT)
-Message-ID: <66BECFA9.9080708@gmail.com>
-Date: Thu, 15 Aug 2024 23:03:53 -0500
-From: Jacob Bachmeyer <jcb62281@gmail.com>
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.8.1.22) Gecko/20090807 SeaMonkey/1.1.17 Mnenhy/0.7.6.0
+x-ms-reactions: disallow
+Received: (qmail 18199 invoked from network); 23 Sep 2025 12:37:00 -0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eZwiF9eA5e84T8eGMaMmcxe2p0q7Uu86BcWJF0WCnGePow4MirgwA+Jq7jsMXGCVf+R41WtvOZbmiM6sxbAJvntVMj6Ts085mvdVyx07hp0G9Ce542+IIYTUM+LACdG74A/8YsFqNAF2GAUsLrzUtVqswhg/wX/JyejGMAIb1kzom5qoaR3ZBQOylfOb1DS4algZAEDRpnr0AVhaBi1HipC5JdmNowQqVxUGzpzzLSydvfhWztT+bgfWMKSw0siDq+5qJeRyQ/GVhjNuEZeot6aWcIgMBk8q+AyRZN87SFWSyFD7rlVAggehYfrZn5n0LponlDBPOFRd8Hn/iU816Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KX+Q2XHaHScPYjpq1oTjKhnOtZ1bzqM9GRBgL59DuUQ=;
+ b=FWxIPCN1Ba3fX1uBOt94TWKIre/25MC/5q61/hUww2xCfQ/gIkUXQq6kMWQWJX4KPt/0EnBftNYgopJu3t5Sm4YhfdMwLiQQJMy+wd8U9TX1PcD3TmKiWxD0bvD/u8S02E4gwFOaINYBsIEILMptnaEhTtFdHQ8A36YAkG4TOmjvAI4oyQVR1eqRGHp0l9G7T6sK12UJoGLdjJdt7dAAylGVh7IzK9eaFlNw21ZUoAfcjvXuxcv7KfctLCORxgY9FJWDrlUYXrLf9WZpALGXjDBDZkyqqNZdSQQkjOoQHVCBdUFuWrVLWErp+YzPlsqcNCFYVAe55zgta3ZFm3EcdA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cs.auckland.ac.nz; dmarc=pass action=none
+ header.from=cs.auckland.ac.nz; dkim=pass header.d=cs.auckland.ac.nz; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.auckland.ac.nz;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KX+Q2XHaHScPYjpq1oTjKhnOtZ1bzqM9GRBgL59DuUQ=;
+ b=BiMd+opxrtzLcBRMl2losLo+D1/EhYNVL3nJ1yBmPtqPd5AG71DS8+VL5rr9q2upYj4uGYOjBXt/zGfEOtJ7FGv6tzSp2gEr/lB65DUdOc5Ziylnz4B5rUXg4og3NWu1aPsE8kw5qnJRKYAvw2wc57NOeZbYDn5Rps8CydsLgcIW+bJpScqhqUoaKaeWK0bmZGlZ/kOs8WlY8N7gXGgM+P27Faxvm4a0kN7cmxLOOJAgvPI2znwO1w6fW8WYOu+ntSlhdKC7LG58zwaqxlMRG1XwuAez1IPrPSoOtaFG+0ByxIaEmb6nIYW6nNHGxEXsEv9alPRlSDSIC5Q0tbvsaQ==
+From: Peter Gutmann <pgut001@cs.auckland.ac.nz>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: "openssh@openssh.com" <openssh@openssh.com>, "Tol, Caner" <mtol@wpi.edu>,
+	"Adiletta, Andrew" <ajadiletta@wpi.edu>, "Sunar, Berk" <sunar@wpi.edu>,
+	"Doroz, Yarkin" <ydoroz@wpi.edu>, "Todd C. Miller"
+	<Todd.Miller@courtesan.com>
+Thread-Topic: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
+Thread-Index: AQHcK9nVQvgc26eVTkSHWXCcKT6jp7SgGoaAgACayG8=
+Date: Tue, 23 Sep 2025 12:36:45 +0000
+Message-ID:
+ <SY8P300MB0711638E26D2EA3CE5E0ED7AEE1DA@SY8P300MB0711.AUSP300.PROD.OUTLOOK.COM>
+References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org>
+ <20250923032113.GA14348@openwall.com>
+In-Reply-To: <20250923032113.GA14348@openwall.com>
+Accept-Language: en-NZ, en-US
+Content-Language: en-NZ
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=cs.auckland.ac.nz;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SY8P300MB0711:EE_|SY9P300MB1564:EE_
+x-ms-office365-filtering-correlation-id: 69238980-c5ca-4634-165c-08ddfa9ddb86
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|1800799024|38070700021;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?JARYTiwZSTC3BZ+HRXhD/x881zXiR9nd5L5nP2e2HDa4ELJbMVeihZQGH6?=
+ =?iso-8859-1?Q?XIvNN38tIDAaeuuYQnZNI6Rscu0ZN3PXXbS562n6gmtVd5rdxcWv6Nc+PX?=
+ =?iso-8859-1?Q?Fbvur8cHeMfdab7dlhtwg/roP1uW1Gvvcj8FTApd+K7TnlU+/cyEw4zVf3?=
+ =?iso-8859-1?Q?bvrvT0CUkqWALTFE9ZzIWQax3aMsRfY+UCfpTNcfoB6Dt304LoipV2oJLK?=
+ =?iso-8859-1?Q?RpiUO0lDFTDYiAMJqqC7SionHn+u1idyWL6y/BxCD8Pu2Ox2HXH3iH4tX6?=
+ =?iso-8859-1?Q?KTc8VP1/ESUjbhjoVhpMmHahfGUdn2qmc/gVrDuwF1iPV5ntZacCbslilN?=
+ =?iso-8859-1?Q?ptFQgZAviS5AbYenw5qQmMVTJOJ7pFzo+jjLkqOcx1aaWujQ/h4upBIblQ?=
+ =?iso-8859-1?Q?7pEEheCUefARHIhjvKgeQf6eJLEp78vsDy0tHlrkU4FhM9vdMhxY3Eovng?=
+ =?iso-8859-1?Q?w853yuBigR4483QMLtm2r+nVajdElIFhpg6KDstug97rRGXxpXONnUkc2E?=
+ =?iso-8859-1?Q?+ohnrMBIPeP85wX9Ul6mT+4AvkJ4txbhtxhSsYFy/GSCwYvcjygCCLl8Rp?=
+ =?iso-8859-1?Q?jsxZkguNOMSpHVHUZaZotc1R8j1Tmf59NXsRGrrG/uB1Hp3ViU+zEeV2r5?=
+ =?iso-8859-1?Q?cjUz088j93uXEe//BOOqGlWWTC9/dH6Mgii69XMOVgNB3UdtI2+XQlgDQb?=
+ =?iso-8859-1?Q?6T9kf5e/LiQH5dsR+tuccoV/hvf8jdoL2A60Zzmsi2dX8aNTBca30f6RTc?=
+ =?iso-8859-1?Q?bQcQ3eUWD8yM42KhkybtvLYURya9RN6Gyr621Ybbcj04uIQKlx5tIU57th?=
+ =?iso-8859-1?Q?oWMMcXssEfxWrOEfeu+cyYiqcImADmRzZCHV0lue+IjEDtVgmxW+L8nACA?=
+ =?iso-8859-1?Q?h5EP074+kAsAeguvBk4SW/yHNJg3HoapjtdjvBJ6H1KWijqPby43sWm9n/?=
+ =?iso-8859-1?Q?+MVvX91ZE9+rrkcHSTLWJvhWZ4e7GSS4VYtRYzMOrIWyhFfcFi6aYOMZlE?=
+ =?iso-8859-1?Q?ZO4i1RJBLvLBS0QXz+QFlKpFmZBmLEKev4gNvpwNfD3Bg+FzS4lol9P/jw?=
+ =?iso-8859-1?Q?gFV4UdBflJErQ9ydXY2C88kOhD1g1/jE1nEPiCQrWF53QT9GJ+oBhcSn2D?=
+ =?iso-8859-1?Q?vcGwIK1VHhu8UjEQIrxMfPrWKp7Ub4xO+ZVeLPNrA/3Hw60LbYoOAJwCfn?=
+ =?iso-8859-1?Q?oTAsZ+7b1lm83yoH0hNbfBsGWrl9XYicLF66sE2q060Yysj6DBVSs410u5?=
+ =?iso-8859-1?Q?JPFzQ/Y44xXp2bD1Plnj3nDHrCmpzlPRkm6rt2ytTGUt7O2z+5WHh3giYj?=
+ =?iso-8859-1?Q?hpNyv6BoWk02fOs28Mj+k9olr0gMEWgzrrkI8aRQ7Ti/sXe2/d4qwyx/uf?=
+ =?iso-8859-1?Q?zk4UcKha0Gysjithl6+BS/StCPCyOT5S0Ud28ibev8JGU1jykVAJlFyAoF?=
+ =?iso-8859-1?Q?s4XSIKUNAPDO9Pk73uIbbeZuok5i7fyC46VR3JBqHXNdx5SUWGIeMDOjlo?=
+ =?iso-8859-1?Q?g=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SY8P300MB0711.AUSP300.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?Pssh+sSQjA0HRiKNmJoTtQKHRxkQWlTTFMjyGOLuBuGUpyBcx942Iawd65?=
+ =?iso-8859-1?Q?Me1EClkSAN1N7YkwP60ZsLCusooDvIo/fCKu8hoIgk8NVZUDzuJX5k56S3?=
+ =?iso-8859-1?Q?mts5Zf7YwklRN/QCePcEOdYni+81DBUq4BVIX6TsQ/PJmtU5SLs1NC/Ckx?=
+ =?iso-8859-1?Q?BSGSYwuwhpPbPmuUysFra8NA8bsL0itTB3XrGylbU/PHyuWc+KkxvcfsbL?=
+ =?iso-8859-1?Q?QEiCFFMmeh/IR78cjrJdYZxuNHVabXMQZcH6YTC+YQ8BdT02l1p7HCsbkk?=
+ =?iso-8859-1?Q?8xDpD6ktcVrbGRLW7LMAWmLztPuI9RYtL4GtYjuHjoyEbVPt7B9Rszx/tC?=
+ =?iso-8859-1?Q?dRzhmTE+Ndm/w1BxPQWSEcx9gzNpTuUS/HUp+NtlmU0PfqKPRrEw6waQEM?=
+ =?iso-8859-1?Q?cM+27EWw6zwDVNA+bJ4wNr8rTfPRCk2oGgXhOhcEXxGVD5IiXySeh4kkj1?=
+ =?iso-8859-1?Q?sJPdEoxJCpJYjs2rdXqQeEDEkHa8i7zz/HrU42VTjuzW30+qWV5YfnE3yL?=
+ =?iso-8859-1?Q?YILK6kxbFtWJSd/Hh6DJkecbfW/fRzVdVtdEpybTLa2mdgXZE9bxKG025v?=
+ =?iso-8859-1?Q?B7fQK/wP30aoqmP7EqHxqM7hL1DGrJtYR3SF8VPCgbG4ZXELU2hUDhVmHZ?=
+ =?iso-8859-1?Q?SDTNM//SSq98yEJxfr5JKoJU+UQp9mBM1xYMpNu0MekidJUVCa6Qx/FpAE?=
+ =?iso-8859-1?Q?FcFxQ1++PBLCKfD11t+QXbxU95fSAJYrDUihnXrLpn+XMNWmTt0GeD8kYS?=
+ =?iso-8859-1?Q?PNgQakNbazCjJDVx7bBDt0YWKK2vdBwqEHoqixbztdpL4iXp0+m4aM+t9Y?=
+ =?iso-8859-1?Q?wovgwaO6boV//H9ytxT6gSu84NLHyPSgTND3IslYfVCa9K/MfgTFUwMarg?=
+ =?iso-8859-1?Q?pWJ0HO/VSlzBYDGQdMJQw8yDi4lQ2DXcMu2nSm5n9E3omQBTIU9/ifGliZ?=
+ =?iso-8859-1?Q?7kVb/E0I4cHTMZQdbrr/OsShP4SJuUmgu63UtyzFg0Px1uNcj9CF3xjqEA?=
+ =?iso-8859-1?Q?tbniVaeGlRAIc+Ob+p7MTYdPuI51isnsVi34wTKIqcU+Qtxzga/omMYhnk?=
+ =?iso-8859-1?Q?NyjuvvvwvbHPUI6hmIgPPrhDKp9ls0JEYHjmaqckY9BuM295rBeCcpnb/u?=
+ =?iso-8859-1?Q?WiF86n2/Adjv8xHZRuFN0WaVo0/N5B556OF14ugau4J8gOlLPvod6PVJfz?=
+ =?iso-8859-1?Q?7TYbq3sP+lsc5JeZmgEGsbqssi+UsXE/h+XNEvK7JIN5QpiKI+q+lOhTyW?=
+ =?iso-8859-1?Q?zbw5gqPouQDzsc53MbMecbjpHrOS5VZ1oUkRVdTQvaa0He/Jgwp6xgUzgq?=
+ =?iso-8859-1?Q?uRqxH8dE8ZIfNuv3KZSuevic0Ux2t8RWZY4FPqBkgnmmmxeL23p6yI2dm3?=
+ =?iso-8859-1?Q?qB4OiC0WWEuXDwWQGIWlqC72USvkwsSpKSScSXrC3YvHU7T55JfWsn4oNR?=
+ =?iso-8859-1?Q?RhMoggGkomoLD3GMAJa5mR9xqSzuBbm/NE1+Uv0V/fIC78JpoJ/r6vw5OG?=
+ =?iso-8859-1?Q?pAPvZNIhbCbviE/nyJLPmVqxWAUtH6AN1c0196x06C8vPvQEfMbfY4s40l?=
+ =?iso-8859-1?Q?e884tEyfIoRtK6O3eM0qsRWyjplTABvg5mrb3A8LqZms9bTRRwiT6XdAU6?=
+ =?iso-8859-1?Q?2zCE10QEY6MCiC4MdHEWmWTYWAOINBeaJKtLDq32c5yEx4pkhiuR7J2A?=
+ =?iso-8859-1?Q?=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-To: oss-security@lists.openwall.com
-CC: Peter Gutmann <pgut001@cs.auckland.ac.nz>
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com> <20240806171232.6bd08942@zbook> <ZrJv8PDeCxQQJVxH@itl-email> <20240807144047.GA12108@test> <20240807174807.GA4206@openwall.com> <CADz+4x8wo6KaCU9b2s_+VkB08X7U4WWJHj66UfyvRU1qKUUd-A@mail.gmail.com> <20240807201640.1RD27ogN@steffen%sdaoden.eu> <E3810E68-25CC-456F-9DC4-A03752C43E79@redhat.com> <20240808190532.Uwg8_Ylc@steffen%sdaoden.eu> <20240808205540.267A1153AD7@kent.sdaoden.eu> <ME0P300MB0713B2849ACB451ACDC81707EEBA2@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
-In-Reply-To: <ME0P300MB0713B2849ACB451ACDC81707EEBA2@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] collision confounders (was: feedback requested
- regarding deprecation of TLS 1.0/1.1)
+X-OriginatorOrg: cs.auckland.ac.nz
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SY8P300MB0711.AUSP300.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 69238980-c5ca-4634-165c-08ddfa9ddb86
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Sep 2025 12:36:45.5918
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: d1b36e95-0d50-42e9-958f-b63fa906beaa
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: oWT39XvLHYfxnKhvvYgvJHPv6rbxnPnD7Y+Md+i2lJnOJtmmaTrNyFwEgNt6zeE+E+F5EXCVZR4xCJbXVR56zX0p3i5XvlM4L3Sh2uPeE0E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY9P300MB1564
+Subject: Re: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
 
-Peter Gutmann wrote:
-> steffen <steffen@sdaoden.eu> writes:
->
->   
->> That is: whether "vulnerability" thus means to create a fake packet with
->> identical MD-5 and SHA-1 hashes (it seems TLSv1.1 always uses both
->> concurrently, at least for RSA) as the cryptographically verifiable one that
->> ships with the packet.
->>
->> It seems to me this is hard stuff, especially for "the occasional attack".
->>     
->
-> It's not just hard, for TLS it's pretty much impossible.  The collision
-> attacks against SHA-1 have been chosen-prefix and very much offline which you
-> can't do with TLS.  Even then, it's only the handshake which uses SHA-1, the
-> rest uses HMAC-SHA1 which, even for MD5, is still secure.  Finally, TLS < 1.2
-> uses MD5+SHA1 in combination, which no-one has found an actual attack on yet.
-> So in this case TLS 1.2 is actually weaker than TLS 1.1.
->   
+Solar Designer <solar@openwall.com> writes:
 
-This actually raises an interesting question from my perspective.  If 
-concatenating MD5+SHA1 (which I would guess was done because the TLS 
-designers were unsure which would hold up better) proves sufficient to 
-confound attacks, how strong does such a confounding digest need to be?
+>I also worry about risk of software bugs that a simple 0/1 flag may be more
+>susceptible to than e.g. magic values would be.  Maybe we can identify a
+>reasonable level of defensive programming without going for slippery slope
 
-More specifically, could even a non-cryptographic function, such as CRC 
-or Fowler-Noll-Vo, be sufficient to prevent an SHA1 (or even MD5) 
-collision attack?  While second (and even first) preimages are 
-straightforward for CRC, would the cryptographic attack on SHA1 (or MD5) 
-conflict with maintaining the non-cryptographic digest value?
+You can write code that deals with bit-flips (SEEs to use the correct term)
+and the like but you pretty much need to do it end-to-end if you're worried
+about real-world bit-flips, and that's a *lot* of work.  If you want the fu=
+ll
+gory details:
 
-I ask because CRC (and FNV) are extremely cheap to compute compared to 
-actual cryptographic digests.  Would a combination with a 
-non-cryptographic digest significantly strengthen a cryptographic digest?
+https://www.cs.auckland.ac.nz/~pgut001/pubs/software_faults.pdf
 
+To answer a question from another post, ECC RAM won't necessarily help you
+because you can get faults like word-line upsets that ECC won't detect, I've
+got a second talk that covers that if anyone's interested.  The upside is t=
+hat
+most modern desktop/ server processors are essentially rad-hard so faults in
+the CPU or data in on-CPU cache memory aren't so much a concern any more.
 
--- Jacob
+Peter.
