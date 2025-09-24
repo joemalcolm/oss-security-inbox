@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["310" "Tuesday" "8" "September" "2015" "11:48:49" "+0200" "Marcus Meissner" "meissner@suse.de" "<20150908094849.GB18322@suse.de>" "13" "[oss-security] Re: CVE Request: Wireshark 1.12.7" nil nil nil "9" "2015090809:48:49" "[oss-security] Re: CVE Request: Wireshark 1.12.7" (number mark "U       meissner@sus Sep  8   13/310   " thread-indent "\"[oss-security] Re: CVE Request: Wireshark 1.12.7\"\n") "<20150908093740.GA18322@suse.de>" ("<20150908093740.GA18322@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16143 invoked by uid 550); 8 Sep 2015 09:49:02 -0000
+Received: (qmail 30517 invoked by uid 550); 24 Sep 2025 21:43:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,34 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16110 invoked from network); 8 Sep 2015 09:49:01 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 8 Sep 2015 11:48:49 +0200
-From: Marcus Meissner <meissner@suse.de>
-To: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org
-Message-ID: <20150908094849.GB18322@suse.de>
-References: <20150908093740.GA18322@suse.de>
+x-ms-reactions: disallow
+Received: (qmail 30486 invoked from network); 24 Sep 2025 21:43:55 -0000
+Message-ID: <9849f703-9b30-4159-8c91-92365dbe5148@pipping.org>
+Date: Wed, 24 Sep 2025 23:43:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150908093740.GA18322@suse.de>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] Re: CVE Request: Wireshark 1.12.7
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Sebastian Pipping <sebastian@pipping.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] libexpat 2.7.3 improves fixes to CVE-2024-8176 and CVE-2025-59375
 
-On Tue, Sep 08, 2015 at 11:37:40AM +0200, Marcus Meissner wrote:
-> Hi,
-> 
-> https://www.wireshark.org/docs/relnotes/wireshark-1.12.7.html
-> 
-> 9 security issues were fixed by the Wireshark Team.
-> 
+Hello oss-security,
 
-Sorry for this, but they had been assigned already I now see.
 
-CVE-2015-6241 up to CVE-2015-6249
+just a quick note that libexpat 2.7.3 (or "Expat 2.7.3") released
+today is improving upon the original fixes to CVE-2024-8176 and
+CVE-2025-59375. So if you backported the original fixes, please be sure
+to update/extend these backports as needed.
 
-Ciao, Marcus
+Some key links are:
+
+- The change log of release 2.7.3
+   https://github.com/libexpat/libexpat/blob/R_2_7_3/expat/Changes
+
+- The two key pull requests:
+   https://github.com/libexpat/libexpat/pull/1048
+   https://github.com/libexpat/libexpat/pull/1059
+
+Best
+
+
+
+Sebastian
+
