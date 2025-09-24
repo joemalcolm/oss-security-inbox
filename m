@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4087" "Saturday" "9" "July" "2016" "11:27:33" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160709152733.28D676C1D52@smtpvmsrv1.mitre.org>" "98" "[oss-security] Re: CVE request: several SOGo issues (DOS, XSS, information leakage)" nil nil nil "7" "2016070915:27:33" "[oss-security] Re: CVE request: several SOGo issues (DOS, XSS, information leakage)" (number mark "U       cve-assign@m Jul  9   98/4087  " thread-indent "\"[oss-security] Re: CVE request: several SOGo issues (DOS, XSS, information leakage)\"\n") "<f1a94b45-2ea5-8943-b676-c07456992798@uni-konstanz.de>" ("<f1a94b45-2ea5-8943-b676-c07456992798@uni-konstanz.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3383 invoked by uid 550); 9 Jul 2016 15:27:45 -0000
+Received: (qmail 1836 invoked by uid 550); 24 Sep 2025 04:09:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,110 +7,247 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3359 invoked from network); 9 Jul 2016 15:27:44 -0000
-From: cve-assign@mitre.org
-To: jens.erat@uni-konstanz.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <f1a94b45-2ea5-8943-b676-c07456992798@uni-konstanz.de>
-Message-Id: <20160709152733.28D676C1D52@smtpvmsrv1.mitre.org>
-Date: Sat,  9 Jul 2016 11:27:33 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: several SOGo issues (DOS, XSS, information leakage)
+x-ms-reactions: disallow
+Received: (qmail 28532 invoked from network); 24 Sep 2025 03:25:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758684348; x=1759289148; darn=lists.openwall.com;
+        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=txtN71dnz4wPLpUWtDcOUTUjqm2Pra7VfBDrlCRktf4=;
+        b=finGt+kcSLLfKH6yWz7RuyuUWi4oQWoZOdAaEXQq8sPhXIUv2hxOMBc7T02FCh9RKN
+         HSZmy71rHi/dL5wmYUUw1IsLYPHEsHzoUvzVoMA64dzi1hJSuRSmS4EdAmpLVNOofE7X
+         dEhZlHYUy2rb6sCxUBahu7UVSkRuRayzeMLNMI08MB3xNsmTbZKN27u5I/FIyzH9Pbnm
+         1FhgJY8vUFBOzTn5tBcfkcNSpQiVdNDS7lDSdD/qhTtbJzbr1J62/eyOftBRW4JDWvZx
+         Ktnrt2lWeRHwvwk9I/yIVOrsny2g0oj85L4G4+jAyCibRckh60EVEE+eulJNjA5l+kDG
+         pFow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758684348; x=1759289148;
+        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=txtN71dnz4wPLpUWtDcOUTUjqm2Pra7VfBDrlCRktf4=;
+        b=OiahWBkdLvJcvoV8C1EQesykxjCwfmk2gls8/CDaqciPiCYBGu9G9wfNr7cF0miUi2
+         Q18c0Bt8+CpAAxLTyXjS5BWfJNuKKCidZCiwc0ukREms1qAric4nM03I11Y8RzJnNfjA
+         xmCuSIfAgSFkHwFN/uku39ZI6evSOCxZgh8KtLi6XZYzmmN0R9WiktgFxZkeTxmD2rFW
+         sV3LwhGv+psQ8cN/XAOKMCEc4MMPEtGltKzuph/SdlKJ43MqYT9nUOiM0wnznsW+2jpx
+         zpVEh7iJKgiAw6nlosIUXhEW7kyH5UyZORSLEdEw2IyyJ6/uHstdeOT40ut+mkpFVYWz
+         CetA==
+X-Gm-Message-State: AOJu0YxdpB8UlMqNVm+3vwOdABUsH+KRzwPOSQ2UVaKmDuDWCFIAffTg
+	w4535DNRIKR5W19pLzv7qvzj9X3ok4ywbnBqAquYY2CQcAnkvufWo0Nrp7Zt/Q==
+X-Gm-Gg: ASbGncvhW2NwepMzZMR2gjTpwDPsWW+0uY2zrswRr5INfuV1wSbkbq1O0Zmge/8aduf
+	bpXkJg+Vz/lfSKBv0q5L/M+P+W5EQTscm4t1mMq5DgTrMaZOy6cxJBpa7lTWumbyJE2kIu6bHFX
+	uqxrBVqrU6HcfSHI1JnFilnnp1K/pBBHB1bMnwCNlatOxcVCz/wZZDLDoIoIyC0r4tyWMLJH4jl
+	1HOfZPOWWja8B8BshuHi6FVzfIAh92M6Dkr26ZHhv/OcPQqmRUPrmX5V4jqlBOg9rh1bXXKtm0Y
+	Bb4rUVd4GoWJ8c52CLNkA3JmfSxIdjBd/4Ex/eLvSpMwdUJo9n/HBHUChZ2X9+zY1P6arjlRIjP
+	geJyAauoyyouHsqwbjxA=
+X-Google-Smtp-Source: AGHT+IFfjzuaWjXDai7mjHzIFMSBiXuG/0y1Mevl9v9JBnh7AAqkfWnLGLZweFF5UhX5QL+29XkCpg==
+X-Received: by 2002:a05:690c:4d88:b0:72e:a82a:ab84 with SMTP id 00721157ae682-758a8aab027mr37714217b3.51.1758684347711;
+        Tue, 23 Sep 2025 20:25:47 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------vIr9Ueh3SpyGVPtRTLrx0C96"
+Message-ID: <43743160-7c83-4c4e-ad77-52e5058636c5@gmail.com>
+Date: Tue, 23 Sep 2025 22:25:37 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, "Adiletta, Andrew" <ajadiletta@wpi.edu>,
+ Solar Designer <solar@openwall.com>
+Cc: "openssh@openssh.com" <openssh@openssh.com>, "Tol, Caner" <mtol@wpi.edu>,
+ "Sunar, Berk" <sunar@wpi.edu>, "Doroz, Yarkin" <ydoroz@wpi.edu>,
+ "Todd C. Miller" <Todd.Miller@courtesan.com>,
+ "pgut001@cs.auckland.ac.nz" <pgut001@cs.auckland.ac.nz>
+References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org>
+ <20250923032113.GA14348@openwall.com>
+ <BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com>
+Subject: Re: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a
+ bogus CVE in OpenSSH
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--------------vIr9Ueh3SpyGVPtRTLrx0C96
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> SOGo #3510:  DOS attack through uploading malicious attachments
-> Fix:         http://github.com/inverse-inc/sogo/commit/32bb1456e23a32c7f45079c3985bf732dd0d276d
-> Issue:       https://sogo.nu/bugs/view.php?id=3510
+On 9/23/25 20:42, Adiletta, Andrew wrote:
+> [...]
+>
+> However, on the practicality, I do believe that we did not 
+> mischaracterize the attack in the paper, and as Alexander concisely 
+> mentioned, we are really trying to emphasize the issues with simple 
+> 0/1 flag logic that leads down to sensitive execution flows. Also, 
+> great point about the exit codes, in hindsight that would've been a 
+> good point to address as well. But ulimately, we did make 
+> syncronization an assumption as stated in the paper, citing that there 
+> are other teams working on syncronization methods 
+> (https://www.usenix.org/conference/usenixsecurity22/presentation/aldaya 
+> <https://www.usenix.org/conference/usenixsecurity22/presentation/aldaya>).
 
->> 1. Create a large file, for example `dd if=/dev/zero of=/tmp/1GB bs=1M count=1000`
->> 2. Open new mail in SOGo, try to attach large file
->> 3. If attachment fails, some memory gets freed, but not all of it
->> 4. Repeat 1-3 until server crashes
- 
-> The issues was resolved by limiting the upload size ...
-> 
-> Further investigation showed that not memcached was the issue but
-> temporary files kept around
+This seems to confirm my previous assessment that your attack from the 
+paper is a proof-of-concept.
 
-Use CVE-2016-6188.
+> Slight clarification on Peter's point - I agree with your point about 
+> rad-hard faults protection on modern CPUs, although the threat model 
+> for Mayhem was that registers, as a limited resource, need to 
+> constantly swap back to DRAM, where register values can be corrupted 
+> via Rowhammer and the corrupted values are then stored in the register 
+> when they are brought back from DRAM.
 
-
-> SOGo #3695:  Private information leakage through ics/XML feeds when restricted to "View the Date & Time" 
-> Fix SOGo v2: https://github.com/inverse-inc/sogo/commit/717f45f640a2866b76a8984139391fae64339225
-> Fix SOGo v3: https://github.com/inverse-inc/sogo/commit/875a4aca3218340fd4d3141950c82c2ff45b343d
-> Issue:       https://sogo.nu/bugs/view.php?id=3695
-
-> 1. Not all private information removed for the public free/busy view
-
->> I was able to observe following fields containing critical information:
->> 
->> - ORGANIZER (who invited the calendar owner?)
->> - X-ALT-DESC (Outlook-specific extended copy of the description?) 
-
-Use CVE-2016-6189.
+The critical issue for exploiting Rowhammer to corrupt spilled register 
+values seems to be how long those spilled values remain live in DRAM 
+before they are reloaded into the register file and ultimately used.
 
 
-> SOGo #3696:  Meta information can be derived from UID/DTSTAMP attributes though
-> "View the Date & Time" restricted access Backend Calendar
-> Fix SOGo v2: https://github.com/inverse-inc/sogo/commit/717f45f640a2866b76a8984139391fae64339225
-> Fix SOGo v3: https://github.com/inverse-inc/sogo/commit/875a4aca3218340fd4d3141950c82c2ff45b343d
-> Issue:       https://sogo.nu/bugs/view.php?id=3696
-
-> 2. It was possible to join appointments based on the UID of the
->    public free/busy view from different users, to know who has
->    appointments with whom
-
->> one can derive common appointments between other people
-
-Use CVE-2016-6190.
+As I understand it, Rowhammer is a slow, probabilistic attack, 
+requiring, at minimum, many milliseconds for a chance at success. If the 
+target program is going to reload the values within microseconds, the 
+probability of a successful attack rapidly approaches zero and there is 
+no practical risk.  (A machine that vulnerable to Rowhammer is likely to 
+flip too many bits in normal operation and crash so frequently that it 
+gets replaced.)
 
 
-> SOGo #3718:  Persistent Cross-Site Scripting in calendar
-> Issue:       https://sogo.nu/bugs/view.php?id=3718
-> Fix:         http://github.com/inverse-inc/sogo/commit/64ce3c9c22fd9a28caabf11e76216cd53d0245aa
-
->> When creating a calendar entry containing script code
-
-Use CVE-2016-6191.
+This may point towards a previously-unrecognized security risk in OS 
+schedulers, where delaying a privileged process is more than merely a 
+denial-of-service.  Perhaps dynamic CPU affinities could be used to 
+reduce the risk by reserving a core for privileged tasks when any are 
+runnable?
 
 
-> SOGo #2598:  Script injection in calendar title
-> Fixes:       - https://github.com/inverse-inc/sogo/commit/1a7fc2a0e90a19dfb1fce292ae5ff53aa513ade9
->              - https://github.com/inverse-inc/sogo/commit/80a09407652ec04e8c9fb6cb48e1029e69a15765
->              - https://github.com/inverse-inc/sogo/commit/3a5e44e7eb8b390b67a8f8a83030b49606956501
->              - https://github.com/inverse-inc/sogo/commit/c94595ea7f0f843c2d7abf25df039b2bbe707625
-> Issue:       https://sogo.nu/bugs/view.php?id=2598
-> 
-> The (now public) issue log says I realized the issue also exists with contacts
+Another solution could be a "scheduler yield" primitive that yields the 
+processor but guarantees a full timeslice when the program is next 
+resumed.  As long as the critical window can fit within a single 
+scheduler timeslice, this would close the window on exploitation.
 
->> Add injection code, for example in the "Display" name field
+> From a hardware architectural standpoint, it might make sense to do a 
+> hash check before and after register values are pushed and popped to 
+> prevent this type of attack, but that was a bit out-of-scope for the 
+> paper. But also, agree with your point on ECC as being a potentially 
+> unreliable mitigation.
 
-Use CVE-2014-9905 for the XSS issues in both the calendar title and
-the contacts module.
+Any practical hash check will be no better than ECC:  the attacker need 
+only also flip a few more bits.  Do not pretend that checksums are going 
+to fix this.
 
 
-We cannot yet send a CVE ID here for the non-public issue #3670.
+If you think that a cryptographic digest is suitable for protecting 
+register values spilled to the stack, then you have no idea how often 
+registers are spilled and reloaded.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXgRd2AAoJEHb/MwWLVhi2A5wP/j6sHW/jtA04EIw4E0KiQRFt
-wI9QOZ1BdyptWssGcq0r5FV8p1sdVsjiFn607Dj8uVXjf1Txpai7/Z7Dpl3Ssejh
-LXdABo+TDnCM49n0CKyQUzSF+HfaUoU2HRar+48pB1KqYx+hahE4TVZ+14L9etvg
-UMJzkeu/cEzS8vh6G9VFp0vEOAhWuhcfKqBVrMjU2hFSCHLJVrvduO05uvMlJ0fJ
-B5nLcAR6OCiFcqZ+ttHtxOCSZD96bpogBAkxCMsl7rz6iZpwqMdhJrh+8wf5cIfn
-T2v+5fPRiM0/rm0NCjI8bWd87pI7ZWr+FNbuqwkPeGwHtYpwrMryfMaiMmqdSf+V
-rxaKOsYwh5vr6IddVBQAQF+OmVBj71wfsydl71HvZdp4vLCZcr8EgpaQPFjltC//
-2EEsQ7dsfJIGY9GfarYPVuwLN2psqiUkf1x1KvEPzcSFJn+w0LLx2qxeGwFc3X0m
-11MYp+v0C1LVmYwaf+vNrnMf537sN+K8s6pN80Hf+t7lB3hEmilyeaPoXWxOyF8s
-t3hAJ6isrhTZ10xqX6nFz1I69piNp4IEJQ7SgbXJoI8BJEDucYC99G/VBaB2j3WA
-JdXI5I1fZZ/rTPT3EcBrM8psMWJmOGNUBnZmJfFpalIfkrD9OqKkvtovNm+EF/we
-XHadO9HsP5kU7/eTgBEf
-=Uq/q
------END PGP SIGNATURE-----
+
+-- Jacob
+
+--------------vIr9Ueh3SpyGVPtRTLrx0C96
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 9/23/25 20:42, Adiletta, Andrew
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <style type="text/css" style="display:none;">P {margin-top:0;margin-bottom:0;}</style>[...]
+      <div class="elementToProof"
+style="text-align: left; text-indent: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">
+        <br>
+      </div>
+      <div class="elementToProof"
+style="text-align: left; text-indent: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">
+        However, on the practicality, I do believe that we did not
+        mischaracterize the attack in the paper, and as Alexander
+        concisely mentioned, we are really trying to emphasize the
+        issues with simple 0/1 flag logic that leads down to sensitive
+        execution flows. Also, great point about the exit codes, in
+        hindsight that would've been a good point to address as well.
+        But ulimately, we did make syncronization an assumption as
+        stated in the paper, citing that there are other teams working
+        on syncronization methods (<a data-ogsc="" data-linkindex="0"
+          data-auth="NotApplicable"
+originalsrc="https://www.usenix.org/conference/usenixsecurity22/presentation/aldaya"
+          rel="noopener noreferrer"
+title="Original URL: https://www.usenix.org/conference/usenixsecurity22/presentation/aldaya. Click or tap if you trust this link."
+          class="OWAAutoLink moz-txt-link-freetext"
+          id="OWA634fa6af-207f-ef00-9ca2-1bdf2be9828f" target="_blank"
+href="https://www.usenix.org/conference/usenixsecurity22/presentation/aldaya"
+          moz-do-not-send="true">https://www.usenix.org/conference/usenixsecurity22/presentation/aldaya</a>).</div>
+    </blockquote>
+    <p>This seems to confirm my previous assessment that your attack
+      from the paper is a proof-of-concept.</p>
+    <blockquote type="cite"
+cite="mid:BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com">
+      <div class="elementToProof"
+style="text-align: left; text-indent: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">
+        Slight clarification on Peter's point - I agree with your point
+        about rad-hard faults protection on modern CPUs, although the
+        threat model for Mayhem was that registers, as a limited
+        resource, need to constantly swap back to DRAM, where register
+        values can be corrupted via Rowhammer and the corrupted values
+        are then stored in the register when they are brought back from
+        DRAM.</div>
+    </blockquote>
+    <p>The critical issue for exploiting Rowhammer to corrupt spilled
+      register values seems to be how long those spilled values remain
+      live in DRAM before they are reloaded into the register file and
+      ultimately used.</p>
+    <p><br>
+    </p>
+    <p>As I understand it, Rowhammer is a slow, probabilistic attack,
+      requiring, at minimum, many milliseconds for a chance at success. 
+      If the target program is going to reload the values within
+      microseconds, the probability of a successful attack rapidly
+      approaches zero and there is no practical risk.  (A machine that
+      vulnerable to Rowhammer is likely to flip too many bits in normal
+      operation and crash so frequently that it gets replaced.)<br>
+    </p>
+    <p><br>
+    </p>
+    <p>This may point towards a previously-unrecognized security risk in
+      OS schedulers, where delaying a privileged process is more than
+      merely a denial-of-service.  Perhaps dynamic CPU affinities could
+      be used to reduce the risk by reserving a core for privileged
+      tasks when any are runnable?</p>
+    <p><br>
+    </p>
+    <p>Another solution could be a "scheduler yield" primitive that
+      yields the processor but guarantees a full timeslice when the
+      program is next resumed.  As long as the critical window can fit
+      within a single scheduler timeslice, this would close the window
+      on exploitation.<br>
+    </p>
+    <blockquote type="cite"
+cite="mid:BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com">
+      <div class="elementToProof"
+style="text-align: left; text-indent: 0px; font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 11pt; color: rgb(0, 0, 0);">From
+        a hardware architectural standpoint, it might make sense to do a
+        hash check before and after register values are pushed and
+        popped to prevent this type of attack, but that was a bit
+        out-of-scope for the paper. But also, agree with your point on
+        ECC as being a potentially unreliable mitigation.</div>
+    </blockquote>
+    <p>Any practical hash check will be no better than ECC:  the
+      attacker need only also flip a few more bits.  Do not pretend that
+      checksums are going to fix this.<br>
+    </p>
+    <p><br>
+    </p>
+    <p>If you think that a cryptographic digest is suitable for
+      protecting register values spilled to the stack, then you have no
+      idea how often registers are spilled and reloaded.</p>
+    <p><br>
+    </p>
+    <p><br>
+    </p>
+    <p>-- Jacob<br>
+    </p>
+  </body>
+</html>
+
+--------------vIr9Ueh3SpyGVPtRTLrx0C96--
