@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["555" "Thursday" "23" "April" "2015" "03:04:23" "+0300" "Solar Designer" "solar@openwall.com" "<20150423000423.GA31439@openwall.com>" "17" "Re: [oss-security] USBCreator D-Bus service" nil nil nil "4" "2015042300:04:23" "[oss-security] USBCreator D-Bus service" (number mark "        solar@openwa Apr 23   17/555   " thread-indent "\"Re: [oss-security] USBCreator D-Bus service\"\n") "<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>" ("<CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15584 invoked by uid 550); 23 Apr 2015 00:04:27 -0000
+Received: (qmail 7338 invoked by uid 550); 24 Sep 2025 14:43:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +6,61 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15563 invoked from network); 23 Apr 2015 00:04:26 -0000
-Message-ID: <20150423000423.GA31439@openwall.com>
-References: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJ_zFk+imjcZZTm8KwOZia0McwHZ2iQawpXoijRpejM9jt3PGA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 23 Apr 2015 03:04:23 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] USBCreator D-Bus service
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 31968 invoked from network); 24 Sep 2025 05:33:13 -0000
+Date: Wed, 24 Sep 2025 15:32:35 +1000 (AEST)
+From: Damien Miller <djm@mindrot.org>
+To: "Adiletta, Andrew" <ajadiletta@wpi.edu>
+cc: Solar Designer <solar@openwall.com>,
+        "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+        "openssh@openssh.com" <openssh@openssh.com>,
+        "Tol, Caner" <mtol@wpi.edu>, "Sunar, Berk" <sunar@wpi.edu>,
+        "Doroz, Yarkin" <ydoroz@wpi.edu>,
+        "Todd C. Miller" <Todd.Miller@courtesan.com>,
+        "pgut001@cs.auckland.ac.nz" <pgut001@cs.auckland.ac.nz>
+In-Reply-To: < BL1PR01MB772308134BF946DF07159A05C11CA%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au>
+Message-ID: <c5d66517-f422-1fe7-03a0-d79cf4af1fbf@mindrot.org>
+References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org> <20250923032113.GA14348@openwall.com> < BL1PR01MB772308134BF946DF07159A05C11CA%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; BOUNDARY="0-621254645-1758690352=:30621"
+Content-ID: <0a9844fb-835b-c36e-5cdf-783508e64f51@mindrot.org>
+x-ms-reactions: disallow
+X-Scanned-By: MIMEDefang 2.75 on 130.102.79.58
+Subject: Re: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
 
-Hi Tavis,
+--0-621254645-1758690352=:30621
+Content-Type: text/plain; CHARSET=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
+Content-ID: <7e10eabd-e71e-fe08-537a-3580e513c22b@mindrot.org>
 
-On Wed, Apr 22, 2015 at 04:50:08PM -0700, Tavis Ormandy wrote:
-> [as-per previous discussion on the vendors list, skipping closed
-> discussion of low-severity issue]
+On Wed, 24 Sep 2025, Adiletta, Andrew wrote:
 
-What "vendors list" do you mean?  Do you possibly mean "vendor's" rather
-than "vendors" - that is, upstream's list?  (I do not recall seeing this
-on the linux-distros list.)
+> Hi Alexander and Team,
+> 
+> Thank your for the interest in our paper, and we appreciate all the
+> feedback. We wanted to address two points - the OpenSSH CVE, and the
+> comments from the OpenSSH community about the practicality of the attack. 
+> 
+> On CVE-2023-51767 (OpenSSH), we did not submit this CVE. Our team
+> coordinates with vendors / software mantainers before submitting CVEs to
+> make sure there is agreement. The CVE description does seem
+> mischaracterized, as this is not a zero-click type vulnability as the CVE
+> suggests, and we would not oppose either a revision or other action. We did
+> work with Todd Miller on a SUDO CVE (CVE-2023-42465), of which we worked
+> with him to release a patch. 
+> 
+> However, on the practicality, I do believe that we did not mischaracterize
+> the attack in the paper, and as Alexander concisely mentioned, we are really
+> trying to emphasize the issues with simple 0/1 flag logic that leads down to
+> sensitive execution flows. 
 
-Either way, it sounds weird to keep a low severity issue private.  Low
-severity usually means not needing an embargo in the first place.  But I
-guess it was the vendor's preference?
+Sure, but my criticism at the time was that your paper claimed in
+the abstract to have successfully attacked OpenSSH to bypass
+authentication but what was actually attacked was a modified version
+of sshd run in a highly unrealistic and synchronised setting.
 
-Thanks,
+IMO this context matters and doesn't detract from your findings.
 
-Alexander
+-d
+--0-621254645-1758690352=:30621--
