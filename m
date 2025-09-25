@@ -1,4 +1,4 @@
-Received: (qmail 13671 invoked by uid 550); 3 Jul 2024 20:54:47 -0000
+Received: (qmail 23736 invoked by uid 550); 25 Sep 2025 16:47:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,120 +7,105 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13650 invoked from network); 3 Jul 2024 20:54:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:References:In-Reply-To:Date:To:From:Subject:
-	Message-ID:Reply-To:Cc:Content-ID:Content-Description;
-	bh=p4iL1RSerALslXInwiqdI8xE3SbC75fvZRK2h/vIun0=; b=i0sw3D2eguECnzOBE2Kc6b37O9
-	V2TzBU3uxP5Dqgypg+/RfB5m1urGHzG96sbUj2kR50w5jGMAAIMO8riM7YQPW1cz28vZfrtRB4ASR
-	kFPuQ3fg+5MrmztLfF+FWFx5TZI/9t1xs5qn5ecAZN5JrzNNWbhCg+Re67XTdJ9/iwcg23dS/WnF7
-	q7qrxa1dzsl6/K3TmyS0okb8GGoP7Qu8lwFVhOnjr6lZ8LEJFh0hSBvsTcW3p4ChieS6986wG8BVf
-	Of8xC7E31SEFdjvjtD5nSzFWyTWg2Y0gupnbEtakzkprx0KySv8o4Iboz8P3JLKwgZ/yQppUJBQPX
-	Ibtot2bQ==;
-Message-ID: <4ba5ff088a2619fe98f73b0d853fe6b3c682479d.camel@debian.org>
-From: Yves-Alexis Perez <corsac@debian.org>
-To: oss-security@lists.openwall.com
-Date: Wed, 03 Jul 2024 22:54:30 +0200
-In-Reply-To: <20240701083838.GA12787@localhost.localdomain>
-References: <20240701083838.GA12787@localhost.localdomain>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.52.3-1 
+x-ms-reactions: disallow
+Received: (qmail 16213 invoked from network); 25 Sep 2025 16:39:52 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1758818376; bh=NUFktp5Wh7qSW6j/NuVDTFL5yyBSnr1b1UVX3iHgG/I=;
+	h=From:Date:Subject:To:From;
+	b=BBgic43+bMb8ehBk6YP2BEduG3cnvKh3HdqLcGTvJwmGi3pzwjGxx9RLNgr5UX+Lp
+	 DAyAj5i68veV057JRe1ZzeA7KPxI4eHkka5pHkfoa47Vwy6IlG1Jtb1AOYJ30yopiN
+	 +5kl35cjU1wOGjQ98QuhbG5Oona59iUYGk4kevQ4UZLJJtttgrKKQkFQ2934HHEeeW
+	 51I6F+qDdCiibksWW6Z0Viv5k4uSk3vZA309w7/sx9kjkkxp9b4VdngWMnOyfPcQ+q
+	 e7pMK95R4CHvF5ZyrNiQtQGmsV2CwZBdOYzFEVkeBd7AhMolsPYb7ba4lpUME5Yg2W
+	 rnVBRvSsMxZSg==
+X-Gm-Message-State: AOJu0YxFPioMppkVaJiUa+X3dUOgcHBDxpbEY9HRqa9tOwdk1nFXIy8E
+	E/WYB7a5E6D5CtCf3G6cBA51Y99V7JY8z74bd2Vzm7+1x39GC9iq31PghtPh9GuGIc4Jpwz69ve
+	GZYk9TbkxVCWzGF/NZEuqYKVJn3XaLY4=
+X-Google-Smtp-Source: AGHT+IFeiLvD6G1siOA09MwKqUjJqyZeDk9YKD2P91JDSMG4mV94TFLj3/2irrtY8ushuE4LJxiezKbP/ccUk9+pIas=
+X-Received: by 2002:a05:620a:6cc5:b0:860:21a7:47f6 with SMTP id
+ af79cd13be357-86021a748cemr28729885a.35.1758818375059; Thu, 25 Sep 2025
+ 09:39:35 -0700 (PDT)
 MIME-Version: 1.0
-X-Debian-User: corsac
-Subject: Re: [oss-security] CVE-2024-6387: RCE in OpenSSH's server, on
- glibc-based Linux systems
+From: Kaxil Naik <kaxilnaik@apache.org>
+Date: Thu, 25 Sep 2025 17:39:23 +0100
+X-Gmail-Original-Message-ID: <CAH5JyZpcppJjVPTcuQmLJMaEaJa7CsH+dAgv1DNyQwsjR25iRw@mail.gmail.com>
+X-Gm-Features: AS18NWD8L5FXN13nu02dvPCltPZ6MNpk5T9rQtcHhh2iooE96VwbPdns7CkCSZc
+Message-ID: <CAH5JyZpcppJjVPTcuQmLJMaEaJa7CsH+dAgv1DNyQwsjR25iRw@mail.gmail.com>
+To: oss-security@lists.openwall.com, users@airflow.apache.org, 
+	dev@airflow.apache.org
+Content-Type: multipart/alternative; boundary="000000000000784f9c063fa2d060"
+Subject: [oss-security] CVE-2025-54831: Apache Airflow: Connection sensitive details exposed
+ to users with READ permissions
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--000000000000784f9c063fa2d060
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 2024-07-01 at 08:40 +0000, Qualys Security Advisory wrote:
-> Finally, if sshd cannot be updated or recompiled, this signal handler
-> race condition can be fixed by simply setting LoginGraceTime to 0 in the
-> configuration file. This makes sshd vulnerable to a denial of service
-> (the exhaustion of all MaxStartups connections), but it makes it safe
-> from the remote code execution presented in this advisory.
+CVE-2025-54831: Apache Airflow: Connection sensitive details exposed
+to users with READ permissions
 
-Hi,
 
-thanks Qualys for the outstanding research and detailed report (as always).
+Severity: important
 
-On Mastodon Hector Marcan also proposed
-(https://mastodon.social/deck/@marcan@treehouse.systems/112715797114998895)=
- to
-use `-e` on sshd command-line as a mitigation measure.
+Affected versions:
+- Apache Airflow (apache-airflow) 3.0.3
 
-Copying the whole text from the first post for archiving purpose on the lis=
-t:
+Description:
 
-=3D=3D=3D=3D
-OpenSSH CVE-2024-6387 mitigation (on Fedora):
+Apache Airflow 3 introduced a change to the handling of sensitive
+information in Connections. The intent was to restrict access to
+sensitive connection fields to Connection Editing Users, effectively
+applying a "write-only" model for sensitive values.
 
-echo 'OPTIONS=3D-e' | sudo tee -a /etc/sysconfig/sshd && sudo systemctl res=
-tart
-sshd
+In Airflow 3.0.3, this model was unintentionally violated: sensitive
+connection information could be viewed by users with READ permissions
+through both the API and the UI. This behavior also bypassed the
+`AIRFLOW__CORE__HIDE_SENSITIVE_VAR_CONN_FIELDS` configuration option.
 
-I have no idea why Qualys didn't mention this. The only non-async-safe
-function called by the vulnerable signal handler is syslog(). So just turn =
-off
-syslog and log to stderr. On systemd distros, this still ends up in the
-journal anyway, so you lose nothing.
+This issue does not affect Airflow 2.x, where exposing sensitive
+information to connection editors was the intended and documented
+behavior.
 
-I confirmed that the message at the root of the issue is logged to stderr a=
-nd
-not syslog with this option:
+Users of Airflow 3.0.3 are advised to upgrade Airflow to >=3.0.4.
 
-[pid 638194] --- SIGALRM {si_signo=3DSIGALRM, si_code=3DSI_KERNEL} ---
-[pid 638194] getpgid(0)                 =3D 638194
-[pid 638194] getpid()                   =3D 638194
-[pid 638194] rt_sigaction(SIGTERM, {sa_handler=3DSIG_IGN, sa_mask=3D~[RTMIN=
- RT_1],
-sa_flags=3DSA_RESTART}, {sa_handler=3DSIG_DFL, sa_mask=3D~[KILL STOP RTMIN =
-RT_1],
-sa_flags=3DSA_RESTART}, 8) =3D 0
-[pid 638194] kill(0, SIGTERM)           =3D 0
-[pid 638194] getpid()                   =3D 638194
-[pid 638194] write(2, "Timeout before authentication for 192.168.21.10 port
-37734\r\n", 60) =3D 60
-[pid 638194] exit_group(1)              =3D ?
-[pid 638194] +++ exited with 1 +++
+References:
+https://airflow.apache.org/https://www.cve.org/CVERecord?id=CVE-2025-54831
 
-Edit: The problem code still calls snprintf() which on-paper is still unsaf=
-e.
-However, it does this a bunch of times anyway in multiple code paths, and
-Qualys didn't mention anything about it. A quick look through glibc code
-suggests that snprintf() only does unsafe things (allocate memory) if you
-format floats, which obviously ssh does not.
-=3D=3D=3D=3D
+--000000000000784f9c063fa2d060
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I agree with Hector that at first sight the `snprintf()` call look OK on gl=
-ibc
-(no dynamic memory allocation or complicated handling that I could spot
-either), and the write to stderr is done using write(2) (which is async-
-signal-safe).
+<div dir=3D"ltr"><pre style=3D"font-size:12px;color:rgb(0,0,0)"><font face=
+=3D"arial, sans-serif">CVE-2025-54831: Apache Airflow: Connection sensitive=
+ details exposed to users with READ permissions </font></pre><pre style=3D"=
+font-size:12px;color:rgb(0,0,0)"><font face=3D"arial, sans-serif">
+Severity: important=20
 
-The change isn't totally agnostic even on systemd/journald systems because
-you'll lose some log metadata (facility and loglevel) and it might depend on
-some local syslog configuration, but if one can't update it might be better
-than turning into a DoS (or totally losing logs by setting LogLevel to Quie=
-t).
+Affected versions:
+- Apache Airflow (apache-airflow) 3.0.3
 
-On Debian based systems you can put `-e` in SSHD_OPTS in /etc/default/ssh.
+Description:
 
-What are you thoughts on this mitigation?
+Apache Airflow 3 introduced a change to the handling of sensitive informati=
+on in Connections. The intent was to restrict access to sensitive connectio=
+n fields to Connection Editing Users, effectively applying a &quot;write-on=
+ly&quot; model for sensitive values.
 
-Regards,
-- --=20
-Yves-Alexis
------BEGIN PGP SIGNATURE-----
+In Airflow 3.0.3, this model was unintentionally violated: sensitive connec=
+tion information could be viewed by users with READ permissions through bot=
+h the API and the UI. This behavior also bypassed the `AIRFLOW__CORE__HIDE_=
+SENSITIVE_VAR_CONN_FIELDS` configuration option.
 
-iQEzBAEBCAAdFiEE8vi34Qgfo83x35gF3rYcyPpXRFsFAmaFuocACgkQ3rYcyPpX
-RFuJNAgA2RNFY/W6XazSArrINEHsw+GG7N7UjyOKFYJ4JebhgmG0SWH7Udd3ZWhU
-NP0C2+6FrSBWWrMgP2xF5bwx5ehBzcjaEwLuQR2AO2ztotdkADonrvP1vrdSTLpG
-ZAVgiuripN5B1fUatZMGDCK+uXP5Ottc7/0NZ2kwIB+VNHGSU2cesknQq6vpvubI
-sk8PuTFRayhglwXzdTWrPVKvAnYtiRSEV8hepPBpDngAqbIvb4LFGt734gLWvB9s
-FjAPOqySfzGM1B4MeH21D51bs4JDE7avxQG16ShS4Tm/Kg16Ea4N4rx7u2NDlfyQ
-JVzsOiu5TM6roMvBmHBw76jpi36Eow=3D=3D
-=3Dtity
------END PGP SIGNATURE-----
+This issue does not affect Airflow 2.x, where exposing sensitive informatio=
+n to connection editors was the intended and documented behavior.
+
+Users of Airflow 3.0.3 are advised to upgrade Airflow to &gt;=3D3.0.4.
+
+References:
+
+<a href=3D"https://airflow.apache.org/">https://airflow.apache.org/</a>
+<a href=3D"https://www.cve.org/CVERecord?id=3DCVE-2025-54831">https://www.c=
+ve.org/CVERecord?id=3DCVE-2025-54831</a>
+</font></pre><br class=3D"gmail-Apple-interchange-newline"></div>
+
+--000000000000784f9c063fa2d060--
