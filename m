@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1783" "Wednesday" "2" "November" "2016" "12:53:04" "+0100" "Robert Scheck" "robert@fedoraproject.org" "<20161102115304.GA11945@hurricane.linuxnetz.de>" "49" "Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" "^Cc:" nil nil "11" "2016110211:53:04" "[oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host" (number mark "        robert@fedor Nov  2   49/1783  " thread-indent "\"Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use wrong host\"\n") "<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>" ("<alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 8089 invoked by uid 550); 2 Nov 2016 12:44:47 -0000
+Received: (qmail 25919 invoked by uid 550); 28 Sep 2025 00:12:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,64 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21991 invoked from network); 2 Nov 2016 11:53:22 -0000
-Message-ID: <20161102115304.GA11945@hurricane.linuxnetz.de>
-References: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="6c2NcOVqGQ03X4Wi"
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1611020812500.375@tvnag.unkk.fr>
-X-GnuPG-Key: 0xCE3E1F56, available at http://pgp.uni-mainz.de/
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Scanned-By: MIMEDefang 2.78 on 127.0.0.1
-Cc: Daniel Stenberg <daniel@haxx.se>
-Date: Wed, 2 Nov 2016 12:53:04 +0100
-From: Robert Scheck <robert@fedoraproject.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] [SECURITY ADVISORY] IDNA 2003 makes curl use
- wrong host
+x-ms-reactions: disallow
+Received: (qmail 21869 invoked from network); 27 Sep 2025 23:57:27 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1759017436; bh=wBw00dGxWScqSpUAY8+yi7WfCNB2fgxxJyl3PXBVnJo=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=oUru4pRVtp8iejld/exIPukmV8LXsaGzJNysLLWlO0d2evOltFZcOG/7Qdf+KCGQB
+	 cz/mPh8o4XArjjn7QXc/2TkrcnWpqprI0hV8eiJwKtnO0kF7G7N1D34SLkLuoh2Zpc
+	 lJ1Plqe4+vMoBn4ozeTM9NFDxb2NYuV3kUPAhcQY66mL2NgPySE/gtJq1BWsWJyYlC
+	 j8pjYJxjaLFhrkXr3I0rsL1Y6qWYQcSd9nDGkI6yIrVGJP4udDyA9Tv+JPw+c1GXep
+	 XLDTOt6ZM6V4EfxFllS6NBuqx3wfhNfQDk7qr8cLbwFALEHe6s7IKlobaP7jU3OO+T
+	 Adr6cGPVJbB6w==
+Message-ID: <544cce0b-2734-47cd-9037-dc29a6ed0f73@apache.org>
+Date: Sat, 27 Sep 2025 16:57:15 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+Content-Language: en-US
+From: Michael Jumper <mjumper@apache.org>
+In-Reply-To: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
---6c2NcOVqGQ03X4Wi
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/27/25 1:30 AM, Amit wrote:
+> -----------------------------------------------------------------------
+> How to do secure coding and create secure software
+> -----------------------------------------------------------------------
+> 
+> I can do secure coding and no one can hack my code unless the language/OS have
+> some issues. You can challenge me on this.
+> 
+> Ultimately, all software boil down to functions/methods. If functions/methods
+> are secure then the whole software is secure.
+>
+Unfortunately, this is simply a faulty premise. You need to consider the 
+security of what you've built separately from the security of your 
+building materials.
 
-On Wed, 02 Nov 2016, Daniel Stenberg wrote:
-> For example, `stra=DFe.de` is translated into `strasse.de` using IDNA 200=
-3 but
-> is translated into `xn--strae-oqa.de` using IDNA 2008. Needless to say, t=
-hose
-> host names could very well resolve to different addresses and be two
-> completely independent servers. IDNA 2008 is mandatory for .de domains.
->=20
-> curl is not alone with this problem, as there's currently a big flux in t=
-he
-> world of network user-agents about which IDNA version to support and use.
+Security of software isn't inherited from the isolated security of each 
+of its functions, and it is generally not valid logic to assume that a 
+particular quality of the components of a whole will extend to the 
+entire whole:
 
-=46rom my point of view, this especially affects GNU libc for example.
+https://en.wikipedia.org/wiki/Fallacy_of_composition
 
-On the other hand, I am wondering if this should be really classified as a
-security related issue. Being interested in IDNA 2008 support myself, I did
-some IDNA 2008 patches in the past, but practically IDNA 2008 support is
-still not that widespread as I would wish. Does using an older standard (as
-in IDNA 2003) really classify this issue as a security related one? If so,
-I guess many upstreams should be explicitly made aware of that soon. Maybe
-MITRE (or somebody else) could share their thoughts about this, too?
+Consider individual CPU instructions as an easy counter example. Every 
+function is made up of such low-level instructions, and these 
+instructions are functions in their own right. The original core premise 
+would imply that no software vulnerabilities can exist except where 
+individual CPU instructions are vulnerable, which is clearly not the case.
 
-> It was first reported to the curl project on October 11 by Christian Heim=
-es.
+When you build something out of lower-level components, focusing purely 
+on the security of those components ignores the *arrangement* of those 
+components. From arrangement ("I'm made up of atoms"), higher levels of 
+behavior emerge ("I'm writing this email"), and you're left with 
+something that has its own security model that must be freshly considered.
 
-I reported the "=DF" issue and the lack of IDNA 2008 support in cURL on Sun,
-18 May 2014 17:17:03 +0200 directly to you, but I didn't classify it as a
-security related issue though... ;-)
-
-
-Greetings,
-  Robert
-
---6c2NcOVqGQ03X4Wi
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-
-iEUEARECAAYFAlgZ06AACgkQUwMgnc4+H1Y6TQCXYyWObt76DDM5Fbxdls++Lv+d
-BwCdEq7Oj5kAyABMiZkCjfkQDsPZvEI=
-=jma9
------END PGP SIGNATURE-----
-
---6c2NcOVqGQ03X4Wi--
+- Mike
