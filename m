@@ -1,4 +1,4 @@
-Received: (qmail 21698 invoked by uid 550); 21 Sep 2023 20:53:50 -0000
+Received: (qmail 9249 invoked by uid 550); 27 Sep 2025 22:17:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,206 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20371 invoked from network); 21 Sep 2023 20:53:16 -0000
-Date: Thu, 21 Sep 2023 22:52:50 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 9218 invoked from network); 27 Sep 2025 22:17:31 -0000
+Date: Sat, 27 Sep 2025 22:17:18 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20230921205250.GA13106@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <aNhibrmfkKuRJVsW@yuggoth.org>
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="K0lKd2lIJHqXo8yb"
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2023-4863: libwebp: Heap buffer overflow in WebP Codec
+In-Reply-To: <20250927214013.GA9163@openwall.com>
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
-Hi,
+--K0lKd2lIJHqXo8yb
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ideally this should have been brought in here ~10 days ago, but I guess
-better late than never, and I'd like to encourage others to be bringing
-relevant stuff to the list.
+On 2025-09-27 23:40:13 +0200 (+0200), Solar Designer wrote:
+[...]
+> However, if in "functions/methods are secure" you refer only to=20
+> smaller building blocks, then no, the program built from them may=20
+> still be insecure. Also "the whole software" isn't necessarily=20
+> just one program.
+[...]
 
-On September 11, Google announced an update to Chrome:
+Yes, in practical terms the majority of security vulnerabilities I=20
+handle day to day lately stem from insecure design choices. The=20
+software is working as designed, but the design was poorly chosen.
 
-https://chromereleases.googleblog.com/2023/09/stable-channel-update-for-desktop_11.html
+Insecure coding patterns are mostly caught by static analyzers=20
+during development or review, and so don't typically even merge to=20
+the public code repository much less end up in the hands of users.
+--=20
+Jeremy Stanley
 
-fixing this issue:
+--K0lKd2lIJHqXo8yb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Critical CVE-2023-4863: Heap buffer overflow in WebP. Reported by Apple
-> Security Engineering and Architecture (SEAR) and The Citizen Lab at The
-> University of Toronto's Munk School on 2023-09-06
-> 
-> We would also like to thank all security researchers that worked with us
-> during the development cycle to prevent security bugs from ever reaching
-> the stable channel.
-> 
-> Google is aware that an exploit for CVE-2023-4863 exists in the wild.
+-----BEGIN PGP SIGNATURE-----
 
-With the bug being in a library used by many projects, this made people
-wonder why a CVE was assigned to Chrome rather than to libwebp:
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmjYYmhfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WClyFxAAhlHCfKR0DTZSjk5KgFeqLpO+CdmTBQ+zvXLk0+J4XRuvwpeTU+y7XoDL
+IwhSJpwmGMKtDau16bpDS9CplAQGjSNlGYdMUG1mcwSIpdCtntdrRkkAesyYZSS0
+uRKMzEy5aUaru+7vB6tuI7eOffG1lx9T16EyufJesEEVHloGkRKVmyWyv4pUwsKd
+oLHTYLSyEokDEW9c5nsA9lqPPKUZYKotKeeLs8v6a2GF3PP8n9reZDdc2roFdZCF
+D6I9ALLnoCKs27Q4QDzvW1VHUIfpGUhV3Bg9kV2J6auO7sUgkt1Q9l2HqF0rbiEF
+0aFGCxH2+1xlzM+CJnWFmeff4Ip+HWjV9EgHUKq6PldjJfpTCo8RLyxd+srRhVpQ
+Pys9RM6E5vqVkmbBJS6qkbyfSdGcrYYDBIJs1Bh65L2zIDn6y648b2GMssMAaJvu
+/TYuzkgyoGoauZCWvgDdZlZYaescqujX4uvvEkybNJl4OfYES1n6Q1gLV+oXwI50
+a3cH21GQFoI4z2Ht6iLBkRdN6ce/fWgDGQRYCijf+0liSkKX+2WE42NV245s3jXC
+dfqZfKYAAFFzbBJfj7+xNjBayd0QY3Czk4twdVvnbXMoai8Htiktf+x1yeZG6Dpg
+I9zJXicoRs9nwe0bBSE7M6ehS2HleLWVK5sl1n83uQbFxNbQr0c=
+=89eA
+-----END PGP SIGNATURE-----
 
-https://adamcaudill.com/2023/09/14/whose-cve-is-it-anyway/
-
-Adam Caudill, Security Architect at 1Password:
-
-> The latest vulnerability causing headaches across the world is
-> CVE-2023-4863, issued by Google Chrome and described as "Heap buffer
-> overflow in WebP in Google Chrome prior to 116.0.5845.187 allowed a
-> remote attacker to perform an out of bounds memory write via a crafted
-> HTML page". This same CVE is cited by a number of other vendors as they
-> are impacted as well. But, is this really a Google Chrome vulnerability?
-> 
-> The fix for this issue is not actually part of Chrome or even Chromium,
-> but rather the libwebp library, which is used by Chromium, and a number
-> of other projects. The library is maintained by the WebM Project, which
-> is a joint effort between Google and a number of other companies.
-> Firefox, for example, uses also uses libwebp, and is impacted by this
-> vulnerability - though they don't mention Chrome in their advisory, but
-> they do mention Chrome's CVE.
-
-and more recently:
-
-https://twitter.com/wdormann/status/1704581257865085414
-
-Will Dormann:
-
-> Out-loud wonders:
-> Citizen Lab reported an ITW 0day to Apple, who assigned CVE-2023-41064
-> to ImageIo. Apple and Citizen Lab reported a libwebp issue to Google,
-> who filed CVE-2023-4863 to describe it, saying it's for "Chrome" only.
-> Are these both the same vulnerability?
-> 
-> If they are, then:
-> Apple got a libwebp vulnerability, and decided to assign a CVE to their
-> product rather than libwebp.
-> Google got a libwebp vulnerability, and also decided to assign a
-> different CVE to their product rather than libwebp.
-> Surely this isn't how CVE is to be used??
-
-The official CVE record still says:
-
-https://www.cve.org/CVERecord?id=CVE-2023-4863
-https://nvd.nist.gov/vuln/detail/CVE-2023-4863
-
-> Heap buffer overflow in WebP in Google Chrome prior to 116.0.5845.187
-> allowed a remote attacker to perform an out of bounds memory write via a
-> crafted HTML page. (Chromium security severity: Critical)
-
-However, "GitHub Advisory Database / GitHub Reviewed / CVE-2023-4863"
-correctly attributes this to libwebp, and also gives affected version
-ranges for some other projects.  It otherwise looks CVE-entry based and
-weirdly refers to "a crafted HTML page", even though that's specific to
-just some uses of the library:
-
-https://github.com/advisories/GHSA-j7hp-h8jx-5ppr
-
-> Heap buffer overflow in libwebp allow a remote attacker to perform an
-> out of bounds memory write via a crafted HTML page.
-
-What a mess.  Finally, distros are releasing update packages that use
-CVE-2023-4863 to refer to the libwebp vulnerability, e.g. Red Hat:
-
-https://access.redhat.com/errata/RHSA-2023:5309
-
-> The libwebp packages provide a library and tools for the WebP graphics
-> format. WebP is an image format with a lossy compression of digital
-> photographic images. WebP consists of a codec based on the VP8 format, and
-> a container based on the Resource Interchange File Format (RIFF).
-> Webmasters, web developers and browser developers can use WebP to compress,
-> archive, and distribute digital images more efficiently.
->   
-> Security Fix(es):
->   
-> * libwebp: Heap buffer overflow in WebP Codec (CVE-2023-4863)
-
-This is probably the best way to go.
-
-Somehow none of the above refers to vulnerable/fixed upstream libwebp
-version numbers.  As far as I can see, the main bug is fixed in 1.3.2:
-
-https://chromium.googlesource.com/webm/libwebp
-https://github.com/webmproject/libwebp
-
-NEWS file entry:
-
-> - 9/13/2023: version 1.3.2
->   This is a binary compatible release.
->   * security fix for lossless decoder (chromium: #1479274, CVE-2023-4863)
-
-Going through recent commits, the main one appears to be:
-
-commit 2af26267cdfcb63a88e5c74a85927a12d6ca1d76
-Author: Vincent Rabaud <vrabaud@google.com>
-Date:   Thu Sep 7 21:16:03 2023 +0200
-
-    Fix OOB write in BuildHuffmanTable.
-    
-    First, BuildHuffmanTable is called to check if the data is valid.
-    If it is and the table is not big enough, more memory is allocated.
-    
-    This will make sure that valid (but unoptimized because of unbalanced
-    codes) streams are still decodable.
-    
-    Bug: chromium:1479274
-    Change-Id: I31c36dbf3aa78d35ecf38706b50464fd3d375741
-    (cherry picked from commit 902bc9190331343b2017211debcec8d2ab87e17a)
-
-However, another maybe-important one also made it into 1.3.2:
-
-commit 95ea5226c870449522240ccff26f0b006037c520
-Author: Vincent Rabaud <vrabaud@google.com>
-Date:   Mon Sep 11 16:06:08 2023 +0200
-
-    Fix invalid incremental decoding check.
-    
-    The first condition is only necessary if we have not read enough
-    (enough being defined by src_last, not src_end which is the end
-    of the image).
-    The second condition now fits the comment below: "if not
-    incremental, and we are past the end of buffer".
-    
-    BUG=oss-fuzz:62136
-    
-    Change-Id: I0700f67c62db8e1c02c2e429a069a71e606a5e4f
-
-and then these are post-1.3.2 (not in that release), but possibly also
-important:
-
-commit dce8397fec159c9edfeec7c6388cb81428c87ed8
-Author: Masahiro Hanada <hanada@atmark-techno.com>
-Date:   Thu Sep 14 19:37:24 2023 +0900
-
-    Fix next is invalid pointer when WebPSafeMalloc fails
-    
-    When WebPSafeMalloc fails on VP8LHuffmanTablesAllocate,
-    next is not initialized to NULL.
-    VP8LHuffmanTablesDeallocate uses next to know the following nodes.
-    A patch fixes this issue.
-    
-    Change-Id: I144ae84cd97e5bca227018ef1afa95361267902c
-
-commit 433c7dca11bb5b001ce5ad36ac1afd2906a2f13e
-Author: Vincent Rabaud <vrabaud@google.com>
-Date:   Thu Sep 14 09:31:19 2023 +0200
-
-    Fix static analyzer warnings.
-    
-    Change-Id: I45f0db2310b1188809963af93240e3d438f807b8
-
-It looks like libwebp is having more eyes and static analyzers and
-fuzzers on it now and more (potential) issues are being fixed (great),
-but those additional fixes might not yet be making it into distros and
-into larger third-party projects using libwebp such as apparently
-Firefox, Signal, and Electron (to focus on FOSS here):
-
-https://twitter.com/flacon8x/status/1704617206137475093
-
-> WebP seemed to be all connected to Chrome, Mozilla, Edge, Brave, Signal,
-> 1Password and Apple Zero-Days. 
-> 
-> "any software that uses the libwebp library" is affected by this
-> vulnerability, including Electron-based applications such as 1Password
-> and Signal.
-
-I wish someone more involved made this posting, not me.  It is possible
-that I got something wrong.  I'd appreciate any relevant follow-ups.
-
-Alexander
+--K0lKd2lIJHqXo8yb--
