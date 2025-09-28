@@ -1,4 +1,4 @@
-Received: (qmail 20074 invoked by uid 550); 29 May 2026 19:56:26 -0000
+Received: (qmail 12076 invoked by uid 550); 28 Sep 2025 22:09:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,108 +8,39 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 20003 invoked from network); 29 May 2026 19:56:26 -0000
-Date: Fri, 29 May 2026 21:56:16 +0200
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 19788 invoked from network); 28 Sep 2025 21:43:20 -0000
+Date: Sun, 28 Sep 2025 22:43:11 +0100
 To: oss-security@lists.openwall.com
-Message-ID: <ahnvYETeqM5TtaO2@256bit.org>
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+ <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+In-Reply-To: <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+User-Agent: Heirloom mailx 12.5 7/5/10
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Arbitrary Code Execution via Python Omni-Completion
- in Vim < 9.2.561
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250928214311.BF89F8F5@notatla.org.uk>
+From: lists@notatla.org.uk
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
-Arbitrary Code Execution via Python Omni-Completion in Vim < 9.2.561
-====================================================================
-Date: 29.05.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Control of Generation of Code (CWE-94),
-     Inclusion of Functionality from Untrusted Control Sphere (CWE-829)
+> Can someone give an example as to how a software made up of secure
+> functions can be hacked?
 
-## Summary
-The Python omni-completion script in `python3complete.vim` for Vim with the
-`+python3` interpreter enabled (and the legacy `pythoncomplete.vim` for builds
-with the `+python` interpreter) executes the `import` and `from` statements
-found in the current buffer through Python's import machinery.  Because the
-buffer's working directory is on `sys.path`, opening a hostile `.py` file
-with a sibling Python package and invoking omni-completion runs that
-package's top-level code as the editing user.
+The security depends not only on the program but on your requirements and the
+environment where it is used.
+https://bad-example-find-xargs-rm.s3.eu-west-2.amazonaws.com/find_xargs_rm.html
 
-## Description
-`runtime/ftplugin/python.vim` installs `omnifunc=python3complete#Complete`
-on every Python buffer when Vim has `+python3` (or `+python`).
-When the user invokes omni-completion with `CTRL-X CTRL-O` in insert mode, the
-completer parses the buffer with an embedded Python tokenizer, regenerates a
-Python source string from the parsed scope, and passes it to `exec(src,
-self.compldict)` to populate the completion dictionary.
+There's the whole subject of side channels where computers are bad at keeping secrets.
 
-The regenerated source re-emits every top-level `import X` and
-`from X import Y` statement that the parser harvested from the buffer.
-Additionally, the completer extends `sys.path` with `['.', '..']` so
-that sibling modules in the buffer's working directory are importable.
-The combined effect: invoking omni-completion on a `.py` file runs
-Python's import machinery on attacker-supplied module names with the
-attacker's working directory on the search path.
+On scoring high at the wrong task I recommend:
+https://www.cl.cam.ac.uk/archive/rja14/Papers/wcf.pdf
 
-A crafted `.py` file containing `import evil_pkg` and a sibling
-`evil_pkg/__init__.py` in the same directory will execute the
-`__init__.py` code when the victim opens the file and presses
-`CTRL-X CTRL-O`.
+Books:
+Schneier: Secrets and Lies
+https://www.amazon.com/Secrets-Lies-Digital-Security-Networked/dp/0471453803/
 
-## Impact
-Arbitrary local code execution as the user running Vim, with the user's
-full credential set (SSH keys, cloud credentials, etc.), file-system
-access, and network egress.  Realistic delivery vectors include:
+Anderson: Security Engineering
+https://www.amazon.com/Security-Engineering-Building-Dependable-Distributed/dp/1119642787/
 
-- reviewing a third-party Python contribution by checking out a fork
-  branch and opening any `.py` file in it,
-- auditing an extracted source tarball, malware sample, or repository
-  whose layout the attacker controls,
-- opening a `.py` file from any downloaded archive where the extracted
-  layout places a hostile package next to the file being inspected.
-
-Exploitation requires:
-
-- Vim built with `+python3` (or `+python3/dyn` with a working Python 3
-  runtime)
-- Filetype plugins enabled (`filetype plugin on`, the default in
-  `runtime/defaults.vim` and most distribution `vimrc`s).
-- The victim opens the hostile `.py` file from the attacker-controlled
-  working directory and invokes omni-completion.
-
-The severity is rated Medium because the user must manually invoke omni-
-completion after opening the file; the bug does not fire on file-open alone.
-
-## Mitigation
-As of Vim patch v9.2.0561 the omni-completer no longer executes
-`import` or `from` statements harvested from the buffer by default.
-Users who require completion of imported module members (for example
-`os.<C-X><C-O>` offering `getcwd`, `path`, etc.) can opt back in with: >
-
-    let g:pythoncomplete_allow_import = 1
-
-Setting this variable re-enables the import-execution behavior and
-should only be used when editing code from trusted sources.  When the
-variable is unset or `0`, in-buffer symbols (classes, functions,
-variables defined in the file) still complete normally; only completion
-of names that would require executing imports is unavailable.
-
-## Acknowledgements
-The Vim project would like to thank github user tonghuaroot for
-reporting, analyzing the issue, providing a proof of concept
-and suggesting a fix.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.0561](https://github.com/vim/vim/releases/tag/v9.2.0561).
-- [Commit](https://github.com/vim/vim/commit/4b850457e12e1a678dd209f2868154f7553cbf8d)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-52mc-rq6p-rc7c)
-
-
-Best,
-Christian
--- 
-There's so much to say but your eyes keep interrupting me.
+Viega & McGraw: Building Secure Software
+https://www.amazon.com/Building-Secure-Software-Security-Documents-ebook/dp/B003CW67YQ/
