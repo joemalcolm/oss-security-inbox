@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2880" "Wednesday" "27" "July" "2016" "19:05:38" "+0200" "Christian Rebischke" "Chris.Rebischke@archlinux.org" "<20160727170537.GA3330@motoko>" "72" "Re: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers" "^Date:" nil nil "7" "2016072717:05:38" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" (number mark "        Chris.Rebisc Jul 27   72/2880  " thread-indent "\"Re: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers\"\n") "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1544 invoked by uid 550); 27 Jul 2016 17:08:24 -0000
+Received: (qmail 26534 invoked by uid 550); 28 Sep 2025 14:51:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,92 +6,143 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32453 invoked from network); 27 Jul 2016 17:05:53 -0000
-Message-ID: <20160727170537.GA3330@motoko>
-References: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
- <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YZ5djTAD1cGYuMQK"
-Content-Disposition: inline
-In-Reply-To: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
-User-Agent: Mutt/1.6.2 (2016-07-01)
-Date: Wed, 27 Jul 2016 19:05:38 +0200
-From: Christian Rebischke <Chris.Rebischke@archlinux.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: cve request: systemd-machined: information
- exposure for docker containers
+x-ms-reactions: disallow
+Received: (qmail 30478 invoked from network); 28 Sep 2025 03:35:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759030527; x=1759635327; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EThvQSEsdZASVxNngwA6EkJ6cLFqefdGwup77fJirPM=;
+        b=XcIGJI0LyQO75ZPjSf8X0Nsyh3c6LxorxUu8xKL1If5QCyG2tvUJuctB9EKuvbwnZ5
+         Opm+xu2slQ6DdWYOhW+G1FCqHFKwpzOZkddSlfrgvG3BdkDJaxUFAu1etSN0ILzlOu+1
+         2EEitO/avsw7A1KANZvWAyJOCuGlkh0/ee+9CbAVgzK2R0ZTskODcH+++Vjt85UlMnu0
+         Yn/xbUis/RQtumwz3CIXQbXkOZApoLaQefsHidxghLK4HbuFHRkRAWznNau9d58KZOwe
+         p4FXFQbLXGF9tZiJ71OE4SDLUQl8VFU9rIQiExphGjX2B09anx05f3c+OoMFvlGL2S+W
+         RTCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759030527; x=1759635327;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EThvQSEsdZASVxNngwA6EkJ6cLFqefdGwup77fJirPM=;
+        b=bn5FcCuhECTIP+WljM1Km1spRunIomQUpZ2QbAv2nLojkfdQbelsfqaJ8nodKSBSEv
+         KL6vujd9cjNNaXZFtNe7DzcBzG69B+TTh9Nd9kTggNTDa3dLZZFwViD+Y2uogEz8UPtR
+         I2fR7eXgNqJDTmim91luRBsu48xlD1rNojVmLttHdIrRgkQ3OOdSQRE8nYYhl0iEsx1S
+         +4/Wuk0Z2J+PCXeQ7vieu9/+tbAW864frJwLBrHVCgZ3Y6UGH48xJnntO34iUOfiyq6v
+         nuIdla6QeOFJ73HBuEWsNke/0F62TDhY4rkp7u05/DyxyoxBlwvaOM6pU6/7jbhU/soJ
+         U0EA==
+X-Gm-Message-State: AOJu0YxEfgAguiloXKLUUzcetl6AOiGiHymH1Ss1aKhJd32vQw2QFvSI
+	bL0Mj4+sulJf4yTItOU2EfnWpMxo5oHmSWaNLem+SybGlqrOMPVHP4Df5Z7LiY2/8Al+qiXvhaG
+	kb/jQA4yPL4XzNBKVVKkfrW1DQYGpfS/KQSEU
+X-Gm-Gg: ASbGncuFcIgrfI/fofRZInDE1MjciBjAIgU4dmqzU+gm4MBf/vbtR1khLc2Y+PXY9Mz
+	PKNemFhj5Oe8IF9NTEGRA5AAGbAIGiWOI+CujbW75OFbh8qyBcLSp+53jUx8fWLFJ/eD9s/gYuC
+	fL9wrBuells2FeEyftv4Jt5BwOv24bcGPNb6sQdRhk37pXXP7Li3WEOiV0JVo2qoH7D4d4uF15F
+	C5BLvP7LW1Vp5MGqHKaeBHtdRuu030Ymh8A3TYpBg==
+X-Google-Smtp-Source: AGHT+IGOIly3AHC2o5VcwrbxT3RMMqBkMmseRqRkMQJAtsCg5xhGjJ+zebQSCFWmnP/gYRP5gtJtCEY6BxmT6TNTNVw=
+X-Received: by 2002:a05:690e:1a9e:b0:635:4ece:20ad with SMTP id
+ 956f58d0204a3-6361a8734dcmr10094990d50.50.1759030526453; Sat, 27 Sep 2025
+ 20:35:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+In-Reply-To: <20250927214013.GA9163@openwall.com>
+From: Amit <amitchoudhary0523@gmail.com>
+Date: Sun, 28 Sep 2025 09:05:15 +0530
+X-Gm-Features: AS18NWDzp-Jla2no79RU6wz2-2DAhu7S3ow8H0y2wMFcb1195FsHRxOc09CeJd8
+Message-ID: <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000adadf7063fd435c1"
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
---YZ5djTAD1cGYuMQK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--000000000000adadf7063fd435c1
+Content-Type: text/plain; charset="UTF-8"
+
+On Sun, 28 Sept 2025 at 03:11, Solar Designer <solar@openwall.com> wrote:
+
+>
+> You claim that "If functions/methods are secure then the whole software
+> is secure."  If we talk C where main() is also a function, and limit the
+> definition of "whole software" to one program, then I'd agree - your
+> claim can as well directly say "if [all functions including] main() are
+> secure then the whole software [meaning this one program only] is
+> secure."  While true, under those definitions this isn't a useful claim.
+>
+> However, if in "functions/methods are secure" you refer only to smaller
+> building blocks, then no, the program built from them may still be
+> insecure.  Also "the whole software" isn't necessarily just one program.
+>
+>
+Everyone has said more or less the same thing that even if in a software
+all functions are secure then this doesn't mean that the software will be
+secure.
+
+But the point is that this is what people have said and this is all
+theoretical.
+
+Can someone give an example as to how a software made up of secure
+functions can be hacked?
+
+Let's assume that there are 2 (or more) different software and all the
+functions in all the software are secure and these software are interacting
+with each other. Then how can they be hacked? Can someone give an example.
+
+I don't agree with theoretical assumptions.
+
+Someone also mentioned that secure functions having limits on arguments can
+result in DoS. In my opinion, DoS is better than getting hacked.
+
+But still, the main point is that can someone give an example of how a
+software made up of all secure functions be hacked? I request for an
+example (not theoretical statements).
+
+Or, some example that happened in the past in the real world? I will
+analyze that.
+
+Amit
+
+--000000000000adadf7063fd435c1
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 26, 2016 at 03:24:13PM -0400, cve-assign@mitre.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->=20
-> > Once docker containers register themselves to systemd-machined
-> > by oci-register-machine. Any unprivileged user could run
-> > machinectl to list every single containers running in the host
-> > even if the containers do not belong to this user (including containers
-> > belong to the root user), and access sensitive information associated
-> > with any individual container including its internal IP address, OS
-> > version, running processes, and file path for its rootfs.
-> >=20
-> > $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
-> > cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
-> >            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
-> >           Leader: 43494 (sleep)
-> >          Service: docker; class container
-> >             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b=
-20f759613
-> >          Address: 172.17.0.2
-> >                   fe80::42:acff:fe11:2
-> >               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
-> >             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c=
-254ebfd2d
-> >                   43494 sleep 3000
->=20
-> Use CVE-2016-6349.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><div class=3D"gmail_quote gmail=
+_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, 28 Sept 202=
+5 at 03:11, Solar Designer &lt;<a href=3D"mailto:solar@openwall.com">solar@=
+openwall.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex"><br>
+You claim that &quot;If functions/methods are secure then the whole softwar=
+e<br>
+is secure.&quot;=C2=A0 If we talk C where main() is also a function, and li=
+mit the<br>
+definition of &quot;whole software&quot; to one program, then I&#39;d agree=
+ - your<br>
+claim can as well directly say &quot;if [all functions including] main() ar=
+e<br>
+secure then the whole software [meaning this one program only] is<br>
+secure.&quot;=C2=A0 While true, under those definitions this isn&#39;t a us=
+eful claim.<br>
+<br>
+However, if in &quot;functions/methods are secure&quot; you refer only to s=
+maller<br>
+building blocks, then no, the program built from them may still be<br>
+insecure.=C2=A0 Also &quot;the whole software&quot; isn&#39;t necessarily j=
+ust one program.<br><br></blockquote><div><br></div><div>Everyone has said =
+more or less the same thing that even if in a software all functions are se=
+cure then this doesn&#39;t mean that the software will be secure.</div><div=
+><br></div><div>But the point is that this is what people have said and thi=
+s is all theoretical.</div><div><br></div><div>Can someone give an example =
+as to how a software made up of secure functions can be hacked?</div><div><=
+br></div><div>Let&#39;s assume that there are 2 (or more) different softwar=
+e and all the functions in all the software are secure and these software a=
+re interacting with each other. Then how can they be hacked? Can someone gi=
+ve an example.</div><div><br></div><div>I don&#39;t agree with theoretical =
+assumptions.</div><div><br></div><div>Someone also mentioned that secure fu=
+nctions having limits on arguments can result in DoS. In my opinion, DoS is=
+ better than getting hacked.</div><div><br></div><div>But still, the main p=
+oint is that can someone give an example of how a software made up of all s=
+ecure functions be hacked? I request for an example (not theoretical statem=
+ents).</div><div><br></div><div>Or, some example that happened in the past =
+in the real=C2=A0world? I will analyze that.</div><div><br></div><div>Amit<=
+/div><div><br></div></div></div>
 
-Hello,
-I don't think that the bug for this problem lies in systemd.
-It's more a design mistake in docker or oci-register-machine.
-I have forwarded this issue to the systemd developer team and I don't
-think they will fix this in the future. In their opinion it's a
-bug in docker or oci-register-machine:
-
-https://github.com/systemd/systemd/issues/3815
-
-by the way.. I would feel glad if the security researchers would first
-message the developers and then assign a CVE a bug. This is the normal
-way for a full disclosure.
-
-best regards,
-
-Christian Rebischke
-
---YZ5djTAD1cGYuMQK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJXmOnhAAoJENIUYePf4gYNNf0P/jfo7WqpnnKxFyzOJ1Z61/Dn
-4O4AKDZzj2TEBB0DbariZGu3KXc36GfSFPZKvuKdZd97MqPaeUwRx68+Ib9Ho2kN
-FLnoqmVRyDFLQBe/axx0T9kQ2yCXpOm9BoqUYKOzgMyPBybEbV/KSG2v45/oXn2v
-XdhLg1QWINvPkvl+VvRSEl/F+JTmyjTTTgWbMuvnJSORNQVNmwSUiBY5Wttrb8Au
-eWibwyzIMkXWzC8sH+Md4nU9mAdmg3DOMJzKAZj5ltKAxt++1EXLE4qWe8pWtjR0
-8ffw0RGynmvXf30Ketgc9nHpD7FOiLOFBZtEj0epyUhIplKLB1umrjPicmcJh/7k
-f+B5SeMYj3PPozIpTvrNnp6o6iI0TUqQIyqaDzrIYzq+rV2goH8nyvdtMA5IDRUz
-Wij4FI9B0rmPwzIRsnUmWnxkLskiNcGdcbTrv5L9tMLQrE821YTc8TnItlZUFz7j
-Z5MFJSA2Hq5ReU0sf3kuPE7IM8UW3VLO5FnJkH4rGwOWPHSb4OsJYU+6mjAp5nQQ
-AXMIJ2o23YMGAdmO4v5V5S65z5K0tbc4hAM4E5hp/s0DDErNMD7lhDJn/WryDGKI
-umFr1jracHPzyGTHWhqc4eqQrtHBN+RboYWUORn5V2NAYgXOE2IcE8nQE8mhfZ24
-2AyTfgozRDLA1a6Gg+vT
-=lwap
------END PGP SIGNATURE-----
-
---YZ5djTAD1cGYuMQK--
+--000000000000adadf7063fd435c1--
