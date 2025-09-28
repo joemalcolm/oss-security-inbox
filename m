@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2004" "Monday" "26" "June" "2017" "22:50:12" "+0200" "Solar Designer" "solar@openwall.com" "<20170626205012.GA17038@openwall.com>" "43" "[oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)" "^Date:" nil nil "6" "2017062620:50:12" "[oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)" (number mark "        solar@openwa Jun 26   43/2004  " thread-indent "\"[oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)\"\n") "<CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>" ("<20170624005003.GB27479@grsecurity.net>" "<CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com>" "<20170624151504.GA25902@grsecurity.net>" "<CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com>" "<20170625013537.GA21637@grsecurity.net>" "<CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1795 invoked by uid 550); 26 Jun 2017 20:52:42 -0000
+Received: (qmail 18176 invoked by uid 550); 28 Sep 2025 15:42:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +6,95 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25868 invoked from network); 26 Jun 2017 20:50:29 -0000
-Message-ID: <20170626205012.GA17038@openwall.com>
-References: <20170624005003.GB27479@grsecurity.net> <CAADWXX8JYe-AewtzoY6VBVLPTs+UvnfZst76vL4tccf6x9cY=g@mail.gmail.com> <20170624151504.GA25902@grsecurity.net> <CA+55aFyZpWutYKccn1eZBV5Lj_bF7gEZqy=LgjDOBqHk4poeTA@mail.gmail.com> <20170625013537.GA21637@grsecurity.net> <CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALogXGW++8_OVkE_hyREa_fYjK1eDkinZQfBDVYVJ=vA0Nw-dg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 26 Jun 2017 22:50:12 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] civilized discussion (Re: More CONFIG_VMAP_STACK vulnerabilities, refcount_t UAF, and an ignored Secure Boot bypass / rootkit method)
+x-ms-reactions: disallow
+Received: (qmail 1181 invoked from network); 28 Sep 2025 15:39:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=herricane.ca; s=default; h=Content-Transfer-Encoding:Content-Type:
+	Message-ID:References:In-Reply-To:Subject:To:From:Date:MIME-Version:Sender:
+	Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=LFQ1lzdzhlzdum4omqqncduoRxcoDBK+vQXcfVN4ZJA=; b=WR8erjjlunM1tyZjYTJtL5SnxN
+	BcWJTUsuwBt6YiKbG23zZNs0mc2bOc1lX10SznUZ3ebtPIVHQ4msHHelo/EsL94DSDk3+u8L98bl9
+	GltyD3rwqnJmy2fSMHhVaIVF8yYb89WASuAqI/RcLOOPkyr7+Wht9b86r561lfFjN/cV7WUgH8rlI
+	XFjO40Ox6FvHNn04QaEqpdHGhkMSB5t/1sJ2BR+A5l2acJyzJrzcG1PUaFDiNWq8ByHacmbahGpSv
+	++ft6HC2Ux43uKFiYrcQknOcFsRZar4nNaPfxYZynsCKsGjM0y8dRj48vSs7GgWgU6Ihz3Oun7Bgb
+	x11mj6Dw==;
+MIME-Version: 1.0
+Date: Sun, 28 Sep 2025 11:39:23 -0400
+From: Katie <katie@herricane.ca>
 To: oss-security@lists.openwall.com
+In-Reply-To: <aNlRCNC4_Jys33iA@yuggoth.org>
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+ <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+ <aNlRCNC4_Jys33iA@yuggoth.org>
+User-Agent: Roundcube Webmail/1.6.11
+Message-ID: <2adc239e81a272808e42f4be59479343@herricane.ca>
+X-Sender: katie@herricane.ca
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: 51.161.115.83
+X-SpamExperts-Domain: out.mailpro2.whc.ca
+X-SpamExperts-Username: 51.161.115.83
+Authentication-Results: web-dns1.com; auth=pass smtp.auth=51.161.115.83@out.mailpro2.whc.ca
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.15)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVzkKdCtcsyq2M+fj6t3NdnVaPuWW65IIT8
+ lIUNtU+PTCu2SmbhJN1U9FKs8X3+Nt0RO5ts8sca2iwkxXjGoQrycdsS/K0WfPyaaqqAEeqiutcV
+ PSoHm0W/3adFfiYl2nsdibJ06/OOlyVceQbE/KzY0xFuTxT4zj7FZjRutUGTvzFyLdg06ZXED6UM
+ nC21Pwe5VKCmY71Q8rpziSs1z3EmSWDshiesHrcEYBdmJouoxYHVk96emT+AZZiFE3SvFSxLV2X/
+ 3wnXUyDVGAbHopQqACkJUHU38G0nImq/tiQjLLS3+BvyeXgHepft495FCqN6E5JqhSWdWpr9L2bu
+ lXmia/8Uon9wny37HD2R7t0vN9D24m2/y9IKUWP7z6pmKVXQuoj4uAALoxT8jVnYX3cDPfLi+tUq
+ EWFwO9WZ9ZslDBGE3MqH1GuGi/5k++Cs4cIB4BzfgSOdfrbzWOGBisJW31/E3ahF5MMcDI7KdpjQ
+ KTg+JCkfKD/ivi53r0DEEjdYKEtzJCEksnUuhAOykqB2RzjSgN+Ml6WkNvJzLqQmE8SLLpEkwSMJ
+ SQNgn3B0EJOEU1utNskUAORCV2WFZX0jqC56dOYVWA9zZxnRGvQcaXFDUSMW1uAqSBy3jxO98TK2
+ NcKifqx6rY69A9LuIE/WzKPsuvcd5LiDZgB3HR68dOBwp6A2VTVeALfm4Lf8tZPODV874XtA1bGv
+ lnhG30957+Y2bPCY/Al8WD7b8tUqrzNoVb66Uz/C2kybry8w32fLtIjT9ik6HugYPaEaeUmia/M6
+ foC3smmcr08dR1h2HvmPB6Fb3VEVScTTBg7DV388CVsONrMJuGzuoGnKTKcyG49os/tOryltftT4
+ NZEQ3vI4J7QA6bnykuTHKSWdRL6OtyN7A2wRRV8n4XE0VxMbI5WI/3F1qHeXtIZXg6+e2NeioPng
+ UbDzIGafosDCkZydVrCpNS0SSX2t6gHZym81j3JiOSC6vtxuYy/MBLIoEcYH+LKBw+SplSb/9OJq
+ 7RgoJpzMYZre45oQSaK3jGBp
+X-Report-Abuse-To: spam@se1.web-dns1.com
+X-Complaints-To: abuse@se1.web-dns1.com
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
-Hi all,
+"the term "hack" has a lot of other less nefarious meanings, and using 
+it to describe unwanted or criminal activity casts the entire hacker 
+community in a negative light."
 
-Yes, I too would like the discussions in here to stay civilized.
+Just want to add my support for this important statement.  Thanks for 
+saying stating this so well Jeremy!
 
-Brad wrote to Linus:
+-Katie
 
-On Sat, Jun 24, 2017 at 9:35 PM, Brad Spengler <spender@grsecurity.net> wrote:
-> With no technical content coming from your end, there's no need to discuss
-> anything further -- don't waste your time because I won't reply.
-
-and I hope that Linus won't reply (as far as I can see, he did not so
-far) and this does in fact end that thread.
-
-On Mon, Jun 26, 2017 at 03:16:06PM -0400, Mansour Moufid wrote:
-> Is there another mailing list for discussions of Linux security? Or forum?
-
-At Openwall, we also host the kernel-hardening mailing list, but we
-currently moderate it similarly - that is, we're not preventing
-occasional/infrequent threads like this right away, letting a sensible
-number of messages to pass through, even if with insults and such.
-Usually those threads end on their own.  In fact, I only recall one very
-recent thread in there where I intervened and technically shut it down.
-If the pro-grsecurity and/or anti-grsecurity folks try much harder,
-we'll probably have to start moderating the lists much stricter.
-
-There are probably other suitable mailing lists and forums as well.
-Maybe someone else would share some.
-
-> I have been thinking of sharing a few patches for the last couple months.
-> I don't think this is the right place after the kind of insults I saw this week.
-
-This sounds weird to me: you've been sitting on those patches for "the
-last couple months" and now a thread "this week" finally made you decide
-not to post them in here.  Anyhow, if those patches would be on-topic in
-here or on kernel-hardening, please feel free to reconsider.
-
-Off-list, someone else also explained to me that the recent dirt in here
-discouraged them from posting certain reasonable content.  So this is
-probably happening, and that's a pity.  I ask that anyone who thinks
-they have higher quality content than what we see in this thread does
-post that.  Let this be your response.
-
-Alexander
+On 2025-09-28 11:15, Jeremy Stanley wrote:
+> On 2025-09-28 09:05:15 +0530 (+0530), Amit wrote:
+> [...]
+>> But still, the main point is that can someone give an example of how a 
+>> software made up of all secure functions be hacked? I request for an 
+>> example (not theoretical statements).
+>> 
+>> Or, some example that happened in the past in the real world? I will 
+>> analyze that.
+> [...]
+> 
+> As an aside, the term "hack" has a lot of other less nefarious 
+> meanings, and using it to describe unwanted or criminal activity casts 
+> the entire hacker community in a negative light.
+> 
+> I think you still have tunnel vision, imagining that "hacking" software 
+> can only mean attacking flaws in the way it was coded. When I say most 
+> of the security flaws I deal with stem from poor design choices rather 
+> than insecure coding practices, I really mean it. I'm one of the 
+> vulnerability managers for the OpenStack project, and skimming over all 
+> the recent entries at the top of 
+> https://security.openstack.org/ossalist.html they basically all fit 
+> that description.
+> 
+> It's comparatively easy to avoid or catch insecure coding patterns that 
+> could lead to vulnerabilities, it's much harder to design complex 
+> software securely.
