@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1100" "Tuesday" "14" "July" "2020" "11:31:04" "+0800" "ShaoFeng Shi" "shaofengshi@apache.org" "<CANfpUcv3P9nza4UAJSHGScvrft53c8APzOaD=6sf0zrD4tiNMA@mail.gmail.com>" "33" "[oss-security] [SECURITY][CVE-2020-13925] Apache Kylin command injection vulnerability" nil nil nil "7" "2020071403:31:04" "[oss-security] [SECURITY][CVE-2020-13925] Apache Kylin command injection vulnerability" (number mark "U       shaofengshi@ Jul 14   33/1100  " thread-indent "\"[oss-security] [SECURITY][CVE-2020-13925] Apache Kylin command injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY][CVE-2020-13925] Apache Kylin command injection vulnerability" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29882 invoked by uid 550); 14 Jul 2020 08:17:02 -0000
+Received: (qmail 16251 invoked by uid 550); 28 Sep 2025 15:15:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,81 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1195 invoked from network); 14 Jul 2020 03:31:52 -0000
-X-Gm-Message-State: AOAM530QvoHoz7bd/rozzUuqIUTlmtk2gVkVzgiofw92D4Bao5Z5AO6F
-	y4sEbn5SH7JW+utWR7Jg8t6PuWMioVIJKsHBmjA=
-X-Google-Smtp-Source: ABdhPJyLiQ2zUfZQcj9Dp3gfdM3WeYL0dnUVbTFuvJ+jsofjFMLjlLFc/h9k9MYwvzn9IGdoYPr2ne8zurSOFC7eatc=
-X-Received: by 2002:a05:6102:126a:: with SMTP id q10mr1607641vsg.35.1594697500007;
- Mon, 13 Jul 2020 20:31:40 -0700 (PDT)
-MIME-Version: 1.0
-From: ShaoFeng Shi <shaofengshi@apache.org>
-Date: Tue, 14 Jul 2020 11:31:04 +0800
-X-Gmail-Original-Message-ID: <CANfpUcv3P9nza4UAJSHGScvrft53c8APzOaD=6sf0zrD4tiNMA@mail.gmail.com>
-Message-ID: <CANfpUcv3P9nza4UAJSHGScvrft53c8APzOaD=6sf0zrD4tiNMA@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 16210 invoked from network); 28 Sep 2025 15:15:31 -0000
+Date: Sun, 28 Sep 2025 15:15:20 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000003227905aa5e72b4"
-Subject: [oss-security] [SECURITY][CVE-2020-13925] Apache Kylin command injection vulnerability
+Message-ID: <aNlRCNC4_Jys33iA@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+ <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uqIwm8L4nXTvU3b5"
+Content-Disposition: inline
+In-Reply-To: <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
---00000000000003227905aa5e72b4
-Content-Type: text/plain; charset="UTF-8"
+--uqIwm8L4nXTvU3b5
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Versions Affected: 2.3.0, 2.3.1, 2.3.2, 2.4.0, 2.4.1, 2.5.0, 2.5.1, 2.5.2,
-2.6.0, 2.6.1, 2.6.2, 2.6.3, 2.6.4, 2.6.5, 2.6.6, 3.0.0-alpha, 3.0.0-alpha2,
-3.0.0-beta, 3.0.0, 3.0.1 3.0.2
+On 2025-09-28 09:05:15 +0530 (+0530), Amit wrote:
+[...]
+> But still, the main point is that can someone give an example of how a=20
+> software made up of all secure functions be hacked? I request for an=20
+> example (not theoretical statements).
+>
+> Or, some example that happened in the past in the real world? I will=20
+> analyze that.
+[...]
 
-Description:
+As an aside, the term "hack" has a lot of other less nefarious=20
+meanings, and using it to describe unwanted or criminal activity=20
+casts the entire hacker community in a negative light.
 
-Similar to CVE-2020-1956, Kylin has one more restful API which concatenates
-the API inputs into OS commands and then executes them on the server; while
-the reported API misses necessary input validation, which causes the
-hackers to have the possibility to execute OS command remotely.
+I think you still have tunnel vision, imagining that "hacking"=20
+software can only mean attacking flaws in the way it was coded. When=20
+I say most of the security flaws I deal with stem from poor design=20
+choices rather than insecure coding practices, I really mean it. I'm=20
+one of the vulnerability managers for the OpenStack project, and=20
+skimming over all the recent entries at the top of=20
+https://security.openstack.org/ossalist.html they basically all fit=20
+that description.
 
-Mitigation:
-Users of all previous versions after 2.3 should upgrade to 3.1.0.
+It's comparatively easy to avoid or catch insecure coding patterns=20
+that could lead to vulnerabilities, it's much harder to design=20
+complex software securely.
+--=20
+Jeremy Stanley
 
-Credit:
-We would like to thank Clancey <clanceyz@protonmail.com> for reporting
-this issue.
+--uqIwm8L4nXTvU3b5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Best regards,
+-----BEGIN PGP SIGNATURE-----
 
-Shaofeng Shi =E5=8F=B2=E5=B0=91=E9=94=8B
-Apache Kylin PMC
-Email: shaofengshi@apache.org
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmjZUQBfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCngow/+OqjWG2qpmPU+gGAzNHEgWbf94Kcyauh6epwVYf3pNL1B1utHR9mf5KZ+
+5ZTxLR/DBUn6OKQtNdRlc8r3nRKaizkEw/SZvfC7/3p9uwGOmnjhfP/NeCt3SAtK
+WcffrhICWHJ4xNh9ZxakbEQ0qetv5aUL8lkc0w/s20xayB6u3I/gneCoar+L4C3g
+h0/N6Q/+hrbj1IJQyqZYWtqH/t2lpbA7d9jLSL/hHdEO74DqMmDaTjdNKljeI7cX
+EZvVh5RK2qWB+OU4aRkGO4pFZjkoOAQpZmymol36MUXaxmvjdHqwi3xbd0zit+1/
+gkAqtWGIf8EQaZ9I0+p2XAq4mtKwIJ5WiNrnHbKFwqjwJOkTKTBTlEKlLrYxjfjV
+zdBDgAaPSgQiIeFuPnPiXQvJ3ptVy47I/dcuPr+l3T4Uhi1/jSoxnwAH3+hi8qRD
+zzJBL3UpxhCHd5ONx5D+Po9qvZYA6N/7bsrL52wc/xylRxf0cWnPB+L25eR+7X72
+sCQ0AM94K73kkcrmCqGqkoty2SOmRT9J/p/FYuh7zrzEwLwRuZKWwZhfwmAoD2gt
+NcK+lkBVFxT+E98xpS6dUDBpeC3VwRgO4QPCtbxW98c0of22prhOljHSuAfsvB/L
+tncCaG5WZgjexxvAfAb9Js0PQ7M/shSE12Kf0qz5HehxiKjNDLU=
+=Daa6
+-----END PGP SIGNATURE-----
 
-Apache Kylin FAQ: https://kylin.apache.org/docs/gettingstarted/faq.html
-Join Kylin user mail group: user-subscribe@kylin.apache.org
-Join Kylin dev mail group: dev-subscribe@kylin.apache.org
-
---00000000000003227905aa5e72b4--
+--uqIwm8L4nXTvU3b5--
