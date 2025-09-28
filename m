@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1452" "Sunday" "22" "March" "2015" "12:04:54" "+1000" "Justin Steven" "justin@justinsteven.com" "<CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>" "52" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032202:04:54" "[oss-security] CVE for Kali Linux" (number mark "        justin@justi Mar 22   52/1452  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<550E21FA.6090704@redhat.com>" ("<550E21FA.6090704@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20269 invoked by uid 550); 22 Mar 2015 02:06:18 -0000
+Received: (qmail 28376 invoked by uid 550); 28 Sep 2025 15:39:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +6,66 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19920 invoked from network); 22 Mar 2015 02:05:20 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=YrvVjzDr20LKpcPKCvU/Hk/d07E02LKqEZUkbvSB7h8=;
-        b=KYrWw5m73kAYWd2Aj+AmKo67KO7ss5jLvkWSRHHlatzcKALzKg3HZGxf4MyYr57EVx
-         dW0+m2XD/eR8zZuDYW3q/wxiWKVrWnUs726gSorjzFl3FBoj7/zhky6bymW+xVtdad//
-         1k7PNFgkS/pxJbxjHiXhg+2Yc674eXKwBCZwHN5GEZLkzQfHDP6L8NO4yzhQIUliDlGK
-         2/IuM/GoNNZXljFzG9Ay9sB319immHELjJh2SSjm/IKu7EBFfAnWJV8ZF/s45S4qAw9z
-         fHmM6l+giyjGr4hU0v2+T3AvWCZigVKF0I2RkQaakHS6loPIFVDFMHXaYURipth8vWJO
-         EwtA==
-X-Gm-Message-State: ALoCoQmWR0Opyelk/nAIKU0QT/mnKvzaDKV0PSaJM3T00aaKV8yI2+KYntmLWafuvE5mfVkIH4MA
-X-Received: by 10.107.155.131 with SMTP id d125mr159022696ioe.17.1426989909409;
- Sat, 21 Mar 2015 19:05:09 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <550E21FA.6090704@redhat.com>
-References: <550E21FA.6090704@redhat.com>
-Message-ID: <CAHZU0yRzjyO78Nan5jgf38Mqt3hPQDDhcsirdVmBFPmRZ=6k9g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140aacea6189d0511d6fa49
-Cc: Assign a CVE Identifier <cve-assign@mitre.org>
-Date: Sun, 22 Mar 2015 12:04:54 +1000
-From: Justin Steven <justin@justinsteven.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 26566 invoked from network); 28 Sep 2025 15:31:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=0XcBkQZFR8
+	12DM3ajEsLjYAJBPOAAu1RrEcxoVx2aLo=; h=date:references:in-reply-to:
+	subject:cc:to:from; d=openbsd.org; b=YPGQVl8CzEKgL1MHML4X8AOPaAaKm4V9h
+	U/opBxG6wrgyFgwFbIh7lfs9KHBUPWMkJPzpwAwrEAhNTML5rvwQR+jknRs98Uwk52whb8
+	/UnyhSz5DCw5UOr63Iy2WUGLNdXP2Y73wdHRKulve9evSYbkoD+LlpEKfjktzKYvc+cDfN
+	BaeON3MYYoJYTA9QKrlqFiEj9WcbBAfLuBgjiRAU7bJEzlF/+oT4rBG92V8v402fLLKvE/
+	t+NU4s8H5HK/FFQTjIRORqa19mRcUYn3h+wd3zR5hlyTxZ620BWzt/PxsaFkmNz4iVXpAT
+	ZJ/53vd6RcKkyb5YsEAwwxgqOcbwg==
+From: "Theo de Raadt" <deraadt@openbsd.org>
+To: "Adiletta, Andrew" <ajadiletta@wpi.edu>
+cc: Damien Miller <djm@mindrot.org>, Solar Designer <solar@openwall.com>,
+    "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
+    "openssh@openssh.com" <openssh@openssh.com>,
+    "Tol,
+    Caner" <mtol@wpi.edu>, "Sunar, Berk" <sunar@wpi.edu>,
+    "Doroz,
+    Yarkin" <ydoroz@wpi.edu>,
+    "Todd C. Miller" <Todd.Miller@courtesan.com>,
+    "pgut001@cs.auckland.ac.nz" <pgut001@cs.auckland.ac.nz>
+In-reply-to: <BL1PR01MB772375CA93AF5608280A224FC118A@BL1PR01MB7723.prod.exchangelabs.com>
+References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org> <20250923032113.GA14348@openwall.com> < BL1PR01MB772308134BF946DF07159A05C11CA%BL1PR01MB7723.prod.exchangelabs.com@mailhub.eait.uq.edu.au> <c5d66517-f422-1fe7-03a0-d79cf4af1fbf@mindrot.org> <76091.1759068746@cvs.openbsd.org> <BL1PR01MB772375CA93AF5608280A224FC118A@BL1PR01MB7723.prod.exchangelabs.com>
+Comments: In-reply-to "Adiletta, Andrew" <ajadiletta@wpi.edu>
+   message dated "Sun, 28 Sep 2025 15:22:43 -0000."
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 28 Sep 2025 09:30:38 -0600
+Message-ID: <13391.1759073438@cvs.openbsd.org>
+Subject: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a bogus CVE in OpenSSH
 
---001a1140aacea6189d0511d6fa49
-Content-Type: text/plain; charset=UTF-8
+Adiletta, Andrew <ajadiletta@wpi.edu> wrote:
 
-Kali, like its upstream (Debian), signs packages using gpg.
+> As far as SSH is concerned there are ways to handle synchronization (we o=
+utline them
+> in the paper). The POC concept we present in the paper should be acceptab=
+le to anybody
+> who is fluent in the Rowhammer/microarch attack literature.
 
-https://wiki.debian.org/SecureApt
+I disagree.  I believe your simulation is fake.=20
 
-Kali provides sha1sums over https at their site to verify the .iso
-download, as well as providing gpg signatures for .iso files
+> There are numerous results
+> where the target is slowed down to solve synchronization. We don=E2=80=99=
+t brush aside or hide
+> the synchronization issue in the paper but discuss it explicitly.
 
---
-Justin
+Then why don't you produce exactly such a synchronization without any sourc=
+e code
+changes, in any actual distribution build system??
 
-On 22 March 2015 at 11:59, Kurt Seifried <kseifried@redhat.com> wrote:
+It's not that you brush or hide; it is that you overplay the seriousness by
+providing an entirely synthetic example.
 
-> From RISKS, looks like it needs a CVE
->
-> Date: Tue, 17 Mar 2015 07:37:50 -0700
-> From: Henry Baker <hbaker1@pipeline.com>
-> Subject: Kali Linux security is a joke!
->
-> FYI -- Your best chance to hack the hackers...
->
->   "Downloading Kali Linux"
->
->   "Alert!  Always make certain you are downloading Kali Linux from official
->   sources, as well as verifying md5sums against official values.  It would
->   be easy for a malicious entity to modify a Kali install to contain
->   malicious code, and host it unofficially."
->   http://docs.kali.org/category/introduction
->
-> ---
->
-> No kidding!
->
-> So how come whenever you do apt-get install in Kali Linux, it accesses
-> http://security.kali.org and http://http.kali.org ??
->
-> Hasn't Kali heard about MITM attacks against http ??
->
-> What's the point of verifying md5 sums against "official values", if Kali
-> can't even get the "official values" securely ??
->
->
->
-> --
-> Kurt Seifried -- Red Hat -- Product Security -- Cloud
-> PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
->
->
+Unless your document is amended, non-astute readers in the future will
+read this as "serious OpenSSH problem" instead of "entirely synthetic
+and fake demonstration".
 
---001a1140aacea6189d0511d6fa49--
+I think you made a mistake choosing OpenSSH as a demonstration target
+for reputational benefit, that hand-waving about realistic attacks when
+you didn't execute one, and I'm calling you out for what is effectively
+academic malpractice.
