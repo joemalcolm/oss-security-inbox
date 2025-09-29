@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2457" "Tuesday" "1" "March" "2016" "20:59:39" "+0300" "gremlin@gremlin.ru" "gremlin@gremlin.ru" "<20160301175939.GA8873@gremlin.ru>" "63" "Re: [oss-security] CVE's for SSLv2 support" "^Date:" nil nil "3" "2016030117:59:39" "[oss-security] CVE's for SSLv2 support" (number mark "        gremlin@grem Mar  1   63/2457  " thread-indent "\"Re: [oss-security] CVE's for SSLv2 support\"\n") "<CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>" ("<CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30520 invoked by uid 550); 1 Mar 2016 17:59:53 -0000
+Received: (qmail 5453 invoked by uid 550); 29 Sep 2025 14:59:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,83 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30502 invoked from network); 1 Mar 2016 17:59:53 -0000
-Message-ID: <20160301175939.GA8873@gremlin.ru>
-References: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=x-unknown;
-	protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
-Content-Disposition: inline
-In-Reply-To: <CANO=Ty3qgsHtaivrfwoB=ZdbgyE=z5+Q+HkhazE06ppDbw63RQ@mail.gmail.com>
-OpenPGP: id=8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
-X-PGP-PubKey: 0xEF3B1FA8
-X-PGP-Fingerprint: 8832 FE9F A791 F796 8AC9 6E4E 909D AC45 EF3B 1FA8
-Date: Tue, 1 Mar 2016 20:59:39 +0300
-From: gremlin@gremlin.ru
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE's for SSLv2 support
+x-ms-reactions: disallow
+Received: (qmail 5434 invoked from network); 29 Sep 2025 14:59:35 -0000
+Date: Mon, 29 Sep 2025 14:59:21 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
+Message-ID: <aNqeyW7Yp2m62m6q@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+ <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+ <CAH8yC8mQBVE5TZ_N8Cc1FkVGrqgV9rhNeAxoMi2wit5C26weFg@mail.gmail.com>
+ <CAFf+5zhE2d_4TfbXH25PCLeRLTQPH832c9TwkH9FaS6E0t0qKQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cloobwOLP1d34r4J"
+Content-Disposition: inline
+In-Reply-To: <CAFf+5zhE2d_4TfbXH25PCLeRLTQPH832c9TwkH9FaS6E0t0qKQ@mail.gmail.com>
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
---vtzGhvizbBRQ85DL
-Content-Type: text/plain; charset=koi8-r
+--cloobwOLP1d34r4J
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2016-03-01 10:33:17 -0700, Kurt Seifried wrote:
+On 2025-09-29 09:01:26 +0530 (+0530), Amit wrote:
+[...]
+> The function body should also be secure.
 
- > https://tools.ietf.org/html/rfc6176
- > TL;DR: SSLv2 needs to be shot.
+This generalizes to a tautology: The software is secure if the=20
+software is secure. It's true, of course, as are all tautologies,=20
+while also being a useless assertion.
 
-Yes, with SSLv3 and TLS 1.0 being the next.
+> After writing code, you should review your code for security=20
+> issues and also get it peer reviewed for security issues. In=20
+> general, you should always get your code peer reviewed for=20
+> security issues, bugs, company coding guidelines, etc.
+[...]
 
- > Now we have yet another significant SSLv2 problem, DROWN, bad
- > enough in fact that Red Hat has now disabled SSLv2 in OpenSSL
- > by default (already done in NSS/GnuTLS), so from my vendor
- > perspective, we're treating SSLv2 support as a security problem,
- > the solution of which is to remove said support.
+While excellent advice, this does not guarantee security (all of the=20
+vulnerability reports I oversee are for software where every change=20
+has been reviewed and approved by multiple competent developers=20
+before merging, but humans are not perfect either).
 
-The problem is more wide, as it's in the use of insecure algorithms.
-
- > But more generally, should we look at assigning CVE's for
- > support of SSLv2, much like we would for products supporting
- > DES or other known insecure cryptographic algorithms, hashes,
- > digests and protocols? My personal vote is for yes.
-
-Yes. Including, but not limited to:
-1. RSA keys of less than 4096 bits (a minimum of 8192 should be
-recommended).
-2. Non-EC discrete logarithm based algos (DSA, old GOST 34.10-94).
-2. EC-based algos with keys of less than 256 bits (as for me, I'd
-consider 1024 bits to be an absolute minimum: chips are cheap, but
-the energy is still expensive).
-3. Symmetric ciphers in any mode other than CFB or counter-based.
-4. Symmetric ciphers with key size of less than 256 bits.
-5. Hash functions of less than 256 bits.
-
-
+Not to insult your work or ideas, but sadly this has the hallmarks=20
+of what the scientific and mathematical communities would refer to=20
+as "crank" or "crackpot" theory so I don't think anyone on this=20
+mailing list continuing to engage with you is likely to solve your=20
+misunderstandings. In time, hopefully, you'll gain a greater=20
+perspective on software security and come to realize why this is not=20
+as simple as you keep asserting.
 --=20
-Alexey V. Vissarionov aka Gremlin from Kremlin
-GPG: 8832FE9FA791F7968AC96E4E909DAC45EF3B1FA8
+Jeremy Stanley
 
---vtzGhvizbBRQ85DL
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+--cloobwOLP1d34r4J
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIcBAEBCgAGBQJW1diLAAoJEJCdrEXvOx+oYwMQAIuQnmY9t5Gr87CIG+jq1A68
-CJH4MOZMyisAXPd1/iEuW6LLKLJLwbF3E2ump4VuVwmsnl/5tkhcrx1HmNon1KcJ
-W0T618HPqtf8X6WFCTdZxDP3dCDISlqxsV+pucaRBzE4m3TClDWoIDPhgFWjxve/
-1xlV9VzhGhHO6v8mqIZlWFoLDFnO7hnpgy055n2QTasFOLk6LB+TrkBhRBsN/0Fz
-WJXaKMinPfMvk1RTBYHN5aPjus5DTICo6MVUvBsAOGHmkwkodaFNLbim0204k5/p
-uEDMfc+nfTH4NFyKAASHSVGinHA0a30XeqnEv9rYIU8o2jddfsTYlUKTfOp9ixVu
-PJg+7Wf8280bF44wgytXslkT0MdF5D+R3x3cf8JjFmv3AvDvHJhubEdlcdZxdkwB
-NbKFG3/7cW5FhMlGBcD4FPgvWPfnxnRPWi9DOLWQHBxySJ6g7he9T33ghsjFdmVJ
-ZUAahXGGrdNYUM0lwj0jYQ6wVAi96cImLrApUpb3TulxWyrev5IdD34KH1X6Tc0g
-9w1wFBdLfvcu+mM++IWgaN76O6l83l9gnITXtn6WWxIxI7j3YAzRM8SOhV8fqKoa
-8HySYpleBsIcnn75k2JGygqDGAr9AaouCQvzwGOKGpKMNVhyEDr2VoqdIajE11aN
-BVQJvsLYkc7ohUw1YvAl
-=7gu0
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmjansBfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCl9eg//YtgNw2dTeU5vhzF57eMhXK4bidohEukNN3C1k8p6jviJqbTjCysbuCiH
+65W6Qi5XnfAonKlqS4xIa7uvv/5cC4j4CMtYKTzw4TVGeoHZj7uMT4CVTMy8N6gK
+ecvoJEX+fa+0D9WYbe8QEXHeUvwq6ijNrA14W6kNNyY8rHlZOMiquye9JTYd9sSJ
+1HFxc8CU7Iu8p76ZD1p32TOH+DahaCv2Vm5P+7cDApZt1AHTccGP/hepdsRxAPeg
+/yBKwsBrSVzUmcrobtKJYO0CgWaIMMunQ2n+TTqI/PEV7B+rbfiA+BsPTbCpsKD8
+uzQRQY2/ZsgbqoZEB03qAis4/MB4lJ+WQ+soo6isGC5d0q00Qzz/KptWWRd0rX/Q
+2Axe/qKn9JPiuWxY1E0pVvnuTRIprtYAYuAy34Uz7/djBjaXmIq7eW6eD/aA62BU
+Si1/21NwxrFaRnzGcW8ngFWwN5pYIiePEKnrvjmCzPRweqVYbd+qdPnNgYWMssp+
+DnjXi6Bjz30ebFvO/uVyXtxC0Hp83nbcMENi08sa2FlotXzNudI5chrq62eXOeAY
++4vL6hM5m0A1Fy+3n2Wf39Y5M5dvFqQDiqTnYbenei921hao7P9IaRzKoLVhxspF
+V3d5L6cYyGQRr9TwHzEIlN74dhGIZiZkd8jjmCZKJItK6fLOFSk=
+=zDyI
 -----END PGP SIGNATURE-----
 
---vtzGhvizbBRQ85DL--
+--cloobwOLP1d34r4J--
