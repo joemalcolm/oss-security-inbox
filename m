@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["303" "Sunday" "29" "March" "2015" "15:44:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<Pine.LNX.4.64.1503291541040.13956@beijing.mitre.org>" "14" "Re: [oss-security] byzanz: Out-of heap-based buffer write in GIF encoder" nil nil nil "3" "2015032919:44:40" "[oss-security] byzanz: Out-of heap-based buffer write in GIF encoder" (number mark "        cve-assign@m Mar 29   14/303   " thread-indent "\"Re: [oss-security] byzanz: Out-of heap-based buffer write in GIF encoder\"\n") "<54D550D3.2000601@redhat.com>" ("<54D550D3.2000601@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15972 invoked by uid 550); 29 Mar 2015 19:44:53 -0000
+Received: (qmail 3359 invoked by uid 550); 30 Sep 2025 15:50:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15948 invoked from network); 29 Mar 2015 19:44:52 -0000
-X-Authentication-Warning: beijing.mitre.org: coley owned process doing -bs
-X-X-Sender: coley@beijing.mitre.org
-In-Reply-To: <54D550D3.2000601@redhat.com>
-Message-ID: <Pine.LNX.4.64.1503291541040.13956@beijing.mitre.org>
-References: <54D550D3.2000601@redhat.com>
-MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-cc: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-        Assign a CVE Identifier <cve-assign@mitre.org>
-Date: Sun, 29 Mar 2015 15:44:40 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] byzanz: Out-of heap-based buffer write in GIF
- encoder
-To: Kurt Seifried <kseifried@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 23745 invoked from network); 30 Sep 2025 15:29:09 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Li Yang <liyang@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <84860219-7e19-7cb5-a433-cb75b2066885@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 30 Sep 2025 15:28:38 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-61733: Apache Kylin: Authentication bypass 
 
+Severity: high=20
 
-Kurt Seifried wrote:
+Affected versions:
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=852481
->
-> this may warrant a cve
+- Apache Kylin 4.0.0 through 5.0.2
 
-Use CVE-2015-2785.
+Description:
 
----
+Authentication Bypass Using an Alternate Path or Channel vulnerability in A=
+pache Kylin.
 
-CVE assignment team, MITRE CVE Numbering Authority M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+This issue affects Apache Kylin: from 4.0.0 through 5.0.2.
+
+Users are recommended to upgrade to version 5.0.3, which fixes the issue.
+
+This issue is being tracked as KYLIN-6081=20
+
+Credit:
+
+liuhuajin <liuhuajin1@huawei.com> (finder)
+
+References:
+
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-61733
+https://issues.apache.org/jira/browse/KYLIN-6081
+
