@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3210" "Tuesday" "17" "November" "2015" "17:41:28" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151117224128.B300342E101@smtpvbsrv1.mitre.org>" "74" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" "^Cc:" nil nil "11" "2015111722:41:28" "[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw" (number mark "        cve-assign@m Nov 17   74/3210  " thread-indent "\"[oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw\"\n") "<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>" ("<1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9746 invoked by uid 550); 17 Nov 2015 22:41:41 -0000
+Received: (qmail 11796 invoked by uid 550); 30 Sep 2025 05:24:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,87 +6,155 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9728 invoked from network); 17 Nov 2015 22:41:40 -0000
-In-Reply-To: <1904852023.6462846.1447029380024.JavaMail.zimbra@redhat.com>
-Message-Id: <20151117224128.B300342E101@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Tue, 17 Nov 2015 17:41:28 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Assign CVE for common-collections remote code execution on deserialisation flaw
+x-ms-reactions: disallow
+Received: (qmail 9478 invoked from network); 30 Sep 2025 05:24:11 -0000
+Date: Tue, 30 Sep 2025 07:23:52 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20250930052352.GA23546@openwall.com>
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com> <20250927214013.GA9163@openwall.com> <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> [1] http://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/
-> [2] https://issues.apache.org/jira/browse/COLLECTIONS-580
+Let's wind this thread down.  As a moderator, I already rejected 4
+postings (3 by Amit, 1 arguing with him), and if necessary will reject
+more.  Further postings to this thread, if any, will have to add value
+on top of what was already said.  The 4 rejected postings did not.
 
-The MITRE CVE team has no current plans to provide a CVE ID associated
-with the Apache Commons Collection product for its behavior described
-at:
+There's no goal of challenging any one subscriber, nor convincing any
+one particular person of anything.  The discussion should be generally
+helpful and relevant to the community here.
 
-  https://blogs.apache.org/foundation/entry/apache_commons_statement_to_widespread
+On Sun, Sep 28, 2025 at 09:05:15AM +0530, Amit wrote:
+> Everyone has said more or less the same thing that even if in a software
+> all functions are secure then this doesn't mean that the software will be
+> secure.
+> 
+> But the point is that this is what people have said and this is all
+> theoretical.
+> 
+> Can someone give an example as to how a software made up of secure
+> functions can be hacked?
 
-and elsewhere. Our interpretation is that some people are taking a
-position that, very roughly, corresponds to:
+Consider the below two C programs made from secure functions.  These
+implement /bin/su.  If one is secure, the other is not.
 
- - suppose that a library product is very difficult to deploy safely
-   in a use case involving untrusted input
+#include "secure_functions.h"
+int main(void)
+{
+	if (secure_auth(secure_password_prompt()) == AUTH_PASSED)
+		return secure_spawn_shell();
+	return 1;
+}
 
- - furthermore, suppose that part of this library product has
-   semantics that are inconsistent with the usual semantics for the
-   programming language in use
+#include "secure_functions.h"
+int main(void)
+{
+	if (secure_auth(secure_password_prompt()) != AUTH_PASSED)
+		return secure_spawn_shell();
+	return 1;
+}
 
- - furthermore, suppose that a number of applications are actually
-   using this library in a very unsafe way
+You could try to disqualify this example by saying that main() is also a
+function and its body should also be secure to qualify, but I had
+addressed this in my first reply:
 
- - furthermore, suppose that the vendor of this library product has
-   decided to change this product's behavior so that (among other
-   differences) it will sometimes be easier to deploy safely
+You claim that "If functions/methods are secure then the whole software
+is secure."  If we talk C where main() is also a function, and limit the
+definition of "whole software" to one program, then I'd agree - your
+claim can as well directly say "if [all functions including] main() are
+secure then the whole software [meaning this one program only] is
+secure."  While true, under those definitions this isn't a useful claim.
 
- - furthermore, suppose that this vendor's change notification seems
-   to be more about hardening the library as a way to help prevent
-   exploitation of current or future applications, and seems to be
-   less about announcing the original behavior as a library
-   vulnerability
+So either my example above is valid, or your claim is useless, depending
+on your choice of definitions.  You choose, and it is unimportant to the
+rest of us which choice you make for yourself.  We have no use for a
+false claim, and we have no use for a useless claim.
 
- - still, a CVE ID could be used as a name for the original behavior
+> Let's assume that there are 2 (or more) different software and all the
+> functions in all the software are secure and these software are interacting
+> with each other. Then how can they be hacked? Can someone give an example.
 
-We prefer not to have a CVE ID for the library product in this
-situation. There is a continuum between "inadvertent coding error" on
-the left side and "a choice that was reasonable for a smaller than
-expected fraction of customers" on the right side. The situation here
-is not far enough to the left to have a CVE ID.
+Program 1 is a Unix shell that uses environment variables to pass
+exported functions from a parent shell to a subshell.  The shell
+suffixes the function names with _SHELL_FUNCTION to form the variable
+names and puts the function bodies into those variables.  Any invocation
+of the shell (which may be a subshell or not) imports all environment
+variables with names ending in _SHELL_FUNCTION and processes them to
+define such shell functions.  (This is similar to bash Shellshock, but a
+bit different so that it "obviously" isn't a vulnerability per se.)
 
-The CVE-2015-3253 ID came from the Apache Software Foundation itself,
-and thus can't be generalized to other cases that may seem similar.
+Program 2 is a web server capable of running CGI programs.  It parses
+HTTP headers and prefixes each header name (provided by any untrusted
+HTTP client) with HTTP_ to form environment variable names, and it sets
+the variables to the header values.  (This is how common HTTP servers
+actually work, and it "obviously" isn't a vulnerability per se.)
 
-The CVE-2015-4852 ID came from Oracle and must remain associated only
-with Oracle's own software (WebLogic Server is the product they've
-named).
+Program 3 is a CGI script written in the Unix shell language, and using
+the shell.  It has functions invoked on different HTTP request methods,
+with functions HTTP_GET and HTTP_POST currently defined.  The script
+prefixes the request method with HTTP_ and calls the function with that
+name.  If an unknown HTTP method is requested, the script fails securely
+since there's no corresponding function.
 
-We'll send a separate response about the Jenkins SECURITY-218 report.
+All functions in these 3 programs are secure.  Also, all 3 programs
+individually implement strictly their documented behavior, which in
+isolation can reasonably be considered secure.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+A malicious HTTP client connects to the HTTP server and requests an URL
+corresponding to the CGI script.  It uses the PUT method.  It passes a
+header named GET_SHELL_FUNCTION with a value that defines a shell
+function body, which ends up injected and executed.
 
-iQIcBAEBCAAGBQJWS6xKAAoJEL54rhJi8gl5QJ0P/11kaNbWjxC2RpWh4L8Y1U29
-Jo+LSwxdBDmh8v8I0Xab4ne6/rmqKN7iPl65yy7J7t8ULYcf2fcU4lUe93sZHpk9
-hPWX/x4eYQBQRS89f7lerYD/RK0hTJ8RGQIsfqYCScEmFuNpqdOA0LoXhGCJFu7p
-63GRtyJuvI0sZkFQKYY5l9A8E2fDLMHyEk9NWyTgwWNKXZWVyMQAkXipbtVko/xy
-DjtVA0OTgaje0PZzh6moFU1rwwMqkSmq+5pXPpUq+iCrAP55RIuEFzzM+sBhgeEG
-6I9JoEjaGci+w6t+jnEwLfzjFWDL9ioFkenyqG0GsTdd7fGC96Lsa2jHI7ZsDy6g
-4GLTUJ/BEhQxKNvQ88cNfUNsyIP8NzLdwjChvxEa7m4CmnxmHU++MQZXmlo8Aq6C
-PBLrWeKaOGhGz6fs8H0NNWfcM5GAco6nEK8d4EYLsb7lIVNrGqaNpwKqnkfntK97
-9vH7OnrIAIfnneyKH8+53IcN1ogPrBmwLPY9DDTU2XUIOlWE7IvtRtmpuBX884KF
-7c5r2pA/xgecczvjGQ5C9t0yMzrNgPBNgfkG9RsPnh/1LOhcm/tA4Ijo21JXmYb6
-2s6MF3yl9H8qvtRAu1fMCUMjuHa4wTOH7Uv57MeJsFVzRZvNxf0nmlWRV5PrLGuW
-VHHOmkmQRl9UWJ9jGv14
-=93c8
------END PGP SIGNATURE-----
+The injected function may also be secure: it is the attacker's function,
+and it may implement strictly the documented behavior that the attacker
+wants.  In fact, in isolation it may also be deemed secure even if
+reviewed by the server owner, unaware of where this function would be
+used.  "Oh, this function runs a provided arbitrary shell command
+exactly as documented in the comment, and follows my friend Amit's
+secure shell script coding guidelines so diligently."
+
+Yet the server gets hacked.
+
+Where to place blame?  What to fix?  Realistically, the more established
+and externally relied-upon convention will stay, in this case the HTTP
+server's use of HTTP_ variables.  The shell will probably be modified to
+avoid this unfortunate interaction, such as switching from usage of a
+suffix to a prefix.  The CGI script may be hardened to use an additional
+allow-list of HTTP request names prior to trying to call a function, in
+case its new version is installed on a system with non-updated shell.
+So is the vulnerability in the shell, like Shellshock was determined to
+be?  CVE-wise, this would probably be the case here as well, although
+without the rest of the ecosystem being like that there's no
+vulnerability, and the shell maintainers may well dispute this CVE on
+such grounds as well as because the shell worked exactly as documented.
+Yet sysadmins will want this CVE against the shell to stay because that
+is the package they need security scanners to flag as needing an update.
+Even though the HTTP server could be considered the vulnerable component
+just as well, if it weren't too big to fail.  Such is life.
+
+> Someone also mentioned that secure functions having limits on arguments can
+> result in DoS. In my opinion, DoS is better than getting hacked.
+
+I did, and I generally agree.  BIND 9 is better than BIND 8.  However,
+those BIND 9 DoS vulnerabilities do have to be fixed one by one anyway,
+which is being done.
+
+If you were to introduce arbitrary limits and just crash the server on
+exceeding those, and would refuse to fix that because it's part of your
+secure design, then this wouldn't be received well by the sysadmins and
+they'd choose an alternative that isn't so "secure".
+
+I'm not strictly opposed to having sane arbitrary limits, but they and
+the handling of failures should be carefully chosen to fit all of the
+function's use cases.  It's one thing to reject one request, and it's a
+different thing to crash the service for all users.
+
+Alexander
