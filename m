@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7754" "Friday" "30" "June" "2017" "15:22:09" "+0200" "Solar Designer" "solar@openwall.com" "<20170630132209.GA4625@openwall.com>" "156" "Re: [oss-security] accepting new members to (linux-)distros lists" "^Date:" nil nil "6" "2017063013:22:09" "[oss-security] accepting new members to (linux-)distros lists" (number mark "        solar@openwa Jun 30  156/7754  " thread-indent "\"Re: [oss-security] accepting new members to (linux-)distros lists\"\n") "<20170628200239.GA25525@openwall.com>" ("<20170628200239.GA25525@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24045 invoked by uid 550); 30 Jun 2017 13:22:53 -0000
+Received: (qmail 1032 invoked by uid 550); 30 Sep 2025 13:49:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,173 +6,67 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23731 invoked from network); 30 Jun 2017 13:22:15 -0000
-Message-ID: <20170630132209.GA4625@openwall.com>
-References: <20170628200239.GA25525@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170628200239.GA25525@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Fri, 30 Jun 2017 15:22:09 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] accepting new members to (linux-)distros lists
+x-ms-reactions: disallow
+Received: (qmail 32736 invoked from network); 30 Sep 2025 13:49:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=dwheeler.com; s=selector1; h=Message-Id:In-Reply-To:To:References:Date:
+	Subject:Mime-Version:Content-Transfer-Encoding:Content-Type:From;
+	bh=L9ukb/5LvSwsVqV5aTrk42JmCCsAyZitjxgw6QsYp98=; b=WE40wrNo9HQOSCMAWo+xsUSycd
+	1XIRVvmTd4CoT1EBPsyyynzbbwIMkfrMGEl4T21Hifowk/2phv6IFwf1Qh6fBLhZ7beqRsqYWz/tc
+	7fuywUU2VfJ+ytnv5TYMaUr2pTW2xHdOkhOgIg59bkrb5irowYrSWBxRAUJ5+34JRjuKlfQI8ikaG
+	oi0O2w3EtFinWNeW5GK0MWvwo/+IJLYDaR58JjiL56hM11JzDun5wAMvNAUR2vIvG8uSmn7u94EHL
+	WIDctirYkUpwQeQonH+akErRsH5nO0vJLIk/JKpOXbemye5TWf8LSuf3Cyd/bjf91gPdSvrRLrXeN
+	knrSbnvA==;
+From: "David A. Wheeler" <dwheeler@dwheeler.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6.1.21\))
+Date: Tue, 30 Sep 2025 09:48:42 -0400
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+ <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+ <20250930052352.GA23546@openwall.com>
+ <1dab9d0b-cd90-406a-81a5-5b20fffe81a5@gmail.com>
+ <20250930061823.GA26871@openwall.com>
 To: oss-security@lists.openwall.com
+In-Reply-To: <20250930061823.GA26871@openwall.com>
+Message-Id: <77ECC3BF-4766-4B48-A865-57D43412B374@dwheeler.com>
+X-Mailer: Apple Mail (2.3731.700.6.1.21)
+Subject: Re: [oss-security] Shellshock (was: How to do secure coding and
+ create secure software)
 
-On Wed, Jun 28, 2017 at 10:02:40PM +0200, Solar Designer wrote:
-> I came up with many current tasks/roles that a new or existing member
-> could usefully help with, thereby contributing to the team effort.
-> Currently the wiki page lists a total of 18 such items: 5 technical and
-> 13 administrative.  I'd prefer that new membership requests include
-> specifics on what the new member will contribute - this can be work on
-> some of these 18 items or/and something else.
 
-This is now up to 22 items: I've split one in two, and added three more.
-The full list is at:
 
-http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-back
+> On Sep 30, 2025, at 2:18 AM, Solar Designer <solar@openwall.com> wrote: .=
+..
+>=20
+> On Tue, Sep 30, 2025 at 01:02:01AM -0500, Jacob Bachmeyer wrote:
+>> Small nit here:  Shellshock was clearly a vulnerability in Bash and I am=
+=20
+>> unsure if the way Bash exports shell functions was documented at all.
+> ...
+>> If presented with an environment variable value having the correct form=
+=20
+>> for a shell function, but containing more text than the body of the=20
+>> function, Bash would immediately execute the trailing text as commands=20
+>> while importing the shell function from the environment.  That was=20
+>> Shellshock.
+>=20
+> Yes, there were multiple Shellshock-related code issues in bash, and
+> several CVEs were rightly assigned against bash.  No arguing about that.
+> Also, the proper Shellshock was exposed as a vulnerability by far not
+> only through HTTP servers, since it parsed variables of any names.
 
-No volunteers so far?  I know some of you are actually helping with
-these, but I'd prefer that you explicitly take responsibility for them.
+All true. Shellshock's story is complicated in part because
+early "fixes" didn't fix it. Its revelation was over 10 years ago, so
+some readers here may not be familiar with Shellshock. I wrote a detailed a=
+rticle
+about Shellshock here, including ways detect or prevent similar vulnerabili=
+ties:
 
-We got to improve how we run these lists in order to counter-balance the
-possible negative effects of embargoes and of new members joining.  The
-alternative, you know, is shutting the lists down.
+https://dwheeler.com/essays/shellshock.html
 
-> Right now, most of these things I listed are everyone's and thus no
-> one's responsibility (and they often fall back on me as list admin).
-> I want this to change.  Ideally, we'd list specific distros for each one
-> of these tasks/roles... and if something required is not done or goes
-> wrong per one of those roles, we'll ask them to explain why and correct
-> that for further occasions.  This will also serve to verify that they're
-> still active and paying attention, replacing my responsiveness tests.
-> 
-> Here are the current tasks/roles to choose from or/and add to:
-> 
-> Technical (in arbitrary order):
+--- David A. Wheeler
 
-> 4. Generalize the reported issues to see if other closely related issues
-> exist (e.g., if a bug is reported against one implementation of X, see
-> if a similar bug exists in another implementation of X and inform the
-> list of either result)
-
-I split the above one in two:
-
-4. Check if related issues exist in the same piece of software (e.g.,
-same bug class common across the software, or other kinds of bugs exist
-in its problematic component), and inform the list either way
-
-5. Check if related issues exist in implementations of similar
-functionality in other software (e.g., forked code including the same
-bug, or the same error made independently), and inform the list either way
-
-This is significant amount of work, and with so many distro members (as
-we already have) I'd be OK with different (sets of) distros volunteering
-for these two sub-tasks.
-
-> Administrative (roughly in chronological order, although many of these
-> activities overlap):
-
-> 4. Evaluate relevance to other parties, such as the upstream, other
-> affected distros (not present here), and other Open Source projects, see
-> if the report mentions notifying any of these, communicate your findings
-> and possible concerns to the reporter and the list, and stay on top of
-> the resulting discussion until a decision is made on who else to
-> possibly notify (or not) and any such notifications are in fact made
-
-The above item should have partially addressed Simon's feedback: yes, we
-do intend to notify upstreams (and have been doing so), but we need a
-decision and at least the reporter's approval for this first.  I've now
-revised the wording to:
-
-4. Evaluate relevance to other parties such as the upstream, other
-affected distros (not present on the (sub-)list), and other Open Source
-projects, see if the report mentions notifying any of these, communicate
-your findings and possible concerns to the reporter and the list, and
-stay on top of the resulting discussion until a decision is made on who
-else to possibly notify (or not) and any such notifications are in fact
-made (with the reporter's approval)
-
-The change from "not present here" to "not present on the (sub-)list" is
-to address the special case of someone sending to linux-distros an issue
-that would also be relevant to the distros list (which currently includes
-two *BSD's).  If this happens, we'll need to notice, decide, get the
-reporter's approval, and finally move the discussion from linux-distros
-to distros.  This certainly sounds overly complicated and formalized to
-me, but I hope we'll be doing it quickly in practice, like I think we
-have been already - but I also hope someone in particular will take
-responsibility for this happening.
-
-And I've also added explicit "with the reporter's approval", because in
-any such cases the ultimate say is the reporter's.
-
-Having considered the special case mentioned above made me realize we
-also have this task, newly inserted into the list:
-
-5. Determine if the reported issues are Linux-specific, and if so help
-ensure that (further) private discussion goes on the linux-distros
-sub-list only (thus, not spamming and unnecessary disclosing to the
-non-Linux distros)
-
-We have been trying to do this already, but like with most of these
-tasks it was everyone's and no one's responsibility.  This got to change.
-
-I also listed this new task, reusing number 13:
-
-13. Keep track of per-report and per-issue handling and disclosure
-timelines (at least times of notification of the private list and of
-actual public disclosure), at regular intervals produce and share
-statistics (most notably, the average embargo duration) as well as the
-raw data (except on issues that are still under embargo) by posting to
-oss-security
-
-> 12. Help evaluate new (linux-)distros list membership requests per the
-> current criteria (participating in the corresponding oss-security
-> threads)
-> 
-> 13. Vouch for people wanting to join in on behalf of a new distro member
-> as long as you are confident of their trustworthiness, expected proper
-> use of the list, and contributions
-
-The above are now the only two items on their own sub-list of
-"Administrative tasks not strictly requiring (linux-)distros list
-membership (thus, open for contributions by the wider community)".
-
-And there's another new sub-list, currently with just one item:
-
-Administrative tasks mostly unrelated to (linux-)distros lists (but
-relevant to the wider community)
-
-1. Help ensure that each message posted to oss-security contains the
-most essential information (e.g., vulnerability detail and/or exploit)
-directly in the message itself (and in plain text) rather than only by
-reference to an external resource, and add the missing information
-(e.g., in your own words, by quoting with proper attribution, and/or by
-creating and attaching a properly attributed text/plain export of a
-previously referenced web page) and remind the original sender of this
-requirement (for further occasions) in a "reply" posting when necessary
-
-> Finally, I also came up with specific policy on handling of embargoed
-> information.  Most of this was taken for granted so far, and this worked
-> well, but there were a few gray areas.  The currently proposed policy,
-> which list members have to agree to, is as follows:
-> 
-> Aside from your participation in discussions with the reporter and on
-> the (linux-)distros lists (including possibly continuing to CC other
-> prior recipients of the information), the information you receive
-> through the (linux-)distros lists must not be made public, shared, nor
-> even hinted at anywhere beyond the need-to-know within your distro's
-> team, until the agreed upon public disclosure date/time, the reporter's
-> explicit approval, or substantially complete publication by others.
-
-To hopefully address Simon's feedback, I moved "the reporter's explicit
-approval" to the beginning of list, so that it stands out.  The current
-wording is:
-
-[...] except with the reporter's explicit approval, until the agreed upon
-public disclosure date/time or substantially complete publication by others.
-
-The beginning of this paragraph and further paragraphs are unchanged.
-
-Alexander
