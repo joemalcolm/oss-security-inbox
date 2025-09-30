@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1305" "Tuesday" "9" "October" "2018" "18:34:23" "-0400" "Alex Gaynor" "alex.gaynor@gmail.com" "<CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>" "39" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" "^Cc:" nil nil "10" "2018100922:34:23" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "U       alex.gaynor@ Oct  9   39/1305  " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" "<20181009153006.GF21509@takahe.colorado.edu>" "<CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>" "<alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>" "<20181009182643.5d601a06@jabberwock.cb.piermont.com>" "<CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12217 invoked by uid 550); 9 Oct 2018 22:34:47 -0000
+Received: (qmail 3718 invoked by uid 550); 30 Sep 2025 06:06:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,86 +6,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12199 invoked from network); 9 Oct 2018 22:34:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eZnFJx5aXp0c0SPjnpBn7HDt+ZHpOoO++gHtJYBWRlA=;
-        b=j+WHAM679JyMAOhuWD99IfTlpQI8vyUH3UlHDV9zesX1SnAVhO+5mUyJ22Q4m1btrr
-         9rMkyfQEJZNYkNAettKYb8yADomF/Xud/qYh3pkXLLTJfkQG8lrHOSDxNn6adLLQUgt+
-         e8NZqlmPD3Q+ZEIZkx8uM1SUolqvSH80aI//POu+OvKdPff3TG6CEjzVKg0Pq6LHqj3v
-         mHKEAItxq36a1VIDujy9vivCvHSMJlrXjl+5c02r3ePD66P9XO3pC2zpFZ+mSl4dqPvk
-         Vqv6JSYHvU2hlIwlLz5wFTyW9rHc5vyDmm8zwEcJv0s2e9pWMmeHTqFDlsb4A/LF7dUW
-         6YfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eZnFJx5aXp0c0SPjnpBn7HDt+ZHpOoO++gHtJYBWRlA=;
-        b=SFHaiwwB6sREapoeMsofCQClcEp3Fr9drQKZKjqZ3qQbrKUtn8lwixTYwAiljyYrpt
-         nCe1iqe2Cc6Rxobl80eLl8fCy5yIc3DGxEqsBHzw6ow9evjJEFlN6HqvvWV5yMxKjf51
-         gTFQ+MLRnXuI8VhiiLeR+B4zq5v2aPR1khUMFbB4a8IRMXONHIA5vFqvl13x+PHD23Lr
-         +dW8GpMQWxzdxXO9TX+kzhqzt0rNOsuz2wamPPQtCQTA9/0JRMMs9Ym+ph2E4TQ4EHs6
-         gFHqaIVbG6zcDyW4LuptOgaGFrFz3dBRuN71qIvQjAnQ/fVdnkL2KOrjy/60x9TJ3FrB
-         5tcA==
-X-Gm-Message-State: ABuFfogDrPXNIrjs4gR1u1KhTBYQ9ZwKXrj5wg7ouXR4yUKGjugbk+wC
-	TQ3WbMtpMhlsRGjV/VZmYlH8WM5pBRxDKza6T5V7Ow==
-X-Google-Smtp-Source: ACcGV63PXhgGRv/8BP8vrNkv1gP63pUbBQvECxdjN3ybZ1JGkuu1pZ59F57q8Blr3sGVPGET6c6KGnqDZf0lfhTJa1Q=
-X-Received: by 2002:a19:dd8a:: with SMTP id w10-v6mr17314125lfi.97.1539124475546;
- Tue, 09 Oct 2018 15:34:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
- <20181009153006.GF21509@takahe.colorado.edu> <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
- <alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>
- <20181009182643.5d601a06@jabberwock.cb.piermont.com> <CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>
-In-Reply-To: <CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>
-Message-ID: <CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000a152450577d357a7"
-Cc: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
-Date: Tue, 9 Oct 2018 18:34:23 -0400
-From: Alex Gaynor <alex.gaynor@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
- -dSAFER sandbox (CVE-2018-17961)
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 13609 invoked from network); 30 Sep 2025 06:02:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759212129; x=1759816929; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZGrsIQ6KGPMAxdqJZJ9YnNE1EPn+sfZyWX4n7fPac5w=;
+        b=W+g3HBtWB3GJkiVd3gRkXMwh+4H1Wlm152494iAH7oBZhcCDVxR1J7aopS1BpKPA4f
+         pbtO/478L06gyMTzYBcOfsrLoVayVzxBp5wCQz4Py3sNdlaWkjlwRFnUnQwaK7wfTCKN
+         2g+Gu4yIEceZr5OYCwxbSz5MkEFCeR83puiKKdPkctoVFN8Og4Y/E4JyuES0y38fqz2B
+         +YHGTXldMXer/fPJ0X5dHfqq3XVf9JWIBPh8KJ2nQJuk9dsybPn0duncAefpQDB/17cZ
+         h+pjYJHdtdtj4jqWYEHCi2uNlRJf/HfwDfK9PLtMKKDPV1Vy/h6tWWH9yZ01eBPpckg7
+         MX9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759212129; x=1759816929;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZGrsIQ6KGPMAxdqJZJ9YnNE1EPn+sfZyWX4n7fPac5w=;
+        b=XscOIYHwvozFe7VbznOpPGsqmJ4kFBIz5w2poxESCyrisl6xeLMB065JCUIvhzUEck
+         77+q+ee+Rk4MVL/IsKi+pz2jXktHf17nwppJyayES/jWCDTQHaJ3lK1qSxW4qrHpl7gL
+         8FPBB5f7bbOH4gbbCFgouF0UEEyIbm7Fbd69BSGDuNo1qk+2eJ/6XmL9l6J8VyMMT35O
+         3RC0t3AW4HfOet7AMZDkM0+Y5yLoqZN25lBNTh/1PvMJ9UCa9qm1xlmbhIz3e/ki+fKp
+         ZPHLmdCFe6mG2Xl/e4w6CfuXnXcZgX6dUzi7tSZ0ldlPic4a3q9Zm//uIqIQ7o5I+YZQ
+         XepA==
+X-Gm-Message-State: AOJu0YxWCxaT4KlJe8YQih+VgensLAPhjs59PWG1DK58sEyjT5ubWttx
+	P7uOC1yJq+RvavhnlF8NwVIDzr0cDRRbvg8ak6qrwhGOxhK00Db7bx1kVXQzDQ==
+X-Gm-Gg: ASbGncsJjeXinU2AvKFYyEqkRWnkttv6K0ydZaYpRFq45+TH0MiRanR1IHD8XrhBEZn
+	iDA683uqO/9kJXfCHAiVZB5G/rt3UQAlFJbTdVmTemVF9iVaYbjF1mHMjuYtMOtC6EVWT+urweY
+	mvzqv7ySFbIyLk1Bhjm+RegbVWkyZTNekETuH7qXqQF6bGA5MkCQO1J8l2+shqfhPlNY0hAkSCw
+	7r76FL345+xEkBNttPmbPFNpEvXLrYgccISXFzhd55svb2M+pp64ZM/GfNMi0tz9Ul8GJlD/OaO
+	YPZVZn4yy7ok4ORG8/8b16XrcdfZe6IFcG6PW36zaih8DuclPfoEU1OJYSa2nFXMXoYVgE10ybS
+	+kQbNLbyWgEM9/18nq7p9YdhJyA+4JyiA1g9HKE0LpUxn5zpo+xOwvg==
+X-Google-Smtp-Source: AGHT+IFz1V8soRJbP3ZO40gBrZ7yx28ZmCosQmhDstA9WQ6eqXEFWuzqI/mNgVSzFUej1Sv5uqfhgQ==
+X-Received: by 2002:a53:b88f:0:b0:632:e937:d6b1 with SMTP id 956f58d0204a3-63b5986721dmr3022658d50.3.1759212128749;
+        Mon, 29 Sep 2025 23:02:08 -0700 (PDT)
+Message-ID: <1dab9d0b-cd90-406a-81a5-5b20fffe81a5@gmail.com>
+Date: Tue, 30 Sep 2025 01:02:01 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>
+References: <CAFf+5ziKPTBLFmDAffWTH+MCnOp5NHhZNM803PsemVLRuQoCaQ@mail.gmail.com>
+ <20250927214013.GA9163@openwall.com>
+ <CAFf+5ziVBQ-xk=VQdrbnhgzdu1gu==ZQSrhBGj7PEq6mcOVVAw@mail.gmail.com>
+ <20250930052352.GA23546@openwall.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <20250930052352.GA23546@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] How to do secure coding and create secure software
 
---000000000000a152450577d357a7
-Content-Type: text/plain; charset="UTF-8"
+On 9/30/25 00:23, Solar Designer wrote:
+> [...]
+> So is the vulnerability in the shell, like Shellshock was determined to
+> be?  [...] the shell maintainers may well dispute this CVE on
+> such grounds as well as because the shell worked exactly as documented. [...]
 
-Would they consider making a build-time "safe PS only" flag that ensured it
-was compiled without things like shell-invocation? Then we could just try
-to convince Linux distros to package it that way :-)
+Small nit here:  Shellshock was clearly a vulnerability in Bash and I am 
+unsure if the way Bash exports shell functions was documented at all.
 
-Alex
+If presented with an environment variable value having the correct form 
+for a shell function, but containing more text than the body of the 
+function, Bash would immediately execute the trailing text as commands 
+while importing the shell function from the environment.  That was 
+Shellshock.
 
-On Tue, Oct 9, 2018 at 6:33 PM Tavis Ormandy <taviso@google.com> wrote:
-
-> On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@piermont.com>
-> wrote:
->
-> > I keep wondering if there isn't a way to fully remove the dangerous
-> > bits from a postscript interpreter so it can _only_ be used to view
-> > the document and literally has no file system access compiled in at
-> > all, so there's no way to touch the fs etc. regardless of what flags
-> > the interpreter is invoked with.
-> >
-> > (I, too, find removing the ability to look at historical postscript
-> > documents a bit more draconian than I like.)
-> >
-> >
-> I've discussed it with upstream, it's a hard no because they feel it would
-> make ghostscript non-conforming (i.e. non-conforming with the Adobe
-> PostScript Language Reference Manual)
->
-> We probably have similar thoughts on this, but that is the final word from
-> upstream.
->
-> Tavis.
->
+This went unnoticed for years because Bash, of course, would never 
+include trailing text when *exporting* a shell function, so the 
+vulnerable code path went unexercised.  I have used Shellshock as a 
+counterexample to claims that input validation is unneeded because the 
+data will always be written correctly in the proper format by the same 
+program.
 
 
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
+-- Jacob
 
---000000000000a152450577d357a7--
