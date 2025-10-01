@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["908" "Friday" "4" "January" "2019" "09:22:56" "-0500" "Tim Graham" "timograham@gmail.com" "<CAD-rxRBEb3zdu_43VEHyy7ntz-Sy4tvUCQzVOGivycMyc+2JVg@mail.gmail.com>" "21" "[oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18" "^Cc:" nil nil "1" "2019010414:22:56" "[oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18" (number mark "        timograham@g Jan  4   21/908   " thread-indent "\"[oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 4018 invoked by uid 550); 4 Jan 2019 14:23:20 -0000
+Received: (qmail 30315 invoked by uid 550); 1 Oct 2025 07:29:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,63 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3984 invoked from network); 4 Jan 2019 14:23:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=qvrJkmEqfl3sftIFMCKrrglTKm5p4hKJ2JeqAGF/US0=;
-        b=lnxXFXx3gb1FaFegKyqqopnbCoSybWomwr1U9gndW54MsJWr0p40ksgeGB61ZqEaTL
-         n+rudNGHj/3woMn64tQmyJECLj441bFNyROJputEuTK6mgYHNu2XA4mR4DKP4TxaFzBR
-         rnnxvUObuWtmHzhAIFeyhKVOaiUKnnPVZUaEijFBoA2xsJR5aE3rn/UFE+fk/wnAWGrY
-         bQF07FydzLfui7/3zPUaUi2L3CnLsfbwAp3BY0gOfiHPg3bnQObR/TpCIH85CSciI6Bh
-         2sCGKX7oNRhXkay7xN0ohZdB2uunTH62+ZnGuSeD580HDVonpSp0qxq798IUCbQsNcA/
-         YV2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=qvrJkmEqfl3sftIFMCKrrglTKm5p4hKJ2JeqAGF/US0=;
-        b=YqIIUidbFS5EcvyddItKiQV5wRqzzFwmVpla/h80e/rjbqO0WCvleIbvPiMVhrvC4H
-         pyZfqHE5BeHJNbUza5q2aOQ6p1KylGR4I3A7XDeQ8XT9RWmn9sHnC72NXQx15E0Z7qtd
-         fJdSRM8Evx4Rk3x3yqsXQj8UThOlDaHs2/TuyXxpKlOWpp1qFoWtlSzckAoOiaSUODxi
-         sjbQNABoTDUyZOb0rPSU2CUry8HQDL6qDbjJKPK0mGVZfHsZoYRuPUWsTaDGp9AC2953
-         Rv/KgwqeneJft+yXcfvF6qFDeRt7Je8CIzt79xgI7yqArCq+TKE5ZRvXbZC3oxzO0M9w
-         QW9Q==
-X-Gm-Message-State: AA+aEWZFP3N03YToVZanxjnzLWJTiXeQKCn/mZV+nF1y7K025GVjabqv
-	VweDEOQvucMWlecaMj/ag6S4xP4J+SfENHfUP44=
-X-Google-Smtp-Source: AFSGD/WZphoey1JWzGHIlowbJbfOAuH+GeNvUAFsuChySpa8vMqBhUkOXAgC/RSFWZkwU2J7Pcd7ZAIrYVMvCLdNVFQ=
-X-Received: by 2002:a02:8a1c:: with SMTP id j28mr35257396jak.49.1546611787404;
- Fri, 04 Jan 2019 06:23:07 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAD-rxRBEb3zdu_43VEHyy7ntz-Sy4tvUCQzVOGivycMyc+2JVg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000319c0b057ea29e0a"
-Cc: django-users@googlegroups.com, django-developers@googlegroups.com, 
-	oss-security@lists.openwall.com
-Date: Fri, 4 Jan 2019 09:22:56 -0500
-From: Tim Graham <timograham@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Django security releases issued: 2.1.5, 2.0.10, and 1.11.18
-To: django-announce@googlegroups.com
+x-ms-reactions: disallow
+Received: (qmail 17727 invoked from network); 1 Oct 2025 02:20:35 -0000
+Date: Tue, 30 Sep 2025 21:15:27 -0400
+From: "Mike O'Connor" <mjo@dojo.mi.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aNyAr-XUGTlZHWtg@dojo.mi.org>
+References: <92a89d5d-e0de-c713-e7d2-83f971574eff@mindrot.org>
+ <20250923032113.GA14348@openwall.com>
+ <BL1PR01MB772308134BF946DF07159A05C11CA@BL1PR01MB7723.prod.exchangelabs.com>
+ <43743160-7c83-4c4e-ad77-52e5058636c5@gmail.com>
+ <ME0P300MB0713919015F954023D6D63FAEE1CA@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
+ <0ea3da20-739e-4608-8869-9d5882a8f003@gmail.com>
+ <544d9d89-2a0a-4901-84ab-40c07c9c7bcd@gmail.com>
+ <a715936d-759a-4c2f-8498-6da12f0fba3a@gmail.com>
+ <dac51d5e-e9a9-4e8d-b044-7da3316c9252@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dac51d5e-e9a9-4e8d-b044-7da3316c9252@gmail.com>
+X-Greylist: inspected by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Tue, 30 Sep 2025 22:20:25 -0400 (EDT) for IP:'127.0.0.1' DOMAIN:'localhost' HELO:'angus.mystery.com' FROM:'mjo@dojo.mi.org' RCPT:''
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.11 (angus.mystery.com [127.0.0.1]); Tue, 30 Sep 2025 22:20:25 -0400 (EDT)
+Subject: Re: [oss-security] Re: [EXT] Re: [oss-security] CVE-2023-51767: a
+ bogus CVE in OpenSSH
 
---000000000000319c0b057ea29e0a
-Content-Type: text/plain; charset="UTF-8"
+:> Second, I had expected ECC to "kill Rowhammer dead" only to find that it 
+:> can be possible to cause enough bit flips to get all the way from one 
+:> valid ECC word to another valid ECC word before ECC scrub reaches the 
+:> location.  I suspect that the DDR5 built-in ECC is supposed to resolve 
+:> Rowhammer, but we will have to wait and see if it actually achieves that 
+:> goal.
 
-Today the Django team issued 2.1.5, 2.0.10, and 1.11.18 as part of our
-security process. These releases address a security issue, and we encourage
-all users to upgrade as soon as possible:
+You won't have to wait very long, it seems:
+https://comsec.ethz.ch/research/dram/phoenix/
 
-https://www.djangoproject.com/weblog/2019/jan/04/security-releases/
+...
 
-The issue was publicly reported through a GitHub pull request, therefore we
-fixed the issue as soon as possible without the usual prenotification
-process (
-https://docs.djangoproject.com/en/dev/internals/security/#how-django-discloses-security-issues
-).
+As someone who fielded inquiries about CVE-2023-51767 in the context
+of some commercial OSes/platforms when it first came out, I'd suggest
+this ought to be tagged as REJECTED.  It's sad that this bogus CVE is
+still causing confusion.  This almost makes me long for the good ol'
+days when CVEs stated out life as "candidates", and learned people
+would weigh in on whether it should be promoted to a full CVE.
 
-As a reminder, we ask that potential security issues be reported via private
-email to security@djangoproject.com and not via Django's Trac  instance,
-Django's GitHub repositories, or the django-developers list. Please see
-https://www.djangoproject.com/security for further information.
+If I read this thread right, the author of the paper didn't request
+this CVE, and it was assigned via MITRE (probably the result of some
+external requester).  I'd suggest bringing it up with MITRE, get to
+the source of who actually made the CVE request, and properly dispose
+of this.  I'd suggest engaging MITRE directly, not just righteous
+venting on oss-security, hoping it finds the right CVE folks.
 
---000000000000319c0b057ea29e0a--
+
+Take FWIW...
+-Mike
+
+-- 
+ Michael J. O'Connor                                          mjo@dojo.mi.org
+ =--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--==--=
+"Security freaks are pretty wierd."                    -Brian Harvey, RFC 686
