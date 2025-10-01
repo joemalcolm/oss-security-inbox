@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12989" "Tuesday" "5" "June" "2018" "17:11:11" "+0000" "Rai, Harendra" "Harendra.Rai@ncr.com" "<MWHPR15MB1711FD389FCC54BF5F9FB74A99660@MWHPR15MB1711.namprd15.prod.outlook.com>" "222" "[oss-security] RE: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114" nil nil nil "6" "2018060517:11:11" "[oss-security] RE: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114" (number mark "U       Harendra.Rai Jun  5  222/12989 " thread-indent "\"[oss-security] RE: [CVE-2014-0114]: Apache Ignite is vulnerable to existing CVE-2014-0114\"\n") "<CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>" ("<CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21774 invoked by uid 550); 5 Jun 2018 17:20:06 -0000
+Received: (qmail 16299 invoked by uid 550); 1 Oct 2025 15:54:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,305 +7,630 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11455 invoked from network); 5 Jun 2018 17:11:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ncr.com; h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- mime-version; s=mail; bh=vYDiRHtJ2sfo7YhyAdPhgkDeoJvouPOgUfwkMAMYtsA=;
- b=X7em+Nu11vF+6fS5lpzmpFlXzES+WH6R3TSB/FR2maPiIHyFpgGuuYGQzSGoHkT7jdBN
- 9j1ibxFWQJb6MDy4g8Z+EnUuL/scYKOgteA8a7ehB4KWOjQTAZbdOev0mKNotxg/3667
- xBnXrO8GHjRdwz2TaCEIdPzRuFPFGVOGZM6V0uoA0N9HJ5BiQ9I/d61Ya0JsgQ99xWld
- DbpN+RZ8OaKqoEBToQD0eUKhYaNloOsR4sd6rDXSK4Qyl08OhwpPr5YwgkVfcGoOSh5h
- UqYnSZCGqm12kgwDKwffGzw/7VzEG1VeifDid8R5C6Qo/3r7o5fSo5o9DD3tFu5OMk6w UA== 
-From: "Rai, Harendra" <Harendra.Rai@ncr.com>
-To: Denis Magda <dmagda@apache.org>,
-        "announce@apache.org"
-	<announce@apache.org>,
-        dev <dev@ignite.apache.org>,
-        "user@ignite.apache.org"
-	<user@ignite.apache.org>,
-        "oss-security@lists.openwall.com"
-	<oss-security@lists.openwall.com>
-Thread-Topic: [CVE-2014-0114]: Apache Ignite is vulnerable to existing
- CVE-2014-0114
-Thread-Index: AQHT+cxqUJ++fOZM9UeM4TphJDcuVaRR7I7g
-Date: Tue, 5 Jun 2018 17:11:11 +0000
-Message-ID: <MWHPR15MB1711FD389FCC54BF5F9FB74A99660@MWHPR15MB1711.namprd15.prod.outlook.com>
-References: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
-In-Reply-To: <CAK0qHnrDU3PVMWdeBEZjatHGjiB8SBbmk1UMuPEphvMuCHkbhA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Enabled=True;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_SiteId=ae4df1f7-611e-444f-897e-f964e1205171;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Ref=https://api.informationprotection.azure.com/api/ae4df1f7-611e-444f-897e-f964e1205171;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Owner=hr185017@ncr.com;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_SetDate=2018-06-05T13:11:09.7033506-04:00;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Name=Confidential;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_dc233488-06c6-4c2b-96ac-e256c4376f84_Extended_MSFT_Method=Manual;
- Sensitivity=Confidential
-x-originating-ip: [104.129.204.164]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MWHPR15MB1872;7:6G2c796sb5H27Bnrs2lUA0TpWt+bsW2wVQ6nhI7cwkvKUV/08gY2axzp5S+ZT1wr/Aga5KYh8J+ttoSAZlDGeuY8N1PRul6Kgo7UbMpqz0qOqmvtjuNhLzv4UYrkUOLHVokT+Sdn5PEu4JcjfFZ0qNzCYFd8HLedoAkwXda7a4sibD8IGl1dyySY7n8CbsPhX5qjOTUimu8y12rnDO6/6RbMvRjq8/jmRJ93JDx6WPl1Q+aq+9pawg0K9cbzpRk4
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(48565401081)(5600026)(4534165)(7168020)(4627221)(201703031133081)(201702281549075)(2017052603328)(7153060)(49563074)(7193020);SRVR:MWHPR15MB1872;
-x-ms-traffictypediagnostic: MWHPR15MB1872:
-x-from-ncr-tenant: Processed
-x-microsoft-antispam-prvs: <MWHPR15MB1872B2CF9FD658B478BA8F3999660@MWHPR15MB1872.namprd15.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(134217032509453)(76373721406558)(10436049006162)(192374486261705)(110640500709094)(21748063052155)(147143408336642);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(102415395)(6040522)(2401047)(5005006)(8121501046)(3002001)(3231254)(944501410)(52105095)(10201501046)(93006095)(93001095)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123558120)(20161123560045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(6072148)(201708071742011)(7699016);SRVR:MWHPR15MB1872;BCL:0;PCL:0;RULEID:;SRVR:MWHPR15MB1872;
-x-forefront-prvs: 0694C54398
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(346002)(396003)(39380400002)(39860400002)(366004)(376002)(50944005)(199004)(189003)(54896002)(19609705001)(68736007)(14454004)(6246003)(5660300001)(53936002)(9686003)(2900100001)(236005)(2906002)(1680700002)(2201001)(6506007)(53546011)(5250100002)(66066001)(26005)(966005)(59450400001)(2501003)(476003)(102836004)(53386004)(7696005)(446003)(86362001)(99286004)(486006)(11346002)(76176011)(3280700002)(229853002)(6306002)(55236004)(81156014)(186003)(110136005)(54556002)(3660700001)(8936002)(6116002)(3846002)(33656002)(55016002)(790700001)(606006)(74316002)(8676002)(316002)(106356001)(105586002)(72206003)(478600001)(7736002)(6436002)(81166006)(25786009)(733005)(99936001)(97736004);DIR:OUT;SFP:1101;SCL:1;SRVR:MWHPR15MB1872;H:MWHPR15MB1711.namprd15.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: ncr.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: dUYa+ekaKPTv6gos7pAxvhz2Ky/MeOBX6dr3kYleHB366adylyckRURj6F3fIGAt6YBgodNf5vyEbOfgFDHRx4PwW2KQ0c8XWbQLd2jjvQo3cXykj0Dm5+EYnddW+0+w1dVBlazhcCHsuA4XKE6/Ncpt0jsk7UtYWQwO9reMeX3VVhO3/ap9AwijWdXem93u
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: multipart/related;
-	boundary="_004_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_";
-	type="multipart/alternative"
+x-ms-reactions: disallow
+Received: (qmail 13799 invoked from network); 1 Oct 2025 14:51:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=djangoproject-com.20230601.gappssmtp.com; s=20230601; t=1759330278; x=1759935078; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UG9NVQxs5wO9DIJa56hsZTwktHad+I6Otd7dzv1ippU=;
+        b=dPJZ3WG1mN0qcH5GnLPB9EIQH5eargIHUX6SkH7usCrF35fm7/rZ1FDFVp8kVkLSMt
+         sRT+R+n0MVLed9QXPzPm6bEi6VtdWaJeL3mK0ryvFnAIaZZT8n5lapsjL8Qi3OB5u4wK
+         cFxQObNjKf/Mtte3YiR7HrIBjO+dqWNZih8NpfS5L/CxZ7WfJanzgK/lHwjWmTjsayju
+         Ybgg1Eywq9OLvHsq5oPtHeept8TRvr71JW4AMp5c0r5iLlBlyPRwWfGR2hVqlHLkuIqg
+         nfkN6gkhuyoYG0z5eTRbPOccEzqkJ/7CjhRPRVdflft/R5AiUJvq4pfAEJOn66ZIT5PA
+         VbpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759330278; x=1759935078;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UG9NVQxs5wO9DIJa56hsZTwktHad+I6Otd7dzv1ippU=;
+        b=ZE9dou6Wmy5F1ThKbEeULJuIiVr7iCaZsvkZFtqU1JVUM9tqeGArZ1zOhf728Djz0m
+         KGk+NvhoBK/+ouoxVdCgFsi3oGvYI+BdY+HOCRAtpDvE8hSMgSOrXbDWGNVCkB9UkGlm
+         /19YbuzRyb8vck2vfJGxzcDS3y8UBTCag2ukONxd0plQQjDignxiGUPC2DXuAufIT0hc
+         hqan3Ieu1XPwEv8L2uZnhEvc/8XwwiwQ2d1WH/phxVk2+NrCNS5+l2Z1lfscEzOd+2s4
+         Rge5672QqAUGW+BeOUmE5weF0OEnBWpE2avztvGsOvc4dsGUbSvaP1ppteTiAG0Qftmi
+         7yKA==
+X-Gm-Message-State: AOJu0Yxh9QKvAR5r60RRy8uN0JlFwzV/MaQ1fhFZdoUJtbU1CO+/4dEp
+	klvxy05LDBoqSqgqdWzRYRv4kysMqQPNQC0YT2SKqCTSiKsbP0/q2eZ5n3aclLBxxQnvzNCm500
+	MM26zcdjq06aBzo9vGbWZMBPn+DYz7uD8QWBjYf5i7XhPmAVJA5kGq4c=
+X-Gm-Gg: ASbGncuCjhuUXhZj9Ew704L/Ubajhs9ECZRMMq1WwXeusaYP08LvDTdYc49huBHG8o6
+	PNriTZMZB/czw8LAB7O/0X/HunJZc8fddAtBnxsXDjRMusgR+VHkOnZX/uU0+ax7kP1Edof2QPO
+	iIS1K5nKKgIaGvl8BTzebPAIeCU7TEtdEQjv7bUM1EAk+g3+ICjmLDDJVgPHYtFO6gtRRoUeh7w
+	3dyCIugVbfQfaWZePJ4flrzGu4oVZJCunWDlMskaF3cxg==
+X-Google-Smtp-Source: AGHT+IF2PSmf91u3da1BkQG6kICGiPWHXbukJZVnTgWvN7UkgloiNx4ChHScl9J0mlpGxdgNC2g4frbDOoYE9Xo6pzk=
+X-Received: by 2002:a05:690e:4291:10b0:63b:17b0:2c80 with SMTP id
+ 956f58d0204a3-63b70103b23mr2657011d50.9.1759330278274; Wed, 01 Oct 2025
+ 07:51:18 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Office365-Filtering-Correlation-Id: afeec76e-b38f-4407-7d5c-08d5cb075655
-X-OriginatorOrg: ncr.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: afeec76e-b38f-4407-7d5c-08d5cb075655
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2018 17:11:11.4258
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: ae4df1f7-611e-444f-897e-f964e1205171
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR15MB1872
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-05_07:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1805220000 definitions=main-1806050197
-Subject: [oss-security] RE: [CVE-2014-0114]: Apache Ignite is vulnerable to existing
- CVE-2014-0114
+From: Jacob Walls <jwalls@djangoproject.com>
+Date: Wed, 1 Oct 2025 10:51:07 -0400
+X-Gm-Features: AS18NWAvZUZXJG2QRjKq3IFm9J7vHUC1__yHSVT_3pmJghLDa8rzvxLqDb5NnZc
+Message-ID: <CAL4K_NZt_CttrZcQHfo7m=_3_+ysBJDw-hG2BKT_UL2Z7N-ZYA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Django Security Team <security@djangoproject.com>
+Content-Type: multipart/alternative; boundary="000000000000478b2a06401a0059"
+Subject: [oss-security] Django CVE-2025-59681 and CVE-2025-59682
 
---_004_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_
-Content-Type: multipart/alternative;
-	boundary="_000_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_"
+--000000000000478b2a06401a0059
+Content-Type: text/plain; charset="UTF-8"
 
---_000_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+* Announce link:
+https://www.djangoproject.com/weblog/2025/oct/01/security-releases/
 
-SSBmb3VuZCBvdGhlciBzZWN1cml0eSBpc3N1ZXMgYW5kIEkgaGF2ZSBjcmVh
-dGVkIGEgYnVnLiBodHRwczovL2lzc3Vlcy5hcGFjaGUub3JnL2ppcmEvYnJv
-d3NlL0lHTklURS04NzEzDQoNCg0KSGFyZW5kcmEgUmFpDQpTb2Z0d2FyZSBF
-bmdpbmVlcg0KTkNSIENvcnBvcmF0aW9uDQpvZmZpY2U6IDc3MC40OTUuMjg2
-NA0KbW9iaWxlOiAyNDguNzg3LjI4NzYNCmhhcmVuZHJhLnJhaUBuY3IuY29t
-PG1haWx0bzpoYXJlbmRyYS5yYWlAbmNyLmNvbT4NCnd3dy5uY3IuY29tPGh0
-dHA6Ly93d3cubmNyLmNvbT4NCltjaWQ6aW1hZ2UwMDMucG5nQDAxRDA0MDVF
-Ljg2RjRBRDcwXQ0KDQpGcm9tOiBEZW5pcyBNYWdkYSBbbWFpbHRvOmRtYWdk
-YUBhcGFjaGUub3JnXQ0KU2VudDogRnJpZGF5LCBKdW5lIDAxLCAyMDE4IDE6
-MTcgUE0NClRvOiBhbm5vdW5jZUBhcGFjaGUub3JnOyBkZXYgPGRldkBpZ25p
-dGUuYXBhY2hlLm9yZz47IHVzZXJAaWduaXRlLmFwYWNoZS5vcmc7IG9zcy1z
-ZWN1cml0eUBsaXN0cy5vcGVud2FsbC5jb207IFJhaSwgSGFyZW5kcmEgPEhh
-cmVuZHJhLlJhaUBuY3IuY29tPg0KU3ViamVjdDogW0NWRS0yMDE0LTAxMTRd
-OiBBcGFjaGUgSWduaXRlIGlzIHZ1bG5lcmFibGUgdG8gZXhpc3RpbmcgQ1ZF
-LTIwMTQtMDExNA0KDQpbQ1ZFLTIwMTQtMDExNF06IEFwYWNoZSBJZ25pdGUg
-aXMgdnVsbmVyYWJsZSB0byBleGlzdGluZyBDVkUtMjAxNC0wMTE0DQoNClNl
-dmVyaXR5OiBJbXBvcnRhbnQNCg0KVmVuZG9yOiBUaGUgQXBhY2hlIFNvZnR3
-YXJlIEZvdW5kYXRpb24NCg0KVmVyc2lvbnMgQWZmZWN0ZWQ6IEFwYWNoZSBJ
-Z25pdGUgMi40IG9yIGVhcmxpZXINCg0KSW1wYWN0Og0KQW4gYXR0YWNrZXIg
-Y2FuIGV4ZWN1dGUgYXJiaXRyYXJ5IGNvZGUgb24gSWduaXRlIG5vZGVzIGlu
-IHRoZSBjYXNlIHdoZW4gSWduaXRlIGNsYXNzcGF0aCBjb250YWlucyBhcmJp
-dHJhcnkgdnVsbmVyYWJsZSBjbGFzc2VzLg0KDQpEZXNjcmlwdGlvbjoNCkFw
-YWNoZSBJZ25pdGUgdXNlZCBjb21tb25zLWJlYW51dGlscy0xLjguMy5qYXIg
-bGlicmFyeSB3aGljaCBkaWQgbm90IHN1cHByZXNzIHRoZSBjbGFzcyBwcm9w
-ZXJ0eSwgd2hpY2ggYWxsb3dlZCByZW1vdGUgYXR0YWNrZXJzIHRvICJtYW5p
-cHVsYXRlIiB0aGUgQ2xhc3NMb2FkZXIgYW5kIGV4ZWN1dGUgYXJiaXRyYXJ5
-IGNvZGUgdmlhIHRoZSBjbGFzcyBwYXJhbWV0ZXIsIGFzIGRlbW9uc3RyYXRl
-ZCBieSB0aGUgcGFzc2luZyBvZiB0aGlzIHBhcmFtZXRlciB0byB0aGUgZ2V0
-Q2xhc3MgbWV0aG9kIG9mIHRoZSBBY3Rpb25Gb3JtIG9iamVjdCBpbiBTdHJ1
-dHMgMS4NCg0KTWl0aWdhdGlvbjoNCuKAoiAgICBBbGwgSWduaXRlIHZlcnNp
-b25zOiBtYWtlIHN1cmUgdGhlcmUgYXJlIG5vIHZ1bG5lcmFibGUgY2xhc3Nl
-cyBhbW9uZyB5b3VyIGN1c3RvbSBjb2RlIHVzZWQgaW4gQXBhY2hlIElnbml0
-ZS4NCuKAoiAgICBVcGdyYWRlIHRvIEFwYWNoZSBJZ25pdGUgMi41IG9yIGxh
-dGVyIHZlcnNpb24NCg0KQ3JlZGl0Og0KSGFyZW5kcmEgUmFpIG9mIE5DUiBD
-b3Jwb3JhdGlvbiBkaXNjb3ZlcmVkIHRoZSBpbXBhY3Qgb2YgdGhlIGV4aXN0
-aW5nIHZ1bG5lcmFiaWxpdHkgb24gQXBhY2hlIElnbml0ZS4NCg0KUmVmZXJl
-bmNlczoNCiogaHR0cHM6Ly9jdmUubWl0cmUub3JnL2NnaS1iaW4vY3ZlbmFt
-ZS5jZ2k/bmFtZT1DVkUtMjAxNC0wMTE0PGh0dHBzOi8vdXJsZGVmZW5zZS5w
-cm9vZnBvaW50LmNvbS92Mi91cmw/dT1odHRwcy0zQV9fY3ZlLm1pdHJlLm9y
-Z19jZ2ktMkRiaW5fY3ZlbmFtZS5jZ2ktM0ZuYW1lLTNEQ1ZFLTJEMjAxNC0y
-RDAxMTQmZD1Ed01GYVEmYz1nSk4yamY4QXlQNVE2TnAweVdZMTl3JnI9OU1x
-TER1SS1ZT0hmblVzWmo4ektBaUU1Y2I0cGQtRXFad2ZiZWZ6QW4xOCZtPU83
-VjVUNFZLdEd4QTFXN0RucDNkWm14djdGVDJmeTcyMjcwNHgwZUFudGsmcz1z
-aEsycTRjdW14NzBvOHhxV0hCY1kxOVItRFZTZ05JeTMyUC16VFRiSk5vJmU9
-Pg0K
+* Announce content:
+In accordance with `our security release policy
+<https://docs.djangoproject.com/en/dev/internals/security/>`_, the Django
+team
+is issuing releases for
+`Django 5.2.7 <https://docs.djangoproject.com/en/dev/releases/5.2.7/>`_,
+`Django 5.1.13 <https://docs.djangoproject.com/en/dev/releases/5.1.13/>`_,
+and
+`Django 4.2.25 <https://docs.djangoproject.com/en/dev/releases/4.2.25/>`_.
+These releases address the security issues detailed below. We encourage all
+users of Django to upgrade as soon as possible.
 
---_000_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+CVE-2025-59681: Potential SQL injection in ``QuerySet.annotate()``,
+``alias()``, ``aggregate()``, and ``extra()`` on MySQL and MariaDB
+======================================================================================================================================
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwi
-IHhtbG5zOm89InVybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9m
-ZmljZSIgeG1sbnM6dz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZp
-Y2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNv
-bS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5v
-cmcvVFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9
-IkNvbnRlbnQtVHlwZSIgY29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0
-Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRvciIgY29udGVudD0iTWljcm9z
-b2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPCEtLVtpZiAhbXNv
-XT48c3R5bGU+dlw6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0K
-b1w6KiB7YmVoYXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0Kd1w6KiB7YmVo
-YXZpb3I6dXJsKCNkZWZhdWx0I1ZNTCk7fQ0KLnNoYXBlIHtiZWhhdmlvcjp1
-cmwoI2RlZmF1bHQjVk1MKTt9DQo8L3N0eWxlPjwhW2VuZGlmXS0tPjxzdHls
-ZT48IS0tDQovKiBGb250IERlZmluaXRpb25zICovDQpAZm9udC1mYWNlDQoJ
-e2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0xOjIgNCA1
-IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpD
-YWxpYnJpOw0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCi8q
-IFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9y
-bWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47DQoJbWFyZ2luLWJv
-dHRvbTouMDAwMXB0Ow0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1p
-bHk6IlRpbWVzIE5ldyBSb21hbiIsc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1z
-b0h5cGVybGluaw0KCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJY29sb3I6
-Ymx1ZTsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30NCmE6dmlzaXRl
-ZCwgc3Bhbi5Nc29IeXBlcmxpbmtGb2xsb3dlZA0KCXttc28tc3R5bGUtcHJp
-b3JpdHk6OTk7DQoJY29sb3I6cHVycGxlOw0KCXRleHQtZGVjb3JhdGlvbjp1
-bmRlcmxpbmU7fQ0KcC5tc29ub3JtYWwwLCBsaS5tc29ub3JtYWwwLCBkaXYu
-bXNvbm9ybWFsMA0KCXttc28tc3R5bGUtbmFtZTptc29ub3JtYWw7DQoJbXNv
-LW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCglt
-c28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47
-DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToiVGltZXMgTmV3
-IFJvbWFuIixzZXJpZjt9DQpzcGFuLkVtYWlsU3R5bGUxOA0KCXttc28tc3R5
-bGUtdHlwZTpwZXJzb25hbC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJy
-aSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30NCi5Nc29DaHBE
-ZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQt
-ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCkBwYWdlIFdvcmRTZWN0
-aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4w
-aW4gMS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldv
-cmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48
-eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0i
-MTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3RlIG1zbyA5
-XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86aWRt
-YXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+
-PC94bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1V
-UyIgbGluaz0iYmx1ZSIgdmxpbms9InB1cnBsZSI+DQo8ZGl2IGNsYXNzPSJX
-b3JkU2VjdGlvbjEiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5
-bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJy
-aSZxdW90OyxzYW5zLXNlcmlmIj5JIGZvdW5kIG90aGVyIHNlY3VyaXR5IGlz
-c3VlcyBhbmQgSSBoYXZlIGNyZWF0ZWQgYSBidWcuDQo8YSBocmVmPSJodHRw
-czovL2lzc3Vlcy5hcGFjaGUub3JnL2ppcmEvYnJvd3NlL0lHTklURS04NzEz
-Ij5odHRwczovL2lzc3Vlcy5hcGFjaGUub3JnL2ppcmEvYnJvd3NlL0lHTklU
-RS04NzEzPC9hPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJN
-c29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQt
-ZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZiI+PG86cD4m
-bmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1
-b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNlcmlmIj48bzpwPiZuYnNwOzwvbzpw
-Pjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBs
-YW5nPSJFTiIgc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6
-JnF1b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNlcmlmO2NvbG9yOiM1NEI5NDgi
-PkhhcmVuZHJhIFJhaTwvc3Bhbj48L2I+PHNwYW4gbGFuZz0iRU4iIHN0eWxl
-PSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NhbGlicmkm
-cXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0OTdEIj48YnI+DQo8L3NwYW4+
-PGI+PHNwYW4gbGFuZz0iRU4iIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2Zv
-bnQtZmFtaWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xv
-cjojNTg1ODVBIj5Tb2Z0d2FyZSBFbmdpbmVlcjxicj4NCk5DUiBDb3Jwb3Jh
-dGlvbjxicj4NCm9mZmljZTogNzcwLjQ5NS4yODY0PGJyPg0KbW9iaWxlOiAy
-NDguNzg3LjI4NzY8L3NwYW4+PC9iPjxzcGFuIGxhbmc9IkVOIiBzdHlsZT0i
-Zm9udC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1
-b3Q7LHNhbnMtc2VyaWY7Y29sb3I6IzFGNDk3RCI+PGJyPg0KPC9zcGFuPjxi
-PjxzcGFuIGxhbmc9IkVOIiBzdHlsZT0iZm9udC1zaXplOjExLjBwdDtmb250
-LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7LHNhbnMtc2VyaWY7Y29sb3I6
-IzU0Qjk0OCI+PGEgaHJlZj0ibWFpbHRvOmhhcmVuZHJhLnJhaUBuY3IuY29t
-Ij5oYXJlbmRyYS5yYWlAbmNyLmNvbTwvYT48YnI+DQo8YSBocmVmPSJodHRw
-Oi8vd3d3Lm5jci5jb20iPnd3dy5uY3IuY29tPC9hPjwvc3Bhbj48L2I+PHNw
-YW4gbGFuZz0iRU4iIHN0eWxlPSJmb250LXNpemU6MTEuMHB0O2ZvbnQtZmFt
-aWx5OiZxdW90O0NhbGlicmkmcXVvdDssc2Fucy1zZXJpZjtjb2xvcjojMUY0
-OTdEIj48YnI+DQo8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4w
-cHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJyaSZxdW90OyxzYW5zLXNlcmlm
-Ij48aW1nIGJvcmRlcj0iMCIgd2lkdGg9Ijc2IiBoZWlnaHQ9Ijc2IiBzdHls
-ZT0id2lkdGg6Ljc5MTZpbjtoZWlnaHQ6Ljc5MTZpbiIgaWQ9IlBpY3R1cmVf
-eDAwMjBfMSIgc3JjPSJjaWQ6aW1hZ2UwMDEucG5nQDAxRDNGQ0NFLkE0RkNB
-NjgwIiBhbHQ9ImNpZDppbWFnZTAwMy5wbmdAMDFEMDQwNUUuODZGNEFENzAi
-PjxzcGFuIHN0eWxlPSJjb2xvcjojMUY0OTdEIj48bzpwPjwvbzpwPjwvc3Bh
-bj48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5
-bGU9ImZvbnQtc2l6ZToxMS4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q2FsaWJy
-aSZxdW90OyxzYW5zLXNlcmlmIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48
-L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48Yj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7
-LHNhbnMtc2VyaWYiPkZyb206PC9zcGFuPjwvYj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdDtmb250LWZhbWlseTomcXVvdDtDYWxpYnJpJnF1b3Q7
-LHNhbnMtc2VyaWYiPiBEZW5pcyBNYWdkYSBbbWFpbHRvOmRtYWdkYUBhcGFj
-aGUub3JnXQ0KPGJyPg0KPGI+U2VudDo8L2I+IEZyaWRheSwgSnVuZSAwMSwg
-MjAxOCAxOjE3IFBNPGJyPg0KPGI+VG86PC9iPiBhbm5vdW5jZUBhcGFjaGUu
-b3JnOyBkZXYgJmx0O2RldkBpZ25pdGUuYXBhY2hlLm9yZyZndDs7IHVzZXJA
-aWduaXRlLmFwYWNoZS5vcmc7IG9zcy1zZWN1cml0eUBsaXN0cy5vcGVud2Fs
-bC5jb207IFJhaSwgSGFyZW5kcmEgJmx0O0hhcmVuZHJhLlJhaUBuY3IuY29t
-Jmd0Ozxicj4NCjxiPlN1YmplY3Q6PC9iPiBbQ1ZFLTIwMTQtMDExNF06IEFw
-YWNoZSBJZ25pdGUgaXMgdnVsbmVyYWJsZSB0byBleGlzdGluZyBDVkUtMjAx
-NC0wMTE0PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2Pg0KPGRpdj4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPltDVkUtMjAxNC0wMTE0XTogQXBhY2hlIEln
-bml0ZSBpcyB2dWxuZXJhYmxlIHRvIGV4aXN0aW5nIENWRS0yMDE0LTAxMTQ8
-bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29O
-b3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+U2V2ZXJpdHk6IEltcG9ydGFudDxvOnA+
-PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIj5WZW5kb3I6IFRoZSBBcGFjaGUgU29mdHdhcmUg
-Rm91bmRhdGlvbjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8L2Rp
-dj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5WZXJzaW9ucyBBZmZl
-Y3RlZDogQXBhY2hlIElnbml0ZSAyLjQgb3IgZWFybGllcjxvOnA+PC9vOnA+
-PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86
-cD4mbmJzcDs8L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj5JbXBhY3Q6PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxk
-aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5BbiBhdHRhY2tlciBjYW4gZXhl
-Y3V0ZSBhcmJpdHJhcnkgY29kZSBvbiBJZ25pdGUgbm9kZXMgaW4gdGhlIGNh
-c2Ugd2hlbiBJZ25pdGUgY2xhc3NwYXRoIGNvbnRhaW5zIGFyYml0cmFyeSB2
-dWxuZXJhYmxlIGNsYXNzZXMuPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxk
-aXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwv
-cD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkRlc2Ny
-aXB0aW9uOjxvOnA+PC9vOnA+PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xh
-c3M9Ik1zb05vcm1hbCI+QXBhY2hlIElnbml0ZSB1c2VkIGNvbW1vbnMtYmVh
-bnV0aWxzLTEuOC4zLmphciBsaWJyYXJ5IHdoaWNoIGRpZCZuYnNwO25vdCBz
-dXBwcmVzcyB0aGUgY2xhc3MgcHJvcGVydHksIHdoaWNoIGFsbG93ZWQgcmVt
-b3RlIGF0dGFja2VycyB0byAmcXVvdDttYW5pcHVsYXRlJnF1b3Q7IHRoZSBD
-bGFzc0xvYWRlciBhbmQgZXhlY3V0ZSBhcmJpdHJhcnkgY29kZSB2aWEgdGhl
-IGNsYXNzIHBhcmFtZXRlciwgYXMgZGVtb25zdHJhdGVkIGJ5IHRoZQ0KIHBh
-c3Npbmcgb2YgdGhpcyBwYXJhbWV0ZXIgdG8gdGhlIGdldENsYXNzIG1ldGhv
-ZCBvZiB0aGUgQWN0aW9uRm9ybSBvYmplY3QgaW4gU3RydXRzIDEuPG86cD48
-L286cD48L3A+DQo8L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPk1pdGlnYXRpb246PG86cD48L286cD48L3A+DQo8
-L2Rpdj4NCjxkaXY+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj7igKIgJm5ic3A7
-ICZuYnNwO0FsbCBJZ25pdGUgdmVyc2lvbnM6IG1ha2Ugc3VyZSB0aGVyZSBh
-cmUgbm8gdnVsbmVyYWJsZSBjbGFzc2VzIGFtb25nIHlvdXIgY3VzdG9tIGNv
-ZGUgdXNlZCBpbiBBcGFjaGUgSWduaXRlLjxvOnA+PC9vOnA+PC9wPg0KPC9k
-aXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+4oCiICZuYnNwOyAm
-bmJzcDtVcGdyYWRlIHRvIEFwYWNoZSBJZ25pdGUgMi41IG9yIGxhdGVyIHZl
-cnNpb248bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNz
-PSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+DQo8
-ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+Q3JlZGl0OjxvOnA+PC9vOnA+
-PC9wPg0KPC9kaXY+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+SGFy
-ZW5kcmEgUmFpIG9mIE5DUiBDb3Jwb3JhdGlvbiBkaXNjb3ZlcmVkIHRoZSBp
-bXBhY3Qgb2YgdGhlIGV4aXN0aW5nIHZ1bG5lcmFiaWxpdHkgb24gQXBhY2hl
-IElnbml0ZS48bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPC9kaXY+
-DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+UmVmZXJlbmNlczo8bzpw
-PjwvbzpwPjwvcD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPiogPGEgaHJlZj0iaHR0cHM6Ly91cmxkZWZlbnNlLnByb29mcG9pbnQu
-Y29tL3YyL3VybD91PWh0dHBzLTNBX19jdmUubWl0cmUub3JnX2NnaS0yRGJp
-bl9jdmVuYW1lLmNnaS0zRm5hbWUtM0RDVkUtMkQyMDE0LTJEMDExNCZhbXA7
-ZD1Ed01GYVEmYW1wO2M9Z0pOMmpmOEF5UDVRNk5wMHlXWTE5dyZhbXA7cj05
-TXFMRHVJLVlPSGZuVXNaajh6S0FpRTVjYjRwZC1FcVp3ZmJlZnpBbjE4JmFt
-cDttPU83VjVUNFZLdEd4QTFXN0RucDNkWm14djdGVDJmeTcyMjcwNHgwZUFu
-dGsmYW1wO3M9c2hLMnE0Y3VteDcwbzh4cVdIQmNZMTlSLURWU2dOSXkzMlAt
-elRUYkpObyZhbXA7ZT0iPg0KaHR0cHM6Ly9jdmUubWl0cmUub3JnL2NnaS1i
-aW4vY3ZlbmFtZS5jZ2k/bmFtZT1DVkUtMjAxNC0wMTE0PC9hPjxvOnA+PC9v
-OnA+PC9wPg0KPC9kaXY+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9o
-dG1sPg0K
+``QuerySet.annotate()``, ``QuerySet.alias()``, ``QuerySet.aggregate()``,
+and ``QuerySet.extra()`` methods were subject to SQL injection in column
+aliases, using a suitably crafted dictionary, with dictionary expansion, as
+the ``**kwargs`` passed to these methods on MySQL and MariaDB.
 
---_000_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_--
+Thanks to sw0rd1ight for the report.
 
---_004_MWHPR15MB1711FD389FCC54BF5F9FB74A99660MWHPR15MB1711namp_--
+This issue has severity "high" according to the Django security policy.
+
+CVE-2025-59682: Potential partial directory-traversal via
+``archive.extract()``
+===============================================================================
+
+The ``django.utils.archive.extract()`` function, used by ``startapp
+--template`` and ``startproject --template``, allowed partial
+directory-traversal via an archive with file paths sharing a common prefix
+with the target directory.
+
+Thanks to stackered for the report.
+
+This issue has severity "low" according to the Django security policy.
+
+
+Affected supported versions
+===========================
+
+* Django main
+* Django 6.0 (currently at alpha status)
+* Django 5.2
+* Django 5.1
+* Django 4.2
+
+Resolution
+==========
+
+Patches to resolve the issue have been applied to Django's
+main, 6.0 (currently at alpha status), 5.2, 5.1, and 4.2 branches.
+The patches may be obtained from the following changesets.
+
+CVE-2025-59681: Potential SQL injection in QuerySet.annotate(), alias(),
+aggregate(), and extra() on MySQL and MariaDB
+----------------------------------------------------------------------------------------------------------------------
+
+* On the `main branch <
+https://github.com/django/django/commit/41b43c74bda19753c757036673ea9db74acf494a
+>`__
+* On the `6.0 branch <
+https://github.com/django/django/commit/4ceaaee7e04b416fc465e838a6ef43ca0ccffafe
+>`__
+* On the `5.2 branch <
+https://github.com/django/django/commit/52fbae0a4dbbe5faa59827f8f05694a0065cc135
+>`__
+* On the `5.1 branch <
+https://github.com/django/django/commit/01d2d770e22bffe53c7f1e611e2bbca94cb8a2e7
+>`__
+* On the `4.2 branch <
+https://github.com/django/django/commit/38d9ef8c7b5cb6ef51b933e51a20e0e0063f33d5
+>`__
+
+CVE-2025-59682: Potential partial directory-traversal via archive.extract()
+---------------------------------------------------------------------------
+
+* On the `main branch <
+https://github.com/django/django/commit/924a0c092e65fa2d0953fd1855d2dc8786d94de2
+>`__
+* On the `6.0 branch <
+https://github.com/django/django/commit/af067f56c1dd467df4abd0ddd409a700da1f03ba
+>`__
+* On the `5.2 branch <
+https://github.com/django/django/commit/ed8fc39d77465eddbde1191a054ae965f6a8a584
+>`__
+* On the `5.1 branch <
+https://github.com/django/django/commit/74fa85c688a87224637155902bcd738bb9e65e11
+>`__
+* On the `4.2 branch <
+https://github.com/django/django/commit/9504bbaa392c9fe37eee9291f5b4c29eb6037619
+>`__
+
+
+The following releases have been issued
+=======================================
+
+* Django 5.2.7 (`download Django 5.2.7
+  <https://www.djangoproject.com/download/5.2.7/tarball/>`_ |
+  `5.2.7 checksums
+  <https://www.djangoproject.com/download/5.2.7/checksum/>`_)
+* Django 5.1.13 (`download Django 5.1.13
+  <https://www.djangoproject.com/download/5.1.13/tarball/>`_ |
+  `5.1.13 checksums
+  <https://www.djangoproject.com/download/5.1.13/checksum/>`_)
+* Django 4.2.25 (`download Django 4.2.25
+  <https://www.djangoproject.com/download/4.2.25/tarball/>`_ |
+  `4.2.25 checksums
+  <https://www.djangoproject.com/download/4.2.25/checksum/>`_)
+
+The PGP key ID used for this release is Jacob Walls: `131403F4D16D8DC7 <
+https://github.com/jacobtylerwalls.gpg>`_
+
+
+General notes regarding security reporting
+==========================================
+
+As always, we ask that potential security issues be reported via private
+email
+to ``security@djangoproject.com``, and not via Django's Trac instance, nor
+via
+the Django Forum. Please see `our security policies
+<https://www.djangoproject.com/security/>`_ for further information.
+
+* Machine-readable CVE data for CVE-2025-59681:
+{
+  "affected": [
+    {
+      "collectionURL": "https://github.com/django/django/",
+      "defaultStatus": "affected",
+      "packageName": "django",
+      "versions": [
+        {
+          "lessThan": "5.2.7",
+          "status": "affected",
+          "version": "5.2.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.2.*",
+          "status": "unaffected",
+          "version": "5.2.7",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.1.13",
+          "status": "affected",
+          "version": "5.1.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.1.*",
+          "status": "unaffected",
+          "version": "5.1.13",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "4.2.25",
+          "status": "affected",
+          "version": "4.2.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "4.2.*",
+          "status": "unaffected",
+          "version": "4.2.25",
+          "versionType": "semver"
+        }
+      ]
+    }
+  ],
+  "credits": [
+    {
+      "lang": "en",
+      "type": "reporter",
+      "value": "Django would like to thank sw0rd1ight for reporting this
+issue."
+    }
+  ],
+  "datePublic": "10/01/2025",
+  "descriptions": [
+    {
+      "lang": "en",
+      "value": "QuerySet.annotate(), QuerySet.alias(),
+QuerySet.aggregate(), and QuerySet.extra() methods are subject to SQL
+injection in column aliases, using a suitably crafted dictionary, with
+dictionary expansion, as the **kwargs passed to these methods on MySQL and
+MariaDB."
+    }
+  ],
+  "metrics": [
+    {
+      "other": {
+        "content": {
+          "namespace": "
+https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
+",
+          "value": "high"
+        },
+        "type": "Django severity rating"
+      }
+    }
+  ],
+  "references": [
+    {
+      "name": "Django security releases issued: 5.2.7, 5.1.13, and 4.2.25",
+      "tags": [
+        "vendor-advisory"
+      ],
+      "url": "
+https://www.djangoproject.com/weblog/2025/oct/01/security-releases/"
+    }
+  ],
+  "timeline": [
+    {
+      "lang": "en",
+      "time": "2025-10-01T14:00:00+00:00",
+      "value": "Made public."
+    }
+  ],
+  "title": "Potential SQL injection in QuerySet.annotate(), alias(),
+aggregate(), and extra() on MySQL and MariaDB"
+}
+
+* Machine-readable CVE data for CVE-2025-59682:
+{
+  "affected": [
+    {
+      "collectionURL": "https://github.com/django/django/",
+      "defaultStatus": "affected",
+      "packageName": "django",
+      "versions": [
+        {
+          "lessThan": "5.2.7",
+          "status": "affected",
+          "version": "5.2.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.2.*",
+          "status": "unaffected",
+          "version": "5.2.7",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.1.13",
+          "status": "affected",
+          "version": "5.1.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "5.1.*",
+          "status": "unaffected",
+          "version": "5.1.13",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "4.2.25",
+          "status": "affected",
+          "version": "4.2.0",
+          "versionType": "semver"
+        },
+        {
+          "lessThan": "4.2.*",
+          "status": "unaffected",
+          "version": "4.2.25",
+          "versionType": "semver"
+        }
+      ]
+    }
+  ],
+  "credits": [
+    {
+      "lang": "en",
+      "type": "reporter",
+      "value": "Django would like to thank stackered for reporting this
+issue."
+    }
+  ],
+  "datePublic": "10/01/2025",
+  "descriptions": [
+    {
+      "lang": "en",
+      "value": "The django.utils.archive.extract() function, used by
+\"startapp --template\" and \"startproject --template\", allows partial
+directory-traversal via an archive with file paths sharing a common prefix
+with the target directory."
+    }
+  ],
+  "metrics": [
+    {
+      "other": {
+        "content": {
+          "namespace": "
+https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
+",
+          "value": "low"
+        },
+        "type": "Django severity rating"
+      }
+    }
+  ],
+  "references": [
+    {
+      "name": "Django security releases issued: 5.2.7, 5.1.13, and 4.2.25",
+      "tags": [
+        "vendor-advisory"
+      ],
+      "url": "
+https://www.djangoproject.com/weblog/2025/oct/01/security-releases/"
+    }
+  ],
+  "timeline": [
+    {
+      "lang": "en",
+      "time": "2025-10-01T14:00:00+00:00",
+      "value": "Made public."
+    }
+  ],
+  "title": "Potential partial directory-traversal via archive.extract()"
+}
+
+--000000000000478b2a06401a0059
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">* Announce link: <a href=3D"https://www.djangoproject.com/=
+weblog/2025/oct/01/security-releases/">https://www.djangoproject.com/weblog=
+/2025/oct/01/security-releases/</a><br><br>* Announce content:<div>In accor=
+dance with `our security release policy<br>&lt;<a href=3D"https://docs.djan=
+goproject.com/en/dev/internals/security/">https://docs.djangoproject.com/en=
+/dev/internals/security/</a>&gt;`_, the Django team<br>is issuing releases =
+for<br>`Django 5.2.7 &lt;<a href=3D"https://docs.djangoproject.com/en/dev/r=
+eleases/5.2.7/">https://docs.djangoproject.com/en/dev/releases/5.2.7/</a>&g=
+t;`_,<br>`Django 5.1.13 &lt;<a href=3D"https://docs.djangoproject.com/en/de=
+v/releases/5.1.13/">https://docs.djangoproject.com/en/dev/releases/5.1.13/<=
+/a>&gt;`_, and<br>`Django 4.2.25 &lt;<a href=3D"https://docs.djangoproject.=
+com/en/dev/releases/4.2.25/">https://docs.djangoproject.com/en/dev/releases=
+/4.2.25/</a>&gt;`_.<br>These releases address the security issues detailed =
+below. We encourage all<br>users of Django to upgrade as soon as possible.<=
+br><br>CVE-2025-59681: Potential SQL injection in ``QuerySet.annotate()``, =
+``alias()``, ``aggregate()``, and ``extra()`` on MySQL and MariaDB<br>=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D<br><br>``QuerySet.annotate()``, ``QuerySet.alias()=
+``, ``QuerySet.aggregate()``, and ``QuerySet.extra()`` methods were subject=
+ to SQL injection in column aliases, using a suitably crafted dictionary, w=
+ith dictionary expansion, as the ``**kwargs`` passed to these methods on My=
+SQL and MariaDB.<br><br>Thanks to sw0rd1ight for the report.<br><br>This is=
+sue has severity &quot;high&quot; according to the Django security policy.<=
+br><br>CVE-2025-59682: Potential partial directory-traversal via ``archive.=
+extract()``<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D<br><br>The ``django.utils.archive.extract()`` f=
+unction, used by ``startapp --template`` and ``startproject --template``, a=
+llowed partial directory-traversal via an archive with file paths sharing a=
+ common prefix with the target directory.<br><br>Thanks to stackered for th=
+e report.<br><br>This issue has severity &quot;low&quot; according to the D=
+jango security policy.<br><br><br>Affected supported versions<br>=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br=
+><br>* Django main<br>* Django 6.0 (currently at alpha status)<br>* Django =
+5.2<br>* Django 5.1<br>* Django 4.2<br><br>Resolution<br>=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D<br><br>Patches to resolve the issue have been applied to Djang=
+o&#39;s<br>main, 6.0 (currently at alpha status), 5.2, 5.1, and 4.2 branche=
+s.<br>The patches may be obtained from the following changesets.<br><br>CVE=
+-2025-59681: Potential SQL injection in QuerySet.annotate(), alias(), aggre=
+gate(), and extra() on MySQL and MariaDB<br>-------------------------------=
+---------------------------------------------------------------------------=
+------------<br><br>* On the `main branch &lt;<a href=3D"https://github.com=
+/django/django/commit/41b43c74bda19753c757036673ea9db74acf494a">https://git=
+hub.com/django/django/commit/41b43c74bda19753c757036673ea9db74acf494a</a>&g=
+t;`__<br>* On the `6.0 branch &lt;<a href=3D"https://github.com/django/djan=
+go/commit/4ceaaee7e04b416fc465e838a6ef43ca0ccffafe">https://github.com/djan=
+go/django/commit/4ceaaee7e04b416fc465e838a6ef43ca0ccffafe</a>&gt;`__<br>* O=
+n the `5.2 branch &lt;<a href=3D"https://github.com/django/django/commit/52=
+fbae0a4dbbe5faa59827f8f05694a0065cc135">https://github.com/django/django/co=
+mmit/52fbae0a4dbbe5faa59827f8f05694a0065cc135</a>&gt;`__<br>* On the `5.1 b=
+ranch &lt;<a href=3D"https://github.com/django/django/commit/01d2d770e22bff=
+e53c7f1e611e2bbca94cb8a2e7">https://github.com/django/django/commit/01d2d77=
+0e22bffe53c7f1e611e2bbca94cb8a2e7</a>&gt;`__<br>* On the `4.2 branch &lt;<a=
+ href=3D"https://github.com/django/django/commit/38d9ef8c7b5cb6ef51b933e51a=
+20e0e0063f33d5">https://github.com/django/django/commit/38d9ef8c7b5cb6ef51b=
+933e51a20e0e0063f33d5</a>&gt;`__<br><br>CVE-2025-59682: Potential partial d=
+irectory-traversal via archive.extract()<br>-------------------------------=
+--------------------------------------------<br><br>* On the `main branch &=
+lt;<a href=3D"https://github.com/django/django/commit/924a0c092e65fa2d0953f=
+d1855d2dc8786d94de2">https://github.com/django/django/commit/924a0c092e65fa=
+2d0953fd1855d2dc8786d94de2</a>&gt;`__<br>* On the `6.0 branch &lt;<a href=
+=3D"https://github.com/django/django/commit/af067f56c1dd467df4abd0ddd409a70=
+0da1f03ba">https://github.com/django/django/commit/af067f56c1dd467df4abd0dd=
+d409a700da1f03ba</a>&gt;`__<br>* On the `5.2 branch &lt;<a href=3D"https://=
+github.com/django/django/commit/ed8fc39d77465eddbde1191a054ae965f6a8a584">h=
+ttps://github.com/django/django/commit/ed8fc39d77465eddbde1191a054ae965f6a8=
+a584</a>&gt;`__<br>* On the `5.1 branch &lt;<a href=3D"https://github.com/d=
+jango/django/commit/74fa85c688a87224637155902bcd738bb9e65e11">https://githu=
+b.com/django/django/commit/74fa85c688a87224637155902bcd738bb9e65e11</a>&gt;=
+`__<br>* On the `4.2 branch &lt;<a href=3D"https://github.com/django/django=
+/commit/9504bbaa392c9fe37eee9291f5b4c29eb6037619">https://github.com/django=
+/django/commit/9504bbaa392c9fe37eee9291f5b4c29eb6037619</a>&gt;`__<br><br><=
+br>The following releases have been issued<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D<br><br>* Django 5.2.7 (`download Django 5.2.7<br>=C2=A0 &lt=
+;<a href=3D"https://www.djangoproject.com/download/5.2.7/tarball/">https://=
+www.djangoproject.com/download/5.2.7/tarball/</a>&gt;`_ |<br>=C2=A0 `5.2.7 =
+checksums<br>=C2=A0 &lt;<a href=3D"https://www.djangoproject.com/download/5=
+.2.7/checksum/">https://www.djangoproject.com/download/5.2.7/checksum/</a>&=
+gt;`_)<br>* Django 5.1.13 (`download Django 5.1.13<br>=C2=A0 &lt;<a href=3D=
+"https://www.djangoproject.com/download/5.1.13/tarball/">https://www.django=
+project.com/download/5.1.13/tarball/</a>&gt;`_ |<br>=C2=A0 `5.1.13 checksum=
+s<br>=C2=A0 &lt;<a href=3D"https://www.djangoproject.com/download/5.1.13/ch=
+ecksum/">https://www.djangoproject.com/download/5.1.13/checksum/</a>&gt;`_)=
+<br>* Django 4.2.25 (`download Django 4.2.25<br>=C2=A0 &lt;<a href=3D"https=
+://www.djangoproject.com/download/4.2.25/tarball/">https://www.djangoprojec=
+t.com/download/4.2.25/tarball/</a>&gt;`_ |<br>=C2=A0 `4.2.25 checksums<br>=
+=C2=A0 &lt;<a href=3D"https://www.djangoproject.com/download/4.2.25/checksu=
+m/">https://www.djangoproject.com/download/4.2.25/checksum/</a>&gt;`_)<br><=
+br>The PGP key ID used for this release is Jacob Walls: `131403F4D16D8DC7 &=
+lt;<a href=3D"https://github.com/jacobtylerwalls.gpg">https://github.com/ja=
+cobtylerwalls.gpg</a>&gt;`_<br><br><br>General notes regarding security rep=
+orting<br>=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br><br>As a=
+lways, we ask that potential security issues be reported via private email<=
+br>to ``<a href=3D"mailto:security@djangoproject.com">security@djangoprojec=
+t.com</a>``, and not via Django&#39;s Trac instance, nor via<br>the Django =
+Forum. Please see `our security policies<br>&lt;<a href=3D"https://www.djan=
+goproject.com/security/">https://www.djangoproject.com/security/</a>&gt;`_ =
+for further information.<br><br>* Machine-readable CVE data for CVE-2025-59=
+681:<br>{<br>=C2=A0 &quot;affected&quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =
+=C2=A0 =C2=A0 &quot;collectionURL&quot;: &quot;<a href=3D"https://github.co=
+m/django/django/">https://github.com/django/django/</a>&quot;,<br>=C2=A0 =
+=C2=A0 =C2=A0 &quot;defaultStatus&quot;: &quot;affected&quot;,<br>=C2=A0 =
+=C2=A0 =C2=A0 &quot;packageName&quot;: &quot;django&quot;,<br>=C2=A0 =C2=A0=
+ =C2=A0 &quot;versions&quot;: [<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &quot;5.2.7&quot;,<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: &quot;affected&quot;,<b=
+r>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&quot;: &quot;5.2.0&quot;=
+,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versionType&quot;: &quot;semv=
+er&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {=
+<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &quot;5.2.*&qu=
+ot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: &quot;unaffe=
+cted&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&quot;: &quo=
+t;5.2.7&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versionType&quot=
+;: &quot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;:=
+ &quot;5.1.13&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quo=
+t;: &quot;affected&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versi=
+on&quot;: &quot;5.1.0&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;ve=
+rsionType&quot;: &quot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;l=
+essThan&quot;: &quot;5.1.*&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &qu=
+ot;status&quot;: &quot;unaffected&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 &quot;version&quot;: &quot;5.1.13&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 &quot;versionType&quot;: &quot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 },<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 &quot;lessThan&quot;: &quot;4.2.25&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 &quot;status&quot;: &quot;affected&quot;,<br>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 &quot;version&quot;: &quot;4.2.0&quot;,<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versionType&quot;: &quot;semver&quot;<br>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &quot;4.2.*&quot;,<br>=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: &quot;unaffected&quot;,<br=
+>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&quot;: &quot;4.2.25&quot;=
+,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versionType&quot;: &quot;semv=
+er&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>=C2=A0 =C2=A0 =C2=A0 ]<br>=C2=
+=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;credits&quot;: [<br>=C2=A0 =C2=A0=
+ {<br>=C2=A0 =C2=A0 =C2=A0 &quot;lang&quot;: &quot;en&quot;,<br>=C2=A0 =C2=
+=A0 =C2=A0 &quot;type&quot;: &quot;reporter&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =
+&quot;value&quot;: &quot;Django would like to thank sw0rd1ight for reportin=
+g this issue.&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;datePub=
+lic&quot;: &quot;10/01/2025&quot;,<br>=C2=A0 &quot;descriptions&quot;: [<br=
+>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;lang&quot;: &quot;en&quot;,<=
+br>=C2=A0 =C2=A0 =C2=A0 &quot;value&quot;: &quot;QuerySet.annotate(), Query=
+Set.alias(), QuerySet.aggregate(), and QuerySet.extra() methods are subject=
+ to SQL injection in column aliases, using a suitably crafted dictionary, w=
+ith dictionary expansion, as the **kwargs passed to these methods on MySQL =
+and MariaDB.&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;metrics&=
+quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;other&quot;: {<br=
+>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;content&quot;: {<br>=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 &quot;namespace&quot;: &quot;<a href=3D"https://docs.djangop=
+roject.com/en/dev/internals/security/#security-issue-severity-levels">https=
+://docs.djangoproject.com/en/dev/internals/security/#security-issue-severit=
+y-levels</a>&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;value&quot;=
+: &quot;high&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;type&quot;: &quot;Django severity rating&quot;<br>=C2=A0 =
+=C2=A0 =C2=A0 }<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;references&=
+quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;name&quot;: &quot=
+;Django security releases issued: 5.2.7, 5.1.13, and 4.2.25&quot;,<br>=C2=
+=A0 =C2=A0 =C2=A0 &quot;tags&quot;: [<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=
+vendor-advisory&quot;<br>=C2=A0 =C2=A0 =C2=A0 ],<br>=C2=A0 =C2=A0 =C2=A0 &q=
+uot;url&quot;: &quot;<a href=3D"https://www.djangoproject.com/weblog/2025/o=
+ct/01/security-releases/">https://www.djangoproject.com/weblog/2025/oct/01/=
+security-releases/</a>&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quo=
+t;timeline&quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;lang&q=
+uot;: &quot;en&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;time&quot;: &quot;2025-=
+10-01T14:00:00+00:00&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;value&quot;: &quo=
+t;Made public.&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;title&=
+quot;: &quot;Potential SQL injection in QuerySet.annotate(), alias(), aggre=
+gate(), and extra() on MySQL and MariaDB&quot;<br>}<br><br>* Machine-readab=
+le CVE data for CVE-2025-59682:<br>{<br>=C2=A0 &quot;affected&quot;: [<br>=
+=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;collectionURL&quot;: &quot;<a=
+ href=3D"https://github.com/django/django/">https://github.com/django/djang=
+o/</a>&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;defaultStatus&quot;: &quot;affe=
+cted&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;packageName&quot;: &quot;django&q=
+uot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;versions&quot;: [<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &q=
+uot;5.2.7&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: =
+&quot;affected&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&q=
+uot;: &quot;5.2.0&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versio=
+nType&quot;: &quot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessTha=
+n&quot;: &quot;5.2.*&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;sta=
+tus&quot;: &quot;unaffected&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &q=
+uot;version&quot;: &quot;5.2.7&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ &quot;versionType&quot;: &quot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ },<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+&quot;lessThan&quot;: &quot;5.1.13&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 &quot;status&quot;: &quot;affected&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 &quot;version&quot;: &quot;5.1.0&quot;,<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;versionType&quot;: &quot;semver&quot;<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &quot;5.1.*&quot;,<br>=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: &quot;unaffected&quot;,<br>=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&quot;: &quot;5.1.13&quot;,<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versionType&quot;: &quot;semver&qu=
+ot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &quot;4.2.25&quot;=
+,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: &quot;affected&=
+quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&quot;: &quot;4.2=
+.0&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;versionType&quot;: &q=
+uot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;lessThan&quot;: &quot;=
+4.2.*&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;status&quot;: &quo=
+t;unaffected&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version&quo=
+t;: &quot;4.2.25&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;version=
+Type&quot;: &quot;semver&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>=C2=A0 =
+=C2=A0 =C2=A0 ]<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;credits&quo=
+t;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;lang&quot;: &quot;en=
+&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;type&quot;: &quot;reporter&quot;,<br>=
+=C2=A0 =C2=A0 =C2=A0 &quot;value&quot;: &quot;Django would like to thank st=
+ackered for reporting this issue.&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=
+=C2=A0 &quot;datePublic&quot;: &quot;10/01/2025&quot;,<br>=C2=A0 &quot;desc=
+riptions&quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;lang&quo=
+t;: &quot;en&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;value&quot;: &quot;The dj=
+ango.utils.archive.extract() function, used by \&quot;startapp --template\&=
+quot; and \&quot;startproject --template\&quot;, allows partial directory-t=
+raversal via an archive with file paths sharing a common prefix with the ta=
+rget directory.&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;metri=
+cs&quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;other&quot;: {=
+<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;content&quot;: {<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 &quot;namespace&quot;: &quot;<a href=3D"https://docs.djan=
+goproject.com/en/dev/internals/security/#security-issue-severity-levels">ht=
+tps://docs.djangoproject.com/en/dev/internals/security/#security-issue-seve=
+rity-levels</a>&quot;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;value&qu=
+ot;: &quot;low&quot;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 },<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 &quot;type&quot;: &quot;Django severity rating&quot;<br>=C2=A0 =
+=C2=A0 =C2=A0 }<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;references&=
+quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;name&quot;: &quot=
+;Django security releases issued: 5.2.7, 5.1.13, and 4.2.25&quot;,<br>=C2=
+=A0 =C2=A0 =C2=A0 &quot;tags&quot;: [<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=
+vendor-advisory&quot;<br>=C2=A0 =C2=A0 =C2=A0 ],<br>=C2=A0 =C2=A0 =C2=A0 &q=
+uot;url&quot;: &quot;<a href=3D"https://www.djangoproject.com/weblog/2025/o=
+ct/01/security-releases/">https://www.djangoproject.com/weblog/2025/oct/01/=
+security-releases/</a>&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quo=
+t;timeline&quot;: [<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 &quot;lang&q=
+uot;: &quot;en&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;time&quot;: &quot;2025-=
+10-01T14:00:00+00:00&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;value&quot;: &quo=
+t;Made public.&quot;<br>=C2=A0 =C2=A0 }<br>=C2=A0 ],<br>=C2=A0 &quot;title&=
+quot;: &quot;Potential partial directory-traversal via archive.extract()&qu=
+ot;<br>}</div></div>
+
+--000000000000478b2a06401a0059--
