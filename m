@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4458" "Wednesday" "10" "October" "2018" "10:51:24" "-0500" "Brandon Perry" "bperry.volatile@gmail.com" "<7cd73ce3487de75dd3b387dc177baeb74e2359ab.camel@gmail.com>" "107" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" nil nil nil "10" "2018101015:51:24" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "U       bperry.volat Oct 10  107/4458  " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<5782b494-5dba-71ee-d3f9-9f07814f715a@ehuk.net>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" "<e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>" "<20181010145330.63e183d8@computer>" "<5782b494-5dba-71ee-d3f9-9f07814f715a@ehuk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3947 invoked by uid 550); 10 Oct 2018 15:51:38 -0000
+Received: (qmail 7615 invoked by uid 550); 2 Oct 2025 21:18:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,156 +7,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3929 invoked from network); 10 Oct 2018 15:51:37 -0000
+x-ms-reactions: disallow
+Received: (qmail 14312 invoked from network); 2 Oct 2025 19:33:00 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=UY3bNJ3+R274iy6/Bxll673x90SzPrXth+TWMukrkxo=;
-        b=XD7vf5jUbt+1YAEV5o/WlRqHTDab/rLaE3uHwyAOOXoXrujIEsVf6sLQxyz/sKPFBJ
-         OeKHNPD0MfECFL0ZQNt07WP5RHSdQ3WvyLAjOBBO8QlkkvjZLO4sZLBGwGbB8PI1GJ3X
-         sRJF51aXiFiPQb9L143rOsnITxl+x0hsyyYiK9WMSgICUGXzRtnTKibnM3vAA0HiQUpH
-         uST8IvGrWFSnse1z1KN1od/kjeZCVNXRxXuEtQBPMnvxZrJbESiu42IdXiUAg0eRFEJN
-         mzEB/0/qAgQZCtz8U2X2Fwh0lM5w9XBLv0b6cY7QcmUyQUiy9Pm93gYK0XiavqQgtByY
-         58RA==
+        d=gmail.com; s=20230601; t=1759433571; x=1760038371; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/pVI92EVkuV/G9B/SnYJNeGUbgm49mcAar6YUWrm/Bc=;
+        b=W0wMlyP1UAnn+ZXhl03DGRiJhS+cwG2hwP+1g7ssIyt+7Kf8/eyfjPYZAElQ+s55WF
+         fDI/IY5+EKFmTLmR3tUGT81oWFoctBCUI0PJQnZYy99rShR5iMo8HCWAdIOd14HiyM8F
+         A51JrJHSoVlJMJHQDxu72j6HclP4dcB630oJ6IuhZjAd9SDtPfSUwK0oiRspDjBEa9mG
+         eD8bl29YbXOq+lHK+bz9fcv3medfZppWRv1hDhg6MbeDBlwXPOeKVqBnZJRAXvzs5BII
+         Wz8kTw9bXWApKNIjnIxKVNg5xyA6aX7QcwjpWciinAlxopmZqvJZiDH8qqa1TypS/G9X
+         D5cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=UY3bNJ3+R274iy6/Bxll673x90SzPrXth+TWMukrkxo=;
-        b=oZPCg7YH+E95leqgAaSDO7YiE2MraYdykzUuaBmKsgdI6XOrfV4WZoZhKYBF8wnYTd
-         1+4nU5rGmtW0xGEiGecTi37Chy7fAO0yVKSEXIS+sTfRBtEBMiaF7M8HWGG7o5wOojRY
-         QyZzLi6dRw2RiOjXk5NbZ3NC1cHvKmXbBz/T5LBFb4Q8pzS2YrOpSXYqd5Xd0c9e2//F
-         p44j3UGqrbBjHW+SNkJ7EFVgNsgxLGXGIiKUG4GOxvbYok+e2mzWy9OB449gXFz7ZVSv
-         wUZHwGS2EcH4PfLmS+B7KNUdCeJWTdAPm1uu0Zy/8JNirJ2as2nBBQRPA7C7pyEtpzf/
-         H4cg==
-X-Gm-Message-State: ABuFfohA5hOxfQqS9fdsrpE8vMGXAeLYmgzVVAZmzTZKrQT9oUnjidbk
-	pyGdvG2IAb2Sb4FFmJO4YWb7DRXf
-X-Google-Smtp-Source: ACcGV62m0iWfcBcH1Jbmfu5PivUMB+W5MkHWsQzeOJWY91kNrPQkr37Yt3EfvT3s9rxsRmSeYHuA6w==
-X-Received: by 2002:a9d:3634:: with SMTP id w49mr2361335otb.11.1539186685442;
-        Wed, 10 Oct 2018 08:51:25 -0700 (PDT)
-Message-ID: <7cd73ce3487de75dd3b387dc177baeb74e2359ab.camel@gmail.com>
-From: Brandon Perry <bperry.volatile@gmail.com>
-To: oss-security@lists.openwall.com, Hanno =?ISO-8859-1?Q?B=F6ck?=
-	 <hanno@hboeck.de>
-Date: Wed, 10 Oct 2018 10:51:24 -0500
-In-Reply-To: <5782b494-5dba-71ee-d3f9-9f07814f715a@ehuk.net>
-References: 
-	<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
-	 <e9f76ebb-869e-69c5-7623-bae8553636ab@ehuk.net>
-	 <20181010145330.63e183d8@computer>
-	 <5782b494-5dba-71ee-d3f9-9f07814f715a@ehuk.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.1-2 
-Mime-Version: 1.0
+        d=1e100.net; s=20230601; t=1759433571; x=1760038371;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/pVI92EVkuV/G9B/SnYJNeGUbgm49mcAar6YUWrm/Bc=;
+        b=WDia6mz3FD2JWyzXOe3Jp57nmGfk0hTg/46vXNtlVNcFDRmdTBKsrt9BY4fCw7+39d
+         49df8hjOVcc3989duTU6mW3Oqg2184voiNaGIF8XqbbV/o62j2pjUuZN4V8+dBL3iRh6
+         7Ap1Q1UXqvsFzn9Am9lc0vT7dKkGNvpzXfd+GcplVSqD1vUdbxDBGa6cDsbkcJZwqujr
+         TnqVnqwdO78MX9jdJchP1MVrcmBAJyxFAzQn2166RLgmRYRMIuItAG2N5i1YKP42JOlO
+         RNu0M5P/Y9AGvygHYidZ7ILTspWL19I1svsMjn9L9noCAOKXcv6ssgzt3rYFBrMa5cED
+         T+AA==
+X-Gm-Message-State: AOJu0YyAgT6JTi7DAbPjaxB6zsZTwdm9Qza+gx5uzjd1QtMTp8vCysBV
+	BedDaRAfm1JYaQHun6HiRExNcEDcRpw12r+ChgRvtmLyqm4Tm18cAvKCs+oqxA==
+X-Gm-Gg: ASbGncu8d3K4brw6TrcC2TVCoMj8l20uuzWwYql1banuJO1SuUXz10HmxvxyPwMIXBq
+	p8TU2uBpz/7EOSZgD9EevDDFnLU//pJP7fznRe9GeDl9nVYyJyNAewris5QWjK5r3AZhdY+R1v1
+	e5C9EltSieJKyBwAykXGh1+KWFEA512GatiZpxPZgP/8ZQ2IUrLFZ+1ZGt3CT9V9bazOkF0G9vU
+	kgxo85uwZOKLqlCzhznGFxdqP6a3eZh3rGsnIlOnvqLABaATlK+n5DzgCYy5wfci1kByd2+O8FT
+	0Dl/nxrH1CDaTuh34JBSVR5HN6NDrviXOo2RJB4KRQooskA4cjjpmoTsotJiNlHd3jhHXn0+zVE
+	t2XcpN8HBPwShX/VysN3y3DWj0d9wj+gDE7YAiRGepVcaQTtJmZgu79uRnrLQCNOixiUWL9fRtV
+	wf8ruMbrsRKfcWnaYTHOoxTzbA
+X-Google-Smtp-Source: AGHT+IEnfOfUiViiE5lAZB+M2SDfuetkUGIye6COaxVpi1AKE/QVZrHUlFxgo8sxOkWkdLyfflUnWw==
+X-Received: by 2002:a05:600c:1f96:b0:45f:2ed1:d1c5 with SMTP id 5b1f17b1804b1-46e7115cba1mr3209845e9.36.1759433570892;
+        Thu, 02 Oct 2025 12:32:50 -0700 (PDT)
+Message-ID: <e61844e3-47d2-4209-b34a-6d94f963113f@gmail.com>
+Date: Thu, 2 Oct 2025 21:32:49 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <07bdaddb-1414-492b-a178-93b38f8ac3a0@gmail.com>
+ <2025060713-aloe-decency-a74c@gregkh>
+ <40b4dd6d-eb00-4076-8f38-546a1c3589a1@gmail.com>
+ <2025100255-cage-squall-f003@gregkh>
+Content-Language: en-US
+From: Attila Szasz <szasza.contact@gmail.com>
+In-Reply-To: <2025100255-cage-squall-f003@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
- -dSAFER sandbox (CVE-2018-17961)
+Subject: Re: [oss-security] Re: Re: Linux kernel: HFS+ filesystem
+ implementation, issues, exposure in distros
 
-On Wed, 2018-10-10 at 15:36 +0100, Eddie Chapman wrote:
-> On 10/10/18 13:53, Hanno Böck wrote:
-> > On Wed, 10 Oct 2018 10:10:58 +0100
-> > Eddie Chapman <eddie@ehuk.net> wrote:
-> > 
-> > > While the vulnerability in ghostscript itself is clear in this
-> > > thread, does anyone have any more info on the above aspect of
-> > > this?
-> > > i.e is the above scenario (inadvertently running postscript,
-> > > perhaps
-> > > contained in an image, through ghostscript by just browsing a
-> > > malicious site) limited to just nautilus in gnome environments?
-> > > Do
-> > > other browsers/environments handle this better or do they do
-> > > similar?
-> > > It seems that, strictly speaking, the "critical" nature of this
-> > > vulnerability hinges on the behaviour of the browser/desktop
-> > > environment. Otherwise the scope is limited to an individual
-> > > manually
-> > > downloading a postscript file and opening it outside of the
-> > > browser.
-> > 
-> > evince installs a thumbnail entry to
-> > /usr/share/thumbnailers
-> > 
-> > This is a generic location where applications can install files (I
-> > believe they follow the .desktop specification, which is an ini-
-> > based
-> > format). This is thus not nautilus-specific, but every filemanager
-> > that
-> > uses this format will be affected. A quick googling tells me e.g.
-> > pcmanfm is also affected. I'm not sure if dolphin uses them as
-> > well.
-> > 
-> > Nautilus is trying to solve this by sandboxing the thumbnailers.
-> > However this depends on bubblewrap and is currently fail-open, i.e.
-> > if
-> > bubblewrap is not available it will not disable the thumbnailing,
-> > it
-> > will just not sandbox it. In practice this means it's often not
-> > sandboxed. I doubt this will change any time soon.
-> > 
-> > Very similar problems show up with desktop search tools.
-> > 
-> > I think this whole concept is questionable and should be reviewed.
-> > I
-> > think it's not desirable to have thumbnailers for all kinds of
-> > formats,
-> > instead a more reasonable approach would be to limit thumbnailing
-> > to a
-> > few widely used formats that have well-reviewed libraries (e.g. I
-> > don't
-> > think that libjpeg or libpng will have any vulnerabilities left
-> > that are
-> > even remotely as severe as the things tavis found in ghostscript).
-> 
-> Ah OK, I got confused (having not used gnome or nautilus for a long 
-> time) of what exactly Nautilus' role is here. Because Tavis
-> mentioned 
-> web browsing and nautilus together in my mind I was thinking
-> nautilus 
-> was the web browser here forgot it's a file manager :-)
-> 
-> But I'm still unclear how "just browsing a website is enough to
-> trigger 
-> the vulnerability in some common configurations." Are we talking
-> about 
-> the user looking in their web browser cache directory on the
-> filesystem 
-> using Nautilus, and hence running malicious code embedded in a
-> cached 
-> file via the evince thumbnailer on opening that directory? Or maybe 
-> Nautilus/Gnome automatically runs the thumbnailer on every new file 
-> created in the user's home directory (via inotify?), including
-> whatever 
-> the browser saves in the background (hopefully not)? Or is it just a 
-> case of the user opening a downloaded file with evince and becoming
-> a 
-> victim that way? Though that is not exactly automatic, most browsers 
-> show a prompt asking what to do with a downloaded file.
+*Hi Greg,*
 
-A whole ago, there was a vuln in Evince in how it handled comic book
-files.
+I am writing to formally invite you to a public debate at next year’s 
+FOSDEM.
 
-https://vuldb.com/?id.106116
+Our past discussions surrounding the HFS+ vulnerability—and the 
+subsequent "lamest vendor response" award the Linux CNA received at 
+DEFCON—highlighted a significant disconnect in how we approach security, 
+disclosure, and community roles. My goal is not to re-litigate a past 
+issue, but to bring transparency to crucial questions that many in our 
+community are asking about the future.
 
-By default, nautilus renders a thumbnail of media if it is possible,
-and evince can render a thumbnail of the first image in the comic book
-simply by browsing to the Downloads directory.
+I propose a moderated discussion in the Linux kernel devroom to explore 
+these topics. The idea is to foster a constructive dialogue, not a 
+confrontation. The key questions to address would be:
 
-If a malicious comic book were downloaded but not opened, then I opened
-my Downloads directory, rendering the comic book thumbnail would cause
-the payload to be executed in the context of the user opening Nautilus.
+  *
 
-This same technique would apply here since Nautilus can use ghostscript
-to render a thumbnail preview of a PS file.
+    *The Linux CNA's Role:* What is its responsibility in global product
+    security, and is its current approach effective?
 
-> 
-> So, still slightly confused, how one can become a victim here just 
-> browsing a website. It's probably obvious to everyone but I'm not 
-> getting it having always run a quite minimal desktop for years 
-> (currently a mixture of Awesome window manager + some Mate elements, 
-> caja file manager) .... Or maybe no-one wants to spell it out so as
-> not 
-> to give the bad guys any free tips. So feel free to ignore me if
-> it's 
-> either of those :-)
+  *
+
+    *Vulnerability Triage:* Is the "all bugs are just bugs" philosophy
+    sustainable, or do certain flaws require a higher class of treatment?
+
+  *
+
+    *The Future of Linux Security:* What are the long-term consequences
+    of our strategic choices regarding security investment and process?
+
+  *
+
+    *The Next Generation:* How does the kernel project integrate the
+    perspectives of independent, nonconformist, and younger developers?
+
+  *
+
+    *Regulatory Readiness:* How can the kernel community best prepare
+    for the impact of legislation like the EU’s Cyber Resilience Act (CRA)?
+
+I believe FOSDEM's open, community-driven, and unfiltered nature makes 
+it the ideal venue. A frank conversation between us would bring immense 
+value and clarity to these complex challenges for the benefit of the 
+entire ecosystem.
+
+Would you be willing to participate?
+
+*Best regards,*
+
+*Attila*
+
+
+On 10/2/25 16:34, Greg KH wrote:
+> On Thu, Oct 02, 2025 at 03:11:17PM +0200, Attila Szasz wrote:
+>> For the sake of product security folks who rely on consistency: the Linux
+>> CNA recently registered a batch of HFS/HFS+ CVEs that require manipulating
+>> malformed filesystems as a first step. This seems inconsistent with how
+>> similar cases were previously handled.
+> If you feel the Linux CNA has issued CVEs in an inconsistent way, please
+> contact them and the people there will be glad to research the issue and
+> get back to you.  They are issuing, on average, 13 CVEs a day, and so
+> stuff like this easily gets lost in the firehose.
+>
+> The Linux CNA is also currently "backfilling" many old CVE entries that
+> previously came from the GSD database, and perhaps the issues you are
+> referring to came from there.  If so, again, please contact them and
+> they will be glad to discuss it.
+>
+> thanks,
+>
+> greg k-h
