@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4611" "Friday" "18" "August" "2017" "13:54:06" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<301376.256483735-sendEmail@localhost>" "103" "[oss-security] graphicsmagick: use-after-free in ReadWMFImage (wmf.c)" nil nil nil "8" "2017081813:54:06" "[oss-security] graphicsmagick: use-after-free in ReadWMFImage (wmf.c)" (number mark "U       ago@gentoo.o Aug 18  103/4611  " thread-indent "\"[oss-security] graphicsmagick: use-after-free in ReadWMFImage (wmf.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25837 invoked by uid 550); 18 Aug 2017 13:54:24 -0000
+Received: (qmail 18136 invoked by uid 550); 6 Oct 2025 07:23:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,115 +7,336 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25790 invoked from network); 18 Aug 2017 13:54:22 -0000
-Message-ID: <301376.256483735-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 18 Aug 2017 13:54:06 +0000
-MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-391060.030161501"
-Subject: [oss-security] graphicsmagick: use-after-free in ReadWMFImage (wmf.c)
+x-ms-reactions: disallow
+Received: (qmail 18061 invoked from network); 6 Oct 2025 07:23:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=gs4RsUzveF
+	rbTCFN/t8OgwPkhwumTDtzLJAlP4s/huE=; h=subject:to:date:from;
+	d=openbsd.org; b=V+9r6HGwS5UCsrTIuvpAJ4GlstDkI5L89csb9JEY/W9xvkhNpsfTu
+	oQhm6tXDa+tSpoQZMWf5cY/unjnGDatuUJxZcyPnSPJ32PEXMO42Dm/txSLJ3C5byNU8bX
+	NS6okLVT9OOzWFvGJENEG2g47GqFiFIcSCRpWzHDtV3+J7bn1HmKzZtopzR0WQAtwJf+Ob
+	edIJHhPLOlKGYUxz8qfKY64EZEyvg5rw6iRLo+3l7Q0IbCR0/Avq/InLg64uSGQmAeI1SN
+	me2YJ+9SZCg/SwI9SgitO1BLS8jUeBSKLVUaUhhT4uWKyMD14sl6gAaVaDVq8QeznXsXMc
+	CzaC6M++A==
+From: Damien Miller <djm@cvs.openbsd.org>
+Date: Mon, 6 Oct 2025 01:23:28 -0600 (MDT)
+To: oss-security@lists.openwall.com
+Message-ID: <dd12623ae86aa5eb@cvs.openbsd.org>
+Subject: [oss-security] Announce: OpenSSH 10.1 released
 
-------MIME delimiter for sendEmail-391060.030161501
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+OpenSSH 10.1 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-Description:
-graphicsmagick is a collection of tools and libraries for many image formats.
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-The complete ASan output of the issue:
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-# gm convert -negate -clip $FILE out
-==24889==ERROR: AddressSanitizer: heap-use-after-free on address 0x60c0000005c0 at pc 0x7fca38d0da52 bp 0x7ffc6119c090 sp 0x7ffc6119c088
-READ of size 8 at 0x60c0000005c0 thread T0
-    #0 0x7fca38d0da51 in ReadWMFImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/wmf.c:2720:5
-    #1 0x7fca3e7e7e88 in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #2 0x7fca3e67af18 in ConvertImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:4348:22
-    #3 0x7fca3e6b70c5 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #4 0x7fca3e76285b in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #5 0x7fca3e75f991 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #6 0x7fca3cfca680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #7 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+Future deprecation warning
+--------------------------
 
-0x60c0000005c0 is located 64 bytes inside of 120-byte region [0x60c000000580,0x60c0000005f8)
-freed by thread T0 here:
-    #0 0x4cf4d0 in __interceptor_cfree /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:55
-    #1 0x7fca38ac70cd in wmf_lite_destroy /var/tmp/portage/media-libs/libwmf-0.2.8.4-r6/work/libwmf-0.2.8.4/src/api.c:336
+ * A future release of OpenSSH will deprecate support for SHA1 SSHFP
+   records due to weaknesses in the SHA1 hash function. SHA1 SSHFP
+   DNS records will be ignored and ssh-keygen -r will generate only
+   SHA256 SSHFP records.
 
-previously allocated by thread T0 here:
-    #0 0x4cf688 in malloc /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/asan_malloc_linux.cc:66
-    #1 0x7fca38ac72f7 in wmf_malloc /var/tmp/portage/media-libs/libwmf-0.2.8.4-r6/work/libwmf-0.2.8.4/src/api.c:482
+   The SHA256 hash algorithm, which has no known weaknesses, has
+   been supported for SSHFP records since OpenSSH 6.1, released in
+   2012.
 
-SUMMARY: AddressSanitizer: heap-use-after-free /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/wmf.c:2720:5 in ReadWMFImage
-Shadow bytes around the buggy address:
-  0x0c187fff8060: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff8070: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-  0x0c187fff8080: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c187fff8090: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff80a0: 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa
-=>0x0c187fff80b0: fd fd fd fd fd fd fd fd[fd]fd fd fd fd fd fd fa
-  0x0c187fff80c0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c187fff80d0: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
-  0x0c187fff80e0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c187fff80f0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c187fff8100: 00 00 00 00 00 00 00 fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==24889==ABORTING
+Potentially-incompatible changes
+--------------------------------
 
-Affected version:
-1.3.26
+ * ssh(1): add a warning when the connection negotiates a non-post
+   quantum key agreement algorithm.
 
-Fixed version:
-N/A
+   This warning has been added due to the risk of "store now, decrypt
+   later" attacks. More details at https://openssh.com/pq.html
 
-Commit fix:
-http://hg.code.sf.net/p/graphicsmagick/code/rev/be898b7c97bd
+   This warning may be controlled via a new WarnWeakCrypto ssh_config
+   option, defaulting to on. This option is likely to control
+   additional weak crypto warnings in the future.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+ * ssh(1), sshd(8): major changes to handling of DSCP marking/IPQoS
 
-CVE:
-CVE-2017-12936
+   In both client and server the default DSCP (a.k.a IPQoS) values
+   were revised and the way these values are used during runtime has
+   changed.
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00302-graphicsmagick-UAF-ReadWMFImage
+   Interactive traffic is now assigned to the EF (Expedited
+   Forwarding) class by default. This provides more appropriate
+   packet prioritisation information for the intermediate network,
+   such as wireless media (cf. RFC 8325). Non-interactive traffic
+   will now use the operating system default DSCP marking. Both the
+   interactive and non-interactive DSCP values may be overridden via
+   the IPQoS keyword, described in ssh_config(5) and sshd_config(5).
 
-Timeline:
-2017-07-14: bug discovered and reported to upstream
-2017-07-26: upstream released a fix
-2017-08-05: blog post about the issue
-2017-08-18: CVE assigned
+   The appropriate DSCP marking is now automatically selected and
+   updated as needed over the course of a connection's lifetime.
+   ssh(1) and sshd(8) will switch between the interactive and
+   non-interactive IPQoS values depending on the type of SSH
+   channels open at the time. For example, if an sftp session is
+   using the connection alongside a shell session, then the non-
+   interactive value will be used for the duration of the sftp. A
+   connection which contains only interactive sessions is marked EF.
 
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
+ * ssh(1), sshd(8): deprecate support for IPv4 type-of-service (ToS)
+   keywords in the IPQoS configuration directive.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/05/graphicsmagick-use-after-free-in-readwmfimage-wmf-c/
+   Type of Service (ToS) was deprecated in the late nineties and
+   replaced with the Differentiated Services architecture, which
+   has significant advantages for operators because it offers more
+   granularity.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+   OpenSSH switched its default IPQoS from ToS to DSCP values in
+   2018 (openssh-7.7).
 
+   IPQoS configurations with 'lowdelay', 'reliability', or
+   'throughput' will be ignored and will instead use the system
+   default QoS settings. Additionally, a debug message will be logged
+   about the deprecation with a suggestion to use DSCP QoS instead.
 
-------MIME delimiter for sendEmail-391060.030161501--
+ * ssh-add(1): when adding certificates to an agent, set the expiry
+   to the certificate expiry time plus a short (5 min) grace period.
+
+   This will cause the agent to automatically remove certificates
+   shortly after they expire. A new ssh-add -N option disables this
+   behaviour.
+
+ * All: remove experimental support for XMSS keys. This was never
+   enabled by default. We expect to implement a new post-quantum
+   signature scheme in the near future.
+
+ * ssh-agent(1), sshd(8): move agent listener sockets from /tmp to
+   under ~/.ssh/agent for both ssh-agent(1) and forwarded sockets
+   in sshd(8).
+
+   This ensures processes that have restricted filesystem access
+   that includes /tmp do not ambiently have the ability to use keys
+   in an agent.
+
+   Moving the default directory has the consequence that the OS will
+   no longer clean up stale agent sockets, so ssh-agent now gains
+   this ability.
+
+   To support $HOME on NFS, the socket path includes a truncated
+   hash of the hostname. ssh-agent will, by default, only clean up
+   sockets from the same hostname.
+
+   ssh-agent(1) gains some new flags: -U suppresses the automatic
+   cleanup of stale sockets when it starts. -u forces a cleanup
+   without keeping a running agent, -uu forces a cleanup that ignores
+   the hostname. -T makes ssh-agent put the socket back in /tmp.
+
+Changes since OpenSSH 10.0
+==========================
+
+This release contains a minor security fix as well as a number of
+feature improvements and bugfixes.
+
+Security
+========
+
+* ssh(1): disallow control characters in usernames passed via the
+  commandline or expanded using %-sequences from the configuration
+  file, and disallow \0 characters in ssh:// URIs.
+
+  If an ssh(1) commandline was constructed using usernames or URIs
+  obtained from an untrusted source, and if a ProxyCommand that uses
+  the %u expansion was configured, then it may be possible for an
+  attacker to inject shell expressions that may be executed when the
+  proxy command is started.
+
+  We strongly recommend against using untrusted inputs to construct
+  ssh(1) commandlines.
+
+  This change also relaxes the validity checks in one small way:
+  usernames supplied via the configuration file as literals (i.e.
+  that have no % expansion characters) are not subject to these
+  validity checks. This allows usernames that contain arbitrary
+  characters to be used, but only via configuration files. This is
+  done on the basis that ssh's configuration is trusted.
+
+  This issue was reported by David Leadbeater.
+
+New features
+------------
+
+ * ssh(1), sshd(8): add SIGINFO handlers to log active channel and
+   session information.
+
+ * sshd(8): when refusing a certificate for user authentication, log
+   enough information to identify the certificate in addition to the
+   reason why it was being denied. Makes debugging certificate
+   authorisation problems a bit easier.
+
+ * ssh(1), ssh-agent(1): support ed25519 keys hosted on PKCS#11
+   tokens.
+
+ * ssh(1): add an ssh_config(5) RefuseConnection option that, when
+   encountered while processing an active section in a
+   configuration, terminates ssh(1) with an error message that
+   contains the argument to the option.
+
+   This may be useful for expressing reminders or warnings in config
+   files, for example:
+
+   Match host foo
+            RefuseConnection "foo is deprecated, use splork instead"
+
+ * sshd(8): make the X11 display number check relative to
+   X11DisplayOffset. This will allow people to use X11DisplayOffset
+   to configure much higher port ranges if they really want, while
+   not changing the default behaviour.
+
+ * unit tests: the unit test framework now includes some basic
+   benchmarking capabilities. Run with "make UNITTEST_BENCHMARK=yes"
+   on OpenBSD or "make unit-bench" on Portable OpenSSH.
+
+Bugfixes
+--------
+
+ * sshd(8): fix mistracking of MaxStartups process exits in some
+   situations. At worst, this could cause all MaxStartups slots to
+   fill and sshd to refuse new connections.
+
+ * ssh(1): fix delay on X client startup when ObscureKeystrokeTiming
+   is enabled. bz#3820
+
+ * sshd(8): increase the maximum size of the supported configuration
+   from 256KB to 4MB, which ought to be enough for anybody. Fail
+   early and visibly when this limit is breached. bz3808
+
+ * sftp(1): during sftp uploads, avoid a condition where a failed
+   write could be ignored if a subsequent write succeeded. This is
+   unlikely but technically possible because sftp servers are
+   allowed to reorder requests.
+
+ * sshd(8): avoid a race condition when the sshd-auth process exits
+   that could cause a spurious error message to be logged.
+
+ * sshd(8): log at level INFO when PerSourcePenalties actually
+   blocks access to a source address range. Previously this was
+   logged at level VERBOSE, which hid enforcement actions under
+   default config settings.
+
+ * sshd(8): GssStrictAcceptor was missing from sshd -T output; fix
+
+ * sshd(8): Make the MaxStartups and PerSourceNetBlockSize options
+   first-match-wins as advertised. bz3859
+
+ * ssh(1): fix an incorrect return value check in the local forward
+   cancellation path that would cause failed cancellations not to be
+   logged.
+
+ * sshd(8): make "Match !final" not trigger a second parsing pass
+   of ssh_config (unless hostname canonicalisation or a separate
+   "Match final" does). bz3843
+
+ * ssh(1): better debug diagnostics when loading keys. Will now list
+   key fingerprint and algorithm (not just algorithm number) as well
+   as making it explicit which keys didn't load.
+
+ * All: fix a number of memory leaks found by LeakSanitizer,
+   Coverity and manual inspection.
+
+ * sshd(8): Output the current name for PermitRootLogin's
+   "prohibit-password" in sshd -T instead of its deprecated alias
+   "without-password".  bz#3788
+
+ * ssh(1): make writing known_hosts lines more atomic by writing
+   the entire line in one operation and using unbuffered stdio.
+
+   Usually writes to this file are serialised on the "Are you sure
+   you want to continue connecting?" prompt, but if host key
+   checking is disabled and connections were being made with high
+   concurrency then interleaved writes might have been possible.
+
+Portability
+-----------
+
+ * sshd(8): check the username didn't change during the PAM
+   transactions.
+
+   PAM modules can change the user during their execution, but
+   this is not supported by sshd(8). If such a case was incorrectly
+   configured by the system administrator, then sshd(8) could end up
+   using a different username to the one authorised by PAM.
+
+ * sshd(8): don't log audit messages with UNKNOWN hostname to avoid
+   slow DNS lookups in the audit subsystem.
+
+ * All: when making a copy of struct passwd, ensure struct fields are
+   non-NULL. Android libc can return NULL pw_gecos, for example.
+
+ * All: Remove status bits from OpenSSL >=3 version check.
+
+ * sshd(8), ssh(1): Use SSH_TUN_COMPAT_AF on FreeBSD. Otherwise tun
+   forwarding from other OSes fails as soon as the first IPv6 message
+   is sent by the other side (which is usually a Router Solicitation
+   ICMPv6 message which is sent as soon as the interface is up).
+
+ * ssh(1), ssh-agent(8): check for nlist function presence before
+   attempting to use it instead of relying on the presence of the
+   nlist.h header.  Mac OS X, for example, has the header but not
+   the function in the 64bit libraries.
+
+ * All: fill in missing system header files.
+
+   Create replacement header files inside openbsd-compat for common
+   headers that are missing on a given platform. Usually these are
+   just empty, but in some cases they'll include the equivalent file.
+   This avoids having to wrap those includes in '#ifdef HAVE_FOO_H'
+   and reduces the diff between Portable OpenSSH and OpenBSD.
+
+ * sshd(8): handle futex_time64 properly in seccomp sandbox
+   Previously we only allowed __NR_futex, but some 32-bit systems
+   apparently support __NR_futex_time64. We had support for this
+   in the sandbox, but because of a macro error only __NR_futex was
+   allowlisted.
+
+ * Add contrib/gnome-ssh-askpass4 for GNOME 40+ using the GCR API.
+
+ * sshd(8): let ga_init() fail gracefully if getgrouplist does.
+   Apparently getgrouplist() can fail on OSX when passed a
+   non-existent group name. Other platforms seem to return a group
+   list consisting of the numeric gid passed to the function. bz3848
+
+ * ssh-agent(1): exit 0 from SIGTERM under systemd socket-activation,
+   preventing a graceful shutdown of an agent via systemd from
+   incorrectly marking the service as "failed".
+
+ * build: wrap some autoconf macros in AC_CACHE_CHECK.
+
+   This allows skipping/overriding the OSSH_CHECK_CFLAG_COMPILE and
+   OSSH_CHECK_CFLAG_LINK macros used to discover supported compiler
+   or linker flags. E.g.
+
+     $ ./configure ossh_cv_cflag__fzero_call_used_regs_used=no
+     [...]
+     checking if cc supports compile flag -fzero-call-used-regs=used
+     and linking succeeds... (cached) no
+
+Checksums:
+==========
+
+SHA1 (openssh-10.1.tar.gz) = 8eef44a945a9a9a5a99213ab0d57e35b7ba60e75
+SHA256 (openssh-10.1.tar.gz) = j9ymvhvdGMeAvh1oTI2YmOAwv7Ao70gbGPyPedgQsBU=
+
+SHA1 (openssh-10.1p1.tar.gz) = 7fd17b99d1beffb47cd380d64079e920bb0bd91f
+SHA256 (openssh-10.1p1.tar.gz) = ufx6K4JXlGem8vQ+SoHI4d/aYU3bT5slWq/XAgu/B1g=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@openssh.com
 
