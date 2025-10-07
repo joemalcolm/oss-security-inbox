@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4224" "Friday" "8" "April" "2016" "05:05:42" "+0000" "=?gb2312?B?zfXDtw==?=" "wangmei@360.cn" "<DEB54FAB-6270-4AA8-AFF4-74F5A33920E4@360.cn>" "73" "[oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool" nil nil nil "4" "2016040805:05:42" "[oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool" (number mark "U       wangmei@360. Apr  8   73/4224  " thread-indent "\"[oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23869 invoked by uid 550); 8 Apr 2016 05:56:37 -0000
+Received: (qmail 25607 invoked by uid 550); 7 Oct 2025 21:36:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,94 +7,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28377 invoked from network); 8 Apr 2016 05:05:55 -0000
-From: =?gb2312?B?zfXDtw==?= <wangmei@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba
- tool
-Thread-Index: AQHRkVRMGCge55o+1kq3WLla7Kmk9A==
-Date: Fri, 8 Apr 2016 05:05:42 +0000
-Message-ID: <DEB54FAB-6270-4AA8-AFF4-74F5A33920E4@360.cn>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.25.162]
-Content-Type: multipart/alternative;
-	boundary="_000_DEB54FAB62704AA8AFF474F5A33920E4360cn_"
+x-ms-reactions: disallow
+Received: (qmail 24542 invoked from network); 7 Oct 2025 21:36:54 -0000
+Date: Tue, 7 Oct 2025 17:36:45 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aOWH7fEE-Gxh3nIt@netmeister.org>
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2016-3945 libtiff: Out-of-bounds Write in the tiff2rgba tool
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Subject: [oss-security] redis: CVE-2025-49844: Lua Use-After-Free may lead to remote code
+ execution
 
---_000_DEB54FAB62704AA8AFF474F5A33920E4360cn_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+I haven't seen it here on this list yet, so
+forwarding:
 
-RGV0YWlscw0KPT09PT09PQ0KDQpQcm9kdWN0OiBsaWJ0aWZmDQpBZmZlY3Rl
-ZCBWZXJzaW9uczogPD0gNC4wLjYNClZ1bG5lcmFiaWxpdHkgVHlwZTogIE91
-dC1vZi1ib3VuZHMgV3JpdGUNClZlbmRvciBVUkw6IGh0dHA6Ly93d3cucmVt
-b3Rlc2Vuc2luZy5vcmcvbGlidGlmZi8NCkNWRSBJRDogQ1ZFLTIwMTYtMzk0
-NQ0KQ3JlZGl0OiBNZWkgV2FuZyBvZiB0aGUgQ2xvdWQgU2VjdXJpdHkgVGVh
-bSwgUWlob28gMzYwDQoNCkludHJvZHVjdGlvbg0KPT09PT09PT09PT09DQoN
-CldoZW4gbGlidGlmZiA0LjAuNiB0aWZmMnJnYmEgaGFuZGxlIG1hbGljaW91
-cyB0aWYgZmlsZSh3aWR0aD0gODM4ODY0MCwgaGVpZ2h0PTMxKSBhbmQgc2V0
-IHBhcmFtIC1iIHdpbGwgY2F1c2UgaWxsZWdhbCB3cml0ZS4gVGhlIHZ1bG5l
-cmFiaWxpdHkgZXhpc3QgaW4gZnVuY3Rpb24gY3Z0X2J5X3N0cmlwIChhbHNv
-IGV4aXN0IGluIGN2dF9ieV90aWxlICkgd2l0aG91dCBjaGVja2luZyB0aGUg
-YnVmZmVyIGFsbG9jYXRlIHJlc3VsdC4gQW4gYXR0YWNrZXIgbWF5IGNvbnRy
-b2wgdGhlIHdyaXRlIGFkZHJlc3MgYW5kL29yIHZhbHVlIHRvIHJlc3VsdCBp
-biBkZW5pYWwtb2Ytc2VydmljZSBvciBjb21tYW5kIGV4ZWN1dGlvbi4NCg0K
-DQoNCg0KZ2RiIHRpZmYycmdiYQ0KDQooZ2RiKSByIC1iIHNhbXBsZS90ZXN0
-LnRpZiAxLnRpZg0KDQpTdGFydGluZyBwcm9ncmFtOiAvdXNyL2xvY2FsL2Jp
-bi90aWZmMnJnYmEgLWIgc2FtcGxlL3Rlc3QudGlmIDEudGlmDQpUSUZGRmV0
-Y2hOb3JtYWxUYWc6IFdhcm5pbmcsIEFTQ0lJIHZhbHVlIGZvciB0YWcgIkRv
-Y3VtZW50TmFtZSIgY29udGFpbnMgbnVsbCBieXRlIGluIHZhbHVlOyB2YWx1
-ZSBpbmNvcnJlY3RseSB0cnVuY2F0ZWQgZHVyaW5nIHJlYWRpbmcgZHVlIHRv
-IGltcGxlbWVudGF0aW9uIGxpbWl0YXRpb25zLg0KVElGRkZldGNoTm9ybWFs
-VGFnOiBXYXJuaW5nLCBJTyBlcnJvciBkdXJpbmcgcmVhZGluZyBvZiAiWVJl
-c29sdXRpb24iOyB0YWcgaWdub3JlZC4NCkxaV0RlY29kZTogTm90IGVub3Vn
-aCBkYXRhIGF0IHNjYW5saW5lIDAgKHNob3J0IDY3MTA4ODY0IGJ5dGVzKS4N
-Cg0KQnJlYWtwb2ludCAyLCBndFN0cmlwQ29udGlnIChpbWc9MHg3ZmZmZmZm
-ZmRkOTAsIHJhc3Rlcj0weDdmZmZmN2ZjZTAxMCwgdz04Mzg4NjQwLCBoPTMy
-KSBhdCB0aWZfZ2V0aW1hZ2UuYzo5NDYNCjk0NiAgICAgICAgICAgICAgICAg
-ICAgICgqcHV0KShpbWcsIHJhc3Rlcit5KncsIDAsIHksIHcsIG5yb3csIGZy
-b21za2V3LCB0b3NrZXcsIGJ1ZiArIHBvcyk7DQooZ2RiKSBwICpwdXQNCiQ1
-ID0ge3ZvaWQgKFRJRkZSR0JBSW1hZ2UgKiwgdWludDMyICosIHVpbnQzMiwg
-dWludDMyLCB1aW50MzIsIHVpbnQzMiwgaW50MzIsIGludDMyLCB1bnNpZ25l
-ZCBjaGFyICopfSAweDdmZmZmN2I5OGE1ZSA8cHV0MmJpdGNtYXB0aWxlPg0K
-KGdkYikgcCAqKHJhc3Rlcit5KncpDQpDYW5ub3QgYWNjZXNzIG1lbW9yeSBh
-dCBhZGRyZXNzIDB4ODAwMDM1ZmNlZjkwDQooZ2RiKSBjDQpDb250aW51aW5n
-Lg0KDQpQcm9ncmFtIHJlY2VpdmVkIHNpZ25hbCBTSUdTRUdWLCBTZWdtZW50
-YXRpb24gZmF1bHQuDQoweDAwMDA3ZmZmZjdiOThhZTcgaW4gcHV0MmJpdGNt
-YXB0aWxlIChpbWc9MHg3ZmZmZmZmZmRkOTAsIGNwPTB4ODAwMDM1ZmNlZjk0
-LCB4PTAsIHk9MzEsIHc9ODM4ODY0MCwgaD0zMSwgZnJvbXNrZXc9MCwgdG9z
-a2V3PS0xNjc3NzI4MCwNCiAgICBwcD0weDdmZmZmMTI4ODAxMSAnXDM3Nycg
-PHJlcGVhdHMgMTEgdGltZXM+LCAiXDMwM1wzMDBcMzc3XDM3N1wzNzdcMzc3
-XDM3N1wzNzdcMDI0P1wzNzdcMzc3XDM3N1wzNjBcMDAzIikgYXQgdGlmX2dl
-dGltYWdlLmM6MTIzMw0KMTIzMyAgICAgICAgICAgIFVOUk9MTDQodywgYncg
-PSBQQUxtYXBbKnBwKytdLCAqY3ArKyA9ICpidysrKTsNCihnZGIpIGJ0DQoj
-MCAgMHgwMDAwN2ZmZmY3Yjk4YWU3IGluIHB1dDJiaXRjbWFwdGlsZSAoaW1n
-PTB4N2ZmZmZmZmZkZDkwLCBjcD0weDgwMDAzNWZjZWY5NCwgeD0wLCB5PTMx
-LCB3PTgzODg2NDAsIGg9MzEsIGZyb21za2V3PTAsIHRvc2tldz0tMTY3Nzcy
-ODAsDQogICAgcHA9MHg3ZmZmZjEyODgwMTEgJ1wzNzcnIDxyZXBlYXRzIDEx
-IHRpbWVzPiwgIlwzMDNcMzAwXDM3N1wzNzdcMzc3XDM3N1wzNzdcMzc3XDAy
-ND9cMzc3XDM3N1wzNzdcMzYwXDAwMyIpIGF0IHRpZl9nZXRpbWFnZS5jOjEy
-MzMNCiMxICAweDAwMDA3ZmZmZjdiOTgwNTUgaW4gZ3RTdHJpcENvbnRpZyAo
-aW1nPTB4N2ZmZmZmZmZkZDkwLCByYXN0ZXI9MHg3ZmZmZjdmY2UwMTAsIHc9
-ODM4ODY0MCwgaD0zMikgYXQgdGlmX2dldGltYWdlLmM6OTQ2DQojMiAgMHgw
-MDAwN2ZmZmY3Yjk2Y2U3IGluIFRJRkZSR0JBSW1hZ2VHZXQgKGltZz0weDdm
-ZmZmZmZmZGQ5MCwgcmFzdGVyPTB4N2ZmZmY3ZmNlMDEwLCB3PTgzODg2NDAs
-IGg9MzIpIGF0IHRpZl9nZXRpbWFnZS5jOjUwMA0KIzMgIDB4MDAwMDdmZmZm
-N2JhMTFkYSBpbiBUSUZGUmVhZFJHQkFTdHJpcCAodGlmPTB4NjA0OTMwLCBy
-b3c9MCwgcmFzdGVyPTB4N2ZmZmY3ZmNlMDEwKSBhdCB0aWZfZ2V0aW1hZ2Uu
-YzoyODE2DQojNCAgMHgwMDAwMDAwMDAwNDAxNjkzIGluIGN2dF9ieV9zdHJp
-cCAoaW49MHg2MDQ5MzAsIG91dD0weDYwNDAxMCkgYXQgdGlmZjJyZ2JhLmM6
-MjkwDQojNSAgMHgwMDAwMDAwMDAwNDAxZTU4IGluIHRpZmZjdnQgKGluPTB4
-NjA0OTMwLCBvdXQ9MHg2MDQwMTApIGF0IHRpZmYycmdiYS5jOjUwMg0KIzYg
-IDB4MDAwMDAwMDAwMDQwMTFiNSBpbiBtYWluIChhcmdjPTQsIGFyZ3Y9MHg3
-ZmZmZmZmZmU0MDgpIGF0IHRpZmYycmdiYS5jOjEyNg0KDQoNClJlZmVyZW5j
-ZXM6DQpbMV0gaHR0cDovL3d3dy5yZW1vdGVzZW5zaW5nLm9yZy9saWJ0aWZm
-Lw0KWzJdIGh0dHA6Ly9idWd6aWxsYS5tYXB0b29scy5vcmcvYnVnbGlzdC5j
-Z2k/cHJvZHVjdD1saWJ0aWZmDQoNCg0KVGhhbmsgeW91IQ0KQmVzdCBSZWdh
-cmRzLA0KDQoNCk1laQ0KDQo=
+There's an RCE vulnerability in Redis with a CVSS
+Score of 9.9 (although advertised as 10.0):
 
---_000_DEB54FAB62704AA8AFF474F5A33920E4360cn_--
+https://nvd.nist.gov/vuln/detail/CVE-2025-49844
+https://github.com/redis/redis/security/advisories/GHSA-4789-qfc9-5f9q
+
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+
+
+Impact
+
+An authenticated user may use a specially crafted Lua
+script to manipulate the garbage collector, trigger a
+use-after-free and potentially lead to remote code
+execution.
+
+The problem exists in all versions of Redis with Lua
+scripting.
+
+
+Workarounds
+
+An additional workaround to mitigate the problem
+without patching the redis-server executable is to
+prevent users from executing Lua scripts. This can be
+done using ACL to restrict EVAL and EVALSHA commands.
+Credit
+
+The problem was reported by Wiz researchers Benny
+Isaacs (@benny_isaacs), Nir Brakha, Sagi Tzadik
+(@sagitz_) working with Trend Micro, Zero Day
+Initiative
+
+---
+
+Additional link, which assesses the vulnerability
+based on the how many exposed instances don't require
+authentication:
+
+https://www.wiz.io/blog/wiz-research-redis-rce-cve-2025-49844
