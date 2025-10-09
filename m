@@ -1,4 +1,4 @@
-Received: (qmail 16327 invoked by uid 550); 10 Jun 2025 14:46:15 -0000
+Received: (qmail 13470 invoked by uid 550); 9 Oct 2025 04:47:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,123 +8,82 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 23763 invoked from network); 10 Jun 2025 13:28:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=djangoproject-com.20230601.gappssmtp.com; s=20230601; t=1749562125; x=1750166925; darn=lists.openwall.com;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UKPywFF8LUqGb8jsI6Td2ZyhjNUW6a8tWf3H8uwe0Ck=;
-        b=pQ8jigVUTFyHWCG6xIu352hMc6/kby/xqo8sfKrIGnUzILWLPioq0NCkhI0+XoUENt
-         OeDcL7eRBFHXIgoV629tFgq21+n1M7VGNggpFN9ULbspthzYE8sQLDS3/mJ+CPCymaIg
-         vbMEt7/vLomlWMv8lFTKbYa3OzbCoRG6nhfX1IQ378XKevXF8ortZlM0gfTz9p3bRM/f
-         OppJLQENnfoH2lLv72I1iqIvH0XFD375nHwyk0i/Ivdwsh+EmNAd33qxSpAOx+UrtO3g
-         YwK3qry3qyKd9VGxUul9uIAgvFic5wgvk1+z8cZ8iwRysbY4Wa24RzN4g9zptr7RuRdz
-         hQBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749562125; x=1750166925;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UKPywFF8LUqGb8jsI6Td2ZyhjNUW6a8tWf3H8uwe0Ck=;
-        b=p1GpBbzhID4/jXqZaqs9SdQ3WzDJxtGMi3+oXrCxtcl1qUqt4iikJph+W81zy6GFIN
-         KvVM/TiRYYwh4a69jKaR6z156zGvbR0cuXokaWZAot71b7AeCPJNpDZCpIyV9jUb7mJZ
-         Y3bzx4o3hHCjy8QWGKJ/wNl2sbDP/E/TkGc3a8eQYeWZnm4kJgxYZB1fouXwlc6vo8IQ
-         YvPq/NNKBFzWQ+Ve2HRxsDXnImkCcpRDTP6/Gy9oxChQUMv5dyMlxi70YL58GqF72Ih/
-         4rb6YQTUtcLrvsA6KYCeRYGLldA8zcgn0iaTnHs7ZuI5TcGhW/EFk4mIP+H9x6q/1DWW
-         voNA==
-X-Gm-Message-State: AOJu0Yzc1YyoPWXrNSuPZg3SDyggxIy4B3CkdEnxriwWrTSDSW/RRE4z
-	PLI64qFCpsWEwo1y9yhq6LNKMfJpG0hVhPX/YbafbiWKu28H+Ml6hjiPSmZQux43wdX+Z29boau
-	52UzTJ7qJ/NHak9mC5U3WPsjSMOFL7AM7fDDhPP3cRI5cNCYX/Fk6744=
-X-Gm-Gg: ASbGnctp6Z4pe2HDwkAlbAiJANbP7E1jhcwqtTZR1UkEM8oaPXrnp4BuarPjQU03zFL
-	GYOmttp51gUXpq5JfzHYdW5zs3izYms8oz5PIP9V1LV2y7NYyztq0XX0napRVSNoIuWvVfK2I8R
-	SiHZXLkSS0eD9w7D1K+SWNqoZPn+dzA0FW4wy1tzOY3bpN/ktAf5rawkmejJEvn5awkAVm4VIX3
-	REBvw==
-X-Google-Smtp-Source: AGHT+IF26B2rHsSGrjdlzZAziQwX2pHQf38XKMDXk3XrWq2B2Pp9BQnVxlw1ktPRoJSGEetK9tCWLOouEMCbbW10R7E=
-X-Received: by 2002:a17:907:7ba9:b0:ade:4121:8d52 with SMTP id
- a640c23a62f3a-ade7ac5415cmr310472766b.16.1749562125186; Tue, 10 Jun 2025
- 06:28:45 -0700 (PDT)
+Received: (qmail 3688 invoked from network); 9 Oct 2025 04:46:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=catalyst.net.nz;
+	s=default; t=1759985182;
+	bh=HaP63b/mLS4Q75KQXYNLYJW6SIOOkPfXyoQ/h6jlEaE=;
+	h=Date:Subject:References:To:From:In-Reply-To:From;
+	b=GYlRaUVUSS6JQxWB5smwrRz6iLhjzGlKkdKpjs5xcf3tW/lvDWH8Pr1iE27Dp2VRi
+	 OgtgpheRryxNA4a7md0u2n/0PXbOzEkQL++VRWYWBi8p4HeTMMceTrdqcKOMlnDIUC
+	 cD00f9QIV/LDeHRbOKbnV1WV8HffRRVBbL68bYBArw0lzgP/JKa/wXobiR5QtzJinh
+	 grBXX803qZCcbI/dHoSZk6crdAbzjigf95igQmwP8tyy0RzWUUGEQ64tYjw3E1rxlA
+	 pcRKbzFzv0uh5akjqOWOGMm2C0CuzwmDLlWuMUrcLw6otnrk7O1p83eYvAS4/3uXqK
+	 yYSGZ80Zi3M1w==
+Message-ID: <da7aa05f-01c0-4798-8496-33f1c0010e4e@catalyst.net.nz>
+Date: Thu, 9 Oct 2025 17:46:22 +1300
 MIME-Version: 1.0
-From: Sarah Boyce <sarahboyce@djangoproject.com>
-Date: Tue, 10 Jun 2025 15:28:34 +0200
-X-Gm-Features: AX0GCFt3OHvBDZEZM-vuObhoFrq7dN0nq9Gbot1P4zVyjsa6-eQZad-hxdBKgFE
-Message-ID: <CAN+fQHzDjwHONmFdu17_O-SkiG1i3Z637i-6EsJnnq4rd9HrWg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-NZ
+References: <20f5f042-d3de-411b-aa09-b2c46ee19cc8@samba.org>
 To: oss-security@lists.openwall.com
-Cc: Django Security Team <security@djangoproject.com>
-Content-Type: multipart/alternative; boundary="000000000000fc0ffc063737ac66"
-Subject: [oss-security] Django CVE-2025-48432 (follow-up patch releases)
+From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
+Autocrypt: addr=douglas.bagnall@catalyst.net.nz; keydata=
+ xsBNBFTZNuABCACnBtS+eLzGts68jAJrZstbH5vM0d/4+OsGcvFkrXGPE9D6PsRdVM+jPT1Z
+ fASzsarvWkx0b7p6/XTwTo2Al3KRRVLq3FQFPOLyKzSXK8u+vUi/py7Cv133t4Uea7+Pp+YM
+ tWjXGwB/y3s5TBwJkYShSTBpAhDnkKjxRSQXIr7gIE0fIPIS1uy19g1q/BuXuj1sfcISRMpp
+ z8qs9cAsk45tG1JItaLjO7+K47Q3LEfskChGPbhwh7tWCquDzreQC7q+h3dK6A1AOrorskON
+ +Wy3aucRoOw6scNfV2H1y6lDza2lwZxCDRs6zkn7SQVjX62j9kVczShyi5udgqfWsW2jABEB
+ AAHNMURvdWdsYXMgQmFnbmFsbCA8ZG91Z2xhcy5iYWduYWxsQGNhdGFseXN0Lm5ldC5uej7C
+ wHgEEwECACIFAlTZNuACGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEHcqM0mxsX5t
+ XIoH/jiHvUuw4xrBKuk9KzAE5JNd5rcTQdaRgiIvM/6C6X/uobzO2CDKFEUOmTpYSSXkq0/3
+ YmwCRqWMja/5N1886qFrkcrIkTMRb0imxkNVwd7JIPdryK6dFCzCRUC1hByqeI8EwO41ROX+
+ qw6DT+H/o6QkPWAB1P8ODVtq0F3TUZ0/Xpe3xYK1QF6Ud0BKWVcKBMAdS7CWTsVRD6m9it80
+ Mp4N3y6Ka0vrgZ6IEskBHGVJ/Mm6ONrHIjl4OAbAKK4PuFha5PjPx1YYYOnsp4JvhrSJQDag
+ A9vDdm7mbJpxxVY0Rx4t7xRvh+jsZ1f6yVGx5UTpdtvSbriZ2SZ3F29hBGfOwE0EVNk24AEI
+ ANSG9xaPHGxr7l1Wcz8J51IDT0EE7ozS3TSYRE80OSH8oB26w5StLbQkC+iWj0GsTveJL9x6
+ Vp/dfsPGfG9CP9J0C4ZOwY7+V9ex1d10xzr32zetKiUt7ZEimzIiCnmnR9K54jVbGDvVfJie
+ uTOGruqRLIUAO69ZyhplRywyee6MRtgmfLpJlnOySgvihR4kHmq03zHe6whhJ0RmbKSIwb/F
+ Ri/ZmpujNZ7PTYcmw7sp/5HpE4taYA0f3QvK9/DTjuoITdugrxhOwBdv6jLAAzI8d0quOFf+
+ 5IeGizYTa6HPmBtIUyyzVajjiUpXiB8WuhgTL5pP0BT5j6BtW8Li/YEAEQEAAcLAXwQYAQIA
+ CQUCVNk24AIbDAAKCRB3KjNJsbF+bYRnB/94DaFuxGVA65kkr5iubWbwKnaiTWlZLIFQp0RH
+ QRk/jgdpuQj3E4D660QdfoMqhTeozOPTBH3cJOCjgN/klI7xrkvdq8sLTMWyM5Bbu+XhDaSr
+ 8hnjvdhZM7bHQdaH3FI5zdm2rMbP8nB6IH8wYSxHzywjR9vks6PTsqxqeCoupqdVO/kZ3jsU
+ F0LOxxnMTlT8YZIn8lFVptsz5HMOKFnUdR3fYpcO+CTc9vXqcLWqnMwchdSQPp1cjZ5eUl+G
+ jmq9xwOWLG/0u5b9stC3cEiCNSZn8Nyy7KaY8fQeKn//sBeyu3htjZ2wZ+oRVuc/XR/+/hl6
+ QCGP/4UC6mJGdmU0
+In-Reply-To: <20f5f042-d3de-411b-aa09-b2c46ee19cc8@samba.org>
+X-Forwarded-Message-Id: <20f5f042-d3de-411b-aa09-b2c46ee19cc8@samba.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Fwd: Heads-up: Upcoming Samba security releases
 
---000000000000fc0ffc063737ac66
-Content-Type: text/plain; charset="UTF-8"
+The Samba team (which includes me) has announced there will be a 
+security release next Wednesday. This is our standard procedure, though 
+this time we have added an estimate of how many people might be affected 
+by each bug.
 
-https://www.djangoproject.com/weblog/2025/jun/04/security-releases/
+Douglas
 
-Following the June 4, 2025 security release, the Django team is issuing
-releases for
-`Django 5.2.3 <https://docs.djangoproject.com/en/dev/releases/5.2.3/>`_,
-`Django 5.1.11 <https://docs.djangoproject.com/en/dev/releases/5.1.11/>`_,
-and
-`Django 4.2.23 <https://docs.djangoproject.com/en/dev/releases/4.2.23/>`_ to
-complete mitigation for CVE-2025-48432: Potential log injection via
-unescaped
-request path (`full description <
-https://www.djangoproject.com/weblog/2025/jun/04/security-releases/>`_).
+-------- Forwarded Message --------
+Subject: Heads-up: Upcoming Samba security releases
+Date: Thu, 9 Oct 2025 17:38:13 +1300
+From: Douglas Bagnall via samba-technical <samba-technical@lists.samba.org>
+Reply-To: Douglas Bagnall <dbagnall@samba.org>
+To: samba-technical <samba-technical@lists.samba.org>, samba 
+<samba@lists.samba.org>
 
-These follow-up releases migrate remaining response logging paths to a safer
-logging implementation, ensuring that all untrusted input is properly
-escaped
-before being written to logs. This update does not introduce a new CVE but
-strengthens the original fix.
+This is a heads-up that there will be Samba security updates for 4.21, 
+4.22, and 4.23 on Wednesday, October 15, 2025. Please make sure that 
+your Samba servers will be updated soon after the release!
 
-We encourage all users of Django to upgrade as soon as possible.
+Impacted component:
+  - AD DC (CVSS 10, High, when using a very unusual configuration)
+  - File services (CVSS 4.3, Low, in a widely used configuration)
 
-Affected supported versions
-===========================
+The AD DC bug will affect very few, possibly zero, users.
 
-* Django main
-* Django 5.2
-* Django 5.1
-* Django 4.2
-
-Resolution
-==========
-
-Patches to resolve the issue have been applied to Django's
-main, 5.2, 5.1, and 4.2 branches.
-The patches may be obtained from the following changesets.
-
-CVE-2025-48432: Potential log injection via unescaped request path
-------------------------------------------------------------------
-
-* On the `main branch <
-https://github.com/django/django/commit/957951755259b412d5113333b32bf85871d29814/
->`__
-* On the `5.2 branch <
-https://github.com/django/django/commit/8fcc83953c350e158a484bf1da0aa1b79b69bb07/
->`__
-* On the `5.1 branch <
-https://github.com/django/django/commit/31f4bd31fa16f7f5302f65b9b8b7a49b69a7c4a6/
->`__
-* On the `4.2 branch <
-https://github.com/django/django/commit/b597d46bb19c8567615e62029210dab16c70db7d/
->`__
+cheers,
+Douglas Bagnall
+Samba Team and Catalyst IT
 
 
-The following releases have been issued
-=======================================
-
-* Django 5.2.3 (`download Django 5.2.3
-  <https://www.djangoproject.com/download/5.2.3/tarball/>`_ |
-  `5.2.3 checksums
-  <https://www.djangoproject.com/download/5.2.3/checksum/>`_)
-* Django 5.1.11 (`download Django 5.1.11
-  <https://www.djangoproject.com/download/5.1.11/tarball/>`_ |
-  `5.1.11 checksums
-  <https://www.djangoproject.com/download/5.1.11/checksum/>`_)
-* Django 4.2.23 (`download Django 4.2.23
-  <https://www.djangoproject.com/download/4.2.23/tarball/>`_ |
-  `4.2.23 checksums
-  <https://www.djangoproject.com/download/4.2.23/checksum/>`_)
-
-The PGP key ID used for this release is : `3955B19851EA96EF <
-https://github.com/sarahboyce.gpg>`_
-
---000000000000fc0ffc063737ac66--
