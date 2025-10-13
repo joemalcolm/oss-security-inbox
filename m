@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2526" "Friday" "23" "September" "2016" "12:14:14" "+0100" "Martyn Taylor" "mtaylor@redhat.com" "<CAH6wpnqzeNtpykT7emtDU1-GV7AvjFP5-YroWcCC4UZyQEFvtA@mail.gmail.com>" "64" "[oss-security] [CVE-2016-4978] Apache ActiveMQ Artemis: Deserialization of untrusted input vunerability" nil nil nil "9" "2016092311:14:14" "[oss-security] [CVE-2016-4978] Apache ActiveMQ Artemis: Deserialization of untrusted input vunerability" (number mark "U       mtaylor@redh Sep 23   64/2526  " thread-indent "\"[oss-security] [CVE-2016-4978] Apache ActiveMQ Artemis: Deserialization of untrusted input vunerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1688 invoked by uid 550); 23 Sep 2016 12:15:36 -0000
+Received: (qmail 11631 invoked by uid 550); 13 Oct 2025 22:46:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7529 invoked from network); 23 Sep 2016 11:14:27 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=EjcuPRyLKtyfesIkqpnNeFBF9/c8agBhsJj5D74M/X8=;
-        b=EyPyt5O/mjuMYTBsdGvlyCdZn5uo5NrBOFVcAQJ5ZzxhSWYMJyMa+7xVdJnBlLWbLD
-         eEA735nM8e1PrUGnAprHuplgQUb6nrq32WmdPG26sRneHwyyS0+ASJHWQs/lJEhQWwhb
-         u0Zm6e9JZY0eiGHWmE14qN+mg27/aiIwLxKhfOI9NWlyBZpGFWg/gpZlqHBQCXkGaqxs
-         jXoHT05ytoiinYjx+qMYRbK/F4Qby8i5M2MU72QA4U0F1cuol92G0CnnWW1x8T/3iVPO
-         4gOlmKjDQgA5GdWK0uMu005GJN3vFwQEUTY+h2aLQzDJTzyPN1NB/8AsBlrEvxCHoQxn
-         vzWQ==
-X-Gm-Message-State: AE9vXwPwjv9S7LdyTX8jMgsaxhJPqGUNAJ7ZTKarKR6FqtIR5B9syVxicANStEJ/4qJtkrevjXhyev0denrNae1f
-X-Received: by 10.107.57.139 with SMTP id g133mr9220520ioa.176.1474629255046;
- Fri, 23 Sep 2016 04:14:15 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 9350 invoked from network); 13 Oct 2025 19:45:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=qIlLW7Gca8JisnDHeWvPPFs7j21Au0wrJe9/UP8KxuI=; b=KKiiJ3F3HgppsF57ktWO0pXCGA
+	RMst+XuAK4zq1xR2jDl+ttEjHUO1kengR5e+bCQ9jW5JFDrOZTIoxdqw6+ZbGm1eA96ttJlWjVoGW
+	Pvk6FTuLfm+oRtb5qah7W+JObf3lLKxCyLir762NZGqAWwn5z1KSsYyPIfkNY6vx0X+fT4e7iWQH5
+	9YmJU52NYqpAzzUWarSKjo+lk36OasGxzG1h9jdbnGy0s3Zjc6wmv1G4kNOVZkzUck2nooqKB1pve
+	/7pg7vXiCPIhg09dULx9kaafEdE7ZE8RVfDB9ZWrAMVi16UCxfGj26uLVY3MmiLr6wsVYYqaLB681
+	E4984hsw==;
+Date: Mon, 13 Oct 2025 22:45:13 +0300
+Message-ID: <20251013224513.GG1422726@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-From: Martyn Taylor <mtaylor@redhat.com>
-Date: Fri, 23 Sep 2016 12:14:14 +0100
-Message-ID: <CAH6wpnqzeNtpykT7emtDU1-GV7AvjFP5-YroWcCC4UZyQEFvtA@mail.gmail.com>
-To: security@apache.org, Matthias Kaiser <matthias.kaiser@code-white.com>, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com, 
-	dev@activemq.apache.org, users@activemq.apache.org
-Content-Type: multipart/alternative; boundary=001a114ac88aec4276053d2ae00b
-Subject: [oss-security] [CVE-2016-4978] Apache ActiveMQ Artemis: Deserialization of untrusted
- input vunerability
+Content-Type: multipart/signed; boundary="8lJlc/WuDxLtgrVd"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0007
 
---001a114ac88aec4276053d2ae00b
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--8lJlc/WuDxLtgrVd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-Severity: Important
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwNwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogT2N0b2JlciAxMywgMjAyNQpBZHZpc29yeSBJRCAgICAgICAgICAg
+ICA6IFdTQS0yMDI1LTAwMDcKV2ViS2l0R1RLIEFkdmlzb3J5IFVSTCAgOiBodHRwczovL3dlYmtp
+dGd0ay5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwNy5odG1sCldQRSBXZWJLaXQgQWR2aXNvcnkg
+VVJMIDogaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDcuaHRtbApD
+VkUgaWRlbnRpZmllcnMgICAgICAgICA6IENWRS0yMDI1LTQzMzQzLgoKU2V2ZXJhbCB2dWxuZXJh
+YmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdC4KCkNW
+RS0yMDI1LTQzMzQzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
+S2l0IGJlZm9yZSAyLjUwLjEuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIu
+CiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBt
+YXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjog
+VGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5n
+LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTY0OTAKCldlIHJlY29tbWVuZCB1cGRhdGluZyB0byB0
+aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBXZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0
+IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJz
+aW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMgZm9yIGluZm9ybWF0aW9u
+IGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBh
+Ym91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUg
+Zm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1sIG9yCmh0dHBzOi8v
+d3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgdGVh
+bSwK
 
-Vendor: The Apache Software Foundation
+--8lJlc/WuDxLtgrVd
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Versions Affected: Apache Artemis 1.0.0, 1.1.0, 1.2.0, 1.3.0
+-----BEGIN PGP SIGNATURE-----
 
-A class implementing the Serializable interface is free to implement
-the =E2=80=9CreadObject(java.io.ObjectInputStream
-in)=E2=80=9D method however it chooses. This readObject method is used duri=
-ng the
-deserialization process, when constructing a java object from a serialized
-byte stream. It is possible to implement the method in such a way that can
-result in java code being executed during the deserialization of an object
-of this class (gadget class).
+iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaO1WyQAKCRCRxVnb5MkS
+O/ANAJ9g14gWwGBFA5rEgu310kbVljElcgCeJQU7f/dgSVKonhn7XpUyWa0tYMc=
+=K7tv
+-----END PGP SIGNATURE-----
 
-The JMS specification outlines a getObject() method on the
-javax.jms.ObjectMessage
-class. The Apache Artemis implementation of this method allows
-deserialization of objects, from untrusted input. There are several places
-where Apache Artemis uses this getObject() method. In the JMS Core client,
-the Artemis broker and the Artemis REST component. These Artemis components
-may therefore be vulnerable to a remote code execution attack. Successful
-exploitations of this vulnerability rely on these "gadget classes"  being
-present on the Artemis classpath and the sender of the untrusted input
-being authenticated and authorized to send messages to the Artemis broker.
-
-The code execution exploit may happen under the following circumstances:
-
-=C2=B7 In the JMS client when consuming an object message.
-
-=C2=B7 In the REST module when a REST client requests to consume a message =
-that
-was originally sent as an object message (cross protocol).
-
-=C2=B7 In the Artemis management layer, when a client sends an object messa=
-ge to
-a management address.
-
-=C2=B7 On the broker when an AMQP client consumes a message that was origin=
-ally
-sent as an object message (cross protocol).
-
-For this exploit to occur the sender of the compromised message needs to be
-authenticated and authorized in order to send the message to the Artemis
-broker and affected classes (gadget classes) present on the Artemis class
-path.
-
-Mitigation:
-To secure the Apache Artemis broker and management layer:
-** Upgrade to 1.4.0.
-
-For the Apache Artemis REST module and Apache Artemis JMS client.
-** Upgrade to Apache Artemis 1.4.0
-** Configure the appropriate deserialization white/black lists as outlined
-in the Artemis documentation.
-
-Credit: This issue was discovered by Matthias Kaiser of Code White (
-www.code-white.com)
-
---001a114ac88aec4276053d2ae00b--
+--8lJlc/WuDxLtgrVd--
