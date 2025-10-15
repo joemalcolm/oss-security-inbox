@@ -1,4 +1,4 @@
-Received: (qmail 24445 invoked by uid 550); 22 Mar 2023 11:51:56 -0000
+Received: (qmail 1971 invoked by uid 550); 15 Oct 2025 22:23:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,54 +7,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26114 invoked from network); 22 Mar 2023 10:13:05 -0000
+x-ms-reactions: disallow
+Received: (qmail 12205 invoked from network); 15 Oct 2025 22:08:56 -0000
 Authentication-Results: apache.org; auth=none
-Message-ID: <32ab10c5-fecd-438f-1371-5fa77d5f957a@apache.org>
-Date: Wed, 22 Mar 2023 10:12:50 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+From: =?UTF-8?Q?Krzysztof_Por=C4=99bski?= <havret@apache.org>
 To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE-2023-28708: Apache Tomcat: JSESSIONID Cookie missing secure
- attribute in some configurations
+Message-ID: <9c174b7a-d9cb-da38-40b9-ad05152550e6@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 15 Oct 2025 22:08:14 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-54539: Apache ActiveMQ NMS AMQP Client: Deserialization
+ of Untrusted Data 
 
-CVE-2023-28708 Apache Tomcat - Information Disclosure
+Severity: important=20
 
-Severity: Important
+Affected versions:
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Apache Tomcat 11.0.0-M1 to 11.0.0-M2
-Apache Tomcat 10.1.0-M1 to 10.1.5
-Apache Tomcat 9.0.0-M1 to 9.0.71
-Apache Tomcat 8.5.0 to 8.5.85
+- Apache ActiveMQ NMS AMQP Client through 2.3.0
 
 Description:
-When using the RemoteIpFilter with requests received from a reverse 
-proxy via HTTP that include the X-Forwarded-Proto header set to https, 
-session cookies created by Tomcat did not include the secure attribute. 
-This could result in the user agent transmitting the session cookie over 
-an insecure channel.
 
-Mitigation:
-Users of the affected versions should apply one of the following
-mitigations:
-- Upgrade to Apache Tomcat 11.0.0-M3 or later
-- Upgrade to Apache Tomcat 10.1.6 or later
-- Upgrade to Apache Tomcat 9.0.72 or later
-- Upgrade to Apache Tomcat 8.5.86 or later
+A Deserialization of Untrusted Data vulnerability exists in the Apache Acti=
+veMQ NMS AMQP Client.
 
-History:
-2023-03-22 Original advisory
+This issue affects all versions of Apache ActiveMQ NMS AMQP up to and inclu=
+ding 2.3.0, when establishing connections to untrusted AMQP servers. Malici=
+ous servers could exploit unbounded deserialization logic present in the cl=
+ient to craft responses that may lead to arbitrary code execution on the cl=
+ient side.
+
+Although version 2.1.0 introduced a mechanism to restrict deserialization v=
+ia allow/deny lists, the protection was found to be bypassable under certai=
+n conditions.
+
+In line with Microsoft=E2=80=99s deprecation of binary serialization in .NE=
+T 9, the project is evaluating the removal of .NET binary serialization sup=
+port from the NMS API entirely in future releases.
+
+Mitigation and Recommendations:
+Users are strongly encouraged to upgrade to version 2.4.0 or later, which r=
+esolves the issue. Additionally, projects depending on NMS-AMQP should migr=
+ate away from .NET binary serialization as part of a long-term hardening st=
+rategy.
+
+Credit:
+
+Security Research Team @ Endor Labs (finder)
 
 References:
-[1] https://tomcat.apache.org/security-11.html
-[2] https://tomcat.apache.org/security-10.html
-[3] https://tomcat.apache.org/security-9.html
-[4] https://tomcat.apache.org/security-8.html
+
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-54539
 
