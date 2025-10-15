@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4110" "Wednesday" "20" "November" "2019" "12:14:50" "-0500" "Aditya Sirish Arunkumar Yelgundhalli" "asy278@nyu.edu" "<CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>" "92" "Re: [oss-security] Mitigating malicious packages in gnu/linux" "^Date:" nil nil "11" "2019112017:14:50" "[oss-security] Mitigating malicious packages in gnu/linux" (number mark "  z     asy278@nyu.e Nov 20   92/4110  " thread-indent "\"Re: [oss-security] Mitigating malicious packages in gnu/linux\"\n") "<20191120124425.GA25554@openwall.com>" ("<CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>" "<20191120124425.GA25554@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] Mitigating malicious packages in gnu/linux" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 1001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22091 invoked by uid 550); 20 Nov 2019 17:49:44 -0000
+Received: (qmail 11722 invoked by uid 550); 15 Oct 2025 19:00:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,151 +6,235 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6107 invoked from network); 20 Nov 2019 17:14:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=mime-version :
- references : in-reply-to : from : date : message-id : subject : to :
- content-type; s=20180315; bh=bNrgBSRolM0X+miCSlpH+Db6M9xr789hy+3cd7wq1jo=;
- b=KRvUoO9TxL/lzT2aMrZNznlhw+0cdl8KJZliVRWG6aopW3aZMWPvZUxi40jmHPqEbqwJ
- O/iw6PMFHAVZopG7FKuyzm7+ZA8oeBpMhHnP3Lqh5w4zx+mpS8ogWGwsifrHYPBABQEt
- +p0dj/4EzP0r7KTd/2xE2LxdL+WGf4sHKI2RL6Bsrm1GRRN4VLpJICH/RiwToNgc+Bv+
- UuGw+p+7fEtv9uiG/XOPFVpOvlUedM4tbAUnUlBG07Nuw3au19ixxkw/yRwdFTnrcBAz
- uigN5U9imb9Y3Oki4D7hSllIlUNzqwil+rPJD6HXhjJ5WsepWGavRSEUxZHB16rELJKt ww== 
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=bNrgBSRolM0X+miCSlpH+Db6M9xr789hy+3cd7wq1jo=;
-        b=a08E6tIwPVwTvdsBGVYEiKmlGTzPN20+R4buQO1uQm17ALxpt4+ofx554JWUhAEbxb
-         qEKdY7oAuu4Y2LGOP2PyKyG4e5N5kGdFrMe7byRxkk+1l93Ki9c1eylWbg8hm71nvv4W
-         GjJaM/88yDtjUPQ5zFGnONslVRoQxjPfv2JSaS/vTmIxjmBzKgAQIxmg0gEeWqNpla6Z
-         dpgT9F6iyIqERuEz/tW3xBA83uZhQMHTdUN/nu+0W/BF2jdPR7d9xXgUA/o/mFJKulM1
-         ha+DZtZ/pm0SS8ZzcQ1sx6SCUusj60p+JyVuZBiGQMUhACa0zyfB+3u6harSnbhm4U3O
-         1wtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=bNrgBSRolM0X+miCSlpH+Db6M9xr789hy+3cd7wq1jo=;
-        b=SIpRnOVDrWPxU7rXpqB600KSgP8JEuRFy9B81iW2zKWyW4/b7wQluOKEu9SQ9KbS1u
-         EKmNsw89xhtFe2vgl4XX774peLbZmEBI2p+GpXjIx+JBddXtOzc+ZofrkL7Tody/Z6Y8
-         2pLfV+Y5j58Vp44O408K06LQKe04KzXfm3pt2o80nsajMLoYpBTYAvryfX1GNX3ptNRu
-         lcgPBzp7lS50cvNpAKc4jgr9XqiTQ9l535uhaYImcc36gDDenT3QfbqbMMc80uh2pWnz
-         B96U2kODtaDBpy3U7MFkZHpRZPs3A9+vbRojIH1408mGVqnNBDwxFusTyH15Q5NPTmLk
-         uhzA==
-X-Gm-Message-State: APjAAAVBW/GabHam13XQ7YcUWvKnM2J2b1EuKkVBA1Q85HcPnIX+k3i/
-	I593ODeT5r9hJF27SLfW7EmkMzVF08sKE4GNAWtm8x+a8F5y7OErabqaH5HWWFbC14DrF2XktyE
-	feAc6IeRiO/S6xot2xulPgRBNgoDQQhGn9uaJNK9vaPg=
-X-Received: by 2002:a9d:313:: with SMTP id 19mr2918176otv.197.1574270071913;
-        Wed, 20 Nov 2019 09:14:31 -0800 (PST)
-X-Google-Smtp-Source: APXvYqwb4YfVv8s7ittABl/3lV+EqXmXaKvUHGSK6IR8vMyD3KIKlYaPPs3Zq0evKH8OQ3HXWekuvqXslApcwFIfh4g=
-X-Received: by 2002:a9d:313:: with SMTP id 19mr2918076otv.197.1574270070184;
- Wed, 20 Nov 2019 09:14:30 -0800 (PST)
-MIME-Version: 1.0
-References: <CAGUWgD8LDusq3PyWeMd-RoDhOtfiebVtKKV_39GhG+8c0QYFYg@mail.gmail.com>
- <20191120124425.GA25554@openwall.com>
-In-Reply-To: <20191120124425.GA25554@openwall.com>
-Message-ID: <CANuUHoGe6x5ntTBMMX0rLDFWbFeMd3FXGKJtrK5NjF=t7QV-0Q@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000005076970597ca50a5"
-X-Orig-IP: 209.85.210.69
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- mlxlogscore=999 clxscore=1034 lowpriorityscore=0 phishscore=0 bulkscore=0
- suspectscore=0 mlxscore=0 spamscore=0 impostorscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-1910280000
- definitions=main-1911200145
-Date: Wed, 20 Nov 2019 12:14:50 -0500
-From: Aditya Sirish Arunkumar Yelgundhalli <asy278@nyu.edu>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Mitigating malicious packages in gnu/linux
+x-ms-reactions: disallow
+Received: (qmail 24173 invoked from network); 15 Oct 2025 18:51:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=catalyst.net.nz;
+	s=default; t=1760554262;
+	bh=7qGWNSKEh8tkfoS09RP0tA4Irs8JXy5yhv5cNSw776I=;
+	h=Date:From:Subject:To:References:In-Reply-To:From;
+	b=YvWvwhnWfK0hG+wNfMjoYKGBmLMMg+c5NhihN+SILHIrasqVXcMd0a2cfUJyVCHYQ
+	 IMXiRnOHrg/9402QIrSim7zmCBHPWp8Rj6H+Fd0IddkzUf9NJ8kfV/G8eXJRPcVHWC
+	 rudvbJ8nEA6z+9iC3Z4lD6ZF0q8sednWeDcuTxFz2ZjNADzZv6JXdE1U2PWz1VIWLM
+	 IebTicvryhHMDrD6KVX8rP/LFu/dnE9zSaSsVlvCjYWVwjeAGlvTy8qSeah77r3/iD
+	 Of3NP3Vo/2Z1+hMoYsI6Yz2Egjp0FDzCCoFOZzu9W9k2uMk3L8xipv0N4+0uZPfDGe
+	 6LpCur33JScrA==
+Message-ID: <2338e6b3-44d5-4d9e-bd94-e3b96534359d@catalyst.net.nz>
+Date: Thu, 16 Oct 2025 07:51:00 +1300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
 To: oss-security@lists.openwall.com
+References: <20f5f042-d3de-411b-aa09-b2c46ee19cc8@samba.org>
+ <da7aa05f-01c0-4798-8496-33f1c0010e4e@catalyst.net.nz>
+Content-Language: en-NZ
+In-Reply-To: <da7aa05f-01c0-4798-8496-33f1c0010e4e@catalyst.net.nz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] Samba security releases for CVE-2025-10230 and CVE-2025-9640
 
---0000000000005076970597ca50a5
-Content-Type: text/plain; charset="UTF-8"
-
-Hi,
-
-My name is Aditya, and I represent the NYU Secure Systems Lab, where we
-actively research and develop solutions for the kind of problems discussed
-in this thread.
-
-In particular, we believe that a combination of The Update Framework (TUF)
-and in-toto will help to address the problem of malicious packages. TUF is
-the technology that ensures that packages have not been tampered between
-the repository and end-users, whereas in-toto is the technology that
-ensures that packages have been built correctly by the CI/CD using source
-code signed by developers, securing the software supply chain end to end. A
-critical property of both technologies is that they are fundamentally
-designed to be resilient against a compromise of some signing keys in the
-system. By combining both TUF and in-toto [X], it is possible for a Linux
-distribution to guarantee that packages have not been tampered with
-anywhere between developers and end-users, despite being built and
-distributed by machines.
-
-TUF is the de-facto standard for signing container images, used by Docker,
-IBM, and Microsoft. It is also being used by Google to update everything on
-their next-gen Fuchsia OS. A version of TUF called Uptane has been
-standardized for use by North American ground vehicles [Y]. in-toto is
-being used to verify reproducible builds for Debian packages.
-
-We would be happy to help your community integrate both technologies, if so
-desired. Let us know if you have questions!
-
-Thanks,
-
-Aditya
-
-[X]
-https://www.datadoghq.com/blog/engineering/secure-publication-of-datadog-agent-integrations-with-tuf-and-in-toto/
-[Y]
-https://uptane.github.io/papers/ieee-isto-6100.1.0.0.uptane-standard.html
-
-On Wed, Nov 20, 2019 at 7:45 AM Solar Designer <solar@openwall.com> wrote:
-
-> On Tue, Nov 19, 2019 at 01:33:48PM +0200, Georgi Guninski wrote:
-> > As end user and contributor of gnu/linux, I am concerned about malicious
-> > packages (either hostile developers or hacked developers or another
-> reason)
-> > and have two questions:
-> >
-> > * What do linux vendors to avoid malicious packages?
+Last week I wrote:
+> This is a heads-up that there will be Samba security updates for
+> 4.21, 4.22, and 4.23 on Wednesday, October 15, 2025. Please make
+> sure that your Samba servers will be updated soon after the release!
 >
-> Back when Openwall GNU/*/Linux was being actively developed, I used to
-> review each contributor's changes before making them public.  I also
-> (re-)verified authenticity of third-party source tarballs instead of
-> blindly trusting whatever the contributor could have uploaded to us.
-> (I'd do the same now, but without active development there's simply
-> nothing to review lately.)
+> Impacted component:
+>  - AD DC (CVSS 10, High, when using a very unusual configuration)
+>  - File services (CVSS 4.3, Low, in a widely used configuration)
 >
-> Of course, this approach doesn't scale as-is (with just one person to
-> review and publish everything) to larger distros, but some kind of peer
-> review can and should be present.
->
-> > * As end user what can I do to mitigate malicious packages?
->
-> Try to install only what's needed, or not a lot more than what's needed.
-> (Can't be done perfectly with larger distros and their dependency hell.)
->
-> Contrary to traditional best practices, update only what and when needs
-> to be updated.  (Of course, you take responsibility to watch for any
-> relevant security updates, or accept the risk if you neglect to do that.
-> You also miss silent security fixes, but on the other hand you similarly
-> miss newly introduced vulnerabilities.)
->
-> Use a long-term support distro, preferably starting half-way into its
-> lifetime when updates are already infrequent.  (Similar risk of missing
-> silent security fixes in new upstream versions, but also avoiding new
-> vulnerabilities.)
->
-> Setup packet filters with blocking and logging of unexpected outbound
-> packets, including to console so that you'd notice.
->
-> Setup custom anomaly detection and actually watch it - e.g., for new
-> programs running that haven't ever run before, etc.
->
-> Use multiple pseudo-user accounts (doesn't protect against issues in
-> packages' pre/post-install scripts, etc.), containers, VMs - but even
-> then you have the risk of getting the same malicious package in multiple
-> VMs, which e.g. on Qubes OS could happen through updating a template VM.
->
-> Alexander
->
+> The AD DC bug will affect very few, possibly zero, users.
 
---0000000000005076970597ca50a5--
+The fixes are now out.
+
+These are
+
+CVE-2025-10230 https://bugzilla.samba.org/show_bug.cgi?id=15903
+CVE-2025-9640  https://bugzilla.samba.org/show_bug.cgi?id=15885
+
+The first of which is the CVSS 10 one. I have included the
+announcements here, which you can also see at
+
+https://www.samba.org/samba/security/CVE-2025-10230.html
+https://www.samba.org/samba/security/CVE-2025-9640.html
+
+and various other places. There are patches on bugzilla and at
+https://www.samba.org/samba/history/security.html.
+
+I will reply with an explanation of how this came about.
+
+Douglas
+
+
+=================================================================
+== Subject:      Command injection via WINS server hook script
+==
+== CVE ID#:     CVE-2025-10230
+==
+== Versions:    All versions since 4.0
+==
+== Summary:     If the 'wins hook' parameter is set on a domain
+==              controller with the WINS server enabled,
+==              unauthenticated remote code execution is possible.
+=================================================================
+
+===========
+Description
+===========
+
+If a Samba server has WINS support enabled (it is off by default), and
+it has a 'wins hook' parameter specified, the program specified by
+that parameter will be run whenever a WINS name is changed.
+
+The WINS server used by the Samba Active Directory Domain Controller
+did not validate the names passed to the wins hook program, and it
+passed them by inserting them into a string run by a shell.
+
+WINS is an obsolete and trusting protocol, and clients can request any
+name that fits within the 15 character NetBIOS limit. This includes
+some shell metacharacters, making it possible to run arbitrary
+commands on the host.
+
+The WINS server used by Samba when it is not a domain controller is
+unaffected.
+
+==================
+Patch Availability
+==================
+
+Patches addressing this issue have been posted to:
+
+    https://www.samba.org/samba/security/
+
+Additionally, Samba 4.23.2, 4.22.5, and 4.21.9 have been issued as
+security releases to correct the defect. Samba administrators are
+advised to upgrade to these releases or apply the patch as soon as
+possible.
+
+==================
+CVSSv3 calculation
+==================
+
+CVSS:3.1: AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H  (10.0)
+
+==========
+Workaround
+==========
+
+Avoid setting the 'wins hook' parameter in the smb.conf of a Samba AD
+Domain Controller.
+
+The 'wins hook' parameter is only effective when 'wins support' is
+enabled. In other words, this combination is safe, regardless of 'wins
+hook':
+
+        server role = domain controller
+        wins support = no
+
+The default value for 'wins support' is 'no', so it is safe (though
+pointless) for 'wins hook' occurs if 'wins support' does not.
+
+It does NOT help to have 'wins hook' set to a non-existent or
+non-executable path, but an explicitly empty value
+
+        wins hook =
+
+is OK.
+
+When 'server role' is not 'domain controller' (or its synonyms 'active
+directory domain controller', 'dc'), the server is not affected.
+Specifically, 'member' or 'standalone' servers use a different WINS
+server that is not vulnerable.
+
+The 'wins hook' parameter is unlikely to be useful on a domain
+controller, and administrators who use it might want to reconsider
+that choice even on a patched server. It may not be supported in
+future Samba releases.
+
+=======
+Credits
+=======
+
+Reported by Igor Morgenstern of Aisle Research.
+
+Patches provided by Douglas Bagnall of the Samba team and Catalyst IT.
+
+This advisory written by Douglas Bagnall.
+
+==========================================================
+== Our Code, Our Bugs, Our Responsibility.
+== The Samba Team
+==========================================================
+
+
+
+===========================================================
+== Subject:     uninitialized memory disclosure via vfs_streams_xattr
+==
+== CVE ID#:     CVE-2025-9640
+==
+== Versions:    All versions since 3.2
+==
+== Summary:     Uninitialised memory can be written into alternate data
+==              streams, possibly leaking sensitive data.
+===========================================================
+
+===========
+Description
+===========
+
+An authenticated user can read an unlimited number of samples of
+discarded heap memory, due to a failure to initialise memory in
+streams_xattr_pwrite() in the vfs_streams_xattr file server module.
+
+This is achieved by issuing write requests that creates holes in the
+file.
+
+Samba erases known secrets before freeing the associated memory, which
+somewhat mitigates the data leak.
+
+==================
+Patch Availability
+==================
+
+Patches addressing this issues have been posted to:
+
+    https://www.samba.org/samba/security/
+
+Additionally, Samba 4.23.2, 4.22.5, and 4.21.9 have been issued as
+security releases to correct the defect. Samba administrators are
+advised to upgrade to these releases or apply the patch as soon as
+possible.
+
+====================
+CVSSv3.1 calculation
+====================
+
+AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:N/A:N (4.3)
+
+==========
+Workaround
+==========
+
+Systems that don't use vfs_streams_xattr are not affected. If you are
+not sure, look for the string "streams_xattr" in your smb.conf. If
+there is a line like this
+
+    vfs objects = streams_xattr [and possibly other terms]
+
+removing 'streams_xattr' from the 'vfs objects' list will avoid the
+vulnerability but will affect functionality.
+
+=======
+Credits
+=======
+
+Reported and fixed by Andrew Walker of IX Systems and the Samba Team.
+
+This advisory written by Douglas Bagnall of Catalyst IT and the Samba
+Team.
+
+==========================================================
+== Our Code, Our Bugs, Our Responsibility.
+== The Samba Team
+==========================================================
+
