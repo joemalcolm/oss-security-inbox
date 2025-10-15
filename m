@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2801" "Monday" "19" "April" "2021" "17:36:42" "+0200" "Solar Designer" "solar@openwall.com" nil "61" "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil "4" nil nil (number mark "U       solar@openwa Apr 19   61/2801  " thread-indent "\"Re: [oss-security] xscreensaver package caps gets raw socket\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] xscreensaver package caps gets raw socket" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22174 invoked by uid 550); 19 Apr 2021 15:37:07 -0000
+Received: (qmail 30650 invoked by uid 550); 15 Oct 2025 00:53:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,77 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22078 invoked from network); 19 Apr 2021 15:36:52 -0000
-Date: Mon, 19 Apr 2021 17:36:42 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20210419153642.GA25158@openwall.com>
-References: <20210417143105.GB3276@thinkstation>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210417143105.GB3276@thinkstation>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] xscreensaver package caps gets raw socket
+x-ms-reactions: disallow
+Received: (qmail 20364 invoked from network); 15 Oct 2025 00:51:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1760489474; x=1761094274; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8pIPIC2dGsO6+II//MdR7bRmVSifs8P7DUsjmF4QNNE=;
+        b=FLAQ+13j+ojFkoG9C2jK9u3smy6bgc0tecPtvfwCJGHvd6VVbPIdU+2WQ6d7IDq9EH
+         Nh5BMrKidrPLz2NhlElHf8WqD2ioHx5sylP+F/yzr99ouW6lMVX1x2JrjNO8RVt+ubdY
+         eyfxdLobr+RTZHwMKgcjHnIvhuphSBC68OKgapD94gE6mxfP6dKps8vvOs3waE+A8ZA+
+         I1d4VFlEwRFgzFjdAw2kX1XTpA+G+czjzYbdUGfiVEVpe+g5RAj1rr4GyVYkqLMCsmsf
+         ZIrjFqWcRvxATq2BQloj2HgbFvNrppOh9+BqCQFgjepaxkQIZ5AA64SpP3lZoP9gNIi3
+         cf0Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1760489474; x=1761094274;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8pIPIC2dGsO6+II//MdR7bRmVSifs8P7DUsjmF4QNNE=;
+        b=o8/B+zstscEYuBsHIX5DaFfJJp/ByJ7wZUtZpw/P9HRatT7gSs7NpQcCLcIa5bBdiw
+         x1ItKyI+CcuGXRTtepuVGrz/wTx8HnjKyYmVkgWPbyOC37T4OoxAyFy1XUco+uYPRK3D
+         ktHuUkcJuiq9pjB3XKYcx4yaXJQG0tmY2Z6+7vwSaF9fCNKB4rXNz+0c30XhAVLEBmu2
+         +ud0wfmpCkI7nzH1Fe0ZXr2KL1Ht79oP91RK89Y8hq4gvVhpDIPf0HGGyJc6C3I9QJSJ
+         hxik63cpDgoGuiGBENMVCvOsNBYOaSYUdVYCx8XRTuV8EtzPNj6pGt+mFhX8bK7TRwbi
+         /y8w==
+X-Gm-Message-State: AOJu0YyGf0b7SFsRUGPzgxTZ7OhU0goVbk4MKbjM2KBWNxuiLzn1o1o5
+	ykIAJpby9eUGVN+6BNTwWW2isClXJJb0vOgJCoRpSbzu6d7qvINy2uSVycm7JdkYNuc=
+X-Gm-Gg: ASbGncvFhQkXxtVGAIMUWJJEWO0U/rOtTZHlTelmBFIpZ53fkor4Mq/X+VmjR8qbfjp
+	671V78L/HJQ9+WdNbb05vIqirq/fPI2L4cGzG2u3b7unxx9Uocl9CpHo3c6u7XmTlVLlnl3rxz2
+	ZAkOc9dSCOQ3HmY1qVdm7O1KFkg5iLl/jzpbeUtXoc0VMcSXxcXjRCgPTgkBsQhi9VAzoNJgQve
+	FC7TR6h5juVeD9Rf9HZS9GDWnFypi/n7n6Q9NDeY9FAHiBDB1P+2W1Dp8aBOUd/bbWrN3zON1qw
+	syshzoBe8q8sZEfQB06aXmVVeFUvyE/1fK49FdIrQc872HFlfyv+MPID87ZVTuReQvvriiN7wIF
+	RnmgkAW9Z4+S50sIEDRiIxL9294v89eCKBCMOZYr9N0zDH/yX
+X-Google-Smtp-Source: AGHT+IFgYwtaI9xbg8hUT+Hs7OyT4ssW9dJ2c++BTmIQKeipZR/Ge8ighNnGzSU+j4wuKoW+4k/xeA==
+X-Received: by 2002:a53:864c:0:b0:636:d520:32e4 with SMTP id 956f58d0204a3-63ccb95f9e3mr18164795d50.53.1760489474253;
+        Tue, 14 Oct 2025 17:51:14 -0700 (PDT)
+Message-ID: <a5948a82-c85b-443c-9adb-9d6985359828@gmail.com>
+Date: Tue, 14 Oct 2025 19:51:06 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, David Benjamin <davidben@google.com>
+References: <fd686bd9-d2a7-89f9-f438-7ed38e127591@iki.fi>
+ <CAH8yC8nZDxYF1NyGjHn8yOADBioNwPB4WTjUZGPmbRTvPLq2tw@mail.gmail.com>
+ <ME0P300MB0713AA2595680B38B28287AEEEEAA@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
+ <CAFRnB2XECXsKDSuvBCeWHwC9apboBdvhYCEFrUo2TuonHs1yFw@mail.gmail.com>
+ <CAF8qwaB=b0EDUTckx-ZHdAHkj-_kN9xPmfVFJP8XxCUq-W9Q5Q@mail.gmail.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <CAF8qwaB=b0EDUTckx-ZHdAHkj-_kN9xPmfVFJP8XxCUq-W9Q5Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] BoringSSL private key loading is not constant time
 
-On Sat, Apr 17, 2021 at 07:31:05AM -0700, Tavis Ormandy wrote:
-> Hello, I noticed that at least debian (maybe others) ship xscreensaver
-> hack with cap_net_raw enabled:
-> 
-> $ getcap /usr/libexec/xscreensaver/sonar
-> /usr/libexec/xscreensaver/sonar cap_net_raw=p
+On 10/14/25 12:08, David Benjamin wrote:
+> [...]
+>
+> With respect to the constant-time model, that import process indeed 
+> leaks the byte length of the privateKey field, but this is actually 
+> unavoidable. The encoding itself already leaked the length. The byte 
+> strings themselves weren’t the same size and the constant-time model 
+> assumes the trace of memory accesses (often visible to cache-timing 
+> attacks) is leaked. That means merely constructing a buffer to pass 
+> into the library leaks the length of the buffer.
+>
+> This means private key formats must have secret-independent lengths. 
+> The privateKey field, by spec, achieves this, but these malformed, 
+> truncated privateKey fields do not. If one passes a truncated 
+> privateKey field to any decoder, leaking the byte length is 
+> unavoidable. Rather, it is up to the encoder to follow the spec, which 
+> will give a fixed-width, secret-independent byte length that can be 
+> safely leaked.
 
-> - The code could use ping sockets instead, but they're still rarely
->   enabled by default, and users have to set the ping_group_range sysctl.
->   I personally think it's time to enable them by default, but that's a
->   different discussion :-)
+Does the file size of the private key file also leak this information?
 
-I think the distro should set a ping_group_range by default to just one
-GID it can allocate for the purpose - e.g., on Owl we had:
+> The inputs in the test harness use this leaky, truncated encoding. One 
+> can see this in how the test cases have different sizes. The issue is 
+> that “randme.py” calls the Python hex() function on an integer, which 
+> returns the minimal hex encoding. Something like theint.to_bytes(48, 
+> "big").hex() would have constructed the correct, fixed-width private 
+> key representation for P-384.
+>
+> Ideally, decoders would all reject these invalid inputs, so it would 
+> be immediately apparent when encoders get this wrong, but the 
+> environment of existing private keys makes doing so a compatibility risk.
 
-In /etc/group:
+Perhaps a warning that limited information about the private key has 
+unavoidably been leaked and the key should be rotated should be emitted 
+upon loading such an improperly-encoded key?  (The warning could include 
+a URL for a page with a longer explanation of the issue.)
 
-_icmp:x:111:
 
-In /etc/sysctl.conf:
+-- Jacob
 
-# Range of group IDs permitted to access non-raw (datagram) ICMP sockets.
-#
-# These are an Openwall extension to the Linux kernel.  Our ping(1) program is
-# able to use these sockets, which enables it to start and run without
-# requiring root privileges nor a capability.  Access to these sockets is
-# restricted at all primarily in order to reduce direct exposure of the added
-# kernel code to potential attacks.  In other words, we gain privilege
-# separation due to keeping this access restricted and installing ping(1) SGID.
-#
-net.ipv4.ping_group_range = 111 111
 
-Then the distro should ideally make use of this in ping(1), like we did,
-installing it SGID _icmp.  (Note: ping(1) should also be patched to drop
-its elevated egid after obtaining the socket.)
-
-Then, as an option, the distro could also make use of ping sockets in
-/usr/libexec/xscreensaver/sonar and change it from cap_net_raw=p to SGID
-_icmp (with similar early dropping of the elevated egid).  It should
-also patch the known ways for an attacker to execute arbitrary code that
-could access the ping socket, in case of ping socket vulnerabilities in
-the kernel.
-
-If the ICMP ping functionality remains in sonar itself and isn't made
-available to all users by default (ping_group_range isn't set to cover
-the entire groups range anyway), then its added security risk shouldn't
-be taken by default - if a user really wants the sonar screensaver on
-their system, they should enable it explicitly.
-
-There are some valid reasons to just expose ICMP sockets to all users by
-default (but maybe exclude a range of system pseudo-user group IDs that
-certainly have no need for this, not to ease sandbox escapes) - such as
-to allow ICMP ping from users' QEMU VMs by default - but this sonar toy
-isn't a sufficiently good reason to take security risks, in my opinion.
-
-Other options would be to execute /bin/ping like you mention or maybe to
-ping by other means (non-ICMP, or only needing ICMP responses - e.g.
-like Olaf Kirch's unprivileged Linux 2.4+ traceroute(1) does - BTW, I
-think distros should adopt it, better late than never).
-
-Alexander
