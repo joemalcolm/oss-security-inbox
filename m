@@ -1,4 +1,4 @@
-Received: (qmail 1127 invoked by uid 550); 4 Sep 2025 15:57:25 -0000
+Received: (qmail 5288 invoked by uid 550); 16 Oct 2025 16:20:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,38 +8,47 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 3839 invoked from network); 4 Sep 2025 15:53:46 -0000
+Received: (qmail 1277 invoked from network); 16 Oct 2025 08:39:49 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Huajie Wang <benjobs@apache.org>
+From: Arnout Engelen <engelen@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <81ab5595-dc7b-a80e-2c2b-ca0ba90cffc9@apache.org>
-Content-Transfer-Encoding: 7bit
-Date: Thu, 04 Sep 2025 15:53:34 +0000
+Message-ID: <eca856de-bfdc-85b0-715d-f34140fc6bd1@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 16 Oct 2025 08:39:37 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-30001: Apache StreamPark: Authenticated users can trigger
- remote command execution 
+Subject: [oss-security] CVE-2025-61581: Apache Traffic Control: ReDoS issue in Traffic
+ Router configuration 
 
-Severity: low 
+Severity: low=20
 
 Affected versions:
 
-- Apache StreamPark 2.1.4 before 2.1.6
+- Apache Traffic Control: all versions
 
 Description:
 
-Incorrect Execution-Assigned Permissions vulnerability in Apache StreamPark.
+** UNSUPPORTED WHEN ASSIGNED ** Inefficient Regular Expression Complexity v=
+ulnerability in Apache Traffic Control.
 
-This issue affects Apache StreamPark: from 2.1.4 before 2.1.6.
+This issue affects Apache Traffic Control: all versions.
 
-Users are recommended to upgrade to version 2.1.6, which fixes the issue.
+People with access to the management interface of the Traffic Router compon=
+ent could specify malicious patterns and cause unavailability.
+
+As this project is retired, we do not plan to release a version that fixes =
+this issue. Users are recommended to find an alternative or restrict access=
+ to the instance to trusted users.
+
+NOTE: This vulnerability only affects products that are no longer supported=
+ by the maintainer.
 
 Credit:
 
-Liufeng Yi (ylf@yiliufeng.net) (reporter)
+Chris Lemmons (finder)
 
 References:
 
-https://streampark.apache.org
-https://www.cve.org/CVERecord?id=CVE-2025-30001
+https://trafficcontrol.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-61581
 
