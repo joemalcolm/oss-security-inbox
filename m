@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1827" "Thursday" "19" "October" "2017" "12:44:28" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20171019194428.GK20315@hunt>" "44" "Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" "^Date:" nil nil "10" "2017101919:44:28" "[oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync" (number mark "        seth.arnold@ Oct 19   44/1827  " thread-indent "\"Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in Debian mirror script ftpsync\"\n") "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>" ("<20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>" "<CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>" "<CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>" "<CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3830 invoked by uid 550); 19 Oct 2017 19:44:42 -0000
+Received: (qmail 1886 invoked by uid 550); 16 Oct 2025 23:01:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +6,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3808 invoked from network); 19 Oct 2017 19:44:42 -0000
-Message-ID: <20171019194428.GK20315@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <20171017162507.e7lx6fbnleugoxxa@waldi.eu.org>
- <CAOfWR+EHYftu3Hqbu0qGvk_kk3au-Gkj_WEH95syC3n-QuNnxg@mail.gmail.com>
- <CABMkiz5UkRvC7FRFQ_9nAfG=+gqGXTb-67faWu=s4n=mXghZtA@mail.gmail.com>
- <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0FM4RQAc0jwHekq5"
-Content-Disposition: inline
-In-Reply-To: <CAOfWR+GW8oR8+uSKeETF3+mzhhzH5-GiRuJr2sGOnhodefHRaQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Thu, 19 Oct 2017 12:44:28 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8805: Unsafe symlinks not filtered in
- Debian mirror script ftpsync
-To: oss-security@lists.openwall.com
-
---0FM4RQAc0jwHekq5
+x-ms-reactions: disallow
+Received: (qmail 1391 invoked from network); 16 Oct 2025 23:01:20 -0000
+Date: Fri, 17 Oct 2025 01:01:08 +0200
+From: Solar Designer <solar@openwall.com>
+To: lunbun <lunbun021@gmail.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20251016230108.GA18468@openwall.com>
+References: <CAMqWyhi=xW2sq2+Hb2aJ=ta-zfi_Zay6CztQ9mvDqgjbKr1HpQ@mail.gmail.com> <a7169751-2b66-4123-b2b5-09e35623ff80@gmail.com> <CAMqWyhhFgATrYJtxFP-hGLR3FN2XhnvZLHVyNtxpWdAp6fFJNQ@mail.gmail.com> <5d16e4d9-a25d-4b5e-946b-4c5243a54bcb@gmail.com> <CAMqWyhgUK+4dW=jxztFYopDxv5apLYsGcWN=1sbfHmmUfePduw@mail.gmail.com> <aJxWPAv5ew3BCm+O@adhil> <CAMqWyhgY=k3h8mKmjPiy-K6mBHjmjW_gMbJ+yn9H=YLyKKHrsA@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <CAMqWyhgY=k3h8mKmjPiy-K6mBHjmjW_gMbJ+yn9H=YLyKKHrsA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] CVE-2025-55188: 7-Zip: Arbitrary file write on extraction, may lead to code execution
 
-On Wed, Oct 18, 2017 at 04:55:07PM -0400, Robert Watson wrote:
-> Removing the ability for rsync to copy symlinks pointing to targets outside
-> the mirror tree would greatly cripple it. I need to understand how the
-> danger is worth the loss of this functionality.
+Hi,
 
-Note that the fix isn't modifying rsync, the fix is modifying the ftpsync
-script that calls rsync:
+It's another case where I was hoping someone else would reply, but since
+no one did, I do.
 
-+    RSYNC_OPTIONS=${RSYNC_OPTIONS:-"-prltvHSB8192 --safe-links --timeout 3600 --stats --no-human-readable"}
+On Sun, Oct 12, 2025 at 03:59:27PM -0700, lunbun wrote:
+> Does anyone know how might I get the CVSS score of this vulnerability
+> (CVE-2025-55188) increased?
 
-https://anonscm.debian.org/cgit/mirror/archvsync.git/commit/?id=d1ca2ab2210990b6dfb664cd6776a41b71c48016
+CVSS scores don't exist on their own - they're computed from CVSS
+vectors.  So you need to suggest and justify a certain CVSS vector.
+Please refer to CVSS specification documents and examples from FIRST:
 
-Of course for people who run this mirroring tool as a specific user
-account and set file permissions appropriately this is more or less a
-no-op. But this is a useful hardening for people who run the ftpsync
-command as a user with too many privileges. (I wouldn't have bothered
-filing for a CVE for this change; I see it as a simple hardening change.)
+https://www.first.org/cvss/v3-1/
 
-This option shouldn't cripple ftpsync as a well-run repository is highly
-unlikely to have symlinks pointing out of the tree. A repository with
-symlinks pointing out of the tree is already not a suitable rsync source.
+> I recently saw an advisory for CVE-2025-11001, a very similar
+> arbitrary file write in 7-Zip due to symbolic links
+> (https://www.zerodayinitiative.com/advisories/ZDI-25-949/).
 
-Thanks
+I actually care more about bringing vulnerability detail in here than
+about CVSS scores, so let me quote the above as if you did:
 
---0FM4RQAc0jwHekq5
-Content-Type: application/pgp-signature; name="signature.asc"
+> > October 7th, 2025
+> > 7-Zip ZIP File Parsing Directory Traversal Remote Code Execution Vulnerability
+> > ZDI-25-949
+> > ZDI-CAN-26753
+> > CVE ID 	CVE-2025-11001
+> > CVSS SCORE 	7.0, AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H
+> > AFFECTED VENDORS 	7-Zip
+> > AFFECTED PRODUCTS 	7-Zip
+> > VULNERABILITY DETAILS 	
+> > 
+> > This vulnerability allows remote attackers to execute arbitrary code on affected installations of 7-Zip. Interaction with this product is required to exploit this vulnerability but attack vectors may vary depending on the implementation.
+> > 
+> > The specific flaw exists within the handling of symbolic links in ZIP files. Crafted data in a ZIP file can cause the process to traverse to unintended directories. An attacker can leverage this vulnerability to execute code in the context of a service account.
+> > ADDITIONAL DETAILS 	
+> > 
+> > Fixed in 7-Zip 25.00
+> > 
+> > DISCLOSURE TIMELINE 	
+> > 
+> >     2025-05-02 - Vulnerability reported to vendor
+> >     2025-10-07 - Coordinated public release of advisory
+> >     2025-10-07 - Advisory Updated
+> > 
+> > CREDIT 	Ryota Shiga (GMO Flatt Security Inc.) with takumi-san.ai
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+> However, CVE-2025-11001 is clearly different from CVE-2025-55188,
+> as the advisory states that CVE-2025-11001 was patched in 25.00.
+> My proof-of-concept symbolic link attack for CVE-2025-55188 works in
+> version 25.00.
+> 
+> I am concerned that due to the low CVSS score of CVE-2025-55188, most users
+> do not realize that 25.00 is still vulnerable to symbolic link attacks.
+> 
+> I've already tried contacting MITRE 8 times to update the description
+> and CVSS score. I've only received one response, and that was that
+> not enough public information was available.
+> 
+> I then published a proof-of-concept and vulnerability explanation
+> (https://github.com/lunbun/CVE-2025-55188 and
+> https://lunbun.dev/blog/cve-2025-55188/), but MITRE is still unresponsive
+> to my update requests.
+> 
+> I suspect that MITRE is just busy with a huge backlog of CVE requests,
+> but I am not sure what to do here. If anyone could offer any advice,
+> I'd greatly appreciate it.
 
-iQEcBAEBCgAGBQJZ6QCcAAoJEPMhclmdjS6XqT4H/2Woj3PvN90ke1kkdEZ6IDbR
-SyxyE801ywPHzbI2o6HIl8vsmMYfA5xS0WMQ50vu4txXWkL8mJvYr0gUZJFoksKf
-38qx/on3QW1anM8Ug7glCqwFlR0F6c4HLnMmYn4zfZtUsPRPfiKHoojxczY1Jt4e
-HTAX51LIn2MNBb6ZUfOk5cYRzw/rQB0eI7t9uV9CYkWc3c5BIjNzGxN0aBglgYa6
-gTRvk5lseSVduL4DZ1eVWtsxBpWUjtAC7FdtkXcWCHkNtQZJ/og/i7mbM8jLEhfX
-nysF776U9660K6avdAxUE2gAS+UbcZTi+kcn6HrcJkKw03vRk5SvRj0c+SiXUJI=
-=+wb+
------END PGP SIGNATURE-----
+Yes, I suspect they're just busy.
 
---0FM4RQAc0jwHekq5--
+There isn't any one authoritative source for CVSS scores.  In fact,
+there are often different/conflicting CVSS scores (and their
+corresponding different CVSS vectors) coming from different sources.
+
+In this case, for CVE-2025-55188 the only score published by NVD is in
+fact coming from MITRE, and it is:
+
+3.6, CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:N/I:L/A:N
+
+As to CVE-2025-11001, it is "reserved by a CNA" and not yet published,
+so the higher score of 7.0 (which I've confirmed does match the vector)
+remains ZDI's suggestion.  You can also make your suggestion e.g. in
+this thread and in your blog - and it'd have similar (lack of) effect.
+
+I hope this helps.
+
+Alexander
