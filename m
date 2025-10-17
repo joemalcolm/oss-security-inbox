@@ -1,4 +1,4 @@
-Received: (qmail 24427 invoked by uid 550); 7 Apr 2022 09:39:28 -0000
+Received: (qmail 30477 invoked by uid 550); 17 Oct 2025 23:51:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13374 invoked from network); 7 Apr 2022 09:17:09 -0000
-X-F-Verdict: SPFVALID
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tsmtp0001.email;
-	s=titan1; t=1649323017;
-	bh=iFKWc8sWBiunag/BUj9IFHHrzeTesXnQ0lSUlU3YDKI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:From:To:Cc:Subject:Message-ID;
-	b=U5LPNUDuOWOiiKvoJcVvMYfbv3YxO6N63tUWnenvwns7/vazqIUp1gRWkSBBxhjU8
-	 IIslLHtFHnyX2v4acaQcNK9Y6bd43EjrarBTRYXiK0OaubwjTh+8tO9YVhoIOO5zfK
-	 A5tMJ74jRqJ7fVFNFU+D/skZozzEz4ZOpr2pzoAc=
-Message-ID: <4fd4c465-35a5-4ca5-f549-6392ecb10330@sysec.org>
-Date: Thu, 7 Apr 2022 17:16:26 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Content-Language: en-US
-To: Solar Designer <solar@openwall.com>, kangel <kangel@zju.edu.cn>
-Cc: oss-security@lists.openwall.com, pgn@zju.edu.cn,
- Pedro Sampaio <psampaio@redhat.com>, pbonzini@redhat.com
-References: <657e93b4.3cced.18001ce5999.Coremail.kangel@zju.edu.cn>
- <20220407083543.GA16833@openwall.com>
-Feedback-ID: :qiuhao@sysec.org:sysec.org:flockmailId
-From: Qiuhao Li <qiuhao@sysec.org>
-In-Reply-To: <20220407083543.GA16833@openwall.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CMAE-Score: 0
-X-CMAE-Analysis: v=2.4 cv=VdbkgXl9 c=1 sm=1 tr=0 ts=624eac09
-	a=9zuiwUaE+4GOE7xYIc90Uw==:117 a=9zuiwUaE+4GOE7xYIc90Uw==:17
-	a=IkcTkHD0fZMA:10 a=CEWIc4RMnpUA:10 a=XkRKQH6RAAAA:8
-	a=xKTUhbey2Rtow4XnkqoA:9 a=QEXdDO2ut3YA:10 a=1gUyE30hU_ULiMxJiLUW:22
-X-Virus-Scanned: ClamAV using ClamSMTP
-Subject: Re: [oss-security] Linux kernel: x86/kvm: null-ptr-deref in
- kvm_dirty_ring_push
+x-ms-reactions: disallow
+Received: (qmail 24472 invoked from network); 17 Oct 2025 23:50:25 -0000
+Date: Sat, 18 Oct 2025 01:50:23 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: Thorsten Alteholz <debian@alteholz.de>
+Message-ID: <20251017235023.GA23530@openwall.com>
+References: <20251017231636.GC2696@qaa.vinc17.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251017231636.GC2696@qaa.vinc17.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] rplay (Mark R. Boyns) potential security issues (unsanitized data, unchecked malloc...)
 
-On 4/7/22 16:35, Solar Designer wrote:
-> Further in the linux-distros thread, this got assigned CVE-2022-1263,
-> however is this really a security issue - in other words, is a security
-> boundary crossed in triggering the bug?  I think it is not, and if so
-> the CVE ID should probably be rejected.  From the PoC:
+On Sat, Oct 18, 2025 at 01:16:36AM +0200, Vincent Lefevre wrote:
+> Debian distributes Mark R. Boyns's rplay 3.3.2. I've had
+> a very quick look at the source and found at least:
 > 
->> 		res = syscall(__NR_openat, 0xffffffffffffff9cul, "/dev/kvm", 0ul, 0ul);
-
-We sent the report to oss-security as instructed by linux-distro.
-
-As Paolo said, /dev/kvm can be accessed by an unprivileged local user. 
-So it's a Dos. It also seems like there is a kernel NPD issue on oss 
-before: https://www.openwall.com/lists/oss-security/2022/04/02/5
-
+> * In rplay/rplay.c line 600, the use of atoi() on something that
+>   looks like unsanitized data from a remote server:
 > 
-> In fact, also in the linux-distros thread it was promptly agreed that
-> this doesn't need an embargo - perhaps precisely because of no security
-> relevance?  If so, that should have been said explicitly, so a CVE ID
-> wouldn't be assigned (it was by another person).
+>         remote_size = -1;
+>         p = rptp_parse(response, "size");
+>         if (p)
+>             remote_size = atoi(p);
+> 
+> * Various malloc() without a check of failure, such as:
 
-We are willing to cooperate with the final decision of the CVE issuer 
-and oss-security.
+These look like minor correctness and robustness issues.
 
-Personally, I agree with Paolo this is not a scary bug. No embargo makes 
-it be fixed quickly.
+In the code lines you quoted below, I am more worried about potential
+for attacker triggerable integer overflows in calculation of malloc()
+and realloc() sizes.  These have the potential of being vulnerabilities
+worse than DoS, so may be worth further investigation.
 
-Regards,
-   Qiuhao Li
+> contrib/xjukebox-0.9/xjukebox.c-    *list = (spool_info **)realloc(*list, (*items_count + 1) *
 
+> contrib/xjukebox-0.9/xjukebox.c-    *nlist = (String *)realloc(*nlist, (*items_count + 1) * sizeof(String));
+
+> rx/rxanal.c:            *subexps = (struct rexp_node **)malloc (sizeof (struct rexp_node *) * *re_nsub);
+> rx/rxanal.c-          else
+> rx/rxanal.c-            *subexps = (struct rexp_node **)realloc (*subexps,
+> rx/rxanal.c-                                                     sizeof (struct rexp_node *) * *re_nsub);
+
+> My bug report in the Debian BTS:
+> 
+>   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1118224
+> 
+> The upstream version was released in 1999, thus 26 years ago!
+> And the rplay homepage no longer exists.
+> 
+> Has anyone looked at this more closely?
+> Are there CVEs?
+
+I don't know.  I did a quick search now, and couldn't find any.
+
+Alexander
