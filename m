@@ -1,4 +1,4 @@
-Received: (qmail 11916 invoked by uid 550); 16 Dec 2025 14:07:31 -0000
+Received: (qmail 26470 invoked by uid 550); 17 Oct 2025 23:34:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,122 +8,101 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 11856 invoked from network); 16 Dec 2025 14:07:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ucc.asn.au;
-	s=ucc-2016-3; t=1765894035;
-	bh=WFycOvYGIS7dVkBh5rb+oMLUhibjQ9+ugOEJmu2PW9s=;
-	h=Date:From:To:Subject:From;
-	b=cFkoCOe22bk78NcZ6itz0w+VPBBpSuFpXEbH8Od98wRRg0kBc79GFv3IUD8nktm7Z
-	 R7N4Ne2haRkQXm5tjcXzymmzGWqZrhe55giChCsbFRt0LShbjGKnNyHDEEa9f7gxDz
-	 OdstBaaHhNDW3uy3Og+D2ISwxnPqJEoKl2Q+jokg=
-Authentication-Results: OpenDMARC; dmarc=pass (p=none dis=none) header.from=ucc.asn.au
-Authentication-Results: OpenDMARC; spf=pass smtp.mailfrom=ucc.asn.au
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ucc.asn.au;
-	s=ucc-2016-3; t=1765894034;
-	bh=WFycOvYGIS7dVkBh5rb+oMLUhibjQ9+ugOEJmu2PW9s=;
-	h=Date:From:To:Subject:From;
-	b=TMC6lqehRP0ROP0Prhwg5EZUScEmH3tIK72zrwlkzcAXPly0m4JjiXOsLnLdOVWFr
-	 AHdF2Jq00EVXeni0wKudcE2LyMaDdxPXdeuLctw8AUGz0vr0lCDsMRRNunTbKMP9Zf
-	 hQsZ2LJw/uVLHOAsm/8Oy/QJhO/DBrqrbA9TqaM4=
-Date: Tue, 16 Dec 2025 22:07:13 +0800
-From: Matt Johnston <matt@ucc.asn.au>
+Received: (qmail 17665 invoked from network); 17 Oct 2025 23:16:46 -0000
+Date: Sat, 18 Oct 2025 01:16:36 +0200
+From: Vincent Lefevre <vincent@vinc17.net>
 To: oss-security@lists.openwall.com
-Message-ID: <aUFnkZUz29e7mr8o@ucc.gu.uwa.edu.au>
+Message-ID: <20251017231636.GC2696@qaa.vinc17.org>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-snowman: =?utf-8?Q?=E2=98=83_9mIAoXdIBzBQMuAqQoG9pn?=
- =?utf-8?Q?iH2uaG3MzgxgwS2tOjlmPdHsFAPK3wc6jr?=
-Subject: [oss-security] Dropbear 2025.89 fixes privilege escalation, CVE-2025-14282
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.2.15+91 (ba36b184) vl-169878 (2025-10-03)
+Subject: [oss-security] rplay (Mark R. Boyns) potential security issues (unsanitized data,
+ unchecked malloc...)
 
-Forwarded from the dropbear list.
+Debian distributes Mark R. Boyns's rplay 3.3.2. I've had
+a very quick look at the source and found at least:
 
----
+* In rplay/rplay.c line 600, the use of atoi() on something that
+  looks like unsanitized data from a remote server:
 
-Dropbear 2025.89 is released. As well as various
-improvements, this includes a security fix for privilege
-escalation in Dropbear server. This affects versions 2024.84
-to 2025.88, allowing any authenticated user to run arbitrary
-programs as root (depending on other system programs).
+        remote_size = -1;
+        p = rptp_parse(response, "size");
+        if (p)
+            remote_size = atoi(p);
 
-A mitigation for affected versions is to disable unix socket
-forwarding, either with  "dropbear -j" runtime argument
-(will also disable TCP fowarding) or building with
-localoptions.h / distrooptions.h
-"#define DROPBEAR_SVR_LOCALSTREAMFWD 0".
+* Various malloc() without a check of failure, such as:
 
-The full fix of dropping privileges requires the commits in
-https://github.com/mkj/dropbear/pull/391
-https://github.com/mkj/dropbear/pull/394
+contrib/rplaytool-1.1/misc.c:    INFO *info = (INFO *) malloc (sizeof (INFO));
+contrib/rplaytool-1.1/misc.c-
+contrib/rplaytool-1.1/misc.c-    info->filename[0] = '\0';
 
-Unix socket forwarding is now disabled when forced command
-options are used, since it could bypass command restrictions.
-This isn't directly related to the privilege escalation, but
-could allow arbitrary commands to be run as the correct
-user.
+contrib/rplaytool-1.1/rplaytool_stubs.c:                sp = (SPOOL *) malloc (sizeof (SPOOL));
+contrib/rplaytool-1.1/rplaytool_stubs.c-                sp->id = id;
 
-https://matt.ucc.asn.au/dropbear/
-https://dropbear.nl/mirror/
+contrib/xjukebox-0.9/xjukebox.c-  if (*list != NULL)
+contrib/xjukebox-0.9/xjukebox.c-    *list = (spool_info **)realloc(*list, (*items_count + 1) *
+--
+contrib/xjukebox-0.9/xjukebox.c:      *list = (spool_info **)malloc(sizeof(spool_info *));
+contrib/xjukebox-0.9/xjukebox.c-    }
+contrib/xjukebox-0.9/xjukebox.c-  (*list)[*items_count] = new_item;
+contrib/xjukebox-0.9/xjukebox.c-  if ((*nlist != NULL)  && (*nlist != empty_list))
+contrib/xjukebox-0.9/xjukebox.c-    *nlist = (String *)realloc(*nlist, (*items_count + 1) * sizeof(String));
+contrib/xjukebox-0.9/xjukebox.c-  else
+contrib/xjukebox-0.9/xjukebox.c:    *nlist = (String *)malloc(sizeof(String));
+contrib/xjukebox-0.9/xjukebox.c-  (*nlist)[*items_count] = new_item->sound;
 
-Cheers,
-Matt
+contrib/xjukebox-0.9/xjukebox.c:  new_item = (spool_info *)malloc(sizeof(spool_info));
+contrib/xjukebox-0.9/xjukebox.c-
+contrib/xjukebox-0.9/xjukebox.c-  new_item->sid = atoi (1 + rptp_parse (new_info, "id"));
 
-2025.89 - 16 December 2025
+librplay/async.c:               new->data = malloc(nbytes);
+librplay/async.c-               memcpy(new->data, ptr, nbytes);
 
-- Security: Avoid privilege escalation via unix stream forwarding in Dropbear
-  server. Other programs on a system may authenticate unix sockets via
-  SO_PEERCRED, which would be root user for Dropbear forwarded connections,
-  allowing root privilege escalation.
-  Reported by Turistu, and thanks for advice on the fix.
-  This is tracked as CVE-2025-14282, and affects 2024.84 to 2025.88.
+librplay/async.c:       new = (ibuf *) malloc(sizeof(ibuf));
+librplay/async.c-       new->next = NULL;
 
-  It is fixed by dropping privileges of the dropbear process after
-  authentication. Unix stream sockets are now disallowed when a
-  forced command is used, either with authorized_key restrictions or
-  "dropbear -c command".
+librplay/rplay.c:           rp->data = (char *) malloc(rp->data_size);
+librplay/rplay.c-           memcpy(rp->data, packet, rp->data_size);
 
-  In previous affected releases running with "dropbear -j" (will also disable
-  TCP fowarding) or building with localoptions.h/distrooptions.h
-  "#define DROPBEAR_SVR_LOCALSTREAMFWD 0" is a mitigation.
+rplay/rplay.c:          name = (char *) malloc(strlen(cwd) + strlen(argv[optind]) + 2);
+rplay/rplay.c-          strcpy(name, cwd);
 
-- Security: Include scp fix for CVE-2019-6111. This allowed
-  a malicious server to overwrite arbitrary local files.
-  The missing fix was reported by Ashish Kunwar.
+rplayd/rplayd.c:            s = (SERVER *) malloc(sizeof(SERVER));
+rplayd/rplayd.c-            s->next = NULL;
 
-- Server dropping privileges post-auth is enabled by default. This requires
-  setresgid() support, so some platforms such as netbsd or macos will have to
-  disable DROPBEAR_SVR_DROP_PRIVS in localoptions.h. Unix stream forwarding is
-  not available if DROPBEAR_SVR_DROP_PRIVS is disabled.
+rx/rxanal.c:            *subexps = (struct rexp_node **)malloc (sizeof (struct rexp_node *) * *re_nsub);
+rx/rxanal.c-          else
+rx/rxanal.c-            *subexps = (struct rexp_node **)realloc (*subexps,
+rx/rxanal.c-                                                     sizeof (struct rexp_node *) * *re_nsub);
+rx/rxanal.c-        }
+rx/rxanal.c-    }
+rx/rxanal.c-      if (node->params.pair.left)
+rx/rxanal.c-    id = rx_posix_analyze_rexp (subexps, re_nsub, node->params.pair.left, id);
 
-  Remote server TCP socket forwarding will now use OS privileged port
-  restrictions rather than having a fixed "allow >=1024 for non-root" rule.
+rx/rxnfa.c:     consed = (struct rx_se_list *) malloc (sizeof (*consed));
+rx/rxnfa.c-     *consed = template;
 
-  A future release may implement privilege dropping for netbsd/macos.
+rx/rxnode.c:  n = (struct rexp_node *) malloc (sizeof (*n));
+rx/rxnode.c-  rx_bzero ((char *)n, sizeof (*n));
 
-- Fix a regression in 2025.87 when RSA and DSS are not built. This would lead
-  to a crash at startup with bad_bufptr().
-  Reported by Dani Schmitt and Sebastian Priebe.
+rx/rxunfa.c:      cr = (struct rx_cached_rexp *)malloc (sizeof (*cr));
+rx/rxunfa.c-      rx_bzero ((char *)cr, sizeof (*cr));
 
-- Don't limit channel window to 500MB. That is could cause stuck connections
-  if peers advise a large window and don't send an increment within 500MB.
-  Affects SSH.NET https://github.com/sshnet/SSH.NET/issues/1671
-  Reported by Rob Hague.
+My bug report in the Debian BTS:
 
-- Ignore -g -s when passwords arent enabled. Patch from Norbert Lange.
-  Ignore -m (disable MOTD), -j/-k (tcp forwarding) when not enabled.
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1118224
 
-- Report SIGBUS and SIGTRAP signals. Patch from Loïc Mangeonjean.
+The upstream version was released in 1999, thus 26 years ago!
+And the rplay homepage no longer exists.
 
-- Fix incorrect server auth delay. Was meant to be 250-350ms, it was actually
-  150-350ms or possibly negative (zero). Reported by pickaxprograms.
+Has anyone looked at this more closely?
+Are there CVEs?
 
-- Fix building without public key options. Thanks to Konstantin Demin
-
-- Fix building with proxycmd but without netcat. Thanks to Konstantin Demin
-
-- Fix incorrect path documentation for distrooptions, thanks to Todd Zullinger
-
-- Fix SO_REUSEADDR for TCP tests, reported by vt-alt.
-
-
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
