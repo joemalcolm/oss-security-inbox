@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["569" "Wednesday" "19" "December" "2018" "19:46:03" "+0100" "=?UTF-8?B?R8OpemFwZXRpIENzZWg=?=" "gezapeti@apache.org" "<CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>" "23" "[oss-security] [CVE-2018-11799] Apache Oozie security vulnerability" nil nil nil "12" "2018121918:46:03" "[oss-security] [CVE-2018-11799] Apache Oozie security vulnerability" (number mark "U       gezapeti@apa Dec 19   23/569   " thread-indent "\"[oss-security] [CVE-2018-11799] Apache Oozie security vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23909 invoked by uid 550); 19 Dec 2018 18:47:01 -0000
+Received: (qmail 26134 invoked by uid 550); 18 Oct 2025 00:26:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23598 invoked from network); 19 Dec 2018 18:46:44 -0000
-X-Gm-Message-State: AA+aEWbAwdd1fyrmi2OBugJ1KoG8V9pNBrQPNxsPx39MSlC1hzvLN6jG
-	rm2SlgOtzJvgiKAQCbxPdKnVYPHcypPoeColNDI=
-X-Google-Smtp-Source: AFSGD/VgUCwpAIEc25REzpO5xPCT3gPyYVNwl5wpJYokD44PDoEIcbs3famM4xYNzWYUe/a7YT2tuy8OztQerHjcnxc=
-X-Received: by 2002:ad4:41d0:: with SMTP id a16mr22685088qvq.55.1545245190484;
- Wed, 19 Dec 2018 10:46:30 -0800 (PST)
+x-ms-reactions: disallow
+Received: (qmail 5581 invoked from network); 17 Oct 2025 23:59:57 -0000
+Date: Sat, 18 Oct 2025 01:59:49 +0200
+From: Vincent Lefevre <vincent@vinc17.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20251017235949.GD2696@qaa.vinc17.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <20251017231636.GC2696@qaa.vinc17.org>
+ <20251017235023.GA23530@openwall.com>
 MIME-Version: 1.0
-From: =?UTF-8?Q?G=C3=A9zapeti_Cseh?= <gezapeti@apache.org>
-Date: Wed, 19 Dec 2018 19:46:03 +0100
-X-Gmail-Original-Message-ID: <CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>
-Message-ID: <CAHydKRCdXAepr6pjqqXUSWhSnnRrrYKnNSQVjsX6V2JTvM1xNA@mail.gmail.com>
-To: user@oozie.apache.org
-Cc: dev@oozie.apache.org, private@oozie.apache.org, 
-	oss-security@lists.openwall.com, satishsaley@apache.org
-Content-Type: multipart/alternative; boundary="000000000000ab77c3057d646ee8"
-Subject: [oss-security] [CVE-2018-11799] Apache Oozie security vulnerability
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251017235023.GA23530@openwall.com>
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.2.15+91 (ba36b184) vl-169878 (2025-10-03)
+Subject: Re: [oss-security] rplay (Mark R. Boyns) potential security issues
+ (unsanitized data, unchecked malloc...)
 
---000000000000ab77c3057d646ee8
-Content-Type: text/plain; charset="UTF-8"
+On 2025-10-18 01:50:23 +0200, Solar Designer wrote:
+> On Sat, Oct 18, 2025 at 01:16:36AM +0200, Vincent Lefevre wrote:
+> > Debian distributes Mark R. Boyns's rplay 3.3.2. I've had
+> > a very quick look at the source and found at least:
+> > 
+> > * In rplay/rplay.c line 600, the use of atoi() on something that
+> >   looks like unsanitized data from a remote server:
+> > 
+> >         remote_size = -1;
+> >         p = rptp_parse(response, "size");
+> >         if (p)
+> >             remote_size = atoi(p);
+> > 
+> > * Various malloc() without a check of failure, such as:
+> 
+> These look like minor correctness and robustness issues.
 
-CVE-2018-11799: Apache Oozie security vulnerability
+Some of them may be minor, but ones in librplay may be a major
+issue. For instance, in Debian, /usr/libexec/fvwm2/2.7.0/FvwmEvent
+is linked against this library:
 
-Severity:  8.7 (High) (CVSS:3.0/AV:N/AC:L/PR:L/UI:R/S:C/C:H/I:H/A:N)
+qaa:~> ldd /usr/libexec/fvwm2/2.7.0/FvwmEvent
+[...]
+        librplay.so.3 => /lib/librplay.so.3 (0x00007f25461f4000)
+[...]
 
-Vendor: The Apache Software Foundation
+meaning that this could make the window manager crash (unless it
+has some protection for modules).
 
-Versions Affected: Oozie versions earlier than 5.1.0
-
-Description: A malicious user can construct an XML that results workflows
-running in other user's name.
-
-Mitigation: Upgrade to Apache Oozie 5.1.0
-
-Credit: This issue was discovered by
-
-*Satish Subhashrao Saley at Oath / Yahoo!*
-
-Gezapeti Cseh
-
---000000000000ab77c3057d646ee8--
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
