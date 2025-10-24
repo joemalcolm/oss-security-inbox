@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2291" "Sunday" "16" "October" "2016" "12:41:15" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1491121.JZs8W73v97@arcadia>" "60" "Re: [oss-security] Fuzzing jasper" "^Date:" nil nil "10" "2016101610:41:15" "[oss-security] Fuzzing jasper" (number mark "        ago@gentoo.o Oct 16   60/2291  " thread-indent "\"Re: [oss-security] Fuzzing jasper\"\n") "<1528713.C8CqGc87r5@arcadia>" ("<1528713.C8CqGc87r5@arcadia>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16161 invoked by uid 550); 16 Oct 2016 10:40:59 -0000
+Received: (qmail 9763 invoked by uid 550); 24 Oct 2025 12:14:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,77 +6,265 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16141 invoked from network); 16 Oct 2016 10:40:58 -0000
-Message-ID: <1491121.JZs8W73v97@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
-In-Reply-To: <1528713.C8CqGc87r5@arcadia>
-References: <1528713.C8CqGc87r5@arcadia>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Date: Sun, 16 Oct 2016 12:41:15 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Fuzzing jasper
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 9736 invoked from network); 24 Oct 2025 12:14:28 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
+MIME-Version: 1.0
+X-Mailer: MIME-tools 5.510 (Entity 5.510)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1vCGgP-00EOqt-1K@xenbits.xenproject.org>
+Date: Fri, 24 Oct 2025 12:14:13 +0000
+Subject: [oss-security] Xen Security Advisory 476 v1 (CVE-2025-58149) - Incorrect removal
+ of permissions on PCI device unplug
 
-Hello all,
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-I would like to inform people that the jasper development is alive on github 
-since few days, I filed the bugs and some was fixed.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Below the link to my blogs for each issue which contains the commit fix and 
-or/the status.
+            Xen Security Advisory CVE-2025-58149 / XSA-476
 
+         Incorrect removal of permissions on PCI device unplug
 
-On Tuesday 23 August 2016 20:40:27 Agostino Sarubbo wrote:
-> Hello all,
-> 
-> I fuzzed jasper and it revealed some crashes,
-> we know that jasper has no more release(s) since a lot of time, so there are
-> some unfixed vulnerabilities.
-> Based on what I said, I don't know if any of the following crashes have been
-> reported in the past.
-> 
-> I know that Jasper clearly state about its capability on the BMP format, so
-> if you think that something is suitable for an identifier, please assign
-> one. Thanks.
-> 
-> NOTE: The command used in all cases was: imginfo $CRAFTED_IMAGE
+ISSUE DESCRIPTION
+=================
 
-> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5 in bmp_getdata
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c/
+When passing through PCI devices, the detach logic in libxl won't remove
+access permissions to any 64bit memory BARs the device might have.  As a
+result a domain can still have access any 64bit memory BAR when such
+device is no longer assigned to the domain.
 
-> SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5 in bmp_getdata
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-null-pointer-dereference-in-bmp_getdata-bmp_dec-c/
+For PV domains the permission leak allows the domain itself to map the memory
+in the page-tables.  For HVM it would require a compromised device model or
+stubdomain to map the leaked memory into the HVM domain p2m.
 
+IMPACT
+======
 
-> SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17 in
-> jpc_dec_process_siz
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-divide-by-zero-in-jpc_dec_process_siz-jpc_dec-c/
+A buggy or malicious PV guest can access memory of PCI devices no longer
+assigned to it.
 
+VULNERABLE SYSTEMS
+==================
 
-> SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
-> r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18 in
-> jpc_dec_process_siz
-https://blogs.gentoo.org/ago/2016/10/16/jasper-two-divide-by-zero-in-jpc_dec_process_siz-jpc_dec-c/
+Xen versions 4.0 and newer are vulnerable.
 
+Only PV guests with PCI passthrough devices can leverage the vulnerability.
 
-> SUMMARY: AddressSanitizer: double-free /var/tmp/temp/portage/sys-
-> devel/llvm-3.8.0-r2/work/llvm-3.8.0.src/projects/compiler-
-> rt/lib/asan/asan_malloc_linux.cc:38 in free
-https://blogs.gentoo.org/ago/2016/10/16/jasper-double-free-in-mem_close-jas_stream-c/
+Only domains whose PCI devices are managed by the libxl library are affected.
+This includes the xl toolstack and xapi, which uses the xl toolstack when
+dealing with PCI devices.
 
+HVM guests are also affected, but accessing the leaked memory requires an
+additional compromised component on the system.
 
-SUMMARY:
-The two SEGV are patched and they aren't in any release
-The two FPE are patches and they are in 1.900.4
-The double-free is unfixed.
+MITIGATION
+==========
 
+Not doing hot unplug of PCI devices will avoid the vulnerability.
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Passing through PCI devices to HVM domains only will also limit the impact, as
+an attacker would require another compromised component to exploit it.
+
+CREDITS
+=======
+
+This issue was discovered by Jiqian Chen of AMD and diagnosed as a
+security issue by Roger Pau Monné of XenServer.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa476.patch           xen-unstable
+xsa476-4.20.patch      Xen 4.20.x - Xen 4.18.x
+xsa476-4.17.patch      Xen 4.17.x
+
+$ sha256sum xsa476*
+ee4c2fa73d38c5c699006b6317ba53f20343af0593ff9a8c38e7e59b69a0beca  xsa476.patch
+3b921545f023dc7d9d943d0d661e677711458a917630de14f0871b03db0f2148  xsa476-4.17.patch
+5babfaa3680de9950d3391a78e4956b5c18d54eaac9938c6cde2433a2ad3f27d  xsa476-4.20.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was discussed in public already.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmj7bXYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZEIEH/ApNvYmMcqqEyOMgGV/VVmEMcXsAy1Ps3rMdDe9U
+YLsa7ugJLQ/kMI70y0qzws8Uc/kVftl6Z3NbvhpnBMdpurEbZnVuuPtV5I08BF7G
+23Qij+NNXSFdUzZVtgqz+POuhpVmrZgEwmg2HXsL1h2KgirUgwh5Nbs4ZuAlbz/f
+05tiljIdv4ntqz8sczUxUmtw3XuzcTu0GS8EtPSoAEC5paK72X+5i496qDKpgtqv
+gdnxqDL2s5ue3G029e9JA3pscVQTMYa3InNiHK28GAM2BW10op1JaxVl/JLN1zzL
+igpd+u6Fs73qNzcClXQ48YEBkCoTTIdhIrl0mSp4zTfN9dk=
+=MBxa
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa476.patch"
+Content-Disposition: attachment; filename="xsa476.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmlxaWFuIENoZW4gPEppcWlhbi5DaGVuQGFtZC5jb20+ClN1YmplY3Q6IHRvb2xzL2xp
+YnMvbGlnaHQ6IGZpeCBCQVIgbWVtb3J5IGFkZHJlc3MgdHJ1bmNhdGlvbgoKNjQtYml0IEJBUiBt
+ZW1vcnkgYWRkcmVzcyBpcyB0cnVuY2F0ZWQgd2hlbiByZW1vdmluZyBhIHBhc3N0aHJvdWdoCnBj
+aSBkZXZpY2UgZnJvbSBndWVzdCBzaW5jZSBpdCB1c2VzICJ1bnNpZ25lZCBpbnQiLgoKU28sIGNo
+YW5nZSB0byB1c2UgNjQtYml0IHR5cGUgdG8gZml4IHRoaXMgcHJvYmxlbS4KClRoaXMgaXMgWFNB
+LTQ3NiAvIENWRS0yMDI1LTU4MTQ5LgoKRml4ZXM6IGIwYTFhZjYxNjc4YiAoImxpYnhlbmxpZ2h0
+OiBpbXBsZW1lbnQgcGNpIHBhc3N0aHJvdWdoIikKU2lnbmVkLW9mZi1ieTogSmlxaWFuIENoZW4g
+PEppcWlhbi5DaGVuQGFtZC5jb20+ClJlbGVhc2UtQWNrZWQtYnk6IE9sZWtzaWkgS3Vyb2Noa28g
+PG9sZWtzaWkua3Vyb2Noa29AZ21haWwuY29tPgpSZXZpZXdlZC1ieTogSnVlcmdlbiBHcm9zcyA8
+amdyb3NzQHN1c2UuY29tPgpBY2tlZC1ieTogQW50aG9ueSBQRVJBUkQgPGFudGhvbnkucGVyYXJk
+QHZhdGVzLnRlY2g+CgpkaWZmIC0tZ2l0IGEvdG9vbHMvbGlicy9saWdodC9saWJ4bF9wY2kuYyBi
+L3Rvb2xzL2xpYnMvbGlnaHQvbGlieGxfcGNpLmMKaW5kZXggMmVhMmNhZWI2NjI0Li40OWQyNzJk
+MGRlNjUgMTAwNjQ0Ci0tLSBhL3Rvb2xzL2xpYnMvbGlnaHQvbGlieGxfcGNpLmMKKysrIGIvdG9v
+bHMvbGlicy9saWdodC9saWJ4bF9wY2kuYwpAQCAtMjAwMSw3ICsyMDAxLDggQEAgc3RhdGljIHZv
+aWQgcGNpX3JlbW92ZV9kZXRhY2hlZChsaWJ4bF9fZWdjICplZ2MsCiB7CiAgICAgU1RBVEVfQU9f
+R0MocHJzLT5hb2Rldi0+YW8pOwogICAgIGxpYnhsX2N0eCAqY3R4ID0gbGlieGxfX2djX293bmVy
+KGdjKTsKLSAgICB1bnNpZ25lZCBpbnQgc3RhcnQgPSAwLCBlbmQgPSAwLCBmbGFncyA9IDAsIHNp
+emUgPSAwLCBpcnEgPSAwOworICAgIHVpbnQ2NF90IHN0YXJ0ID0gMCwgZW5kID0gMCwgZmxhZ3Mg
+PSAwLCBzaXplID0gMDsKKyAgICB1bnNpZ25lZCBpbnQgaXJxID0gMDsKICAgICBpbnQgaSwgc3R1
+YmRvbWlkID0gMDsKICAgICBjb25zdCBjaGFyICpzeXNmc19wYXRoOwogICAgIEZJTEUgKmY7CkBA
+IC0yMDMxLDcgKzIwMzIsOCBAQCBzdGF0aWMgdm9pZCBwY2lfcmVtb3ZlX2RldGFjaGVkKGxpYnhs
+X19lZ2MgKmVnYywKICAgICB9CiAKICAgICBmb3IgKGkgPSAwOyBpIDwgUFJPQ19QQ0lfTlVNX1JF
+U09VUkNFUzsgaSsrKSB7Ci0gICAgICAgIGlmIChmc2NhbmYoZiwgIjB4JXggMHgleCAweCV4XG4i
+LCAmc3RhcnQsICZlbmQsICZmbGFncykgIT0gMykKKyAgICAgICAgaWYgKGZzY2FuZihmLCAiMHgl
+IlNDTng2NCIgMHglIlNDTng2NCIgMHglIlNDTng2NCJcbiIsCisgICAgICAgICAgICAgICAgICAg
+JnN0YXJ0LCAmZW5kLCAmZmxhZ3MpICE9IDMpCiAgICAgICAgICAgICBjb250aW51ZTsKICAgICAg
+ICAgc2l6ZSA9IGVuZCAtIHN0YXJ0ICsgMTsKICAgICAgICAgaWYgKHN0YXJ0KSB7CkBAIC0yMDQw
+LDcgKzIwNDIsNyBAQCBzdGF0aWMgdm9pZCBwY2lfcmVtb3ZlX2RldGFjaGVkKGxpYnhsX19lZ2Mg
+KmVnYywKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBz
+aXplLCAwKTsKICAgICAgICAgICAgICAgICBpZiAocmMgPCAwKQogICAgICAgICAgICAgICAgICAg
+ICBMT0dFRChFUlJPUiwgZG9taWQsCi0gICAgICAgICAgICAgICAgICAgICAgICAgICJ4Y19kb21h
+aW5faW9wb3J0X3Blcm1pc3Npb24gZXJyb3IgMHgleC8weCV4IiwKKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgInhjX2RvbWFpbl9pb3BvcnRfcGVybWlzc2lvbiBlcnJvciAlIyJQUkl4NjQiLyUj
+IlBSSXg2NCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhcnQsCiAgICAgICAgICAgICAg
+ICAgICAgICAgICAgIHNpemUpOwogICAgICAgICAgICAgfSBlbHNlIHsKQEAgLTIwNTAsNyArMjA1
+Miw3IEBAIHN0YXRpYyB2b2lkIHBjaV9yZW1vdmVfZGV0YWNoZWQobGlieGxfX2VnYyAqZWdjLAog
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMCk7CiAgICAg
+ICAgICAgICAgICAgaWYgKHJjIDwgMCkKICAgICAgICAgICAgICAgICAgICAgTE9HRUQoRVJST1Is
+IGRvbWlkLAotICAgICAgICAgICAgICAgICAgICAgICAgICAieGNfZG9tYWluX2lvbWVtX3Blcm1p
+c3Npb24gZXJyb3IgMHgleC8weCV4IiwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgInhjX2Rv
+bWFpbl9pb21lbV9wZXJtaXNzaW9uIGVycm9yICUjIlBSSXg2NCIvJSMiUFJJeDY0LAogICAgICAg
+ICAgICAgICAgICAgICAgICAgICBzdGFydCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6
+ZSk7CiAgICAgICAgICAgICB9Cg==
+
+--=separator
+Content-Type: application/octet-stream; name="xsa476-4.17.patch"
+Content-Disposition: attachment; filename="xsa476-4.17.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmlxaWFuIENoZW4gPEppcWlhbi5DaGVuQGFtZC5jb20+ClN1YmplY3Q6IHRvb2xzL2xp
+YnMvbGlnaHQ6IGZpeCBCQVIgbWVtb3J5IGFkZHJlc3MgdHJ1bmNhdGlvbgoKNjQtYml0IEJBUiBt
+ZW1vcnkgYWRkcmVzcyBpcyB0cnVuY2F0ZWQgd2hlbiByZW1vdmluZyBhIHBhc3N0aHJvdWdoCnBj
+aSBkZXZpY2UgZnJvbSBndWVzdCBzaW5jZSBpdCB1c2VzICJ1bnNpZ25lZCBpbnQiLgoKU28sIGNo
+YW5nZSB0byB1c2UgNjQtYml0IHR5cGUgdG8gZml4IHRoaXMgcHJvYmxlbS4KClRoaXMgaXMgWFNB
+LTQ3NiAvIENWRS0yMDI1LTU4MTQ5LgoKRml4ZXM6IGIwYTFhZjYxNjc4YiAoImxpYnhlbmxpZ2h0
+OiBpbXBsZW1lbnQgcGNpIHBhc3N0aHJvdWdoIikKU2lnbmVkLW9mZi1ieTogSmlxaWFuIENoZW4g
+PEppcWlhbi5DaGVuQGFtZC5jb20+ClJlbGVhc2UtQWNrZWQtYnk6IE9sZWtzaWkgS3Vyb2Noa28g
+PG9sZWtzaWkua3Vyb2Noa29AZ21haWwuY29tPgpSZXZpZXdlZC1ieTogSnVlcmdlbiBHcm9zcyA8
+amdyb3NzQHN1c2UuY29tPgpBY2tlZC1ieTogQW50aG9ueSBQRVJBUkQgPGFudGhvbnkucGVyYXJk
+QHZhdGVzLnRlY2g+CgpkaWZmIC0tZ2l0IGEvdG9vbHMvbGlicy9saWdodC9saWJ4bF9wY2kuYyBi
+L3Rvb2xzL2xpYnMvbGlnaHQvbGlieGxfcGNpLmMKaW5kZXggZjRjNGYxNzU0NTRkLi4zN2UyZTI2
+MjQ3N2UgMTAwNjQ0Ci0tLSBhL3Rvb2xzL2xpYnMvbGlnaHQvbGlieGxfcGNpLmMKKysrIGIvdG9v
+bHMvbGlicy9saWdodC9saWJ4bF9wY2kuYwpAQCAtMTk5NSw3ICsxOTk1LDcgQEAgc3RhdGljIHZv
+aWQgZG9fcGNpX3JlbW92ZShsaWJ4bF9fZWdjICplZ2MsIHBjaV9yZW1vdmVfc3RhdGUgKnBycykK
+ICAgICAgICAgY2hhciAqc3lzZnNfcGF0aCA9IEdDU1BSSU5URihTWVNGU19QQ0lfREVWIi8iUENJ
+X0JERiIvcmVzb3VyY2UiLCBwY2ktPmRvbWFpbiwKICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBwY2ktPmJ1cywgcGNpLT5kZXYsIHBjaS0+ZnVuYyk7CiAgICAgICAgIEZJTEUg
+KmYgPSBmb3BlbihzeXNmc19wYXRoLCAiciIpOwotICAgICAgICB1bnNpZ25lZCBpbnQgc3RhcnQg
+PSAwLCBlbmQgPSAwLCBmbGFncyA9IDAsIHNpemUgPSAwOworICAgICAgICB1aW50NjRfdCBzdGFy
+dCA9IDAsIGVuZCA9IDAsIGZsYWdzID0gMCwgc2l6ZSA9IDA7CiAgICAgICAgIGludCBpcnEgPSAw
+OwogICAgICAgICBpbnQgaTsKIApAQCAtMjAwNCw3ICsyMDA0LDggQEAgc3RhdGljIHZvaWQgZG9f
+cGNpX3JlbW92ZShsaWJ4bF9fZWdjICplZ2MsIHBjaV9yZW1vdmVfc3RhdGUgKnBycykKICAgICAg
+ICAgICAgIGdvdG8gc2tpcDE7CiAgICAgICAgIH0KICAgICAgICAgZm9yIChpID0gMDsgaSA8IFBS
+T0NfUENJX05VTV9SRVNPVVJDRVM7IGkrKykgewotICAgICAgICAgICAgaWYgKGZzY2FuZihmLCAi
+MHgleCAweCV4IDB4JXhcbiIsICZzdGFydCwgJmVuZCwgJmZsYWdzKSAhPSAzKQorICAgICAgICAg
+ICAgaWYgKGZzY2FuZihmLCAiMHglIlNDTng2NCIgMHglIlNDTng2NCIgMHglIlNDTng2NCJcbiIs
+CisgICAgICAgICAgICAgICAgICAgICAgICZzdGFydCwgJmVuZCwgJmZsYWdzKSAhPSAzKQogICAg
+ICAgICAgICAgICAgIGNvbnRpbnVlOwogICAgICAgICAgICAgc2l6ZSA9IGVuZCAtIHN0YXJ0ICsg
+MTsKICAgICAgICAgICAgIGlmIChzdGFydCkgewpAQCAtMjAxMiw3ICsyMDEzLDcgQEAgc3RhdGlj
+IHZvaWQgZG9fcGNpX3JlbW92ZShsaWJ4bF9fZWdjICplZ2MsIHBjaV9yZW1vdmVfc3RhdGUgKnBy
+cykKICAgICAgICAgICAgICAgICAgICAgcmMgPSB4Y19kb21haW5faW9wb3J0X3Blcm1pc3Npb24o
+Y3R4LT54Y2gsIGRvbWlkLCBzdGFydCwgc2l6ZSwgMCk7CiAgICAgICAgICAgICAgICAgICAgIGlm
+IChyYyA8IDApCiAgICAgICAgICAgICAgICAgICAgICAgICBMT0dFRChFUlJPUiwgZG9tYWluaWQs
+Ci0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAieGNfZG9tYWluX2lvcG9ydF9wZXJtaXNz
+aW9uIGVycm9yIDB4JXgvMHgleCIsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAieGNf
+ZG9tYWluX2lvcG9ydF9wZXJtaXNzaW9uIGVycm9yICUjIlBSSXg2NCIvJSMiUFJJeDY0LAogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhcnQsCiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBzaXplKTsKICAgICAgICAgICAgICAgICB9IGVsc2UgewpAQCAtMjAyMCw3ICsyMDIx
+LDcgQEAgc3RhdGljIHZvaWQgZG9fcGNpX3JlbW92ZShsaWJ4bF9fZWdjICplZ2MsIHBjaV9yZW1v
+dmVfc3RhdGUgKnBycykKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAoc2l6ZSsoWENfUEFHRV9TSVpFLTEpKT4+WENfUEFHRV9TSElGVCwgMCk7CiAg
+ICAgICAgICAgICAgICAgICAgIGlmIChyYyA8IDApCiAgICAgICAgICAgICAgICAgICAgICAgICBM
+T0dFRChFUlJPUiwgZG9tYWluaWQsCi0gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAieGNf
+ZG9tYWluX2lvbWVtX3Blcm1pc3Npb24gZXJyb3IgMHgleC8weCV4IiwKKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICJ4Y19kb21haW5faW9tZW1fcGVybWlzc2lvbiBlcnJvciAlIyJQUkl4
+NjQiLyUjIlBSSXg2NCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0LAogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZSk7CiAgICAgICAgICAgICAgICAgfQo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa476-4.20.patch"
+Content-Disposition: attachment; filename="xsa476-4.20.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmlxaWFuIENoZW4gPEppcWlhbi5DaGVuQGFtZC5jb20+ClN1YmplY3Q6IHRvb2xzL2xp
+YnMvbGlnaHQ6IGZpeCBCQVIgbWVtb3J5IGFkZHJlc3MgdHJ1bmNhdGlvbgoKNjQtYml0IEJBUiBt
+ZW1vcnkgYWRkcmVzcyBpcyB0cnVuY2F0ZWQgd2hlbiByZW1vdmluZyBhIHBhc3N0aHJvdWdoCnBj
+aSBkZXZpY2UgZnJvbSBndWVzdCBzaW5jZSBpdCB1c2VzICJ1bnNpZ25lZCBpbnQiLgoKU28sIGNo
+YW5nZSB0byB1c2UgNjQtYml0IHR5cGUgdG8gZml4IHRoaXMgcHJvYmxlbS4KClRoaXMgaXMgWFNB
+LTQ3NiAvIENWRS0yMDI1LTU4MTQ5LgoKRml4ZXM6IGIwYTFhZjYxNjc4YiAoImxpYnhlbmxpZ2h0
+OiBpbXBsZW1lbnQgcGNpIHBhc3N0aHJvdWdoIikKU2lnbmVkLW9mZi1ieTogSmlxaWFuIENoZW4g
+PEppcWlhbi5DaGVuQGFtZC5jb20+ClJlbGVhc2UtQWNrZWQtYnk6IE9sZWtzaWkgS3Vyb2Noa28g
+PG9sZWtzaWkua3Vyb2Noa29AZ21haWwuY29tPgpSZXZpZXdlZC1ieTogSnVlcmdlbiBHcm9zcyA8
+amdyb3NzQHN1c2UuY29tPgpBY2tlZC1ieTogQW50aG9ueSBQRVJBUkQgPGFudGhvbnkucGVyYXJk
+QHZhdGVzLnRlY2g+CgpkaWZmIC0tZ2l0IGEvdG9vbHMvbGlicy9saWdodC9saWJ4bF9wY2kuYyBi
+L3Rvb2xzL2xpYnMvbGlnaHQvbGlieGxfcGNpLmMKaW5kZXggMTY0N2ZkNmY0NzU2Li43YWY2MDIy
+MjRhYmEgMTAwNjQ0Ci0tLSBhL3Rvb2xzL2xpYnMvbGlnaHQvbGlieGxfcGNpLmMKKysrIGIvdG9v
+bHMvbGlicy9saWdodC9saWJ4bF9wY2kuYwpAQCAtMjE3OSw3ICsyMTc5LDcgQEAgc3RhdGljIHZv
+aWQgcGNpX3JlbW92ZV9kZXRhY2hlZChsaWJ4bF9fZWdjICplZ2MsCiB7CiAgICAgU1RBVEVfQU9f
+R0MocHJzLT5hb2Rldi0+YW8pOwogICAgIGxpYnhsX2N0eCAqY3R4ID0gbGlieGxfX2djX293bmVy
+KGdjKTsKLSAgICB1bnNpZ25lZCBpbnQgc3RhcnQgPSAwLCBlbmQgPSAwLCBmbGFncyA9IDAsIHNp
+emUgPSAwOworICAgIHVpbnQ2NF90IHN0YXJ0ID0gMCwgZW5kID0gMCwgZmxhZ3MgPSAwLCBzaXpl
+ID0gMDsKICAgICBpbnQgIGlycSA9IDAsIGksIHN0dWJkb21pZCA9IDA7CiAgICAgY29uc3QgY2hh
+ciAqc3lzZnNfcGF0aDsKICAgICBGSUxFICpmOwpAQCAtMjIwOSw3ICsyMjA5LDggQEAgc3RhdGlj
+IHZvaWQgcGNpX3JlbW92ZV9kZXRhY2hlZChsaWJ4bF9fZWdjICplZ2MsCiAgICAgfQogCiAgICAg
+Zm9yIChpID0gMDsgaSA8IFBST0NfUENJX05VTV9SRVNPVVJDRVM7IGkrKykgewotICAgICAgICBp
+ZiAoZnNjYW5mKGYsICIweCV4IDB4JXggMHgleFxuIiwgJnN0YXJ0LCAmZW5kLCAmZmxhZ3MpICE9
+IDMpCisgICAgICAgIGlmIChmc2NhbmYoZiwgIjB4JSJTQ054NjQiIDB4JSJTQ054NjQiIDB4JSJT
+Q054NjQiXG4iLAorICAgICAgICAgICAgICAgICAgICZzdGFydCwgJmVuZCwgJmZsYWdzKSAhPSAz
+KQogICAgICAgICAgICAgY29udGludWU7CiAgICAgICAgIHNpemUgPSBlbmQgLSBzdGFydCArIDE7
+CiAgICAgICAgIGlmIChzdGFydCkgewpAQCAtMjIxOCw3ICsyMjE5LDcgQEAgc3RhdGljIHZvaWQg
+cGNpX3JlbW92ZV9kZXRhY2hlZChsaWJ4bF9fZWdjICplZ2MsCiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2l6ZSwgMCk7CiAgICAgICAgICAgICAgICAg
+aWYgKHJjIDwgMCkKICAgICAgICAgICAgICAgICAgICAgTE9HRUQoRVJST1IsIGRvbWlkLAotICAg
+ICAgICAgICAgICAgICAgICAgICAgICAieGNfZG9tYWluX2lvcG9ydF9wZXJtaXNzaW9uIGVycm9y
+IDB4JXgvMHgleCIsCisgICAgICAgICAgICAgICAgICAgICAgICAgICJ4Y19kb21haW5faW9wb3J0
+X3Blcm1pc3Npb24gZXJyb3IgJSMiUFJJeDY0Ii8lIyJQUkl4NjQsCiAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHN0YXJ0LAogICAgICAgICAgICAgICAgICAgICAgICAgICBzaXplKTsKICAgICAg
+ICAgICAgIH0gZWxzZSB7CkBAIC0yMjI4LDcgKzIyMjksNyBAQCBzdGF0aWMgdm9pZCBwY2lfcmVt
+b3ZlX2RldGFjaGVkKGxpYnhsX19lZ2MgKmVnYywKICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgIDApOwogICAgICAgICAgICAgICAgIGlmIChyYyA8IDApCiAg
+ICAgICAgICAgICAgICAgICAgIExPR0VEKEVSUk9SLCBkb21pZCwKLSAgICAgICAgICAgICAgICAg
+ICAgICAgICAgInhjX2RvbWFpbl9pb21lbV9wZXJtaXNzaW9uIGVycm9yIDB4JXgvMHgleCIsCisg
+ICAgICAgICAgICAgICAgICAgICAgICAgICJ4Y19kb21haW5faW9tZW1fcGVybWlzc2lvbiBlcnJv
+ciAlIyJQUkl4NjQiLyUjIlBSSXg2NCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhcnQs
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgIHNpemUpOwogICAgICAgICAgICAgfQo=
+
+--=separator--
