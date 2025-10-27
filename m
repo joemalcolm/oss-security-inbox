@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1656" "Sunday" "18" "September" "2016" "13:06:54" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160918170654.46FF36C5824@smtpvmsrv1.mitre.org>" "39" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities" nil nil nil "9" "2016091817:06:54" "[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities" (number mark "U       cve-assign@m Sep 18   39/1656  " thread-indent "\"[oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities\"\n") "<CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>" ("<CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20305 invoked by uid 550); 18 Sep 2016 17:07:06 -0000
+Received: (qmail 10153 invoked by uid 550); 27 Oct 2025 20:17:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20287 invoked from network); 18 Sep 2016 17:07:06 -0000
-From: cve-assign@mitre.org
-To: felixk3y@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAEiFw0VXVgWtKP3cT6SzKgrWSrs5N_3f2HXFoWhx=fi2Qm24vg@mail.gmail.com>
-Message-Id: <20160918170654.46FF36C5824@smtpvmsrv1.mitre.org>
-Date: Sun, 18 Sep 2016 13:06:54 -0400 (EDT)
-Subject: [oss-security] Re: CVE request : Exponent CMS 2.3.9 SQL injection vulnerabilities
+x-ms-reactions: disallow
+Received: (qmail 1803 invoked from network); 27 Oct 2025 20:13:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761596009; x=1762200809; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IQi6scyR9J7eHADDwFSRR7fGNRCJZExKuy6rpkow70w=;
+        b=kA0eQOtB52FOob/TizfLj1ErJm7mvfdzigcQ2eMkmgEmkyIgFNdTdQ3uN0vj6xctGq
+         ruAqY9jxN4y747lvQZO0jSfyC4vxNdQfb4+8E3xbOoe9P7HBqnOmQEIudrYGocIE+ETv
+         34+3IsVFty0ZpIoSy3kq7EPgQIpXy03mEy/EMoqan4FiTJDhfg/R+y6c3enxkJ8Xh6Va
+         0UIN9pGyBriiFgmJ9e1/VYUjoPZ+4rSzhftn5dSS9p1rSG5DVe/Wa1BlcSB+1kFg9Qv1
+         KvlW1bptt6eV2XNVN4iOLFPWDWpWWZElSH92khoV7VioPSFgyOvUYcdNy2ZPe3S8jTZd
+         +FbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761596009; x=1762200809;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IQi6scyR9J7eHADDwFSRR7fGNRCJZExKuy6rpkow70w=;
+        b=UhH+bvvl+MzFH9RDKxLaLqqA4D2ZvDLTJztA9ohNQnPRXaj1jCMBmhJjGhYKuz1L3G
+         LGBcm2U/hjIT6nBIujcM9iXf2h/Rh+Jbyr5D29sjOoQ/aPmGHmlovGHRaaFWb/Uwz0Ct
+         LkRQJiY2oyGuhzqRlQpbCtjJ5ttz8/uA7Ov4l4lBI2d/H5/xZvRLnP2i5+TmObrmcGUC
+         xyckG9Vw/uD9tkhAG3VjlX89HfuwmhbwfTb4wMlQJHLPG15dwU6SsxP9Wr2k4PszfZrs
+         QvRQTMyPesgyG/HpYSZI5unRCl++QIptUDkNp5BKcIxD83QpTRDCtIIGrgc5hGm9Xp6n
+         80eA==
+X-Gm-Message-State: AOJu0Yzqa7B3A6psEsRuFqCtvcSk4rl5QLZBoNpLj/gp58MMzBtRTZmC
+	qiwDh+FGCZoE3Ylde0Eg1gxj1NbuDpu54kByvrU/jbsPC56+MNCIKcQjrgAu0RuOQBMJ2JU4LjJ
+	26vetocqV6Zt3T0mSQZaSKPQJz+S8wN6g5sUO
+X-Gm-Gg: ASbGncuDCInXwKxhlFZqGWvPRGe6J4VccSzlXnEIxZ/0zc3FQvqloyj1QGbZP13f+iS
+	k96fKRvSn8JS7mBnnIHMtccHlyp8UzydUh72EKdmEpk5IsJO3fU2tvPA13WkGQWZEQYU9TfPRu7
+	huaXSFs98eAcC+s76d4mv9lGtiddSeyCLfBZoi2tHv2x/YDdKXfxHqsXSjkfNPi0Bskzzr6Tv49
+	WGU+ipEE5QCb16OrUWSpXLENhaf0fPYWtDlT7S0MWTdLC2Vo9IYf342XSQ=
+X-Google-Smtp-Source: AGHT+IEvXt+zuvwB5E8gaFoVsqJu2lqOt9E/HIugxpQLQHJHwRz5DW5w+kFmKRIZq/8kY0H27LDVIbAquakF4vVZzvU=
+X-Received: by 2002:a2e:a909:0:b0:36e:6d54:b56d with SMTP id
+ 38308e7fff4ca-379076d81eamr2983631fa.12.1761596009316; Mon, 27 Oct 2025
+ 13:13:29 -0700 (PDT)
+MIME-Version: 1.0
+References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com> <aP-rxft9ra58z9EZ@yuggoth.org>
+In-Reply-To: <aP-rxft9ra58z9EZ@yuggoth.org>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Mon, 27 Oct 2025 16:12:52 -0400
+X-Gm-Features: AWmQ_bkHzXrM3oJSDoh1LGhQIpN9KL6DFPAbU4WdOA4jo2exev6zoYt6RBzqELw
+Message-ID: <CAH8yC8nB-K8iCKXbAMCqj2RL=Qu-RDfYH5+zCUZ_qcsPzrCBKA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, Oct 27, 2025 at 1:30=E2=80=AFPM Jeremy Stanley <fungi@yuggoth.org> =
+wrote:
+>
+> On 2025-10-27 09:34:03 -0700 (-0700), Alan Coopersmith wrote:
+> [...]
+> >> The vendor was contacted early about this disclosure but did not
+> >> respond in any way.
+> [...]
+>
+> With the flood of dubious reports being submitted by anyone who can
+> thumb some words into an LLM prompt and not bother to check the
+> results for hallucinated nonsense, I've taken to ignoring or
+> summarily closing such submissions to projects I work on as not
+> worth my time to respond. This is probably yet another sign that the
+> CVE system needs an overhaul or it's going to get ignored when it
+> becomes as overwhelmed with "AI noise" as everything else (not
+> saying these reports were necessarily machine-generated, but it's
+> reaching the point where open source projects with limited resources
+> have no choice but to silently bin such nonsense to /dev/null).
 
-> 1)
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/addressbook/controllers/addressController.php#L166-L175
-> 
-> 2)
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/blog/controllers/blogController.php#L192-L195
-> 
-> 3)
-> https://github.com/exponentcms/exponent-cms/blob/master/framework/modules/core/controllers/expCommentController.php#L129-L134
-> 
-> https://github.com/exponentcms/exponent-cms/commit/e916702a91a6342bbab483a2be2ba2f11dca3aa3
+cURL is fed up with the LLM nonsense, too.  cURL requires the source
+of a vulnerability report be stated because the project was being
+overrun with false positives and low quality bug reports from AI
+generated slop.  See "AI guidelines" (May 2025),
+<https://curl.se/mail/lib-2025-05/0013.html> and
+<https://github.com/curl/curl/pull/17325>.
 
-Use CVE-2016-7400 for all of the SQL injection issues fixed in
-e916702a91a6342bbab483a2be2ba2f11dca3aa3.
+And the IETF is also concerned about submissions curated from LLMs.
+See "BCP 78 policy / copyright / Generative AI / LLM .. is there a
+FAQ?" (August 2025),
+<https://mailarchive.ietf.org/arch/msg/ietf/ZAwDLUWAQ-iU2u6vVpw5IeW7g-E/>.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX3shoAAoJEHb/MwWLVhi2SKgP/0ROz868/9VNunPODC3o0SNo
-DH/VdQ0h1DRDwWBA4R1Lc16Qlsee4m8gInD+8e0LtKWc07OMzg+VqHICTdW3COUd
-Cd+nXTMRmr9T/TIsvfN/tEch23o36/z4d1kA9QDgODELvNW3EsQXwDePMlWbRi80
-7u2Y6uf7gshQmq95fSlsbawkj+0813X5XvCxX22wXZWGCQhlAP9ejxv1Q+Z4qbyu
-JEY5DXYubfEjXsv1AIKyoiAGSGesO3MeXoGXYnPFd8V18NJNZiz4xHe0hurYVhuH
-LNBnsZKO7whSciiUgcXKopbzkKloMEVEdHlu+HZ63eALvMWcKxQrxGlcKTVBWcOs
-CKUlsTjnD7liEZk46HIiVVSUFLnxCR/Q3koR0tgfBRNJQ9zpoMxNwxFKEi0366/Y
-MHDYKuYUvefMTDQJhtVYYNANCC+LQxdeBwfQsVFZnp/2JbCGDs5OSlUwl7WFTVh2
-nI7kF8lqUpDIni5VhYAniEUedGToFMgusDQaWCLWV34Tyhm5XfGn7bMZVr3HLPn9
-wTsfRJnItjgerHSpnezcSc+i4dALBINpjxYyqJCbRMmIx/pwlI77W/fShgXq6VLh
-0eJmP32P3sRV+sGYYphMSUQuyA9Lv3YA9oEuct1/gcGyQDzqhd1HklhbX2/UpykW
-ftRu2RktzIYSf/3CC5oL
-=rC1I
------END PGP SIGNATURE-----
+Jeff
