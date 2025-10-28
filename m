@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1497" "Friday" "11" "November" "2016" "12:45:32" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<bf7ce36abd284e80b01f6beff3a9f75e@imshyb02.MITRE.ORG>" "35" "[oss-security] Re: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)" nil nil nil "11" "2016111117:45:32" "[oss-security] Re: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)" (number mark "U       cve-assign@m Nov 11   35/1497  " thread-indent "\"[oss-security] Re: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)\"\n") "<5253979.W8Yu5ZOxEb@blackgate>" ("<5253979.W8Yu5ZOxEb@blackgate>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1792 invoked by uid 550); 11 Nov 2016 17:45:44 -0000
+Received: (qmail 23986 invoked by uid 550); 28 Oct 2025 01:52:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,76 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1774 invoked from network); 11 Nov 2016 17:45:44 -0000
-From: <cve-assign@mitre.org>
-To: <ago@gentoo.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <5253979.W8Yu5ZOxEb@blackgate>
-Message-ID: <bf7ce36abd284e80b01f6beff3a9f75e@imshyb02.MITRE.ORG>
-Date: Fri, 11 Nov 2016 12:45:32 -0500
-MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: libdwarf: heap-based buffer overflow in dwarf_get_aranges_list (dwarf_arange.c)
+x-ms-reactions: disallow
+Received: (qmail 17966 invoked from network); 28 Oct 2025 01:50:58 -0000
+Date: Tue, 28 Oct 2025 02:49:09 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20251028014909.GA6430@openwall.com>
+References: <aP_msOoiyHJ_M4Yx@mertle> <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> https://blogs.gentoo.org/ago/2016/11/07/libdwarf-heap-based-buffer-overflow-in-dwarf_get_aranges_list-dwarf_arange-c
-> https://sourceforge.net/p/libdwarf/code/ci/583f8834083b5ef834c497f5b47797e16101a9a6/
+On Mon, Oct 27, 2025 at 05:15:09PM -0600, Hank Leininger wrote:
+> On 2025-10-27, Michael Orlitzky wrote:
+> > On 2025-10-27 19:21:54, Moritz Mühlenhoff wrote:
+> > > > On Mon, Oct 27, 2025 at 09:34:03AM -0700, Alan Coopersmith wrote:
+> > > > 
+> > > > and if you can replace the server's configuration file you don't
+> > > > need to play games with putting invalid contents in to break the
+> > > > parser, but can simply change the configuration directly.
+> >
+> > > The same nonsense also happened for the Kamailio SIP server
+> > > (CVE-2025-12204, CVE-2025-12205, CVE-2025-12206 and CVE-2025-12207).
+> >
+> > Config parser exploits are not necessarily bogus. The admin might
+> > allow group/ACL edits to the configuration files knowing that it
+> > allows group members to torch the service in question, while, at the
+> > same time, not trusting those group members to execute arbitrary
+> > commands as root.
 > 
-> AddressSanitizer: heap-buffer-overflow
-> READ of size 2
+> For a particular package/system/deployment, sure. For the dnsmasq
+> package? I don't think the project claims it's safe to make dnsmasq.conf
+> editable by non-root-equivalent users. Heck just use the dhcp-script=...
+> hook along with user=root to keep privs. Or in the case of kamailio, it
+> looks like it has exec_*, app_*, etc.
+> 
+> Somebody could, on a per-package basis, investigate config
+> options/syntax, decide if it's safe / try to create a safe wrapper
+> around config-editing, which knows how to lint edits and which
+> parameters are dangerous, or something.
+> 
+> Which works fine until it doesn't. It's like the #2 way to break out of
+> appliances' locked-down custom CLIs or web UI, after simple command
+> injection.
+> 
+> However, in that case it'd be CVEs in the appliance/wrapper thing,
+> "XYZ CLI privilege escalation via malicious dnsmasq.conf edits", great.
+> A CVE in OpenSSH that requires writing to sshd_config would be bonkers.
+> A CVE for an appliance whose CLI allows you to set an arbitrary "banner"
+> string and write it to /etc/ssh/sshd_config.d/pwned? Sure!
 
-Use CVE-2016-9276 for this buffer over-read. Although the commit is
-the same as for CVE-2016-9275, fixing CVE-2016-9276 apparently
-requires the dwarf_arange.c part of the commit.
+Right.  "Config parser exploits are not necessarily bogus", but that
+doesn't mean the parsers or the immediate programs they're part of are
+the vulnerable components.  Perhaps not as robust as we'd have liked,
+but generally not vulnerable as far as CVE is concerned.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+What's common about the CVEs mentioned in this thread, including those
+against GNU Bison (so not config file parsing, but just bogus CVEs), is
+that all of them were assigned by VulDB as the CNA.  VulDB even went to
+the effort (or automation?) to generate CVSS 2.0, 3.0, 3.1, and 4.0
+vectors for all of these.  It's pretty ridiculous for a CNA not only to
+assign bogus CVEs, but also have CVSS vectors and scores for them
+without realizing the error.  This suggests a lack of proper process
+and/or expertise.
 
-iQIcBAEBCAAGBQJYJgKbAAoJEHb/MwWLVhi28eMP/01xy9Xb5cx1Nekg36i2fkrn
-rqfRioDonkNhjjB2hHszRn7TJkXKAMzxWdPJhuMTsYlo8R9jwBy0jyZmSNXi+5gL
-1ms14sa2pZnOo6PdO/FfyPSDjBqVR/2tj0E3mrVXtvQWhwZj7F8723y7dEWQJ6FS
-u8RKcqYep/YC+sCNgF2cnSHmHdzOL7DgIBOmDCshfWMx2aAtbKuvysGTfM4Sj7xU
-28ZLvI7EzKyxB0BMfTnl/cNzmOdcVXxUwd8uw1u5U0xKqSqXHcTqpxjZt7Jl+4Jk
-xy3qbyN+O2yrZJVsDhiR+lt0iRmodQov4m4bpHTnET8wglV3Vv6Amtkax79AzxCn
-QKGNy02tL8RiMBLscxETJa5MUm8MNrsASPpKQvhodcOtMCapCb6NctuvNbxII5XQ
-AIeDxn/5ElfNgKaJst4ou9nwuZYfSe91XS97bWX7d3IJnLECFrcDB6NC3LWqgBv9
-Y534JH13OhruCrEuSr1cNUu3k1kLsNUyRHzMpUU+q6A0Q8ni5Kq1cL20BI3zku/f
-ioKxPBUFaO3VGmnVPAOQdF70yokgrelUMxsr0rEbPwz2+R6AgAW2ICF/v2k/EP7D
-sd80M5oB0j/5fUnbhC1mcT/sFVOl4ggi+BXtsF4QRXZ0vt5/rga2F3fy493yRdLw
-NUJoJIaWp3qUr6VViDeP
-=IOf0
------END PGP SIGNATURE-----
+At this point, I think we want to hear from VulDB on this, and from
+MITRE on their requirements for CNAs in general and VulDB in particular
+to review CVE requests before assignment.  Maybe VulDB is in violation.
+
+Alexander
