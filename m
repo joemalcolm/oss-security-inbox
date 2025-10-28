@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1560" "Monday" "9" "May" "2016" "15:03:40" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1605091454420.27960@freddy.simplesystems.org>" "33" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016050920:03:40" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        bfriesen@sim May  9   33/1560  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<20160509193355.GA11234@perpetual.pseudorandom.co.uk>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" "<alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org>" "<20160509193355.GA11234@perpetual.pseudorandom.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30527 invoked by uid 550); 9 May 2016 20:03:53 -0000
+Received: (qmail 1727 invoked by uid 550); 28 Oct 2025 09:53:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30502 invoked from network); 9 May 2016 20:03:52 -0000
-X-X-Sender: bfriesen@freddy.simplesystems.org
-In-Reply-To: <20160509193355.GA11234@perpetual.pseudorandom.co.uk>
-Message-ID: <alpine.GSO.2.20.1605091454420.27960@freddy.simplesystems.org>
-References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org> <20160509172045.GC9754@perpetual.pseudorandom.co.uk> <alpine.GSO.2.20.1605091330140.27960@freddy.simplesystems.org> <20160509193355.GA11234@perpetual.pseudorandom.co.uk>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Mon, 09 May 2016 15:03:41 -0500 (CDT)
-Date: Mon, 9 May 2016 15:03:40 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+x-ms-reactions: disallow
+Received: (qmail 1671 invoked from network); 28 Oct 2025 09:53:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=CgRLL7m/SKGA/mVqJaYaQJCbB59oG5AqD9BtCPRZt4Y=; b=jjFlJeoJLP+nWvz9f1MeK1ercT
+	bnQeJBrKLhO0EEhtl3AVt0s1JVaJeBvQ+oAbGKTlaOpVuyrH/ueipqmJ8l5EcplQLr1FXjZC2uwDr
+	/QMSH4tv2hy8qV5R15ouqr1Y6EO+gxX2ZS6a91AeKAsbsgWEKugs9oeDndR/W10bVvTSD345qmV50
+	wx1gB75cJFfGoMZJqlGVDiK8FZWEXwwbWcB8c4LTQsx+BmY4J927VlLYxcW8CE0NTVgJnV5muwWdq
+	6D0/SIdd1GGdF5H6B9QCvjSKnh1DtPAk8cJsynBz7ccaTv04rYwoJPK8Jr7r5Vz3hrkCAxOfAPmCI
+	+InmcEVg==;
+Date: Tue, 28 Oct 2025 09:53:25 +0000
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <aQCSlbL8RScPX1mg@remnant.pseudorandom.co.uk>
+References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
+ <aP_GUo51BVldIFVQ@inutil.org>
+ <aP_msOoiyHJ_M4Yx@mertle>
+ <c6a4b588-33b0-47ba-bc49-8fd9b934e8bd@gmail.com>
+ <APnIGZvcyeI7GyFh@aceecat.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <APnIGZvcyeI7GyFh@aceecat.org>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
-On Mon, 9 May 2016, Simon McVittie wrote:
+On Mon, 27 Oct 2025 at 19:26:47 -0700, nightmare.yeah27@aceecat.org wrote:
+>On Mon, Oct 27, 2025 at 09:37:03PM -0400, Demi Marie Obenour wrote:
+>> I suspect that OPNsense generates dnsmasq and Unbound
+>> configuration files from data provided in the web UI.
 >
-> Great. Is there an API that can be used to say "load this arbitrary file,
-> but only if it is in a format that is considered entirely safe"?
+>And OpenWRT. Definitely. Not sure how much validation there is.
 
-In GraphicsMagick, defining the environment variable 
-MAGICK_CODER_STABILITY=PRIMARY before running the will block out quite 
-a lot of functionality (including SVG/MVG/MSL) but nothing can be 
-considered entirely safe.
+The OpenWRT web UI can also execute arbitrary code (most obviously via 
+System -> Startup -> Local Startup which directly edits /etc/rc.local), 
+so an authenticated user of the OpenWRT web UI is already on the 
+secure/trusted side of the airtight hatchway, and it isn't a 
+vulnerability if they can also execute arbitrary code in some more 
+convoluted way than just writing it into /etc/rc.local.
 
-> I think the reason people are surprised and concerned to read about the
-> MVG and MSL scripting languages is that they enter *Magick through the
-> same APIs that open "safe" image files, blurring the boundary between
-> "open a file" and "execute a script". If the entry point into executing
-> MVG/MSL scripts was named more like ExecuteScript(), as opposed to
-> ReadImage(), then I don't think anyone would object to MVG and MSL
-> files having arbitrary code execution capabilities.
-
-It is likely that the *Magick name was coined from the header of XPM 
-files which playfully use the word "magick" as part of the header that 
-programs would use for header magic testing.  This sets the stage for 
-the automatic things that the software is doing.
-
-In GraphicsMagick, the automatic scary stuff is all done within one 
-function so it is reasonable to develop a less magical mode which is 
-less likely to dispatch to a file reader for an archaic file format 
-which stopped being used in 1993.
-
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+     smcv
