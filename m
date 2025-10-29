@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1583" "Thursday" "22" "December" "2016" "08:01:03" "+0100" "Johannes Segitz" "jsegitz@suse.com" "<20161222070103.GE2660@suse.com>" "40" "Re: [oss-security] CVE-2016-9963 Exim private information leak" nil nil nil "12" "2016122207:01:03" "[oss-security] CVE-2016-9963 Exim private information leak" (number mark "U       jsegitz@suse Dec 22   40/1583  " thread-indent "\"Re: [oss-security] CVE-2016-9963 Exim private information leak\"\n") "<20161221232409.GN19629@jumper.schlittermann.de>" ("<20161215233645.GJ29010@jumper.schlittermann.de>" "<8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>" "<20161218175925.GE31981@jumper.schlittermann.de>" "<20161220225935.GH19629@jumper.schlittermann.de>" "<20161221205952.GA81339@wopr>" "<20161221232409.GN19629@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30143 invoked by uid 550); 22 Dec 2016 08:16:29 -0000
+Received: (qmail 9660 invoked by uid 550); 29 Oct 2025 13:04:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +7,234 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1813 invoked from network); 22 Dec 2016 07:01:16 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Thu, 22 Dec 2016 08:01:03 +0100
-From: Johannes Segitz <jsegitz@suse.com>
-To: Heiko Schlittermann <hs@schlittermann.de>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20161222070103.GE2660@suse.com>
-References: <20161215233645.GJ29010@jumper.schlittermann.de>
- <8c7f77c36aa246b9ad31e46f6e733414@imshyb02.MITRE.ORG>
- <20161218175925.GE31981@jumper.schlittermann.de>
- <20161220225935.GH19629@jumper.schlittermann.de>
- <20161221205952.GA81339@wopr>
- <20161221232409.GN19629@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="g2qYG+WgOEFhwE/z"
-Content-Disposition: inline
-In-Reply-To: <20161221232409.GN19629@jumper.schlittermann.de>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] CVE-2016-9963 Exim private information leak
+x-ms-reactions: disallow
+Received: (qmail 7736 invoked from network); 29 Oct 2025 13:03:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckweb.net;
+	s=kas202505051015; t=1761743022;
+	bh=JgM0OBjV7Vtb7nppl4WuGdCMMAJdtTl6gZN5L9UvZo8=;
+	h=From:Subject:Date:To:From;
+	b=qiwzIAU5rXdkS/lXIwMhGY+QOIcYv0CVooM4OzEb/mpyCd6e7oNk4WzEGkz+5XfsU
+	 cK2pH1FNX/o1JFbYh27zG9lFNdnIQeTGRSFHv62OXsEUPjFZTL9SsXAzMBOBmWjK4v
+	 2hP/+VOMLSFpCmlwb97Dz0rLayu6+2LQ7ClkYTBYbj5dAhPbAIWmNLg5fbwhCqPrx3
+	 2nZ0X15wEUiPbet/bGGeRbgJZY/bbG0uscHC6DnZXstp5CIZok8EPolQB3+IykPtYS
+	 00SrhWLdHFycBVRCMEgvHpVeSgQMMP5jIXAL8HPtqBP6ICBImv/Dwz1J84tdeh2/6s
+	 5gzLRQRpEnapQ==
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Message-Id: <A062B294-84C0-4E3F-8C08-C03D7E469B74@beckweb.net>
+Date: Wed, 29 Oct 2025 14:03:31 +0100
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3826.700.81)
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---g2qYG+WgOEFhwE/z
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-On Thu, Dec 22, 2016 at 12:24:09AM +0100, Heiko Schlittermann wrote:
-> In case the distros are ready already, we could release on 23rd, but I
-> need feedbeck from the distros and ack from the other developers.
+The following releases contain fixes for security vulnerabilities:
 
-SUSE would be fine with that
+* MCP Server Plugin 0.86.v7d3355e6a_a_18
+* SAML Plugin 4.583.585.v22ccc1139f55
 
-Johannes
---=20
-GPG Key E7C81FA0       EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Linux GmbH, GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG N=FCrnberg)
+Additionally, we announce unresolved security issues in the following
+plugins:
 
---g2qYG+WgOEFhwE/z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+* Azure CLI Plugin
+* ByteGuard Build Actions Plugin
+* Curseforge Publisher Plugin
+* Eggplant Runner Plugin
+* Extensible Choice Parameter Plugin
+* JDepend Plugin
+* Nexus Task Runner Plugin
+* OpenShift Pipeline Plugin
+* Publish to Bitbucket Plugin
+* Start Windocks Containers Plugin
+* Themis Plugin
 
------BEGIN PGP SIGNATURE-----
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2025-10-29/
 
-iQIcBAEBCgAGBQJYW3ovAAoJELwn3Z0sxP1mV8QQALv1SFjCa+pwihRaaXXB9oTJ
-A5luIgoG4SujIXiqXxvyfzRMBOXTI7b9aFD4ReJZqzuvoxjKg1zMc/9cYW60tgFk
-ach7V0nvvPCDm0gNlXdgtrgoPXdFCP2yL/7iW/mXimY8BwWjT0IOeiZ9wVv/H1sd
-SmtYHq2KdVh8wK4CXPM8cB4bxOdwZHIFYLVAgYy+7l5IL5XdD1NzgYcuNtT5NYVR
-lgZDp/naKPLhmUPnP9qCk3NGE2Dh7EwcCKZhwf+guWI7cscglE5P3ank7kbfE9JU
-Ss9jE6KS2B9qbt7XAENf8avL+WKlEeTbs9YrWruJ3723KMtpP1d1D1QeQIqrb80H
-2BwsqnlshpV2rlqAPjyxoVPDDk65jgDbpMSYQ4lKofuO1pk6Mb8MztTyRdU2lQKY
-fmo+VEJ3OjrUFDjjhQtfngl17tU7pQ2/2U1+9zYPvaUv8GaHVNrwgO3/zFuoo/Y2
-vfbOLGfPEMRwi2A7wgRKINQYEwxqahEVDDkr23mk27/0HlxwJrLcdB+ady+bRbvU
-AJng0DtKKCgLWoy7lqAqwtNin5v4DaKQ99oul9EPQDuFp+xXZi0PjNUNuJ9hUjJ+
-g13KAhG5ZEl+9WaQlgj3PMF0238INCu3k15lwMyNUFIZHEICcLHz9wFUif9edRb3
-ljigtmI+EhVInqSkZOmo
-=cYEr
------END PGP SIGNATURE-----
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
---g2qYG+WgOEFhwE/z--
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
+
+---
+
+SECURITY-3613 / CVE-2025-64131
+SAML Plugin 4.583.vc68232f7018a_ and earlier does not implement a replay
+cache.
+
+This allows attackers able to obtain information about the SAML
+authentication flow between a user's web browser and Jenkins to replay
+those requests, authenticating to Jenkins as that user.
+
+
+SECURITY-3622 / CVE-2025-64132
+MCP Server Plugin 0.84.v50ca_24ef83f2 and earlier does not perform
+permission checks in several MCP tools.
+
+This allows to do the following:
+
+* Attackers with Item/Read permission can obtain information about the
+  configured SCM in a job despite lacking Item/Extended Read permission
+  (`getJobScm`).
+* Attackers with Item/Read permission can trigger new builds of a job
+  despite lacking Item/Build permission (`triggerBuild`).
+* Attackers without Overall/Read permission can retrieve the names of
+  configured clouds (`getStatus`).
+
+
+SECURITY-3583 / CVE-2025-64133
+Extensible Choice Parameter Plugin 239.v5f5c278708cf and earlier does not
+require POST requests for an HTTP endpoint, resulting in a cross-site
+request forgery (CSRF) vulnerability.
+
+This vulnerability allows attackers to execute sandboxed Groovy code.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-2936 / CVE-2025-64134
+JDepend Plugin 1.3.1 and earlier includes an outdated version of JDepend
+Maven Plugin that does not configure its XML parser to prevent XML external
+entity (XXE) attacks.
+
+This allows attackers able to configure input files for the "Report
+JDepend" step to have Jenkins parse a crafted file that uses external
+entities for extraction of secrets from the Jenkins controller or
+server-side request forgery.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3326 / CVE-2025-64135
+Eggplant Runner Plugin 0.0.1.301.v963cffe8ddb_8 and earlier sets the Java
+system property `jdk.http.auth.tunneling.disabledSchemes` to an empty value
+as part of applying a proxy configuration.
+
+This disables a protection mechanism of the Java runtime addressing
+CVE-2016-5597.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3517 / CVE-2025-64136 (CSRF) & CVE-2025-64137 (permission check)
+Themis Plugin 1.4.1 and earlier does not perform a permission check in an
+HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3531 / CVE-2025-64138 (CSRF) & CVE-2025-64139 (permission check)
+Start Windocks Containers Plugin 1.4 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3538 / CVE-2025-64140
+Azure CLI Plugin 0.9 and earlier does not restrict which commands it
+executes on the Jenkins controller.
+
+This allows attackers with Item/Configure permission to execute arbitrary
+shell commands on the Jenkins controller.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3550 / CVE-2025-64141 (CSRF) & CVE-2025-64142 (permission check)
+Nexus Task Runner Plugin 0.9.2 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL using attacker-specified username and password.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3553 / CVE-2025-64143
+OpenShift Pipeline Plugin 1.0.57 and earlier stores authorization tokens
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These token can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3560 / CVE-2025-64144 (storage) & CVE-2025-64145 (masking)
+ByteGuard Build Actions Plugin 1.0 and earlier stores API tokens
+unencrypted in job `config.xml` files on the Jenkins controller as part of
+its configuration.
+
+These tokens can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the job configuration form does not mask these credentials,
+increasing the potential for attackers to observe and capture them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3562 / CVE-2025-64146 (storage) & CVE-2025-64147 (masking)
+Curseforge Publisher Plugin 1.0 and earlier stores API Keys unencrypted in
+job `config.xml` files on the Jenkins controller as part of its
+configuration.
+
+These keys can be viewed by users with Item/Extended Read permission or
+access to the Jenkins controller file system.
+
+Additionally, the job configuration form does not mask these keys,
+increasing the potential for attackers to observe and capture them.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3570 / CVE-2025-64148
+Publish to Bitbucket Plugin 0.4 and earlier does not perform a permission
+check in a method implementing form validation.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+SECURITY-3576 / CVE-2025-64149 (CSRF) & CVE-2025-64150 (permission check)
+Publish to Bitbucket Plugin 0.4 and earlier does not perform a permission
+check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified HTTP URL using attacker-specified credentials IDs
+obtained through another method, capturing credentials stored in Jenkins.
+
+Additionally, this endpoint does not require POST requests, resulting in a
+cross-site request forgery (CSRF) vulnerability.
+
+As of publication of this advisory, there is no fix.
+
+
+
