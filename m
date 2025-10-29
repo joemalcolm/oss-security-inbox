@@ -1,4 +1,4 @@
-Received: (qmail 3310 invoked by uid 550); 15 Mar 2023 09:34:40 -0000
+Received: (qmail 15765 invoked by uid 550); 29 Oct 2025 17:45:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,146 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19951 invoked from network); 15 Mar 2023 09:26:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2022-7-12;
- bh=yWzTT0NilF9GhrdxO0/5B+kLNr/nNIrkcDcuEYp6gF0=;
- b=U7ZLLa/5FzaDUu3olgUzhZf7AWqvywqRrwvI/jSyt62f35M0VXDCo4tnsqpNL1SpTpJG
- icIeCsFSxYr/HvqxJt/v4KpFSle6cHrJDtVc5rhEC/k4BZcrdNlTYRrla6UL8UaYzryJ
- t8yfMJQkstkxnqqqo1griabLKZ2Fw5PZ7G5uJ64gJ9N7vhy9jcK931TyIA963bDpicCH
- 8IGPgsr9UjPJC+7zzqwqxmoyU56WDUJbNfhh/7F9XRvBUNeK1YlE8JoyKxF3xpYlrVZu
- U3fhdyRULdO4K3PitZDlkWxciU71ChtrnOhNLgiVK0xJjwZ4cVZU9Zahz2CLID4JK6L+ Iw== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VXBRWE0RYBJRIqUcKL1XKZ5f2aYM5XIkmO4FTfE5D3RiCBl+4UZHUilSqC1qxpPA8+gOUTQ/64D6Z8oji34qpEPg/1X0gsYvMUFdUUmC7a7NoLHE/L0DfVqfOf673AdJhunj+T063HFAKrTmR9h5qDmgK4TXylHQNC36+SZ+MyASHEwg1Uo3Z3GMoUs1JbHPtgnZehffrGcVTkzlXdSZApYdVxrulUAXdCSbrLLAAxg784rj4iNHBu0SypiwrBMQ7THNbYlQo0sUXBc0LyFa/rKXmB/bqSS23893dvjsQQpTrTxAJOkvvm6SSiztnkx4Ig6JBnnKCBsxtUxVjrjTvw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yWzTT0NilF9GhrdxO0/5B+kLNr/nNIrkcDcuEYp6gF0=;
- b=doFkMuoGIjInLmXXWWQ2vMrtbobTc363u0M7Bm161fMd64qSsf0gypXAtYObb9uDN45VcaXdL0P4F3cDxVGG6YQnSoaqSUsQHLhYwTRXyiZeHz4GlCpdLHF6vlzAczGQvJKYJ2H+yErZxIKvZMu2CHuCA0v+hAx3m8QQ9C09wyEQnntOb0B2qEYoHDNbk1R5dmsLYQ7HCsavkwCm3I/oI5ahJeiKWZSTSdDReSlmUufAdNSumzY7x9lyU9h1M18f8hQPxnJevlVeRa0fKJBxCpS3tnuca1Tx4LSUvGy9mwJI7EwTntqVVM6ltqOpvkK0ZmAbwo8lLwY+CngM9TyTOQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yWzTT0NilF9GhrdxO0/5B+kLNr/nNIrkcDcuEYp6gF0=;
- b=lNMAlWikE8fpZMqAebSt0Ugtq2DDEMVo53CHap2KMtp2JUO9eRFrvklXpSv70/iX0KzU2JtRlhUOcTrtHvwSrXB7ncmtwrNtcG/pjuIanAMEKkTBz34v3horjjRGS5fTRbddgh51t+s9mYmbxIeOgeHuGe0mEJzZgnxMo5ee4TM=
-From: Casper Dik <casper.dik@oracle.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [External] : Re: [oss-security] TTY pushback vulnerabilities /
- TIOCSTI
-Thread-Index: AQHZVsY9VeYO0QZgIUeP4rfAooF9wa77hf4AgAAGZICAAAQkJw==
-Date: Wed, 15 Mar 2023 09:26:24 +0000
-Message-ID: 
- <DS7PR10MB5358E5511783501575C5C133FDBF9@DS7PR10MB5358.namprd10.prod.outlook.com>
-References: <20230314095103.1ed76cc0.hanno@hboeck.de>
- <20230314205725.oqr3um7kkkyq7zr3@mutt-hbsd>
- <20230315094018.27d65aae@fabiankeil.de>
- <alpine.BSF.2.21.9999.2303152001170.67613@aneurin.horsfall.org>
-In-Reply-To: <alpine.BSF.2.21.9999.2303152001170.67613@aneurin.horsfall.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BLAPR10MB5347:EE_|IA1PR10MB6243:EE_
-x-ms-office365-filtering-correlation-id: 06fefc25-d2fc-4fff-0994-08db253758c0
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- 5Ut9UIn5jbK0y2TmB/Dy/1Wd5UWDyAgsGBqfDiMtNNdVaDnPW1NTy6MfhtnlWhPkAT3ilkCaQxssYxh00KllA8awtCoftrFbk195IEw1LEg1s/6O7l8hJDNFxDAaR94sxb7X4VZsw5VfLCw46MUbaqG+7hely7LtzDFxl748aL3iHVeGXamxzQ2lZPlJEWqLruAFyWOpyvy1UZDTNhl2mc6EDSzpRTw7YYSBQM537guDoR7FlKbluou9I1zwZ422p3WpMi7Xgo4FcBKM98QRtHLCob0s+lkYHE8Y12QvqSuxUp8aJDD1P4UCd8HqtYtEHKK9/nZZVhg6J+iVffwLH4k1MeGvngAng2y1Cj6cPgNMEzGUJzZOwvhiwOnHDMkAt0KjyumJnsXE0cMfZeo8vDgceBVtgcGCwlZFou4nMJ9IO5tdMFSDDx2YlwUZYFme6xukADLHwgYQYGd6hbQ+wmL4Fr1cpkm1D68v+yCLaVs2KwwbAZFwSh9P2bT6VQS7dZveDMpzXw+YrGXR76OkyzPcvHuvpRKn4gFnWv8ivvZN1mOTyDrZWSniSK1RDof6J+WsQZQtxf//jogatYNMWFgj8H0K29fZIGuMIizOq5mZ1qBeJEjZsb94aYa4TdDlZLa/FoAlM5o87pjfvTF7fk5jS0Zlh02bNUfJTtoy2vxOrijfVwXQxupBCBGa4PeQ9jhmgMrBFkRCM9XGobOJDQ==
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BLAPR10MB5347.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(376002)(136003)(346002)(39860400002)(366004)(396003)(451199018)(33656002)(4744005)(44832011)(5660300002)(83380400001)(8676002)(186003)(71200400001)(6506007)(6486002)(9686003)(6512007)(76116006)(66446008)(38070700005)(91956017)(66946007)(66556008)(316002)(41300700001)(64756008)(8936002)(66476007)(6916009)(478600001)(86362001)(52536014)(38100700002)(15650500001)(2906002)(122000001);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?us-ascii?Q?RM7S51vPn1b7YY3q7bz9NQI03E0O0gRfllq+qD6uOQ2JIUTuKosuEUNft4tI?=
- =?us-ascii?Q?CjEnAenye6Ky1k+TcPIpuaVokUU+2aLunUBWXX8iQr4y7jiq1lFBToKTpGq1?=
- =?us-ascii?Q?xUgmH+285xKXoY1+Il1fzB52vkmGjcbQYhgYZsi9UzdtekhQtu4Sq0TR12v7?=
- =?us-ascii?Q?xlZHytFIW9DpjksE0LFh/3P0gbA498kl1j6jcJR0ok8TFfqF8IOoAxNfOjg5?=
- =?us-ascii?Q?kW9cOtyuzYThVJAldLIFVLieX4ZwN0MziFstV89WSEb+8h2CCCdoKdHpKysj?=
- =?us-ascii?Q?5MSEuEeuBQ4mw+Onv9/knBOtyXrVXt08pV/QzLXm87ckkTsYQqo+RNtLNsbB?=
- =?us-ascii?Q?Bzy/6pzYxXim4fiu2CO/VhITSMaLP/J0zqScdKVxuGexlYQX91fFO17ed9/A?=
- =?us-ascii?Q?8LmuaTmPYvxJx/aS6uH5q0+k9PhjBw9T+L/BcmP+MQIzy9NwoR9CggIRHUYH?=
- =?us-ascii?Q?REXJ5BXCBr8CQjKAW40n1hK39PChheadNlNwzmSyYYWMylb4HoLva1VcyE9v?=
- =?us-ascii?Q?soqGQZdjcIlx/Kw1F6nLfajHkIaZ0nCoRXcq5ZVvvXs1HZ9V86yQ/bo/YJR1?=
- =?us-ascii?Q?IoTG0FGJElnENNFMavZMbVk2avZPODWvJ00DYzhjiXoyllX9+N5/bAIPhBxz?=
- =?us-ascii?Q?Dq22jgNvkJvmPyvcg99ZjM2d1Xo398SM3hhRJMrmWXzgKRfqSdexT4ruVILa?=
- =?us-ascii?Q?fK0nrci0JyQl0FW2PEo5l7GCNNIFmVCjmfz/LOFbHABKnzZAGY0K9jGpNJYs?=
- =?us-ascii?Q?USbMKPKC4nZ6oP4bc3SJmjqPB5LW0hCNV08PB2IG/HoEHMas3Cayrr51ja3d?=
- =?us-ascii?Q?Hw0oOO2juAhgUcE79I5hMGj7im5RPbSSQXj1mT/f3Ur2rhuSiYUP0RAvm3wx?=
- =?us-ascii?Q?RGMDa1brAMx0b97F+0hBmrNGfTvao0Bk7bHGcxH3XQf5EG49u+wOz+Q7UScD?=
- =?us-ascii?Q?JUJQCdElMh5gtUZGTye1aGEtaeN04p9YmNrDgufZp40v84bbCRSY/ANwzU6O?=
- =?us-ascii?Q?WwhPp1otW1OFmE9SYNUVrDKAXP7LqTbqYOYPqqAGH5nuMLTZwA0gqwZp9Gw/?=
- =?us-ascii?Q?RGZeSOA+WeTN+VH79ynw5ZjeBoOROja5Ntmy8qFu1Coas7eTSxWNH0+t/ZBk?=
- =?us-ascii?Q?Z5d64aswhDLlQVYtd1WV/nbKQOdCC3Xd8zh0+eie8Jax/mjqLWW+TtmLMWbd?=
- =?us-ascii?Q?B0KH/8TnL/YfhJPS6WQaiDV2GGLawhu2A7i5wpkvUY/S7F6htNOQlwNqgMLl?=
- =?us-ascii?Q?klE4fBXU34Wji/0YUFzGBWtxXQPtz+HsGn4vEQIa3D7ZCMvGHXPoIMJd1Egr?=
- =?us-ascii?Q?mpaImjo8GKeG0u3aWoqbJXJVQljMrRzu97klGKLISp4tDstB0zw+3r8BIGSY?=
- =?us-ascii?Q?J4C0rBZRMxj5A7pgCmvWfH5iU6M8JluiyNnWivXHShQ6DVWQcN/V6JE7qHUJ?=
- =?us-ascii?Q?Ljs37E/8wW2FnlD6HVGxmaxL5mp/ctRbmrqJGHV34VxUy8svEXzSL/k7hSEH?=
- =?us-ascii?Q?zoIj+mrv5URgZ23IUog8j3/L2QbT7wwQZiZeW+adnoHrgdi3R++AvdJjCOUf?=
- =?us-ascii?Q?fyPcvCNLB6tJSXbo+aovJaK+S6XEl1kXAgtSXW0Sc4ZsBVORLwwG9uCrV8EI?=
- =?us-ascii?Q?opYHMrE6CUQxljzkhmla7Ek=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+x-ms-reactions: disallow
+Received: (qmail 23772 invoked from network); 29 Oct 2025 08:50:01 -0000
+DMARC-Filter: OpenDMARC Filter v1.4.2 edithae.camelia.dev 54CA22E4B8E
+Authentication-Results: camelia.dev; dmarc=pass (p=quarantine dis=none) header.from=camelia.dev
+Authentication-Results: camelia.dev; spf=pass smtp.mailfrom=camelia.dev
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=camelia.dev; s=mail;
+	t=1761727780; bh=39l1b0wiN1fisHgTJrFvVfDeqtRdIxRwoqxryUkaKo0=;
+	h=Date:From:To:Subject:In-Reply-To:References;
+	b=MuXxJEFUNERSyoGOyVJscdqGz2acmc/YAqvNyFHLuEuDyl/Anx6ugN0Hw+9mVO5dR
+	 QMyB8r7h2OwS23ynWd419VQjEk/vEAZXvJXE6jhAPcBIeUVlmQ17olMfwQX+5Du4+z
+	 clBHAD5T5vcv7EP8ZeffGU473cYqkQ1Hc8jMOlHQbrmSf7MuFZPwA3/ZWB51yvBook
+	 oqCUjDMidASfdPBuQriLVh5I3GXOMuHWsIzczz4xu11/C7r2l58VEdNpoIlUzbrAb6
+	 MdtP8MPPqnGoBJ7N8B+oIMJvLBcIiVoNifg6IaNuHU98nz9gjnSf+Q7rHG2emDcuje
+	 y+4sIcV7rhU8A==
+X-Virus-Scanned: amavis at camelia.dev
+Date: Wed, 29 Oct 2025 08:49:48 +0000
+From: Camelia Lavender <cam@camelia.dev>
+To: oss-security@lists.openwall.com
+In-Reply-To: <2134361509.6292.1761726167021@appsuite-pro-sync-core-mw-groupware-1.appsuite-pro-sync-core-mw-hazelcast-headless.appsuite-dev.svc.cluster.local>
+References: <2134361509.6292.1761726167021@appsuite-pro-sync-core-mw-groupware-1.appsuite-pro-sync-core-mw-hazelcast-headless.appsuite-dev.svc.cluster.local>
+Message-ID: <DB28AB9A-808E-4D20-8401-58863BBDEFDB@camelia.dev>
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	4NGFUjwupTcZRbuce3VGlmOgZwQ0gPV8iGmFI425NEw3ncOUvwN3Io68rboejR48LbXMJ5ftI3ZtX/94C10lWfXA8sCs6TE5QCVOeYz+G8JvAcxXpyPBcQOG0aWYonYopMCguDRFGQiyJRY7RidMGRn1MTwzBeoyJC5YeStBZmHo7JI2jH4fBy41U6oKp1+m1fFr2y7YfHi2p4sxnbpHbr5A4FHp+UlRqkVVV879C6gkFp5/3PIPPMg7MWtgMQMnQxWBR1Ukq5gMKL2s8+X6MjxVtL4f5eLWpRTXWQZUTaBOrhsyA5Hr43jAa7uthU4UadOY37Lwqxd3/9R+V93b5VxVr9Wl87SAvvxrXa34SPfJpSHsUNpuGONl5+A4ybIGs9L6BlzRsGenvx4I+Tai5Tb9VDqinFh6T93PX0YygZF90jqh+YpLQS1BjKoK3MEuQ8Lj+/m6N7LTr+LwspjFX4V9lbekeI9fGvdtcbzbrhBRVWfTbh1fZ5DUQUNKTBRiyT6Q1mlKKqx9ClV3eP9pI6W5+MV7THrhEWdG9mPhe7tbBVSMBNRgXz1imdJcEzNn0dUHfrdmtgguSQWB1PiuACbvI8E1+gDB+EsQ+65FCksTnYDbc447hLsVR2ukjO+1+htO4ul35LSEfEKUMNj6+EvIDx7CofD2a4z2/t2lN1hrbmiGsdGSUgpoYp2ZCw/C+TgLh8qRLO9iQB+ufLWIF3nwc0wzQ1zB24nUcu8sXwvqV9kkdF1DldyJu3TG81R4/cAkiLZTPd/inIYF+FSU9A==
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5347.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 06fefc25-d2fc-4fff-0994-08db253758c0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Mar 2023 09:26:24.5154
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /KzOzIqo2Kg0PUh9VmNOPfzTkZ+vOctA1vBfRa5WhSpsxij3fxrJc8b3dzzgnktbwnUJZLD5h15TmWmrMyPgmA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR10MB6243
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-15_04,2023-03-14_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=694 phishscore=0
- malwarescore=0 adultscore=0 suspectscore=0 spamscore=0 mlxscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2302240000 definitions=main-2303150079
-X-Proofpoint-GUID: 3u1XqiY4lsKVjBb2mqxVAxsJonto2alb
-X-Proofpoint-ORIG-GUID: 3u1XqiY4lsKVjBb2mqxVAxsJonto2alb
-Subject: Re: [oss-security] TTY pushback vulnerabilities / TIOCSTI
-
->On Wed, 15 Mar 2023, Fabian Keil wrote:
-
->> In ElectroBSD I removed TIOCSTI support in 2017 [0] and haven't noticed
->> any problems.
-
->I hate tossing out functionality; would you not make it a privileged
->operation instead?
-
->-- Dave
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Autocrypt: addr=cam@camelia.dev; keydata=
+ mDMEZxb6PRYJKwYBBAHaRw8BAQdAoSyxfx6E3Xs+xzYjRM1mu/9eEE47sIv2cw9mceAQBFS0IkNh
+ bWVsaWEgTGF2ZW5kZXIgPGNhbUBjYW1lbGlhLmRldj6JApQEExYKAjwCGwMFCRLMAwAFCwkIBwIC
+ IgIGFQoJCAsCBBYCAwECHgcCF4ACGQEWIQR2TroXf4myj1yW6eTbzHDvvDYOlwUCaEH8rTEUgAAA
+ AAAQABhwcm9vZkBhcmlhZG5lLmlkeG1wcDpjYW1lbGlhQGNhbWVsaWEuZGV2NhSAAAAAABAAHXBy
+ b29mQGFyaWFkbmUuaWRpcmM6Ly9pcmMubGliZXJhLmNoYXQvYzRtZWxpYUMUgAAAAAAQACpwcm9v
+ ZkBhcmlhZG5lLmlkaHR0cHM6Ly9jb2RlYmVyZy5vcmcvY2FtZWxpYS9mb3JnZWpvX3Byb29mRhSA
+ AAAAABAALXByb29mQGFyaWFkbmUuaWRodHRwczovL2dpdC5jYW1lbGlhLmRldi9jYW1lbGlhL2Zv
+ cmdlam9fcHJvb2aWFIAAAAAAEAB9cHJvb2ZAYXJpYWRuZS5pZG1hdHJpeDp1L2M0bTplbnZzLm5l
+ dD9vcmcua2V5b3hpZGUucj1kQmZRWnhDb0dWbVNUdWpmaXY6bWF0cml4Lm9yZyZvcmcua2V5b3hp
+ ZGUuZT1LdGR1YjVMNkRBeE9SZkc2YnhodWNQY05vQndWeTZjeU11MEJqZ1ZKVVlFMRSAAAAAABAA
+ GHByb29mQGFyaWFkbmUuaWRkbnM6Y2FtZWxpYS5kZXY/dHlwZT1UWFQ6FIAAAAAAEAAhcHJvb2ZA
+ YXJpYWRuZS5pZGh0dHBzOi8vZmVkaS5jYW1lbGlhLmRldi9AY2FtZWxpYQAKCRDbzHDvvDYOlyfb
+ AQD4HXpjaiwrN8blld7l18TLnqYT/PNpjPUjP3X717XTZAD/WNmzNSTgYFshYEjkUdyL8IZvG5MK
+ kQxjzKQ6RMxN5A64OARnFvo9EgorBgEEAZdVAQUBAQdAqshBrvkB2JxzAd9DCJSxAakNE03oaUZw
+ B0/0bHoKWj4DAQgHiH4EGBYKACYWIQR2TroXf4myj1yW6eTbzHDvvDYOlwUCZxb6PQIbDAUJEswD
+ AAAKCRDbzHDvvDYOl9tCAQD9qMqFI89k6mcoLVYdsdhFvbTRsAGPEdJBoBDdLyRBkgEA9y+6cqvX
+ QMqUCmEQUGfTktfaK2fkLHoQqGlpQ371owI=
+Subject: [oss-security] CVE-2025-30189: Dovecot IMAP Server: Using auth caching
+ causes the first lookup to be cached for all lookups
 
 
-I think it makes it mostly useless.
 
-In Solaris we've changed how TIOCSTI works; when a process reads the
-packet with the stuffed input, it then checks the credential of the
-sender.   So while the stuffed input is still echoed but ignored:
 
-# su nobody -c tiocsti
-exit
-echo Payload as `whoami`
-#
+-------- Original Message --------
+From: Aki Tuomi via Dovecot-news <dovecot-news@dovecot.org>
+Sent: October 29, 2025 8:22:46 AM UTC
+To: "dovecot@dovecot.org" <dovecot@dovecot.org>, "dovecot-news@dovecot.org"=
+ <dovecot-news@dovecot.org>
+Subject: [Dovecot-news] CVE-2025-30189 notification
 
-But when having root calling tciosti, you get:
+Affected product: Dovecot IMAP Server
+Internal reference: DOV-7830
+Vulnerability type: CWE-1250 (Improper Preservation of Consistency Between =
+Independent Representations of Shared State)
+Vulnerable version: 2.4.0, 2.4.1
+Vulnerable component: auth
+Report confidence: Confirmed
+Solution status: Fixed in 2.4.2
+Researcher credits: Erik <erik@broadlux.com>
+Vendor notification: 2025-07-25
+CVE reference: CVE-2025-30189
+CVSS: 7.4 (CVSS3.1:AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
 
-# su root -c tiocsti
-exit
-echo Payload as `whoami`
-# exit
-Payload as root
+Vulnerability Details:
+Using auth caching with oauth2 passdb, passwd passdb or userdb, or passwd u=
+serdb, causes the first lookup to be cached for all the lookups. This is be=
+cause the cache key is "%u" which no longer actually expands to same as "%{=
+user}".
 
-(The exit here is not needed)
+Workaround:
+Disabling auth cache will prevent the issue.
 
-Casper=
+Fix
+Install non-vulnerable version of Dovecot. Patch can be found at https://gi=
+thub.com/dovecot/core/compare/a70ce7d3e2f983979e971414c5892c4e30197231%5E..=
+.34caed79b76a7b82a2a9c94cf35371bec6c2b826.patch
