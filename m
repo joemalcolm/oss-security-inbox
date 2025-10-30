@@ -1,4 +1,4 @@
-Received: (qmail 28147 invoked by uid 550); 20 Aug 2024 12:48:26 -0000
+Received: (qmail 3352 invoked by uid 550); 30 Oct 2025 06:15:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,177 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6015 invoked from network); 19 Aug 2024 21:18:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1724102302; x=1724768968; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=ThTKnPhZ/MaX+ovfTeDIyRc9ul/WLvygpM0s0NZD53o=;
- b=ddf28klf/siU4GWSCR5+P103iXrdDLEAjuNa6u2qgJFMHJkEvSDMt/zNglRwjGgKIXVQVcNF
-  C9GztnUzlmUrbDuL9st89MKC0jBz2KV6HATXYwZkcOXVH/oXa/K3qViDyS+pJUrtIIXtXt9yXL
-  tp918hrqpBDAe5kiipVV2wIE6OC8vN42gOZ+qe0TWapECxCOEo78xvyIX3uyhYo69BVydWTxSw
-  NET3XmxdvNDvAFiybX4IfjHCSBWLfXnoFsi8WJd0PmP1wU3cPPqcLhtHs+MhrfODnKqCQ1qAsu
-  pY3ZU7L/bg1pUxWlt1XqUJ4a1vaavKbbRAZv3PtSlklUUg3A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1724102302; x=1724768968; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
-  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
-  in-reply-to:references:mime-version:content-type:
-  content-transfer-encoding:content-disposition:content-id:
-  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
- bh=ThTKnPhZ/MaX+ovfTeDIyRc9ul/WLvygpM0s0NZD53o=;
- b=4gWxdeaL05JW0cDkqGTh+7Nx0gdBRn5fEskD/ebqmUWaTJf/CWctkHyCI2o0HAOMQedzuVMv
-  A4vookohAoEzAg==
-Date: Mon, 19 Aug 2024 20:14:12 +0200
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
+x-ms-reactions: disallow
+Received: (qmail 3304 invoked from network); 30 Oct 2025 06:15:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761804903; x=1762409703; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P3T6sjOY2TF+p1mlVDk/e8U6xCFjeuJA7Cz4LrZODsU=;
+        b=URyzEDHMh3dJscaoGxHO0aN0rqfpNkGwOHncMXQDOjWQoArxetnwjwOArc7CJMOnws
+         r/I4Qd/VcMBESj2Dp72OECEBby0WqyxLsMJqSXr5e8yuRddWVNKSOkx9RQenCK1B11my
+         ZME/Wv3z22EeKRBvvLvKDfOcNTpdeOJFdPxgdRYPLu4qkMzj2/eIsANdeXrCiVsETqY5
+         SE/XwDVuKCtBegMvtz5Sp59imqjAyEyEy5n1TXOAgiBk33nRJD+3lxRYmOomodM8/+X7
+         Y0O2kKWuiVEP12CxDicRDPX4HGeDJ7QpfBHs6h4drxMW/VNgwD2ZASl7LZ3Pj4AyAWX1
+         +2mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761804903; x=1762409703;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=P3T6sjOY2TF+p1mlVDk/e8U6xCFjeuJA7Cz4LrZODsU=;
+        b=DDm3PEyLFy/6gk32upMh6/c5IaX6F0R/+ybQAzN7IXZI91NnW4rCXiKJsYo9AnFSFZ
+         +MKlc3nMVb0LTl1apulrNqscpotGE6AIjMlgyRaNr6CZpVHdj+p+CEy8lLm4YXe3uid8
+         mGMY9wQyT1+ioreABtA3ckHG9jjQp8SqUPdgyCCxUYKCDBwm8C5EegIHK0aBLDgUyamB
+         31vaHOEAmlqPJTtSOUnDtlGH7X+hWPl+losPXnQiSN2cMCKAW+jCyJkMvW5xTiFf93xO
+         5dIFF72NSXC6YZCNkG2/dPTRfX1JzNqGYOpftmiwCUu6s5W8iixL4Z2Hf5/yEu6EHNYk
+         3Z3w==
+X-Gm-Message-State: AOJu0Yz+wrIaV6FwRlFvJFttUnfLukHPbSz52wdPjtFBrah2ko9SDst8
+	DtLsxxrm5c2+kPQvtBpxsFSm+W7lu2p8AKKdU+Kz0yX1cCWs1qiOnIPXyoUm1Nyt
+X-Gm-Gg: ASbGncvOryJNQvzS0Brfvpl0nJVirAy7QD4bEX6l15mOvRlyGGcAB+Af5cB5nG9yb98
+	OMdDeeSQR7MgwNH23gydz2R8+Y1sbl6Z47JHJHANSr65jjxn7iOwCNvgf4EneuSuSA6UP586ygd
+	qpQOwV6+zVVV8DqlGRY/gQnffslmJc3zShS//8pmSJ2p/ls+zvOrdEV0xuzJLIJB8D7mdNMfEA6
+	KoMNsGnxKCimdNVVPgCeJw+XeW1XCtsajjPboqNs2LtDNusOQm9DW0O1zyUsyMNeU8ffEl0iIOk
+	Kvhxpg3vKHNHx3MJsemCFOzvv8B8mlAqYxtFLbl5bRDVDiRXfmL9ByWeEuUorz0tAp9Wz8v3yzb
+	yjwp1R5rJBWv+Ug/yjDdQgfij0omanNVJTPc+6IVySrVyfmFIGD/qkBO+uBfueKqa/JWIi+HgTn
+	Pn4Vsgv/mY4Wq+2ESUlViDh2Dor/61Obs5Ug==
+X-Google-Smtp-Source: AGHT+IHwmvbqHwilmoYSHp6MDbmzKW1tIAgN4ZMjjZY3CZrF1Tq1IBdkwTZSDdPfS1FY+Fwtmi8Efg==
+X-Received: by 2002:a17:907:3e12:b0:b6d:6a35:999d with SMTP id a640c23a62f3a-b703d382cf5mr632512066b.27.1761804903289;
+        Wed, 29 Oct 2025 23:15:03 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 30 Oct 2025 07:15:01 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20240819181412.tVrtAtA9@steffen%sdaoden.eu>
-In-Reply-To: <66C2ACB0.2040203@gmail.com>
-References: <CAJbOq16ebWS21u439bcV764HhaeQHF+eO64LdMAAKFgjdDLrMg@mail.gmail.com>
- <20240815111847.406cf6c1@computer> <66BECFB0.3080704@gmail.com>
- <CAH8yC8ndnyhyMNaQu3N_uUM_yXhd32PwR9odEOeoDe7jC5fQLw@mail.gmail.com>
- <66C02F68.1050609@gmail.com>
- <ME0P300MB0713D8A7D829DC25E6520BA3EE832@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
- <66C2ACB0.2040203@gmail.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.25-599-g5c75a327b2
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
-Subject: Re: [oss-security] feedback requested regarding deprecation
- of TLS 1.0/1.1
+Message-ID: <aQMCZWK1xr3-3DeO@eldamar.lan>
+References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
+ <aP-rxft9ra58z9EZ@yuggoth.org>
+ <CA+qj4S-=TtjPN5Us5tva1TUo7a2MJKzpXweiQCM=QLMwcq5Xjw@mail.gmail.com>
+ <6c9a4094-6af3-4aa3-940d-0d19505da3b1@pipping.org>
+ <aP_L7mY0OXB2iDmk@symphytum.spacehopper.org>
+ <9eefb12f-5de8-4638-a4e8-b0c309e81cec@pipping.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9eefb12f-5de8-4638-a4e8-b0c309e81cec@pipping.org>
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
-Jacob Bachmeyer wrote in
- <66C2ACB0.2040203@gmail.com>:
- |Peter Gutmann wrote:
- |> Jacob Bachmeyer <jcb62281@gmail.com> writes:
- |>> The AtE mode has problems, but is still supported in TLS1.2.  (Why \
- |>> was EtA
- |>> not also introduced in TLS1.2?)
- |>>     
- |> It was:
- |>
- |> https://datatracker.ietf.org/doc/html/rfc7366
- |>
- |> So you don't need any new modes, just an extension to signal its \
- |> presence and
- |> swapping the order of the processing operations if present.
- |
- |I see.  TLS1.2 supports *both* AtE and EtA.
- |
- |My question (here expressed yet another way) still stands unanswered:  
- |excluding cipher suites (and the use of concatenated SHA1+MD5) what, if 
- |any, parts of TLS1.0/1.1 are not also required to implement TLS1.2?
- |
- |Removing support for TLS1.0/1.1 has definite costs in compatibility, 
- |costs that hit particularly hard with legacy embedded devices for which 
- |no updates will be available.  Given that TLS1.2 is to remain supported, 
- |what benefits to maintainability are to be had?  How much of the 
- |TLS1.0/1.1 support does *not* overlap with the TLS1.2 support?  How much 
- |of it *should* overlap if the code were to be optimally refactored?
+Hi,
 
-A primitive view on that is
+On Mon, Oct 27, 2025 at 09:40:35PM +0100, Sebastian Pipping wrote:
+> Hello Stuart,
+> 
+> 
+> On 10/27/25 20:45, Stuart Henderson wrote:
+> > On 2025/10/27 19:51, Sebastian Pipping wrote:
+> > > Also, fixes without a CVE will not be backported downstream.
+> > 
+> > That depends on the downstream.
+> 
+> I'm happy to learn which downstreams backport security issues
+> without a CVE, in practice. Do you have an example or two?
 
-  # git grep -i tls_v master -- \
-      crypto lib include engines ssl apps dev exporters external providers |
-    wc -l
-  72
+Another very recent example is
+https://lists.debian.org/debian-security-announce/2025/msg00200.html
 
-but you must cut things like
+It is about:
+https://discuss.tryton.org/t/security-release-for-issue-14290/8895
+https://foss.heptapod.net/tryton/tryton/-/issues/14290
 
-  master:crypto/evp/e_aes_cbc_hmac_sha256.c:        else if (key->aux.tls_ver >= TLS1_1_VERSION)
-  master:providers/implementations/ciphers/cipher_aes_cbc_hmac_sha1_hw.c:        else if (ctx->aux.tls_ver >= TLS1_1_VERSION)
+While it would be nice that a identifier exists for this issue (has
+not yet happend), this was not blocking doing an update.
 
-(-E 'TLS.+_VERSION' isn't that much better, for the remove party.)
-
-My own gut feeling says btw that no logical argument of whoever
-can change anything on this topic, there is a pimple to go, the
-cancel culture requires a victim, the next announcement (ie web
-page to which the otherwise hollow email message points) shall
-have an effective advertising-niveau-compatible entry.
-
-Ie, it seems for OpenSSL TLSv1 all share the same implementation:
-
-  git show master:ssl/record/methods/tls1_meth.c
-says
-  /* TLSv1.0, TLSv1.1 and TLSv1.2 all use the same funcs */
-and also
-        /* For TLSv1.1 and later explicit IV */
-
-and
-
-  git show master:ssl/t1_lib.c
-
-shows only flag differences in between
-
-  SSL3_ENC_METHOD const TLSv1_1_enc_data = {
-and
-  SSL3_ENC_METHOD const TLSv1_2_enc_data = {
-
-in particular 0 vs
-
-    SSL_ENC_FLAG_SIGALGS | SSL_ENC_FLAG_SHA256_PRF
-        | SSL_ENC_FLAG_TLS1_2_CIPHERS,
-
-So it *could* be "removing support of TLSv1.0 and v1.1" is in fact
-only a small mostly housekeeping diff at first.
-
-By the way i found your question on additional aka redundant
-checksums (wherever) very interesting, given that Antonio
-Diaz Diaz (author of plzip plus support libraries) swears on
-CRC-32 for long time storage, with absolutely impressive numbers
-on reliability (i think here: [1])
-
-  [1] https://www.nongnu.org/lzip/safety_of_the_lzip_format.html#lzma_crc
-
-(Ie, i asked for maybe xxhash support or what, eh, as it was
-a public list:
-
-  > While CRC-32 is ok, i guess people (including me) doubt its
-  > viability for long-term archiving, especially when compared with
-  > other algorithms.  It is not so terrible as years ago, since most
-  > people surely have lots of copies, and the filesystems use
-  > checksumming.  But as a standalone archive, CRC-32 fails badly,
-  > for example smhash says "insecure, 8590x collisions, distrib,
-  > PerlinNoise":
-
-  The tests performed by smhasher are 100% unrelated to error detection in a
-  decompressor context. CRC32 is probably optimal to detect errors in lzip
-  members. See
-  http://www.nongnu.org/lzip/manual/lzip_manual.html#Quality-assurance
-
-  "Lzip, like gzip and bzip2, uses a CRC32 to check the integrity of the
-  decompressed data because it provides optimal accuracy in the detection of
-  errors up to a compressed size of about 16 GiB, a size larger than that of
-  most files. In the case of lzip, the additional detection capability of the
-  decompressor reduces the probability of undetected errors several million
-  times more, resulting in a combined integrity checking optimally accurate
-  for any member size produced by lzip."
-
-  See also http://www.nongnu.org/lzip/safety_of_the_lzip_format.html#lzma_crc
-  '4.1 Interaction between LZMA compression and CRC32' and '7 Conclusions':
-
-  "After 14 years of testing, the MTBF of lzip can only be estimated because
-  not even one false negative has ever been observed. If one were to
-  continuously decompress corrupt lzip files of about one megabyte in size (10
-  decompressions per second), each of them containing the kind of corruption
-  most difficult to detect (one random bit flip), then a false negative would
-  be expected to happen every 694 million years."
-
-The linked site claims (and that thus likely means: announces
-facts) that the error detection is "good enough for avionics", if
-i recall correctly.)
-
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Regards,
+Salvatore
