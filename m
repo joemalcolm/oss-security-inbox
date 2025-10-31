@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2262" "Thursday" "8" "February" "2018" "17:57:00" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>" "66" "[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" "^Date:" nil nil "2" "2018020816:57:00" "[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow" (number mark "        hs@schlitter Feb  8   66/2262  " thread-indent "\"[oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow\"\n") "<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>" ("<20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21994 invoked by uid 550); 8 Feb 2018 17:03:49 -0000
+Received: (qmail 18076 invoked by uid 550); 31 Oct 2025 21:47:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +6,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13581 invoked from network); 8 Feb 2018 16:57:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=zcQTDbG6Xp4vV0VtMWeMWBd984QYWs/SuHfvFR6ClJI=; b=Ga82i0LUJHEfFj4NyECiNEtA8h
-	fG1MnNGuABBEo9duYuAjkVbVMXtVc6xO0xwY2nJON03vC9wf1FHereO+R9vndap8aKBvk3W6O8Zik
-	BFBF50MSCalG6RA8ATcGnecctdZ0xwugreUHSDhyWrOWjI/ymI4NHQHVLGtc3wjKdpZI=;
-Message-ID: <20180208165700.i7j2n7avv6bebqo2@jumper.schlittermann.de>
-References: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rcpsruxerdun24pt"
-Content-Disposition: inline
-In-Reply-To: <20180207103943.wwijjdmnlzpp46lm@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Date: Thu, 8 Feb 2018 17:57:00 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-2018-6789 Exim 4.90 and earlier: buffer overflow
+x-ms-reactions: disallow
+Received: (qmail 7533 invoked from network); 31 Oct 2025 21:06:21 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1761944772; x=1762203972;
+	bh=ghxdeBjb2Nwd2z7S3Sk+hqUNBoUS2o+Yr0xYMcBC3FM=;
+	h=Date:To:From:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=QbD6MjMiN09diJb9sfNiYcVlt1fhIjtNR6xTO3Rb/Rt+PfPFDbTy34rwPNxrHgZoD
+	 h+qcmEqlnTEorTe5QgB+aFBKZcUvlt+rREXr2NPvZo60u8TtUODp2N+sBzuZB1hpqU
+	 nHd4yf4mUFqXyPwHmMRWcSn3Y8tCFt5VHCMSbSFDz799vni1BI4IPDl7ajsHE1gi0k
+	 bqGlKDKtWisx53uwi6E3Pf/ugmOZLh50mYx+6w3PIIuPd1y6u007TtW/TOT56Gs7Yr
+	 I0FHEQmIjyB+N6cQEfgPQEVGlqpohCu2NIwPeVSZzboEw40lrwCpVZGkmczzpe+hmc
+	 DNj7YBdsC8s9Q==
+Date: Fri, 31 Oct 2025 21:06:09 +0000
 To: oss-security@lists.openwall.com
-
---rcpsruxerdun24pt
+From: Art Manion <zmanion@protonmail.com>
+Message-ID: <76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
+In-Reply-To: <20251028014909.GA6430@openwall.com>
+References: <aP_msOoiyHJ_M4Yx@mertle> <20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com> <20251028014909.GA6430@openwall.com>
+Feedback-ID: 39015149:user:proton
+X-Pm-Message-ID: cfc279aab31afc343cb2544706f829fb137e25d3
+MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
-Heiko Schlittermann <hs@schlittermann.de> (Mi 07 Feb 2018 11:39:43 CET):
-> CVE-2018-6789 Exim 4.90 and earlier
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On 2025-10-27 18:49, Solar Designer wrote:
+
+> What's common about the CVEs mentioned in this thread, including those
+> against GNU Bison (so not config file parsing, but just bogus CVEs), is
+> that all of them were assigned by VulDB as the CNA.  VulDB even went to
+> the effort (or automation?) to generate CVSS 2.0, 3.0, 3.1, and 4.0
+> vectors for all of these.  It's pretty ridiculous for a CNA not only to
+> assign bogus CVEs, but also have CVSS vectors and scores for them
+> without realizing the error.  This suggests a lack of proper process
+> and/or expertise.
 >=20
-> There is a buffer overflow in an utility function, if some pre-conditions
-> are met.  Using a handcrafted message, remote code execution seems to be
-> possible.
->=20
-> Next steps:
->=20
-> * t0:     Distros will get access to our "security" non-public git repo
->           (based on the SSH keys known to us)
-> * t0 +7d: Patch will be published on the official public git repo
->=20
-> t0 will be around 2018-02-08.
+> At this point, I think we want to hear from VulDB on this, and from
+> MITRE on their requirements for CNAs in general and VulDB in particular
+> to review CVE requests before assignment.  Maybe VulDB is in violation.
 
-t0 is now. Distro maintainers please use the following repo URLs:
+Speaking as a CVE Board member, but not for MITRE, I suggest that somebody =
+dispute the dnsmasq (and Bison) CVE IDs.  I'll do this unless somebody else=
+ wants to.  There is room for improvements to CVE assignment, but the curre=
+nt path is to file disputes.  Perhaps CNAs with "high" dispute counts or ra=
+tios warrant some sort of action.
 
-The full git repo:
+Considering the CVE vulnerability determination rules, if there is no net s=
+ecurity impact or gain to the attacker, then:
 
-    ssh://git@exim.org/exim.git=20=20=20=20=20
-    tag: exim-4_90_1
+"4.1.2 Conditions or behaviors that do not lead to a security impact SHOULD=
+ NOT be determined to be Vulnerabilities. Examples of security impacts incl=
+ude an increase in access for an attacker, a decrease in availability of a =
+target, or another violation of security policy."
 
-The tarballs git repo:
+https://www.cve.org/resourcessupport/allresources/cnarules#section_4-1_Vuln=
+erability_Determination
 
-    ssh://git@exim.org/exim-packages.git
-    tag: exim-4_90_1
+Does dnsmasq read the config file before dropping privileges?  I think so, =
+since dnsmasq needs to know what interfaces and ports to bind to?
 
-The tags are signed with my key=C2=B9, as are the tarballs and my own
-commits.
+Does dnsmasq check that the config file is root-owned and not user-writable=
+?  In my brief testing, no.
 
-=C2=B9) If you get a warning about my key being expired, please refresh it
-from the keyservers or from
-https://ssl.schlittermann.de/keys/gpg/hs@schlittermann.de/F69376CE.asc
+Can a regular user call dnsmasq with '-C dnsmasq_malicious.conf' and achiev=
+e memory corruption under root privileges?  Even if it's unlikely to result=
+ in code execution, that privilege escalation may qualify as a CVE-worthy v=
+ulnerability.
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
+Regards,
 
---rcpsruxerdun24pt
-Content-Type: application/pgp-signature; name="signature.asc"
+ - Art
 
------BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlp8gVsACgkQr0zGdqa2
-wUI+pAf/eSU7MtOqnqXaz9eBjaRIwX5fJD+SB19zJJBf8QmrrXa1ZpypfqKEPTv7
-bFCqkFmhuX3NsFPHNVzALCwrcl1GtC9aKJm+7LGggBiGHs1td656/dxF2rP7klPH
-pCojtzm6LA1LKQvR12qWYedb4Y1zClg6CWg7p2V9SrF9gHlZTTsIaC2TbJ3X9wVN
-znL/NHM6WW0XHfgn7g/NhtYid4zHt2GuqXI1FvBEoYlmlgiZS7EnOi6lkf83eyq1
-TU5Hn0XuMcOagPs5VOYTEWSY3RGXQcAXv1leyTu4h/DWr5grIIQ+Z43WcvM7Z9TD
-uWE/+2zvBWw2+F9HmKeVPI440c1k7Q==
-=0aOA
------END PGP SIGNATURE-----
-
---rcpsruxerdun24pt--
