@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1028" "Wednesday" "22" "April" "2015" "03:39:46" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150422073946.3934E6C001B@smtpvmsrv1.mitre.org>" "28" "[oss-security] Re: CVE Request for ZFS on Linux" nil nil nil "4" "2015042207:39:46" "[oss-security] Re: CVE Request for ZFS on Linux" (number mark "        cve-assign@m Apr 22   28/1028  " thread-indent "\"[oss-security] Re: CVE Request for ZFS on Linux\"\n") "<55370039.7000607@tripleback.net>" ("<55370039.7000607@tripleback.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5656 invoked by uid 550); 22 Apr 2015 07:40:00 -0000
+Received: (qmail 11692 invoked by uid 550); 31 Oct 2025 21:47:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,41 +6,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5607 invoked from network); 22 Apr 2015 07:39:58 -0000
-In-Reply-To: <55370039.7000607@tripleback.net>
-Message-Id: <20150422073946.3934E6C001B@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 22 Apr 2015 03:39:46 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request for ZFS on Linux
-To: kash@tripleback.net
+x-ms-reactions: disallow
+Received: (qmail 32497 invoked from network); 31 Oct 2025 17:20:56 -0000
+Date: Fri, 31 Oct 2025 10:20:45 -0700
+From: nightmare.yeah27@aceecat.org
+To: oss-security@lists.openwall.com
+Message-ID: <hjcvYS5JbRM3pUNh@aceecat.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <b3afc964-2840-4583-bb39-e05d390d3e55@citrix.com>
+ <20250306031513.GA4873@openwall.com>
+ <b21e9116-4108-4d52-b3b0-8c1e96486888@citrix.com>
+ <20250306044856.GA6417@openwall.com>
+ <bfaecb7c-25a9-406a-a4ca-a55a32c3ae43@citrix.com>
+ <20250313035536.GA20899@openwall.com>
+ <b66f24d0-6f20-459c-a7ab-c5c6267791a1@citrix.com>
+ <eb6ac191-18a8-45a2-99bf-2bee42b02fca@ehuk.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eb6ac191-18a8-45a2-99bf-2bee42b02fca@ehuk.net>
+Subject: Re: [oss-security] Xen Security Notice 2 (CVE-2024-35347) AMD CPU Microcode
+ Signature Verification Vulnerability
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Oct 30, 2025 at 04:25:29PM +0000, Eddie Chapman wrote:
 
-> https://github.com/zfsonlinux/zfs/issues/3319
+> Even just for 1 AMD machine, a BIOS updates is harder than it should
+> be, since almost none of the major motherboard manufacturers have
+> managed to implement the ability to somehow save a set of BIOS
+> settings that can then be reloaded after updating (or at least one
+> that works reliably). Meaning each machine's BIOS needs to be
+> completely reconfigured each time, very time consuming and
+> problematic for some deployments.
 
-> Can we have a CVE
+This is ancient, pre EFI and etc etc ... but it may be a start for someone.
 
-Use CVE-2015-3400 for the 'Since 0.6.4 sharenfs, when built with the
-https://github.com/zfsonlinux/zfs/pull/2790/commits patches (such as
-for "deb http://archive.zfsonlinux.org/debian jessie main"), always
-gives read access to everyone' issue.
+https://savannah.nongnu.org/projects/biosconfig/
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVN0/jAAoJEKllVAevmvmsN1oIAIrao/NraIfKK6zZwLi4Xj28
-tDPPGfs1WQRwnWEKt44EYE4aQ43wvTopr2FcIqw6l6lyOJCgsJxHCJQnSBf7DeaC
-Hbe41b/tbdKH3lG2XUyV/FA5BDPeJqhleEKOUZV88zLolDauAMTCMyAKI/wUW/t6
-zyxhpHPsnmDcSTOnzlEMG/a8VlvWvDDvc48zeES9aDe/Bj4yaaEMrvuSj4ma48SL
-uP68YliACF3hjQx8pgepa44qfp8UuB2T+EGAtGiL0DmwGURv1Ljo7GArVPhq6OVj
-ZWq8jb7nh1wLkBW7orezZclKSCdlitFPsTPqD6xMnTtsJLwqgdh94VToBHVzwoM=
-=Z38L
------END PGP SIGNATURE-----
+-- 
+Ian
