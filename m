@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1602" "Monday" "18" "July" "2016" "10:33:12" "+0300" "Solar Designer" "solar@openwall.com" "<20160718073312.GA29485@openwall.com>" "39" "Re: [oss-security] CVE request for webkit js engine javascriptcore" nil nil nil "7" "2016071807:33:12" "[oss-security] CVE request for webkit js engine javascriptcore" (number mark "U       solar@openwa Jul 18   39/1602  " thread-indent "\"Re: [oss-security] CVE request for webkit js engine javascriptcore\"\n") "<CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>" ("<CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30250 invoked by uid 550); 18 Jul 2016 07:33:23 -0000
+Received: (qmail 7877 invoked by uid 550); 1 Nov 2025 02:19:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30232 invoked from network); 18 Jul 2016 07:33:23 -0000
-Date: Mon, 18 Jul 2016 10:33:12 +0300
+x-ms-reactions: disallow
+Received: (qmail 32231 invoked from network); 1 Nov 2025 02:18:36 -0000
+Date: Sat, 1 Nov 2025 03:18:35 +0100
 From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20160718073312.GA29485@openwall.com>
-References: <CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>
+Message-ID: <20251101021835.GA2757@openwall.com>
+References: <b3afc964-2840-4583-bb39-e05d390d3e55@citrix.com> <20250306031513.GA4873@openwall.com> <b21e9116-4108-4d52-b3b0-8c1e96486888@citrix.com> <20250306044856.GA6417@openwall.com> <bfaecb7c-25a9-406a-a4ca-a55a32c3ae43@citrix.com> <20250313035536.GA20899@openwall.com> <b66f24d0-6f20-459c-a7ab-c5c6267791a1@citrix.com> <eb6ac191-18a8-45a2-99bf-2bee42b02fca@ehuk.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CA+VUd4jXjoWWsNBhsy8B6yoE5GtHhF4zjocWkxvj-axatyY+QQ@mail.gmail.com>
+In-Reply-To: <eb6ac191-18a8-45a2-99bf-2bee42b02fca@ehuk.net>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE request for webkit js engine javascriptcore
+Subject: Re: [oss-security] Xen Security Notice 2 (CVE-2024-35347) AMD CPU Microcode Signature Verification Vulnerability
 
-Hi,
+On Thu, Oct 30, 2025 at 04:25:29PM +0000, Eddie Chapman wrote:
+> When I skimmed this thread back in April the implications for sysadmins 
+> of the changes made by AMD to microcode loading didn't fully hit home. 
+> However, with AMD's comment added to amd-ucode/README in their commit 
+> [1] to the linux firmware repository this week it finally dawned on me 
+> that huge numbers of AMD machines are never going to get future 
+> microcode updates, unless their owners update the BIOS.
 
-On Mon, Jul 18, 2016 at 02:25:17PM +0800, jun3 June wrote:
-> Please can I have CVE IDs assigned to the following vulnerabilities:
-> 
-> 1.javascriptcore vulnerability:
-> 
-> https://bugs.webkit.org/show_bug.cgi?id=158411
-> 
-> 2.the fix has landed in r201787: <http://trac.webkit.org/r201787>
+> [1] 
+> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=ad91544767665e911386e62ecebaa969e2cfb1c0
 
-As a list moderator, I already regret having (reluctantly) accepted your
-message.  I thought it was just lacking detail in message body, which is
-against oss-security list content guidelines:
+Posting the referenced comment directly in here for those too busy to
+visit links and for archival:
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
++NOTE: In order to not fully abandon machines affected by AMD-SB-7033 [1] that
++have not received the BIOS update, the family 19h microcode container now
++includes a second patch for these machines that brings the microcode to the
++highest possible level without the microcode signing fix. While a BIOS update
++is highly recommended to receive the latest security updates issued after the
++microcode signing vulnerability, this will allow non-updated systems to at
++least receive some microcode updates beyond the version provided by BIOS.
++
++The list of additional patches can be seen below:
++  Family=0x19 Model=0x01 Stepping=0x01: Patch=0x0a0011d5 Length=5568 bytes
++  Family=0x19 Model=0x01 Stepping=0x02: Patch=0x0a001238 Length=5568 bytes
++  Family=0x19 Model=0x11 Stepping=0x01: Patch=0x0a101148 Length=5568 bytes
++  Family=0x19 Model=0x11 Stepping=0x02: Patch=0x0a101248 Length=5568 bytes
++  Family=0x19 Model=0xa0 Stepping=0x02: Patch=0x0aa00215 Length=5568 bytes
++
++[1]: https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7033.html
 
-"At least the most essential part of your message (e.g., vulnerability
-detail or a PoC exploit) should in fact be in the message itself (and in
-plain text), rather than only included by reference to an external
-resource.  Posting links to relevant external resources as well is
-acceptable, but posting only links is not."
-
-So I thought I'd just point out this to you like I do now (but
-off-list), for further occasions.  However, as it turns out the URL
-https://bugs.webkit.org/show_bug.cgi?id=158411 says "You are not
-authorized to access bug #158411. To see this bug, you must first log in
-to an account with the appropriate permissions." and the other URL is
-lacking direct detail on the bug as well (only talking about the fix).
-
-BTW, is it one vulnerability or more?  You wrote "vulnerabilities".
-
-Please post the detail in a "reply" to this message, and please
-include detail (not only URLs) in your postings going forward.  This
-last request/reminder applies to everyone posting to oss-security.
-
-Thanks,
+So the issue is those machines without a BIOS update only get their
+microcode updated "to the highest possible level without the microcode
+signing fix."  Not to the actual latest, and with no future updates.
 
 Alexander
