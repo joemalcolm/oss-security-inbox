@@ -1,4 +1,4 @@
-Received: (qmail 26583 invoked by uid 550); 10 Apr 2025 13:18:29 -0000
+Received: (qmail 25670 invoked by uid 550); 1 Nov 2025 21:33:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,51 +8,109 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 18185 invoked from network); 10 Apr 2025 12:22:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akendo.eu; s=MBO0001;
-	t=1744287767;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=itzkq4TgG/Gdc6PRDMtr6uJWR0nlc5bmjvnYKleaYd0=;
-	b=By2QJ3GsjzZYJsBO2QhBDlr0dzpNFa421QsXnaaorsTuc1DRfEEFLWXH4Lqyq6Gfm2QqsR
-	hCnHo8EJRGIhhNJNVPMWMfi8zfhd6N6mF4+2O7Pwgn7TY7mlnkt3cqS3XP64A1eR9qPQMt
-	Av7xrGbcIBGS/dE2Lx/b+0q6KBJktnN5lqMKepPVsGiRS0/DDXwLJqiRCKEZ72Er9SK9xe
-	THr5B24HujemKf37viAXQNRohLXXktRoERM+n0wJX4CQSMM8eVC/oD4MibISHXp3TUkOAR
-	4aLZjlfz15/nptyL2pLpXl6t91zlnrFQQEF831z1Zva5MWYMt2tJX7Xve01S2w==
-From: "akendo@akendo.eu" <akendo@akendo.eu>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: Kernel CVE-2024-50217
-Thread-Index: AQHbqhLyJDDKZBF9g0aSSOJ7H+RjcQ==
-X-MS-Exchange-MessageSentRepresentingType: 1
-Date: Thu, 10 Apr 2025 12:22:46 +0000
-Message-ID:
-	<VI0P189MB276612AABA4D5DB2B4018524AEB72@VI0P189MB2766.EURP189.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-Exchange-Organization-SCL: -1
-X-MS-TNEF-Correlator:
-X-MS-Exchange-Organization-RecordReviewCfmType: 0
-x-ms-reactions: allow
-Content-Type: multipart/alternative;
-	boundary="_000_VI0P189MB276612AABA4D5DB2B4018524AEB72VI0P189MB2766EURP_"
+Received: (qmail 26571 invoked from network); 1 Nov 2025 20:15:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762028139; x=1762632939; darn=lists.openwall.com;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lfPSgFgm7BxiEca/BgplssQ8G/cto9B8yu6siiubd/o=;
+        b=dQHUDO/TeBk+6qJ99inohkqGa/aO7I1Tqbfz9qazMZ3gYNlofYMstTyeKIoepAMoJm
+         EaDALUnkULjSBmCr5hgcIhQI5m1puoe73tm8eOLYpGHs9bhhePpKfRGEhc92FyXr0goo
+         cnwcSi7eeWTmpN7R+0kJ7O5taW+3gC8rKgPax9ZbK1QULDczfYThpFSwaZp1Vi/Bu+KA
+         kfH0d+MOlA2XylQ7FswZpRK8FADTlADMoxXCFiBywVji2KSUTsdj1jJ5BM2LfD+5331w
+         zhcTCp2ZxRF9xnAKC1JHjCp11visa5HHdAJ4ynFHNC1/f4iqRyHsRqrdPT9Wh/ILmMdR
+         5HIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762028139; x=1762632939;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lfPSgFgm7BxiEca/BgplssQ8G/cto9B8yu6siiubd/o=;
+        b=FcZezM2uudKP4oz3GeSBNOon83HsN0U8r47PE6+f1z8PnjG87BIaG35Mv/uAeJearr
+         L2A6V6xf77uF7UFPhFoFzelEvvGeo6MEpx2V0J3xf/xUnEZTRHuv5HJdsgFbQwvgo9z6
+         Ec/ckHExArPQGEUOAJQMnan/VhmjY8mCDdZZUecrOHWNfgIrNruadk09XJOI3ausfuTQ
+         7kQXTEPDxq43XMFvee40N/vehUZznyK9XzOTeGpQbbLBp0z2v4Bf9Rc8yUahy51GymXJ
+         JpfxrwBg1DNc1BJXHjXza//wIFuujGdRinClD0tuVk6qMwtb8EbYyaHlcmnheNSnqoZi
+         Qdog==
+X-Gm-Message-State: AOJu0Yyd9kj1W4d7BuIxN2oyXaE2MHUyKUJLMV90Z2LboD/kQG1Mu1Um
+	2i2Ee7yYIaUCwA14i8tPoMHNxqtlKd8nLDHgL8Lf5PcRTqYmqUsu9Z3p3fNkYzOS
+X-Gm-Gg: ASbGncsvVj9UYa5wXDKwqyYffWSc/n6ceiXvX3k7xKR3nTyM1tCT09JCqu7AePLIHRC
+	itm1Y4wqLso8tYP5jkwEknCKXwxh2y59DJBOpwuVESLtv/N5G+nFULl/lDbe2/Qw4/bKq6ckKHv
+	yU1LFFez+hQvCPhtoQ+XWyavjoxr11aL+NfcDFHVY5tIaM7j7Lvaqj170dElBLtnC64D9qYnt74
+	tsy3cK3to9rTW8YMq1WNQPzTiOHCz7g57V17JIVwymFkdTJNYaP0w1MY+B+JepwHQRTRckjS6hR
+	rQLnQEvnUZNCATRUe2N9I6498+HkJq/kHU9EdzA+PO4dv7e3It9b5sQcB/KQGxvUJTTtvp850va
+	7HhFHbdFEXYUM5U+R9I0NwJeM3c5z8zY/VHhGu3Nvvu+/EiHz9k0qlFr0+w==
+X-Google-Smtp-Source: AGHT+IH9oM/wqgQXQrQQFccIMJbMgyEPWmqDX9rat2+ee5LJJXTbfMg8kjMAxDbtBMkKP+1nAv1NAg==
+X-Received: by 2002:a17:902:e751:b0:271:479d:3dcb with SMTP id d9443c01a7336-2951a36c5cdmr110215545ad.6.1762028139299;
+        Sat, 01 Nov 2025 13:15:39 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Russ Allbery <eagle@eyrie.org>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <875xbtlf4z.fsf@hope.eyrie.org>
+References: <aP_msOoiyHJ_M4Yx@mertle>
+	<20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
+	<20251028014909.GA6430@openwall.com>
+	<76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
+	<20251101030054.GA3031@openwall.com> <875xbtlf4z.fsf@hope.eyrie.org>
+Date: Sat, 01 Nov 2025 13:15:38 -0700
+Message-ID: <87qzuh33x1.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-50217: Linux kernel: btrfs: Use-after-free of block device file in __btrfs_free_extra_devids()
+Content-Type: text/plain
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
---_000_VI0P189MB276612AABA4D5DB2B4018524AEB72VI0P189MB2766EURP_
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+Hi Russ,
 
-Hey everyone,
+Russ Allbery <eagle@eyrie.org> writes:
 
-Not too sure how or whom to ask about: But I saw that there is CVE-2024-502=
-17 that affects every kernel since 4.8.
+> Solar Designer <solar@openwall.com> writes:
+>
+>> I don't think a "check that the config file is root-owned and not
+>> user-writable" would be relevant since a maybe-relevant threat model
+>> involves config files intentionally created by other software such as a
+>> web UI, which would set permissions such that the file is processed, and
+>> since such checks are uncommon and the lack of them does not mean the
+>> software supports untrusted config files.
+>
+>> Other than that, I see that this gets tricky for a CNA to evaluate
+>> without input from the maintainers, so I may have been unnecessarily
+>> harsh on VulDB.
+>
+> This is a bit of an "ask the Lazyweb" question since I have done only
+> minimal research, but is there any way for me to declare, as the software
+> maintainer, what I consider to be the security boundaries of the software
+> in a way that can be at least partially machine-readable? I know there are
+> tons of modeling languages for *building* software, imposing or checking
+> access control, etc., but is there a way for me to *label* a free software
+> project to communicate information such as "edit access to the
+> configuration file is arbitrary code execution by design"?
 
-However, it is only fixed on more recent version of the linux kernel like 6=
-.11 or 6.12. Any reason this wasn=92t backported to older kernel versions?
+If it makes you feel better, I do not think it is an "ask the Lazyweb"
+question. I actually had the same question.
 
+There is a recent example in GNU Tar CVE-2025-45582 [1] which describes
+a situation that has been described in the manual for 15 years. Copying
+the relevant text from the manual [2]:
 
-Best regards,
-Akendo
+    When extracting from two or more untrusted archives, each one should
+    be extracted independently, into different empty
+    directories. Otherwise, the first archive could create a symbolic
+    link into an area outside the working directory, and the second one
+    could follow the link and overwrite data that is not under the
+    working directory. For example, when restoring from a series of
+    incremental dumps, the archives should have been created by a
+    trusted process, as otherwise the incremental restores might alter
+    data outside the working directory.
 
---_000_VI0P189MB276612AABA4D5DB2B4018524AEB72VI0P189MB2766EURP_--
+There seems to have been agreement to change this longstanding behavior,
+but the CVE situation seems to have been handled very sloppily. The CVE
+was assigned on 2025-07-11, and the GNU Tar mantainers did not know
+about it until 2025-08-07 when a third party inquired about it on
+list [3]. Presumably upon scanning a container or something like
+that.
+
+Collin
+
+[1] https://nvd.nist.gov/vuln/detail/CVE-2025-45582
+[2] https://www.gnu.org/software/tar/manual/html_node/Integrity.html
+[3] https://lists.gnu.org/archive/html/bug-tar/2025-08/msg00000.html
