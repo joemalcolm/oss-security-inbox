@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2574" "Saturday" "24" "October" "2015" "10:31:16" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20151024103116.4877253d@pc1>" "76" "[oss-security] Heap overflow and endless loop in exfatfsck / exfat-utils" nil nil nil "10" "2015102408:31:16" "[oss-security] Heap overflow and endless loop in exfatfsck / exfat-utils" (number mark "        hanno@hboeck Oct 24   76/2574  " thread-indent "\"[oss-security] Heap overflow and endless loop in exfatfsck / exfat-utils\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30141 invoked by uid 550); 24 Oct 2015 08:30:51 -0000
+Received: (qmail 19698 invoked by uid 550); 5 Nov 2025 07:14:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +6,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30097 invoked from network); 24 Oct 2015 08:30:39 -0000
-Message-ID: <20151024103116.4877253d@pc1>
-X-Mailer: Claws Mail 3.13.0 (GTK+ 2.24.28; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-18577-1445675427-0001-2"
-Date: Sat, 24 Oct 2015 10:31:16 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Heap overflow and endless loop in exfatfsck / exfat-utils
-To: oss-security@lists.openwall.com,
-  CVE ID Requests <cve-assign@mitre.org>
+x-ms-reactions: disallow
+Received: (qmail 19657 invoked from network); 5 Nov 2025 07:14:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1762326852; bh=zILTWnj10AmojB7RBP55JxrTGcIAnF+uWFQA/VTxtsE=;
+	h=Date:From:To:Subject:From;
+	b=JdUxkT1crLdoJG9bMwOkAmMkFKBJ8o5tkguZ70sHfufA6BTmWSflQtGnjc7iuaJ4E
+	 z1QJHCec1oOmkOiaMZRQj0kjGi5m4I03/8o/dVbTq++JmXCxuNbCfKUBqOnho5Lux7
+	 fuScCE2M96hHa7JNf4lFlolRe8aYw9X50fek3nbNx9WSrEGxHhNqHmbcMg4uE8c0tF
+	 W5gWnz1Q6btYP/wOvimCJbyBNQtYTb0OCwo/7t1f6cDsKq0AayfVJCl43ST7Lw65pw
+	 TU3rw+5ZZx9EeML+Zd0RPT0jKluXrFsFux6KUac4oJx0l/UdFqj6mc0m2gbgS3SoVO
+	 A1wT4OuAwHGAw==
+Date: Wed, 5 Nov 2025 08:14:12 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <n22p0976-32rq-9n56-n206-5o42o51090r5@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [SECURITY ADVISORY] curl: missing SFTP host verification with
+ wolfSSH
 
---=_zucker.schokokeks.org-18577-1445675427-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+missing SFTP host verification with wolfSSH
+===========================================
 
-https://blog.fuzzing-project.org/25-Heap-overflow-and-endless-loop-in-exfat=
-fsck-exfat-utils.html
+Project curl Security Advisory, November 5 2025 -
+[Permalink](https://curl.se/docs/CVE-2025-10966.html)
 
-exfat-utils is a collection of tools to work with the exFAT filesystem.
-Fuzzing the exfatfsck with american fuzzy lop led to the discovery of a
-write heap overflow and an endless loop.
+VULNERABILITY
+-------------
 
-Especially at risk are systems that are configured to run filesystem
-checks automatically on external devices like USB flash drives.
+curl's code for managing SSH connections when SFTP was done using the wolfSSH
+powered backend was flawed and missed host verification mechanisms.
 
-A malformed input can cause a write heap overflow in the function
-verify_vbr_checksum. It might be possible to use this for code
-execution.
+This prevents curl from detecting MITM attackers and more.
 
-Upstream bug report
-https://github.com/relan/exfat/issues/5
+INFO
+----
 
-Sample file triggering the bug
-https://crashes.fuzzing-project.org/exfatfsck-heap-overflow-write-verify_vb=
-r_checksum
+curl contains support for several different SSH backends, out of which wolfSSH
+is the newest and one that seems to almost never be used. Of course partially
+because of its incomplete state. When building curl, a single specific SSH
+backend is selected at build-time.
 
-Git commit for fix
-https://github.com/relan/exfat/commit/2e86ae5f81da11f11673d0546efb525af02b7=
-786
+The wolfSSH backend never supported SCP, only SFTP.
 
-Another malformed input can cause an endless loop, leading to a
-possible denial of service.
+As the wolfSSH backend was documented to be incomplete and to fail tests, we
+don't expect many users to use this code in production.
 
-Upstream bug report
-https://github.com/relan/exfat/issues/6
+The missing known host support and host key verification for wolfSSH were
+omissions from the time this code was added, as we expected and hoped it would
+grow and get improved over time. As we never got bug reports or comments on
+the code (which implies that nobody uses it) it never triggered anyone to
+continue the improvements and complete the implementation.
 
-Sample file triggering the bug
-https://crashes.fuzzing-project.org/exfatfsck-endless-loop
+We have since introduced the concept of experimental features, and should we
+have done this attempt today this code would probably never have left the
+experimental state.
 
-Git commit of fix
-https://github.com/relan/exfat/commit/35a1f77f9be2d8b21731f758baba4334935bf=
-18b
+We have now completely removed support for wolfSSH.
 
-Both issues have been fixed in the latest release 1.2.1 of exfat-utils.
-https://github.com/relan/exfat/releases/tag/v1.2.1
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-10966 to this issue.
 
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
+CWE-322: Key Exchange without Entity Authentication
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
+Severity: Low
 
---=_zucker.schokokeks.org-18577-1445675427-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+AFFECTED VERSIONS
+-----------------
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+- Affected versions: curl 7.69.0 to and including 8.16.0
+- Not affected versions: curl < 7.69.0 and >= 8.16.0
+- Introduced-in: https://github.com/curl/curl/commit/6773c7ca65cf2183295e56
 
-iQIcBAEBCgAGBQJWK0HUAAoJEKWIAHK7tR5CqkIP/ikFv6egbyLChEcHJo9sJs3n
-Nw/k0cr6Cb+tUaYfxGOvehnJ3auiTkM6b6QsXnQurVV8kdx//0T5kK+Zb2+RKcey
-HpZJxniTOVl6LSBUzqgjXo3IRgZWK6TkT1R1k5Ox2v4k0tBXPqZH6scpco8W/Io+
-FKtOJRwwoYwQKF4kuRwLorHjIt6cqOAv8eFw9AL2ShzAYDFW7rnBv7LnTbNdJv7W
-qBbqzlplJITFTrKwnVZjy8eOMiOWRw0BWC2nCi+aU9+kCfvpHswN71ZLlp/iolCp
-4pkjcDZMJh2UJKXeBtADUcwSyHX4XRC7tZFya0fknMYLgP1+85ZnX9obWmDK8pD8
-Hb91PaiUAF2GFP65ZhSV9rB1/VJ/YcoyIYaSQUTcZNltoQCblsEIrUjzN7QgNjcY
-NjL7182yube5HkwuZao0+vooD7cHiVyzUf/Wb52i+bzSzqUvNY75qSu5YO0lntgq
-yJRPItZ6nUkoF14EYr9qq3VzxHYUo4OxidvQpRMLeGIj/Rgq5KhDCUwuoG2e1Nwt
-5XX3/6lHlzhRD/dsGjuFPo2PJxV1wIAvykf0hBLKhhToNXDWl52fF4wafB+mG7zm
-9qHElm00nZVTV4t4W/WaWU1o4Adn4n7yF/iz0FR1kqLGJNDMED0Oay7nI4pjtD5V
-4DmmlkodRRBi2aCtCbUt
-=9KVB
------END PGP SIGNATURE-----
+libcurl is used by many applications, but not always advertised as such!
 
---=_zucker.schokokeks.org-18577-1445675427-0001-2--
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw also affects the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.17.0, this mistake is fixed. Support for wolfSSH is
+dropped.
+
+- Fixed-in: https://github.com/curl/curl/commit/b011e3fcfb06d6c027859
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.17.0
+
+  B - Build curl with another SSH backend
+
+  C - Avoid using `sftp://`
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on September 23, 2025. We
+contacted distros@openwall on October 29, 2025.
+
+curl 8.17.0 was released on November 5 2025 around 07:00 UTC, coordinated
+with the publication of this advisory.
+
+The curl security team is not aware of any active exploits using this
+vulnerability.
+
+CREDITS
+-------
+
+- Reported-by: Stanislav Fort (Aisle Research)
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
