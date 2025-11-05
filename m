@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1579" "Thursday" "22" "December" "2016" "18:59:21" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<81a289a4d4114679beb6de0627777384@imshyb02.MITRE.ORG>" "39" "[oss-security] Re: CVE request Qemu: display: virtio-gpu: out of bounds read in virtio_gpu_set_scanout" nil nil nil "12" "2016122223:59:21" "[oss-security] Re: CVE request Qemu: display: virtio-gpu: out of bounds read in virtio_gpu_set_scanout" (number mark "U       cve-assign@m Dec 22   39/1579  " thread-indent "\"[oss-security] Re: CVE request Qemu: display: virtio-gpu: out of bounds read in virtio_gpu_set_scanout\"\n") "<alpine.LFD.2.20.1612201818230.29699@wniryva>" ("<alpine.LFD.2.20.1612201818230.29699@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22092 invoked by uid 550); 22 Dec 2016 23:59:34 -0000
+Received: (qmail 29894 invoked by uid 550); 5 Nov 2025 14:56:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,67 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22052 invoked from network); 22 Dec 2016 23:59:33 -0000
-From: <cve-assign@mitre.org>
-To: <ppandit@redhat.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<zhenhaohong@gmail.com>
-In-Reply-To: <alpine.LFD.2.20.1612201818230.29699@wniryva>
-Message-ID: <81a289a4d4114679beb6de0627777384@imshyb02.MITRE.ORG>
-Date: Thu, 22 Dec 2016 18:59:21 -0500
+x-ms-reactions: disallow
+Received: (qmail 22142 invoked from network); 5 Nov 2025 02:43:12 -0000
+Message-ID: <46e47266-347a-4ebd-a400-86267ead39ac@treenet.co.nz>
+Date: Wed, 5 Nov 2025 15:43:02 +1300
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request Qemu: display: virtio-gpu: out of bounds read in virtio_gpu_set_scanout
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <6b3baf54-147d-4dce-a2c8-3cf77181030d@treenet.co.nz>
+ <20251105000946.GA30872@openwall.com>
+Content-Language: en-US
+From: Amos Jeffries <squid3@treenet.co.nz>
+In-Reply-To: <20251105000946.GA30872@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] [CVE-2019-18860] SQUID-2023:6 Cross Site Scripting
+ in cachemgr.cgi
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 05/11/2025 13:09, Solar Designer wrote:
+ > Hi,
+ >
+ > Thank you for posting this, but I'm afraid it is confusing:
+ >
+ > On Wed, Nov 05, 2025 at 11:26:14AM +1300, Amos Jeffries wrote:
+ >>      Squid Proxy Cache Security Update Advisory SQUID-2023:6
+ >
+ >> Advisory ID:       | SQUID-2023:6 (CVE-2019-18860)
+ >> Date:              | November 5, 2025
+ >
+ > OK, so it's an advisory from 2023 for a CVE from 2019 (or for an issue
+ > first disclosed in 2019), which was updated in 2025.  This brings up the
+ > question of what those updates in 2025 are...
 
-> Quick Emulator(Qemu) built with the Virtio GPU Device emulator support is
-> vulnerable to an OOB read issue. It could occur while processing
-> 'VIRTIO_GPU_CMD_SET_SCANOUT:' command.
+
+Okay, to clarify;
+
+The 2025 change is a new patch for the secondary attack vector reported 
+in 2020. Which should have been part of Squid v6.7 cachemgr.cgi and 
+sadly omitted. Mea culpa on that.
+
+That omission means *all* cachemgr.cgi released by the Squid Project 
+have been vulnerable and need the new v6 patch applied.
+  If the previous v4 patch for this CVE was applied, then it will still 
+need the new one applied on top.
+
+The tool is no longer published upstream, so there will not be an 
+officially fixed version released.
+
+
 > 
-> A guest user/process could use this flaw to crash the Qemu process instance
-> resulting in Dos.
+>> Revision history:
+>>
+>>   2019-10-18 20:15:14 UTC Initial Report
+>>   2019-11-03 16:22:22 UTC Initial Patches Released
+>>   2020-03-31 11:07:35 UTC Additional Report
 > 
-> http://git.qemu.org/?p=qemu.git;a=commit;h=acfc4846508a02cc4c83aa27799fd7
-> http://git.qemu.org/?p=qemu.git;a=commit;h=2fe760554eb3769d70f608a158474f
+> ...but the revision history starts in 2019 (before the advisory year?!)
+> and ends in 2020.
+> 
 
->> The scanout id should not be above the configured num_scanouts.
+(oops, thanks I have updated the github text)
 
-Use CVE-2016-10029.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYXGfnAAoJEHb/MwWLVhi2XawP/jE9QxYK30gG1aMK8peEuX3a
-b59gBHobECBcTLX2A8NUXN7/C5fIUhOUwiAj00sHEZjyZkJA8NONIfC3ussRlrkU
-GfFnFnYT6h5mprlh9EGaiXjENCGxWFYTZ1PeAieGpJV4VPWDzGr49L7p8lleLKS5
-arhNsgBXnJO/H6Wlk2JGlZRQAR6B+0rmhrpvQzZz0ry711f3sdkJ0bPIqPr3SrMS
-SBlARTOYKueTenW3z/o3U1YxKUx/y9/pkXbaEcRueGuUfCDQ7VEone4VzuqQG7Wo
-AJvkLoPX81TMShec4A9AKjMOohtDlDpnMB5afCHL8940u05BVLBk9n8Nw7hZbXZ+
-oETpGdXAVtXnJodBwfvY/tWQ5mJIkcCXNJefGEw1a0xM1JmGbYnfXCrqNEBJKboJ
-UAmL1wx6k4XZ698/akQupRkIIsSsEi3pwuK+3RBnHtbmkRiKVyiA0oRWyLFvas7u
-1Ij+iYb8xPGFdgAF/CuGvhkqsNWuZJIK0J8Qgxq7Tobt/EPdU86yt3cY4BjRBLr4
-VVOt9hjJKoUiIyszmeuwEK10G9UxqSu9RqK6siAOj+hEJCoMeqWx9Cdi2QgUaRwX
-saqhI5Y0pvcxccU/BN6spVWzRMpCp49D8t610pCEfLQE18mp+BqRAsPAN39j9RXZ
-V9XNIsxkhbOaBh0BwUqV
-=8Vzd
------END PGP SIGNATURE-----
+Cheers
+Amos
