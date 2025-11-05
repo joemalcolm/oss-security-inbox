@@ -1,4 +1,4 @@
-Received: (qmail 22341 invoked by uid 550); 2 Oct 2023 20:21:41 -0000
+Received: (qmail 15919 invoked by uid 550); 5 Nov 2025 15:02:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,39 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22002 invoked from network); 2 Oct 2023 20:21:18 -0000
-Date: Mon, 2 Oct 2023 22:21:06 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 7794 invoked from network); 5 Nov 2025 09:22:58 -0000
+From: "Olle E. Johansson" <oej@edvina.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Date: Wed, 5 Nov 2025 10:22:38 +0100
+References: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+ <2025110538-probation-thickness-0517@gregkh>
 To: oss-security@lists.openwall.com
-Cc: Kyle Zeng <zengyhkyle@gmail.com>
-Message-ID: <20231002202106.GA17010@openwall.com>
-References: <CADW8OBs19JEt7NekWaCuwQh=b90Kt1gDeXApuRXJX7YU0vmBKQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CADW8OBs19JEt7NekWaCuwQh=b90Kt1gDeXApuRXJX7YU0vmBKQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] [CVE-2023-42754] null pointer dereference in Linux kernel ipv4 stack
+In-Reply-To: <2025110538-probation-thickness-0517@gregkh>
+Message-Id: <5F9CEC1C-62DC-4BF1-96DC-22F62F2935F9@edvina.net>
+X-Mailer: Apple Mail (2.3826.700.81)
+Subject: Re: [oss-security] Becoming a CVE Naming Authority for your project
 
-On Mon, Oct 02, 2023 at 12:53:20PM -0700, Kyle Zeng wrote:
-> when the skb is rerouted through ipvs, its skb->dev is NULL. Then the
-> following `dev_net` call, which accesses `dev->nd_net`, becomes null
-> pointer dereference.
 
-When reporting issues like this, please always note the privileges
-required for attack.  For the example above, it appears to be
-CAP_NET_ADMIN within the namespace:
 
-static int
-do_ip_vs_set_ctl(struct sock *sk, int cmd, sockptr_t ptr, unsigned int len)
-{
-[...]
-	if (!ns_capable(sock_net(sk)->user_ns, CAP_NET_ADMIN))
-		return -EPERM;
+> On 5 Nov 2025, at 00:23, Greg KH <greg@kroah.com> wrote:
+>=20
+> On Tue, Nov 04, 2025 at 08:47:35AM -0300, Rodrigo Freire wrote:
+>> Open Source Project Maintainers,
+>>=20
+>> Managing security vulnerabilities is currently a significant pain,
+>> especially with the recent increase in dubious CVE reports due to AI
+>> assistants. The discussion around questionable CVEs reported against
+>> projects like dnsmasq, curl highlights a growing concern within the
+>> open source community.
+>>=20
+>> One effective way to combat the influx of bogus CVEs and ensure
+>> accurate vulnerability reporting is for open source projects to become
+>> their own CVE Numbering Authority (CNA). As a CNA, your project gains
+>> control over the CVE assignment process.
+>>=20
+>> Taking ownership of your project's as a CNA ensures that you are in
+>> control of the CVE assignment. There will be some requirements to it,
+>> sure thing. Check
+>> https://openssf.org/blog/2023/11/27/openssf-introduces-guide-to-becoming=
+-a-cve-numbering-authority-as-an-open-source-project/
+>=20
+> I totally agree that all "major" open source projects should become a
+> CNA, and strongly recommend taking back control over stuff like this.
+>=20
+> But, for "smaller" open source projects, it would be _great_ if a root
+> CNA could become the default for all of open source so that we don't
+> have the problem where any CNA can assign CVEs against any random
+> software without any repercussions.
 
-I guess other possibilities for triggering this issue (if any) have
-similar requirements.
+I would be happy if we could assign or =E2=80=9Cscope=E2=80=9D to a CNA tha=
+t would help us,
+but also protect our scope without having to become a CNA with all that
+comes with being one. In that case, we have to be in control over our scope
+if we want to move it to another CNA or at some point have the resources
+needed to register as a CNA ourselves. I am not sure how scope =E2=80=9Cown=
+ership=E2=80=9D
+works in the CVE program today.
 
-Thanks,
-
-Alexander
+/O=
