@@ -1,4 +1,4 @@
-Received: (qmail 30289 invoked by uid 550); 17 May 2025 13:22:50 -0000
+Received: (qmail 22292 invoked by uid 550); 5 Nov 2025 15:40:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,59 +8,93 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 15851 invoked from network); 17 May 2025 13:19:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=netbsd.org;
-	s=20240131; t=1747487965;
-	bh=DB3ohylWzuevlMY7FWdB3JbWoUR7Nzp1V+jlYZfgyss=;
-	h=To:CC:In-reply-to:Subject:Date:From;
-	b=V5i6IIM2IaY6z/rznz553+DEKGTt0Gfe6YsOiSMhRVN+qgikGffcXlG6Q+qV4u8jZ
-	 1CaW1Rb7RrRx4rVrqin/fTffatdjzDsBInW06YDih91I3ICIrfHITB+N0+Xrkm3Wpq
-	 6RnMjn5S58zPJzBck6tznYLT38XRVbUcJzVeb/Os=
+Received: (qmail 22256 invoked from network); 5 Nov 2025 15:40:00 -0000
+Date: Wed, 5 Nov 2025 15:39:48 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-CC: oss-security@lists.openwall.com, Eli Schwartz <eschwartz@gentoo.org>
-In-reply-to: <8ea7f8f5-7645-4d5d-af38-d0b434636e40@gmail.com> (jcb62281@gmail.com)
-Date: Sat, 17 May 2025 13:19:21 +0000
-From: Taylor R Campbell <riastradh@NetBSD.org>
+Message-ID: <aQtvxL3uUpHOd7q8@yuggoth.org>
+References: <aQoVOMxbrWQ7JzCV@yuggoth.org>
+ <cb27a1fa-c1f5-41c2-8e12-b7a183ea2aba@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250517131925.B156484E93@mail.netbsd.org>
-Subject: Re: [oss-security] describing affected systems (was: screen: Multiple
-	Security Issues in Screen (mostly affecting release 5.0.0 and setuid-root
-	installations))
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KLrkGjAAOXnJ8v6A"
+Content-Disposition: inline
+In-Reply-To: <cb27a1fa-c1f5-41c2-8e12-b7a183ea2aba@gmail.com>
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] [OSSA-2025-002] OpenStack Keystone:
+ Unauthenticated access to EC2/S3 token endpoints can grant Keystone
+ authorization (CVE PENDING)
 
-> Date: Fri, 16 May 2025 21:52:14 -0500
-> From: Jacob Bachmeyer <jcb62281@gmail.com>
-> 
-> On 5/16/25 13:07, Eli Schwartz wrote:
-> > On 5/16/25 12:31 PM, Taylor R Campbell wrote:
-> > [...]
-> >> (a) the same pkgsrc packages are available on, e.g., NetBSD 9.x (which
-> >>      is not EOL); and
-> >>
-> >> (b) pkgsrc is used on platforms other than NetBSD, including macOS,
-> >>      SmartOS, and various Linux distributions (e.g., for unprivileged
-> >>      use on HPC clusters where it is more flexible and up-to-date than
-> >>      the Linux distribution's package manager).
-> >>
-> >> That is why it would be more accurate for the report to say
-> >> `pkgsrc-2025Q1', not `NetBSD 10.1'.
-> >
-> > I strongly dispute this. It should instead list both, as both are
-> > affected.
-> 
-> Would "systems using pkgsrc-2025Q1, notably including NetBSD 9.x and 
-> NetBSD 10.1" have been a fair way of describing that set?
+--KLrkGjAAOXnJ8v6A
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sure, that's fine, or just `...notably including NetBSD' instead of
-specifying versions since NetBSD and pkgsrc versions advance
-independently.
+On 2025-11-04 18:15:23 -0500 (-0500), Demi Marie Obenour wrote:
+>On 11/4/25 10:01, Jeremy Stanley wrote:
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>> OSSA-2025-002: Unauthenticated access to EC2/S3 token endpoints can grant
+>>                 Keystone authorization
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>> :Date: November 04, 2025
+>> :CVE: PENDING
+>>
+>> Affects
+>> ~~~~~~~
+>> - Keystone: <26.0.1, =3D=3D27.0.0, =3D=3D28.0.0
+>>
+>> Description
+>> ~~~~~~~~~~~
+>> kay reported a vulnerability in Keystone=E2=80=99s ec2tokens and s3tokens
+>> APIs. By sending those endpoints a valid AWS Signature (e.g., from a
+>> presigned S3 URL), an unauthenticated attacker may obtain Keystone
+>> authorization (ec2tokens can yield a fully scoped token; s3tokens
+>> can reveal scope accepted by some services), resulting in
+>> unauthorized access and privilege escalation. Deployments where
+>> /v3/ec2tokens or /v3/s3tokens are reachable by unauthenticated
+>> clients (e.g., exposed on a public API) are affected.
+>
+>Which account will the tokens belong to?  Is it the one that signed
+>the URL?
 
-If I gave anyone the impression that I'm trying to conceal its impact
-on NetBSD users, as Eli has insinuated with fabricated quotes, I
-apologize (for that and for all the off-topic noise this minor point
-has generated) -- we did not escape this, and we are working to
-address it for all pkgsrc users on NetBSD or otherwise.
+Correct, if a user shares a signed URL, then that can be used to=20
+perform other (likely unintended) actions with the account that=20
+signed it as long as the relevant ec2tokens or s3tokens API methods=20
+are exposed to the attacker, i.e. not blocked with a WAF or similar.
 
-This will be my last message on the subject in this thread; I'm sure
-everyone is tired of hearing about it now.
+I've made a note to clarify this in an upcoming errata revision.=20
+Thanks!
+--=20
+Jeremy Stanley
+
+--KLrkGjAAOXnJ8v6A
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmkLb75fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WClVNRAAyQSKmpCv8OkdKFzXaLCK9hEiiMReEqgYcin/J8W7AMZqHMgA4OcIYsfq
+EINoPGCaBqXu5yBNyyV936OigoH93BTaxQAHdqzyfzigTJV3z+G3oDaWGp2mA1S1
+HHiUtxjkZwodzcI//aQlI0Q1YbClSIRNYnPpsYwfIryOHGyJETNlXw+K9lyPi90G
+zBtH1MwBcnv8rcH4IxQ7yXpr2J3QxFDND4V77wS9jXLwS6RAJRXmeboOiub9T5wx
++BICxXBP/PRiH1JsaRR5+q+ciMqqU5SWAolmRc7vobsCHe8BzreZDiJA1lxOtjpW
+ekPN7Nr0IrsdMhioZK7xCNoZf8iRBDDp8o5AoK9EyvY1X4Me1OIQfRyiO39YL9bm
+qJ2L2lMT/tKe9kB/bq5VQC3S2QTsUMlBHrK2OiAAx8Cdb3pLj9HOjSTV0vZJekb9
+9kA45WcrHEbBrrisdK6wri+CjCNtYmrYJ2R66M5usTqLkAxVsiTOljhfvKnUcA+0
+0/KzwpvekJqV/od5froGKvlWnkttfXKElh+piT/l/0Mhg58xQVnsvJpnHBci+Szs
+vnz/5sl//RtD1yVBdaDkFB9zmcu0Urt+15nbDvidpESG1xXERWmvMcu5POwqUjW1
+iwIxAa0xfn4VPaG5y7b2fbeAcLiTRqAeBN5OvmhmJVqU7Ptl6OE=
+=iN68
+-----END PGP SIGNATURE-----
+
+--KLrkGjAAOXnJ8v6A--
