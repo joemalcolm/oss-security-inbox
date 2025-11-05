@@ -1,4 +1,4 @@
-Received: (qmail 5890 invoked by uid 550); 27 Mar 2023 19:32:32 -0000
+Received: (qmail 27826 invoked by uid 550); 5 Nov 2025 14:56:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +7,126 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5717 invoked from network); 27 Mar 2023 19:32:09 -0000
-Date: Mon, 27 Mar 2023 21:31:59 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 1457 invoked from network); 5 Nov 2025 02:38:02 -0000
+Message-ID: <9423be70-1e56-4e04-9710-c41bce99b419@treenet.co.nz>
+Date: Wed, 5 Nov 2025 15:37:51 +1300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Message-ID: <20230327193159.GB6662@openwall.com>
-References: <CA+aC4kvP=EatKudD=V7Dzx6BRUN_0TQqyj_Xd0wOpzvnoG58wA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+aC4kvP=EatKudD=V7Dzx6BRUN_0TQqyj_Xd0wOpzvnoG58wA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] New distros list statistics
+From: Amos Jeffries <squid3@treenet.co.nz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [CVE-2025-54574] SQUID-2025:1 Buffer Overflow in URN Handling
 
-Hi,
+__________________________________________________________________
 
-Thank you very much for contributing this, Anthony!
+      Squid Proxy Cache Security Update Advisory SQUID-2025:1
+__________________________________________________________________
 
-I've just edited the wiki to credit Amazon for this (just like we did
-for Gentoo's similar contribution in 2017-2019) and to assign the task
-to Amazon.  Please let me know whether this is right.
+Advisory ID:       | SQUID-2025:1, CVE-2025-54574
+Date:              | August 1, 2025
+Summary:           | Buffer Overflow in URN Handling
+Affected versions: | Squid 2.x -> 2.7.STABLE9
+                    | Squid 3.x -> 3.5.28
+                    | Squid 4.x -> 4.17
+                    | Squid 5.x -> 5.9
+                    | Squid 6.x -> 6.3
+Fixed in version:  | Squid 6.4
+__________________________________________________________________
 
-On Thu, Mar 23, 2023 at 08:37:42PM -0700, Anthony Liguori wrote:
-> I've been working to automate[*] tracking posting on the distros@ mailing
-> list for reporting purposes.  This includes searching oss-security for
-> posting information, extracting CVEs, and trying to tie it all together.
-> 
-> Anywhere, I have full stats for 2022 and stats for Jan/Feb of 2023.  As
-> long as everyone is happy with the content, I'll update regularly moving
-> forward.
-> 
-> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2022
-> https://oss-security.openwall.org/wiki/mailing-lists/distros/stats/2023
-> 
-> [*] this has to be invoked manually in order to unlock my signing key so
-> it's only semi-automated.
+Problem Description:
 
-Yes, please do update this regularly.
+   Due to incorrect buffer management Squid is vulnerable to a
+   heap buffer overflow and possible remote code execution attack
+   when processing URN.
 
-Regarding the content, I notice some issues that I hope you can address:
+__________________________________________________________________
 
-You show "Coordinated Release Date" and "Days embargoed (scheduled)" as
-7.00 days from date "Reported" for most entries, which I assume is in
-most cases a placeholder when no specific CRD was extracted.  I
-understand it would be tricky to extract that from the private list
-threads automatically.  So for now I suggest that instead of stating
-7.00 in such cases, you leave these fields blank.  Longer-term, maybe we
-need to agree on a syntax (to include in list messages setting, ack'ing,
-or adjusting the CRD), so that your script would extract this more
-reliably?
+Severity:
 
-By the way, when an initially set CRD is later adjusted, how would you
-report that - report just one of them (I guess so, but need to decide
-and document which one) or add an extra column?  What if there's more
-than one adjustment?
+   This problem allows a remote server to perform a Buffer Overflow
+   attack when delivering URN Trivial-HTTP responses. Potentially
+   allowing delivery of up to 4KB of Squid allocated heap memory
+   to the client.
 
-You show extreme delays of 150+ days for two Linux kernel issues that
-you claim were brought to linux-distros in March 2022.  Neither of these
-two looks correct to me.  In one case, I merely added detail to an old
-thread where satisfactory disclosure on oss-security had been made
-months earlier.  In the other, you seem to link to a wrong CVE ID and
-thus picked up a correspondingly wrong linux-distros disclosure; in
-fact, you also list the same CVE ID for another issue, where it's
-probably correct, and you show that one was disclosed publicly on time.
+   Revealed memory may include security credentials or other
+   confidential data.
 
-You show "A race condition vulnerability in drivers/tty/tty_buffers.c"
-as Reported on 2022-05-26, but I see this Subject first appear on
-2022-04-24.  You show nothing Reported in April at all, but I think this
-is a counter-example.  In fact, I only checked this one because I found
-it weird to see nothing for April.  I guess there are more issues like
-this that I did not notice.
+__________________________________________________________________
 
-I think more issues were handled via (linux-)distros than you report.
-For example, we had some "Embargoed OpenSSL issue" pre-notifications in
-2022, but you don't list them.  I understand they were not full
-disclosures of the issues to linux-distros - rather, the distros were
-invited to contact OpenSSL for more information - yet I think we should
-not exclude them from statistics.  Perhaps your script didn't capture
-something else as well.
+Updated Packages:
 
-Once you've addressed these, I think it'd be a good idea to re-add the
-average and median embargo times - I think per year would be enough.
+   This bug is fixed by Squid version 6.4.
 
-Overall, this makes me skeptical about the automated processing.  We
-track these issues manually anyway, like we ought to, so we can as well
-manually keep track of the aspects needed for the statistics collection
-and reporting.  This would take some effort, but that's fine, and maybe
-we'll end up cross-verifying results of both approaches.
+   In addition, patches addressing this problem for the stable
+   releases can be found in our patch archives:
 
-Thanks again,
+   Squid 6:
+  
+<https://github.com/squid-cache/squid/commit/a27bf4b84da23594150c7a86a23435df0b35b988>
 
-Alexander
+   If you are using a prepackaged version of Squid then please refer
+   to the package vendor for availability information on updated
+   packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable:
+
+   Squid older than 4.14 have not been tested and should be assumed
+   to be vulnerable.
+
+   All Squid-4.x up to and including 4.17 are vulnerable.
+
+   All Squid-5.x up to and including 5.9 are vulnerable.
+
+   All Squid-6.x up to and including 6.3 are vulnerable.
+
+__________________________________________________________________
+
+Workaround:
+
+   Disable URN access permissions.
+
+    acl URN proto URN
+    http_access deny URN
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+   For installation / upgrade support on binary packaged versions
+   of Squid: Your first point of contact should be your binary
+   package vendor.
+
+   If you install and build Squid from the original Squid sources
+   then the <squid-users at lists.squid-cache.org> mailing list is your
+   primary support point. For subscription details see
+   <http://www.squid-cache.org/Support/mailing-lists.html>.
+
+   For reporting of non-security bugs in the latest STABLE release
+   the squid bugzilla database should be used
+   <https://bugs.squid-cache.org/>.
+
+   For reporting of security sensitive bugs send an email to the
+   <squid-bugs at lists.squid-cache.org> mailing list. It's a closed
+   list (though anyone can post) and security related bug reports
+   are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits:
+
+   This vulnerability was discovered by StarryNight.
+
+   Fixed by The Measurement Factory.
+
+__________________________________________________________________
+
+Revision history:
+   2023-06-24 08:18:55 UTC Fix published
+   2025-07-01 18:40:24 UTC Initial Report
+__________________________________________________________________
+END
