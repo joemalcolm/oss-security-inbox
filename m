@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1256" "Friday" "26" "July" "2019" "10:14:08" "+0200" "Greg KH" "greg@kroah.com" "<20190726081408.GA32730@kroah.com>" "28" "Re: [oss-security] Security release pre-announcement messages" "^Date:" nil nil "7" "2019072608:14:08" "[oss-security] Security release pre-announcement messages" (number mark "        greg@kroah.c Jul 26   28/1256  " thread-indent "\"Re: [oss-security] Security release pre-announcement messages\"\n") "<aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>" ("<20190722100013.GJ1168@jumper.schlittermann.de>" "<20190722112146.z4ey7777h5zci2zl@local>" "<20190722112953.GT67124@symphytum.spacehopper.org>" "<20190722115009.GA4117@openwall.com>" "<110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>" "<aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>") nil nil nil nil nil nil nil "Re: [oss-security] Security release pre-announcement messages" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32142 invoked by uid 550); 26 Jul 2019 08:14:26 -0000
+Received: (qmail 19517 invoked by uid 550); 6 Nov 2025 17:50:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,112 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32124 invoked from network); 26 Jul 2019 08:14:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=
-	date:from:to:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=fm1; bh=tqeFkr1sbKP1r7GAcJ7G/3/l0YS
-	MwZxdgxm3E8mm8V8=; b=VbenL9EDeL7jyrTIci8VZP0FNa8tAzPzbNXylDZnD/o
-	zp4K2wDQMzQe/6eIJixf4SzA5wHK0Wzts7ps+pF4c4OhSzecEKLKAbvKtj7fhAI8
-	1ZPMIYDZfZIPJxMnaOxOiT1Jtx+v0PHH7bDKIMRIVITP0LwNAbngxyfa8sIW9+8p
-	UNo1cPquvtZ2gT2G/N8JUneqPfILeOeHviLzwKE8okRV7sK8URkh7ViIYQji+B3X
-	kNdHqEGnFJdd2dBAwaBjVmAjZjwmBcW01OOlGGKyqkHnbA7Y7BRNCb0VTTAPaRf7
-	BbE/QRhzsEbu1lWksC7WAC+7TF/vAh9e4uhQnd1nFBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=tqeFkr
-	1sbKP1r7GAcJ7G/3/l0YSMwZxdgxm3E8mm8V8=; b=yMjNzBLEHXLupem44e/GrR
-	PY6A8FQOor0cfcJZKxrt2ldKIE1szYB1rrKFvA06tWdKFfr3W4CbMfTiCeSMt94L
-	mTgmRAW65BZWCxJ5ehBc6PLZEC+koDfqJTGpZHj0+tGL2pOOEGgPodLV3vQ+l2Qq
-	HZ7yFMJkLx/jGjtSKX8HS6zYrHBs9fzRCSnwpGBxrxFUrtU0jetHSBg01uCAJdGa
-	l9qvojteRrSkcn0P6NdD/VXWwjHVoz9c7aPQv2es/4RaE31lwbMWlhC+5DZc2fRe
-	+lgTiO8wb+bcKmUPfFKTyf/3MB2grOHnWROfru28hZw4EDy6fkCpiLyq8XO01PgA
-	==
-X-ME-Sender: <xms:UrY6XVOZSRIyDLT9wtCuuJ2j0TGXVmjitukIHdSf7WqQfUtEFjn0VQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeduvddrkeeggddtvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjfgesthdtre
-    dttdervdenucfhrhhomhepifhrvghgucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheq
-    necukfhppeekfedrkeeirdekledruddtjeenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hrvghgsehkrhhorghhrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-X-ME-Proxy: <xmx:UrY6XcPPv9y1hKhg5BV4g6EXFQFxil_gPmTPpLkyzBEeMCvRlvAcYg>
-    <xmx:UrY6XfSUw7USaLovha7Xsm37_QshRKKV9bDgTNrXj84njKI-w2jgzg>
-    <xmx:UrY6XWCtCBQw1CRut6erEbUbxDkLP_sPBY1ShmMLLLKLuLXlOmLxJA>
-    <xmx:UrY6Xd2TsP4umuFAYndICAwN04u1GiQxCDpsMmmYx9yBAYk6YAt51w>
-Message-ID: <20190726081408.GA32730@kroah.com>
-References: <20190722100013.GJ1168@jumper.schlittermann.de>
- <20190722112146.z4ey7777h5zci2zl@local>
- <20190722112953.GT67124@symphytum.spacehopper.org>
- <20190722115009.GA4117@openwall.com>
- <110f8440-7612-6014-fd40-2f8c72097b9a@catalyst.net.nz>
- <aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aa6TE4xteynh2_Ca6HNTpGBRXN0UKjaeO1QKfmh9JLPDcl0GZvbZgnMqCqUIjY7tqZ7EfR1cxFot8QGtkhtBlQrlcpMdnmnCH6qxIcETRas=@protonmail.ch>
-User-Agent: Mutt/1.12.1 (2019-06-15)
-Date: Fri, 26 Jul 2019 10:14:08 +0200
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Security release pre-announcement messages
+x-ms-reactions: disallow
+Received: (qmail 5239 invoked from network); 6 Nov 2025 17:18:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1762449474; x=1763054274; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t5shbr4WP6Y6ryZBlklRALqfJFCyMGfzMBK89+cAQkU=;
+        b=i2JRTxWLklB6poHeWqmYf3BF2Fi6uTceQhH32suziaOhUlxUgo0l+xXIF/DA6oyNEy
+         fUUKF9WLEV8hQXxDy311kcy15fP2qzbmI1AAlNwKR5VWW2Ca1vXf99ndHcTv1oSmtGV3
+         3tHROZ8OjShu73av+owP8a+HzPpdTxuYZ2FGcIFK3M6kY4jIbKPew/jdXZvw7o0EibSV
+         oJzEpZSv7BopBVpqtI7zfaazx5Pf0QvB0SXihAlGnA/Ua9HOio71YMd5OgciDHrbzZDU
+         0Gy9foP0QKEijxJJL+1hV7mV/yimOCId7Gcx8XZVwsA7rSbZJaqoRhuc4rCB/jNaM/4T
+         a8tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762449474; x=1763054274;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t5shbr4WP6Y6ryZBlklRALqfJFCyMGfzMBK89+cAQkU=;
+        b=M69ds7GMDNKwR+82n5rpF1QVJE0L5n961fT3XnDpV2Jd3A27rENoB0SMo9qOYDlgEp
+         6ndlwSlQJDwXOsvggzRyKFazaP1IGVwkystr3FDwLm9Ek5R00LL8iIaAa7GWazXzS9YI
+         8/xeVAYvR42ec8tLG82KqGqJgwvpC4d0ulxPHqTKShcxS/XQlmFltfCImPYiXN/i3X7K
+         8YxlFfi+pZJ5kOg5cMsbmw+BK1kGtooRayXj5kvbP63UHnCJFE5ldaUZJikpUv59oq2C
+         HRZPPLOLRGUqOVo1SRq9JxLgGXhR3Dn1S5xyAU5UFpB3LsQhkBkpNRQrQnKtgm5T3Mry
+         NGBA==
+X-Gm-Message-State: AOJu0YyCX8ZNTZOdKL2qctoSImK7bawUPZdTsRu9hcKZP3JWlnNyx8LD
+	OqjJ406ockO7r3QSsXFgCmDOGoxQSkq4o+cxwAFlcpA8u04W7YfHBCylFj0UhkkIWYniSzEi5bv
+	+uF+ho/VrCiRwGjv5XIWmQyhkRTP1XSXaQnQM
+X-Gm-Gg: ASbGncvO1aFg4yl/fh0jOuy3hY7WyIxLT8QfTsW8E6a4E1lBYtCOyM7ywo0lOV0VMsa
+	jCyAFK36ShgXxkYMDp+K+QMNJQyCAMpui4qknCgmkOd2lfrLCZrRTWH+aOFTEiiCt9M31oQck+j
+	C2abCeH6RePurpEf5mYIiJfo59jQz4IRJXqbTzWiXv2XfFUnVAT9IzVWz1T6yuz8Groiql9stE7
+	Wqg06kPqxV1+JLH7oSET+7nsV+lj2PlpU7nFFPgX/r5hAs0DuR1cgFiIU7MujJHke/FcnOtr/ac
+	zjJW4tBu
+X-Google-Smtp-Source: AGHT+IFgdUVRL9qdAT8xGt43RficxwuCWw009n1JfCw4Wq5lEOFcz+pmpUhP7Yq7x8WBYe54cP2BEsjh81HKuKL8I2U=
+X-Received: by 2002:a05:6000:2681:b0:426:d5de:e454 with SMTP id
+ ffacd0b85a97d-429e3305fd1mr6893525f8f.31.1762449473856; Thu, 06 Nov 2025
+ 09:17:53 -0800 (PST)
+MIME-Version: 1.0
+References: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+In-Reply-To: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+From: Pat Gunn <pgunn01@gmail.com>
+Date: Thu, 6 Nov 2025 12:17:41 -0500
+X-Gm-Features: AWmQ_bm3tatSWBqZ81GNv7K9jFO5B__tToJ4CNcoXhiekF-6XIZpQDhPxewQI_c
+Message-ID: <CADz+4x-GmS6gSGRe=6jCkS+5Sgnx8SpVyvx8Lu5UDE6ndx9CzQ@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000d2e94e0642f03e94"
+Subject: Re: [oss-security] Becoming a CVE Naming Authority for your project
 
-On Thu, Jul 25, 2019 at 09:35:45PM +0000, Stiepan wrote:
-> I would like to congratulate the teams that do that. If public
-> disclosure is deemed too dangerous before a patch is available, this
-> looks like The reasonable tradeoff. Wish it was the same with Linux...
+--000000000000d2e94e0642f03e94
+Content-Type: text/plain; charset="UTF-8"
 
-I too want a pony :)
+Wouldn't it be more healthy if security-minded people preferred to decouple
+process, numbering, and naming of these kinds of issues from
+technical/legal ownership of the covered products? I recognise that there's
+an advantage of the technical/legal owners generally having more context,
+but they're also not (and can't be, no matter how much relevant engineers
+might promise to adhere to some code rather than financial/reputational
+interests of their employer) uninterested in the process. It would be
+easier to trust the process if it were generally vendor independent - if
+for example Redhat, a company that's been particularly poor at being a good
+open citizen recently, didn't want something affecting its products to be a
+CVE because in this hypothetical they were doing marketing around how few
+CVEs there are on their product, would we be okay with that? Would that
+look like good practice of the security community? More independence would
+possibly prevent such things.
 
-> Rationale: people could switch meanwhile to a known safe kernel. That
-> would provide peace of mind to the "rest of us" who don't have the
-> keys to the linux-distros kingdom of the elected few, yet wish to have
-> secure OSes, without a window of vulnerability open to whoever hacked
-> into the elected few's machines (or are entitled another way to this
-> secret information).
-> It would also make Linux governance way more democratic, which seems
-> to be a must for such a "too big to fail" core open-source software.
+Hoping I'm not missing something obvious about this concern that'll make me
+look the fool, but worried that if nobody speaks up about it this will
+amount to a corporate capture of things that are best not so owned.
 
-The "best known safe kernel" is the latest one we release from the
-stable kernel series.  It has all of the fixes that that the kernel
-developers possibly know about at that point in time.
+On Tue, 4 Nov 2025 at 11:09, Rodrigo Freire <rfreire@redhat.com> wrote:
 
-There's no need to worry about being on linux-distros or anything else,
-just keep updating your kernel, test in in your infrastructure to ensure
-it all works properly, and then push it out to all of your other systems
-and all is good.
+> Open Source Project Maintainers,
+>
+> Managing security vulnerabilities is currently a significant pain,
+> especially with the recent increase in dubious CVE reports due to AI
+> assistants. The discussion around questionable CVEs reported against
+> projects like dnsmasq, curl highlights a growing concern within the
+> open source community.
+>
+> One effective way to combat the influx of bogus CVEs and ensure
+> accurate vulnerability reporting is for open source projects to become
+> their own CVE Numbering Authority (CNA). As a CNA, your project gains
+> control over the CVE assignment process.
+>
+> Taking ownership of your project's as a CNA ensures that you are in
+> control of the CVE assignment. There will be some requirements to it,
+> sure thing. Check
+>
+> https://openssf.org/blog/2023/11/27/openssf-introduces-guide-to-becoming-a-cve-numbering-authority-as-an-open-source-project/
+>
+> If you want to learn more and how it impacted an open source project,
+> reach for the glibc (in the past, a frequent topic here in this
+> mailing list) security community
+> (https://sourceware.org/glibc/security.html) and ask them your
+> questions.
+>
+> If you're interested in learning more about becoming a CNA, Red Hat
+> (along Google, INCIBE, JPCERT/CC, and Thales Group) can help you.
+> Reach ymittal@redhat.com and we will be happy to help.
+>
+> Best regards;
+>
+> Rodrigo Freire
+> Chief Architect
+>
+>
 
-thanks,
-
-greg k-h
+--000000000000d2e94e0642f03e94--
