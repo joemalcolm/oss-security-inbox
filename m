@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1546" "Sunday" "18" "October" "2015" "22:06:13" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>" "41" "[oss-security] Prime example of a can of worms" nil nil nil "10" "2015101904:06:13" "[oss-security] Prime example of a can of worms" (number mark "        kseifried@re Oct 18   41/1546  " thread-indent "\"[oss-security] Prime example of a can of worms\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5333 invoked by uid 550); 19 Oct 2015 04:06:26 -0000
+Received: (qmail 6105 invoked by uid 550); 6 Nov 2025 17:49:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,90 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5302 invoked from network); 19 Oct 2015 04:06:25 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=Gcu9TMjmkjekn7ICs1TiSUioR4ZE16asGuCOXtuEwgM=;
-        b=ZlH1+TrI6h7Z4z+6KWq6SH6T8JUnSXcOYCk+9ZNzXBkcZP8ijKgr6tE32jOU9z/C5R
-         teW2KGYyZeySjIJPXhC1wfCI8M1VTTwdrxKtOPyXPs0GBYcPi1kEyJWIfqd71OtoN/pd
-         DJQ6vPI9YePNb3ATYPlU+FYZokfhDTtbEtJpP2H1k/Yo179SZKb49HcRmTfoXsyUuTn6
-         PeqSF1dcM8o7fVZECUmV4dL73RUvZa5G+QuKyFytwGTWBojsj2b8OKIt7tE3QEHUuvhY
-         k98twAOJJ7uw4rFLcVSPb7V8eQYnVprZtrTs3pLkoAjjMvZqy03DdMeEDHeoqgzzpjHA
-         AQTQ==
-X-Gm-Message-State: ALoCoQmgcsTfxnW7DcsPKFWo4H7Q+UzAqUTDGKY2SBcSgS8AAAIIO2qqxx5LWWvEprDH680NqQzV
-MIME-Version: 1.0
-X-Received: by 10.13.212.141 with SMTP id w135mr20554128ywd.76.1445227573531;
- Sun, 18 Oct 2015 21:06:13 -0700 (PDT)
-Message-ID: <CANO=Ty18_pMLco8RdabsEbhs9sLahRhT_U93PGhDVwhcRaqzpQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114fd41223e62205226d44e0
-Date: Sun, 18 Oct 2015 22:06:13 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Prime example of a can of worms
-To: CVE ID Requests <cve-assign@mitre.org>, oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3211 invoked from network); 6 Nov 2025 08:28:42 -0000
+From: "Olle E. Johansson" <oej@edvina.net>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_E3D0DB35-8CA6-4E82-B9C1-CD4D999F08C8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81\))
+Date: Thu, 6 Nov 2025 09:28:22 +0100
+References: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+ <2025110538-probation-thickness-0517@gregkh>
+ <ME0P300MB0713ACE3EB14C8F1375F2464EEC5A@ME0P300MB0713.AUSP300.PROD.OUTLOOK.COM>
+ <8175f2ed-5bec-4770-bc23-e626bf35c04b@protonmail.com>
+ <CAEFhzs_txKtdVMAiNbpsWYM3jOYeGMeT=EiP9xhRJJ4FE2pr0Q@mail.gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <CAEFhzs_txKtdVMAiNbpsWYM3jOYeGMeT=EiP9xhRJJ4FE2pr0Q@mail.gmail.com>
+Message-Id: <12D4C7A9-6B68-4D3F-923A-38AA2E47EB51@edvina.net>
+X-Mailer: Apple Mail (2.3826.700.81)
+Subject: Re: [oss-security] Becoming a CVE Naming Authority for your project
 
---001a114fd41223e62205226d44e0
-Content-Type: text/plain; charset=UTF-8
-
-So in light of:
-
-https://weakdh.org/imperfect-forward-secrecy-ccs15.pdf
-
-and
-
-https://www.eff.org/deeplinks/2015/10/how-to-protect-yourself-from-nsa-attacks-1024-bit-DH
-
-I would suggest we minimally have a conversation about DH prime security
-(e.g. using larger 2048 primes, and/or a better mix of primes to make
-pre-computation attacks harder). Generating good primes is not easy from
-what I've seen of several discussions, my fear would be that people try to
-fix this by finding new primes that turn out to be problematic.
-
-Secondly I would also suggest we seriously look at assigning a CVE to the
-use of suspected compromised DH primes. Despite the fact we don't have
-conclusive direct evidence (that I'm aware of, correct me if there is any
-conclusive evidence) I think in this case:
-
-1) the attack is computationally feasible for an organization with
-sufficient funding
-2) the benefit of such an attack far, far, FAR outweighs the cost for
-certain orgs, from the paper:
-
-A small
-number of fixed or standardized groups are used by millions
-of servers; performing precomputation for a single 1024-bit
-group would allow passive eavesdropping on 18% of popular
-HTTPS sites, and a second group would allow decryption
-of traffic to 66% of IPsec VPNs and 26% of SSH servers.
+--Apple-Mail=_E3D0DB35-8CA6-4E82-B9C1-CD4D999F08C8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
 
---001a114fd41223e62205226d44e0--
+> On 5 Nov 2025, at 18:36, Pedro Sampaio <psampaio@redhat.com> wrote:
+>=20
+> On Wed, Nov 5, 2025 at 1:29=E2=80=AFPM Art Manion <zmanion@protonmail.com=
+ <mailto:zmanion@protonmail.com>> wrote:
+>> On 2025-11-05 05:30, Peter Gutmann wrote:
+>> > The problem is that individuals can't be CNAs, which means you'd need =
+to do
+>> > something like going through the cost and overhead of setting up a she=
+ll
+>> > corporation or similar to meet the checkbox requirement that an indivi=
+dual
+>> > can't be a CNA but the same individual fronted by a paper entity can.
+>> >=20
+>> > Does anyone know what the thinking behind this is?  It excludes any OSS
+>> > project that doesn't have some entity fronting it from being a CNA.  I=
+f by
+>> > "major" you mean "lots of people involved in the project" then there a=
+re
+>> > probably entities fronting them but if you mean "lots of users and cri=
+tical to
+>> > Internet operation" then see the famous xkcd cartoon, and that person =
+can't be
+>> > a CNA.
+>>=20
+>> I believe that there are no strict requirements to be a non-individual l=
+egal
+>> entity and that in practice, a somewhat informal "project" can be a CNA.
+>>=20
+>> Individuals as CNAs are rare, but here is one:
+>>=20
+>>   https://www.cve.org/partnerinformation/ListofPartners
+>>=20
+>>  - Art
+>>=20
+>>=20
+>=20
+>=20
+> Although there isn't a requirement for a legal entity, the operational si=
+de of a CNA requires more than one person to manage.
+>=20
+> One example is that different points of contact are required for communic=
+ation between us and the CNA so we always have a way to reach it. Another o=
+ne is that the CNA will be handling its organization's user base in CVE Pro=
+gram's systems, and that requires redundancy so the CNA would not be stuck =
+in case a member leaves.
+>=20
+> This and other good practices may be what prevents 'individuals' CNAs fro=
+m being accepted in favor of teams. It should not be a one person endeavor.
+
+I think there are very few one person projects that have knowledge, time an=
+d resources to operate a CNA. But I am beginning to realise that we need so=
+me sort of =E2=80=9CCommunity CNA=E2=80=9D operating in an open way, being =
+able to register a scope for projects and help them out. For our project I =
+realise that the current situation (considering the discussed CVEs) does no=
+t work, it hurts us. But we have no resources to operate a full CNA. A =E2=
+=80=9Ccommunity driven CNA=E2=80=9D is well worth considering.
+
+/O
+
+
+--Apple-Mail=_E3D0DB35-8CA6-4E82-B9C1-CD4D999F08C8--
