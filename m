@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["797" "Sunday" "10" "April" "2016" "01:13:52" "+0200" "Matthias Geerdsen" "matthias@vorlons.info" "<57098CB0.1000806@vorlons.info>" "27" "[oss-security] CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()" nil nil nil "4" "2016040923:13:52" "[oss-security] CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()" (number mark "U       matthias@vor Apr 10   27/797   " thread-indent "\"[oss-security] CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14178 invoked by uid 550); 9 Apr 2016 23:14:05 -0000
+Received: (qmail 27728 invoked by uid 550); 6 Nov 2025 18:21:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14158 invoked from network); 9 Apr 2016 23:14:05 -0000
-X-Virus-Scanned: Debian amavisd-new at mail.vorlons.info
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vorlons.info;
-	s=mail; t=1460243633;
-	bh=VgLC1ejS9Y9VByZNQbYWCczwidVRpX+/GTDZZhzSkh4=;
-	h=To:From:Subject:Date:From;
-	b=h9k0/qkcsjEkYxBzNRabyum8AZAiMTFcbcR8nlmHM7D5mPP3OddHnlzwAvaFzHC/G
-	 XwY7TBKxhR2DBbrUNQN7fxs0bglcPvk2hCz+3Bi44cF0cooXWZ19rTdet7kW32/efM
-	 5Y4nCdinQTBSxH4f2C43iVWQgE5d79JyBMwupZKA=
+x-ms-reactions: disallow
+Received: (qmail 27707 invoked from network); 6 Nov 2025 18:21:21 -0000
+Date: Thu, 6 Nov 2025 18:21:10 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-From: Matthias Geerdsen <matthias@vorlons.info>
-Message-ID: <57098CB0.1000806@vorlons.info>
-Date: Sun, 10 Apr 2016 01:13:52 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Icedove/38.7.0
+Message-ID: <aQznFji8Z84Sn38R@yuggoth.org>
+References: <CAHjsZGZvy3zeN3st9-Ya4Hxu+29My68sXc9WJnZw_Pd2c_AF6Q@mail.gmail.com>
+ <CADz+4x-GmS6gSGRe=6jCkS+5Sgnx8SpVyvx8Lu5UDE6ndx9CzQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] CVE request: imlib2 - off-by-one OOB read in __imlib_MergeUpdate()
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5j2DntQzAYevlb4a"
+Content-Disposition: inline
+In-Reply-To: <CADz+4x-GmS6gSGRe=6jCkS+5Sgnx8SpVyvx8Lu5UDE6ndx9CzQ@mail.gmail.com>
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] Becoming a CVE Naming Authority for your project
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--5j2DntQzAYevlb4a
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On 2025-11-06 12:17:41 -0500 (-0500), Pat Gunn wrote:
+[...]
+> Hoping I'm not missing something obvious about this concern=20
+> that'll make me look the fool, but worried that if nobody speaks=20
+> up about it this will amount to a corporate capture of things that=20
+> are best not so owned.
+[...]
 
-please provide a CVE ID for this OOB read im imlib2.
+This is part of why projects I work on just apply for assignments=20
+straight from MITRE, and wait for a while in some cases. We've=20
+intentionally decoupled our advisory publication process from=20
+obtaining a CVE so that if it takes them until well after things are=20
+public then that's still fine with us. Instead we issue an errata=20
+revision for the advisory to add the CVE identifier later once it's=20
+finally been assigned.
 
-upstream commit:
-<https://git.enlightenment.org/legacy/imlib2.git/commit/?id=ce94edca1ccf
-be314cb7cd9453433fad404ec7ef>
+In the past we've had CVEs assigned to us from interested=20
+CNA-wielding companies, and end up with duplicates that then need to=20
+be rejected as a result; so while it would be great to be able to=20
+prevent that, it sounds like the only way available at the moment is=20
+to become our own CNA which is more work than we collectively have=20
+time for.
+--=20
+Jeremy Stanley
 
-Debian bug report:
-<https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819818>
+--5j2DntQzAYevlb4a
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Cheers
-Matthias
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQEcBAEBCAAGBQJXCYynAAoJEDVYuxv9Aw7qwBMH/0nS/UoDHHfGflwqdHXvlEJv
-3thOfAYNmojCrrSUkqr8dKbHHltcDShTfmyfQVf8/S+l+aWe7z+K/d9osSI9Vkhw
-VWD44KaDfCTsjYwGxFpxPGneeBe2ZqX9WFJsaxofJUByKJzIILtf0y7m010/EZLP
-Rep3nO9W7xu7GV/FUjFopzqedDLOTYqDcvrmgsPzSKoycDGXmNB3Rltm1xCJEWka
-2yuGin4dB7YcQwAkOmjTZvsRTNg0sFocVWQoyfpQIpkHTJHRXRviUElSuP3dPnXm
-Xx2E8n6eemAGqgSKXtvcmIk78FYLEBxk8+w/ioTJH1jV4s2rrkQgnRFuH0YyiPo=
-=/orZ
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmkM5xBfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCmsig/+Li66r8ogbGQ/LFzFPs0hkE0PaeKj6u2kiei2E4uWYt2It196dwpgXPH0
+lj2mnFnMvbZD9I+VF2/eqIQfaJaysHkdj+pmWyuN4MOHw1tcg5GwjjwhmGcYvbsX
+5QHNMvoDd25k1Lg82wOH0WaT49N8TbB73KgwPor1bEU4FF0gYeHg5ARGq6TNaM7z
+9zIqSxC19YjuFJVif0TpIcmRtL+46TXioIONKwcmNI2bVgKCSxwViv8bxY+mFrkE
+L5AZAX5ibg3lvke7YJFtuy6jrLfkcY31zlj36jupHxFXvaKTEQDNL1sqbwJ5/oCZ
+82ZNy7BHQ0ZdZQLfp1q3JwJa4nvBg29g82z3DGoNXiC0UgNsoK+7YE38EXehM2HQ
+TBQsWY7hLoI1SNs00gr3kBXZPGliezdVmOkXLciforjdVsIBJsIphxCHa7LRz1zJ
+KAzoAxn5Xxkvwl1qHqdjgjbtbtrLLQMzgjSDlcarR6fXFkI4+QfXqoExgL+Kcnqc
+G+qIsA8njjZorGBi3Rs8foYEApOU6CqPasAuli35P9AUVNZ13QM+BYbL+8zIfahX
+mQLL2aKmpS1iZcpSr3B2Hj4chh3U7bbMJgGJlnYS3iPEgHRDyTJE7h3KKaivkXal
+yciTz5KK/XLZmls2sOx5MEmeOB3gZ4gMo76bDmj/BXlOVgW2Z9c=
+=ReLw
 -----END PGP SIGNATURE-----
+
+--5j2DntQzAYevlb4a--
