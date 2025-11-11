@@ -1,4 +1,4 @@
-Received: (qmail 7302 invoked by uid 550); 26 Nov 2025 21:27:10 -0000
+Received: (qmail 23847 invoked by uid 550); 11 Nov 2025 22:53:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,158 +8,45 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 19607 invoked from network); 26 Nov 2025 12:41:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nlnetlabs.nl;
-	s=MBO0001; t=1764160851;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
-	bh=MzwTTSH9ybW8GOA/8wXAGdmj7vQqD4SvTdLZ3oqVHFc=;
-	b=jFNUeHIQhXRtL1DOPdX9n0Tb/n2vdPAimHM1x894JrsEi9LVxtnz/1SRJTlaXFixR3acBV
-	CTxdv0vRnBRWSf7ypcQQgNsRMGpPOzp8f5x+zGxrqUXtPztPtbJsx79EyfdcDlbaQU7acr
-	9S6eUXBp5NVItbCnxbwUnfWGm6bhEkl4Vtab7wIJV0976ltEAFKKitIwT3vbLRYlA3/lkH
-	dgNKvYtp0ZDZ1cL5/ejybxDfvRBjh8ZhjakI5+mdZ3a9oI2/pwsqcj72NjrVOHyh+XsM1a
-	gOIkTKvCBWSkQActscK0sRR+khEiaoh4prSCtm+rVoUH0khC+p1lRsw09QBZFA==
-Authentication-Results: outgoing_mbo_mout;
-	dkim=none;
-	spf=pass (outgoing_mbo_mout: domain of yorgos@nlnetlabs.nl designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=yorgos@nlnetlabs.nl
-Message-ID: <25875f90-1b0b-497b-a603-9787e38c14ab@nlnetlabs.nl>
-Date: Wed, 26 Nov 2025 13:40:49 +0100
+Received: (qmail 24474 invoked from network); 11 Nov 2025 22:38:31 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Arrigo Marchiori <ardovm@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <19985ab1-9918-f8b3-6754-06f31e39e477@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 11 Nov 2025 22:36:31 +0000
 MIME-Version: 1.0
-Content-Language: en-GB
-From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
-Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
- 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
- S/sVF2vr7MhLmA==
-To: oss-security@lists.openwall.com
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------kA4pV4nG7vtt0PwFirTdGP4W"
-Subject: [oss-security] Unbound: 1.24.2 addresses CVE-2025-11411 (again)
+Subject: [oss-security] CVE-2025-64402: Apache OpenOffice: Remote documents loaded without
+ prompt via OLE objects 
 
---------------kA4pV4nG7vtt0PwFirTdGP4W
-Content-Type: multipart/mixed; boundary="------------0rSL0tMhWQdp83oUVx27uLmC";
- protected-headers="v1"
-From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
-To: oss-security@lists.openwall.com
-Message-ID: <25875f90-1b0b-497b-a603-9787e38c14ab@nlnetlabs.nl>
-Subject: Unbound: 1.24.2 addresses CVE-2025-11411 (again)
+Severity: moderate=20
 
---------------0rSL0tMhWQdp83oUVx27uLmC
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Affected versions:
 
-SGkgdGhlcmUsDQoNCihUaGUgb2ZmaWNpYWwgYW5ub3VuY2VtZW50IGFuZCBtb3JlIGluZm9ybWF0
-aW9uIGNhbiBiZSBmb3VuZCBhdDoNCmh0dHBzOi8vbmxuZXRsYWJzLm5sL25ld3MvMjAyNS9Ob3Yv
-MjYvdW5ib3VuZC0xLjI0LjItcmVsZWFzZWQvKQ0KDQpXZSB3ZXJlIG1hZGUgYXdhcmUgdGhhdCBw
-cmV2aW91cyBmaXhlcyBmb3IgQ1ZFLTIwMjUtMTE0MTEgcmVsZWFzZWQgd2l0aA0KVW5ib3VuZCAx
-LjI0LjEgd2VyZSBub3QgY29tcGxldGUuDQoNCk5hbWVseSwgVW5ib3VuZCBpcyBzdGlsbCB2dWxu
-ZXJhYmxlIGlmIHRoZSByZXNwb25zZSB3b3VsZCBiZSBZWERPTUFJTiBvcg0Kbm9kYXRhIG5vbi1y
-ZWZlcnJhbCwgdG9nZXRoZXIgd2l0aCBwcm9taXNjdW91cyAocG9zc2libHkgcG9pc29ub3VzKSBO
-Uw0KUlJTZXRzLg0KDQpXZSBhcmUgcmVsZWFzaW5nIDEuMjQuMiBhcyBhIHNlY3VyaXR5IHJlbGVh
-c2Ugb24gdGhlIDI2dGggb2YgTm92ZW1iZXINCmluY2x1ZGluZyB0aGUgcmVsZXZhbnQgZml4Lg0K
-DQoNCj09IFN1bW1hcnkNCihTYW1lIGFzIENWRS0yMDI1LTExNDExKQ0KDQpQcm9taXNjdW91cyBO
-UyBSUlNldHMgdGhhdCBjb21wbGVtZW50IEROUyByZXBsaWVzIGluIHRoZSBhdXRob3JpdHkNCnNl
-Y3Rpb24gY2FuIGJlIHVzZWQgdG8gdHJpY2sgcmVzb2x2ZXJzIHRvIHVwZGF0ZSB0aGVpciBkZWxl
-Z2F0aW9uDQppbmZvcm1hdGlvbiBmb3IgdGhlIHpvbmUuDQpVc3VhbGx5IHRoZXNlIFJSU2V0cyBh
-cmUgdXNlZCB0byB1cGRhdGUgdGhlIHJlc29sdmVyJ3Mga25vd2xlZGdlIG9mIHRoZQ0Kem9uZSdz
-IG5hbWUgc2VydmVycy4NCklmIGEgbWFsaWNpb3VzIGFjdG9yIGlzIGFibGUgdG8gYXR0YWNoIHN1
-Y2ggcmVjb3JkcyBpbiBhIHJlcGx5IChpLmUuLA0Kc3Bvb2ZlZCBwYWNrZXQsIGZyYWdtZW50YXRp
-b24gYXR0YWNrKSBoZSB3b3VsZCBiZSBhYmxlIHRvIHBvaXNvbg0KVW5ib3VuZCdzIGNhY2hlIGZv
-ciB0aGUgZGVsZWdhdGlvbiBwb2ludC4NCg0KVW5ib3VuZCAxLjI0LjEgaW5jbHVkZXMgYSBmaXgg
-dG8gbWl0aWdhdGUgdGhlIHBvaXNvbiBhdHRlbXB0Lg0KVW5ib3VuZCAxLjI0LjIgd2lsbCBpbmNs
-dWRlIGFuIGFkZGl0aW9uYWwgZml4IHRvIG1pdGlnYXRlIHRoZSBwb2lzb24NCmF0dGVtcHQgdGhy
-b3VnaCBZWERPTUFJTiBhbmQgbm9kYXRhIG5vbi1yZWZlcnJhbCBhbnN3ZXJzLg0KDQoNCj09IEFm
-ZmVjdGVkIHByb2R1Y3RzDQpVbmJvdW5kIHVwIHRvIGFuZCBpbmNsdWRpbmcgdmVyc2lvbiAxLjI0
-LjEuDQoNCg0KPT0gRGVzY3JpcHRpb24NCihTYW1lIGFzIENWRS0yMDI1LTExNDExKQ0KDQpBIG1h
-bGljaW91cyBhY3RvciBjYW4gZXhwbG9pdCB0aGUgcG9zc2libGUgcG9pc29ub3VzIGVmZmVjdCBi
-eSBpbmplY3RpbmcNCk5TIFJSU2V0cyAoYW5kIHBvc3NpYmx5IHRoZWlyIHJlc3BlY3RpdmUgYWRk
-cmVzcyByZWNvcmRzKSBpbiBhIHJlcGx5Lg0KVGhpcyBjb3VsZCBiZSBkb25lIGZvciBleGFtcGxl
-IGJ5IHRyeWluZyB0byBzcG9vZiBhIHBhY2tldCBvcg0KZnJhZ21lbnRhdGlvbiBhdHRhY2tzLg0K
-DQpVbmJvdW5kIHdvdWxkIHRoZW4gcHJvY2VlZCB0byB1cGRhdGUgdGhlIE5TIFJSU2V0IGRhdGEg
-aXQgYWxyZWFkeSBoYXMNCnNpbmNlIHRoZSBuZXcgZGF0YSBoYXMgZW5vdWdoIHRydXN0IGZvciBp
-dCwgaS5lLiwgaW4tem9uZSBkYXRhIGZvciB0aGUNCmRlbGVnYXRpb24gcG9pbnQuDQoNClVuYm91
-bmQgMS4yNC4xIGluY2x1ZGVzIGEgZml4IHRoYXQgc2NydWJzIHVuc29saWNpdGVkIE5TIFJSU2V0
-cyAoYW5kDQp0aGVpciByZXNwZWN0aXZlIGFkZHJlc3MgcmVjb3JkcykgZnJvbSByZXBsaWVzIG1p
-dGlnYXRpbmcgdGhlIHBvc3NpYmxlDQpwb2lzb24gZWZmZWN0Lg0KVW5ib3VuZCAxLjI0LjIgd2ls
-bCBpbmNsdWRlIGFuIGFkZGl0aW9uYWwgZml4IHRvIGFwcGx5IHRoZSBzYW1lDQpzY3J1YmJpbmcg
-b2YgdW5zb2xpY2l0ZWQgTlMgUlJTZXRzIChhbmQgdGhlaXIgcmVzcGVjdGl2ZSBhZGRyZXNzDQpy
-ZWNvcmRzKSBhbHNvIGZvciBZWERPTUFJTiBhbmQgbm9kYXRhIG5vbi1yZWZlcnJhbCBhbnN3ZXJz
-Lg0KDQoNCj09IE1pdGlnYXRpb24NClVuYm91bmQgMS4yNC4yIGZ1bGx5IGFkZHJlc3NlcyB0aGUg
-dnVsbmVyYWJpbGl0eS4NCg0KVGhlIG1pdGlnYXRpb24gc2VjdGlvbiBvZiB0aGUgYXV0aG9yaXRh
-dGl2ZSB0ZXh0IGZvciBDVkUtMjAyNS0xMTQxMQ0KKGh0dHBzOi8vbmxuZXRsYWJzLm5sL2Rvd25s
-b2Fkcy91bmJvdW5kL0NWRS0yMDI1LTExNDExLnR4dCkNCmNvbnRhaW5zIGxpbmtzIHRvIHBhdGNo
-ZXMgYW5kIGluc3RydWN0aW9ucyBpZiB5b3UgbmVlZCB0byBwYXRjaCB5b3VyIA0KY3VycmVudCB2
-ZXJzaW9uLg0KDQoNCj09IEFja25vd2xlZGdlbWVudHMNCldlIHdvdWxkIGxpa2UgdG8gdGhhbmsg
-VGFvRmVpIEd1byBmcm9tIFBla2luZyBVbml2ZXJzaXR5LCBZYW5nIEx1byBhbmQNCkppYW5KdW4g
-Q2hlbiBmcm9tIFRzaW5naHVhIFVuaXZlcnNpdHkgZm9yIGRpc2NvdmVyaW5nIGFuZCByZXNwb25z
-aWJseQ0KZGlzY2xvc2luZyB0aGUgcGFydGlhbCBtaXRpZ2F0aW9uIG9mIENWRS0yMDI1LTExNDEx
-IGluIHRoZSBwcmV2aW91cw0KVW5ib3VuZCB2ZXJzaW9uLg0KDQoNCg0KKiogVGhpcyBlbWFpbCBp
-cyBzaWduZWQuIEtleXMgb2YgdGhlIE5MbmV0IExhYnMgcGVvcGxlIGFyZSBwdWJsaXNoZWQgb24N
-Cmh0dHBzOi8vd3d3Lm5sbmV0bGFicy5ubC9wZW9wbGUvICoqDQoNCkJlc3QgcmVnYXJkcywNCi0t
-IFlvcmdvcw0K
+- Apache OpenOffice through 4.1.15
 
---------------0rSL0tMhWQdp83oUVx27uLmC--
+Description:
 
---------------kA4pV4nG7vtt0PwFirTdGP4W
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+Apache OpenOffice documents can contain links. A missing Authorization vuln=
+erability in Apache OpenOffice allowed an attacker to craft a document that=
+ would cause external links=20
+to be loaded without prompt. In the affected versions of Apache OpenOffice,=
+ documents that used "OLE objects" linked to external files would=20
+load the contents of those files without prompting the user for=20
+permission to do so.
 
------BEGIN PGP SIGNATURE-----
+This issue affects Apache OpenOffice: through 4.1.15.
 
-wsF5BAABCAAjFiEElI60IyLF0At5NA9dz/M0TZCHpJAFAmkm9VIFAwAAAAAACgkQz/M0TZCHpJBE
-bg//RCueoQf+QwlpnEZbiIInBR2r59R9NWriMg4Gcw6hGwWHSZ6zn23Z3aVeUiyx6cmS/tPqnggG
-gZ7cxloO1xlF6MSxVbPahbRfuQsQTdqFDARkgt1tMfHeISoQjS7huTIZGEwyrLThWB1GssUMPa+V
-OUgRl4K1q286q7rFpTiQ8e754G8lK4+uqNodUMiF1vjzTljyLSNkcHLko5H3fRVB8RZd4+sVhe0Z
-yTVWSpOvFyrnJT6WqaDEA4P4wngmQAjlNd2Sd9VPQogcino6YkDwq+PBh+IV7ghEg4NZJfu6i7RZ
-uxUPodX0ljHlVFR2qEdT7yvdCJQszMIFKBgw3Wmq1JUT0QiBjrCP/zbKOAJVY+8JHI6dgbyjEJVG
-SwQnznUfKPKgHyLYw7yTUFhsHZ8IgOf90FJY09MROKs/plQyIGxDqcaeGZjQKy2FCGUZBdpuIhs0
-s4mqdas22xXRkps9Q1vJl2WaL/58IboL9ZpCBAljIWnolZ0hy8ck9rtcbLsckI8F9LBbV1bzmWzA
-jcF5d9OpIal3XreTWBTLHmbidfUZs52pX6NgV9WrvK31vJLzMrRDWsYtie73K1wME52t41tDuoZJ
-5Pf6v9V/1yWvzr/cDxOaacvujsuhBXuysMEZqxPPZGySUYp8LgPXTXbkUxWg34I5szwLOXki/1E+
-Pe8=
-=XFRB
------END PGP SIGNATURE-----
+Users are recommended to upgrade to version 4.1.16, which fixes the issue.
 
---------------kA4pV4nG7vtt0PwFirTdGP4W--
+Credit:
+
+Dawid Golunski, Doyensec LLC (finder)
+
+References:
+
+https://www.openoffice.org/security/cves/CVE-2025-64402.html
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-64402
+
