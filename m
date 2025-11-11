@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["549" "Tuesday" "5" "May" "2015" "09:44:00" "+0200" "Florian Weimer" "fweimer@redhat.com" "<554874C0.509@redhat.com>" "17" "Re: [oss-security] PHP and some == wonkiness" nil nil nil "5" "2015050507:44:00" "[oss-security] PHP and some == wonkiness" (number mark "        fweimer@redh May  5   17/549   " thread-indent "\"Re: [oss-security] PHP and some == wonkiness\"\n") "<20150505072248.GA14223@zoho.com>" ("<55479C75.3070000@redhat.com>" "<CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com>" "<554868F6.1070305@redhat.com>" "<20150505072248.GA14223@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25943 invoked by uid 550); 5 May 2015 07:44:17 -0000
+Received: (qmail 24243 invoked by uid 550); 11 Nov 2025 22:53:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,35 +6,46 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25922 invoked from network); 5 May 2015 07:44:16 -0000
-Message-ID: <554874C0.509@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.6.0
-MIME-Version: 1.0
-References: <55479C75.3070000@redhat.com> <CALwr1GnxttdqOssUd82R4P8wzEd-UhuWWVY3xpkqgt09UmgBuw@mail.gmail.com> <554868F6.1070305@redhat.com> <20150505072248.GA14223@zoho.com>
-In-Reply-To: <20150505072248.GA14223@zoho.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Tue, 05 May 2015 09:44:00 +0200
-From: Florian Weimer <fweimer@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] PHP and some == wonkiness
-To: mancha <mancha1@zoho.com>, oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 8130 invoked from network); 11 Nov 2025 22:40:36 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Arrigo Marchiori <ardovm@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <47d276e4-5fe6-d01a-4897-5fb61c54a595@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 11 Nov 2025 22:36:57 +0000
+MIME-Version: 1.0
+Subject: [oss-security] =?UTF-8?Q?CVE-2025-64403=3A_Apache_OpenOffice=3A_R?=
+ =?UTF-8?Q?emote_documents_loaded_without_prompt_vi?=
+ =?UTF-8?Q?a_=22external_data_sources=22_in_Calc=20?=
 
-On 05/05/2015 09:26 AM, mancha wrote:
+Severity: moderate=20
 
-> Taking sha1 as our reference hash and "==" as our equivalence relation:
-> 
-> All [a-f][0-9a-f]{39} are in equivalence class A.
-> 
-> All 42[a-f][0-9a-f]{37} are in equivalence class B.
-> 
-> Note: those regexes aren't representative of the full equivalence
-> classes because prepending 0s doesn't alter the value (i.e.
-> 0[a-f][0-9a-f]{38} is in equivalence class "A" as well..
+Affected versions:
 
-I cannot reproduce this.  Or you use “equivalence class” in a
-non-standard way.
+- Apache OpenOffice through 4.1.15
 
--- 
-Florian Weimer / Red Hat Product Security
+Description:
+
+Apache OpenOffice Calc spreadsheet can contain links to other files, in the=
+ form of "external data sources". A missing Authorization vulnerability in =
+Apache OpenOffice allowed an attacker to craft a document that would cause =
+such links=20
+to be loaded without prompt.
+
+This issue affects Apache OpenOffice: through 4.1.15.
+
+Users are recommended to upgrade to version 4.1.16, which fixes the issue.
+
+Credit:
+
+Reginaldo Silva of ubercomp.com (finder)
+
+References:
+
+https://www.openoffice.org/security/cves/CVE-2025-64403.html
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-64403
+
