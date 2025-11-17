@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1925" "Tuesday" "15" "January" "2019" "22:51:10" "+0100" "Peter Kovacs" "Petko@Apache.org" "<f1f281ec-0342-23bf-43ba-47fc7e836372@Apache.org>" "61" "[oss-security] CVE-2018-11790: Apache OpenOffice: Arithmetic overflow and wrap around during string length calculation" nil nil nil "1" "2019011521:51:10" "[oss-security] CVE-2018-11790: Apache OpenOffice: Arithmetic overflow and wrap around during string length calculation" (number mark "U       Petko@Apache Jan 15   61/1925  " thread-indent "\"[oss-security] CVE-2018-11790: Apache OpenOffice: Arithmetic overflow and wrap around during string length calculation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30277 invoked by uid 550); 16 Jan 2019 11:45:06 -0000
+Received: (qmail 11915 invoked by uid 550); 17 Nov 2025 14:39:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,122 +7,303 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19812 invoked from network); 15 Jan 2019 21:51:23 -0000
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: Peter Kovacs <Petko@Apache.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=Petko@Apache.org; keydata=
- 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
-Organization: Open Office Project
-Message-ID: <f1f281ec-0342-23bf-43ba-47fc7e836372@Apache.org>
-Date: Tue, 15 Jan 2019 22:51:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
+x-ms-reactions: disallow
+Received: (qmail 11856 invoked from network); 17 Nov 2025 14:39:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1763390338; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
+	b=M59AjVK006FVVo1nrZkQ8M+f7ONtudJK5t6wjYEGKNghUALY0g7cT3zOecRjiqVr/MmxMd
+	v3aJ72tWDt7nUhPZIYvupz91DUn9GCAYldujNWHbH7SZ27Uozz8PmP9/0WO1dMogRTsfrV
+	4a7AEZULeYGQWSIrmcR9fkL5MTc6nh4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1763390338;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
+	b=lV5kk+2NE1vaf4HJEW3XX3uEzBCl3qZeFlSwQkJXji3qBie/Jw8pxl7LS8mtUimvmDFNhb
+	SNScUruya8u3Y2Cw==
+Authentication-Results: smtp-out2.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=M59AjVK0;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lV5kk+2N
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1763390338; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
+	b=M59AjVK006FVVo1nrZkQ8M+f7ONtudJK5t6wjYEGKNghUALY0g7cT3zOecRjiqVr/MmxMd
+	v3aJ72tWDt7nUhPZIYvupz91DUn9GCAYldujNWHbH7SZ27Uozz8PmP9/0WO1dMogRTsfrV
+	4a7AEZULeYGQWSIrmcR9fkL5MTc6nh4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1763390338;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=aCZyfcobQHODy9rrp6l2VCyJfc6AtoaJFrTibG/azEo=;
+	b=lV5kk+2NE1vaf4HJEW3XX3uEzBCl3qZeFlSwQkJXji3qBie/Jw8pxl7LS8mtUimvmDFNhb
+	SNScUruya8u3Y2Cw==
+Date: Mon, 17 Nov 2025 15:38:57 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <aRszgdEcjCyuaqCS@kasco.suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="------------023D7411912E449FA346D1EF"
-Content-Language: en-US-large
-Subject: [oss-security] CVE-2018-11790: Apache OpenOffice: Arithmetic overflow and wrap around during string length calculation
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="kEB3+00XL4MVtyEb"
+Content-Disposition: inline
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spam-Score: -6.61
+Subject: [oss-security] lightdm-kde-greeter: Privilege Escalation from lightdm Service User
+ to root in KAuth Helper Service (CVE-2025-62876)
 
---------------023D7411912E449FA346D1EF
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+--kEB3+00XL4MVtyEb
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 17 Nov 2025 15:38:57 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: lightdm-kde-greeter: Privilege Escalation from lightdm Service User
+ to root in KAuth Helper Service (CVE-2025-62876)
 
-CVE-2018-11790 <http://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-11790>
+Hello list,
 
-Apache OpenOffice Advisory
-<https://www.openoffice.org/security/cves/CVE-2018-11790.html>
+please find below a report about a `lightdm` to `root` privilege
+escalation in lightdm-kde-greeter [1]. We also offer a rendered version
+of this report on our blog [2].
 
-*CVE-2018-11790 Arithmetic overflow and wrap around during sting length
-calculation *
+Summary: lightdm-kde-greeter is a KDE-themed greeter application for the
+lightdm display manager. It contains a KAuth-based D-Bus helper
+application for performing privileged operations, which suffers from a
+`lightdm` to `root` privilege escalation and some other shortcomings in
+versions up to 6.0.3. In discussions with upstream we managed to arrive
+at a much improved version of the affected code.
 
-*Fixed in Apache OpenOffice 4.1.6*
+1) Introduction
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-*Description*
+lightdm-kde-greeter [1] is a KDE-themed greeter application for the
+lightdm display manager [3]. At the beginning of September one of our
+community packagers asked us [4] to review a D-Bus service contained in
+lightdm-kde-greeter for addition to openSUSE Tumbleweed.
 
-When loading a document with smaller end line termination then the
-operating system uses, the defect occurs. In this case OpenOffice runs
-into an Arithmetic Overflow at a string length calculation.
+In the course of the review we found a potential privilege escalation
+from the `lightdm` service user to `root` which is facilitated by this
+D-Bus service, among some other shortcomings in its implementation.
 
-*Severity: Medium*
+The next section provides a general overview of the D-Bus service.
+Section 3 discusses the security problems in the service's
+implementation. Section 4 takes a look at the bugfix upstream arrived
+at.
 
-There are no known exploits of this vulnerability.
-A proof-of-concept demonstration exists.
-ssd-disclosure <https://ssd-disclosure.com/index.php/archives/3758>
+This report is based on lightdm-kde-greeter release 6.0.3 [5].
 
-Thanks to the reporter for discovering this issue.
+2) Overview of the D-Bus Helper
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
 
-*Vendor: The Apache Software Foundation*
+lightdm-kde-greeter includes a D-Bus service which enables regular users
+to configure custom themes to be used by the greeter application. The
+D-Bus service is implemented as a KDE KAuth helper service [6], running
+with full root privileges.
 
-*Versions Affected*
+The helper implements a single API method [7], protected by Polkit
+action `org.kde.kcontrol.kcmlightdm.save`, which requires
+`auth_admin_keep` by default, i.e. users need to provide root
+credentials to perform this action. The method takes a map of key/value
+pairs which allow to fully control the contents of `lightdm.conf` and
+`lightdm-kde-greeter.conf`.
 
-All Apache OpenOffice versions 4.1.5 and older are affected.
-OpenOffice.org versions are also affected.
+=46rom a security point of view such a generic interface is sub-optimal,
+since the scope of the operation is not restricted to changing theme
+settings, but also allows to change all the rest of lightdm's
+configuration, providing less control over who may do what in the
+system. From an application's point of view this approach is
+understandable, however, as this makes it easy to support any future
+features.
 
-*Mitigation*
+Another Polkit action `org.kde.kcontrol.kcmlightdm.savethemedetails` is
+declared in `kcm_lightdm.actions` [8], which is unused, maybe a remnant
+of former versions of the project.
 
-Install Apache OpenOffice 4.1.6 for the latest maintenance and
-cumulative security fixes. Use the Apache OpenOffice download page
-<https://www.openoffice.org/download/>.
+3) Problems in the D-Bus Helper
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
 
-*Further Information*
+The problems in the D-Bus service start in helper.cc line 87 [9], where
+we can find this comment:
 
-For additional information and assistance, consult the Apache OpenOffice
-Community Forums <https://forum.openoffice.org/> or make requests to the
-users@openoffice.apache.org <mailto:users@openoffice.apache.org> public
-mailing list.
+```
+// keys starting with "copy_" are handled in a special way, in fact,
+// this is an instruction to copy the file to the greeter's home
+// directory, because the greeter will not be able to read the image
+// from the user's home folder
+```
 
-The latest information on Apache OpenOffice security bulletins can be
-found at the Bulletin Archive page
-<https://www.openoffice.org/security/bulletin.html>.
+To start with it is rather bad API design to abuse the key/value map,
+which is supposed to contain configuration file entries, for carrying
+"secret" copy instructions. Even worse, in the resulting copy operation
+three different security contexts are mixed:
 
-------------------------------------------------------------------------
+- the helper, which runs with full root privileges.
+- the unprivileged D-Bus client, which specifies a path to be opened by
+  the helper.
+- the `lightdm` service user; the helper will copy the user-specified
+  file into a directory controlled by it.
 
-Security Home <http://security.openoffice.org> -> Bulletin
-<http://www.openoffice.org/security/bulletin.html> -> CVE-2018-11790
-<https://www.openoffice.org/security/cves/CVE-2018-11790.html>
+The helper performs this copy operation with full `root` privileges
+without taking precautions, reading input data from one unprivileged
+context and writing it into another unprivileged context. This is done
+naively using the Qt framework's `QFile::copy()` and similar APIs,
+leading to a range of potential local attack vectors:
 
+- Denial-of-Service (e.g. passing a named FIFO pipe as source file path,
+  causing the D-Bus helper to block indefinitely).
+- information leak (e.g. passing a path to private data as source file
+  like `/etc/shadow`, which will then become public in
+  `/var/lib/lightdm`).
+- creation of directories in unexpected locations (the helper attempts
+  to create `/var/lib/lightdm/.../<theme>`, thus the lightdm user can
+  place symlinks there which will be followed).
+- overwrite of unexpected files (similar as before, symlinks can be
+  placed as destination file name, which will be followed and
+  overwritten with client data).
 
+If this action would ever be set to `yes` Polkit authentication
+requirements, then this would be close to a local root exploit. Even in
+its existing form it allows the `lightdm` service user to escalate
+privileges to `root`.
 
---------------023D7411912E449FA346D1EF--
+Interestingly these problems are quite similar to issues in `sddm-kcm6`,
+which we covered in a previous report [10].
+
+4) Upstream Bugfix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We suggested the following changes to upstream to address the problems:
+
+- the copy operation should be implemented using D-Bus file descriptor
+  passing, this way opening client-controlled paths as `root` is already
+  avoided.
+- for creating the file in the target directory of `lightdm`, a
+  privilege drop to the `lightdm` service user should be performed to
+  avoid any symlink attack surface.
+
+We are happy to share that the upstream maintainer of
+lightdm-kde-greeter followed our suggestions closely and coordinated the
+changes with us before the publication of the bugfix. With these
+changes, this KAuth helper is now kind of a model implementation which
+can serve as a positive example for other KDE components. Upstream also
+performed some general cleanup, like the removal of the unused
+`savethemedetails` Polkit action from the repository.
+
+Upstream released version 6.0.4 [11] of lightdm-kde-greeter which
+contains the fixes.
+
+5) CVE Assignment
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+In agreement with upstream, we assigned CVE-2025-62876 to track the
+`lightdm` service user to `root` privilege escalation aspect described
+in this report.  The severity of the issue is low, since it only affects
+defense-in-depth (if the `lightdm` service user were compromised) and
+the problematic logic can only be reached and exploited if triggered
+interactively by a privileged user.
+
+6) Coordinated Disclosure
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We reported these issues to KDE security on 2025-09-04 offering
+coordinated disclosure, but we initially had difficulties setting up the
+process with them. Upstream did not clearly express the desire to
+practice coordinated disclosure, no (preliminary) publication date could
+be set and no confirmation of the issues was received.
+
+Things took a turn for the better when a lightdm-kde-greeter developer
+contacted us directly on 2025-10-16 and the publication date and fixes
+were discussed. The ensuing review process for the bugfixes was very
+helpful in our opinion, leading to a major improvement of the KAuth
+helper implementation in lightdm-kde-greeter.
+
+7) Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2025-09-04: We received the review request [4] for the lightdm-kde-greeter =
+D-Bus service.
+2025-09-10: We privately reported the findings to KDE security.
+2025-09-17: We received an initial reply from KDE security stating that the=
+y would get back to us.
+2025-09-29: We asked for at least a confirmation of the report and a rough =
+disclosure date, but upstream was not able to provide this.
+2025-10-01: KDE security informed us that an upstream developer planned to =
+release fixes by mid-November.
+2025-10-16: An upstream developer contacted us to discuss the publication d=
+ate, since the bugfixes were ready.
+2025-10-20: We asked the developer to share the bugfixes for review.
+2025-10-21: The developer shared a patch set with us.
+2025-10-24: We agreed on 2025-10-31 for coordinated disclosure date.
+2025-10-28: After a couple of email exchanges discussing the patches, upstr=
+eam arrived at an improved patch set. We suggested to assign a CVE for the =
+`lightdm` to `root` attack surface.
+2025-10-29: We assigned CVE-2025-62876.
+2025-11-03: We asked when the bugfix release would be published, with the d=
+isclosure date already passed.
+2025-11-03: Upstream agreed to publish on the same day.
+2025-11-03: Upstream released version 6.0.4 [11] containing the bugfixes. W=
+e published our Bugzilla bug [4] on the topic.
+2025-11-13: Publication of this report.
+
+8) References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://invent.kde.org/plasma/lightdm-kde-greeter
+[2]: https://security.opensuse.org/2025/11/13/lightdm-kde-greeter-auth-help=
+er.html
+[3]: https://github.com/canonical/lightdm
+[4]: https://bugzilla.suse.com/show_bug.cgi?id=3D1249146
+[5]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/tags/v6.0.3
+[6]: https://security.opensuse.org/2024/04/02/kde6-dbus-polkit.html#the-kde=
+-kauth-framework
+[7]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/blob/v6.0.3/kcm/he=
+lper.cpp#L48
+[8]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/blob/v6.0.3/kcm/kc=
+m_lightdm.actions?ref_type=3Dtags#L39
+[9]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/blob/v6.0.3/kcm/he=
+lper.cpp?ref_type=3Dtags#L87
+[10]: https://security.opensuse.org/2024/04/02/kde6-dbus-polkit.html#proble=
+matic-file-system-operations-in-sddm-kcm6
+[11]: https://invent.kde.org/plasma/lightdm-kde-greeter/-/tags/v6.0.4
+
+Best Regards
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Jochen Jaser, Andrew McDonald, Werner Knoblich
+
+--kEB3+00XL4MVtyEb
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmkbM4EACgkQFMQFyXGS
+NVNJaQ/9FLns6H40UhWvHgkOMWESV22DHHgRxvalfS2LryHab1ZJJmZpQxOfufbW
+GXTCVx5VGEiC+cITVu3OF6dLDrtGTqcqJXvHDTHb5vOuRhn8MDcuu8KwtcZVTdyt
+gd44CaocJvfFFp2lScB9ULUZIB1DokfOqC50ZrDhQYUkdy4IPPLzLTY2GT3wBU0U
+0WAE3LU/h8BxAx+sYq4Ez0mM0kPvHMWV5lrOK2ugH/5bihb/lxQB/2KXAajxIT29
+1UkjnM5ltgNG9e8tBnSykJNlDFF6ZKxSaE813e/hlCdlGAsu69iN42iorX+zWWlU
+QpctVcHSSA9+Qby5NgrbHwveyE5wciKzBtvAAjhWSn1BOyDxpmsJaPtpq7PR6VHB
+iHT/GE1a9TtRx9GeV35RO1MuH1+1B9xAinDGy9JRVKeTqS/A7GgGT1szu13BuEW9
+q/W55TRyvBi6H2toQaKRQaEtXdeFLavpZueTnOWsOATb1HM9q46wtUepjxYJGx/3
+/RpL0atKHIa84YaOLwWvdNP4/NWyWqmvHwS9npmNgufzZVLN8/leWLvI3Zjdm6FD
+8Sj6Dn/H1naui7psGMO4GWxgeb64UlEcb/gCLdx/ag39KgbRFkdGSmK7AG6La4Kv
+f7nsAK9gT2l5/dCK2UDd6tXkmmyPZQVTkjmxqGCPM5d4m6xcDbg=
+=CkCR
+-----END PGP SIGNATURE-----
+
+--kEB3+00XL4MVtyEb--
