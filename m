@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4926" "Thursday" "17" "August" "2017" "20:13:19" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<450974.601644219-sendEmail@localhost>" "84" "[oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)" nil nil nil "8" "2017081720:13:19" "[oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)" (number mark "U       ago@gentoo.o Aug 17   84/4926  " thread-indent "\"[oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28120 invoked by uid 550); 17 Aug 2017 20:13:39 -0000
+Received: (qmail 26470 invoked by uid 550); 19 Nov 2025 08:54:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,96 +7,65 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27963 invoked from network); 17 Aug 2017 20:13:36 -0000
-Message-ID: <450974.601644219-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Thu, 17 Aug 2017 20:13:19 +0000
+x-ms-reactions: disallow
+Received: (qmail 16271 invoked from network); 19 Nov 2025 08:26:49 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1763540766; bh=s8zq1YICgJUTLT/R/uUycZ7LdXE/+KqO8O8jwV8aKmM=;
+	h=Reply-To:From:Date:Subject:To:From;
+	b=0/LyrKTXHQplMKRaaPtMMmIbp+ApFt0afBcf5l4kRjOCU3BrdxG9LkPWluqjc3g+y
+	 h3+KmLJriSqFr8zjkFks+3zWpaiQW9FNRRIjBukcTO6Fk9vjMhYRQCLhc/e8r7O4/T
+	 qaUyERQwbN/xBAYIeExNCJr7CqxhQuktmKYlcngP01LAVhypIiU2pqyJyh5xSdTIFh
+	 jjZ2JXpnmBDd8Ix71+GMdE9nAgUpztuDMraIhhxOWcghD7wH5RixlYkkzLTKCxY2g9
+	 IkhAkhNjlAFXrGGWzCzIomK5MCZzKMsKUfjbJeJeMtPwEkvEQPM5FOeFma4rnbRzao
+	 s5TIgNKicZSMA==
+X-Gm-Message-State: AOJu0Yw5Gbt92ZS4lXvzu0iJfC/IUoF3RBVPrwj0p0KnDjNUdxn9tnbB
+	GLk1gZxL+75oTnh2Z+4RO07UjOZdNppI75kOnb3DYxuZV+006DYvipEFVFPNMSGE9OH6MCu4Raf
+	SiwvYyCV23VFs10T/SmGtQ8RnTQyJrHM58oCXXWLlQw==
+X-Google-Smtp-Source: AGHT+IGkFlaoohM640ZcXqjA1Q6i7Zg9YJhU1W3z3WNIyLM7Lr/6ZPme/4IdsicUuTLabcaBdUA/cU2LgJzpKINR8Qw=
+X-Received: by 2002:a17:907:1b05:b0:b73:880a:fde8 with SMTP id
+ a640c23a62f3a-b73880b01fbmr1456165466b.12.1763540765809; Wed, 19 Nov 2025
+ 00:26:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-57976.5644661201"
-Subject: [oss-security] libfpx: NULL pointer dereference in OLEStream::WriteVT_LPSTR (olestrm.cpp)
+From: Dan Haywood <danhaywood@apache.org>
+Date: Wed, 19 Nov 2025 08:25:54 +0000
+X-Gmail-Original-Message-ID: <CALJOYLGnFQLUmqHS-L9tCuJSQsJr=0yvvYd5CgWyxyqf1Wn8yg@mail.gmail.com>
+X-Gm-Features: AWmQ_bmCsrmrw984Ji-wtUS9qz17njniJqhKT1ycn8Pvl0INnTD3X89_orxF7U8
+Message-ID: <CALJOYLGnFQLUmqHS-L9tCuJSQsJr=0yvvYd5CgWyxyqf1Wn8yg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000e4af280643ee5454"
+Subject: [oss-security] CVE-2025-64408: Apache Causeway: Java deserialization vulnerability
+ to authenticated attackers
 
-------MIME delimiter for sendEmail-57976.5644661201
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--000000000000e4af280643ee5454
+Content-Type: text/plain; charset="UTF-8"
+
+Severity: critical
+
+Affected versions:
+
+- Apache Causeway (org.apache.causeway:*) 2.0.0 through 3.4.0
+- Apache Causeway (org.apache.causeway:*) 4.0.0-M1
 
 Description:
-libfpx is a library for manipulating FlashPIX images.
 
-I’m aware that the link to the upstream website does not work. I’m keeping it as well because in the future the upstream website could appear 
-again.
-Libfpx is not actively developed, I contacted the imagemagick project if they were available to patch security issues, but they said the they 
-are only accepting patches and push new releases.
-This issue was found using the gm command line tool of graphicsmagick.
+Apache Causeway faces Java deserialization vulnerabilities that allow
+remote code execution (RCE) through user-controllable URL parameters.
+These vulnerabilities affect all applications using Causeway's
+ViewModel functionality and can be exploited by authenticated
+attackers to execute arbitrary code with application privileges.
 
-The complete ASan output of the issue:
+This issue affects all current versions.
 
-# gm identify $FILE
-==11182==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7fbac56ca5f6 bp 0x7ffc56dee420 sp 0x7ffc56dedba8 T0)
-==11182==The signal is caused by a READ memory access.
-==11182==Hint: address points to the zero page.
-    #0 0x7fbac56ca5f5 in strlen /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76
-    #1 0x43ea3c in __interceptor_strlen /var/tmp/portage/sys-libs/compiler-rt-sanitizers-4.0.1/work/compiler-rt-4.0.1.src/lib/asan/../sanitizer_common/sanitizer_common_interceptors.inc:282
-    #2 0x7fbac1376493 in OLEStream::WriteVT_LPSTR(char*) /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/olestrm.cpp:1472
-    #3 0x7fbac1372e06 in OLEPropertySection::Write() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:477
-    #4 0x7fbac1373101 in OLEPropertySet::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ole/oleprops.cpp:131
-    #5 0x7fbac134da36 in PFlashPixFile::Commit() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:581
-    #6 0x7fbac134da8f in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:276
-    #7 0x7fbac134db78 in PFlashPixFile::~PFlashPixFile() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxformt.cpp:306
-    #8 0x7fbac1379ed3 in PHierarchicalImage::~PHierarchicalImage() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/ri_image/ph_image.cpp:168
-    #9 0x7fbac1349c38 in PFileFlashPixIO::~PFileFlashPixIO() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/f_fpxio.cpp:277
-    #10 0x7fbac13536a5 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:519
-    #11 0x7fbac13536b8 in PFlashPixImageView::~PFlashPixImageView() /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpximgvw.cpp:532
-    #12 0x7fbac135529e in FPX_CloseImage /var/tmp/portage/media-libs/libfpx-1.3.1_p6/work/libfpx-1.3.1-6/fpx/fpxlibio.cpp:766
-    #13 0x7fbac15c7bf4 in ReadFPXImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/coders/fpx.c:344:14
-    #14 0x7fbac6e89e2b in ReadImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1607:13
-    #15 0x7fbac6e86e8c in PingImage /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/constitute.c:1370:9
-    #16 0x7fbac6d52ae5 in IdentifyImageCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8379:17
-    #17 0x7fbac6d59065 in MagickCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:8869:17
-    #18 0x7fbac6e047fb in GMCommandSingle /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17396:10
-    #19 0x7fbac6e01931 in GMCommand /var/tmp/portage/media-gfx/graphicsmagick-1.3.26/work/GraphicsMagick-1.3.26/magick/command.c:17449:16
-    #20 0x7fbac566c680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #21 0x419cd8 in _init (/usr/bin/gm+0x419cd8)
+Users are recommended to upgrade to version 3.5.0, which fixes the issue.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/string/../sysdeps/x86_64/strlen.S:76 in strlen
-==11182==ABORTING
-
-Affected version:
-1.3.1_p6
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
+This issue is being tracked as CAUSEWAY-3939
 
 Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
 
-CVE:
-CVE-2017-12923
+Slain Nico (reporter)
 
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00312-libfpx-NULLptr-OLEStream_WriteVT_LPSTR
+References:
+https://causeway.apache.org/https://www.cve.org/CVERecord?id=CVE-2025-64408https://issues.apache.org/jira/browse/CAUSEWAY-3939
 
-Timeline:
-2017-08-01: bug discovered
-2017-08-09: blog post about the issue
-2017-08-17: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/08/09/libfpx-null-pointer-dereference-in-olestreamwritevt_lpstr-olestrm-cpp/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
-
-
-------MIME delimiter for sendEmail-57976.5644661201--
-
+--000000000000e4af280643ee5454--
