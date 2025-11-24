@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1623" "Wednesday" "17" "August" "2016" "23:38:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160818033840.B027AB2E013@smtpvbsrv1.mitre.org>" "40" "[oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation" nil nil nil "8" "2016081803:38:40" "[oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation" (number mark "U       cve-assign@m Aug 17   40/1623  " thread-indent "\"[oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation\"\n") "<alpine.LFD.2.20.1608120118130.16386@wniryva>" ("<alpine.LFD.2.20.1608120118130.16386@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25958 invoked by uid 550); 18 Aug 2016 03:38:52 -0000
+Received: (qmail 4041 invoked by uid 550); 24 Nov 2025 12:36:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25940 invoked from network); 18 Aug 2016 03:38:52 -0000
-From: cve-assign@mitre.org
-To: ppandit@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, liqiang6-s@360.cn
-In-Reply-To: <alpine.LFD.2.20.1608120118130.16386@wniryva>
-Message-Id: <20160818033840.B027AB2E013@smtpvbsrv1.mitre.org>
-Date: Wed, 17 Aug 2016 23:38:40 -0400 (EDT)
-Subject: [oss-security] Re: CVE request Qemu: an infinite loop during packet fragmentation
+x-ms-reactions: disallow
+Received: (qmail 30127 invoked from network); 24 Nov 2025 12:26:17 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: =?UTF-8?Q?Francesco_Chicchiricc=C3=B2?= <ilgrosso@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <3f140d4d-8781-9a13-0b2e-a008c2513673@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 24 Nov 2025 12:26:06 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-65998: Apache Syncope: Default AES key used for internal
+ password encryption 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important=20
 
-> Quick Emulator(Qemu) built with the VMWARE VMXNET3 NIC device support,
-> with network abstraction layer is vulnerable to an infinite loop issue.
-> It could occur while fragmenting packets in the device.
-> 
-> A privileged user inside guest could use this flaw to crash the Qemu instance
-> resulting in DoS.
-> 
-> https://lists.gnu.org/archive/html/qemu-devel/2016-08/msg01601.html
-> http://git.qemu.org/?p=qemu.git;a=commit;h=ead315e43ea0c2ca3491209c6c8db8ce3f2bbe05
-> 
-> It is susceptible
-> to an infinite loop, if the current fragment length is zero.
+Affected versions:
 
-Use CVE-2016-6834.
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 2.1 through =
+2.1.14
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0 through =
+3.0.14
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0 through =
+4.0.2
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Description:
 
-iQIcBAEBCAAGBQJXtSWUAAoJEHb/MwWLVhi2Y/sP/jxwMXiQrfXymrc2Ol3PCKxA
-S7jTAlxSjG8DCH3T20nblB4NBdN7JXdKhywmZVs24zFsVGUA6zHD+JFduMROpQzv
-p5GYv2WveqUGlgz0X96q6cIJOQh+iTwlw4SKcUxexK1iGGr/LrU9BTG+aIHLrOYe
-t2UBHt0avx9Sfy8PCWljU+xrLTzU1IULd0fU/qaBXrn5GMweo79JPnIPMq7bAx/1
-uUUod8hRnoEv04Pstv6k46NoF1IW0SFNol8i6NcZhxaGqD8viUmIaBoeSvfF3I6o
-xWK5NNoiROKXGgfzhqt/q3i9KurVwnaDFV5ZPeVPb0mss0HWB4Gloo9MdMa4fBAf
-UmHp2/mkIHqkJv9lqDidW2Qt+D9c5yJ/92f6Ym9hKX26Q1+UaD/MpJT5OXsj4Otu
-VcMR3tPjaSh3h9xYjmONBkbMmkum09KSTvfhGtssiQaAiTP18T60adLGGIPwBj/d
-gcVOANLF0gr4DlxYn0H0hD90Mw3eGK0ShU9Ny/K81z7hcUA8T/T4QVuFR7Va5tvJ
-USmd+HPrZzQcqeRV0oYmDqio+Dg9V8+0LrYILxA82+qv3w+/BoaEmYPkxFqNRleH
-6TPWLlewziXb14goepC7TAnUyPHTKxYkuOFqEXdaeGEW2X8KqDv1DwQy4sKCTFBj
-Ic0SqC5GnEEgFlo70OHN
-=59XJ
------END PGP SIGNATURE-----
+Apache Syncope can be configured to store the user password values in the i=
+nternal database with AES encryption, though this is not the default option.
+
+When AES is configured, the default key value, hard-coded in the source cod=
+e, is always used. This allows a malicious attacker, once obtained access t=
+o the internal database content, to reconstruct the original cleartext pass=
+word values.
+This is not affecting encrypted plain attributes, whose values are also sto=
+red using AES encryption.
+
+Users are recommended to upgrade to version 3.0.15 / 4.0.3, which fix this =
+issue.
+
+Credit:
+
+Clemens Bergmann (Technical University of Darmstadt) (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-65998
+
