@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["304" "Monday" "14" "March" "2022" "10:06:24" "+0000" "Stefan Eissing" "icing@apache.org" nil "13" "[oss-security] CVE-2022-23943: Apache HTTP Server: mod_sed: Read/write beyond bounds " nil nil nil "3" nil nil (number mark "U       icing@apache Mar 14   13/304   " thread-indent "\"[oss-security] CVE-2022-23943: Apache HTTP Server: mod_sed: Read/write beyond bounds \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2022-23943: Apache HTTP Server: mod_sed: Read/write beyond bounds " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3469 invoked by uid 550); 14 Mar 2022 10:46:33 -0000
+Received: (qmail 13390 invoked by uid 550); 28 Nov 2025 14:28:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,27 +7,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32468 invoked from network); 14 Mar 2022 10:06:37 -0000
+x-ms-reactions: disallow
+Received: (qmail 21683 invoked from network); 28 Nov 2025 13:59:45 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Stefan Eissing <icing@apache.org>
+From: Hulk Lin <hulk@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <13a710ca-0f67-4c77-dc3a-61091d14a77f@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 14 Mar 2022 10:06:24 +0000
+Message-ID: <396ec424-7fe1-6c7c-9a69-cb01a339f1e5@apache.org>
+Content-Transfer-Encoding: 7bit
+Date: Fri, 28 Nov 2025 13:59:33 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2022-23943: Apache HTTP Server: mod_sed: Read/write beyond
- bounds 
+Subject: [oss-security] CVE-2025-59790: Apache Kvrocks: RESET command grants admin
+ privileges 
 
-Severity: important
+Severity: critical 
+
+Affected versions:
+
+- Apache Kvrocks 2.9.0 through 2.13.0
 
 Description:
 
-Out-of-bounds Write vulnerability in mod_sed of Apache HTTP Server allows a=
-n attacker to overwrite heap memory with possibly attacker provided data.
+Improper Privilege Management vulnerability in Apache Kvrocks.
 
-This issue affects Apache HTTP Server 2.4 version 2.4.52 and prior versions.
+This issue affects Apache Kvrocks: from v2.9.0 through v2.13.0.
+
+Users are recommended to upgrade to version 2.14.0, which fixes the issue.
 
 Credit:
 
-Ronald Crane (Zippenhop LLC)
+Mapta / BugBunny_ai (reporter)
+
+References:
+
+https://kvrocks.apache.org
+https://www.cve.org/CVERecord?id=CVE-2025-59790
 
