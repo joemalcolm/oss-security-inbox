@@ -1,4 +1,4 @@
-Received: (qmail 14331 invoked by uid 550); 29 Apr 2026 15:09:10 -0000
+Received: (qmail 5760 invoked by uid 550); 1 Dec 2025 14:59:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,93 +8,63 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 3135 invoked from network); 29 Apr 2026 14:29:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1777472955;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=3rJSRaMKvZeoFIrxXzfpNJZSiGIIWaojoy2t2wFM6WY=;
-	b=O9ksL/Rv7Nc/SPRLz+HEHKwy+RvvVB2IlU5jpq6dZqW1yqPK7Ub8hkc/svkIUpsF037cXJ
-	tcsDJ2PwsKJp7cKBiRKtb7d6+7ggqjuoOCawZxko1+VbQn2JHw03Jmd6HPBubSr1Yoh0fh
-	sxQgTUBQIxjc/jGFpInfpkQpgJxr+ucEWuvY87B6LwctXFXPv2MMhHhiQzKXdQV2tzXa1O
-	pZ5M+XF7B5Qzr6WqRDM5XiAHiKcdQlK0dAO8egXI/INKOgJ9yGz9WHkuBUtcW103gVU4xO
-	8lemrlVXBCPbKJ76VYVkVNCj6YmGeukQwwbRfPKK59zDtWA1m24Z65lqx5DtiQ==
-From: Stig Palmquist <stig@stig.io>
-Content-Type: text/plain;
-	charset=us-ascii
+Received: (qmail 18278 invoked from network); 1 Dec 2025 14:48:30 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1764600388; bh=e4XXKOFBo8YY04elxWfcWG4QCLEeMmmkFuYgFIMLX+I=;
+	h=From:Date:Subject:To:From;
+	b=HtL1m5cCQODBIjojL2aOoR99OleL1EIOyXb4Aoa5ev2+EmIWgZMy9KVMYFMHenG3L
+	 XNU68SyKDkcGZpUqjHe5hAs3Q1YokSxsGFJGroPC9awrJ9tscNmD0AA8IeeYdhQ/ei
+	 Lx76S7JFu2SenOIcxsvOAi7EARoU105BRNmeSlLQs3NCnwywlvCEPAIa1d/Qb9R15z
+	 +bC0cU55rQorBaU/Fa5ZoAZvAqtJ8NkNESMYqlKkm57FgCps3GE3kWC4JHL7W8HdDs
+	 Y5nV01g49KWDXweOpH51SveHQ7kQ+fl+FwG8FEEZR1H8FX8B+gcl9gjIQIB2CemQOa
+	 7rTQT1BSJvXMw==
+X-Gm-Message-State: AOJu0Ywh8bfom0hHONClFy22KIj+/VX4edCXbHnqE0uuB83wy7XF19nX
+	SEcrqaefWuStOWOr9AHtppcqcwNOPq2PZvuLWfmshf5hyScHXkCYhL7cG9FdXSfCrwbj2htzlns
+	2/QKhADC1ZtXLt+yD8BxFuxyB1hpzlto=
+X-Google-Smtp-Source: AGHT+IFmNhWKevyCZWzdLRjzmbMChmQ5IAqkc9gdaDTFzNyEe1ZTn8XHj5omb7glOpsofsHfv6AkJzsU1fMtGc2Rmgk=
+X-Received: by 2002:a05:620a:29c5:b0:8b2:7679:4d0b with SMTP id
+ af79cd13be357-8b33d269bd3mr5267776385a.54.1764600388094; Mon, 01 Dec 2025
+ 06:46:28 -0800 (PST)
+MIME-Version: 1.0
+From: Lukasz Lenart <lukaszlenart@apache.org>
+Date: Mon, 1 Dec 2025 15:46:17 +0100
+X-Gmail-Original-Message-ID: <CAMopvkP-=gOHFmF8ZHv4To1zBDtAGSJ26o5x-GX-otzr9iD=4g@mail.gmail.com>
+X-Gm-Features: AWmQ_bmMBuCl1J0bM6fKx6FYcfg8_qYz8WkyPjkK9xCPxoMzaeWUORBnr6ZDEdA
+Message-ID: <CAMopvkP-=gOHFmF8ZHv4To1zBDtAGSJ26o5x-GX-otzr9iD=4g@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Message-Id: <CDD95EFB-3A8C-4E6A-BEA1-C5FE74E10DBF@stig.io>
-Date: Wed, 29 Apr 2026 16:29:03 +0200
-To: cve-announce@security.metacpan.org,
- oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2026-7111: Text::CSV_XS versions before 1.62 for Perl have a
- use-after-free when registered callbacks extend the Perl argument stack,
- which may enable type confusion or memory corruption
+Subject: [oss-security] CVE-2025-64775: Apache Struts: File leak in multipart request
+ processing causes disk exhaustion (DoS) - S2-068
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2026-7111                                        CPAN Security Group
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Severity: important
 
-        CVE ID:  CVE-2026-7111
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.62
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
+- Apache Struts (org.apache.struts:struts2-core) 2.0.0 through 6.7.0
+- Apache Struts (org.apache.struts:struts2-core) 7.0.0 through 7.0.3
 
+Description:
 
-Text::CSV_XS versions before 1.62 for Perl have a use-after-free when
-registered callbacks extend the Perl argument stack, which may enable
-type confusion or memory corruption
+Denial of Service vulnerability in Apache Struts, file leak in
+multipart request processing causes disk exhaustion.
 
-Description
------------
-Text::CSV_XS versions before 1.62 for Perl have a use-after-free when
-registered callbacks extend the Perl argument stack, which may enable
-type confusion or memory corruption.
+This issue affects Apache Struts: from 2.0.0 through 6.7.0, from 7.0.0
+through 7.0.3.
 
-The Parse, print, getline, and getline_all methods invoke registered
-callbacks (for example after_parse, before_print, or on_error) and
-cache the Perl argument stack pointer across the call. If a callback
-extends the argument stack enough to trigger a reallocation, the return
-value is written through the stale pointer into the freed buffer, and
-the caller reads the original $self argument as the return value
-instead.
+Users are recommended to upgrade to version 6.8.0 or 7.1.1, which
+fixes the issue.
 
-Calling code that expects parsed data from getline_all receives the
-Text::CSV_XS object in its place, leading to logic errors or crashes.
-Text::CSV_XS objects used without any registered callbacks are not
-affected.
+Credit:
 
-Problem types
--------------
-- CWE-825 Expired Pointer Dereference
-- CWE-416 Use After Free
+Nicolas Fournier (reporter)
 
-Solutions
----------
-Upgrade to 1.62 or later.
+References:
 
+https://cwiki.apache.org/confluence/display/WW/S2-068
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-64775
 
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/c17f31a5f2bf36674748eb4b=
-6e25672f0571a224.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.62/changes
-
-Timeline
---------
-- 2026-04-25: Fix committed to public Github repository
-- 2026-04-26: CVE number reserved
-- 2026-04-29: Version 1.62 with the fix released to CPAN
-
-Credits
--------
-Leon Timmermans, analyst
-
+On behalf of the Apache Struts project
+=C5=81ukasz Lenart
