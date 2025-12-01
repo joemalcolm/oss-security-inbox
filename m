@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1390" "Thursday" "16" "July" "2015" "12:02:21" "+0200" "=?UTF-8?B?Q8OpZHJpYyBDaGFtcGVhdQ==?=" "cchampeau@apache.org" "<CADQzvmmYC7RbZnsQ8O63XN4HCMYh9RGRdMiuWupVt=u=pjH8+g@mail.gmail.com>" "48" "[oss-security] [CVE-2015-3253] Apache Groovy Zero-Day Vulnerability Disclosure" nil nil nil "7" "2015071610:02:21" "[oss-security] [CVE-2015-3253] Apache Groovy Zero-Day Vulnerability Disclosure" (number mark "        cchampeau@ap Jul 16   48/1390  " thread-indent "\"[oss-security] [CVE-2015-3253] Apache Groovy Zero-Day Vulnerability Disclosure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12012 invoked by uid 550); 16 Jul 2015 10:32:40 -0000
+Received: (qmail 23733 invoked by uid 550); 1 Dec 2025 16:44:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +6,140 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32100 invoked from network); 16 Jul 2015 10:02:36 -0000
-MIME-Version: 1.0
-X-Received: by 10.112.10.166 with SMTP id j6mr7773176lbb.120.1437040941380;
- Thu, 16 Jul 2015 03:02:21 -0700 (PDT)
-Message-ID: <CADQzvmmYC7RbZnsQ8O63XN4HCMYh9RGRdMiuWupVt=u=pjH8+g@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a11347cfad6bad8051afb2aff
-Cc: security@apache.org, oss-security@lists.openwall.com, 
-	bugtraq@securityfocus.com
-Date: Thu, 16 Jul 2015 12:02:21 +0200
-From: =?UTF-8?Q?C=C3=A9dric_Champeau?= <cchampeau@apache.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2015-3253] Apache Groovy Zero-Day Vulnerability Disclosure
-To: users@groovy.incubator.apache.org, dev@groovy.incubator.apache.org
+x-ms-reactions: disallow
+Received: (qmail 27917 invoked from network); 1 Dec 2025 16:29:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=VwhEmk5WnyV70/in1Qe7jZ3tT0yioNQVWQ/1qp9aPGE=; b=g8OLupAEFB2+tHzJH89AivWXYb
+	MkV7Os397Y26uTs37P1I37VyXM/ztlEwHRC/kmnFDtrYb7HlOwD+1R9q717Z9jvOqy9/sWqTOw2eV
+	fzYPFdN6WdehzNahuuE3W9CO1767EMUDY6x7965UxiW/bRyPmQc4e2toEjYBZ8WJs+dXrE5B7Cny2
+	LDZxs3vMbNjlH/4fFnGAN7rhBZ9oNmxwRASffXUoQWaEExUsdVDE4ak2BXqV4FcdeDnv7UEwD5SK7
+	0w7c+BrJ03IsD69eylKm1M85D7T+wAFd/J2zdEk5EQgJy3Oe+3x0N0ixD8pifl0xTtXwZDTM3bbd2
+	dmLf922Q==;
+Date: Mon, 1 Dec 2025 18:29:32 +0200
+Message-ID: <20251201182932.GE2377579@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="J4O4D8wwXbOzlutp"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0008
 
---001a11347cfad6bad8051afb2aff
-Content-Type: text/plain; charset=UTF-8
+--J4O4D8wwXbOzlutp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-*Severity*: Important
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwOAotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogRGVjZW1iZXIgMDEsIDIwMjUKQWR2aXNvcnkgSUQgICAgICAgICAg
+ICAgOiBXU0EtMjAyNS0wMDA4CldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
+aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDguaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
+IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDA4Lmh0bWwK
+Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyMy00MzAwMCwgQ1ZFLTIwMjUtNDMzOTIs
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtNDM0MTksIENWRS0yMDI1LTQzNDI1
+LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQzNDI3LCBDVkUtMjAyNS00MzQy
+OSwKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS00MzQzMCwgQ1ZFLTIwMjUtNDM0
+MzEsCiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtNDM0MzIsIENWRS0yMDI1LTQz
+NDM0LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQzNDQwLCBDVkUtMjAyNS00
+MzQ0MywKICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS00MzQ4MC4KClNldmVyYWwg
+dnVsbmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJlZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJL
+aXQuCgpDVkUtMjAyMy00MzAwMAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi40Mi4wLgogICAgQ3JlZGl0IHRvIEFwcGxlLgogICAgSW1wYWN0
+OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8K
+ICAgIG1lbW9yeSBjb3JydXB0aW9uLiBEZXNjcmlwdGlvbjogQSB1c2UtYWZ0ZXItZnJlZSBpc3N1
+ZSB3YXMgYWRkcmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9yeSBtYW5hZ2VtZW50LgogICAg
+V2ViS2l0IEJ1Z3ppbGxhOiAyNTU5NTEKCkNWRS0yMDI1LTQzMzkyCiAgICBWZXJzaW9ucyBhZmZl
+Y3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUwLjIuCiAgICBDcmVkaXQg
+dG8gVG9tIFZhbiBHb2V0aGVtLgogICAgSW1wYWN0OiBBIHdlYnNpdGUgbWF5IGV4ZmlsdHJhdGUg
+aW1hZ2UgZGF0YSBjcm9zcy1vcmlnaW4uCiAgICBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBh
+ZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBoYW5kbGluZyBvZgogICAgY2FjaGVzLgogICAgV2ViS2l0
+IEJ1Z3ppbGxhOiAyOTc1NjYKCkNWRS0yMDI1LTQzNDE5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDog
+V2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUwLjAuCiAgICBDcmVkaXQgdG8gSWdu
+YWNpbyBTYW5taWxsYW4gKEB1bGV4ZWMpLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91
+c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1lbW9yeSBjb3JydXB0aW9u
+LiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQg
+bWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTM4OTUKCkNWRS0yMDI1LTQz
+NDI1CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9y
+ZSAyLjUwLjIuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIuCiAgICBJbXBh
+Y3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0
+byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogVGhlIGlzc3Vl
+IHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2Vi
+S2l0IEJ1Z3ppbGxhOiAyOTg4NTEKCkNWRS0yMDI1LTQzNDI3CiAgICBWZXJzaW9ucyBhZmZlY3Rl
+ZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUwLjIuCiAgICBDcmVkaXQgdG8g
+R2FyeSBLd29uZywgcmhlemEgKEBnaW5nZ2lsQmVzZWwpLgogICAgSW1wYWN0OiBQcm9jZXNzaW5n
+IG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhw
+ZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVzY3JpcHRpb246IFRoaXMgaXNzdWUgd2FzIGFkZHJlc3Nl
+ZAogICAgdGhyb3VnaCBpbXByb3ZlZCBzdGF0ZSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3pp
+bGxhOiAyOTg2MjgKCkNWRS0yMDI1LTQzNDI5CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0
+R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUwLjIuCiAgICBDcmVkaXQgdG8gR29vZ2xlIEJp
+ZyBTbGVlcC4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBj
+b250ZW50IG1heSBsZWFkIHRvIGFuCiAgICB1bmV4cGVjdGVkIHByb2Nlc3MgY3Jhc2guIERlc2Ny
+aXB0aW9uOiBBIGJ1ZmZlciBvdmVyZmxvdyB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVk
+IGJvdW5kcyBjaGVja2luZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjk4MjMyCgpDVkUtMjAyNS00
+MzQzMAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZv
+cmUgMi41MC4yLgogICAgQ3JlZGl0IHRvIEdvb2dsZSBCaWcgU2xlZXAuCiAgICBJbXBhY3Q6IFBy
+b2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgog
+ICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogVGhpcyBpc3N1ZSB3YXMg
+YWRkcmVzc2VkCiAgICB0aHJvdWdoIGltcHJvdmVkIHN0YXRlIG1hbmFnZW1lbnQuCiAgICBXZWJL
+aXQgQnVnemlsbGE6IDI5ODE5NgoKQ1ZFLTIwMjUtNDM0MzEKICAgIFZlcnNpb25zIGFmZmVjdGVk
+OiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuMi4KICAgIENyZWRpdCB0byBH
+b29nbGUgQmlnIFNsZWVwLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0
+ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1lbW9yeSBjb3JydXB0aW9uLiBEZXNjcmlw
+dGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgbWVtb3J5IGhh
+bmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTgxOTQKCkNWRS0yMDI1LTQzNDMyCiAgICBW
+ZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9yZSAyLjUwLjIu
+CiAgICBDcmVkaXQgdG8gSG9zc2VpbiBMb3RmaSAoQGhvc3NlbG90KSBvZiBUcmVuZCBNaWNybyBa
+ZXJvIERheSBJbml0aWF0aXZlLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNy
+YWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBj
+cmFzaC4gRGVzY3JpcHRpb246IEEgdXNlLWFmdGVyLWZyZWUgaXNzdWUgd2FzCiAgICBhZGRyZXNz
+ZWQgd2l0aCBpbXByb3ZlZCBtZW1vcnkgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6aWxsYTog
+Mjk5MzEzCgpDVkUtMjAyNS00MzQzNAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBh
+bmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC4yLgogICAgQ3JlZGl0IHRvIEdvb2dsZSBCaWcgU2xl
+ZXAuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVu
+dCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBTYWZhcmkgY3Jhc2guIERlc2NyaXB0aW9u
+OiBBIHVzZS1hZnRlci1mcmVlIGlzc3VlIHdhcwogICAgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQg
+bWVtb3J5IG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5Nzk1OAoKQ1ZFLTIwMjUt
+NDM0NDAKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVm
+b3JlIDIuNTAuMi4KICAgIENyZWRpdCB0byBOYW4gV2FuZyAoQGV0ZXJuYWxzYWt1cmExMykuCiAg
+ICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkg
+bGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogVGhp
+cyBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIGNoZWNrcy4KICAgIFdlYktp
+dCBCdWd6aWxsYTogMjk4MTI2CgpDVkUtMjAyNS00MzQ0MwogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6
+IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41MC4yLgogICAgQ3JlZGl0IHRvIGFu
+IGFub255bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5
+IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2Vz
+cyBjcmFzaC4gRGVzY3JpcHRpb246IFRoaXMgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBp
+bXByb3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5OTg0MwoKQ1ZFLTIwMjUtNDM0
+ODAKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3Jl
+IDIuNDYuMC4KICAgIENyZWRpdCB0byBBbGVrc2VqcyBQb3BvdnMuCiAgICBJbXBhY3Q6IEEgbWFs
+aWNpb3VzIHdlYnNpdGUgbWF5IGV4ZmlsdHJhdGUgZGF0YSBjcm9zcy1vcmlnaW4uCiAgICBEZXNj
+cmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBpbXByb3ZlZCBjaGVja3MuCiAg
+ICBXZWJLaXQgQnVnemlsbGE6IDI3NjIwOAoKV2UgcmVjb21tZW5kIHVwZGF0aW5nIHRvIHRoZSBs
+YXRlc3Qgc3RhYmxlIHZlcnNpb25zIG9mIFdlYktpdEdUSyBhbmQgV1BFCldlYktpdC4gSXQgaXMg
+dGhlIGJlc3Qgd2F5IHRvIGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVubmluZyBzYWZlIHZlcnNpb25z
+Cm9mIFdlYktpdC4gUGxlYXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBmb3IgaW5mb3JtYXRpb24gYWJv
+dXQgdGhlIGxhdGVzdApzdGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVyIGluZm9ybWF0aW9uIGFib3V0
+IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBzZWN1cml0eSBhZHZpc29yaWVzCmNhbiBiZSBmb3Vu
+ZCBhdDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0bWwgb3IKaHR0cHM6Ly93cGV3
+ZWJraXQub3JnL3NlY3VyaXR5LgoKVGhlIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCB0ZWFtLAo=
 
-*Vendor*: The Apache Software Foundation
-*Versions Affected*:
+--J4O4D8wwXbOzlutp
+Content-Type: application/pgp-signature; name="signature.asc"
 
-All unsupported versions ranging from 1.7.0 to 2.4.3.
+-----BEGIN PGP SIGNATURE-----
 
-*Impact*
+iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaS3CbAAKCRCRxVnb5MkS
+O70uAJ4njiMC2ngcS5lSW+uh5sm405XrxgCdHRGYIf+H6RP3+xlxSTQSjPCcLPE=
+=EjQt
+-----END PGP SIGNATURE-----
 
-Remote execution of untrusted code, DoS
-
-*Description*
-
-When an application has Groovy on classpath and that it uses standard Java
-serialization mechanims to communicate between servers, or to store local
-data, it is possible for an attacker to bake a special serialized object
-that will execute code directly when deserialized. All applications which
-rely on serialization and do not isolate the code which deserializes
-objects are subject to this vulnerability.
-
-*Mitigation*
-
-Apache Groovy 2.4.4 is the first and only supported release under the
-Apache Software Foundation. It is strongly recommanded that all users
-upgrade to this version. If you cannot upgrade or rely on an older,
-unsupported version of Groovy, you can apply the following patch on the
-MethodClosure class
-(src/main/org/codehaus/groovy/runtime/MethodClosure.java):
-
- public class MethodClosure extends Closure {
-+    private Object readResolve() {
-+        throw new UnsupportedOperationException();
-+    }
-
-*Credit*
-
-This vulnerability was discovered by:
-
-   cpnrodzc7 working with HP's Zero Day Initiative
-
-*References*
-
-http://groovy-lang.org/security.html
-
---001a11347cfad6bad8051afb2aff--
+--J4O4D8wwXbOzlutp--
