@@ -1,4 +1,4 @@
-Received: (qmail 7299 invoked by uid 550); 3 Oct 2023 22:53:05 -0000
+Received: (qmail 25790 invoked by uid 550); 2 Dec 2025 15:56:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,57 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5985 invoked from network); 3 Oct 2023 22:52:20 -0000
-Date: Wed, 4 Oct 2023 00:51:56 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 25760 invoked from network); 2 Dec 2025 15:56:42 -0000
+Date: Tue, 2 Dec 2025 16:56:06 +0100
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20231003225156.GA26670@openwall.com>
-References: <E1qko5Z-0003cF-KD@xenbits.xenproject.org> <ZROMd1GCpD8uDtbE@itl-email> <20231003201212.GA24599@openwall.com> <1786f020-2af8-4adb-bb4c-5dc87c545dcd@citrix.com> <20231003214424.prarc3aboi3ar7zk@yuggoth.org> <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <aS8MFknR8ZPxcniJ@256bit.org>
+References: <2362c3be-360c-413b-be59-d15dd682deee@oracle.com>
+ <aS33bPmVC5MVinXv@256bit.org>
+ <5e016ff3-a121-4137-a5c5-b53f91f4ca91@greenbone.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CADxcaYUe3Mj-VYn7j5T_JoF-vhDeqxJh9CZXm-r+z27zrnjwow@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 439 v1 (CVE-2023-20588) - x86/AMD: Divide speculative information leak
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5e016ff3-a121-4137-a5c5-b53f91f4ca91@greenbone.net>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: Re: [oss-security] 5 CVE's fixed in Fluent Bit
 
-On Tue, Oct 03, 2023 at 03:02:41PM -0700, Jean Luc Picard wrote:
-> Hi, just dropping in, is this the kind of thing to where the userspace &
-> kernel layers need mitigation until there's microcode mitigation?
 
-In general, kind of yes - it could have been that kind of thing.
+On Di, 02 Dez 2025, Christian Fischer wrote:
 
-More specifically, no - in this case, only kernel and hypervisor
-and system configuration (disable SMT) mitigations are expected.  No
-userspace mitigations, other than maybe specific algorithms avoiding
-integer divide operations based on secrets where they can.  While AMD
-maybe could fix this in microcode (or maybe not, or maybe with
-unacceptable performance penalty), they expressed no plans to do so.
+> there seems to be indeed some confusion/inconsistencies about the possible
+> fixes:
+> 1. [1] lists 4.2, 4.1.1 and 4.0.14 as fixes
+> 2. [2] lists 4.0.12, 4.1.1 and 4.2.0 as fixes
+> 3. In this thread 4.0.13 (among 4.1.1 and 4.2.0) is now listed as a fix
+> 
+> But if we check [3] version 4.0.13 only contains two changelog entries
+> shared with version 4.1.1. Furthermore 4.0.12 was released more closely to
+> 4.1.1 then 4.0.13 so the fixed versions on [2] might be the correct ones
+> (4.0.12, 4.1.1 and 4.2.0).
+> 
+> Regards,
+> 
+> [1] https://fluentbit.io/blog/2025/10/28/security-vulnerabilities-addressed-in-fluent-bit-v4.1-and-backported-to-v4.0/
+> [2] https://kb.cert.org/vuls/id/761751
+> [3] https://github.com/fluent/fluent-bit/releases
 
-> On Tue, Oct 3, 2023 at 2:46???PM Jeremy Stanley <fungi@yuggoth.org> wrote:
-> > On 2023-10-03 22:37:08 +0100 (+0100), Andrew Cooper wrote:
-> > [...]
-> > > If you have a proposal for how you'd prefer it to be done, I'll see what
-> > > I can do.  Perhaps BCC oss-security, or just send out a second mail?
-> >
-> > When I send advisories, I prepare two basically identical E-mail
-> > messages: one to the project's announcement list and one to
-> > oss-security (signing both of them). It seems like this is the most
-> > common approach to avoiding cross-posting between lists.
+Well, I have asked upstream 
+https://github.com/fluent/fluent-bit/issues/11230 and they have 
+confirmed and updated the blog post[1] to mention 4.0.13 as the proper 
+backported fix.
 
-Andrew, sending a second message like Jeremy suggests works best.
-Bcc currently isn't expected to work at all.  Thank you!
+I did not check or even verify the other versions.
 
-BTW, in this case I think the problem was actually for Xen's lists more
-than for oss-security - you included xen-announce among the CC'ed lists,
-and this means e.g. Demi Marie's reply was attempted to be posted to
-there, while certainly not being a valid Xen announcement.  However, I
-guess external messages to the announcement list are very easy to reject
-on your side.  It's not so easy for us on oss-security because we've
-setup some senders to bypass moderation, yet those people participate in
-threads on other lists that might just happen to be CC'ed in here and
-they might not notice that the rest of the sub-thread is moderated-out.
-
-I'm not too concerned about this issue with Xen announcements in
-particular - things have worked pretty well with these so far.
-
-Alexander
+Thanks,
+Christian
+-- 
+evakuieren:
+  zeigt eindeutig, daß der Menschen erstes Milchvieh "o'muh" sagte.
