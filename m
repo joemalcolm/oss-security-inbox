@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4707" "Sunday" "22" "March" "2015" "11:55:11" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<550F01FF.1010208@redhat.com>" "100" "Re: [oss-security] CVE for Kali Linux" nil nil nil "3" "2015032217:55:11" "[oss-security] CVE for Kali Linux" (number mark "        kseifried@re Mar 22  100/4707  " thread-indent "\"Re: [oss-security] CVE for Kali Linux\"\n") "<20150322172300.GA21110@openwall.com>" ("<550EE478.70005@redhat.com>" "<E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com>" "<20150322172300.GA21110@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 6133 invoked by uid 550); 22 Mar 2015 17:55:25 -0000
+Received: (qmail 31849 invoked by uid 550); 2 Dec 2025 15:40:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,119 +6,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6112 invoked from network); 22 Mar 2015 17:55:24 -0000
-Message-ID: <550F01FF.1010208@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-References: <550EE478.70005@redhat.com> <E1YZj9N-0003Th-Gn@rmm6prod02.runbox.com> <20150322172300.GA21110@openwall.com>
-In-Reply-To: <20150322172300.GA21110@openwall.com>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="G1aE7TVhqoaFg6v4txmeEPi4NRqItkGuf"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.27
-Date: Sun, 22 Mar 2015 11:55:11 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE for Kali Linux
+x-ms-reactions: disallow
+Received: (qmail 9267 invoked from network); 2 Dec 2025 09:34:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=greenbone.net;
+	s=MBO0001; t=1764668085;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=OXgG/SrrLZoUW7wswyy/ymJER7bn73GIepGFZeKxamA=;
+	b=nMn8B41+SiQPULnRlPoPFv+wo3DXVP6Ffud5dmV0bmrweaCrRJEDpuGRtSTOggR0CpOPdu
+	wr1fGeeOV+fVIIyqyUzc+/yawAhYloHJZZPk1BUDqGMe6CMEXrDQE9wKSFglwAZ+tqXomf
+	X95k1XCITOkJsXOtL+TlwUa7NUGPQONxXiYrI6ZUM6VSq9YarfklC4SIoQxpUnAlQU7L/5
+	ZW5Nrl+aJza4qlczueMMx8LAAud7D3BuXfVox+0ZOm9Wv1OZxuczrQSNEYOA2/ZSYq+DSs
+	FlJfG7keV1+fcQRRu/t8mGJNNDIxbJOSrVhF8WoV7XVwC6Vq9zLhj47lzBFTKQ==
+Message-ID: <5e016ff3-a121-4137-a5c5-b53f91f4ca91@greenbone.net>
+Date: Tue, 2 Dec 2025 10:34:40 +0100
+MIME-Version: 1.0
 To: oss-security@lists.openwall.com
+References: <2362c3be-360c-413b-be59-d15dd682deee@oracle.com>
+ <aS33bPmVC5MVinXv@256bit.org>
+Content-Language: en-US, de-DE
+From: Christian Fischer <christian.fischer@greenbone.net>
+Autocrypt: addr=christian.fischer@greenbone.net; keydata=
+ xsFNBFfIFQABEACsiBqyEKeDzj0nBZAl9yKhGccjNgPaiUBG3i8KTCxXh6d6Supyvpbetfu2
+ Wj9rk3T6SB49hvNrLSOPlSDnwSvcjiZTaZPpnm4Kfimm2Ok2EVJDsS7my8iTqnkNX8TWO1eY
+ GWoIkNxPxexyUUX7fdsVx1NwnXFK/1Xji3+waeIbcX4NZDQETlTBG5D36F0PV0lwftbihQ18
+ AB0zlmkRP0cF037rcIFdvubZgtWhpf7aAm6GRALX+jUZBQpS7cUYS1hIQXGG5mCyZBU6Yj6q
+ XzzzKT94ic+bvIXin10U98YLmTSyKAq+BV1u6sZm0vybL/PAGKbFhIqyIq00NX+2NpLSDIzx
+ 8UFkO46mJZRat0f2KYw+ftLwZnSk26/kXzbXwCTdjfugFFIa9PPyzdfEONe4+awQj3R2T282
+ IOVYWOdXndbGhptaV9tZXReh3E1Tg+VquWVuunvO7v8I6OozjRSpHQDDL8y/4rbNaO2Q6o2f
+ MYKJkl91/HO5W6OnYDZZd7c0FI8DezsMow10nvRjyDbpiiC7xkckhBiI3sH0SNh1IR0uX7WH
+ MOqIqeTvIXOB5tUKwUoF6FeKpeOJDXxK8eof6CljO93yoxQRjGEWC5r1Pe+d5lK2PnynMIf8
+ f/sQfwGkokVfdjIlfecB5Yc0zWXuiX/UVTt4viLEdfCTubBRJQARAQABzTNDaHJpc3RpYW4g
+ RmlzY2hlciA8Y2hyaXN0aWFuLmZpc2NoZXJAZ3JlZW5ib25lLm5ldD7CwXcEEwEIACEFAlfI
+ FQACGyMFCwkIBwIGFQgJCgsCBBYCAwECHgECF4AACgkQVPPOW3bFl61uiQ//RgPiDJoLgPWD
+ zLxrkGQDrdwoqwPqz3/D7pz9bJbdxNFNaH1WHjL8PkAYclIQWn7pJ+E+xOFlRKmUXHAovepk
+ +aqJkuNLZG/KRYmIBlI9EUnoDphIImzYNJIAUGxbW8qXuCpYuPaBq8pzRCKZvosQQ5wTrCAI
+ wP3CQtoFRR+IMWx3qbC2CpFG+tK5+k+dycKJAcHfm3+cZFr1wD2ePm9vVw81PwSwGmT/Dfho
+ ZLXbDmfsEpmx9r8qhUcJ6sjc0vU8OxTiWKeqCKII+wX0QFVYI5t42YSiUpXcwQ3LIzHkdFxS
+ cTs0zDMjCXgM70Ud3gLnArBVQwnKN8NnHT3WnlyJ81OkLI6f9FfoCN2iOoBQQqwdygFM2H6f
+ CSL6Zji8VTV/tL8hmHCh1aElrWqXM1QcczVh2KKOn5PYkndD6SHjiz8hFp9X75UsndaM6PV/
+ QHQQT1IcyD1AtfG1CO15POmRKc5RVGDVGTeWKX5tDWrPFyiLLruXsy5d8n6HpeP9o1hcd0iF
+ SRXZ5H7EYhHPqFkBG9kmPIi28uJ9Nhnnai2f/NjuiFIcGMs3VyiyT8T/z+SblA6kQBDDjIbn
+ 9s8INMhgCOaWM3R/adrRagB13CwAOsJJXX3/Ha5eOvMqtJSp0/pA6ALX6Y5rmOh4aGhcS1VW
+ 2fq22mnuX6aEOduo6QY1svbOwU0EV8gVAAEQAKZayFLcFfQXnm1KXWDK9dxBfWK+DfygyduW
+ g0Yn70CYJf2ha+d/P60vSuN5pV8SpaR3NuX352JxmxixvjrDk9hWO1muYoy4PfvEOn5VKrc9
+ M8QjnpNnjj9OIP85qV+wB8mXI1LWk++zW0Nt1W0B/ePJcDGbXjSgtFd5mhGeWkb+80xVRVOO
+ ru1eA5cOgdDmW23UtahoamymH2Zrz2nfRj0x3RQIZfcA63ragIQTv/hb2Qq8j1mTFD7h5xQ5
+ qLSh+OAGPql2uyGaHohLUNcl7KSDJXVWJGbEKGc8ykfA2HfrY6pRwA+vxizxg3L6R4DYisvi
+ u9L+lEzU7M3QJWpZ1YNYVmqmDwdsC4Hof5b0uzXrnc23JDJpOauVeSFFWuIXrnolpSXzMx3O
+ DEt7Iz6nfSh/7phTa5909I2Ut334CAim4uDECgIdwsa9N501Aoa3Kf2FrjT+B5Qd4WhIlm6z
+ Q/yd2KMwzcss/dQGmNyHOopZ9s8RHptqK04dl3mGvdqdGZyaWevdXhszbWi6SwUDTj+1FE9A
+ 8OCdFf84ymYtEyMMtwSROwCl/RoDlWDqQi/GlN+YeyxiJO7LVKIkjLci1S02tDyJasKIPGFv
+ 3r5mBocCYsrVJUHqUGttGKQbh/MXxHgCkd7Tj/D3j/ti4mMK9bVZO8SVtKmaJm9ELe6kF/Gf
+ ABEBAAHCwV8EGAEIAAkFAlfIFQACGwwACgkQVPPOW3bFl63V4A//dLM8uluD68S27lwN5dPM
+ zaAkXEZ0ejC6Qno11jVi3TK7xCgdrWOP6Bzek5irqmlwntPLD2pCtMZHFyuoTOWICY8dOvml
+ OIz+7c4WH4Re/f1/malQmCWzE14gSnrks0kkDdP2LJ3Z7zLdfC4lO3bgqNcAMjxH0MIFMIPx
+ M8LRO+Io0Lnie3hsubCO0z/FCHexfyjYbICnBCoV1CHdNfiaYEAmbcM5g8bLUNMfPZekGeQI
+ a0Xz1y2F5vvPsIHOuO4MN6gXbF5xsqf2JM5kt7XaFUgxyGNQ8HBStae2aTD/4T+IFaN2pnMe
+ hn/pWlld3hxjm7c1ixgU0yQbnHMFa56z9QGy0FsMaeq6GST6sJl48vd5+MzZ9B3S6RttKS80
+ LMuIBecQ+Rox+vfPnmwfJRSAdMRA71OFJY3JlR+mpiVHTTDdqAALrtkSMSzvVP1JkReLHd/p
+ qPhNMe62A2Y5dviDJPXWdGO1GunAcLsRNcfXRvfDBlenEsrQ0lMQ33y2qzW9GUjRp3+q2Jiq
+ GXPjIwX8FxgIWnkZQeKGghMwTxPqPdzxie+rq1iOdFF4CnLMc5JaaDKAhaU1Df763vPFZzbq
+ Q6OW8LmyBpLpOSvB9fAyTg60xP9pL6mIbr/Pa72tlXN8SMz7x/+OJyrlPKTf2nai5wOFy24w
+ nSh/BvVF+Xp6Dow=
+In-Reply-To: <aS33bPmVC5MVinXv@256bit.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] 5 CVE's fixed in Fluent Bit
 
---G1aE7TVhqoaFg6v4txmeEPi4NRqItkGuf
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-On 03/22/2015 11:23 AM, Solar Designer wrote:
-> On Sun, Mar 22, 2015 at 12:54:57PM -0400, David A. Wheeler wrote:
->> On 2015-02-26 I reported to Cygwin that they had a similar man-in-the-mi=
-ddle issue.
->> The Cygwin package manager (which downloaded all other packages) was unp=
-rotected
->> and downloaded using http (as http://cygwin.com/setup-x86.exe or http://=
-cygwin.com/setup-x86_64.exe).
->> They changed it to load with HTTPS, and later added HTTP Strict Transpor=
-t Security (HSTS).
->=20
-> IMO, http vs. https is a red herring.  We shouldn't be focusing on
-> security of software downloads, but rather on authenticity of the
-> software.  If the distribution web server gets compromised, https
-> doesn't help.  Thus, GPG signatures and the like.
+On 12/1/25 9:15 PM, Christian Brabandt wrote:
+> 
+> On Mi, 26 Nov 2025, Alan Coopersmith wrote:
+> 
+>> https://fluentbit.io/blog/2025/10/28/security-vulnerabilities-addressed-in-fluent-bit-v4.1-and-backported-to-v4.0/
+>> provides their analysis and information about fixes in versions 4.2, 4.1.1,
+>> and 4.0.14, which are available from https://github.com/fluent/fluent-bit .
+> 
+> For the record, there is a typo in the above blog post. The backported
+> fixed version is v4.0.13
 
-The problem is to do this you need some key/shared secret/verifiable
-secret, e.g. a GPG key. How do I get the GPG key securely?
+there seems to be indeed some confusion/inconsistencies about the 
+possible fixes:
+1. [1] lists 4.2, 4.1.1 and 4.0.14 as fixes
+2. [2] lists 4.0.12, 4.1.1 and 4.2.0 as fixes
+3. In this thread 4.0.13 (among 4.1.1 and 4.2.0) is now listed as a fix
 
-In reality most system, for better or worse, ship with a set of
-certificate roots that can be used (in theory) to prove the validity of
-a web site. Hence the HTTP vs HTTPS debate. Sadly, HTTPS is the best we
-have for that initial bootstrap often.
+But if we check [3] version 4.0.13 only contains two changelog entries 
+shared with version 4.1.1. Furthermore 4.0.12 was released more closely 
+to 4.1.1 then 4.0.13 so the fixed versions on [2] might be the correct 
+ones (4.0.12, 4.1.1 and 4.2.0).
 
-My personal thought on this is the same reason I sign all my email. I
-don't sign my email for security reasons, so much as to prove the
-validity of the key, e.g. at this point either I truly am
-keifried@redhat.com or someone has been impersonating me for so long and
-getting away with it, they might as well be me.
+Regards,
 
-So in the case of an ISO download that is GPG signed how do I verify the
-key is correct? If this is all done over HTTP it is pretty trivial for
-an attacker to run a Man in the Middle proxy that string replaces they
-key/signature as needed. HTTPS significantly raises this bar, it goes
-from "run off the shelf Squid/etc" to "convince a CA to give you a wonky
-certificate".
-
-> I don't care about CVEs much, but if CVEs start being assigned to
-> anything like this, they should be for lack of signatures or lack of
-> signature verification in the vendor's recommended software installation
-> or update mechanism or lack of a way to verify the signing key or lack
-> of key verification in the vendor's recommended procedures (where
-> applicable).  (With key verification, it gets tricky.  So probably those
-> issues are not CVE-worthy yet, except in extreme cases where e.g. new
-> signing keys would be downloaded automatically with no verification.)
-
-That is what we have done in past, however in this case my question is
-still "if a vendor provides a download securely, but then advises people
-to do something really insecure, does that win a CVE".
-
-> They should not be for use of http, nor for https vulnerabilities.
->=20
-> https does offer a security aspect that signatures don't: it hides from
-> some observers which exact software is being downloaded (and maybe that
-> it's a software download at all).  It doesn't do that perfectly because
-> the target address and transfer timings and sizes may be revealing, but
-> I do acknowledge there's some subtle improvement over http here.  I just
-> think this is far less important than ensuring authenticity of the
-> software.  So let's demand signatures and signature verification first,
-> and let's not be distracted by http vs. https.
-
-How do you propose we bootstrap secure key distribution and verification
-then? This is a real world problem with no easy solution.
-
-> Alexander
->=20
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-
-
---G1aE7TVhqoaFg6v4txmeEPi4NRqItkGuf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJVDwH/AAoJEBYNRVNeJnmT3PwQAId4FGgCluSMHj7bR3D62cKF
-HZwYWDEHfx5/1UVNTiCE3nC5uyu0lsbp505IYXwGVEpgjSeNfyDAwoe5wOFrqHku
-e1Vu4whGaqMdOPnUNuQV0mVjyFDUCgS/QblpJmPlQSMkO3UbB7JmVq076nol+W66
-QsbAtoQYAz33I0D426IjvkaEDIMT5N8jxe0d1Mk2SIWV1HPX/qBA8NE/o0q8eVTL
-9E4AF6/ggc1F438XHG3am/GnDGFkzQzThKHlFGgvVm7K25Bpol2DaUhSrhn4/Ikx
-HhoLfwB5wYG90uJQMVOMOR3U1mr/4WkW0KmCft2iP7CPxYpyPbIDbg9gIs/zEEc6
-24wd1zbTW3yfTvRhHk2lN3bpxZufKAjR2B3cCys7yeedIH7OBG59g1ZdEFNUdjJw
-/W01ZngeY7Eorh4jSos36vyiGC8Wvik2vyG6k5P3CI+sy3RXwSIwBPcwEqUlfIDO
-0MRpH2eKmpBZnnGV17sjYtBzWzkkVHPKNpIYUydp2oanihW3vkFLcFK/fCvluzn5
-7FmJHZCSH+fkmphs3LfekU/yI+roFgtsP6T7nj/cihhXtUykWNACUvuPxVLlWM9v
-ywpid5bVZmDFWJ3lh5697OkqsmsaMogcIFpoe6EEtnFPaPvM42siuSqTTQ0FaHk8
-x1/+8ruGtdMvlCsmXYyc
-=8qdc
------END PGP SIGNATURE-----
-
---G1aE7TVhqoaFg6v4txmeEPi4NRqItkGuf--
+[1] 
+https://fluentbit.io/blog/2025/10/28/security-vulnerabilities-addressed-in-fluent-bit-v4.1-and-backported-to-v4.0/
+[2] https://kb.cert.org/vuls/id/761751
+[3] https://github.com/fluent/fluent-bit/releases
