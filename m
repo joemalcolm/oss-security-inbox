@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1935" "Friday" "22" "January" "2016" "13:54:07" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160122185407.D525752E002@smtpvbsrv1.mitre.org>" "50" "[oss-security] Re: imlib2 may need some CVEs assigned" "^Cc:" nil nil "1" "2016012218:54:07" "[oss-security] Re: imlib2 may need some CVEs assigned" (number mark "        cve-assign@m Jan 22   50/1935  " thread-indent "\"[oss-security] Re: imlib2 may need some CVEs assigned\"\n") "<1453311159.1817542.497713370.3C97F695@webmail.messagingengine.com>" ("<1453311159.1817542.497713370.3C97F695@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24259 invoked by uid 550); 22 Jan 2016 18:54:28 -0000
+Received: (qmail 26145 invoked by uid 550); 3 Dec 2025 13:28:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24195 invoked from network); 22 Jan 2016 18:54:21 -0000
-In-Reply-To: <1453311159.1817542.497713370.3C97F695@webmail.messagingengine.com>
-Message-Id: <20160122185407.D525752E002@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 22 Jan 2016 13:54:07 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: imlib2 may need some CVEs assigned
-To: feld@feld.me
+x-ms-reactions: disallow
+Received: (qmail 20197 invoked from network); 3 Dec 2025 09:12:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=greenbone.net;
+	s=MBO0001; t=1764753137;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=dCSUn93eN1gZAxBHO/JZRsjwBv3FUNJAiShGmXJH2L4=;
+	b=yYIqMf5qxMqKad9peDt/fc+jzjDMHjTo/8V2aygOUshOsy7KFX27Ns7AmdwpmU5pGOkTqQ
+	k0t8hnPOFS6Eiysf8MnDwDVed0dCnS2T/TAj8O5ZkuTfAEScQ9Jy6ieHa2tnf9MUlDpS/Y
+	BGn/47ymtzVTfRWo4jS/NhaL+cfPFeK2us0GZUwHVrEj7U/O+cTXMb27PvQ1S45kZ7wqez
+	vlDocHAYCH+cIVP2bu5VXiFCq/ZbmXy2sThdPJKpgzge2tYOIGkgguDRq+Su3V+uS713Ax
+	XaX4014GDqJnDZ+wCasRXA3Zs9LaHYKBqmGsDHi4DTpvKeT3027ek/Cnlf7SXA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of christian.fischer@greenbone.net designates 2001:67c:2050:b231:465::2 as permitted sender) smtp.mailfrom=christian.fischer@greenbone.net
+Message-ID: <702d6b9c-136c-4921-9b5f-481b3e287057@greenbone.net>
+Date: Wed, 3 Dec 2025 10:12:16 +0100
+MIME-Version: 1.0
+To: oss-security@lists.openwall.com
+References: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
+Content-Language: en-US, de-DE
+From: Christian Fischer <christian.fischer@greenbone.net>
+Autocrypt: addr=christian.fischer@greenbone.net; keydata=
+ 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
+ nSh/BvVF+Xp6Dow=
+In-Reply-To: <2ccbcc13-fc25-484c-a34d-56f27ac87db7@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 10/27/25 5:34 PM, Alan Coopersmith wrote:
+> Among the new CVE's published this weekend were these from the VulDB CNA:
 
-> imlib2 1.4.7's changelog seems to indicate fixes for issues that should
-> probably have some CVEs assigned
-> 
-> https://git.enlightenment.org/legacy/imlib2.git/tree/ChangeLog
+only attaching here as related (not from VulDB CNA) / another example:
 
-We feel that the best approach for now is to assign CVE IDs for the
-three cases in which the changelog suggests that a crash would occur.
+There was another questionable CVE (CVE-2025-45311) reported against 
+fail2ban which seems to have been turned out to be bogus / nonsense and 
+which has been disputed in the meantime:
 
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=39641e74a560982fbf93f29bf96b37d27803cb56
-> GIF loader: Fix segv on images without colormap.
-
-Use CVE-2014-9762.
-
-
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=c21beaf1780cf3ca291735ae7d58a3dde63277a2
-> Prevent division-by-zero crashes
-
-Use CVE-2014-9763.
-
-
-> https://git.enlightenment.org/legacy/imlib2.git/commit/?h=v1.4.7&id=1f9b0b32728803a1578e658cd0955df773e34f49
-> Fix segfault when opening input/queue/id:000007,src:000000,op:flip1,pos:51 with feh
-
-Use CVE-2014-9764.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWonoYAAoJEL54rhJi8gl5aFcQAJIhYKuGQbyH9RK1mzgqFx7n
-hs5b4vQgKmysd0O5+063aZdDh0JwDUn6HCXl9gYDrGyo5QusrqyTI/A1YxRNGwtP
-DXdUSbdQOoLrZoRKFngo0p5jiDO8nBjvNQCtXiI/ilh2uEopeUKfEFAJlpOf4JGA
-5TWpq9mh+2GSHRtRkQb/PeMLADz4z7ur6FmADcngWwZ1HAAYvRBkumhuNrgmwuYi
-gfNwZQnb66wTlvZ9Tqx4JIRDCWNlIo7ZYkbYOYi3zWJMX2l7eb+RK0jPsDc6SiCf
-0J9kl5JqNHQ0+hu/FnNf3nV8FCdiCqnP9AXkMHNqvF+KDO6iqaKDDlqd0H/F93sF
-Rp5dWO8NreG6pTG4KgfccuXx7veZAi6GJcezveoj9GHBNbWG0o7cLPusfHOGi/QQ
-iln+BakiJl7XOL9O1ngcS/UOlvKspi6EYTYB0bksgePOdKawqtvSPNW23fPqEhJ8
-FF1KLwK/c53wNbl3YWNEcZW5fN1CN1jeGuRvbKd3G1OGV59sHGD0Qt0c6DzIqTJP
-zuJaNdreCbnZiKn8SZF/+fNvHMYS+alIr1XSm1cdbAxmvqSwzIBre0gUNfUqOjWQ
-BcpiklApxD+eHv3n9dOrHD9PSYss3QvFDpofvYBUjUzYz/CGnf317Pm4hccIdnbR
-jX1Yexx+h29NgMWslfvG
-=bde7
------END PGP SIGNATURE-----
+https://github.com/fail2ban/fail2ban/issues/4110
