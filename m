@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["987" "Friday" "28" "April" "2017" "22:36:16" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLfOaQEkD+o8j7GMiXFxcZ-ANA4aYA13NjtN6iOUWfDuQ@mail.gmail.com>" "28" "Re: [oss-security] CVE-2017-8291 ghostscript remote code execution" "^Date:" nil nil "4" "2017042905:36:16" "[oss-security] CVE-2017-8291 ghostscript remote code execution" (number mark "        taviso@googl Apr 28   28/987   " thread-indent "\"Re: [oss-security] CVE-2017-8291 ghostscript remote code execution\"\n") "<CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>" ("<20170428015004.11956.12148@falcon>" "<20170428030522.GA53619@wopr>" "<CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com>" "<CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 16183 invoked by uid 550); 29 Apr 2017 05:36:49 -0000
+Received: (qmail 17485 invoked by uid 550); 3 Dec 2025 23:43:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 16165 invoked from network); 29 Apr 2017 05:36:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=chWka9b9xpWm+nVXwYped8UrTUC6MqBGWQ362VkHfnE=;
-        b=hddYpbTkw3X8cwZeJ+pPshERLU5vnx8hDP7glLd6WOaTlaVkn41mkfs55Z2MiBPm7r
-         rsW+WvMi8b7IkonEAg8qbjBYmGVNGDYKXdZdtAT97ctgbyGcb+SDjMfbJB0cu+jEx5VI
-         vUVlZ8ya+ec9iKdDyPmIuS1Qth4A8aaFn/8sy6HzmtU1aMahWMOcNwK+FwcwWUI7b7PH
-         c7bLcnSx9MPdj3pGwCc2LIp3BYSXXltMQ7W7Sfe6ut0S3+MyR9N6Ls5x+zUVRiFSzhP8
-         UO5OKnuJG7BarR6ji4QRTNQ/wdlsGMuKK8ezMwVfEnSZGYNxDGCiLAtXJUnEar3VvL2/
-         LVVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=chWka9b9xpWm+nVXwYped8UrTUC6MqBGWQ362VkHfnE=;
-        b=nAyjNnVPGq00ZVpncdGNQlpB1h558OM6Q9KX+jvt3/i8K61n2XCS7roCz7y6a55BHX
-         HFhMPvmYoeMmGOgKyZeN3co/szQi3AIKHeoiXzb267GtbyhNZPG1B3Ng94PLiacER5W6
-         1L04ga4qe9K2usDvzDKjZ/sOT98RZ9qIzMDh84D3fGAr9g4sjiOv6vnddHj2iUA/yfM4
-         cn+kt5hurMpSX3kmgPrrhESkSX2Xv702+NwwE0AJuLJy7LP+pLIzQ56AGA+BaiWYWelD
-         Xd6GIGZWFJJc1m0eOqq7T4NaL0lCMkfMYMg0bcTliJMpImja9M2/uT+e5X8JZ8pG6s4s
-         idvQ==
-X-Gm-Message-State: AN3rC/5eXpPV47WQYSSSdw6JOJnbRgOkQdhuFPISJF10qbAIqWoXG9rW
-	zRupJVquakuT95TqsJplcHlG5jB+4J/7ctd5oQ==
-X-Received: by 10.200.41.35 with SMTP id y32mr12926989qty.37.1493444196585;
- Fri, 28 Apr 2017 22:36:36 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>
-References: <20170428015004.11956.12148@falcon> <20170428030522.GA53619@wopr>
- <CAAYo3Bu+9QFoqsRU__WmCou09Y_xt39VMEyoV3Y-RR0qv-gtng@mail.gmail.com> <CAPGxrc_kUAFA6Y_QnSxx-iyt2kGoKG1=RCSKUGE=ot1qvTtL=w@mail.gmail.com>
-Message-ID: <CAJ_zFkLfOaQEkD+o8j7GMiXFxcZ-ANA4aYA13NjtN6iOUWfDuQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 28 Apr 2017 22:36:16 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2017-8291 ghostscript remote code execution
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 1392 invoked from network); 3 Dec 2025 23:09:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=panix.com; s=panix;
+	t=1764803365; bh=wIeBRpa9AQwYbTTV3ZLhjykAlHKTbYuI2xMxF+u3Knk=;
+	h=Date:From:To:Cc:Subject:Reply-To:In-Reply-To:References;
+	b=N9yVpsJXwyRiTOpfUFZgR4+qcmtyWdYxs3ejAYMNWCKQb3usUq2NCz+E6p3sSG0Ae
+	 MX8mhYLJ4S+wiMggzSkMaFaVDUD3jG5OQBh10aWednq/b8RzZAHdgmr5htXNQkVEZu
+	 Z4GUYxVQzHs0FYQiX2jmt1FC9T3ySoW2xkJBar9c=
+MIME-Version: 1.0
+Date: Wed, 03 Dec 2025 15:09:25 -0800
+From: Greg Roelofs <roelofs@panix.com>
+To: Cosmin Truta <ctruta@gmail.com>
+Cc: Alan Coopersmith <alan.coopersmith@oracle.com>,
+ oss-security@lists.openwall.com
+Mail-Reply-To: newt@pobox.com
+In-Reply-To: <CAAoVtZwm9yLRV_DgvVTmir8-eEfLxksUshTQ-EBpPf1Cz_Vf=A@mail.gmail.com>
+References: <CAAoVtZwksfG-MFfhdamHt2SazD-n-_1HuZwXcRpRAJe_g3NDKg@mail.gmail.com>
+ <7e93b4f6-2ccd-4859-97b4-d51d61b95694@oracle.com>
+ <CAAoVtZwm9yLRV_DgvVTmir8-eEfLxksUshTQ-EBpPf1Cz_Vf=A@mail.gmail.com>
+Message-ID: <1b4f6c556882843b58d84b0412264c58@panix.com>
+X-Sender: roelofs@panix.com
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] libpng 1.6.52: Out-of-bounds vulnerability fixed:
+ CVE-2025-66293
 
-On Fri, Apr 28, 2017 at 7:43 PM, redrain root <rootredrain@gmail.com> wrote:
->
-> what a awkward??
-> I have discovered a part of my vulns about ghostscript last year and
-> exploited in fulldisclosure early!
-> and these vulns are part of mine I was going to discovered these in defcon
-> or other conference...WTF...
-> u guys are logo designer???
->
-> there are two demos last year
-> Evince Arbitrary Code Execution https://youtu.be/wzcrHXngfcM Attack Imagick
-> through Ghostscript https://youtu.be/tPGm_ANDyOw
->
+Fixed now, and many thanks to Alan! That oversight had been there since 
+Glenn's death 7+ years ago.
 
-I don't think so, that is CVE-2016-7976 and is entirely unrelated to
-the issue being discussed, other than superficial similarity of the
-exploit.
+Greg
 
-That issue was reported by me, and we discussed the ImageMagick and
-evince attack vectors at the time, you can check the archives if
-you're interested.
-
-http://seclists.org/oss-sec/2016/q4/29
-
-This issue (CVE-2017-8291) is a type confusion vulnerability (well,
-technically two vulnerabilities), and was found in the wild.
-
-Tavis.
+On 2025-12-03 13:33, Cosmin Truta wrote:
+> [Cc-ing Greg Roelofs, who owns and maintains libpng.org [1]]
+> 
+> On Wed, Dec 3, 2025 at 11:09 PM Alan Coopersmith
+> <alan.coopersmith@oracle.com> wrote:
+> 
+>> Does this bug (and the recent bugs fixed in 1.6.51) not affect the
+> older> branches of libpng, or is the statement that "libpng 1.2.x
+> continues to get
+>> security fixes, as has 1.0.x for well over a decade" on
+>> https://libpng.org/pub/png/libpng.html no longer correct?
+> 
+> The good news is this: neither this bug nor the ones in the previous
+> v1.6.51 release affect those ancient libpng releases. What these bugs
+> DO affect is a thing called "the simplified libpng API", which was
+> added in libpng-1.6.0.
+> 
+> The bad news is this:
+> 
+>> https://libpng.org/pub/png/libpng.html
+> 
+> I have seen that page a thousand times, and... yet... OOPSIE!!
+> 
+>> Is the statement on https://libpng.sourceforge.io/index.html that
+> the older
+>> branches "ARE NO LONGER UPDATED" and were frozen in 2017 the correct
+> one now?
+> 
+> Yes, that is correct.
+> 
+> Sincerely,
+> Cosmin
+> 
+> Links:
+> ------
+> [1] http://libpng.org
