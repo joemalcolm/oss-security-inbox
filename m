@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1559" "Wednesday" "13" "March" "2019" "08:47:13" "-0400" "James E. King III" "jking@apache.org" "<CAOWZHxeF3EK+5gHgvqF9Srw2-ksXrafOA6-Rjh1Gu77=O+Xy=g@mail.gmail.com>" "44" "[oss-security] Re: [SECURITY] CVE-2018-1320 Apache Thrift SASL negotiation vulnerability (update)" nil nil nil "3" "2019031312:47:13" "[oss-security] Re: [SECURITY] CVE-2018-1320 Apache Thrift SASL negotiation vulnerability (update)" (number mark "U       jking@apache Mar 13   44/1559  " thread-indent "\"[oss-security] Re: [SECURITY] CVE-2018-1320 Apache Thrift SASL negotiation vulnerability (update)\"\n") "<CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>" ("<CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>") nil nil nil nil nil nil nil "[oss-security] Re: [SECURITY] CVE-2018-1320 Apache Thrift SASL negotiation vulnerability (update)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30300 invoked by uid 550); 13 Mar 2019 12:57:52 -0000
+Received: (qmail 14235 invoked by uid 550); 4 Dec 2025 16:33:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +7,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16262 invoked from network); 13 Mar 2019 12:47:38 -0000
-X-Gm-Message-State: APjAAAUsO4iH3gBFSDMDDSv7FAZFZh4rvU4Zc4wZAsoFIi0vCwMnq/uE
-	HGOp78nDw/r44KuTqzXFqzvh2CINkNDx6mkNJz0=
-X-Google-Smtp-Source: APXvYqzLoWenFWWsjnNKT09OG5BxPLYVFG2tAPquXX91uyJvEVep9Q784elv3y1jT8pFJbUDp8IYf7rVKHHs6iAkV7M=
-X-Received: by 2002:a5d:5504:: with SMTP id b4mr2636313wrv.137.1552481243807;
- Wed, 13 Mar 2019 05:47:23 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 26155 invoked from network); 4 Dec 2025 16:02:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:In-Reply-To:Subject:Cc:To:
+	From:Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=ZiOJAAjThnbRxTqIS/EXyNAFbqBu7ox9DbuLewSbxu4=; b=m4LxuFEHTCOw4E8JUEA0N8UtiP
+	07D8RU5Jpg+GYe0QWWtdpo1121m95TdoX92ngOHC8xJJ4KV95R9sSnVNlXmx+G+d6iCA8NU5CPLtc
+	IJ9p5cBH5Z+bMCfcj/wiGGYkbfSZJYXFME4vpI/yiNCJnhaVlO59Lq/CFDaxfDYoJkoVzW45FJ+Bp
+	L3g+vyYaRYGsSvibGGeFmYf4AMJFSVgkLJQFfzMagjs5K88Bd5LJ31hBFU+afRIDCYJ4jn5sWswLR
+	zA+nJtmU+DW8+n3/t3wNV2qmG3NwmDw/u5zdJUlUNM4c0H0U2BckuUmNZ7xHDKH34DXF5H562HnjB
+	3D+ZJ2qQ==;
+Date: Thu, 4 Dec 2025 18:01:55 +0200
+Message-ID: <20251204180155.GC2659512@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org
+Cc: webkit-wpe@lists.webkit.org, security@webkit.org,
+ oss-security@lists.openwall.com
+In-Reply-To: <20251204162045.GB2659024@igalia.com>
+References: <20251204162045.GB2659024@igalia.com>
 MIME-Version: 1.0
-References: <CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>
-In-Reply-To: <CAOWZHxfwV6WviB8XqrpxguMdu2N577Fpj3qWj0QzWoZF=WuVLQ@mail.gmail.com>
-From: "James E. King III" <jking@apache.org>
-Date: Wed, 13 Mar 2019 08:47:13 -0400
-X-Gmail-Original-Message-ID: <CAOWZHxeF3EK+5gHgvqF9Srw2-ksXrafOA6-Rjh1Gu77=O+Xy=g@mail.gmail.com>
-Message-ID: <CAOWZHxeF3EK+5gHgvqF9Srw2-ksXrafOA6-Rjh1Gu77=O+Xy=g@mail.gmail.com>
-To: "James E. King III" <jking@apache.org>
-Cc: oss-security@lists.openwall.com, security <security@apache.org>, 
-	dev@thrift.apache.org, user@thrift.apache.org
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Re: [SECURITY] CVE-2018-1320 Apache Thrift SASL negotiation
- vulnerability (update)
+Content-Type: multipart/signed; boundary="Vh/zNc9EPmynkkD/"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Subject: [oss-security] Re: [webkit-gtk] WebKitGTK and WPE WebKit Security Advisory
+ WSA-2025-0009
 
-This is an update to a previously announced CVE.  The specific change
-in the update is that a new version of Apache Thrift 0.9.3.1 was
-released per community request.  The following fields changed from the
-previous announcement:
+--Vh/zNc9EPmynkkD/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-Versions Affected
-Mitigation
-Resolution
+SGVsbG8gYWxsLAoKSSBoYXZlIGEgc21hbGwgYW1lbmRtZW50IHRvIHRoZSBhZHZpc29yeSwgcGxl
+YXNlIHJlYWQgYmVsb3cuCgpPbiBUaHUsIDA0IERlYyAyMDI1IDE2OjIwOjQ1ICswMjAwIEFkcmlh
+biBQZXJleiBkZSBDYXN0cm8gPGFwZXJlekBpZ2FsaWEuY29tPiB3cm90ZToKPiAtLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0KPiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgU2VjdXJpdHkgQWR2aXNvcnkgICAgICAg
+ICAgICAgICAgIFdTQS0yMDI1LTAwMDkKPiAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KPiAKPiBEYXRlIHJlcG9y
+dGVkICAgICAgICAgICA6IERlY2VtYmVyIDA0LCAyMDI1Cj4gQWR2aXNvcnkgSUQgICAgICAgICAg
+ICAgOiBXU0EtMjAyNS0wMDA5Cj4gV2ViS2l0R1RLIEFkdmlzb3J5IFVSTCAgOiBodHRwczovL3dl
+YmtpdGd0ay5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwOS5odG1sCj4gV1BFIFdlYktpdCBBZHZp
+c29yeSBVUkwgOiBodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwOS5o
+dG1sCj4gQ1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNS0xMzUwMiwgQ1ZFLTIwMjUt
+MTM5NDcsCj4gICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS00MzQyMSwgQ1ZFLTIw
+MjUtNDM0NTgsCj4gICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS02NjI4Ny4KPiAK
+PiBTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2NvdmVyZWQgaW4gV2ViS2l0R1RLIGFu
+ZCBXUEUgV2ViS2l0Lgo+IAo+IENWRS0yMDI1LTEzNTAyCj4gICAgIFZlcnNpb25zIGFmZmVjdGVk
+OiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuMy4KPiAgICAgQ3JlZGl0IHRv
+IFN0YW5pc2xhdiBGb3J0LCBBaXNsZSBSZXNlYXJjaC4KPiAgICAgSW1wYWN0OiBQcm9jZXNzaW5n
+IG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KPiAgICAgdW5l
+eHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogQSBidWZmZXIgb3ZlcmZsb3cgd2Fz
+Cj4gICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIGJvdW5kcyBjaGVja2luZy4KPiAgICAgV2Vi
+S2l0IEJ1Z3ppbGxhOiAzMDIyMTgKClRoaXMgaXNzdWUgd2FzIGFjdHVhbGx5IGZpeGVkIGFscmVh
+ZHkgaW4gdmVyc2lvbiAyLjUwLjIgb2YgYm90aApXUEUgV2ViS2l0IGFuZCBXZWJLaXRHVEsuIFRo
+ZSBhZHZpc29yaWVzIGluIHRoZSByZXNwZWN0aXZlIHByb2plY3Qncwp3ZWJzaXRlcyBoYXZlIGJl
+ZW4gdXBkYXRlZCB0byByZWZsZWN0IHRoaXMgYXMgd2VsbC4KCkNoZWVycywK4oCUQWRyacOhbgo=
 
-The new content of the CVE announcement is as follows:
+--Vh/zNc9EPmynkkD/
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Reported By: Sudheesh Katkam
-Vendor: The Apache Software Foundation
-Product: Apache Thrift
-Problem Type: Improper Authentication
-Versions Affected: Apache Thrift versions 0.5.0 through 0.11.0, except 0.9.3.1
-Mitigation: Upgrading to 0.9.3.1 or to the latest 0.12.0 release
+iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaTGwcwAKCRCRxVnb5MkS
+Ow4RAJ9ZZk1N0/xb9yup72W1ALK5goj5XwCggOgajmYyII+KNK3VmEPahguAil0=
+=Aj+V
+-----END PGP SIGNATURE-----
 
-Description:
-Apache Thrift Java client library TSaslTransport can bypass SASL negotiation
-isComplete validation. An assert was previously used to determine if the
-SASL handshake had successfully completed, but in some cases this assertion
-could be disabled in production settings making the validation incomplete.
-
-Resolution:
-The assertion has been removed and an isComplete check has
-been moved within the handshake processing loop. The fix is contained
-in the 0.12.0 Apache Thrift release as has also been backported to the
-0.9.3.1 release, also available on maven central.  0.12.0 was released
-on January 4, 2019 and 0.9.3.1 was released on March 13, 2019.
-
-Jira issue:
- - https://issues.apache.org/jira/browse/THRIFT-4506
-
-Mitre issue:
-  - https://cve.mitre.org/cgi-bin/cvename.cgi?name=2018-1320
-
-Committed resolution:
- - https://github.com/apache/thrift/commit/d973409661f820d80d72c0034d06a12348c8705e
-
-On behalf of the Apache Thrift PMC,
-
-Thank you
+--Vh/zNc9EPmynkkD/--
