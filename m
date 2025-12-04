@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1886" "Tuesday" "12" "January" "2016" "10:07:25" "-0800" "Grant Murphy" "grant.murphy@hpe.com" "<20160112180725.GB91908@hpe.com>" "67" "[oss-security] [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)" "^Date:" nil nil "1" "2016011218:07:25" "[oss-security] [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)" (number mark "        grant.murphy Jan 12   67/1886  " thread-indent "\"[oss-security] [OSSA 2016-002] Xen connection password leak in logs via StorageError (CVE-2015-8749)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30063 invoked by uid 550); 12 Jan 2016 18:07:45 -0000
+Received: (qmail 10004 invoked by uid 550); 4 Dec 2025 15:10:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +6,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30023 invoked from network); 12 Jan 2016 18:07:39 -0000
-Message-ID: <20160112180725.GB91908@hpe.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lEGEL1/lMxI0MVQ2"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Tue, 12 Jan 2016 10:07:25 -0800
-From: Grant Murphy <grant.murphy@hpe.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA 2016-002] Xen connection password leak in logs via
- StorageError (CVE-2015-8749)
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 7487 invoked from network); 4 Dec 2025 14:21:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=0FcwCtMHghlacE5GpOjoY4npj37aFZMfWYhXtJZv29s=; b=pR3ms7oHO05CF+TYrqap11MN/z
+	sJBS3tC2JzsL/8VSaX1b9RyfphQfqAQSMOB7eoNbWQ1ZcNlCnEr3sUxKfdJvu3cglsYcs7pT1elZP
+	sY7tpHxYqwXWEONflkqfakO5TH5j9SZhnn+UdDUQ9l55YHy0Bsn5sut6v3DF+1jtGGmlsyeRwmglO
+	pG/GSMCza2GdqjL1G20/Drms/X5nV9kcs7/aYtte9G8vnf7ZrktaiWKCg5cqxgZ/2BbzcfQXNCW6n
+	hqG5MiUWR5aFdx7YMD2yr8A/8kzoPQBBIS+QrOIGLRhy+2DKkDsMvi0XJWr5NjFXz2QNgiuUYnyQ2
+	vR+y9eNQ==;
+Date: Thu, 4 Dec 2025 16:20:45 +0200
+Message-ID: <20251204162045.GB2659024@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="sMQ+fzfy3YMBHTB8"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0009
 
---lEGEL1/lMxI0MVQ2
-Content-Type: text/plain; charset=us-ascii
+--sMQ+fzfy3YMBHTB8
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-====================================================================
-OSSA-2016-002: Xen connection password leak in logs via StorageError
-====================================================================
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwOQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogRGVjZW1iZXIgMDQsIDIwMjUKQWR2aXNvcnkgSUQgICAgICAgICAg
+ICAgOiBXU0EtMjAyNS0wMDA5CldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJr
+aXRndGsub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDkuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5
+IFVSTCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDA5Lmh0bWwK
+Q1ZFIGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNS0xMzUwMiwgQ1ZFLTIwMjUtMTM5NDcs
+CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtNDM0MjEsIENWRS0yMDI1LTQzNDU4
+LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTY2Mjg3LgoKU2V2ZXJhbCB2dWxu
+ZXJhYmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdC4K
+CkNWRS0yMDI1LTEzNTAyCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUg
+V2ViS2l0IGJlZm9yZSAyLjUwLjMuCiAgICBDcmVkaXQgdG8gU3RhbmlzbGF2IEZvcnQsIEFpc2xl
+IFJlc2VhcmNoLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2Vi
+IGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVz
+Y3JpcHRpb246IEEgYnVmZmVyIG92ZXJmbG93IHdhcwogICAgYWRkcmVzc2VkIHdpdGggaW1wcm92
+ZWQgYm91bmRzIGNoZWNraW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAzMDIyMTgKCkNWRS0yMDI1
+LTEzOTQ3CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJl
+Zm9yZSAyLjUwLjMuCiAgICBDcmVkaXQgdG8gSmFuZXQgQmxhY2suCiAgICBJbXBhY3Q6IEEgd2Vi
+c2l0ZSBtYXkgYmUgYWJsZSB0byBleGZpbHRyYXRlIHNlbnNpdGl2ZSBzeXN0ZW0KICAgIGluZm9y
+bWF0aW9uLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgdGhyb3VnaCBpbXBy
+b3ZlZAogICAgc3RhdGUgY2hlY2tzLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyNzE5NTcKCkNWRS0y
+MDI1LTQzNDIxCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0
+IGJlZm9yZSAyLjUwLjMuCiAgICBDcmVkaXQgdG8gTmFuIFdhbmcgKEBldGVybmFsc2FrdXJhMTMp
+LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQg
+bWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJvY2VzcyBjcmFzaC4gRGVzY3JpcHRpb246
+IE11bHRpcGxlIGlzc3VlcyB3ZXJlCiAgICBhZGRyZXNzZWQgYnkgZGlzYWJsaW5nIGFycmF5IGFs
+bG9jYXRpb24gc2lua2luZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMzAwNzE4CgpDVkUtMjAyNS00
+MzQ1OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZv
+cmUgMi41MC4zLgogICAgQ3JlZGl0IHRvIFBoaWwgQmVhdXZvaXIuCiAgICBJbXBhY3Q6IFByb2Nl
+c3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAg
+dW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogVGhpcyBpc3N1ZSB3YXMgYWRk
+cmVzc2VkCiAgICB0aHJvdWdoIGltcHJvdmVkIHN0YXRlIG1hbmFnZW1lbnQuCiAgICBXZWJLaXQg
+QnVnemlsbGE6IDI5NjY5MwoKQ1ZFLTIwMjUtNjYyODcKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBX
+ZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTAuMy4KICAgIENyZWRpdCB0byBTdGFu
+aXNsYXYgRm9ydCwgQWlzbGUgUmVzZWFyY2guCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNp
+b3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBw
+cm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAog
+ICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAzMDIyMjAK
+CldlIHJlY29tbWVuZCB1cGRhdGluZyB0byB0aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBX
+ZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhh
+dCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJzaW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBv
+dXIgd2Vic2l0ZXMgZm9yIGluZm9ybWF0aW9uIGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVh
+c2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBhYm91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQg
+c2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUgZm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9y
+Zy9zZWN1cml0eS5odG1sIG9yCmh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBX
+ZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgdGVhbSwK
 
-:Date: January 11, 2016
-:CVE: CVE-2015-8749
-
-
-Affects
-~~~~~~~
-- Nova: >=2014.2 <= 2015.1.2, == 12.0.0
-
-
-Description
-~~~~~~~~~~~
-Matt Riedemann from IBM reported an information disclosure
-vulnerability in Nova. If a StorageError occurs when attempting to
-connect a volume using the Xen API, the connection parameters will be
-logged. These parameters may include credentials that are not masked.
-An attacker with read access to Nova logs could use these credentials
-with the Xen API directly. Only Nova deployments using the Xen backend
-are affected by this flaw.
-
-
-Patches
-~~~~~~~
-- https://review.openstack.org/249239 (Kilo)
-- https://review.openstack.org/247825 (Liberty)
-- https://review.openstack.org/245987 (Mitaka)
-
-
-Credits
-~~~~~~~
-- Matt Riedemann from IBM (CVE-2015-8749)
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/bugs/1516765
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-8749
-
-
-Notes
-~~~~~
-- This fix will be included in future 2015.1.3 (kilo) and 12.0.1
-  (liberty) releases.
-
---lEGEL1/lMxI0MVQ2
+--sMQ+fzfy3YMBHTB8
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQEcBAEBAgAGBQJWlUDbAAoJEJ3kO55VGiJSUR0H/2wrEQJy9B7DbXQVb0qzoBja
-QIxe9XG4c9bSIbIJv+SEViWiXZyEgIuDJ/5fjTa0eMC8QcW7im5eB2vYTyqXHSgo
-vg3y5gcPOrJ9vCtGrQ7HdnemQzsOgf7DPEDv6CVKgBBYtuxDfmijJSIUw7wAOzLt
-pd4V5Bw3wAOE2zeu7moEXeyjsNUQkEMOJaPSoacrFoRZ7AVykKI10+d6xG5ib2/b
-YWlh6sRgdxGqzHrnfdjTmhjUiF6MrR53TQo/hIvXLgIdtIwZrove88yANtQGHX7q
-UdJIHZqYQZLhhou3atsK+eRjaxqd9YA8g/6nZvE9e0RmENh67p2mcahC3oTJ7qE=
-=p2T+
+iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaTGYvQAKCRCRxVnb5MkS
+O/XkAJ9myO+HIiz8Vbfv7F84pq2Hi6BhCQCcDZLR4mvW6o+qOwYjhaD3rbdG86E=
+=NohP
 -----END PGP SIGNATURE-----
 
---lEGEL1/lMxI0MVQ2--
+--sMQ+fzfy3YMBHTB8--
