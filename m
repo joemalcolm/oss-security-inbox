@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1272" "Thursday" "29" "June" "2017" "11:33:54" "+0200" "Michael Scherer" "misc@zarb.org" "<20170629093354.GA4211@sisay.ephaone.org>" "44" "[oss-security] rkhunter: [CVE-2017-7480] Potential RCE after MiTM due to clear text download without signature" "^Date:" nil nil "6" "2017062909:33:54" "[oss-security] rkhunter: [CVE-2017-7480] Potential RCE after MiTM due to clear text download without signature" (number mark "U       misc@zarb.or Jun 29   44/1272  " thread-indent "\"[oss-security] rkhunter: [CVE-2017-7480] Potential RCE after MiTM due to clear text download without signature\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30213 invoked by uid 550); 29 Jun 2017 09:34:11 -0000
+Received: (qmail 22143 invoked by uid 550); 4 Dec 2025 15:10:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +6,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 30191 invoked from network); 29 Jun 2017 09:34:10 -0000
-Message-ID: <20170629093354.GA4211@sisay.ephaone.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Date: Thu, 29 Jun 2017 11:33:54 +0200
-From: Michael Scherer <misc@zarb.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] rkhunter: [CVE-2017-7480] Potential RCE after MiTM due to clear
- text download without signature
+x-ms-reactions: disallow
+Received: (qmail 1608 invoked from network); 4 Dec 2025 14:44:41 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <d01979ff-c708-ea40-1077-d829bea3f234@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 04 Dec 2025 14:42:31 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-58098: Apache HTTP Server: Server Side Includes adds
+ query string to #exec cmd=... 
 
-Hi,
+Severity: low=20
 
-while evaluating various security solutions, I looked at
-rkhunter, and found that it do download by default various
-files over http and parse them with bash:
+Affected versions:
 
+- Apache HTTP Server before 2.4.66
 
-For example, it download mirrors.dat over http, using no signature and
-just a version verification that can be faked:
+Description:
 
-# cat /var/lib/rkhunter/db/mirrors.dat
-Version:2007060601
-mirror=http://rkhunter.sourceforge.net
-mirror=http://rkhunter.sourceforge.net
+Apache HTTP Server 2.4.65 and earlier with Server Side Includes (SSI) enabl=
+ed and mod_cgid (but not mod_cgi) passes the shell-escaped query string to =
+#exec cmd=3D"..." directives.
 
-So I will assume that a attacker can inject a file with MITM without
-much problem.
+This issue affects Apache HTTP Server before 2.4.66.
 
-And it turn out that since rkhunter is in bash, it parse the file as
-bash.
+Users are recommended to upgrade to version 2.4.66, which fixes the issue.
 
-So adding something like:
+Credit:
 
-mirror=$(sleep 455)
+Anthony Parfenov (United Rentals, Inc.) (finder)
 
-in the file result into "rkhunter --update" doing this:
+References:
 
-\_ /bin/sh /usr/bin/rkhunter --update
-\_ /bin/sh /usr/bin/rkhunter --update
-\_ sleep 455
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-58098
 
-It also :nd on a few packages (if not all), rkhunter --update is run by cron,
-as root, so without much limitation.
+Timeline:
 
-Upstream have been warned 2 months ago, and I also did warned
-RH product security, who assigned CVE-2017-7480  to it.
+2025-08-21: Reported to security team
+2025-12-01: fixed in 2.4.x by r1930165
 
-Unfortunaly, half of the upstream developpers seems to have disappeared and the
-software is in maintenance mode, so no fix is avaliable yet, except "turn off
-mirror update". Upstream told me to publish it, but I didn't found time earlier.
-
-
--- 
-Michael Scherer
