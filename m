@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1440" "Wednesday" "17" "June" "2015" "06:33:36" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150617043336.GA23069@lorien.valinor.li>" "48" "Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1850)" nil nil nil "6" "2015061704:33:36" "[oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1850)" (number mark "        carnil@debia Jun 17   48/1440  " thread-indent "\"Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure through qcow2 backing file (CVE-2015-1850)\"\n") "<55805FE7.5070007@redhat.com>" ("<55805FE7.5070007@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3769 invoked by uid 550); 17 Jun 2015 04:33:49 -0000
+Received: (qmail 30594 invoked by uid 550); 10 Dec 2025 16:12:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,77 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3751 invoked from network); 17 Jun 2015 04:33:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=sbzUar4ZbpwFLLSKu/ghiEpvZv5PBZtZ8K2K4TFQvKE=;
-        b=iObRqu44vhY06ekspYNH+zD0KzZe970v9SucWb4LR2S0LEADoq3jQKL2XjxLlslP1a
-         ogsxfRs7CI8aO3x5ohfsJs95lI7E9z9Kf7Q10acz/vkhdErgiPkSODk2fsOTBd24/0Ty
-         bfaYsFusbMdouslcKNvoxYSK+5pJJeiRg6g6e1Pnslewua8sDphwlGquxOwtKJQhmDDf
-         +NHwmzbrLxHM4XJjYklr+EdY7qfq9TA1VyAjYMBcsz10BbofwcJudXCywnFKgvMKjCh7
-         0NTA0utJnXrmEBrZfzDi1M0ApcXK525J4EuXp65Ni7rLIS8HhHaLYpbLh1TvaDtEzyG3
-         R9Lg==
-X-Received: by 10.194.62.132 with SMTP id y4mr1964872wjr.91.1434515618024;
-        Tue, 16 Jun 2015 21:33:38 -0700 (PDT)
-Message-ID: <20150617043336.GA23069@lorien.valinor.li>
-References: <55805FE7.5070007@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55805FE7.5070007@redhat.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: Tristan Cacqueray <tdecacqu@redhat.com>
-Date: Wed, 17 Jun 2015 06:33:36 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] [OSSA 2015-011] Cinder host file disclosure
- through qcow2 backing file (CVE-2015-1850)
+x-ms-reactions: disallow
+Received: (qmail 1466 invoked from network); 10 Dec 2025 16:08:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dorfdsl.de;
+	s=default; t=1765382922;
+	bh=h0q4NeftwUjNkEkwYrCtqNZyHWLBJO51G0Midb5msx8=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=69UIYNu5mQqnRU3Xt6zDPJgFW5F6ZcjLnh4tCkeMp23TOWypMgqrklg+mnrRyD91d
+	 JlyjBHdKhss9WDLERXqjMvexgd/EL3RN+dhSpBAIhn/P3jSHYyYhP3Is76iBrs5vSG
+	 xsH36mk6EjBL5rBgcuNnmVsB+q5RuStxXEtqjLq2g6hwcWWfJeWByxc+Mb85Ja1giX
+	 /VpkLc1kG+JrMnEzrW2Bgq+c+usmm6Z1GAFc+SDKR67/YbFHcVpMw/WWLuP5u45Fnu
+	 noaBQQW1nItEgpgaU2niPY7OJ+b6jP56xuIwVWhvpMeuRF6p73/9hQtzgzKxQsws35
+	 00mhFnznd9/Ag==
+Date: Wed, 10 Dec 2025 17:08:42 +0100
+From: Marco Moock <mm@dorfdsl.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20251210170842.1d69b326@ryz.dorfdsl.de>
+In-Reply-To: <20251210113517.GF2622@qaa.vinc17.org>
+References: <20251210113517.GF2622@qaa.vinc17.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/9y.iVYbQPAzFdRIxdUZqURi";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: Re: [oss-security] LibreOffice puts searched text into the PRIMARY
+ selection (Linux, X11)
 
-Hi,
+--Sig_/9y.iVYbQPAzFdRIxdUZqURi
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 16, 2015 at 10:41:59AM -0700, Tristan Cacqueray wrote:
-> =====================================================================
-> OSSA-2015-011: Cinder host file disclosure through qcow2 backing file
-> =====================================================================
-> 
-> :Date: June 16, 2015
-> :CVE: CVE-2015-1850
-> 
-> 
-> Affects
-> ~~~~~~~
-> - Cinder: versions through 2014.1.4,
->           and 2014.2 versions through 2014.2.3,
->           and version 2015.1.0
-> 
-> 
-> Description
-> ~~~~~~~~~~~
-> Bastian Blank from credativ reported a vulnerability in Cinder. By
-> overwriting an image with a malicious qcow2 header, an authenticated
-> user may mislead Cinder upload-to-image action, resulting in
-> disclosure of any file from the Cinder server. All Cinder setups are
-> affected.
-> 
-> 
-> Patches
-> ~~~~~~~
-> - https://review.openstack.org/191871 (Icehouse)
-> - https://review.openstack.org/191865 (Juno)
-> - https://review.openstack.org/191786 (Kilo)
-> - https://review.openstack.org/191785 (Liberty)
-> 
-> 
-> Credits
-> ~~~~~~~
-> - Bastian Blank from Credativ (CVE-2015-1850)
+Am 10.12.2025 um 12:35:17 Uhr schrieb Vincent Lefevre:
 
-Could you clearify if this CVE assignment is correct? I noticed that
-Red Hat Bugzilla has
-https://bugzilla.redhat.com/show_bug.cgi?id=1231816 (CVE-2015-1850)
-for the nova issue and similarly
-https://bugzilla.redhat.com/show_bug.cgi?id=1231817 (CVE-2015-1851)
-for the cinder issue. Is this correct?
+> Under Linux X11, LibreOffice (Writer, Calc, Draw...) silently puts
+> searched text into the PRIMARY selection when a search is active and
+> its window gets the focus. This can yield such text to be disclosed
+> to web sites (when one clicks with the middle button in some form)
+> and to other applications using the same X server (without needing
+> any action from the user).
 
-Regards and thanks in advance,
-Salvatore
+This behavior exists in various applications like browsers, when
+focusing the address bar (I saw that in Pale Moon). Dunno if that is
+related to the GTK toolkit.
+
+The common behavior for applications is that text is only copied to
+primary if it is actively selected.
+
+--=20
+Gru=C3=9F
+Marco
+
+Send unsolicited bulk mail to 1765366517muell@cartoonies.org
+
+--Sig_/9y.iVYbQPAzFdRIxdUZqURi
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEpXefSZn9R6zNZtTQE76RLz2tRfAFAmk5mwsACgkQE76RLz2t
+RfCJAxAAqyNW6CEyt27NNropUGP+BpdNw95ttQ3L6mh0coX2CIO6FKhjjICsaXYs
+DO+6DFzFKNscLrIXI0WgyX38Bok61W4jmOJ2e9e7pB+g6yM7m/rpux+4qeRsZGbn
+LfYtO+Cxa4ffPVPSpv/IIxfzXfO7aO0v88NlGtKBIu2pXIcpU2pikuaVWFBKtbId
+rQh7waIiEfVRowiNT/+ARhUeuSKN7qAbb6CuII2t5D5lBWvSj2BP/CwCvaUn8hzu
+Bf1tPtAbQs9bfTXspLNUXio/Xq5wXC0fGxgOuYEqPcUqiOQZ0V9dKV6HtqDD2UFy
+Q1ZBmNLOJmTqWcoalDQPZG+kuGrgtlVIKMdK+YBL+Mvbkood4btNhPU+0eZHfOnR
+M7+hslPrXCNjVnRPxeuJubqhgRaHP6zGMUauEst1FwVjNR9AyutppaIDooWVVkf1
+FTTwHgC9oxet9LyP0ijqI+oa6AU8VrR7PfYBxweQvUPsNw0dr8tKYJ78LtklDr9A
+Wd96q31FuBIcmWJKEBwwgUrHRyh3zeF5W/fWX5fbIJ9pCZOwH98MVR34IY616vq1
+rtdq7ElatF8WwTaS4yFZCC/VL61ZT0XrYsbUDCxxXIkGxtSBeCwHwJizfrGjlWhQ
+EY3pKBK8Hi4R5De7f/zRVUX0zEgrVWUtgMgCWhCPiBp1jvj5Fec=
+=VZlr
+-----END PGP SIGNATURE-----
+
+--Sig_/9y.iVYbQPAzFdRIxdUZqURi--
