@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2610" "Thursday" "26" "January" "2017" "20:26:02" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" "<20170126202602.GZ12842@openstack.org>" "78" "[oss-security] [OSSA-2017-001] CatchErrors leaks sensitive values in oslo.middleware (CVE-2017-2592)" "^Date:" nil nil "1" "2017012620:26:02" "[oss-security] [OSSA-2017-001] CatchErrors leaks sensitive values in oslo.middleware (CVE-2017-2592)" (number mark "U       fungi@yuggot Jan 26   78/2610  " thread-indent "\"[oss-security] [OSSA-2017-001] CatchErrors leaks sensitive values in oslo.middleware (CVE-2017-2592)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22108 invoked by uid 550); 26 Jan 2017 20:28:48 -0000
+Received: (qmail 27652 invoked by uid 550); 10 Dec 2025 15:59:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,97 +6,79 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18284 invoked from network); 26 Jan 2017 20:26:15 -0000
-X-Auth-ID: jeremy@openstack.org
-X-Sender-Id: jeremy@openstack.org
-Message-ID: <20170126202602.GZ12842@openstack.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j+MD90OnwjQyWNYt"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Date: Thu, 26 Jan 2017 20:26:02 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA-2017-001] CatchErrors leaks sensitive values in
- oslo.middleware (CVE-2017-2592)
+x-ms-reactions: disallow
+Received: (qmail 29791 invoked from network); 10 Dec 2025 11:35:27 -0000
+Date: Wed, 10 Dec 2025 12:35:17 +0100
+From: Vincent Lefevre <vincent@vinc17.net>
 To: oss-security@lists.openwall.com
-
---j+MD90OnwjQyWNYt
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <20251210113517.GF2622@qaa.vinc17.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.2.15+93 (58e9dca4) vl-169878 (2025-11-09)
+Subject: [oss-security] LibreOffice puts searched text into the PRIMARY selection (Linux,
+ X11)
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2017-001: CatchErrors leaks sensitive values in oslo.middleware
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Under Linux X11, LibreOffice (Writer, Calc, Draw...) silently puts
+searched text into the PRIMARY selection when a search is active and
+its window gets the focus. This can yield such text to be disclosed
+to web sites (when one clicks with the middle button in some form)
+and to other applications using the same X server (without needing
+any action from the user).
 
-:Date: January 26, 2017
-:CVE: CVE-2017-2592
+A search in LibreOffice should have remained local to LibreOffice.
+Text entered in the search field may be private or confidential,
+thus it must not be disclosed anywhere else.
 
+To reproduce:
 
-Affects
-~~~~~~~
-- Oslo.middleware: <=3D3.8.0, >=3D3.9.0 <=3D3.19.0, >=3D3.20.0 <=3D3.23.0
+1. Start LibreOffice Writer (or Calc, Draw...).
+2. Type Ctrl-F to start a search.
+3. Type some text to search (a single character is sufficient).
+4. Optional: Select some text in another application, e.g. xterm.
+5. Move the cursor over the LibreOffice window.
+   With window managers that support "focus-follows-mouse"
+   (e.g. FVWM and twm), this window gets the focus.
+   Otherwise you need to click so that this window gets the focus.
 
+Result: The text in the LibreOffice search field automatically
+becomes the new PRIMARY selection. This can be seen by pasting
+the PRIMARY selection somewhere else (with the middle button)
+or with the following script (using the xclip utility):
 
-Description
-~~~~~~~~~~~
-Divya K Konoor with IBM reported a vulnerability in oslo.middleware.
-Software using the CatchError class may include sensitive values in
-the error message accompanying a Traceback, resulting in their
-disclosure. For example, complete API requests (including keystone
-tokens in their headers) may leak into neutron error logs.
+while true
+do
+  new=$(xclip -o 2> /dev/null)
+  if [ "x$new" != "x$old" ]; then
+    printf "%s\n" "$new"
+    old=$new
+  fi
+  sleep 1
+done
 
+which prints text from the current PRIMARY selection, as soon as
+it is modified.
 
-Patches
-~~~~~~~
-- https://review.openstack.org/425734 (Mitaka)
-- https://review.openstack.org/425732 (Newton)
-- https://review.openstack.org/425730 (Ocata)
+Note: The text in the LibreOffice search field appears as
+selected, but this should have remained internal to LibreOffice.
+For instance, when I click on the address bar of Firefox, its
+contents get selected, but the PRIMARY selection is unchanged.
 
+Affected LibreOffice versions (at least): 24.2.5, 24.2.6 and 25.8.3.2
 
-Credits
-~~~~~~~
-- Divya K Konoor from IBM (CVE-2017-2592)
+In case this matters, I'm using the libreoffice Debian package
+under Debian/unstable.
 
+Bug I had reported last year (I forgot about it, until I got caught
+again today, wondering what was happening):
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1080978
+  https://bugs.documentfoundation.org/show_bug.cgi?id=162821
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1628031
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2017-2592
-
-
---=20
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-
---j+MD90OnwjQyWNYt
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQJ8BAEBCgBmBQJYiltaXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25zLm9w
-ZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQ5N0FFNDk2RkMwMkRFQzlGQzM1M0IyRTc0
-OEY5OTYxMTQzNDk1ODI5AAoJEEj5lhFDSVgpW9YP/0v1z6Rq1ctDnQ1MHhKFXjdw
-5FdOivDZZ4KaPKYvgoGYAxdULTfncF/CpmQXuQbDu4L9GbOdP8pNDde7jbw1aQEw
-WPwc9frW2/CCqS30X8bEsLuZ4EqZM09KfToTQfeFxJf25daZyaHIp4/7N/FA9vh8
-armlo/WvGDY2zfqLOP5oa6Gm3DzpAlCE5rbbRxRZD4uEF9bjGGHuHG0pXBe0YwSS
-dQY3D4akpzlEJToZr5CZMoxFdi0piyrta1pVRKeLCH1vmd+fT3wCTJ8jVNPvNS/A
-rwYC0yKQfQWwWX/egLtfsWdYS06cXCXzLNpbsv1HwDzcz13GkZIv2VcFZLsgV8sc
-KAtkKjN4UItOLOwfhVMnLoHi1j8kgEAlywWf3KQe+JULgggN2lH9dJjyDiImMCVd
-5oiolM0DSHz75hpqH85CXBx9L/c/+soGJsAgLoxwg7bIjAGp+izpoksPQTB3HC44
-UBJhOSTYIQj+ZfplVOWUjltFzlvYM+m284o2ozo6il/OpN52Wk+2eWz0t5Wgy4Bw
-T/HpmctKR4xBP4J1a6uP3kyNQ9oPvBerDkmTvan5PiLoLKyS+X4kLVjqhvLsot5s
-uQ6HmWGGLy5z/ziy5+wQC+zsN8JymDlBc4HiMpZ/skWR33OFcYm3r/mizh10FuoP
-Y1C058/AuB4Tl+zoAJiP
-=DIIL
------END PGP SIGNATURE-----
-
---j+MD90OnwjQyWNYt--
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
