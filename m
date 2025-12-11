@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1917" "Friday" "27" "January" "2017" "12:21:42" "+0100" "Raphael Hertzog" "hertzog@debian.org" "<20170127112142.pgx5mrvl5qsxnvpa@home.ouaza.com>" "50" "Re: [oss-security] CVE-2016-9584: heap use-after-free on libical" nil nil nil "1" "2017012711:21:42" "[oss-security] CVE-2016-9584: heap use-after-free on libical" (number mark "U       hertzog@debi Jan 27   50/1917  " thread-indent "\"Re: [oss-security] CVE-2016-9584: heap use-after-free on libical\"\n") "<CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>" ("<CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>" "<CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com>" "<20170120112604.cga6fjvktcveo46g@home.ouaza.com>" "<CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14054 invoked by uid 550); 27 Jan 2017 11:26:29 -0000
+Received: (qmail 32120 invoked by uid 550); 11 Dec 2025 22:23:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10168 invoked from network); 27 Jan 2017 11:21:54 -0000
-Date: Fri, 27 Jan 2017 12:21:42 +0100
-From: Raphael Hertzog <hertzog@debian.org>
-To: oss-security@lists.openwall.com
-Cc: Gustavo Grieco <gustavo.grieco@gmail.com>
-Message-ID: <20170127112142.pgx5mrvl5qsxnvpa@home.ouaza.com>
-References: <CAFR3uCN6=QS2FN0yAWA_T61sVzYgrPd6FsqLd43mhPYGS=CUZA@mail.gmail.com>
- <CAFR3uCNRc4SvGrUbQLjZEqAdLWj90tewpUt9c4Qv_+RRo_k6SQ@mail.gmail.com>
- <20170120112604.cga6fjvktcveo46g@home.ouaza.com>
- <CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>
-MIME-Version: 1.0
+x-ms-reactions: disallow
+Received: (qmail 3627 invoked from network); 11 Dec 2025 21:24:09 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACn5sdTLxn6uRQdZfpkrWzY4Tc+2_mLGdjG6-O_7hoUSoHNa7Q@mail.gmail.com>
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-Virus-Scanned: clamav-milter 0.99.2 at mail
-X-Virus-Status: Clean
-Subject: Re: [oss-security] CVE-2016-9584: heap use-after-free on libical
+From: Adam Monsen <meonkeys@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f6b29ad7-5b67-c529-09d1-26f31939b9f3@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 11 Dec 2025 21:23:57 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-58130: Apache Fineract: Server Key not masked 
 
-On Fri, 20 Jan 2017, Gustavo Grieco wrote:
-> > Any reason why you did not request a CVE for #251?
-> 
-> Yes. It was already reported here:
-> https://bugzilla.mozilla.org/show_bug.cgi?id=1275400 (CVE-2016-5824)
-> but it was never officially reported upstream (and therefore, never fixed).
+Severity: low=20
 
-It was reported in https://github.com/libical/libical/issues/235 but then
-closed by the submitter.
+Affected versions:
 
-You could have stated in #251 that you believed this crash to be the same
-than the one above. It was not obvious to me, I did it for you.
+- Apache Fineract through 1.11.0
+- Apache Fineract 1.12.1 unaffected
 
-> >> It is worth to mention there is a very similar bug found (CVE-2016-5824) on
-> >> the libical version used by
-> >> Thunderbird but we think is *not* the same as this one. In fact, we've
-> >> tested it on Thunderbird and it does *not* crash.
-> >>
-> >> The reproducer is available upon request.
-> >
-> > #253 has a reproducer here:
-> > https://github.com/libical/libical/files/627392/heap-use-after-free.ical.txt
-> >
-> > Is this the same file?
-> 
-> It is not the same file in fact. We found a variation of the original
-> input that trigger this
-> read out-of-bounds to read more than 60 bytes. This looks more serious
-> than usual (maybe you can read as much as you want) .
-> We had some complains in the past for making public test cases ..
+Description:
 
-Here, I'm lost. You said that this oss-security report (CVE-2016-9584) is
-the same as #253 but you have another file than the test case
-submitted in #253.
+Insufficiently Protected Credentials vulnerability in Apache Fineract.
 
-Are you sure that this second file is the same underlying issue ?
+This issue affects Apache Fineract: through 1.11.0.=C2=A0The issue is fixed=
+ in version 1.12.1.
 
-> > If it's a different file, then I'd like to have access to the file but I
-> > would prefer if it was just available publicly and not to me only.
-> 
-> Feel free to make the file public if you want.
+Users are encouraged to upgrade to version 1.13.0, the latest release.
 
-You would have to send it to me first :-)
+Credit:
 
-Cheers,
--- 
-Raphaël Hertzog ◈ Debian Developer
+Peter Chen (reporter)
+Jose Alberto Hernandez (remediation developer)
+=C3=81d=C3=A1m S=C3=A1ghy (remediation reviewer)
 
-Support Debian LTS: https://www.freexian.com/services/debian-lts.html
-Learn to master Debian: https://debian-handbook.info/get/
+References:
+
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-58130
+
