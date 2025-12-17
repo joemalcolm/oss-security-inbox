@@ -1,4 +1,4 @@
-Received: (qmail 15479 invoked by uid 550); 30 Jan 2024 16:33:24 -0000
+Received: (qmail 13345 invoked by uid 550); 17 Dec 2025 01:50:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,118 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15453 invoked from network); 30 Jan 2024 16:33:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706632536; x=1706718936; bh=nBj7T+TEFT
-	r+IXQo6ppGotZ5aq3iJPdLMsKTv86Cf7Q=; b=GvjOBO1jvUsYWAPrvp5KMS5ppN
-	/yMhgrSQ/LosEqzWNdVc5TfMv+jeke+xRUSwZAXHWh56g669Wj9QqHKRRX8tXJ/p
-	7a3bZeb1m7U06A1vVxghEXhECko+FJeMAhye92G8OwDpdnkKukHJY0s51in7HHsO
-	qagY3CYeF+XMyBodcgTbnuwPsKvh/TMb8E+uiTc0/JJKdTVy9c44TjVkHNBs4IyU
-	DK01tuhwQqbcD2wbIEm4Pw6Z7BDJSO+81G/5RjVOug1XCQu4Jsuk0OMOV3dIZfDi
-	te42wo956aXxSHgjEPbWegx5moUL1H54vf9pNg7KDWvqR3WDHVBREj2Gg+tw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706632536; x=1706718936; bh=nBj7T+TEFTr+IXQo6ppGotZ5aq3i
-	JPdLMsKTv86Cf7Q=; b=jv4yXlXAPZAMbyT2WcwjBrrOQ4AckJQK0+f+qctw76Uc
-	o0OvnTZo+Gn+FEZQ0rgflRQQ4fHo4sFI0aY9+U8JNQochgMxp3yh6agD/pRu/v85
-	Qk1R8SXZe1EQEmacuOoS2J0vyCFM73U5i7vd1ujjCd/ne800FQex3oksebYcelXI
-	VnoYT56mFOtau3T+ViGDeAlTUKKBds/AvZt19Op7/9RJ40+vNfoQUgzuMI67L2YM
-	oIrUhqrfX9S2pKmM00ZH4cRzd5it3JwtkYvX6wiQTxhyQz0EI7SbYbrCKRRwXKXg
-	0E9PCp+TPxak7SeCfY1rL9HGYv7fhBd1vDbCMDfvYg==
-X-ME-Sender: <xms:VyW5Zeeokq5wTcruWigr6J0JgBADIUVsK5-R0H5z6ZSX4GrbfSpcGQ>
-    <xme:VyW5ZYOQG2dBcyHyk7nQgxgABhCrNOyolkDFArf_n_ZI8k0dP1uXXJG4Vt-8Ec-_8
-    tEMjA_Ws7R00g>
-X-ME-Received: <xmr:VyW5ZfiRtnR3N0aSIxpnglVYCZjiKcnae8AnrGSp0qzRl5l0gTWGvDia3OdG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtjedgvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlqdeimdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddt
-    tddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpeevffehjeekteehlefhheejfeeujefhgefffeffhfefjeejgfev
-    iefhfefhteevteenucffohhmrghinhepnhhishhtrdhgohhvpdhkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgv
-    gheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:VyW5Zb9iZJ4L_yEorNZP2daZ3z-hzQff6d6ECiTe30rTRC9AtkStZA>
-    <xmx:VyW5ZatpzYfhgMLdGP9dVA6svUXzuRwU62oRPDFJw-cgotM9bLIOmQ>
-    <xmx:VyW5ZSE88JP51r9VLNuGxZGFsPfIUXZaygqpgvHvAQjnq0Vw7Z9xRQ>
-    <xmx:WCW5ZcLfzbOdR2pUxVrqP6FKdRXwPvRAzKvp-jPFtT-lZ-2tc7FpZw>
-Feedback-ID: i787e41f1:Fastmail
-Date: Tue, 30 Jan 2024 08:34:03 -0800
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: Armin Kuster <akuster@mvista.com>
-Message-ID: <2024013010-jockey-kindred-c6cd@gregkh>
-References: <CAKLnGtR3cgHVQz0kTmGVJAaT4nKvSejAZvbMGONTe=f_e9fSYA@mail.gmail.com>
- <20240130142524.GA21216@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 1158 invoked from network); 17 Dec 2025 01:43:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765935826; x=1766540626; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nay8CNDrkEwH1SSaa2TIfEpOprsGwpzfVvTY89XPQ6g=;
+        b=D93Ovch573DUUyl0PkweIz14NDgLJii64kfDOnyKnm/pAVwnZoGAWmR+YOFD43ybBU
+         ZrpkyU+QLOscXFuIVXzep3XhYYNd2rtvIQPSBGwUhO88GI0P3Xa4adSchRXHfogw9QvW
+         nZep7RLQP2WvfDwgA998ILHqjw6wyaZFte1JrklhQgTWhL1dorv2s7O3H0aE93IsjmG3
+         hlSYD++5OIGVhrjg2cwxBHNLwPerE4n7cEN3n7D6jibI1QbW/50O2ItV8Z6a9LiXCzPW
+         mdlmQRpBn2cEBFiwMTlQ8KsoNrqmdqvuMGc6MP/2FWW3Ms1LCgRJoI4h3+/4yMy/SSok
+         6cRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765935826; x=1766540626;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nay8CNDrkEwH1SSaa2TIfEpOprsGwpzfVvTY89XPQ6g=;
+        b=DVgmR2FXTrKlYWQd5t3wcC1r3XplMCsVubaq8QmCkdv6X1sLX3WJyqkChHYg8JSqT9
+         R9RzBmM5EpGF1HiTnb/R/D6Ht0Fqs8bVJdAgd6CHNe5hawv2uCou+FdPi4miHS5V/N1N
+         K2h5/JHISI8e1/3VlzhR3+8pQGT2lxmTb8v71f+igpCNGLYugkJJQ1j2kvlHb50p11F0
+         wzfpw4nXftP/IIt+JhV9mwaDlHHdt17zEyuwP3jjOhhmYHCZxo1o3fmvlVyK3SnQjQf5
+         t7s0ROETCpfSyBeaOCyT5UitqYYkQpyOXGR16RUsC2pIiLLGXbf0mM+IihliPRj/m0LU
+         0/ng==
+X-Gm-Message-State: AOJu0YyFRIXRJivYlJn0fqePs9fYdXi0mGBa3iHSgHtllmQEqw4if9iv
+	T+4eHeF3Z4V2GOr71uxNwc4R5MVsPhGYyyhz184lu5txcJlUZH5pv3/93zSiO8TH
+X-Gm-Gg: AY/fxX5DOeU62jpyA59VBF0nOIFdOidTMdXuhocw+I4Gky3iiCqGf8257lSVotj+WFi
+	GN/jpSXUCrwjhIJCnNi/gYC2P25dzxL0TrUj8GwXtVKs5NVEFf6dv7v2EAtjjigQ8SqI3nOWksR
+	TxRCn3JeRyJzNnjMW+jyYm2rLMFA5P9/8sTF7Mj2o3qoPbeoj7NQHGP0l1hUKJREnQMK7UgzqXE
+	/2JiLjY67km6xh3SkROHC4hTHMDBkcvrqF4dA911BjdNpvNRiu8VfT5hMJjw2mA1avpJd2oPQPq
+	bgQMLRM//fLT+PtVdUAX3wuIrdp/yfzK5Ds0DwUhiBiq4jPkaAKRobtBepes79YIkIN/hnbmHEc
+	9wwHyy2ANBRjEHEKzEeNyevapJHEqnBwl7g2jmDfqH/V30IzdvpnV7N6GLY91HblN825KntG8Oc
+	dKTewo4J4=
+X-Google-Smtp-Source: AGHT+IFbOj5ZlVNUftYNeNFgNf18BL6zxr3i4QU/fWjLS1kGRqzUUm+W2d0aKwXd9m7OgbEuI5Dqng==
+X-Received: by 2002:a05:6830:4c08:b0:7c7:6275:419b with SMTP id 46e09a7af769-7cae8353d39mr9174565a34.20.1765935826457;
+        Tue, 16 Dec 2025 17:43:46 -0800 (PST)
+Message-ID: <a508afdc-888b-45cd-b479-9601a833acfe@gmail.com>
+Date: Tue, 16 Dec 2025 19:43:24 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240130142524.GA21216@openwall.com>
-Subject: Re: [oss-security] FWD: Kernel vulnerabilities CVE-2021-33630 &
- CVE-2021-33631
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, turistu@gmail.com
+References: <68b13971a63c33c7a18c8c236d0b4b23.d2701554@milliner.nutritionists>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <68b13971a63c33c7a18c8c236d0b4b23.d2701554@milliner.nutritionists>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] [CVE-2025-14282] dropbear: privilege escalation
+ via unix domain socket forwardings
 
-On Tue, Jan 30, 2024 at 03:25:24PM +0100, Solar Designer wrote:
-> On Tue, Jan 30, 2024 at 08:46:56AM -0500, Armin Kuster wrote:
-> > I noticed these two openEuler CVEs were assigned two weeks ago affecting
-> > some K.O stable branches.
-> > 
-> > https://nvd.nist.gov/vuln/detail/CVE-2021-33630
-> 
-> This says:
-> 
-> "NULL Pointer Dereference vulnerability in openEuler kernel on Linux
-> (network modules) allows Pointer Manipulation. This vulnerability is
-> associated with program files net/sched/sch_cbs.C. This issue affects
-> openEuler kernel: from 4.19.90 before 4.19.90-2401.3."
-> 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3e8b9bfa110896f95d602d8c98d5f9d67e41d78c
-> 
-> This mainline commit is from 2019, "net/sched: cbs: Fix not adding cbs
-> instance to list".
-> 
-> > https://nvd.nist.gov/vuln/detail/CVE-2021-33631
-> 
-> This says:
-> 
-> "Integer Overflow or Wraparound vulnerability in openEuler kernel on
-> Linux (filesystem modules) allows Forced Integer Overflow.This issue
-> affects openEuler kernel: from 4.19.90 before 4.19.90-2401.3, from
-> 5.10.0-60.18.0 before 5.10.0-183.0.0."
+On 12/16/25 08:27, turistu@gmail.com wrote:
+> [...]
+>
+> But this dbus/systemd thing is only meant as illustration; there are plenty
+> of other ways to (ab)use this; in particular, xwayland / recent linux distros
+> have gutted the X11 cookie auth, only relying on "si:localuser" (i.e. on
+> SO_PEERCRED checks) for authentication.
 
-The commit above was fixed in the following kernels:
-	5.2.19 5.3.4 5.4
-and was fixing an issue that showed up in the 4.19.99 and 5.2 kernel
-releases.
+This looks to me like the problem here is systemd and wayland offering 
+abusable endpoints and distributions intentionally weakening security.
 
-I can queue this up to the 4.19.y kernel tree next week if people really
-think this is needed, would have been nice if whom ever created the CVE
-would have done so :(
+Gutting X11 cookie auth is *completely* *inexcusable* in a networked 
+environment.  Could that itself qualify for a CVE on all distributions 
+that do it?
 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=5c099c4fdc438014d5893629e70a8ba934433ee8
-> 
-> 2022, "ext4: fix kernel BUG in 'ext4_write_inline_data_end()'"
-> 
-> So the concern is that upstream longterm 4.19.y and 5.10.y (and perhaps
-> some others) may still be affected.
 
-This commit is fixed in the following kernel trees:
-	4.14.312 4.19.280 5.4.240 5.10.177 5.15.87 6.0.18 6.1.4 6.2
-So I think that all actively supported kernel.org releases are ok.
+-- Jacob
 
-> The above links don't say anything about attack vectors and required
-> access - I guess CAP_NET_ADMIN and raw block device write (e.g., to a
-> USB flash drive on another computer), respectively, are the
-> prerequisites?  The CVSS scores look exaggerated, especially NVD's score
-> of 7.8 for CVE-2021-33631.
-
-Yeah, that looks really high but who knows how CVSS scores really are
-calculated :)
-
-thanks,
-
-greg k-h
