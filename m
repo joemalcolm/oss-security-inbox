@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1896" "Thursday" "16" "April" "2015" "11:10:37" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" "<552F4B55.2010404@redhat.com>" "42" "Re: [oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041605:40:37" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        huzaifas@red Apr 16   42/1896  " thread-indent "\"Re: [oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<20150416052011.C25D86C0072@smtpvmsrv1.mitre.org>" ("<20150416052011.C25D86C0072@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 4031 invoked by uid 550); 16 Apr 2015 05:29:25 -0000
+Received: (qmail 16141 invoked by uid 550); 26 Dec 2025 22:41:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +6,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3997 invoked from network); 16 Apr 2015 05:29:24 -0000
-Message-ID: <552F4B55.2010404@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.4.0
-MIME-Version: 1.0
-References: <20150416052011.C25D86C0072@smtpvmsrv1.mitre.org>
-In-Reply-To: <20150416052011.C25D86C0072@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Thu, 16 Apr 2015 11:10:37 +0530
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 27840 invoked from network); 26 Dec 2025 21:57:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1766786251; x=1767045451;
+	bh=uCpPwaVhKTQdRpOzC7E5FnorhyqUOONff0CUSr6LDoc=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=AwnQAWa/X674EIdKoLUrrHjax4uAn25JVqkO7X60BLwdK1qXqRwBBXHEtIS1cj3bD
+	 pxxmeg+wihVqsa9adAOymxMZPv1cssHsGPVBuGIXggsFqyUPjoxkV3PPgtfrNyMuqE
+	 k5eOWOEn4i0ZnKhao+BSBm5isj+gnzehYcIFgfPMHcacNEVaqTWQ/WxO0zJah/XEb8
+	 Ce/4WOUv5w5Wn3oCZCboykqwnUl3dvX3dmo+z/GuHeBvE24j3Nz/9IevjLxvxYH3dy
+	 ULwYrmBx8Bq0vbdv/tgAi1ph/JQl0s/vto1r3E1vJkeI8TQAZnJzSoLWvFKLKTKVjG
+	 x3gs2rZ1MAijA==
+Date: Fri, 26 Dec 2025 21:57:26 +0000
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+From: Joseph Goydish II <newt0ns_law@proton.me>
+Cc: Apple Product Security <product-security@apple.com>
+Message-ID: <jq8xQxO7VyzQbtSsLz_p4DUzIOsf476KniI3gerokeyM90-zpczEWoWDiBQH0AYnpCr51vbCQX9qyBPuOqr20UplDsFlLbBRU0h2_swCBk4=@proton.me>
+Feedback-ID: 171741277:user:proton
+X-Pm-Message-ID: 06649e40327a686bf757ab547afbad44e1b81359
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="b1=_34hJExqkJr34xBgsH9TcGrPvYvxNQwgQDwpiUAbZxs"
+Subject: [oss-security] [Advisory] WebKit/iOS 26.2: Gigacage Boundary Violation via Logic Flaw enabling OOB Access
 
-On 04/16/2015 10:50 AM, cve-assign@mitre.org wrote:
->> IMO two CVEs are required:
-> 
->> "Various symlink flaws in abrt" and "Various race conditions in abrt"
-> 
-> For purposes of CVE, a set of vulnerabilities related to symlink
-> following normally isn't assigned two CVE IDs solely because some of
-> the symlink attacks depend on a race condition, whereas other symlink
-> attacks don't depend on a race condition.
-> 
-> The specific exploitation scenario disclosed in raceabrt.c is about
-> replacing maps with a symlink to /etc/passwd and then waiting for the
-> next line of the code to chown /etc/passwd. This requires symlink
-> following, and will have the same CVE ID as other issues that require
-> symlink following.
-> 
-> If the only goal of an attacker were to delete the maps file in order
-> to cause data loss, then we think that attacker does not need to win a
-> race. That attacker can delete the maps file either before or after
-> the chown. (It's also conceivable that file deletion, by itself, was
-> considered an acceptable risk, and not a valid attack goal.)
-> 
-> However, the text of
-> http://openwall.com/lists/oss-security/2015/04/14/4 said "is
-> vulnerable to a filesystem race where a user unlinks the file." That's
-> why we asked about the possibility of another scenario in which:
-> 
->   1. The ultimate goal is only to unlink the file.
->   2. Achieving this ultimate goal requires winning a race.
-> 
-> We think there's isn't any such scenario, but we wanted to confirm
-> that before doing a CVE mapping. If there isn't any such scenario,
-> then the total number of CVE IDs for the whole "Furthermore, Abrt
-> suffers" section will be 1.
-> 
-> 
-My previous email, was based on general observation, i really dont have
-a preference. Please feel free to assign a CVE, if other issues are
-discovered we will let MITRE know.
+--b1=_34hJExqkJr34xBgsH9TcGrPvYvxNQwgQDwpiUAbZxs
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security Team
+W0NWRSBQZW5kaW5nXSBXZWJLaXQgSlNDIEludGVnZXIgT3ZlcmZsb3cg4oCTIE9PQiBXcml0ZSB2
+aWEgR2lnYWNhZ2UgKGlPUyAyNi4yKQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLUZ1bGwgYWR2aXNvcnksIFBvQywgYW5k
+IGxvZ3M6CltodHRwczovL2dpdGh1Yi5jb20vSkdveWQvMGRheS1HaWdhQ2FnZS1XZWJraXRdCi0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tCjEuIEV4ZWN1dGl2ZSBTdW1tYXJ5CgpBIGNyaXRpY2FsIHZ1bG5lcmFiaWxpdHkg
+ZXhpc3RzIGluIHRoZSBXZWJLaXQgSmF2YVNjcmlwdENvcmUgKEpTQykKZW5naW5lLiBJbnRlZ2Vy
+IG92ZXJmbG93IGluIG1lbW9yeSBvZmZzZXQgY2FsY3VsYXRpb25zIGZvcgpBcnJheUJ1ZmZlciwg
+VHlwZWRBcnJheSwgYW5kIFdlYkFzc2VtYmx5IGVuYWJsZXMgb3V0LW9mLWJvdW5kcwooT09CKSBt
+ZW1vcnkgYWNjZXNzLiBHaWdhY2FnZSBjdXJyZW50bHkgbWl0aWdhdGVzIHRoaXMgdmlhIHByb2Nl
+c3MKdGVybWluYXRpb24sIGJ1dCB0aGUgdW5kZXJseWluZyBsb2dpYyBmbGF3IGNvdWxkIGJlIHVz
+ZWQgZm9yIHJlbW90ZQpjb2RlIGV4ZWN1dGlvbiBpZiBjb21iaW5lZCB3aXRoIGEgbWl0aWdhdGlv
+biBieXBhc3MuCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoyLiBFbnZpcm9ubWVudCBEZXRhaWxzCgpPUzogaU9TIDI2
+LjIgKEJ1aWxkIDIzQzU1KQpXZWJLaXQ6IDg2MjMuMS4xNC4xMC45CkNyYXNoOiBFWENfR1VBUkQg
+KE5hbWVzcGFjZSAzMTogR2lnYWNhZ2UgUHJpbWl0aXZlIFBhcnRpdGlvbikKT2Zmc2V0OiAweEFE
+RDc0NzZDCkRldmljZTogaVBob25lIDE1LDMgKGlQaG9uZSAxNCBQcm8gTWF4KQpVVUlEOiBhZjI1
+ZmE3OC1hZTNlLTNiZjQtYjMyMC00NDA0ZDNhMzZhNzcKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCjMuIFRlY2huaWNh
+bCBBbmFseXNpcyAoQ1dFLTE5MCkKClZ1bG5lcmFiaWxpdHkgb2NjdXJzIGR1cmluZyBvZmZzZXQg
+Y2FsY3VsYXRpb24gZm9yIFR5cGVkQXJyYXkgYW5kCkRhdGFWaWV3LiBJZiAnaW5kZXggKiBlbGVt
+ZW50U2l6ZScgd3JhcHMgYXQgdGhlIDMyLWJpdCBib3VuZGFyeSwgdGhlCm92ZXJmbG93ZWQgdmFs
+dWUgY2FuIHBhc3MgaW5pdGlhbCBib3VuZHMgY2hlY2tzLiBXaGVuIGFkZGVkIHRvIHRoZQpHaWdh
+Y2FnZSBiYXNlIHBvaW50ZXIsIHRoaXMgY2FuIGV4Y2VlZCB0aGUgMTZHQiBib3VuZGFyeSwgdHJp
+Z2dlcmluZwphIGd1YXJkIHZpb2xhdGlvbi4KClRoZSBmbGF3IGlzIGFsc28gcmVhY2hhYmxlIHZp
+YSB0aGUgV2ViQXNzZW1ibHkgSklULCB3aGljaCBtYXkgZWxpZGUKYm91bmRzIGNoZWNrczsgd3Jh
+cGFyb3VuZCBpbiAzMi1iaXQgYXJpdGhtZXRpYyBwZXJtaXRzIHVuc2FuaXRpemVkCkpJVGVkIG1l
+bW9yeSBhY2Nlc3MuCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo0LiBQcm9vZiBvZiBDb25jZXB0IChQb0MpCgpKYXZh
+U2NyaXB0IChEYXRhVmlldyB2ZWN0b3IpOgoKY29uc3QgYnVmZmVyID0gbmV3IEFycmF5QnVmZmVy
+KDEwMjQpOwpjb25zdCB2aWV3ID0gbmV3IERhdGFWaWV3KGJ1ZmZlcik7Ci8vIDB4RkZGRkZGRkUg
+KyA0IHdyYXBzIGF0IDMyLWJpdHMKdmlldy5zZXRVaW50MzIoMHhGRkZGRkZGRSwgMHg0MTQxNDE0
+MSk7CgpXZWJBc3NlbWJseSAoSklUIHZlY3Rvcik6Cgo7OyAoaTMyLmFkZCAoaTMyLmNvbnN0IDB4
+RkZGRkZGRkYpIChpMzIuY29uc3QgMHg1KSkgd3JhcHMgdG8gMHg0CihpMzIubG9hZCBvZmZzZXQ9
+MCkKClJlcHJvZHVjdGlvbiBTdGVwczoKCjEuIEhvc3QgUG9DIEhUTUwgb24gSFRUUFMgc2VydmVy
+LgoyLiBBY2Nlc3Mgd2l0aCBNb2JpbGUgU2FmYXJpIG9uIGlPUyAyNi4yLgozLiBPYnNlcnZlIHRl
+cm1pbmF0aW9uIG9mIFdlYkNvbnRlbnQgcHJvY2Vzcy4KNC4gQ29uZmlybSBvZmZzZXQgMHhBREQ3
+NDc2QyBpbiBjcmFzaCBsb2cuCgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo1LiBSZW1lZGlhdGlvbgoKSW1wbGVtZW50
+IGNoZWNrZWQgYXJpdGhtZXRpYyBpbiB0aGUgZm9sbG93aW5nIGNvbXBvbmVudHM6CgotIFNvdXJj
+ZS9KYXZhU2NyaXB0Q29yZS9ydW50aW1lL0pTQXJyYXlCdWZmZXJWaWV3LmNwcAotIFNvdXJjZS9K
+YXZhU2NyaXB0Q29yZS9ydW50aW1lL0pTRGF0YVZpZXcuY3BwCgpQcm9wb3NlZCBmaXg6CgpzaXpl
+X3QgYnl0ZU9mZnNldDsKaWYgKF9fYnVpbHRpbl9tdWxfb3ZlcmZsb3coc3RhdGljX2Nhc3Q8c2l6
+ZV90PihpbmRleCksCm1fZWxlbWVudFNpemUsICZieXRlT2Zmc2V0KSkgewpyZXR1cm4gdGhyb3dP
+dmVyZmxvd0Vycm9yKCk7Cn0KCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCjYuIFN1cHBvcnRpbmcgRXZpZGVuY2UKCkNv
+bnNpc3RlbnQgY3Jhc2ggb2Zmc2V0IGFuZCBuYW1lc3BhY2UgMzEgdmlvbGF0aW9uIGZvdW5kIGlu
+OgoKRXhjVXNlckZhdWx0X01vYmlsZVNhZmFyaS0yMDI1LTEyLTI1LTEzMTQzMi5pcHMKRXhjVXNl
+ckZhdWx0X1NhZmFyaVZpZXdTZXJ2aWNlLTIwMjUtMTItMjUtMDYyOTQ1LmlwcwoKLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0KNy4gRGlzY2xvc3VyZQoKQXBwbGUgU2VjdXJpdHkgaXMgYmVpbmcgbm90aWZpZWQgYXQgdGhl
+IHNhbWUgdGltZSBhcyB0aGlzIHB1YmxpYwptYWlsaW5nIGxpc3QgcG9zdCwgYXMgdGhleSBhcmUg
+Q0MnZCBvbiB0aGlzIGVtYWlsLiBUaGlzIGlzIG5vdCBhCmNvb3JkaW5hdGVkIGRpc2Nsb3N1cmU7
+IG5vdGlmaWNhdGlvbiB0byBBcHBsZSBhbmQgdGhlIGJyb2FkZXJjb21tdW5pdHkgaXMgb2NjdXJy
+aW5nIHNpbXVsdGFuZW91c2x5LgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQo4LiBMZWdhbCBEaXNjbGFpbWVyCgpQcm92
+aWRlZCBmb3IgYXV0aG9yaXplZCBzZWN1cml0eSByZXNlYXJjaCBvbmx5LgpVbmF1dGhvcml6ZWQg
+dXNlIGlzIHByb2hpYml0ZWQgYW5kIG1heSBiZSB1bmxhd2Z1bC4KCi0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpUaGFu
+ayB5b3UsCkpvc2VwaCBHb3lkaXNoIElJ
+
+--b1=_34hJExqkJr34xBgsH9TcGrPvYvxNQwgQDwpiUAbZxs--
+
