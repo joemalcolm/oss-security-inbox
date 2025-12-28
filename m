@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["463" "Tuesday" "27" "October" "2015" "13:48:38" "+0100" "Stefan Cornelius" "scorneli@redhat.com" "<20151027134838.5baf199d@redhat.com>" "16" "[oss-security] CVE request: libxslt xsltStylePreCompute() type confusion DoS" nil nil nil "10" "2015102712:48:38" "[oss-security] CVE request: libxslt xsltStylePreCompute() type confusion DoS" (number mark "        scorneli@red Oct 27   16/463   " thread-indent "\"[oss-security] CVE request: libxslt xsltStylePreCompute() type confusion DoS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1630 invoked by uid 550); 27 Oct 2015 12:48:56 -0000
+Received: (qmail 27855 invoked by uid 550); 28 Dec 2025 23:09:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,32 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1608 invoked from network); 27 Oct 2015 12:48:55 -0000
-Message-ID: <20151027134838.5baf199d@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Cc: cve-assign@mitre.org
-Date: Tue, 27 Oct 2015 13:48:38 +0100
-From: Stefan Cornelius <scorneli@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: libxslt xsltStylePreCompute() type confusion DoS
+x-ms-reactions: disallow
+Received: (qmail 25898 invoked from network); 28 Dec 2025 11:38:43 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
+Cc: contact@gpg.fail
+In-Reply-To: <20251228042744.GA629@openwall.com>
+Organization: Gentoo
+References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
+	<20251228042744.GA629@openwall.com>
+User-Agent: mu4e 1.12.13; emacs 31.0.50
+Date: Sun, 28 Dec 2025 11:38:29 +0000
+Message-ID: <878qemkf9m.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] Many vulnerabilities in GnuPG
 
-Hi,
+--=-=-=
+Content-Type: text/plain
 
-A type confusion error within the libxslt "xsltStylePreCompute()"
-function in preproc.c can lead to a DoS. Confirmed in version 1.1.28,
-other versions may also be affected.
+Solar Designer <solar@openwall.com> writes:
 
-Red Hat bug:
-https://bugzilla.redhat.com/show_bug.cgi?id=1257962
+> On Sat, Dec 27, 2025 at 07:29:53PM -0500, Demi Marie Obenour wrote:
+>> https://gpg.fail lists many vulnerabilities in GnuPG, one of which
+>> allows remote code execution.  All are zero-days to the best of
+>> my knowledge.
+>
+> Thanks.  I wish this were brought in here by the researchers, but since
+> it was not and since we require actual content here (not just links),
 
-Proposed patch (afaik, not yet committed upstream, but I believe that
-it'll happen soon):
-https://bugzilla.redhat.com/attachment.cgi?id=1086465
+Indeed. I'll note that several of the vulnerability pages (say
+https://gpg.fail/sha1) have:
 
-Thanks and kind regards,
--- 
-Stefan Cornelius / Red Hat Product Security
+> Upcoming Timeline:
+> [...]
+> 21.12.2025: Disclosure of this report on https://seclists.org/fulldisclosure/
+
+But I've not been able to find such a report there either.
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmlRFrUbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTEsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkHwD
+AP4xNwUkTZYRDB6NL21R0WJJVtWq7tG+lIzN81CJ4CEtFwD+KKCPmMm1ebm+q0um
+mqLEQ+Zg8TLPs9JtnhqhF0rXfw4=
+=3naj
+-----END PGP SIGNATURE-----
+--=-=-=--
