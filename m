@@ -1,4 +1,4 @@
-Received: (qmail 5704 invoked by uid 550); 30 Apr 2022 11:28:51 -0000
+Received: (qmail 24135 invoked by uid 550); 28 Dec 2025 23:09:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,83 +7,125 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31804 invoked from network); 30 Apr 2022 11:24:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=greenbone.net; s=20170621; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:To:Subject:MIME-Version:Date:Message-ID:Sender:
-	Reply-To:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=3wUj5KWVFYY7stqTb5jw76N1vcBnWiCYwG+SPkMStgo=; b=It7qB0SXGK4wzqW1b2i1XCD9av
-	Vsft5QcUaHHymejMnG1ekBooa5CkoXw+xaFAztKPBsUJ8nDd2Cwlp1ehblj97B45b83Fh91eog2xd
-	b+CWrWXDLLT86L4O/5ZXpnTCN26EnAw7XmhYIjF5VooTOiyazTSJyb+bO3j5IpV/OOww=;
-Delivery-date: Sat, 30 Apr 2022 13:23:06 +0200
-Message-ID: <ffd2934f-4e65-88ca-e3db-5204c2eb1127@greenbone.net>
-Date: Sat, 30 Apr 2022 13:24:36 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Content-Language: en-US
+x-ms-reactions: disallow
+Received: (qmail 22209 invoked from network); 28 Dec 2025 10:00:24 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-References: <484488E0-D662-4F58-80DB-499DE532FA3B@akamai.com>
- <20220428201003.GA1260523@millbarge>
- <142a2b8b-f5f5-526e-741f-35337a5a81f2@tao.at>
- <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
-From: Christian Fischer <christian.fischer@greenbone.net>
-In-Reply-To: <2D37FD38-B910-4D66-A5B3-0E58DA3B87C1@akamai.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scan-Signature: b94af4f566913c645349cb1868460e23
-Subject: Re: [oss-security] CVE-2022-21449 and version reporting
+In-Reply-To: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
+Organization: Gentoo
+References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
+User-Agent: mu4e 1.12.13; emacs 31.0.50
+Date: Sun, 28 Dec 2025 10:00:08 +0000
+Message-ID: <87y0mnj593.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] Many vulnerabilities in GnuPG
 
- > It’s not that they didn’t/can’t verify, it’s already verified, 
-they’re claiming those versions no longer being officially supported 
-means they can seemingly omit them from CVE reporting.
- >
- > Which is dangerous, misleading, and nonsensical.
+--=-=-=
+Content-Type: text/plain
 
-While i fully agree with this be aware that CVE entries could generally 
-contain incomplete information:
+Demi Marie Obenour <demiobenour@gmail.com> writes:
 
-After requesting an update of a CVE entry via the MITRE CVE forum in the 
-past to add additional affected products for a different vendor (which 
-wasn't even the assigning CNA like it is the case for Oracle here) my 
-request was rejected by MITRE with the following rationale given:
+> https://gpg.fail lists many vulnerabilities in GnuPG, one of which
+> allows remote code execution.
 
- > A CVE description does not necessarily contain all the affected 
-products or versions and is not part of CVE ID requirements. The 
-products are documented in the CVE references.
+> All are zero-days to the best of my knowledge.
 
-This is also matching my experiences with various other products / 
-vendors and related CVE entries for these.
+In 2.5.14:
 
-On 29.04.22 01:34, Seaman, Chad wrote:
-> Exactly this.
-> 
-> It’s not that they didn’t/can’t verify, it’s already verified, they’re claiming those versions no longer being officially supported means they can seemingly omit them from CVE reporting.
-> 
-> Which is dangerous, misleading, and nonsensical.
-> 
-> Regards,
-> Chad
-> 
-> On Apr 28, 2022, at 5:36 PM, Sven Schwedas <sven.schwedas@tao.at> wrote:
-> 
-> ﻿
-> On 28.04.22 22:10, Seth Arnold wrote:
-> On Thu, Apr 28, 2022 at 02:12:04PM +0000, Seaman, Chad wrote:
-> In what universe exactly are versions omitted from vulnerability
-> reporting because a vendor “no longer supports that version”… this
-> non-supported version is still vulnerable?
-> A large part of software maintenance is managing technical debt --
-> and being able to walk away from no-longer-supported products is an
-> important part of that.
-> Would you expect Microsoft to evaluate Windows 3.11, Windows 95,
-> Windows 98, Windows ME, Windows NT 3.51, Windows NT 4.0. Windows XP,
-> etc for every single vulnerability discovered in newest products?
-> 
-> You and Jeremy arguing in bad faith here, OP didn't ask about anything like that.
-> 
-> The problem at hand is, someone *already did all that work*, and Oracle is *actively intervening* to have it dropped from CVE reports.
-> 
-> So the question is: Why is vulnerability information that already exists being censored?
+commit 115d138ba599328005c5321c0ef9f00355838ca9
+Author:     Werner Koch <wk@gnupg.org>
+AuthorDate: Thu Oct 23 11:36:04 2025 +0200
+Commit:     Werner Koch <wk@gnupg.org>
+CommitDate: Thu Oct 23 11:37:59 2025 +0200
+
+    gpg: Fix possible memory corruption in the armor parser.
+
+    * g10/armor.c (armor_filter): Fix faulty double increment.
+
+    * common/iobuf.c (underflow_target): Assert that the filter
+    implementations behave well.
+    --
+
+    This fixes a bug in a code path which can only be reached with special
+    crafted input data and would then error out at an upper layer due to
+    corrupt input (every second byte in the buffer is unitialized
+    garbage).  No fuzzing has yet hit this case and we don't have a test
+    case for this code path.  However memory corruption can never be
+    tolerated as it always has the protential for remode code execution.
+
+    Reported-by: 8b79fe4dd0581c1cd000e1fbecba9f39e16a396a
+    Fixes-commit: c27c7416d5148865a513e007fb6f0a34993a6073
+    which fixed
+    Fixes-commit: 7d0efec7cf5ae110c99511abc32587ff0c45b14f
+
+In 2.5.13:
+
+commit 8abc320f2a75d6c7339323a3cff8a8489199f49f
+Author:     Werner Koch <wk@gnupg.org>
+AuthorDate: Wed Oct 22 12:39:15 2025 +0200
+Commit:     Werner Koch <wk@gnupg.org>
+CommitDate: Wed Oct 22 12:39:15 2025 +0200
+
+    gpg: Error out on unverified output for non-detached signatures.
+
+    * g10/mainproc.c (do_proc_packets): Never reset the any.data flag.
+    --
+
+    Fixes-commit: 3b1b6f9d98b38480ba2074158fa640b881cdb97e
+    Updates-commit: 69384568f66a48eff3968bb1714aa13925580e9f
+    Reported-by: 8b79fe4dd0581c1cd000e1fbecba9f39e16a396a
+
+
+commit 8abc320f2a75d6c7339323a3cff8a8489199f49f
+Author:     Werner Koch <wk@gnupg.org>
+AuthorDate: Wed Oct 22 12:39:15 2025 +0200
+Commit:     Werner Koch <wk@gnupg.org>
+CommitDate: Wed Oct 22 12:39:15 2025 +0200
+
+    gpg: Error out on unverified output for non-detached signatures.
+
+    * g10/mainproc.c (do_proc_packets): Never reset the any.data flag.
+
+commit db9705ef594d5a2baf0e95e13cf6170b621dfc51
+Author:     Werner Koch <wk@gnupg.org>
+AuthorDate: Wed Oct 22 11:19:55 2025 +0200
+Commit:     Werner Koch <wk@gnupg.org>
+CommitDate: Wed Oct 22 11:20:10 2025 +0200
+
+    gpg: Avoid potential downgrade to SHA1 in 3rd party key signatures.
+
+But it isn't clear to me what...
+* the mapping between all of the vulnerabilities listed on the website is vs GnuPG commits (unfortunately
+  no CVE identifiers yet either);
+* GnuPG bug tracker links map to commits or vulnerabilities;
+* whether these fixes are complete for a specific vulnerability or not.
+
+The relevant public bugs I'm aware of for GnuPG are:
+* https://dev.gnupg.org/T7909
+* https://dev.gnupg.org/T7900
+* https://dev.gnupg.org/T7902
+* https://dev.gnupg.org/T7903
+but some linked therein are still marked private.
+
+Finally, to end the dump of what I know so far: Werner Koch has
+published a response to the cleartext signature vulnerabilities:
+https://gnupg.org/blog/20251226-cleartext-signatures.html.
+
+sam
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmlQ/6gbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTEsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkMrl
+AQDZzNP+LP1IPSQdPI/bVYv6n30nUE+Dre622gIX1/0/EwEAlX0F1jgCOH6hRmKl
+pvossjWVtkbPKOBCqF8Pfts1igk=
+=pXhW
+-----END PGP SIGNATURE-----
+--=-=-=--
