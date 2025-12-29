@@ -1,4 +1,4 @@
-Received: (qmail 5808 invoked by uid 550); 31 Mar 2024 18:35:44 -0000
+Received: (qmail 1053 invoked by uid 550); 29 Dec 2025 17:08:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,207 +7,38 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23727 invoked from network); 31 Mar 2024 18:14:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1711908840; bh=GhvS1aFPWhvorE8aCDTnOzr4+dtMHAzG7aA2R061rjg=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=uTRvhf38og6Zj3UIj9PXeUHKPDkdaIzEC9RzrSIl9W9DQxoGMwzBMG1zWdsTqs8LX
-	 HufRwAxfk/V3Zmbb80cHFYqhisNEIE4ddw75St7tszP3tdxyxrr6/DfT2AxkrBbWsJ
-	 +6ft02wtKf6NPwTOWRrZgty8pGXpvs4ovyZXOWlwko1QqczJTB3nH8jFXinm6KI5JQ
-	 povhClEkI8AS+7zUWZ28pHDKmlQCbLmGFSnP4gOwF5sM7O7uMZb4jVnA8H0frRHgNs
-	 wZD3kyl9si/XdxMZvSVHGMsmbpdSXARXxRLHkGS3oWf+yl8SwkN8SvUbyikJXk5zN2
-	 Xg2BLlyBKYuyg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org; s=2;
-	t=1711908840; bh=GhvS1aFPWhvorE8aCDTnOzr4+dtMHAzG7aA2R061rjg=;
-	h=Date:From:To:Subject:References:In-Reply-To:From;
-	b=uTRvhf38og6Zj3UIj9PXeUHKPDkdaIzEC9RzrSIl9W9DQxoGMwzBMG1zWdsTqs8LX
-	 HufRwAxfk/V3Zmbb80cHFYqhisNEIE4ddw75St7tszP3tdxyxrr6/DfT2AxkrBbWsJ
-	 +6ft02wtKf6NPwTOWRrZgty8pGXpvs4ovyZXOWlwko1QqczJTB3nH8jFXinm6KI5JQ
-	 povhClEkI8AS+7zUWZ28pHDKmlQCbLmGFSnP4gOwF5sM7O7uMZb4jVnA8H0frRHgNs
-	 wZD3kyl9si/XdxMZvSVHGMsmbpdSXARXxRLHkGS3oWf+yl8SwkN8SvUbyikJXk5zN2
-	 Xg2BLlyBKYuyg==
-Date: Mon, 1 Apr 2024 03:13:39 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
+x-ms-reactions: disallow
+Received: (qmail 22430 invoked from network); 29 Dec 2025 14:45:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bebt.de;
+	s=d2; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Message-ID:Subject:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:
+	To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=92CIXD6eH98zoZouT87wi6CGRr8BBE2SVXqy0CG/ruE=; b=s9M4atINVA5pRj3AJi2w7T3xr/
+	M4yY9ysJnEEDmkdVz2bw+w2/dBbWbJg28D1usTtMS4gExOTTtldNITKli1eP6qHX2sEIz+wpXTL7+
+	k6iWix6dNqqHgGTfPNwgZ0QiBwRZEhZrc3XFzSQbx8HwcP1iV5hMKSNNjgkQECBPJloJ3Tja364M8
+	gXa2AXJ5pjuaba0kQf1riYwN//tGhlCj/lKtpPquAmiE5NCPOVgvZMayW2Wmz45OXCnuFFV6t2OJq
+	H0Yij8SyiObnAGyc5bjAdmzedP2lH2cSZrES6UVrX/Pqt+XYW9nFCpEU+aYWycngZsHFs1EgVF+fs
+	bhWwdpKw==;
+Date: Mon, 29 Dec 2025 15:45:15 +0100
+From: Andreas Metzler <ametzler@bebt.de>
 To: oss-security@lists.openwall.com
-Message-ID: <Zgmn06K3C-nY83YH@codewreck.org>
-References: <20240329155126.kjjfduxw2yrlxgzm@awork3.anarazel.de>
- <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de>
+Message-ID: <aVKT-72EaOkbvDNM@argenau.bebt.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <ed2715be-e7a0-4a7f-a3fd-7041f6c6fa49@fu-berlin.de>
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh
- server compromise
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0bf8169edb12d002a4654c4ccf6aa54d84eba14a.camel@verbuecheln.ch>
+X-Spam-Score: -2.0 (--)
+X-Spam-Report: (-2.0 / 8.0 requ) ALL_TRUSTED=-1,BAYES_00=-1.9,TXREP=-1.639,URIBL_DBL_SPAM=2.5 autolearn=no autolearn_force=no
+Subject: [oss-security] Re: Many vulnerabilities in GnuPG
 
-Michael.Karcher wrote on Sun, Mar 31, 2024 at 07:13:35PM +0200:
-> > I am *not* a security researcher, nor a reverse engineer.  There's lots of
-> > stuff I have not analyzed and most of what I observed is purely from
-> > observation rather than exhaustively analyzing the backdoor code.
-> 
-> I am a reverse engineer, and tried some static analysis on that code. One
-> key feature is that the code does not contain any ASCII strings, neither in
-> clear text nor in obfuscated form. Instead, it recognizes all relevant
-> strings using one single deterministic finite automaton, a technique commonly
-> used to search for terms given by regular expressions.
-> 
-> I wrote a script that decodes the tables for the table-driven DFA and outputs
-> the strings recognized by it accompanied with the "ID" assigned to the terminal
-> accepting state that represents that string.
-> 
-> You can find this script (and possibly other stuff I found interesting later)
-> at https://github.com/karcherm/xz-malware .
+Stephan Verbücheln <stephan@...buecheln.ch> wrote:
+> The RCE bug was actually fixed as they already state in their slides.
 
-This list requires that the content is made available in messages
-themselves and not just links, so I've copied the README below (all the
-way to the end), which probably contains enough information for most
-people so I'm not going all the way to attach the script as well.
+> https://github.com/gpg/gnupg/commit/ad0c6c33c3d6fe7ff7cc8c2e73d02ead5788e5b3
 
-This is really helpful, thanks a lot for the analysis!
+This commit seems to be related to #3 https://gpg.fail/filename while
+the RCE is #5 https://gpg.fail/memcpy aka CVE-2025-68973, isn't it?
 
--- Dominique Martinet | Asmadeus
-
-
-README content below scissors:
-------------8<----------------------
-Information about the liblzma (xz-utils) backdoor
-=================================================
-
-Decoder for the string recognition automaton
---------------------------------------------
-
-The backdoor code, in the version extracted by Florian Weimer, contains no readable ASCII strings.
-It also contains no obfuscated ASCII strings. Instead, it has a single state automaton to recognize
-the required strings. Searching for a string is performed by inputting all candidate start addresses
-into the string detection automaton, and checking whether the intended string is recognized. The
-string detection automaton returns a string ID.
-
-The string detection automaton is implemented in the function `_Lsimple_coder_update_0`, which has
-this signature:
-
-```
-int detect_string(const void* startptr, const void* optional_endptr);
-```
-
-It returns 0 if no known string is detected at startptr (the search is aborted if endptr is encountered before
-a match is detected), otherwise it returns a "string ID".
-
-This is the table that is generated by running the script in this repository:
-
-``` 
- 810: ' from '
- 678: ' ssh2'
-  d8: '%.48s:%.48s():%d (pid=%ld)\x00'
- 708: '%s'
- 108: '/usr/sbin/sshd\x00'
- 870: 'Accepted password for '
- 1a0: 'Accepted publickey for '
- c40: 'BN_bin2bn\x00'
- 6d0: 'BN_bn2bin\x00'
- 958: 'BN_dup\x00'
- 418: 'BN_free\x00'
- 4e0: 'BN_num_bits\x00'
- 790: 'Connection closed by '
-  18: 'Could not chdir to home directory %s: %s\n\x00'
-  b0: 'Could not get agent socket\x00'
- 960: 'DISPLAY='
- 9d0: 'DSA_get0_pqg\x00'
- 468: 'DSA_get0_pub_key\x00'
- 7e8: 'EC_KEY_get0_group\x00'
- 268: 'EC_KEY_get0_public_key\x00'
- 6e0: 'EC_POINT_point2oct\x00'
- b28: 'EVP_CIPHER_CTX_free\x00'
- 838: 'EVP_CIPHER_CTX_new\x00'
- 2a8: 'EVP_DecryptFinal_ex\x00'
- c08: 'EVP_DecryptInit_ex\x00'
- 3f0: 'EVP_DecryptUpdate\x00'
-  f8: 'EVP_Digest\x00'
- 408: 'EVP_DigestVerify\x00'
- 118: 'EVP_DigestVerifyInit\x00'
- d10: 'EVP_MD_CTX_free\x00'
- af8: 'EVP_MD_CTX_new\x00'
- 6f8: 'EVP_PKEY_free\x00'
- 758: 'EVP_PKEY_new_raw_public_key\x00'
- 510: 'EVP_PKEY_set1_RSA\x00'
- c28: 'EVP_chacha20\x00'
- c60: 'EVP_sha256\x00'
- 188: 'EVP_sm'
- 8c0: 'GLIBC_2.2.5\x00'
- 6a8: 'GLRO(dl_naudit) <= naudit\x00'
- 1e0: 'KRB5CCNAME\x00'
- cf0: 'LD_AUDIT='
- bc0: 'LD_BIND_NOT='
- a90: 'LD_DEBUG='
- b98: 'LD_PROFILE='
- 3e0: 'LD_USE_LOAD_BIAS='
- a88: 'LINES='
- ac0: 'RSA_free\x00'
- 798: 'RSA_get0_key\x00'
- 918: 'RSA_new\x00'
- 1d0: 'RSA_public_decrypt\x00'
- 540: 'RSA_set0_key\x00'
- 8f8: 'RSA_sign\x00'
- 990: 'SSH-2.0'
- 4a8: 'TERM='
-  e0: 'Unrecognized internal syslog level code %d\n\x00'
- 158: 'WAYLAND_DISPLAY='
- 878: '__errno_location\x00'
- 2b0: '__libc_stack_end\x00'
- 228: '__libc_start_main\x00'
- a60: '_dl_audit_preinit\x00'
- 9c8: '_dl_audit_symbind_alt\x00'
- 8a8: '_exit\x00'
- 5b0: '_r_debug\x00'
- 5b8: '_rtld_global\x00'
- a98: '_rtld_global_ro\x00'
-  b8: 'auth_root_allowed\x00'
- 1d8: 'authenticating'
-  28: 'demote_sensitive_data\x00'
- 348: 'getuid\x00'
- a48: 'ld-linux-x86-64.so'
- 7d0: 'libc.so'
- 7c0: 'libcrypto.so'
- 590: 'liblzma.so'
- 938: 'libsystemd.so'
-  20: 'list_hostkey_types\x00'
- 440: 'malloc_usable_size\x00'
-  c0: 'mm_answer_authpassword\x00'
-  c8: 'mm_answer_keyallowed\x00'
-  d0: 'mm_answer_keyverify\x00'
- 948: 'mm_answer_pam_start\x00'
-  78: 'mm_choose_dh\x00'
-  40: 'mm_do_pam_account\x00'
-  50: 'mm_getpwnamallow\x00'
-  a8: 'mm_log_handler\x00'
-  38: 'mm_pty_allocate\x00'
-  a0: 'mm_request_send\x00'
-  48: 'mm_session_pty_cleanup2\x00'
-  70: 'mm_sshpam_free_ctx\x00'
-  58: 'mm_sshpam_init_ctx\x00'
-  60: 'mm_sshpam_query\x00'
-  68: 'mm_sshpam_respond\x00'
-  30: 'mm_terminate\x00'
- c58: 'parse PAM\x00'
- 400: 'password\x00'
- 4f0: 'preauth'
- 690: 'pselect\x00'
- 7b8: 'publickey\x00'
- 308: 'read\x00'
- 710: 'rsa-sha2-256\x00'
- 428: 'setlogmask\x00'
- 5f0: 'setresgid\x00'
- ab8: 'setresuid\x00'
- 760: 'shutdown\x00'
- d08: 'ssh-2.0'
- 2c8: 'ssh-rsa-cert-v01@openssh.com\x00'
-  88: 'sshpam_auth_passwd\x00'
-  90: 'sshpam_query\x00'
-  80: 'sshpam_respond\x00'
-  98: 'start_pam\x00'
- 9f8: 'system\x00'
- 198: 'unknown\x00'
- b10: 'user'
- 380: 'write\x00'
-  10: 'xcalloc: zero size\x00'
- b00: 'yolAbejyiejuvnup=Evjtgvsh5okmkAvj\x00'
- 300: '\x7fELF'
-```
+cu Andreas
