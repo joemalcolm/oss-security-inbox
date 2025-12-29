@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3134" "Wednesday" "18" "May" "2016" "12:25:39" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160518162539.B5707B2E038@smtpvbsrv1.mitre.org>" "68" "[oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely" nil nil nil "5" "2016051816:25:39" "[oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely" (number mark "U       cve-assign@m May 18   68/3134  " thread-indent "\"[oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely\"\n") "<e21dd438-42f0-afc7-b510-cc8affd352c8@redhat.com>" ("<e21dd438-42f0-afc7-b510-cc8affd352c8@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28522 invoked by uid 550); 18 May 2016 16:25:54 -0000
+Received: (qmail 19962 invoked by uid 550); 29 Dec 2025 17:30:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +7,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28504 invoked from network); 18 May 2016 16:25:52 -0000
-From: cve-assign@mitre.org
-To: huzaifas@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <e21dd438-42f0-afc7-b510-cc8affd352c8@redhat.com>
-Message-Id: <20160518162539.B5707B2E038@smtpvbsrv1.mitre.org>
-Date: Wed, 18 May 2016 12:25:39 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: null pointer deref in openslp, can be triggered remotely
+x-ms-reactions: disallow
+Received: (qmail 5555 invoked from network); 29 Dec 2025 17:21:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1767028890; x=1767695556; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=6EBkvVZEAT+Qr5jmpOsLB80oHpQsHo0l8sLewAWsBdg=;
+ b=g/t5bgvwUkzLvCihLrizAaRHfRLIedpl8jXovtYISMtgAkHyYUAP7leyWsRUjjDko6RsPyQt
+  C/QWW0nHlsiZ4uwZhNkjMKiTkvxc7+VUjQh3/cZVa+8frx5c5qSbYCCDTiadcKaN1EK03Sp0K9
+  qLWyulnJJpXtdyu8Zj0tpoYid3660fgKCXk3FfAjycwPsAcCmZ0r7B/z171arrv65duldWJgFl
+  BgxnCCneenQxQdLTVtdHPIk/v+B9jFrNPh+N4CZ99dBYQuHvsDDNqn2wVNy5JJ2+yuq7Amr/xf
+  T7B8Y7A+AGzT7xgWwGyYKZk5yMK33I9GczMz44q+MYQu5Uzw==
+Date: Mon, 29 Dec 2025 18:21:29 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20251229172129.XftBSrA3@steffen%sdaoden.eu>
+In-Reply-To: <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
+References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
+ <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
+ <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-743-g1489053f65-dirty
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Best practices for signature verifcation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+kf503bla@duck.com wrote in
+ <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>:
+ |> Demi Marie Obenour (she/her/hers)
 
-> return value from malloc isn't checked
+ |> In light of the recent GnuPG vulnerabilities, I remembered that OpenPGP
+ |> is almost never the right choice. CMS/PKCS#7 isn't any better, and
+ |> X.509 is also bad except that its extremely wide deployment in TLS
+ |> keeps it alive.
+ |> 
+ |> See https://www.latacora/com/blog/2019/07/16/the-pgp-problem/
+ |> 
+ |> and https://soatok.blog/2024/11/15/what-to-use-instead-of-pgp/.
 
-Our guess is that this probably wasn't an intentional design choice,
-and thus it's a security-related bug for some deployments. Use
-CVE-2016-4912.
+ |then what do you suggest to use? i hear it all the time "pgp sucks" \
+ |but what's the alternative huh?
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1329295
+I know a gentle and forgiving Russian who said (since "crypto
+saves the world" simply quoting all this shamelessly)
 
-The oss-security message and the rhbz document seem to describe the
-impact in different ways, i.e., "Basically return value from malloc
-isn't checked ... This can be triggered remotely by sending a large
-number of requests, which could possibly lead malloc to fail at one
-point, causing crash via null pointer deref" versus "A remote attacker
-could potentially deplete the memory of the server." For purposes of
-CVE, this type of scenario is often not interpreted as two independent
-problems. Roughly speaking, it is interpreted as "The unchecked malloc
-return value is the primary problem. This problem becomes reachable
-for reasons that aren't fully described, but those reasons might
-involve a design limitation in which the memory consumption of
-requests is not strictly controlled."
+  Years ago I started to recommend age
+  (https://age-encryption.org/) for file encryption and
+  "ssh-keygen -Y" for making ed25519 signatures. But both of them
+  do not support post-quantum cryptographic algorithms.  [.]
 
-http://www.openslp.org/doc/html/UsersGuide/Security.html says "The
-OpenSLP daemon (slpd) must run as root initially in order to bind to
-the well known SLP port. However, slpd will relinquish root privileges
-and suid() to the daemon user (if it exists)." Thus, maybe the
-affected code is running as root with large or unbounded resource
-limits in some situations.
+As well as
 
-> Because of the way memory works on modern linux systems, this one seems
-> to be difficult to exploit
+ I have not tried it, but read very carefully the format/protocol
+ specification of https://saltpack.org/ and it is definitely done
+ right and pretty minimalistic.
 
-Maybe there is a relevant non-Linux case?
-http://www.openslp.org/doc/html/faq.html says "the OpenSLP code has
-proven to be very portable. It currently works on many operating
-systems including: Linux, BSD, Solaris, Tru64, HPUX, UnixWare, OSR5,
-and Win32."
+Especially in favour of MessagePack instead of JSON/CBOR (as also
+used by saltpack).
 
-Finally, although perhaps not related to the issue of whether a CVE ID
-should exist, that Security.html page says "If you find a security
-hole in OpenSLP, please bring it to the attention of the OpenSLP
-maintainer" and names John Calcote. Possibly Red Hat could do this
-upstream notification if that hasn't already happened.
+Where this all would end when year++ long working group workoutss
+get simply bypassed by working implementations, one can wonder.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXPJaSAAoJEHb/MwWLVhi2h4cQAJmkQyaRT0i7LKVxxfP54FCK
-PPU79sWFvARo2g9W8WusHKaOFM/ebXR2FdgLOBwIxsiJ6jp7zbupgOG5t8n5T/s2
-FXIgpiYUjgw04wlqEVcWIC64wYX+AiJZ3qAA2L1p69XOBz1Be0x3ngA3H6+w+i+z
-o4049/nEisclSGGzAZVMxO2/hycsJwtV5LlZmMZgcMfY+9ddwm/1j84JSTjT930s
-IAZxFdyymQAKGllQS8qRd3pmVVIRruDW7BhxuuzbZjRukgmExxwq7kkQ1JsQhrA+
-VlQOR3AVV9oVVQMwwW5hDP9c8Fom2DnRxOkJduxvgBuUtACDlfsNUcncG68hBnJG
-skBvJ9A/4jDtsQGox19UAwJcsknn3O1aE138IbPu49AfUwUNFJr/iqJAHkAoxpw6
-yz6Lmb5Z7fGWQlJzFzbHS/f3/F9TNjuwet75krGO1FJl9bBJSZ/agy++x/a5fyLG
-BB4eFVLhTu+b4cdQ0+08sbiSyf0eu5ro2527w4tyrj8P6pNVca3rS2BQTCiGgcBl
-3kIcJ73g1KlUcJ0z3uIQWhut9A4qAm/xPV1fKNllcp6xDbX6N/CThPHWiMm70ary
-8GhlVsTfjXkw+hMj9zD0jVNO64rHsodcFpoQQ3mtityguTuLY8KangerYE0E6Ztj
-cqBtWstYfr4XjyyVazC1
-=/rdk
------END PGP SIGNATURE-----
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
