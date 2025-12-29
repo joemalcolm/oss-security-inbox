@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3927" "Monday" "12" "September" "2016" "10:45:20" "-0400" "Fried Wil" "wilfried.pascault@gmail.com" "<CANTwUcrbn0J5+bfhgYQOy3DY-xLO=6dr7tj_6Esa8CKT0DA-0g@mail.gmail.com>" "101" "Re: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )" nil nil nil "9" "2016091214:45:20" "[oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )" (number mark "U       wilfried.pas Sep 12  101/3927  " thread-indent "\"Re: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution / Privilege Escalation ( 0day )\"\n") "<CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>" ("<CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>" "<20160912103527.GA3003@openwall.com>" "<CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30135 invoked by uid 550); 12 Sep 2016 14:46:25 -0000
+Received: (qmail 1718 invoked by uid 550); 29 Dec 2025 20:02:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,141 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29878 invoked from network); 12 Sep 2016 14:45:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=Q8ZqsadUcxwT59McDltoJEFhQGk83+Xs9ADciBr2xjk=;
-        b=Kj2/O5ALpqL+57bAtGLy5zb3AyVIoeqRoBYKrxfVeq8aJKqS/jwu1+2fjMw07LHOR9
-         1Og0+2wPG34XOY/yQgbENMiqlFC/HjoFWGQbJgRQsLX9GejXjKCBQLAdHMqPLo2Wm74A
-         kqmKcGq1B6UL44TK7q6jhMP/IZcrRCLSm26g9crY77gFVUANArUqDHSNKecgE8bGxVd/
-         /TdV80M956xfUQvBChQvHZkY/rjDHUj32NfuacwvhDaQQKskg9htbwRP/hxMZsap+VG/
-         GswXMOxairTnxb9fIHBFT5I8aLbw1MjRJvNbUIEr1iKMzphIXFUTgQoQXvpWTihvIsSE
-         g7vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=Q8ZqsadUcxwT59McDltoJEFhQGk83+Xs9ADciBr2xjk=;
-        b=V10/lAfw60byAA/gTO6NbV1OrbP+yXLYN67ufurPDjoVO/4qK9Oth1p0Ae4qkD7q94
-         h99jCyX4f09phE19Ep0lbRO5X3VTVtUAeq8j7nBdOXL83/tG/8xJgHyYBE9YVnqlV6ko
-         FLYOuNs90XM3Io2f92Yk3t2miLbK/q64odbXSwjprYHKKowTx0DpF08kQXfTs6XPck/9
-         CJcGCP/KRL5+nQT6Q+gehlez4uSHFcZpmpMC0CBxcriBB7cZyDy6iJ+gavqAFErPVqor
-         XsJuxYGNegyByrT2nDxWc+Ib9sNTMkr7ZhZMkAA60/QA97/jQzlclchwFwjyRnlqwcCc
-         B3lw==
-X-Gm-Message-State: AE9vXwPUaPxrGkNGPH9gRUVg9ipTmCEzNewczNouSz0151pE44JgmvM8t58B33GfoGrAczPVdqG0czhv5BimWA==
-X-Received: by 10.55.166.67 with SMTP id p64mr21212943qke.33.1473691520702;
- Mon, 12 Sep 2016 07:45:20 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 25757 invoked from network); 29 Dec 2025 19:58:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seestieto.com;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1767038290; x=
+	1767124690; bh=ILiX8XIO5m/vnjWNFDGHTWcehXainyQ6QI6cbR6gVzA=; b=2
+	3QTr2K9QK6VNaFuA7JnXeplsL1AmMKPAadyYgjJntscR7K0OgOEPELN8Tmt3Lc0i
+	0BPjmKR0BrLXSEYiMj4swV0TrKPjKHtpDftr2NcgvsIUO4jktGPArYO8qcSYT+yE
+	PkEL3yiQEzjAySIPSxpKqEMqTJE5IoMKE45vu/fzcqQ8AYMIqs/je1jM+UVaAf+/
+	a//bykFulT7m7Eb6PnuxK8CRU1VmW34a5nw93qTBSoJxIJ2Fk8Q26sOe5iJD6OXz
+	x6RgZ4m8859NFInvwOLuHIaoISchX8f3mvYd635ZWwzXQVQgyfk5bLZf8t8aZoIR
+	KNW9DWlnuVrAoET0yAV7w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1767038290; x=1767124690; bh=ILiX8XIO5m/vnjWNFDGHTWcehXainyQ6QI6
+	cbR6gVzA=; b=z6aOBkhIjwqLl7EmAKaReo4PjKz+WRlq3spZtV0KfbIhelG6Jma
+	fco9GMhml0QgkKMwKZqahXJ7MtiZ2AzNvkW03HAUFp0R841sdgo/nGORQrMG69vh
+	44UnEfkOMgsXXf2lggqL6867jrverq8q522N6Ui4k2MzjeI2qi3gFvHxCPBOB3Xu
+	xMDBYrH8woqy5J2kmIS0hG+o3rooBm4NMtQPwr6QWM+um2Jb0Z4JPwzf2NW0jz/e
+	XPADPkaashO3iE1+L+Hy79QlO7UK3bA6lDNd7SR0SlwhE4/pZdG/RMygDs9SavJD
+	oQ9fQIWgWT/kgJLvVSXof6oCN7AoHRFeNkQ==
+X-ME-Sender: <xms:Ud1Safee3m0RRr8PRg-6VaFkSbHP0egQgu5uJofqjfUlvtcDORvk3A>
+    <xme:Ud1SacNZfusiHilBhtZXGXcdX8sQjI9382wXHiwegDSNgfmxnuYsIyBhfudcdVJwW
+    n3DRTMy3zzlRqp6xnivsGzRjtGbNA91aCAQNX1zCLxL6mvfYA>
+X-ME-Received: <xmr:Ud1Sadh3HxEDVGa28vQmIX4BhlC21rlLvmbq_zHpPKr2guUd5vtzzCAo2MGwihZRHg5wsOovZjWTnNsj_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdejkedtgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfggtgesthdtredttddttdenucfhrhhomhepjfgvnhhrihhkucet
+    hhhlghhrvghnuceophgrsghlohesshgvvghsthhivghtohdrtghomheqnecuggftrfgrth
+    htvghrnhepheeuheeuueehffffueefheegfedtkeeuvddtkedvueevjefgffejieejvddt
+    jeeunecuffhomhgrihhnpehgnhhuphhgrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphgrsghlohesshgvvghsthhivghtohdrtgho
+    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsh
+    holhgrrhesohhpvghnfigrlhhlrdgtohhmpdhrtghpthhtohepohhsshdqshgvtghurhhi
+    thihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdprhgtphhtthhopehjtggsiedvvd
+    ekudesghhmrghilhdrtghomhdprhgtphhtthhopegtohhnthgrtghtsehgphhgrdhfrghi
+    lh
+X-ME-Proxy: <xmx:Ud1Saf0kUjTTVsE5b6rKG-ZI-8rwXHzNi_Q4V3XAmnVXZMhapR7nRg>
+    <xmx:Ud1SaXhDskDdvDu4MW2NnaPhHW5X0Psph5xdocRjO_Ki7PYbhD8dmA>
+    <xmx:Ud1SaffXukUk0ZBOtyystClFarzHe3-B4UQA6-0e5E0kCB0qQIlZmQ>
+    <xmx:Ud1SaanxNGC0FveWCwnGHLk5CCd5fEgV9Z24QT9Wkokzgr23f7opNA>
+    <xmx:Ut1SaelZOdpUDblb_DNQkBfI_ZNm7_IlQKM7YzIx36iXdYUr1N_CcnX2>
+Feedback-ID: i8ea641e4:Fastmail
+From: Henrik Ahlgren <pablo@seestieto.com>
+To: "Lexi Groves (49016)" <contact@gpg.fail>
+Cc: jcb62281@gmail.com,  oss-security@lists.openwall.com,  Solar Designer
+ <solar@openwall.com>
+In-Reply-To: <d892df77-a488-4a51-af35-697897e3984e@gpg.fail> (Lexi Groves's
+	message of "Mon, 29 Dec 2025 17:57:44 +0100")
+References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
+	<20251228042744.GA629@openwall.com>
+	<0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
+	<d892df77-a488-4a51-af35-697897e3984e@gpg.fail>
+Date: Mon, 29 Dec 2025 21:58:05 +0200
+Message-ID: <87tsx99i2a.fsf@noux.seestieto.com>
 MIME-Version: 1.0
-In-Reply-To: <CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>
-References: <CADSYzstomCU7KFOqX1u30Cej=OG3-FjCMpHPvsoCysHPoen1jw@mail.gmail.com>
- <20160912103527.GA3003@openwall.com> <CADSYzss4ZyRdBEHjDtXD4YcbrEJ6Kxvj_yUJTOmY-McGvm4KDg@mail.gmail.com>
-From: Fried Wil <wilfried.pascault@gmail.com>
-Date: Mon, 12 Sep 2016 10:45:20 -0400
-Message-ID: <CANTwUcrbn0J5+bfhgYQOy3DY-xLO=6dr7tj_6Esa8CKT0DA-0g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: Re: [oss-security] CVE-2016-6662 - MySQL Remote Root Code Execution /
- Privilege Escalation ( 0day )
+Content-Type: text/plain
+Subject: Re: [oss-security] Many vulnerabilities in GnuPG
 
-Hi Dawid,
+"Lexi Groves (49016)" <contact@gpg.fail> writes:
 
-Affected MySQL versions (including the latest):
-<= 5.7.15
-<= 5.6.33
-<= 5.5.52
+> Yes. We found this advice in [The GNU Privacy Handbook, Chapter 1.
+> Getting Started, Making and verifying
+> signatures](https://www.gnupg.org/gph/en/manual/x135.html):
 
-Is your issue related to MySQL bugids fixed in 5.5.52/5.6.33/5.7.15 ?
+I'd just like to point out that the GNU Privacy Handbook (GPH) was
+published in 1999, and I have not encountered any more recent revisions.
+I believe GnuPG did not even support RSA until version 1.0.3 and
+AES/Rijndael until version 1.0.4, which were released in 2000, meaning
+the handbook exclusively addresses DSA and ElGamal, making it 25 years
+out of date.
 
-https://dev.mysql.com/doc/relnotes/mysql/5.5/en/news-5-5-52.html
-Changes in MySQL 5.5.52 (2016-09-06):
-- For mysqld_safe, the argument to --malloc-lib now must be one of the
-directories /usr/lib, /usr/lib64, /usr/lib/i386-linux-gnu, or
-/usr/lib/x86_64-linux-gnu. In addition, the --mysqld and
---mysqld-version options can be used only on the command line and not
-in an option file. (Bug #24464380)
-- Privilege escalation was possible by exploiting the way REPAIR TABLE
-used temporary files. (Bug #24388746)
-- It was possible to write log files ending with .ini or .cnf that
-later could be parsed as option files. The general query log and slow
-query log can no longer be written to a file ending with .ini or .cnf.
-(Bug #24388753)
-
-Thanks
-
-
-On Mon, Sep 12, 2016 at 6:58 AM, Dawid Golunski <dawid@legalhackers.com> wrote:
-> Hi Alexander,
->
-> I was just going to reply to your email you sent earlier.
-> Thanks for the feedback. I actually updated the introduction after your email.
-> The advisory focuses on CVE-2016-6662 vulnerability which lets users
-> to modify/create my.cnf files. A fix would prevent users from writing
-> to my.cnf config.
->
-> And yes there's a typo in the last paragraph made after a few
-> sleepless nights ;) I've fixed it now.
->
-> The CVE-2016-6663 is not public yet. I refer to it in the advisory to
-> give some heads up in case someone wanted to discard this issue based
-> on reasoning that FILE privs are not common and that they will never
-> be pwned etc. It'll soon be published then it'll be clear what this
-> CVEID is about ;)
->
-> Cheers.
->
->
->
-> On Mon, Sep 12, 2016 at 7:35 AM, Solar Designer <solar@openwall.com> wrote:
->> On Mon, Sep 12, 2016 at 06:09:10AM -0300, Dawid Golunski wrote:
->>> Vulnerability: MySQL Remote Root Code Execution / Privilege Escalation 0day
->>> CVE: CVE-2016-6662
->>> Severity: Critical
->>> Affected MySQL versions (including the latest):
->>> <= 5.7.15
->>> <= 5.6.33
->>> <= 5.5.52
->>
->>> http://legalhackers.com/advisories/MySQL-Exploit-Remote-Root-Code-Execution-Privesc-CVE-2016-6662.html
->>
->> Thank you for posting this.  For archival, and to comply with
->> oss-security content guidelines, I am attaching a text/plain version of
->> the above advisory (which includes a lot of detail not in your posting).
->>
->> Also, to add detail on the disclosure timeline: Dawid brought this to
->> the distros list yesterday (Sunday).
->>
->> As I had pointed out in a reply on distros, it is not entirely clear
->> what exact issue the CVE-2016-6662 identifier is for.  The advisory
->> talks about multiple sysadmin practices, packaging issues, dangerous
->> features of MySQL, and finally of safe_mysqld including the data
->> directory in its search path for my.cnf.  I guess it would be most
->> reasonable to have the CVE ID refer only to the latter aspect, but
->> confirmation/clarification is needed.  As it is, it's unclear from the
->> advisory what exact "vulnerabilities were patched by PerconaDB and
->> MariaDB vendors" (the advisory says so), and it is unclear what Oracle
->> and distros "fixing" CVE-2016-6662 would mean.
->>
->> Also, in this paragraph I guess the advisory wanted to refer to the
->> upcoming CVE-2016-6663 (I have no idea what that issue is, beyond what
->> the advisory says), like it does in a few other places:
->>
->> "It is worth to note that attackers could use one of the other vulnerabilities discovered
->> by the author of this advisory which has been assigned a CVEID of CVE-2016-6662 and is
->> pending disclosure. The undisclosed vulnerability makes it easy for certain attackers to
->> create /var/lib/mysql/my.cnf file with arbitrary contents without the FILE privilege
->> requirement."
->>
->> Alexander
->
->
->
-> --
-> Regards,
-> Dawid Golunski
-> http://legalhackers.com
-
-
-
--- 
-Wilfried
+The GnuPG Manual (https://gnupg.org/documentation/manuals/gnupg/) is
+much more current, but sadly it is not structured as a user guide that
+would introduce a new user to PGP concepts and best practices, etc.
