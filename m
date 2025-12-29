@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["280" "Saturday" "3" "December" "2016" "00:29:12" "+0100" "Andrey Konovalov" "andreyknvl@google.com" "<CAAeHK+yMo_kYnhJf_rJX7tNkBefWXuKMsXTF1aB6-RqsLZn4ZQ@mail.gmail.com>" "11" "[oss-security] CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE" nil nil nil "12" "2016120223:29:12" "[oss-security] CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE" (number mark "U       andreyknvl@g Dec  3   11/280   " thread-indent "\"[oss-security] CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30438 invoked by uid 550); 2 Dec 2016 23:32:25 -0000
+Received: (qmail 25921 invoked by uid 550); 29 Dec 2025 04:13:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29768 invoked from network); 2 Dec 2016 23:29:24 -0000
+x-ms-reactions: disallow
+Received: (qmail 13826 invoked from network); 29 Dec 2025 04:11:52 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=HNvmb/qbKessJg5Gs+dAvejOTPKos4B5uZ4DUzsoYa8=;
-        b=CDry47P+zQxB/X9fbsBgeppN7o3KWddrVqGitdNU/stGiGbOvlVxPrAJEEFkA4sW2+
-         bJebyWdaweuUDRa5H4oKx7QBgGuTSyceyEIcdHTdpUALz3bFMKk8CD3aYClV02Dixoqo
-         w0yYdvGtEg3ZMhrFes6/aOYgU9iotIUVW2MOgkO1cZ5grU5zIW1KxGz5U688m/XlD+98
-         eRQLTYj7/d9s5RRBFNKBlhJMnIQZeihlCMOrvBeVttqR4OZ12vn03z0ZqLzyyXQY4Ovv
-         X1EnwV89fppOFa1dywHUeAw8QPhrdvvsTR96IBc2czw5kAvI8sjbFvFNqIH0z4HEwSkz
-         ATzw==
+        d=gmail.com; s=20230601; t=1766981503; x=1767586303; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rNa5fpEyhNXFX3uQ73I6umjvfRgp3GpcBmSSBo51WHs=;
+        b=IEGan4QmNoy7TZpj0/XDQm/1gsAA0OrlwKN0L3AxRODNvsKZiN6jJLmv0RBkA0QQ9o
+         pz3pXwRRtsn3PiFsGYPTVFAKJSeAfLH7PJnOlqM9oHqjyHHanmpIGt4NU9KuGPW9yJzd
+         LL/5CRMNcp4vyiUmvCspnwl9olkm05/u8qiuWGmd9tfflQOxQn1lDqlq1oCBCgziiHvC
+         SAu4LdDwxohBGemS9LMxhnhuZzSnADYQ7L9550I5/K3MMvxHY7b16QlJ7GpsvQx6ODdG
+         lhWlusNG1tudYIFy7UGRq0OnOFe/5MJSvuovkgQeQeggi037nbz1vL7zm3qOhC3+a4lW
+         cz5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=HNvmb/qbKessJg5Gs+dAvejOTPKos4B5uZ4DUzsoYa8=;
-        b=HG39SpOS6+cq/IeGsM51aJ2atitcOwXa2e2P9Rhae26tIXLQmSD7DEDK7L9f4Zne4j
-         KBhhdHreysFiKyuT+FwGr96emzh2Rx/7ODz3U6mZuZNGX1NuvLPhWBKr0fzcG+3B6vdQ
-         Boz4OcZnOLA2vaWOkxicsLQCDyJQbGkZ3P/VYDmKTp95OziYzG5mVodK8C/HQ1sG9A69
-         dqkzGvk11Wtt+q4GfniSVyMHT1F0eEXZgJi/ybLP07SusTagCkKQ5SdntgtGJlrVVRPw
-         Iy9/gIqHunrHw6fdkeYAYDmIDEW4SlvWtZYZS7ZZ4R7TpNfrOrl24G6hSAV9WVd3WScg
-         n8KQ==
-X-Gm-Message-State: AKaTC00i/J2D8zPHBMejPLtVuXib8aMKrS414XkZnamABmTx35fPB6myvW/bEe48Gu4FZX2mrK/e0u9lHfXyyj2L
-X-Received: by 10.25.195.194 with SMTP id t185mr14171552lff.13.1480721352890;
- Fri, 02 Dec 2016 15:29:12 -0800 (PST)
+        d=1e100.net; s=20230601; t=1766981503; x=1767586303;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rNa5fpEyhNXFX3uQ73I6umjvfRgp3GpcBmSSBo51WHs=;
+        b=scayxXvOkhbB6ZXQbDUBV5Aom07pOZb1sRgMrS3EbBOnknJMSRKnnNTIT0AC+40koF
+         PrHvzFHGgm2rLVBCgCg2SqJb59ln3TgPb+PiUuPAzXsgU09/yamEEi1X/+qu5OmPeK/0
+         f/l5YZJ5qsrRm7ZrmBfLsKrKVKVH0+OyL3PmAabbI1mK/SDqOJmwolo1Jqoa7VhDwxn1
+         9Vk6ifKXbUnM6CvVGdCBvD2VWZj025ZYL1CcEQVYZStqBlDSNcz8Ng2TtrvvPl15r1Gq
+         G3YpTMMr05P0nS8sd07fpB1ELSLHNb/weKYppAhFnKaTDzNhrI0ypXva5s5G70ic14dW
+         snOA==
+X-Gm-Message-State: AOJu0Yw3MxRu4KP51lHuTtElZFJngg62Se99ccfekznGSdvoBqyWECyC
+	JjRmubXXzvEkiiwivdUW/mWYGNLE0IJj35TZoDlQm+ldjfY4sqmbpu00NiFd2j4Y
+X-Gm-Gg: AY/fxX4yFFEOrvqVK/lOcFBhL5I/5XDc9u02+43AeGZgYXYs35MkMDVUIzSzQY7OeAj
+	Nd72sBRpI3TvfMq2Gg3WzAt3r94zgpToeADeWGppoQo2PKU1R9UoU/2jtZQKjms7hicUWKjU62v
+	xh5kFKA/TEOJedBRggPwwBbz0c8hv7rwOsjgVhvYpF7+FpqqUGqnVe8n2QvEBemxclmAuML3mcC
+	JSArbrZIpFAisr0+ExiSOaxb5+TNIcB+zYTlovFPCN+Fq0odzet0OaTgkyxG3gCpYaEwYPpFH4D
+	eUojN1C+DiZvTRVpsfyM73pHZj3XJEOELkt3B7Imww0xGmXBwaNYY0NfQka5PBZhqezXKILbJXh
+	ViCfEaXSn+tZm0gvaiYMcjrcmQD/jVniFukogqjKnp61+gI7urEmSJnV+bUcaBtZvA60Maw2/np
+	8iudBT8VY=
+X-Google-Smtp-Source: AGHT+IGMkFTnmeJgDyVbtRakhZ5KO0bLRsMZL+b/qs6KOvI/iDK7FE0fUQSThVyEfd0t2fgksmIlJA==
+X-Received: by 2002:a05:6830:2646:b0:7c7:1c87:4f95 with SMTP id 46e09a7af769-7cc668e9548mr14226830a34.4.1766981503399;
+        Sun, 28 Dec 2025 20:11:43 -0800 (PST)
+Message-ID: <974a2abd-7449-4cf7-bbe6-e329aa4af59e@gmail.com>
+Date: Sun, 28 Dec 2025 22:11:35 -0600
 MIME-Version: 1.0
-From: Andrey Konovalov <andreyknvl@google.com>
-Date: Sat, 3 Dec 2016 00:29:12 +0100
-Message-ID: <CAAeHK+yMo_kYnhJf_rJX7tNkBefWXuKMsXTF1aB6-RqsLZn4ZQ@mail.gmail.com>
-To: cve-assign@mitre.org
-Cc: oss-security@lists.openwall.com, Kostya Serebryany <kcc@google.com>, 
-	Dmitry Vyukov <dvyukov@google.com>, syzkaller <syzkaller@googlegroups.com>, 
-	Eric Dumazet <edumazet@google.com>
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE Request: Linux: signed overflows for SO_{SND|RCV}BUFFORCE
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, Greg Dahlman <dahlman@gmail.com>
+References: <CAM=PXV50+jaVYFueXFbZpioBX3PMrUG2Ey8WoQ5NT89J9gFwCA@mail.gmail.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <CAM=PXV50+jaVYFueXFbZpioBX3PMrUG2Ey8WoQ5NT89J9gFwCA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Systemd vsock sshd
 
-Hi!
+On 12/27/25 21:46, Greg Dahlman wrote:
+> [...]
+>
+>   **Systemd v256 change** - When the *openssh-server* package is
+>   installed on a VM with vsock support, systemd now automatically
+>   starts an *sshd* instance that listens on the **af_vsock** socket in
+>   the **global network namespace** without any manual configuration.
 
-There's a bug in SO_{SND|RCV}BUFFORCE setsockopt() implementation,
-which allows CAP_NET_ADMIN users to cause memory corruption.
+Obvious question:  what manual configuration is required to kill that 
+listener?
 
-The fix is upstream:
-https://github.com/torvalds/linux/commit/b98b0bc8c431e3ceb4b26b0dfc8db509518fb290
 
-Could you assign a CVE for this?
+-- Jacob
 
-Thanks!
