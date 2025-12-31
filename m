@@ -1,4 +1,4 @@
-Received: (qmail 24180 invoked by uid 550); 16 Dec 2025 09:19:25 -0000
+Received: (qmail 21944 invoked by uid 550); 31 Dec 2025 05:59:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,71 +8,74 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 24135 invoked from network); 16 Dec 2025 09:19:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1765876754; bh=OuEVtZzmxnrYlc4ObTfZy57MGkeruJMf6TFi4EgHguA=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=dwFRgCOK1flE6UEyEiFW4D9XxokDManCSHZcTN3c5cVWoECc7NqjWXps0Gqlq56U0
-	 7z1npPXPo2muYwThKkJdBM25C7RaGOc+SO0lm9ux67p4KqaUQiB2745B80/RkwvzkI
-	 6uYeTMb6GVAn3XWi7YthePawImCVe67liKJLVr6dOdi/cVNYcej0mf/zpjQs5ZwAze
-	 izOTsmRKgO392qtWkvsx2FwlSOLP1faBNcOQ7kLXpre3yZZ4K0zQpcugE4ZLurBE+l
-	 ISnK0oDZ3RlK0tKE+m7/XJ576VX0xSlfc7vZ0ya78tlA5dxsqWuMOJjz8F7v4ZTV7Z
-	 0ktfkoo5pWU3g==
-Original-Subject: XXE vulnerabilities in electronic invoicing software (Kivitendo,
- peppol-py, ZUV)
-Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-Date: Tue, 16 Dec 2025 10:19:13 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20251216101913.39107597@hboeck.de>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+Received: (qmail 24361 invoked from network); 31 Dec 2025 05:44:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767159853; x=1767764653; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=0KMFzzdkrsHYm1yTPKhtAsD5eCpEIiGrKWcqK7do5aM=;
+        b=LfKu7fH/BmdwALOvQttb70dS0PzzpZv7DNMkSa+qwJSzlRXkVLCwxsM0njojktL0Zg
+         1oo8QYUHa/fefa2eAZ+dqKCJ7EcoxYkS4hFFGosKSAwkkJpFyVgKcqf2um2Y7lu6h/Yn
+         lR+3vdIiJmBGE+i3yTiXzPhaZlcqVGMCSZkUdqMkfQJJLmiCnydHVZJ+D/JDmS6lVMmO
+         lbxuGlCXXIx94ov/pX24nRRvLcq0yCrKbioCLJAlk89t7XINTnihPRKVgAPWCfMw7qzg
+         hVxKvUi6/wHsYXlqIuGYsfT12iY7+1+89E6JCW5ICyDRaJSlVyE5yW4De1UCEfiC1ctu
+         adKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767159853; x=1767764653;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0KMFzzdkrsHYm1yTPKhtAsD5eCpEIiGrKWcqK7do5aM=;
+        b=J6g9jBuZTuv220iMd0wbhGrTR6gn1FtsgUi57ZR6YHTl2cW4GVGPTfsuUvemkDHqHP
+         4Prjg99t3WJVBhHBsuZC6XLAEgzcw0gHWuIgprYzVjw0motfv6VVUqco/GfNoI3HVvzi
+         yMRu9A6bfNN/TweQD9wyvlVeuMWqzNueksyO4cuEgO5hUNICyostVNR4k6bIsxVHyikb
+         9Jbf71VLYCbYUBcDek0qOCV6finv7SA1Dv31oudjaD7ARv7oIFbiSQjCeJ+b4LYu1lD+
+         ZgFKEJ5/nbPyY7MsegT913yFOvdsKVlTgPBsJYYIXseVLD+yekusCKnHeyg39NE3e570
+         mVgg==
+X-Gm-Message-State: AOJu0YyFWV7YVB5HNb+9oiU/cMfm5RPuWFJp9i3WZ+DbbfAKOd57MkUB
+	wuj+IWJu5sT9UO9hUrzG+a0rmVVxYIcpK1gCOOxHrYR45PzKMiv/fiSCIYoTiBg7
+X-Gm-Gg: AY/fxX7AGbX4eBs+cHXeBir29UFl2e0mUnSz4/k2Lp+/2VPpX/IsJUkd8SZ2C6qXvnx
+	pi+4/73BNeDWcKP+OfoqDeuky7rHMUHumf0Isjl6L2rMVsKYKheBT48Bv3FGzGydjUdVQYb39hn
+	xggSXSVQSzBZ7bMuWhtivuQDSdngQQTy7NZ3UYp5uPxH7kIoEObcI29CSCK98jTIHQVL/gfGKZQ
+	QwZfswDkfhqLh0eCzSOdmiSYiewcZKr6TjutsdacZvNR3T9RQWckHxDsHSJLEIMnpp4Fj7Msn2C
+	mZWR2q/htQErABXtHO7saUOLMgjBpEYwdZby44HEB51SAy4farHSQLjNyGsQUm1fM3AlukzQKQI
+	r0IK6DSIAeiC3p02Dr9pdDcNIVW5yO+6Kp11nA0r29bZbPpZfrCYJ4ogFryR0N4EozieYjCi7HT
+	jlQ/64AAw=
+X-Google-Smtp-Source: AGHT+IGxd5bloaYjj/jDObRmbWF74BjHvRKQtBv0R4N1oZkBCrTKuF7pUKLBoCf7KUNgXVjKarclrA==
+X-Received: by 2002:a05:6870:160c:b0:3f5:b411:ad9 with SMTP id 586e51a60fabf-3fda5886411mr16482274fac.41.1767159852665;
+        Tue, 30 Dec 2025 21:44:12 -0800 (PST)
+Message-ID: <0f885422-9937-438c-85cd-4f6850ee5b72@gmail.com>
+Date: Tue, 30 Dec 2025 23:44:05 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] XXE vulnerabilities in electronic invoicing software (Kivitendo,
- peppol-py, ZUV)
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, Peter Gutmann <pgut001@cs.auckland.ac.nz>
+References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
+ <0bf8169edb12d002a4654c4ccf6aa54d84eba14a.camel@verbuecheln.ch>
+ <SYCPR01MB366178C350BB2649FA5B82D6EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <SYCPR01MB366178C350BB2649FA5B82D6EEBCA@SYCPR01MB3661.ausprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Many vulnerabilities in GnuPG
 
-Hi,
+On 12/29/25 18:57, Peter Gutmann wrote:
+> [...]
+>
+> A solution for mission-critical use like authenticating downloaded binaries
+> would be to do two things:
+>
+> 1. Create an app that does just that and nothing else: Here is a blob of data,
+> here is a detached signature, is it valid for the data?
 
-I recently analyzed electronic invoicing software, and reported various
-XXE vulnerabilities to affected software, including three open source
-projects.
+Does using gpgv(1) with detached signatures fit this bill?
 
-Kivitendo is a CRM software written in Perl. By uploading an electronic
-invoice in XML format (ZUGFeRD/CII format), one was able to inject an
-XXE payload that allows exfiltrating files from the system.
-Fixed in Kivitendo 3.9.2, CVE-2025-66370
-https://blog.kivitendo.de/?p=3D1415
-
-peppol-py is a Python library and tool that allows validating invoices
-and delivering them through the Peppol network.
-The validation function was vulnerable to blind XXE, allowing
-exfiltration of files (with the restriction that blind XXE only works
-for files without newlines or special characters that will break in a
-URL).
-Fixed in peppol-py 1.1.1, CVE-2025-66371
-https://github.com/iterasdev/peppol-py/releases/tag/1.1.1
-
-ZUV is a tool to validate invoices in the ZUGFeRD standard. It is
-vulnerable to blind XXE. ZUV is no longer developed, and this will not
-be fixed. The ZUV developers recommend using the tool Mustang instead.
-Mustang was also vulnerable to XXE in versions before 2.16.3
-(CVE-2025-66372, not discovered by me, see GitHub issue):
-https://github.com/ZUGFeRD/mustangproject/issues/685
-https://github.com/ZUGFeRD/mustangproject/releases/tag/core-2.16.3
-
-The vulnerabilities in ZUV and peppol-py are caused by insecure defaults
-in the underlying library Saxon.
+I am unsure what having a separate tool dedicated for verifying 
+signatures using trusted keyrings says about the overall system...
 
 
-Proof of concept files for these vulnerabilities can be found here:
-https://github.com/hannob/invoicesec
+-- Jacob
 
-More info:
-https://invoice.secvuln.info/
 
---=20
-Hanno B=C3=B6ck - Independent security researcher
-https://itsec.hboeck.de/
-https://badkeys.info/
