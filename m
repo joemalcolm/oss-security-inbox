@@ -1,4 +1,4 @@
-Received: (qmail 26435 invoked by uid 550); 26 Oct 2023 21:54:06 -0000
+Received: (qmail 11622 invoked by uid 550); 31 Dec 2025 19:53:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,79 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21852 invoked from network); 26 Oct 2023 20:11:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698351094; x=1698955894; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:subject:to
-         :from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=T/8o6U40TGm4zIueZT6e3nrcbllth/wVUy98/cqOb9o=;
-        b=V/ZUdgc5eIii+WKuz9QxMAHYYgmTcuZjqbgFSh8Gl1ExTeR8G203RqD4OYkF9B+S1l
-         1h7keMQ4vgnn1IfWrHY1UnyrEcgMzLW4XF+/tpFzvV5FXE4S7t7z00j3X1qMRfPC2PLv
-         CXDM317GHqrKuJXJlbuV6OZGRKoTX1ygRiKgG1YiRTZdUFS5OYkvyAYoFRSXib9C/FtL
-         e/i2JlqjL8dM3l6dQFrmax+Hoy8d4SokUo21PRYmj+sEcOYbprOmjSrtpdXn0QAnE51O
-         FoNkYoqcHK7m8V1rzGUkrYRsDfCoBHkdQft6EqAaMOj2Z0FffLFEVjwbEShEZDe+GpuG
-         4D6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698351094; x=1698955894;
-        h=in-reply-to:content-disposition:mime-version:references:subject:to
-         :from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T/8o6U40TGm4zIueZT6e3nrcbllth/wVUy98/cqOb9o=;
-        b=vcmgwKAtkfYhtd52JA/anuuDck9cplzycEZQ8RsEw8J1iW9WEZIxk1xlVh+kYxxU+C
-         clSxRdeff/dw9alAo2WS3GLBO4W0cQlv2F4rwAooDwEOHS5AgFSMCFVdpV7Shj3PPawU
-         KbaNvUAx0CFRxI64i4WQrSE3yM0Xv5XakRbNb4g9NmUxICbS1F3rv9Tak07Z3wrBsmxX
-         jdP9oXQv/eZgt60S764KgOFWOy8I0Gz53+SOW3/OvJCeABnQXr23C+zG24/uFL0nDay8
-         u20WhVqV0z7OGtrvhAa8f6TFcnas265dKVVyXZyKmpsSW0Ijg2omh5wG1rScMXsiO+AU
-         AS7Q==
-X-Gm-Message-State: AOJu0Yz3FGpo278Khz5BWxeFBqs75mKgZzinWH9whND3t9O6l3KJmo17
-	GZm6MzTZdJ6olY3lOLdbJqPegNXfu78=
-X-Google-Smtp-Source: AGHT+IGPlWj3Kn0c/KxY0LJKm0QuIVkMdJ3Lzf0SUweSfnkThv1LbvmDt0+giYvZkITU74qpFGq03A==
-X-Received: by 2002:a19:ee11:0:b0:508:1edf:92f with SMTP id g17-20020a19ee11000000b005081edf092fmr323243lfb.40.1698351094418;
-        Thu, 26 Oct 2023 13:11:34 -0700 (PDT)
-Message-ID: <841313aeae2c595e9ed3cf2f7197a7c3.939be4cb@humanizers.horsehide>
-Date: Thu, 26 Oct 2023 23:11:32 +0300
-From: Turistu <turistu@gmail.com>
-To: oss-security@lists.openwall.com
-References: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
+x-ms-reactions: disallow
+Received: (qmail 22485 invoked from network); 31 Dec 2025 12:51:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=gnupg.org;
+	s=20181017; h=Content-Type:MIME-Version:Message-ID:In-Reply-To:Date:
+	References:Subject:Cc:To:From:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=7cIfe4fqmkIE6DyxWV8yV8WD9GsAv/gYbuyxm9e4GYw=; b=aLc8bTOv3poeT9NvAPjWxD9KRn
+	5I4U/lVOVjdnB2vXeDq3BUZitJ3j7htgKkbZHFJH7OOi0yuhAcwHlj5/EWp6S/LAEW4x9gOo+EM7T
+	dVHuOddM8Q1FMYjsEyzRZZp+N1JrmPVs3nsPjTIT5XxEdJHolFIpWH9wpJO6H6XyYCXc=;
+From: Werner Koch <wk@gnupg.org>
+To: Demi Marie Obenour <demiobenour@gmail.com>
+Cc: oss-security@lists.openwall.com,  Jacob Bachmeyer <jcb62281@gmail.com>,
+  Solar Designer <solar@openwall.com>,  contact@gpg.fail
+References: <3318308d-70b1-4ab3-9cca-ab4ea67dd27d@gmail.com>
+	<20251228042744.GA629@openwall.com>
+	<0009d6cc-143e-41e6-b240-eb526a9cb306@gmail.com>
+	<87zf71pqe9.fsf@jacob.g10code.de>
+	<f1811ded-6a8c-4eca-a8fc-4f9c77e4db5a@gmail.com>
+	<87ms30s6eo.fsf@jacob.g10code.de>
+	<fa5d8b21-114e-4791-928c-a6b0a56ba544@gmail.com>
+Jabber-ID: wk@jabber.gnupg.org
+Date: Wed, 31 Dec 2025 13:54:23 +0100
+In-Reply-To: <fa5d8b21-114e-4791-928c-a6b0a56ba544@gmail.com> (Demi Marie
+	Obenour's message of "Tue, 30 Dec 2025 15:06:37 -0500")
+Message-ID: <87a4yyrev4.fsf@jacob.g10code.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e5dc2cc159fa7e7f287e10482366011e.f0e92af0@rotted.prefixed>
-Subject: Re: [oss-security] with firefox on X11, any page can pastejack you
- anytime
+Content-Type: multipart/signed; boundary="=Al_Qa.ida_quarter_Reyosa_Brush_fire_NOCS_AGT._AMME_Plague_smugglers=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] safe use of cleartext signatures?
 
-On Tue, Oct 17, 2023 at 03:17:36AM +0300, turistu wrote:
-> ### Firefox Patch
-> ```
-> diff -r 9b362770f30b layout/generic/nsFrameSelection.cpp
-> --- a/layout/generic/nsFrameSelection.cpp	Fri Oct 06 12:03:17 2023 +0000
-> +++ b/layout/generic/nsFrameSelection.cpp	Sun Oct 08 11:04:41 2023 +0300
-> @@ -3345,6 +3345,10 @@
->      return;  // Don't care if we are still dragging.
->    }
->  
-> +  if (aReason & nsISelectionListener::JS_REASON) {
-> +    return;
-> +  }
-> +
->    if (!aDocument || aSelection.IsCollapsed()) {
->  #ifdef DEBUG_CLIPBOARD
->      fprintf(stderr, "CLIPBOARD: no selection/collapsed selection\n");
-> ```
-> 
-> The idea of this patch was to *always* prevent javascript from indirectly
-> messing with the primary selection via the Selection API. However, it turned
-> out that the `JS_REASON` flag was not reliable; if javascript calls some
-> function like `addRange()` or `selectAllChildren()` while the user has started
-> dragging but hasn't released the mouse button yet, that code will be called
-> *without* that flag but with the text set by javascript, not the text
-> selected by the user. However, I think that this patch is still enough
+--=Al_Qa.ida_quarter_Reyosa_Brush_fire_NOCS_AGT._AMME_Plague_smugglers=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-They have recently added a (functionally identical) patch to mozilla-central:
-https://hg.mozilla.org/mozilla-central/rev/88e0043c5aa4234dada941ac2fd0ded875210508
+On Tue, 30 Dec 2025 15:06, Demi Marie Obenour said:
+> On 12/30/25 03:47, Werner Koch wrote:
+>> data (with --output FILE).  Actually we have the same problem with MIME
+>> when forwarding a mail.  Not all MUAs correctly mark which parts are
+>> signed by which signature.
+>
+> What about for detached signatures?
 
-So the most egregious issue should be fixed in their "nighly" pre-release
-version of firefox soon.
+PGP/MIME and S/MIME use detached signature.  There is one MIME object
+for the signed text and one MIME object with the signature.
 
-I have updated my write-up with that and more info at:
-https://github.com/turistu/odds-n-ends/blob/main/firefox/pastejack.md
+
+Salam-Shalom,
+
+   Werner
+
+--=20
+The pioneers of a warless world are the youth that
+refuse military service.             - A. Einstein
+
+--=Al_Qa.ida_quarter_Reyosa_Brush_fire_NOCS_AGT._AMME_Plague_smugglers=
+Content-Type: application/pgp-signature; name="openpgp-digital-signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJ8EARYKAEcWIQSHd0YfKgdOvEgNNZQZzByeCFsQegUCaVUc/xsUgAAAAAAEAA5t
+YW51MiwyLjUrMS4xMSwyLDINHHdrQGdudXBnLm9yZwAKCRAZzByeCFsQenLFAP9p
+v9MqEwFVkS46MiAE3kdDIK8jSwDyqbcmngpqdFVNGQEAnaa5ieYTaBcDjyXNr/9N
+VO7zlOyRCVMBZl4c+CkPRAM=
+=iLxC
+-----END PGP SIGNATURE-----
+--=Al_Qa.ida_quarter_Reyosa_Brush_fire_NOCS_AGT._AMME_Plague_smugglers=--
+
