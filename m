@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4917" "Friday" "25" "September" "2015" "16:04:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>" "97" "[oss-security] Re: CVE request for wget" nil nil nil "9" "2015092520:04:13" "[oss-security] Re: CVE request for wget" (number mark "U       cve-assign@m Sep 25   97/4917  " thread-indent "\"[oss-security] Re: CVE request for wget\"\n") "<CACC5Q1dz1GhKVD+0P6Ox7Gom8A0wzFv8FzQ6fbE0twehUOhawA@mail.gmail.com>" ("<CACC5Q1dz1GhKVD+0P6Ox7Gom8A0wzFv8FzQ6fbE0twehUOhawA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7865 invoked by uid 550); 25 Sep 2015 20:04:27 -0000
+Received: (qmail 11466 invoked by uid 550); 1 Jan 2026 22:03:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,110 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7833 invoked from network); 25 Sep 2015 20:04:26 -0000
-In-Reply-To: <CACC5Q1dz1GhKVD+0P6Ox7Gom8A0wzFv8FzQ6fbE0twehUOhawA@mail.gmail.com>
-Message-Id: <20150925200413.DC3B16C406D@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 25 Sep 2015 16:04:13 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request for wget
-To: austinenglish@gmail.com
+x-ms-reactions: disallow
+Received: (qmail 28158 invoked from network); 1 Jan 2026 20:42:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1767300129;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=4iv7oCBTB1cKlSLrv4xcPCf8g5ZEUHEO1JDxVDDirVI=;
+	b=eMAWLm71ZTqKUoEPDDH0BtCUUrEE2u+kCSpeHcQDIXti90zB+h/y5A+0ySSJmLMy8HkhLr
+	6zVYHPYSMROxVWqZvSFDryTZ8CgghxZyEsx3Y9uG3MgBaB7vvGaxPjvlMWFz6Z6Z1/m7E8
+	Mnwd45W6hPgsfivvOBNAZWlhwMOPKDw=
+X-MC-Unique: epX4XisGPxmtvVUY1BKoNg-1
+X-Mimecast-MFC-AGG-ID: epX4XisGPxmtvVUY1BKoNg_1767300127
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767300127; x=1767904927;
+        h=message-id:in-reply-to:to:references:date:subject:mime-version
+         :content-transfer-encoding:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SUZs/mSTVWjrhLZM4Qycx8fcN3KSfZZEx3jS7NGp5Ko=;
+        b=G3n3itDCu28TViAWhyvB9utB4mmG+oDU+96fj2Prie+GtkQavJ1YQHDEQyuGn7pbgw
+         WsRGZbX/FPz8SOqdAy1AnLAj0yvMokj4A/gf1PbiZ4DLp3A+8qUcGA52i39Xd73qG6Bw
+         PG0s2PcPpT9zoh7sqOXopTH13BvsUM5tthTFf+K+P7tuv0ky1VRm7PENlShkZ5SrqtG+
+         RSc4mEV71cE4wJCpJQz5vjUGy/hiR10B7pHHd+//DKpy5rMc+Z0Ra1BvKpsO2Dmq/dgT
+         a7yWng2cjtZpAuhHznnTA0LKWCOM1IZ2dAbrb3NSNH+HPfkkgUOl8E9+KO+BXXlLsJJ8
+         OGZA==
+X-Gm-Message-State: AOJu0YwYo+CZ+jOQjEwiAF4vqm+Nends1zesH9NGXXJpfH8tnvDVczeI
+	40huCq+pvIJ5UfdPyFLduWMi2UIvpidPhHdVjY40MXzvvfaLwBxxUGn6onU2MQqitlbdxKDXt31
+	+4wfaL1juYQSUF8vAqQ75prHnSF1qiKVCnnoZ9rFjFgN1gUnPfhXIOr5QgJxTVcBBV3g5PQwlh/
+	5W1FAIumPbgv1vgJrChIwfbwggBLBrwLEMCTVs3zVmSEuFv0A7OlM=
+X-Gm-Gg: AY/fxX7dzvqICzakNCgetkXtZnWGqIaZgOUjC+DaEQhapWS5mjNA2OYsGngsy6/2izY
+	qVY86iWTpWkO0EvGZj2bAPDF4BsXoO8mNbN1Y5mbluLSDz5MIOtixxy3oYw63B81Z0O64qT0Jq5
+	+r6UzIPG+cCQY88cZ4q3aeaDhq8VhANzbkiEQCKZnDT5lZhQlof2pQzAxIV6EP31khgbmOR3DX4
+	05MWSHU2l5sT/4i99r5eTwhtXda+38rhgH6KLuIX4cLobO6SZbafC76IH6oWZ57SRf1TTMaTemT
+	Z3FH0Rj2tECJV4kn+DhKqHHrPOZCs+Hwf2hnKhERT8nKl7rWtvytiT2kI/8lAbPkAn/bzBUtyQ5
+	Dq8JuCnsWycMy+rOvjXGE6qhJr6KmhRLQ2g1GHQ==
+X-Received: by 2002:a17:906:f598:b0:b79:cf10:a17c with SMTP id a640c23a62f3a-b8036f2d2e9mr3831695066b.10.1767300126764;
+        Thu, 01 Jan 2026 12:42:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGk62e8JrGVWJXlTDgGp27795rpLQVUC/28BOilmk5p4bDGaTD7cmwza3pCjxsImcTttWNJGA==
+X-Received: by 2002:a17:906:f598:b0:b79:cf10:a17c with SMTP id a640c23a62f3a-b8036f2d2e9mr3831693666b.10.1767300126322;
+        Thu, 01 Jan 2026 12:42:06 -0800 (PST)
+From: Clemens Lang <cllang@redhat.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.300.41.1.7\))
+Date: Thu, 1 Jan 2026 21:41:54 +0100
+References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
+ <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
+ <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
+ <878qei6bq7.fsf@josefsson.org>
+To: oss-security@lists.openwall.com
+In-Reply-To: <878qei6bq7.fsf@josefsson.org>
+Message-Id: <9882E5D7-2B0D-46DF-A0E2-3E23D8DCBF66@redhat.com>
+X-Mailer: Apple Mail (2.3864.300.41.1.7)
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 1RiLNHMlea0KbfXqDshOxugrFuvDOdid61OaSC1tchQ_1767300127
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Best practices for signature verifcation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Simon,
 
-> https://mailman.boum.org/pipermail/tails-dev/2015-August/009370.html
-> https://lists.gnu.org/archive/html/bug-wget/2015-08/msg00020.html
-> http://git.savannah.gnu.org/cgit/wget.git/commit/?id=075d7556964f5a871a73c22ac4b69f5361295099
 
-We really don't understand what set of expectations led to this
-becoming a CVE request for a vulnerability in wget. We know that a
-design goal of Tails is to prevent Internet servers from discovering
-the IP address of a machine running Tails. Possibly it's a design
-requirement of Tails that a developer needs to "torify" every piece of
-Internet client software before it can be shipped with the Tails
-distribution, and that a failure of a torify step is, by definition, a
-Tails vulnerability. (torify is explained on the
-https://trac.torproject.org/projects/tor/wiki/doc/TorifyHOWTO page.)
-If that's true, then a CVE ID can be provided for the Tails product.
+> On 31. Dec 2025, at 14:07, Simon Josefsson <simon@josefsson.org> wrote:
+>=20
+> I believe that Ed25519+SLH-DSA is the best
+> near-term PQ variant for long-term software protection, alas no
+> practical tools offers this today.
 
-One of the things that happened is that the upstream wget developer
-made a change that we would categorize as a
-functionality/usability-versus-privacy tradeoff. Specifically,
-upstream decided it was better to omit the automatic fallback from
-passive to active. As far as we can tell, upstream hasn't announced
-this as a "wget vulnerability" -- they just reconsidered the tradeoff.
-A reconsidered tradeoff is generally outside the scope of CVE. We
-believe that reasonable behavior for wget on Tails is very different
-from reasonable behavior for the standard upstream distribution.
+SLH-DSA relies on the security of hashes, which I think we understand prett=
+y well, so I=E2=80=99m not sure we need a hybrid with SLH-DSA. But then aga=
+in, an Ed25519 pub key and signature are minuscule compared to SLH-DSA, so =
+maybe that doesn=E2=80=99t matter.
 
-Also, references such as
-https://bugzilla.suse.com/show_bug.cgi?id=944858#c4 suggest that
-there's a concern even without Tor: "An second information leak
-scenario is leaking of an internal IP address (e.g. from a private
-range) to an external entity when connecting through NAT."
+Note that there are some outside requirements that at least companies will =
+not be able to ignore:
 
-So, some of the options for sets of expectations are:
+- CNSA 2.0 (relevant for US government customers) does not allow SLH-DSA, o=
+nly ML-DSA
+- Common Criteria certification requires elliptic curves >=3D 384 bits or R=
+SA >=3D 3072 bits, ruling out ed25519
+- use of FIPS-certified primitives (historically a problem for solutions im=
+plemented in Go, or shipping their own implementation instead of re-using O=
+penSSL, for example)
 
-1. No piece of Internet client software may support any protocol
-feature in which the end-client machine's IP address is sent as part
-of application data. If any such feature is supported, it is a
-vulnerability because someone might try to use that protocol feature
-in conjunction with NAT, or Tor, or another type of proxy, and privacy
-would be compromised. This would, for example, mean that every FTP
-client must either completely rip out support for active mode, or at
-least warn the user that it is unsupported and require explicit user
-confirmation before proceeding.
+Some of these rule out signify, for example.
 
-2. Internet client software developers are responsible for providing a
-privacy-friendly configuration setting in which the end-client
-machine's IP address is never sent as part of application data. In the
-wget case, maybe this would be a wgetrc line of "passive_ftp = always"
-or "active_ftp = off" (i.e., active mode would never be used, either
-first or as a fallback).
+Any solution that hopes to be widely adopted should be able to address thos=
+e, if necessary through cryptographic agility.
 
-3. Internet client software developers have a much wider range of
-reasonable behavior, although wrong documentation needs to be avoided.
-Specifically, NAT users aren't entitled to expect that their IP
-address (in a case such as FTP) will remain secret unless a developer
-chooses to explicitly document NAT privacy behavior. Tor users aren't
-entitled to expect that all of the necessary torify steps have been
-done in the upstream distribution. The torify steps are the
-responsibility of Tor-oriented products such as the Tor Browser Bundle
-(and possibly Tails, if torifying everything is their policy).
 
-(As one of the references mentioned, missing torify steps for wget
-aren't a new concept; see the
-https://lists.torproject.org/pipermail/tor-talk/2012-April/024040.html
-post from 2012.)
+--=20
+Clemens Lang
+RHEL Crypto Team
+Red Hat
 
-Currently, for CVE assignment, options 1 and 2 are more or less false,
-and option 3 is more or less true.
-
-If an upstream developer makes a decision to do privacy hardening to
-avoid address disclosure, that's great, but regardless of the decision,
-there typically won't be a CVE ID assigned to that upstream product.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWBabRAAoJEL54rhJi8gl5PngP/3vNxfQYa3M50eLYPNsMzreo
-LN48gBIzf96DwffplTex2BgJRHpXKEdvQvetvjmc3TWb77Dl8J9F9pOfwCKAapCI
-7wMoyR2f/WpaDs0RI4NIeGjh4UorLlN5NaRdIOfdvxfGD4rLSJY4wz12AvGvaUh9
-Ynk8JlBbx++CSsEF6WCfOYFPSKDzF2c7hYrR2IR7+QPiKo7YSDp7Jy/gp2FuyI4p
-GH6T6SrbDHuw9YqtNACzp+TCRGJxuqAeXVhGqNdViiLZurhTl0hHkl4TsRIHwDPn
-SmaMnLLx3YbTwkpC1vH9aGTVeKCbXjt7RPDTy1v2dZSUMiljJXca892NkfJOqvXx
-piy0afjD9aXNhW1C1nkVlPC0zrCwa4cxxhm1M/T9k+18L1weYixl/pQnlZYAa+OH
-Lc5/YQPcpAqHQkk1Kyksl+qFjgmeXkUToPd1jgss6YVuuBnHku3gZjwTn5msM3i/
-wN7FRBAB8CQvMCW/7Gkr0uYBfdlTo9o7tuvB5whdTzr2xyXpey0ns7axNX1FaY7b
-ut8HonGQryLBZexBdskOLVr0H+ihRjCd7AX/ijUUo5o8mNSAG/s0Y3Uh2W8MGrir
-n9p9k/r+aH82u+yoeJuTUT2QpWfJO4nYB6m84d8gl51gQlX2+FrXaRcFXkJkwrUY
-g66Lp4JhmaTWTiVpf1yX
-=RjXG
------END PGP SIGNATURE-----
