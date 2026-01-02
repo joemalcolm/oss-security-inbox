@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil t nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1931" "Monday" "7" "September" "2020" "21:11:00" "-0400" "Jeffrey Walton" "noloader@gmail.com" "<CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>" "44" "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" "^Date:" nil nil "9" "2020090801:11:00" "[oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" (number mark "  z     noloader@gma Sep  7   44/1931  " thread-indent "\"Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework\"\n") "<20200907165101.38058373@jabberwock.cb.piermont.com>" ("<CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>" "<20200905054704.1d90da6a@jabberwock.cb.piermont.com>" "<CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>" "<20200907165101.38058373@jabberwock.cb.piermont.com>") nil nil nil nil nil nil nil "Re: [oss-security] Open Source Tool | vPrioritization | Risk Prioritization Framework" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 1001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1588 invoked by uid 550); 8 Sep 2020 01:11:40 -0000
+Received: (qmail 24361 invoked by uid 550); 2 Jan 2026 23:15:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +6,110 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1570 invoked from network); 8 Sep 2020 01:11:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to;
-        bh=put+xpyiROK5YQFqBra38OuDZpAU0kY2ySy/Y5ouhlo=;
-        b=oKziM2Wqjmxv6rEmhmMYLmH+9Oo/MwDRZwQYjuOg0BVJXH+hTceSegEQCooqFo2pco
-         rWbfqitgreas+gpC4msK4f8J1jNS6wDcgihv5htMuceKupCCruApZRExYgV/R92Zuw1C
-         SyQRrB6Q/4JbjSZDGrD26bAWzaLdWR6buxxMugzKAio6/D4e9ZrWV5lkq8PpyQu/mkS/
-         EuDjmoFM8jzJNRR/SmzOp2EvlI1yUIdN1IaLzP1oZRRgo0hoEj9a3EWW5zqp7+52w4WO
-         efa+5KlT21SNLTZtfYbAPwG454oJhmZV1DFfe7XbrWzPYze6nO9qNsHRxMb82pZ7HeAZ
-         c1TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to;
-        bh=put+xpyiROK5YQFqBra38OuDZpAU0kY2ySy/Y5ouhlo=;
-        b=nKPllJ+C9WSlW8XeR3Ey21fcLAA/wPmuKPqGcUezf+1PZqI89RV3fgbOspykfu8pjf
-         sexvglM+/qaPZP+iQaA0BUhXo4fA4md2r+J4bODB/gqC/PLKIdj0iXXk81IaASE5mw3l
-         eqNEA4NOI5ZVhagEp9hSVP7umT3MBhgQJ7jDfwj1VV9jqDVzIQesxK+vuuMteOrY4Qt5
-         7jWMdcqpAR7WytSYppPJZ+AUzelJK3+2HEAT7w1H3fyKfE0oiQsRGEW81RCP4/6YWctR
-         qOTjLPo4TsXzjaSClCS5bbAsApaojpIk48h4kRuHA98Mkn0nCSBjlIZTliS7wOmx3ThM
-         YYiA==
-X-Gm-Message-State: AOAM531ZkV3gyHaV7jXE/S3nFQwZoz2WtCShNTq/GR1JupmPilL0+zfn
-	FaLaypSvRfY+15lt8dmNaGgoxI6lTlbkSAjvUkOGK/us1+4CHg==
-X-Google-Smtp-Source: ABdhPJxGPC5xtYfZoHdPqog+9DYeLl4m814T0I+S79NX1Iqq3BjL6Xt3wxhOuEJ/vY0gkoeF7C8+6b3tDVMi2VJNX+A=
-X-Received: by 2002:a5d:9ed3:: with SMTP id a19mr19253682ioe.28.1599527487678;
- Mon, 07 Sep 2020 18:11:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <CALv8orGS3m5i=WihK7PAfJLwNuCd9bMxcs7UVTYy1s3MSc5PRQ@mail.gmail.com>
- <20200905054704.1d90da6a@jabberwock.cb.piermont.com> <CALv8orEzf_P79a6gqk8cKL=Ow7ymmXdQY_qBfmL-t7enSn5SsA@mail.gmail.com>
- <20200907165101.38058373@jabberwock.cb.piermont.com>
-In-Reply-To: <20200907165101.38058373@jabberwock.cb.piermont.com>
-Message-ID: <CAH8yC8ms56V7hAVKz1VQ7wX01H+ZC78GAPnNbd7tXRQgRxBt6A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 7 Sep 2020 21:11:00 -0400
-From: Jeffrey Walton <noloader@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Open Source Tool | vPrioritization | Risk
- Prioritization Framework
+x-ms-reactions: disallow
+Received: (qmail 1346 invoked from network); 2 Jan 2026 12:47:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767358045; x=1767962845; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=u7hNdsNbp+kGG38sZkvXMSw3YVmW0B60JdJA4+gE4ps=;
+        b=ZmxpD8fGFw81Yk7P9k2XCX/fuEupZRf5o4BO6BhoCTW9B2N5HTFvfTPFWHrEv4WeRR
+         Bk3XD2m6YPVOsV5v1K5JM4v8ki4ogxeg3VNaHQ1CJA9tYBvkQt3BQ7AxEL0r/PI8Pfkx
+         bI2hXJO/zauJ7Os9NB2G1AUzCy9Q78y3+wn1qeenT4uqXNyeKYwL/Uz/BVGOpXiSuGYa
+         OaNfVXF7YP2w38ZdrtAvyvuMr+k7IYHOyIedyUTpeFH7gx3zLfdqg8nRUwp8BpN/+IGF
+         7eOQX7TI34LUOj5d2lVICv9oNd7aJHvNf2ofj1iFMThnOfWZZCTAQzXt3Yx6vGUOkVDt
+         UXtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767358045; x=1767962845;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u7hNdsNbp+kGG38sZkvXMSw3YVmW0B60JdJA4+gE4ps=;
+        b=BCcm4LnG+LrmJGy4ziOwQJ/M68H0BmTNuuPUa/7iZRqVHq5z6PcXXm1Ia217dAb/aw
+         eD/oOq8dOyhDvJixGzpeVedMpMOcGx2j3LYVWJqwM4KZUW7BMhv/jt42ztcqCXnNPHao
+         GQCaM149s1LbE5RDUcQBCikPKmiVByFET0L9UFt+I9JZQYjbbRm7QJi5ycksS3aXTdFQ
+         Rf+PpeAu/zibt9BsZ0RCEMXcSpyt39DE5w8Y9Eom2Nh1olQ4vANFLJhP/+4frOYgyQV/
+         ws6q9jNB8GP4iQJfchK+R0IeKF22L3r4SX37lfPUeH1uMvIHd1Q1eIlpngAIvOfrCrvd
+         vG1A==
+X-Gm-Message-State: AOJu0Yzkkc1re8wvcnLxdlnmjrATA/Dm7nNT/3GgIEUqegJ4lgh8DDmT
+	gWqj/RTpsKAg0oQQpvDQM2JS+DocvWAMd2YaUYBMzPzsTgVbsaYN/N8OEqyXifCDd+zvhpfeaQ4
+	Ms1M1y5MnUqM/m2BREzvVwXky2cfsh5cgoaku
+X-Gm-Gg: AY/fxX4Lwrm1ol2plbBs+afPt77P1oaGtWJZSAK5YomkHOKOVnesbCWay+4tU9iv8k7
+	ofnNj+QaLpBVegmgqzs+o5HNwF953/UulMp4DsgUNlYhVPtC2sp/WHPat0a7PczrEKXU6cQbecM
+	QqtSBCEa0S4nQdnN4cunepdCDjUDjdyK/Lpv8naqP331Mus+CdDdqo9SQUysAtVnb/vh1YIE+ev
+	NcrUxthKG3qnacp1KZlH6KI7VRPPMflL+boY6/SwrHjCPK/r2S3ZD4uQV8kb0/aG0RGwX9AaLmv
+	9r9jbOdzPzh9hTgrQxvA5FgqkYIUMosHQR+BOnDJSPPo4w7ByQE9RDtraEU/
+X-Google-Smtp-Source: AGHT+IGv6Xr37k9qzUvwSMS/dSDIcGherJDjWtyckqF6qAvyJJGnitepElAImcD8b6TuMjGbMx0b0UG5mhER93qCsPY=
+X-Received: by 2002:a2e:bc11:0:b0:37b:9e27:89f with SMTP id
+ 38308e7fff4ca-38121691d21mr128808391fa.37.1767358044693; Fri, 02 Jan 2026
+ 04:47:24 -0800 (PST)
+MIME-Version: 1.0
+References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
+ <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
+ <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
+ <878qei6bq7.fsf@josefsson.org> <9882E5D7-2B0D-46DF-A0E2-3E23D8DCBF66@redhat.com>
+In-Reply-To: <9882E5D7-2B0D-46DF-A0E2-3E23D8DCBF66@redhat.com>
+From: Soatok Dreamseeker <soatok.dhole@gmail.com>
+Date: Fri, 2 Jan 2026 07:48:29 -0500
+X-Gm-Features: AQt7F2pS6DHVVZUd8qpPpPPOEuDZgGwxEw6fUQ6eeD6HdjjhUUV94IIdb6nl5VQ
+Message-ID: <CAOvwWh3jqp9c23Xm7FuBbOrtDekXNWfTrzKkfjCJfT1602Ov3g@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000071e73a0647671ce3"
+Subject: Re: [oss-security] Best practices for signature verifcation
 
-On Mon, Sep 7, 2020 at 4:52 PM Perry E. Metzger <perry@piermont.com> wrote:
+--00000000000071e73a0647671ce3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jan 1, 2026 at 5:10=E2=80=AFPM Clemens Lang <cllang@redhat.com> wro=
+te:
+
+> Hi Simon,
 >
-> On Sun, 6 Sep 2020 13:18:34 +0530 Pramod Rana <varchashva@gmail.com>
-> wrote:
-> > Appreciate your comments.
+>
+> > On 31. Dec 2025, at 14:07, Simon Josefsson <simon@josefsson.org> wrote:
 > >
-> > My two cents - Patch everything is far from reality to most (read
-> > all) organizations
+> > I believe that Ed25519+SLH-DSA is the best
+> > near-term PQ variant for long-term software protection, alas no
+> > practical tools offers this today.
 >
-> "All" is clearly false; I know many organizations that patch
-> all their hardware fast, and a few that do it essentially within
-> hours (unless CI tests for the patched infra fail).
+> SLH-DSA relies on the security of hashes, which I think we understand
+> pretty well, so I=E2=80=99m not sure we need a hybrid with SLH-DSA. But t=
+hen again,
+> an Ed25519 pub key and signature are minuscule compared to SLH-DSA, so
+> maybe that doesn=E2=80=99t matter.
+>
+> Note that there are some outside requirements that at least companies will
+> not be able to ignore:
+>
+> - CNSA 2.0 (relevant for US government customers) does not allow SLH-DSA,
+> only ML-DSA
+> - Common Criteria certification requires elliptic curves >=3D 384 bits or
+> RSA >=3D 3072 bits, ruling out ed25519
+> - use of FIPS-certified primitives (historically a problem for solutions
+> implemented in Go, or shipping their own implementation instead of re-usi=
+ng
+> OpenSSL, for example)
+>
+> Some of these rule out signify, for example.
+>
+> Any solution that hopes to be widely adopted should be able to address
+> those, if necessary through cryptographic agility.
+>
+>
+> --
+> Clemens Lang
+> RHEL Crypto Team
+> Red Hat
+>
 
-Yeah, I thought the same. I was hoping to see more about that comment.
+Please be very careful with "cryptographic agility". Too many designs
+follow JWT's example of letting the attacker specify the algorithm, and
+then either allow "none" as a choice or mix symmetric and asymmetric modes
+in the same feature.
 
-Every US Federal agency I have worked with patches. The Social
-Security Administration does it within 30 days, and the Treasury
-Department does it in a matter of days. SSA is one of the largest
-networks in the world with over 100,000 hosts. Treasury had over
-40,000 hosts.
+https://soatok.blog/2022/08/20/cryptographic-agility-and-superior-alternati=
+ves/
 
-Microsoft did a study years ago and found most hosts that are
-compromised failed to install vendor patches. Most patches were
-available at least 60 days earlier. The one takeaway is, if you want
-to get compromised, then don't patch the host. A script kiddie will be
-happy to pwn you.
-
-I also got to rebuild a few servers that were compromised due to lack
-of updates. It is a lot easier to fix a broken database connection
-then it is to rebuild the server and restore the database. Diagnosing
-and fixing the database connection takes about 30 minutes. Rebuilding
-and restoring the server takes about two days.
-
-I'm such a firm believer in patching from experiences at SSA and
-Treasury all machines under my control are patched immediately. I
-apply all patches in case something is misclassified. I don't care if
-it is a CVE or [benign?] memory error. I want the vector removed.
-https://github.com/noloader/auto-update.
-
-Also see Peter Herzog's
-https://blogs.blackberry.com/en/2018/04/security-getting-off-the-patch
-and https://blogs.blackberry.com/en/2018/05/security-getting-off-the-patch-the-shining-hope.
-
-Jeff
+--00000000000071e73a0647671ce3--
