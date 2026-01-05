@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["13103" "Tuesday" "3" "May" "2016" "23:45:56" "+0930" "Simon Lees" "sflees@suse.de" "<5728B29C.2010004@suse.de>" "399" "[oss-security] CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator (parser)" nil nil nil "5" "2016050314:15:56" "[oss-security] CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator (parser)" (number mark "U       sflees@suse. May  3  399/13103 " thread-indent "\"[oss-security] CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator (parser)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17696 invoked by uid 550); 3 May 2016 14:39:04 -0000
+Received: (qmail 9274 invoked by uid 550); 5 Jan 2026 16:49:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,418 +7,117 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3157 invoked from network); 3 May 2016 14:16:22 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com,
- security@gnome.org, security@suse.com
-From: Simon Lees <sflees@suse.de>
-Message-ID: <5728B29C.2010004@suse.de>
-Date: Tue, 3 May 2016 23:45:56 +0930
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.7.2
+x-ms-reactions: disallow
+Received: (qmail 7729 invoked from network); 5 Jan 2026 16:17:50 -0000
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on velox
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+	autolearn_force=no version=3.4.6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linderud.pw;
+	s=linderud; t=1767629859;
+	bh=Sp0+vs+p0YJ1YCcFrIW3NgyiZzgNMJB3sU+MEhYxrmg=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=lJDjzi06oyvgyanHYAYpakT/4Mwly4z+USVkGQQFKk63jWprKpXHf+AT0f+5Lop2M
+	 mhOvvKIwdiVhJLtQ32E9e7lmG4L9mBD8Z3CcBpeseeXA+UiK/JRTubO0CUMzcgUr1w
+	 Ju/iRoxJG+bvmUpuCZyjeE5AaLVzjZURKRvPuRrfB46WjjaxBFysg3MMjfDB8fsbMT
+	 CBa4quBLEuVG2pptNBAWlGjnDHbWDiTnfZBus2tHYUThV+CO2Z0pknG84XFHiNwSSp
+	 OqAYJsNiSG8wVDrXA+X8h0HZH1mppe+ZlHqQXji39j/lWehzWb0BpDj003CwyBrlSY
+	 kdcj9mIWzEePYXV5vC6g3mn3MNCmpyw/M8MBNEi92ZW0swCS+oWeLdVipUaZFXvxxA
+	 0ODZikWRwNpIFs1axSbFzOe1EYaCQuNYqsQiFdCb2nD9CfgCMGm1evzAUBkSrnjflc
+	 XeGyx/TeLk9zik5XGLGUgfLTkDztYl/Z2xR/hr+fy48hIc6R8Ov1QuNiugoNXyzAJ/
+	 c98JrjImAHY/WUOXbCybc+MkAAx9Ofphhf4slrh8UwlYfZ+5DcHJEQLbrwuUspN36S
+	 PKZyvMiX1dj/JUjTZNPmHw46T1og4fL/uLThi/nhteOnpYVOsug78o+nfZlnt+12rf
+	 bfs7Bl8gYPCw1R4ut2gR4YgM=
+Date: Mon, 5 Jan 2026 17:17:31 +0100
+From: Morten Linderud <morten@linderud.pw>
+To: oss-security@lists.openwall.com
+Message-ID: <aVvj1GESJIik6puj@framework>
+References: <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
+ <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
+ <878qei6bq7.fsf@josefsson.org>
+ <87ms2y1d2m.fsf@gmail.com>
+ <87eco91kzi.fsf@josefsson.org>
+ <SYCPR01MB3661379F4E31EE1A57A2F310EEBBA@SYCPR01MB3661.ausprd01.prod.outlook.com>
+ <7002eb83-6227-4de9-aa3a-bfe5cad62320@gmail.com>
+ <ME2PR01MB36500CA1987170A857BCF637EEB9A@ME2PR01MB3650.ausprd01.prod.outlook.com>
+ <aVuxyNKwrPhbE0SH@donburi.himad.notcom.org>
+ <CAH8yC8mLpb6Gr63cQR2EmCfERvCjZ4qkcVgOtamki3cMFC1bnQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="usEslTgPoS7A6Go374E7LEEV5EOBFNnlN"
-Subject: [oss-security] CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator
- (parser)
+	protocol="application/pgp-signature"; boundary="cevsnimuegsx3pa4"
+Content-Disposition: inline
+In-Reply-To: <CAH8yC8mLpb6Gr63cQR2EmCfERvCjZ4qkcVgOtamki3cMFC1bnQ@mail.gmail.com>
+Subject: Re: [oss-security] Re: Best practices for signature verifcation
 
---usEslTgPoS7A6Go374E7LEEV5EOBFNnlN
-Content-Type: multipart/mixed; boundary="BePFwxvDLBJjSI6RwRfjwaGQ8bkKQiRPi"
-From: Simon Lees <sflees@suse.de>
-To: fulldisclosure@seclists.org, oss-security@lists.openwall.com,
- security@gnome.org, security@suse.com
-Message-ID: <5728B29C.2010004@suse.de>
-Subject: CVE-2016-3627 CVE-2016-3705: libxml2: stack overflow in xml validator
- (parser)
-
---BePFwxvDLBJjSI6RwRfjwaGQ8bkKQiRPi
-Content-Type: multipart/mixed;
- boundary="------------020400050406020302010203"
-
-This is a multi-part message in MIME format.
---------------020400050406020302010203
-Content-Type: text/plain; charset=utf-8
+--cevsnimuegsx3pa4
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Re: Best practices for signature verifcation
+MIME-Version: 1.0
 
-Hi
-This is a disclosure of the following issue that was raised a week ago
-on the distro's mailing list. Both bugs on the gnome bugtracker are
-currently private and should be made public now. The two attached
-patches are based off the 2.9.3 libxml2 release.
+On Mon, Jan 05, 2026 at 08:01:40AM -0500, Jeffrey Walton wrote:
+> On Mon, Jan 5, 2026 at 7:54=E2=80=AFAM Valtteri Vuorikoski <vuori@notcom.=
+org> wrote:
+> >
+> > On Sun, Jan 04, 2026 at 11:56:06AM +0000, Peter Gutmann wrote:
+> > > As an aside, is anyone aware of a single-source design document for w=
+hat
+> > > Authenticode does?   There's a million web pages related to the busin=
+ess of
+> > > selling signing certs, and less than a million on using it, but I can=
+'t find a
+> > > single-source design doc, just lots of stuff in various places that I=
+'ve
+> > > picked up over the years.  By "single-source doc" I mean something th=
+at
+> > > addresses all of the above issues and related ones in one place.
+> >
+> > Are you looking for something more detailed than the Microsoft document=
+ titled
+> > "Windows Authenticode Portable Executable Signature Format" from 2008?
+> >
+> > Download from the horse's mouth:
+> > <https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-=
+d599bac8184a/authenticode_pe.docx>)
+>=20
+> Nice find.  I remember the document, but I could not find it in my
+> collection of old documents.
+>=20
+> Also of interest may be some entries from the Wayback machine of
+> Microsoft's site at
+> <https://web.archive.org/web/20030210220956/http://msdn.microsoft.com/wor=
+kshop/security/authcode/authenticode_ovw_entry.asp>.
+> The original page was titled "Authenticode Overviews and Tutorials".
+>=20
+> Jeff
 
-A couple of weeks back while working on a related bug [CVE-2016-3627] I
-discovered a specially created xml file is capable of triggering a stack
-overflow before libxml2 can detect its a invalid xml file.
+This is the latest edition of Microsoft Authenticode specification.
 
-We raised this issue upstream on 2016-04-18 and informed them that we
-would place a two week embargo on the issue in case we didn't here back.
-As of yet we have had no response so we have posted here.
-https://bugzilla.gnome.org/show_bug.cgi?id=3D765207
-
-We intend to keep the current embargo (ending May 3) unless we get
-advise otherwise here. Below is a script to generate the xml file along
-with a tested patch to fix the issue. I will also include our
-unpublished patch and simplified reproducer for CVE-2016-3627 as again
-we have had no response upstream and its likely that you will want to
-fix this less severe issue at the same time.
-https://bugzilla.gnome.org/show_bug.cgi?id=3D762100
-
-python3 repoducer.py ; xmllint repo.xml
-
-repoducer.py
------------------------------------------------------------------------
-#!/bin/python3
-
-f =3D open('repo.xml', 'w')
-
-f.write( "<!DOCTYPE a [ ")
-
-i =3D 1
-
-while (i < 30000):
-    f.write ("<!ENTITY a" + str(i) + " \"&a" + str(i+1) + ";\">")
-    i =3D i+1
-
-f.write("<!ENTITY a" + str(i+1) + " \"&a1;\">]> <bruces bogans=3D\"&a1;\">")
-
-f.close()
------------------------------------------------------------------------
-
-Patch for this issue.
------------------------------------------------------------------------
-From: Peter Simons <psimons@suse.com>
-Date: Fri, 15 Apr 2016 11:56:55 +0200
-Subject: Add missing increments of recursion depth counter to XML
- parser.
-
-The functions xmlParserEntityCheck() and xmlParseAttValueComplex() used
-to call
-xmlStringDecodeEntities() in a recursive context without incrementing the
-'depth' counter in the parser context. Because of that omission, the parser
-failed to detect attribute recursions in certain documents before
-running out
-of stack space.
----
- parser.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/parser.c b/parser.c
-index 9604a72..4da151f 100644
---- a/parser.c
-+++ b/parser.c
-@@ -144,8 +144,10 @@ xmlParserEntityCheck(xmlParserCtxtPtr ctxt, size_t
-size,
-
- 	ent->checked =3D 1;
-
-+        ++ctxt->depth;
- 	rep =3D xmlStringDecodeEntities(ctxt, ent->content,
- 				  XML_SUBSTITUTE_REF, 0, 0, 0);
-+        --ctxt->depth;
-
- 	ent->checked =3D (ctxt->nbentities - oldnbent + 1) * 2;
- 	if (rep !=3D NULL) {
-@@ -3966,8 +3968,10 @@ xmlParseEntityValue(xmlParserCtxtPtr ctxt,
-xmlChar **orig) {
- 	 * an entity declaration, it is bypassed and left as is.
- 	 * so XML_SUBSTITUTE_REF is not set here.
- 	 */
-+        ++ctxt->depth;
- 	ret =3D xmlStringDecodeEntities(ctxt, buf, XML_SUBSTITUTE_PEREF,
- 				      0, 0, 0);
-+        --ctxt->depth;
- 	if (orig !=3D NULL)
- 	    *orig =3D buf;
- 	else
-@@ -4092,9 +4096,11 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt,
-int *attlen, int normalize) {
- 		} else if ((ent !=3D NULL) &&
- 		           (ctxt->replaceEntities !=3D 0)) {
- 		    if (ent->etype !=3D XML_INTERNAL_PREDEFINED_ENTITY) {
-+			++ctxt->depth;
- 			rep =3D xmlStringDecodeEntities(ctxt, ent->content,
- 						      XML_SUBSTITUTE_REF,
- 						      0, 0, 0);
-+			--ctxt->depth;
- 			if (rep !=3D NULL) {
- 			    current =3D rep;
- 			    while (*current !=3D 0) { /* non input consuming */
-@@ -4130,8 +4136,10 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt,
-int *attlen, int normalize) {
- 			(ent->content !=3D NULL) && (ent->checked =3D=3D 0)) {
- 			unsigned long oldnbent =3D ctxt->nbentities;
-
-+			++ctxt->depth;
- 			rep =3D xmlStringDecodeEntities(ctxt, ent->content,
- 						  XML_SUBSTITUTE_REF, 0, 0, 0);
-+			--ctxt->depth;
-
- 			ent->checked =3D (ctxt->nbentities - oldnbent + 1) * 2;
- 			if (rep !=3D NULL) {
---=20
-2.7.4
-
------------------------------------------------------------------------
-
-CVE-2016-3627 - simplified reproducers
-echo '<!DOCTYPE b [ <!ENTITY b "&b;"> ]> <b b=3D"&b;">' | xmllint -recover -
-echo '<!DOCTYPE b [ <!ENTITY b "&c;"> <!ENTITY c "&d;"> <!ENTITY d
-"&b;">]> <test123=3D"&c;">' | xmllint -recover -
------------------------------------------------------------------------
-
-
-CVE-2016-3627 - Patch
------------------------------------------------------------------------
-From: Peter Simons <psimons@suse.com>
-Date: Thu, 14 Apr 2016 16:15:13 +0200
-Subject: [PATCH] xmlStringGetNodeList: limit the function to 1024 recursions
- to avoid CVE-2016-3627
-
-This patch prevents stack overflows like the one reported in
-https://bugzilla.gnome.org/show_bug.cgi?id=3D762100.
----
- tree.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/tree.c b/tree.c
-index 6a158ce..9c9f0ec 100644
---- a/tree.c
-+++ b/tree.c
-@@ -1464,6 +1464,8 @@ out:
-     return(ret);
- }
-
-+static xmlNodePtr xmlStringGetNodeListInternal(const xmlDoc *doc, const
-xmlChar *value, size_t recursionLevel);
-+
- /**
-  * xmlStringGetNodeList:
-  * @doc:  the document
-@@ -1475,6 +1477,11 @@ out:
-  */
- xmlNodePtr
- xmlStringGetNodeList(const xmlDoc *doc, const xmlChar *value) {
-+  return xmlStringGetNodeListInternal(doc, value, 0);
-+}
-+
-+static xmlNodePtr
-+xmlStringGetNodeListInternal(const xmlDoc *doc, const xmlChar *value,
-size_t recursionLevel) {
-     xmlNodePtr ret =3D NULL, last =3D NULL;
-     xmlNodePtr node;
-     xmlChar *val;
-@@ -1483,6 +1490,8 @@ xmlStringGetNodeList(const xmlDoc *doc, const
-xmlChar *value) {
-     xmlEntityPtr ent;
-     xmlBufPtr buf;
-
-+    if (recursionLevel > 1024) return(NULL);
-+
-     if (value =3D=3D NULL) return(NULL);
-
-     buf =3D xmlBufCreateSize(0);
-@@ -1593,8 +1602,9 @@ xmlStringGetNodeList(const xmlDoc *doc, const
-xmlChar *value) {
- 			else if ((ent !=3D NULL) && (ent->children =3D=3D NULL)) {
- 			    xmlNodePtr temp;
-
--			    ent->children =3D xmlStringGetNodeList(doc,
--				    (const xmlChar*)node->content);
-+			    ent->children =3D xmlStringGetNodeListInternal(doc,
-+				    (const xmlChar*)node->content,
-+                                    recursionLevel+1);
- 			    ent->owner =3D 1;
- 			    temp =3D ent->children;
- 			    while (temp) {
---=20
-2.7.4
-
------------------------------------------------------------------------
-
-Cheers
+https://aka.ms/AuthenticodeSpec
 
 --=20
+Morten Linderud
+PGP: 9C02FF419FECBE16
 
-Simon Lees (Simotek)                            http://simotek.net
-
-Emergency Update Team                           keybase.io/simotek
-SUSE Linux                            Adeliade Australia, UTC+9:30
-GPG Fingerprint: 5B87 DB9D 88DC F606 E489 CEC5 0922 C246 02F0 014B
-
---------------020400050406020302010203
-Content-Type: text/x-patch;
- name="0001-Add-missing-increments-of-recursion-depth-counter-to.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename*0="0001-Add-missing-increments-of-recursion-depth-counter-to.pa";
- filename*1="tch"
-
-=46rom 6f0af3f6b9b1c5f82a2bb5ded65923437fee5d21 Mon Sep 17 00:00:00 2001
-From: Peter Simons <psimons@suse.com>
-Date: Fri, 15 Apr 2016 11:56:55 +0200
-Subject: [PATCH 2/2] Add missing increments of recursion depth counter to X=
-ML
- parser.
-
-The functions xmlParserEntityCheck() and xmlParseAttValueComplex() used to =
-call
-xmlStringDecodeEntities() in a recursive context without incrementing the
-'depth' counter in the parser context. Because of that omission, the parser
-failed to detect attribute recursions in certain documents before running o=
-ut
-of stack space.
----
- parser.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/parser.c b/parser.c
-index 9604a72..4da151f 100644
---- a/parser.c
-+++ b/parser.c
-@@ -144,8 +144,10 @@ xmlParserEntityCheck(xmlParserCtxtPtr ctxt, size_t siz=
-e,
-=20
- 	ent->checked =3D 1;
-=20
-+        ++ctxt->depth;
- 	rep =3D xmlStringDecodeEntities(ctxt, ent->content,
- 				  XML_SUBSTITUTE_REF, 0, 0, 0);
-+        --ctxt->depth;
-=20
- 	ent->checked =3D (ctxt->nbentities - oldnbent + 1) * 2;
- 	if (rep !=3D NULL) {
-@@ -3966,8 +3968,10 @@ xmlParseEntityValue(xmlParserCtxtPtr ctxt, xmlChar *=
-*orig) {
- 	 * an entity declaration, it is bypassed and left as is.
- 	 * so XML_SUBSTITUTE_REF is not set here.
- 	 */
-+        ++ctxt->depth;
- 	ret =3D xmlStringDecodeEntities(ctxt, buf, XML_SUBSTITUTE_PEREF,
- 				      0, 0, 0);
-+        --ctxt->depth;
- 	if (orig !=3D NULL)
- 	    *orig =3D buf;
- 	else
-@@ -4092,9 +4096,11 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt, int *=
-attlen, int normalize) {
- 		} else if ((ent !=3D NULL) &&
- 		           (ctxt->replaceEntities !=3D 0)) {
- 		    if (ent->etype !=3D XML_INTERNAL_PREDEFINED_ENTITY) {
-+			++ctxt->depth;
- 			rep =3D xmlStringDecodeEntities(ctxt, ent->content,
- 						      XML_SUBSTITUTE_REF,
- 						      0, 0, 0);
-+			--ctxt->depth;
- 			if (rep !=3D NULL) {
- 			    current =3D rep;
- 			    while (*current !=3D 0) { /* non input consuming */
-@@ -4130,8 +4136,10 @@ xmlParseAttValueComplex(xmlParserCtxtPtr ctxt, int *=
-attlen, int normalize) {
- 			(ent->content !=3D NULL) && (ent->checked =3D=3D 0)) {
- 			unsigned long oldnbent =3D ctxt->nbentities;
-=20
-+			++ctxt->depth;
- 			rep =3D xmlStringDecodeEntities(ctxt, ent->content,
- 						  XML_SUBSTITUTE_REF, 0, 0, 0);
-+			--ctxt->depth;
-=20
- 			ent->checked =3D (ctxt->nbentities - oldnbent + 1) * 2;
- 			if (rep !=3D NULL) {
---=20
-2.8.1
-
-
---------------020400050406020302010203
-Content-Type: text/x-patch;
- name="libxml2-2.9.1-CVE-2016-3627.patch"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="libxml2-2.9.1-CVE-2016-3627.patch"
-
-=46rom e5269fd1e83743f7e62c89eca45000c2e84e6edc Mon Sep 17 00:00:00 2001
-From: Peter Simons <psimons@suse.com>
-Date: Thu, 14 Apr 2016 16:15:13 +0200
-Subject: [PATCH 1/2] xmlStringGetNodeList: limit the function to 1024
- recursions to avoid CVE-2016-3627
-
-This patch prevents stack overflows like the one reported in
-https://bugzilla.gnome.org/show_bug.cgi?id=3D762100.
----
- tree.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
-
-Index: libxml2-2.9.3/tree.c
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- libxml2-2.9.3.orig/tree.c
-+++ libxml2-2.9.3/tree.c
-@@ -1464,6 +1464,8 @@ out:
-     return(ret);
- }
-=20
-+static xmlNodePtr xmlStringGetNodeListInternal(const xmlDoc *doc, const xm=
-lChar *value, size_t recursionLevel);
-+
- /**
-  * xmlStringGetNodeList:
-  * @doc:  the document
-@@ -1475,6 +1477,12 @@ out:
-  */
- xmlNodePtr
- xmlStringGetNodeList(const xmlDoc *doc, const xmlChar *value) {
-+   return xmlStringGetNodeListInternal(doc, value, 0);
-+ }
-+
-+xmlNodePtr
-+xmlStringGetNodeListInternal(const xmlDoc *doc, const xmlChar *value, size=
-_t recursionLevel) {
-+
-     xmlNodePtr ret =3D NULL, last =3D NULL;
-     xmlNodePtr node;
-     xmlChar *val;
-@@ -1483,6 +1491,8 @@ xmlStringGetNodeList(const xmlDoc *doc,
-     xmlEntityPtr ent;
-     xmlBufPtr buf;
-=20
-+    if (recursionLevel > 1024) return(NULL);
-+
-     if (value =3D=3D NULL) return(NULL);
-=20
-     buf =3D xmlBufCreateSize(0);
-@@ -1593,8 +1603,9 @@ xmlStringGetNodeList(const xmlDoc *doc,
- 			else if ((ent !=3D NULL) && (ent->children =3D=3D NULL)) {
- 			    xmlNodePtr temp;
-=20
--			    ent->children =3D xmlStringGetNodeList(doc,
--				    (const xmlChar*)node->content);
-+			    ent->children =3D xmlStringGetNodeListInternal(doc,
-+				    (const xmlChar*)node->content,
-+                                    recursionLevel+1);
- 			    ent->owner =3D 1;
- 			    temp =3D ent->children;
- 			    while (temp) {
-
---------------020400050406020302010203--
-
---BePFwxvDLBJjSI6RwRfjwaGQ8bkKQiRPi--
-
---usEslTgPoS7A6Go374E7LEEV5EOBFNnlN
+--cevsnimuegsx3pa4
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
 
-iQEcBAEBCAAGBQJXKLKcAAoJEBHULpq+GPyRUAwH/3E3gHjZyhYroK0/9d086in8
-PATm8a+xOiCnHuG4unJ6s6fM+Yuj9Axg6eYT7ckPo59ak2Uxz9awPxhLo1miibqv
-5ekEywk2w3HfqLlC2hL7DAI3wzNr9wh7U7s6JCGauXmnhAQKGqK91Gw6+qM0Cwim
-DlQwMrylo4fIIdHVOi6sX8BUIar3p4g5UljKW5LCP9c7HDgU/ZMtJ9nj27JWF2Cx
-wr+TNRlHizberg46sdfIffp9J8Kw7xmBz6GiljpTlhpcbLLXnwF6TfgcatpNiwRu
-Tz4oaDYhtz+74/LWS139jM34lEqzxkyr5p8bggqBR9L6TbUJ6maPfAw7KCdpRD4=
-=NSFs
+iQIzBAABCAAdFiEEwQA0ZnZjToDJQPuenAL/QZ/svhYFAmlb5BAACgkQnAL/QZ/s
+vha2Ow/+KE4hbntmKwqLcFSG6f4QbPFL3yzbAZxX+a25gARpxgz0nbvmiU9g2vSu
+aD9oDG2GHSbW6f9Uby0+vniVgN+piOOEjy168zSsdc/6IQU5GgO/7mt5qCP7qprU
+JFg7ch09PWKnkhVNiuAjF2lNqopNazYiEZFkGuE6l0SSDjof1LXU8ECWxCL9ZUbX
+0MSdsz2t2cx/+gAQJdb1gJAbrJsS5WY0zQI3Pa1uzgHExFYSnhhPJM8h2fBVrpfj
+7Y5a2Vsi9WH6+8z66YNm2Cy6Z8QM6yJVIVjSuy0YrBThtINNgHlo4RKeLjksN+eZ
+PifbBdpfwPyqxSe+ajiu9LUO4QuxCiWE4jBTH0JyWpuBf4FLfm1wQWOGqiZB7AYd
+T33wEIMCFLVDU7i/YxES/qChgvnpocK0tO/dPE/e3uidTvfXEUl4rjPKakctAlsQ
+Y4s1djqX2/uheH5FfJR0SSNV518ftxJoKaFYUqyp1xXPQLTaTc0MuEK9i0ZsH6oQ
+x9Ar/NdLuxIsTFhItcMNrfdrG0BWAoB79+hxFAxa6rLsWz10Vh8jLe45CnumiqHT
+J6j/0rGrAJLgAK08JEWnAaEuOOux2edVUFXPMm2YJQaPtBY9P7Ctf4bWs98TBYG+
+bvuj8kLQ5ok8cJu+1SC6W55Qn8YS2uhlusjvI1WfAhRB/7utf+k=
+=mLMc
 -----END PGP SIGNATURE-----
 
---usEslTgPoS7A6Go374E7LEEV5EOBFNnlN--
+--cevsnimuegsx3pa4--
