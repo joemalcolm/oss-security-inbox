@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1574" "Sunday" "26" "April" "2015" "13:30:00" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20150426112844.GA8340@eldamar.local>" "40" "[oss-security] Possible CVE Request: Wordpress 4.1.2 security release" nil nil nil "4" "2015042611:30:00" "[oss-security] Possible CVE Request: Wordpress 4.1.2 security release" (number mark "        carnil@debia Apr 26   40/1574  " thread-indent "\"[oss-security] Possible CVE Request: Wordpress 4.1.2 security release\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 31944 invoked by uid 550); 26 Apr 2015 11:30:15 -0000
+Received: (qmail 25984 invoked by uid 550); 5 Jan 2026 12:52:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31924 invoked from network); 26 Apr 2015 11:30:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=Rzc3WWCBFs/IhfellEKgB7gu+QQLgpXkqD4QzHMOmWo=;
-        b=FBbDOl55JYw2CiTCQJEuVenEJTXXrPcPQTBNSAQndpjP8rJZYNi94JQpNq219u6y9O
-         J97vfuzbe8d+UeyoBRQ6Oodf4gHxKx2lUMpezao14bPt1khp35yjBeu/Cj2r95jbJWdC
-         Bm6Iai6X810NHk/M9XSe4YjYlGzhwlVfYYSnZKGTzkuZ/EnbyNctkkwbiB+IauifivYf
-         tJ0NO/uBzvc3dPTIqbewZ9Y5FSYhFgOZ1lYMHFHLCj6w6oAcGZ7ObsVrsXRJ9K3BTMfd
-         u/L/sV52DmtQl5Wcl3UF/5XEcMfd93A85dTMcl0F5g2QxD/DhF+gcFCpxmFGxhnNVntR
-         5qHQ==
-X-Received: by 10.180.211.2 with SMTP id my2mr11792183wic.78.1430047803110;
-        Sun, 26 Apr 2015 04:30:03 -0700 (PDT)
-Message-ID: <20150426112844.GA8340@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: CVE Assignments MITRE <cve-assign@mitre.org>
-Date: Sun, 26 Apr 2015 13:30:00 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: [oss-security] Possible CVE Request: Wordpress 4.1.2 security release
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 25945 invoked from network); 5 Jan 2026 12:52:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-ID:
+	Content-Description; bh=ArD1rJAZ+NhxoRABUclY2G4GHXMCScsht0DmBfwATKA=;
+	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1767617579;
+	x=1768265579; b=DdARvv1yJlFHfYZE8W0fuJTH61Pvqasj1xyLw56+NZLTQ1DHm+UmT73dyoVKe
+	QhoS31wBOvfgIXRIJOTrHFwOZe3+5IOJKAMtC63E86bmyvI3h1LrZytgBrsL9o2tXXN3aH1gjoZRB
+	SGKENBXLfyq1y6N4HZfQMOx0tIwaU822mtqGQZ/Z9DFCktJzQzrb6GlZ1AsqHIqhZyDQePId5qwkx
+	X+41lGThEYyNNjMKnXf1097RsOZ++83ZxDpN0nz2NaKJiae1D4SL1zRgC1C3luX3QpyvLOIaUVwhq
+	hi8KasdB/hYv1K9nZzMTTSiwWA49a9N3eWy7KJoOJhm9pM0SPA==;
+Date: Mon, 5 Jan 2026 14:52:39 +0200
+From: Valtteri Vuorikoski <vuori@notcom.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aVuxyNKwrPhbE0SH@donburi.himad.notcom.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <4bb0e4f7-a4f3-45cc-b519-2044b4b2871c@gmail.com>
+ <928709EE-07AA-4995-B9D3-E83AC18353CC.1@smtp-inbound1.duck.com>
+ <6F979157-91AD-4C55-8CCD-5CC5AA18BB50.1@smtp-inbound1.duck.com>
+ <878qei6bq7.fsf@josefsson.org>
+ <87ms2y1d2m.fsf@gmail.com>
+ <87eco91kzi.fsf@josefsson.org>
+ <SYCPR01MB3661379F4E31EE1A57A2F310EEBBA@SYCPR01MB3661.ausprd01.prod.outlook.com>
+ <7002eb83-6227-4de9-aa3a-bfe5cad62320@gmail.com>
+ <ME2PR01MB36500CA1987170A857BCF637EEB9A@ME2PR01MB3650.ausprd01.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ME2PR01MB36500CA1987170A857BCF637EEB9A@ME2PR01MB3650.ausprd01.prod.outlook.com>
+User-Agent: NeoMutt/20251211-3-1d6324
+Subject: Re: [oss-security] Re: Best practices for signature verifcation
 
-Hi
+On Sun, Jan 04, 2026 at 11:56:06AM +0000, Peter Gutmann wrote:
+> As an aside, is anyone aware of a single-source design document for what
+> Authenticode does?   There's a million web pages related to the business of
+> selling signing certs, and less than a million on using it, but I can't find a
+> single-source design doc, just lots of stuff in various places that I've
+> picked up over the years.  By "single-source doc" I mean something that
+> addresses all of the above issues and related ones in one place.
 
-I have not seen a request for CVEs for the issues fixed in the recent
-WordPress security release:
+Are you looking for something more detailed than the Microsoft document titled
+"Windows Authenticode Portable Executable Signature Format" from 2008?
 
-https://wordpress.org/news/2015/04/wordpress-4-1-2/
+Download from the horse's mouth:
+<https://download.microsoft.com/download/9/c/5/9c5b2167-8017-4bae-9fde-d599bac8184a/authenticode_pe.docx>)
 
-> WordPress 4.1.2 is now available. This is a critical security release
-> for all previous versions and we strongly encourage you to update your
-> sites immediately.
-> 
-> WordPress versions 4.1.1 and earlier are affected by a critical cross-
-> site scripting vulnerability, which could enable anonymous users to
-> compromise a site. This was reported by Cedric Van Bockhaven and fixed
-> by Gary Pendergast, Mike Adams, and Andrew Nacin of the WordPress
-> security team.
-> 
-> We also fixed three other security issues:
-> 
->  * In WordPress 4.1 and higher, files with invalid or unsafe names
->    could be uploaded. Discovered by Michael Kapfer and Sebastian
->    Kraemer of HSASec.
->  * In WordPress 3.9 and higher, a very limited cross-site scripting
->    vulnerability could be used as part of a social engineering attack.
->    Discovered by Jakub Zoczek.
->  * Some plugins were vulnerable to an SQL injection vulnerability.
->    Discovered by Ben Bidner of the WordPress security team.
-> 
-> We also made four hardening changes, discovered by J.D. Grimes, Divyesh
-> Prajapati, Allan Collins, Marc-Alexandre Montpas and Jeff Bowen.
-> 
-> We appreciated the responsible disclosure of these issues directly to
-> our security team. For more information, see the release notes or
-> consult the list of changes.
+Here is the overview section of that document (via pandoc -t rst):
 
-Could you please assign CVEs to identify the issues fixed by the
-latest WordPress release?
+Overview
+========
 
-Regards,
-Salvatore
+The Authenticode signature in a PE file is in a PKCS #7 **SignedData**
+structure. The signature asserts that:
+
+-  The file originates from a specific software publisher.
+
+-  The file has not been altered since it was signed.
+
+The signature itself does not convey any information about the intent or
+quality of the software. However, signatures that are associated with
+programs such as the Windows Logo Program—that sign software only if it
+passes certain tests—can convey quality information.
+
+A PKCS #7 **SignedData** structure contains the PE file's hash value, a
+signature created by the software publisher’s private key, and the X.509
+v3 certificates that bind the software publisher’s signing key to a
+legal entity. A PKCS #7 **SignedData** structure can optionally contain:
+
+-  A description of the software publisher.
+
+-  The software publisher's URL.
+
+-  An Authenticode timestamp.
+
+The timestamp is generated by a timestamping authority (TSA) and asserts
+that a publisher’s signature existed before the specified time. The
+timestamp extends the lifetime of the signature when a signing
+certificate expires or is later revoked.
+
+Authenticode signatures can be “embedded” in a Windows PE file, in a
+location specified by the **Certificate Table** entry in **Optional
+Header Data Directories**. When Authenticode is used to sign a Windows
+PE file, the algorithm that calculates the file's Authenticode hash
+value excludes certain PE fields. When embedding the signature in the
+file, the signing process can modify these fields without affecting the
+file's hash value.
+
+Figure 1 provides a simplified overview of how an Authenticode signature
+is included in a Windows PE file. It includes the location of the
+embedded Authenticode signature and specifies which PE fields are
+excluded when calculating the PE file's hash value.
+
+For details about the PE file structure, see ”Microsoft Portable
+Executable and Common Object File Format Specification” (PE/COFF
+specification).
+
+For details on the PKCS #7 portion of the Authenticode signature see the
+Abstract Syntax Notation version 1 (ASN.1) structure definitions later
+in this paper.
+
+For details on how the Authenticode PE hash value is calculated, see
+“Calculating the PE Image Hash” later in this paper.
