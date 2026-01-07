@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3213" "Tuesday" "3" "May" "2016" "10:59:12" "-0700" "Ryan Huber" "rhuber@gmail.com" "<CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>" "92" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" "^Date:" nil nil "5" "2016050317:59:12" "[oss-security] ImageMagick Is On Fire -- CVE-2016-3714" (number mark "        rhuber@gmail May  3   92/3213  " thread-indent "\"[oss-security] ImageMagick Is On Fire -- CVE-2016-3714\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 4035 invoked by uid 550); 3 May 2016 18:03:12 -0000
+Received: (qmail 24339 invoked by uid 550); 7 Jan 2026 07:09:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,131 +6,111 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1538 invoked from network); 3 May 2016 17:59:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to;
-        bh=SbduoyK2LS3q8hXRLwg26Lynbe7EMWM2MqXaJ2v4vms=;
-        b=j1VHc6MK7kBVr2Rua6piwOAV3/KThnkvwDpbsLDmNU3WJLJVXZaCNE/9QW/aOGz7Gf
-         btJ0Xcuim1uwwISnU7aUwJlXpJ30tsFgA/DhPxRCAjwRQ7PJoEUNruMP/kcU6zmDVvoD
-         HTdCpLMWye5d/8ZyER6Da2ttufyygnD4hHnuL+XbrDJjTrkx8ybT47nuCDbM+kyBeTEZ
-         +RxUs6iOwhk0albFTBK3SQeLdQ53TjzgsHSdsoyCc/7Y+SJrlCeMXjoPF7+IlVyve+qx
-         QKuDgWn+lj9Ldf3jpHE81b+u6vFojKfuCmvR0gAgDTPtjhUQ7LJHXWfI8hJyjzQbMc6x
-         NSpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to;
-        bh=SbduoyK2LS3q8hXRLwg26Lynbe7EMWM2MqXaJ2v4vms=;
-        b=WqUQYK+O2pRNmj5gl+pAEqmHUElHFtN6az0Xgz+BAyZAmFmVCIlqD8jtQ3vaQAMkRH
-         MAohaIp8nVMFX7m41qPRmH3GjDomg0VAbM0XeeyLuKeA6aUXmSUyOAAFYyVF7wGSRwZh
-         tnTmbLy01WvoIUZNnqoBd6d5v605HFvf81jISb6MA0JZ83Ms2EjV5rTA2VYLjD5cMrIq
-         g6gUK30m7Si6LtCzW41nzqJXli8no2q13QBaD8TQWB3grbdDVq/LPc7a3UdqBDAT+3pU
-         /Laph0AEd0cdCQ7zfqiJe1HSAZR5Uw06msjV7anJMiwAqsHpU+ACAoJWlFDOzOQ7lQ5w
-         AvDA==
-X-Gm-Message-State: AOPr4FXSdhjxW6DQV0XFxLILuAY7z7PFpeaYy1NBjiuFhFMXvozA0fyyYZkDuoVtqKni0w==
-X-Received: by 10.50.109.138 with SMTP id hs10mr5226361igb.76.1462298353324;
-        Tue, 03 May 2016 10:59:13 -0700 (PDT)
-MIME-Version: 1.0
-X-Received: by 10.50.190.138 with SMTP id gq10mr22211651igc.44.1462298352577;
- Tue, 03 May 2016 10:59:12 -0700 (PDT)
-X-Gmail-Original-Message-ID: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
-Message-ID: <CABi+pA7xDJhirUFbrVZQkwMnFj--zbNJA8_Aoq-SiJx0QNcsoA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 3 May 2016 10:59:12 -0700
-From: Ryan Huber <rhuber@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ImageMagick Is On Fire -- CVE-2016-3714
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 24312 invoked from network); 7 Jan 2026 07:09:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1767769780; bh=hJzs/+A9XJbLBYTDmcHZf2qHfHna403SUOCDIRS7vi0=;
+	h=Date:From:To:Subject:From;
+	b=tNU4wmsz3QiXTCFhp9MA3+JnbkpT37GpJeP3wbK3F4j8xGafhFLpKg6/I+CFPPUuW
+	 sHdxkp2OY41nxknCs721ORD4q8N57Cn7qMRcVv5rRW3oJpsRNzW9bXnh14CnScNIk7
+	 3yDT2G4frVD4cB6D1aLikSfPQmc6gx6wz0HDWedMNFlrJqrqXOnG1JZ0o1o15h/stp
+	 6FmPoht1xZezIAR9iCNvqs4se7qelyEdW7hzZV7qV3gO8SwB7pIcWXtNBVcuK4M4bR
+	 KtzGwAbWX5FH+TLE7YWqv2Nh3qheevr4qKwFiFZ4XMSoWsAuG4peyUwDzM5wOo4rC7
+	 IdxHfK4rEVV4g==
+Date: Wed, 7 Jan 2026 08:09:40 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <p1728624-2s9n-4689-8128-387qpn026q5o@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl CVE-2025-15079: libssh global knownhost override
 
-There are multiple vulnerabilities in ImageMagick, a package commonly
-used by web services to process images. One of the vulnerabilities can
-lead to remote code execution (RCE) if you process user submitted
-images. The exploit for this vulnerability is being used in the wild.
+libssh global knownhost override
+================================
 
-A number of image processing plugins depend on the ImageMagick
-library, including, but not limited to, PHP's imagick, Ruby's rmagick
-and paperclip, and nodejs's imagemagick.
+Project curl Security Advisory, January 7 2026 -
+[Permalink](https://curl.se/docs/CVE-2025-15079.html)
 
-If you use ImageMagick or an affected library, we recommend you
-mitigate the known vulnerabilities by doing at least one these two
-things (but preferably both!):
+VULNERABILITY
+-------------
 
-1. Verify that all image files begin with the expected "magic bytes"
-corresponding to the image file types you support before sending them
-to ImageMagick for processing. (see FAQ for more info)
+When doing SSH-based transfers using either SCP or SFTP, and setting the
+knownhosts file, libcurl could still mistakenly accept connecting to hosts
+*not present* in the specified file if they were added as recognized in the
+libssh *global* knownhosts file.
 
-2. Use a policy file to disable the vulnerable ImageMagick coders. The
-global policy for ImageMagick is usually found in "/etc/ImageMagick".
-This policy.xml example will disable the coders EPHEMERAL, URL, MVG,
-and MSL.
+INFO
+----
 
-Github Gist showing an example policy file:
-https://gist.github.com/rawdigits/d73312d21c8584590783a5e07e124723
+This flaw only exists when libcurl is built to use the libssh backend, not the
+libssh2 based one. This problem happened because libssh has a somewhat
+surprising API choice where they fall back to a built-in *global* knownhosts
+file if the host was not found in the specified one. The global file that was
+used as a fallback gets its set path at build time.
 
-FAQ
+The fix now makes libcurl set *both* knownhost files to the same path.
 
-Who found this bug?
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-15079 to this issue.
 
-Stewie (https://hackerone.com/stewie) found the initial bug, and
-Nikolay Ermishkin (https://twitter.com/__sl1m) from the Mail.Ru
-Security Team found additional issues, including the RCE.
+CWE-297: Improper Validation of Certificate with Host Mismatch
 
-Will you share the exploit with me?
+Severity: Low
 
-No. We would like to give people a chance to patch before it is more
-widely available. The exploit is trivial, so we expect it to be
-available within hours of this post. Updates and PoC will eventually
-be available here.
+AFFECTED VERSIONS
+-----------------
 
-Are patches available?
+- Affected versions: curl 7.58.0 to and including 8.17.0
+- Not affected versions: curl < 7.58.0 and >= 8.18.0
+- Introduced-in: https://github.com/curl/curl/commit/c92d2e14cfb0db662f958effd2ac86f99
 
-Yes, but they appear to be incomplete. Everyone would have preferred
-to wait for patches before disclosing, but working exploits are
-readily available.
+libcurl is used by many applications, but not always advertised as such!
 
-What are "magic bytes"?
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
 
-The first few bytes of a file can often used to identify the type of
-file. Some examples are GIF images, which start with the hex bytes "47
-49 46 38", and JPEG images, which start with "FF D8". This list on
-Wikipedia has the magic bytes for most common file types.
+This flaw **also** affects the curl command line tool.
 
-Why are you disclosing a vulnerability like this?
+SOLUTION
+------------
 
-We have collectively determined that these vulnerabilities are
-available to individuals other than the person(s) who discovered them.
-An unknowable number of people having access to these vulnerabilities
-makes this a critical issue for everyone using this software.
-ImageMagick also disclosed this on their forum a few hours ago.
+Starting in curl 8.18.0, this mistake is fixed.
 
-How well-tested are these mitigations?
+- Fixed-in: https://github.com/curl/curl/commit/adca486c125d9a6d9565b9607a19dce803
 
-They are effective against all of the exploit samples we've seen, but
-we cannot guarantee they will eliminate all vectors of attack.
+RECOMMENDATIONS
+--------------
 
-Are there other ways to mitigate?
+  A - Upgrade curl to version 8.18.0
 
-Sandboxing ImageMagick is worth investigating, but we are not
-providing specific instructions for doing this.
+  B - Build curl with the libssh2 backend
 
-What else should I know?
+  C - Avoid using SFTP or SCP
 
-We did not find this vulnerability ourselves. We understand the
-mechanisms involved, but credit for finding this vulnerability should
-go to the researcher(s).
+TIMELINE
+--------
 
-Vulnerabilities need names! What is its name??!?
+This issue was reported to the curl project on December 24, 2025. We contacted
+distros@openwall on December 30, 2025.
 
-If you must, we've been calling it "ImageTragick".
+curl 8.18.0 was released on January 7 2026 around 07:00 UTC, coordinated with
+the publication of this advisory.
 
-How can I contact you?
+The curl security team is not aware of any active exploits using this
+vulnerability.
 
-imagetragick@gmail.com
+CREDITS
+-------
 
+- Reported-by: Harry Sintonen
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
 
 -- 
-Ryan Huber
-rhuber@gmail.com
-@ryanhuber
-https://github.com/rawdigits
-+1 (312) 380 6136
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
