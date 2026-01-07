@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["12257" "Tuesday" "23" "May" "2017" "08:06:34" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<889256.295838521-sendEmail@localhost>" "131" "[oss-security] qpdf: three infinite loop in libqpdf" nil nil nil "5" "2017052308:06:34" "[oss-security] qpdf: three infinite loop in libqpdf" (number mark "U       ago@gentoo.o May 23  131/12257 " thread-indent "\"[oss-security] qpdf: three infinite loop in libqpdf\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9992 invoked by uid 550); 23 May 2017 08:06:53 -0000
+Received: (qmail 9603 invoked by uid 550); 7 Jan 2026 19:20:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,143 +7,318 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9952 invoked from network); 23 May 2017 08:06:51 -0000
-Message-ID: <889256.295838521-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Tue, 23 May 2017 08:06:34 +0000
+x-ms-reactions: disallow
+Received: (qmail 9573 invoked from network); 7 Jan 2026 19:20:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1767813621; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=d/zsJKuX8YDuzwFcOzZGtYpa9JSNZnQpoKtsLmYyPyk=;
+	b=HRbzew9gcoBl0QxF/HFYqkEWeCGBj/z6a0KefT1V/Og98yLb8WSO3sCLdk8YVpL06IItbp
+	rWGs+OiIE6tmYDxSZzEJxTzoThxZaA+4iQgIRWlTx1vz4cOT4fom7wu3VRX+ycfZBRzWd1
+	j6yTFxFwnZbi46R0NP5vrQV61ykR0FQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1767813621;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=d/zsJKuX8YDuzwFcOzZGtYpa9JSNZnQpoKtsLmYyPyk=;
+	b=RdoXxST1k1dUD27Q+JeMSPoJ8EvHs5u82dOd6TERha7i6o3gGgCmbuuv2TviIIW12kw3cH
+	90BktQUwAo6TzNDg==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gVlN1brG;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=eeC31hrf
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1767813620; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=d/zsJKuX8YDuzwFcOzZGtYpa9JSNZnQpoKtsLmYyPyk=;
+	b=gVlN1brGA8xRYygyB8KxbBVRfSihcVxxrTq7ukNrzo2siXpuA+J90RjiYZTvKrMHDN+MN9
+	+V40J9iiSXsqczd3DGtaaE8WOgBgj6Fhe6ZinmAcYXft6S930Okw8n1+OlKDiY46NDV6pV
+	3PtgK9Jwxu7bBwVPxsCT7vcooeqqr+o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1767813620;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=d/zsJKuX8YDuzwFcOzZGtYpa9JSNZnQpoKtsLmYyPyk=;
+	b=eeC31hrfMI0RuK1sgCfh8A/uP+LS9zr8iJ4baPNvcNvwSYmrROccK5i7bxFoyFirl7mEWQ
+	5KsSWRoQNguy70Bg==
+Date: Wed, 7 Jan 2026 20:20:20 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <aV6x9IJym6OdzB9Y@kasco.suse.de>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-999345.197183178"
-Subject: [oss-security] qpdf: three infinite loop in libqpdf
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="ARKK7rLmKdRSHA59"
+Content-Disposition: inline
+X-Spam-Flag: NO
+X-Spam-Score: -6.61
+X-Spam-Level: 
+Subject: [oss-security] Foomuuri: Lack of Client Authorization and Input Verification allow
+ Control over Firewall Configuration (CVE-2025-67603, CVE-2025-67858)
 
-------MIME delimiter for sendEmail-999345.197183178
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+--ARKK7rLmKdRSHA59
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 7 Jan 2026 20:20:20 +0100
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: Foomuuri: Lack of Client Authorization and Input Verification allow
+ Control over Firewall Configuration (CVE-2025-67603, CVE-2025-67858)
 
-Description:
-qpdf QPDF is a command-line program that does structural, content-preserving transformations on PDF files.
+Hello list,
 
-I discovered three infinite loop. Upstream didn’t provide a feedback, so they might have the same root cause.
+please find below a report about security issues in the D-Bus interface
+in the Foomuuri firewall manager [1]. We also offer a rendered version
+of this report on our blog [2].
 
-# qpdf $FILE -
-==8000==ERROR: AddressSanitizer: stack-overflow on address 0x7fff9cf4efd8 (pc 0x7f925abe7e23 bp 0x7fff9cf4f050 sp 0x7fff9cf4efe0 T0)
-    #0 0x7f925abe7e22 in QPDFObjectHandle::assertInitialized() const /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1380
-    #1 0x7f925abe38aa in QPDFObjectHandle::isIndirect() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:241:5
-    #2 0x7f925abe38aa in QPDFObjectHandle::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:71
-    #3 0x7f925ad2ca5d in QPDFObjectHandle::ReleaseResolver::releaseResolved(QPDFObjectHandle&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObjectHandle.hh:554:8
-    #4 0x7f925ad2ca5d in QPDF_Array::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Array.cc:19
-    #5 0x7f925abe3c24 in QPDFObject::ObjAccessor::releaseResolved(QPDFObject*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObject.hh:67:6
-    #6 0x7f925abe3c24 in QPDFObjectHandle::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:80
-    #7 0x7f925ad30a6e in QPDFObjectHandle::ReleaseResolver::releaseResolved(QPDFObjectHandle&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObjectHandle.hh:554:8
-    #8 0x7f925ad30a6e in QPDF_Dictionary::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:23
-    #9 0x7f925abe3c24 in QPDFObject::ObjAccessor::releaseResolved(QPDFObject*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObject.hh:67:6
-    #10 0x7f925abe3c24 in QPDFObjectHandle::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:80
-    #11 0x7f925ad30a6e in QPDFObjectHandle::ReleaseResolver::releaseResolved(QPDFObjectHandle&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDFObjectHandle.hh:554:8
-    #12 0x7f925ad30a6e in QPDF_Dictionary::releaseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:23
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00176-qpdf-infiniteloop1
-CVE:
-CVE-2017-9208
+Summary: Foomuuri is an nftables-based firewall manager for Linux. It
+contains a privileged D-Bus service which allows to change the firewall
+configuration. A lack of D-Bus client authorization and input data
+verification allow arbitrary local users to completely control the
+system's firewall configuration in Foomuuri before version 0.31.
 
-############################
+1) Introduction
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-# qpdf $FILE -
-    #0 0x427108 in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:323
-    #1 0x50ce78 in operator new(unsigned long) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_new_delete.cc:78
-    #2 0x7fe47c18de58 in std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator const&) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf3e58)
-    #3 0x7fe47c18ec3a in std::string::_Rep::_M_clone(std::allocator const&, unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4c3a)
-    #4 0x7fe47c18ece3 in std::string::reserve(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4ce3)
-    #5 0x7fe47c656405 in std::string::push_back(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:1072:10
-    #6 0x7fe47c656405 in std::string::operator+=(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:968
-    #7 0x7fe47c656405 in QPDFTokenizer::presentCharacter(char) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFTokenizer.cc:189
-    #8 0x7fe47c65d19a in QPDFTokenizer::readToken(PointerHolder, std::string const&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFTokenizer.cc:519:6
-    #9 0x7fe47c61da83 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:873:23
-    #10 0x7fe47c61f018 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:939:15
-    #11 0x7fe47c6122d4 in QPDFObjectHandle::parse(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:841:12
-    #12 0x7fe47c553ec1 in QPDF::readObject(PointerHolder, std::string const&, int, int, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1017:31
-    #13 0x7fe47c542a0b in QPDF::reconstruct_xref(QPDFExc&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:393:7
-    #14 0x7fe47c57e826 in QPDF::readObjectAtOffset(bool, long long, std::string const&, int, int, int&, int&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1359:6
-    #15 0x7fe47c59e56d in QPDF::resolve(int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1474:7
-    #16 0x7fe47c5f4854 in QPDF::Resolver::resolve(QPDF*, int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDF.hh:520:19
-    #17 0x7fe47c5f4854 in QPDFObjectHandle::dereference() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1520
-    #18 0x7fe47c626227 in QPDFObjectHandle::isName() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:184:5
-    #19 0x7fe47c626227 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1074
-    #20 0x7fe47c61f018 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:939:15
-    #21 0x7fe47c6122d4 in QPDFObjectHandle::parse(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:841:12
-    #22 0x7fe47c553ec1 in QPDF::readObject(PointerHolder, std::string const&, int, int, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1017:31
-    #23 0x7fe47c542a0b in QPDF::reconstruct_xref(QPDFExc&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:393:7
-    #24 0x7fe47c57e826 in QPDF::readObjectAtOffset(bool, long long, std::string const&, int, int, int&, int&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1359:6
-    #25 0x7fe47c59e56d in QPDF::resolve(int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF.cc:1474:7
-    #26 0x7fe47c5f4854 in QPDF::Resolver::resolve(QPDF*, int, int) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/include/qpdf/QPDF.hh:520:19
-    #27 0x7fe47c5f4854 in QPDFObjectHandle::dereference() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1520
-    #28 0x7fe47c626227 in QPDFObjectHandle::isName() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:184:5
-    #29 0x7fe47c626227 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:1074
-    #30 0x7fe47c61f018 in QPDFObjectHandle::parseInternal(PointerHolder, std::string const&, QPDFTokenizer&, bool&, QPDFObjectHandle::StringDecrypter*, QPDF*, bool, bool, bool) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:939:15
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00177-pdf-infiniteloop2
-CVE:
-CVE-2017-9209
+Foomuuri [1] is an nftables-based firewall manager for Linux. The
+project includes a D-Bus daemon which offers an API similar to
+firewalld. In early December an openSUSE community member asked us to
+review Foomuuri [3] for addition to openSUSE Tumbleweed.
 
-############################
+During the review we quickly noticed a lack of client authorization and
+input validation in the implementation of Foomuuri's D-Bus service. We
+reported the issues to upstream and performed coordinated disclosure.
+Upstream published version 0.31 [4] of Foomuuri on 2026-01-07 which
+contains bugfixes for the security issues.
 
-# qpdf $FILE -
-==13070==ERROR: AddressSanitizer: stack-overflow on address 0x7ffd0ba0efb0 (pc 0x00000042711b bp 0x7ffd0ba0f8a0 sp 0x7ffd0ba0efb0 T0)
-    #0 0x42711a in __asan::Allocator::Allocate(unsigned long, unsigned long, __sanitizer::BufferedStackTrace*, __asan::AllocType, bool) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_allocator.cc:325
-    #1 0x50ce78 in operator new(unsigned long) /tmp/portage/sys-devel/llvm-3.9.1/work/llvm-3.9.1.src/projects/compiler-rt/lib/asan/asan_new_delete.cc:78
-    #2 0x7f949448ae58 in std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator const&) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf3e58)
-    #3 0x7f949448bc3a in std::string::_Rep::_M_clone(std::allocator const&, unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4c3a)
-    #4 0x7f949448bce3 in std::string::reserve(unsigned long) (/usr/lib/gcc/x86_64-pc-linux-gnu/6.3.0/libstdc++.so.6+0xf4ce3)
-    #5 0x7f9494a4451d in std::string::push_back(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:1072:10
-    #6 0x7f9494a4451d in std::string::operator+=(char) /usr/lib/gcc/x86_64-pc-linux-gnu/4.9.4/include/g++-v4/bits/basic_string.h:968
-    #7 0x7f9494a4451d in QPDF_Name::normalizeName(std::string const&) /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Name.cc:24
-    #8 0x7f9494a3ddaa in QPDF_Dictionary::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:35:12
-    #9 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
-    #10 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
-    #11 0x7f9494a39cb0 in QPDF_Array::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Array.cc:30:20
-    #12 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
-    #13 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
-    #14 0x7f9494a3de56 in QPDF_Dictionary::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:36:27
-    #15 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
-    #16 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
-    #17 0x7f9494a39cb0 in QPDF_Array::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Array.cc:30:20
-    #18 0x7f949490c23f in QPDFObjectHandle::unparseResolved() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:699:23
-    #19 0x7f9494909e8c in QPDFObjectHandle::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDFObjectHandle.cc:685:11
-    #20 0x7f9494a3de56 in QPDF_Dictionary::unparse() /tmp/portage/app-text/qpdf-6.0.0-r1/work/qpdf-6.0.0/libqpdf/QPDF_Dictionary.cc:36:27
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00177-qpdf-infiniteloop3
-CVE:
-CVE-2017-9210
+The next section provides an overview of the Foomuuri D-Bus service.
+Section 3) discusses the security issues in detail. Section 4) provides
+an overview of the upstream bugfixes to address the issues. Section 5)
+looks into the CVEs which were assigned. Section 6) gives insight into
+the coordinated disclosure process which was established for these
+findings.
 
-############################
+This report is based on Foomuuri release v0.29 [5].
 
-Affected version:
-6.0.0
+2) Overview of the D-Bus Service
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
 
-Fixed version:
-N/A
+Foomuuri runs with full root privileges and registers a D-Bus interface
+[6] under the name"fi.foobar.Foomuuri1". Optionally a firewalld drop-in
+replacement interface is also registered under
+"org.fedoraproject.FirewallD1". Both interfaces hook into the same
+logic, however, and there is no need to look at them separately.
 
-Commit fix:
-N/A
+There are only a few methods [7] provided by the D-Bus interface:
+getting the list of available zones and managing the assignment of
+network interfaces to zones.
 
-Credit:
-These bugs were discovered by Agostino Sarubbo of Gentoo.
+3) Security Issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Timeline:
-2017-02-13: bug discovered and reported to upstream
-2017-05-21: blog post about the issue
-2017-05-23: CVE assigned
+3.1) Lack of Client Authorization
+---------------------------------
 
-Note:
-These bugs were found with American Fuzzy Lop.
+There is no authentication layer like Polkit present in the Foomuuri
+D-Bus service, and there are also no restrictions on D-Bus configuration
+level [8] as to who is allowed to connect to the D-Bus interfaces
+provided.
 
-Permalink:
-https://blogs.gentoo.org/ago/2017/05/21/qpdf-three-infinite-loop-in-libqpdf/
+As a result any local user, including low privilege service user
+accounts or even `nobody`, can invoke the D-Bus interface and change the
+firewall configuration. The only state which can be modified this way is
+the assignment of interfaces to zones, but this is enough to weaken the
+firewall configuration or to perform a limited Denial-of-Service.
 
---
-Agostino Sarubbo
-Gentoo Linux Developer
+3.2 Missing Input Parameter Verification
+----------------------------------------
 
+Apart from the lack of access restrictions pointed out above, the input
+parameters to the D-Bus methods are not carefully scrutinized. While the
+`zone` input parameter is at least checked against currently configured
+zones [9], no further checks are performed on the `interface` parameter.
+This means that, e.g. via the "addInterface" D-Bus method, arbitrary
+strings can be passed as interface name. There is also intentionally no
+check if the specified name corresponds to an existing network device in
+the system (to allow seamless coverage of network devices even before
+they are added to the system).
 
-------MIME delimiter for sendEmail-999345.197183178--
+One result from this can be log spoofing, since the `interface` name is
+passed to logging functions unmodified. The string could contain control
+characters or newlines, which can manipulate the log.
 
+In `DbusCommon.add_interface()` [10] the possibly crafted interface name
+is added to the to-be-generated JSON configuration via the `out()`
+method. While we did not verify whether this works in practice, a local
+attacker could attempt to largely control the JSON configuration passed
+to `nftables`, by skillfully embedding additional JSON configuration in
+the `interface` parameter.
+
+We were worried that this could even lead to arbitrary code execution by
+abusing features of `nftables` like loading external files or plugin
+code, but it turned out that there are no such features available in the
+`nftables` configuration format.
+
+3.3) Unsafe `umask` used in Daemonize Code
+------------------------------------------
+
+Foomuuri contains optional support to daemonize itself. Normally this is
+done by systemd and the code in question is not invoked. It contains
+logic [11] to set the daemon's `umask` to 0, however, which is a bad
+default, since applications or libraries which intend to foster user
+control of the file mode of newly created files can pass modes like
+`0666` to `open()`, rendering them world-writable.
+
+Foomuuri does not contain any code paths that create new files, but the
+`umask` setting is also inherited by child processes, for example. While
+we did not think this was a tangible security issue in this form, we
+suggested to choose a more conservative value here to prevent future
+issues.
+
+4) Upstream Bugfixes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We suggested the following fixes to upstream:
+
+- restrict access to the D-Bus interfaces to `root` only, maybe also to
+  members of a dedicated opt-in group. Alternatively Polkit could be
+  used for authentication of callers, which is more effort and complex,
+  however.
+- the `interface` input parameter should be verified right from the
+  beginning of each D-Bus method to make sure that it does not contain
+  any whitespace or special characters and is not longer than `IFNAMSIZ`
+  bytes (which is currently 16 bytes on Linux).
+- as an additional hardening measure we also suggested to apply systemd
+  directives like `ProtectSystem=3Dfull` to Foomuuri's systemd services,
+  to prevent possible privilege escalation should anything go wrong at
+  the first line of defense.
+
+Upstream decided to implement Polkit authentication for Foomuuri's D-Bus
+service and otherwise followed closely our suggestions:
+
+- commit 5944a42 [12] adds Polkit authentication to the D-Bus service.
+  Changing firewall settings now requires admin authorization. The use
+  of Polkit can be disabled in Foomuuri, in which case only clients with
+  UID 0 are allowed to perform the operations.
+- commit d1961f4 [13] adds verification of the `interface` parameter to
+  prevent manipulation of the JSON configuration data.
+- commit 806e11d [14] sets the `umask` used in the daemonize code to a
+  more conservative `0o022` setting, preventing world- or group-writable
+  files from coming into existence.
+- commit 5fcf125 [15] adds the `ProtectSystem=3Dfull` directive to all
+  Foomuuri systemd service units.
+
+All of the bugfixes are contained in version 0.31 [4] of Foomuuri.
+
+5) CVE Assignment
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+In agreement with upstream we assigned the following two CVEs
+corresponding to this report:
+
+- CVE-2025-67603: lack of client authorization allows arbitrary users to
+  influence the firewall configuration (issue 3.1).
+
+- CVE-2025-67858: a crafted `interface` input parameter to D-Bus methods
+  can lead to integrity loss of the firewall configuration or further
+  unspecified impact by manipulating the JSON configuration passed to
+  `nft` (issue 3.2).
+
+6) Coordinated Disclosure
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We reported these issues to the upstream developer on 2025-12-11,
+offering coordinated disclosure. We soon got a reply and discussed the
+details of the non-disclosure process. Upstream quickly shared patches
+with us for review and we agreed on the final patches already on
+2025-12-19. In light of the approaching Christmas season we agreed on a
+publication date of 2026-01-07 for general disclosure.
+
+We want to thank the upstream author for the prompt reaction and
+cooperation in fixing the issues.
+
+7) Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2025-12-11: We contacted the Foomuuri developer by email providing a detail=
+ed report about the D-Bus related findings and offered coordinated disclosu=
+re.
+2025-12-12: The upstream author confirmed the issues, agreed to coordinated=
+ disclosure and asked us to assign CVEs the way we suggested them. 2026-01-=
+07 was suggested for publication date.
+2025-12-15: We discussed some additional technical details like the umask i=
+ssue and the question of whether arbitrary code execution could result from=
+ the ability to control the JSON configuration passed to `nft`.
+2025-12-18: Upstream shared with us a first version of patches for the issu=
+es we reported. The patches for minor issues and hardening were already pub=
+lished on GitHub at this point.
+2025-12-19: We provided feedback on the patches, suggesting minor improveme=
+nts.
+2025-12-19: With the fixes ready we discussed whether earlier publication w=
+ould make sense, but we agreed to stick to the date of 2026-01-07 to accomm=
+odate the Christmas holiday season.
+2026-01-07: Upstream release v0.31 [4] was published.
+2026-01-07: Publication of this report.
+
+[1]: https://github.com/FoobarOy/foomuuri
+[2]: https://security.opensuse.org/2026/01/07/foomuuri-lack-of-dbus-authori=
+zation.html
+[3]: https://bugzilla.suse.com/show_bug.cgi?id=3D1254385
+[4]: https://github.com/FoobarOy/foomuuri/releases/tag/v0.31
+[5]: https://github.com/FoobarOy/foomuuri/releases/tag/v0.29
+[6]: https://github.com/FoobarOy/foomuuri/blob/c532cc902a402bbaf88e90a972d0=
+78649425f34b/src/foomuuri#L2856
+[7]: https://github.com/FoobarOy/foomuuri/blob/c532cc902a402bbaf88e90a972d0=
+78649425f34b/src/foomuuri#L2763
+[8]: https://github.com/FoobarOy/foomuuri/blob/c532cc902a402bbaf88e90a972d0=
+78649425f34b/firewalld/fi.foobar.Foomuuri-FirewallD.conf#L20
+[9]: https://github.com/FoobarOy/foomuuri/blob/c532cc902a402bbaf88e90a972d0=
+78649425f34b/src/foomuuri#L2698
+[10]: https://github.com/FoobarOy/foomuuri/blob/c532cc902a402bbaf88e90a972d=
+078649425f34b/src/foomuuri#L2692
+[11]: https://github.com/FoobarOy/foomuuri/blob/c532cc902a402bbaf88e90a972d=
+078649425f34b/src/foomuuri#L244
+[12]: https://github.com/FoobarOy/foomuuri/commit/5944a428f53a132fc343ff679=
+2b1b7539f1c990e
+[13]: https://github.com/FoobarOy/foomuuri/commit/d1961f420600d133e5f1d3125=
+deb17445e7745ac
+[14]: https://github.com/FoobarOy/foomuuri/commit/806e11d59c1e582452668cec3=
+b68397e4cbf71b3
+[15]: https://github.com/FoobarOy/foomuuri/commit/5fcf1254537604b0b60904751=
+9efedeb7a2fd2cb
+
+Best Regards
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=FCrnberg
+Gesch=E4ftsf=FChrer: Jochen Jaser, Andrew McDonald, Werner Knoblich
+
+--ARKK7rLmKdRSHA59
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmlesfQACgkQFMQFyXGS
+NVP6lRAA1FbfNRFh0HZvv/yYxGIhsSZH5XTLD9r5ZOgJvP71WNpFbPtXhkE69HHw
+Pi66f8IAInNvrnMhs3tI29A53DSFen38o5/H52mmNRtAAl7Iiq1uLQ++OjtpIqaD
+i8eQs6Y1iVe8A2JpkNhTNN2WdfZVS0yy+jUot5rnV7SHSSFyriSoLX4fdZnlhTWf
+VwoVjFvUt/+Yi2JqsgAcLUtaQlwqBnwbZtiwdlVvst/i5+bbLOvM5+Jj47qKzRtF
+LvI0VYVbdADczfBFMxq/tt6Glw15hPn8x9290APqzi2a8+vYkLuPApTGlsVyWimo
+CrOXQTWesPSAlDHBBr76rmpCGmVXKFbUTct0Xa7T8g2ylLEf1cyo4iviCQFQosyW
+7qdzFsQnOcEkWsT3w89xAVyKAbf98tZrOePQkAFNpgHBP5qfi4z0abfeTwRZV9KN
+nffdxGaK6RJ+l/dLSizb2/DNVVrkjufkOdfBjaMS8gh/r0H1R/V+aXN8c4hIkJgX
+kNVYjybi+ESfYNpDWLHvepl07bm9oENF3hxlIKz3rQ7IUIP82gOlC6segxaT2NeF
+ogHrS5H56ucnsXOe62nXYAQEYaQ6P3RTm348hpX9PTECkF16Yl005owq7gcJPwHD
+/D1OE8FOHNLLqaOn19GWKlFDOU2wFZOx1A6a4RJmvO4bksqPQsY=
+=/49H
+-----END PGP SIGNATURE-----
+
+--ARKK7rLmKdRSHA59--
