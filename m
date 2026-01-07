@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1881" "Wednesday" "27" "January" "2016" "20:39:35" "+0000" "Matthew Wild" "mwild1@gmail.com" "<CAJt9-x6kPqB6N+qT=70uYvF00sFECT8hBhLzJU9SZJ-q7p_F9g@mail.gmail.com>" "74" "[oss-security] CVE-2016-0756: Prosody XMPP server: insecure dialback key generation/validation algorithm" nil nil nil "1" "2016012720:39:35" "[oss-security] CVE-2016-0756: Prosody XMPP server: insecure dialback key generation/validation algorithm" (number mark "U       mwild1@gmail Jan 27   74/1881  " thread-indent "\"[oss-security] CVE-2016-0756: Prosody XMPP server: insecure dialback key generation/validation algorithm\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22294 invoked by uid 550); 27 Jan 2016 20:40:06 -0000
+Received: (qmail 25822 invoked by uid 550); 7 Jan 2026 07:09:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,111 +7,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22276 invoked from network); 27 Jan 2016 20:40:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=ocNRp3+XWuAXRIafwOLb/Y3/Xb52kvWMfhygw+jhXns=;
-        b=OGfVjUQ3GDjknx+Mvq/xP4f8apX4MZ6qArpOMBTVPH0ABOMFyCA4GfdWfJIYcIQ4V5
-         cReghuhN/SvvFcekhHuspm3svrHez4Aji1ASra1itfnr7smtaUiIqa6fnDzYYRUepu27
-         B6716HMUQkovKq8qm+KJBKW8nf1gIfH9pymWFVa0yS5dhkKgZrkKWDbxtTJnpznawoGI
-         DIYgux0dBA2WT0cXs3RRQNcUxdqq4FJeNQarYJQsBO7Huqxd+Fs1w8CpcFPMtyNCAXiN
-         BgpYkkCKcO4W2OVQuR0HcqZ35PAka1L4BOquBRe4Xi+dVURX7wzd/w0KkYTHU3ahi/lJ
-         8ltA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=ocNRp3+XWuAXRIafwOLb/Y3/Xb52kvWMfhygw+jhXns=;
-        b=a1mrIR118O4jhWUPREPPQKhGxPRHEE4VVTsD8XHmP6xH3ScpFJvz9Vi5Z6/aIdK1Wv
-         kMye89Rg7ThA6UfpAISzxJ7LBdAxe5frJqAC6xa6tlKEt9Nkb1EdFzTkUNoXKmxwhJLI
-         SefRBE5vN/6RvoVgU8UJi83JPzf17g75R4PsQJ8FPll0nF5BsZioJq7aND84bRrsIFfi
-         zhcyznq4OOWxXJc5M6ixsioNf2eKsvZO6BRv0XjYhqlHxzzlivEhdIRcsPKdJVYwcDqO
-         cDuRSq649CeCprP+apwQ1EHH55HH9L8EfiLACy2B2yU7Bli9npudDXb9019cb43yHIvt
-         xiYQ==
-X-Gm-Message-State: AG10YOTLlKNGz/h/86sJXN9GIwLZmn7weeejeMjcpI08Gtcv+NPkkYTAEeG8RupJIIGkzJzqhkya0Pf30ihBJg==
-X-Received: by 10.25.32.16 with SMTP id g16mr3627341lfg.82.1453927194677; Wed,
- 27 Jan 2016 12:39:54 -0800 (PST)
+x-ms-reactions: disallow
+Received: (qmail 25786 invoked from network); 7 Jan 2026 07:09:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1767769783; bh=+9MVT/vwW3winubrFVRTVkcTzO9oF63y328QqCZTcw4=;
+	h=Date:From:To:Subject:From;
+	b=VaWftFu1L+ut2fIYO9Lz64FWR26eFGrPnc4dupaV1jYd5an2QzYOuQbgY3rDLf5zm
+	 IzS/i573/la3GNriVg0jGsgtDeqn0OY7jqCEM87s21wBZuanJUeFp1KHzcwwZR0cES
+	 tDcA1+wu1tBvSyYeP/CfHSR0Nys/tcaOtuqk3t+KqqXkXCBL9ZKlzeGRT8slbIyxdc
+	 ugzcEr4TF4BBnkLr35Wco7juE4DFFC/wANSwiBh9XU6b8WKxPzlAafz+bXlyczkAv4
+	 jJ5iXw6aX/BXVA/iWdZJT0MuxNAT5E+X7HTzxBX0yVlNOiscTfJJxEliGf20HCNtuL
+	 6zolu5FAx9ouw==
+Date: Wed, 7 Jan 2026 08:09:43 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <r1rs4967-1378-015n-0183-8239004p3o6q@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-From: Matthew Wild <mwild1@gmail.com>
-Date: Wed, 27 Jan 2016 20:39:35 +0000
-Message-ID: <CAJt9-x6kPqB6N+qT=70uYvF00sFECT8hBhLzJU9SZJ-q7p_F9g@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] CVE-2016-0756: Prosody XMPP server: insecure dialback key
- generation/validation algorithm
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl CVE-2025-15224: libssh key passphrase bypass without
+ agent set
 
-A vulnerability has been found and fixed in the Prosody XMPP server.
+libssh key passphrase bypass without agent set
+==============================================
 
-CVE-2016-0756
+Project curl Security Advisory, January 7 2026 -
+[Permalink](https://curl.se/docs/CVE-2025-15224.html)
+
+VULNERABILITY
 -------------
 
-Project
-  ~ Prosody XMPP server
-URL
-  ~ https://prosody.im/
-CVE
-  ~ CVE-2016-0756
-Date
-  ~ 2016-01-27
+When doing SSH-based transfers using either SCP or SFTP, and asked to do
+public key authentication, curl would wrongly still ask and authenticate using
+a locally running SSH agent.
 
-Affected versions
-  ~ All versions prior to 0.9.10
-Affected Prosody modules
-  ~ mod_dialback
-Fixed versions
-  ~ 0.9.10, 0.10 nightly build 201, trunk nightly build 612
+INFO
+----
 
-Description
------------
+This flaw only exists when libcurl is built to use the libssh backend, not the
+libssh2 based one. This problem happened because libssh has a somewhat
+surprising API choice where they fall back to agent authentication.
 
-The flaw allows a malicious XMPP server to impersonate the vulnerable
-domain to any
-XMPP domain whose domain name includes the attacker's domain as a suffix.
+It should be noted that the authentication still only succeeds if the local
+SSH agent actually has the correct passphrase.
 
-For example, 'bber.example' would be able to connect to 'jabber.example' and
-successfully impersonate any vulnerable server on the network.
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-15224 to this issue.
 
-Affected configurations
------------------------
+CWE-287: Improper Authentication
 
-The default configuration is affected. Servers with mod_dialback
-disabled are not affected.
+Severity: Low
 
-Servers with s2s_secure_auth enabled will reject incoming
-impersonation attempts (that is,
-servers attempting to impersonate other domains will be rejected), but
-may still be impersonated to other servers on the network.
+AFFECTED VERSIONS
+-----------------
 
-Temporary mitigation
---------------------
+- Affected versions: curl 7.58.0 to and including 8.17.0
+- Not affected versions: curl < 7.58.0 and >= 8.18.0
+- Introduced-in: https://github.com/curl/curl/commit/c92d2e14cfb0db662f958effd2ac86f99
 
-Disable mod_dialback by adding "dialback" to your modules_disabled
-list in the global
-section of your config file, and restart Prosody:
+libcurl is used by many applications, but not always advertised as such!
 
-   modules_disabled = { "dialback" }
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
 
-Note that disabling dialback will affect interoperability with servers
-that do not have trusted
-TLS certificates.
+This flaw **also** affects the curl command line tool.
 
-Advice
-------
+SOLUTION
+------------
 
-All users should upgrade to 0.9.10, or check their OS distribution for
-security updates. Users of development branches (0.10, trunk) should
-upgrade to the latest nightly builds.
+Starting in curl 8.18.0, this mistake is fixed.
 
-Credits
+- Fixed-in: https://github.com/curl/curl/commit/16d5f2a5660c61cc27bd5f1c7f512391d1c92
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.18.0
+
+  B - Build curl with the libssh2 backend
+
+  C - Avoid using SFTP or SCP
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on December 28, 2025. We contacted
+distros@openwall on December 30, 2025.
+
+curl 8.18.0 was released on January 7 2026 around 07:00 UTC, coordinated with
+the publication of this advisory.
+
+The curl security team is not aware of any active exploits using this
+vulnerability.
+
+CREDITS
 -------
 
-The flaw was discovered and responsibly disclosed to us by Thijs Alkemade.
+- Reported-by: Harry Sintonen
+- Patched-by: Harry Sintonen
 
-Links
--------
+Thanks a lot!
 
- - https://prosody.im/security/advisory_20160127/
- - http://blog.prosody.im/prosody-0-9-10-released/
- - https://prosody.im/issues/issue/596
- - https://hg.prosody.im/0.9/rev/5c6e78dc1864
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
