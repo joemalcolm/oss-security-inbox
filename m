@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1759" "Thursday" "20" "August" "2015" "12:23:51" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150820162351.97F80B2E143@smtpvbsrv1.mitre.org>" "42" "[oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service." nil nil nil "8" "2015082016:23:51" "[oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service." (number mark "        cve-assign@m Aug 20   42/1759  " thread-indent "\"[oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service.\"\n") "<1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>" ("<1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3914 invoked by uid 550); 20 Aug 2015 16:24:04 -0000
+Received: (qmail 17580 invoked by uid 550); 7 Jan 2026 07:09:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,55 +6,120 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3893 invoked from network); 20 Aug 2015 16:24:03 -0000
-In-Reply-To: <1385098753.10178920.1439876309298.JavaMail.zimbra@redhat.com>
-Message-Id: <20150820162351.97F80B2E143@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 20 Aug 2015 12:23:51 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request - Linux kernel - perf on ppp64 - unbounded checks in perf_callchain_user_64 denial of service.
-To: wmealing@redhat.com
+x-ms-reactions: disallow
+Received: (qmail 17562 invoked from network); 7 Jan 2026 07:09:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1767769752; bh=rBO5acttHa5CDDXDCKLhua8uGhf+iKTB8VcBSVkKWvg=;
+	h=Date:From:To:Subject:From;
+	b=gDP/gv/C2xx9u8yI3wbjqfQ3Y39LReyAqqSB2YRME+GhFCPuXEfhsTKprhYamMq5m
+	 Bq3SrZB4jzdXfpid9/R9YubjsTK306GT4RZfbD+VSshOzGfsM1a5iM0c3bTcCDigKZ
+	 vmm//jO/Y0Qz/XZDAhpL1KJrG651qRvOsM77P7g9AuX4OZptLqUieavwmfmgf/JoK2
+	 PZHzHu6u2ke5GU8p5COCfvjCafXps1zxA9CsI8lCzA/QvLiyqr6r+BsHHbT2BEb51L
+	 wB8Lx2V+ex5G7U5LhscClbEEMGbVVdLq4Fz/giTNzAH1H65KJ0u3AgeWvW11RCAFb/
+	 q9PR03/RbyjXg==
+Date: Wed, 7 Jan 2026 08:09:12 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <325nq5nr-nr0n-6231-093r-01o942ssp5r0@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl CVE-2025-13034: No QUIC certificate pinning with
+ GnuTLS
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+No QUIC certificate pinning with GnuTLS
+=======================================
 
-> A malicious user could create a special stack layout that fools
-> the perf_callchain_user_64 function (called by perf record) into
-> an infinite loop, tying up that particular CPU and the process
-> can not be killed.
-> 
-> A kernel patch was committed upstream capping the maximum user-level
-> stacktrace collected by perf to PERF_MAX_STACK_DEPTH on 64bit powerpc
-> architectures.
-> 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1218454
-> https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=9a5cbce421a283e6aea3c4007f141735bf9da8c3
+Project curl Security Advisory, January 7 2026 -
+[Permalink](https://curl.se/docs/CVE-2025-13034.html)
 
->> We cap 32bit userspace backtraces to PERF_MAX_STACK_DEPTH (currently
->> 127), but we forgot to do the same for 64bit backtraces.
+VULNERABILITY
+-------------
 
-Use CVE-2015-6526.
+When using `CURLOPT_PINNEDPUBLICKEY` option with libcurl or `--pinnedpubkey`
+with the curl tool, curl should check the public key of the server certificate
+to verify the peer.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This check was skipped in a certain condition that would then make curl allow
+the connection without performing the proper check, thus not noticing a
+possible impostor. To skip this check, the connection had to be done with QUIC
+with ngtcp2 built to use GnuTLS and the user had to explicitly disable the
+standard certificate verifiation.
 
-iQIcBAEBCAAGBQJV1f6MAAoJEL54rhJi8gl5KroP/0uXkRzhODlvbLPJsU0xNmhc
-RR/C+5ugnZsrjC3H0RHKe7C7msCcFoGtXG+UKArCsLgN/ub+lcwf7p5tMcGr57h8
-F3uEGMa+BAvb+A8Y2mnRVfLzZ5PS94qklRngZDsJdO3NfY/R0W0oJT5FTjX74+MJ
-yvGz2xikpeE5sgfnPtMNBwCfSyICfsNCUnwqYjp9tdN4E+RKuNXSlf9vsUeMHdj9
-M0/oHuC7y6e+EiNestFPpPNwjKypvKnvCqZIFR43ty558GxRNWQZEmNlaPMZfZ8o
-OgKEwcHUpk96567Jyld9k3l9BR3wEggAR3ayoHSAvNkck2Y2NTt80y33uTdHhm9V
-9tVY6hSEUMt7xUoU1ePN1cZMvledTM3z450vkPnAdMUt0MilUBL46+dHULEo7qAE
-vq/tWtO8d4kC84rOggfgcJK4np/qf8ffTSJITpv4YnHy00bFTIhRCPcLGPfDgqNv
-Lelaz5G24nUIFKIzSzDns4E4JClr6xRq4tzIUziAVvg4TAeYZgXfJjCk95xaFk7F
-NLUCFYCpg0nc0zIPdt4fBAhuiUHhxhOVENeVKAxLAKRoHGHCt2uIN+pdGJerK5R/
-vo/HA/CFuos7qojBgnuvAmeCHGGcfMLXHiGcS8TaDwqQvRyTNCZ9UpH6I/MfVjun
-QA2LWaIGj3s4a6xMmQiX
-=CCb4
------END PGP SIGNATURE-----
+INFO
+----
+
+curl contains support for several different QUIC and TLS backends. Other QUIC
+backends or the ngtcp2 backend built with another TLS library are not affected
+by this flaw.
+
+If instead connecting to a server over HTTP/1 or HTTP/2, the pinning check
+works fine and does properly detect impostors.
+
+This issue is similar to
+[CVE-2025-5025](https://curl.se/docs/CVE-2025-5025.html) but for a different
+TLS library.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2025-13034 to this issue.
+
+CWE-295: Improper Certificate Validation
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 8.8.0 to and including 8.17.0
+- Not affected versions: curl < 8.8.0 and >= 8.18.0
+- Introduced-in: https://github.com/curl/curl/commit/3210101088dfa3d6a125
+
+libcurl is used by many applications, but not always advertised as such!
+
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw also affects the curl command line tool.
+
+SOLUTION
+------------
+
+Starting in curl 8.18.0, this mistake is fixed.
+
+- Fixed-in: https://github.com/curl/curl/commit/3d91ca8cdb3b434226e743946
+
+RECOMMENDATIONS
+--------------
+
+  A - Upgrade curl to version 8.18.0
+
+  B - Build curl with another TLS library
+
+  C - Avoid using HTTP/3
+
+TIMELINE
+--------
+
+This issue was reported to the curl project on November 9, 2025. We
+contacted distros@openwall on December 30, 2025.
+
+curl 8.18.0 was released on January 7 2026 around 07:00 UTC, coordinated
+with the publication of this advisory.
+
+The curl security team is not aware of any active exploits using this
+vulnerability.
+
+CREDITS
+-------
+
+- Reported-by: Stanislav Fort (Aisle Research)
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
