@@ -1,4 +1,4 @@
-Received: (qmail 26476 invoked by uid 550); 27 Mar 2026 14:51:09 -0000
+Received: (qmail 13428 invoked by uid 550); 8 Jan 2026 22:34:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,150 +8,190 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 26399 invoked from network); 27 Mar 2026 14:51:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=cc
-	:content-id:content-transfer-encoding:content-type:date:from
-	:in-reply-to:message-id:mime-version:references:subject:to; s=
-	qualyscom; bh=qI1WMloJKqUBpKqzH1YM/U8wQ2NTZeDiQdxqBzFbI+U=; b=ne
-	hzEaggF8kS9FsOlzqlzkNZeoL53ozLI+1sdk5qfDAFzz5HMf0QdVTGI8gylf0Y/o
-	Mt4wWCJYMUEgO/6GN61F8owdSVBkeP+41lgcnH52gqAcsG6mAcfS2bamHvyWElzN
-	QxEhYjvJ/J1HQWB1uA1gl83k9eTQ+nEoezeB4uU+7Ifn+HFiCTfeaJi/0OxGEFyM
-	cJzZVxWPksvKcoUUDDBfVztIFTyciPspNp2RQOry2n7faVodBv1xLSQdQ7xT49Ay
-	3JhHi0/WYKq5HrLBqdltgQH10RbyChH19vuh1oJ3XNulK9DUQ8Xe2MLL5q+frAyD
-	eGFF3HmJBdbrHlvXTdvQ==
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PKcDR2vAsaOhZvcziSp3iUUUsxUmN/T/iLyZBKzifQWwgotd0n+94zr91DhHB6CsAM/0b0FzNpHT0CDOOYUChYlpZdsj4+q40jynw8xWFGCQTsrRy2qJOds1ay69Su6Ma+GDJR977MUZt7l4w/HjiXk8x2IhHBGFMUT9//ThzaIEt55QHudYJdPvc0VYY5WKrTun0xfKWK7NkWkRULCOjj3ICbHJ0IYIOvao4Ls/1sZU68CQWGakjPCrxVVGYYWJis7FN0fnSrphf9WrVLKfo/DubA4JPMREHXTB7hDPoKyU3b7QJP8WFZVEC1fsz4v61L3tN9NAdBartHVwLCYxtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qI1WMloJKqUBpKqzH1YM/U8wQ2NTZeDiQdxqBzFbI+U=;
- b=upye9mPqkJKUI56i7B6yT8lrlQT7mPLr4bwQU88RlLYSEll4T6lyZr7IokMxrLRiUYyMEUUY/BkalP+KA/VV+P3E8eWwN9JmzzuCmTg7SpJrBYM4y4t40049EquY2ezGvJkWSRnIzsX7JrOpzyMXeunK+TWx1C6gYWxMsRqyTDH0LwpIUOIVC9mozSrAtRNx1Z2/9yuLozHYHJCWeFIgA6Wj1vm/qE+jhDrDRqGJq3W0Ge3U65NJu1bNXNEsdf4BizTSouxEwODJmtLpckWkMupc642HxQmTkuhJxHTikUK5XKUn8fNQxKZ22eXsxqjqidNUzAdH93knxYqtMAVqCQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
- dkim=pass header.d=qualys.com; arc=none
+Received: (qmail 18206 invoked from network); 8 Jan 2026 22:21:24 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qI1WMloJKqUBpKqzH1YM/U8wQ2NTZeDiQdxqBzFbI+U=;
- b=IlAKi9EoHSYLiIdaGmREOa1bDc0zIphJswdeQ6kTBekmhrEQIs1rMuwoEp+ZUfsMtNswCOKUjkV20lw2fftDuoI3UmqatDohrFzYpQApaYcRl0hKuqVBQoD9z/UXnrmoxIYxqZ3SEjakGkVw+IXJlEIjg+NpVdHAwibevhiyxbQfF4B400ZfXVtdjj6n4xycCTXF7CfU2DV5VvEZ5EDu/xC2sRhCs1t4C+BgYGpnK6tViAGVuCalVMGYFcRnjpDSG3xzMp5jigAHtFtfF9HWRhQ1HwZ3pPvY12C5zpmmOgyyf++ICkunOqhDeyUxmhMTTRvHJtvh54C9b2TCOeHu6Q==
-From: Qualys Security Advisory <qsa@qualys.com>
-To: Greg KH <gregkh@linuxfoundation.org>,
-        John Johansen
-	<john.johansen@canonical.com>
-CC: "cve@kernel.org" <cve@kernel.org>,
-        "oss-security@lists.openwall.com"
-	<oss-security@lists.openwall.com>
-Thread-Topic: Multiple vulnerabilities in AppArmor
-Thread-Index: AQHcsmaIKu96NKiXikGSCaV0fqpbFbWrawGAgBXO+YCAAMWnAIAAjaUA
-Date: Fri, 27 Mar 2026 14:50:42 +0000
-Message-ID: <20260327145022.GA30102@localhost.localdomain>
-References: <20260312212345.GA2728@localhost.localdomain>
- <20260312213345.GA3105@localhost.localdomain>
- <20260326183559.GA22540@localhost.localdomain>
- <2026032744-resale-jeep-2d72@gregkh>
-In-Reply-To: <2026032744-resale-jeep-2d72@gregkh>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV5PR06MB11218:EE_|CO6PR06MB7220:EE_
-x-ms-office365-filtering-correlation-id: 1bc64e04-9768-4c9d-52f8-08de8c10386d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|1800799024|366016|38070700021|56012099003|18002099003|22082099003;
-x-microsoft-antispam-message-info:
- aHhUcGAuKDusWEmXJLfuR+EmP1yt4dEJzmnNBvboTivqnFUbS42tOEI/HLhXQTN8CEzpM4RcevkH98aJtBGV1Q+oZb+AUqj9V3fG5i6KwObdDNTIrRFu7aFYvieDwNghtkh/C4p1UmgVHG8uVx53EpyKIs8F4mDnMSeLJT1hXFb73XRVNuWXFU3CCjoH3lhR0f9D7CdG6x/D08HLMW3euC7VFm1ForHmrzI2oPGD6w1e4BPPve323DHSO0VQUMgYHrS+sCHhItCH79PZzHmi6nL7ic7AKQfe45esiiZ3HsRmFn84jNJq1+DLfZrK8W0fd7fx+2JfYMF5TuB9s210MrO0Kq8RsElOIPnHG4xCeEnu1ajzyma3TEi9UKYm8LYsVaRoZg7cQqLk8ImAnzqTKIcBBIQcaUIYRrdbFISUA9b3pp6g6cLwOIc/WNsHxQI2e3nDv0ZktyvFK0ugKGzKklTD4VqWhZYYaqZQ/VcDxc+m11fkz46f04T5I2dla2clt9H4f+x/xeCgnq7/yH4ra/jWuNHVsChWgAvRx0AQVMmeG9Mddrd7kTJdT3DH18/42ZAA+5urvPVlYGtosuF+f09AlNI/acTR0NisjNrcjT3g39uMep0seEqADjr7PlfGC8T8iZcYRG8JaunPklA1k2hiV7Uy1VIWacIbnkUhWG6BOm2QjXBIyFsgnyPjFnqK7Redp9F6mO0YOv7IcOJTY8XaFatmdJLJnPOXfJvSNl6PFf1ay9vMMyOIsImGOYFPnX7KOqrJWJdBpviz9LYbkwt1Y0kvhMhvjy8posCvi14=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV5PR06MB11218.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?Nd/XLsQ1pEx0GqaiVBLTtu1iCFMPxbD5GZpLKYjTLofpakhGwEwRZdxblpEI?=
- =?us-ascii?Q?OpkqhLAAkcXDmW8Miai9h53C9PsFnWpbMohoscXyotpLCXbgP/cakqi0aJPi?=
- =?us-ascii?Q?tydUFMmzGWDSSQriM0CR6Jzgn1/PUcUv5tPwbqZvAflgY7yJupQgZ/kjr2a0?=
- =?us-ascii?Q?UQTbh1o5pU4+aJlIX+2HtmYYYtBKeNSEw3cj44AUoCr8B1VhH43vHc0bw9XM?=
- =?us-ascii?Q?sak93YOrqz6xMkCuIEzE2HrKlHo8xn993uiB1srks8lDNy9ATVsT7jXLzFLM?=
- =?us-ascii?Q?RkUN37/YVebmj5Dh9kKpGZEN6JgNa7BaJ5mKgQxq+OLFvW8FhOTA7NnyUlSk?=
- =?us-ascii?Q?K0yjztxANaIkI3NP3xlHZrbWe40En9ucHDPdLdP/yABU1KrlHcDEx4EzvbA5?=
- =?us-ascii?Q?1TJp9jbU4z6r1b2Ce1bUTaI6MX3+JRADx50bLU9GEqNtoNv+mPlJ3khKdrqq?=
- =?us-ascii?Q?MO2NDuXAcBz7ru/TgiFs4s6rs37MM+8lQF0JPtOjvJjp8EPkIvfWoTELzxiP?=
- =?us-ascii?Q?zPjXWBXeOnQNspE6hL1iZ610JQ3RnXFM265ezIy6eKI885ibsg5dif4aWQ26?=
- =?us-ascii?Q?VAanzU3XjWVFgBkMdsGdBSm6+WvhxWJvIcfpyCVhcJ8Jtwr5LYa3Q2Ml0rI4?=
- =?us-ascii?Q?NFLu99x6MyAraci27BLtWIjPEqgiq8iICyiEh4lUs2wawh+TKEKueHbGl1eP?=
- =?us-ascii?Q?CxQUwEVLDOX6t77H7FZqZlQpdJm7BElYMG58Tvf8YpWFuc3YQeQlhouragd2?=
- =?us-ascii?Q?7idfUZ8urxy8qD8dyMZoIIEUry+C9iVtq8/4DEhDBDSuq384wGO65DlzYtLl?=
- =?us-ascii?Q?xqLyxNaJgVTawQdvjPlluLL/ywzqYOSE1lpAw+Ee5WMlBJVwxixzLxPrUgY0?=
- =?us-ascii?Q?oFI2wnGdtZ7o7eM3StjF1QiNJrWheU/QYR/aLPFzrB7cMsQLwZGb+Ysvc3+O?=
- =?us-ascii?Q?ef32TvuKpfHbdpQX74rQUaxtDfgfCEYFb1T0QwPLMkfgAXvb9jtBKgSdMBA0?=
- =?us-ascii?Q?TAnEKqhVdaEeG51aLF7vCUts5KczhpyCTnrndh+i0yUK+OzK/8lPYIV1VS4w?=
- =?us-ascii?Q?Y6qKnWRjgMj7u23kUyRj0mCOxFJ7Y0sTioQiVa5uX34+o88EuR8mKhAX8CzE?=
- =?us-ascii?Q?ONka5SS5S3a1+B8gAhru/DkKg09ek5CZSKagSOhRRaDM8yteC8NU8PGDt4Ae?=
- =?us-ascii?Q?iaBw4Bd4UnPad9dT8f9I1iM97WD0LzBy4e7fFByhSB8V/t8PCvX6A6ijEa7g?=
- =?us-ascii?Q?Si1HW3BdAgs4SmXnOA2vuvUfLC8bS3UJa0U3te/fi+HBjftMBVlydtRaPZso?=
- =?us-ascii?Q?x0++sDkb64CQIVfAAhUugOasDqC0TxR+Vi7WXBWLiolgKl7VKA7qc+Ut2dQX?=
- =?us-ascii?Q?NlpMHVinIBkKkJuwoLQSINiAUKGKRa5SaFIrPd5EUF+yilUy8GcyRxnANvme?=
- =?us-ascii?Q?B1CQ9r6UmKwK3XDLFJDgwpAtxkz4Po8wvC0MQhcLUXwq/hzmKSNndv15zPsm?=
- =?us-ascii?Q?o6yvH9rNpzEi60NCizaT5uFntKkGiz9PjShEDK0FiY83X6cqEHT1Taoyz2Zt?=
- =?us-ascii?Q?ZwLDkrnmnqU80yvgF6RZvcgy86oKLfKByBucJ/Y8s6PnIdoKxCDsSqC9qzcu?=
- =?us-ascii?Q?yWnROpgVl1oujH7VGeG2PLStPFZccuojBO3b5QXv9Dw4cjKrIAJrsSYF6CRZ?=
- =?us-ascii?Q?GKRTdiHtwlH3dBKbk6YD7PDBFt0T00B4p4D/wqxAZj8vqPCFyKp/Qyfo6d0r?=
- =?us-ascii?Q?0R52jtzU5UfoZAHB/EIvHeXRZ5EAdKuKhPcSMZSl4wGv0BkW1/nl?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <92196152C25C684F972AF42E4F3ABC7C@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20230601; t=1767910875; x=1768515675; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gi8JXClQDKXBBjS1cYoOKS5g+fmnJP4UP9cRCWv/jaQ=;
+        b=ZFi/qx0gu/YH4jiuNn4hA0kEhFTbvwP14IY+zxRQvBX4N7qnYDs0KTxBGRnQGi/ulT
+         QvYcDiyX5HEV6yRKQPyfGP+f238rjIHOszLexelpqXmM/O9ZVnYBB6CJQvQNouTBWoc2
+         i3nFLlB72DTAzl1h2Bsa53ZkuyZVO20xS1OxwNIp6+4Ma98+6l0M1bGglNQzomlGrw0m
+         B/+8K/UYi1oPdzDwao5JIIJaXinFK3G68Qn2SREuv+8yChGyBvO+HojSCwHQLn/ZlMbu
+         Vk+R7ftKFewq2igqNTMibxkwy3z4Hjynu1i37/SbC3dfUIQBShdvya4eVVhHgCXkGL71
+         sAxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767910875; x=1768515675;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gi8JXClQDKXBBjS1cYoOKS5g+fmnJP4UP9cRCWv/jaQ=;
+        b=R7AnOQ5byxSjrlHD4KfQBZ0TjwnQJu385pCwsE+iRtk/vOa7j26Qf+O84uI62dHtpu
+         2po9UXBQ9ykzj+3vIP5vnEbL/q6KIUpJc/s7CHN0rNsF/kFr1omFMhTe3cyPkOWT9OWp
+         xvhG7RRj0sJOJPCMrvkHmxLlb9fr4KZUugm1pGAcJNKXjOzINFEUG7btyU3+3bxJuLwR
+         r1QKXJjU8wthrKKasZBRAJPBtyXrNDGAIVsHNABZ/m2k/Uo4SV+gHeVJQPrbglbrQRMW
+         +C+J2i6R9NLOla0kLqh+LWCgX+dRr8p3fMFYtii+rXHv/v0mM3gUsPGYUfykwMROn4F+
+         q3+A==
+X-Gm-Message-State: AOJu0Yz+cyhAN70oPDcX7AxEQiTauTFpD0KpGC13vj7x8Q2bqRf0zM+Y
+	qV6pnfeOGxMSttqN8u6mFCGJIMJ24S6xmMoPYNwVLEKDaS0s7F5DkwxWKKwWpAJzEKgToDDCnAR
+	q45Mtw8DTYkHv32rLWEqESdE4TpITBGV1+L/G
+X-Gm-Gg: AY/fxX5uv2saKr4QrOCVev8oKFlUYXPHbEerbGwQZhdLTZa2T/VOE3XMMwwpWOXgtol
+	RetboxbGHkmqbLuWCuShkvZ7h8STfmbH+yOr2P2b53jQcHRtePBsokTLXtawTyOoQefK+rnIH+N
+	IFXwX6P3s2xog2d4JOJmvAL2vRce7NC1rM1O6DOhlwroipUVDfLMDazI8ZseYnWzZm87XNTtavw
+	Vs8oGCrZpNNoxm6za4LD73hudvMBqpLhx13lXtcYmTdOboWm9k+lDSwdl8MwTDKudmKq7o3opEu
+	H86JJsk=
+X-Google-Smtp-Source: AGHT+IFSu5Pf3YD8Cwgm957lo3+Q4pLbUptqsslxjyyWkDfW5xJoYpw6zR81bPKuUKNMJFHxohAQ0VwwMoEiT+pNVG4=
+X-Received: by 2002:ac8:7d8c:0:b0:4ee:739:142 with SMTP id d75a77b69052e-4ffb4a6d327mr96810121cf.51.1767910874709;
+ Thu, 08 Jan 2026 14:21:14 -0800 (PST)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked:
-	pcjZdgO69dbsfcX5PRuRONhU+2GJA2pGP75E7MRe3I4/WT8ISvsEFBofL7mDShAsFGwCgBZySNUK1Mxu9ZZLSgXr/PbTmE0LXMpdXdCPhX6H/T00TvE/6XJlko3uzWQ53cZA1weDlBLmcLvRRuf4mNL37JjRcUPXGPV5Py1z1jfRPWUQx1AvLn54baIBVb+yAsdZqj5Mo9P2DZj/r/YQ+3yuZCrVpcxBa1LGHHT6tw+RleAsdJmoVXZhEzB3HzmbfqYjh1/0isXKDrtD+dG+Flo9RhhqqvSQWrAbHnuietQ5Prg6h6Q1NNlvKbduVMrhZsgGww9laSZKerP2Ifmn6Q==
-X-OriginatorOrg: qualys.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV5PR06MB11218.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1bc64e04-9768-4c9d-52f8-08de8c10386d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2026 14:50:42.6791
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dnLAzvkHuxDJAk/Jye3R6PnCd3DBgU4WHaTOMSX1OLcwPdgMw78QsJv8YAuK/dIPl196HkEgQmUvdyeUTyQpRg3LcUJS2HRhBk+lqn1Mstc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR06MB7220
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-Subject: [oss-security] Re: Multiple vulnerabilities in AppArmor
+References: <CAM=PXV50+jaVYFueXFbZpioBX3PMrUG2Ey8WoQ5NT89J9gFwCA@mail.gmail.com>
+ <20260108212019.GA31309@openwall.com>
+In-Reply-To: <20260108212019.GA31309@openwall.com>
+From: Greg Dahlman <dahlman@gmail.com>
+Date: Thu, 8 Jan 2026 15:21:03 -0700
+X-Gm-Features: AQt7F2qlb2W2xVwkO7Hbt8xUf5exAA_s_0hetKk9wCdVC0PWf8w53kDKLUetN0Q
+Message-ID: <CAM=PXV7zqSmHzewL1fOWTYAvuKGxLSRADCpbf7Grig-ocQnHVw@mail.gmail.com>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000ae845f0647e7d389"
+Subject: Re: [oss-security] Systemd vsock sshd
 
-Hi Greg, John, all,
+--000000000000ae845f0647e7d389
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 27, 2026 at 07:23:24AM +0100, Greg KH wrote:
-> On Thu, Mar 26, 2026 at 06:36:17PM +0000, Qualys Security Advisory wrote:
-> > Since two weeks have passed now (since the fixes were released), would
-> > it be possible to please assign CVEs to the remaining seven AppArmor
-> > vulnerabilities:
-> We were told that these all required elevated privileges to hit, and so
-> were not classified as individual vulnerabilities.  If the Apparmor
-> maintainer tells us that these really all should be assigned a CVE, we
-> will be glad to do so, but until then, we're just going to stick with
-> the ones that we have assigned already.
+Hi Alexander,
 
-Thank you very much for your reply! Adding John Johansen then
-(AppArmor's maintainer), since he will have the authoritative answer.
+Note that the systemd socket activated sshd listener was the only really
+embargoed information. That information was on this list for a while, so
+you should consider it public and feel free to share with those impacted.
+I have included the known working, end-user mitigations below in a few
+locations and I have shared it with individuals I know in some larger sites.
 
-The problem is that containers can be allowed to manage their own
-AppArmor profiles (via AppArmor namespaces), in which case an attacker
-inside such a container can directly write to AppArmor's .load, .replace
-and .remove files and trigger all these vulnerabilities, even without
-CVE-2026-23268 (the confused-deputy vulnerability).
+I am holding off on a comprehensive blog post as I am waiting on a few
+other stakeholders. I expect it to be published soon, maybe this weekend,
+trying to only publish examples with known fixes.  However as when crun was
+developed to replace lxc by the containerd team, there were no constraints
+or defaults at the crun level on callers that is proving challenging.
 
-The way we see it:
+While I can add apparmor rules to crun/runc/podman/bwrap/etc... SElinux has
+proven to be more challenging, so those in k8s with mutating inlet
+controllers should ensure that they deny address family 40 at the control
+plane if possible.
 
-- either CVEs should be assigned to the remaining seven vulnerabilities,
-  in light of the container use case described above;
+Note: While local execution on a container host is problematic, restricting
+access to the vsock loopback and VM bus from containers/sandboxes is
+important.
 
-- or CVE-2026-23269 ("validate DFA start states are in bounds") should
-  be rejected, because this vulnerability is no different from the other
-  seven vulnerabilities.
+I now have permission to share more information about one attack that I was
+informed of, which was internal.
 
-Thank you very much in advance! We are at your disposal for questions,
-comments, and further discussions. With best regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Known attack
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
---=20
-the Qualys Security Advisory team=
+A SAAS provider had a singleton container that originally allowed customers
+to upload assets for branding via git and rsync, over time they added the
+ability to pull assets from external tools which required them to allow
+customers to log in to troubleshoot and run python scripts.  Their
+expectations was that this container was not shared between tenants, and
+that it was isolated.  As this was a tiny container, they just co-hosted it
+with their app tier due to budget concerns.
+
+An internal developer was approached by a customer.  That developer then,
+claiming to be working on a new reporting engine container, added code to a
+chain of notification engines pushing to the vsock proxy.  Any error being
+explained away as safe because that new container wasn't in the app layer
+pod.
+
+That developer, either handed a time limited ansible key to the customer or
+used the customers key to ssh into the customer's container, used
+python/paramiko script to ssh to the container host, and launched a
+multi-hop proxy as the container host debian built in www-data user.  That
+container listens for all customer events and using the vsock proxy and
+pushed targeted ones to the customer's asset container, allowing them to
+exfiltrate sensitive data.
+
+While the above attack did use the systemd vsock sshd listener for Escape
+to Host <https://attack.mitre.org/tactics/TA0005/>, the attacker could have
+just directly listened over the vsock loopback. Unfortunately this
+orginization was only interested in a fix, and I don't expect more details
+to be made public.
+
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Known mitigations
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+
+Kernel boot string
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Disables systemd sshd vsock listener, will not protect the vsock loopback.
+
+The official way to disable vsock sshd is through a kernel command line
+parameters or system credentials logic. [systemd-ssh-generator]
+
+ systemd.ssh_auto=3Dno
+
+
+Mask systemd socket
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+This will disable the systemd sshd vsock listener, but will not protect
+the vsock loopback.
+
+ sudo systemctl mask sshd-vsock.socket
+
+Note:
+
+ If another unit **explicitly** wants "sshd-vsock.socket" it may
+ be started.
+
+
+AppArmor
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+This will remove access to the vsock loopback, which will also remove
+access to the systemd sshd vsock listener for targeted binaries.
+
+Add the following to "/etc/apparmor.d/local/<filename>" for each
+high risk command.
+
+ audit deny network vsock,
+
+
+
+I will reply to this thread once I do publish a more indepth post and my
+time for testing is constrained.
+
+If anyone has found reliable methods of constraining crun with SElinux by
+default without breaking the upstream callers it would be appreciated and
+accelerate that effort.
+
+Thanks,
+
+Greg
+
+On Thu, Jan 8, 2026 at 2:20=E2=80=AFPM Solar Designer <solar@openwall.com> =
+wrote:
+
+> Hi Greg,
+>
+> On Sat, Dec 27, 2025 at 08:46:49PM -0700, Greg Dahlman wrote:
+> > This information is to be publicly released on January 6 per requiremen=
+ts
+> > of the distro list.
+>
+> We're past this date now.  Have you already disclosed everything in this
+> thread, or do you have anything additional you had shared with distros
+> that you're yet to disclose to oss-security?  In the latter case, please
+> do this ASAP!  (Sorry I haven't kept track of all the detail.)
+>
+> Thanks,
+>
+> Alexander
+>
+
+--000000000000ae845f0647e7d389--
