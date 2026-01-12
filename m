@@ -1,4 +1,4 @@
-Received: (qmail 21916 invoked by uid 550); 27 Mar 2024 22:59:26 -0000
+Received: (qmail 25723 invoked by uid 550); 12 Jan 2026 13:43:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,132 +7,90 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13458 invoked from network); 27 Mar 2024 22:55:41 -0000
+x-ms-reactions: disallow
+Received: (qmail 25696 invoked from network); 12 Jan 2026 13:43:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1768225420;
+	 x=1768311820; bh=NZMA7v8DPcCNctIai63XhDPmVCbXsYkiBku+ls7oIP4=; b=
+	TQL/MS0jAB+tK7vgzVYG4U4SBDr3mQIqPxkXycBceiy3zCIeaN6ZT1KIoRPzrrKx
+	mNCmKqRatAlFGeZK/QKfQknB1E5lcOT9swz+tHL84RNsdJjQgupzJ5w3HyEFwmMV
+	d0t/jHEBoEGytXvHxOS1jRPsN062JJjy+RXyQ1H6jXt/qaXYK8fugyN5bC9+Bhax
+	6MCqGpt7mL3sZ2R3YOHHD4V5pRRnHVtX6AY9o+jC7atbCxSp9G2LIOMm2iLJOeYc
+	IOfcbIX4RHCLD5QO4zI9fnc8QFtKLYUMlvy4ZJJxZub+gfGJpXHjuhfiIZxi+uFH
+	yUb7dXcylk1a+U3DRb/rhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1711580420;
-	 x=1711666820; bh=ti6U56nA7hFTM9I3cQXMNC6hsZSFjc84BNPHWZxKS7Y=; b=
-	bYhtprS343ZTtzWw3UeGks7K8zT505zgOlDZPNnDCRtus4gjs4vjVo5qyR+zJghV
-	rlgqVj0LT/+g7uWyNQL54tDhjnPvJaAfJ6MGZ3gRyCeeSDUbgEbUjuKYgTRY6NZS
-	VrBDFu/jAMASsEVn1XXBA0kpvqroSqeYLrO8vzVy53u0bInLi2XzA8b3vsJWtuZj
-	P3kHFf/Asvoo6PAJWcqCSKpty+f26+prRTTaSxQUOKbxcpwmvXFlHDKFfX1/NnGE
-	BGRH8kidlzENk+arpodh24OHe16mQLoGQrrAV+9brfKBBO41Gn3pk0rpzMFZk5UD
-	iAdR7NP4lago623Wua687A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1711580420; x=1711666820; bh=ti6U56nA7hFTM9I3cQXMNC6hsZSF
-	jc84BNPHWZxKS7Y=; b=kRWLxnr7Yxz4gUXpYfrpyfZKjFoCttF0r3+dHlc2YxCt
-	vrP9VvQI/rrYZPbGJ1qz5UevdVSNfjo7A67VV9K0NepvGgIJQss3nziXguM4W8GY
-	S534A2WSezYG/A5frRoGNCme7r2C4M40wtPTMcXfhELLhJv+oPvmOSCjGasqCtOa
-	WQJfq10XT6bSLOI6tAoe2QU6rpa6Tl1RL6kgMwzrkeVCO/nutqyCh3S71gB5arr+
-	iPiJmtF7uJ2eBtwu6NrIrm+j/vGsE6M9cTBxyNA/3h4HoZlvV7nUj4RrdCcmBJJ+
-	iG+IA2u3cHMwXvr/nXtTEb+oGPe0JVFoXFoIK78zfQ==
-X-ME-Sender: <xms:A6UEZgruLisSXBwTrzZCdMAR0iOCJJBfeBUh4jAiIRYwa1XY0eCskQ>
-    <xme:A6UEZmpyBvLSPnJytgD9M_t4O3YTP4M7guizWsmhWzfa0xL-kR5s-PU3TaDZfzF_u
-    GSrW44Ig_7Kexg>
-X-ME-Received: <xmr:A6UEZlNLojSIV5c6IC7KAjh3oTcUK4WWVFCFxqjfLGl2N5NcHkWmxA60HK63YWlkG_5C0YrHMdBikbWgHV3FN9Am9kHxvWx36ECfvy0oEn0G0t-N>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddukedgtdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomhepffgvmhhiucforghrihgvucfqsggvnhhouhhruceouggvmhhi
-    sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnh
-    epueekieetvdefffffheevleehiedtgfeitdeukeeiueehjeekhfettddtveffjeefnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhl
-    rggsrdgtohhm
-X-ME-Proxy: <xmx:BKUEZn4QLujuZsuhwxrS9MDcC7jHLtrgofp351iCE1Z_9ODZAN2DEw>
-    <xmx:BKUEZv792fKrBCxVEvF6CTyqYdZImuZlFzj-WLIxasuTgF_XKgnFlg>
-    <xmx:BKUEZnj1ESyJrbmLgakHzX8zXE8mL2cFwnGo_eOvvY8Idn2KeR_HTw>
-    <xmx:BKUEZp7lbLNlxFA8TwKlclzhQMK3dNziBVBzwCWwBMaY697HfGDoUg>
-    <xmx:BKUEZpRtu0n2Uk6jA70hM-Us9loLsUT-_gUlBA_GpvGWsXHudir12Q>
-Feedback-ID: iac594737:Fastmail
-Date: Wed, 27 Mar 2024 19:00:02 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768225420; x=
+	1768311820; bh=NZMA7v8DPcCNctIai63XhDPmVCbXsYkiBku+ls7oIP4=; b=b
+	r+6OiZhwHIQtKqCthVu6TfAk/MtjFDsR/N7LzLMe2D4tU4OxXnhoZsd2jVt1d9E5
+	uQndbhIjvDgU5mo/YVnnQw+DYAh76EXjVpZS5xy06lwSByp99r6RxUaQ+ia32ob2
+	/p82UltBzvtK6W4VzZN35Yj97aBEXkw89BTFdOSriWNBu+ps/BfJWnGn4ANwehf5
+	VfuwZ1sXuQv+EsaHg+HjEzGbpvqFW5V1zf4AZq6vjkPnBi4I5gTAl6qdu1vBZShG
+	pR3TNPqS63JuhHgSVfNdnRI2jkSVdq0zH78JPs/6ElrPyaQzxE6yczrq8H0yzeVH
+	Glbj/Es/017g8ndAxD1Rw==
+X-ME-Sender: <xms:jPpkaUU4ZR1TWjEFCjJ_3G1yP6vEQc5T4yQLICQ6KsnlnxjrlcgrvQ>
+    <xme:jPpkaWYBYwPPh82WApaYViooveeToG8TETBWhaNQocFsrzZV5tRxcocAywIiaoLS1
+    a4Rt2uzrR6_2amjNBg-kU6-Qh582yzb9k7Gtyif4aSKrhp1>
+X-ME-Received: <xmr:jPpkaS1yss8seJ2dR42UEpwr4LfOaxo_85aKU7ywa7v2tUhW68gq3jJMmA-2TJzWoyfCTahXLoCDc48cac07dxpEd8J2yUznUhB9Ew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduudejiedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttddunecuhfhrohhmpefirhgvghcu
+    mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpeegveevte
+    fgveejffffveeluefhjeefgeeuveeftedujedufeduteejtddtheeuffenucffohhmrghi
+    nhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtohhmpdhnsggprhgtphhtthhopeeg
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslh
+    hishhtshdrohhpvghnfigrlhhlrdgtohhmpdhrtghpthhtoheprghlrghnrdgtohhophgv
+    rhhsmhhithhhsehorhgrtghlvgdrtghomh
+X-ME-Proxy: <xmx:jPpkaQhZoVcKfJo48PYUpCelZrncH8c8OfVpRIvODBm02HHD8mLHYg>
+    <xmx:jPpkaeYr-9AhXwa5hW_mkLD9M0z-nYp96cyum_zljqjXCsI_T07CiA>
+    <xmx:jPpkaYQ7l6v4tIl9u790pHbnUDRdbnPIzXSzogdWDn4wcR_l9iqR3Q>
+    <xmx:jPpkaRSCn-dYPvnyWAK3ecaMgnfsRkcj43IaiBTjfhJdW4144aPJ9w>
+    <xmx:jPpkaYO2av7U8H8IkS8tc1A8nWfdn7nlyr6xV3coP-cHKn9Ap3DTxc0j>
+Feedback-ID: i787e41f1:Fastmail
+Date: Mon, 12 Jan 2026 14:43:38 +0100
+From: Greg KH <greg@kroah.com>
 To: oss-security@lists.openwall.com
-Message-ID: <ZgSlAmss1tT8M2vZ@itl-email>
-References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com>
- <20240327213041.qyr7sglmxgdmtcb4@jwilk.net>
+Cc: Alan Coopersmith <alan.coopersmith@oracle.com>
+Message-ID: <2026011249-radiantly-scrambled-299e@gregkh>
+References: <f6825a3e-06ba-4672-afc1-171c7ae48d9d@oracle.com>
+ <56e7f252-59a4-447c-b8ee-29e647c6bc3b@gmail.com>
+ <9151rn19-0on4-96s6-p3oq-qq07188p9n0r@vanv.qr>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+91qtLFP3wKN2X26"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240327213041.qyr7sglmxgdmtcb4@jwilk.net>
-Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
- util-linux wall
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9151rn19-0on4-96s6-p3oq-qq07188p9n0r@vanv.qr>
+Subject: Re: [oss-security] Null Pointer Dereference in HarfBuzz
 
---+91qtLFP3wKN2X26
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 Mar 2024 19:00:02 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
- util-linux wall
+On Mon, Jan 12, 2026 at 10:42:33AM +0100, Jan Engelhardt wrote:
+> 
+> On Monday 2026-01-12 04:09, Jacob Bachmeyer wrote:
+> >
+> > In short, this is a crash bug, but not a security issue.  This is different
+> > from (for example) a parser bug that results in NULL being dereferenced if
+> > crafted input is processed.
+> >
+> > Are we now using CVE IDs as some kind of global bug tracker?
+> 
+> Isn't that how the Linux kernel works these days,
+> as per <https://docs.kernel.org/process/cve.html>:
+> 
+> "almost any bug might be exploitable to compromise the security of
+> the kernel, but the possibility of exploitation is often not evident
+> when the bug is fixed"
 
-On Wed, Mar 27, 2024 at 10:30:41PM +0100, Jakub Wilk wrote:
-> While looking through upstream git for a fix for this=C2=B9, I stumbled u=
-pon
-> another write(1)/wall(1) control character injection vulnerability,
-> introduced last year in util-linux v2.39.
->=20
-> The offending commits are:
->=20
-> * https://github.com/util-linux/util-linux/commit/8a7b8456d1dc0e7c
->   ("write: correctly handle wide characters")
-> * https://github.com/util-linux/util-linux/commit/aa13246a1bf1be9e
->   ("wall: use fputs_careful()")
->=20
-> The added comment says:
->=20
-> > The locale of the recipient is nominally unknown,
-> > but it's a solid bet that the encoding is compatible with the author's.
->=20
-> Alas the bet is not that solid when writer's locale encoding is controlled
-> by an attacker.
->=20
-> We can exploit this against terminal emulators that recognize C1 control
-> characters, such as Linux VTs or screen(1):
->=20
->    $ printf '\302\23331mMOO\302\2330m\n' | LC_ALL=3Dkk_KZ wall
->=20
-> I don't see any good way to fix this on the util-linux's side. It should =
-be
-> fixed on the terminal emulators' side by disabling C1 support.
->=20
->=20
-> =C2=B9 https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
->   ("wall: fix escape sequence Injection [CVE-2024-28085]")
+The kernel might be a bit "different" here, given that any type of bug
+that happens at the level of Linux can cause a system failure (i.e.
+vulnerability), while I don't know if harfbuzz is at that same level
+(i.e. does it claim to support any invalid input, like the kernel does?)
 
-Would enforcing UTF-8 validity (regardless of user locale) be a
-solution?
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+thanks,
 
---+91qtLFP3wKN2X26
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmYEpQEACgkQsoi1X/+c
-IsEAZxAAozgHZk/r3S3pF8Hen7+xBwpx3uyXfmAK6dmeOuFjtAObUgO4/KiWNrQP
-oqRL9nuXCeLdUp4dAz8JBWBXIX+kBifCBBlsNtVed71J0ZpCMfMMprA8g9JRHOLP
-p7jm0JkMyw3nEKEy7kyZRlAmzjAmZxYTLPmOOdFfKoqOhC+b6rTDjiDg2AGAVo8/
-dGc5q2gvhmJ9lBXlS65Q2KbHoIS2EtT6Yo8R3GipN0RJlF6z3qyxQyXaRnzOPg88
-aV5oSzCQDMupxIPeFOL2FCuhM63AWfX+MDEtWOlUnsdpOMmj1NH6l3OUvaSTCrNT
-/f8RlhK8RPiC/4R3J5SR3QnWszofwdSK9xiN8O4FMGcdwysy8vvTiai70NjgvXIq
-auy2UrsCPAZVh9LQYzOwQvjGF1iczVB+NmsWEj8nDFmUbWU0koycr1vlXd8KrEqA
-/nHQUv4kN8srWgKTeGBw4pdPlBSa7H8m91Mi9i8e2bEjZ7o4T7XOSRw/V34nkssW
-r3vljnRfIGEujlPfT4A6UUD3IQAMkfH7SGx5bMIZ5OhmB56p5sAgPGgT/ImlwC0n
-XU9DtHlVaRsSbVPn4P5jerLWmwf0XuTQOYN6Q/3XMzlLcDv0/7cyTYakoXbE88VM
-MEwz85Wauj6jW/ca5qioGsHfZiqN0ltz003i14sszoecWp6/eD0=
-=iMpM
------END PGP SIGNATURE-----
-
---+91qtLFP3wKN2X26--
+greg k-h
