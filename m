@@ -1,4 +1,4 @@
-Received: (qmail 10020 invoked by uid 550); 11 Apr 2026 01:11:16 -0000
+Received: (qmail 28128 invoked by uid 550); 12 Jan 2026 11:14:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,85 +8,59 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 26067 invoked from network); 10 Apr 2026 21:53:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
-	t=1775858010;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=TVDhuq5wGzJuO9skq1HuiaOVR6RH1x3fULoXGHOY5fw=;
-	b=LipFt7PypkoblrI0O9ENZ4wDjHJNxStjXJRpmsI3a4etILXJhX8k8m4hwH22p1mRUU1t/L
-	ZZF603b36kDcQQ0UOpeVR6eaNoU1Bq4ZagPTPdjgP0Q9an/YgizqYGjC5aFcyqVKNwbhZt
-	EjUy4kVwe2iEwUP+Gk/G8AqY4DvS4n/YM7zI+iuiGorXNe7zknmFpXkNpFUsyYLDQGWwo5
-	TaLL/Qj7lcjeifb2BoKrx/ZiIXAAwfp8rH7g0iEkXEjcnAuZMMgoOcgJNPeQTThIa6DqYT
-	cQOFJYpSivoxk0sU6U2ZDrfO/chOxa7p0eyeSP0SjhwDjQdMTNcaNkeG62sx3Q==
-Date: Fri, 10 Apr 2026 23:53:28 +0200
-From: Stig Palmquist <stig@stig.io>
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Message-ID: <adlwk7KgpcptKJUC@ava>
+Received: (qmail 28109 invoked from network); 12 Jan 2026 11:14:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1768216435; bh=bgZQCZVHrPJi/Nsu33aW8wea2yFG+Gr4OJswf2GieyA=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=TejgqU3jS9GEdAn4wLPYdNn5ATmizGZEkk084vXUjYCJUSxMvsgdXg8uC5Z02CUh+
+	 i/3v5+byCgjsB8fNSZ4gkxd3JkZsAVEUPP16cLfPN1caywsYWVQLDFPeOlwGUBXLl9
+	 1LKRYs7qwNnjYEYQ0rLDwTbBHhhm/2wr/bAqzwF8NML9BblpHo+jDklzVCD2fCKMoF
+	 uOFT9HmCtSdj6in5nXDjmotcZejA3rdl7u7/JyGOGF5rrkXEyjth/ZqtLJOa7przni
+	 t2F+B9XkbxbrnaUEJfD5vGIHVuXlHLWKgaRpfXCSIEgg8k1dr9vGYHU1XfIyGWGBtA
+	 thTwI6InYS3Uw==
+Original-Subject: Re: [oss-security] CVE-2025-68493: Apache Struts: XXE vulnerability
+ in outdated XWork component
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Mon, 12 Jan 2026 12:13:53 +0100
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20260112121353.1a1921f1@hboeck.de>
+In-Reply-To: <092d7ffa-d71b-22c4-2014-ce6c21cec8e3@apache.org>
+References: <092d7ffa-d71b-22c4-2014-ce6c21cec8e3@apache.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Subject: [oss-security] CVE-2026-40199: Net::CIDR::Lite versions before 0.23 for Perl
- mishandles IPv4 mapped IPv6 addresses, which may allow IP ACL bypass
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2025-68493: Apache Struts: XXE vulnerability
+ in outdated XWork component
 
-========================================================================
-CVE-2026-40199                                       CPAN Security Group
-========================================================================
+Looking through recent mails on this list with XXE in the toppic, I see:
 
-        CVE ID:  CVE-2026-40199
-  Distribution:  Net-CIDR-Lite
-      Versions:  before 0.23
+* XXE in Apache Struts due to insecure defaults in Java's standard
+  library: CVE-2025-68493
+* XXE in Apache SIS due to insecure defaults in Java's standard
+  library: CVE-2025-68280
+* XXE in Apache Tika due to insecure defaults in Java's standard
+  library: CVE-2025-54988, CVE-2025-66516
+* XXE in Apache Jackrabbit due to insecure defaults in Java's standard
+  library: CVE-2025-53689
+* XXE in Apache Ambari due to insecure defaults in Java's standard
+  library: CVE-2025-23195
+* XXE in Apache XML Graphics FOP due to insecure defaults in Java's
+  standard library: CVE-2024-28168
+* XXE in Apache Drill due to insecure defaults in Java's standard
+  library: CVE-2023-48362
 
-      MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Lite
-      VCS Repo:  https://github.com/stigtsp/Net-CIDR-Lite
+Also recently: my research on prevalent XXEs in electronic invoicing
+software, largely due to insecure defaults in Java and Saxon (which is
+based on Java): https://invoice.secvuln.info/
 
+I'm sensing a pattern here. Maybe Apache should audit all their uses of
+Apache's XML standard library. And, maybe, having insecure defaults in
+Java's standard library is not so great.
 
-Net::CIDR::Lite versions before 0.23 for Perl mishandles IPv4 mapped
-IPv6 addresses, which may allow IP ACL bypass
-
-Description
------------
-Net::CIDR::Lite versions before 0.23 for Perl mishandles IPv4 mapped
-IPv6 addresses, which may allow IP ACL bypass.
-
-_pack_ipv6() includes the sentinel byte from _pack_ipv4() when building
-the packed representation of IPv4 mapped addresses like
-::ffff:192.168.1.1. This produces an 18 byte value instead of 17 bytes,
-misaligning the IPv4 part of the address.
-
-The wrong length causes incorrect results in mask operations (bitwise
-AND truncates to the shorter operand) and in find() / bin_find() which
-use Perl string comparison (lt/gt). This can cause find() to
-incorrectly match or miss addresses.
-
-Example:
-
-  my $cidr = Net::CIDR::Lite->new("::ffff:192.168.1.0/120");
-  $cidr->find("::ffff:192.168.2.0");  # incorrectly returns true
-
-This is triggered by valid RFC 4291 IPv4 mapped addresses
-(::ffff:x.x.x.x).
-
-See also CVE-2026-40198, a related issue in the same function affecting
-malformed IPv6 addresses.
-
-Problem types
--------------
-- CWE-130 Improper Handling of Length Parameter Inconsistency
-
-Solutions
----------
-Upgrade to version 0.23 or newer, or apply the patch provided.
-
-
-References
-----------
-https://github.com/stigtsp/Net-CIDR-Lite/commit/b7166b1fa17b3b14b4c795ace5b3fbf71a0bd04a.patch
-https://metacpan.org/release/STIGTSP/Net-CIDR-Lite-0.23/changes
-https://www.cve.org/CVERecord?id=CVE-2026-40198
-
-Timeline
---------
-- 2026-04-09: Vulnerability found
-- 2026-04-10: Net-CIDR-Lite version 0.23 released
-
+--=20
+Hanno B=C3=B6ck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
