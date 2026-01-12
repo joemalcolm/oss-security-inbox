@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2333" "Wednesday" "13" "April" "2016" "10:20:40" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160413142040.A22F96C04FB@smtpvmsrv1.mitre.org>" "57" "[oss-security] Re: CVE-Request for brltty auth bypass" "^Cc:" nil nil "4" "2016041314:20:40" "[oss-security] Re: CVE-Request for brltty auth bypass" (number mark "        cve-assign@m Apr 13   57/2333  " thread-indent "\"[oss-security] Re: CVE-Request for brltty auth bypass\"\n") "<20160412074937.GA30265@suse.de>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5811 invoked by uid 550); 13 Apr 2016 14:20:53 -0000
+Received: (qmail 23889 invoked by uid 550); 12 Jan 2026 23:18:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,124 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5792 invoked from network); 13 Apr 2016 14:20:52 -0000
-In-Reply-To: <20160412074937.GA30265@suse.de>
-Message-Id: <20160413142040.A22F96C04FB@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 13 Apr 2016 10:20:40 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE-Request for brltty auth bypass
-To: krahmer@suse.com
+x-ms-reactions: disallow
+Received: (qmail 12157 invoked from network); 12 Jan 2026 23:09:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768259352; x=1768864152; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0UoU9+I+6HvppRFqnelHk9hvlax5xglR+BiP28mZ7qc=;
+        b=gRgFyIvd4cj3EsNTXtPSkIA/OephDoNFF49IXyy+Rpwihwhq1d78JDxu0BT2SFfov1
+         rEn26njhHekTR6KlNFu6FxlHsqN0eMAMQnpKne6hqzJkifQYrmc8BrzzkgDZbH5INHxw
+         ZcZ/cztUAhnlAzBOtdot8YsIUpS+0MziKUjsEcGMI9z8VcGt0VHjx0Lu2gHk/UABgsJk
+         MjmEuKfb+OD3szkdC9A+jRNiVIMalKSFJgmGDniObTdOeV1LyzVa9vHBVbsVzjQMjhn+
+         UyGSu/hEJpJkSI4J7MK7ptDTLYgxbGdCcPW9j2ep77NpRiQ8JU/SJdZq26gEx9yPCAHL
+         j1ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768259352; x=1768864152;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0UoU9+I+6HvppRFqnelHk9hvlax5xglR+BiP28mZ7qc=;
+        b=Cvl799Ocq/1XSI6Lkrod2qfgY6wdDarjX9z1MbkYKjwrZpq5FPaidrgfP/DdVYY9mw
+         pSAkmxqnDfDT3WQy03ToPQctdYMYSp/eXWXTF6rZONVj3jxJVGGpaD6ddBHDUFvPoeg3
+         RDSHJAtCkAmcZZEQugv94dlPN9AR6qu/1pm492pqLi+IaT7wmri80NA5tU48DMvEMVuz
+         iWqiNaOMsKr7qQwETPUTMD/juoE3QnQVTRXFlrI4cEAOizD1YO7q4y430OnsgzwugZ+/
+         ff+mi/7ImOHNY8vXGPyQVi+RCjVMiILmBTvpYUuLreCAPiGfaXwS1UjiThIZyZbU0/yD
+         ovUA==
+X-Gm-Message-State: AOJu0YxghA6M1+pQTRTt1tJVUv9Cz6CcVNQcqvak8NrCdtAb2YX2O61B
+	K5ZVKK5cEFq2QCunrBYkHve5iEvLUoDLh2PQKwXC813YMqJrW+orlfL/6VeOvYFVV3uQoBTlSE+
+	pO2YoE4Y4OCTZlK5QOYGlXMyP53mDJhxLP67k
+X-Gm-Gg: AY/fxX7pWduRi0KHVvEWarO/q4boEO/l7SkA00BexvswFMIUZ4HsACje3m1iWsAyALW
+	+vU1BwAHgrZfMx9Oy+jtSqU2S6ZX9uxG9AfYBG7T0lxlVnTGvbiNj8jfx7XiIcYt30uJ+EnFcMj
+	4eErpeoRSyLUXQDXavNCAJaEt6/V7T7RXYkWuVVGG4DO6o/KgQQkLXfIaxxj+RVz12QAlPZwUj6
+	W1FH8Qdpypg35iXUaBr0JtQH8ALuKZi9/vQxSJTdszC9xVuH1VwU0XJ0IT/amHVkuWxBLbyVb97
+	+dBRmEOIPFxhSxjisntiU7JIuQ3Aemdw65ecIp1mrflBY4Kf3HvLLG17znZFo3C1/6j+bhxgXMI
+	a8flh/ynFzyY=
+X-Google-Smtp-Source: AGHT+IESNCSscNVsl3fPBI5bzrQEl7qTjUiYblBHXXmyXKrVxzeB7Crsmc/atLRdjQVUjLDTOaNlOgMptKNAWTUtY8k=
+X-Received: by 2002:a05:6820:160f:b0:65e:c673:777a with SMTP id
+ 006d021491bc7-65f550982eemr9858573eaf.58.1768259352428; Mon, 12 Jan 2026
+ 15:09:12 -0800 (PST)
+MIME-Version: 1.0
+From: Cosmin Truta <ctruta@gmail.com>
+Date: Tue, 13 Jan 2026 01:09:01 +0200
+X-Gm-Features: AZwV_Qg6OaA6jwO274slwdQtQv1UrG0G-EDBpoFTi4IKIBULjbhon4FuYqGRqpE
+Message-ID: <CAAoVtZwZkg3vN3MOdFxXA4JLqpZVTcmmtbwccXbkSAEEMiCSAA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] libpng 1.6.54: two heap buffer over-read vulnerabilities fixed:
+ CVE-2026-22695, CVE-2026-22801
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hello, everyone,
 
-> https://bugzilla.suse.com/show_bug.cgi?id=967436
+libpng 1.6.54 has been released, fixing two medium-severity heap buffer
+over-read vulnerabilities in the simplified API.
 
-We don't know enough about the deployment of this product to decide
-whether a CVE is needed. As far as we can tell, the available
-information is:
+=== CVE-2026-22695 ===
 
-  - the last release was 5.3.1 on 2015-12-21
+Heap buffer over-read in png_image_read_direct_scaled
+(regression from CVE-2025-65018 fix)
 
-  - the vulnerable code was not in that release
+Security advisory:
+https://github.com/pnggroup/libpng/security/advisories/GHSA-mmq5-27w3-rxpp
+Remediation commit: https://github.com/pnggroup/libpng/commit/e4f7ad4ea2
 
-  - the vulnerable code was added in
-    https://github.com/brltty/brltty/commit/e62b3c925d03239a372d425fb87b2cac65d8ef19
-    on 2016-01-28
+CVSS 3.1: 6.1 (Medium) - CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H
+CWE: CWE-125 (Out-of-bounds Read)
+Affected: libpng 1.6.51 through 1.6.53
+Fixed: libpng 1.6.54
 
-  - the vulnerable code was fixed in
-    https://github.com/brltty/brltty/commit/74affe7d1401f2b43ad32e18cb78704d22604ad7
-    on 2016-04-12
+This is a regression introduced by the fix for CVE-2025-65018.
+When processing interlaced 16-bit PNGs with 8-bit output format and
+non-minimal row stride, the png_image_read_direct_scaled() function
+used the caller's stride instead of the actual row width for memcpy,
+causing a heap buffer over-read.
 
-  - SUSE Bug 967436 mentions the existence of home:mgorse:branches:hardware but
-    doesn't state that this was distributed to any SUSE customers
+Impact:
+- Information disclosure (low): over-read may expose adjacent heap data
+- Denial of service (high): negative stride causes deterministic crash
 
-  - https://github.com/brltty/brltty/blob/master/README doesn't seem to
-    have any suggestion that building the latest code from the master
-    branch was ever recommended for an end user
+Applications using the default stride
+(row_stride = 0 or row_stride = PNG_IMAGE_ROW_STRIDE(image))
+are NOT affected.
 
-We can assign a CVE ID if there's an assertion that it's reasonable to
-expect that someone was affected by this vulnerability. Otherwise, we
-feel it could be thought of as one of the millions of cases where
-potentially unfinished code is added to a master branch of something,
-with the expectation that it could be reviewed/revised at some point
-before it is released.
+Credit: Petr Simecek, Stanislav Fort and Pavel Kohout (discovery),
+Petr Simecek (fix)
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+=== CVE-2026-22801 ===
 
-iQIcBAEBCAAGBQJXDlUvAAoJEL54rhJi8gl5nf4P/0xGuraGsr0t2YArrabJsLhy
-psyPiii4a5IenxWfvuhysCRyR1em07qjyxZv10AwxRbAj9WdmIODlXybPnSq6lEc
-wzwkZT1VUKUrgbSOCHIY4S6qEgn4uGinTf0LiT72aAVPdtfUOaPatZLGVr/DWPwb
-qdDRE2e768JnbwCu6KEyHYTuOwAG6BX0vorYjdCpPLoxgt9jKccgX7GgTp7Chfj9
-ya8GM2nLvRVwP5RfD/so9OpxU7nFHT8jLnNh+JzqcPj5tUpDSn8miT05lavYQpBa
-Bttxapv57evtNTPtpk4cJ1efqNvFNsP9LNaWDWhD8xetlxHIpHtoamYfWohl/SB8
-6H9tPo2MtR8teoljJ/rsYJmqHDCG6jKJswdnFyxtdWq6KYf0sqGH4v7fMmENslKN
-8bUDYyUAZxyqNAX67sJHWDB7LzWGQKMTMdLaLQ/RU0JuNnHBs5ZTkqYno4R3r3Z8
-NKDPs01VivU6X53grCOeLKGcb8JdEHVfdICm2wVas7m80RWQVwlovrXXF9DoevUv
-uXt/8MwkEQOO7dWwDmXjkXODmxGCMGznCyPQecyIqa68M0B6I7SJAZeEg4SDQ1Tf
-6gXSfIbahurkkJKAy43ftI4RG42M6pElHXzNarV6fNK9q0a4jTYxyabrJPceRoi8
-dYBecJWP9YFfamGXYADJ
-=F6zB
------END PGP SIGNATURE-----
+Integer truncation causing heap buffer over-read in png_image_write_*
+
+Security advisory:
+https://github.com/pnggroup/libpng/security/advisories/GHSA-vgjq-8cw5-ggw8
+Remediation commit: https://github.com/pnggroup/libpng/commit/cf155de014
+
+CVSS 3.1: 6.1 (Medium) - CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H
+CWE: CWE-125 (Out-of-bounds Read), CWE-190 (Integer Overflow or Wraparound)
+Affected: libpng 1.6.26 through 1.6.53
+Fixed: libpng 1.6.54
+
+The simplified write API functions png_write_image_16bit and
+png_write_image_8bit cast ptrdiff_t row_bytes to png_uint_16 before
+pointer arithmetic. This truncation causes heap buffer over-read when
+the caller provides a negative row stride (for bottom-up layouts) or a
+stride exceeding 65535 bytes.
+
+Impact:
+- Information disclosure (low): over-read may expose heap data in output
+- Denial of service (high): infinite loop or crash from reading unmapped
+  memory
+
+Applications using default stride with images narrower than 65535 bytes
+per row and top-down layout are NOT affected.
+
+Credit: Cosmin Truta (discovery and fix)
+
+=== References ===
+
+- GitHub Issue (CVE-2026-22695): https://github.com/pnggroup/libpng/issues/778
+- libpng homepage: http://www.libpng.org/pub/png/libpng.html
+
+---
+Cosmin Truta
+libpng maintainer
