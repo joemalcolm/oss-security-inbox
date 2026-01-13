@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1874" "Thursday" "5" "May" "2016" "17:21:46" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<572B56FA.1030507@openwall.com>" "35" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050514:21:46" "[oss-security] broken RSA keys" (number mark "        ch3root@open May  5   35/1874  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160505112350.66f699b5@pc1>" ("<20160504124248.GA15148@openwall.com>" "<20160505112350.66f699b5@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9487 invoked by uid 550); 5 May 2016 14:21:57 -0000
+Received: (qmail 26117 invoked by uid 550); 13 Jan 2026 05:41:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,53 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9469 invoked from network); 5 May 2016 14:21:57 -0000
-References: <20160504124248.GA15148@openwall.com>
- <20160505112350.66f699b5@pc1>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <572B56FA.1030507@openwall.com>
-MIME-Version: 1.0
-In-Reply-To: <20160505112350.66f699b5@pc1>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Date: Thu, 5 May 2016 17:21:46 +0300
-From: Alexander Cherepanov <ch3root@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] broken RSA keys
+x-ms-reactions: disallow
+Received: (qmail 16374 invoked from network); 13 Jan 2026 05:33:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768282420; x=1768887220; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MFz2B6TEb6NMxtIlw4ACLstv+lFT/BbjSXIsKGfPcaI=;
+        b=eQXWY7xrtSm4v05AgwtrPOAKSPO+V8Yz7W/vCEgjcH4W3sBqbvKnClRC65x1u+Kokn
+         jPXHQig6ZndRlenSQCsCj/Q88jibOf0nbjmexj4LjTHEhwj4pj7bZdooN+CbocpGzc8C
+         89zd4fXSAV/I7C4geMVMuJhQB3rpft3XzQ56DrsnFYv/ZRYbQzdRB6+sSIvxfAhZfmYl
+         TVpUo1rGYjE9uDXRxCjEjfK5D778CAKsCelRP/MH/AwVa1SvGcWGLR5CVwCT034il8VY
+         dCYT8V7JQtPAkNHEFXovSPLFsua0Zdq36eKSMJl4XMry0jnTp252UP4QBsyRgIHMA+1e
+         hHGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768282420; x=1768887220;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MFz2B6TEb6NMxtIlw4ACLstv+lFT/BbjSXIsKGfPcaI=;
+        b=WD4iHANDH9ZdSLCqioEMaDLrhnQm6SkIUFeZOO0WEt45D0OW7aFO/Ob72TBcMcHCq3
+         MXFyedwFJ0ZLkEFjAryFxolEtZEjkCKrPIM4xNNOhjAwI1C458+FpIzmV0DebHWQjwNU
+         FkRFVUWzb7SploOYqqqEtOAO5B3lwPEwYzLlAdzM2jXW9HSu7cjyqPgDuBFGpOeLeUXu
+         RN3edpUgZxGY/g3jJKzUdZG2nSna+HjL5kZ9+VPmuyIA2b7AO61zDChIFX0H75K3C/v9
+         K5TQvTR6CN4nGbQni+RZUeyXzXmAT3i1GjiAtNJsMdjvxBCXPuhwl+BhGfbNDR00hnWl
+         JiTA==
+X-Gm-Message-State: AOJu0YxiCdgHfS9q41x6OdzyMogorqUlY3YvbtZtNvNQ0O0/WKHBqY3k
+	Uha8R6m0eeMf5h62eyRwzuXmJi2fMbMM7qo/suUeZ79e+Md3ox/r3ru9FOJY2CNv
+X-Gm-Gg: AY/fxX4z2nBu48/GtopH5bG4qyogqsFyR79WC5isaKwkQEfuuQ0adbjmxiF006A8XEY
+	bzV+rAQe6qnQVEr1CF9IAB9jHOAYgZ1knOWA7nCcruBbmjau2KvAT+FsOxgfdOsq0gmcZGlwWuL
+	LTRQTaC/zE2M0F/B0WDpi7xLB2KvBD+oX79aKzf+yWefVfQXpUyeFZJg2iPVWnsX1Ay+gxjPMgn
+	7m3Kxp8wx9nKS5mDq0WyYpQ1DhukdJsKgCy3CfgK11ADJ3AYEbOEu/iAMD7e8g2hQPygF0pvr4S
+	QI5HEbLoyF4NRK8mNnSlqDzeJZaFjwHvrCYxurppXIzeFzl+4lwFYIC1ahaGgVuFXMLhRqhC3lV
+	AUETiDaurNEeHzV7Aok+RVdEsp5HlbUjv8eRUPPJ56jx0D3CE0I2i/V+SIdiwIzSD5dVNUw87YK
+	B7/tt2lOg=
+X-Google-Smtp-Source: AGHT+IFLZlSWiQzHzBQHW1DbG1qSGe3EXt4HR4OSRKUx7M3eTo11XjauLyecTBF9P70UZrxqddqnQg==
+X-Received: by 2002:a05:6830:254a:b0:7cd:b383:ce37 with SMTP id 46e09a7af769-7ce50bddba7mr11102505a34.36.1768282420323;
+        Mon, 12 Jan 2026 21:33:40 -0800 (PST)
+Message-ID: <6c34559b-d38a-49d3-8917-8ea3d235f77c@gmail.com>
+Date: Mon, 12 Jan 2026 23:33:37 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+References: <f6825a3e-06ba-4672-afc1-171c7ae48d9d@oracle.com>
+ <56e7f252-59a4-447c-b8ee-29e647c6bc3b@gmail.com>
+ <20260112142559.GA974242@joooj.vinc17.net>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <20260112142559.GA974242@joooj.vinc17.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Null Pointer Dereference in HarfBuzz
 
-On 2016-05-05 12:23, Hanno Böck wrote:
-> What one will find are 273 vulnerable moduli.
+On 1/12/26 08:25, Vincent Lefevre wrote:
+> On 2026-01-11 21:09:55 -0600, Jacob Bachmeyer wrote:
+>> Aside from the dubious patch, this is a good example of a legitimate bug but
+>> bogus CVE:  how exactly does an attacker trigger this without either having
+>> *already* completed a DoS attack (consuming all memory) or achieved
+>> arbitrary code execution (altering the allocator to return NULL even though
+>> memory is available)?
+>>
+>> In short, this is a crash bug, but not a security issue.  This is different
+>> from (for example) a parser bug that results in NULL being dereferenced if
+>> crafted input is processed.
+> Note that according to the C standard, dereferencing a null pointer
+> is undefined behavior, not necessarily a crash. This means that
+> due to compiler optimizations, unexpected code might be run with
+> uncontrollable behavior. And it may be difficult to prove that the
+> code is actually safe despite the optimizations.
 
-I've took a look.
+The issue reported here is a write to address zero causing SIGSEGV.  I 
+doubt that compilers can optimize placement new to avoid writing through 
+the given pointer without introducing undefined behavior in correct 
+programs, since the contents of allocated-but-not-initialized memory are 
+undefined.
 
-174 moduli are divisible by 2**32+1. All of them consist of duplicated 
-32-bit limbs, as we have already seen in previous examples. There are no 
-exponents in the set, so I've only checked moduli.
 
-214 moduli are both in this set and in the phuctor set. There are 11 
-moduli that are in phuctor only:
+-- Jacob
 
-http://phuctor.nosuchlabs.com/gpgkey/8382619625FF6F7D4A9D62B3DA6CD70227AE2FE8329BAEDCB1B84A7D7B01F43B
-http://phuctor.nosuchlabs.com/gpgkey/70B3180A25B248F090A74547A31373B2BFB1AE203632D24A26181CE0B0E1D24B
-http://phuctor.nosuchlabs.com/gpgkey/BC8A4290FD0B2F36F20B7CF469D06CACB67204EE47E9E38C4077699C95F190C1
-http://phuctor.nosuchlabs.com/gpgkey/73B5D08E0F43710FC8E04037FFDE987E9C2F648297F9D24CE29D4068A7B86964
-http://phuctor.nosuchlabs.com/gpgkey/94E0C9E553C74A3A837160998693F14D8895AED0F4575565CBC3EB94DA4DE610
-http://phuctor.nosuchlabs.com/gpgkey/3C76C921ACD9ED4BE60ECD06C341CD8F18952E398C63CD4C958503DA9E42C1B2
-http://phuctor.nosuchlabs.com/gpgkey/07C61F68A5980FFB9272A759B577A7338D559B2EF7E17FA24AC14F62808B46E2
-http://phuctor.nosuchlabs.com/gpgkey/B731C95FA850A5B27F1A5FC534AA85C6768AF95600A3F1DEC3A63E78F0AA48C9
-http://phuctor.nosuchlabs.com/gpgkey/01DD7A44EC310DA9E8EB4726A32C322F6990CE6EFC4CFAA44486AA8619C21894
-http://phuctor.nosuchlabs.com/gpgkey/90BC6D88C26403285CF4A89F6E0501D31AD908A598A81BB09E41E0C981C24091
-http://phuctor.nosuchlabs.com/gpgkey/65B890243C97BE24B5089EA8B1F6A3BDA129651C31BD33A106BD44ECD8FD8E95
-
-> I'll upload a keyids file to the pgpmoduli repo:
-> https://github.com/hannob/pgpmoduli
->
-> The way to interpret that data is that line numbers match. I.e. the gcd
-> in line 10 of gcds matches the modulus in line 10 of vulnerable_moduli
-> and the keyid in line 10 of keyids etc.
-
-There are only 259 keyids though.
-
--- 
-Alexander Cherepanov
