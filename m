@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2152" "Friday" "1" "May" "2015" "21:34:05" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20150501213405.2b2aca2a@pc1>" "55" "Re: [oss-security] On sanctioned MITMs" nil nil nil "5" "2015050119:34:05" "[oss-security] On sanctioned MITMs" (number mark "        hanno@hboeck May  1   55/2152  " thread-indent "\"Re: [oss-security] On sanctioned MITMs\"\n") "<20150501191522.GA18039@zoho.com>" ("<20150501191522.GA18039@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21764 invoked by uid 550); 1 May 2015 19:33:48 -0000
+Received: (qmail 9957 invoked by uid 550); 15 Jan 2026 21:36:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,108 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21746 invoked from network); 1 May 2015 19:33:48 -0000
-Message-ID: <20150501213405.2b2aca2a@pc1>
-In-Reply-To: <20150501191522.GA18039@zoho.com>
-References: <20150501191522.GA18039@zoho.com>
-X-Mailer: Claws Mail 3.11.1 (GTK+ 2.24.27; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-28092-1430508816-0001-2"
-Cc: oss-security@lists.openwall.com
-Date: Fri, 1 May 2015 21:34:05 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] On sanctioned MITMs
-To: mancha <mancha1@zoho.com>
+x-ms-reactions: disallow
+Received: (qmail 15690 invoked from network); 15 Jan 2026 21:27:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1768512426; x=1769179092; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=QbDwVcyIzEEazPCJ8qkiwzbakjiKv9TdSrSLE2krzBM=;
+ b=jcxystP2wkW2k8domj/KURVLsO/rdqvrqhyZkNJZSxPQUgz7S/BBVOd9i9I444cO5LlhySRR
+  /N7b2vWTO8ZRKqum6iBD6qO5JztVKZzifT2+f/6Kon0n5CoCB34cVTsaF013qun9XaxuRPgwNC
+  0J+8KTE6Q/s3eEyTpwyliNFXeZP/yEHmGjMLIFdy9/jGnAeLeZWmyJ8tngrjKrNMIXW2Z0RTKo
+  5QDHQ9ZvL30MsW8D3RRQA4iGn237pQrDEEiDwENQA3ATJtI/zUvAFUUY5x0k2Qn7ml4UbZMfye
+  D9gB4eHX6RY7Un+5HJTD0qfgSBDUBWnQS9QOA5DF9ulQrmBQ==
+Date: Thu, 15 Jan 2026 22:27:05 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20260115212705.TKR365wo@steffen%sdaoden.eu>
+In-Reply-To: <01e3014e-85d8-484c-b755-bd8eb6ddd10d@oracle.com>
+References: <01e3014e-85d8-484c-b755-bd8eb6ddd10d@oracle.com>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-743-g1489053f65-dirty
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Go 1.25.6 and Go 1.24.12 are released
+ with 6 CVE fixes
 
---=_zucker.schokokeks.org-28092-1430508816-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Alan Coopersmith wrote in
+ <01e3014e-85d8-484c-b755-bd8eb6ddd10d@oracle.com>:
+ |https://groups.google.com/g/golang-announce/c/Vd2tYVM8eUc announces:
+ |> Hello gophers,
+ |> 
+ |> We have just released Go versions 1.25.6 and 1.24.12, minor point \
+ |> releases.
+ |> 
+ |> These releases include 6 security fixes following the security policy:
+ |> 
+ |>   - archive/zip: denial of service when parsing arbitrary ZIP archives
+ |> 
+ |>     archive/zip used a super-linear file name indexing algorithm \
+ |>     that is invoked
+ |>     the first time a file in an archive is opened. This can lead \
+ |>     to a denial of
+ |>     service when consuming a maliciously constructed ZIP archive.
+ |> 
+ |>     Thanks to Thanks to Jakub Ciolek for reporting this issue.
+ |> 
+ |>     This is CVE-2025-61728 and Go issue https://go.dev/issue/77102.
 
-My quick take on this:
-It is very common that when you run any kind of IT infrastructure that
-you outsource some technical parts to third parties. Your security
-relies on the question how trustworthy these third parties are.
+Go is thrilling you know, those personalities involved in the past
+and present (also including Plan9 history, and all that) ...
 
-I don't see anything special here with outsourcing your server's TLS
-handling. Or anything special about cloudflare. When you outsource IT
-infrastructure you trust someone.
+It is a little bit off-topic, but it reminds me of kinds of
+"detoriation", as well as "spreaded complication" i have
+introduced myself when fixing bugs of all sort.  So looking at the
+link bug report, i see
 
-Just a thought experiment that has nothing to do with CDNs or TLS: Most
-medium or small Web services don't have their own datacenters. They have
-servers - either rented or their own - in a datacenter run by someone
-else. With physical access to the machine basically you can own them
-completely. There's almost nothing you can do to secure a machine where
-non-trustworthy people have physical access.
+  for dir := path.Dir(name); dir != "."; dir = path.Dir(dir) {
 
-So I don't deny there are potential problems. But I don't see them as
-new or special.
+being replaced with an unrolled
 
+  if idx := strings.LastIndex(dir, "/"); idx < 0 {
+    ...
 
---=20
-Hanno B=C3=B6ck
-http://hboeck.de/
+But Go supports "modification in place", and doesn't the above
+imply that the Go standard library interface is missing important
+functionality to avoid such security glitches in any code that
+makes use of path.?  Ie, path.Dir() is
 
-mail/jabber: hanno@hboeck.de
-GPG: BBB51E42
+  Dir returns all but the last element of path, typically the
+  path's directory. After dropping the final element using Split,
+  the path is Cleaned and trailing slashes are removed. If the
+  path is empty, Dir returns ".". If the path consists entirely of
+  slashes followed by non-slash bytes, Dir returns a single
+  slash. In any other case, the returned path does not end in
+  a slash.
 
---=_zucker.schokokeks.org-28092-1430508816-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+and path.Split() is
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+  Split splits path immediately following the final slash,
+  separating it into a directory and file name component. If there
+  is no slash in path, Split returns an empty dir and file set to
+  path. The returned values have the property that path
+  = dir+file.
 
-iQIcBAEBCgAGBQJVQ9UtAAoJEKWIAHK7tR5CS7kP/0082jTH3ZxI+l51aavvbrrr
-VTz1vPu7rDvAVkBFfLdIQXaX3KKSEad23Zc80PCkH1YFKfmK/Uet7Pt3o1tT8TlN
-IoLbMuwUBuoG/HwlLXB7GkmDVXUzfQb+vwBuQWIrNbHHQlXoOy2epryQWLFA//oO
-ZUwNohkIBQnclRtC63Ktx8cHQ9qOWi+/Cc4ROI3h+YT9zfw78rTB8F2faf50QbvC
-0QkFHT5sv1MjsqdUquXSZR4ulO0ybJuBqPBDbFDNt32Th/xL997WX7we2BngW6uN
-dYeYFo/2l8AkKmISlFhIA2YbFd4FEiDdTjrVDzkeUmmy6h3W32zrXjsVidBFEl4p
-g9s8uKfSb4eSekra5XhFTPx2f+B0EdOG3+SJH4kIluodKjSxn46XEQXsYJL5vDaI
-W+4wpyS3gOajT3/k4udn2qPPqCFyby3ywlWvZSiFKLru9Ow7GtGLj5aVydr2KUno
-ZOpIghpziujtA/ZOZ0SEk+KAF0GwVuqAqb5aw+RyKRfkcMTkEs7v+ElCvOytMUDH
-NeghQjdcZajngeSrKHAS96NkQpIDs+uKZdALiHobdubmzdrrRu5S8tQCNoA3dRHD
-4cv/dDg+A73jW+7g4W+hBA7c0enKvpluZvRKJYzKTV1EjVQ5WgmLoO+A/YjP2kks
-vcslFUeHInJJc9cgOSzb
-=ifMb
------END PGP SIGNATURE-----
+And i note that the committed bugfix not only avoids all the
+canonicalization cleanup of Dir(), but also the creation of new
+(temporary) result strings.  In order to do that creates (yet
+another?) place that fiddles with indices.
 
---=_zucker.schokokeks.org-28092-1430508816-0001-2--
+Just a (well-known, granted) thought in all the overdriven
+"memory-safe" noise.
+
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
