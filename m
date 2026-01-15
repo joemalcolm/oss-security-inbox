@@ -1,4 +1,4 @@
-Received: (qmail 26276 invoked by uid 550); 4 May 2026 22:35:39 -0000
+Received: (qmail 13748 invoked by uid 550); 15 Jan 2026 21:37:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,54 +8,42 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 11796 invoked from network); 4 May 2026 21:26:53 -0000
-Message-ID: <fbbaf5ed-23ad-4d45-92a6-1f620e422be4@linuxlounge.net>
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linuxlounge.net;
-	s=e202603; t=1777930003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=N+5EOL0acmKPFHUWaPbw3oX5i0YlETBrZ7OT9H0/eXM=;
-	b=luRlAk6fYm4YdSB3Az3x71hWyJyI7LyoJbpld46F5QJGV2RTG4+Q50sfIMN5qlok2KzbZv
-	ujY8yIjmUxBjMOCA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxlounge.net;
-	s=r202603; t=1777930003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=N+5EOL0acmKPFHUWaPbw3oX5i0YlETBrZ7OT9H0/eXM=;
-	b=CftwR2ASBIkgATAAh4uG9lS6Dzi9Ld6VvZt2xGyGADYEjr6qcKofVYTW4OWJ6Kbfzww/82
-	ISuh+vkpYlXWR+7cectdn4gxY2p98XSyb3L297PvVhSNM21vC4SLF4b4VR+19hPgxNmcUd
-	peYAnShKf0AwkCI/HezObyYhiKibFPLbpGd1wXLNAAA2wnVGNDSJvXSdRb/ZJUqYoQMYd1
-	oD93e3EF2FuoSukM6acdiUxZNn9kQ6zs20OIsM60iyvu2Fiq6KL0wJxuFoTcrxZXmKHmEA
-	OrIRwgztqTpWxm9aIQAj3IcpvbuNU+he6HBjtjh+r0zOFBLWxmc+58PKisso2w==
-Date: Mon, 4 May 2026 23:26:38 +0200
-MIME-Version: 1.0
-Content-Language: en-US
+Received: (qmail 24464 invoked from network); 15 Jan 2026 20:23:10 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
 To: oss-security@lists.openwall.com
-From: Martin Weinelt <martin@linuxlounge.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Nix/Lix: local privilege escalation in daemon process
+Message-ID: <dd452638-757c-8c37-8727-b4f9b427ac2d@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 15 Jan 2026 20:22:59 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-68438: Apache Airflow: Secrets in rendered templates
+ could contain parts of sensitive values when truncated 
 
-Nix is a package manager and build system for Unix-like systems. Lix is 
-a community-maintained fork of Nix. Both provide a daemon used in 
-multi-user installations to perform privileged build and store operations.
+Severity: low=20
 
-The Nix and Lix projects are issuing a coordinated security advisory for 
-vulnerabilities in their daemon implementations.
+Affected versions:
 
-A buffer overflow in the daemon may allow a local attacker with access 
-to the daemon interface to achieve arbitrary code execution as the 
-daemon user (root in typical multi-user installations).
+- Apache Airflow (apache-airflow) 3.1.0 before 3.1.6
 
-CVE assignment is pending.
+Description:
 
-Fixes are available, and users are strongly encouraged to upgrade.
+In Apache Airflow versions before 3.1.6, when rendered template fields in a=
+ Dag exceed [core]=C2=A0max_templated_field_length, sensitive values could =
+be exposed in cleartext in the Rendered Templates UI. This occurred because=
+ serialization of those fields used a secrets masker instance that did not =
+include user-registered mask_secret() patterns, so secrets were not reliabl=
+y masked before truncation and display.
 
-For full details (affected versions, fixed releases, mitigations), see:
+Users are recommended to upgrade to 3.1.6 or later, which fixes this issue
 
-https://discourse.nixos.org/t/security-advisory-local-privilege-escalation-in-lix-and-nix/77407
+Credit:
 
+William Ashe (finder)
+Amogh Desai (remediation developer)
 
-Martin
+References:
+
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-68438
+
