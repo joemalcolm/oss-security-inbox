@@ -1,4 +1,4 @@
-Received: (qmail 7226 invoked by uid 550); 4 May 2023 10:35:34 -0000
+Received: (qmail 23726 invoked by uid 550); 15 Jan 2026 15:32:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,113 +7,112 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30077 invoked from network); 4 May 2023 06:49:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1683182943; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9Ljk1UvtGLK7cLLvHfoLZUQ4HiJBbMNOdeotdE1SU1I=;
-	b=z9UqasaIt7V2cgBr3ZwVJ4F1ezObFVBkshueHrUl87+USW8FSGrUjz9jyQyYF7AsXoPCw9
-	RIsY7ByAECFN3repZYYe8i7kIZzpDbkA5MGDUFt6yo4MXIDjvcRoHbFw1OBnBPRGDWhAWx
-	SuB7bP2c0C6xaj8O250Ju3K0g01Zvjw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1683182943;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9Ljk1UvtGLK7cLLvHfoLZUQ4HiJBbMNOdeotdE1SU1I=;
-	b=Lr48iE1KRXigKtiwq/YPUY7RHiaAJoZPswh921XJr7k1jLWtvXUeTQB6df2CeLUwTu3Hl0
-	h13J0WHzxhi1MbDg==
-Date: Thu, 4 May 2023 08:48:58 +0200
-From: Johannes Segitz <jsegitz@suse.de>
+x-ms-reactions: disallow
+Received: (qmail 23692 invoked from network); 15 Jan 2026 15:32:58 -0000
+Date: Thu, 15 Jan 2026 15:32:46 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-Cc: Daniel Stenberg <daniel@haxx.se>
-Message-ID: <20230504064858.GF20467@suse.com>
-References: <20230503190011.GA13309@openwall.com>
+Message-ID: <aWkInhuT5D-s-MOh@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ChQOR20MqfxkMJg9"
+	protocol="application/pgp-signature"; boundary="WR0HI/VP9Ub7WxWt"
 Content-Disposition: inline
-In-Reply-To: <20230503190011.GA13309@openwall.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] semi-public issues on (linux-)distros
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [CVE-2026-22797] OpenStack keystonemiddleware: Privilege Escalation
+ via Identity Headers in External OAuth2 Tokens (CVE-2026-22797)
 
---ChQOR20MqfxkMJg9
-Content-Type: text/plain; charset=iso-8859-1
+--WR0HI/VP9Ub7WxWt
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2026-001: Privilege Escalation via Identity Headers in External
+                OAuth2 Tokens
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-first of all let me take the opportunity to thank you for your work in this
-area. I'm not a member of the distros list anymore (have been for years),
-but I appreciate very much what you do for the community.
+:Date: January 15, 2026
+:CVE: CVE-2026-22797
 
-On Wed, May 03, 2023 at 09:00:11PM +0200, Solar Designer wrote:
-> curl project's handling of security issues has been exemplary so far, in
+Affects
+~~~~~~~
+- Keystonemiddleware: >=3D10.0.0 <10.7.2, >=3D10.8.0 <10.9.1, >=3D10.10.0 <=
+10.12.1
 
-I agree. And I'm happy to see that this is being discussed, as I've seen
-Daniel talking on Mastodon about this and it would be a shame if they
-wouldn't provide their high quality reports to distributions up front
-anymore.
+Description
+~~~~~~~~~~~
+Grzegorz Grasza with Red Hat reported a vulnerability in the=20
+external_oauth2_token middleware for keystonemiddleware. This=20
+middleware fails to sanitize incoming authentication headers before=20
+processing OAuth 2.0 tokens. By sending forged identity headers such=20
+as X-Is-Admin-Project, X-Roles, or X-User-Id, an authenticated=20
+attacker may escalate privileges or impersonate other users. All=20
+deployments using the external_oauth2_token middleware are affected.
 
-> my opinion at least, which gives me reason to expect sound judgement
-> from Daniel on which issues to handle in which way.  Also, like it or
-> not, starting to publicly commit some security fixes is a decision the
-> project has already made, so our only options are (1) to change the list
-> policy, (2) to grant one-time exceptions every time, or (3) to create
-> extra work for Daniel for notifying the individual distros other than
-> via the list (or choose not to).
+Patches
+~~~~~~~
+- https://review.opendev.org/973499 (2024.1/caracal)
+- https://review.opendev.org/973497 (2024.2/dalmatian)
+- https://review.opendev.org/973496 (2025.1/epoxy)
+- https://review.opendev.org/973495 (2025.2/flamingo)
+- https://review.opendev.org/973494 (2026.1/gazpacho)
 
-My vote is for option 1.=20
+Credits
+~~~~~~~
+- Grzegorz Grasza from Red Hat (CVE-2026-22797)
 
-> I would also be happy to have a general solution if we _reasonably_ can,
-> for all projects, but I'm not sure how reasonable that is.  The terms
-> for Linux kernel's vs. curl's exceptions may reasonably vary to meet
-> these project's exact needs and not more: for Linux kernel it's "issues
-> concurrently or very recently handled by the Linux kernel security team"
-> and for curl it can be "low and medium severity issues".
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2129018
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2026-22797
 
-This is indeed tricky. I would not try to sync this to specific conditions
-of the upstream policy, but to the proven track record of an upstream
-project. If they can show that they can reliable do this for security
-issues below a certain threshold they should get approved to post
-semi-public issues onto the list.
+Notes
+~~~~~
+- The unmaintained/2024.1 branches will receive no new point releases,
+   but patches for them are provided as a courtesy.
+- This bug was possible because the middleware only conditionally set
+   certain headers (e.g., X-Is-Admin-Project was only set when the token
+   had admin privileges), leaving spoofed values intact when conditions
+   were not met.
+- The fix adds a call to remove_auth_headers() at the start of request
+   processing to sanitize all incoming identity headers, matching the
+   behavior of the main auth_token middleware.
+- The external_oauth2_token middleware was introduced in
+   keystonemiddleware 10.0.0.
 
-And yes, this isn't a hard criterion that can be easily judged, which is
-indeed a problem. There could be some form of vote on the list to decide
-this for each project asking for it. In my experience the subscribers are
-reasonable and I would expect that this would lead to good results.
-
-Johannes
 --=20
-GPG Key                EE16 6BCE AD56 E034 BFB3  3ADD 7BF7 29D5 E7C8 1FA0
-Subkey fingerprint:    250F 43F5 F7CE 6F1E 9C59  4F95 BC27 DD9D 2CC4 FD66
-SUSE Software Solutions Germany GmbH, Frankenstra=DFe 146, 90461 N=FCrnberg=
-, Germany
-Gesch=E4ftsf=FChrer: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moer=
-man
-(HRB 36809, AG N=FCrnberg)
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
 
---ChQOR20MqfxkMJg9
+--WR0HI/VP9Ub7WxWt
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCgAdFiEEJQ9D9ffObx6cWU+VvCfdnSzE/WYFAmRTVVoACgkQvCfdnSzE
-/WaM1A/+PC/+SkMP9ielMS8xunx/SWiEB+3g2CwcUG+QPs/PkqLSHqQjDxmZAU9J
-hAv1RluPp5KKBULymqIaE+LiliprztJnTYFDfsawf5oX5jVSMrSDENYjO84TbBal
-at4oWCwTID7yoPDaNZM7bKoZ+MXq22Uppxl6MUxJAm8CWcZiCRpUvL2Lk7CS52lj
-KwCW+dn08v8c/PhykKMfaIFq6l0yBCyGy2kNu1cDXT/gs7+5ZU8sUK2hpItA1YRP
-J0j8K3lBW3Sx/Br1GdIXbz8+i1pcC6y+kkvtbOEBOnQyvf/fO8WYXHudaF1q/Kq3
-c2j/UHdf9x5nR/aYaFc+toWJcICSLnmdVV9Vtt9nPxH2+9e4bWcX6UX1fTKw4wa9
-L2IWqJMylNehoLy3HEW6Hf8FD/eIOGsnQG8TDhZd+XYTlWaX7vCi3hElFyh8SynK
-nOKleoOW6bg9+4BQf3Yk/4J2lcK78cQu77sGVNBy0YMt1rXb4yjX6384aj+knhfS
-cVnE9kPsA6fUjw0or+GYMJAn8MepAGjaU7R6yy8K1/iFs6h9PiciNY52EHUqLsCg
-YryHjiEgjWyqH853mMN3G0BiMN6BHvvYFY3ALkNE97yvPz4YkeTHSuD7yWbPqQ7Q
-x68ZCJ0unrjhG6FOMnvzh+U8hovjKzt3rXK2U3EuAIenqnvNFNw=
-=z+ST
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmlpCJ5fFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCmuCxAAgia4qVkDhF+7fUAfpgJcEAHL5lirW1YvfQDSWq1ShWo85sJHySrzaIAg
+GhpEpggshXuoOkrhF8cSUMfxIomcojGs7tbNgRjVKHjsPRCLE8GzDAoqf6snqlZj
+wZ/STSUvgpgceNab7VccMNo4q4vjNixF0PfWt2oUO8kymY8ye/VteltYlCc8EhdZ
+Xzvo1tsSviTORRtwMXl13wl0DQ8iK8PqVRiOwCr+OKRwEW8oBbcxj7nxgtJPihG6
+4NUW2XfWVLiqYoKNIXcgQf6booSf71pPeY1HkjG7SrbDya7pHTvuugjU+6etFXZV
+XoqRco+ISKsBCAB7SYGRPfYmxRVwFeCZFM/9HUT/XeU/w8oa/5VRifA0tRrllFHr
+4MLbDAjGNl4OjAvwOhH9ZIokGs6p2rlA+a5EwHtROKyE2DLmpheVU3Gtl/a8ve3a
+PxJJx18CNmsTBkEOA0ElsgwZjaCOyp+hzk0GjnUnU/1B+PtMzrru1ZDJpe4lvd7+
+e7nONJ86VYx5qIOzNJZlyo5NzluxTZw6Rli4XHAlZedcb4+A38S6Fh3eWxwTCQDu
+fca/qoDR+mdSmkAr7t2MDrTM6mQLWO9nnV6o6UpyQQJePjF0K0wHTpJ9RLUBamrJ
+pxK8xedHvuWczwBFGPIz6ErRlKUayJ2WyJlfIlEPXfuXX1tyjJg=
+=sV31
 -----END PGP SIGNATURE-----
 
---ChQOR20MqfxkMJg9--
+--WR0HI/VP9Ub7WxWt--
