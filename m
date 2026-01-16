@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4861" "Monday" "21" "August" "2017" "17:49:18" "+0200" "Remi Gacogne" "remi.gacogne@powerdns.com" "<c126c968-f80d-6036-f1b7-22bedd1fbfa0@powerdns.com>" "125" "[oss-security] PowerDNS Security Advisories for dnsdist 2017-01 and 2017-02" nil nil nil "8" "2017082115:49:18" "[oss-security] PowerDNS Security Advisories for dnsdist 2017-01 and 2017-02" (number mark "U       remi.gacogne Aug 21  125/4861  " thread-indent "\"[oss-security] PowerDNS Security Advisories for dnsdist 2017-01 and 2017-02\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22051 invoked by uid 550); 21 Aug 2017 15:49:36 -0000
+Received: (qmail 32676 invoked by uid 550); 16 Jan 2026 23:37:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,145 +7,124 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22019 invoked from network); 21 Aug 2017 15:49:34 -0000
+x-ms-reactions: disallow
+Received: (qmail 32627 invoked from network); 16 Jan 2026 23:37:11 -0000
+Date: Fri, 16 Jan 2026 23:37:00 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
 To: oss-security@lists.openwall.com
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-Message-ID: <c126c968-f80d-6036-f1b7-22bedd1fbfa0@powerdns.com>
-Date: Mon, 21 Aug 2017 17:49:18 +0200
+Message-ID: <aWrLnOyaPgqyLLvU@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <aWkInhuT5D-s-MOh@yuggoth.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="6IasI3NeQab1L2A0wwKxp2pOfWuJgDB5D"
-X-purgate-ID: 151428::1503330559-00000233-00F41778/0/0
-X-purgate-type: clean
-X-purgate-size: 5049
-X-purgate-Ad: Categorized by eleven eXpurgate (R) http://www.eleven.de
-X-purgate: This mail is considered clean (visit http://www.eleven.de for further information)
-X-purgate: clean
-Subject: [oss-security] PowerDNS Security Advisories for dnsdist 2017-01 and 2017-02
+	protocol="application/pgp-signature"; boundary="Vygt0WmMGMI2x+9M"
+Content-Disposition: inline
+In-Reply-To: <aWkInhuT5D-s-MOh@yuggoth.org>
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2026-001] OpenStack keystonemiddleware: Privilege Escalation
+ via Identity Headers in External OAuth2 Tokens (CVE-2026-22797) errata 1
 
---6IasI3NeQab1L2A0wwKxp2pOfWuJgDB5D
-Content-Type: multipart/mixed; boundary="aWBCDndUFi8OkiNLmNq8jS91KEcNMIhlR";
- protected-headers="v1"
-From: Remi Gacogne <remi.gacogne@powerdns.com>
-To: oss-security@lists.openwall.com
-Message-ID: <c126c968-f80d-6036-f1b7-22bedd1fbfa0@powerdns.com>
-Subject: PowerDNS Security Advisories for dnsdist 2017-01 and 2017-02
-
---aWBCDndUFi8OkiNLmNq8jS91KEcNMIhlR
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
+--Vygt0WmMGMI2x+9M
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2026-001: Privilege Escalation via Identity Headers in External
+                OAuth2 Tokens
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-Two security issues of low severity have been reported to us, and we
-just released a new version of dnsdist, 1.2.0, addressing them:
-- 2017-01: Crafted backend responses can cause a denial of service
-- 2017-02: Alteration of ACLs via API authentication bypass
+:Date: January 15, 2026
+:CVE: CVE-2026-22797
 
-The full security advisories are provided below, and can also be
-found at:
--
-https://dnsdist.org/security-advisories/powerdns-advisory-for-dnsdist-2017-=
-01.html
--
-https://dnsdist.org/security-advisories/powerdns-advisory-for-dnsdist-2017-=
-02.html
+Affects
+~~~~~~~
+- Keystonemiddleware: >=3D10.5.0 <10.7.2, >=3D10.8.0 <10.9.1, >=3D10.10.0 <=
+10.12.1
 
-Minimal patches for 1.1.0 are available for those unable to fully upgrade:
-- https://downloads.powerdns.com/patches/2017-01/
-- https://downloads.powerdns.com/patches/2017-02/
+Description
+~~~~~~~~~~~
+Grzegorz Grasza with Red Hat reported a vulnerability in the=20
+external_oauth2_token middleware for keystonemiddleware. This=20
+middleware fails to sanitize incoming authentication headers before=20
+processing OAuth 2.0 tokens. By sending forged identity headers such=20
+as X-Is-Admin-Project, X-Roles, or X-User-Id, an authenticated=20
+attacker may escalate privileges or impersonate other users. All=20
+deployments using the external_oauth2_token middleware are affected.
 
-Please feel free to contact me directly if you have any question.
+Errata
+~~~~~~
+The original advisory listed versions >=3D10.0.0 as affected based on=20
+incorrect data, the code in question was not added until 10.5.0.
 
-- PowerDNS Security Advisory 2017-01 for dnsdist: Crafted backend
-responses can cause a denial of service
+Patches
+~~~~~~~
+- https://review.opendev.org/973499 (2024.1/caracal)
+- https://review.opendev.org/973497 (2024.2/dalmatian)
+- https://review.opendev.org/973496 (2025.1/epoxy)
+- https://review.opendev.org/973495 (2025.2/flamingo)
+- https://review.opendev.org/973494 (2026.1/gazpacho)
 
-CVE: CVE-2016-7069
-Date: 2017-08-21
-Credit: Guido Vranken
-Affects: dnsdist up to and including 1.2.0 on 32-bit systems
-Not affected: dnsdist 1.2.0, dnsdist on 64-bit (all versions)
-Severity: Low
-Impact: Degraded service or Denial of service
-Exploit: This issue can be triggered by sending specially crafted
-response packets from a backend
-Risk of system compromise: No
-Solution: Upgrade to a non-affected version
-Workaround: Disable EDNS Client Subnet addition
-An issue has been found in dnsdist in the way EDNS0 OPT records are
-handled when parsing responses from a backend. When dnsdist is
-configured to add EDNS Client Subnet to a query, the response may
-contain an EDNS0 OPT record that has to be removed before forwarding the
-response to the initial client. On a 32-bit system, the pointer
-arithmetic used when parsing the received response to remove that record
-might trigger an undefined behavior leading to a crash.
+Credits
+~~~~~~~
+- Grzegorz Grasza from Red Hat (CVE-2026-22797)
 
-dnsdist up to and including 1.1.0 is affected on 32-bit systems. dnsdist
-1.2.0 is not affected, dnsdist on 64-bit systems is not affected.
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2129018
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2026-22797
 
-For those unable to upgrade to a new version, a minimal patch is
-available for 1.1.0
+Notes
+~~~~~
+- The unmaintained/2024.1 branches will receive no new point releases,
+   but patches for them are provided as a courtesy.
+- This bug was possible because the middleware only conditionally set
+   certain headers (e.g., X-Is-Admin-Project was only set when the token
+   had admin privileges), leaving spoofed values intact when conditions
+   were not met.
+- The fix adds a call to remove_auth_headers() at the start of request
+   processing to sanitize all incoming identity headers, matching the
+   behavior of the main auth_token middleware.
+- The affected code was introduced in keystonemiddleware 10.5.0
+   during the OpenStack 2024.1 (Caracal) development cycle.
 
-We would like to thank Guido Vranken for finding and subsequently
-reporting this issue.
-
-- PowerDNS Security Advisory 2017-02 for dnsdist: Alteration of ACLs via
-API authentication bypass
-CVE: CVE-2017-7557
-Date: 2017-08-21
-Credit: Nixu
-Affects: dnsdist 1.1.0
-Not affected: dnsdist 1.0.0, 1.2.0
-Severity: Low
-Impact: Access restriction bypass
-Exploit: This issue can be triggered by tricking an authenticated user
-into visiting a crafted website
-Risk of system compromise: No
-Solution: Upgrade to a non-affected version
-Workaround: Keep the API read-only (default) via setAPIWritable(false)
-An issue has been found in dnsdist 1.1.0, in the API authentication
-mechanism. API methods should only be available to a user authenticated
-via an X-API-Key HTTP header, and not to a user authenticated on the
-webserver via Basic Authentication, but it was discovered by Nixu during
-a source code audit that dnsdist 1.1.0 allows access to all API methods
-to both kind of users.
-
-In the default configuration, the API does not provide access to more
-information than the webserver does, and therefore this issue has no
-security implication. However if the API is allowed to make
-configuration changes, via the setAPIWritable(true) option, this allows
-a remote unauthenticated user to trick an authenticated user into
-editing dnsdist=E2=80=99s ACLs by making him visit a crafted website contai=
-ning
-a Cross-Site Request Forgery.
-
-For those unable to upgrade to a new version, a minimal patch is
-available for 1.1.0
+OSSA History
+~~~~~~~~~~~~
+- 2026-01-16 - Errata 1
+- 2026-01-15 - Original Version
 
 --=20
-Remi Gacogne
-PowerDNS.COM BV - https://www.powerdns.com/
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
 
-
---aWBCDndUFi8OkiNLmNq8jS91KEcNMIhlR--
-
---6IasI3NeQab1L2A0wwKxp2pOfWuJgDB5D
+--Vygt0WmMGMI2x+9M
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAlmbAP4ACgkQogjtT4r1
-hEYTpAf8Cqm8trjhvaQRqqNa/N5LpGHzUG5dRY3h7VnTuiXz5JEvTcI6SoXhAgO0
-94AKeuUdEMVrhGfuLL19z/QjPKUNFhEo3S5R7G3qQF6lGmlsMtJxOj2k8H8tF8Ig
-NhxmaA+PxIGcKj+976EDLXMoJb5cnCDlIWZ282oAvy9igNvnislVZ5arzilLTEVU
-rC57t7vWl7mvBqCr39OTZIdLEQbM7b7cquYBX2A4hxJOLMeCeCAckuFw0ZGv8jY5
-BSj0CUPLQsNlQ/opZs8Sez0Zo5TMpzr2k403dccSWZkFlXmbwVSNinHh+MCf1dgl
-8VevcEHEp8OTXLQY73kAxw3Tjl3s1Q==
-=0PvC
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmlqy5xfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCkSLA//S3aiAWoWR21V2dCR/ICm/zgJXc/Qx0Futk5z/PbUgT8BAD3twr7X3iia
+VwEriSMWonE4PG86jmCySehHkxiySAWUPRpBwHiM0keFYogiBkgvA7YsNGeNfhVZ
+SW/uNjZzDLadDzzsrYpI9B7R2ykkQD7sPaNKCTIAFdOPs5DTF1ELmObBtY+hWyEz
+tqec19/KVot5Np+fXdNE+myc3Hx+CESEZ2wX8BzMf1j6XIoE3RoKwUfcEjbN98K7
+CAKa32Tm9xQP/aIa/hidKDMXOLUhqNmF3ysTfy5CLXwssVIH04R9+IjMHAvlQthg
+YIn8flK3M0ReOb8EqYKDzDRlf0YGVt2ZDnKWg9YuQV6qAb6k61ilw/SmnPJldmIY
+ZAl5cXubuykx25WJ/53v5gI201dYrgRIbxsmtf+kTykC/YPR6I/i+nat9ZLwf4Ah
+FiBxN7fZAIEojSYm9uY+Z10MEBe1C1hpKITg2m6a2bdp4zVRZIqa3BnXu9CB+PA4
+cpft9lFizhM7xcqHvcFOnDgKMNoBcVlKx9Qkf/ZMtSam2oSV6nwiUg3Cb7ybjX6e
+3/tbFSPS4oMPwM2C0T3SOd3HdqW/q3xpGYioJZ/irp28TpyjOIIFr3pDxMOV7H4D
+LdVPcj1OS6MB78IJuZdnoPdqakMdPZ+9Zveh/8Uxmca8YrApAC4=
+=x7qR
 -----END PGP SIGNATURE-----
 
---6IasI3NeQab1L2A0wwKxp2pOfWuJgDB5D--
+--Vygt0WmMGMI2x+9M--
