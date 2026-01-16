@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1618" "Tuesday" "1" "December" "2020" "01:50:50" "+0800" "butt3rflyh4ck" "butterflyhuangxx@gmail.com" "<CAFcO6XMCxbHjiHFWUoFW5jcwfOrgz3atyW_MfHaQ4Akv6XF4jw@mail.gmail.com>" "56" "[oss-security] CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree" nil nil nil "12" "2020113017:50:50" "[oss-security] CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree" (number mark "U       butterflyhua Dec  1   56/1618  " thread-indent "\"[oss-security] CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds in dbAdjTree" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9587 invoked by uid 550); 30 Nov 2020 18:08:05 -0000
+Received: (qmail 15740 invoked by uid 550); 16 Jan 2026 15:43:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,94 +7,52 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15929 invoked from network); 30 Nov 2020 17:51:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=8mQt8vNmnwwV9e4zhvkB18ZNgD0hm0pKbdxy6jwYpmk=;
-        b=K4C4hcPsnoy7+0JgB5PmDNGvHblPcvJ3d926wkUnl6X86TFc7DyQUjrz++lTSP6fbd
-         y8tWBefKM5oRAxpkDpoGh4iFxQBzTCYgMTRP+2v5s3H29oPlf4XS4AuZYNFmicOkK1c6
-         3TlB5UqhFzzNzh1JaKpIKbv0XbxPzT/kuld25PLBelvFHEUJEkLYIwq6Boy8Q3P9PWl4
-         ni+zoTGFVq8MPrtsAROJ+DQ8kCDV0Uiilj2TaWgtFxXN7GfhGlEG+Il7t0QLcFTJ03Fr
-         LFq5AgKMmchc7jZuukGew2GDlnmFYf9Cg10A6VCdtDaIn+w5AOIRFFkJotL4FVSqJSgK
-         KP7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=8mQt8vNmnwwV9e4zhvkB18ZNgD0hm0pKbdxy6jwYpmk=;
-        b=No9iNgBIWfTNUZ5CmbS2yPIGRHXhcv3QhY00D00DIOvZRnMzTgwgYRb+QGMSbGFQno
-         KY6kLxqmB4TA/r+r71c5Y8Rmcfyk+UfAJSrGEwQL+QkKcuyQ3liaOsCZq/oFNRVoyhPh
-         BeoLLasKstkw7S5qGIPSX5etfMUD/cQ4aM6nBmhSejq37x2cthkLaQOZmm6CLX8ozIN6
-         ackTSaiP0b2+/reaiz6E3aJtzaQ2KVNiHV3VVwoguOoeTpYcvfTJnZqFKAx8RTrXDHZ1
-         kFdNSFcQzTYfprxIx6cMv0Jczb5iYqqsdrPT2rTtGfF6nPd5CjCxaYVnV+/qB1BlCtx0
-         ZmRQ==
-X-Gm-Message-State: AOAM53076wpGPfnxr1YjXJOu2hrfIx9+JmUJJnRiD8mdloHxB/ne4u/j
-	cnfQvu46HI0H3egE8M696sgoK3jB/wjGVTBVg7TTUA2utC7ruw==
-X-Google-Smtp-Source: ABdhPJxVN36EWruSbhfaGhFIAGYXz7D1wcYeEXOQ36UwL9vRHyEsxRh+3uKkldyESXsYN257LFqD6Proz2c9E65cnog=
-X-Received: by 2002:a25:ac92:: with SMTP id x18mr39147222ybi.484.1606758660244;
- Mon, 30 Nov 2020 09:51:00 -0800 (PST)
-MIME-Version: 1.0
-From: butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date: Tue, 1 Dec 2020 01:50:50 +0800
-Message-ID: <CAFcO6XMCxbHjiHFWUoFW5jcwfOrgz3atyW_MfHaQ4Akv6XF4jw@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 18256 invoked from network); 16 Jan 2026 07:29:04 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Guangming Chen <guangmingchen@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2020-27815 Linux kernel: jfs: array-index-out-of-bounds
- in dbAdjTree
+Message-ID: <5907213e-7239-31e7-3dc3-4733fdac2d96@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 16 Jan 2026 07:28:29 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-60021: Apache bRPC: Remote command injection
+ vulnerability in heap builtin service 
 
-Hello,
+Severity: important=20
 
-I report an array-index-out-of-bounds bugs in fs/jfs/jfs_dmap.c in
-dbAdjTree and reproduce it in Linux kernel 5.9.6 version.
+Affected versions:
+
+- Apache bRPC 1.11.0 before 1.15.0
 
 Description:
 
-In the Linux kernel through 5.9.6, there is a
-array-index-out-of-bounds in fs/jfs/jfs_dmap.c in dbAdjTree and it may
-cause out of bounds read and Denial of Service.
+Remote command injection vulnerability in heap profiler builtin service in =
+Apache bRPC ((all versions < 1.15.0)) on all platforms allows attacker to i=
+nject remote command.
 
-Root Cause:
 
-the dmtree_t is that
- typedef union dmtree {
- struct dmaptree t1;
- struct dmapctl t2;
-} dmtree_t;
 
- the dmaptree is that
-  struct dmaptree {
-  __le32 nleafs; /* 4: number of tree leafs */
-  __le32 l2nleafs; /* 4: l2 number of tree leafs */
-  __le32 leafidx; /* 4: index of first tree leaf */
-  __le32 height; /* 4: height of the tree */
-  s8 budmin; /* 1: min l2 tree leaf value to combine */
-  s8 stree[TREESIZE]; /* TREESIZE: tree */
-  u8 pad[2]; /* 2: pad to word boundary */
- };the TREESIZE is totally 341.
+Root Cause: The bRPC heap profiler built-in service (/pprof/heap) does not =
+validate the user-provided extra_options parameter and executes it as a com=
+mand-line argument. Attackers can execute remote commands using the extra_o=
+ptions parameter..
 
-the dmapctl is that:
-struct dmapctl {
-__le32 nleafs; /* 4: number of tree leafs */
-__le32 l2nleafs; /* 4: l2 number of tree leafs */
-__le32 leafidx; /* 4: index of the first tree leaf */
-__le32 height; /* 4: height of tree */
-s8 budmin; /* 1: minimum l2 tree leaf value */
-s8 stree[CTLTREESIZE]; /* CTLTREESIZE: dmapctl tree */
-u8 pad[2714]; /* 2714: pad to 4096 */
-}; /* - 4096 - */
-the CTLTREESIZE is totally 1365.
-The dmt_stree was used in dbAdjTree. Since dmt_stree can refer to the
-stree in both structures dmaptree and dmapctl. the stree size is not
-consistent, may it cause index out of range.
+Affected scenarios:=C2=A0Use the built-in bRPC heap profiler service to per=
+form jemalloc memory profiling.
 
-CVE assigned :
-CVE-2020-27815
+How to Fix: we provide two methods, you can choose one of them:
 
-Patch:
-It's in linux-next now, not available in upstream.
+1. Upgrade bRPC to version 1.15.0.
+2. Apply this patch ( https://github.com/apache/brpc/pull/3101 ) manually.
 
 Credit:
-This issue was discovered by the ADLab of venustech.
 
-Regards.
- butt3rflyh4ck.
+Simcha Kosman (reporter)
+
+References:
+
+https://brpc.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2025-60021
+
