@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1540" "Wednesday" "23" "November" "2016" "22:49:22" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<58bfcc2f68c14d9794d8bdd65e9d6266@imshyb02.MITRE.ORG>" "38" "[oss-security] Linux kernel net/ipv4/ip_tunnel.c issue mentioned on netdev" nil nil nil "11" "2016112403:49:22" "[oss-security] Linux kernel net/ipv4/ip_tunnel.c issue mentioned on netdev" (number mark "U       cve-assign@m Nov 23   38/1540  " thread-indent "\"[oss-security] Linux kernel net/ipv4/ip_tunnel.c issue mentioned on netdev\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9953 invoked by uid 550); 24 Nov 2016 03:49:36 -0000
+Received: (qmail 17516 invoked by uid 550); 18 Jan 2026 00:41:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,119 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9900 invoked from network); 24 Nov 2016 03:49:33 -0000
-From: <cve-assign@mitre.org>
-To: <oss-security@lists.openwall.com>
-CC: <cve-assign@mitre.org>
-Message-ID: <58bfcc2f68c14d9794d8bdd65e9d6266@imshyb02.MITRE.ORG>
-Date: Wed, 23 Nov 2016 22:49:22 -0500
+x-ms-reactions: disallow
+Received: (qmail 15997 invoked from network); 17 Jan 2026 23:02:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768690964; x=1769295764; darn=lists.openwall.com;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c/nxj0dm2oeBv11RNQ1yID5sNjzsuMWb1PceXfDoGk8=;
+        b=giJx79itmwtdzTeRNi56D2BfOQ+jIniHC6+5yEZdksQy5dYNx2sqyqjPoGoBFiR8OE
+         9R4obbOWe3od7l2F5XhVUECo0quK5iinGG5TyxAEv3/QhiuMN7nAiY9g5ocqa4mBFAPp
+         3o9W+Gwq7eUI/vzkKidB46I8B8mxdTllWhnFjv2gN8gyhG3tyzXcw7pvABnbI2+RWqUE
+         J4Bq12Qn2RMMArOVBLAxm1j96oRh6HOvo+GB4wV6cREdZ8EXzmhc6WHka4BCdbaDgZBB
+         p4S3062ttWFihZREohaYN1KH+fLpKG2ssAnhrmjNtZZif85om9A1JgYq1yxkQh/SMJu/
+         sYZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768690964; x=1769295764;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:to:from:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c/nxj0dm2oeBv11RNQ1yID5sNjzsuMWb1PceXfDoGk8=;
+        b=mP3zLps53vPGqcvqpnEGiNci7AcGFQe3nalo8m/9dBY70sS5XyIZ4JoIhNKAPzaRwW
+         /VX6pCc57K6YW8Bu3di34aZpjbv8PjdhnpHnkNtWcrcBEp53oyxPoTtOzH3FsBAChC0w
+         WDkESs6FmuGGK4c47dobjAU6okN9CN5+LP16PvbIhhjj1ommJJS8qVwmRLzBzYnqaj/r
+         I6zQUtCfxLKMIsh6uK1XI0Kwq6hPfHoQvWPMmOH1m1+aqxN+UAtLTXYae6ZYYI5Hl5U3
+         acZdQutguolCLdRx4kQSQpSThDemYapgTEqHznm4Wwc1Re4k3+0f9WObJJon4NQbPmoQ
+         nxiQ==
+X-Gm-Message-State: AOJu0YwovCsvQNetSqInDP1cdfSfAUJ9WYLOCeyR1hCSHH45G893fwZJ
+	Mz/fbvAjKv1u9OdhBOLtvRxiedGng+15CBZxP0CJ7FhliTY9bsRjpM+sZCCsuA==
+X-Gm-Gg: AY/fxX5y/U1tqH46sA8A+RZwZyLkSMZLm0bysiV9JcnIIo9r+KZZSW95gRNsUpnZr1j
+	7GhLfg/YyDGaBfoU44Td2jN3TTqdwPz1m3bMh1MyJUSgAF9yEy/9F4waJgvzdMdbGJStZY+aOj7
+	4Gm0GLCCUdigf6X25HPsIHCGZhj5NhvLqaQXQy6Ys2UYMvmYE4dj2hziikETnfF00GzuB5LR5ET
+	aUMr1DJ4Ad2soFac20pvFaRmSFsExE3fuGJQV0Sv0e9KKivUVkfx4BYBxyzujdAIt7bo1tokE55
+	FMQ0Uu75snNlLMeUPDeGYW4qNx/P/XwzNdo5CDe5zoNJcIB4HW7YmW1Hn7ZC1x52IVrS7OmB0TN
+	AUamEXPWDHVnmXR/WH7S0gXZeAoH6nIGfuYgFB0AD9KVkus15wc/KCLACar6fBiTiDlZF
+X-Received: by 2002:a05:7301:4194:b0:2a9:97bd:a844 with SMTP id 5a478bee46e88-2b6b4e8cb91mr6023387eec.21.1768690963626;
+        Sat, 17 Jan 2026 15:02:43 -0800 (PST)
+From: Collin Funk <collin.funk1@gmail.com>
+To: oss-security@lists.openwall.com
+In-Reply-To: <61dcfcad-c04d-4cef-9d2b-105e97048043@icloud.com>
+References: <7ae55330-061d-41d6-a2c0-e83b2ba16235@oracle.com>
+	<61dcfcad-c04d-4cef-9d2b-105e97048043@icloud.com>
+Date: Sat, 17 Jan 2026 15:02:42 -0800
+Message-ID: <874iojkfl9.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Linux kernel net/ipv4/ip_tunnel.c issue mentioned on netdev
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] CVE-2025-8110 in Gogs self-hosted git service
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi Chad,
 
-In case anyone wants to be aware of CVE ID requests that appeared
-on other public mailing lists:
+Chad Dougherty <crd477@icloud.com> writes:
 
-  http://marc.info/?l=linux-netdev&m=147995726821221&w=2
+> On 12/10/25 11:18 PM, Alan Coopersmith wrote:
+>> https://github.com/gogs/gogs offers a MIT-licensed self-hosted git servi=
+ce.
+>> https://www.wiz.io/blog/wiz-research-gogs-cve-2025-8110-rce-exploit
+>> warns of
+>> CVE-2025-8110, an as-yet-unfixed vulnerability in this service which
+>> they say
+>> they are seeing being actively exploited.
+>>=20
+>
+> FYI, this was reportedly fixed in https://github.com/gogs/gogs/pull/8082
 
-wanted an ID for an integer overflow in this:
+Thanks for the link.
 
-  https://github.com/torvalds/linux/blob/cfc7381b3002756b1dcada32979e942aa3126e31/net/ipv4/ip_tunnel.c#L396-L404
+But I'm not very confident this actually fixes the issue. Copying some
+select lines of code from that patch:
 
-Because the report was simultaneously sent to security@kernel.org and
-may have other people contributing analysis, we may be waiting a short
-time before assigning a CVE ID.
+>  	localPath :=3D r.LocalCopyPath()
+>       [...]
+> +	// =F0=9F=9A=A8 SECURITY: Prevent touching files in surprising places, =
+reject operations
+> +	// involves symlinks.
+> +	if hasSymlinkInPath(localPath, opts.OldTreeName) || hasSymlinkInPath(lo=
+calPath, opts.NewTreeName) {
+> +		return errors.New("cannot update file with symbolic link in path")
+> +	}
+> +
+> +	repoPath :=3D r.RepoPath()
+>
+> +	newFilePath :=3D path.Join(localPath, opts.NewTreeName)
+>       [...]
+> +	if err :=3D os.MkdirAll(path.Dir(newFilePath), os.ModePerm); err !=3D n=
+il {
+> +		return errors.Wrapf(err, "create parent directories of %q", newFilePat=
+h)
+> + 	}
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Where hasSymlinkInPath() is defined here:
 
-iQIcBAEBCAAGBQJYNmLPAAoJEHb/MwWLVhi2nVYQALYW1yBzHzv/hVdWIsUHKLQC
-5gNQoTyazj6zw4fTiXfkg8MESzeTHPEY3IygWE0UhvdnZG6SjfS5HVBONsZtLPMu
-MBzgJ8nLefUeonhqAKaMYzbi4Ntt1Cf/AWGoiA5Dd8+MTmwc4hOCvkyhQwZsKjJh
-DyIIsNGgFd0glItqicNhNCEwXcdmPeeWGHqi9vN4n6ZjVkra1rEUlZ44dnPkTxNa
-9Y9m0+ETP4CrufvWnPv2E4rAEuqqRzHiEX1gPWNT/Rabf/VCMVPZHXyiXxdCYlnR
-vOyY9DzpO3NeI5yxGqME8/A5H0RkgvWsnrFOxqgaHOV1odTaseA8s6K3FAQY2Z9Z
-tQfM3lHRq80TkfAp7SelwjWk9kH+gWOYGdcDER2vjv45WO9ETdRcrfIV4X07fWJ7
-YDU1T+qc/0647OP6un/lEnVBQX2AoFfY25IhloYUpKHGxNxxUFJIurVpTIN+qksf
-2gAJcMTF4MDfNmAaENi97tL4CwkJmvGswncPG4Cy3V+hsvRNqgp0VWuYFVfv/MtT
-SIb80ErscC1+ltKJBUka4Pi9C3Q0fx4f51/gf0XLrjQBUhtwUwl889yr5lM1Cf4X
-e1Wja9saMPGcYWZudIvTameli18G+5Z1Hh/Iu9NR5HxYUHOIEVoGWaRCt2LxkRR6
-9sos50TA6UaxylJ3PdAn
-=5/Wi
------END PGP SIGNATURE-----
+> +// hasSymlinkInPath returns true if there is any symlink in path hierarc=
+hy using
+> +// the given base and relative path.
+> +func hasSymlinkInPath(base, relPath string) bool {
+> +	parts :=3D strings.Split(filepath.ToSlash(relPath), "/")
+> +	for i :=3D range parts {
+> +		filePath :=3D path.Join(append([]string{base}, parts[:i+1]...)...)
+> +		if osutil.IsSymlink(filePath) {
+> +			return true
+> +		}
+> +	}
+> +	return false
+> +}
+
+This just introduces TOCTOU races, no?
+
+If someone can delete a portion of "opts.NewTreeName" and recreate an
+element as a symbolic link before "os.MkdirAll" is executed, they would
+be able to achieve the same thing as before the patch.
+
+Surely Go has a way to use O_NOFOLLOW, right? That would be the correct
+way to do it.
+
+Collin
