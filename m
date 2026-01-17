@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2294" "Tuesday" "10" "January" "2017" "22:38:08" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<13140680db674bd8a5edb9761ee23a6f@imshyb02.MITRE.ORG>" "65" "[oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8" nil nil nil "1" "2017011103:38:08" "[oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8" (number mark "U       cve-assign@m Jan 10   65/2294  " thread-indent "\"[oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8\"\n") "<8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>" ("<8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1973 invoked by uid 550); 11 Jan 2017 03:38:20 -0000
+Received: (qmail 11688 invoked by uid 550); 17 Jan 2026 19:46:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +7,95 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1953 invoked from network); 11 Jan 2017 03:38:19 -0000
-From: <cve-assign@mitre.org>
-To: <astieger@suse.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <8e3602af-836a-d812-91ed-d78d7ed2a150@suse.com>
-Message-ID: <13140680db674bd8a5edb9761ee23a6f@imshyb02.MITRE.ORG>
-Date: Tue, 10 Jan 2017 22:38:08 -0500
+x-ms-reactions: disallow
+Received: (qmail 14256 invoked from network); 17 Jan 2026 16:20:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768666816; x=1769271616; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OWBRAbEuP2QWYNHDeRIM8+D1irUYZrwslBo9dxmuOhc=;
+        b=PfZAMsxpsrJhyV1ujGkMQJeZ145iBsKk1XQcQ1JRxJrQaC4I2dkffKAEKOVZ6txicN
+         mPqTO9mb8J0N79wx2vdgaJv3tQhmYBENbCu9kuc5DjAYJ018KKhZX4e/ZDOkEcB3z3Oq
+         p5bgocZ42F8DAKs4Ajgbw++M0um0VcUYMYunLI2RZ+vAf9CG/zQqLYVEoPELF1ggsKtO
+         TOLSZkOoosaOI4+xwD2OFU/PDBugRbijoYnbDI11ajmrvc4GuNoTY6xEFSvyt/lKp9n6
+         IkmtjHgWA2zEYCyXBFB+w1etOz6jQ/yzAdi4FHXbYzlC8h/J1szxy7QrJDQ2STPtLL1g
+         XWWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768666816; x=1769271616;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OWBRAbEuP2QWYNHDeRIM8+D1irUYZrwslBo9dxmuOhc=;
+        b=gFxWbJz/NFdpNt4OIjbNu6TJxOo2RNsw9scFwtYNZOdK72qt8BjMl9+HU9yxNHmOl3
+         n+D+upFOz59bXHfvz1zM06UvBpkxEUrRKw2a9jJJAsTRtT5BaDmOm5yJOycYzUrCKw3r
+         B9goGMXv021TDHTVOxWblZsls8qdXPWHb20keVtSZ60mJ6GnN6+6uPvC8qvwyPbGErmT
+         W/VchFFd7pGJDKO4S8oLX9CZ7FaRDPtsnT0tyzmylyUESfp0Q9vqnPrUqiSF/cjGVMlE
+         3/pYW3r9GEP1RyDR23YkX5y8OM9bfgSqOgzam1qBVaWEWzy41QvzVy4e4d+XK16ftAEe
+         JWPA==
+X-Gm-Message-State: AOJu0YzNSHcGhKeuIvOWMJfgTktuaYI7uxz7mPNHNh1j106ddlXBuU7a
+	/KOHTVLIVlqalWsWmlLXUazXYf3LTfHJZmaW/M4nq8eZ9qhQIsSJ7sO2T688qtQUt2FgSBZjSko
+	Hz7Eg/k4zuZcinf6AdtJ9ZThcST7povcGNuYqD3A=
+X-Gm-Gg: AY/fxX5OTafyFdPXpGkhG6xl7GMvIcPN7aX73Xzl6E+YHGvcEWr/u5g5bOEedg/zBVV
+	TLDj7i+Z2HVsIDcO0HBdeXs8Yp54acATnL37JOrB3d2JWF0yVylY2oBlw4fe0rM3jGgw28hIWK3
+	haJTQBCEkiy7zY+jOaABea5AEbz9IvCP9wg+tj5FlfFQ37xwctc5TS8YX87VcnWzWMXHXrCwlFK
+	06i2V3Ra/1BGauG2E26FfzrAVqeJM4mtj1qBeEOAWR3tXN/KiEg7ouI3Yp6+SD4JBDbVHqfP87j
+	sowbvAlY
+X-Received: by 2002:a17:907:6e87:b0:b83:9767:c8ba with SMTP id
+ a640c23a62f3a-b8792dcddddmr465804466b.17.1768666815416; Sat, 17 Jan 2026
+ 08:20:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE request: two advisories for GnuTLS GNUTLS-SA-2017-1, GNUTLS-SA-2017-2, fixed in 3.3.26, 3.5.8
+From: Coia Prant <coiaprant@gmail.com>
+Date: Sun, 18 Jan 2026 00:20:04 +0800
+X-Gm-Features: AZwV_Qg7MWJjvHvT8HmKYydkBRzohsbA7uziR-hkpF3TNb19GL5-4o04FM7jhz4
+Message-ID: <CALj3r0jnYcmJ9-ymGs1X3_t7=9OV6UbvVJ7nmiuXpfe+9yN9Tg@mail.gmail.com>
+To: oss-security@lists.openwall.com, security@suse.com, 
+	team@security.debian.org, secalert@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2025-68121: Regression and Incomplete Fix for Go TLS Session Resumption
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> https://gnutls.org/security.html#GNUTLS-SA-2017-1
-> 
-> It was found using the OSS-FUZZ fuzzer infrastructure that decoding a
-> specially crafted X.509 certificate with Proxy Certificate Information
-> extension present could lead to a double free. This issue was fixed in
-> GnuTLS 3.3.26 and 3.5.8.
-> 
-> https://gitlab.com/gnutls/gnutls/commit/c5aaa488a3d6df712dc8dff23a049133cab5ec1b
+I am the original reporter of the vulnerabilities recently addressed
+in Go 1.25.6/1.24.x (CVE-2025-61730, CVE-2025-68121).
 
->> gnutls_x509_ext_import_proxy: fix issue reading the policy language
->> 
->> If the language was set but the policy wasn't, that could lead to
->> a double free
+I am writing to inform the community that the official fix provided by
+the Go security team is critically flawed and causes significant
+regressions in the networking ecosystem (notably breaking quic-go).
 
-Use CVE-2017-5334.
+1. Missing Root Cause in Official Advisory
 
+The official advisory attributes the risk to "misuse of APIs," but the
+root cause is a fundamental logic error in Go's TLS 1.3 state machine
+during session resumption.
 
-> https://gnutls.org/security.html#GNUTLS-SA-2017-2
-> 
-> It was found using the OSS-FUZZ fuzzer infrastructure that decoding
->  a specially crafted OpenPGP certificate could lead to heap and stack
->  overflows.
-> 
-> The support of OpenPGP certificates in GnuTLS is considered obsolete. As
-> such, it is not recommended to use OpenPGP certificates with GnuTLS.
+Specifically, it fails to re-validate the identity of the trust anchor
+when a session is resumed, allowing for Cross-CA certificate bypass.
 
-> https://gitlab.com/gnutls/gnutls/commit/49be4f7b82eba2363bb8d4090950dad976a77a3a
+2. Flawed Patch Implementation
 
-Use CVE-2017-5335.
+The current official patch (CL 735051) contains amateurish errors that
+undermine its effectiveness:
 
+Incorrect Indexing: It attempts to verify peerCertificates instead of
+the verifiedChain (that include RootCA).
 
-> https://gitlab.com/gnutls/gnutls/commit/5140422e0d7319a8e2fe07f02cbcafc4d6538732
+Ecosystem Breakage: By aggressively blocking Config.Clone logic to
+"fix" the issue, it has paralyzed 0-RTT and session resumption in the
+QUIC ecosystem.
 
-Use CVE-2017-5336.
+3. Proposed O(1) Solution
 
+I have proposed a far more elegant solution that performs a
+constant-time SHA-224 fingerprint check of the root CA.
 
-> https://gitlab.com/gnutls/gnutls/commit/94fcf1645ea17223237aaf8d19132e004afddc1a
+This fixes the vulnerability without breaking the Config.Clone
+semantics or performance.
 
-Use CVE-2017-5337.
+Details and Discussion:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/golang/go/issues/77217
 
-iQIcBAEBCAAGBQJYdaciAAoJEHb/MwWLVhi2qzwP+wYLuGHW+TN2khSxseT9Y72w
-qsnw9dgHq2dGZDjbmIDonOXPyH0+K26QurJQr9mrZGzlR4uaz3bqQsG+JMfSJAaQ
-EfVpwpbDxqorSE5+NFy7KYZoY0teC1QZ2/9lBY0+zqtIWEEIZh0JplTqLssOm5PI
-3p/bJp2oJd2qgSiIAg5fCWvzhshEy7v545+hV3hIZG8K1q2ikdxaC+UM3dcy8xU2
-3ZT3eiJidqVHbf+skqcazgQ1/03XOo7HhybL83O3FK1T84ASnu3XpH5qQcX8Ojkz
-ELky55ReLVKl31jJf4zyxhEadSSpEJ5yUqep/q4zGXZDtWEOM23DZ90GX9evCLKL
-zSGKa1KSNEPUBTCQG1P8vbmnN+/61ZISF3Y6DUqCGGVftdXIkuCBl3DRmXQ+gxf0
-qHMFqf435S5HtGVYBQmE3+AGeHpIq5EKshCRCAcz3oPj1NgO9CiEoJfozDiC1+ou
-ldziOAe2YpZ6Ir32mRl2//ZobevSf/4YDhAbmfeysVE/6Mno5JN6zNersrmwi7Mm
-3ba6Ii7rXRHKATFqi9siDMQPE2eiHl/UzVir+uvoPoNGzHf/dkCqn3/3FE/Ae5F+
-shNAA43Rd8ynOV10pmtX6NGmsoaQKO5wudbgCP/25S1T9PR84WZnMJtZuE7wJtqF
-uqputud32DdwKJfPhstT
-=EtoE
------END PGP SIGNATURE-----
+I encourage downstream maintainers (SUSE, Red Hat, Debian) to review
+the fix before deploying it to mission-critical infrastructure.
+
+Best regards,
+Coia Prant (rbqvq)
