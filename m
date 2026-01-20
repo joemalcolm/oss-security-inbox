@@ -1,4 +1,4 @@
-Received: (qmail 1410 invoked by uid 550); 10 Jun 2022 16:39:50 -0000
+Received: (qmail 21627 invoked by uid 550); 20 Jan 2026 16:01:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,111 +7,62 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8180 invoked from network); 10 Jun 2022 16:12:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=02HOH/C/c7PEvZdwDhppDgb7z3yM3yTxeqnNjz6Vg6E=;
-        b=b6a1zmqcvprKwoImf/Wfee+hTdQUAIzOspsybJqy1s+tYWK7/ZpjJzgQIH10hs1AWE
-         Dl4qN8KxSS4GuMkugBluQpCjgiJsWz4vh/5uwX/Tv11J1qtQQR+m26+YjkA0FKvosMkp
-         orStUvQWOLipkbdg8xSD2iFkHsEmZ3KOfSCDiEY4VugkgYwkfMs3zwFHrwaltHte2V+R
-         oHbX3a+mgVMg3/8zOxEO/cLAPe23RjzogBLnB5aloqgBxQM0D9QE9IOzRd50zYgpEEgA
-         QL4N9ogOWUzf2d3hrQ/gS8sKpskxZE6RvY2V5de/6qmgSxAew+rCxQ3aGdU1/sGyvwuP
-         RqHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=02HOH/C/c7PEvZdwDhppDgb7z3yM3yTxeqnNjz6Vg6E=;
-        b=n3ypGNffHUO6da6b26vs8A9WoYg4nxfNrqXjiv81Hb2xGgUfxQJfoA0QCRe3YHZc+T
-         Xerr97siPq3h+jDetNSItzCHVdsoL3vPUzVQnl7+ZSxfmF9XQC6x42Ch3NIcknuI4Yqb
-         Z/1ToCxf2KnyMEStT43D/Og9LzNiLAQgkrU18sNRebKUizhdaeTU24/yEsKpvJgogOwQ
-         2ZYOfZhByp+Oa+IXVuzAF05lucaB/uj+1hfHHElHTSZNMMx8MdcwnK7wHzPfBRcqq1FS
-         xNX9aXV+JTHad0sk9fKPhF1rWfJY3Q8AzcYYdhA3w/jU35osUKlwHUmvQfUYDxYIgzVD
-         bYwg==
-X-Gm-Message-State: AOAM531yZ1FjY0onjdErf+Ao2CKn5wgP+i37wHzXoG5blSD6Yd8/t2LN
-	TL9Zy6thRn1/zf3CJZnYSKdUzwEtHrkkr2u5d7UXqdCGR6FJQQ==
-X-Google-Smtp-Source: ABdhPJxmPsdNwLYcmFYAleKdHex36lwSNadiagl3a+8zlI+Sv3evHyxZUKEmDRkq8VYu08RBimw/ioZIqgvUCSkUkWs=
-X-Received: by 2002:a81:7607:0:b0:2fb:7bee:bf70 with SMTP id
- r7-20020a817607000000b002fb7beebf70mr49777899ywc.279.1654877518648; Fri, 10
- Jun 2022 09:11:58 -0700 (PDT)
-MIME-Version: 1.0
-From: CJ Cullen <cjcullen@google.com>
-Date: Fri, 10 Jun 2022 09:11:47 -0700
-Message-ID: <CABdrxGBr+uS70N8OhVvLZ=qW8EaGLJkA84Q0vAjQ3tpv6bdX0Q@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 1393 invoked from network); 20 Jan 2026 15:52:05 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jason Gerlowski <gerlowskija@apache.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="000000000000a5cd9505e11a32a0"
-Subject: [oss-security] [kubernetes] CVE-2021-25748: Ingress-nginx `path` sanitization can be
- bypassed with newline character
-
---000000000000a5cd9505e11a32a0
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <4baedddc-7d59-0d80-3f89-ff9bae6051bc@apache.org>
 Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Jan 2026 15:50:52 +0000
+MIME-Version: 1.0
+Subject: [oss-security] =?UTF-8?Q?CVE-2026-22022=3A_Apache_Solr=3A_Unautho?=
+ =?UTF-8?Q?rized_bypass_of_certain_=22predefined_pe?=
+ =?UTF-8?Q?rmission=22_rules_in_the_RuleBasedAuthor?=
+ =?UTF-8?Q?izationPlugin=20?=
 
-Issue Details
+Severity: moderate=20
 
-A security issue was discovered in ingress-nginx
-<https://github.com/kubernetes/ingress-nginx> where a user that can create
-or update ingress objects can use a newline character to bypass the
-sanitization of the `spec.rules[].http.paths[].path` field of an Ingress
-object (in the `networking.k8s.io` or `extensions` API group) to obtain the
-credentials of the ingress-nginx controller. In the default configuration,
-that credential has access to all secrets in the cluster.
+Affected versions:
 
-This issue has been rated High (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:L
-<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U=
-/C:H/I:L/A:L>),
-and assigned CVE-2021-25748.
-Affected Components and Configurations
+- Apache Solr 5.3 through 9.10.0
 
-This bug affects ingress-nginx. If you do not have ingress-nginx installed
-on your cluster, you are not affected. You can check this by running
-`kubectl get po -n ingress-nginx`.
+Description:
 
-If you are running the =E2=80=9Cchrooted=E2=80=9D ingress-nginx controller =
-introduced in
-v1.2.0 (gcr.io/k8s-staging-ingress-nginx/controller-chroot), you are not
-affected.
+Deployments of Apache Solr 5.3.0 through 9.10.0 that rely on Solr's "Rule B=
+ased Authorization Plugin" are vulnerable to allowing unauthorized access t=
+o certain Solr APIs, due to insufficiently strict input validation in those=
+ components.=C2=A0 Only deployments that meet all of the following criteria=
+ are impacted by this vulnerability:
 
-Multitenant environments where non-admin users have permissions to create
-Ingress objects are most affected by this issue.
-Affected Versions
+  *  Use of Solr's "RuleBasedAuthorizationPlugin"
+  *  A RuleBasedAuthorizationPlugin config (see security.json) that specifi=
+es multiple "roles"
+  *  A RuleBasedAuthorizationPlugin permission list (see security.json) tha=
+t uses one or more of the following pre-defined permission rules: "config-r=
+ead", "config-edit", "schema-read", "metrics-read", or "security-read".
+  *  A RuleBasedAuthorizationPlugin permission list that doesn't define the=
+ "all" pre-defined permission
+  *  A networking setup that allows clients to make unfiltered network requ=
+ests to Solr. (i.e. user-submitted HTTP/HTTPS requests reach Solr as-is, un=
+modified or restricted by any intervening proxy or gateway)
 
-   -
+Users can mitigate this vulnerability by ensuring that their RuleBasedAutho=
+rizationPlugin configuration specifies the "all" pre-defined permission and=
+ associates the permission with an "admin" or other privileged role.=C2=A0 =
+Users can also upgrade to a Solr version outside of the impacted range, suc=
+h as the recently released Solr 9.10.1.
 
-   <v1.2.1
+This issue is being tracked as SOLR-18054=20
 
-Fixed Versions
+Credit:
 
-   -
+monkeontheroof (finder)
 
-   v1.2.1
+References:
 
-Mitigation
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2026-22022
+https://issues.apache.org/jira/browse/SOLR-18054
 
-If you are unable to roll out the fix, this vulnerability can be mitigated
-by implementing an admission policy that restricts the
-`spec.rules[].http.paths[].path` field on the networking.k8s.io/Ingress
-resource to known safe characters (see the newly added rules
-<https://github.com/kubernetes/ingress-nginx/blame/main/internal/ingress/in=
-spector/rules.go>,
-or the suggested value for annotation-value-word-blocklist
-<https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/=
-configmap/#annotation-value-word-blocklist>
-).
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See ingress-nginx Issue #8686
-<https://github.com/kubernetes/ingress-nginx/issues/8686> for more details.
-Acknowledgements
-
-This vulnerability was reported by Gafnit Amiga.
-
-Thank You,
-
-CJ Cullen on behalf of the Kubernetes Security Response Committee
-
---000000000000a5cd9505e11a32a0--
