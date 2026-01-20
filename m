@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6172" "Thursday" "28" "July" "2016" "13:57:01" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<3DF58940-08A7-4235-B4BD-62A4210D4B0E@me.com>" "151" "[oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla" "^Date:" nil nil "7" "2016072817:57:01" "[oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla" (number mark "U       larry0@me.co Jul 28  151/6172  " thread-indent "\"[oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3442 invoked by uid 550); 28 Jul 2016 17:57:23 -0000
+Received: (qmail 18179 invoked by uid 550); 20 Jan 2026 15:33:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,181 +6,236 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3384 invoked from network); 28 Jul 2016 17:57:16 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-07-28_12:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1015 suspectscore=0 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1510270003 definitions=main-1607280179
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <3DF58940-08A7-4235-B4BD-62A4210D4B0E@me.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1469728623; bh=qGZA/P/wnroJhhCsnmYGe4k7OWs044LSj/hscYhPM6s=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=aYeV5w+mPwwn74Y8V+878WteizMHby5xHLnjwxAW/CT1NsU7j1j4NQ4+wwuW0UwHT
- NFe7zG6kOy0NSLBp1R3v+orV9Z8m5RecNcqyvun/Ty9aMGbZsg5Mt6K1LsqFz3LbN0
- LbioSDnLWus/9xoCU/M76m9NITz2Ioo+LZewrWpnG3BMucvlwbslVg4pc7AKDbiB72
- blC8N8Y1XVvamYdwyoDJ7h/Z4YfSF3ivI3crzDZ9q3On4L3tF+2atccIYZW+XKekDu
- okg1FAhzuDP0h4/y1j9AGjPouvzGbzKHDLzcKjBKqL4L1dpg1gXnNGPtyIc7w6g5pC
- ksWauWifNEvfw==
-Date: Thu, 28 Jul 2016 13:57:01 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla
-To: Open Source Security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 13810 invoked from network); 20 Jan 2026 14:00:17 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:Date:
+	Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description; bh=HrLd1dDOYE+YvlouA5kuZxIZiOXHAMD05Pt8LYQnAqE=;
+	t=1768917605; x=1770127205; b=Z3mdnlYW4E6OnSfSynXFg+wKR83s9WFCQu9nyTjCfcQRqyG
+	uCG5eDLs31DB+LhaLilnYsBtzLrzUhCg4TVEWBg==;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:Date:
+	Subject:To:From:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description; bh=HrLd1dDOYE+YvlouA5kuZxIZiOXHAMD05Pt8LYQnAqE=;
+	t=1768917605; x=1770127205; b=ibq57EJr6NUorGXpqItjjwlvFR9AQwhpzkHoSlLaIaZwa5C
+	cHniLjVe4dBR1l3gX5cYNKRugsx7inzpaMkCFKgWXsH4CjDtrlInKppXw5nDt3baIgWdX1HiR1vBR
+	UAbmT47KVzXU/1qAEjiODrFQFJTnKacLXjz7rLJ9Zln3ee0JiDyqQL9nmBO/UlzcVCHt5KUxqqZNC
+	ErzPWtq0/R+t9RK6XCdKUhw2Pthy94scSNEB3Nfy5rB/QM8zd3JqsAzqQHuu0Lct7AHjiBaietYY1
+	lfCFaAgfBtOJ7TSDGX3oO2elMSiwNhJBubRALZpLpKJJd9W6/jzjbDsnMmTi3yFT4utNTlMDJM5fl
+	BuWoGdn7FVgn921a5POBbXQGdyRgDNUX7vVVIG9t+hfXozHf505265c9TungZ6jUGnd2E05jYStj7
+	GF74m/xjQi5QEcLL3pmsE87l;
+From: Simon Josefsson <simon@josefsson.org>
+To: oss-security@lists.openwall.com
+OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
+ url=https://josefsson.org/key-20190320.txt
+X-Hashcash: 1:23:260120:oss-security@lists.openwall.com::3gJpEAyC9ZGG8LQb:8WsE
+Date: Tue, 20 Jan 2026 15:00:07 +0100
+Message-ID: <87h5sg9yfs.fsf@josefsson.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [oss-security] GNU InetUtils Security Advisory: remote authentication by-pass in
+ telnetd
 
-Title: SQLi and Reflected XSS in Huge IT catalog extension v1.0.4 for Joomla
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-07-17
-Download Site: http://extensions.joomla.org/extensions/extension/e-commerce=
-/shopping-cart/catalog
-Vendor: www.huge-it.com
-Vendor Notified: 2015-07-17
-Vendor Contact: info@huge-it.com
-Description: This extension is designed to help you display the products in=
- the most attractive way. Joomla Catalog Extension has a stylish design wit=
-h convenient construction for displaying the product to the customers.
-Vulnerability:
-The attacker must be logged in with at least manager level access or access=
- to the administrative panel to exploit this vulnerability.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Reflected XSS in file ./views/submissions/tmpl/default.php via message_id p=
-arameter:
+If you are tired of modern age vulnerabilities, and remember the good
+old times on bugtraq, I hope you will appreciate this one.  If someone
+can allocated a CVE, we will add it in future release notes.
 
-825:   <input type=3D"hidden" id=3D"message_id" value =3D"<?php echo $_GET[=
-'message_id']; ?>" />
+/Simon
 
+# GNU InetUtils Security Advisory: remote authentication by-pass in telnetd
 
-SQL Injection=20
+The telnetd server invokes /usr/bin/login (normally running as root)
+passing the value of the USER environment variable received from the
+client as the last parameter.
 
-in file ./models/submissions.php via id parameter
-59-        $query =3D $db->getQuery(true);
-60-        $id =3D JRequest::getVar('message_id');
-61-        $this-> updateReadInfo($id);
-62:        $query->select('*,#__huge_it_catalog_products.name as product_na=
-me, #__huge_it_catalog_asc_seller.id as  message_id');
-63-        $query->from('#__huge_it_catalog_asc_seller,#__huge_it_catalog_p=
-roducts');
-64-        $query->where('#__huge_it_catalog_asc_seller.product_id =3D #__h=
-uge_it_catalog_products.id and #__huge_it_catalog_asc_seller.id =3D "'.$id.=
-'"');
-65-        $db->setQuery($query);
-in file ./models/comment.php via projectId parameter:
+If the client supply a carefully crafted USER environment value being
+the string "-f root", and passes the telnet(1) -a or --login parameter
+to send this USER environment to the server, the client will be
+automatically logged in as root bypassing normal authentication
+processes.
 
-56-        $db =3D JFactory::getDBO();
-57-       $id =3D JRequest::getVar('projectId');=20
-58-       $query =3D $db->getQuery(true);
-59:        $query->select('*,#__huge_it_catalog_reviews.id as comId, #__hug=
-e_it_catalog_reviews.name as author_name, #__huge_it_catalog_products.name =
-as product_name')
-60-             ->from('#__huge_it_catalog_reviews, #__huge_it_catalog_prod=
-ucts')
-61-         ->where('#__huge_it_catalog_reviews.product_id =3D #__huge_it_c=
-atalog_products.id and #__huge_it_catalog_products.id =3D "'.$id.'"');
-62-        $db->setQuery($query);
+This happens because the telnetd server do not sanitize the USER
+environment variable before passing it on to login(1), and login(1)
+uses the -f parameter to by-pass normal authentication.
 
-in file ./models/rating.php via projectId parameter:
+Severity: High
 
-55-        return $results;
-56-    }=20
-57-=20=20=20=20
-58-    public  function getRatingById() {
-59-        $db =3D JFactory::getDBO();
-60:       $id =3D JRequest::getVar('projectId');=20
-61-       $query =3D $db->getQuery(true);
-62-        $query->select('*,#__huge_it_catalog_rating.id as ratId')
-63-             ->from('#__huge_it_catalog_rating, #__huge_it_catalog_produ=
-cts')
-64-         ->where('#__huge_it_catalog_rating.prod_id =3D #__huge_it_catal=
-og_products.id and #__huge_it_catalog_products.id =3D "'.$id.'"');
-65-        $db->setQuery($query);
+Vulnerable versions: GNU InetUtils since version 1.9.3 up to and
+including version 2.7.
 
-in file ./models/catalog.php via id parameter:
+## Example
 
-45:        $id_cat =3D JRequest::getVar('id');
-46-        $query =3D $db->getQuery(true);
-47-        $query->select('#__huge_it_catalog_products.name as name,'
-48-                . '#__huge_it_catalog_products.id ,'
-49-                . '#__huge_it_catalogs.name as catName,'
-50-                . 'catalog_id,#__huge_it_catalog_products.description as=
- productDescription,#__huge_it_catalog_products.parameters as productParame=
-ters,#__huge_it_catalogs.description,image_url,sl_url,sl_type,price,market_=
-price,single_product_url_type,single_product_url_type,#__huge_it_catalog_pr=
-oducts.link_target as productLinkTarget,#__huge_it_catalog_products.orderin=
-g,#__huge_it_catalog_products.published,published_in_sl_width');
-51-        $query->from(array('#__huge_it_catalogs' =3D> '#__huge_it_catalo=
-gs', '#__huge_it_catalog_products' =3D> '#__huge_it_catalog_products'));
-52-        $query->where('#__huge_it_catalogs.id =3D catalog_id')->where('c=
-atalog_id=3D' . $id_cat);
-53-        $query->order('ordering asc');
-54-=20=20=20=20=20=20=20
-55-        $db->setQuery($query);
---
-63:        $id_cat =3D JRequest::getVar('id');
-64-        $query =3D $db->getQuery(true);
-65-        $query->select('*');
-66-        $query->from('#__huge_it_catalog_products');
-67-        $query->where('catalog_id=3D' . $id_cat);
-68-        $db->setQuery($query);
-69-        $results =3D $db->loadObjectList();
-70-        return $results;
-71-    }
-72-
-73-    public function save($data) {
---
-121:        $id_cat =3D JRequest::getVar('id');
-122-        $query =3D $db->getQuery(true);
-123-        $query->update('#__huge_it_catalogs')->set('name =3D"' . $name =
-. '"')->where('id=3D"' . $id_cat . '"');
-124-        $db->setQuery($query);
-125-        $db->execute();
-126-    }
-127-
-128-    function selectStyle() {
-129-        $db =3D JFactory::getDBO();
-130-        $data =3D JRequest::get('post');
-131-          $name =3D $data['name'];
---
-136:        $id_cat =3D JRequest::getVar('id');
-137-        $query =3D $db->getQuery(true);
-138-=20=20=20=20=20=20=20=20
-139-        $query->update('#__huge_it_catalogs')
-140-              ->set('name =3D"' . $name . '"')
-141-              ->set('catalog_list_effects_s =3D"'.$catalog_effects_list=
-.'"')
-142-              ->set('pagination_type =3D"'.$pagination_type.'"')
-143-              ->set('count_into_page =3D"'.$count_into_page.'"')
-144-              ->set('categories =3D"'.$allCategories.'"')
-145-              ->where('id=3D"' . $id_cat . '"');
-146-        $db->setQuery($query);
---
+On a Trisquel GNU/Linux 11 aramo laptop:
 
-via removeslide parameter:
+root@kaka:~ sudo apt-get install inetutils-telnetd telnet
+root@kaka:~ sudo sed -i 's/#<off># telnet/telnet/' /etc/inetd.conf=20
+root@kaka:~ sudo /etc/init.d/inetutils-inetd start
+root@kaka:~ USER=3D'-f root' telnet -a localhost
+...
+root@kaka:~#=20
 
-208:        $id_cat =3D JRequest::getVar('removeslide');
-209:        $id =3D JRequest::getVar('id');
-210-        $db =3D JFactory::getDBO();
-211-        $query =3D $db->getQuery(true);
-212-        $query->delete('#__huge_it_catalog_products')->where('id =3D' .=
- $id_cat);
-213-        $db->setQuery($query);
-214-        $db->execute();
+## History
 
-CVE-2016-1000119 2016-1000120
-Exploit Code:
-	=E2=80=A2 SQLi:
-	=E2=80=A2=20=20
-	=E2=80=A2 $ sqlmap  --load-cookies=3Dcookies.txt -u "http://192.168.0.125/=
-administrator/index.php?option=3Dcom_catalog&view=3Dcatalog&id=3D*" --dbms =
-mysql=20
-	=E2=80=A2=20=20
-	=E2=80=A2 XSS:
-	=E2=80=A2=20=20
-	=E2=80=A2 http://192.168.0.125/administrator/index.php?option=3Dcom_catalo=
-g&view=3Dcatalog&id=3D1--%20%22%3E%3Cscript%3Ealert(1);%3C/script%3E
+The bug was introduced in the following commit made on 2015 March 19:
 
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D167=
+https://codeberg.org/inetutils/inetutils/commit/fa3245ac8c288b87139a0da8249=
+d0a408c4dfb87
+
+Based on mailing list discussions:
+
+https://lists.gnu.org/archive/html/bug-inetutils/2014-12/msg00012.html
+https://lists.gnu.org/archive/html/bug-inetutils/2015-03/msg00001.html
+
+It was included in the v1.9.3 release made on 2015 May 12.
+
+## Recommendation
+
+Do not run a telnetd server at all.  Restrict network access to the
+telnet port to trusted clients.
+
+Apply the patch or upgrade to a newer release which incorporate the
+patch.
+
+## Workaround
+
+Disable telnetd server or make the InetUtils telnetd use a custom
+login(1) tool that does not permit use of the '-f' parameter.
+
+## Further research
+
+The template for invoking login(1) is in telnetd/telnetd.c:
+
+```
+/* Template command line for invoking login program.  */
+char *login_invocation =3D
+#ifdef SOLARIS10
+  /* TODO: `-s telnet' or `-s ktelnet'.
+   *       `-u' takes the Kerberos principal name
+   *       of the authenticating, remote user.
+   */
+  PATH_LOGIN " -p -h %h %?T{-t %T} -d %L %?u{-u %u}{%U}"
+#elif defined SOLARIS
+  /* At least for SunOS 5.8.  */
+  PATH_LOGIN " -h %h %?T{%T} %?u{-- %u}{%U}"
+#else /* !SOLARIS */
+  PATH_LOGIN " -p -h %h %?u{-f %u}{%U}"
+#endif
+  ;
+```
+
+The variable expansion happens in telnetd/utility.c:
+
+```
+/* Expand a variable referenced by its short one-symbol name.
+   Input: exp->cp points to the variable name.
+   FIXME: not implemented */
+char *
+_var_short_name (struct line_expander *exp)
+{
+  char *q;
+  char timebuf[64];
+  time_t t;
+  switch (*exp->cp++)
+    {
+    case 'a':
+#ifdef AUTHENTICATION
+      if (auth_level >=3D 0 && autologin =3D=3D AUTH_VALID)
+	return xstrdup ("ok");
+#endif
+      return NULL;
+    case 'd':
+      time (&t);
+      strftime (timebuf, sizeof (timebuf),
+		"%l:%M%p on %A, %d %B %Y", localtime (&t));
+      return xstrdup (timebuf);
+    case 'h':
+      return xstrdup (remote_hostname);
+    case 'l':
+      return xstrdup (local_hostname);
+    case 'L':
+      return xstrdup (line);
+    case 't':
+      q =3D strchr (line + 1, '/');
+      if (q)
+	q++;
+      else
+	q =3D line;
+      return xstrdup (q);
+    case 'T':
+      return terminaltype ? xstrdup (terminaltype) : NULL;
+    case 'u':
+      return user_name ? xstrdup (user_name) : NULL;
+    case 'U':
+      return getenv ("USER") ? xstrdup (getenv ("USER")) : xstrdup ("");
+    default:
+      exp->state =3D EXP_STATE_ERROR;
+      return NULL;
+    }
+}
+```
+
+Thus there is potential for similar vulnerabilities for other
+variables.
+
+On non-GNU/Linux systems, only the remote hostname field is of
+interest.  The `remote_hostname` variable is populated in the function
+`telnetd_setup` from telnetd/telnetd.c by calling getnameinfo() or
+gethostbyaddr() depending on platform.  This API is generally not
+considered to return trusted data, thus relying on it to not return a
+value such as 'foo -f root' is not advisable.
+
+## Patch
+
+We chose to sanitize all variables for expansion.  The following two
+patches are what we suggest:
+
+https://codeberg.org/inetutils/inetutils/commit/fd702c02497b2f398e739e3119b=
+ed0b23dd7aa7b
+https://codeberg.org/inetutils/inetutils/commit/ccba9f748aa8d50a38d7748e2e6=
+0362edd6a32cc
+
+## Credits
+
+This vulnerability was found and reported by Kyu Neushwaistein aka
+Carlos Cortes Alvarez on 2026-01-19.
+
+Initial patch by Paul Eggert on 2026-01-20.  Simon Josefsson improved
+the patch to also cover similar concerns with other expansions.
+
+This advisory was drafted by Simon Josefsson on 2026-01-20.
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQNoBAEWCgMQFiEEo8ychwudMQq61M8vUXIrCP5HRaIFAmlvimcUHHNpbW9uQGpv
+c2Vmc3Nvbi5vcmfCHCYAmDMEXJLOtBYJKwYBBAHaRw8BAQdACIcrZIvhrxDBkK9f
+V+QlTmXxo2naObDuGtw58YaxlOu0JVNpbW9uIEpvc2Vmc3NvbiA8c2ltb25Aam9z
+ZWZzc29uLm9yZz6IlgQTFggAPgIbAwULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgBYh
+BLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XQkBQkNZGbwAAoJENc89jjFPAa+BtIA
+/iR73CfBurG9y8pASh3cbGOMHpDZfMAtosu6jbpO69GHAP4p7l57d+iVty2VQMsx
++3TCSAvZkpr4P/FuTzZ8JZe8BrgzBFySz4EWCSsGAQQB2kcPAQEHQOxTCIOaeXAx
+I2hIX4HK9bQTpNVei708oNr1Klm8qCGKiPUEGBYIACYCGwIWIQSx0r0Tdb7LeEz0
++MTXPPY4xTwGvgUCZ9F0SgUJDWRmSQCBdiAEGRYIAB0WIQSjzJyHC50xCrrUzy9R
+cisI/kdFogUCXJLPgQAKCRBRcisI/kdFoqdMAQCgH45aseZgIrwKOvUOA9QfsmeE
+8GZHYNuFHmM9FEQS6AD6A4x5aYvoY6lo98pgtw2HPDhmcCXFItjXCrV4A0GmJA4J
+ENc89jjFPAa+wUUBAO64fbZek6FPlRK0DrlWsrjCXuLi6PUxyzCAY6lG2nhUAQC6
+qobB9mkZlZ0qihy1x4JRtflqFcqqT9n7iUZkCDIiDbg4BFySz2oSCisGAQQBl1UB
+BQEBB0AxlRumDW6nZY7A+VCfek9VpEx6PJmdJyYPt3lNHMd6HAMBCAeIfgQYFggA
+JgIbDBYhBLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XTSBQkNZGboAAoJENc89jjF
+PAa+0M0BAPPRq73kLnHYNDMniVBOzUdi2XeF32idjEWWfjvyIJUOAP4wZ+ALxIeh
+is3Uw2BzGZE6ttXQ2Q+DeCJO3TPpIqaXDAAKCRBRcisI/kdForC7AQDeP1rJHJBe
+XKTO7Up/aepxs1poC30Vskra9CNTAAXS1wEA30G25WuoDCd+53xqo+mpwVaUzyVC
+JL+VWV5bpt92dQ4=
+=UsRQ
+-----END PGP SIGNATURE-----
+--=-=-=--
