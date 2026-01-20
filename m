@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2360" "Wednesday" "2" "November" "2016" "08:11:10" "+0100" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.1611020810390.375@tvnag.unkk.fr>" "82" "[oss-security] [SECURITY ADVISORY] curl_getdate read out of bounds" nil nil nil "11" "2016110207:11:10" "[oss-security] [SECURITY ADVISORY] curl_getdate read out of bounds" (number mark "U       daniel@haxx. Nov  2   82/2360  " thread-indent "\"[oss-security] [SECURITY ADVISORY] curl_getdate read out of bounds\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15406 invoked by uid 550); 2 Nov 2016 07:11:26 -0000
+Received: (qmail 22526 invoked by uid 550); 20 Jan 2026 16:01:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,101 +7,63 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14135 invoked from network); 2 Nov 2016 07:11:23 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 2 Nov 2016 08:11:10 +0100 (CET)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.1611020810390.375@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+x-ms-reactions: disallow
+Received: (qmail 21693 invoked from network); 20 Jan 2026 15:53:50 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jason Gerlowski <gerlowskija@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <c9e84a7e-4693-3bbc-3d51-90b1374abb31@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 20 Jan 2026 15:52:12 +0000
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="1129329158-454175242-1478070670=:375"
-Subject: [oss-security] [SECURITY ADVISORY] curl_getdate read out of bounds
+Subject: [oss-security] CVE-2026-22444: Apache Solr: Insufficient file-access checking in
+ standalone core-creation requests 
 
---1129329158-454175242-1478070670=:375
-Content-Type: text/plain; format=flowed; charset=VISCII
-Content-Transfer-Encoding: 8BIT
+Severity: moderate=20
 
-curl_getdate read out of bounds
-===============================
+Affected versions:
 
-Project cURL Security Advisory, November 2, 2016 -
-[Permalink](https://curl.haxx.se/docs/adv_20161102G.html)
+- Apache Solr 8.6 through 9.10.0
 
-VULNERABILITY
--------------
+Description:
 
-The `curl_getdate` converts a given date string into a numerical timestamp and
-it supports a range of different formats and possibilites to express a date
-and time. The underlying date parsing function is also used internally when
-parsing for example HTTP cookies (possibly received from remote servers) and
-it can be used when doing conditional HTTP requests.
+The "create core" API of Apache Solr 8.6 through 9.10.0 lacks sufficient in=
+put validation on some API parameters, which can cause Solr to check the ex=
+istence of and attempt to read file-system paths that should be disallowed =
+by Solr's  "allowPaths" security setting https://https://solr.apache.org/gu=
+ide/solr/latest/configuration-guide/configuring-solr-xml.html#the-solr-elem=
+ent .=C2=A0 These read-only accesses can allow users to create cores using =
+unexpected configsets if any are accessible via the filesystem.=C2=A0 On Wi=
+ndows systems configured to allow UNC paths this can additionally cause dis=
+closure of NTLM "user" hashes.=C2=A0
 
-The date parser function uses the libc sscanf() function at two places, with
-the parsing strings "%02d:%02d" and ""%02d:%02d:%02d". The intent being that
-it would parse either a string with HH:MM (two digits colon two digits) or
-HH:MM:SS (two digits colon two digits colon two digits). If instead the piece
-of time that was sent in had the final digit cut off, thus ending with a
-single-digit, the date parser code would advance its read pointer one byte too
-much and end up reading out of bounds.
+Solr deployments are subject to this vulnerability if they meet the followi=
+ng criteria:
+  *  Solr is running in its "standalone" mode.
+  *  Solr's "allowPath" setting is being used to restrict file access to ce=
+rtain directories.
+  *  Solr's "create core" API is exposed and accessible to untrusted users.=
+=C2=A0 This can happen if Solr's  RuleBasedAuthorizationPlugin https://solr=
+.apache.org/guide/solr/latest/deployment-guide/rule-based-authorization-plu=
+gin.html  is disabled, or if it is enabled but the "core-admin-edit" predef=
+ined permission (or an equivalent custom permission) is given to low-trust =
+(i.e. non-admin) user roles.
 
-We are not aware of any exploit of this flaw.
+Users can mitigate this by enabling Solr's RuleBasedAuthorizationPlugin (if=
+ disabled) and configuring a permission-list that prevents untrusted users =
+from creating new Solr cores.=C2=A0 Users should also upgrade to Apache Sol=
+r 9.10.1 or greater, which contain fixes for this issue.
 
-INFO
-----
+This issue is being tracked as SOLR-18058=20
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2016-8621 to this issue.
+Credit:
 
-AFFECTED VERSIONS
------------------
+Damon Toey (finder)
 
-This flaw exists in the following curl versions.
+References:
 
-- Affected versions: curl 7.12.2 to and including 7.50.3
-- Not affected versions: curl < 7.12.2 and curl >= 7.51.0
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2026-22444
+https://issues.apache.org/jira/browse/SOLR-18058
 
-libcurl is used by many applications, but not always advertised as such!
-
-THE SOLUTION
-------------
-
-In version 7.51.0, the parser function is fixed.
-
-A [patch for CVE-2016-8621](https://curl.haxx.se/CVE-2016-8621.patch) is
-available.
-
-RECOMMENDATIONS
----------------
-
-We suggest you take one of the following actions immediately, in order of
-preference:
-
-  A - Upgrade curl and libcurl to version 7.51.0
-
-  B - Apply the patch to your version and rebuild
-
-TIME LINE
----------
-
-It was first reported to the curl project on October 3 by Lu§t Nguy­n.
-
-We contacted distros@openwall on October 19.
-
-curl 7.51.0 was released on November 2 2016, coordinated with the publication
-of this advisory.
-
-CREDITS
--------
-
-Thanks to Lu§t Nguy­n.
-
--- 
-
-  / daniel.haxx.se
---1129329158-454175242-1478070670=:375--
