@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1902" "Monday" "6" "April" "2015" "12:52:43" "-0700" "Andy Lutomirski" "luto@kernel.org" "<5522E40B.4030506@kernel.org>" "43" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" nil nil nil "4" "2015040619:52:43" "[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts" (number mark "        luto@kernel. Apr  6   43/1902  " thread-indent "\"[oss-security] Re: Linux namespaces: It is possible to escape from bind mounts\"\n") "<20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>" ("<20150403105802.GA21110@pc.thejh.net>" "<20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32118 invoked by uid 550); 6 Apr 2015 20:12:52 -0000
+Received: (qmail 25686 invoked by uid 550); 21 Jan 2026 13:09:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +6,56 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14165 invoked from network); 6 Apr 2015 19:52:58 -0000
-Message-ID: <5522E40B.4030506@kernel.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.5.0
-MIME-Version: 1.0
-References: <20150403105802.GA21110@pc.thejh.net> <20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>
-In-Reply-To: <20150404185434.6F84B6C0048@smtpvmsrv1.mitre.org>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-CC: cve-assign@mitre.org
-Date: Mon, 06 Apr 2015 12:52:43 -0700
-From: Andy Lutomirski <luto@kernel.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Linux namespaces: It is possible to escape from bind mounts
-To: oss-security@lists.openwall.com, jann@thejh.net
+x-ms-reactions: disallow
+Received: (qmail 25655 invoked from network); 21 Jan 2026 13:09:25 -0000
+Authentication-Results:garm.ovh; auth=pass (GARM-98R0027b690a10-e8be-4415-86df-2bfd92b92b30,
+                    D5D127BDDEA1D3972C6917FEE641D96ED74D0DB7) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:31.0.178.54
+Date: Wed, 21 Jan 2026 14:09:03 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20260121130903.ydfe42j5ovq2lnte@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <87h5sg9yfs.fsf@josefsson.org>
+ <aXAM3Sn3-xw28o-Z@gxis.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aXAM3Sn3-xw28o-Z@gxis.de>
+X-Ovh-Tracer-Id: 14986572188869733585
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: dmFkZTGQ1corhzqBelpQ3LHAojup8HkezRfpBnHyjrGOSaBZaWm0tyNN1ISji2jK+bhMf3y4yKoEuM9JWq37h0cpxEFggSFq2VctbiASvywPkVYqn9zEPjnned2wNeSJPMb0DFRiQ/Tce/LGI81dQpPWX4Gm6ukLErW1QVblo3HN4IBzH6TCjITjRsFr6ctB3xBa7OrSwXUkMqJ6QZWXZzXCbhWhk4Y7aP+g2cxyQuHUT3dWNhC3JQ61EaoHx4FEHjJhGLhYDoLiX4cZdIw9sm0O9W2IcVZU7lEWyvFQJClvTXQQ9fXX8rnbwxOsNnr8wZADKErishpV7cWdRNwsFH6NQ+aLOe96qurbbckAuHCISPcMUYBjqzzZhSwZtKDpDJGO9o7YWjFxLpGnor3zFlYyiSuyx3FyaOaGpgjToZEn2QxftQGZeBW9juRKqZsCdmjpY448Nofm8s4EYx0HuZd4IQBB1tVhbydTVN0eouHIv0EjMDUjXlO1VbaVocWEIz+a2L/l5pffwf07l4gkSqoDZBVA7kkVrfbLsNygNLpo0gwPqaOoRCRM87uN8pjfS4FGxXqkyvfU/he9zqi9tN+U0DFbYP6rgeada4VUwkqGWcyVnqZtwzznrnB+ovScOWaqNv6bWNrlrWKIIoeB4Dm/SXINjZcMjn1KbmeoAXUC+2VI+w
+DKIM-Signature: a=rsa-sha256; bh=scY25rTFjSjSWQixgAh73jKmmWgImtKKKd+j5IPdSjs=;
+ c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
+ t=1769000955; v=1;
+ b=sFSKYkEA52DJq7deWfjs/2Dm405uq+dJyr9EL1pdv4LDrCbXcBlI7VDSYOhZkdGfj9w/dnbY
+ aT87NQppSp6FQvglBoyfzNJ9qnw9DrthapZ7ZwfrAREZZkSV1gI+kttYBVq9rypAQ4VEC1jnEFX
+ YYPqLuzOs7BDrq3G96StXNMxG4tx4OEREJStAUajzLREp4UYQXDfXe+Y1SlWCXDNZ6Dc9oxFmuU
+ /f+JktJPVwOMkDyxPCSVEUWafvvSLS7/cstiSUK9GLFPtLPvr0kUMRKUprYAYQy/K5EiO8Qn0Am
+ XNDNYzi+MQu6Py6NBK/APhHRQpcTVIlI2/mcDpSfD2RZw==
+Subject: Re: [oss-security] GNU InetUtils Security Advisory: remote
+ authentication by-pass in telnetd
 
-On 04/04/2015 11:54 AM, 
-cve-assign-AZamIotjMK3YtjvyW6yDsg@public.gmane.org wrote:
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
+* Alexander Bochmann <ab@lists.gxis.de>, 2026-01-21 00:16:
+>...on 2026-01-20 15:00:07, Simon Josefsson wrote:
 >
->> http://permalink.gmane.org/gmane.linux.kernel.containers/29173
->> http://permalink.gmane.org/gmane.linux.kernel.containers/29177
+>>Vulnerable versions: GNU InetUtils since version 1.9.3 up to and 
+>>including version 2.7.
 >
->> Containers on Linux normally use bind mounts to restrict how much
->> of the filesystem is visible for processes inside the container.
->> However, if an attacker can gain capabilities within such a
->> container or can create another user and mount namespace within
->> the existing container, he can do something similar to a
->> double-chroot attack to break out of the bind mount and gain
->> access to the full filesystem to which the bind mount refers:
->>
->> Create folders /A, /A/B, /C, /D inside the namespace.
->> Bind-mount the /A inside the namespace to /D.
->> Let a process chdir to /D/B.
->> Move /D/B over into /C.
->> The process which chdir'ed to /D/B is now in /C/B, but at the
->> same time it is in a bind mount with /D as root. It can then
->> traverse upwards, past what looks like / inside the namespace.
+>Looking at Debian, this gets even more hilarious... Their
+>changelog for inetutils has:
 >
-> Our understanding so far is that the underlying problem is that the
-> original design didn't fully consider the ability of an attacker to
-> rename. Because of this, the rename implementation has been changed so
-> that it detects a violation of the intended security properties and
-> puts a countermeasure in place. This has been done in the fs/dcache.c
-> __d_move function. There is no commit available yet at
->
->    http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/fs/dcache.c
->
-> Use CVE-2015-2925 for this issue.
->
-> As far as we can tell, the patches don't address a separate scenario
-> in which a ".." attack can occur but the underlying problem is
-> something other than rename handling. So, we don't think a second CVE
-> ID is needed.
+>>inetutils (2:1.9.4-7) unstable; urgency=medium
+>>[..]
+>> * Take several patches from upstream git master:
+>>[..]
+>>   - 0028-telnetd-Scrub-USER-from-environment.patch
 
-Do you have a specific scenario in mind?
+I think this is unrelated.
 
---Andy
+The bug is reproducible with inetutils-telnetd 2:1.9.4-7 too.
+
+-- 
+Jakub Wilk
