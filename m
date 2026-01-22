@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1859" "Friday" "16" "December" "2016" "00:36:45" "+0100" "Heiko Schlittermann" "hs@schlittermann.de" "<20161215233645.GJ29010@jumper.schlittermann.de>" "53" "[oss-security] CVE Request - Exim 4.69-4.87 - disclosure of private information" nil nil nil "12" "2016121523:36:45" "[oss-security] CVE Request - Exim 4.69-4.87 - disclosure of private information" (number mark "U       hs@schlitter Dec 16   53/1859  " thread-indent "\"[oss-security] CVE Request - Exim 4.69-4.87 - disclosure of private information\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11890 invoked by uid 550); 16 Dec 2016 01:12:39 -0000
+Received: (qmail 1480 invoked by uid 550); 22 Jan 2026 17:37:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23978 invoked from network); 15 Dec 2016 23:36:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=Content-Type:MIME-Version:Message-ID:
-	Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
-	bh=zVcbDkqYJDv1/o2A+ti4U7d4o6mndXPSMob+nhpx9b4=; b=NIYARShKXFtyCHKLurYpKltETZ
-	APyI5zrS0/mFLx7tiLxamlmDW/toPI4rqDS5R1+iv8k0kjGroSUwelmnEe48tKo24CQN6Z1euyqMG
-	Gbrp1vBRr++JH6MaIeyDir9/swM+pZXPsrnj+3hHOmgTt43fDGJ66FzI6VmsEXEw8i3E=;
-Date: Fri, 16 Dec 2016 00:36:45 +0100
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security <oss-security@lists.openwall.com>
-Message-ID: <20161215233645.GJ29010@jumper.schlittermann.de>
+x-ms-reactions: disallow
+Received: (qmail 6014 invoked from network); 22 Jan 2026 10:25:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=greenbone.net;
+	s=MBO0001; t=1769077532;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=hqlNo+IlseAC1NsYzT+D7Jfg+cyhE+oReqE0AliJzP4=;
+	b=CIPC23v7MpZv7m/BaajV3uC2AlO2xrujKmnQdKMeKlrhIRH2EaF5isPWh5q8StGDxI/Kff
+	NmXi9hszlRLu8P1GQpOxEr3IkcIDfqa12v+f42OKlb8dxI7bLo0Sic5GNg1/EeIlvRbM90
+	RAC7fsRk73xwoik5G5CqiSQsNg8pGDZ3MAixDybmI9CIMGv6ph06OcLqfO81mIQ0X5lt3G
+	mN91rM+PhfnAEsMlbw5OsupD+ruruVSsoJ7tW2QWk/vYr5VWBwifkXOWBHOGLNqC0X3r6G
+	by19vbztoVdQuotb0+isQm8SsnP1V7oR6n+Z85IxjkwMcZWOQ6BA1oJehvwi6w==
+Message-ID: <9262f36a-a626-44ed-a8b8-af888cc9601b@greenbone.net>
+Date: Thu, 22 Jan 2026 11:25:31 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IJ3xY7yfhADm8R0x"
-Content-Disposition: inline
-Organization: schlittermann -- internet & unix support
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE Request - Exim 4.69-4.87 - disclosure of private information
-
---IJ3xY7yfhADm8R0x
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+To: oss-security@lists.openwall.com
+References: <87h5sg9yfs.fsf@josefsson.org>
+Content-Language: en-US, de-DE
+From: Christian Fischer <christian.fischer@greenbone.net>
+Autocrypt: addr=christian.fischer@greenbone.net; keydata=
+ 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
+ nSh/BvVF+Xp6Dow=
+In-Reply-To: <87h5sg9yfs.fsf@josefsson.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] GNU InetUtils Security Advisory: remote
+ authentication by-pass in telnetd
 
 Hello,
 
-please assign a CVE ID
+On 1/20/26 3:00 PM, Simon Josefsson wrote:
+> If someone can allocated a CVE, we will add it in future release notes.
 
-Product:    Exim
-Versions:   4.69 -> 4.87
-Impact:     Possible leak of private information to a remote attacker
-Reference:  https://bugs.exim.org/show_bug.cgi?id=3D1996 (placeholder curre=
-ntly)
-Requester:  Heiko Schlittermann <hs@schlittermann.de> (Exim Developer)
-Credits:    Bjoern Jacke <bjoern@j3e.de>
+it seems https://www.cve.org/CVERecord?id=CVE-2026-24061 got assigned by 
+MITRE to this now:
 
-If several conditions are met, Exim leaks private information to
-a remote attacker.
-
-A patch exists and is under testing already.
-Backports to older versions are under development.
-
-As soon as the tests are passed we'll send an announcement
-to the "Operating system distribution security contacts list" and
-ask for packaging fixed versions.
-
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann              - Exim developer
---=20
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
- ! key id 7CBF764A and 972EAC9F are revoked since 2015-01 ------------ -
-
---IJ3xY7yfhADm8R0x
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBCgAGBQJYUykMAAoJEGoXY4qgRQz1csYH/1gq+3/sZzDThQHF9fvu8mrl
-1OzlRfy1pgOV2yjscEOt60ElPD/2K7xHRQGEa8gjt35Ck80VgzMMQX2qnGJ1mxv3
-7rnsQVwLnHfeTgyV+9QJmwTpn/leKJrSts5Xb0fe/NUeiB1lxg+FJ+Ym4c+v0r5s
-T0FpzhvMmnNbL0akGCY9WQoPahyMcmgZ/RMDPCOlLCHM0JCEE/vwwQLcCQkJ3+TH
-bCI4vtzUDHfzogS1AKGCcXysnj22dH0IUDAa7z1EUQv6Gyg6He3uHgLnX3mpV9JS
-SqD+GLBtso/FZNN7hVhsjA/IyPdXeBFOrp2SUhwuQDDrwDs357qtVgybGqRzlco=
-=nvHI
------END PGP SIGNATURE-----
-
---IJ3xY7yfhADm8R0x--
+ > telnetd in GNU Inetutils through 2.7 allows remote authentication 
+ > bypass via a "-f root" value for the USER environment variable.
