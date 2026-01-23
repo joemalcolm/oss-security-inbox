@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["702" "Monday" "29" "April" "2019" "21:15:28" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "16" nil nil nil nil "4" nil nil (number mark "U       carnil@debia Apr 29   16/702   " thread-indent "\"Re: [oss-security] Linux kernel: multiple issues\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: multiple issues" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1890 invoked by uid 550); 29 Apr 2019 19:15:43 -0000
+Received: (qmail 9765 invoked by uid 550); 23 Jan 2026 16:14:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +7,51 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1867 invoked from network); 29 Apr 2019 19:15:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=m+A9cE9gap/bxT+7H5yEt/LRNc8KotAXyPM4Zp3t4hg=;
-        b=YT9/VfAtvhq1xhmCt2nHWFwgrgyd+7MDv1zkcGVnjJVqf12nC2mUiBTSuHmKTq7VnC
-         vDqGwcRiJJDAO1zYVX26NCagzEgiTwNJrn6yDee4zCF1I+u4Hc6YL6EVOQ1TJWhvrNTM
-         TDBvftdZ1Ud0tt8A2Qa+XSs+Jp2hnQKUS36r+j9al60AplgIC/Y1yQmk9rEHsLbyzLBz
-         5dYQYBangcELyW14SihgPgPbEu/yxufgLLiBUZfYAXhtDXRBiZU+6GIQfT2Bj2h+SkdS
-         J1NQ062wiEPLmrZPcFmDvFBkyapeFTauUDFTp+37eYms/tx7PMEudiOpuTgV57AXlL3S
-         G2WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=m+A9cE9gap/bxT+7H5yEt/LRNc8KotAXyPM4Zp3t4hg=;
-        b=kTawXom2VH6vzxj5EQoblHaJy3Vu0D1A42qCNn+bSh0YBB9f9dZGgOHdcR26ohWJAq
-         1MVf8Ot+V0cPFaTLUgblQ7o4UAucw/QdMDAB5fwYV71AM02h/RU+RnyK9vrN3Clm1KWx
-         Ks+mfYDeobldlNLM2LsF6FkV1e5vMsezA20RBnCI2HzQ5iPS7Uwp9rAAcjupEL9uhxTZ
-         SXjrAnNjoynKCd0rZhYxF+sBbS6KerNXF16AC0O6JHOD1DQTDbUO5xf9tUwHCood2v+O
-         lcbi14Q9TPfGni9RNXDDfcBFJk5IP3H+qmeqS4eJJkKMzmvuVKvjft7mLIwbPePGxD5N
-         zbfg==
-X-Gm-Message-State: APjAAAXfv2/lCxJlnigQTRZeKDlfEWmYclAzBW3fFkv7WIdKidTCSbpt
-	MYD6vW4XkNt6PVnfjeuBJPYkLgiuEM8=
-X-Google-Smtp-Source: APXvYqzX0lLnMtvojtOjFGcalG1FhQLirqPgTVh4S2JejORxRO5gEF3/qjexWrdRRovrZd0Bvzh+hw==
-X-Received: by 2002:a17:906:7c12:: with SMTP id t18mr4348783ejo.59.1556565331111;
-        Mon, 29 Apr 2019 12:15:31 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Mon, 29 Apr 2019 21:15:28 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
+x-ms-reactions: disallow
+Received: (qmail 16297 invoked from network); 23 Jan 2026 16:12:21 -0000
+From: "Olle E. Johansson" <oej@edvina.net>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_72F8094A-3438-40C7-95F9-528226F48949"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Date: Fri, 23 Jan 2026 17:12:01 +0100
+References: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net>
+ <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20190429191528.GA10231@eldamar.local>
-References: <CAG48ez04TXacCC8-PSw_gHofAux6tfxXBU6EMGpoqL=KzevKuw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAG48ez04TXacCC8-PSw_gHofAux6tfxXBU6EMGpoqL=KzevKuw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] Linux kernel: multiple issues
+In-Reply-To: <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+Message-Id: <8A740407-A3EC-4625-A703-A6CD2B38AD82@edvina.net>
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Subject: Re: [oss-security] Vulnerability management and Open Source: FOSDEM
+ BoF
 
-Hi Jann,
+--Apple-Mail=_72F8094A-3438-40C7-95F9-528226F48949
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
 
-On Mon, Apr 29, 2019 at 02:56:06PM -0400, Jann Horn wrote:
-> == missing locking between ELF coredump code and userfaultfd VMA modification ==
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=04f5866e41fb70690e28397487d8bd8eea7d712a
-> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.114
-> https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.37
-> https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.0.10
-> https://bugs.chromium.org/p/project-zero/issues/detail?id=1790
-> CVE-2019-11599
 
-If I'm not mistaken, this was assigned already CVE-2019-3892,
-information from https://bugzilla.redhat.com/show_bug.cgi?id=1696015
 
-Regards,
-Salvatore
+> On 23 Jan 2026, at 14:51, Peter Gutmann <pgut001@cs.auckland.ac.nz> wrote:
+>=20
+> Olle E. Johansson <oej@edvina.net> writes:
+>=20
+>> If you are heading to Brussels next week, please mark this session in yo=
+ur
+>> calendar:
+>=20
+> For those of us who are nowhere near Brussels, will any of it be streamed?
+I know that FOSDEM streams a lot of sessions, but I am not sure if the BOFs=
+ are=20
+included. A link will show up on the web page. If I discover any news about=
+ it, I will
+update the list.
+
+The GVIP project just announced two GVIP Community meetings that are virtual
+and scheduled to fit different time zones. We invite everyone to register a=
+nd participate!
+
+https://www.gvip-project.org/blog/2026/community-feb/
+
+/Olle
+
+
+--Apple-Mail=_72F8094A-3438-40C7-95F9-528226F48949--
