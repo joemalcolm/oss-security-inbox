@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["901" "Tuesday" "11" "August" "2015" "10:23:59" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>" "27" "[oss-security] Terminal escape sequences - the new XSS for admins?" nil nil nil "8" "2015081116:23:59" "[oss-security] Terminal escape sequences - the new XSS for admins?" (number mark "        kseifried@re Aug 11   27/901   " thread-indent "\"[oss-security] Terminal escape sequences - the new XSS for admins?\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28208 invoked by uid 550); 11 Aug 2015 16:24:11 -0000
+Received: (qmail 13772 invoked by uid 550); 23 Jan 2026 19:53:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28184 invoked from network); 11 Aug 2015 16:24:10 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=HAUz7VAKAIGAC6QraB/KKNSEH7zpVgd7r7iHGMnW+zw=;
-        b=XLC3r7LdcXOObBYGscKPxIOJHSuEq9A/uhFOnhIUgxflqeGvzZbs5A1mPCIQ7zmbfj
-         Amjq+cr3egojltZ0wgJ/MqWft9oySSMhO1W3NGt80vjeWMuy4HW67KFvtblhqWO7xf0c
-         a3CEXLLCjf7rX151J8H5jiC3k4oCff5p05D77gMLUpTQIfLduF1rSgNNdcQBZdWjmu04
-         R92YY/DdjyHZRuBtmJwqckHFmNrhpqtOCHl920YhhLMJZLS3MT7IC1nou6sQnJPFk0/n
-         ZrOpN2salpjXRX+1lgoyARGyW8OGI3NCPgS1McM4QwhNPLEifNyi/sEUXNB/E7lGmQ9+
-         8QBw==
-X-Gm-Message-State: ALoCoQmKB7FwCAzjvS/LTH+pZwFnzIzXWNFTWWvEJIg/lvaAOkFRYyGR/+kDrdS8MdjmmDpofWFm
-MIME-Version: 1.0
-X-Received: by 10.170.154.67 with SMTP id v64mr28221702ykc.83.1439310239085;
- Tue, 11 Aug 2015 09:23:59 -0700 (PDT)
-Message-ID: <CANO=Ty1ku4Hs-eFzCWK_K0=QXEZbtDFR4c--gBnoHPQi7Ko+XQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a113a9cb285efb6051d0b8786
-Date: Tue, 11 Aug 2015 10:23:59 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Terminal escape sequences - the new XSS for admins?
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 14166 invoked from network); 23 Jan 2026 18:22:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=behlendorf.com;
+ h=Content-Type: MIME-Version: References: Message-ID: In-Reply-To:
+ Subject: To: From: Date; q=dns/txt; s=fe-c91d36cdc9; t=1769192511;
+ bh=PUaV/hu2QcZEr06s2z4euUYyd4/Kdjwn/l+LnDaeiLc=;
+ b=BXmWvCo1Ys3Irfsetdo2kX7ncOGNGCg0EqfiCBFUbhdm+LSfls6PCMnidfr3wkxlokqt2kANV
+ CYgtDnCcqqCG+FbBBkURW0aSoWLgzRLrfbLX8W9SV87FdMa9qKHBtDu4EIid50mcZzvtChV08P3
+ wQHpsy2n4YxxtwJ1mGOBRuA=
+X-Forward-Email-ID: 6973bc39a3f68025883bb0f7
+X-Forward-Email-Sender: rfc822; brian@behlendorf.com,
+ smtp.forwardemail.net, 149.28.215.223
+X-Forward-Email-Version: 2.5.3
+X-Forward-Email-Website: https://forwardemail.net
+X-Complaints-To: abuse@forwardemail.net
+X-Report-Abuse: abuse@forwardemail.net
+X-Report-Abuse-To: abuse@forwardemail.net
+Date: Fri, 23 Jan 2026 10:21:44 -0800 (PST)
+From: Brian Behlendorf <brian@behlendorf.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+In-Reply-To: <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+Message-ID: <01b8770e-38a5-8dca-fa64-712264d6e7a7@behlendorf.com>
+References: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net> <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Subject: Re: [oss-security] Vulnerability management and Open Source: FOSDEM
+ BoF
 
---001a113a9cb285efb6051d0b8786
-Content-Type: text/plain; charset=UTF-8
+On Fri, 23 Jan 2026, Peter Gutmann wrote:
+> In the meantime I think the cURL folks approach is worth a mention:
+>
+> https://curl.se/.well-known/security.txt
 
-So we've had a bunch of this stuff over the years:
+In fact Daniel will be presenting at a keynote there:
 
-http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=terminal+escape
+https://fosdem.org/2026/schedule/event/B7YKQ7-oss-in-spite-of-ai/
 
-And now more recently:
+Brian
 
-http://turbochaos.blogspot.ca/2014/08/journalctl-terminal-escape-injection.html
-https://bugzilla.redhat.com/show_bug.cgi?id=1084577
-
-And we have at least one more coming down the pipeline that's pretty
-widespread.
-
-Also I'm thinking of all those docker apps that log to STDOUT.
-
-So the basic TL;DR: please don't use really ancient terminal programs that
-are vulnerable to this stuff. It appears in testing that most (all?) of the
-Red Hat stuff is ok, but I can't speak for other vendors.
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a113a9cb285efb6051d0b8786--
