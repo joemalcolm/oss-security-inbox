@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["816" "Thursday" "8" "October" "2020" "12:56:47" "+0200" "Oleg Kalnichevski" "olegk@apache.org" "<957319a25dba4efdb7523141231a6f35385ca72d.camel@apache.org>" "29" "[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component" nil nil nil "10" "2020100810:56:47" "[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component" (number mark "U       olegk@apache Oct  8   29/816   " thread-indent "\"[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed URI authority component" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5771 invoked by uid 550); 8 Oct 2020 10:58:29 -0000
+Received: (qmail 1966 invoked by uid 550); 23 Jan 2026 13:09:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,44 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5405 invoked from network); 8 Oct 2020 10:57:03 -0000
-Message-ID: <957319a25dba4efdb7523141231a6f35385ca72d.camel@apache.org>
-From: Oleg Kalnichevski <olegk@apache.org>
+x-ms-reactions: disallow
+Received: (qmail 9911 invoked from network); 23 Jan 2026 10:17:55 -0000
+From: "Olle E. Johansson" <oej@edvina.net>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Message-Id: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net>
+Date: Fri, 23 Jan 2026 11:17:34 +0100
 To: oss-security@lists.openwall.com
-Date: Thu, 08 Oct 2020 12:56:47 +0200
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.36.4-0ubuntu1 
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [CVE-2020-13956] Apache HttpClient incorrect handling of malformed
- URI authority component
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Subject: [oss-security] Vulnerability management and Open Source: FOSDEM BoF
 
-CVE-2020-13956: Apache HttpClient incorrect handling of malformed
-authority component in request URIs
+Hi!
 
-Severity: Medium
+We have discussed several vulnerability databases here, bad reports and AI =
+slop. I just got a BoF session on FOSDEM granted to continue this discussio=
+n. If you are heading to Brussels next week, please mark this session in yo=
+ur calendar:
 
-Vendor:
-The Apache Software Foundation
+https://fosdem.org/2026/schedule/event/DAFMJX-vulnerability-today/
 
-Versions Affected:
-Apache HttpClient 4.5.12 and prior 
-Apache HttpClient 5.0.2 and prior
 
-Description:
+Title: Vulnerability today: What's the state of Open Source vulnerability m=
+anagement?
 
-Apache HttpClient versions prior to version 4.5.13 and 5.0.3 can
-misinterpret malformed authority component in request URIs passed to
-the library as java.net.URI object and pick the wrong target host for
-request execution.  
+Text: The vulnerability management world is in a bit of turmoil. With the D=
+oS-type attack AI slop is putting on Open Source projects at the same time =
+as the funding of core systems is unsure, we need to agree on requirements =
+for the future, ways of working and how we can handle the shift forced by t=
+he Cyber Resilience Act. Let's spend an hour talking about this and discuss=
+ ways forward.
+The Global Vulnerability Intelligence Platform is a project that aims at wo=
+rking on a long term solution, a cooperation between OWASP, OpenSSF, Eclips=
+e/ORCWG, OpenForum Europe with support from the Sovereign Tech Resilience p=
+roject.
+https://www.gvip-project.org <https://www.gvip-project.org/>
 
-Mitigation:
+It=E2=80=99s part of the BOF/Unconference track. Room K.4.401 Saturday at 1=
+5:00 - 15:55
 
-As of release 4.5.13 and 5.0.3 HttpClient will reject URIs with
-ambiguous malformed authority component as invalid. Users of HttpClient
-are advised to upgrade to version 4.5.13 or 5.0.3 and sanitize request
-URIs when using java.net.URI as input.
 
-Credit:
-This issue was discovered and reported by Priyank Nigam
+I hope to see many of you there!
+
+/Olle
 
