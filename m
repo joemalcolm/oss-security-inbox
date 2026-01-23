@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["823" "Thursday" "18" "January" "2018" "15:58:43" "-0500" "Rich Felker" "dalias@libc.org" "<20180118205843.GR1627@brightrain.aerifal.cx>" "18" "Re: [oss-security] How to deal with reporters who don't want their bugs fixed?" "^Date:" nil nil "1" "2018011820:58:43" "[oss-security] How to deal with reporters who don't want their bugs fixed?" (number mark "        dalias@libc. Jan 18   18/823   " thread-indent "\"Re: [oss-security] How to deal with reporters who don't want their bugs fixed?\"\n") "<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>" ("<07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5934 invoked by uid 550); 18 Jan 2018 21:00:47 -0000
+Received: (qmail 7394 invoked by uid 550); 23 Jan 2026 19:21:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3179 invoked from network); 18 Jan 2018 20:58:55 -0000
-Message-ID: <20180118205843.GR1627@brightrain.aerifal.cx>
-References: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
+Reply-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 7360 invoked from network); 23 Jan 2026 19:21:39 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1769196090; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qRsvW8u4LmTgVq7YPWBMkcOndx2wXuk7XrTqRfFy22I=;
+	b=K4FIw55uHHw2PgewophTUavg5MBRbdu5jUJI3ajx30uyaHGp19pAhV0/b/Sg7CfzY5dHbo
+	Porrmbrm9fXPnMCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1769196090; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=qRsvW8u4LmTgVq7YPWBMkcOndx2wXuk7XrTqRfFy22I=;
+	b=Wzm+w1AisIDpDnaaYOBAiJ7hUdFgsey4ZUYeAED5ue9sogGGJ1B/kajsFDSR3Lfxt3fgsE
+	dcxAjI1lTNFgbJ09LmrD2ZoJZd9M++0uVRLv+A+C30X1ofkIOHnG3hg5FqPefcs8liUBha
+	IMFvEPNE0/ANXOExH+d81ow278fgtTyaQ3h4isq/o4+JMCHM9G5zecKsPHUk3qehnOegVy
+	nmlWhIEFbelkjGE36+pMsyDUOMWFUlYQlXBfRR5KED2EBZ8Aobn9gIxGOCZAqy/DnjsFHA
+	Zw7aU4cIcS19jycY67pLZxjeaHXJBo99CCcyOi8OBB7J+RF4J8A0zISlMAwwvw==
+Date: Fri, 23 Jan 2026 19:21:30 +0000
+From: Stuart Henderson <stu@spacehopper.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aXPKOvcPCd_ARqpQ@symphytum.spacehopper.org>
+References: <7d323bf4-91fb-4bee-aed4-e5f3757c3631@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <07f40446-1917-893c-2a87-b0d7990579b2@redhat.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Thu, 18 Jan 2018 15:58:43 -0500
-From: Rich Felker <dalias@libc.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Rich Felker <dalias@aerifal.cx>
-Subject: Re: [oss-security] How to deal with reporters who don't want their
- bugs fixed?
-To: oss-security@lists.openwall.com
+In-Reply-To: <7d323bf4-91fb-4bee-aed4-e5f3757c3631@oracle.com>
+Subject: Re: [oss-security] CVE-2025-56005 Undocumented RCE in PLY via
+ `picklefile` Parameter
 
-On Thu, Jan 18, 2018 at 05:10:05PM +0100, Florian Weimer wrote:
-> Subject says it all: What do you do if you receive a vulnerability
-> report, and the reporter requests an embargo at some time in the
-> future because that's when their paper/conference
-> presentation/patent submission is scheduled?
-> 
-> The obvious approach is to find a prior public report of essentially
-> the same bug and fix that (which will work surprisingly often), but
-> let's assume that this isn't the case.
+On 2026/01/23 11:06, Alan Coopersmith wrote:
+> Of note, https://github.com/dabeaz/ply now bears a banner:
+> "This repository was archived by the owner on Dec 21, 2025. It is now read-only."
 
-Assuming there is no good reason for the embargo (like coordination
-with other affected parties), ignore the embargo, fix the bug, and
-report the behavior to the conference. Conferences should adopt
-policies not to host speakers who request that users be left
-unprotected for any extended period for the sake of their own ego
-trip.
+And the most recent commit added to the readme:
 
-Rich
+    "After 25 years, I've decided to abandon the PLY project.  No further
+    maintenance is expected.  At this point, there are many high-quality
+    parsing libraries that you might consider using instead.  Or you could
+    continue to use PLY by copying it into your project. Or you could write
+    a hand-rolled recursive descent parser.  I don't really have a
+    specific recommendation (although writing a parser by hand can be
+    a fun challenge)."
+
