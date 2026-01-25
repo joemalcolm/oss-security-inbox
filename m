@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["957" "Sunday" "2" "August" "2015" "09:34:48" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150802133448.8CDF36C0028@smtpvmsrv1.mitre.org>" "24" "[oss-security] Re: CVE request: Integer overflow in SCSI generic driver in Linux <4.1 - Linux kernel" nil nil nil "8" "2015080213:34:48" "[oss-security] Re: CVE request: Integer overflow in SCSI generic driver in Linux <4.1 - Linux kernel" (number mark "        cve-assign@m Aug  2   24/957   " thread-indent "\"[oss-security] Re: CVE request: Integer overflow in SCSI generic driver in Linux <4.1 - Linux kernel\"\n") "<1438449399.3225.15.camel@decadent.org.uk>" ("<1438449399.3225.15.camel@decadent.org.uk>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32529 invoked by uid 550); 2 Aug 2015 13:35:01 -0000
+Received: (qmail 29949 invoked by uid 550); 25 Jan 2026 03:53:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32511 invoked from network); 2 Aug 2015 13:35:00 -0000
-In-Reply-To: <1438449399.3225.15.camel@decadent.org.uk>
-Message-Id: <20150802133448.8CDF36C0028@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, security@debian.org
-Date: Sun,  2 Aug 2015 09:34:48 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: Integer overflow in SCSI generic driver in Linux <4.1 - Linux kernel
-To: ben@decadent.org.uk
+x-ms-reactions: disallow
+Received: (qmail 26525 invoked from network); 25 Jan 2026 03:53:23 -0000
+Date: Sun, 25 Jan 2026 04:53:20 +0100
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20260125035320.GA503@openwall.com>
+References: <D5B9E3F5-6C07-40DB-8303-15BE77956988@edvina.net> <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <MEAPR01MB36543C13D54D53A2E87C1942EE94A@MEAPR01MB3654.ausprd01.prod.outlook.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Vulnerability management and Open Source: FOSDEM BoF
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi,
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=451a2886b6bf90e2fb378f7c46c655450fb96e81
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=fdc81f45e9f57858da6351836507fbcf1b7583ee
+On Fri, Jan 23, 2026 at 01:51:29PM +0000, Peter Gutmann wrote:
+> In the meantime I think the cURL folks approach is worth a mention:
+> 
+> https://curl.se/.well-known/security.txt
+> 
+> (Third sentence).
 
-Use CVE-2015-5707.
+Let's please be posting actual content in here, not only links (but
+links as well).  Peter is referring to:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+# We will ban you and ridicule you in public if you waste our time on crap
+# reports.
 
-iQEcBAEBCAAGBQJVvhr8AAoJEKllVAevmvmsKroIAMInxTmIuoTYUMu836p1ctis
-nwqyjo5aZ/rxa0HkFpCGgiXhvABtS1cg26odiBABjGCNLSX9nAMU9YpjsME4ujSX
-M8V9AoOn5W0qDoA/SX/KeyCFNofc7bj/lTYeRk0+BRVeeJ2Ik6zHMlpV3l4leIyr
-1orqM0csZDB6KSD/SEG2O5s+vHj1/UHKX5e7nc2Iw+0p4Eah13JshV0TidPq6p7u
-Pgo/qzURfU05gmBslPNNjAei5s72Icd8AJnZHSKJQwul8TK/W/oVHuwBKF9R/Nex
-0mOlbNeu6QqtUWbCf5KTxgyiumm3Rj1e7LzD+gXD1zIbBoXWBlMzmzElKs6q2+c=
-=aL1J
------END PGP SIGNATURE-----
+The full content from the URL above:
+
+---
+#***************************************************************************
+#                                  _   _ ____  _
+#  Project                     ___| | | |  _ \| |
+#                             / __| | | | |_) | |
+#                            | (__| |_| |  _ <| |___
+#                             \___|\___/|_| \_\_____|
+#
+# The curl open source project accepts security reports for problems found in
+# products made by the curl project.
+#
+# We offer NO (zero) rewards or other kinds of compensation for reported
+# problems, but we offer gratitude and acknowledgments clearly stated in
+# documentation around confirmed issues.
+#
+# We will ban you and ridicule you in public if you waste our time on crap
+# reports.
+
+Contact: mailto:security@curl.se
+Contact: https://github.com/curl/curl/security/advisories
+
+Policy: https://curl.se/dev/vuln-disclosure.html
+
+Preferred-Languages: en
+
+Acknowledgments: https://curl.se/docs/security.html
+
+Expires: 2026-10-25T00:00:00Z
+
+Canonical: https://curl.se/.well-known/security.txt
+---
+
+Alexander
+
+P.S. While our list content guidelines ask not to post conference CFPs,
+I felt this thread was more focused on this community and sufficiently
+different from a CFP to let it through.
