@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2117" "Tuesday" "10" "May" "2016" "12:14:35" "-0700" "Steve Beattie" "steve.beattie@canonical.com" "<20160510191435.GA12598@nxnw.org>" "59" "Re: [oss-security] Re: CVE Request: kernel information leak vulnerability in Linux sound module" nil nil nil "5" "2016051019:14:35" "[oss-security] Re: CVE Request: kernel information leak vulnerability in Linux sound module" (number mark "U       steve.beatti May 10   59/2117  " thread-indent "\"Re: [oss-security] Re: CVE Request: kernel information leak vulnerability in Linux sound module\"\n") "<20160509232909.8E58C52E014@smtpvbsrv1.mitre.org>" ("<CABEk9YyTYLpTE0Q5wtvqdHirJd6-2sdJ6Y2YE_kty+wi3DB4jw@mail.gmail.com>" "<20160509232909.8E58C52E014@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10218 invoked by uid 550); 10 May 2016 19:54:49 -0000
+Received: (qmail 11565 invoked by uid 550); 27 Jan 2026 12:00:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,85 +7,210 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5775 invoked from network); 10 May 2016 19:14:55 -0000
-Date: Tue, 10 May 2016 12:14:35 -0700
-From: Steve Beattie <steve.beattie@canonical.com>
-To: oss-security@lists.openwall.com
-Cc: kangjielu@gmail.com, cve-assign@mitre.org, csong84@gatech.edu,
-	insu@gatech.edu, taesoo@gatech.edu
-Message-ID: <20160510191435.GA12598@nxnw.org>
-References: <CABEk9YyTYLpTE0Q5wtvqdHirJd6-2sdJ6Y2YE_kty+wi3DB4jw@mail.gmail.com>
- <20160509232909.8E58C52E014@smtpvbsrv1.mitre.org>
+x-ms-reactions: disallow
+Received: (qmail 11506 invoked from network); 27 Jan 2026 12:00:59 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
+X-Mailer: MIME-tools 5.510 (Entity 5.510)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1vkhkT-004FQb-1J@xenbits.xenproject.org>
+Date: Tue, 27 Jan 2026 12:00:45 +0000
+Subject: [oss-security] Xen Security Advisory 478 v2 (CVE-2025-58151) - varstored: TOCTOU
+ issues with mapped guest memory
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <20160509232909.8E58C52E014@smtpvbsrv1.mitre.org>
-Organization: North by Northwest Consolidated Industries, LLC
-X-Paranoia: Greetings CIA, FBI, MI5, NSA, ATF, Immigration!
-X-Message-Flag: Repeal the DMCA! Real security is only possible  when subject
- to open critical review.
-X-PGP-Key: http://www.NxNW.org/~steve/005E81F4.txt
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: Re: [oss-security] Re: CVE Request: kernel information leak
- vulnerability in Linux sound module
+Content-Transfer-Encoding: 7bit
 
---rwEMma7ioTxnRzrJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-On Mon, May 09, 2016 at 07:29:09PM -0400, cve-assign@mitre.org wrote:
-> > http://comments.gmane.org/gmane.linux.kernel/2214250
-> >=20
-> > The stack object "tread" has a total size of 32 bytes. Its field
-> > "event" and "val" both contain 4 bytes padding. These 8 bytes
-> > padding bytes are sent to user without being initialized.
->=20
-> Use CVE-2016-4569.
->=20
-> This is not yet available at
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/sound/=
-core/timer.c
-> but may be there later.
+            Xen Security Advisory CVE-2025-58151 / XSA-478
+                               version 2
 
-It's staged at:
+           varstored: TOCTOU issues with mapped guest memory
 
-  https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=3D=
-for-next&id=3Dcec8f96e49d9be372fdb0c3836dcf31ec71e457e
+UPDATES IN VERSION 2
+====================
 
-Looks like there were two more related kernel leak fixes:
+Public release.
 
-  https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=3D=
-for-next&id=3D9a47e9cff994f37f7f0dbd9ae23740d0f64f9fe6
-  https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?h=3D=
-for-next&id=3De4ec8cc8039a7063e24204299b462bd1383184a5
+ISSUE DESCRIPTION
+=================
 
-Thanks.
---=20
-Steve Beattie
-<sbeattie@ubuntu.com>
-http://NxNW.org/~steve/
+varstored is a component of the Xapi toolstack handling UEFI Variables
+for a VM.  It has a communication path with OVMF inside the VM involving
+mapping a buffer prepared by OVMF.
 
---rwEMma7ioTxnRzrJ
-Content-Type: application/pgp-signature; name="signature.asc"
+Within varstored, there were insufficient compiler barriers, creating
+TOCTOU issues with data in the shared buffer.
 
+The exact vulnerable behaviour depends on the code generated by the
+compiler.  In a build of varstored using default settings, the attacker
+can control an index used in a jump table.
+
+IMPACT
+======
+
+An attacker with kernel level access in a VM can escalate privilege via
+gaining code execution within varstored.
+
+VULNERABLE SYSTEMS
+==================
+
+Only systems using the Xapi toolstack are potentially affected.
+
+Systems running all versions of varstored are potentially affected.
+
+x86 HVM guests which have been configured as UEFI VMs can leverage the
+vulnerability.  x86 PV guests cannot leverage the vulnerability.
+
+A Xapi VM is configured for UEFI if the `HVM-boot-params` map contains
+`firmware=uefi`.  e.g.:
+
+  xe vm-param-list uuid=$UUID
+
+  ...
+  HVM-boot-params (MRW): firmware: uefi
+  ...
+
+If `firmware` is set to `bios`, or is absent entirely (PV guests), then
+the guest cannot leverage the vulnerability.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+CREDITS
+=======
+
+This issue was discovered by Teddy Astie of Vates.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa478.patch           varstored master
+
+$ sha256sum xsa478*
+401679429e22e202fecf418c5100144ea0ee1cca3643f09960107cf3d88821db  xsa478.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCgAGBQJXMjMbAAoJEC8Jno0AXoH0elMP/jTyYBEH8meh9V9HKAsjapCy
-cj+34L5JS8uGNJh54bHfSNrCGGX6m+875NyjhqgR8MOGytBNAj+WszAHmhfC4L6b
-XL2Jp0eyKKGLFg0adWn0BsV9fEqVxTQUoAqYAfWgbqHuMdfY10gr5U0iSjRXVU2J
-gUpaZ5o9iEfLUd2I8hK9MTWw1fZ/DtnTjeGaUuYjOjdjGvojm9sIpEVJXXS7wKMr
-dbG4CKceoNYw4PTx6aPKBsT4HkMi1ESw/A08CzrQGC9Ns4ncjvXvcTlcjf7wpPYB
-9W0s41h01+75O2JfU7xXpNc8JY4rR4fkw4t29cU3DJO2pY8Br1VhhbQdlphcrAO6
-7CYuHA61DQjGmTLQq6lZZauXkB5O4enQciwe6ywKvH+Sgnd7F/HSqXFzCI5A+zpq
-alGJlMti5dqSsqSLtDCI+rPwjqbDOT3HS9a1/eGy54f2SjtIkbeDA08UOMRfAN/O
-XRTjgFLyUreTrYwSIF5IAPxVh0EmE7ameDpKKrJFS8CoaK8kSpdlssQhL+ThnR0T
-qa/t8jLVBz9cc9u/Zo/WKxMazRsjX2RLHiacGZVC2ObRgx2U2QdXCoDnB/Q1iPQW
-dXp8o0JOsmtRB0lMo8ZBhr9crQ5sSd2UpjCD7hnCVr8BK8vwjEKEeaU3Xkyyqued
-Qx70pK0zp6509bMB02qe
-=Pber
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAml4qMEMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZp94IAKAafDWRsyB3vmmHsGG2cF3I1LFKQMzhtogNUu/w
+7QrhNwmyI9tdIhtlPk4JC75L1Em+kDXHh+vNkQF97QeKq2IyuEYt+q2ko6sV/RTF
+Ewv0BhJJIiJCfyI/x55dz+YANOwsSOo7bZrSy1l/VgUJOdVKK5L1VtcloD57ZX2D
+A4r/rfZbJwx/vJ+Zp8R+W0on7SWS6h4am6M0+7f2swiJ2MpoEUwhSgFMmigOcdUc
+xbUo/IKOiQVNX2A6j+J5tQT6JlrXC/K8bIUwe2oDKRPG1qSMYAr2lKZ4GvoflUra
+ckCA0k520KHw+ZfuHhQq/TzIFaLVDnr1kfChYdPSX0jXtb0=
+=B9ua
 -----END PGP SIGNATURE-----
 
---rwEMma7ioTxnRzrJ--
+--=separator
+Content-Type: application/octet-stream; name="xsa478.patch"
+Content-Disposition: attachment; filename="xsa478.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogQW5kcmV3IENvb3BlciA8YW5kcmV3LmNvb3BlcjNAY2l0cml4LmNvbT4KU3ViamVjdDog
+W1BBVENIXSBGaXggVE9DVE9VIGlzc3VlcyB3aXRoIG1hcHBlZCBndWVzdCBtZW1vcnkKCm1lbWNw
+eSgpIGNhbiBiZSBvcHRpbWlzZWQgYnkgdGhlIGNvbXBpbGVyLCBsZWFkaW5nIHRvIFRPQ1RPVSBi
+dWdzIHdpdGggZGF0YSBpbgpndWVzdCBtZW1vcnkuICBXaXRob3V0IHRoZXNlIGJhcnJpZXJzLCBk
+aXNwYXRjaF9jb21tYW5kKCkgY29tcGlsZXMgaW4gYSB3YXkKd2hpY2ggaXMgdnVsbmVyYWJsZSB0
+byBjb2RlIGluamVjdGlvbi4KClRoaXMgaXMgWFNBLTQ3OCAvIENWRS0yMDI1LTU4MTUxCgpSZXBv
+cnRlZC1ieTogVGVkZHkgQXN0aWUgPHRlZGR5LmFzdGllQHZhdGVzLnRlY2g+ClNpZ25lZC1vZmYt
+Ynk6IEFuZHJldyBDb29wZXIgPGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5
+OiBGcmVkaWFubyBaaWdsaW8gPGZyZWRpYW5vLnppZ2xpb0BjaXRyaXguY29tPgpSZXZpZXdlZC1i
+eTogUm9zcyBMYWdlcndhbGwgPHJvc3MubGFnZXJ3YWxsQGNpdHJpeC5jb20+ClJldmlld2VkLWJ5
+OiBSb2dlciBQYXUgTW9ubsOpIDxyb2dlci5wYXVAY2l0cml4LmNvbT4KLS0tCiBpbmNsdWRlL3Nl
+cmlhbGl6ZS5oIHwgMTggKysrKysrKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgMTggaW5z
+ZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBhL2luY2x1ZGUvc2VyaWFsaXplLmggYi9pbmNsdWRlL3Nl
+cmlhbGl6ZS5oCmluZGV4IDA0NDQxZWE4YTM3Mi4uMTY2Nzg2OGZlYWI0IDEwMDY0NAotLS0gYS9p
+bmNsdWRlL3NlcmlhbGl6ZS5oCisrKyBiL2luY2x1ZGUvc2VyaWFsaXplLmgKQEAgLTM1LDEyICsz
+NSwxNSBAQAogI2luY2x1ZGUgImVmaS5oIgogI2luY2x1ZGUgImhhbmRsZXIuaCIKIAorI2RlZmlu
+ZSBiYXJyaWVyKCkgYXNtIHZvbGF0aWxlICgiIiA6OjogIm1lbW9yeSIpCisKIHN0YXRpYyBpbmxp
+bmUgZW51bSBjb21tYW5kX3QKIHVuc2VyaWFsaXplX2NvbW1hbmQodWludDhfdCAqKnB0cikKIHsK
+ICAgICBVSU5UMzIgZGF0YTsKIAogICAgIG1lbWNweSgmZGF0YSwgKnB0ciwgc2l6ZW9mKGRhdGEp
+KTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgZGF0YTsKIAogICAgIHJldHVy
+biAoZW51bSBjb21tYW5kX3QpZGF0YTsKQEAgLTUwLDkgKzUzLDExIEBAIHN0YXRpYyBpbmxpbmUg
+dm9pZAogc2VyaWFsaXplX2RhdGEodWludDhfdCAqKnB0ciwgY29uc3QgdWludDhfdCAqZGF0YSwg
+VUlOVE4gZGF0YV9sZW4pCiB7CiAgICAgbWVtY3B5KCpwdHIsICZkYXRhX2xlbiwgc2l6ZW9mKGRh
+dGFfbGVuKSk7CisgICAgYmFycmllcigpOwogICAgICpwdHIgKz0gc2l6ZW9mIGRhdGFfbGVuOwog
+ICAgIGlmIChkYXRhX2xlbikgewogICAgICAgICBtZW1jcHkoKnB0ciwgZGF0YSwgZGF0YV9sZW4p
+OworICAgICAgICBiYXJyaWVyKCk7CiAgICAgICAgICpwdHIgKz0gZGF0YV9sZW47CiAgICAgfQog
+fQpAQCAtNjEsNiArNjYsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHNlcmlhbGl6ZV9yZXN1bHQo
+dWludDhfdCAqKnB0ciwgRUZJX1NUQVRVUyBzdGF0dXMpCiB7CiAgICAgbWVtY3B5KCpwdHIsICZz
+dGF0dXMsIHNpemVvZihzdGF0dXMpKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXpl
+b2Ygc3RhdHVzOwogfQogCkBAIC02OCw2ICs3NCw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZAogc2Vy
+aWFsaXplX2d1aWQodWludDhfdCAqKnB0ciwgY29uc3QgRUZJX0dVSUQgKmd1aWQpCiB7CiAgICAg
+bWVtY3B5KCpwdHIsIGd1aWQsIEdVSURfTEVOKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciAr
+PSBHVUlEX0xFTjsKIH0KIApAQCAtNzUsNiArODIsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHNl
+cmlhbGl6ZV90aW1lc3RhbXAodWludDhfdCAqKnB0ciwgRUZJX1RJTUUgKnRpbWVzdGFtcCkKIHsK
+ICAgICBtZW1jcHkoKnB0ciwgdGltZXN0YW1wLCBzaXplb2YoKnRpbWVzdGFtcCkpOworICAgIGJh
+cnJpZXIoKTsKICAgICAqcHRyICs9IHNpemVvZigqdGltZXN0YW1wKTsKIH0KIApAQCAtODIsNiAr
+OTAsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHNlcmlhbGl6ZV91aW50bih1aW50OF90ICoqcHRy
+LCBVSU5UTiB2YXIpCiB7CiAgICAgbWVtY3B5KCpwdHIsICZ2YXIsIHNpemVvZih2YXIpKTsKKyAg
+ICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgdmFyOwogfQogCkBAIC04OSw2ICs5OCw3
+IEBAIHN0YXRpYyBpbmxpbmUgdm9pZAogc2VyaWFsaXplX3VpbnQzMih1aW50OF90ICoqcHRyLCBV
+SU5UMzIgdmFyKQogewogICAgIG1lbWNweSgqcHRyLCAmdmFyLCBzaXplb2YodmFyKSk7CisgICAg
+YmFycmllcigpOwogICAgICpwdHIgKz0gc2l6ZW9mIHZhcjsKIH0KIApAQCAtOTYsNiArMTA2LDcg
+QEAgc3RhdGljIGlubGluZSB2b2lkCiBzZXJpYWxpemVfdWludDY0KHVpbnQ4X3QgKipwdHIsIFVJ
+TlQ2NCB2YXIpCiB7CiAgICAgbWVtY3B5KCpwdHIsICZ2YXIsIHNpemVvZih2YXIpKTsKKyAgICBi
+YXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgdmFyOwogfQogCkBAIC0xMDUsNiArMTE2LDcg
+QEAgdW5zZXJpYWxpemVfZGF0YSh1aW50OF90ICoqcHRyLCBVSU5UTiAqbGVuLCBVSU5UTiBsaW1p
+dCkKICAgICB1aW50OF90ICpkYXRhOwogCiAgICAgbWVtY3B5KGxlbiwgKnB0ciwgc2l6ZW9mKCps
+ZW4pKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXplb2YgKmxlbjsKIAogICAgIGlm
+ICgqbGVuID4gbGltaXQgfHwgKmxlbiA9PSAwKQpAQCAtMTE1LDYgKzEyNyw3IEBAIHVuc2VyaWFs
+aXplX2RhdGEodWludDhfdCAqKnB0ciwgVUlOVE4gKmxlbiwgVUlOVE4gbGltaXQpCiAgICAgICAg
+IHJldHVybiBOVUxMOwogCiAgICAgbWVtY3B5KGRhdGEsICpwdHIsICpsZW4pOworICAgIGJhcnJp
+ZXIoKTsKICAgICAqcHRyICs9ICpsZW47CiAKICAgICByZXR1cm4gZGF0YTsKQEAgLTEyNCw2ICsx
+MzcsNyBAQCBzdGF0aWMgaW5saW5lIHZvaWQKIHVuc2VyaWFsaXplX2RhdGFfaW5wbGFjZSh1aW50
+OF90ICoqcHRyLCB1aW50OF90ICpidWYsIFVJTlROIGxlbikKIHsKICAgICBtZW1jcHkoYnVmLCAq
+cHRyLCBsZW4pOworICAgIGJhcnJpZXIoKTsKICAgICAqcHRyICs9IGxlbjsKIH0KIApAQCAtMTM3
+LDYgKzE1MSw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZAogdW5zZXJpYWxpemVfdGltZXN0YW1wKHVp
+bnQ4X3QgKipwdHIsIEVGSV9USU1FICp0aW1lc3RhbXApCiB7CiAgICAgbWVtY3B5KHRpbWVzdGFt
+cCwgKnB0ciwgc2l6ZW9mKCp0aW1lc3RhbXApKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciAr
+PSBzaXplb2YoKnRpbWVzdGFtcCk7CiB9CiAKQEAgLTE0Niw2ICsxNjEsNyBAQCB1bnNlcmlhbGl6
+ZV91aW50bih1aW50OF90ICoqcHRyKQogICAgIFVJTlROIHJldDsKIAogICAgIG1lbWNweSgmcmV0
+LCAqcHRyLCBzaXplb2YocmV0KSk7CisgICAgYmFycmllcigpOwogICAgICpwdHIgKz0gc2l6ZW9m
+IHJldDsKIAogICAgIHJldHVybiByZXQ7CkBAIC0xNTcsNiArMTczLDcgQEAgdW5zZXJpYWxpemVf
+Ym9vbGVhbih1aW50OF90ICoqcHRyKQogICAgIEJPT0xFQU4gcmV0OwogCiAgICAgbWVtY3B5KCZy
+ZXQsICpwdHIsIHNpemVvZihyZXQpKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXpl
+b2YgcmV0OwogCiAgICAgcmV0dXJuIHJldDsKQEAgLTE2OCw2ICsxODUsNyBAQCB1bnNlcmlhbGl6
+ZV91aW50MzIodWludDhfdCAqKnB0cikKICAgICBVSU5UMzIgcmV0OwogCiAgICAgbWVtY3B5KCZy
+ZXQsICpwdHIsIHNpemVvZihyZXQpKTsKKyAgICBiYXJyaWVyKCk7CiAgICAgKnB0ciArPSBzaXpl
+b2YgcmV0OwogCiAgICAgcmV0dXJuIHJldDsKLS0gCjIuMzkuNQoK
+
+--=separator--
