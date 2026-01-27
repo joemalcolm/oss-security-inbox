@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1569" "Thursday" "25" "January" "2018" "11:35:59" "+0200" "Aki Tuomi" "aki.tuomi@open-xchange.com" "<1876333558.159.1516872958654@appsuite-guard.open-xchange.com>" "40" "[oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted." nil nil nil "1" "2018012509:35:59" "[oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted." (number mark "U       aki.tuomi@op Jan 25   40/1569  " thread-indent "\"[oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL authentication is aborted.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5991 invoked by uid 550); 25 Jan 2018 10:52:40 -0000
+Received: (qmail 17594 invoked by uid 550); 27 Jan 2026 17:18:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,88 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6090 invoked from network); 25 Jan 2018 09:36:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
-	s=201705; t=1516872960;
-	bh=6PJ4IhPdUtM8Q8NGpgGTZvb7E51B8kVaQK3rvFsiQcY=;
-	h=Date:From:To:Subject:From;
-	b=T9FgkHBLI8UVEewVq8F+DSR+yCiqiRJi9/vU71BFRap46LRLA8CRr77bl80+R8PW1
-	 t4EBwHyGVDooCsGIRIXtt1NLEMzZnEOdawrS6WtZgkiCRE9F5gRPvUia8eQkhNvwHZ
-	 iwF8d+HAvfbSWkgYbxfED18lUmYaWMMNw0g2tgNrBbwfTmYFp64iqFJbydwwDi/Zvd
-	 axg8jeHZg9P1IsnZAAdvX0FGJTGPQVgCKb10GWy3wWRG7amptMpH0PVXdFYPZ8AGWs
-	 n4Frwk0cDFHfZ/whBdmCGUKBKuXLEPq8zx8okftYrxNKK+TEbkgtCV5ULzsmRWkGpm
-	 4R2P9GaqTxh1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
-	s=201705; t=1516872960;
-	bh=6PJ4IhPdUtM8Q8NGpgGTZvb7E51B8kVaQK3rvFsiQcY=;
-	h=Date:From:To:Subject:From;
-	b=T9FgkHBLI8UVEewVq8F+DSR+yCiqiRJi9/vU71BFRap46LRLA8CRr77bl80+R8PW1
-	 t4EBwHyGVDooCsGIRIXtt1NLEMzZnEOdawrS6WtZgkiCRE9F5gRPvUia8eQkhNvwHZ
-	 iwF8d+HAvfbSWkgYbxfED18lUmYaWMMNw0g2tgNrBbwfTmYFp64iqFJbydwwDi/Zvd
-	 axg8jeHZg9P1IsnZAAdvX0FGJTGPQVgCKb10GWy3wWRG7amptMpH0PVXdFYPZ8AGWs
-	 n4Frwk0cDFHfZ/whBdmCGUKBKuXLEPq8zx8okftYrxNKK+TEbkgtCV5ULzsmRWkGpm
-	 4R2P9GaqTxh1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=open-xchange.com;
-	s=201705; t=1516872960;
-	bh=6PJ4IhPdUtM8Q8NGpgGTZvb7E51B8kVaQK3rvFsiQcY=;
-	h=Date:From:To:Subject:From;
-	b=T9FgkHBLI8UVEewVq8F+DSR+yCiqiRJi9/vU71BFRap46LRLA8CRr77bl80+R8PW1
-	 t4EBwHyGVDooCsGIRIXtt1NLEMzZnEOdawrS6WtZgkiCRE9F5gRPvUia8eQkhNvwHZ
-	 iwF8d+HAvfbSWkgYbxfED18lUmYaWMMNw0g2tgNrBbwfTmYFp64iqFJbydwwDi/Zvd
-	 axg8jeHZg9P1IsnZAAdvX0FGJTGPQVgCKb10GWy3wWRG7amptMpH0PVXdFYPZ8AGWs
-	 n4Frwk0cDFHfZ/whBdmCGUKBKuXLEPq8zx8okftYrxNKK+TEbkgtCV5ULzsmRWkGpm
-	 4R2P9GaqTxh1Q==
-Date: Thu, 25 Jan 2018 11:35:59 +0200 (EET)
-From: Aki Tuomi <aki.tuomi@open-xchange.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1876333558.159.1516872958654@appsuite-guard.open-xchange.com>
+x-ms-reactions: disallow
+Received: (qmail 19815 invoked from network); 27 Jan 2026 15:33:45 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1769528016; cv=none;
+        d=google.com; s=arc-20240605;
+        b=BYwJH9/nDOBbTAWvZdC3vmQwwaZ2P5LBhbRvDqLJ+ej4fu6j+PUFnLcEUdiBPZa8rd
+         VNo7hUKTFmAJeynZWZO/KaSZ9FqqoQDmOLyh8PiPFDKz0q/RJdbEOxSOfoUNTjRs8tAj
+         BrN1ArYFus7A/ib8vvx5W9y8RitfmdJAvP3639R9YX/Mp92L5oBtgr56gGcPdex8Ijz7
+         CbBZIem1LySn7hmo7drcTG4pZRDcRS72CMUytUPYwPFMTCf1pjj1lUPJK9hBUXVHm1+y
+         B+h0Rfr60b4hi9cz/yMnN1UNfhtr6IJpWvfSuuMxetZVGnXdthZ/Z+7RAMiJFl+T9CXG
+         SRoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=03mvMvvm6vhkIESjcHiCixQRpsxkQ7BZGUIS6tJZnF8=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=WRqOlY1wi6hBWPxn/GP6wOmqEC2wvONHNo1yR+gB/Rclbwipf/V4pTeYF+8X36ay6d
+         caMqlKJ/+/PDKsvYquloJymGqOTySn9vOvuuU1ySu+X+i7ACMGA7OOrX7oxL6YmfwY8u
+         5sMM/TI79LGBLDFuaAHAds8mU88Vcn1iRtn70qqvwJ/B+WF2h2dncmfeFQyGOVqqXT9u
+         2P9p7NubDbgcKrHrkvDhadByDqAM5meREwod/4OtN8n71hh6REBwkAiUcAMd3Z+5f19R
+         WDoVEE0PgBMyuy8+ZuyJ1tKOtV0maVvKQhaiBXC2CX9+7YFm+KfOM8kOgrnBYmkoTYXL
+         zk5g==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769528016; x=1770132816; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=03mvMvvm6vhkIESjcHiCixQRpsxkQ7BZGUIS6tJZnF8=;
+        b=VCiv4v88YHVaPdT+Ujmo8YaKs+NCVXB9XnJU0gi5l+V8WODr6luFbLXG3dl46CyTxg
+         bGpCkxEljTK0Gz04IZyrB2uwYhOSyyhWZg3zQvRZykfisB9/jtZCIoifMd/5NBnQotNV
+         D/YYpJnp+giOtRtObCbxnvlgIhKSrpIov4sBY42Jwd7YiRdJxYiz2gNORV9P9p0Gv+9O
+         UoSWvG5WZ0QQEIHEX9yPzZ0KCUyzTlvLG2vNDXxWJHcO+1Iy9IRDkQNRgz+ZUmfUR1AV
+         tjoDte2lQ8F1nEcxSlJEqrbCiB3q97sqMjpVmVq7XXYPB43Y5WNBQv6fys0GFkrhCW0X
+         a6XA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769528016; x=1770132816;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=03mvMvvm6vhkIESjcHiCixQRpsxkQ7BZGUIS6tJZnF8=;
+        b=cn6oNOgKbgIKGNGahzaWjGON0Jg1VtF/gXVMqdjcuOgHwy0dpwcguS7duce6567EPR
+         Je8Ye+ilj4x4sukvZl8IGlhYdOSpvLSlm27EOrlTrjlXy/ACpiNBG8Gu7ucZTu2a/q9a
+         PigvARg7nfaNnM/diUjCyHOe2mm88ZzevCjR7l6Hb3s23ca1xbY/4qGBAu7Av08uMYi4
+         i1rTeAbqcQTRJj/TFdN8xv39d9kouqLSWawj0kZO8zFEsIysbasKlzFeEz+gSyPl512A
+         UoglpWtfyBmZNpDIW3wYAjwb7nj7cdu+vnnG9JqMTUXThW+fQT+PWH493breBJc97IHM
+         xuMw==
+X-Gm-Message-State: AOJu0YwpQJebEPUoARAHLTXObaZqKSJqJqPhuEuiHXWkVeFNFis/i6Bt
+	j5ixzzsQdC0oKgt62g72HUA0HFXBp8HnDYQ6du/nC9oUJF+Xcwy58P1i/GwP+vcHDvXWehEYuyb
+	gPLjS2smVC6aZjS4kUu169M0Sdencq2LoBxB28Uyefg==
+X-Gm-Gg: AZuq6aI1cefoAzA4CpcWGTsP4GJSqCpNePICu8nQnmi5JXlmSWO/huKk1i8Say31/7k
+	CohijmKCRh4Ar8TwbMJ7QBt/b8061JPNR+zbEJyqRgFgZimqECtmBrvvZ6BeqI1vi17CFTjqjrr
+	2Ia502E44mNn5EDLmk8926qNCaLXqiB6WIM1y0OiN4NIV7o0JlauYwOowjRQ9ScuUHfPUzrKgNV
+	q/i0bbbxvfc8Fpe1MkGjBmIbpevY/P0PY2STM8jkS0hokdXjqM3dqTkIhenQTeUOKYaWmBt
+X-Received: by 2002:a05:651c:e0a:b0:37f:c5ca:709c with SMTP id
+ 38308e7fff4ca-3861ca80c2cmr6218691fa.7.1769528015159; Tue, 27 Jan 2026
+ 07:33:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; 
-	boundary="----=_Part_158_277251643.1516872958649"
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev21
-X-Originating-Client: open-xchange-appsuite
-Subject: [oss-security] CVE-2017-15132: dovecot: auth client leaks memory if SASL
- authentication is aborted.
+From: cyber security <cs7778503@gmail.com>
+Date: Tue, 27 Jan 2026 15:33:23 -0800
+X-Gm-Features: AZwV_QjPVdmJGysQ8vr57cBMj7_HgJ4ld95nZ9NUn4MJoQBsdMCR1xXbG04BdcA
+Message-ID: <CAPmip_w_x-4qSOH-8TAUH9vtz6M+oh+fCcwptqsp7zqj6OBmpQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] Clarification: rbash escape via history built-ins
 
-------=_Part_158_277251643.1516872958649
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Summary:
+Restricted Bash (rbash) blocks output redirection to prevent file modification.
+However, history-writing built-ins (`history -w`, `history -a`) can overwrite
+startup files such as .profile if the restricted user is left in $HOME.
+This allows PATH resets and escape from confinement.
 
-Score: 5.3, AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L
-Affected versions: 2.0 up to 2.2.33 and 2.3.0
-Fixed versions: 2.2.34 (not released yet), 2.3.1 (not released yet)
+Steps to reproduce:
+1. Start rbash in $HOME with writable .profile.
+2. Run: history -w .profile
+3. On next login, .profile is sourced, PATH is reset, confinement is broken.
 
-We have identified a memory leak in Dovecot auth client used by login
-processes. The leak has impact in high performance configuration where
-same login processes are reused and can cause the process to crash due to memory exhaustion.
+Discussion:
+The Bash manual notes administrators must configure restricted environments
+carefully (unwritable $HOME, different working directory, restricted PATH).
+However, this particular escape vector is not documented in common guides
+(e.g., https://0xffsec.com/handbook/shells/restricted-shells/).
 
-Patch to apply this issue can be found from https://github.com/dovecot/core/commit/1a29ed2f96da1be22fa5a4d96c7583aa81b8b060.patch
+Recommendation:
+While consistent with current design, administrators should be aware that
+history-writing built-ins can modify files in the current directory.
+Restricted environments should ensure $HOME is unwritable or place users
+in a safe subdirectory.
 
-To our best knowledge, this patch should apply to all versions.
+References:
+GNU Bash manual:
+https://www.gnu.org/software/bash/manual/html_node/The-Restricted-Shell.html
 
-This issue can be mitigated on vulnerably systems by limiting login process to single request per process, which is also the default value.
-
-Regards,
-Aki Tuomi
-Dovecot oy
-
-------=_Part_158_277251643.1516872958649
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: BCPG v1.56
-
-iQEbBAABCgAGBQJaaaT+AAoJEBk7Y2OzREIGcY8H93doAw8B/0TYxUMNB+KHQrKa
-FKW/5z4/87Sn303vjtWAcNWegjVM4mz8Gt0XFmaUI4kP19TKFfdSsL/pe+2Cgfd8
-BrYdGmpKkshADlrfc5NF570HMNG3Ez1stfrZCI9zW6WbHgGeqkYI0fWQHZ8ClwHv
-oI18k4viBTt/uHAU5Y3m1ddol5nUtot/r1qyDVqpHog29tjh79K8BiJsHscYgjpT
-l3IxjPAxGwM+BzLFJ9cNjbHRDKstRzU4eesfvSVB4SWxZPTyhUlaJ7d+fS4PJCa1
-50SX6v+mspbSTwKZaCJXK3mWhYmI4qc3z27RzigXPqZlHI/cZUpmBFBDoW1Hmg==
-=amVr
------END PGP SIGNATURE-----
-
-------=_Part_158_277251643.1516872958649--
+-- RelunSec
