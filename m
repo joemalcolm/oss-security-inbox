@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1452" "Wednesday" "8" "September" "2021" "13:15:34" "+0530" "Rohit Keshri" "rkeshri@redhat.com" nil "48" "Re: [oss-security] CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c" nil nil nil "9" nil nil (number mark "U       rkeshri@redh Sep  8   48/1452  " thread-indent "\"Re: [oss-security] CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3715 Linux kernel: use-after-free in route4_change() in net/sched/cls_route.c" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9589 invoked by uid 550); 8 Sep 2021 09:22:54 -0000
+Received: (qmail 13896 invoked by uid 550); 27 Jan 2026 20:10:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,97 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7450 invoked from network); 8 Sep 2021 07:46:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1631087149;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vEiTkOwi9+TvNiyLi54G/fs8FThlgMncnQ9pN1TM/fo=;
-	b=HKet0+1+DAUG4zJrWBX7Z+0iZtIsH0EDGxL1ubY4iBuqgEhGKbBzbMH/bZPelqYCdooV0P
-	uTHu/cxjCBEDYcSOs46qu2H6G7wqgNOADEzalQBi6HbHdM7Uj6LAyZDlEheW9NcrjoolID
-	s7BXk4H4hDXi3OE9lzAsJOskyS2NAC4=
-X-MC-Unique: SFkF8MFHNpK2Mheg_YT00A-1
+x-ms-reactions: disallow
+Received: (qmail 13835 invoked from network); 27 Jan 2026 20:10:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769544599; x=1770149399; darn=lists.openwall.com;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:sender:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hHzj+OkTGLfDUYqFdra+02u4DSE3MXJu7R5+tmCYvHw=;
+        b=h5JWtKnDkgRR5Vjzjptb4LmzWCd9shADaRIM87dfuyB0O0SlAo+RVXjEfNOkCXaYbo
+         nNeQAEM8HadxORGsvhWbWXSs2lPZBtrk7btRaPXsTpK4Ili8VlDz0LyTC9Wtka5xpeMS
+         3YJXaaBla202klY9OFH1PikN6HJU9PbNHJjL1KazUvpVCT71t2TWOjblzvRnzOycE4Y+
+         3/REYAIxMubZ/Qb/oXIt6ZgQ411pip8VhdzMWbiEWfkQVMW++kvaj7aD8IfGF9QHDy5G
+         XSRgtREOMlzjljn24wxifXfnVEE2Z8hvL9jrx5Ytbe0UATMpqvqtJrhMBZ7QYvaFtRVP
+         Cgeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=vEiTkOwi9+TvNiyLi54G/fs8FThlgMncnQ9pN1TM/fo=;
-        b=gj5ZcAz/IMvE1I1lrviInBoYSbykiqCg9xeDodrzbpE75sOqyp9j32AwX7HvY5Yysl
-         9dGlI7WA7Qj1FBYGZpc/9PuMT7pB2l89HPeqt9baSusHM/BtNpnLOkQ4s/OjvzdZG2Uq
-         i1syLaQtqPY40FfJsNrrIVD25UVDqzObTyTf/WxMTGObPuIGrYBcHBSadNpZ1xSATxcD
-         Q6YPIU2uJ7bfLtggNH+KM6z14Ir4KaIiWjuFEGG5JNTPOlRNOIqBRgMklFk4yOsqmAaR
-         RG+/+nB4Xbyxb+gUIpAxtWAiQGDaN/jpfBZPdr7iRlTfZpaxtGitSZGBXSL2vKhzzpQR
-         nwJw==
-X-Gm-Message-State: AOAM530fx/HvcHxwODptWS0lYlvXxXs5gn/5Tta9JCikx5AWd9n/eOcp
-	8x0mJdGShZv1k/oCA7gkBG0kZmt4ztBHvL56bugJUrM1Uq7yVHZtpUDUMfG01aJ0ogEpLPgZIZ6
-	hSNscsvZ9XyKysT46hFGi9Rf7LA7Q3UtB7s4wjRWtpmXK
-X-Received: by 2002:a05:6512:220a:: with SMTP id h10mr1721780lfu.623.1631087145876;
-        Wed, 08 Sep 2021 00:45:45 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJz+F6mD4FnYk6RkjlIIFYhbK89QezV08B0meP12GWejvUSwfsFE3N5vO4mfX2FGz+BR8neuZY+KqrtebuOb2E4=
-X-Received: by 2002:a05:6512:220a:: with SMTP id h10mr1721769lfu.623.1631087145636;
- Wed, 08 Sep 2021 00:45:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAKx+4-qZVEvOx+zD1R0r2UzNpT8eLUe+sTp78KJHjaEun7BVPA@mail.gmail.com>
- <YTc8Gk29v6qc5ej0@kroah.com>
-In-Reply-To: <YTc8Gk29v6qc5ej0@kroah.com>
-From: Rohit Keshri <rkeshri@redhat.com>
-Date: Wed, 8 Sep 2021 13:15:34 +0530
-Message-ID: <CAKx+4-riLe6E466yDMO=_zV-ZDisOESHT82=Wofc=o5G3BDWGA@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1769544599; x=1770149399;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:to:from:date:sender
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hHzj+OkTGLfDUYqFdra+02u4DSE3MXJu7R5+tmCYvHw=;
+        b=VkeXwE+YZmyqK2J14AUbsjbnEjZI24ne+/VkXRWs629VefpKyJ1xG67uZE8yGo35e3
+         6nOk1AxmtnNsBH9vtbo9cw8b2Vn3ahwBQhxOSAbbVo5KOILQXgZOAT1axD4bhx/SRKZX
+         M+mdYMyZ/fusz2OicIdMtSxCAWmqPIB0TOQ9xUjjNd0XCLC8yX+EJikICFNXRO3PIEri
+         HrcFv/HSX38s+8PkkwbErT+IleUeMI9g8EkAw3Sgzslt2oQ6NZ0oM95LTCbZgWI1XYmu
+         EKHlgZdJ21BJ33dGJQNIQ1lc/doMAPIar2jLQcOuv4+Do5LNLxEzh2U39hBjTmyOZOEk
+         85Uw==
+X-Gm-Message-State: AOJu0YxnfFgs0TzsK2frMwS4iW81Gw+wWyutvYB/lTaTxMluOPSSNa5L
+	1DydDAxDBayBFiytiNS/XyXtwdCPixnbEpgaCUUJA2Y9f/PSFe+DNOsoQwVruXKX
+X-Gm-Gg: AZuq6aJYSjwWx4L5pVgxG+z2rDMqsg4VCB3fG86i1tNZEYV0deipy2kB/nh4pfmvJWw
+	M8B+MlZpncrf43YYcJXS6pCIAX3PHsWixyul6jgGyHOo/GfmxkjFemA2dEIT2OKr8Y8dPISBXDF
+	3180fWDeimy2lLnsztQGvxdn0gI9zu+z2zLsNheiD4A48NZZy90IIzV9ddWvxdvIBQ1BilF+eHI
+	rzJhEDSoKJjh40lGW8ODDaMsyHTcFYajrVwekzzAJk48FTA7h+zYN+zYlYMqP4m4uuKMLEDXml3
+	9uWbrxEjK19YWjLzgK8D6rCUqvXjdLaSDjmPH+yrU6lwltfXvpVHMCjJ1vdzc3EtepDAhr4amrl
+	dudOY1n4fyYKdKKBRfZ+RbttXWHLEq88/LGxNjHnJjUkxb5a7HwaV37D1YX5V43QGJaNdiS5CbJ
+	Hv5Bg98QEV5oyr8xvkHY9isazfbapxuhCTzGPUtJRhjkXI
+X-Received: by 2002:a05:6000:4305:b0:430:f742:fbc3 with SMTP id ffacd0b85a97d-435dd1ccbccmr3987409f8f.48.1769544598479;
+        Tue, 27 Jan 2026 12:09:58 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 27 Jan 2026 21:09:56 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA124A263 smtp.mailfrom=rkeshri@redhat.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/alternative; boundary="000000000000e9ea1c05cb7711b6"
-Subject: Re: [oss-security] CVE-2021-3715 Linux kernel: use-after-free in
- route4_change() in net/sched/cls_route.c
+Message-ID: <aXkblElCH4uYloI_@eldamar.lan>
+References: <87343rqa3o.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87343rqa3o.fsf@gentoo.org>
+Subject: Re: [oss-security] GnuPG security release
 
---000000000000e9ea1c05cb7711b6
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Thank you Greg,
+CVEs seems to have been assigned as follows:
 
-Correction please,  This issue was fixed in the upstream Kernel 5.6 onward
-with ef299cc3fa1a9
-..
-Rohit Keshri / Red Hat Product Security Team
-PGP: OX01BC 858A 07B7 15C8 EF33 BFE2 2EEB 0CBC 84A4 4C2D
+On Tue, Jan 27, 2026 at 04:44:11PM +0000, Sam James wrote:
+> GnuPG 2.5.17 has been released to fix a possible RCE:
+> * https://dev.gnupg.org/T8044 ("gpg-agent stack buffer overflow in pkdecrypt using KEM")
+> 
+> [Description for this one at the end, for the full quoted advisory.]
 
-secalert@redhat.com for urgent response
+This is https://www.cve.org/CVERecord?id=CVE-2026-24881
 
+> There's two other security-relevant bugs too:
+> * https://dev.gnupg.org/T8045 ("Stack-based buffer overflow in TPM2 `PKDECRYPT`")
+> 
+> > A stack-based buffer overflow exists in GnuPG’s tpm2daemon when handling
+> > the PKDECRYPT command for TPM-backed RSA and ECC keys. A local attacker
+> > who can access the daemon’s Assuan socket can send an oversized ciphertext
+> > and trigger memory corruption, resulting in a crash and potentially
+> > arbitrary code execution. When a user stores private keys inside a TPM,
+> > GnuPG runs a helper process called tpm2daemon to perform cryptographic
+> > operations on their behalf. Other GnuPG components communicate with this
+> > daemon over Assuan, a local IPC protocol. During a PKDECRYPT request,
+> > tpm2daemon copies the attacker-supplied ciphertext into fixed-size TPM
+> > work buffers without validating that the ciphertext fits. If the supplied
+> > ciphertext is larger than the TPM buffer, the copy operation writes past
+> > the end of the stack buffer and corrupts adjacent stack memory. This
+> > affects both supported TPM decrypt paths: RSA (tpm2_rsa_decrypt) and ECC
+> > (tpm2_ecc_decrypt). Because the overflow occurs on the stack and is
+> > attacker-controlled, it is potentially exploitable for code execution
+> > inside the tpm2daemon process.
 
-On Tue, Sep 7, 2021 at 3:47 PM Greg KH <greg@kroah.com> wrote:
+This is https://www.cve.org/CVERecord?id=CVE-2026-24882
+> 
+> * https://dev.gnupg.org/T8049 ("Null pointer dereference with overlong
+> signature packet")
+> 
+> > Overlong signature packet length causes parse_signature to return
+> > success with sig->data[] left NULL, leading to a crash in later
+> > consumers.
 
-> On Tue, Sep 07, 2021 at 02:09:52PM +0530, Rohit Keshri wrote:
-> > Hello Team,
-> >
-> > A flaw was found in the "Routing decision" classifier in the Linux
-> kernel's
-> > Traffic Control networking subsystem in the way it handled changing of
-> > classification filters, leading to a use-after-free condition. This flaw
-> > allows unprivileged local users to escalate their privileges on the
-> system.
-> > The highest threat from this vulnerability is confidentiality, integrity,
-> > as well as system availability.
-> >
-> > This issue was fixed in the upstream Kernel 5.10 onward with
-> ef299cc3fa1a9
->
-> Note, commit ef299cc3fa1a ("net_sched: cls_route: remove the right
-> filter from hashtable") came out in the 5.6 kernel release, in March of
-> 2020, and was also backported to all relevant stable kernel releases at
-> the beginning of April, 2020:
->         4.4.218 4.9.218 4.14.175 4.19.114 5.4.29 5.5.14
->
-> How did 5.10 get messed up in this, it was not released until December
-> 2020?
->
-> thanks,
->
-> greg k-h
->
->
+This is https://www.cve.org/CVERecord?id=CVE-2026-24883
 
---000000000000e9ea1c05cb7711b6--
-
+Regards,
+Salvatore
