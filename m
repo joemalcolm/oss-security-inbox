@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["658" "Monday" "5" "September" "2016" "16:26:02" "-0700" "=?UTF-8?B?RGlvZ28gTcOzbmljYQ==?=" "diogo.monica@docker.com" "<CA+q1=fTZxdEBOCoUTSXgusCP1k4wm_fJJqSLyucqbjs5LE+1_A@mail.gmail.com>" "19" "[oss-security] cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate" nil nil nil "9" "2016090523:26:02" "[oss-security] cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate" (number mark "U       diogo.monica Sep  5   19/658   " thread-indent "\"[oss-security] cve request: docker swarm node Dos occurs when join a cluster failed using local CA certificate\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19850 invoked by uid 550); 5 Sep 2016 23:26:35 -0000
+Received: (qmail 10160 invoked by uid 550); 27 Jan 2026 12:00:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,52 +7,286 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19832 invoked from network); 5 Sep 2016 23:26:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=docker.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9UvpuSrUkGX+sRjRv9wZF3//qzyxWJmxt505oFM2MKg=;
-        b=aAS9mNdSWHQNqLXSBjHpdMsfV3YXyv8VEIu0H7PiKdarRR5lwz7mcYrOMqBxR6Gt6t
-         4A/Zh6RBeS60zj5YSCCjjsSYKrGiBs0SObQCuhZaQMeVfy7G1q6DqVrVhGv8o+sPkphm
-         PHGrAH3nMD1kAFBs3oI4KdOQ252L600lbYxl8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9UvpuSrUkGX+sRjRv9wZF3//qzyxWJmxt505oFM2MKg=;
-        b=TKPUcV0vOCTYkFJRE0K4h/7+d6QIMFuWogk6YU51n+z6nN2IK+a5n4qkCznTHZJrEE
-         Mvs6QmDiqSZ+pcVUq0GlKJFKv5eRDox1pl0s6xZUfxMscPpsxFZxFGBHNC/9cIoWDeTh
-         XRoVsfiyl5HuPos7tj4gB2vQm7ihNtwSZ1J1jsGMKoegrlq6cq6DqZsbOroxqXH1BLBq
-         nf1oOahCzBXVvZ/45zg5G7uLhtkX92EE41nnBhGa4Gv8av3LloSEHOHOuT5q9pv/ksYn
-         hgRvMzP2/2ft6+IYKEHftq7kEr3fGhIJMbJPBdB0rKyP8Wmyaeb+gv/uJGvzsMo/0UR/
-         rD7Q==
-X-Gm-Message-State: AE9vXwO1CSP3Nb+HH9o7kGtM35Yy0/lQk1JPyficHNJ2YB+kGAwPdSZ/nh0EmCuEARlUKCAd3Y50GWUq+LafYPZl
-X-Received: by 10.28.23.210 with SMTP id 201mr16651678wmx.108.1473117983320;
- Mon, 05 Sep 2016 16:26:23 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 10112 invoked from network); 27 Jan 2026 12:00:56 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-From: =?UTF-8?Q?Diogo_M=C3=B3nica?= <diogo.monica@docker.com>
-Date: Mon, 5 Sep 2016 16:26:02 -0700
-Message-ID: <CA+q1=fTZxdEBOCoUTSXgusCP1k4wm_fJJqSLyucqbjs5LE+1_A@mail.gmail.com>
-To: oss-security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary=001a114706221bc4f0053bcb0219
-Subject: [oss-security] cve request: docker swarm node Dos occurs when join a cluster failed
- using local CA certificate
+X-Mailer: MIME-tools 5.510 (Entity 5.510)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1vkhkO-004FP2-2a@xenbits.xenproject.org>
+Date: Tue, 27 Jan 2026 12:00:40 +0000
+Subject: [oss-security] Xen Security Advisory 477 v2 (CVE-2025-58150) - x86: buffer
+ overrun with shadow paging + tracing
 
---001a114706221bc4f0053bcb0219
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
->From I can understand from this report, the author creates a swarm, messes
-with the local certificate for a worker, and then tries to join the swarm.
-The worker fails because the author messed with the local state.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-This does not make the manager not available to the rest of the worker
-nodes, and is essentially a self-DoS (I modified my local configuration in
-such a way that docker doesn't run).
+            Xen Security Advisory CVE-2025-58150 / XSA-477
+                               version 2
 
-A simple rm -rf /var/lib/docker/swarm should clean all the state. Not CVE
-worthy.
+           x86: buffer overrun with shadow paging + tracing
 
---=20
-Diogo M=C3=B3nica
+UPDATES IN VERSION 2
+====================
 
---001a114706221bc4f0053bcb0219--
+Public release.
+
+ISSUE DESCRIPTION
+=================
+
+Shadow mode tracing code uses a set of per-CPU variables to avoid
+cumbersome parameter passing.  Some of these variables are written to
+with guest controlled data, of guest controllable size.  That size can
+be larger than the variable, and bounding of the writes was missing.
+
+IMPACT
+======
+
+The exact effects depend on what's adjacent to the variables in
+question.  The most likely effects are bogus trace data, but none of
+privilege escalation, information leaks, or Denial of Service (DoS) can
+be excluded without detailed analysis of the particular build of Xen.
+
+VULNERABLE SYSTEMS
+==================
+
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
+
+Only HVM guests running in shadow paging mode and with tracing enabled
+can leverage the vulnerability.
+
+MITIGATION
+==========
+
+Running HVM guests in HAP mode only will avoid the vulnerability.
+
+Not enabling tracing will also avoid the vulnerability.  Tracing is
+enabled by the "tbuf_size=" command line option, or by running tools
+like xentrace or xenbaked in Dom0.  Note that on a running system
+stopping xentrace / xenbaked would disable tracing.  For xentrace,
+however, this additionally requires that it wasn't started with the -x
+option.  Stopping previously enabled tracing can of course only prevent
+future damage; prior damage may have occurred and may manifest only
+later.
+
+CREDITS
+=======
+
+This issue was discovered by Jan Beulich of SUSE.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa477.patch           xen-unstable - Xen 4.19.x
+xsa477-4.18.patch      Xen 4.18.x
+
+$ sha256sum xsa477*
+025783441d7db846e717a1e48547b0db7a36fcc6af652b688524c684f0c3d2a7  xsa477.patch
+194da830e15195873456b145a8df83af43aaae7a82fa6cb6852928d75c68909c  xsa477-4.18.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAml4qLYMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ+IkH/jgVtAAifglnIrxstdAUXMritwnXvcrIJaKjG7yj
+8980GavdbttObFRL+d2XvPXAQLRWCbgMNgNFA9s/6EhH2cCMF9mmeYxxU9zqG9qi
+MQyfp1v/UpNrvD4hdHIXhohMELF6IdXQkrRvnB0hJwSPsDEzMZyofTOKppmSqSE1
+tIdFXD1R845KTl9eG1lX4uwr2KhAjAgk4DrpIvxmtkiz3yF8kznjAGDSA7luKkTU
+XBSlBe9u/9Yg5cspQrh7tVQ0K+6wDR6f4bCq26P/VCDUjwRIzHDhdP+RzKaumLGn
+nTU0aAuIBlXYCa+8HB5c9vf/yLldKflYZ4Qmb3jGD4GYZrQ=
+=nlvD
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa477.patch"
+Content-Disposition: attachment; filename="xsa477.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0OiB4ODYvc2hhZG93
+OiBkb24ndCBvdmVycnVuIHRyYWNlX2VtdWxfd3JpdGVfdmFsCgpHdWVzdHMgY2FuIGRvIHdpZGVy
+LXRoYW4tUFRFLXNpemUgd3JpdGVzIG9uIHBhZ2UgdGFibGVzLiBUaGUgdHJhY2luZwpoZWxwZXIg
+dmFyaWFibGUsIGhvd2V2ZXIsIG9ubHkgb2ZmZXJzIHNwYWNlIGZvciBhIHNpbmdsZSBQVEUgKGFu
+ZCBpdCBpcwpiZWluZyBzd2l0Y2hlZCB0byB0aGUgbW9yZSBjb3JyZWN0IHR5cGUgcmlnaHQgaGVy
+ZSkuIFRoZXJlZm9yZSBib3VuZAppbmNvbWluZyB3cml0ZSBzaXplcyB0byB0aGUgYW1vdW50IG9m
+IHNwYWNlIGF2YWlsYWJsZS4KClRvIG5vdCBsZWF2ZSBkZWFkIGNvZGUgKHdoaWNoIGlzIGEgTWlz
+cmEgY29uY2VybiksIGRyb3AgdGhlIG5vdyB1bnVzZWQKZ3Vlc3RfcGFfdCBhcyB3ZWxsLgoKQWxz
+byBtb3ZlIGFuZCBhZGp1c3QgR1VFU1RfUFRFX1NJWkU6IERlcml2ZSBpdCByYXRoZXIgdGhhbiB1
+c2luZyBoYXJkLQpjb2RlZCBudW1iZXJzLCBhbmQgcHV0IGl0IGluIHRoZSBzb2xlIHNvdXJjZSBm
+aWxlIHdoZXJlIGl0J3MgYWN0dWFsbHkKbmVlZGVkLiBUaGlzIHRoZW4gYWxzbyBhZGRyZXNzZXMg
+YSBNaXNyYSBydWxlIDIwLjkgKCJBbGwgaWRlbnRpZmllcnMKdXNlZCBpbiB0aGUgY29udHJvbGxp
+bmcgZXhwcmVzc2lvbiBvZiAjaWYgb3IgI2VsaWYgcHJlcHJvY2Vzc2luZwpkaXJlY3RpdmVzIHNo
+YWxsIGJlICNkZWZpbmUnZCBiZWZvcmUgZXZhbHVhdGlvbiIpIHZpb2xhdGlvbjoKR1VFU1RfUEFH
+SU5HX0xFVkVMUyBpcyAjZGVmaW5lJ2Qgb25seSBpbiBtdWx0aS5jLgoKVGhpcyBpcyBYU0EtNDc3
+IC8gQ1ZFLTIwMjUtNTgxNTAuCgpGaXhlczogOWE4NmFjMWFhM2QyICgieGVudHJhY2UgNS83OiBB
+ZGRpdGlvbmFsIHRyYWNpbmcgZm9yIHRoZSBzaGFkb3cgY29kZSIpClNpZ25lZC1vZmYtYnk6IEph
+biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEFuZHJldyBDb29wZXIg
+PGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vYXJjaC94ODYvbW0vc2hhZG93
+L211bHRpLmMKKysrIGIveGVuL2FyY2gveDg2L21tL3NoYWRvdy9tdWx0aS5jCkBAIC0xOTcwLDE1
+ICsxOTcwLDE1IEBAIHN0YXRpYyB2b2lkIHNoX3ByZWZldGNoKHN0cnVjdCB2Y3B1ICp2LAogCiAj
+aWYgR1VFU1RfUEFHSU5HX0xFVkVMUyA9PSA0CiB0eXBlZGVmIHU2NCBndWVzdF92YV90OwotdHlw
+ZWRlZiB1NjQgZ3Vlc3RfcGFfdDsKICNlbGlmIEdVRVNUX1BBR0lOR19MRVZFTFMgPT0gMwogdHlw
+ZWRlZiB1MzIgZ3Vlc3RfdmFfdDsKLXR5cGVkZWYgdTY0IGd1ZXN0X3BhX3Q7CiAjZWxzZQogdHlw
+ZWRlZiB1MzIgZ3Vlc3RfdmFfdDsKLXR5cGVkZWYgdTMyIGd1ZXN0X3BhX3Q7CiAjZW5kaWYKIAor
+LyogU2l6ZSAoaW4gYnl0ZXMpIG9mIGEgZ3Vlc3QgUFRFICovCisjZGVmaW5lIEdVRVNUX1BURV9T
+SVpFIHNpemVvZihndWVzdF9sMWVfdCkKKwogLyogU2hhZG93IHRyYWNlIGV2ZW50IHdpdGggR1VF
+U1RfUEFHSU5HX0xFVkVMUyBmb2xkZWQgaW50byB0aGUgZXZlbnQgZmllbGQuICovCiBzdGF0aWMg
+dm9pZCBzaF90cmFjZSh1aW50MzJfdCBldmVudCwgdW5zaWduZWQgaW50IGV4dHJhLCBjb25zdCB2
+b2lkICpleHRyYV9kYXRhKQogewpAQCAtMjA0OCwxMSArMjA0OCwxNCBAQCBzdGF0aWMgdm9pZCBf
+X21heWJlX3VudXNlZCBzaF90cmFjZV9nZm5fCiBzdGF0aWMgREVGSU5FX1BFUl9DUFUoZ3Vlc3Rf
+dmFfdCx0cmFjZV9lbXVsYXRlX2luaXRpYWxfdmEpOwogc3RhdGljIERFRklORV9QRVJfQ1BVKGlu
+dCx0cmFjZV9leHRyYV9lbXVsYXRpb25fY291bnQpOwogI2VuZGlmCi1zdGF0aWMgREVGSU5FX1BF
+Ul9DUFUoZ3Vlc3RfcGFfdCx0cmFjZV9lbXVsYXRlX3dyaXRlX3ZhbCk7CitzdGF0aWMgREVGSU5F
+X1BFUl9DUFUoZ3Vlc3RfbDFlX3QsIHRyYWNlX2VtdWxhdGVfd3JpdGVfdmFsKTsKIAogc3RhdGlj
+IHZvaWQgY2ZfY2hlY2sgdHJhY2VfZW11bGF0ZV93cml0ZV92YWwoCiAgICAgY29uc3Qgdm9pZCAq
+cHRyLCB1bnNpZ25lZCBsb25nIHZhZGRyLCBjb25zdCB2b2lkICpzcmMsIHVuc2lnbmVkIGludCBi
+eXRlcykKIHsKKyAgICBpZiAoIGJ5dGVzID4gc2l6ZW9mKHRoaXNfY3B1KHRyYWNlX2VtdWxhdGVf
+d3JpdGVfdmFsKSkgKQorICAgICAgICBieXRlcyA9IHNpemVvZih0aGlzX2NwdSh0cmFjZV9lbXVs
+YXRlX3dyaXRlX3ZhbCkpOworCiAjaWYgR1VFU1RfUEFHSU5HX0xFVkVMUyA9PSAzCiAgICAgaWYg
+KCB2YWRkciA9PSB0aGlzX2NwdSh0cmFjZV9lbXVsYXRlX2luaXRpYWxfdmEpICkKICAgICAgICAg
+bWVtY3B5KCZ0aGlzX2NwdSh0cmFjZV9lbXVsYXRlX3dyaXRlX3ZhbCksIHNyYywgYnl0ZXMpOwpA
+QCAtMjA3NywxMyArMjA4MCwxNiBAQCBzdGF0aWMgaW5saW5lIHZvaWQgc2hfdHJhY2VfZW11bGF0
+ZShndWVzCiAgICAgICAgICAgICAvKgogICAgICAgICAgICAgICogRm9yIEdVRVNUX1BBR0lOR19M
+RVZFTFM9MyAoUEFFIHBhZ2luZyksIGd1ZXN0X2wxZSBpcyA2NCB3aGlsZQogICAgICAgICAgICAg
+ICogZ3Vlc3RfdmEgaXMgMzIuICBQdXQgaXQgZmlyc3QgdG8gYXZvaWQgcGFkZGluZy4KKyAgICAg
+ICAgICAgICAqCisgICAgICAgICAgICAgKiBOb3RlOiAud3JpdGVfdmFsIGlzIGFuIGFyYml0cmFy
+eSBzZXQgb2Ygd3JpdHRlbiBieXRlcywgcG9zc2libHkKKyAgICAgICAgICAgICAqIG1pc2FsaWdu
+ZWQgYW5kIHBvc3NpYmx5IHNwYW5uaW5nIHRoZSBuZXh0IGdsMWUuCiAgICAgICAgICAgICAgKi8K
+ICAgICAgICAgICAgIGd1ZXN0X2wxZV90IGdsMWUsIHdyaXRlX3ZhbDsKICAgICAgICAgICAgIGd1
+ZXN0X3ZhX3QgdmE7CiAgICAgICAgICAgICB1aW50MzJfdCBmbGFnczoyOSwgZW11bGF0aW9uX2Nv
+dW50OjM7CiAgICAgICAgIH0gZCA9IHsKICAgICAgICAgICAgIC5nbDFlICAgICAgICAgICAgPSBn
+bDFlLAotICAgICAgICAgICAgLndyaXRlX3ZhbC5sMSAgICA9IHRoaXNfY3B1KHRyYWNlX2VtdWxh
+dGVfd3JpdGVfdmFsKSwKKyAgICAgICAgICAgIC53cml0ZV92YWwgICAgICAgPSB0aGlzX2NwdSh0
+cmFjZV9lbXVsYXRlX3dyaXRlX3ZhbCksCiAgICAgICAgICAgICAudmEgICAgICAgICAgICAgID0g
+dmEsCiAjaWYgR1VFU1RfUEFHSU5HX0xFVkVMUyA9PSAzCiAgICAgICAgICAgICAuZW11bGF0aW9u
+X2NvdW50ID0gdGhpc19jcHUodHJhY2VfZXh0cmFfZW11bGF0aW9uX2NvdW50KSwKQEAgLTI2NzIs
+NyArMjY3Nyw3IEBAIHN0YXRpYyBpbnQgY2ZfY2hlY2sgc2hfcGFnZV9mYXVsdCgKICAgICBwYWdp
+bmdfdW5sb2NrKGQpOwogICAgIHB1dF9nZm4oZCwgZ2ZuX3goZ2ZuKSk7CiAKLSAgICB0aGlzX2Nw
+dSh0cmFjZV9lbXVsYXRlX3dyaXRlX3ZhbCkgPSAwOworICAgIHRoaXNfY3B1KHRyYWNlX2VtdWxh
+dGVfd3JpdGVfdmFsKSA9IChndWVzdF9sMWVfdCl7fTsKIAogI2lmIFNIQURPV19PUFRJTUlaQVRJ
+T05TICYgU0hPUFRfRkFTVF9FTVVMQVRJT04KICBlYXJseV9lbXVsYXRpb246Ci0tLSBhL3hlbi9h
+cmNoL3g4Ni9tbS9zaGFkb3cvcHJpdmF0ZS5oCisrKyBiL3hlbi9hcmNoL3g4Ni9tbS9zaGFkb3cv
+cHJpdmF0ZS5oCkBAIC0xMjAsMTQgKzEyMCw2IEBAIGVudW0gewogICAgIFRSQ0VfU0ZMQUdfT09T
+X0ZJWFVQX0VWSUNULAogfTsKIAotCi0vKiBTaXplIChpbiBieXRlcykgb2YgYSBndWVzdCBQVEUg
+Ki8KLSNpZiBHVUVTVF9QQUdJTkdfTEVWRUxTID49IDMKLSMgZGVmaW5lIEdVRVNUX1BURV9TSVpF
+IDgKLSNlbHNlCi0jIGRlZmluZSBHVUVTVF9QVEVfU0laRSA0Ci0jZW5kaWYKLQogLyoqKioqKioq
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKgogICogQXVkaXRpbmcgcm91dGluZXMKICAqLwo=
+
+--=separator
+Content-Type: application/octet-stream; name="xsa477-4.18.patch"
+Content-Disposition: attachment; filename="xsa477-4.18.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbTogSmFuIEJldWxpY2ggPGpiZXVsaWNoQHN1c2UuY29tPgpTdWJqZWN0OiB4ODYvc2hhZG93
+OiBkb24ndCBvdmVycnVuIHRyYWNlX2VtdWxfd3JpdGVfdmFsCgpHdWVzdHMgY2FuIGRvIHdpZGVy
+LXRoYW4tUFRFLXNpemUgd3JpdGVzIG9uIHBhZ2UgdGFibGVzLiBUaGUgdHJhY2luZwpoZWxwZXIg
+dmFyaWFibGUsIGhvd2V2ZXIsIG9ubHkgb2ZmZXJzIHNwYWNlIGZvciBhIHNpbmdsZSBQVEUgKGFu
+ZCBpdCBpcwpiZWluZyBzd2l0Y2hlZCB0byB0aGUgbW9yZSBjb3JyZWN0IHR5cGUgcmlnaHQgaGVy
+ZSkuIFRoZXJlZm9yZSBib3VuZAppbmNvbWluZyB3cml0ZSBzaXplcyB0byB0aGUgYW1vdW50IG9m
+IHNwYWNlIGF2YWlsYWJsZS4KClRvIG5vdCBsZWF2ZSBkZWFkIGNvZGUgKHdoaWNoIGlzIGEgTWlz
+cmEgY29uY2VybiksIGRyb3AgdGhlIG5vdyB1bnVzZWQKZ3Vlc3RfcGFfdCBhcyB3ZWxsLgoKQWxz
+byBtb3ZlIGFuZCBhZGp1c3QgR1VFU1RfUFRFX1NJWkU6IERlcml2ZSBpdCByYXRoZXIgdGhhbiB1
+c2luZyBoYXJkLQpjb2RlZCBudW1iZXJzLCBhbmQgcHV0IGl0IGluIHRoZSBzb2xlIHNvdXJjZSBm
+aWxlIHdoZXJlIGl0J3MgYWN0dWFsbHkKbmVlZGVkLiBUaGlzIHRoZW4gYWxzbyBhZGRyZXNzZXMg
+YSBNaXNyYSBydWxlIDIwLjkgKCJBbGwgaWRlbnRpZmllcnMKdXNlZCBpbiB0aGUgY29udHJvbGxp
+bmcgZXhwcmVzc2lvbiBvZiAjaWYgb3IgI2VsaWYgcHJlcHJvY2Vzc2luZwpkaXJlY3RpdmVzIHNo
+YWxsIGJlICNkZWZpbmUnZCBiZWZvcmUgZXZhbHVhdGlvbiIpIHZpb2xhdGlvbjoKR1VFU1RfUEFH
+SU5HX0xFVkVMUyBpcyAjZGVmaW5lJ2Qgb25seSBpbiBtdWx0aS5jLgoKVGhpcyBpcyBYU0EtNDc3
+IC8gQ1ZFLTIwMjUtNTgxNTAuCgpGaXhlczogOWE4NmFjMWFhM2QyICgieGVudHJhY2UgNS83OiBB
+ZGRpdGlvbmFsIHRyYWNpbmcgZm9yIHRoZSBzaGFkb3cgY29kZSIpClNpZ25lZC1vZmYtYnk6IEph
+biBCZXVsaWNoIDxqYmV1bGljaEBzdXNlLmNvbT4KUmV2aWV3ZWQtYnk6IEFuZHJldyBDb29wZXIg
+PGFuZHJldy5jb29wZXIzQGNpdHJpeC5jb20+CgotLS0gYS94ZW4vYXJjaC94ODYvbW0vc2hhZG93
+L211bHRpLmMKKysrIGIveGVuL2FyY2gveDg2L21tL3NoYWRvdy9tdWx0aS5jCkBAIC0xOTY1LDE1
+ICsxOTY1LDE1IEBAIHN0YXRpYyB2b2lkIHNoX3ByZWZldGNoKHN0cnVjdCB2Y3B1ICp2LAogCiAj
+aWYgR1VFU1RfUEFHSU5HX0xFVkVMUyA9PSA0CiB0eXBlZGVmIHU2NCBndWVzdF92YV90OwotdHlw
+ZWRlZiB1NjQgZ3Vlc3RfcGFfdDsKICNlbGlmIEdVRVNUX1BBR0lOR19MRVZFTFMgPT0gMwogdHlw
+ZWRlZiB1MzIgZ3Vlc3RfdmFfdDsKLXR5cGVkZWYgdTY0IGd1ZXN0X3BhX3Q7CiAjZWxzZQogdHlw
+ZWRlZiB1MzIgZ3Vlc3RfdmFfdDsKLXR5cGVkZWYgdTMyIGd1ZXN0X3BhX3Q7CiAjZW5kaWYKIAor
+LyogU2l6ZSAoaW4gYnl0ZXMpIG9mIGEgZ3Vlc3QgUFRFICovCisjZGVmaW5lIEdVRVNUX1BURV9T
+SVpFIHNpemVvZihndWVzdF9sMWVfdCkKKwogc3RhdGljIGlubGluZSB2b2lkIHRyYWNlX3NoYWRv
+d19nZW4odTMyIGV2ZW50LCBndWVzdF92YV90IHZhKQogewogICAgIGlmICggdGJfaW5pdF9kb25l
+ICkKQEAgLTIwNjIsMTEgKzIwNjIsMTQgQEAgc3RhdGljIGlubGluZSB2b2lkIHRyYWNlX3NoYWRv
+d19lbXVsYXRlXwogc3RhdGljIERFRklORV9QRVJfQ1BVKGd1ZXN0X3ZhX3QsdHJhY2VfZW11bGF0
+ZV9pbml0aWFsX3ZhKTsKIHN0YXRpYyBERUZJTkVfUEVSX0NQVShpbnQsdHJhY2VfZXh0cmFfZW11
+bGF0aW9uX2NvdW50KTsKICNlbmRpZgotc3RhdGljIERFRklORV9QRVJfQ1BVKGd1ZXN0X3BhX3Qs
+dHJhY2VfZW11bGF0ZV93cml0ZV92YWwpOworc3RhdGljIERFRklORV9QRVJfQ1BVKGd1ZXN0X2wx
+ZV90LCB0cmFjZV9lbXVsYXRlX3dyaXRlX3ZhbCk7CiAKIHN0YXRpYyB2b2lkIGNmX2NoZWNrIHRy
+YWNlX2VtdWxhdGVfd3JpdGVfdmFsKAogICAgIGNvbnN0IHZvaWQgKnB0ciwgdW5zaWduZWQgbG9u
+ZyB2YWRkciwgY29uc3Qgdm9pZCAqc3JjLCB1bnNpZ25lZCBpbnQgYnl0ZXMpCiB7CisgICAgaWYg
+KCBieXRlcyA+IHNpemVvZih0aGlzX2NwdSh0cmFjZV9lbXVsYXRlX3dyaXRlX3ZhbCkpICkKKyAg
+ICAgICAgYnl0ZXMgPSBzaXplb2YodGhpc19jcHUodHJhY2VfZW11bGF0ZV93cml0ZV92YWwpKTsK
+KwogI2lmIEdVRVNUX1BBR0lOR19MRVZFTFMgPT0gMwogICAgIGlmICggdmFkZHIgPT0gdGhpc19j
+cHUodHJhY2VfZW11bGF0ZV9pbml0aWFsX3ZhKSApCiAgICAgICAgIG1lbWNweSgmdGhpc19jcHUo
+dHJhY2VfZW11bGF0ZV93cml0ZV92YWwpLCBzcmMsIGJ5dGVzKTsKQEAgLTIwODgsOCArMjA5MSwx
+MyBAQCBzdGF0aWMgaW5saW5lIHZvaWQgdHJhY2Vfc2hhZG93X2VtdWxhdGUoCiAgICAgaWYgKCB0
+Yl9pbml0X2RvbmUgKQogICAgIHsKICAgICAgICAgc3RydWN0IF9fcGFja2VkIHsKLSAgICAgICAg
+ICAgIC8qIGZvciBQQUUsIGd1ZXN0X2wxZSBtYXkgYmUgNjQgd2hpbGUgZ3Vlc3RfdmEgbWF5IGJl
+IDMyOwotICAgICAgICAgICAgICAgc28gcHV0IGl0IGZpcnN0IGZvciBhbGlnbm1lbnQgc2FrZS4g
+Ki8KKyAgICAgICAgICAgIC8qCisgICAgICAgICAgICAgKiBGb3IgR1VFU1RfUEFHSU5HX0xFVkVM
+Uz0zIChQQUUgcGFnaW5nKSwgZ3Vlc3RfbDFlIGlzIDY0IHdoaWxlCisgICAgICAgICAgICAgKiBn
+dWVzdF92YSBpcyAzMi4gIFB1dCBpdCBmaXJzdCB0byBhdm9pZCBwYWRkaW5nLgorICAgICAgICAg
+ICAgICoKKyAgICAgICAgICAgICAqIE5vdGU6IC53cml0ZV92YWwgaXMgYW4gYXJiaXRyYXJ5IHNl
+dCBvZiB3cml0dGVuIGJ5dGVzLCBwb3NzaWJseQorICAgICAgICAgICAgICogbWlzYWxpZ25lZCBh
+bmQgcG9zc2libHkgc3Bhbm5pbmcgdGhlIG5leHQgZ2wxZS4KKyAgICAgICAgICAgICAqLwogICAg
+ICAgICAgICAgZ3Vlc3RfbDFlX3QgZ2wxZSwgd3JpdGVfdmFsOwogICAgICAgICAgICAgZ3Vlc3Rf
+dmFfdCB2YTsKICAgICAgICAgICAgIHVpbnQzMl90IGZsYWdzOjI5LCBlbXVsYXRpb25fY291bnQ6
+MzsKQEAgLTIwOTksNyArMjEwNyw3IEBAIHN0YXRpYyBpbmxpbmUgdm9pZCB0cmFjZV9zaGFkb3df
+ZW11bGF0ZSgKICAgICAgICAgZXZlbnQgPSBUUkNfU0hBRE9XX0VNVUxBVEUgfCAoKEdVRVNUX1BB
+R0lOR19MRVZFTFMtMik8PDgpOwogCiAgICAgICAgIGQuZ2wxZSA9IGdsMWU7Ci0gICAgICAgIGQu
+d3JpdGVfdmFsLmwxID0gdGhpc19jcHUodHJhY2VfZW11bGF0ZV93cml0ZV92YWwpOworICAgICAg
+ICBkLndyaXRlX3ZhbCA9IHRoaXNfY3B1KHRyYWNlX2VtdWxhdGVfd3JpdGVfdmFsKTsKICAgICAg
+ICAgZC52YSA9IHZhOwogI2lmIEdVRVNUX1BBR0lOR19MRVZFTFMgPT0gMwogICAgICAgICBkLmVt
+dWxhdGlvbl9jb3VudCA9IHRoaXNfY3B1KHRyYWNlX2V4dHJhX2VtdWxhdGlvbl9jb3VudCk7CkBA
+IC0yNjgwLDcgKzI2ODgsNyBAQCBzdGF0aWMgaW50IGNmX2NoZWNrIHNoX3BhZ2VfZmF1bHQoCiAg
+ICAgcGFnaW5nX3VubG9jayhkKTsKICAgICBwdXRfZ2ZuKGQsIGdmbl94KGdmbikpOwogCi0gICAg
+dGhpc19jcHUodHJhY2VfZW11bGF0ZV93cml0ZV92YWwpID0gMDsKKyAgICB0aGlzX2NwdSh0cmFj
+ZV9lbXVsYXRlX3dyaXRlX3ZhbCkgPSAoZ3Vlc3RfbDFlX3Qpe307CiAKICNpZiBTSEFET1dfT1BU
+SU1JWkFUSU9OUyAmIFNIT1BUX0ZBU1RfRU1VTEFUSU9OCiAgZWFybHlfZW11bGF0aW9uOgotLS0g
+YS94ZW4vYXJjaC94ODYvbW0vc2hhZG93L3ByaXZhdGUuaAorKysgYi94ZW4vYXJjaC94ODYvbW0v
+c2hhZG93L3ByaXZhdGUuaApAQCAtMTIwLDE0ICsxMjAsNiBAQCBlbnVtIHsKICAgICBUUkNFX1NG
+TEFHX09PU19GSVhVUF9FVklDVCwKIH07CiAKLQotLyogU2l6ZSAoaW4gYnl0ZXMpIG9mIGEgZ3Vl
+c3QgUFRFICovCi0jaWYgR1VFU1RfUEFHSU5HX0xFVkVMUyA+PSAzCi0jIGRlZmluZSBHVUVTVF9Q
+VEVfU0laRSA4Ci0jZWxzZQotIyBkZWZpbmUgR1VFU1RfUFRFX1NJWkUgNAotI2VuZGlmCi0KIC8q
+KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq
+KioqKioqKioqKioqKioqKioqKioKICAqIEF1ZGl0aW5nIHJvdXRpbmVzCiAgKi8K
+
+--=separator--
