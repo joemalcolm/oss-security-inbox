@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["479" "Tuesday" "13" "June" "2017" "17:18:49" "+0200" "Adam Maris" "amaris@redhat.com" "<1497367129.2956.2.camel@redhat.com>" "21" "Re: [oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer" "^Date:" nil nil "6" "2017061315:18:49" "[oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer" (number mark "        amaris@redha Jun 13   21/479   " thread-indent "\"Re: [oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a data race in ALSA timer\"\n") "<CAG_fn=W+kiQAmmtXeEwECmyabiJwaEQVyxo0D29-PTXwzgF9jg@mail.gmail.com>" ("<CAG_fn=W+kiQAmmtXeEwECmyabiJwaEQVyxo0D29-PTXwzgF9jg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 18181 invoked by uid 550); 13 Jun 2017 15:19:04 -0000
+Received: (qmail 11839 invoked by uid 550); 31 Jan 2026 13:45:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,44 +6,52 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18146 invoked from network); 13 Jun 2017 15:19:04 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 03351145F84
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=amaris@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 03351145F84
-Message-ID: <1497367129.2956.2.camel@redhat.com>
-In-Reply-To: <CAG_fn=W+kiQAmmtXeEwECmyabiJwaEQVyxo0D29-PTXwzgF9jg@mail.gmail.com>
-References: 
-	<CAG_fn=W+kiQAmmtXeEwECmyabiJwaEQVyxo0D29-PTXwzgF9jg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="=-uEZdEmz1JJAQoUQqwXTj"
-Mime-Version: 1.0
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Tue, 13 Jun 2017 15:18:52 +0000 (UTC)
-Date: Tue, 13 Jun 2017 17:18:49 +0200
-From: Adam Maris <amaris@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel 2.6.0 to 4.12-rc4 infoleak due to a
- data race in ALSA timer
+x-ms-reactions: disallow
+Received: (qmail 11812 invoked from network); 31 Jan 2026 13:45:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
+	s=manitu-webhosting; t=1769867140;
+	bh=x3J8mhdIaoq363MTWvi+FEmGNwj6Fll37MdOghxArng=;
+	h=Date:From:Subject:To;
+	b=1Rg/yrdcwy2l53FKoHka8B4rfEdvOnHqkg1GbuSbru1Dtsj7wFD0rQPzUdJ1in34x
+	 abVH4xxeYYzHNIIsR4O9Pb4+NRnG1r9GrmKP4MEFCk1pNcWM8WwI/M/wPwczTbuWIw
+	 /aKjxJrbDeJ+y6K+ebB7dyi893mlGUngEMaEzSIl5Sy0buTFfc2CpzR90PKf0JeerM
+	 mobIoZAHs4n/LLR/b+01Jzxp/Jvp7CUrM41hIAsnZekkQM9ItE9ZqdRUuMlFX+wBJY
+	 oTNU9JPBxnYW5SeJQqVP5F96IcR7rswVNMt2l7tVZTl/jlP8atbV7WCGTNueBNN2lf
+	 k3N616GFNDpwA==
+Message-ID: <347725ee-629f-4b1b-b040-e8998e249044@pipping.org>
+Date: Sat, 31 Jan 2026 14:45:44 +0100
+MIME-Version: 1.0
+Content-Language: en-US
+From: Sebastian Pipping <sebastian@pipping.org>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] libexpat 2.7.4 fixes CVE-2026-24515 and CVE-2026-25210
 
---=-uEZdEmz1JJAQoUQqwXTj
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
+Hello oss-security,
 
 
-> > https://github.com/torvalds/linux/commit/d11662f4f798b50d8c8743f43384
-2c3e40fe3378
-> > https://github.com/torvalds/linux/commit/ba3021b2c79b2fa9114f92790a99
-deb27a65b728
-> 
-> 
+just a quick note that libexpat 2.7.4 (or "Expat 2.7.4") released
+today is fixing CVE-2026-24515 (NULL pointer de-reference, CWE-476)
+and CVE-2026-25210 (integer overflow, CWE-190).
 
-For reference, CVE-2017-1000380 was assigned for this issue.
+Some key links are:
 
-Regards,
+- The change log of release 2.7.4
+   https://github.com/libexpat/libexpat/blob/R_2_7_4/expat/Changes
 
--- 
-Adam Mariš, Red Hat Product Security
-1CCD 3446 0529 81E3 86AF  2D4C 4869 76E7 BEF0 6BC2 
---=-uEZdEmz1JJAQoUQqwXTj--
+- The fixing pull requests
+   - https://github.com/libexpat/libexpat/pull/1131
+   - https://github.com/libexpat/libexpat/pull/1075
+
+- The official CVE metadata
+   - https://nvd.nist.gov/vuln/detail/CVE-2026-24515
+   - https://nvd.nist.gov/vuln/detail/CVE-2026-25210
+
+Best
+
+
+
+Sebastian
 
