@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["482" "Tuesday" "15" "September" "2015" "18:50:11" "+0530" "P J P" "ppandit@redhat.com" "<alpine.LFD.2.20.1509151827540.14460@wniryva>" "17" "[oss-security] CVE-2015-5278 Qemu: net: avoid infinite loop when receiving packets" nil nil nil "9" "2015091513:20:11" "[oss-security] CVE-2015-5278 Qemu: net: avoid infinite loop when receiving packets" (number mark "        ppandit@redh Sep 15   17/482   " thread-indent "\"[oss-security] CVE-2015-5278 Qemu: net: avoid infinite loop when receiving packets\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3204 invoked by uid 550); 15 Sep 2015 13:20:33 -0000
+Received: (qmail 14147 invoked by uid 550); 5 Feb 2026 03:46:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,34 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3172 invoked from network); 15 Sep 2015 13:20:32 -0000
-X-X-Sender: pjp@javelin
-Message-ID: <alpine.LFD.2.20.1509151827540.14460@wniryva>
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-cc: Qinghao Tang <luodalongde@gmail.com>
-Date: Tue, 15 Sep 2015 18:50:11 +0530 (IST)
-From: P J P <ppandit@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2015-5278 Qemu: net: avoid infinite loop when receiving
- packets
-To: oss security list <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 14104 invoked from network); 5 Feb 2026 03:46:16 -0000
+Date: Wed, 4 Feb 2026 22:46:07 -0500
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aYQSf3Dg0UJ83IXz@netmeister.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] NGINX < 1.29.5, 1.28.2 MitM injection CVE-2026-1642
 
-   Hello,
+I don't believe F5 / the NGINX team is in the habit of
+posting security announcements here, so:
 
-Qemu emulator built with the NE2000 NIC emulation support is vulnerable to an 
-infinite loop issue. It could occur when receiving packets over the network.
+https://my.f5.com/manage/s/article/K000159824
 
-A privileged user inside guest could use this flaw to crash the Qemu instance 
-resulting in DoS.
+Partial contents of that advisory below:
 
-Upstream fix:
--------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2015-09/msg03985.html
+Security Advisory Description
+
+A vulnerability exists in NGINX OSS and NGINX Plus
+when configured to proxy to upstream Transport Layer
+Security (TLS) servers. An attacker with a
+man-in-the-middle (MITM) position on the upstream
+server side—along with conditions beyond the
+attacker's control—may be able to inject plain text
+data into the response from an upstream proxied
+server. (CVE-2026-1642)
+
+Impact
+
+The vulnerability may allow an unauthenticated
+attacker with an MITM position on the upstream server
+side to inject responses which may be sent to clients.
+
+NGINX Open Source
+Versions known to be vulnerable: 1.3.0 - 1.29.4
+
+Fixes introduced in: 1.29.5, 1.28.2
+
+Severity/CVSS score:
+Medium/5.9 (CVSS v3.1)
+CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:N
+
+High/8.2 (CVSS v4.0)
+CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N
 
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+Vulnerable component or feature: NGINX proxying to
+TLS-enabled HTTP (HTTP 1.x and HTTP/2), gRPC, and
+uWSGI backends
+
+Mitigation: None
+
+This issue was discovered internally by F5.
+
+---
+
+Release notes on GitHub:
+
+https://github.com/nginx/nginx/releases/tag/release-1.29.5
+https://github.com/nginx/nginx/releases/tag/release-1.28.2
+
+
+The actual code fix appears to be:
+https://github.com/nginx/nginx/pull/1114/changes/376c3739b633e4ddac8ecf59d72e43b0b9151c51
+
+I don't think I've seen a GitHub Security Advisory.
+
