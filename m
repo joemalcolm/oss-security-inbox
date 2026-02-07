@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4218" "Tuesday" "5" "May" "2015" "09:19:20" "+0100" "Pedro Ribeiro" "pedrib@gmail.com" "<CAEDdjHdR4LYTL_3BUibrYbiBfB2==aJXXLF0RKxcHQgep_SNSw@mail.gmail.com>" "111" "[oss-security] [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL" nil nil nil "5" "2015050508:19:20" "[oss-security] [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL" (number mark "        pedrib@gmail May  5  111/4218  " thread-indent "\"[oss-security] [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24368 invoked by uid 550); 5 May 2015 08:19:42 -0000
+Received: (qmail 29790 invoked by uid 550); 7 Feb 2026 03:56:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,138 +6,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24302 invoked from network); 5 May 2015 08:19:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=Ja3dirFGukghGsD0TpRznQBSrA0/IhDzHH0jPZLjhmk=;
-        b=HBSC9Gt7dUV9zednskolb3LEJIMlmI5pnlmi6CWS02DagZhycTnBWOJcvqVI/2oxOJ
-         /nnaDz5wXtviVnlkdslKczFkdU+4ECmkW1YItrUYWs/njmZ7dkM427WVU0yeKBjbpYh8
-         ReBXlW2h0eDxu9GdjK2qsD83R8EppbBmMad5jEhTv84avWNQLjVkvpz7/koKuxeIiLJR
-         tFZpR2+qVsRJlPjBZQDY5Ga0x/cJB+DQH6qc50ycBybIpV4Lf+bhMCa5zTHY9qTwND8t
-         /LcSIzZYnZHpYGJa9h+cXe2BDkSfvEdO1VG9ktE4uGYEr5IApe+4wTyTWxStflTy5d47
-         Gwug==
-MIME-Version: 1.0
-X-Received: by 10.60.223.228 with SMTP id qx4mr21478043oec.24.1430813960732;
- Tue, 05 May 2015 01:19:20 -0700 (PDT)
-Message-ID: <CAEDdjHdR4LYTL_3BUibrYbiBfB2==aJXXLF0RKxcHQgep_SNSw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: Solar Designer <solar@openwall.com>
-Date: Tue, 5 May 2015 09:19:20 +0100
-From: Pedro Ribeiro <pedrib@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [CVE-2014-8146/8147] - ICU heap and integer overflows / I-C-U-FAIL
-To: oss-security@lists.openwall.com, 
-	"fulldisclosure@seclists.org" <fulldisclosure@seclists.org>, bugtraq <bugtraq@securityfocus.com>
+x-ms-reactions: disallow
+Received: (qmail 28186 invoked from network); 7 Feb 2026 01:30:15 -0000
+From: Sam James <sam@gentoo.org>
+To: oss-security@lists.openwall.com
+Cc: Florian Weimer <fw@deneb.enyo.de>
+Organization: Gentoo
+User-Agent: mu4e 1.12.15; emacs 31.0.50
+Date: Sat, 07 Feb 2026 01:30:00 +0000
+Message-ID: <87jywpibmv.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [oss-security] On patch vs commit messages
 
-tl;dr heap and integer overflows in ICU, many packages affected,
-unknown if these can be exploited or not - everyone names vulns
-nowadays, so I name these I-C-U-FAIL.
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi!
 
-I have found two vulnerabilities in the ICU library while fuzzing
-LibreOffice, full details in the advisory below.
-Disclosure of these was done initially to LibreOffice and then to
-distro-security. I then reported it to Chromium, Android and finally
-CERT, so I ended up breaking the rules of distro-security which
-requires that any vulnerability reported to the list is made public in
-14 days. I apologise for this to oss-security, distro-security and
-Solar Designer, and will not do it again.
+I don't think I view this as a vulnerability, but I think the topic is
+rather interesting and it seems like the audience here might be
+interested in it and/or take another view on whether it is a problem.
 
-A full copy of the advisory below can be found in my repo at
-https://raw.githubusercontent.com/pedrib/PoC/master/generic/i-c-u-fail.txt.
+Michael Stapelberg posted on Mastodon [0] the following:
+> PSA: Did you know that it=E2=80=99s **unsafe** to put code diffs into you=
+r commit messages?
+>
+> Like https://github.com/i3/i3/pull/6564 for example
+>
+> Such diffs will be applied by patch(1) (also git-am(1)) as part of the co=
+de change!
+>
+> This is how a sleep(1) made it into i3 4.25-2 in Debian unstable.
 
-Regards,
-Pedro
+I see Florian has sent a patch to patch(1) for this, to implement
+--no-dedent [1].
 
+But git-am(1) does the same: there's also a discussion ongoing over at
+the git mailing list [2].
 
->> Heap overflow and integer overflow in ICU library
->> Discovered by Pedro Ribeiro (pedrib@gmail.com), Agile Information Security
-=================================================================================
-Disclosure: 04/05/2015 / Last updated: 04/05/2015
+I think at the very least, this is rather surprising. I've run into it a
+handful of times when applying a patch to gentoo.git where the commit
+message includes some diff that someone used for debugging, but in those
+cases, the diff was always to file(s) not in the repository (but a patch
+to be applied to the *package*'s source code), hence it was just an
+annoyance and resulted in the patch just not applying.
 
->> Background on the affected products:
-ICU is a mature, widely used set of C/C++ and Java libraries providing
-Unicode and Globalization support for software applications. ICU is
-widely portable and gives applications the same results on all
-platforms and between C/C++ and Java software.
+(Similarly, it does remind me a little of how patch fuzz can lead to
+genuine problems and is often dismissed as noise, but e.g. you could
+easily get a double free from it. A patch applying is not always a good thi=
+ng.)
 
+[0] https://mas.to/@zekjur/116022397626943871
+[1] https://lists.gnu.org/archive/html/bug-patch/2026-02/msg00000.html
+[2]
+https://lore.kernel.org/git/bcqvh7ahjjgzpgxwnr4kh3hfkksfruf54refyry3ha7qk7d=
+ldf@fij5calmscvm/
 
->> Summary:
-While fuzzing LibreOffice an integer overflow and a heap overflow
-where found in the ICU library. This library is used by LibreOffice
-and hundreds of other software packages.
-Proof of concept files can be downloaded from [1]. These files have
-been tested with LibreOffice 4.3.3.2 and LibreOffice 4.4.0-beta2 and
-ICU 52.
-Note that at this point in time it is unknown whether these
-vulnerabilities are exploitable.
-Thanks to CERT [2] for helping disclose these vulnerabilities.
+anyway, I hope this is of some value to readers,
+sam
 
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
->> Technical details:
-#1
-Vulnerability: Heap overflow
-CVE-2014-8146
+-----BEGIN PGP SIGNATURE-----
 
-The code to blame is the following (from ubidi.c:2148 in ICU 52):
-    dirProp=dirProps[limit-1];
-    if((dirProp==LRI || dirProp==RLI) && limit<pBiDi->length) {
-        pBiDi->isolateCount++;
-        pBiDi->isolates[pBiDi->isolateCount].stateImp=stateImp;
-        pBiDi->isolates[pBiDi->isolateCount].state=levState.state;
-        pBiDi->isolates[pBiDi->isolateCount].start1=start1;
-    }
-    else
-        processPropertySeq(pBiDi, &levState, eor, limit, limit);
-
-Under certain conditions, isolateCount is incremented too many times,
-which results in several out of bounds writes. See [1] for a more
-detailed analysis.
-
-
-#2
-Vulnerability: Integer overflow
-CVE-2014-8147
-
-The overflow is on the resolveImplicitLevels function (ubidi.c:2248):
-        pBiDi->isolates[pBiDi->isolateCount].state=levState.state;
-
-pBiDi->isolates[].state is a int16, while levState.state is a int32.
-The overflow causes an error when performing a malloc on
-pBiDi->insertPoints->points because insertPoints is adjacent in memory
-to isolates[].
-
-The Isolate struct is defined in ubidiimp.h:184
-typedef struct Isolate {
-    int32_t startON;
-    int32_t start1;
-    int16_t stateImp;
-    int16_t state;
-} Isolate;
-
-LevState is defined in ubidi.c:1748
-typedef struct {
-    const ImpTab * pImpTab;             /* level table pointer          */
-    const ImpAct * pImpAct;             /* action map array             */
-    int32_t startON;                    /* start of ON sequence         */
-    int32_t startL2EN;                  /* start of level 2 sequence    */
-    int32_t lastStrongRTL;              /* index of last found R or AL  */
-    int32_t state;                      /* current state                */
-    int32_t runStart;                   /* start position of the run    */
-    UBiDiLevel runLevel;                /* run level before implicit solving */
-} LevState;
-
-
->> Fix:
-The ICU versions that are confirmed to be affected are 52 to 54, but
-earlier versions might also be affected. Upgrade to ICU 55.1 to fix
-these vulnerabilities.
-Note that there are probably many other software packages that embed
-the ICU code and will probably also need to be updated.
-
-
->> References:
-[1] https://github.com/pedrib/PoC/raw/master/generic/i-c-u-fail.7z
-[2] https://www.kb.cert.org/vuls/id/602540
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmmGlZgbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkG9z
+AQDA/a5tixFbB+H0oHdh/xFn+nDmc9WCf+csoaYbxTAkqgEA+EP6+Nwnooe4Ah8v
+eDSE0Ry9rzZ6Xeb3kg3Trm6jGAE=
+=HWtD
+-----END PGP SIGNATURE-----
+--=-=-=--
