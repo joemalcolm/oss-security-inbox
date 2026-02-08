@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3818" "Wednesday" "12" "August" "2020" "15:20:24" "+0200" "Daniel Beck" "ml@beckweb.net" "<CC6AAEF3-55C7-4F5F-9664-624DFE79A227@beckweb.net>" "107" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" "^Date:" nil nil "8" "2020081213:20:24" "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" (number mark "U       ml@beckweb.n Aug 12  107/3818  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19809 invoked by uid 550); 12 Aug 2020 13:20:37 -0000
+Received: (qmail 20304 invoked by uid 550); 8 Feb 2026 16:45:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,125 +6,55 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19769 invoked from network); 12 Aug 2020 13:20:36 -0000
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <CC6AAEF3-55C7-4F5F-9664-624DFE79A227@beckweb.net>
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1597238436;1bd48ffd;
-X-HE-SMSGID: 1k5qg5-0003Pw-68
-Date: Wed, 12 Aug 2020 15:20:24 +0200
-From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+x-ms-reactions: disallow
+Received: (qmail 5282 invoked from network); 8 Feb 2026 16:33:21 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Lenny Primak <lprimak@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <a545932d-1a13-17b0-3484-92bb0ec526f2@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 08 Feb 2026 16:30:14 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-23901: Apache Shiro: Brute force attack possible to
+ determine valid user names 
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+Severity: low=20
 
-The following releases contain fixes for security vulnerabilities:
+Affected versions:
 
-* Jenkins 2.252
-* Jenkins LTS 2.235.4
-* Email Extension Plugin 2.74
-* Pipeline Maven Integration Plugin 3.8.3
-* Yet Another Build Visualizer Plugin 1.12
+- Apache Shiro (org.apache.shiro:shiro-core) before 2.0.7
 
-Additionally, we announce unresolved security issues in the following
-plugins:
+Description:
 
-* Flaky Test Handler Plugin
+Observable Timing Discrepancy vulnerability in Apache Shiro.
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2020-08-12/
+This issue affects Apache Shiro: from 1.*, 2.* before 2.0.7.
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Users are recommended to upgrade to version 2.0.7 or later, which fixes the=
+ issue.
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+Prior to Shiro 2.0.7, code paths for non-existent vs. existing users are di=
+fferent enough,
+that a brute-force attack may be able to tell, by timing the requests only,=
+ determine if
+the request failed because of a non-existent user vs. wrong password.
 
----
+The most likely attack vector is a local attack only.
+Shiro security model=C2=A0 https://shiro.apache.org/security-model.html#use=
+rname_enumeration =C2=A0discusses this as well.
 
-SECURITY-1955 / CVE-2020-2229
-Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
-tooltip content of help icons. Tooltip values can be contributed by
-plugins, some of which use user-specified values.
+Typically, brute force attack can be mitigated at the infrastructure level.
 
-This results in a stored cross-site scripting (XSS) vulnerability.
+Credit:
 
+4ra1n (finder)
+Y4tacker (finder)
+lprimak (remediation developer)
 
-SECURITY-1957 / CVE-2020-2230
-Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
-project naming strategy description that is displayed on item creation.
+References:
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Overall/Manage permission.
-
-
-SECURITY-1960 / CVE-2020-2231
-Jenkins 2.251 and earlier, LTS 2.235.3 and earlier does not escape the
-remote address of the host starting a build via 'Trigger builds remotely'.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Job/Configure permission or knowledge of the
-Authentication Token.
-
-
-SECURITY-1975 / CVE-2020-2232
-Email Extension Plugin stores an SMTP password in its global configuration
-file `hudson.plugins.emailext.ExtendedEmailPublisher.xml` on the Jenkins
-master as part of its configuration.
-
-While this password is stored encrypted on disk, it is transmitted and
-displayed in plain text as part of the configuration form by Email
-Extension Plugin 2.72 and 2.73. This can result in exposure of the
-password.
-
-
-SECURITY-1794 (1) / CVE-2020-2233
-Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read access to Jenkins to enumerate
-credentials IDs of credentials stored in Jenkins. Those can be used as part
-of an attack to capture the credentials using another vulnerability.
-
-
-SECURITY-1794 (2) / CVE-2020-2234 (permission check) & CVE-2020-2235 (CSRF)
-Pipeline Maven Integration Plugin 3.8.2 and earlier does not perform a
-permission check in a method implementing form validation.
-
-This allows users with Overall/Read access to Jenkins to connect to an
-attacker-specified JDBC URL using attacker-specified credentials IDs
-obtained through another method, potentially capturing credentials stored
-in Jenkins.
-
-Additionally, this form validation method does not require POST requests,
-resulting in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-1940 / CVE-2020-2236
-Yet Another Build Visualizer Plugin 1.11 and earlier does not escape
-tooltip content.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by users with Run/Update permission.
-
-
-SECURITY-1763 / CVE-2020-2237
-Flaky Test Handler Plugin 1.0.4 and earlier does not require POST requests
-for the "Deflake this build" feature, resulting in a cross-site request
-forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to rebuild a project at a previous git
-revision where the tests were failing.
-
-As of publication of this advisory, there is no fix.
-
-
+https://shiro.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-23901
 
