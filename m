@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1691" "Tuesday" "1" "December" "2015" "17:51:46" "-0800" "Seth Arnold" "seth.arnold@canonical.com" "<20151202015146.GJ24908@hunt>" "50" "[oss-security] CVE Request: dhcpcd 3.x, potentially other versions too" "^Cc:" nil nil "12" "2015120201:51:46" "[oss-security] CVE Request: dhcpcd 3.x, potentially other versions too" (number mark "        seth.arnold@ Dec  1   50/1691  " thread-indent "\"[oss-security] CVE Request: dhcpcd 3.x, potentially other versions too\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13896 invoked by uid 550); 2 Dec 2015 01:52:01 -0000
+Received: (qmail 13611 invoked by uid 550); 9 Feb 2026 09:03:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13869 invoked from network); 2 Dec 2015 01:52:00 -0000
-Message-ID: <20151202015146.GJ24908@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com, guidovranken@gmail.com
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="VBq/nvTu32OVLBUP"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: guidovranken@gmail.com
-Date: Tue, 1 Dec 2015 17:51:46 -0800
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: dhcpcd 3.x, potentially other versions too
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 13573 invoked from network); 9 Feb 2026 09:03:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1770627807;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZV2gnPiGYZQYjxOjHBUqt9djsx9E5AvPkdhd60WW9mI=;
+	b=TzA9iqlu3Hun9niIMycTorMKIb8ZpSDIx08qfcuInpw14fVD+H78OKVXhkhp5/5x0lLUqj
+	t0DSRPpszwJIQAOO4PpbkkVDsVAXbnv6AyoEbEDMYD2GKaaqK+ICKhez99y8mmWFfHvKu5
+	l/Y78iqDiZExSP6Z1yuaam27tX6CxkM=
+X-MC-Unique: E9UgkXtAOmKexr5RrpfD4g-1
+X-Mimecast-MFC-AGG-ID: E9UgkXtAOmKexr5RrpfD4g_1770627803
+From: Florian Weimer <fweimer@redhat.com>
+To: Sam James <sam@gentoo.org>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <87jywpibmv.fsf@gentoo.org> (Sam James's message of "Sat, 07 Feb
+	2026 01:30:00 +0000")
+References: <87jywpibmv.fsf@gentoo.org>
+Date: Mon, 09 Feb 2026 10:03:19 +0100
+Message-ID: <lhujywmthk8.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: w40BQAuS3S1xHsVVQN1Y2FLlVTfxBtNweg40iK9lVsY_1770627803
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] On patch vs commit messages
 
---VBq/nvTu32OVLBUP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+* Sam James:
 
-Hello MITRE, all.
+> I see Florian has sent a patch to patch(1) for this, to implement
+> --no-dedent [1].
 
-Guido Vranken reported several flaws to Ubuntu's launchpad bugtracker
-in the dhcpcd3 package that is shipped in Ubuntu, Debian, and potentially
-other distributions.
+> [1] https://lists.gnu.org/archive/html/bug-patch/2026-02/msg00000.html
 
-https://bugs.launchpad.net/ubuntu/+source/dhcpcd/+bug/1517226
+I should mention that Daniel P. Berrang=C3=A9 pointed out this patch behavi=
+or
+to me.
 
-Guido included a patch along with AFL-discovered inputs to trigger the
-issues:
+Thanks,
+Florian
 
-https://launchpadlibrarian.net/228152582/dhcp.c.patch
-
-https://bugs.launchpad.net/ubuntu/+source/dhcpcd/+bug/1517226/+attachment/4520925/+files/patch-payloads-dhcpcd.c.tar.xz
-
-Roy Marples has already addressed these issues in upstream dhcpcd
-packages; I believe these issues may require 2012-era CVE identifiers:
-
-http://roy.marples.name/projects/dhcpcd/finfo?name=dhcp.c&ci=27a92c6a825d6e74
-
-
-I believe this represents three distinct flaws: out of bounds reads beyond
-the end of the supplied packet, out of bounds write before the start of
-the 'out' parameter, and a use-after-free.
-
-I brought this issue to the distros list on Wed, 18 Nov 2015.
-
-Thanks
-
---VBq/nvTu32OVLBUP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJWXk6yAAoJEPMhclmdjS6Xg9YH/j/vthUgi0YG3oQ/oWh7O6LJ
-vKmJJeBFT6hhiSbJSD7RnHTJXPU798NHdjTRqawOH5xb90iyEseD0QareAEYXJ4B
-EJPhDIi3hyHQ6Ho03dUBNEkHaCZLSE1qSz9YYp3h4cHD8zg9nTvv1AK2x1CIS1Sl
-wWuMF9qTx6KkZtaplZVuCQOeiNYbO1pU72Oo/gvtDYJa3/rhenSQbVtq3NyhElOd
-6J1zeW38Gj49ddYfB2nz2aOTXVpFl2BqrtmOXnUJZMdnom+fC3zQDLP6lpnFE5J3
-u5BogZZwrMqDdh3De46uv9dy0e0DPpUXEBs/i5nkGpVRobgonB1vwdQuura6KBA=
-=wH9B
------END PGP SIGNATURE-----
-
---VBq/nvTu32OVLBUP--
