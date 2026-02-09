@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["330" "Thursday" "6" "April" "2017" "08:04:47" "+0200" "Florian Weimer" "fweimer@redhat.com" "<455b67a9-6d14-b374-8140-51546a53738d@redhat.com>" "14" "Re: [oss-security] libxslt math.random issue" nil nil nil "4" "2017040606:04:47" "[oss-security] libxslt math.random issue" (number mark "U       fweimer@redh Apr  6   14/330   " thread-indent "\"Re: [oss-security] libxslt math.random issue\"\n") "<20170406054400.GC32355@suse.de>" ("<20170406054400.GC32355@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28145 invoked by uid 550); 6 Apr 2017 06:05:06 -0000
+Received: (qmail 13365 invoked by uid 550); 9 Feb 2026 16:12:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28127 invoked from network); 6 Apr 2017 06:05:06 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 6B7BF61B8C
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=fweimer@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 6B7BF61B8C
+x-ms-reactions: disallow
+Received: (qmail 9750 invoked from network); 9 Feb 2026 09:48:15 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Ephraim Anierobi <ephraimanierobi@apache.org>
 To: oss-security@lists.openwall.com
-References: <20170406054400.GC32355@suse.de>
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <455b67a9-6d14-b374-8140-51546a53738d@redhat.com>
-Date: Thu, 6 Apr 2017 08:04:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+Message-ID: <60a59fa4-ed6b-7e3b-0df6-e39f953f9f0c@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 09 Feb 2026 09:48:01 +0000
 MIME-Version: 1.0
-In-Reply-To: <20170406054400.GC32355@suse.de>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.15
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Thu, 06 Apr 2017 06:04:54 +0000 (UTC)
-Subject: Re: [oss-security] libxslt math.random issue
+Subject: [oss-security] CVE-2026-22922: Apache Airflow: Airflow externalLogUrl Permission
+ Bypass 
 
-On 04/06/2017 07:44 AM, Marcus Meissner wrote:
+Severity: low=20
 
-> FWIW, why is glibc not doing srand(RANDOMVECTOR) during startup... :/
+Affected versions:
 
-The C standard does not allow it.
+- Apache Airflow (apache-airflow) 3.1.0 before 3.1.7
 
-”
-If rand is called before any calls to srand have been made, the same 
-sequence shall be generated as when srand is first called with a seed 
-value of 1.
-”
+Description:
 
-Thanks,
-Florian
+Apache Airflow versions 3.1.0 through 3.1.6 contain an authorization flaw t=
+hat can allow an authenticated user with custom permissions limited to task=
+ access to view task logs without having task log access.=20
+
+Users are recommended to upgrade to Apache Airflow 3.1.7 or later, which re=
+solves this issue.
+
+Credit:
+
+34selen (finder)
+Shubham Raj (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/60412
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-22922
+
