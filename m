@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1604" "Tuesday" "18" "January" "2022" "18:21:30" "+0000" "Will" "willsroot@protonmail.com" nil "25" "[oss-security] Linux kernel: Heap buffer overflow in fs_context.c since version 5.1" nil nil nil "1" nil nil (number mark "U       willsroot@pr Jan 18   25/1604  " thread-indent "\"[oss-security] Linux kernel: Heap buffer overflow in fs_context.c since version 5.1\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Linux kernel: Heap buffer overflow in fs_context.c since version 5.1" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12207 invoked by uid 550); 18 Jan 2022 18:35:14 -0000
+Received: (qmail 24507 invoked by uid 550); 17 Feb 2026 16:10:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5617 invoked from network); 18 Jan 2022 18:21:46 -0000
-Date: Tue, 18 Jan 2022 18:21:30 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail2; t=1642530094;
-	bh=hIdqHc6kKS405LtzckaCOB5jX+0UnjMcuInD2AWOqO4=;
-	h=Date:To:From:Cc:Reply-To:Subject:Message-ID:From:To:Cc;
-	b=cBNcw+hut/65P/E5tSfd/MKdEXMbD/UJHzxdznQToH2TbpTKaNeabPpvMSRDZwmEQ
-	 UAPnwj+6tqu07rmOwsr8HJQ3NoTb38ZfAw9Hx4JB8nNWC1I5hZpieKBqzNaNgo1woX
-	 hdDn7h7MlFyhwlycV/GWsWIh4K5gjrSmmOnN3FGu4tDLM0eWjFdi5IQbiWuFaxfDjE
-	 Yf7qqtRODI8jtckFXzNRjJY5Pp0iyzp3tzq6MOCWFKA9KgJdcl1NCIcEI78IWXGXCI
-	 w7RVIdNg41/BB2cvecLTu98jwYuTg//bBjgcYVaLO0xTdGcqDTyY0vxK9VqH2B/csB
-	 5KW6TBdeQDIig==
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-From: Will <willsroot@protonmail.com>
-Cc: "jamie@hill-daniel.co.uk" <jamie@hill-daniel.co.uk>, "g@gnk.io" <g@gnk.io>, "misetichrvoje@gmail.com" <misetichrvoje@gmail.com>, "alecthechop@gmail.com" <alecthechop@gmail.com>, "isaac.badipe@gmail.com" <isaac.badipe@gmail.com>
-Message-ID: <nZdp4o4iHdicJfJwEJ-dtJrhs5aDa-cbvA3psbItS3dkwOwxmzwXanoaslI0T5nXjCNz0Cm5csVgCJxDWPWIaKDbF6mxaYch5xJo3QT-8_0=@protonmail.com>
+x-ms-reactions: disallow
+Received: (qmail 24471 invoked from network); 17 Feb 2026 16:10:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771344629; x=1771949429; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BCyST/eObs8IoGlgFw+0oZDZC4eXHSqqnSDB2gBRiNI=;
+        b=bxIHKkOeRNo7cXel3j+pWKWhFXIWBM4xRhF7/hsZlvNxOZEhg+Tr2+2tdE8QqAxAP3
+         ngnFAGCC2SxLKoIr1hjd0mrtqeYa0NwHehvz+bcUY6fRLJUdsIqbk5LiIyZ6TuARgpe5
+         vgo4TP3M8FRT8WDTcQJ3r55LkeCL09VaRd2uyMR2nKqtJAdv0Xwj8RgBPh5x+M1MKF6c
+         MVVUhSMXV0oEhNK5z0AQ+SCeGVfiBoc8AAj27kz+AFagX9DWU5qBS0KOhAqwWRcsyyW3
+         5I6C0dFcsDhPLQEPtuuDubWrkzJVY2U3E96q4XgiJN1q6IYWXLe8eqEDdPKYuyNLx8AV
+         ixyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771344629; x=1771949429;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BCyST/eObs8IoGlgFw+0oZDZC4eXHSqqnSDB2gBRiNI=;
+        b=n9UPFuNJec3qmTPQF8VK6PvqxomL0nPSDFmvq2ZMqFwUrTW3tk6wVpfusH5DG/2A2Q
+         LARsGy/CQLXNAjVtwqDYjJn/ekIMcIDRtM8M6W4mMuB9+0BqnQxIyATCdBuJUstC/6fy
+         p/AH0F4NqaRO7h+d/GidZuMW/hhLvwAfB/5sT3ILuYSIe6ng0HLDlSvIfOmoIKiSCAo/
+         KXZaQDoidPTOz9vd6QL1mglGB4x0UkwJ62S3CJO5e/xEBkaUGc0XgZ7SBgAIsgyG48lj
+         SOF09jdPip87Y529CZQH0ADMdFb2Mx+V3kkVwHsJ4HMIXvmKYUnZrBR8QCvy0eNM6Ly6
+         ft0w==
+X-Gm-Message-State: AOJu0YyLuVAw1nhByQ/WbRas1Bc0mGojRJIZrCFsi1FMk8QDTPZg6fKV
+	rC4uQxmsyz8bwBIlX/Tw88gaeSiwdkAMmNdsI5wu2TVd5d5sUqGwMG+1cY74oHsk
+X-Gm-Gg: AZuq6aL9/6TgHjHUDHro01k5TC+JQzKexYgUmk/1S6g7b439gxc7g6LQiH4FrPp4SIs
+	XFuH5BVgawGTSiZfUB3qO6kkZgF80aHAJScSbPWiIu3Fu9ZyUKUAWLdb9fd+qji/vQNpW0qV7Ar
+	7va/gGrv2xUn6mlKfBPU52aO5PM6jIi2pxle+cHBzqGqzq9E2g3Lp7HKhf9qcRIPjhKHc9PTG8A
+	uXe3PbyteXU8KxKFfEWmg6mkhjVOh5LtNzW0S8MdMHJ0HPlOmUI3Gh+l4a+DsUULyYaMY2/YTdd
+	UZL3iR3tzpntCMHqmm5XRv+jGcnsEmFfEf3a0YVXPeNKB8Upg5c3H4s1CLGC2bPbshTaKLCP/C8
+	DfNRZNQJ1r80gjtdJst7rGM/YL5E/1XYv8BR9J99z/T3zkkHZAnRdSZZuKOdx6sK/jStmH5Sh6C
+	9DFAMHFtrHX/UKvV6p7nGSh4zw2qbu5bGUt0bBTZkai3jAPQliBhF84K5o1onXHxmCy0k=
+X-Received: by 2002:a05:600c:8b6d:b0:47e:e807:a05a with SMTP id 5b1f17b1804b1-48379c31ca1mr198429885e9.33.1771344628908;
+        Tue, 17 Feb 2026 08:10:28 -0800 (PST)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Tue, 17 Feb 2026 17:10:27 +0100
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aZSS895E3y8wLlmm@eldamar.lan>
+References: <aZSCyyJ82etgzCKm@yuggoth.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Linux kernel: Heap buffer overflow in fs_context.c since version 5.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aZSCyyJ82etgzCKm@yuggoth.org>
+Subject: Re: [oss-security] [OSSA-2026-002] OpenStack Nova: calls qemu-img
+ without format restrictions for resize (CVE-2026-24708)
 
-There is a heap overflow bug in legacy_parse_param in which the length of d=
-ata copied can be incremented beyond the width of the 1-page slab allocated=
- for it. We currently have created functional LPE exploits against Ubuntu 2=
-0.04 and container escape exploits against Google's hardened COS. The bug w=
-as introduced in 5.1-rc1 (https://github.com/torvalds/linux/commit/3e1aeb00=
-e6d132efc151dacc062b38269bc9eccc#diff-c4a9ea83de4a42a0d1bcbaf1f03ce35188f38=
-da4987e0e7a52aae7f04de14a05) and is present in all Linux releases since. As=
- of January 18th, this patch (https://git.kernel.org/pub/scm/linux/kernel/g=
-it/torvalds/linux.git/commit/?id=3D722d94847de29310e8aa03fcbdb41fc92c521756=
-) fixes this issue.
+Hi,
 
-The bug is caused by an integer underflow present in fs/fs_context.c:legacy=
-_parse_param, which results in miscalculation of a valid max length. A boun=
-ds check is present at fs_context.c:551, returning an error if (len > PAGE_=
-SIZE - 2 - size); however, if the value of size is greater than or equal to=
- 4095, the unsigned subtraction will underflow to a massive value greater t=
-han len, so the check will not trigger. After this, the attacker may freely=
- write data out-of-bounds. Changing the check to size + len + 2 > PAGE_SIZE=
- (which the patch did) would fix this.
+On Tue, Feb 17, 2026 at 03:01:31PM +0000, Jeremy Stanley wrote:
+> =========================================================================
+> OSSA-2026-002: Nova calls qemu-img without format restrictions for resize
+> =========================================================================
+> 
+> :Date: January 17, 2026
+> :CVE: CVE-2026-24709
+> 
+> Affects
+> ~~~~~~~
+> - Nova: <30.2.2, >=31.0.0 <31.2.1, >=32.0.0 <32.1.1
+> 
+> Description
+> ~~~~~~~~~~~
+> Dan Smith from Red Hat reported a vulnerability in nova. By writing a
+> malicious QCOW header to a root or ephemeral disk and then triggering a
+> resize, a user may convince Nova's flat image backend to call qemu-img
+> without a format restriction resulting in an unsafe image resize operation
+> that could destroy data on the host system. Only compute nodes using the
+> Flat image backend (usually configured with use_cow_images=False) are
+> affected.
+> 
+> Patches
+> ~~~~~~~
+> - https://review.opendev.org/977104 (2024.2/dalmatian)
+> - https://review.opendev.org/977103 (2025.1/epoxy)
+> - https://review.opendev.org/977101 (2025.2/flamingo)
+> - https://review.opendev.org/977100 (2026.1/gazpacho)
+> 
+> Credits
+> ~~~~~~~
+> - Dan Smith from Red Hat (CVE-2026-24708)
+> 
+> References
+> ~~~~~~~~~~
+> - https://launchpad.net/bugs/2137507
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-24709
 
-Exploitation relies on the CAP_SYS_ADMIN capability; however, the permissio=
-n only needs to be granted in the current namespace. An unprivileged user c=
-an use unshare(CLONE_NEWNS|CLONE_NEWUSER) to enter a namespace with the CAP=
-_SYS_ADMIN permission, and then proceed with exploitation to root the syste=
-m.
+Just a small heads-up: The title mentions CVE-2026-24708, but the mail
+body once CVE-2026-24708 and refers to CVE-2026-24709. My
+understandign is that CVE-2026-24708 should be the correct one as this
+was the CVE originally mentioned.
+
+Jeremy, can you confirm: CVE-2026-2470*8* is the one to use?
+
+Regards,
+Salvatore
