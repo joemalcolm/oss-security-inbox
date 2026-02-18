@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1282" "Thursday" "5" "November" "2015" "11:46:27" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151105164627.27EF76C03E9@smtpvmsrv1.mitre.org>" "34" "[oss-security] Re: CVE request: qt5-qtwebkit records visited URLS in private browsing" nil nil nil "11" "2015110516:46:27" "[oss-security] Re: CVE request: qt5-qtwebkit records visited URLS in private browsing" (number mark "        cve-assign@m Nov  5   34/1282  " thread-indent "\"[oss-security] Re: CVE request: qt5-qtwebkit records visited URLS in private browsing\"\n") "<563B6D08.6030008@redhat.com>" ("<563B6D08.6030008@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17773 invoked by uid 550); 5 Nov 2015 16:46:39 -0000
+Received: (qmail 18049 invoked by uid 550); 18 Feb 2026 16:39:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,47 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17755 invoked from network); 5 Nov 2015 16:46:38 -0000
-In-Reply-To: <563B6D08.6030008@redhat.com>
-Message-Id: <20151105164627.27EF76C03E9@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu,  5 Nov 2015 11:46:27 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: qt5-qtwebkit records visited URLS in private browsing
-To: amaris@redhat.com
+x-ms-reactions: disallow
+Received: (qmail 12253 invoked from network); 18 Feb 2026 10:29:11 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Andrea Cosentino <acosentino@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <93363667-8e34-0e9b-ce43-04896cf20365@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 18 Feb 2026 10:28:58 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-23552: Apache Camel: Camel-Keycloak: Cross-Realm Token Acceptance
+ Bypass in KeycloakSecurityPolicy
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important=20
 
-> qt5-qtwebkit records visited URLs to its favicon database
-> WebpageIcons.db while using private browsing mode:
-> 
-> https://codereview.qt-project.org/#/c/108936/
+Affected versions:
 
-> Source/WebCore/loader/icon/IconController.cpp
+- Apache Camel (org.apache.camel:camel-keycloak) 4.15.0 before 4.18.0
 
-Use CVE-2015-8079.
+Description:
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Cross-Realm Token Acceptance Bypass in KeycloakSecurityPolicy Apache Camel =
+Keycloak component.
 
-iQIcBAEBCAAGBQJWO4a+AAoJEL54rhJi8gl5NJQP+wdu/xobqgzGMvPyUztbSkml
-xSstFSsqpj+ZiHxiBqmoroGvKo5VwHqKC7kJz4QqhylpVYvYSjeWqMoSLICGm2eU
-VyvxqhZDKgN0V+7O33ZEm7WlHHoYGfJ+05AH9I9FKqAuOznCboYC/gou8xuCTUb+
-UMmZt8s2KD7TInnzrUPdpJpfRww9VpIHP4fBwXwLIiJe9iqk48pD1cPGYI39rvv/
-GnERq1VY56Y/B2lplZrdZJOMn5D8egXpUSlHLltqgqgUFnRi83Hlg7ME4w+YbTy7
-zo2coBLTI7LTGGAhqHIlAKQ+jQjdNmdynK5hWZmzQqo0mlYcsbCL6Le8gCyUxail
-KhESM3p2gu1UfQnYzb6AE150qf3j3WXkXL0i3FZbk8S3A7JclBuCCR4ogOpkWC4y
-JsCF4ZXfOor7IBDo9Yq45l0kV2VbJFgel6dGhKMF3VC982bmdwDA6ISuHgj9ZwWK
-v08GQKPGAsYh0GqtF+l3oy6jyInojsdR/cPcVVuxPMQHJd3vvJyGls2s5NS9RXpT
-IbVWK22k9Yg0sjrMhd21ARX39/LJMmf2MMkKXRYafxoPrHr9Gq6PXr6hFi5E6XeP
-fozWYSCFdd9MCNeKiFwlKrjtq0tmpMfKENstIcjtSWR1EieaJ1czgjrMrc7DQOdk
-EtXfr/9/uvVPSL0jH2aK
-=psBv
------END PGP SIGNATURE-----
+This issue affects Apache Camel: from 4.15.0 before 4.18.0.
+
+Users are recommended to upgrade to version 4.18.0, which fixes the issue.
+
+This issue is being tracked as CAMEL-22854=20
+
+Credit:
+
+Andrea Cosentino (finder)
+Andrea Cosentino (remediation developer)
+
+References:
+
+https://camel.apache.org/security/CVE-2026-23552.html
+https://github.com/oscerd/CVE-2026-23552
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-23552
+https://issues.apache.org/jira/browse/CAMEL-22854
+
