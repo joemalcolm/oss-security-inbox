@@ -1,4 +1,4 @@
-Received: (qmail 22044 invoked by uid 550); 25 Jan 2025 07:00:17 -0000
+Received: (qmail 32037 invoked by uid 550); 19 Feb 2026 00:10:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,78 +8,69 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 22014 invoked from network); 25 Jan 2025 07:00:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1737788407; x=1737874807; bh=YLJHHUHxQj
-	gx36lFii79la4e33/PC+BkMMCwQwphlMM=; b=jQZyDtCC0an+nEUjK/uONDj1vn
-	iaaCE9FhpZm3gHC3FJ2o7PNpMCVLariVPidM9kmrt38pXsAvmrbZVIxVC4XhECsJ
-	EVFYfy6PsCwsyG2T75zhxnOSCU9sqp8gSn0krG3PuIvDXgm+1EguAF8KMMNvZPOd
-	lk5nEqZnuGUY21V22ri0ldE9DSme3HLT/6k3HiPyjSh/kROEm3uGKQ/vJ9ZiO95Z
-	sSNk77cilRxqAD18z9Q8Pkvtdl8QYeY5HQUj0z8yfkeYhc1RZGxamrLqVeJENwXD
-	ItblCM+WskcfEqlfJ9qoPvnjL8YjgNApMO2aKulXnXnYmTW6AiE6h+mmCOSA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737788407; x=1737874807; bh=YLJHHUHxQjgx36lFii79la4e33/PC+BkMMC
-	wQwphlMM=; b=UoIN2t5WTVqtUBOlV+eOGsfvITkAuFoo+HSRK61FRUvDKjQIpwx
-	518Vmemk6D9mM3AlTwqc05hMdnPN6PeVAhgVr6Z9/9R1zkeTg/Nsx/lTXEbIqJu2
-	K4UOVh47gMbI/b2QR2KaEWUbQFi3q+RLbf8ocuU2HwMs5eUOAgSOWWmyaTsw3Kxt
-	wnIskbuMrxrnmVg8Ei78681zQhypsOxN7F4a/kX2/HLwl7nIy29kuOKprM5sKhJL
-	S1DEsVEBCFHai7pvdwFwY9P12Naz0RcFnfdx2RfBrDczV45Xl4zaR4PDqUbSQLKo
-	ZlTJ8jyTXi3A4HEyygjb8hCrUdPHM3yO1NQ==
-X-ME-Sender: <xms:9ouUZ-8cr11-0ttEPMWo42Blfe4U-0zbUeY_1ZCjJOThsEszgJePcA>
-    <xme:9ouUZ-sn2G2nG675XAYQObAk4Y3yUpy4E_aVsJuKuh-PC5aBx_G3HPQN5YNgtar0h
-    7bAAfbjnY-jeQ>
-X-ME-Received: <xmr:9ouUZ0B56obK6IBAz4adDr9gQ_W9KrF-xEEW_VzYrGqJv8as1xCH6OVywcneTNpnYaJ_Yp-lr10Tl7FUcad9m9nK3tzvRBTipFVlAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgieejfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghg
-    sehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpeefgeduheegvefhgfeftefgle
-    fgvdeuhffhffefteevudelleejteeuhfefudffjeenucffohhmrghinhepnhhouggvjhhs
-    rdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epghhrvghgsehkrhhorghhrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvg
-    hnfigrlhhlrdgtohhm
-X-ME-Proxy: <xmx:94uUZ2eMqKZOWPHQwbcuOSy6ghYUWTckal-FjT76n84SC-MlaIErLw>
-    <xmx:94uUZzMWIGH9Q9nGYRVvn-KPjaV8RHaDuwCYsnjk51vMkvrrHzxXpg>
-    <xmx:94uUZwnihWADIq2ViuxKGFiOHxnor1_SSN6rL7Us7sBHNERkgTeNNA>
-    <xmx:94uUZ1vl_gJtxSsIBpnqFK5YUAyzSvJHp1G2qleSxcUqpGhk5CitLg>
-    <xmx:94uUZ8aWFhLzRJJhhMMNaIbZ9USUMpFRoUJmtvs9fi8NGB2K645JJC4j>
-Feedback-ID: i787e41f1:Fastmail
-Date: Sat, 25 Jan 2025 08:00:04 +0100
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2025012512-likely-strainer-4e6d@gregkh>
-References: <Z4__rJ3_SmmtEIsG@netmeister.org>
- <0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
+Received: (qmail 17880 invoked from network); 19 Feb 2026 00:06:10 -0000
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=geeklan.co.uk; h=
+	message-id:date:mime-version:subject:to:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=geeklan;
+	 bh=IpNPsbpZykdcD2s+nF5h3FJA4lw=; b=qbIGtksc+LNWlZqjiskOwMhKFgBT
+	EOWhZb5/JOcBQeDqHCZN3gRHq63jDUtCSTFYqT1FP+pZb6PNkiDYGMQh60bC8+a6
+	cHZi5BUCPcioRG85FJtqqjLIRKrRx1bhwhtbZzc0y1mIbaazYp6V4B8PigdiilVK
+	BJ0R3FeLuYTzRuPgKp0sL5A6Wjt5rj6o33Ahs4dRdwUBHChGZOvDL9CS1vY4HICg
+	Eer7IuWec3TcHiYdSTIW6yUVxi5AxlNkFanfZAN3BgnzOFVTx0ZhZPl5rLysXCuE
+	Akss9G+82tpECjFcpbLxsRrjtc+N00JtTJTSAKFrZMcOpWHBsG2oebHVLA==
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=geeklan.co.uk; h=message-id
+	:date:mime-version:subject:to:references:from:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=geeklan; b=coK
+	p+FqjnSKTOiHQuRW9aXtAdRZgoAYf8iLKyGpsZKURKX2D0tFT7oAg2b3c+lJIk7H
+	1mFLu3NIOpY0wvlNZZgVHTicdC7NVhtfu/iDE2Rtfh1Nl65RiCqwmMmIyAvYGf0t
+	BEzdKZ787eCMflwv77rF1XJjJgMBg26Czh03jjIGYBsI7kGDufIXda/Iazt0HKNf
+	p5AREMUSUM4EzAWiwTn425EST2JXvln58kwGowqsNpd61wchpngCtf5teQCbzpan
+	MBKi8CX7JCZuzv3ByaReaJSViMvRo9avj9srz7TuhbASuC2UVX0u5a503is0FXCi
+	9HxqhKi8rU5o4HgqE4A==
+Message-ID: <91f5f502-2d9d-40cd-8518-1f6526030870@geeklan.co.uk>
+Date: Thu, 19 Feb 2026 00:05:56 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0a34f769-2a8d-4726-b9d7-6238ec3846e7@oracle.com>
-Subject: Re: [oss-security] Node.js EOL CVEs: CVE-2025-23087, CVE-2025-23088,
- CVE-2025-23089
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <87seazqslh.fsf@gentoo.org> <87a4x7awxe.fsf@josefsson.org>
+ <515f855d-cb54-4eb4-912f-a88454e6a26b@geeklan.co.uk>
+ <75f0e607-6842-4f5e-b523-64f5cbcdc883@geeklan.co.uk>
+Content-Language: en-GB
+From: Sevan Janiyan <venture37@geeklan.co.uk>
+In-Reply-To: <75f0e607-6842-4f5e-b523-64f5cbcdc883@geeklan.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: zlib security audit by 7asecurity
 
-On Fri, Jan 24, 2025 at 10:55:39AM -0800, Alan Coopersmith wrote:
-> Their reasons for this are detailed on the blog post at:
-> https://nodejs.org/en/blog/vulnerability/upcoming-cve-for-eol-versions
-> including getting CVE scanners to report EOL versions as vulnerable even
-> if no existing CVE specifically says that they are.
-> 
-> While I can understand their reasoning, I can just imagine the noise if
-> every project started issuing CVE's for every version that reaches EOL.
+On 18/02/2026 12:15, Sevan Janiyan wrote:
+> Dug in a bit further and realised the logic in gzguts.h makes the wrong 
+> assumption about "if C89/90, assume no C99 snprintf() or vsnprintf()" as 
+> these functions have been around for a very long time[1] though 
+> formalised in C99. All versions of OS X include it and you are likely 
+> going to be building with a compiler that only supports C89/90 on the 
+> earlier releases or defaults to it.
 
-I think that's a great idea for projects to start doing (especially ones
-that are a CNA which I recommend all open source projects become.)
+I did some more digging and found that on OS X 10.6 (from 2009) and 
+prior vsnprintf() is not used because of the discrepancy in gzguts.h, 
+though configure is happy.
+On OS X 10.7 (from 2011) onwards you're good if you stick to the default 
+compiler which is clang.
+If you switch to the fallback secondary compiler (llvm-gcc 4.2) then 
+you'll have the same issue as OS X 10.6 and prior, when building on OS X 
+10.7 & 10.8 (from 2012).
+Issue goes away in 10.9 (from 2013) since it only includes clang.
+The patch I submitted[1] in the pull request fixes all versions which 
+had issues (10.2 up to 10.8) that I tested, when running the test suite.
 
-And as for "noise", I think that will just be a "drop in the bucket" of
-the overall CVE assignment numbers these days as just how many different
-software versions are going EOL each month?
+While I've investigated the issue on Mac OS X, I suspect the issue 
+applies to legacy versions of derivatives from the same lineage[2] in 
+general which use legacy GCC, if you're still building modern zlib on it.
 
-thanks,
+Not sure if that's what was meant by "real-world environment". :)
 
-greg k-h
+Sincerely,
+
+
+Sevan
+[1] https://github.com/madler/zlib/pull/1167
+[2] https://www.tuhs.org/cgi-bin/utree.pl?file=Net2/usr/src/lib/libc/stdio
