@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5968" "Monday" "31" "August" "2015" "08:20:11" "-0300" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>" "125" "[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar" nil nil nil "8" "2015083111:20:11" "[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar" (number mark "        gustavo.grie Aug 31  125/5968  " thread-indent "\"[oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7179 invoked by uid 550); 31 Aug 2015 11:20:30 -0000
+Received: (qmail 21902 invoked by uid 550); 19 Feb 2026 01:15:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,150 +6,170 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6099 invoked from network); 31 Aug 2015 11:20:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=zZoKjLVmuLPolXXx9vvAbqsoCbbMHmquErYgTJmY8XE=;
-        b=UthMnJJGGlz+K2tRqSdGzDqfWVGjAAfF19Id9GrDfl+tejalW/AK1aAswnn2ynn/Ma
-         w3L44/acO3q/dCpARBFgZ8xD0FuUZqvQvO8XyccV6s864sh0R6UPo1Gdc25PPU9GoO/N
-         wkCW4kC9eLFcW0XULkpyOFQgy49Jn7lTidxIO+7P1KOC03uA2H1prOSWQc3iMmH7t6II
-         IXWO9c6PDjqTdBgcFrCJysWGxMhkzc1baKVuy1Frj8Fxndnh1qGlnqPEaEPQ6uNEaKLm
-         gE0zYwGiKgztWl4jo+azGBgsEsTwGA3VQTMq7lR9A0V2mvOGutqpZRC1YS/WxBrsTqxY
-         r2zw==
-MIME-Version: 1.0
-X-Received: by 10.152.44.130 with SMTP id e2mr10233776lam.14.1441020011556;
- Mon, 31 Aug 2015 04:20:11 -0700 (PDT)
-Message-ID: <CACn5sdQBUYfLa8JPTFXyQpooCRdWMQ2HRegp0B57wE5r3i5xKQ@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=089e0160bc46e7fdc3051e999d67
-Date: Mon, 31 Aug 2015 08:20:11 -0300
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Out of bounds read using malformed tar archive in GNU Tar and BSD Tar
+x-ms-reactions: disallow
+Received: (qmail 20076 invoked from network); 19 Feb 2026 01:14:49 -0000
+Date: Thu, 19 Feb 2026 02:14:38 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Raul Vega <raul.vega.dv@gmail.com>
+Message-ID: <20260219011438.GA17271@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE risks
 
---089e0160bc46e7fdc3051e999d67
-Content-Type: text/plain; charset=UTF-8
+Hi,
 
-Hello,
+Raul Vega, CC'ed here, sent the below AI-generated message to
+linux-distros on Feb 5, without disclosing the use of AI, yet correctly
+set the public disclosure date to "2026-02-18 (14-day embargo per
+linux-distros policy)" (or maybe the AI assistant did).  Unfortunately,
+there was no further correspondence (in particular, I got no reply to my
+reply, also included below), and Raul failed to bring this to
+oss-security on time on his own, so I am now doing it for him.  And yes,
+I consider this borderline abuse of the list, which is why my tone.
 
-We found some out-of-bands reads in tar clients: GNU Tar and  BSD Tar
-(libarchive 3.1.2). These vulnerabilities can be triggered performing
-a list operation of the compressed files inside an archive. Find
-attached a single test case that exposes both vulnerabilities. They
-can be easily detected using valgrind:
+My summary of Raul AI's message is that Kerberos default_ccache_name
+FILE is relatively unsafe compared to certain other possible kinds of
+credentials cache supported via this setting, especially with respect to
+local file inclusion vulnerabilities in other software such as web apps
+running under the same user account.  The message suggests to use
+KEYRING or KCM instead of FILE.
 
+https://web.mit.edu/kerberos/krb5-1.22/doc/basic/ccache_def.html says
+FILE is the default.  So it may be a case of unsafe default.  Can the
+default reasonably be changed?  "KCM caches work by contacting a daemon
+process", so will require this daemon to be running, and "KEYRING is
+Linux-specific, and uses the kernel keyring support".  So maybe Linux
+packages can use KEYRING by default?
 
-$ valgrind bsdtar -tvf oob-access.tar
+In Heimdal, this setting is called default_cc_name, apparently with
+default_ccache_name added as an alias for MIT compatibility a few years
+ago.  I couldn't quickly find what the default for it is.
 
-bsdtar: Failed to set default locale
-==8307== Invalid read of size 4
-==8307==    at 0x807AC4D: archive_read_format_tar_read_header
-(archive_read_support_format_tar.c:506)
-==8307==    by 0x805779D: _archive_read_next_header2 (archive_read.c:636)
-==8307==    by 0x80578D1: _archive_read_next_header (archive_read.c:676)
-==8307==    by 0x804C783: read_archive (read.c:235)
-==8307==    by 0x804D1C5: tar_mode_t (read.c:86)
-==8307==    by 0x804B591: main (bsdtar.c:798)
-==8307==  Address 0x422ca94 is 4 bytes before a block of size 32 alloc'd
-==8307==    at 0x402A17C: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
-==8307==    by 0x402C3AF: realloc (in
-/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
-==8307==    by 0x808006E: archive_string_ensure (archive_string.c:307)
-==8307==    by 0x8082F76: archive_wstring_append_from_mbs (archive_string.c:259)
-==8307==    by 0x8083876: archive_mstring_get_wcs (archive_string.c:3955)
-==8307==    by 0x8050802: archive_entry_pathname_w (archive_entry.c:540)
-==8307==    by 0x807A17B: tar_read_header
-(archive_read_support_format_tar.c:1273)
-==8307==    by 0x807AB87: archive_read_format_tar_read_header
-(archive_read_support_format_tar.c:473)
-==8307==    by 0x805779D: _archive_read_next_header2 (archive_read.c:636)
-==8307==    by 0x80578D1: _archive_read_next_header (archive_read.c:676)
-==8307==    by 0x804C783: read_archive (read.c:235)
-==8307==    by 0x804D1C5: tar_mode_t (read.c:86)
-==8307==
----------x  0 1      1           1 Jan  1  1970
+BTW, if this actually required pre-publication discussion, I'd have
+insisted on bringing it from linux-distros to the full distros list,
+since Kerberos is not Linux-specific (and predates Linux).
 
-$ valgrind tar -tvf oob-access.tar
+I'd appreciate follow-ups by those familiar with Kerberos (I'm not)
+and/or its packaging.
 
-tar: Substituting `.' for empty member name
-==8598== Invalid read of size 1
-==8598==    at 0x80614B9: simple_print_header (list.c:1142)
-==8598==    by 0x80620CC: list_archive (list.c:287)
-==8598==    by 0x8061F6F: read_and (list.c:199)
-==8598==    by 0x804BD81: main (tar.c:2710)
-==8598==  Address 0x4271857 is 1 bytes before a block of size 1 alloc'd
-==8598==    at 0x402A17C: malloc (in
-/usr/lib/valgrind/vgpreload_memcheck-x86-linux.so)
-==8598==    by 0x808164F: xmalloc (xmalloc.c:43)
-==8598==    by 0x808185F: xmemdup (xmalloc.c:115)
-==8598==    by 0x808189E: xstrdup (xmalloc.c:123)
-==8598==    by 0x8062274: assign_string (misc.c:43)
-==8598==    by 0x8060AEC: read_header (list.c:530)
-==8598==    by 0x8061BF5: read_and (list.c:154)
-==8598==    by 0x804BD81: main (tar.c:2710)
-==8598==
----------x 1/1               1 1970-01-01 00:00
+Alexander
 
+On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
+> [vs] ADV-2026-005: Kerberos Credential Cache Lifecycle Failure and Bearer Token Theft
+> Vulnerability Type: Semantic Design Flaw / Credential Dumping
+> 
+> Affected Components: MIT/Heimdal Kerberos, Linux Core Dump Handlers, /tmp Defaults
+> 
+> Researcher: Raul Vega del Valle
+> 
+> CVSS 3.1 Base: 7.8 (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
+> 
+> CVSS 3.1 Chain: 10.0 (Critical) (When chained with RCE/LFI)
+> 
+> Public Disclosure Date: 2026-02-18 (14-day embargo per linux-distros policy)
+> 
+> Executive Summary: The Semantic Gap
+> The core of this vulnerability is a semantic failure in object lifecycle management. While the Kerberos protocol is syntactically secure, current Linux implementations fail to semantically bound the identity token (bearer ticket) to the process lifetime.
+> 
+> By weaponizing the "Crash and Trash" scenario, an attacker can transform a transient authentication secret into a persistent forensic artifact. This allows an unprivileged local attacker???or a remote attacker via an RCE/LFI chain???to bypass Kerberos protocol guarantees and achieve complete network-wide identity theft.
+> 
+> Technical Analysis
+> 1. File-System Persistence Vector
+> Most Linux distributions default to the FILE: ccache type, storing tickets in /tmp/krb5cc_*.
+> 
+> The Design Flaw: These tickets are bearer tokens. Possession of the file is equivalent to possession of the identity.
+> 
+> Exploitation: An LFI (Local File Inclusion) vulnerability in a web application can be used to "pull the trash" from /tmp, granting the attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
+> 
+> 2. Memory Lifecycle Failure (Crash and Trash)
+> When an application handling Kerberos authentication crashes, the system generates a core dump (if enabled).
+> 
+> The Semantic Gap: The credential remains in the heap or stack during the crash. Because many distributions do not restrict access to core dumps or leave them in unencrypted storage, these secrets become "trash" that is readily harvestable via standard string extraction.
+> 
+> Impact: This bridges the gap from a simple application crash (Availability) to a full authentication bypass (Confidentiality/Integrity).
+> 
+> The Grand Chain: The Case for CVSS 10.0
+> While the individual components may be rated "High," the Semantic Addressing of this flaw creates a critical chain:
+> 
+> Entry (RCE/LFI): Attacker gains limited execution or read access via a library flaw (e.g., Axios SSRF or Undici CRLF).
+> 
+> Pivot (ADV-2026-005): Attacker provokes a crash or reads /tmp to dump the Kerberos ccache.
+> 
+> Escalation: The stolen ticket is replayed from the attacker's machine to access internal high-value targets (LDAP, S3 via IMDSv2, etc.).
+> 
+> Result: Total identity takeover across the infrastructure without triggering traditional "credential theft" alerts.
+> 
+> Actionable Remediations for Distributions
+> Distributions are requested to evaluate the following systemic changes to their default configurations:
+> 
+> Restrict core_pattern: Ensure core dumps are directed to a secure, root-only directory by default.
+> 
+> Default to KEYRING:: Shift the default default_ccache_name in /etc/krb5.conf from FILE to KEYRING or KCM (Kerberos Credential Manager) to keep tickets in unswappable, process-bound kernel memory.
+> 
+> Enforce fs.suid_dumpable: Harden kernel parameters to prevent unprivileged dumping of sensitive processes.
+> 
+> Researcher: Raul Vega del Valle
+> 
+> PGP Fingerprint: [Your Fingerprint]
 
-Fortunately the last revisions of GNU Tar and libarchive fixed these
-issues. Do we have CVE for these issues?
-
-Regards,
-Gustavo.
-
---089e0160bc46e7fdc3051e999d67
-Content-Type: application/x-tar; name="oob-access.tar"
-Content-Disposition: attachment; filename="oob-access.tar"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_idzu3zes0
-
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAADAwMDAwMDEAMDAwMDAwMQAwMDAwMDAxADAwMDAwMDAwMDAx
-ADAwMDAwMDAwMDAxADAwNDUwNQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-
---089e0160bc46e7fdc3051e999d67--
+On Fri, Feb 06, 2026 at 10:06:18AM +0100, Solar Designer wrote:
+> Hello Raul,
+> 
+> When you bring this to oss-security, please start by disclosing your use
+> of AI to generate your message.  Yes, there's a reason why I am so
+> confident, and I find it borderline abuse when you send AI-generated
+> messages without such disclosure.  This is not the norm, at least not yet.
+> 
+> On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
+> > Public Disclosure Date: 2026-02-18 (14-day embargo per linux-distros policy)
+> 
+> This is up to you, but personally and as linux-distros list admin I do
+> not see the value in having this information under embargo.  You could
+> as well post this to oss-security right away.  Just let us know of your
+> decision on this.
+> 
+> What you describe reads like publicly known behavior of the software in
+> question.  The novelty, if any, may be in combining those pieces into an
+> attack, yet this sounds like public discussion material to me.
+> 
+> > Technical Analysis
+> > 1. File-System Persistence Vector
+> > Most Linux distributions default to the FILE: ccache type, storing tickets in /tmp/krb5cc_*.
+> 
+> What are the owners and permissions of those files?
+> 
+> > Exploitation: An LFI (Local File Inclusion) vulnerability in a web application can be used to "pull the trash" from /tmp, granting the attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
+> 
+> Would a web application have permissions to read the /tmp/krb5cc_* files?
+> 
+> > Because many distributions do not restrict access to core dumps
+> 
+> Which ones, for example?  And what do you mean by "do not restrict"?
+> 
+> > Actionable Remediations for Distributions
+> > Distributions are requested to evaluate the following systemic changes to their default configurations:
+> > 
+> > Restrict core_pattern: Ensure core dumps are directed to a secure, root-only directory by default.
+> 
+> This is typical already.  However, you can commonly access your own
+> coredumps.  Same with your own /tmp files.
+> 
+> So are you talking about potential restrictions within the same user
+> account, so that sensitive information processed and available to the
+> user previously does not remain available to the user for too long?
+> 
+> How exactly does fs.suid_dumpable come into play, then?  In other words,
+> do your suggested attacks involve processes that are "dumpable" or/and
+> those that are not?  Which ones?  Please be very specific.
+> 
+> I suggest that you clarify the above things in the public revision of
+> your advisory.  As it is, it reads like a mix of sensible content with
+> everything else an LLM "thought" is relevant, plus the sensationalism.
+> 
+> Thanks,
+> 
+> Alexander
