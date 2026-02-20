@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2447" "Thursday" "4" "June" "2015" "00:50:41" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>" "72" "[oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" nil nil nil "6" "2015060405:50:41" "[oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow" (number mark "        fernando@nul Jun  4   72/2447  " thread-indent "\"[oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17732 invoked by uid 550); 4 Jun 2015 05:50:54 -0000
+Received: (qmail 20113 invoked by uid 550); 20 Feb 2026 03:26:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,101 +6,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17714 invoked from network); 4 Jun 2015 05:50:53 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=dThoiKfeaQeEgNvgUq0Es+y+rARyIF420xJF4j5xqhM=;
-        b=He3NwdkU52tqJ52D7zCMHYCFFZsw/G+lcJsp7k/2hRPZWrcToFhVT9e96FrEemozD2
-         tYtswvWGPiJ0Oj4kil70sRIXOx75iSP3rA1IhZ0jiJYGLBWz1C0mTO+CuHmuuqq8XvDH
-         6b9CFkbsKLJFZ+ZzzIRYbrV85Dmt/Jo8jt+zGxTy18HgvQSXj92dsEMW6y3Wk21XXixQ
-         3wkzC1YLweNPoI2mLhUsPfpplQQmF+9WGIchA9nmZ9iURM6kUbCWITiEppzwRvgsFZJY
-         8PBKYXIF9e8KM0cJr+/02b0lxEgMtoWHcTZDq9tP3s8Qg1XAfGkLZyV8VtyU34KkQKUN
-         Netg==
-X-Gm-Message-State: ALoCoQkRQvYdRxAMa4tR8/4KVNfUtZaV5ixj27OgcG+xA62gRC01HTKcDhFuqrU1IhTFDaiG4dMW
-MIME-Version: 1.0
-X-Received: by 10.43.76.195 with SMTP id zf3mr2449512icb.62.1433397041805;
- Wed, 03 Jun 2015 22:50:41 -0700 (PDT)
-X-Originating-IP: [181.50.56.230]
-Message-ID: <CAEr-gPENyN7yex+Ra7UWMaLTAzVKA+9+YNX=H7jcY4G6CsfPLQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 4 Jun 2015 00:50:41 -0500
-From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request - tidy 0.99 / tidy5 heap-buffer-overflow
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 20085 invoked from network); 20 Feb 2026 03:26:55 -0000
+From: Russ Allbery <eagle@eyrie.org>
+To: Jacob Bachmeyer <jcb62281@gmail.com>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <dc5a9c05-ab0c-4922-9f8e-d0ce2e6a53b1@gmail.com> (Jacob
+	Bachmeyer's message of "Thu, 19 Feb 2026 20:57:48 -0600")
+Organization: The Eyrie
+References: <20260219011438.GA17271@openwall.com>
+	<c9af5be5-fc3f-4ef9-bcb4-140a1d1fe1c2@gmail.com>
+	<87wm08xyrc.fsf@hope.eyrie.org>
+	<dc5a9c05-ab0c-4922-9f8e-d0ce2e6a53b1@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 19 Feb 2026 19:26:45 -0800
+Message-ID: <87ikbsf62y.fsf@hope.eyrie.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE
+ risks
 
-Hello ,
+Jacob Bachmeyer <jcb62281@gmail.com> writes:
+> On 2/19/26 14:29, Russ Allbery wrote:
 
-I'd like to request a CVE ID for the following issue:
+>> My understanding is that the context of this report is services running
+>> with Kerberos credentials. [...]
 
-tidy [1]  is affected by a write out of bounds when processing
-malformed html files.
-This issue could be abused on server side applications that use
-php-tidy extension with user input.
+> That is an interesting way of looking at it.=C2=A0 The report seemed to m=
+e to
+> be describing hijacking user accounts after cracking a service.
 
-The issue was confirmed, analysed and fixed by the tidy5 maintainer. [2]
+That's also possible for services that accept usernames and passwords and
+validate them with Kerberos (common for POP and IMAP servers), although of
+course best practices in those cases is to immediately discard the
+resulting ticket after authentication.
 
-POC
+It is true that some methods of doing that will result in a ticket cache
+stored in /tmp. For example, if the service uses PAM to validate the
+user's password, some PAM Kerberos modules will write a ticket cache to
+/tmp as part of that process. (There is a long and unfortunately
+complicated story here why it is sometimes not possible to defer creating
+the ticket cache to the PAM session stack, which generally doesn't need to
+be called by servers although may be depending on how the service works.)
+Such servers should take some care to clean up those temporary ticket
+caches and not leave them lying around.
 
-$ printf "\x3c\x61\x20\x62\x3d\x3c\x61\x20\x3c\x3f\x78\x6d
-\x0d\x3f\x3e\x62\x3d\x22\x63\x22\x47\x20\x68\x72\x65
-\x66\x3d\x22\x12\x22\xbb" > err.html
+Of course, one should also ideally stop using authentication methods that
+send passwords over the network to a server, and lack of attention to
+cleaning up ticket caches is not a Kerberos problem. It may at most be a
+problem with a specific PAM implementation or service implementation.
 
-An asan-enabled build of tidy outputs:
+>> I think the concern here is that the web application has its own
+>> tickets, which necessarily must be accessible to the web application.
+>> Therefore, if there is a vulnerability in the web application, that can
+>> be used to exfiltrate the Kerberos tickets for the web application.
 
-$ tidy-asan err.html
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-=3D=3D2196=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address
-0xb53006b1 at pc 0xb71df8fe bp 0xbfac9928 sp 0xbfac9918
-WRITE of size 1 at 0xb53006b1 thread T0
-    #0 0xb71df8fd in prvTidytmbstrndup (/usr/lib/libtidy-0.99.so.0+0x15c8fd)
-    #1 0xb7141060 in prvTidyGetToken (/usr/lib/libtidy-0.99.so.0+0xbe060)
-    #2 0xb711856e in prvTidyParseDocument (/usr/lib/libtidy-0.99.so.0+0x955=
-6e)
-    #3 0xb71f2a58 in prvTidyDocParseStream (/usr/lib/libtidy-0.99.so.0+0x16=
-fa58)
-    #4 0xb71f34a5 in tidyParseFile (/usr/lib/libtidy-0.99.so.0+0x1704a5)
-    #5 0x804bfa9 (/usr/bin/tidy+0x804bfa9)
-    #6 0xb6edf72d in __libc_start_main (/lib/i386-linux-gnu/libc.so.6+0x187=
-2d)
-    #7 0x804fa4e (/usr/bin/tidy+0x804fa4e)
+> This does not necessarily give the attacker a ticket with a "~10-hour
+> TTL" (as claimed in the report)
 
-0xb53006b1 is located 0 bytes to the right of 1-byte region
-[0xb53006b0,0xb53006b1)
-allocated by thread T0 here:
-    #0 0xb72af18c in __interceptor_malloc
-(/usr/lib/i386-linux-gnu/libasan.so.1+0x5118c)
-    #1 0xb71c5963 (/usr/lib/libtidy-0.99.so.0+0x142963)
-...
+Not necessarily, but it probably does. That's a very typical ticket
+lifetime (I think it's the default in both MIT and Heimdal). Unless an
+administrator took special precautions to limit an application's
+credentials to a shorter lifetime, I would be very unsurprised by that
+result.
 
-Valgrind with the standard build:
+> and it also blows up "The Grand Chain" because a web application's
+> Kerberos credentials should not be "the keys to the kingdom"
 
-$ valgrind tidy err.html
-...
-=3D=3D30499=3D=3D Invalid write of size 1
-=3D=3D30499=3D=3D    at 0x408805C: prvTidytmbstrndup (tmbstr.c:39)
-=3D=3D30499=3D=3D    by 0x40738A8: ParseValue (lexer.c:3486)
-...
+This is certainly true.
 
-=3D=3D30499=3D=3D Invalid write of size 1
-=3D=3D30499=3D=3D    at 0x4088065: prvTidytmbstrndup (tmbstr.c:41)
-=3D=3D30499=3D=3D    by 0x40738A8: ParseValue (lexer.c:3486)
-=3D=3D30499=3D=3D    by 0x4075F39: ParseAttrs (lexer.c:3603)
-=3D=3D30499=3D=3D    by 0x4075F39: GetTokenFromStream (lexer.c:2416)
+> and the KDC admins should notice if the "web server" suddenly starts
+> asking for interactive login sessions, for example.
 
-...
-file: tmbstr.c
+You are probably overestimating the sophistication of incident detection
+and response capabilities at a lot of sites running Kerberos. :)
 
-39        while ( len-- > 0 &&  (*cp++ =3D *str++) )
-40          /**/;
-41        *cp =3D 0;
+> However, a service's authentication tickets should be bound to the known
+> server addresses,
 
-Credit: Fernando Mu=C3=B1oz
+Binding Kerberos tickets to IP addresses was a mostly failed experiment
+that, at least in my experience, most sites have abandoned. Trying to make
+this work is a HUGE operational headache. In a modern networking
+environment, there are innumerable reasons why the apparent IP address of
+a service from the perspective of some other service doesn't match the
+service's own conception of its IP address.
 
-[1] tidy.sourceforge.net
-[2] https://github.com/htacg/tidy-html5/issues/217
+I know there are people who have gotten this to work, but I don't think
+it's common. It's spectacularly annoying to try to keep configured
+correctly, particularly since in a lot of compromise scenarios the
+attacker has RCE anyway and can act directly from the server, so the
+amount of security benefit you get from the work is debatable.
+
+> If we are talking about exploitable web services, the larger risk is the
+> attacker finding some way to get the web service to simply *use* its
+> credentials to obtain information for the attacker.
+
+Yes.
+
+>> This varies a lot, and in my experience a more typical setup is for
+>> both TGTs and service tickets to have the same lifetimes. Regardless,
+>> though, for tickets for services that are managed externally, one can
+>> use a tool like kstart to regularly refresh the ticket cache, in which
+>> case you can set a short lifetime on *both*.
+
+> I stand corrected ... unless we are talking about two different things.=
+=C2=A0
+> I was using "service ticket" to mean the token a user obtains from the
+> KDC and presents to a service to obtain access. Are you using "service
+> ticket" to mean a service's TGT or similar?
+
+I think we're talking about the same thing. "Presents to a service to
+obtain access" is a simplification -- only a portion of the service ticket
+is sent to the remote server and there's another bit of cryptography that
+ensures that an attacker who intercepts that communication can't use that
+part of the service ticket in isolation -- but that's basically the idea.
+
+There is some variation here, depending on whether the site is doing
+tricky things with TGTs, but my impression was that people generally just
+let all the lifetimes default to the same since the tickets are generally
+all stored in the same place. If you manage to get someone's service
+tickets, you generally get their TGT at the same time, so doing work to
+make the service tickets less powerful doesn't have a great effort to
+reward ratio.
+
+>> No, this is not correct: If you have possession of the service ticket,
+>> you can authenticate as the user to that specific service. You do not
+>> need the TGT. Otherwise, limited ticket forwarding would not work.
+
+> Then I misremembered that detail.=C2=A0 So the cache stores the decrypted
+> session key needed to use the ticket in all cases?
+
+Yes, so far as I know. Maybe there's some new ticket cache that does some
+sort of encryption, but I'm not sure what the practical benefit would be
+given that the TGT is generally right there in the same file.
+
+--=20
+Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
