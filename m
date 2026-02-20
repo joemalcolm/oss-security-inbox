@@ -1,4 +1,4 @@
-Received: (qmail 3944 invoked by uid 550); 26 Sep 2024 23:50:32 -0000
+Received: (qmail 4095 invoked by uid 550); 20 Feb 2026 17:55:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,75 +8,60 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 1653 invoked from network); 26 Sep 2024 23:49:57 -0000
-Date: Fri, 27 Sep 2024 01:49:52 +0200
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 31913 invoked from network); 20 Feb 2026 13:17:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=uraeus.com; s=2017Jan;
+	t=1771593445; bh=WezkskvSIHbEHzbj9r7qfvOk8v4Je8Uc8kJnjTzURBk=;
+	h=From:Subject:Date:Cc:To;
+	b=dIuZ9o5vx9pRyOIbltEDbDHtGiW6iFSFh4NVV2SHvGTm2lNQq61dZ6VhFNqo5hhM3
+	 RnKk4VFgGIpRs1hdHFKszOYxhOH2R3gU57U+phvfOKVk4G7isgW5QZIrXinXaWK9z3
+	 o6DWbYwKhwyRUkxmk1VJJ2omXvdPYiU3hNCuvvuQ=
+From: Joe Malcolm <jmalcolm@uraeus.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_BE68E9BB-D92E-4198-B077-D9094D43E0AD"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
+Message-Id: <43B86407-F2E4-4081-BB14-1B2D26248767@uraeus.com>
+Date: Fri, 20 Feb 2026 08:17:15 -0500
+Cc: Joe Malcolm <jmalcolm@uraeus.com>
 To: oss-security@lists.openwall.com
-Cc: Simone Margaritelli <evilsocket@gmail.com>,
-	Zdenek Dohnal <zdohnal@redhat.com>
-Message-ID: <20240926234952.GA12532@openwall.com>
-References: <20240926221125.GA10895@openwall.com> <5bf73ba2-d643-40a0-9397-65a2e56dd436@oracle.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5bf73ba2-d643-40a0-9397-65a2e56dd436@oracle.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CUPS printing system vulnerabilities
+X-Mailer: Apple Mail (2.3826.700.81.1.4)
+Subject: [oss-security] OpenSC, ghostscript, cgif issues from the recent Anthropic disclosure 
 
-On Thu, Sep 26, 2024 at 03:43:23PM -0700, Alan Coopersmith wrote:
-> On 9/26/24 15:11, Solar Designer wrote:
-> >A lot of drama around the disclosure of those issues was going on for
-> >maybe a month now, with public tweets about the disclosure process and
-> >the issues affecting many distros but excluding detail on the issues
-> >(not even CUPS was specifically mentioned until very recently).  Per
-> >those tweets, the issues were communicated to some distro vendors via
-> >CERT/CC VINCE and a vendor planned to bring them to the distros list on
-> >September 30 with public disclosure on October 6.  Unfortunately, the
-> >information leaked prematurely and thus Simone decided on full public
-> >disclosure today at 20:00 UTC pre-announcing it only 2 hours in advance.
-> 
-> Once it was learned that the information was leaked, the vendors suggested
-> ending the embargo today, and both evilsocket & OpenPrinting agreed to it,
-> with the coordinated end at 20:00 UTC.
+--Apple-Mail=_BE68E9BB-D92E-4198-B077-D9094D43E0AD
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-Thanks Alan!  On Twitter, Alan further clarified that "once it was clear
-the info was out there, the distro makers wanted to end the embargo so
-they could publish advisories telling users to disable cups-browsed
-instead of waiting for patches to be available - those with VINCE access
-had hours of prior notice, not just two."
+Many will have seen the recent post from Anthropic (1) and associated repor=
+ting that says they found 500+ vulnerabilities and lists 3 of them.  These =
+three issues don=E2=80=99t appear to have CVEs and two don=E2=80=99t appear=
+ in releases. I don=E2=80=99t know if that indicates the maintainers don't =
+agree with the significance of these findings, but I wonder if the other 49=
+8+ vulnerabilities also lack CVEs.
 
-I apologize to Simone for the unnecessary and wrong guess on whose
-decision it was.  I didn't have that information and shouldn't have
-included a guess.
+1. For OpenSC, the commit appears to be:
 
-> OpenPrinting has started publishing fixes as well now:
-> 
-> CVE-2024-47175: https://github.com/OpenPrinting/libppd/commit/d681747ebf
-> CVE-2024-47076: 
-> https://github.com/OpenPrinting/libcupsfilters/commit/95576ec3
-> 
-> and a temporary workaround for CVE-2024-47176 in:
-> https://github.com/OpenPrinting/cups-browsed/commit/1debe6b140c
+https://github.com/OpenSC/OpenSC/commit/9ab1daf21029dd18f8828d684ee6151d923=
+8edab
 
-Thanks.  I guess also this from a few days ago? -
+There are no disclosed security issues more recent than 2024 at https://git=
+hub.com/OpenSC/OpenSC/security and the last release was
+OpenSC 0.26.1.
 
-https://github.com/OpenPrinting/cups/commit/8361420cbbfa2e729545c4c537c49fc6322c9631
 
-"Escape localized strings in PPDs", which is similar to the last hunk in
-"Prevent PPD generation based on invalid IPP response" CVE-2024-47175
-libppd commit referenced by Alan above.
+2. For cgif, the fix is=20
+https://github.com/dloebl/cgif/commit/07052febd3a252d30e6f0de67b2ea4f6b9aac=
+ddd and it appears in v0.5.1.
 
-Possibly unrelated to today's disclosure but also security-relevant is:
 
-https://github.com/OpenPrinting/cups/commit/e3467edf3be2d20a022495d9726a741e36768caf
+4. For ghostscript, the commit appears to be=20
+https://github.com/ArtifexSoftware/ghostpdl/commit/4e392a82d1b1780cab858047=
+28317f36a9c4f7f7 which references a nonpublic bug 709080 <https://bugs.ghos=
+tscript.com/show_bug.cgi?id=3D709080>. The last release is 10.06.0 (2025-09=
+-09) so there is no release with this fix.
 
-"Update httpConnectURI to do X.509 pinning, and use it when doing the IPP"
 
-Zdenek, I hope you will soon clarify which commits fix what issues, to
-assist with distro backports.  I understand you're still busy getting
-these in now and it's probably night time for you, so follow up when you
-have a moment later, please.
+Anthropic=E2=80=99s post: https://red.anthropic.com/2026/zero-days/=20
 
-Thanks,
+Joe=
 
-Alexander
+--Apple-Mail=_BE68E9BB-D92E-4198-B077-D9094D43E0AD--
