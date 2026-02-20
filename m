@@ -1,4 +1,4 @@
-Received: (qmail 7645 invoked by uid 550); 5 Feb 2024 17:25:13 -0000
+Received: (qmail 29914 invoked by uid 550); 20 Feb 2026 05:35:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,124 +7,100 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3503 invoked from network); 5 Feb 2024 17:21:31 -0000
-Date: Mon, 5 Feb 2024 18:23:45 +0100
-From: Solar Designer <solar@openwall.com>
-To: Qualys Security Advisory <qsa@qualys.com>
-Cc: oss-security@lists.openwall.com,
-	Adhemerval Zanella <adhemerval.zanella@linaro.org>
-Message-ID: <20240205172345.GA27288@openwall.com>
-References: <20240130183915.GB16546@localhost.localdomain> <20240204163520.GA20987@openwall.com> <20240205155619.GA28587@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240205155619.GA28587@localhost.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Out-of-bounds read & write in the glibc's qsort()
+x-ms-reactions: disallow
+Received: (qmail 29883 invoked from network); 20 Feb 2026 05:35:51 -0000
+From: Russ Allbery <eagle@eyrie.org>
+To: Jacob Bachmeyer <jcb62281@gmail.com>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <4460495c-2f91-40f9-a27c-5b09eeed920a@gmail.com> (Jacob
+	Bachmeyer's message of "Thu, 19 Feb 2026 22:43:48 -0600")
+Organization: The Eyrie
+References: <20260219011438.GA17271@openwall.com>
+	<c9af5be5-fc3f-4ef9-bcb4-140a1d1fe1c2@gmail.com>
+	<87wm08xyrc.fsf@hope.eyrie.org>
+	<dc5a9c05-ab0c-4922-9f8e-d0ce2e6a53b1@gmail.com>
+	<87ikbsf62y.fsf@hope.eyrie.org>
+	<4460495c-2f91-40f9-a27c-5b09eeed920a@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 19 Feb 2026 21:35:38 -0800
+Message-ID: <87ecmgf045.fsf@hope.eyrie.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE
+ risks
 
-On Mon, Feb 05, 2024 at 03:56:41PM +0000, Qualys Security Advisory wrote:
-> On Sun, Feb 04, 2024 at 05:35:20PM +0100, Solar Designer wrote:
-> > It's so invasive I cannot easily tell whether qsort() remained robust
-> > after it or not.  There's no longer a "tmp_ptr != base_ptr &&" check.
-> > So, lacking known-working tests in glibc tree, we don't know about glibc
-> > 2.39's status with respect to this issue.
-> 
-> The "tmp_ptr != base_ptr" bounds check was originally added to the
-> _quicksort() function, but is not needed anymore in glibc 2.39 because
-> the old fallback to quick sort (the _quicksort() function) has been
-> completely removed and replaced by a fallback to heap sort.
-> 
-> Note, just in case: we have not reviewed the implementation of this new
-> fallback to heap sort.
+Jacob Bachmeyer <jcb62281@gmail.com> writes:
+> On 2/19/26 21:26, Russ Allbery wrote:
 
-Oh, I should have spent a bit more time looking at the latest glibc
-before posting.  I just did.  So it indeed did not reintroduce this same
-issue.  That's great.
+>> That's also possible for services that accept usernames and passwords
+>> and validate them with Kerberos (common for POP and IMAP servers),
+>> although of course best practices in those cases is to immediately
+>> discard the resulting ticket after authentication.
 
-Regarding the tests, I now see that one of them explicitly calls
-heapsort_r(), so it tests that fallback code in this way, however the
-rest simply call qsort() or qsort_r(), so they only test non-fallback
-code.  It'd improve code coverage of these tests if they first do what
-they do now, and then repeat the same after setting RLIMIT_AS to 0.
+> I would that think in such a scenario, the client should be presenting a
+> Kerberos service ticket to the POP/IMAP server.
 
-On Mon, Feb 05, 2024 at 05:02:52PM +0800, Alexander E. Patrakov wrote:
-> On Mon, Feb 5, 2024 at 4:45???PM Alexander E. Patrakov <patrakov@gmail.com> wrote:
-> > On Mon, Feb 5, 2024 at 4:40???PM Alexander E. Patrakov <patrakov@gmail.com> wrote:
-> > > On Mon, Feb 5, 2024 at 12:36???AM Solar Designer <solar@openwall.com> wrote:
-> > > > I don't have a glibc 2.39 build handy.  Perhaps someone on a distro that
-> > > > has already updated can run the attached test program and let us know?
-> > >
-> > > Here you go: no output on Arch Linux.
-> > >
-> > > [aep@aep-haswell tmp]$ gcc ./glibc-qualys-rocky-qsort-test.c
-> > > [aep@aep-haswell tmp]$ ./a.out
-> > > [aep@aep-haswell tmp]$ /lib64/libc.so.6
-> > > GNU C Library (GNU libc) stable release version 2.39.
+That requires Kerberos support in the client, which is notoriously not
+always available (mobile clients, for instance, often do not have Kerberos
+clients). It's been a problem in the mail world for a long time that we
+have a ton of better authentication protocols than PLAIN but a lot of mail
+clients still like using PLAIN, to such an extent that we have things like
+device-specific passwords to allow use of password authentication with
+less risk to the user's real credentials.
 
-> > Sorry, I should have followed the instructions.
-> >
-> > [aep@aep-haswell tmp]$ while true; do n=$((RANDOM*64+RANDOM+1));
-> > prlimit --as=$((n*4/2*3)) ./a.out $n; done
-> >
-> > This results in a mix of these outputs:
-> >
-> > PASSED
-> > ./a.out: error while loading shared libraries: libc.so.6: failed to
-> > map segment from shared object
-> > Segmentation fault
+> If PAM is creating the ticket cache when the session is opened, then PAM
+> should also be destroying the ticket cache when the session is closed.
 
-> Upon investigation, I have to add: the segmentation faults come from
-> code that runs before main(), so they do not indicate a problem in
-> qsort().
+Yeah, definitely, it's a problem of not calling the right PAM functions to
+end the authentication (whether that involves a PAM session or not), which
+is a service bug, not a Kerberos bug.
 
-Sorry, I should have included usage instructions.  It's like this:
+> Across the open Internet is one thing, but I would expect (perhaps
+> naively) that communications between web servers and the KDC would be on
+> a secure internal network.
 
-gcc glibc-qualys-rocky-qsort-test.c -o glibc-qualys-rocky-qsort-test -O2
-while true; do n=$((RANDOM*64+RANDOM+1)); echo $n; ./glibc-qualys-rocky-qsort-test $n; done
+The problem isn't so much the open Internet as it is load balancers,
+Kubernetes, VMs on bridge networks, and all the other network complexities
+that might be sitting between the server's understanding of its IP and the
+KDC, which is often segregated into an entirely separate secure network
+from general Internet-facing services and thus on the other side of some
+variety of NAT or the like. At least back in the day, the general feeling
+in the community I was part of was that address-locked tickets were
+operationally fragile and the security benefit wasn't really worth it.
+It's possible that changed, or that analysis is wrong.
 
-In other words, almost same as Qualys', but with prlimit omitted because
-the program itself now takes care of it.  With our current patched glibc
-in Rocky Linux SIG/Security, the output is like this:
+> It stops the use of a stolen ticket in the report's scenario of a web
+> service leaking files from /tmp.=C2=A0 :-)
 
-396121
-PASSED
-77207
-PASSED
-683895
-PASSED
-1402983
-PASSED
+I'm not sure I would go to the effort of making address-locked tickets
+work just in case I configured a web server to serve /tmp for some reason,
+which comes back to your point about the merits of the original report (or
+lack thereof).
 
-and so on.  No crashes anymore.  Before the one-line patch, it would hit
-the test program's abort() within seconds, like Qualys had observed:
+> Aha!=C2=A0 I did not know if the Kerberos cache stored tickets in separate
+> files or all together.
 
-153916
-PASSED
-990497
-PASSED
-1501673
-PASSED
-1344354
-PASSED
-176197
-PASSED
-326004
-Aborted (core dumped)
-1892398
-Aborted (core dumped)
-834837
-PASSED
-2066676
-PASSED
-589237
-Aborted (core dumped)
+> If they are all stored in one file, along with the session keys needed
+> to use them, then yes, distinctions between service tickets and TGTs are
+> useless:=C2=A0 an attacker who steals a usable service ticket will also g=
+et a
+> usable TGT, outside of very specialized scenarios where the service
+> ticket endures after the TGT expires.
 
-As to the occasional segfaults when you do use prlimit, I also saw them
-on Rocky Linux 9.  They appeared to come from the kernel right after
-execve() fails and kind of returns control back to prlimit.  I think
-they're a symptom of execve() concluding it ran out of memory too late
-for it to allow the original program to continue running.  As I recall
-from patching this code in the kernel many years ago, such conditions
-did and probably still do exist.  That's kind of fine.
+I should add the substantial caveat that my experience is almost entirely
+with UNIX Kerberos. Windows uses its own way of managing ticket caches and
+it may well be mediated by some sort of process that, for instance,
+obtains service tickets and provides them without providing access to the
+TGT. I know nothing about how all that works except I know Microsoft did
+things to try to make it more secure.
 
-Alexander
+But the report seemed to be primarily about UNIX Kerberos, and in that
+context generally the TGT and the service tickets are all in the same
+place (whether that be a file or keyring).
+
+I don't know how KCM works. There's a daemon involved, so maybe it does
+something more sophisticated.
+
+--=20
+Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
