@@ -1,4 +1,4 @@
-Received: (qmail 30440 invoked by uid 550); 4 Sep 2023 20:14:39 -0000
+Received: (qmail 28101 invoked by uid 550); 20 Feb 2026 03:34:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,238 +7,210 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30419 invoked from network); 4 Sep 2023 20:14:39 -0000
-Date: Mon, 4 Sep 2023 22:14:26 +0200
-From: Willy Tarreau <w@1wt.eu>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com, Vegard Nossum <vegard.nossum@oracle.com>,
-        Jiri Kosina <jkosina@suse.cz>, Donald Buczek <buczek@molgen.mpg.de>,
-        Greg KH <gregkh@linuxfoundation.org>
-Message-ID: <20230904201426.GA3577@1wt.eu>
-References: <20230825222359.GA10424@openwall.com>
- <ZOuqk2+3EMBV3pPy@1wt.eu>
- <20230828180518.GA29293@openwall.com>
- <ZOzy5H/9go9KPfm3@1wt.eu>
- <20230830152633.GA6199@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 15434 invoked from network); 20 Feb 2026 02:58:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771556276; x=1772161076; darn=lists.openwall.com;
+        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ToiFXvb63hwCJ299p8w32Ms34PKaqbWvLSW5B2VPAdo=;
+        b=GwMnkudjY3ritZruwJp0tQ/cm6s/tR1wJUBG2JV5t1Q+DsAlT0ytwvPVxjo8xEOdMW
+         JRpxAQW6FqfEX7a4aT6w3QcGXIuT5ROplyHni+810s0qCKkJhDj8Bf9tQaNTZQxeA72y
+         xdF0TE5TUIlZPcnT+z1b0sGArYqq2oqMbYquaEhLGbz8XD+mEA3v4gB3tTwrrWiJmHFA
+         DBxq4Shn5ZoIVJRyndwLxRgefLR40KdTiceawbdppBToo2APuVTOS3YMOejE3wG4DerM
+         jH0J/xNkqqFdOebJppZRmw2AVK+3omibnAjXCiFrUsgxDwqHpClx4EQZgykqOff3GrDT
+         kzUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771556276; x=1772161076;
+        h=in-reply-to:from:content-language:references:cc:to:subject:reply-to
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ToiFXvb63hwCJ299p8w32Ms34PKaqbWvLSW5B2VPAdo=;
+        b=tR2uUc29mR7rACMI6/o7t5daCPf7ufHQm5rne+JtTrp3a7/m8n92T5wVK1XuoIUoDv
+         7KQwiiwOohxe9Jlh8djfcDnB2jKK3nQGGw/Fal24pi7I8nVkHMscxTEgNFUXyndm/iwI
+         67aDnV0CkKj6eH64AoRCa3mguQ82Q3/AFZ13SByE4DpG5FYybz4Y6dRSDWexb4rfxAbr
+         /QB9AVfRUxJjL9Rspe8Ea+kRlOn39XLbG3WF3ah4Fp63wnC7TsN9iQQuXOM/v8gQInLc
+         iBcwwrpnnrvfCl0xxaFUPjlu0pZbnfynrXALsPtsTydpxtyp5vlSEDLtUdor0NGl9qtU
+         UXWg==
+X-Gm-Message-State: AOJu0YytzT9XNxfHnWYG3avVAMp2LZCZ/7QCAi3YYy3zWKKAwzTqoLKS
+	9TMYXD/5/zEozxCvkwghwfvp5IDTBJ3fGt2PBPOStUm4avRp9buVh0+5
+X-Gm-Gg: AZuq6aJwdoXGTkPZO7H6c48ePlLJQM93LruXjgxdIEWZCe9eEgSLnWNbhUvKwyvhhOk
+	mmbyEzuoOpaFTuHzj9a73X/Zi06fdgNm+yT0+77/LY9SVzreDyCjkl+SFQDviy4u7pw72nvqMpP
+	Os9ApQPRqKiCAU6g7u12P7QD2ly80EdR+G7YriMEguqfT2RtfZcCMq0aXCh6ZR5vKmjlooVzqga
+	r4GFHECYRhw9dWOO5WjcUv27R+lTCAxTQH/1GIhQQayQWc67B6a3uldzGtnbruqG/bjxsg+8nFb
+	wR1IX6BdcQNIZgc3f4clmNce72jflW0L8+1rfdtGJtcLpMcaxOT/JayUtyuaXXzDoe3be7XDRsG
+	WKINejOdpYNWZJMMyr8eehH3FiOIxXpSr9HVFa/DBPT9jdrcAYPgHi8sqXiT2PjD3WWhV17jXZv
+	rz9gDGKvnO+iEc6BroOg==
+X-Received: by 2002:a05:6808:22a3:b0:450:c321:d50d with SMTP id 5614622812f47-463b403deb5mr9636380b6e.40.1771556276414;
+        Thu, 19 Feb 2026 18:57:56 -0800 (PST)
+Content-Type: multipart/alternative;
+ boundary="------------xA76kuZp9mBl3K64sTXifgak"
+Message-ID: <dc5a9c05-ab0c-4922-9f8e-d0ce2e6a53b1@gmail.com>
+Date: Thu, 19 Feb 2026 20:57:48 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230830152633.GA6199@openwall.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Subject: Re: [oss-security] linux-distros list policy and Linux kernel, again
+User-Agent: Mozilla Thunderbird
+To: Russ Allbery <eagle@eyrie.org>
+Cc: oss-security@lists.openwall.com
+References: <20260219011438.GA17271@openwall.com>
+ <c9af5be5-fc3f-4ef9-bcb4-140a1d1fe1c2@gmail.com>
+ <87wm08xyrc.fsf@hope.eyrie.org>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <87wm08xyrc.fsf@hope.eyrie.org>
+Subject: Re: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE
+ risks
 
-Hi Alexander,
+--------------xA76kuZp9mBl3K64sTXifgak
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 30, 2023 at 05:26:33PM +0200, Solar Designer wrote:
-> > I couldn't blame a bug reporter for
-> > wanting to have their week-ends and nights again and think everything's
-> > behind them and in someone else's hands now.
-> 
-> Right.  This is in part a matter of resources - are we providing only
-> the lists infrastructure and list members' best-effort volunteer
-> contributions to issue handling, or are we providing any guaranteed
-> service?  For the latter, perhaps list admin(s) (me) should always take
-> over whenever the member distros don't handle that sort of
-> contributing-back tasks on time.  Then we'll be able to provide a
-> guarantee that all issues will be handled without the reporter having to
-> stay on top of them.
-> 
-> A drawback is that this may encourage lower-quality or lower-relevance
-> reports, including of issues that are not worth handling in private.  So
-> it could end up wasting those extra resources allocated to this effort.
+On 2/19/26 14:29, Russ Allbery wrote:
+> It's been some years since I've worked on Kerberos extensively, but I
+> still maintain some Kerberos-related software and may be able to provide
+> some context here. I have not been closely tracking developments in
+> keyring formats and do not know how usable KEYRING caches are these days,
+> so I may get some of these details wrong.
 
-Absolutely. But I'm sensing something in the way you're presenting these
-possibilities, it is that there is a perceived (by some?) guarantee of
-service that implies that someone (possibly you) has to do the job for
-others to consume the result of this work. If that's the case it can
-mean the relation is significantly skewed and the person(s) willing to
-make the efforts are indeed likely to get overwhelmed. At least on s@k.o
-we're sufficient to share the effort depending on skills and availability,
-and we can rely on maintainers' support.
+Excellent, someone with more and/or more-recent knowledge on the topic!  :-)
 
-> > On Mon, Aug 28, 2023 at 08:05:18PM +0200, Solar Designer wrote:
-> > > That said, can you share more detail on the specific issue you referred
-> > > to above and its handling/disclosure timeline?  Was it ever brought to
-> > > oss-security, and if not then why not?
-> > 
-> > I just checked and I'm not seeing any traces of it there. I don't even
-> > know who normally notifies about such issues there.
-> 
-> If you worked on the issue, then perhaps you were the most appropriate
-> person to notify oss-security about it?
+> Jacob Bachmeyer<jcb62281@gmail.com> writes:
+>>> On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
+>>>> The core of this vulnerability is a semantic failure in object
+>>>> lifecycle management. While the Kerberos protocol is syntactically
+>>>> secure, current Linux implementations fail to semantically bound the
+>>>> identity token (bearer ticket) to the process lifetime.
+>> Which process lifetime are we talking about here?
+> My understanding is that the context of this report is services running
+> with Kerberos credentials. [...]
 
-Honestly, no, for multiple reasons: The first one being that I'm terrible
-at dealing with processes and this becomes a big effort. The second one is
-that it's already not easy to have participants available with enough time
-to work on reports, to if we add to them as a punishment to have to do that
-extra work, that's not going to be motivating to work on reports. The third
-one is more related to some of my personal convictions: I'm personally not
-convinced of the interest of encouraging distros to focus on a tiny subset
-of all the fixes, because for one that passes via s@k.o, maybe 50-100 are
-regularly merged and might be of similar or even higher importance. And it
-is my belief that all fixes are needed, not just the ones that are reported
-via discrete channels because the reporter is uncertain about the impacts
-a public report could have. I know that some do not share this opinion (and
-I don't want to debate this here). Finally my feeling is that if the person
-that sent a first report was interested in reporting their findings, it's
-probably up to the same person to advertise it everywhere they want (after
-understanding the consequences, of course).
+That is an interesting way of looking at it.  The report seemed to me to 
+be describing hijacking user accounts after cracking a service.  I agree 
+that this is a greater risk for services, but also that those risks are 
+well-known, and I add that a service should have much narrower access 
+than a user.
 
-> Note: this is unrelated to disclosure timelines, policy, etc. - I am
-> talking about public notification for the already-public issue.
+> [...]
+>
+> In other words, this is a valid concern, but it's kind of a minor one.
+> Having ticket caches lying around that live beyond the lifetime of the
+> service creates some additional security risk, but in most cases it's less
+> than the *necessary* security risk of having a keytab on the system that
+> can be used to create new ticket caches at any time. [...]
 
-Yes that's my understanding as well ;-)
+Exactly.  The risks here are already well-known; the report is bogus.
 
-> > > I am guessing this is related to your work on random32 in 2020:
-> > > 
-> > > https://lore.kernel.org/netdev/20200808152628.GA27941@SDF.ORG/
-(...)
-> After I posted the above, Brad Spengler pointed me at another related
-> issue that you worked on in 2022:
-> 
-> https://lore.kernel.org/all/20220502084614.24123-1-w@1wt.eu/
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=ef562489818723ea0a66c57bfdfbf151ad568c42
+> [...]
+>
+>> Arguable, but that is why you are supposed to invoke kdestroy in your
+>> logout script.
+> A more typical design at institutions that use Kerberos heavily is to
+> acquire Kerberos tickets on login via PAM (usually with sssd these days)
+> and destroy them on logout via PAM as well so that users do not have to
+> handle this in their shell files.
 
-Ah, Brad knows well I'm not committing much and that whenever my name is
-CCed on a patch, it smells as much as those that are not sent for review
-first ;-)
+... which only eliminates a potential source of user error, thus closing 
+that loophole and further managing the risks that the report blows out 
+of proportion.
 
-Regarding the patch above, I had memories of having worked at least twice
-on some related stuff and got confused by the first link you sent because
-I mixed the two. Now I understand. That's old and confused in my mind.
+>>>> By weaponizing the "Crash and Trash" scenario, an attacker can
+>>>> transform a transient authentication secret into a persistent forensic
+>>>> artifact. This allows an unprivileged local attacker???or a remote
+>>>> attacker via an RCE/LFI chain???to bypass Kerberos protocol guarantees
+>>>> and achieve complete network-wide identity theft.
+> Those are certainly all words. Some of them are even security-related.
 
-> In fact, your description above sounds like it could be (in part?) for
-> that newer issue.
+Exactly what LLMs are good at.  :-)
 
-Maybe, I don't remember well :-/  For me when a fix is merged I can flush
-my mind on an issue (this makes it very hard for me to write changelogs
-after series of bugfixes in other projects BTW).
+> [...]
+>>>> Exploitation: An LFI (Local File Inclusion) vulnerability in a web
+>>>> application can be used to "pull the trash" from /tmp, granting the
+>>>> attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
+>> Only if DAC is not being used properly.  If you are running a web
+>> application as root, you have bigger problems than stolen Kerberos
+>> tickets.
+> I think the concern here is that the web application has its own tickets,
+> which necessarily must be accessible to the web application. Therefore, if
+> there is a vulnerability in the web application, that can be used to
+> exfiltrate the Kerberos tickets for the web application.
 
-> Anyway, perhaps both of these should have been brought to oss-security
-> at some point, but they were not?
+This does not necessarily give the attacker a ticket with a "~10-hour 
+TTL" (as claimed in the report) and it also blows up "The Grand Chain" 
+because a web application's Kerberos credentials should not be "the keys 
+to the kingdom" and the KDC admins should notice if the "web server" 
+suddenly starts asking for interactive login sessions, for example.
 
-But one could actually ask why just these ones and none of the numerous
-other ones merged in the same stable kernels.
+Mallory could plausibly get to the resources (such as a database) 
+backing a web service, however.  This essentially could allow a local 
+file exfiltration to escalate into something close to an equivalent of 
+arbitrary code execution.
 
-> As to handling them in private on
-> linux-distros, I see little value in that, so they're not a reason for
-> us to have allowed longer embargoes.
+However, a service's authentication tickets should be bound to the known 
+server addresses, unlike user TGTs that can plausibly follow a user 
+around the network.  If this is done, the attack fails completely:  
+Mallory gets the ticket, but it is useless to him without further access.
 
-Good point indeed.
+> Put that way, this is trivially and obviously correct. Maybe storing the
+> tickets in a file in the file system makes it moderately easier to
+> exfiltrate them given some sort of limited security flaw and keyring
+> ticket caches might be less vulnerable, but this is highly speculative and
+> depends on the exact nature of the vulnerability.
 
-> > > Alternatively, we may need to relax the policy.
-> > 
-> > I personally think it does have a flaw that is emphasized by the linux
-> > kernel handling but can actually affect other projects. Some sole
-> > developers might just not have enough resources to do everything in
-> > 14 days, from diagnosing the problem at night or only during a few work
-> > hours, setting up a lab on the week-end to test a fix, to contacting
-> > whoever needs to be contacted and making releases. Some even make the
-> > mistake of developing new stuff in maintenance branches and feel like
-> > they need to finish before releasing (already seen)! I remember having
-> > had to search in my boxes of hardware to re-assemble a working PC with
-> > a floppy drive just to be able to validate a fix in the floppy driver.
-> > You can be sure I only did that the week-end after the report, but
-> > that's possibly 5 days lost already!
-> 
-> This is partially addressed in our current instructions, which say:
-> 
-> "Please notify upstream projects/developers of the affected software,
-> other affected distro vendors, and/or affected Open Source projects
-> before notifying one of these mailing lists in order to ensure that
-> these other parties are OK with the maximum embargo period that would
-> apply (and if not, then you may have to delay your notification to the
-> mailing list)"
-> 
-> Incidentally, this is consistent with the Linux kernel documentation
-> edit that prompted this thread.
+If we are talking about exploitable web services, the larger risk is the 
+attacker finding some way to get the web service to simply *use* its 
+credentials to obtain information for the attacker. This is completely 
+independent of Kerberos or any other authentication scheme.
 
-Looks good.
+> [...]
+>>>> 2. Memory Lifecycle Failure (Crash and Trash)
+>>>> When an application handling Kerberos authentication crashes, the
+>>>> system generates a core dump (if enabled).
+>>>>
+>>>> The Semantic Gap: The credential remains in the heap or stack during
+>>>> the crash. Because many distributions do not restrict access to core
+>>>> dumps or leave them in unencrypted storage, these secrets become
+>>>> "trash" that is readily harvestable via standard string extraction.
+>> If, and only if, the application crashed during the authentication, or did
+>> not take proper steps to discard the credential after using it.  Again,
+>> this is (probably) an application bug, although I am not familiar enough
+>> with the Kerberos libraries to say what extent of care is taken to
+>> extinguish no-longer-needed in-memory copies of tickets.
+> Yeah, this is just every piece of software in existence that manages its
+> own secure credentials. The same can be said of software using X.509
+> credentials as well. If you want to use a differnet security system that
+> stores all keys in a TPM, that may be the right choice in some security
+> models, but that just means Kerberos is not a good fit for you.
 
-> > I understand the rationale behind your policy. I, too, was on vendor-sec
-> > where we saw some vendors say "just FYI we're trying to fix this, we'll
-> > keep you updated" and one year later, no news. But all those doing a
-> > serious work (and there are, and the linux security team is doing that
-> > serious work) can be heavily penalized by that policy when they're not
-> > quick enough to obtain a fix. The linux people are known for being vocal,
-> > so you hear about them. But other developers might just feel completely
-> > crushed by this and it could really be harmful to them, especially when
-> > they're new to this and haven't been dealing with security reports for
-> > 25 years like many of us.
-> > 
-> > That's why I tend to think that what would better address what you want
-> > to prevent, is ensuring the discussion doesn't come to a stall. This
-> > could remove a lot of frustration. And if something has to be published
-> > before the end because the developers or vendor stay silent, it's much
-> > more powerful to say "they didn't dare responding for 14 days" than
-> > "they couldn't figure a working fix for this complex issue in 14 days".
-> 
-> I had similar thoughts too, but OTOH allowing arbitrarily long even if
-> non-stalled discussions means not only longer embargoes and higher risk
-> and impact of leaks, but also a greater number of simultaneous
-> discussions on the list.  When issues take a long time to handle and
-> many are tracked at once, this increases/wastes the effort per issue.
+Which is another strike against the original report, which claimed a 
+weakness in Kerberos ticket caches specifically.
 
-That's true. Actually I'm really wondering what the value of l-d is now,
-if long embargoes are too much of a problem, short ones are too short for
-developers to produce a fix, and bug reporters are progressively encouraged
-to first contact projects then directly oss-sec, I feel like the value of
-l-d becomes pretty low at this point in the process, but I could be
-mistaken, of course. Maybe that's also why we're discussing here after all,
-to find how to make it more useful to all parties.
+>> Note that service tickets usually have much shorter lifetimes than TGTs,
+>> since they only need to be valid long enough to "run" from the KDC to the
+>> service, presenting the ticket at the latter.
+> This varies a lot, and in my experience a more typical setup is for both
+> TGTs and service tickets to have the same lifetimes. Regardless, though,
+> for tickets for services that are managed externally, one can use a tool
+> like kstart to regularly refresh the ticket cache, in which case you can
+> set a short lifetime on *both*.
 
-> > > So the real problem
-> > > may be that (linux-)distros is misunderstood as permanently-private
-> > > rather than temporarily-private.  Unfortunately, I don't know how to
-> > > address that reliably.  Even with automated delayed publication, some
-> > > people would initially have the wrong idea... maybe unless they have to
-> > > pass through a web page with the public archives before finding the
-> > > posting address?
-> > 
-> > Just a stupid idea, it could possibly be addressed by a confirmation
-> > e-mail on an opening thread. Something like "we need you to confirm that
-> > what you posted will be made public by YY/MM/DD, if that's really what
-> > you want, please visit this link within 24h otherwise all your materials
-> > will be destroyed".
-> 
-> We already use a somewhat obscure posting address and a required Subject
-> prefix, although the latter is currently not enforced strictly (is
-> mostly an anti-spam measure, so is bypassed by some other keywords
-> contained in the headers and/or message).  I think part of the problem
-> was that the kernel documentation gave these away directly, without
-> people having to see our policy and instructions first.
+I stand corrected ... unless we are talking about two different things.  
+I was using "service ticket" to mean the token a user obtains from the 
+KDC and presents to a service to obtain access. Are you using "service 
+ticket" to mean a service's TGT or similar?
 
-I hadn't thought about this but it would be possible that some are lost
-due to this. I've often wondered how people manage never to forget to
-prepend "VS" there ;-)
+Or am I misremembering this part of Kerberos?
 
-> > I'm not sure, that's just an idea. But yes, it needs
-> > to be understood as public so that confidential stuff is not shared
-> > there, and it must be possible to ask for some materials to be erased
-> > early if the reporter wasn't aware of this or made a mistake (e.g. send
-> > a pcap just before the security team says "never ever share a pcap!").
-> 
-> There's no reliable way to erase stuff from all subscribers' mailboxes.
+>> If I remember correctly, stealing anything other than a TGT is useless,
+>> since service tickets are encrypted under a key in the TGT and contain a
+>> session key for talking to that service.
+> No, this is not correct: If you have possession of the service ticket, you
+> can authenticate as the user to that specific service. You do not need the
+> TGT. Otherwise, limited ticket forwarding would not work.
 
-Absolutely, but mistakes happen and that's also why participants have
-to be trusted at little bit, and that's how a private list is reassuring
-for first-time reporters.
+Then I misremembered that detail.  So the cache stores the decrypted 
+session key needed to use the ticket in all cases?
 
-> At "best", we could exclude it from delayed publication.
 
-That must be sufficient for most reporters. One reason s@k.o is never
-published precisely is to protect reporters' data. Some might for example
-share a reproducer with a network capture or a dmesg output that reveals
-a customer's name that is totally irrelevant to the problem, and that
-would cause needless hassle for the reporter to hide if the info were
-ever made public. I'm seeing this in haproxy where some reporters spend
-time taking screenshots and editing them for posts on github, and finally
-sending unedited traces privately because it's easier for them. So I do
-think that on s@k.o we have an easier process for reporters to share their
-observations while feeling they're safe enough.
+-- Jacob
 
-Thus I do think that there's definitely something that needs to be worked
-on regarding this specific point affecting what has to be published.
-
-Regards,
-Willy
+--------------xA76kuZp9mBl3K64sTXifgak--
