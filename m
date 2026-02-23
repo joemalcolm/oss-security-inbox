@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["204" "Monday" "8" "June" "2015" "08:24:50" "-0400" "Colin Walters" "walters@verbum.org" "<1433766290.956011.289650937.2219DE8D@webmail.messagingengine.com>" "6" "[oss-security] CVE request for polkit" nil nil nil "6" "2015060812:24:50" "[oss-security] CVE request for polkit" (number mark "        walters@verb Jun  8    6/204   " thread-indent "\"[oss-security] CVE request for polkit\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 30584 invoked by uid 550); 8 Jun 2015 12:54:13 -0000
+Received: (qmail 23829 invoked by uid 550); 23 Feb 2026 08:28:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,29 +6,42 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17457 invoked from network); 8 Jun 2015 12:25:04 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:message-id:mime-version:subject:to:x-sasl-enc
-	:x-sasl-enc; s=smtpout; bh=9nbvTQTjqFhpFirgfghLyYFi9JM=; b=NdaDe
-	jS+Zjh38fZ7Yek17bvYAKIgawMQRKwJbHvNSDjajmXhfMxHgrrXiIiqbUAhLluMq
-	tcATZI6A0fS93FQ955a+C8NEZ49PWGV/HRXoVjjfPDG3UAd9lgZ0Es7fNJKMrcDS
-	nLWIMkfJ2Ar0Uz1TLagEbAtsNzhwLjhOK7eau8=
-Message-Id: <1433766290.956011.289650937.2219DE8D@webmail.messagingengine.com>
-X-Sasl-Enc: dRI+6ruRtB0/d0cpv3OreyBmt90JSCO1K/ZFI1qJRAg2 1433766290
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-b076c697
-Date: Mon, 08 Jun 2015 08:24:50 -0400
-From: Colin Walters <walters@verbum.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for polkit
+x-ms-reactions: disallow
+Received: (qmail 23757 invoked from network); 23 Feb 2026 08:28:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date:Reply-To:Cc
+	:Content-Transfer-Encoding:Content-ID:Content-Description:In-Reply-To:
+	References; bh=2tC+QB230bXx5ZTcP55lEIGBAOt5KvHEEw+ER1OdXQM=;
+	i=9cdceae8c7b5bf2d4c2c643b5341fa4197f0c084@notcom.org; t=1771835309;
+	x=1772483309; b=KvCU7A3X5TANO65bXwJGwLDk/hZsMM55kIp9NGuJtbL+18GT5ldHD9Sm80JW7
+	X1L3xUJ8k70TTxbJznvDGj+tfnDh55bS5whSgoMAgV68qJWuf7Feiup0ozrIHXnntKXESgGxG/LD6
+	uRa0d+Gg9Zdzm4GGS56cmXemI81bZwp94d9TWF+PICbrPb1rDsR+rhSKonelib2ONubmpsXrAQ8SR
+	F4T4ljlmCGwJzEChTaHZxqgvEBllQZ1w2w4OrPEF/ngkxlS+TP8nVvm1GJYHK/60Yt/B3rDVvOFNK
+	4tJfDREZkJk5ScFjY/Bk+eGCyUUsy+1lcYcghVesleUSXOa7Aw==;
+Date: Mon, 23 Feb 2026 17:28:14 +0900
+From: Valtteri Vuorikoski <vuori@notcom.org>
 To: oss-security@lists.openwall.com
+Message-ID: <aZwNSZDGJM_qKMb3@donburi.himad.notcom.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20251211-3-1d6324
+Subject: [oss-security] CVE-2026-26079/CVE-2026-25916: Roundcube vulns prior to 1.5.13/1.6.13
 
-See:
+Roundcube, a PHP-based webmail frontend, released a series of security updates
+on Feb 8, again with little fanfare. From the release announcement:
 
-http://lists.freedesktop.org/archives/polkit-devel/2015-May/000419.html
-And because mailman breaks threading across months:
-http://lists.freedesktop.org/archives/polkit-devel/2015-June/000425.html
+ * Fix CSS injection vulnerability reported by CERT Polska.
 
+ * Fix remote image blocking bypass via SVG content reported by nullcathedral.
+
+There are fixed in the newly-released versions 1.5.13 and 1.6.13. While not
+mentioned in the official annoucement, these appear to be CVE-2026-26079 (4.7)
+and CVE-2026-25916 (4.3) respectively.
+
+Full announcement:
+https://roundcube.net/news/2026/02/08/security-updates-1.6.13-and-1.5.13
+
+ -Valtteri
