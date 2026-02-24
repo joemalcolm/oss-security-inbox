@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3503" "Tuesday" "11" "May" "2021" "15:44:37" "+0200" "Daniel Beck" "ml@beckweb.net" nil "98" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "5" nil nil (number mark "U       ml@beckweb.n May 11   98/3503  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1514 invoked by uid 550); 11 May 2021 13:44:50 -0000
+Received: (qmail 9869 invoked by uid 550); 24 Feb 2026 06:55:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,115 +7,116 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1477 invoked from network); 11 May 2021 13:44:49 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.15\))
-Message-Id: <59CE18A6-1040-41CB-9058-F0E116A6E51A@beckweb.net>
-Date: Tue, 11 May 2021 15:44:37 +0200
-To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.104.15)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1620740689;2865e606;
-X-HE-SMSGID: 1lgSgf-0002ce-Iv
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+x-ms-reactions: disallow
+Received: (qmail 4009 invoked from network); 24 Feb 2026 06:45:08 -0000
+Date: Tue, 24 Feb 2026 07:43:51 +0100
+From: Solar Designer <solar@openwall.com>
+To: Justin Swartz <justin.swartz@risingedge.co.za>
+Cc: bug-inetutils@gnu.org, oss-security@lists.openwall.com,
+	ron.benyizhak@safebreach.com, simon@josefsson.org,
+	auerswal@unix-ag.uni-kl.de
+Message-ID: <20260224064351.GA14779@openwall.com>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <20260224052943.GA13045@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260224052943.GA13045@openwall.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Telnetd Vulnerability Report
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
+On Tue, Feb 24, 2026 at 06:29:43AM +0100, Solar Designer wrote:
+> On Tue, Feb 24, 2026 at 03:17:02AM +0200, Justin Swartz wrote:
+> > In my opinion, to fix this issue and finally put the ghost of CVE-1999-0073 to rest: telnetd must drop the blacklist approach and adopt the OpenSSH AcceptEnv-style approach suggested by Simon Josefsson [1], which amounts to preparing a brand new environment for /bin/login based on a strict whitelist of variables names considered to be "safe", and perhaps a healthy dose of input sanitization for their respective values.
+> 
+> Oh, sure.  A couple of decades ago I ported OpenBSD's telnet and telnetd
+> to Linux for our distro, Owl.  I no longer recalled all detail, but
+> looking at my "Linux port" patch now, it appears to implement a strict
+> allow-list approach already.  There's a comment saying the "list comes
+> from Linux NetKit telnetd, version 0.17", so maybe NetKit already used
+> that approach too, and Linux distros got a regression by switching from
+> NetKit to InetUtils?  Or it could be that Red Hat used NetKit and Debian
+> went with InetUtils.  I see I'm also lightly sanitizing env var values
+> (only for not containing '/' and being of sane length), which I doubt
+> was in NetKit.
 
-The following releases contain fixes for security vulnerabilities:
+I'm now looking at telnet-0.17-85.el9.src.rpm from Rocky Linux 9.  The
+telnet server part of it is still based on NetKit 0.17, where the latest
+ChangeLog entry is:
 
-* Credentials Plugin 2.3.19
-* Dashboard View Plugin 2.16
-* P4 Plugin 1.11.5
-* S3 publisher Plugin 0.11.7
-* Xcode integration Plugin 2.0.15
-* Xray - Test Management for Jira Plugin 2.4.1
+22-Jul-2000:
+        Bug fixes for environment processing from Olaf Kirch. Also fixes
+          privacy issue noticed by Steve Bellovin. Also fix a wrong
+          assert().
 
+and the code is:
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2021-05-11/
+/* check that variable is safe to pass to login or shell */
+#if 0  /* insecure version */
+static int envvarok(char *varp) {
+    if (strncmp(varp, "LD_", strlen("LD_")) &&
+        strncmp(varp, "ELF_LD_", strlen("ELF_LD_")) &&
+        strncmp(varp, "AOUT_LD_", strlen("AOUT_LD_")) &&
+        strncmp(varp, "_RLD_", strlen("_RLD_")) &&
+        strcmp(varp, "LIBPATH") &&
+        strcmp(varp, "ENV") &&
+        strcmp(varp, "IFS"))
+    {
+        return 1;
+    }
+    else {
+        /* optionally syslog(LOG_INFO) here */
+        return 0;
+    }
+}
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+#else
+static int envvarok(char *varp) {
+    /*
+     * Allow only these variables.
+     */
+    if (!strcmp(varp, "TERM")) return 1;
+    if (!strcmp(varp, "DISPLAY")) return 1;
+    if (!strcmp(varp, "USER")) return 1;
+    if (!strcmp(varp, "LOGNAME")) return 1;
+    if (!strcmp(varp, "POSIXLY_CORRECT")) return 1;
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
+    /* optionally syslog(LOG_INFO) here */
+    return 0;
+}
 
----
+In my patch against OpenBSD's it is:
 
-SECURITY-2349 / CVE-2021-21648
-Credentials Plugin 2.3.18 and earlier does not escape user-controlled
-information on a view it provides.
++/* This list comes from Linux NetKit telnetd, version 0.17 */
++static char *goodenv_table[] = {
++       "TERM",
++       "DISPLAY",
++       "USER",
++       "LOGNAME",
++       "POSIXLY_CORRECT",
++       NULL
+ };
 
-This results in a reflected cross-site scripting (XSS) vulnerability.
+[...]
 
++envvarok(varp, valp)
++       char *varp, *valp;
+ {
+[...]
++       for (i = 0; goodenv_table[i]; i++) {
++               if (strcmp(goodenv_table[i], varp))
++                       continue;
++               if (strchr(valp, '/') || strlen(valp) >= 0x100) {
++                       syslog(LOG_NOTICE, "Rejected attempt to set the "
++                               "environment variable \"%s\" to an "
++                               "invalid value", varp);
++                       return (0);
++               }
++               return (1);
++       }
+[...]
++       return (0);
 
-SECURITY-2233 / CVE-2021-21649
-Dashboard View Plugin 2.15 and earlier does not escape URLs referenced in
-Image Dashboard Portlets.
+So it looks like in the Linux world non-use of an allow list is specific
+to InetUtils, which means primarily Debian and derived distros.
 
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with View/Configure permission.
-
-
-SECURITY-2200 / CVE-2021-21650
-S3 publisher Plugin 0.11.6 and earlier does not perform Run/Artifacts
-permission checks in various HTTP endpoints and API models.
-
-This allows attackers with Item/Read permission to obtain information about
-artifacts uploaded to S3, if the optional Run/Artifacts permission is
-enabled.
-
-
-SECURITY-2201 / CVE-2021-21651
-S3 publisher Plugin 0.11.6 and earlier does not perform a permission check
-in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to obtain the list of
-configured profiles.
-
-
-SECURITY-2251 (1) / CVE-2021-21652
-Xray - Test Management for Jira Plugin 2.4.0 and earlier does not require
-POST requests for a connection test method, resulting in a cross-site
-request forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to connect to an attacker-specified URL
-using attacker-specified credentials IDs obtained through another method,
-capturing credentials stored in Jenkins.
-
-
-SECURITY-2251 (2) / CVE-2021-21653
-Xray - Test Management for Jira Plugin 2.4.0 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-2327 / CVE-2021-21654 (permission check) & CVE-2021-21655 (CSRF)
-P4 Plugin 1.11.4 and earlier does not perform permission checks in multiple
-HTTP endpoints implementing connection tests.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified Perforce server using attacker-specified username and
-password.
-
-Additionally, these HTTP endpoints do not require POST requests, resulting
-in a cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-2335 / CVE-2021-21656
-Xcode integration Plugin 2.0.14 and earlier does not configure its XML
-parser to prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control the input files for the Xcode build
-step to have Jenkins parse a crafted Xcode Workspace File that uses
-external entities for extraction of secrets from the Jenkins controller or
-server-side request forgery.
-
+Alexander
