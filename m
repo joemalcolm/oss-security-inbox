@@ -1,4 +1,4 @@
-Received: (qmail 15866 invoked by uid 550); 28 Mar 2024 07:32:31 -0000
+Received: (qmail 3123 invoked by uid 550); 24 Feb 2026 23:32:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,96 +7,59 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15845 invoked from network); 28 Mar 2024 07:32:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1711611430; x=1712216230; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=etJaHsr7anF/UIiD99r29gV6adwKVSCfPjUuVUGbyjI=;
-        b=E8M0dpv20Bit3R0MqPMo9DEzpEG6H9c4kIVEvo61GpF7gS/RA3snKDnGtTaHqetJfu
-         v+RfNOUNOcaSWF7XnVO62ioLjJjiGXmj+Azdip4FfslBQIOUZo7o9YVhHrwYXEWmkOuX
-         cEw9YgQc4o9cDOR1tyyHostAUrDw/+iffCW6drECAd51oKDyvAn120OBuabzNj57n0aK
-         1DWgVa6637duc3ZlYjgFQVHH9UBjR8BdRFjVt9fkxVN1qhj2t0/xWYu2OwIug1XU7Yfz
-         8mLDA+olaet+WFfMI3an+PCZtUFbVPOg9cf7I/8PgDHdRQB2KoCUsnGy8CUCOWDCMA3i
-         Y+ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1711611430; x=1712216230;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=etJaHsr7anF/UIiD99r29gV6adwKVSCfPjUuVUGbyjI=;
-        b=uaEt051pYgZ+Kpr5OfjZ7JKI0ehCKgX3sTRt3wfCxQARdUFjv2amaA6qHGlyPbMUx+
-         WJMvexoF8YkpVXM93a2LlaKxzvh3xTA6FT/pJaA8pMHxqwv8HcYnFpA3DTfsxS/3lq5q
-         XsJnPjSugnGXNb6WgpPO5ZA7ZomM9xGmyeuL/IKcDtsR1qXKbgCDGysLtnfqhB9r1wTA
-         OQ+7harO2qRI05x3Ff1bzJcN88wDUz7w8Y4A3/oMhJu5C3zTHXGf8Ap+GS+6Ri3p1o+t
-         WLSXSm+mxRv0jKsvJeDVVu9az6d4MlAvbsXi/zh9OSkmKXwGxyyBgkanBtt0z4wtvx01
-         LhLA==
-X-Gm-Message-State: AOJu0YwaHI3EfoWboX6Pz7aaGjv92r5C0aUJo8LeolbClsMIFANlhGFg
-	b7qAT8kt+akVIhFOIk7QMKJdxh28bkafWUBaBxhMhalXZJT4hGAENDpmJzOU2Bq6PJCp2s3KR8c
-	x60p8blGhrWyIZZQ46AhXbrQjTKw1jlzD32e40A==
-X-Google-Smtp-Source: AGHT+IFspVvuTgmNiYINtvJu/bSxGLHB9xmPY7r5cZn2Fn0TAjklVKE6ceJSg4aZ0kCgqwWbdacHCWln2osskWGEVvA=
-X-Received: by 2002:a25:dc0b:0:b0:dc7:46e7:7aea with SMTP id
- y11-20020a25dc0b000000b00dc746e77aeamr2246665ybe.47.1711611430056; Thu, 28
- Mar 2024 00:37:10 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 31767 invoked from network); 24 Feb 2026 23:18:50 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk E827CBFC1C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
+	t=1771975120; bh=zK0Dyh1CgOMdQFMbDTjzWvOu7nJGwOdrD+NoXVj4hfk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=BZj5cMGBkpQAriGW5ZpS99XzvOqO88qcfN4U+efJd+6EABEghyJYuRGar0SijK8Ob
+	 D8vwShE6x+9McSVVx9R3qliQhMhJmFEV4HTVlCSYPm3es5MDTHazollJUMvb1X1IX9
+	 sINX0nnV7jCh/z9gx7UV5r3SwW2pGWScwv9DX1/1PUV2I9Mhd43Xj2jsNM4MmvPbK0
+	 hU7rEhFdll3F2CCFet+PMtg2Jl1y3xrZQYSID+onUlMAeKgZdRDv+qzW/MBow7xY7m
+	 6IT9I/coCCNNhJuYJcgANbnHLwmAMxL3gteCLYRGYnpqqjiQ/LzBLulLuiWVTF84cS
+	 zdcDPbqJTzigg==
+Message-ID: <ae76aeaf-88e5-459d-95ca-fcab8de948e2@ehuk.net>
+Date: Tue, 24 Feb 2026 23:18:39 +0000
 MIME-Version: 1.0
-References: <CAEOG19rkUU8Pam5N67xyE9upepp_MahcnY48nek-VBAwo_NyAg@mail.gmail.com>
- <20240327213041.qyr7sglmxgdmtcb4@jwilk.net> <ZgSlAmss1tT8M2vZ@itl-email>
-In-Reply-To: <ZgSlAmss1tT8M2vZ@itl-email>
-From: "Alexander E. Patrakov" <patrakov@gmail.com>
-Date: Thu, 28 Mar 2024 15:36:43 +0800
-Message-ID: <CAN_LGv21fn2e4wYEfuStomeDo7qfWXciw51J3MgsTu5J=1dHog@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2024-28085: Escape sequence injection in
- util-linux wall
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, Solar Designer <solar@openwall.com>,
+ kf503bla@duck.com
+Cc: "bug-inetutils@gnu.org" <bug-inetutils@gnu.org>,
+ "ron.benyizhak@safebreach.com" <ron.benyizhak@safebreach.com>,
+ "simon@josefsson.org" <simon@josefsson.org>,
+ "auerswal@unix-ag.uni-kl.de" <auerswal@unix-ag.uni-kl.de>,
+ "justin.swartz@risingedge.co.za" <justin.swartz@risingedge.co.za>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
+ <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org>
+ <20260224011702.27987-1-justin.swartz@risingedge.co.za>
+ <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
+ <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
+ <20260224203337.GA17345@openwall.com>
+Content-Language: en-GB
+From: Eddie Chapman <eddie@ehuk.net>
+In-Reply-To: <20260224203337.GA17345@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang
+Subject: Re: [oss-security] Telnetd Vulnerability Report
 
-On Thu, Mar 28, 2024 at 7:04=E2=80=AFAM Demi Marie Obenour
-<demi@invisiblethingslab.com> wrote:
->
-> On Wed, Mar 27, 2024 at 10:30:41PM +0100, Jakub Wilk wrote:
-> > While looking through upstream git for a fix for this=C2=B9, I stumbled=
- upon
-> > another write(1)/wall(1) control character injection vulnerability,
-> > introduced last year in util-linux v2.39.
-> >
-> > The offending commits are:
-> >
-> > * https://github.com/util-linux/util-linux/commit/8a7b8456d1dc0e7c
-> >   ("write: correctly handle wide characters")
-> > * https://github.com/util-linux/util-linux/commit/aa13246a1bf1be9e
-> >   ("wall: use fputs_careful()")
-> >
-> > The added comment says:
-> >
-> > > The locale of the recipient is nominally unknown,
-> > > but it's a solid bet that the encoding is compatible with the author'=
-s.
-> >
-> > Alas the bet is not that solid when writer's locale encoding is control=
-led
-> > by an attacker.
-> >
-> > We can exploit this against terminal emulators that recognize C1 control
-> > characters, such as Linux VTs or screen(1):
-> >
-> >    $ printf '\302\23331mMOO\302\2330m\n' | LC_ALL=3Dkk_KZ wall
-> >
-> > I don't see any good way to fix this on the util-linux's side. It shoul=
-d be
-> > fixed on the terminal emulators' side by disabling C1 support.
-> >
-> >
-> > =C2=B9 https://github.com/util-linux/util-linux/commit/404b0781f52f7c04
-> >   ("wall: fix escape sequence Injection [CVE-2024-28085]")
->
-> Would enforcing UTF-8 validity (regardless of user locale) be a
-> solution?
+On 24/02/2026 20:33, Solar Designer wrote:
+> On Tue, Feb 24, 2026 at 05:05:58AM -0500, kf503bla@duck.com wrote:
+>> Who uses telnet anyway? It's deprecated. Everyone uses ssh for any kind of remote access.
+> 
+> Indeed.  Yet:
+> 
+> Quite many people surely do still use a telnet client to access various
+> older/smaller devices
 
-No, as UTF-8 validation does not make sense in non-UTF-8 locales.
-Enforcing ASCII for non-UTF-8 locales and UTF-8 for UTF-8 locales
-would help.
+Yes. I would hazard a guess that the largest cohort of devices running a 
+telnet server are enterprise switches, gateways & routers. So many times 
+over the years I've been surprised to find a switch I'm configuring has 
+a telnet as well as the obligatory http(s) server available for the 
+admin to login via.
 
---=20
-Alexander E. Patrakov
+Albeit to a lesser extent these days, and more likely BusyBox telnetd 
+than InetUtils. But switches are one of the most likely pieces of kit to 
+be forgotten about and left running for 10+ years in a closet without a 
+firmware update. There are a LOT of old switches running out there.
