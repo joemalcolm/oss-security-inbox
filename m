@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["501" "Saturday" "22" "April" "2017" "13:46:35" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<7429505.9S0h3zJD4P@arcadia>" "12" "Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)" "^Cc:" nil nil "4" "2017042211:46:35" "[oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)" (number mark "        ago@gentoo.o Apr 22   12/501   " thread-indent "\"Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)\"\n") "<CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>" ("<CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1637 invoked by uid 550); 22 Apr 2017 11:46:55 -0000
+Received: (qmail 29893 invoked by uid 550); 24 Feb 2026 20:34:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,30 +6,40 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1613 invoked from network); 22 Apr 2017 11:46:54 -0000
-Message-ID: <7429505.9S0h3zJD4P@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.29; x86_64; ; )
-In-Reply-To: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-References: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Cc: Xiaobo Xiang <xiangxb2112@gmail.com>
-Date: Sat, 22 Apr 2017 13:46:35 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp)
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 25786 invoked from network); 24 Feb 2026 20:33:52 -0000
+Date: Tue, 24 Feb 2026 21:33:37 +0100
+From: Solar Designer <solar@openwall.com>
+To: kf503bla@duck.com
+Cc: oss-security@lists.openwall.com,
+	"bug-inetutils@gnu.org" <bug-inetutils@gnu.org>,
+	"ron.benyizhak@safebreach.com" <ron.benyizhak@safebreach.com>,
+	"simon@josefsson.org" <simon@josefsson.org>,
+	"auerswal@unix-ag.uni-kl.de" <auerswal@unix-ag.uni-kl.de>,
+	"justin.swartz@risingedge.co.za" <justin.swartz@risingedge.co.za>
+Message-ID: <20260224203337.GA17345@openwall.com>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com> <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Telnetd Vulnerability Report
 
-On Saturday 22 April 2017 11:02:21 Xiaobo Xiang wrote:
-> There is a infinite recursion in
-> PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
-> In the ReadDocumentStructure function
+On Tue, Feb 24, 2026 at 05:05:58AM -0500, kf503bla@duck.com wrote:
+> Who uses telnet anyway? It's deprecated. Everyone uses ssh for any kind of remote access.
 
-I found it too time ago, but since upstream was unresponsive about....I didn't 
-investigate, and then I didn't know if it has the same root cause of:
-https://blogs.gentoo.org/ago/2017/02/01/podofo-infinite-loop-in-podofopdfpagegetinheritedkeyfromobject-pdfpage-cpp/
+Indeed.  Yet:
 
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Quite many people surely do still use a telnet client to access various
+older/smaller devices, as well as online resources - in particular, in
+the field of astronomy, as it was brought up in last month's discussion
+elsewhere.  Also online retro computers and BBSes.
+
+This means that some kind of telnet server is also still in use on those
+devices and in those places.  Probably in most of those cases it is not
+one from InetUtils, but who knows.  I suppose some astronomy site may
+have migrated their telnet gateway to a Debian or Ubuntu system.
+
+Alexander
