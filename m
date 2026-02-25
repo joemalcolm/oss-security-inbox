@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1614" "Monday" "19" "June" "2017" "18:48:36" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170619164836.GQ20604@suse.de>" "37" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Cc:" nil nil "6" "2017061916:48:36" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        meissner@sus Jun 19   37/1614  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<1497890780.6892.2.camel@gmail.com>" ("<20170619152843.GC7769@localhost.localdomain>" "<2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>" "<1497890780.6892.2.camel@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19877 invoked by uid 550); 19 Jun 2017 16:48:49 -0000
+Received: (qmail 19484 invoked by uid 550); 25 Feb 2026 16:42:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19853 invoked from network); 19 Jun 2017 16:48:48 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170619164836.GQ20604@suse.de>
-References: <20170619152843.GC7769@localhost.localdomain>
- <2a53a138-8f6b-133d-72b2-6dfd5355241a@redhat.com>
- <1497890780.6892.2.camel@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1497890780.6892.2.camel@gmail.com>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Cc: Qualys Security Advisory <qsa@qualys.com>
-Date: Mon, 19 Jun 2017 18:48:36 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+x-ms-reactions: disallow
+Received: (qmail 14261 invoked from network); 25 Feb 2026 07:42:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=dorfdsl.de;
+	s=default; t=1772005357;
+	bh=CL6zt5d2FykIMfg9Yvnj26g1qwAxBYRA5aM1mkcDnKg=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=v+qUubhprxWzQd7GgfrvH/TMpwEBRf/eA3au5M+P1XTga2SUYRd5dXpH+7NdU8PV4
+	 0ucfKhnilS1UglhATJckN1TfCwuVMzHErYQPxBoYx2+XvYG4eG0/EUNGtW+jfLX5A9
+	 FQ7tJ7X6CqckOfNBr68euC9xrhGj7tJapi7A3jxlAi8dmr9XhgrQrrvRcTmx/WdYN0
+	 PFOCXPnldyfcVL09rECpBFP9iuoFj1oFo/u8CHlMHIA8qJOTxuabFyEPYCW+ZOV6m1
+	 iRSMzq0e3VfUvBbJWxnq3bfopbwUJ636Hs5PzNeEcKNFAn795nUAjRcIqPocEj4vzX
+	 nwc0AOJxowDtg==
+Date: Wed, 25 Feb 2026 08:42:35 +0100
+From: Marco Moock <mm@dorfdsl.de>
 To: oss-security@lists.openwall.com
+Message-ID: <20260225084235.288d26d1@dorfdsl.de>
+In-Reply-To: <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
+	<20260206172730.GA12303@unix-ag.uni-kl.de>
+	<877bso8mhf.fsf@josefsson.org>
+	<20260224011702.27987-1-justin.swartz@risingedge.co.za>
+	<B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
+	<27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; i686-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: Telnetd Vulnerability Report
 
-On Mon, Jun 19, 2017 at 12:46:20PM -0400, Daniel Micay wrote:
-> On Mon, 2017-06-19 at 09:40 -0600, kseifried@redhat.com wrote:
-> > On 06/19/2017 09:28 AM, Qualys Security Advisory wrote:
-> > > 
-> > > Qualys Security Advisory
-> > > 
-> > > The Stack Clash
-> > 
-> > I just want to publicly thank Qualys for working with the Open Source
-> > community so we (Linux and *BSD) could all get this fixed properly.
-> > There was a lot of work from everyone involved and it all went pretty
-> > smoothly.
-> 
-> Fixing it properly would really also include fixing these:
-> 
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68065
-> https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66479
-> 
-> and actually implementing -fstack-check as not just a no-op in Clang.
-> 
-> Windows has working stack probes, even in Windows XP and perhaps even
-> earlier. LLVM has working stack probes there (not sure if GCC deals with
-> it properly) yet doesn't make them available elsewhere.
-> 
-> Rust is 'memory safe' but has this same stack exhaustion issue. It
-> didn't used to have the issue, since it kept around the LLVM segmented
-> stack code generation after it dropped segmented stacks to check for
-> stack overflow in function preludes. That got dropped for a 1-3%
-> performance win from using stack probes instead... which was a good
-> idea, but without implementing stack probes... making it a terrible
-> idea. It was deferred to some later date. That was in July 2015, and 2
-> years later it's not done.
+On 24.02.2026 05:05 kf503bla@duck.com kf503bla@duck.com wrote:
 
-The GCC team at least has been working on patches on this topic and they will also
-continue to work on this publically soon.
+> Who uses telnet anyway? It's deprecated. Everyone uses ssh for any
+> kind of remote access.
 
-Ciao, Marcus
+In certain situations telnet is still being used, because it is
+supported on a wide range of systems, regardless of key (exchange)
+algorithms or hash algorithms.
+
+It can also be used in conjunction with a secured tunnel (e.g. stunnel
+or IPsec) to provide a mechanism against eavesdropping.
