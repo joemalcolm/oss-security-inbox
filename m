@@ -1,4 +1,4 @@
-Received: (qmail 3567 invoked by uid 550); 22 Sep 2023 21:41:00 -0000
+Received: (qmail 26402 invoked by uid 550); 26 Feb 2026 00:12:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,78 +7,109 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1884 invoked from network); 22 Sep 2023 21:40:20 -0000
-Date: Fri, 22 Sep 2023 23:40:06 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 28408 invoked from network); 25 Feb 2026 23:04:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1772060669; x=1772727335; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=S5+/D4YBPlcfmJHQkO0LkXp379kjcdIxc3m2iPBQVZE=;
+ b=NAcExqtYKGCiDH6kxsOy7uDmqYsmCJlo6OrsZq9RfH+Os7kn8kbVjXrwiayI63GIKOjlXwJA
+  6HdX1c6WrP+wbkRY0z+aVAB6EfERnDWH/92ATmBTL2pFdjDmVp9PO5rFs+PqLU9pKGOk3rz+L2
+  2DWyBSn6l/Y8YfiKgj4wOYA9x9OAa0ycbYvux/pWAl2ZZ1EHDHtSuNSRisVYbXX05oJ7i98qW7
+  x+h8kRsxYA8/OuYG/emJ2SUgqj8WnHTgzHiYrOZGKreqH0UNZX82qoKeT9uDfe4a/5yaZLgf4Q
+  nWpl5x2YKGnbdJccqbtOYX6bFEqxua/SXompOTfnIbz1c5AQ==
+Date: Thu, 26 Feb 2026 00:04:28 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
-Message-ID: <20230922214006.GA20989@openwall.com>
-References: <6EBBC128-36D2-4262-88F4-6889E9E6DE1E@mnx.io> <20230915210906.GA22532@openwall.com> <36F38D40-5F90-4E1B-B7A2-121431A3E6FE@mnx.io> <20230922172755.GA18909@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230922172755.GA18909@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] illumos (or at least danmcd) membership in the distros list
+Message-ID: <20260225230428.yNKndtKS@steffen%sdaoden.eu>
+In-Reply-To: <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com>
+ <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org>
+ <20260224011702.27987-1-justin.swartz@risingedge.co.za>
+ <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com>
+ <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com>
+ <20260224203337.GA17345@openwall.com> <a0bad9ebbf4507c4@orthanc.ca>
+ <CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com>
+ <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
+ <20260225165449.GA23380@openwall.com>
+ <20260225194709.3XDsVdwv@steffen%sdaoden.eu>
+ <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-746-g512f6a7e26
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Telnetd Vulnerability Report
 
-On Fri, Sep 22, 2023 at 07:27:55PM +0200, Solar Designer wrote:
-> On Mon, Sep 18, 2023 at 05:36:13PM +0000, Dan McDonald wrote:
-> > On Sep 15, 2023, at 5:09 PM, Solar Designer <solar@openwall.com> wrote:
-> > > Can you show illumos fixing non-illumos-only security issues within days
-> > > after public disclosure, so that a few days of advance notice would have
-> > > made those fixes even quicker?
-> > 
-> > It's a per-illumos-distro property.  OmniOS has Stable & LTS releases.   Here's the current-stable
-> > release notes, dynamically updated every time they update:
-> > 
-> > 	https://github.com/omniosorg/omnios-build/blob/r151046/doc/ReleaseNotes.md
-> > 
-> > So I'm not sure if a few days of advance notice would make those quicker,
-> > but I do know that other distros have biweekly scheduled releases, and advance
-> > notice there would keep those wheels spinning faster.  Esp. since "patch tuesday"
-> > is a mere one-day before the release branch is forked off on release weeks.
-> 
-> This looks pretty good for OmniOS, e.g. for OpenSSL CVE-2023-3817 it
-> appears to be 4 days from OpenSSL advisory on "31st July 2023" to OmniOS
-> "r151046n (2023-08-03)", and even something like 1 day for OpenSSH
-> update to "9.3p2, fixing CVE-2023-38408" and for "AMD CPU microcode
-> updated to 20230719, mitigating CVE-2023-20593 on some Zen2 processors"
-> in "r151046m (2023-07-25)" (it was brought to oss-security on July 24).
-> 
-> That page above goes back to May 2023.  Were there separate ones for
-> older releases?  For "a publicly verifiable track record, dating back at
-> least 1 year and continuing to present day".
+Marco Moock wrote in
+ <20260225210354.2bbf0d04@stinkedores.dorfdsl.de>:
+ |Am 25.02.2026 um 20:47:09 Uhr schrieb Steffen Nurpmeso:
+ |
+ |> It seems to me one reason to use telnet(1) arises from the fact
+ |> that there is no nc(1) around.  busybox has one, but it is not
+ |> feature rich enough.  And the one of LibreSSL, which is, as it
+ |> says, a swiss-army-knife, is very often not available at all.
+ |
+ |IIRC this issue is only about the telnetd telnet server daemon, not the
+ |client. This service is only in use if enabled in inetd (or
+ |replacements) by the administrator.
 
-I see this one goes from December 2022 to present:
+Already open socket aka standard descriptors.
+If executables can be replaced, some specialized dropbear, or even
+openssh seems better to me.
+I never have used telnetd by myself, yet the telnet client i am
+using pretty regulary, it comes from the same package
 
-https://github.com/omniosorg/omnios-build/blob/r151044/doc/ReleaseNotes.md
+  $ pkginfo -o /usr/bin/telnet
+  Package    File
+  inetutils  usr/bin/telnet
 
-and this one from May 2022 to April 2023:
+but which the Linux distribution (mostly old-hand admins driven)
+i use massively restricts
 
-https://github.com/omniosorg/omnios-build/blob/r151042/doc/ReleaseNotes.md
+        --disable-{servers,clients} \
+        --enable-{hostname,ifconfig,inetd,ftp,telnet,traceroute}
 
-So that's already more than a year, and I don't need to look further.
+which is why i do not easily (without build overlay) can be
+embarrased in a situation of necessity, to use telnetd, you know.
 
-Also, I note this reply by Bob Friesenhahn:
+Since i have seen Lyndon Nerenberg's message already, yes,
+plenty of possibilities there may be (i wonder how many of those
+could be driven via nc, especially so with an nc which could
+be sliced into some inetd (fwiw) and have an -e, or what about
+introduction of a pty layer), but the security layer algorithms
+(RFC 2953) seem historic -- and, generally speaking, to me it
+looks like a layer abstraction error, so *if*, then maybe that
+IANA registered port 992 for telnets should become used, should
+become an official RFC (except in the email area less harcore
+SMTP the IETF is a great thing *imho* (except for the "I" being
+"not so" "I"), but anyway, no notion of telnets or port 992 in
+inetutils whatsoever, so that would require an external wrapper.
+Maybe nc can provide the necessary TLS wrapper for plain telnetd.
+But Linux/Unix is not Plan9, and wrapper programs are expensive,
+all those context-switches (surely), and data copying (likely).
+(Yet Johnson of dropbear refused a patch that simply did some FD
+exchange, instead he insisted on command line wrapper mode via
+nc(1), a decade or more ago.)
 
-https://www.openwall.com/lists/oss-security/2023/09/14/1
+So to reiterate that in my opinion nc is a good thing, except for
+not using "network newline" aka \r\n but .. i think plain Unix \n.
+Surely the OpenBSD people will not add -e, and i am afraid there
+will be no pty mode either.  But i personally would always refrain
+from spreading crypto to anywhere, there are too many libraries
+around already *imho*, which need to share the eyes which can look
+and see, so that is that.
 
-On Thu, Sep 14, 2023 at 08:36:17AM -0500, Bob Friesenhahn wrote:
-> I am not a member of the 'distros' list, but can vouch for Dan
-> McDonald's dedication and capabilities, as observed over several
-> years.  Dan did not mention it, but he previously became the primary
-> maintainer of an Illumos distribution known as "OmniOS", which I use.
-> As a maintainer, Dan did pay close attention to security issues.
-
-So I think we can accept OmniOS as new distros list member, if that's
-desired and Dan would represent OmniOS on the list.  This subscription
-on its own would not allow sharing of info with other illumos distros.
-
-In special cases, Dan would be able to ask the issue reporters their
-explicit permission to share with other illumos distros.
-
-If those distros do typically need the info, they may request direct
-list membership.
-
-How does this sound to you, Dan?
-
-Alexander
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
