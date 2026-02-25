@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1579" "Thursday" "9" "February" "2017" "14:50:18" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<7514610.NxtJqOQEcv@blackgate>" "58" "[oss-security] zziplib: load of misaligned address in memdisk.c" nil nil nil "2" "2017020913:50:18" "[oss-security] zziplib: load of misaligned address in memdisk.c" (number mark "U       ago@gentoo.o Feb  9   58/1579  " thread-indent "\"[oss-security] zziplib: load of misaligned address in memdisk.c\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14205 invoked by uid 550); 9 Feb 2017 13:50:37 -0000
+Received: (qmail 7492 invoked by uid 550); 25 Feb 2026 16:55:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +7,37 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14053 invoked from network); 9 Feb 2017 13:50:35 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+x-ms-reactions: disallow
+Received: (qmail 1167 invoked from network); 25 Feb 2026 16:54:51 -0000
+Date: Wed, 25 Feb 2026 17:54:49 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Date: Thu, 09 Feb 2017 14:50:18 +0100
-Message-ID: <7514610.NxtJqOQEcv@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.39-gentoo; KDE/4.14.24; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] zziplib: load of misaligned address in memdisk.c
+Cc: kf503bla@duck.com, "bug-inetutils@gnu.org" <bug-inetutils@gnu.org>,
+	"ron.benyizhak@safebreach.com" <ron.benyizhak@safebreach.com>,
+	"simon@josefsson.org" <simon@josefsson.org>,
+	"auerswal@unix-ag.uni-kl.de" <auerswal@unix-ag.uni-kl.de>,
+	"justin.swartz@risingedge.co.za" <justin.swartz@risingedge.co.za>
+Message-ID: <20260225165449.GA23380@openwall.com>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com> <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com> <20260224203337.GA17345@openwall.com> <a0bad9ebbf4507c4@orthanc.ca> <CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com> <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Telnetd Vulnerability Report
 
-Description:
-zziplib is an intentionally lightweight library that offers the ability to 
-easily extract data from files archived in a single zip file.
+On Wed, Feb 25, 2026 at 07:46:07AM -0500, kf503bla@duck.com wrote:
+> telnet is extremely old and just because there is still widespread use of telnet or the daemon, doesn't provide a valid reason to keep using it. these trivial vulnerabilities keep popping up and if you still insist of using telnet, you deserve getting pwned
 
-A fuzz on it discovered the load of a misaligned address. It can cause 
-undefined behavior.
+I mostly let these messages through so far (rejecting only one, which
+had even less value), but as a moderator I declare end of sub-thread
+now.  Further messages on "Who uses telnet anyway?" will be rejected by
+default, unless they truly add something new.
 
-The complete ASan output:
+Messages on actual security issues/fixes in telnet are still desirable.
 
-# unzzipcat-mem $FILE
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:250:33: runtime error: load of 
-misaligned address 0x00000295d17d for type 'uint16_t' (aka 'unsigned short'), 
-which requires 2 byte alignment
-0x00000295d17d: note: pointer points here
- 5a 45 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff 
-ff ff 42 00 00 00  b1
-             ^ 
-/tmp/portage/dev-libs/zziplib-0.13.62-
-r1/work/zziplib-0.13.62/zzip/memdisk.c:256:22: runtime error: load of 
-misaligned address 0x00000295d17f for type 'uint16_t' (aka 'unsigned short'), 
-which requires 2 byte alignment
-0x00000295d17f: note: pointer points here
- 93 58 75 70 0b  00 00 61 64 0a 50 4b 01  02 1e 03 0a 00 00 00 00  ff ff ff ff 
-42 00 00 00  b1 01 00
-             ^
+Alexander
 
-Affected version:
-0.13.62
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00160-zziplib-misalignedadd-memdisk_c
-
-Timeline:
-2017-01-17: bug discovered and poked upstream
-2017-02-09: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/02/09/zziplib-load-of-misaligned-address-in-memdisk-c
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+P.S. I first wrote the above in a confusing manner, not clarifying it's
+only end of sub-thread started by kf503bla, not the entire thread.
+Corrected now, and I'll only let this corrected message to oss-security.
