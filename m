@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["587" "Monday" "17" "October" "2016" "09:30:49" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1887043.2OYlfbTScZ@blackgate>" "21" "Re: [oss-security] Re: Fuzzing jasper" "^Cc:" nil nil "10" "2016101707:30:49" "[oss-security] Re: Fuzzing jasper" (number mark "        ago@gentoo.o Oct 17   21/587   " thread-indent "\"Re: [oss-security] Re: Fuzzing jasper\"\n") "<20161017010245.267aae32@pc1>" ("<1528713.C8CqGc87r5@arcadia>" "<CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com>" "<20161017010245.267aae32@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9501 invoked by uid 550); 17 Oct 2016 07:31:08 -0000
+Received: (qmail 11487 invoked by uid 550); 27 Feb 2026 00:40:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +6,43 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9477 invoked from network); 17 Oct 2016 07:31:07 -0000
-Message-ID: <1887043.2OYlfbTScZ@blackgate>
-User-Agent: KMail/4.14.10 (Linux/4.4.21-gentoo; KDE/4.14.24; x86_64; ; )
-In-Reply-To: <20161017010245.267aae32@pc1>
-References: <1528713.C8CqGc87r5@arcadia> <CAHapaJ1yTNVH+umS9U3SeW0jK73WY0H06_k0eJmJ3pnEVO9D+Q@mail.gmail.com> <20161017010245.267aae32@pc1>
-MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart1631645.d6MQB2r49G"
-Content-Transfer-Encoding: 7Bit
-Cc: Graham Christensen <graham@grahamc.com>, oss-security@lists.openwall.com, cve-assign@mitre.org
-Date: Mon, 17 Oct 2016 09:30:49 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Fuzzing jasper
-To: Hanno =?ISO-8859-1?Q?B=F6ck?= <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 31779 invoked from network); 26 Feb 2026 19:20:59 -0000
+From: "Lyndon Nerenberg (VE7TFX/VE6BBM)" <lyndon@orthanc.ca>
+To: oss-security@lists.openwall.com, Albert Veli <albert.veli@gmail.com>
+In-reply-to: <4459c96c-dabb-4bd8-882c-1f9495972a51@gmail.com>
+References: <CAB1hGqQwnSzEqtrefwqAxD+rWGu_EXVDmu-btMrNYqMzkzc9Kw@mail.gmail.com> <20260206172730.GA12303@unix-ag.uni-kl.de> <877bso8mhf.fsf@josefsson.org> <20260224011702.27987-1-justin.swartz@risingedge.co.za> <B72B4221-75D0-4C28-840F-9CF7B1A53E66.1@smtp-inbound1.duck.com> <27E138FE-A205-4EDD-9A9B-1F84BFAEC100.1@smtp-inbound1.duck.com> <20260224203337.GA17345@openwall.com> <a0bad9ebbf4507c4@orthanc.ca> <CAA748E8-86CC-4C46-AD03-319F6690252B.1@smtp-inbound1.duck.com> <4A24F620-6FA6-4F2B-A1F9-B4781E391989.1@smtp-inbound1.duck.com> <a0bae10a8982d3e5@orthanc.ca> <4459c96c-dabb-4bd8-882c-1f9495972a51@gmail.com>
+Comments: In-reply-to Albert Veli <albert.veli@gmail.com>
+   message dated "Thu, 26 Feb 2026 09:30:07 +0100."
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <24171.1772133645.1@orthanc.ca>
+Date: Thu, 26 Feb 2026 11:20:45 -0800
+Message-ID: <a0bae914813cc517@orthanc.ca>
+Subject: Re: [oss-security] Telnetd Vulnerability Report
 
---nextPart1631645.d6MQB2r49G
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Albert Veli writes:
 
-On Monday 17 October 2016 01:02:45 Hanno B=C3=B6ck wrote:
-> I tested the code again with afl (after the fixes for the stuff
-> Agostino reported) and it immediately found multiple issues:
+> I agree to this, but I can add that telnet remains widely used for login 
+> in OT (Operational Technology) environments, including sites running 
+> critical infrastructure. While operators often justify this by relying 
+> on network isolation, this reasoning breaks down the moment the air gap 
+> is bridged.
 
-Great job. I also was waiting for the next release to re-fuzz
+True, but I suspect that many of those implementations are running
+in firmware that has been long abandonded.  So if you are going to
+craft a CVE on this, how do you address those legacy systems?  Or
+should a CVE even be written for them, if there is no hope of ever
+updating the code?
 
-> https://github.com/mdadams/jasper/issues/31
-> double free on jpeg parsing
+We have to accept that there are cases where the problem simply
+cannot be fixed.  At best we can identify them, and warn users of
+that gear that they have an unrepairable vulnerability that must
+be addresses independtly.  It boils down to "identify and warn."
 
-This is a duplicate of the double-free I reported, but upstream=20
-said that he can't reproduce.
+It's important to not get caught up on unsolvable problems.  An
+awful lot of time gets burned up trying to solve things that can't
+be.
 
---
-Agostino
-
---nextPart1631645.d6MQB2r49G--
-
+--lyndon
