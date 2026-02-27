@@ -1,4 +1,4 @@
-Received: (qmail 22115 invoked by uid 550); 25 Jan 2023 21:45:20 -0000
+Received: (qmail 5378 invoked by uid 550); 27 Feb 2026 21:43:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,134 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21886 invoked from network); 25 Jan 2023 21:44:54 -0000
-Date: Wed, 25 Jan 2023 22:44:45 +0100
-From: Solar Designer <solar@openwall.com>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: oss-security@lists.openwall.com
-Message-ID: <20230125214445.GA8487@openwall.com>
-References: <Y9GEU0G9N5etu+H3@sol.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+x-ms-reactions: disallow
+Received: (qmail 5326 invoked from network); 27 Feb 2026 21:43:05 -0000
+Date: Fri, 27 Feb 2026 22:41:18 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aaIPfq5rK11G/HI5@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y9GEU0G9N5etu+H3@sol.localdomain>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Data operand dependent timing on Intel and Arm CPUs
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Stack-buffer-overflow in build_stl_str_hl() affects
+ Vim < 9.2.0078
 
-Hi Eric,
+Stack-buffer-overflow in build_stl_str_hl() affects Vim < 9.2.0078
+==================================================================
+Date: 27.02.2026
+Severity: Moderate
+CVE: CVE-2026-28422
+CWE: Stack-based Buffer Overflow (CWE-121)
 
-Thank you for bringing this up in here.
+### Summary
+A stack-buffer-overflow occurs in `build_stl_str_hl()` when rendering a 
+statusline with a multi-byte fill character on a very wide terminal.
 
-There was also a brief Twitter thread on it in August 2022, started by
-Adam Langley:
+### Description
+Vim uses a fixed-size stack buffer (`MAXPATHL` = 4096 bytes) to build 
+the statusline string. When filling empty space in the statusline (e.g., 
+using `%=`), Vim checks if there is enough room in the buffer based on 
+the remaining screen cells. 
 
-https://twitter.com/agl__/status/1561374334714671104
+However, if a multi-byte character (like U+2500) is used as a fill 
+character, each cell requires 3 bytes of memory. On terminals wider than 
+~1365 columns, the byte-count exceeds the 4096-byte buffer, but the 
+cell-count check still passes, leading to a stack overflow of up to 1904 
+bytes.
 
-In it Adam Langley, wrote:
-> It appears that Intel doesn't guarantee constant-time execution of _any_
-> instructions on Ice Lake or later unless a configuration bit is set:
-> https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
-> 
-> Ice Lake was released in 2019 but this information is only a few months
-> old. So hopefully multiplication etc actually is always constant-time on
-> existing chips and this is just preparing for the future?
-> 
-> I guess the steady state is that every OS sets this DOITM bit all the
-> time, but Intel get to publish benchmarks based on variable-time
-> instructions and claim that they're using the default configuration?
+### Impact
+An attacker who can influence a user's `fillchars` or `statusline` 
+settings (e.g., via a malicious modeline or plugin) can trigger a 
+stack-buffer-overflow. While this may not result in an immediate crash 
+in all environments, it leads to memory corruption that can cause 
+unpredictable behavior when the statusline is redrawn on a sufficiently 
+wide terminal.
 
-My reply was:
-> Reading between the lines, I think this is a vulnerability and
-> mitigations disclosure for 6th to 12th gen (fixed in 13th?), disguised
-> as a feature. They discovered that "data values may delay instruction
-> retirement by, at most, one cycle" for vector multiplication and bit
-> count.
+### Acknowledgements
+The Vim project would like to thank the reporter Github users ehdgks0627 
+and un3xploitable for identifying the vulnerability and providing a 
+proof-of-concept.
 
-On Wed, Jan 25, 2023 at 11:34:43AM -0800, Eric Biggers wrote:
-> I'd like to draw people's attention to the fact that on recent Intel and Arm
-> CPUs, by default the execution time of instructions may depend on the data
-> values operated on.  This even includes instructions like additions, XORs, and
-> AES instructions, that are traditionally assumed to be constant-time with
-> respect to the data values operated on.
+### References
+The issue has been fixed as of Vim patch 
+[v9.2.0078](https://github.com/vim/vim/releases/tag/v9.2.0078)
 
-FWIW, I'm not aware of any indication that e.g. "additions, XORs, and
-AES instructions" have data-dependent timing on CPUs released so far.
+[Commit](https://github.com/vim/vim/commit/4e5b9e31cb7484ad156f)
+[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-gmqx-prf2-8mwf)
 
-> For details, see the documents from each CPU vendor:
-> 
-> 	Intel: https://www.intel.com/content/www/us/en/developer/articles/technical/software-security-guidance/best-practices/data-operand-independent-timing-isa-guidance.html
-> 	Arm: https://developer.arm.com/documentation/ddi0601/2020-12/AArch64-Registers/DIT--Data-Independent-Timing
-> 
-> ... as well as the following discussion on the Linux Kernel Mailing List:
-> 
-> 	https://lore.kernel.org/lkml/YwgCrqutxmX0W72r@gmail.com/T/#u
-> 
-> Non-constant-time instructions break cryptographic code that relies on
-> constant-time code to prevent timing attacks on cryptographic keys -- i.e., most
-> cryptographic code.  This issue may also have a wider impact on the ability of
-> operating systems to protect data from unprivileged processes.
-> 
-> For Intel, processors with Ice Lake and later are affected by this issue.
-> 
-> The fix for this issue is to set a CPU flag that restores the old, correct
-> behavior of data-independent timing: DIT on Arm, and DOITM on Intel.
-> 
-> Linux v6.2 will enable DIT on Arm, but only in the kernel.  Without any
-> additional patches, userspace code will still get data-dependent timing by
-> default.  See https://git.kernel.org/linus/01ab991fc0ee5019
-> 
-> No patch has been merged to enable DOITM on Intel processors.  Thus, as-is, it's
-> not really possible to safely execute cryptographic algorithms on Linux systems
-> that use an Intel processor with Ice Lake or later.  (I'd guess that the same is
-> true for other operating systems too; Linux is just the one I'm looking at.)  To
-> fix this issue, I've proposed a Linux kernel patch that enables DOITM globally:
-> https://lore.kernel.org/lkml/20230125012801.362496-1-ebiggers@kernel.org
-> 
-> I consider this issue to be a CPU security vulnerability; it shares many
-> characteristics with other CPU security vulnerabilities such as Meltdown and
-> Spectre.  However, Intel and Arm do not seem to consider it to be a security
-> vulnerability.  No CVEs seem to have been assigned yet.
-
-I _guess_ there several aspects here:
-
-Many Intel CPUs starting with Skylake (Intel Core gen 6) were found to
-"delay instruction retirement by, at most, one cycle" for vector
-multiplication and bit count, despite of those instructions being on the
-list of "Data Operand Independent Timing Instructions" published a bit
-earlier (the web page says "Published: 05/10/2022", first copy on the
-Internet Archive is June 14, 2022).
-
-For some of those CPUs, Intel included an optional fix for this perhaps
-in microcode updates, retroactively calling this "MXCSR Configuration
-Dependent Timing (MCDT)" and adding a column "MCDT (MXCSR-Sensitivity)"
-to the list/table above.
-
-Separately, Intel and ARM introduced an explicit data independent
-timings mode, to allow for later inclusion of timing-unsafe
-optimizations when that mode is not enabled.  For Intel, this just
-happens to be starting with Ice Lake (gen 10), but there's currently no
-indication (from any source I know of) that Ice Lake is special in any
-other relevant way.  Specifically, it neither introduced nor fixed the
-issue with vector multiplication and bit count mentioned above (the
-issue was introduced much earlier than Ice Lake, and apparently fixed
-later than Ice Lake - at least it wasn't yet fixed in Alder Lake).
-
-So the only thing changing with Ice Lake appears to be the interface to
-requesting the data-independent mode, which changes from ad-hoc MXCSR to
-longer-term and standardized DOITM.
-
-Further, given how recently the issue with vector multiplication and bit
-count appears to have been found, I expect that a CPU supporting DOITM
-does not imply that enabling DOITM fixes that issue.  Indeed, some Ice
-Lake and newer CPUs are listed among "Processors That May Exhibit MCDT
-Behavior", suggesting that the MXCSR way should still be used on those.
-
-Apparently, it's only with Raptor Lake (gen 13) that DOITM alone is
-guaranteed to be sufficient, or/and perhaps the issue is fixed such that
-neither way/mode matters (for now, until a future CPU introduces new
-optimizations for the no-DOITM case).
-
-The above is just my reading between the lines.  I have no inside info
-on any of this, and could have guessed some of it wrong.
-
-Alexander
+Thanks,
+Christian
+-- 
+Denk immer daran, daß die Menge, die bei Deiner Krönung gejubelt hat,
+auch klatschen wird, wenn man Dich köpft.
+		-- Terry Pratchett, "Ab die Post"
