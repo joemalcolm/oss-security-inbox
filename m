@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1335" "Monday" "14" "March" "2016" "00:31:35" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160314043135.C858372E003@smtpvbsrv1.mitre.org>" "34" "[oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile" nil nil nil "3" "2016031404:31:35" "[oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile" (number mark "U       cve-assign@m Mar 14   34/1335  " thread-indent "\"[oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile\"\n") "<CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>" ("<CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24219 invoked by uid 550); 14 Mar 2016 04:31:48 -0000
+Received: (qmail 32695 invoked by uid 550); 27 Feb 2026 21:59:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,113 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24195 invoked from network); 14 Mar 2016 04:31:47 -0000
-From: cve-assign@mitre.org
-To: dkasyanov@cloudlinux.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAC1DjbY5DcefwkS8ba0iJj6sE8EM10PBE9YsyE59U9_MCmP8tg@mail.gmail.com>
-Message-Id: <20160314043135.C858372E003@smtpvbsrv1.mitre.org>
-Date: Mon, 14 Mar 2016 00:31:35 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: PHP-5.5.33: Out-of-Bound Read in phar_parse_zipfile
+x-ms-reactions: disallow
+Received: (qmail 6128 invoked from network); 27 Feb 2026 20:22:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1772223730; x=1772310130; bh=S
+	wcdhDzJeOr9aqJzyWDhRQnc5BVv046HByg+7MtfH1A=; b=hVmkTIhp+NVJBwv3O
+	9uVBH9eeNBJ+3/68RHo4LpX+TiwaQMUTbAcg3EjHeVlBsWtTjBKxomzb/BvUnrHX
+	MaQekDhc8JOFTFplL2lEA+VQjyIotjKYcoQX8bpf/0gFSVEMePRcZlTynOTJAQVV
+	cLE4k7K4jVXD1Zq8AOnyK7KTWK3O8Pc3tTvbNdXUbS++RksUYa4UzmC2wJRAA0Td
+	no6StBeZ8iKsJybW25JCcUioP8UZmB8gmfBJnslEc2UUoQzqRH7qFNT8jMHJwfL+
+	ZSAEYpHv7+prffwb25lHRHE3AydzgdaUbE+QVb69PmaxWHJk+k4KCK1EVyTEIrG0
+	OXkPg==
+X-ME-Sender: <xms:8vyhafEmvIwfCJLMtRPcGxmELcKQDqAv6dnK69OI22x_Z863h7dspQ>
+    <xme:8vyhaSW62LPJpTm-M_guVPvKxI3KnyMoNAh-UfQwZjAO6x-qiWBbJSrMFtsh0QdLl
+    o5ywB6buRh0gLTJjXVSaqan1-6vjH3N4hjiz5IbpHMHbCuG9QdO>
+X-ME-Received: <xmr:8vyhaex16S5HmF6i1xRyPsMdJISeoD3xqXgHS8c8J0sGvNLrVceDEFi4bbUouuo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeelleegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfufhfvhfgjtgfgsehtkeertd
+    dtvdejnecuhfhrohhmpeftohgsvghrthcutfhothhhvghnsggvrhhguceorhhrfihosegt
+    phgrnhdrohhrgheqnecuggftrfgrthhtvghrnhepgfegheelhfefgfejvdefudfftedvle
+    ffvedvheetffdvfffhhfdukeehveevveejnecuffhomhgrihhnpehmvghtrggtphgrnhdr
+    ohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheprhhrfihosegtphgrnhdrohhrghdpnhgspghrtghpthhtohep
+    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhsshdqshgvtghurhhithihse
+    hlihhsthhsrdhophgvnhifrghllhdrtghomhdprhgtphhtthhopehtohhkuhhhihhrohhm
+    odgtphgrnhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:8vyhaYOGwz7ab6mhe1OUPMDjEcDXKyefzIU6IWwbHl7qg8nbYT72rw>
+    <xmx:8vyhaX51pOgu9tsIpLT4lrGw6glR0QjpQ6sW-21FIFG4kaJJM_WDTA>
+    <xmx:8vyhaRMmVQFEybiNs_v10SvYTj2x0WVxf9hObYU9Y33mN8Fq8VLClQ>
+    <xmx:8vyhadn6joCRSEJFIurt_8Q176OFNU3u1wy3TFsl_PTcja3kQz_2xw>
+    <xmx:8vyhaQS8HVIJKYulPw-AA7Ljr9tXWosabjAB0yHcO9ncZWZFzLPxpQ>
+    <xmx:8vyhaVWbfCtcA-z74mkJk5O6-vgzCLPyhdy6t8ANSMLYaPMitkZlA8aOhWS6>
+Feedback-ID: ia0f04183:Fastmail
+Message-ID: <fb84b191-9a86-400b-b4a0-5ec9656b05a5@cpan.org>
+Date: Fri, 27 Feb 2026 20:22:08 +0000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+References: <76d2d6c0-4afb-4337-8461-c608188aeea8@cpan.org>
+To: oss-security@lists.openwall.com
+From: Robert Rothenberg <rrwo@cpan.org>
+In-Reply-To: <76d2d6c0-4afb-4337-8461-c608188aeea8@cpan.org>
+X-Forwarded-Message-Id: <76d2d6c0-4afb-4337-8461-c608188aeea8@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] Fwd: CVE-2018-25160: HTTP::Session2 versions through 1.09 for Perl
+ does not validate the format of user provided session ids, enabling code
+ injection or other impact depending on session backend
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+========================================================================
+CVE-2018-25160                                       CPAN Security Group
+========================================================================
 
-> If "PK\x05\x06" signature is located at end of `buf`
-> variable, it will read out-of-bound `buf` variable and copy to
-> `locator`.
-> 
-> https://bugs.php.net/bug.php?id=71498
-> https://git.php.net/?p=php-src.git;a=commit;h=a6fdc5bb27b20d889de0cd29318b3968aabb57bd
+         CVE ID:  CVE-2018-25160
+   Distribution:  HTTP-Session2
+       Versions:  through 1.09
 
-Use CVE-2016-3142.
+       MetaCPAN:  https://metacpan.org/dist/HTTP-Session2
+       VCS Repo:  https://github.com/tokuhirom/HTTP-Session2
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJW5j5TAAoJEL54rhJi8gl5DhgQAIB326lNzHLeRy16mjDXg0Dm
-JkKHcv92P5w3NQUOyZbO0HkRqxCrlEcf5x6qhO0ShhuAe4m/3qS0HHugKHbabALV
-nsFSUjoiodWChNdFS9qHznv2sPUvuNujbJludULqNKSHbZm7sqwrOHIos6TXEqWr
-/9ALj350BvarXe4f12esAWWLYyFoqhY09EheHd3TU8IxK0Rk9uCUDNNrfju4e/Q1
-fmHe2zMBvJ8bKVqazp6FSg0hkigSkZyMQ7Iz3NePrIGcKe7t1nMcP9T6T5oAmtHy
-hfmnplpJ/cBjUFDwYCp467CdIm7pH9d/5GgoewCXMH8LJv4MPR/aVxSyPDVExFy3
-8q1eH1ziIr/NjMYTmIB9y6OtSaW6A8Qh9oU9trXgTihQzR3ZY/G5iDB/w8EZ7lcn
-3iPUkWC2SQBUqZUY3xSTViF/uI5CvbkAmSbExJmj1b4XCd1lzKo+LxQ2dvAKEGuk
-Iy7WYUO/toCVAOrnB2acBGp4dY8CJWPPKol7rDVctBS2DHzp/oHokpA9m5Q0x+91
-AUUbgQbb+/Tpo+YvDq3LZ1+cEgWH4Ge3HvjjdJczNZ+gmCv1Mte8vk4zwRGwyPwG
-BfngJsGqwnU6SJnXahIuRF+OMpeLY4mgMHxSrvoQSJIe3c+wtVz+GOWr7jgOHxZH
-k4UsurZYNZpUmtXRpAkZ
-=+dfJ
------END PGP SIGNATURE-----
+HTTP::Session2 versions through 1.09 for Perl does not validate the
+format of user provided session ids, enabling code injection or other
+impact depending on session backend
+
+Description
+-----------
+HTTP::Session2 versions through 1.09 for Perl does not validate the
+format of user provided session ids, enabling code injection or other
+impact depending on session backend.
+
+For example, if an application uses memcached for session storage, then
+it may be possible for a remote attacker to inject memcached commands
+in the session id value.
+
+Problem types
+-------------
+- CWE-20 Improper Input Validation
+
+Workarounds
+-----------
+Upgrade to version 1.10 or later.
+
+Use a session storage module that offers protection against command
+injections, such as Cache::Memcached::Fast::Safe.
+
+
+Solutions
+---------
+HTTP::Session2 has been deprecated since version 1.11, users are
+recommended to migrate to a different solution.
+
+
+References
+----------
+https://github.com/tokuhirom/HTTP-Session2/commit/813838f6d08034b6a265a70e53b59b941b5d3e6d.patch
+https://metacpan.org/release/TOKUHIROM/HTTP-Session2-1.10/source/Changes
+https://metacpan.org/pod/Cache::Memcached::Fast::Safe
+
+Timeline
+--------
+- 2018-01-26: version 1.10 HTTP::Session2 released with fix.
+- 2026-02-24: version 1.11 HTTP::Session2 deprecated.
+
+
+
