@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2672" "Thursday" "19" "March" "2015" "20:45:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150320004509.C29C252E033@smtpvbsrv1.mitre.org>" "59" "[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001" nil nil nil "3" "2015032000:45:09" "[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001" (number mark "        cve-assign@m Mar 19   59/2672  " thread-indent "\"[oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001\"\n") "<CAMYtjAqttknkzUKC50cK1gGXQr+M=Gnjd2Sv3au56F9QDbN_Rw@mail.gmail.com>" ("<CAMYtjAqttknkzUKC50cK1gGXQr+M=Gnjd2Sv3au56F9QDbN_Rw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19601 invoked by uid 550); 20 Mar 2015 00:45:22 -0000
+Received: (qmail 30288 invoked by uid 550); 27 Feb 2026 21:42:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,72 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19577 invoked from network); 20 Mar 2015 00:45:21 -0000
-In-Reply-To: <CAMYtjAqttknkzUKC50cK1gGXQr+M=Gnjd2Sv3au56F9QDbN_Rw@mail.gmail.com>
-Message-Id: <20150320004509.C29C252E033@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Thu, 19 Mar 2015 20:45:09 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE requests for Drupal Core - Moderately Critical - Multiple Vulnerabilities - SA-CORE-2015-001
-To: pere@orga.cat
+x-ms-reactions: disallow
+Received: (qmail 30247 invoked from network); 27 Feb 2026 21:42:34 -0000
+Date: Fri, 27 Feb 2026 22:40:47 +0100
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aaIPX8vdZhmlp9at@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Heap-based Buffer Underflow in Emacs tags parsing
+ affects Vim < 9.2.0075
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Heap-based Buffer Underflow in Emacs tags parsing affects Vim < 9.2.0075
+========================================================================
+Date: 27.02.2026
+Severity: Medium
+CVE: CVE-2026-28419
+CWE: Heap-based Buffer Underflow (CWE-124) / Out-of-bounds Read (CWE-125)
 
-> Access bypass (Password reset URLs - Drupal 6 and 7)
-> Password reset URLs can be forged under certain circumstances,
-> allowing an attacker to gain access to another user's account without
-> knowing the account's password.
+### Summary
+A heap-based buffer underflow exists in Vim's Emacs-style tags file 
+parsing logic. When processing a malformed tags file where a delimiter 
+appears at the start of a line, Vim attempts to read memory immediately 
+preceding the allocated buffer.
 
-Based on the
-http://cgit.drupalcode.org/drupal/commit/?id=8e54eca05a65c6231b02510e1917af0c9191e549
-changes, we think that there is a single underlying issue in which the
-attack vector seems to be essentially expressed by:
+### Description
+The vulnerability is located in the `emacs_tags_parse_line()` function 
+in `src/tag.c`. When parsing Emacs-style tags that use the "second 
+format" (where the tag name is not explicitly provided), the code 
+attempts to isolate the tag name by scanning backward from the `0x7f` 
+delimiter.
 
-  $attack_reset_url = str_replace("user/reset/{$user1->id()}",
-                                  "user/reset/{$user2->id()}", $reset_url);
+If the `0x7f` delimiter is located at the very beginning of the line 
+(`p_7f == lbuf`), the pointer arithmetic `p = p_7f - 1` results in a 
+pointer that precedes the start of the heap-allocated buffer. The code 
+then dereferences this pointer in the `vim_iswordc()` check before 
+verifying the buffer bounds, leading to an out-of-bounds read.
 
-regardless of the Drupal version -- i.e., 6.x, 7.x, or an unreleased
-8.x version. (For purposes of determining the correct number of CVE
-IDs, it is probably not relevant that 6.x and 7.x have different ways
-in which problematic accounts may have been created.)
+### Impact
+An attacker who induces a user to perform a tag lookup using a crafted 
+Emacs tags file can trigger a 1-byte out-of-bounds read. This can lead 
+to a crash (Denial of Service).
 
-Use CVE-2015-2559.
+The severity is rated **medium** because it is a 1-byte read-only 
+underflow and requires user interaction with a malicious file.
 
+### Acknowledgements
+The Vim project would like to thank GitHub users ehdgks0627 and 
+un3xploitable for identifying the vulnerability and providing a 
+proof-of-concept.
 
-> Open redirect (Several vectors including the "destination" URL
-> parameter - Drupal 6 and 7)
-> Under certain circumstances, malicious users can use the destination
-> URL parameter to construct a URL that will trick users into being
-> redirected to a 3rd party website, thereby exposing the users to
-> potential social engineering attacks.
+### References
+The issue has been fixed as of Vim patch 
+[v9.2.0075](https://github.com/vim/vim/releases/tag/v9.2.0075).
 
-This one might be more complicated for CVE assignment. If a single
-change to a single piece of code addressed all of these open-redirect
-issues, then a single CVE ID may be possible. However, it appears that
-the situation might be a series of related problems that were found in
-different places (and possibly different versions) by different
-people. https://www.drupal.org/SA-CORE-2015-001 lists two external
-discoverers, as well as discoverers from the Drupal Security Team. As
-an example, suppose that there were three independent reports, and
-each report included three unique affected parameters: one of which
-existed only in 6.x, one of which existed only in 7.x, and one of
-which existed in both 6.x and 7.x. That would have 9 CVE IDs.
+[Commit](https://github.com/vim/vim/commit/9b7dfa2948c9e1e5e32a5812)
+[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-xcc8-r6c5-hvwv)
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVC20XAAoJEKllVAevmvmsY2UH/3H4RpFVSHhCL/TT1XA2aV9q
-IqXTfWqJb2CXDbb/zPFPyf5fWihmwB222+mLgIUfxuGIJ3QM2/rr39rYFQmMEvrG
-dkVOBiAb8napQy4hmpIOzcqav9PUBLIocRVM1Z+qDC8GM0HC55RgZyKVRKlp8UWF
-ljIyfMKJI22SR5SQNl/kyaf3NYx7cpSNq8G45mn12aegUgifrHL/HEiF+E1SerjQ
-N14t4HVCDoaIMCA5DIclIyLGeSJQrBuP4kvJsQA9P951ksk9K0GU5X06tlCQRRTg
-jN6uZ8a2LZ1zGydXsLdnk+EtY2Tf69Cdbs9xUJ4rd2W9vhhF3zWAoaviDxvEcKw=
-=bJNA
------END PGP SIGNATURE-----
+Thanks,
+Christian
+-- 
+Ein edler Mensch zieht edle Menschen an und weiß sie festzuhalten.
+		-- Johann Wolfgang von Goethe (Torquato Tasso)
