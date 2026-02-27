@@ -1,4 +1,4 @@
-Received: (qmail 5907 invoked by uid 550); 25 Dec 2023 22:09:02 -0000
+Received: (qmail 32763 invoked by uid 550); 27 Feb 2026 21:42:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,123 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5423 invoked from network); 25 Dec 2023 22:08:44 -0000
-Date: Mon, 25 Dec 2023 23:09:25 +0100
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 32706 invoked from network); 27 Feb 2026 21:42:48 -0000
+Date: Fri, 27 Feb 2026 22:41:01 +0100
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20231225220925.GA17188@openwall.com>
-References: <ZSyUUSF_-3YbT14k@workstation> <20231016080850.GF10758@suse.de> <2023101612-snare-dart-c7cf@gregkh> <ZS1CSkbTjDYdGq8F@itl-email> <2023101622-imply-tidal-b6cf@gregkh> <ZS1UPsZo1VyHDAkV@itl-email> <CAMr=8w4N87t24jrRzw+hLHnhB9EoYDtjgic8yVPBqv6jJY_ZvA@mail.gmail.com> <20231223181636.GA8305@openwall.com> <CA+-XxSE0v4B32UjrVZgu5WUpTb+78W3zpupnoJq4FeR3omPGSg@mail.gmail.com> <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <aaIPbS8JzoWltKS3@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAN_LGv2C4DNFaK2TRA5upQuwaP=SY3K6zzOzp7zT8J-k1HaM0Q@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] linux-distros membership application of openEuler
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Heap-based Buffer Overflow and OOB Read in :terminal
+ affects Vim < 9.2.0076
 
-Hi Alexander, Igor, and all -
+Heap-based Buffer Overflow and OOB Read in :terminal affects Vim < 9.2.0076
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Date: 27.02.2026
+Severity: Moderate
+CVE: CVE-2026-28420
+CWE: Heap-based Buffer Overflow (CWE-122) / Out-of-bounds Read (CWE-125)
 
-On Sun, Dec 24, 2023 at 09:43:06PM +0800, Alexander E. Patrakov wrote:
-> Thanks for the summary that you posted. I have read it carefully and
-> found a phrase, "an isolated one application like that so far", that
-> effectively says that this legal issue regarding communications to
-> sanctioned entities is *new*.
+### Summary
+A heap-based buffer overflow WRITE and an out-of-bounds READ exist in=20
+Vim=E2=80=99s terminal emulator when processing maximum combining character=
+s=20
+from Unicode supplementary planes.
 
-What I meant is that it's the first time this was brought up as a
-concern about a new member application.
+### Description
+The vulnerabilities are located in handle_pushline() in src/terminal.c.=20
 
-> Could you please recheck that it is indeed the case?
+1) Heap Overflow: Vim reserves 21 bytes (MB_MAXBYTES) per cell via=20
+ga_grow(). This assumes characters stay within the BMP (3 bytes max).=20
+However, a cell can contain up to 6 characters from supplementary planes=20
+(4 bytes each). This requires 24 bytes, causing a 3-byte heap overflow=20
+during conversion.
 
-I (or anyone) could check oss-security list archives to see if a similar
-concern was possibly brought up before, but I think I'd have remembered
-if this were the case.
+2) OOB Read: The loop iterating over cell characters fails to check the=20
+boundary of the vterm_screen_cell_t.chars array. When a cell is fully=20
+populated, the loop condition reads index 6 of a 6-element array.
 
-> The question formally arises because there are Alt
-> Linux representatives on the list already, and I do not know if there
-> are US sanctions against them.
+### Impact
+An attacker who can control the output of a program running inside a Vim=20
+:terminal buffer can trigger a heap buffer overflow. This can result in=20
+a crash (Denial of Service) or potential memory corruption.
 
-As far as I'm aware, there are currently no US sanctions against them.
+### Acknowledgements
+The Vim project would like to thank the reporter Github users ehdgks0627=20
+and un3xploitable for identifying the vulnerability and providing a=20
+proof-of-concept.
 
-Also, as I pointed out, even the US sanctions against Huawei don't seem
-to apply to what we're doing, per LF's public statement and per my own
-reading (but I am not a lawyer).
+### References
+The issue has been fixed as of Vim patch=20
+[v9.2.0076](https://github.com/vim/vim/releases/tag/v9.2.0076)
 
-However, that might not be enough to prevent people from being concerned
-and discouraged from participating if openEuler joins.  This is why I
-suggested that it's best if openEuler does not join now, and that people
-who had commented before could want to say whether their concerns are
-now sufficiently addressed or maybe not.
+[Commit](https://github.com/vim/vim/commit/bb6de2105b160e729c34063)
+[Github Advisory](https://github.com/vim/vim/security/advisories/GHSA-rvj2-=
+jrf9-2phg)
 
-> Also, Igor has communicated an important note about the mandatory
-> disclosure of vulnerabilities to the Chinese government. Therefore, a
-> question arises: is the Chinese government the only one that requires
-> this?
-
-These are valid concerns.
-
-Per my reading, the EU CRA (which isn't final yet and isn't in effect
-yet) is going to require something related, but different.  The proposal
-from 2022:
-
-https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:52022PC0454
-
-includes the below:
-
-"The manufacturer shall, without undue delay and in any event within 24
-hours of becoming aware of it, notify to ENISA any actively exploited
-vulnerability contained in the product with digital elements."
-
-"The manufacturer shall, without undue delay and in any event within 24
-hours of becoming aware of it, notify to ENISA any incident having
-impact on the security of the product with digital elements."
-
-"Manufacturers shall, upon identifying a vulnerability in a component,
-including in an open source component, which is integrated in the
-product with digital elements, report the vulnerability to the person or
-entity maintaining the component."
-
-As you can see, this separates "actively exploited vulnerability" and
-"incident" requiring timely reporting to a government agency vs. "a
-vulnerability" requiring (not so timely) reporting to upstream.  When a
-vulnerability is actively exploited, we'll generally want to publish it
-within 24 hours anyway, and we generally want to notify upstream anyway,
-so EU list members would probably be able to comply with these while
-meeting our usual policy as well.
-
-I'm not currently aware of related legislation elsewhere, but I would be
-unsurprised if it exists.
-
-Overall, I am concerned about this trend towards more government
-oversight.  While we also have our policies, we do not have a monopoly,
-so if folks disagree they can choose not to participate or set up
-something different, whereas with laws opting-out is much harder.
-
-> Can existing list members certify that they do not have any
-> requirement placed upon them by the applicable laws to disclose the
-> postings beyond what is permitted by the list policy - i.e., "at
-> anywhere beyond the need-to-know within your distro's team"?
-
-We might not want to require that.  It may be sufficient that they
-certify they don't violate the list policy, so that if they take a legal
-risk it's on them and it's not increased by us having made that request.
-
-> On Sun, Dec 24, 2023 at 2:50 AM Igor Seletskiy <i@cloudlinux.com> wrote:
-> > Based on what I know, in 2021, China passed a legislature that requires
-> > people to disclose vulnerabilities to the Chinese government within 2 days.
-> > I don't have a good grasp on the actual terms/conditions, but based on this:
-> > https://www.chinalawtranslate.com/en/product-security-vulnerabilites/
-> >
-> > *(2) Infomation on the relevant vulnerabilities shall be reported to the
-> > Ministry of Industry and Information Technology's network security threat
-> > and vulnerability information-sharing platform within 2 days; The content
-> > sent shall include the name, model number, and version of the products in
-> > which network product security vulnerabilities exist, as well as the
-> > vulnerability's technical characteristics, threat, scope of impact, and so
-> > forth.*
-> >
-> > I read it as adding Chinese entities or residents to the list would force
-> > them to disclose a subset of security vulnerabilities to the Chinese
-> > government before public disclosure.
-
-Ouch.  This does look more problematic than the proposed EU CRA wording.
-
-Alexander
+Thanks,
+Christian
+--=20
+Bei uns wird Hand in Hand gearbeitet: Was die eine nicht schafft, l=C3=A4=
+=C3=9Ft
+die andere liegen. Was keiner kann, das kann ich auch!
