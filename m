@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["786" "Friday" "23" "July" "2021" "22:14:14" "+0200" "Jakub Wilk" "jwilk@jwilk.net" nil "21" "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil "7" nil nil (number mark "U       jwilk@jwilk. Jul 23   21/786   " thread-indent "\"Re: [oss-security] ipython3 may execute code from the current working directory\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] ipython3 may execute code from the current working directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19492 invoked by uid 550); 23 Jul 2021 20:14:28 -0000
+Received: (qmail 32608 invoked by uid 550); 27 Feb 2026 21:59:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,130 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19468 invoked from network); 23 Jul 2021 20:14:27 -0000
-Authentication-Results: garm.ovh; auth=pass (GARM-102R00414e2446a-5646-43b1-8098-863b831748f2,
-                    44FE704B7B11FEBC08C4C9789B2F12B64C1D527C) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp: 94.254.184.115
-Date: Fri, 23 Jul 2021 22:14:14 +0200
-From: Jakub Wilk <jwilk@jwilk.net>
-To: <oss-security@lists.openwall.com>
-Message-ID: <20210723201414.lnpdaxfnxiremhsp@jwilk.net>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <CAGUWgD9MsQts5_jV9=nr8X6mwZyW-NU2JzYnosdMqQ0G06nH6w@mail.gmail.com>
- <20210722113545.hewzinrjmy7jon6c@jwilk.net>
+x-ms-reactions: disallow
+Received: (qmail 3686 invoked from network); 27 Feb 2026 20:21:47 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.net; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1772223697;
+	 x=1772310097; bh=P12zPb+QMKzBH0rjckv4OjOdkii1caQ1XNL79lZeHuA=; b=
+	gHmVW3bognAcLSp/b9SZZ5Sa54yQZchdLmBb1Pkb4fnf5l/+p0Do+zKIsx7q0eTU
+	VvF6v8ZlMaWE2vmMNfJYvvlQyemK1Z8I1u93XXnjDaf82DB0oO2ZSAxm+4H4o1hK
+	uR5iTKZkcmT/1JS25mGd7/cfyG9CPMJyrjLKIEUW23uc2ja/esPetw9xoYj48O8Q
+	Kkk4VPEdtQEsTw2hS8pwVS1lfYvWhim564O7u5e5zTUqPYIsqC3SF7lmSXkHrdbY
+	mgvuvzrIFSq9sCgpttiW+hyrWUGSghhoi9jwxwsaTn21xg2bjMOBf9ipQiPc2iIe
+	YRdiTK2ITpTYNytXl5/JnQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1772223697; x=1772310097; bh=P
+	12zPb+QMKzBH0rjckv4OjOdkii1caQ1XNL79lZeHuA=; b=ZUsDnZSJM9S0sbQkG
+	grE46dCpa2p914LRihv5qKGqgtl1/a+pIMqBAIbQaVx5DiXWNBCXnq/20EqO9pet
+	AHnS6qTwbqW/RiE+KwQKoecEJnW1hJR3oP7HFvD+Yi+/m+7kJb3mssaN9J9zYErA
+	2bx7zxu7jPHngcSh8K2i2WAiL2OIXuL+MQbo113zsLbyr6kFye7nyKlRj59ZoWHT
+	QugVrCm7heyEkp13msKWxI+f7NBEtnMzEfHfWxIa9ZdOa6SThsI7m8yc6PpF8QET
+	ZTCRmnbG3YfuCPc/Od/GUWCQ7ZxI3bX1CZHHok1UulW+efuqhx+Ik0UnsHxsp8v1
+	lJm2Q==
+X-ME-Sender: <xms:0fyhaXV_JIvuJDKysAyx27_M0xouRypqSdzYbhM2KgWR60p0z6yLjw>
+    <xme:0fyhaVkCfdcQ2hy2rfPVA62mSK99VU_MeZqBq00Ymw8aTiuKtphxZVDz3jY9cZavO
+    eLJlg9MQbV9BCQg473UklfQz8BuLm9fL6ctqKO8xC085-SuvgVL>
+X-ME-Received: <xmr:0fyhaRDsqpyrVhe0f0Kblto72r80y4tyy4tHVQIyVd-3jtKum6Zs-O5rDYKew08>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeelleegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfufhfvhfgjtgfgsehtkeertd
+    dtvdejnecuhfhrohhmpeftohgsvghrthcutfhothhhvghnsggvrhhguceorhhosgesfhgr
+    shhtmhgrihhlrdhnvghtqeenucggtffrrghtthgvrhhnpeevtefhudevfeekueeigfekud
+    dtlefgfeelgfegleeutdetleehfeeiieegudfhleenucffohhmrghinhepmhgvthgrtghp
+    rghnrdhorhhgpdhgihhthhhusgdrtghomhdprhgrnhguohhmrdhpmhdpshgvrhhvvghrsh
+    htohhrvgdrphhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomheprhhosgesfhgrshhtmhgrihhlrdhnvghtpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishht
+    shdrohhpvghnfigrlhhlrdgtohhmpdhrtghpthhtohepthhokhhuhhhirhhomhdotghprg
+    hnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:0fyhadcrd-tl3PyZbz_g4T59SawD2pvZOaPxSZamU8v28vftrFrIhw>
+    <xmx:0fyhaUJSGxl1hbsjGKn_Ua7qIWmO4EdV7B_C3lFY9sTVAll1GZVINA>
+    <xmx:0fyhaYc9-eqOXsAOqu8TTQnSZm3lYDTkPl5bLFOCRb0TKKGuUYalzA>
+    <xmx:0fyhaT0vb583wSNb0eH_LvdbsolZqFJi7s9vQ5RXCrHnQ5qyqJ9ETw>
+    <xmx:0fyhaSRjkFWngG-iZ3sQiL2h6pX-4hOFbF0KVdHghd4rNf9KAcKAvfDf>
+Feedback-ID: ia82c4180:Fastmail
+Message-ID: <42bf17c9-52d0-4635-b1a0-5591b225b90d@fastmail.net>
+Date: Fri, 27 Feb 2026 20:21:36 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20210722113545.hewzinrjmy7jon6c@jwilk.net>
-User-Agent: NeoMutt/20180716
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG6EX2.mxp6.local (172.16.2.52) To DAG4EX2.mxp6.local
- (172.16.2.32)
-X-Ovh-Tracer-GUID: 075107bd-9908-4c62-bbf1-75afc4189f41
-X-Ovh-Tracer-Id: 2528489716037768983
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrfeekgddugeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucenucfjughrpeffhffvuffkfhggtggujggfihesthdtredttdervdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepteevgfevhffhvefgueekteeuieeigfehueeuieehkedvgedvfffflefhgeekuddunecuffhomhgrihhnpehgihhthhhusgdrtghomhdpshhhvghllhgrphhprdhphidprhgvrgguthhhvgguohgtshdrihhonecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpqdhouhhtpdhhvghlohepmhigphhlrghniedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-Subject: Re: [oss-security] ipython3 may execute code from the current
- working directory
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+References: <c8787214-2532-4f7f-8357-2a8258825ee9@cpan.org>
+To: oss-security@lists.openwall.com
+From: Robert Rothenberg <rob@fastmail.net>
+In-Reply-To: <c8787214-2532-4f7f-8357-2a8258825ee9@cpan.org>
+X-Forwarded-Message-Id: <c8787214-2532-4f7f-8357-2a8258825ee9@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2026-3255: HTTP::Session2 versions before 1.12 for Perl may
+ generate weak session ids using the rand() function
 
-* Jakub Wilk <jwilk@jwilk.net>, 2021-07-22, 13:35:
->* Georgi Guninski <gguninski@gmail.com>, 2021-07-22, 11:52:
->>Summary: under certain circumstances, ipython3 may execute code from 
->>the current working directory.
->
->Looks like this might be intentional? Or at least there's an option to 
->turn off this behavior:
->
->https://github.com/ipython/ipython/blob/7.25.0/IPython/core/shellapp.py#L219
->https://ipython.readthedocs.io/en/stable/config/options/kernel.html#configtrait-InteractiveShellApp.ignore_cwd
+========================================================================
+CVE-2026-3255                                        CPAN Security Group
+========================================================================
 
-On a second thought, --ignore-cwd is a relatively new invention (added 
-in 7.13.0, I think), ...
+         CVE ID:  CVE-2026-3255
+   Distribution:  HTTP-Session2
+       Versions:  before 1.12
 
->However, in some Debian packages (at least 5.8.0-1 from Debian 
->buster), even --ignore-cwd doesn't help,
+       MetaCPAN:  https://metacpan.org/dist/HTTP-Session2
+       VCS Repo:  https://github.com/tokuhirom/HTTP-Session2
 
-...so it couldn't have been used in this old version.
 
--- 
-Jakub Wilk
+HTTP::Session2 versions before 1.12 for Perl may generate weak session
+ids using the rand() function
+
+Description
+-----------
+HTTP::Session2 versions before 1.12 for Perl for Perl may generate weak
+session ids using the rand() function.
+
+The HTTP::Session2 session id generator returns a SHA-1 hash seeded
+with the built-in rand function, the epoch time, and the PID. The PID
+will come from a small set of numbers, and the epoch time may be
+guessed, if it is not leaked from the HTTP Date header. The built-in
+rand() function is unsuitable for cryptographic usage.
+
+HTTP::Session2 after version 1.02 will attempt to use the /dev/urandom
+device to generate a session id, but if the device is unavailable (for
+example, under Windows), then it will revert to the insecure method
+described above.
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Upgrade to version 1.12 or later.
+
+
+Solutions
+---------
+HTTP::Session2 has been deprecated since version 1.11. Migrate to a
+different solution.
+
+
+References
+----------
+https://metacpan.org/release/TOKUHIROM/HTTP-Session2-1.11/source/lib/HTTP/Session2/Random.pm#L35
+https://metacpan.org/release/TOKUHIROM/HTTP-Session2-1.01/source/lib/HTTP/Session2/ServerStore.pm#L68
+https://metacpan.org/release/TOKUHIROM/HTTP-Session2-1.12/changes
+https://github.com/tokuhirom/HTTP-Session2/commit/9cfde4d7e0965172aef5dcfa3b03bb48df93e636.patch
+
+Timeline
+--------
+- 2014-07-31: version 1.02 HTTP::Session2 released that attempts to use
+   /dev/urandom.
+- 2026-02-24: version 1.11 HTTP::Session2 deprecated
+- 2026-02-26: version 1.12 HTTP::Session2 released with a fix with a
+   portable solution.
+
+
+
