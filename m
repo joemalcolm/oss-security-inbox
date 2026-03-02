@@ -1,4 +1,4 @@
-Received: (qmail 23837 invoked by uid 550); 4 Nov 2022 00:28:32 -0000
+Received: (qmail 29980 invoked by uid 550); 2 Mar 2026 16:34:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,156 +7,117 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23815 invoked from network); 4 Nov 2022 00:28:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	invisiblethingslab.com; h=cc:cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm3; t=1667521697; x=
-	1667608097; bh=5U2MDxQz7aCwOHjGieUTHEAgcM9qUOKHvx3oGry95DA=; b=j
-	6plzKrv+dYOzUhRy450H7t2zMbOXq1Iqzd3Ya3mvwM//GiGgbkDq7ti15CG/VvWl
-	4JpIU4AeGSAZSffnZqE2Fs0ZxpnQX2jhTlE/lduAqAtV6ZLDx8zqb7C18H2d6nt/
-	zoTw2CLghtOKMr0firkzmC13IpBDxpP6jhyQpD1nL90pgQFGC6NerH6OqB0RqGWo
-	Ym5QVA5bjocXQrz9lOo0YW9r3qBhMdHRSihTJ4ofZh4LUbeCp/Si9PoU4Fwi8j3u
-	iJ9PlLswh1VobYNmUc+neCtJ3QRbUgIEUTlRpKIApd37ljXnXviBtG0MKU1wRnXB
-	ouEcJ+XBfdV5VZnqQ1AoA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1667521697; x=1667608097; bh=5U2MDxQz7aCwOHjGieUTHEAgcM9q
-	UOKHvx3oGry95DA=; b=Cwe8pIPwzYLVhsSbk2JGob6uAmDVjTiCUT40u6gm6k6P
-	ANWKv+W1B7Jw8bbroBE+uO32LIX+vmBOevWmZxdBQB3Ugs24xvQtC3jSHJ03+Wk9
-	u5G7LPL8iYLG5GGdQU8v7B8m30T8YGK6waZdly1mrk7AxIPcBkAAGMtUU9GELRar
-	u1DPR+mWx5kFL0160ZnW1fFWFiaA2KxuIiZO3dQh6sq5WfXBxshWrwUgY+/49FlR
-	r6tm80plAGD4wibV54R4oZW9yd/W5W0olX88Akpr/n/xwEXaJGNonjIHEuZ/o+S/
-	SCU4KCDqZBZrvTV9f/BTJ6TSz9PXruqHHJYNlKiBtw==
-X-ME-Sender: <xms:oVxkY4n4Bl1m_cZc5erflV6joY9jZEM_AtnTzTBLbIhfITlP8jYtLQ>
-    <xme:oVxkY30EhRMSbVPw2GGmYABxDZb1U0LYFIR5cWvbpFqy-iJFG8ESRUPAP9YiUwUKh
-    3dbgmDA0lahJ_E>
-X-ME-Received: <xmr:oVxkY2qPR1K8Ta64xXZsQe0SZB_JMrhzHQDiH32pI_oJiZKMUOwi14f5ikEy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvddtgddvvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeffvghmihcu
-    ofgrrhhivgcuqfgsvghnohhurhcuoeguvghmihesihhnvhhishhisghlvghthhhinhhgsh
-    hlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeduieelfeeutedvleehueetffejgeej
-    geffkeelveeuleeukeejjeduffetjeekteenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpeguvghmihesihhnvhhishhisghlvghthhhinhhgshhl
-    rggsrdgtohhm
-X-ME-Proxy: <xmx:oVxkY0m47LlydJDtpnXtlI5_f1o76vwOSiiTg3DIDaM09-NovgUHXg>
-    <xmx:oVxkY23R60QdCFsHjGd7FvwEagmdnrrYfVeYA5Uel8C8DSxDOBe6PQ>
-    <xmx:oVxkY7u18k2vVqF6N4KGGr7HsVbYH2XJUtYK7XPurHoBM_inl6etaw>
-    <xmx:oVxkY79v68VLeaS9fB3aAWP6yArJkP1DoL068lTyA01cqU0KY59FTw>
-Feedback-ID: iac594737:Fastmail
-Date: Thu, 3 Nov 2022 20:28:10 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
-To: oss-security@lists.openwall.com
-Cc: nic.tuv@gmail.com, Hanno =?utf-8?B?QsO2Y2s=?= <hanno@gentoo.org>
-Message-ID: <Y2RcnxVZFaql5VNo@itl-email>
-References: <20221101170833.GA10470@openwall.com>
- <20221102150921.3ab3f2d0@computer>
- <Y2K1yOB7748iGI2P@wopr>
- <tk0n6j$10pr$1@ciao.gmane.io>
- <CANm5x_MaPRcY8B6WdNM40xj8kaeqqfX2Z=EZk36MohfSk9KYNA@mail.gmail.com>
- <FFA5687C-C618-4896-A2C0-5CE992FEF632@gentoo.org>
+x-ms-reactions: disallow
+Received: (qmail 26237 invoked from network); 2 Mar 2026 13:10:29 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1772457019; cv=none;
+        d=google.com; s=arc-20240605;
+        b=KMUqbgFrAnbGW33iwM3i1BTKPph7+lN6QgyPaWGVyAcY7sJHFFUCjE0bxI0ELdHwCG
+         KCfWTJsKHH1QeZhhivOAwxGzgQqH34VQcz+YmAkLs3WZC+PlLvY8gNxywu6tYRMErIQ3
+         fH+psFZMVj+TOj5ddirIa0Gk3hkoxJOy3n01sE0p7BHariMtl6+/3Xq1N7ESMLaCc79l
+         9ZaRXsX+ZbbrQy5lbeFV3JvtO9SJDdcpGct3mT/btA81RQYTlwti6Yy1mS3O+1rJd1J9
+         lbRCo/8qypGmqa/RGrKnQDo79e+LanNUGn6nPzg6mhGJHBW0lP8gPJEcg5hB0fkb4vtp
+         3RDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=pYQmcs9EpMJHZ2RFcc44uCanPBb11dpZ1ClMDj9OZqg=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=ibfBvMkEzXICqMTs76sZtyit1llAVUgzWC0htCVBrhvSa2lebG6BcefP1qayZ6L5Um
+         Cb+FRdgsPPa2P1Ng/aNmjtt4a6LmCbuwmsD7A7fJjUeHDtA6sdPQB2wYYHbrl/aIqIPy
+         6zoEj2+Cxu7dciMQ35eK4gkZkjmPC51Ib/N8bHYRU4h+m/iBAuR9RPjl1KnOvC3X7JGP
+         UIJvDKD+ijLtRYjL2uZL1YRe9K13hN1cWQSygbf6IqF5x9O4z8vBxAP5OLxaMh9JoS9N
+         UnsyN2cnv/ghcOb81bt2LYvx+lwN3bCNWcPR/CHpHhtLQmsS4p8waMe/v1j65us3wpAy
+         HqsA==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772457019; x=1773061819; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=pYQmcs9EpMJHZ2RFcc44uCanPBb11dpZ1ClMDj9OZqg=;
+        b=JvX75lHwkXg4Nt3MD+mcEUqOoJ18Ah34yjYT3ROuzyOqg9ngiatxr+loMIFcqRWUyA
+         3WfYn7hN8JKpegRYJEBLJkrhKTckvIjbHaEWz/4fHt5QlYI9/cHp8SFJvIYi9DUNcmMc
+         QsWXFngyHUiHA/7KsRJQoy/D+1bd2fMVi0HhPk9x1kdoy5mfXelZRtnMMT5Nalohpp4Y
+         5jDncmJUTJxGO1nEw9596Xjn1g+pYFFG/f+Z/haO678C1jKRAK0GlWDDDslApapCUfB8
+         J+iIlusy1K00It8suh+3XrgFdTkIndj5YpBoEV44fjql0b5qcYtnMLmfN/NH6bVKdKoW
+         EV9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772457019; x=1773061819;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pYQmcs9EpMJHZ2RFcc44uCanPBb11dpZ1ClMDj9OZqg=;
+        b=IJCWXYInAQi9+YuYsTlumw9+senMb8Gol4luXZ5NVSywJ65n2mDOQ/Io3h8cKnnm+K
+         yw5I/Q0Ija2bmW84uIxBxB7obvyWeH9BZiayEsd1xHjJNyyXAm6WMbkuaUf0wT3eTn00
+         icWn7AS03WHcVdPX/qg5EHuvCaf64wkBEwQhPGJLQEQLjyh+X8sXUJp4tVYa7yjpBv+b
+         n8/7oc1ZxVbaYSJIOWKjuAw4Meo3oeJZjZbiMtW+bNAPU2nuRJTEggtLSDsBqtfJrSLA
+         +c+9qEZdoXdOUvvmQ/MZeaR43/Kmo1VocDGk+zzTZh0G6QjBYkxvDpU2RnMssBw/Lq6u
+         HZsw==
+X-Gm-Message-State: AOJu0Yx+KgSLZTOxR5NZgLqZC8YhVTdhT9Vf9VLyoTpQP0PlXJG2TDuQ
+	Vp83KXPr6r5ajGKsVpS7tk/P+RPvtDm0QLbynMGwHI2Ji0QDq3nEskp27/jojT5j3IwaQ05qJxD
+	A3dojC78G0008csIUrD+zermltBlOlvRoKFtG
+X-Gm-Gg: ATEYQzxCU2dnGzZFjYkXFVAayAE8iA7n9KuyCP6FrYJ0cQ3b7lSEKYHMM/GCOKqgGGn
+	6T+yYu+G7SIHJo4ej8H3u1pOGfKB9/4ePb7h77BphxQyNvVEwMWuQvs1p0aKMPJsylKIrV1bA8c
+	QmIke5ESwIcSH+Nq2lCWIZ6Isrb7SSpNuS+DuDGPhCNfVusg1itsPLnFQ90ZQeB7+hh7NPLmCmL
+	wCyW+hR7SXKalskRVbkd/z8sGw/zOIJel9NiPS5Ys/vrTGBiAibGafoZT5QgXHcRzv5tjsLbcmt
+	uABOBuYyI4wYbWVACC5BpsVhKPUBFwaekqr3kFTtwWWDA+egrHFj
+X-Received: by 2002:a05:6102:3583:b0:5fd:a537:a778 with SMTP id
+ ada2fe7eead31-5ff3231a87amr6489668137.10.1772457018457; Mon, 02 Mar 2026
+ 05:10:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="eisd9cXkLY2xQqCx"
-Content-Disposition: inline
-In-Reply-To: <FFA5687C-C618-4896-A2C0-5CE992FEF632@gentoo.org>
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
- Overflow (CVE-2022-3786)
-
---eisd9cXkLY2xQqCx
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 3 Nov 2022 20:28:10 -0400
-From: Demi Marie Obenour <demi@invisiblethingslab.com>
+From: Kevin Backhouse <kevin.backhouse@gmail.com>
+Date: Mon, 2 Mar 2026 13:10:07 +0000
+X-Gm-Features: AaiRm53IzwTvnQeaPpncMG-TOdOR4U-gev3pog8tYvBg_UQ-MLavcYChtuDpy7s
+Message-ID: <CAMKvgcQN1k4VLRzCumyHJTycSrvA4CUnjQQvt46a3kaXHkeR7w@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: nic.tuv@gmail.com, Hanno =?utf-8?B?QsO2Y2s=?= <hanno@gentoo.org>
-Subject: Re: [oss-security] OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer
- Overflow (CVE-2022-3786)
+Content-Type: multipart/alternative; boundary="000000000000f70708064c0a4e5c"
+Subject: [oss-security] Exiv2 version 0.28.8 released with fixes for 3 low-severity CVEs
 
-On Thu, Nov 03, 2022 at 08:23:32PM +0000, Sam James wrote:
->=20
->=20
-> > On 3 Nov 2022, at 16:32, Nicola Tuveri <nic.tuv@gmail.com> wrote:
-> >=20
-> > I can also add that at least this member of the OpenSSL Technical
-> > Committee is following the discussion, and I believe I am not the only
-> > one.
-> >=20
-> > The feedback shared here on oss-security is read and carefully
-> > considered, and I know it will be discussed within OTC to continue the
-> > ongoing process of improving the OpenSSL project and its procedures.
->=20
-> I'd like to thank the OpenSSL developers for being open to the
-> CI improvements I've been making lately.
->=20
-> >=20
-> > I totally concur with Tavis Ormandy:
-> >> this is active prolific opensource security researchers discussing the=
-ir opensource security work on the opensource security mailing list :)
-> >=20
-> > Personally, I'd like to thank you all for the feedback so far, as it
-> > is in itself a contribution to the project, even when it is harsh and
-> > reminds us of our mistakes.
-> > As long as it is kept polite and constructive, as it has been so far
-> > here, all feedback is very welcome and valuable.
->=20
-> Something I think that should be revisited is the priority
-> of undefined behaviour in the codebase.
->=20
-> Undefined behaviour can - and has [0][1] - led to misbehaviour
-> at runtime.
->=20
-> Part of living with "Modern C" is embracing the
-> techniques we have available to enhance compiler diagnostics
-> and detect problems. That includes LTO, as well, which
-> generally leads to _far_ better compiler warnings.
->=20
-> The OpenSSL codebase isn't strict aliasing clean, and in
-> Gentoo, we've built with -fno-strict-aliasing since ~2005
-> (note that -fstrict-aliasing is enabled by default with -O2
-> in GCC since at least 10 years ago).
->=20
-> If at all possible, I'd ask that the OpenSSL team revisit
-> its assessment of the severity of strict aliasing bugs
-> as well as the value of LTO in enhancing diagnostics
-> and finding bugs.
+--000000000000f70708064c0a4e5c
+Content-Type: text/plain; charset="UTF-8"
 
--fno-strict-aliasing is definitely the right call.  I use it pretty much
-everywhere, as complying with the strict aliasing rules is often just
-not worth the effort.  I suspect that wl_container_of (used in every C
-program using libwayland) may violate strict aliasing, and I am nearly
-certain X11 clients do.
---=20
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Invisible Things Lab
+Exiv2 version 0.28.8 was released yesterday (2026-03-01) with fixes for
+three CVEs:
 
---eisd9cXkLY2xQqCx
-Content-Type: application/pgp-signature; name="signature.asc"
+CVE-2026-25884: Out-of-bounds read in CrwMap::decode0x0805
+Impact: low severity, because we're only able to reproduce this with our
+fuzz target, not with the exiv2 command-line application.
+Credit: found by Google OSS-Fuzz
 
------BEGIN PGP SIGNATURE-----
+CVE-2026-27596: Integer overflow in LoaderNative::getData() causes
+out-of-bounds read
+Impact: low severity, because it is only triggered when running Exiv2 with
+an extra command line argument, like -pp. The out-of-bounds read is at a
+4GB offset, which typically causes a crash.
+Credit: found by @zerojackyi
 
-iQIzBAEBCgAdFiEEdodNnxM2uiJZBxxxsoi1X/+cIsEFAmNkXJ4ACgkQsoi1X/+c
-IsGm0g//bVBy2d9TTI6ktzxThwKgqHVZp6p/ZqGV066PsccxdXk5qx7RJhwxggDH
-5iwvomuuElrJ4k8G/JCONX+0yfmbgmB3YKqMqYiAthekBQcNmx+5JyOcwpFfZGJ4
-Aq2uXI/1qsHapaLi5+WcsyaPIxwrpoUZPGb+Mir9RXPTNi0SjT76CPpoaL//P9E+
-NdQ7f5vfTtl5j1sP+aIUtRJgosRxVNMy0TAz3U1etyHvncCY22nzdGqDuz6CfqK1
-sr3ka0YhQf+icaNEG1Y5iJSg6ztukpe7oI8KTmwmExBomfk44799oXdEWlvbtLv+
-V5xmWu2FvfSjn33+NbmbJqslw9GtzxjXI+4lN8nVoxduwSTaeoWCAkNArzvNNq9q
-3Ih79Dtn9WAZtRCy8TW+oPPCcDFvwvUoO/bYHI8tBU+Y9p0d0NJjXCseLFdaqWDe
-Axo28vH6AnQ4J2c59p9nNqP7FfQLC1Of+FVGMskvRdCZLqp7rMEnSPfQbRQOAlYl
-QBGpXBl1QX2IPSa/UqcpxK2ZP2v2pTcl2GYTqwJTGe8AF1XjCIT3YMHrhJ2Xg3+1
-OySqkvlJ27gLsn+G7vV8vNpLod2AhrRKluOt55ufaR6XE0A8jkYMTJ8kihWM9BOB
-/poxEg6w82rwCEIhAV9FpSgQAOl+X2NCzOHRH4jBz3zifFnwedc=
-=jzXL
------END PGP SIGNATURE-----
+CVE-2026-27631: Uncaught exception: cannot create std::vector larger than
+max_size()
+Impact: low severity, because it is only triggered when running Exiv2 with
+an extra command line argument, like -pp. This issue causes Exiv2 to crash
+with an uncaught exception.
+Credit: found by team Exiv2
 
---eisd9cXkLY2xQqCx--
+The second issue (CVE-2026-27596) is perhaps the most interesting because
+it looks to me like it was found by AI. I think the report looks
+AI-generated, but it's also unusual for a poc to be written in Python,
+since most Exiv2 bugs are found by fuzzing. In the past, a poc like this
+would have indicated that it was hand-crafted by a human, but these days AI
+seems more likely. Although we've rated it low-severity, it was a useful
+report to receive because it uncovered a gap in our fuzzing coverage. We
+have now added a new fuzz-target to address that gap, which is how we found
+the third issue (CVE-2026-27631).
+
+One more thing that I'd like to mention: we have stopped supporting older
+versions of Exiv2. If you haven't done so already, please consider
+upgrading to the 0.28 series.
+
+Thanks,
+
+Kev
+
+Links:
+https://github.com/Exiv2/exiv2/releases/tag/v0.28.8
+https://github.com/Exiv2/exiv2/security/advisories/GHSA-9mxq-4j5g-5wrp
+https://github.com/Exiv2/exiv2/security/advisories/GHSA-3wgv-fg4w-75x7
+https://github.com/Exiv2/exiv2/security/advisories/GHSA-p2pw-7935-c73j
+
+--000000000000f70708064c0a4e5c--
