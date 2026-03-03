@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2413" "Tuesday" "3" "November" "2015" "15:05:23" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151103200523.E8C2272E00E@smtpvbsrv1.mitre.org>" "51" "[oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2" nil nil nil "11" "2015110320:05:23" "[oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2" (number mark "U       cve-assign@m Nov  3   51/2413  " thread-indent "\"[oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2\"\n") "<5638AB3E.30209@sumptuouscapital.com>" ("<5638AB3E.30209@sumptuouscapital.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 32132 invoked by uid 550); 3 Nov 2015 20:05:35 -0000
+Received: (qmail 7966 invoked by uid 550); 3 Mar 2026 17:44:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,63 +7,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32114 invoked from network); 3 Nov 2015 20:05:35 -0000
-From: cve-assign@mitre.org
-To: kristian.fiskerstrand@sumptuouscapital.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5638AB3E.30209@sumptuouscapital.com>
-Message-Id: <20151103200523.E8C2272E00E@smtpvbsrv1.mitre.org>
-Date: Tue,  3 Nov 2015 15:05:23 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: pycurl use after free fixed in version 7.19.5.2
+x-ms-reactions: disallow
+Received: (qmail 7924 invoked from network); 3 Mar 2026 17:44:14 -0000
+Date: Tue, 3 Mar 2026 17:44:02 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aacd4nhb03hq82sK@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="GFIvdorf5KamHdNx"
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2026-003] OpenStack Vitrage: Remote code execution through
+ Vitrage query parser (CVE-2026-28370)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--GFIvdorf5KamHdNx
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> https://github.com/pycurl/pycurl/commit/602f8e364634d386524f0396e962c2c9de0536a9
-> 
-> my understanding is that use-after-free generally gets assigned a CVE
-> based on CWE 416
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+OSSA-2026-003: Remote code execution through Vitrage query parser
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-There isn't that type of direct relationship between the existence of
-a CWE ID and the availability of a CVE ID for an instance of the
-weakness. CVE, for example, involves additional decision points about
-whether the weakness is a mistake (here, yes) and about whether the
-weakness is exploitable in a way that crosses a privilege boundary
-(here, possibly not). It's also necessary that the vulnerability
-existed in something akin to "shipped code." The patch seems to be
-possibly related to "PyTuple" and the ChangeLog has "List and tuples
-are now accepted in all positions of HTTPPOST option values" for the
-same version. If the problem only existed in unshipped code between
-7.19.5.1 and 7.19.5.2 as tuple support was being developed, then it
-typically would not have a CVE ID.
+:Date: March 03, 2026
+:CVE: CVE-2026-28370
 
-> I haven't looked into the code in any detail for exploitability
+Affects
+~~~~~~~
+- Vitrage: <12.0.1, =3D=3D13.0.0, =3D=3D14.0.0, =3D=3D15.0.0
 
-Anyone is welcome to provide additional analysis. We can accept a
-threat model in which a Python script allows an untrusted person to
-control the string data for properly formed setopt calls. We probably
-can't accept an implausible threat model in which a Python script
-allows an untrusted person to make improperly formed setopt calls.
+Description
+~~~~~~~~~~~
+Khalil Lemtaffah (Nokia) reported a vulnerability in the Vitrage=20
+query parser. A user allowed to access the Vitrage API may trigger=20
+code execution on the Vitrage service host as the user the Vitrage=20
+service runs under. This may result in unauthorized access to the=20
+host and further compromise of the Vitrage service. All deployments=20
+exposing the Vitrage API are affected.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Patches
+~~~~~~~
+- https://review.opendev.org/962671 (2023.1/antelope)
+- https://review.opendev.org/962713 (2024.1/caracal)
+- https://review.opendev.org/962712 (2024.2/dalmatian)
+- https://review.opendev.org/962646 (2025.1/epoxy)
+- https://review.opendev.org/962658 (2025.2/flamingo)
+- https://review.opendev.org/962617 (2026.1/gazpacho)
+
+Credits
+~~~~~~~
+- Khalil Lemtaffah from Nokia (CVE-2026-28370)
+
+References
+~~~~~~~~~~
+- https://storyboard.openstack.org/#!/story/2011539
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2026-28370
+
+Notes
+~~~~~
+- The stable/2023.1 branch is unmaintained and will receive no new point
+   releases, but a patch for it is provided as a courtesy.
+
+--=20
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+--GFIvdorf5KamHdNx
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJWORI9AAoJEL54rhJi8gl5jNUQALG063HFSrdfMbFire7l1S+/
-GU/KMqaHAr2zM+GYNevtUyrid/B9A1wQ4WRcKE5HkGrD5OrEWwLyajdVjdnIHk9R
-qxI8nmHNQi4r2x6JUx6KuuL774NmjVU0IIJHJ6+ca6Z9ZXRI6snZWnBVxBeUerNp
-DhJiuo/VQ6fFJUrT0RrudiG7neG6ml33KsgZ0eMFQWOLejLetVoVJT5l0N9LWkJ6
-clyywFN8c+OeDjQxRfnDuvBPnzr4D+YB8US+d9suDiRR9vWHxyKMqj58rTr+UVn4
-y/NGqCpV+c8DFx64s08pKNOxKy61Sa+xHsEu3OokIpqVmbrw/aAogLrJBdE1hYBM
-oaoI8DqbO7kb2y80WEpzeSpXinpeP9dfD3p6dTtnNhfRSGUKp9vGnw1+XnPAylE6
-qm9NfSE8laViO888lCFPFcGq26bIuhzkPMaVbtv5XN3onePnZj7gSat6Bk8kRNPE
-Dwjac094EmRrvE2ve4ABEYlxxDyyazRF57BfRPUQVfgPytQX17ed1TPfTyjHTB6U
-9d4YHie9z4ud7NR+C8QZjmCIybZnaCZJBodcfIAyIpVH1OXP7a4kr0vy2FaEWA8R
-nPPqp65Y8BKdfzjKcVk1AbrDkvg/tpZAYWWM++8Yk+dunouCdnjXeJFjphmJuac1
-fKRoWuusiPUA6aACQki0
-=AH8p
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmmnHeJfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCn4OhAAr8sYeNXQZCZ7oOXoz7fnnhqv0iy/xsWbUHz93Bj0bBT2dMuo8CGZNIwb
+NfZ9KbsKz9/OVr+shpkThse0hOe7VIdjTHJPsp5KHhhZSthVYMPQvxJgQX6DjOEe
+2RxHYaq+2j6mGBKB7YJxf3miyhMGEW2Vui5MU/kDNujQATYfRnel4cVBtTTjJj7V
+8HGMkFn5EBqdFaN6dH7w70ZGClAFqMHy4wIh2PchueV1H74wBnyee7kDH9tZPMfT
+Lx4Jc1SxtvR0j1PkpMWVhCSqn2/g48+YE5viAjEfmYgpYJR+/ldtIudFwX+wIpI3
+ig7uQTL9gDQMwTqnq1frndrYgW+I4hcQyNQRRT1xBgdSzC6u0bFVza6xwbbl0eic
+FVBlsTsTrD27PNzMijavQsX8UouVIXEXfSkXoMVWWKlQGdulquzSVhE6ICBWqWDB
+zqq02GVepyWZEEZ7PAcvFCVU8n7mBNM5Wsz/tyb9AFA6yO0KzRZP6NQbzc56OThh
+c+X9RzOjg8EzdiJSFqpb69sUxoq5ko08RyyQF+Lx2tT4SPOhLBEt+EejBmHmGbTg
+sM+mfrDOJRz2A8tbILpgGvfBVCAJG/huzMBt4SYZF1YS3I2ASzRmcylRi0SU73Tx
+F7r5B4rVh5ZFboqhjhRGEBslmIaYpq3C9Oo4DKRv+/KD3Xc1sQw=
+=Taow
 -----END PGP SIGNATURE-----
+
+--GFIvdorf5KamHdNx--
