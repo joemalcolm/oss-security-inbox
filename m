@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["865" "Wednesday" "24" "February" "2016" "14:08:27" "-0500" "=?UTF-8?B?RmVybmFuZG8gTXXDsW96?=" "fernando@null-life.com" "<CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>" "26" "[oss-security] CVE Request: bash-completion: dequote command injection" "^Date:" nil nil "2" "2016022419:08:27" "[oss-security] CVE Request: bash-completion: dequote command injection" (number mark "        fernando@nul Feb 24   26/865   " thread-indent "\"[oss-security] CVE Request: bash-completion: dequote command injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 31791 invoked by uid 550); 24 Feb 2016 19:08:40 -0000
+Received: (qmail 22100 invoked by uid 550); 4 Mar 2026 16:11:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +6,148 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 31767 invoked from network); 24 Feb 2016 19:08:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=null-life-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=j3qMgbqoJj2+wM/lTl51B9fFeM64RHTnayJAGlpGzUY=;
-        b=SH0YxIa3mqUPlqMd8DA6SR4ZjG3v3VKjVD0YSA7vXSWWTvXn3MVEFe7+34IqqBR8Br
-         lwzTvWnVBGvd1vBdHecBU29zb3JSJUONqsFXFfuXD4wgA2xvzuweR66npo9vOOx8JXnQ
-         zdowAeCHE0axnf7iYzM1566x2UPqpVUERlU8sJk0v4kAgsRAqMokOha4rbuNcoRRjB6O
-         XWBqBxTWeTwRykwW8lxbzbp/g+W5F8FEz6BmhYeOITHvzzN96y01cd7pLuBcvJtAO5MX
-         C7hp/6j3EibWaLKeEuQII7HRBd1b41mN2MZSb8PnqU8hR6MvFJX+vMfkxT18Ncl0bUV/
-         X7jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=j3qMgbqoJj2+wM/lTl51B9fFeM64RHTnayJAGlpGzUY=;
-        b=X+7/yFRknlDFFKAp2uZM0isHiotsZWlLQO/64qqyqcMp5iRSBUWFwjpG8SqrY2FPKk
-         +jCXrDIE6/SJV6q8nt/qnbDW3yN1Eyu2pIhpdEUMJML8VME9m2pWUYEkbEOFV7Rt75c9
-         cSz+LdB+ufprkBxbF1gAssdxxDl+sVQ4I/EFtgZM3lr5AzQusFD5C8Rm4vxA6Tn6ASKR
-         ZpA9aAWRq4aF1FMjrdiqq5e8x0ipl40KGov4i+pXS43V6uPeE59Xzq3HyWF0oJRqbQj1
-         2tNercsEFjnAa2L17qojrisq+Q8nS41V8ZUn47YNVepTYHC3S//ovjFsVkTVmZAQxhAE
-         WdEQ==
-X-Gm-Message-State: AG10YOSBw1LshZ2+cHakjHrd9nZo94pq8iCpc3w2BjC02H2nr/GItQlg8Ka76o69LlpaBONtO1JLnUjxq5D0kQ==
-MIME-Version: 1.0
-X-Received: by 10.31.12.3 with SMTP id 3mr30540106vkm.28.1456340907660; Wed,
- 24 Feb 2016 11:08:27 -0800 (PST)
-X-Originating-IP: [190.171.87.217]
-Message-ID: <CAEr-gPHk8Q5dSh1rOmKiGEQ97X=JrAypPcVvv+NrzReuOHMoyg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 24 Feb 2016 14:08:27 -0500
-From: =?UTF-8?Q?Fernando_Mu=C3=B1oz?= <fernando@null-life.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: bash-completion: dequote command injection
+x-ms-reactions: disallow
+Received: (qmail 23567 invoked from network); 4 Mar 2026 07:00:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1772607643;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=OrEFXVop2zPvpZCvSn12Jok5gs+eH5iG+AU76lEGH7A=;
+	b=i6h35mgOm+z2TWjz8VNcHHr1RGsDOX9g15ZMT0++KpMDiJQka4vhLngnVl8JFznrgvlk9h
+	Ce6vOAB/pSTJtnigQeA//cCbeeBhNyNUEWqu9AvBUVV2oPa0QpchiWSjpoJXG75rWfA8D1
+	sBJk9JrOqQYiBMWgXNxGedWtFny/9Ds=
+X-MC-Unique: w5jyw7QSNb-jRP9LrySEMw-1
+X-Mimecast-MFC-AGG-ID: w5jyw7QSNb-jRP9LrySEMw_1772607640
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772607640; x=1773212440;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OrEFXVop2zPvpZCvSn12Jok5gs+eH5iG+AU76lEGH7A=;
+        b=rIOMzQLCF58Q8dsDr+bV9Q2hwlHSJGhtG1avSUm/MQZgER+VtsXupCldvHXiROZ4ZJ
+         0fZNOnjiTG17+46eNSXC8qXNT9lynDKadK8g17EIbQ/M8ZIT3OzEmW0hgGjK4aU5C/Al
+         7JrVuOFd91HT5V/OOz8Z5bub+NYqfSuKdI5eaNLqk4QqlPyBpVLvjI4x25PeBMVV249p
+         9NoEJyQoISkpnLm+XkK7/O9efQOjI7v2kx7/0EFmt4EtARduPmCRf3vrdWr0FuayOkNX
+         Li5tGHhL4AVhPkSF0xjyC4pNMX6i0xy8oWdDo+4s/G/s7FiAZGQyMOOrDZHVHVvtVSIe
+         bVpg==
+X-Gm-Message-State: AOJu0YxWMF1v0OvwXgWYqy9kYJeAf6uURNYoaPvGveCWKV1zJh/E/pn+
+	Fe88JPfkeF6AExJIpfeTeqcN21UwIOqdXFqnaLWruSRVrdH4Zf8RWiPYbyP5Eut7GbmKvyPD1fl
+	VKHIF02eEIKr+TmYtNTQfTZsv9d6dJWrFQ5M1Oo9ZIweuuD9QiQzMguc8A5dDscYO1kDg+elG+/
+	BePFNXOLLGdsXQgnBVyHrhCo/ahSV3I6glrSpLUWtGhRTz5M+YOdC3Ge8=
+X-Gm-Gg: ATEYQzzujAeWuzfKDd2LfnHgJ8kvntZWEQe91HnQsbVpC3Vz5Aao4PJRubC2x3cvBMm
+	tdJ1ezZVdgYrcDS7t89yEp/6/TMSlT+Xtn3ByUzZYLgnQ5KEZ8bP2bXk/Dl8Haph9UhF2CvNHwj
+	eiQmOEpIG0u4h+Tk9cMFkVmM9CiUsN3/S2l5yvQW8QNaEL/PVb4vzA+2QFkxzICpLE3hPSr0KBU
+	wdJYg==
+X-Received: by 2002:a05:690c:6e87:b0:798:6561:2a5e with SMTP id 00721157ae682-798c6be0864mr7617467b3.19.1772607640164;
+        Tue, 03 Mar 2026 23:00:40 -0800 (PST)
+X-Received: by 2002:a05:690c:6e87:b0:798:6561:2a5e with SMTP id
+ 00721157ae682-798c6be0864mr7617397b3.19.1772607639722; Tue, 03 Mar 2026
+ 23:00:39 -0800 (PST)
+MIME-Version: 1.0
+References: <03dec16c-fe98-0d84-856e-392f4f5c376c@apache.org>
+In-Reply-To: <03dec16c-fe98-0d84-856e-392f4f5c376c@apache.org>
+From: Yogesh Mittal <ymittal@redhat.com>
+Date: Wed, 4 Mar 2026 12:30:28 +0530
+X-Gm-Features: AaiRm51tnoccI2nIxJs4doE_1Twc8Y6tIi0OInJ8HnbCL0KIOXRoYEGjm1Fb8bQ
+Message-ID: <CAJvML36hSb+uKjsS+AxB70BhTYZ4vaJAseig5f6hwTZ+dZmeZw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Cc: Domenico Francesco Bruscino <dbruscin@redhat.com>, Michal Findra <mfindra@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: tDzYL5wIfKN-vnLAJdvfoDrgFbJYZh57AM72F-RVqHc_1772607640
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000b18f7c064c2d60ff"
+Subject: Re: [oss-security] CVE-2026-27446: Apache Artemis, Apache ActiveMQ
+ Artemis: Auth bypass for Core downstream federation
 
-Marcelo Echeverria and Fernando Mu=C3=B1oz discovered that the dequote
-function included in bash-completion allows to execute arbitrary
-commands since it uses the eval function to call printf and perform
-the actual dequoting. bash-completion is included on Debian, Ubuntu
-OpenSuse [1] and probably other distros.
+--000000000000b18f7c064c2d60ff
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-# type dequote
-dequote is a function
-dequote()
-{
-    eval printf %s "$1" 2> /dev/null
-}
+Hi Justin
 
-# dequote ';id'
-uid=3D0(root) gid=3D0(root) groups=3D0(root)
+I noticed that the cve.org link provided at the bottom of your email still
+shows the CVE status as 'Reserved'. Could you please publish the CVE
+details there as soon as possible?
 
-- Issue reported to maintainers on 24/02/2016 [2]
+Thanks and regards,
 
-While researching we noted that this security problem was first
-identified on 2014 [3] however nobody reported the issue to
-bash-completion at that time.
+Yogesh Mittal
+
+Manager, Product Security Vulnerability Management
+
+Red Hat Pune <https://www.redhat.com/>
+
+ymittal@redhat.com
+M: +91-9637123455
 
 
-[1] https://lists.gnu.org/archive/html/bug-bash/2014-04/msg00057.html
-[2] https://github.com/scop/bash-completion/issues/6
-[3] https://lists.gnu.org/archive/html/bug-bash/2014-04/msg00058.html
+<https://www.redhat.com/>
+
+
+On Tue, Mar 3, 2026 at 10:58=E2=80=AFPM Justin Bertram <jbertram@apache.org=
+> wrote:
+
+> Severity: critical
+>
+> Affected versions:
+>
+> - Apache Artemis (org.apache.artemis:artemis-server) 2.50.0 through 2.51.0
+> - Apache ActiveMQ Artemis (org.apache.activemq:artemis-server) 2.11.0
+> through 2.44.0
+>
+> Description:
+>
+> Missing Authentication for Critical Function (CWE-306) vulnerability in
+> Apache Artemis, Apache ActiveMQ Artemis. An unauthenticated remote attack=
+er
+> can use the Core protocol to force a target broker to establish an outbou=
+nd
+> Core federation connection to an attacker-controlled rogue broker. This
+> could potentially result in message injection into any queue and/or messa=
+ge
+> exfiltration from any queue via the rogue broker. This impacts environmen=
+ts
+> that allow both:
+>
+> - incoming Core protocol connections from untrusted sources to the broker
+>
+> - outgoing Core protocol connections from the broker to untrusted targets
+>
+> This issue affects:
+>
+> - Apache Artemis from 2.50.0 through 2.51.0
+>
+> - Apache ActiveMQ Artemis from 2.11.0 through 2.44.0.
+>
+> Users are recommended to upgrade to Apache Artemis version 2.52.0, which
+> fixes the issue.
+>
+> The issue can be mitigated by either of the following:
+>
+> - Remove Core protocol support from any acceptor receiving connections
+> from untrusted sources. Incoming Core protocol connections are supported =
+by
+> default via the "artemis" acceptor listening on port 61616. See the
+> "protocols" URL parameter configured for the acceptor. An acceptor URL
+> without this parameter supports all protocols by default, including Core.
+>
+> - Use two-way SSL (i.e. certificate-based authentication) in order to
+> force every client to present the proper SSL certificate when establishing
+> a connection before any message protocol handshake is attempted. This will
+> prevent unauthenticated exploitation of this vulnerability.
+>
+> Credit:
+>
+> Hardik Mehta <mehtahardik@proton.me> (finder)
+>
+> References:
+>
+> https://artemis.apache.org
+> https://www.cve.org/CVERecord?id=3DCVE-2026-27446
+>
+>
+
+--000000000000b18f7c064c2d60ff--
+
