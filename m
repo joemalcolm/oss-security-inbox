@@ -1,4 +1,4 @@
-Received: (qmail 14007 invoked by uid 550); 17 Jan 2026 19:47:06 -0000
+Received: (qmail 32763 invoked by uid 550); 5 Mar 2026 09:27:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,105 +8,108 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 5843 invoked from network); 17 Jan 2026 16:29:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768667343; x=1769272143; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yf/i5oKxatTS+JdkydnXYC0/60pPeaXyfzVE1hPqURE=;
-        b=fqPRFHBQN/Bb7ofYBYEXb02kA9BcxFooIfmaQLGUkHcvdzNGzE1MaGCw4nVP9ss+Rk
-         BtojXgHLadiMYI4QlFIYbejGNI2j5iXuNDbcRznvZKJPvQ/LA242JCRod91DY4WcpoqE
-         k6pW1w8p9SZHJlL35vJ+HhwgoahgywZd2nEGVNJIqGSI8T/+8hwG/PQneQvXNXZ85qFP
-         SHe2m8fag0dtpb5+Oh9S1nMuhcdwCypMUJ8VKSRXDBWhxDuf/S8mh+yki8hRjLGHg7N0
-         DnIdwIKaSTFtSwPM7yrg2sYqLB+ANUDbyE5Jvz3KIdAuHjyMBIvjE2V3N+pef/jmIKv/
-         XggQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768667343; x=1769272143;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=yf/i5oKxatTS+JdkydnXYC0/60pPeaXyfzVE1hPqURE=;
-        b=Xo2ND9tvUSXMOcWPYD5qY+vJP8ppeNfd9X011/0rEEAKG+LeCXIuRlj7PPIg1Ceas4
-         T1QQAC3yHThQNiYRA/r9AjzQGwd87dY9na6ls4Bt5hslIJImqcewx+3yWaC+J/zu/0WU
-         fh1MuJfdHsC4UuXOY9lbqto67REz/4uI9Qh7WsBdpJnr77Jj22yA+kU0g3uJVQezGILU
-         iIcT4xrxC6wp2iBWLOL6Rut9w1FDFfH8oBsZ+lbtFWzDABWnRBb/WxBU+j3vRet6pzmJ
-         YowZXIIuAPuhZxdEGtqAfpsNHnpTv3Idl4Uv+DJ+QLOWXGZr9y7ob8oajUdaiDUB2bln
-         XZug==
-X-Gm-Message-State: AOJu0Yz7S2gMdYlP9hmgU7+UH2crHFwM4SSywe9VKOrrULg7AC4QwMsq
-	XP8hWrmhGWdWCscdav0reXUojd5mS1I1FiZhx6nFn0KNRvP3dhN/nBaGyoRWD2kgGlT0jpmE9Ey
-	Mql1+8Qn3wdmgIFBRcrzXA2wXXR0rMzRN8xb0zuc=
-X-Gm-Gg: AY/fxX5JiI/BH84C2X3TxEeiAlApil/fd5xu/noh9M+ArEZ9KunUeV+Iblev9azfBI2
-	qmNEGV3T6vLX+5/AXh4PgCv/Gfy0BZya7eE5gw8oV38YepSfFJeK2rFQcIfaDjrVFrKJ6Y4JbeP
-	dFGFY/e3v3m1qsON/r+pMps42DdDqolIu82LUDgttf0U7mJCfQubYZ26/EuQJJT9L7ibkIbNX1H
-	ZMvH3o1hFs3wJIw5bbRmZ26NfjOfr3otQ1jEzM/GwQVWeN8CDtLapFIVT3XcB8Xw0CWn007Vw==
-X-Received: by 2002:a17:907:7282:b0:b87:4c37:7fd8 with SMTP id
- a640c23a62f3a-b8796b953bamr495938866b.49.1768667342658; Sat, 17 Jan 2026
- 08:29:02 -0800 (PST)
+Received: (qmail 18316 invoked from network); 5 Mar 2026 08:57:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772701048; x=1772787448; bh=UTkziqT8ITutBl6sZk/wwQD04nlAGXvHtNn
+	RYWsuRzM=; b=veAFmAefrO0zYGhcZ/uPDL97bywdz5Li+kMwNv2Da//xwtkza45
+	9ioznDPY3HbKa1DTwiHE3A8ytiNrdPnJmdUUDGG3Q3+jBWeS1MbG0NnscbRyYp3+
+	VZ74rB+U+S7Jfd+iBshhMugELlr4nDUI6Bb4s7FrFdg6WOpe3fD6cPvrOuC8Jsgo
+	Nn7vwQlERdkF9HotSzlKvQLCNNnjBzwCkM9kdR7zBoYN8dHn/zFtcjMRtxnAiPyz
+	/VMuNh5qVRosKOypgZmT0OEMHtPX7wa8E7NbBtP1pkxuVqr2xcLBrPCyl+ypYbIi
+	Ufw2opmPGdWPlGh8EPm8+5F7ApXrmcuw2Zw==
+X-ME-Sender: <xms:eEWpaQrfn3A59hIrO5fZB2mZdFtZOu4odq3iUjdi_gqOxktAMqevig>
+    <xme:eEWpacqSQLi2tplkb_Daln6FjyHcjdd9n_nrqDP0LYph7Pnv6ar9cqL58C-bAeVga
+    oEOMJqv2AGTt61GcMmyIba40xQhTV3vtvYhCh-XYOXD0agk_GYEig>
+X-ME-Received: <xmr:eEWpaS3y4CnKoblXqHOJh5Ajwemdvd-G4uLQ1zY4AbIPjL5S2gClXpjk9DJ1-3DR19cgmNhFBeSEFNme-HyNmlL7kFk_JcA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieehleeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfvhffutgfgsehtkeertddtvd
+    ejnecuhfhrohhmpeftohgsvghrthcutfhothhhvghnsggvrhhguceorhhrfihosegtphgr
+    nhdrohhrgheqnecuggftrfgrthhtvghrnhepjeeifeelteeffeelteffhfeugeejveelle
+    elgeejtdehgedtffevfedufeevtdegnecuffhomhgrihhnpehmvghtrggtphgrnhdrohhr
+    ghdpghhithhhuhgsrdgtohhmpdhsihhmphhlvgdrphhmpdgtvhgvrdhorhhgnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprhhrfihosegtphgr
+    nhdrohhrghdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdp
+    rhgtphhtthhopehkrgiivggsuhhrohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:eEWpaTDUsV0cRJF65pIhmhljutLDHd5OPNeyjApDuVydyPr7_2HkCA>
+    <xmx:eEWpaSf2YM8A4MsnjMkR7KNsEA2ZfHzR5wtMSoLuTs1iiBzbtc79qw>
+    <xmx:eEWpaQjE-8RlALWvzJWh_4lkmN3FAXRSz4NnS6ShUnEJuZLd5VvfPg>
+    <xmx:eEWpaSpaRpS96uauMq5kfRiQ298xLlGeQVJGUJ5h8rpGmCsmd8nEOQ>
+    <xmx:eEWpaYEXgJN9CuQya-t6djpFiCXn2wenVHOIfqAWefhpmGTjqnSwqA>
+    <xmx:eEWpaYmtun_CUxamXXs7qcPjhkiNKdzJSaPWJVKt36NZ7zD1gfX1hVVl9t3b>
+Feedback-ID: ia0f04183:Fastmail
+Message-ID: <b0630336-a930-46ae-a7aa-3fbcaf3dbdc0@cpan.org>
+Date: Thu, 5 Mar 2026 08:57:27 +0000
 MIME-Version: 1.0
-References: <CALj3r0jnYcmJ9-ymGs1X3_t7=9OV6UbvVJ7nmiuXpfe+9yN9Tg@mail.gmail.com>
-In-Reply-To: <CALj3r0jnYcmJ9-ymGs1X3_t7=9OV6UbvVJ7nmiuXpfe+9yN9Tg@mail.gmail.com>
-From: Coia Prant <coiaprant@gmail.com>
-Date: Sun, 18 Jan 2026 00:28:51 +0800
-X-Gm-Features: AZwV_QhAwx1bXQSKyR5kNYfE3sQXEb5hKNQB1n6mAc8O7oOoJMeNcwdCGdvDVn4
-Message-ID: <CALj3r0garTYmNZeTJaKUcpUUaxiv+-5nWfaihikxRBrFSXOt7A@mail.gmail.com>
-To: oss-security@lists.openwall.com, security@suse.com, 
-	team@security.debian.org, secalert@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Re: CVE-2025-68121: Regression and Incomplete Fix for Go TLS Session Resumption
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Robert Rothenberg <rrwo@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2025-40926: Plack::Middleware::Session::Simple versions through
+ 0.04 for Perl generates session ids insecurely
 
-Correction: The current official patch is not CL 735051
+========================================================================
+CVE-2025-40926                                       CPAN Security Group
+========================================================================
 
-See https://go.dev/issue/77113
+         CVE ID:  CVE-2025-40926
+   Distribution:  Plack-Middleware-Session-Simple
+       Versions:  through 0.04
 
-Coia Prant <coiaprant@gmail.com> =E4=BA=8E2026=E5=B9=B41=E6=9C=8818=E6=97=
-=A5=E5=91=A8=E6=97=A5 00:20=E5=86=99=E9=81=93=EF=BC=9A
->
-> Hi,
->
-> I am the original reporter of the vulnerabilities recently addressed
-> in Go 1.25.6/1.24.x (CVE-2025-61730, CVE-2025-68121).
->
-> I am writing to inform the community that the official fix provided by
-> the Go security team is critically flawed and causes significant
-> regressions in the networking ecosystem (notably breaking quic-go).
->
-> 1. Missing Root Cause in Official Advisory
->
-> The official advisory attributes the risk to "misuse of APIs," but the
-> root cause is a fundamental logic error in Go's TLS 1.3 state machine
-> during session resumption.
->
-> Specifically, it fails to re-validate the identity of the trust anchor
-> when a session is resumed, allowing for Cross-CA certificate bypass.
->
-> 2. Flawed Patch Implementation
->
-> The current official patch (CL 735051) contains amateurish errors that
-> undermine its effectiveness:
->
-> Incorrect Indexing: It attempts to verify peerCertificates instead of
-> the verifiedChain (that include RootCA).
->
-> Ecosystem Breakage: By aggressively blocking Config.Clone logic to
-> "fix" the issue, it has paralyzed 0-RTT and session resumption in the
-> QUIC ecosystem.
->
-> 3. Proposed O(1) Solution
->
-> I have proposed a far more elegant solution that performs a
-> constant-time SHA-224 fingerprint check of the root CA.
->
-> This fixes the vulnerability without breaking the Config.Clone
-> semantics or performance.
->
-> Details and Discussion:
->
-> https://github.com/golang/go/issues/77217
->
-> I encourage downstream maintainers (SUSE, Red Hat, Debian) to review
-> the fix before deploying it to mission-critical infrastructure.
->
-> Best regards,
-> Coia Prant (rbqvq)
+       MetaCPAN: https://metacpan.org/dist/Plack-Middleware-Session-Simple
+       VCS Repo: https://github.com/kazeburo/Plack-Middleware-Session-Simple
+
+
+Plack::Middleware::Session::Simple versions through 0.04 for Perl
+generates session ids insecurely
+
+Description
+-----------
+Plack::Middleware::Session::Simple versions through 0.04 for Perl
+generates session ids insecurely.
+
+The default session id generator returns a SHA-1 hash seeded with the
+built-in rand function, the epoch time, and the PID. The PID will come
+from a small set of numbers, and the epoch time may be guessed, if it
+is not leaked from the HTTP Date header. The built-in rand function is
+unsuitable for cryptographic usage.
+
+Predicable session ids could allow an attacker to gain access to
+systems.
+
+Plack::Middleware::Session::Simple is intended to be compatible with
+Plack::Middleware::Session, which had a similar security issue
+CVE-2025-40923.
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Users are advised to change the sid_generator attribute of
+Plack::Middleware::Session::Simple to a function that returns a
+securely generated session id based on a secure source of entropy from
+the system.
+
+Users may consider using Plack::Middleware::Session version 0.35 or
+later.
+
+
+References
+----------
+https://metacpan.org/release/KAZEBURO/Plack-Middleware-Session-Simple-0.04/source/lib/Plack/Middleware/Session/Simple.pm#L43
+https://github.com/kazeburo/Plack-Middleware-Session-Simple/pull/4
+https://github.com/kazeburo/Plack-Middleware-Session-Simple/commit/760bb358b8f53e52cf415888a4ac858fd99bb24e.patch
+https://www.cve.org/CVERecord?id=CVE-2025-40923
+https://security.metacpan.org/docs/guides/random-data-for-security.html
+
+
