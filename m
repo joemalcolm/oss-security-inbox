@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4103" "Monday" "5" "September" "2016" "21:35:12" "+0200" "Nathan Van Gheem" "nathan.van.gheem@plone.org" "<CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>" "117" "[oss-security] Re: CVE request: Plone multiple vulnerabilities" nil nil nil "9" "2016090519:35:12" "[oss-security] Re: CVE request: Plone multiple vulnerabilities" (number mark "U       nathan.van.g Sep  5  117/4103  " thread-indent "\"[oss-security] Re: CVE request: Plone multiple vulnerabilities\"\n") "<CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>" ("<CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28372 invoked by uid 550); 5 Sep 2016 20:26:04 -0000
+Received: (qmail 31937 invoked by uid 550); 5 Mar 2026 09:27:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,158 +7,97 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7377 invoked from network); 5 Sep 2016 19:35:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=Nvj1r4roF2ORK8BYPtiQLEhkqv8RjpeGl8YyGTpXh3U=;
-        b=ie6fvznw/sCMEQlIW1qXRbFpQiuGVqM8pqfu5Ube0Q1t+9uil5F4wa7LyMyaQZa9lh
-         seEccn73cUWzaKTA8mfGyUTC65dIn1JumoOHkFLag8B13d/yOVqsKJWVVho3S4zJlG6n
-         ee3dGOkDpobDAKTwrnsrinYzua8VdsfMFNBKyjQRTJ7Dk36btnJ21u/6B5HHYFvRzLsL
-         xagWqP4t+kR6FY5OHvYwkG4j3fqrLvTmQtqy7yAY18z18kbTVMla3uhZLhDI7Sd0TiXW
-         psZM+cgpFoLY7Oye3APQoiM/8WiO5vXx6UqzwH3uSGnJvHhD2okDYWBs24zDgfvPK3Me
-         miOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to;
-        bh=Nvj1r4roF2ORK8BYPtiQLEhkqv8RjpeGl8YyGTpXh3U=;
-        b=TsM6OuvtPP2xe7eSCRCl3H8KnOP2FB8rNfYO8JFFEKUYS1BppONMZf40miSZilmzPN
-         ABH2E5SchDk6ZtEmKnV78bI+LnnapzBoFQgIvJmEigR5yERWX0tjxa1inYkmclJiuJOz
-         zOxbWaVIsElln7M8mhgxNmdagdgztWCO+CfxjcQ8iAygCfFqdOQXCbcrlwCZdbEeeBcr
-         pU3GPN9jEJoVmPMKCLNAYhyMxnNnS75N9ahE1svCOH+4DxbVn8BSkvK6umNrb2hBuUuV
-         z8klzD+GcuPpo3txnWj0zR/viUeMqjjXYTy1w0zwkXct3Yei3mDlM2eQwoZasXxrL9Xv
-         AUUw==
-X-Gm-Message-State: AE9vXwPm+GVD/dJm8/N16ZCc3FJaxy5Q0m8ZyTxN4K2nPdI0QGxwlnXQQVyLCx+gYsnmQKOCNzOrDqnCSeRaxg==
-X-Received: by 10.200.43.170 with SMTP id m39mr6350293qtm.73.1473104112728;
- Mon, 05 Sep 2016 12:35:12 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 25641 invoked from network); 5 Mar 2026 08:53:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1772700826; x=1772787226; bh=6A86Ub6usJplH0AryjDe1pmWKZ6BLbDvjeg
+	cuJ11ZqE=; b=dW56ImOvLZF9KXjW6ABEUi42AQ2Q2iDfdNVoxIyDFxPhGA2r9Gv
+	0XhG1QJ+0E3Q9OhxH9BScomBGcJER2NmEnwq8gNwxUX2vC5LbT4WDXws6dK09hJd
+	NGdwlGXZ2DSq102KZ46QaNzaXQMJdlWRYPuk5y5vF+xbZIJE4MWt5l3RVgiR6twY
+	/nlDKW0Sq+ZwcK/HG6vEHi7dEEVYwwPt3ZQZFNGxwXIVQqDgwtazp5T1dSORMmof
+	6zJfKXBvq4cQSC+Rpf68rdKh+H6JA1mPBkhUnXpGsLPRpnHMgb0Q5dGXW5GfIp7g
+	myqAvL2CbJF2uTwgsKmU8LXnX0em9uSVA7Q==
+X-ME-Sender: <xms:mUSpaQgZjh06rQc-RJsBj_O6L11P7TL4stuUySjo8aniBDzxF-8HmQ>
+    <xme:mUSpafB38Rs6TVQg9t9-YeptGmsElTnD50vObBC8Wo_zFiuGvoVV7d4uNZJtB0EA8
+    eT2T6wRBK2eTdppHEy9SnwAz1m0yiXYC9TC72x973JP8wcXYT6TcQ>
+X-ME-Received: <xmr:mUSpaVunGr2ZWIX7yAjRL3aw5UjHqS2d_p8-T1Aam-fr1DoJVZ9yzzq7Mt8Mlcama2n8r7LSd0rs9K4tZqehj3mnl_LRvXA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieehleehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfvhffutgfgsehtkeertddtvd
+    ejnecuhfhrohhmpeftohgsvghrthcutfhothhhvghnsggvrhhguceorhhrfihosegtphgr
+    nhdrohhrgheqnecuggftrfgrthhtvghrnhepvdettdfhgeelvefgtdevgeejteekvdduie
+    dvuedvheehieejffefhefhleejhedtnecuffhomhgrihhnpehmvghtrggtphgrnhdrohhr
+    ghdpghhithhhuhgsrdgtohhmpdhinhhithhirghlphgrtghkvghtrdhpmhdpghhithhhuh
+    gsuhhsvghrtghonhhtvghnthdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehrrhifohestghprghnrdhorhhgpdhnsggprhgtphhtth
+    hopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuhhrihht
+    hieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdhrtghpthhtohepughouhhgsehsoh
+    hmvghthhhinhhgughouhhgrdgtohhm
+X-ME-Proxy: <xmx:mUSpacZMc9Aaq7pnK-fzbppHH2kuEAjYWhpo34760xzzXdC9LequNw>
+    <xmx:mUSpaQUSYLzzHGd1Yt-N6GrwWENo2MZ-pCGhVOJUlkFo7jv-1GN71g>
+    <xmx:mUSpaY4VTBXr1KQodfAN-kXR_DDHN7c3zsdylpV3fRCdRbL-iSGYLA>
+    <xmx:mUSpaTh0P0vXDdoqucxueNvgBFA7jFCcWiGhj1etgwcLlGk42tzajA>
+    <xmx:mUSpaXfD4HFVt4mk2Y3SPLjTMgYEwA-gn2zEhS7AYXXkozpRmQI6TA>
+    <xmx:mkSpaWhCEEzsdL9wFmP2rZoTF0oMnoMV3YZmjs1CCYX5_cnXUtFg_lkyZka->
+Feedback-ID: ia0f04183:Fastmail
+Message-ID: <e7be087e-d638-40cf-9be5-517aed96a2f5@cpan.org>
+Date: Thu, 5 Mar 2026 08:53:43 +0000
 MIME-Version: 1.0
-Sender: vangheem@gmail.com
-In-Reply-To: <CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>
-References: <CAL8hw9Hx1HH2DuD8RL1fMAK3SnXsnRSwkF-rb_26z2_Soq+PCg@mail.gmail.com>
-From: Nathan Van Gheem <nathan.van.gheem@plone.org>
-Date: Mon, 5 Sep 2016 21:35:12 +0200
-X-Google-Sender-Auth: slnp5RJ8bFFAclUnFH1phpnZrkE
-Message-ID: <CAL8hw9Go4v4Qah_Vxg0-C03C64FczjZ9b6qWYhd6802_LuYBjw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary=001a1149c7a25b6165053bc7c712
-Subject: [oss-security] Re: CVE request: Plone multiple vulnerabilities
+From: Robert Rothenberg <rrwo@cpan.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] CVE-2024-57854: Net::NSCA::Client versions through 0.009002 for Perl
+ uses a poor random number generator
 
---001a1149c7a25b6165053bc7c712
-Content-Type: text/plain; charset=UTF-8
+========================================================================
+CVE-2024-57854                                       CPAN Security Group
+========================================================================
 
-Hi,
+         CVE ID:  CVE-2024-57854
+   Distribution:  Net-NSCA-Client
+       Versions:  through 0.009002
 
-Re-submitting again because I forgot one of the vulnerabilities.
-
-Multiple vulnerabilities were recently patched.
-
-
-1. *filesystem information leak*: https://plone.org/security/
-hotfix/20160830/filesystem-information-leak
-
-Managers had the ability to find read files from the file system that the
-system user running the plone process had access to
-
-2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/
-hotfix/20160830/non-persistent-xss-in-plone-forms
-
-z3c.form will currently accept data from GET requests when the form is
-supposed to be POST. This allows a user to inject a potential XSS attack
-into a form. With certain widgets in Plone admin forms, the input is
-expected to be safe and can cause a reflexive XSS attack. Additionally,
-there is potential for an attack that will trick a user into saving a
-persistent XSS.
-
-3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-
-redirection-in-plone
-
-In multiple places, Plone blindly uses the referer header to redirect a
-user to the next page after a particular action. An attacker could utilize
-this to draw a user into a redirection attack.
-
-4. *Non-Persistent XSS in Plone*: https://plone.org/security/
-hotfix/20160830/non-persistent-xss-in-plone-1
-
-Plone's URL checking infrastructure includes a method for checking if URLs
-valid and located in the Plone site. By passing javascript into this
-specially crafted url, XSS can be achieved.
-
-5. *Non-persistent XSS in Plone*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-plone
-
-Plone has unescaped user input in a page template that is open to XSS.
-
-5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
-https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
-
-In multiple places, Zope2's ZMI pages do not properly escape user input
+       MetaCPAN:  https://metacpan.org/dist/Net-NSCA-Client
+       VCS Repo:  https://github.com/dougwilson/perl5-net-nsca-client
 
 
-Credits to all these go to Sebastian Perez
+Net::NSCA::Client versions through 0.009002 for Perl uses a poor random
+number generator
 
-All of these vulnerabilities have been patched with the hotfix release
-package(https://plone.org/security/hotfix/20160830) and are being
-incorporated upstream.
+Description
+-----------
+Net::NSCA::Client versions through 0.009002 for Perl uses a poor random
+number generator.
+
+Version v0.003 switched to use Data::Rand::Obscure instead of
+Crypt::Random for generation of a random initialisation vectors.
+
+Data::Rand::Obscure uses Perl's built-in rand() function, which is not
+suitable for cryptographic functions.
+
+Problem types
+-------------
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+   (PRNG)
+
+Solutions
+---------
+Apply a manual patch or migrate to a different solution
 
 
-Thanks,
-Nathan
+References
+----------
+https://metacpan.org/release/DOUGDUDE/Net-NSCA-Client-0.009002/source/lib/Net/NSCA/Client/InitialPacket.pm#L119
+https://patch-diff.githubusercontent.com/raw/dougwilson/perl5-net-nsca-client/pull/2.patch
 
-On Mon, Sep 5, 2016 at 6:42 PM, Nathan Van Gheem <nathan.van.gheem@plone.org
-> wrote:
+Credits
+-------
+Robert Rothenberg, finder
 
-> Hi,
->
-> Multiple vulnerabilities were recently patched.
->
->
-> 1. *filesystem information leak*: https://plone.org/security/
-> hotfix/20160830/filesystem-information-leak
->
-> Managers had the ability to find read files from the file system that the
-> system user running the plone process had access to
->
-> 2. *Non-Persistent XSS in Plone forms*: https://plone.org/security/
-> hotfix/20160830/non-persistent-xss-in-plone-forms
->
-> z3c.form will currently accept data from GET requests when the form is
-> supposed to be POST. This allows a user to inject a potential XSS attack
-> into a form. With certain widgets in Plone admin forms, the input is
-> expected to be safe and can cause a reflexive XSS attack. Additionally,
-> there is potential for an attack that will trick a user into saving a
-> persistent XSS.
->
-> 3. *open redirection*:  https://plone.org/security/hotfix/20160830/open-
-> redirection-in-plone
->
-> In multiple places, Plone blindly uses the referer header to redirect a
-> user to the next page after a particular action. An attacker could utilize
-> this to draw a user into a redirection attack.
->
-> 4. *Non-Persistent XSS in Plone*: https://plone.org/security/
-> hotfix/20160830/non-persistent-xss-in-plone-1
->
-> Plone's URL checking infrastructure includes a method for checking if URLs
-> valid and located in the Plone site. By passing javascript into this
-> specially crafted url, XSS can be achieved.
->
-> 5. *Non-Persistent XSS in Plone Zope Management(ZMI)*:
-> https://plone.org/security/hotfix/20160830/non-persistent-xss-in-zope2
->
-> In multiple places, Zope2's ZMI pages do not properly escape user input
->
->
-> Credits to all these go to Sebastian Perez
->
-> All of these vulnerabilities have been patched with the hotfix release
-> package(https://plone.org/security/hotfix/20160830) and are being
-> incorporated upstream.
->
->
-> Thanks,
-> Nathan
->
-
---001a1149c7a25b6165053bc7c712--
