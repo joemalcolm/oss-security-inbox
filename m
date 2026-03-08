@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1012" "Thursday" "1" "June" "2017" "20:19:06" "+0200" "Solar Designer" "solar@openwall.com" "<20170601181906.GA5071@openwall.com>" "25" "Re: [oss-security] unresponsive distros" "^Date:" nil nil "6" "2017060118:19:06" "[oss-security] unresponsive distros" (number mark "        solar@openwa Jun  1   25/1012  " thread-indent "\"Re: [oss-security] unresponsive distros\"\n") "<1496340239333.24020@amazon.com>" ("<20170601180053.GA4752@openwall.com>" "<1496340239333.24020@amazon.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 6048 invoked by uid 550); 1 Jun 2017 18:20:23 -0000
+Received: (qmail 9731 invoked by uid 550); 8 Mar 2026 08:06:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,42 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5569 invoked from network); 1 Jun 2017 18:19:17 -0000
-Message-ID: <20170601181906.GA5071@openwall.com>
-References: <20170601180053.GA4752@openwall.com> <1496340239333.24020@amazon.com>
+Reply-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 7776 invoked from network); 8 Mar 2026 08:06:04 -0000
+Date: Sun, 8 Mar 2026 09:05:57 +0100
+From: Solar Designer <solar@openwall.com>
+To: Justin Swartz <justin.swartz@risingedge.co.za>
+Cc: oss-security@lists.openwall.com, bug-inetutils@gnu.org,
+	collin.funk1@gmail.com, simon@josefsson.org,
+	auerswal@unix-ag.uni-kl.de, ron.benyizhak@safebreach.com
+Message-ID: <20260308080557.GA27619@openwall.com>
+References: <20260224011702.27987-1-justin.swartz@risingedge.co.za> <20260224052943.GA13045@openwall.com> <20260224064351.GA14779@openwall.com> <20260307002011.18141-1-justin.swartz@risingedge.co.za> <20260308025745.GA24992@openwall.com> <fbfd407edbca76995b86ec45e9cf935d@risingedge.co.za> <20260308073422.20218-1-justin.swartz@risingedge.co.za>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1496340239333.24020@amazon.com>
+In-Reply-To: <20260308073422.20218-1-justin.swartz@risingedge.co.za>
 User-Agent: Mutt/1.4.2.3i
-Date: Thu, 1 Jun 2017 20:19:06 +0200
-From: Solar Designer <solar@openwall.com>
-Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] unresponsive distros
-To: oss-security@lists.openwall.com
+Subject: [oss-security] Re: Telnetd Vulnerability Report
 
-Anthony,
+On Sun, Mar 08, 2026 at 09:34:22AM +0200, Justin Swartz wrote:
+> Based on the feedback provided, the third version of the patch set [1]:
 
-On Thu, Jun 01, 2017 at 06:03:59PM +0000, Liguori, Anthony wrote:
-> Hrm, I've been following the thread but apparently missed your request Solar.
+> - Places the strings of the allowed environment variables array into
+>   the .rodata section.
 
-Wow, that was quick.  I don't see how you could have been following the
-thread, including in the period since May 27, and miss the request,
-since most other distros replied to that very same thread.  With the
-replies quoting parts of my request, it was many messages.  I mentioned
-the 3 non-responsive distros by name in two messages - yesterday and
-today (a few hours before bringing this to oss-security).
+Actually, the strings would be in .rodata (or after linking, in .text)
+with your previous patch version as well.  It's the array of pointers
+that you're also moving to there now.
 
-What was it about the oss-security posting that made you notice it,
-unlike the many messages on the distros list?
+> - Discards the --accept-env feature [3], as an inetutils maintainer [2]
+>   is working on an implementation to extend the allowed environment
+>   using Gnulib instead.
 
-Is it the encryption that causes you not to read some messages, or to
-postpone doing so (for days)?
+It sounds like one of you will have to rebase this on the other's work.
 
-With such selective reading, you'd also miss some new issues that are
-being brought up as part of this same thread.  The Subject stays since
-it's unencrypted, but discussion deviates and expands to new topics.
+> +extern int is_env_var_allowed (const char *var, const char *val);
 
-Thanks,
+You shouldn't need to have this one extern now - you can make it static.
+
+> +#ifdef HAVE_PATHS_H
+> +# include <paths.h>
+> +#else
+> +# ifndef _PATH_DEFPATH
+> +#  define _PATH_DEFPATH "/usr/bin:/bin"
+> +# endif
+> +#endif
+
+You shouldn't need this anymore.
+
+> +is_env_var_allowed (const char *var, const char *val)
+> +{
+> +  const char * const *p;
+
+This second const here looks wrong as you're changing the value of this
+pointer.  I suggested this syntax only for the array, where you used it
+correctly.
+
+> +void
+> +set_env_var_if_allowed (const char *var, const char *val)
+> +{
+> +  if (is_env_var_allowed (var, val))
+> +    {
+> +      if (val)
+> +        {
+> +          if (*val != 0)
+> +            setenv (var, val, 1);
+> +        }
+> +      else
+> +        {
+> +          unsetenv (var);
+> +        }
+> +    }
+> +}
+
+I doubt it's desired behavior to retain the previous value of the env
+var if the new value is an empty string - or is it?  If it is not, then
+I suggest either dropping the "*val != 0" check or moving it into
+"if (val && *val != 0)".
 
 Alexander
