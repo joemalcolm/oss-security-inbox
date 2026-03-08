@@ -1,4 +1,4 @@
-Received: (qmail 27757 invoked by uid 550); 23 Jun 2023 11:40:01 -0000
+Received: (qmail 20404 invoked by uid 550); 8 Mar 2026 10:02:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,55 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25990 invoked from network); 23 Jun 2023 11:39:04 -0000
-Date: Fri, 23 Jun 2023 13:38:56 +0200
+x-ms-reactions: disallow
+Received: (qmail 19831 invoked from network); 8 Mar 2026 10:02:25 -0000
+Date: Sun, 8 Mar 2026 11:02:22 +0100
 From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Cc: Jyoti Raval <jenyraval@gmail.com>
-Message-ID: <20230623113856.GA7102@openwall.com>
-References: <CANo=s0ZesZj2nzHGxeG4CEjcB+dAxBF8pMDWB_mAMvgSm_gnSA@mail.gmail.com> <20230623112217.GA6878@openwall.com>
+To: Justin Swartz <justin.swartz@risingedge.co.za>
+Cc: oss-security@lists.openwall.com, bug-inetutils@gnu.org,
+	collin.funk1@gmail.com, simon@josefsson.org,
+	auerswal@unix-ag.uni-kl.de, ron.benyizhak@safebreach.com
+Message-ID: <20260308100222.GA29407@openwall.com>
+References: <20260224011702.27987-1-justin.swartz@risingedge.co.za> <20260224052943.GA13045@openwall.com> <20260224064351.GA14779@openwall.com> <20260307002011.18141-1-justin.swartz@risingedge.co.za> <20260308025745.GA24992@openwall.com> <fbfd407edbca76995b86ec45e9cf935d@risingedge.co.za> <20260308073422.20218-1-justin.swartz@risingedge.co.za> <20260308080557.GA27619@openwall.com> <0940bd56c70e5d93bc32024cca2b2ac9@risingedge.co.za>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230623112217.GA6878@openwall.com>
+In-Reply-To: <0940bd56c70e5d93bc32024cca2b2ac9@risingedge.co.za>
 User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Open Source Tool | MPT: Pentest In Action!
+Subject: [oss-security] Re: Telnetd Vulnerability Report
 
-I think I overlooked two things:
-
-On Fri, Jun 23, 2023 at 01:22:17PM +0200, Solar Designer wrote:
-> On Thu, Jun 22, 2023 at 06:05:14PM +0530, Jyoti Raval wrote:
-> > Managing Pentest (MPT: Pentest In Action) [image: HITBSecConf HITB2022SIN]
-> > <https://conference.hitb.org/hitbsecconf2022sin/session/mpt-pentest-in-action/>
+On Sun, Mar 08, 2026 at 11:41:47AM +0200, Justin Swartz wrote:
+> On 2026-03-08 10:05, Solar Designer wrote:
+> >On Sun, Mar 08, 2026 at 09:34:22AM +0200, Justin Swartz wrote:
+> >>+is_env_var_allowed (const char *var, const char *val)
+> >>+{
+> >>+  const char * const *p;
+> >
+> >This second const here looks wrong as you're changing the value of this
+> >pointer.  I suggested this syntax only for the array, where you used it
+> >correctly.
 > 
-> This isn't a topic for oss-security.  But per the above, an Open Source
-> security tool announced for the first time nevertheless is.
+> That pointer isn't constant.
 
-While the code is technically open source, for it to be on-topic here
-it'd have to be under an Open Source license - and there's no license
-currently specified in the GitHub repo.  Jyoti, please fix this.
+Oh, you're right, I was wrong.  It's a non-const pointer to a const
+pointer to a const string.  Which is what we need here.
 
-> > Github - https://github.com/jenyraval/MPT
+It's still uncommon in projects to const'ify string arrays like that,
+but I think we should start doing that more.  So I hope this little
+digression we had is helpful beyond these telnetd patches.
 
-> live_edit.php:
-> $input = filter_input_array(INPUT_POST);
-> if ($input['action'] == 'edit') {
-> $update_field='';
-> if(isset($input['status'])) {
-> $update_field.= "status='".$input['status']."'";
-> }
-> if($update_field && $input['id']) {
-> $sql_query = "UPDATE issuedetails SET $update_field WHERE id='" . $input['id'] . "'";
-> mysqli_query($db, $sql_query) or die("database error:". mysqli_error($conn));
-> 
-> (Yes, the lack of indentation is in the original.)
-> 
-> Apparently, no escaping nor filtering is actually performed here, and
-> also no use of prepared statements.  Likely (post-authentication?) SQL
-> injection possibility.  OVE-20230623-0003
-
-Actually, this looks pre-authentication.  Most of this project's PHP
-files include session.php, which attempts an authentication check, but
-live_edit.php does not include it.
+Thank you for posting the tests.
 
 Alexander
