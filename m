@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2136" "Tuesday" "26" "July" "2016" "15:24:13" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" "47" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" "^Cc:" nil nil "7" "2016072619:24:13" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" (number mark "        cve-assign@m Jul 26   47/2136  " thread-indent "\"[oss-security] Re: cve request: systemd-machined: information exposure for docker containers\"\n") "<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>" ("<1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9827 invoked by uid 550); 26 Jul 2016 19:24:25 -0000
+Received: (qmail 12003 invoked by uid 550); 8 Mar 2026 09:47:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,60 +6,245 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9806 invoked from network); 26 Jul 2016 19:24:24 -0000
-In-Reply-To: <1304293369.8684866.1469539505676.JavaMail.zimbra@redhat.com>
-Message-Id: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 26 Jul 2016 15:24:13 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: cve request: systemd-machined: information exposure for docker containers
-To: caiqian@redhat.com
+x-ms-reactions: disallow
+Received: (qmail 11268 invoked from network); 8 Mar 2026 09:42:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=risingedge.co.za; s=xneelo; h=Content-Transfer-Encoding:Content-Type:
+	Message-ID:References:In-Reply-To:Subject:Cc:To:From:Date:MIME-Version:
+	reply-to:sender:bcc; bh=QSXuqhTUTEhy6QNrPcLzkcQntG7QXQkLU/ZMoA0U8V0=; b=r4mgl
+	2dhfKnqLt/RtKOXqCM+e6z2qeQHx4bSQiVNR+wixsde8xaF21iJNig0CQZHT9WW2jbUA0QcZ9UmnK
+	OjFalvkDzdq/iAteBHCVW2eRZlpu13cn7oF2SLs0e+PrE9UJB+sQcJDdkzDdSXHRw2Y9b8deCooWP
+	8p4c5XuegKKpfiHeI3sHJ+w3oFphwn4mutyurVrQLfmakBFDFl4llFJHeEjitwxB0dHEGzin2K74+
+	lodJooWb86jiJx3GbLTkrgOvl55AIrnz/vCcPZ8glmEAbs+jk8yEQbkFP3ftyhrZGKJzVyvh5M6qy
+	VKLKZZxzmaZJlpdJ5YhyIwL/Vjb9g==;
+MIME-Version: 1.0
+Date: Sun, 08 Mar 2026 11:41:47 +0200
+From: Justin Swartz <justin.swartz@risingedge.co.za>
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com, bug-inetutils@gnu.org,
+ collin.funk1@gmail.com, simon@josefsson.org, auerswal@unix-ag.uni-kl.de,
+ ron.benyizhak@safebreach.com
+In-Reply-To: <20260308080557.GA27619@openwall.com>
+References: <20260224011702.27987-1-justin.swartz@risingedge.co.za>
+ <20260224052943.GA13045@openwall.com> <20260224064351.GA14779@openwall.com>
+ <20260307002011.18141-1-justin.swartz@risingedge.co.za>
+ <20260308025745.GA24992@openwall.com>
+ <fbfd407edbca76995b86ec45e9cf935d@risingedge.co.za>
+ <20260308073422.20218-1-justin.swartz@risingedge.co.za>
+ <20260308080557.GA27619@openwall.com>
+Message-ID: <0940bd56c70e5d93bc32024cca2b2ac9@risingedge.co.za>
+X-Sender: justin.swartz@risingedge.co.za
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Sender: justin.swartz@risingedge.co.za
+X-Virus-Scanned: Clear
+X-Originating-IP: 188.40.1.173
+X-SpamExperts-Domain: risingedge.co.za
+X-SpamExperts-Username: 
+Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@risingedge.co.za
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: SB/global_tokens (0.00929476604982)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVfHd1Pe3cv+5ZSzAwX24XnS4DCMC+R7u03
+ QrPzg9flsSu2SmbhJN1U9FKs8X3+Nt0Io1idSgCc/506nnISAkPANvJkKIxakGlbxi+ggiqZlxxH
+ xN7wu8yGEPLNcyeaFTgeofHbrv/l3xWyQQYX1nZaBMmyNbDn7R5kilAhwr3KtFb3AgNUGvQRnUF+
+ Lycvfx+SVUSshQka8VpEeqGYZUq9Hj659XjhVt1bdQ9l6emukohSnw9YyoGHx/ukuag1WKBLWDaO
+ GAC1PCRtpOZuVuRfKVFCXTS2zVmMeFsPQMyMp5ya4EnB7foI3WDAWEIqQR42kI22V3+6/8VpCe4k
+ l4rBoCO4qTTFh+YfFhnsJKW+4WQB2ErbcicDbPONrkjWuIPYD7NLT3TvBNLPf1+s3ESe+GGIqRjk
+ Mz2jvqlQOSgIbaeqxdJWIouFUjNPAI/E3PzhS4ZB89wBg3fE1IRBh4Eju90/HdeWcvWwvxP7m9tu
+ 6hfMGGiVGguJYVfi+McPxsm6Ma0wFdLTf4T3IkAGhpNhJZ+sEAQAshpJkJgYp1fmVCZYrq03PPfA
+ CiLUtg/tzCpiQsMD1yQpJw3MZEkSuQ6aZxvaQE1RAJKkl+/NcOb97uJrCxWqdvrJu5u4CAG115m4
+ kc30M5N1XOqLep1NLvTyBBviKlpvP7rQS13JFiYi1lPrLvDxuJ2Pl/Wwf+s2EUaRwh/zbysUocUY
+ 70LVf6DXKjPTc9Bi5t6eH92KZgAaeKHYbE04rhZBVwX5kuEhEEhv9/dCEtFs6CKy+LlVT1402WH7
+ 25+y2Pi6XSn8nYV1KkECi53KQdYoAYFDTkiO90JDv3Qru3mOOsfu36pjw6IKrSOIPpeqwlm2NDGX
+ IJ2x7C1GDHQzkP4E4DmzW72VoTr7KQxyJBDgZ6UOEU7Q88doCIktcnl0yqCNlzE1u8EO1t/STCxH
+ 8DQLRZxuVhe+952JTxOKPmvS9FNQaEBx3Mzmo+aqL7i/jEFRlxxHHR2edU8lBysIgCGqonuzqB2w
+ MqcL/PyVSe2/DDFq5n7HBuKWuG2VxN5Tk0oIOEgQvkpB2uKK0i3ShO9tndQNaNp5LxD/AGkWz8j9
+ jQRWYwPzN22yjA6ktpRxAMHlW2L66vScAWRVdBHvMOSsCIK1u2y67o71H/aAwarQpYDOYx/6JtUO
+ 88QFH8MDIR4rYBrcD0FJiQH1DNMnmiccMfxXP8hqHV3idsf9htp8mcWuKRLRaGd4RgFnzGg9rgSS
+ O4p0kGP/3gydw9VcjiaDXW5/43LFbxilGU+e1pFQ+nUu7tVfyfBb
+X-Report-Abuse-To: spam@antispamquarantine.host-h.net
+X-Complaints-To: abuse@antispammaster.host-h.net
+Subject: [oss-security] Re: Telnetd Vulnerability Report
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-> Once docker containers register themselves to systemd-machined
-> by oci-register-machine. Any unprivileged user could run
-> machinectl to list every single containers running in the host
-> even if the containers do not belong to this user (including containers
-> belong to the root user), and access sensitive information associated
-> with any individual container including its internal IP address, OS
-> version, running processes, and file path for its rootfs.
+On 2026-03-08 10:05, Solar Designer wrote:
+> On Sun, Mar 08, 2026 at 09:34:22AM +0200, Justin Swartz wrote:
+>> Based on the feedback provided, the third version of the patch set 
+>> [1]:
 > 
-> $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
-> cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
->            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
->           Leader: 43494 (sleep)
->          Service: docker; class container
->             Root: /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
->          Address: 172.17.0.2
->                   fe80::42:acff:fe11:2
->               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
->             Unit: docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
->                   43494 sleep 3000
+>> - Places the strings of the allowed environment variables array into
+>>   the .rodata section.
+> 
+> Actually, the strings would be in .rodata (or after linking, in .text)
+> with your previous patch version as well.  It's the array of pointers
+> that you're also moving to there now.
 
-Use CVE-2016-6349.
+Thanks for clarifying that.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJXl7elAAoJEHb/MwWLVhi2RWIQAKaV9Wfr8YVQfKU+Skfs5Aw5
-10D1SpGzb6X64u7ZBPtBINph6DcANhKRVnsLzhyK64m7tOXlU+f3ZuJJkpYILj/L
-dqpGgpm4Rr3g3CbOBXQzv3MoxI1x6UBpQ0tD4YJR2l4MUBH+WDNTgS2HGsonDgHW
-Y2nLzn/xLbnxBJPhtuTxB3rsSYW5HoLv3rU135z++sgckn9wEpMCLKn4RabJX5pn
-VlvwyvgtS0KQIjxwvc+Fzek3A8JmVmc0Sdv9xv+oUPSpcVx+9UQuJ4IM3JrItkyX
-ozFJvettlVz5DGP+Il19Bsj4VgnqfbIY4hV9G5W3Zvvvj+0NQbqXeA4rz8s6RRaU
-VzGZLfxaSt3giTqLYIVQIe5z/B8zzdeyJv8Sq1p54Wlnw3mhV7jy071Tv85Wuy5C
-WgwlrGw7weXeiDUCDtJccKj+Vulmkl9fA6yZZOTsi1eLdncsRZurdoRKtbu35yS8
-uUx7iv855mq0HcEmONagKuVuuZehESJQ1DgIGDs2U0r4oWwAYkmYfvTdfjqni76c
-CA+qdQZUKXKmg/VBSAxawyO5DeP5sqf8e/W5mGyV9ryEA7d5Td+PhP2/hyYqF/gm
-cWYAMkuS8Twty3XWceKE01ToBU2E3RsOlJTtA7Y5Su7Za/MyoOO0XgZ5LpU2lMhQ
-azlA01pX7DjSmXNbCCZF
-=mOLg
------END PGP SIGNATURE-----
+>> - Discards the --accept-env feature [3], as an inetutils maintainer 
+>> [2]
+>>   is working on an implementation to extend the allowed environment
+>>   using Gnulib instead.
+> 
+> It sounds like one of you will have to rebase this on the other's work.
+
+I'm leaving this up to the inetutils maintainers to take of, as I won't
+have the spare time to contribute towards this going forward.
+
+
+>> +extern int is_env_var_allowed (const char *var, const char *val);
+> 
+> You shouldn't need to have this one extern now - you can make it 
+> static.
+> 
+>> +#ifdef HAVE_PATHS_H
+>> +# include <paths.h>
+>> +#else
+>> +# ifndef _PATH_DEFPATH
+>> +#  define _PATH_DEFPATH "/usr/bin:/bin"
+>> +# endif
+>> +#endif
+> 
+> You shouldn't need this anymore.
+
+You're right. I forgot to drop that when I got rid of exorcise_env().
+
+
+>> +is_env_var_allowed (const char *var, const char *val)
+>> +{
+>> +  const char * const *p;
+> 
+> This second const here looks wrong as you're changing the value of this
+> pointer.  I suggested this syntax only for the array, where you used it
+> correctly.
+
+That pointer isn't constant.
+
+######################################################################
+##                                                                  ##
+##  A test with the pointer declaration used in the previous patch  ##
+##                                                                  ##
+######################################################################
+
+$ cat > p1.c << "EOF"
+#include <stdio.h>
+
+static const char * const allowed_env_vars[] = {
+         "USER", "LOGNAME", "TERM", "LANG", "LC_*", NULL
+};
+
+int main(void)
+{
+         const char **p;
+
+         for (p = allowed_env_vars; *p; p++)
+                 puts(*p);
+
+         putchar('\n');
+         return 0;
+}
+EOF
+
+$ cc -o p1 p1.c -Wall -Werror -Wextra -pedantic
+p.c: In function ‘main’:
+p.c:11:16: error: assignment discards ‘const’ qualifier from pointer 
+target type [-Werror=discarded-qualifiers]
+    11 |         for (p = allowed_env_vars; *p; p++)
+       |                ^
+cc1: all warnings being treated as errors
+
+
+######################################################################
+##                                                                  ##
+##  A test with the pointer declaration used in the current patch   ##
+##                                                                  ##
+######################################################################
+
+$ (echo '9s/\*\*p/\* const \*p/g'; echo ',p'; echo 'wq') | ed -s p.c
+#include <stdio.h>
+
+static const char * const allowed_env_vars[] = {
+         "USER", "LOGNAME", "TERM", "LANG", "LC_*", NULL
+};
+
+int main(void)
+{
+         const char * const *p;
+
+         for (p = allowed_env_vars; *p; p++)
+                 puts(*p);
+
+         putchar('\n');
+         return 0;
+}
+
+$ cc -o p p.c -Wall -Werror -Wextra -pedantic && echo $?
+0
+
+
+######################################################################
+##                                                                  ##
+##  A test with the pointer declaration that would be constant      ##
+##                                                                  ##
+######################################################################
+
+$ (echo '9s/p;/ const p;/g'; echo ',p'; echo 'wq') | ed -s p.c
+#include <stdio.h>
+
+static const char * const allowed_env_vars[] = {
+         "USER", "LOGNAME", "TERM", "LANG", "LC_*", NULL
+};
+
+int main(void)
+{
+         const char * const * const p;
+
+         for (p = allowed_env_vars; *p; p++)
+                 puts(*p);
+
+         putchar('\n');
+         return 0;
+}
+
+$ cc -o p p.c -Wall -Werror -Wextra -pedantic
+p.c: In function ‘main’:
+p.c:11:16: error: assignment of read-only variable ‘p’
+    11 |         for (p = allowed_env_vars; *p; p++)
+       |                ^
+p.c:11:41: error: increment of read-only variable ‘p’
+    11 |         for (p = allowed_env_vars; *p; p++)
+       |                                         ^~
+
+
+>> +void
+>> +set_env_var_if_allowed (const char *var, const char *val)
+>> +{
+>> +  if (is_env_var_allowed (var, val))
+>> +    {
+>> +      if (val)
+>> +        {
+>> +          if (*val != 0)
+>> +            setenv (var, val, 1);
+>> +        }
+>> +      else
+>> +        {
+>> +          unsetenv (var);
+>> +        }
+>> +    }
+>> +}
+> 
+> I doubt it's desired behavior to retain the previous value of the env
+> var if the new value is an empty string - or is it?  If it is not, then
+> I suggest either dropping the "*val != 0" check or moving it into
+> "if (val && *val != 0)".
+
+My thinking was: if a whitelisted variable was defined but featured
+an empty value, then it might be safer to use whatever value it was
+already assigned in the environment instead.
+
+But given that RFC 1572 explicitly supports a client sending a
+defined variable with no value, then maybe it's best not to second
+guess the client and just let them clear it.
