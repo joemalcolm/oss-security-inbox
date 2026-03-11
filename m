@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["357" "Thursday" "16" "July" "2015" "11:36:13" "-0500" "Mark Felder" "feld@feld.me" "<1437064573.2531367.325509785.6E701247@webmail.messagingengine.com>" "16" "Re: [oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)" nil nil nil "7" "2015071616:36:13" "[oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)" (number mark "        feld@feld.me Jul 16   16/357   " thread-indent "\"Re: [oss-security] CVE Request: use after free in PHP 5.6 and 7 (possibly others)\"\n") "<CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>" ("<CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3286 invoked by uid 550); 16 Jul 2015 16:36:28 -0000
+Received: (qmail 9609 invoked by uid 550); 11 Mar 2026 06:54:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +6,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3263 invoked from network); 16 Jul 2015 16:36:27 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=feld.me; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-sasl-enc
-	:x-sasl-enc; s=mesmtp; bh=o3GCubm8rAfPkUyNi/Y6c+xnpso=; b=a2waeG
-	lZgcUMuAlU6PlGZPcxA0DzT5Ab7pPDxzh97JPaiT4JL8BeAfE5SLI0UH9g2Qw9BM
-	pexumBECJYYhJtUtZsTHUY4zS5kttOTGPh+eYsN7uwdLjuOuk/CkAzRqlmFdu+7m
-	bP0vr6bwFDVQ26pkoq5qsdNODirjXm31IAGR0=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=o3GCubm8rAfPkUy
-	Ni/Y6c+xnpso=; b=FHGAnvXK7HIGTU2/FF6zMtWLj2HodtEiJl6Hr6kOnPWnBb6
-	WiIGGJTG20yCMu5Xpjdh6hi1k7ArzVxa28WKH/O/9u6yhLBN7eM3JnLTjcg4/+fa
-	uaf46jACylc6XbEURqjC9QiFOj83iU9dwY9io7hVBSS2H4uwhO3mTjOrwcFU=
-Message-Id: <1437064573.2531367.325509785.6E701247@webmail.messagingengine.com>
-X-Sasl-Enc: VYfCdzLjDlJw/2GS/Q9WaWHr6WhNAruXcm7sjUjcvFsJ 1437064573
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Mailer: MessagingEngine.com Webmail Interface - ajax-63a5d8c6
-In-Reply-To: <CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>
-References: <CANMVOuxUyP_6479fSMMQsWbK1iSywX8OzMC9Px1+wa+3k9jjZg@mail.gmail.com>
-Date: Thu, 16 Jul 2015 11:36:13 -0500
-From: Mark Felder <feld@feld.me>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: use after free in PHP 5.6 and 7
- (possibly others)
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 9567 invoked from network); 11 Mar 2026 06:54:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1773212084; bh=KaG1rwl5/p9OEpoyc0I9g1sI04gOFShh/nMWJh9yIQc=;
+	h=Date:From:To:Subject:From;
+	b=G15FBw/Yqfn8Inotch61v9brpK4+SdvNrHL3iotHetNSdu1M8dNERQ++YlMnIsCfT
+	 6QyUSS4OzyBb2CywRcen2JBRsy2bQlbmfP4XbOrnVV4cwScVDDc+sR/gHRWADAO+Cj
+	 rfFw3hmTblTF8EmahbVlw6WkUfXmbdZFmStfRFZXAkdgY1IROU6ftcObNHplveXziN
+	 OhRZE7LjNtgoLHyQ9NPJy5nemRuT1lycw5ggwuWb16nuyvMm3aZ2i+zYTPG6pDvvE/
+	 E1yhzChxpF61PuIpGLXGXcGK064LMLqWzg34NTNp3zaS9By1IhBJAVBI54NFx20DJZ
+	 tf9peJHCqb1IQ==
+Date: Wed, 11 Mar 2026 07:54:44 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <sqq7s042-807n-7199-p793-rq60s2n88302@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl: CVE-2026-3783: token leak with redirect and netrc
 
+token leak with redirect and netrc
+==================================
 
+Project curl Security Advisory, March 11th 2026
+[Permalink](https://curl.se/docs/CVE-2026-3783.html)
 
-On Thu, Jul 16, 2015, at 01:24, Brian Carpenter wrote:
-> Bug Report:
-> https://bugs.php.net/bug.php?id=70083
-> 
+VULNERABILITY
+-------------
 
-> -Type: Security 
-> +Type: Bug
+When an OAuth2 bearer token is used for an HTTP(S) transfer, and that transfer
+performs a redirect to a second URL, curl could leak that token to the second
+hostname under some circumstances.
 
-Interesting that they removed the Security label
+If the hostname that the first request is redirected to has information in the
+used .netrc file, with either of the `machine` or `default` keywords, curl
+would pass on the bearer token set for the first host also to the second one.
 
-> PHP 5.5 and below are in sec-fixes only mode. I fixed the bug in PHP 5.6 though;
+INFO
+----
 
-They seem to think it's not a security issue and won't be patching < 5.6
-?
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2026-3783 to this issue.
+
+CWE-522: Insufficiently Protected Credentials
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.33.0 to and including 8.18.0
+- Not affected versions: curl < 7.33.0 and >= 8.19.0
+- Introduced-in: https://github.com/curl/curl/commit/06c1bea72faabb6fad4b7ef8
+
+libcurl is used by many applications, but not always advertised as such!
+
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw also affects the curl command line tool.
+
+SOLUTION
+--------
+
+curl 8.19.0 fixes this flaw
+
+- Fixed-in: https://github.com/curl/curl/commit/e3d7401a32a46516c9e5ee877
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade to curl and libcurl 8.19.0
+
+  B - Apply the patch and rebuild libcurl
+
+  C - Avoid using Bearer tokens with redirects
+
+TIMELINE
+---------
+
+It was reported to the curl project on March 3rd 2026. We contacted
+distros@openwall on March 8.
+
+libcurl 8.19.0 was released on March 11th 2026, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: spectreglobalsec on hackerone
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
