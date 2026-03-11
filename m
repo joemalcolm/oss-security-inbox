@@ -1,4 +1,4 @@
-Received: (qmail 24319 invoked by uid 550); 19 Sep 2023 17:31:34 -0000
+Received: (qmail 27857 invoked by uid 550); 11 Mar 2026 13:24:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,156 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18183 invoked from network); 19 Sep 2023 14:46:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : subject :
- date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-03-30;
- bh=DNU01VNxIC7q/Eeh4YAs+jQ79pmzQhwhZ/1BXmVLmjk=;
- b=j6eqSA6CS4obzzziVomcu5sRh3rqfyxvuG/+nmOtE4JbBsslkPad4Y/6Br5+MUvQ3i6T
- rweKof9M5opaHSSQNA+rNOxofuVl4emC1rYMLp2yix97gAtHK46eUxz3RluIwQmr220X
- /0vBfqmFA4TS4AbSZuQnk02CT/3vwRn82JWKtQeLZr9KtibtfX8hpBPdHFOeJwt0g/Yi
- VE8CydE4JyptfjpxtLoUzX0vIh7On9zCFI1+o+xEPIZl8piSsObS7J4oHuPO1ZYUQ5wS
- RCtRhusrC5iyPD15XBhc9T3slmZVOzF6QwCy47TAe++a2Rkh3OE9NyMiGtLpYeCByg1n 5Q== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WFLrr7Pb+onUQ6G2f7rBddgDmzWT59JEMhzhstNJZhVEIxnsNX98JV9q6vrLPNtg/DohdmGY7Ze7czjaIf8tAIsk1ONPnONSSBV+NWWWd9E3qtqBrTbuoN8864UiwtLziQ3S19BNX0EYrjD7nNHZLXvEEJbQOVwXk9CVbBr33r3H1kop9ucpDcuOMFP0r16GM+K5z3WVW8gYMdMP3jstThwNnYg7qEQrn6p5MyA0Med+VeQ8p4HZJUKXUMRSLz6OmnZRWizs3B3IuF7ejNMqfzzdqEkJ4yULRHm7mn/FIW9LREoIy/KnxPxC9q0gpqfOJy2ZYxIT45JEA/CojQCymQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DNU01VNxIC7q/Eeh4YAs+jQ79pmzQhwhZ/1BXmVLmjk=;
- b=NaHcnI35OnpsZIUMUcauFL8eMmpvCcMr67r4eztCwNfqZkuedeQZoo2yjZJe7pOzHb23sqWRUGMcwDLa71OLwNp7wJ/YvC0U2FZVOyqVdwHpB1gIvv6rhle1imUobGjzC9KXWX/a/PvEOjnF3a57ErWfzWqHVj/izC6fiKdgaNcwoe4+002CbYrzU14Ov5HSOYOMecOx+V3zssQGIgs/m8yMIJS4eF2jFteLD75beJehwziVCohHatGH81ozGbJPFQ/o11g9fvqm3kYkI/BkYtqju3bjfrZMAbhzyeCmiIqi4C2jnTiJKqkutYUGrlt3LnMx+KHrc3YW9YWSN2Y97w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+x-ms-reactions: disallow
+Received: (qmail 18248 invoked from network); 11 Mar 2026 13:22:57 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1773235367; cv=none;
+        d=google.com; s=arc-20240605;
+        b=K4lR6MNntm+6mZds79wihKr4L+cIhYwHwo+p4S5gkfMMYG0ujBiprlIeg9L2DR16wU
+         VymIYBOseLQr8nTkVIM/bcbR8yiRuXPnHMBEPRHDPsiDEWXBtRaGzSF53cD9yAMYgjWt
+         lxEUPbWjkg91KfvzNCYjwgAq8wqEc9QNJp95V8ayYh6Zl+V/4OCP4M0Ei6b9PbOUQn4I
+         /6gwfKvu/4LsnshoBcWaBTmCtBBR/qgrgsBYE2lv7HXQC5f8MR7n6bdSaM9KIVYtCcjT
+         ECVggObFGYm0v4F8Nrq1/qGAUbMH0ImeHh5PyMvR+vb/rvmn4fPe029avn6TOOTg+2Ib
+         ZyWw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=d4z20hvL2h/68QrVS8CLVSQkWsNANgx64DvE9W0ACRo=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=f0yG0tDx0HPqJ9yONbmZNhqNwhInkOlW5NB8i3708zbw13YQXHFpDujS6dAy1q/hTL
+         j9MGHDfDXw0hFSnab8DyOROZjdtHOraXMKXivhVIfj7O6t7RSb4xq0oLr51CQafTCaVG
+         P5c3urDUPLosWFLqdlNGua2kfc7FbhL9XajgxSehlfp+5kYRDU0I12Rs5OOXdxurZt9H
+         X2746JsFmCFoOViqY1cgn8cW3Ajwg6gLePkdmiJO+CJcN+JFZK4/BSAXC7xfj+sIu4Vl
+         4TAUJdo13o48tLJoaDqwxVx3IKwuWSvC6lOIU8/vYIj/4PV1pkU3TJWNKRE+TOE73F85
+         facQ==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DNU01VNxIC7q/Eeh4YAs+jQ79pmzQhwhZ/1BXmVLmjk=;
- b=fZgGc67lsFHhQh+p1za2sWkvuf9BIFUpf160Q7Rlc/2uxZeu8Ylvun5o2wEJJQJrTDWrrSyNkquE+QuNp3TdOIdtSvd9Djr0V9jDtGA3LE7Wm5g2Uz2GUOOOxAkjnB6FEQ8urgneEuiTNXRQtJGi1iCDJSNwEZmNzQbkd/G5vgI=
-From: Casper Dik <casper.dik@oracle.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>,
-        Steve
- Thompson <susurrus.of.qualia@gmail.com>
-Thread-Topic: [External] : [oss-security] Possible AMD Zen2 CVE
-Thread-Index: AQHZ6oVYVtQWfRo2rkaqxBe+W0jwk7AiOOQq
-Date: Tue, 19 Sep 2023 14:46:35 +0000
-Message-ID: 
- <DS7PR10MB53580D81F624AC15BEBBC39AFDFAA@DS7PR10MB5358.namprd10.prod.outlook.com>
-References: 
- <CAA0MYJUHngYsTR0miEO31PpMp+TyCgj6ebt9F4b2289SFwy5TQ@mail.gmail.com>
-In-Reply-To: 
- <CAA0MYJUHngYsTR0miEO31PpMp+TyCgj6ebt9F4b2289SFwy5TQ@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS7PR10MB5358:EE_|PH0PR10MB4616:EE_
-x-ms-office365-filtering-correlation-id: d1b6b18c-8231-4524-a02f-08dbb91f394b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- dMN/IH94wLpqi/x0xiWNifjV75siNa++1tVcr65LgO8UI9mCiVJ4WoJIztLXspYemw9stewYQq5yTs2DIq0GTPQwNH3hk1I5UUVTjbn5bHzL0a9HizB6ri2TqQiOiySeOsbUFy/hBBtD6fXWpDoxJiJuSpILqx/+81HZdEbjGmZCdspHO1Ey1/hL6iFyVMJCGXLQ1Pc56cmgpGD9qSxOpZvlcpgT6syNzzXWofCur1C0HwE/w3N/sEHJzm0kVEXHmTTI/D2xJznP3LsBRoX4JtdtsegrrIFXOMa+6Zdyr7p/18RwQPo29yfJOWCN2shsfE3vMry3OURLoj8HJwqGBu3Fo1p7JcUyV04zFbjUWOK7qk/ux0iAFC5xSCdF91W38fa9vvzZUe0CCOfH0mkIu/G2tkRkY6Xm13fJ3ft6fvakoW5ivXyNCsGZXSU19zjd5g6bm7pv42wKqW/c1tg2dSA8TEABGaE9FX8mOtXEDipnOwKksU3KlGCuwHpfyKEwn9oWUVJW6tIcpNHMLGFdLEu9ZFFeYwdpoW35sYEup4/IUrAte4IAboXSgzSle+cwuZv3cNhaDzaVwjSl+D2OdDpYU6QyFQaIzbxJrc7XNGQS3ohpbeLeC4Kxp/a1aeV3
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS7PR10MB5358.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(39860400002)(396003)(376002)(366004)(346002)(186009)(1800799009)(451199024)(55016003)(478600001)(26005)(71200400001)(83380400001)(38100700002)(38070700005)(122000001)(33656002)(86362001)(6506007)(7696005)(9686003)(5660300002)(41300700001)(316002)(8936002)(8676002)(66946007)(76116006)(91956017)(66446008)(64756008)(66476007)(66556008)(110136005)(2906002)(4744005)(52536014)(44832011);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?us-ascii?Q?/H9Ipd8cieLvBFA+M2vesKW9jvSgMJSV9/4+CR915UxOUX6Si3zkvr84fc2O?=
- =?us-ascii?Q?g4fDfZgacrlFFUvuuipyEFZSMNbcws4pxO377zfBxJZMgNo+cpqtAJi1/SQA?=
- =?us-ascii?Q?rnjWHqMif5oqJb/S4T037eDxGicYL6Qt99RQye7pcX9AFkAANGqnkjOCQ5Yc?=
- =?us-ascii?Q?jjTSL4AhERnqHt6o+ooRLowUJjC05af2JTNAWssZi6sMdOX9X/JoLIr6lgHp?=
- =?us-ascii?Q?+ragswgh6Q1nqt8hM5pS3hAjQG/nLJA/N3t+09x9j6LPiNGAIHzVRNJlqkj5?=
- =?us-ascii?Q?TZpjQ7UyB0BCUO5GOdYCh4Ab9Vmykpo3hXJvbaWzaIY/W42rbUdN0qeES6D8?=
- =?us-ascii?Q?UIaoe92v5OQP8l/AbJDKDgCsul4v2AXuFtQkPll1ExWRLO9TUVv5fmtmmtyT?=
- =?us-ascii?Q?1HxX1juCfy4NSac9FE7QneOUEwyg33eIpWhAVp8mN1C3+F/wmm/kyAgyB30c?=
- =?us-ascii?Q?LOjetSmITpSjraCk+tDXpoD6Dhcu9+dMSrfJqptjxJnyT8rq9KGpYoBtUBsk?=
- =?us-ascii?Q?Imr5AZtC6bqtv4/gPSSPt4AMC3tfgPUP67diqWrYcB+C9BF3oTpLPtGeqfgr?=
- =?us-ascii?Q?SZWA6LqB+r9eUZADn7c8QAvLGxWpeyhiC2gbagScMFPt70OnmLi38ALMMhWT?=
- =?us-ascii?Q?UkcEkRF/9FI919XBxjkaTzU7E4UgFBn8tUbIS2N0wv3WT5ZmK33AMG+Ml3hK?=
- =?us-ascii?Q?Br8qjm9Sk+EsX7+1aE3yUKZ+xEAd0/hLfmOZnXvUaDqAYJbbuejC4NICjWah?=
- =?us-ascii?Q?JrmoJKHbY33mkhxFxz6c/aiwJwdTCRAG3KjU7HEJIzmiQA9Y9NDkJhePNqku?=
- =?us-ascii?Q?mGzh+o/UwijNvG44mC+DBHSPyd9a/do2AOOvp4L6TZYww3kVuBdIoZwp/cQx?=
- =?us-ascii?Q?bGJm4ZSXj8GiHcplerR2D+sKEqXjOshKca1FDHvbD/BnivkBXIK7XyZjthaJ?=
- =?us-ascii?Q?O1P6iEk+ZAKUA1S9WHGQZ6HgGv36G9ogrUeWLW2Pb8KY0yboE/AHA94x3JMo?=
- =?us-ascii?Q?R2GE3yn6/72575ruf7G8En8/ci0k6LFVDVLZYuu4cv4lJGR3ntN1vNfARIo7?=
- =?us-ascii?Q?Ukm1U7sAJNlChk7glH6WnXzf+POpcC1bq2eCXTX0q1lNdiDQ1TQABWqiO0oV?=
- =?us-ascii?Q?w2Oq0gH/JGYOVP+0lTvFfE06OH+zicMyJ32Q1OOxLcqYqUC9J7g+G4DacGP9?=
- =?us-ascii?Q?kmhngMVa5BhVcf1ZvHcJPED/IRjlytJXkdGU5b78IZwJYxNdu/ovNg/rXaHw?=
- =?us-ascii?Q?Lv3gnJAIdWo/zzYPvrSVX+X97TUw9curNYg89YNd0J/dVTFV9GE/yUja5qjL?=
- =?us-ascii?Q?HEYnZd6BgC3fJTRPNJJDvFHnr5J2AGkFj7w5d//BFAqjD4XshIVqhZFcB/jh?=
- =?us-ascii?Q?CYzIlkGnkkVqgKwtXW0PYW+IGxDMWlhjm/zI9NBcM8kCb6ZflOBwPP7K7H74?=
- =?us-ascii?Q?DJD1tH5LBBj/dJvAOwbKR3mwjVQUBihLVx3SQTV68Cw5ZD3w31NxpKaD2ANi?=
- =?us-ascii?Q?79CrSKj9ChfgJ82QF9cNZTmfQxmrx7v6zBgOICHPgvc9VAbeA9DqKiahlIaz?=
- =?us-ascii?Q?UKg/K1kCLoUMO+R996iB1kYr2O++l71jmkkZFN/I?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20230601; t=1773235367; x=1773840167; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=d4z20hvL2h/68QrVS8CLVSQkWsNANgx64DvE9W0ACRo=;
+        b=GX3qvNuKiuxeCdL7GnL2C9wp87nzxqIAlQFyhxeQIcXo/IHGK4L71NP0dcuX2P7ZKj
+         NKahx/2KAd05KcwiLPNIgT70OJrYWlmevkJu+3RbhRc3Ce9/gXxSAHrtmW++MQwAbYH6
+         3OGUjbRC3OymWE8Nf4cplhhJVi/2bKobdY6+9wJgAsSYCvfLBE/YWznXwfUdbYtJeVrt
+         lK3fzhPTHz8gngqICItS5s8kCdii8iCkPtoCjB2x+bVpOmDdeSqH/nNiX5z4GMJUBGIo
+         W4roSEAWao2fHZTD6WKzIj+C3bBuQQBpuBXTEWzN8f2vgpLSBMH9aFwAJ2xBhZvWwg2D
+         C5Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773235367; x=1773840167;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d4z20hvL2h/68QrVS8CLVSQkWsNANgx64DvE9W0ACRo=;
+        b=HCsBZxIMceHljrHtnO4cxqFGIB2KeeHhKcACETqfFWGj2dxNq1e3ZteQfIObPem8AL
+         r8cgFjyJHvQiowsG1AENQcrIhb1qP2RvKoYuP9Y/UOkCoSFc3I2ZNIbXe7HIA1vh13or
+         YMxVMIUjGQ88E+krUcSfD2ZtpaZ20byLChsY9H6JJvo72CIcvWDRviwMKSaPpyQCxza9
+         2QCkVFgFNUF0inwu1EKdPdD0wBxqWJ2EtAZ7wKCCe/SonF7pVYCkbs3dLM5hlDM2OeI8
+         U1ZGh+UOv9EWcePQlRfXLmNtXxAklIQ9PuGvxn3VY3CTwuoUpHOZrk71GK+4PT9sGlGC
+         fOhQ==
+X-Gm-Message-State: AOJu0YyPKIQRo6oaJ1ix+mtA0QhG6x4W2sfAdORuOj3se0T8Yip52IHM
+	q5XjNOHR+QhGhPIwzzn7L3m8NPpCLbsgwLvDymGrZfmdp/ioFI7xn49mlOkF/fSgBp6RDhB6Is9
+	k1nCqV3c42Ok8EMuZ/8Lrs3fp6Q97UgKj998p
+X-Gm-Gg: ATEYQzzdyi0c/tcL4oL+0og0iZdviLNOMyUSXD8bH+pX6oHhewx4oNt5IxceNufH2oF
+	pDe6GSIb7Dt/mmMcqR6niK5Km92+Ravj/04HZyaqI9UQmpG+r9fo4XVP1z+rnLVmAzwE8rhkNky
+	1f5xiKFtuK11IjFCqNIgtEIituawx0JsFGc4LKIRo2IXa1y69/+9U1SWNn4ME2AZWcYEN5YAkAV
+	iSLcllxsapKg4Hc/RzeCSdW22PhaIzyvfg8GEmcjLc0WHBm7CBvv7o24rofm0NA+r5beFHpafst
+	IN1Q2Q==
+X-Received: by 2002:a05:6830:6afa:b0:7c7:63b6:89d3 with SMTP id
+ 46e09a7af769-7d76a77776emr1460425a34.19.1773235366417; Wed, 11 Mar 2026
+ 06:22:46 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	fxuH9/In7lNbZD4Sguu3F5L42IjI+MHYlb4STT/YtcbnFCCiTYOSdkAlSIJCVvJO3YJpF2k8sP1516LJvKafDhBqyfr5Q39WuWIUWnFdKlR/lOaamUh9VwzUuqR7pLEaYP2ORt+g8dG9awcjeDdCkCPOkJT4PeK/JE2SDzO/iTS+UMA8/Y7W3xYHgl1jkhqZWhGlVH4BQe9+mH5DvZY+yNokbeIZJN141ezdCJsaDyNvrCb7d34S3kbQf5W54ZxO7Ei2FvJmMSTMh8ul/Mn5AFLFH7QU2l8f42HzmgUj4bbmRgtzGt3/rsvgD745vvnt15eqbeoaYw07QD8I7gYnNTDQ+02SDDd6qHo6+8gbLwBU4kCD2SIi74EGuMgtXVHMN9auC85yOFdCOxmuGcS1tVtegvpe/wyec/oPI/kJ7PB3QH3qKCjYWSMuIIIyzsupoTggBIpgiCmgyfnXVVpC0E6Ewd+TIjWAWz2+uR5nNdKNw39ngax0RyqV0jreeIoxfrMtJgjug7WFcPcXQTYUpQEH+YR8n1j2kgtN4kS2GeVh8hDdEFSEE4YCfvbP7utHeT4j6S86YapoJgUQ9JbzYW+Zwq2uyep+/BXh2jMagpv7Cw2kETjdMcA1okr3E1c5Yq3lu/QHpf1kEuLVackjm9VL2oPW8cSAykAHUBKd359/SnZCb6gLKlPXYUg12drH/jvmwORsYz3yoVAAHG/U6aDaJb+qsSm1j2dygwd0lwnQBtYnc4QNk8DefuJLCLiXwL581vTAi6UnGkaeH9TpYmWArmRt9nafokkIRZaaR84=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5358.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1b6b18c-8231-4524-a02f-08dbb91f394b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Sep 2023 14:46:35.9082
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XjrXbj+JwlcJg4WHqys+j4NKzK0jjyw5yZbbg+idWw+h+04iIie0xBVg+2EqcTFWdK+eGO8kqHrhORhYSRBSqw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4616
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-09-19_06,2023-09-19_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 adultscore=0 bulkscore=0
- suspectscore=0 phishscore=0 malwarescore=0 mlxscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2308100000
- definitions=main-2309190127
-X-Proofpoint-ORIG-GUID: 29IdjDBT_o8Fq9qgu5YMc6atimiFsN8u
-X-Proofpoint-GUID: 29IdjDBT_o8Fq9qgu5YMc6atimiFsN8u
-Subject: [oss-security] RE: [External] : [oss-security] Possible AMD Zen2 CVE
+From: Siddhesh Poyarekar <siddhesh.poyarekar@gmail.com>
+Date: Wed, 11 Mar 2026 09:22:35 -0400
+X-Gm-Features: AaiRm51LP1kWtHZnbM61ThBTCkZurkco1FbuM8YSn-Jbv3Kf6cpFujXVZroaLww
+Message-ID: <CAAHN_R3QxQvMSZWexs3F5OChBkEcpQ9M4b1m06tQcP=9Cju_Rg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] The GNU C Library security advisory update for 2026-03-11
 
-I think you've run into an issue with gcc.
+Hello,
 
-It does not always honor the order and it I have seen issues
-where I was not able to get gcc to properly order the code unless
-I was using some trick.  That particular trick, a smidgen of volatile
-casts did not work.
+The following security advisory has been published:
 
-The code in question:
+GLIBC-SA-2026-0004:
+===================
 
-#if defined BROKEN
-      temp =3D ++obj.value;
-#else
-      ++obj.value;
-#endif
-      t1lock_release(&obj.lock);
+nscd client crash on x86_64 under high nscd load (CVE-2026-3904)
 
-In the "good" binary the "incw" of the obj.lock is after the "incq" of obj.=
-value;
-but in the "bad" binary you see the instructions correctly, incw before inc=
-q.
+Calling NSS-backed functions that support caching via nscd may call the
+nscd client side code and in the GNU C Library version 2.36 under high
+load on x86_64 systems, the client may call memcmp on inputs that are
+concurrently modified by other processes or threads and crash.
 
-I had the problem with an Intel system running Solaris (hence  different
-assembly output):
+Notes:
+======
 
-good:
-     wr_thread+0xe7:         48 ff 05 8a 09 10  incq   +0x10098a(%rip)   <o=
-bj+0x8>
-                            00=20
-    wr_thread+0xee:         66 ff 05 7b 09 10  incw   +0x10097b(%rip)   <ob=
-j>
-                            00=20
-
-bad:
-    wr_thread+0xee:         66 ff 05 8b 09 10  incw   +0x10098b(%rip)   <ob=
-j>
-                            00=20
-    wr_thread+0xf5:         48 ff c0           incq   %rax
-    wr_thread+0xf8:         48 89 05 89 09 10  movq   %rax,+0x100989(%rip) =
-     <obj+0x8>
-                            00=20
-    wr_thread+0xff:         48 89 05 9a 09 10  movq   %rax,+0x10099a(%rip)=
-=20
-=20=20=20=20=20
-Casper=
+Published advisories are available directly in the project git repository:
+https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD
