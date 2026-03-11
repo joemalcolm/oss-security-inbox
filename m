@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["727" "Wednesday" "4" "April" "2018" "14:22:53" "-0500" "Michael Catanzaro" "mcatanzaro@igalia.com" "<1522869773.22588.2@mail.igalia.com>" "23" "[oss-security] Re: [webkit-security] WebKitGTK+ Security Advisory WSA-2018-0003" nil nil nil "4" "2018040419:22:53" "[oss-security] Re: [webkit-security] WebKitGTK+ Security Advisory WSA-2018-0003" (number mark "U       mcatanzaro@i Apr  4   23/727   " thread-indent "\"[oss-security] Re: [webkit-security] WebKitGTK+ Security Advisory WSA-2018-0003\"\n") "<1522867580.22588.1@mail.igalia.com>" ("<1522867580.22588.1@mail.igalia.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 8139 invoked by uid 550); 4 Apr 2018 19:28:18 -0000
+Received: (qmail 10080 invoked by uid 550); 11 Mar 2026 06:55:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,102 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31776 invoked from network); 4 Apr 2018 19:23:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-	h=Content-Type:MIME-Version:References:In-Reply-To:Message-Id:Cc:To:Subject:From:Date; bh=sAOFyM1At9zUHp0c/F9Zmcw0Xcf294HkZamhBv0eJms=;
-	b=EkNUJwa4t1naWDce3pZrv7JiZ3UDEmnjyAygJdjDz2YWIkHgOKXDfrthKTbtC2D0q7wBeb/T9iqZN3YirybOwWN7HHlmgw3SpLl6BGqOmTbtDs4mf2nBw1iDpkiQwz+wn8PEbM0EcStEddruHggyWj921JLE+wdJSq/tIBEX+CpDab38ycQ8WJmOll/qq1HBdephtHvzt4IcrjS5gXl/Jwds3uJXGI+Pq5zYxqJOzKvIWM/zYI49+8rv6RppBhoI3DPIwLjr/BJITXtHC9L0nSeHYpQTMlrQ70wWe/50DUO1VyRfSNBDxECpSM/4uaVlArxrIbjdyj6RdvsNDUnHlA==;
-Date: Wed, 04 Apr 2018 14:22:53 -0500
-From: Michael Catanzaro <mcatanzaro@igalia.com>
-To: webkit-gtk@lists.webkit.org
-Cc: oss-security@lists.openwall.com, security@webkit.org,
-	bugtraq@securityfocus.com, distributor-list@gnome.org
-Message-Id: <1522869773.22588.2@mail.igalia.com>
-In-Reply-To: <1522867580.22588.1@mail.igalia.com>
-References: <1522867580.22588.1@mail.igalia.com>
-X-Mailer: geary/0.12.1
+x-ms-reactions: disallow
+Received: (qmail 10036 invoked from network); 11 Mar 2026 06:55:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1773212087; bh=Q0trA+PN6tj+HriJ3Og2eHDVJF4yF1d+1KoVcrbDypI=;
+	h=Date:From:To:Subject:From;
+	b=PzEMXn/kwbpLPU9PaZcyIymyfsvje6SA5Eeea3RT1G7nDhgmSmF4CHub+9slPQSUv
+	 k38K0J9gdl+Ke6kop7hDgwLZwNey2eIbFLtTshtrgO3iS072EQZDjFvzm5dNT+U1gJ
+	 OO0MaEU5OFgzMI+bzRCMsxoC9b95WgXn+qg5mBd8k85USrO1Hil7yWOPBx+ZPsxIyw
+	 4DSbypcnxwfJWyyEEf/PZx3SGAY2d0kasXskr8G4CH5mFfGFhDeQwzYLI/Q5ObPGxB
+	 Js7caFfAtG0t0DIE7o2lY/2D0owThqX1aKwRiGx5DbDiHhhkyKybTtW61jS3iqOFe9
+	 FxlHPLB9kn64w==
+Date: Wed, 11 Mar 2026 07:54:47 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <n8rpp77p-p9on-rr66-16ro-3q062qoq809r@unkk.fr>
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="=-QLrrU9rP2dAse4Qf7qgv"
-Subject: [oss-security] Re: [webkit-security] WebKitGTK+ Security Advisory WSA-2018-0003
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl: CVE-2026-3784: wrong proxy connection reuse with
+ credentials
 
---=-QLrrU9rP2dAse4Qf7qgv
-Content-Type: text/plain; charset=us-ascii; format=flowed
+wrong proxy connection reuse with credentials
+=============================================
 
+Project curl Security Advisory, March 11th 2026
+[Permalink](https://curl.se/docs/CVE-2026-3784.html)
 
-Correction:
+VULNERABILITY
+-------------
 
-On Wed, Apr 4, 2018 at 1:46 PM, Michael Catanzaro 
-<mcatanzaro@igalia.com> wrote:
-> CVE-2018-4118
->     Versions affected: WebKitGTK+ before 2.18.1.
->     Credit to Jun Kokatsu (@shhnjk).
->     Impact: Processing maliciously crafted web content may lead to
->     arbitrary code execution. Description: Multiple memory corruption
->     issues were addressed with improved memory handling.
+curl would wrongly reuse an existing HTTP proxy connection doing CONNECT to a
+server, even if the new request uses different credentials for the HTTP proxy.
+The proper behavior is to create or use a separate connection.
 
-The versions affected for CVE-2018-4118 was not correct. An attempt to 
-fix this issue was included in 2.18.1, but the change was incomplete. 
-This should have read:
+INFO
+----
 
-Versions affected: WebKitGTK+ before 2.20.0
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2026-3784 to this issue.
 
---=-QLrrU9rP2dAse4Qf7qgv--
+CWE-305: Authentication Bypass by Primary Weakness
 
+Severity: Low
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 7.7 to and including 8.18.0
+- Not affected versions: curl < 7.7 and >= 8.19.0
+- Introduced-in: https://github.com/curl/curl/commit/a1d6ad26100bc493c7b
+
+libcurl is used by many applications, but not always advertised as such!
+
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
+
+This flaw also affects the curl command line tool.
+
+SOLUTION
+--------
+
+curl 8.19.0 fixes this flaw
+
+- Fixed-in: https://github.com/curl/curl/commit/5f13a7645e565c5c1a06f3
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade to curl and libcurl 8.19.0
+
+  B - Apply the patch and rebuild libcurl
+
+  C - Avoid using HTTP proxy with alternating credentials
+
+TIMELINE
+---------
+
+It was reported to the curl project on March 4th 2026. We contacted
+distros@openwall on March 8.
+
+libcurl 8.19.0 was released on March 11th 2026, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Muhamad Arga Reksapati (HackerOne: nobcoder)
+- Patched-by: Stefan Eissing
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
