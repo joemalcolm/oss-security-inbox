@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1663" "Tuesday" "14" "April" "2015" "11:55:15" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>" "38" "[oss-security] Re: Problems in automatic crash analysis frameworks" nil nil nil "4" "2015041415:55:15" "[oss-security] Re: Problems in automatic crash analysis frameworks" (number mark "        cve-assign@m Apr 14   38/1663  " thread-indent "\"[oss-security] Re: Problems in automatic crash analysis frameworks\"\n") "<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>" ("<CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26473 invoked by uid 550); 14 Apr 2015 15:55:33 -0000
+Received: (qmail 11463 invoked by uid 550); 11 Mar 2026 06:55:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26376 invoked from network); 14 Apr 2015 15:55:27 -0000
-In-Reply-To: <CAJ_zFkJw7hNxGp0PNmQbH0suVwfkgzbCsvs2Sv1OdxD+UBiraw@mail.gmail.com>
-Message-Id: <20150414155515.BFCAD6C0075@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org
-Date: Tue, 14 Apr 2015 11:55:15 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Problems in automatic crash analysis frameworks
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 11427 invoked from network); 11 Mar 2026 06:55:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1773212090; bh=9vGTsv19Ecs/LyKJTMfXi8HpE4WKE4qoRkVC5CnWp+w=;
+	h=Date:From:To:Subject:From;
+	b=mBn+r7JarirChwj9aGMAV/clxKOZwDGzNckGMXl7X3nd/wfkNRLnLpS0W+D0sMSAA
+	 2VypPqYJF5Ob23dJgy8QvoAZGLrpOHzAT4i0wTV/OJ5KjMJE7oX+6DTkbe2DtB2wVR
+	 wMLTJ6m2AHmoIUxRKOSOVsnfFD/YgJHQCdYFY+NnNfx1/tJg428N5KhgG9Lo1hBxHy
+	 NAoTyjcObEKsUvLqG+lOIoCd0hHzkm0zkTyDpEGWqm4aDZ7p8jjWJVYvZI8mxQbs+4
+	 mXz9Yjyrmo7nhTm5T+LXWRXs5PEz3qhYzpfVwoj/Q2b/USZVaBlfiVzXxJOj5AKwWL
+	 0GDmaOzWqdh4g==
+Date: Wed, 11 Mar 2026 07:54:50 +0100 (CET)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <rq2n27r2-25s1-p567-ps6q-5396rn1p50q8@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl: CVE-2026-3805: use after free in SMB connection
+ reuse
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+use after free in SMB connection reuse
+======================================
 
-This is mostly a question for the persons who assigned CVE-2015-1318
-and CVE-2015-1862. Should these CVE assignments be interpreted to
-mean:
+Project curl Security Advisory, March 11th 2026
+[Permalink](https://curl.se/docs/CVE-2026-3805.html)
 
-  CVE-2015-1318 - in Apport, an unprivileged user can use a
-                  namespace-based attack because there is an execve by
-                  root after a chroot into a user-specified directory
+VULNERABILITY
+-------------
 
-  CVE-2015-1862 - in ABRT, an unprivileged user can use a
-                  namespace-based attack because there is an execve by
-                  root after a chroot into a user-specified directory
+When doing a second SMB request to the same host again, curl would wrongly use
+a data pointer pointing into already freed memory.
 
-with "Furthermore, Abrt suffers from numerous race conditions and
-symlink problems" not yet mapped to any CVE IDs? (CVE-2012-5660 is a
-similar but older issue.) These additional ABRT issues would seem to
-be, for example, independently relevant on a system where the kernel
-was built without namespaces support. However, the raceabrt.c
-attachment says "This is a race condition exploit for CVE-2015-1862."
+INFO
+----
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+When the bad code hits, curl first makes a `strlen()` on the (freed) memory
+pointer, then checks that the size is less than or equal than 1024 for it to
+do something.
 
-iQEcBAEBAgAGBQJVLTexAAoJEKllVAevmvmsjqcH/2QSrlMTNp+0ovd4FKrMM3W2
-p2R2WeHGkhEodzZJEFtCPit+K8hPEU7PFsX6ZIxM2mY6eQkKkbvBTSbBGzWB92Du
-eqaU9uFXeELo0cqQDws9AyrwoD4YA4EcA84oaEqSpzRUk1YrdV2nQWP5n5/htKV1
-aZmlclshZcecd7PkwxhZh4/+5yinktXnZd72c4MW3QUCmYBnGQjuHGPzJhAKFg13
-PBqyFkUkFnZSA3vhl2gPgomaAFnvBmciiEGyXngqplUrf7pHK3wWWkQoeZ/AefxO
-gttXwwFOMGyf6WJ54dJFYc3MpAoXgEr6yg6Ip2eXa64oYfIyFW85hh2Kbe9Vt2M=
-=77mv
------END PGP SIGNATURE-----
+Then it copies that string to the the outgoing package which then potentially
+could leak sensitive data if the application happened to put it there in the
+mean time since the previous transfer.
+
+This seems extremely hard for an attacker to willingly abuse or to massage the
+application into leaking specific information. It also seems highly unlikely
+that any application ever did this sequence without getting a crash or another
+issue that would indicate there is a problem in curl. The risk here is
+therefore minimal.
+
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2026-3805 to this issue.
+
+CWE-416: Use After Free
+
+Severity: Medium
+
+AFFECTED VERSIONS
+-----------------
+
+- Affected versions: curl 8.13.0 to and including 8.18.0
+- Not affected versions: curl < 8.13.0 and >= 8.19.0
+- Introduced-in: https://github.com/curl/curl/commit/f4831daa9b2a97e8a29
+
+libcurl is used by many applications, but not always advertised as such!
+
+This bug is considered a *C mistake*. It is likely to have been avoided had we
+not been using C.
+
+This flaw also affects the curl command line tool.
+
+SOLUTION
+--------
+
+curl 8.19.0 fixes this flaw
+
+- Fixed-in: https://github.com/curl/curl/commit/e090be9f73a7a71459ef678c
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade to curl and libcurl 8.19.0
+
+  B - Apply the patch and rebuild libcurl
+
+  C - Do not use SMB transfers
+
+TIMELINE
+---------
+
+It was reported to the curl project on March 8th 2026. We contacted
+distros@openwall on March 8.
+
+libcurl 8.19.0 was released on March 11th 2026, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Daniel Wade
+- Patched-by: Stefan Eissing
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
