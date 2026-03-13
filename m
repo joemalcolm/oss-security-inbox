@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["500" "Monday" "27" "January" "2020" "12:08:03" "-0500" "Nathan Gough" "thenatog@apache.org" "<CAEhjM2ByDcfuf-mGxZBjjqqD+brvH6sFHTEt--MMsqB3W8iUOQ@mail.gmail.com>" "18" "[oss-security] [CVE-2020-1933] Apache NiFi XSS Attack" nil nil nil "1" "2020012717:08:03" "[oss-security] [CVE-2020-1933] Apache NiFi XSS Attack" (number mark "U       thenatog@apa Jan 27   18/500   " thread-indent "\"[oss-security] [CVE-2020-1933] Apache NiFi XSS Attack\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-1933] Apache NiFi XSS Attack" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24542 invoked by uid 550); 27 Jan 2020 20:03:42 -0000
+Received: (qmail 3305 invoked by uid 550); 13 Mar 2026 13:20:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,36 +7,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7317 invoked from network); 27 Jan 2020 17:08:27 -0000
-X-Gm-Message-State: APjAAAX0/KIvqN1TBW+33VBXANwM5cDTCDp5tq5FryBE5EGeHwPhQNzr
-	s1A39b5VKVdVmnedmHKZMbNMfnP1i7cW8HPH5/A=
-X-Google-Smtp-Source: APXvYqziLm/ODpoqN2HBsDnaqymO/Lk3UrznEAn6xR4yixfL5frGd3Lrd8krv0zhmZRJglCXs/po9Mp4j1E/BcSjVhw=
-X-Received: by 2002:a6b:398b:: with SMTP id g133mr12920031ioa.7.1580144894406;
- Mon, 27 Jan 2020 09:08:14 -0800 (PST)
-MIME-Version: 1.0
-From: Nathan Gough <thenatog@apache.org>
-Date: Mon, 27 Jan 2020 12:08:03 -0500
-X-Gmail-Original-Message-ID: <CAEhjM2ByDcfuf-mGxZBjjqqD+brvH6sFHTEt--MMsqB3W8iUOQ@mail.gmail.com>
-Message-ID: <CAEhjM2ByDcfuf-mGxZBjjqqD+brvH6sFHTEt--MMsqB3W8iUOQ@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 3260 invoked from network); 13 Mar 2026 13:19:59 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1773407989; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MEx5tS1JdyecTpALE7sOCBZCD4R4jgQeNej+HPkBG9U=;
+	b=HOUEDUDwfLLEmVX95DNgFu/iUIRniyVxJghN7g9UZTdAJktkSPzcZwxjQ5UmoqnA7sdokI
+	gqT6A3/f57JTtwCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1773407989; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MEx5tS1JdyecTpALE7sOCBZCD4R4jgQeNej+HPkBG9U=;
+	b=bUerAXOdjk1+bQ6jCdXvJCc6bQwDFmHxAu+G4xDO0K0aGZyhn9yl+RsaQWYCm0QojkGe9M
+	InF8RTELW2w6k3kqNDilpgDKEcCY0L05SlLPvDxPzmSd89Bj909EmevmyS+QtqbvfbUaC0
+	n9A6IzStG0Mu/qoaFYHCUnuqdpuuez/M4s9gkdXMGzkTIn9QkqvqpD6VPKyKBajWu5A4/1
+	QLjB3nHuxJsBBkH/Kv10wduAC/hcdK14MlIntDxVS+cBcN+sMT5dbqFc4MrkksTNvxzFSJ
+	ci3vJyeNMD8UZSs75sWcE3BnWr0Nlf9mLrWVCuvxTVv5JuWaJagQoA7Ep90JDg==
+Date: Fri, 13 Mar 2026 13:19:49 +0000
+From: Stuart Henderson <stu@spacehopper.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000001ff477059d222722"
-Subject: [oss-security] [CVE-2020-1933] Apache NiFi XSS Attack
+Message-ID: <abQO9W_P5gstPcXT@symphytum.spacehopper.org>
+References: <20260313043738.8600-1-justin.swartz@risingedge.co.za>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260313043738.8600-1-justin.swartz@risingedge.co.za>
+Subject: Re: [oss-security] Some telnet clients leak environment variables
 
---0000000000001ff477059d222722
-Content-Type: text/plain; charset="UTF-8"
+On 2026/03/13 06:37, Justin Swartz wrote:
+>   OpenBSD 7.8 [PARTIAL LEAKAGE]
+>   
+>   The client blocks most variables which have not been explicitly
+>   exported, but potentially sensitive variables such as DISPLAY,
+>   XAUTHORITY and PRINTER are leaked without prior export.
 
-[CVEID]:CVE-2020-1933
+ha, we've had that for a long time.
 
-[PRODUCT]:Apache NiFi
+---------------------
+Date: 2005/02/27 15:46:42
+Author: otto
+Branch: HEAD
+Tag: OPENBSD_3_7_BASE
+Log:
+- only send exported vars (based on a diff from Solar Designer)
+- fix some buffer overflows (also some Solar Designer input)
 
-[VERSION]:Apache NiFi 1.0.0 to 1.10.0
+ok deraadt@ cloder@
 
-[PROBLEMTYPE]:XSS Attack
+Members:
+        authenc.c:1.6->1.7
+        commands.c:1.47->1.48
+        externs.h:1.13->1.14
+        telnet.c:1.18->1.19
+---------------------
 
-[REFERENCES]:https://nifi.apache.org/security.html#CVE-2020-1933
-
-[DESCRIPTION]:As reported by Jakub Palaczynski (ING Tech Poland), malicious
-scripts could be injected to the UI through action by an unaware
-authenticated user in Firefox. Did not appear to occur in other browsers.
-
---0000000000001ff477059d222722--
