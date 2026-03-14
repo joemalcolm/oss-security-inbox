@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1811" "Monday" "20" "June" "2016" "19:00:33" "+0200" "Daniel Beck" "ml@beckweb.net" "<B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>" "59" "[oss-security] Jenkins plugins -- multiple fixes" nil nil nil "6" "2016062017:00:33" "[oss-security] Jenkins plugins -- multiple fixes" (number mark "U       ml@beckweb.n Jun 20   59/1811  " thread-indent "\"[oss-security] Jenkins plugins -- multiple fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 18398 invoked by uid 550); 20 Jun 2016 17:00:52 -0000
+Received: (qmail 28374 invoked by uid 550); 14 Mar 2026 19:49:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18328 invoked from network); 20 Jun 2016 17:00:44 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B8DA6832-45AA-4600-990A-EF50B18EDFCD@beckweb.net>
-Date: Mon, 20 Jun 2016 19:00:33 +0200
+x-ms-reactions: disallow
+Received: (qmail 27730 invoked from network); 14 Mar 2026 19:49:32 -0000
+Date: Sat, 14 Mar 2026 20:49:19 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1466442044;de7b5848;
-Subject: [oss-security] Jenkins plugins -- multiple fixes
+Message-ID: <20260314194919.GA4600@openwall.com>
+References: <210c77d7-6b3a-45b3-8618-d18635efc5e6@canonical.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <210c77d7-6b3a-45b3-8618-d18635efc5e6@canonical.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] OpenSSH GSSAPI keyex patch issue
 
-The Jenkins project published plugin updates today with fixes for multiple=
-=20
-vulnerabilities. Users should upgrade these plugins to the indicated=20
-versions:
+On Thu, Mar 12, 2026 at 02:03:23PM -0400, Marc Deslauriers wrote:
+> Jeremy Brown discovered a security issue in the GSSAPI Key Exchange patch a 
+> lot of distros carry on top of the OpenSSH package.
 
-* Async Http Client Plugin 1.7.24.1
-* Build Failure Analyzer 1.16.0
-* Image Gallery Plugin 1.4
-* TAP Plugin 1.25
+I'm Bcc'ing Jeremy on this.  Thank you for discovering and reporting
+the issue, Jeremy!
 
-Summary and description of the vulnerabilities are below. Some more details=
-,=20
-severity, and attribution can be found here:
-https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2016=
--05-11
+> Unfortunately, there seems to be quite a few different versions of this 
+> patch being used, but a lot of them share the same core issue. Different 
+> compiler options also result in different outcomes, so the severity of this 
+> issue varies.
+> 
+> We have assigned CVE-2026-3497 to this issue.
+> 
+> Attached is the full pdf from the reporter, along with the patch we used in 
+> Ubuntu. I suggest reading the full pdf, but I have extracted some of the 
+> most important excerpts from it:
+> 
+> "The patch contains a code defect where sshpkt_disconnect() (a 
+> non-terminating function that queues a disconnect message and returns) is 
+> used where ssh_packet_disconnect()(which terminates the process) was 
+> intended. This causes the default: error-handling case in the GSSAPI KEX 
+> server loop to fall through into code that reads an uninitialized stack 
+> variable (recv_tok), sends its contents to the privileged monitor process 
+> via IPC, and then passes it to gss_release_buffer() which may call free() 
+> on a garbage pointer."
+> 
+> "Bug: Non-terminating error handler (sshpkt_disconnect) in GSSAPI KEX server
+> code allows fallthrough to uninitialized variable use
+> 
+> - Impact: Pre-auth uninitialized pointer dereference (CWE-824, CWE-908); 
+> confirmed heap corruption via free() on uninitialized pointer (SIGABRT on 
+> x86_64); privsep boundary violation (up to 127KB of heap data to root 
+> monitor via IPC); SIGSEGV (signal 11) and SIGABRT (signal 6) on x86_64 with 
+> 90-second SSH lockout; 100% reliable child process crash
+> 
+> - Trigger: Single crafted SSH packet (~300 bytes), no authentication or 
+> credentials needed
+> 
+> - Potentially Affected: Ubuntu/Debian OpenSSH servers with GSSAPIKeyExchange
+> yes
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+Red Hat has now acknowledged that RHEL 8, 9, 10 are also affected (but 6
+and 7 are not):
 
-If you find security vulnerabilities in Jenkins, please report them as=20
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+https://access.redhat.com/security/cve/cve-2026-3497
 
----
+They suggest setting "GSSAPIAuthentication no" to mitigate this, which I
+find puzzling.  Per the brief discussion we had on the distros list
+pre-disclosure, it appeared that GSSAPIKeyExchange is the option, and
+moreover it was said that GSSAPIKeyExchange could conceivably be used
+without GSSAPIAuthentication.  So which of these two options is/are
+actually responsible for exposing the vulnerability?  Does it maybe vary
+by patch revision (Debian vs. Red Hat) or (more likely?) is this just an
+error in the current Red Hat statement?
 
-1)
-SECURITY-85 / CVE-2016-4986:
-Path traversal vulnerability in TAP Plugin
+Also, the statement is worded such that it's implied the default
+configuration is affected and the mitigation needs to be applied, but
+prior understanding was that these features are disabled by default.
 
-The plugin did not correctly filter a parameter and allowed reading=20
-arbitrary files on the file system.
+> - Potential Fix: Replace sshpkt_disconnect() with ssh_packet_disconnect() 
+> at the 3 server-side call sites in kexgsss.c"
+> 
+> "The uninitialized recv_tok contains different stack residue depending on 
+> compiler, optimization level, and flags."
+> 
+> "Different compilers produce fundamentally different residue. Clang -O0 
+> leaves 0xfffbe600 with length 4. GCC -O2 -fno-stack-protector leaves a 
+> valid heap address with length 127344. The 8-build matrix shows that 
+> recv_tok.value ranges from NULL to stack addresses to heap addresses to 
+> unmapped addresses."
 
+Thank you for bringing this to oss-security, Marc!
 
-2)
-SECURITY-278 / CVE-2016-4987:
-Path traversal vulnerability in Image Gallery Plugin
-
-The plugin did not correctly validate form fields and allowed listing=20
-arbitrary directories and reading arbitrary files on the file system.
-
-
-3)
-SECURITY-290 / CVE-2016-4988:
-Cross-site scripting vulnerability in Build Failure Analyzer Plugin
-
-The plugin did not escape a parameter echoed on an HTML page, resulting in =
-a=20
-reflected XSS vulnerability.
-
-
-4)
-SECURITY-305 / CVE-2013-7397 and CVE-2013-7398:
-Async HTTP Client Plugin does not properly validate certificates
-
-Async HTTP Client Plugin provides the Async HTTP Client Java library to=20
-other plugins. It is based on the 1.7.x line of AHC, which by default is=20
-vulnerable to CVE-2013-7397 and CVE-2013-7398, allowing man-in-the-middle=20
-attacks. The fixes for these vulnerabilities were backported.
-
+Alexander
