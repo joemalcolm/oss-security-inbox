@@ -1,4 +1,4 @@
-Received: (qmail 7476 invoked by uid 550); 30 Dec 2025 22:05:22 -0000
+Received: (qmail 15504 invoked by uid 550); 14 Mar 2026 20:13:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,142 +8,161 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 11337 invoked from network); 30 Dec 2025 20:45:03 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1767127494; x=1767732294; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3jOzFA/lka8mk55yor44sakeh2xJsgz+JglDPlqkXew=;
-        b=nUJ3Z3gg4p1eCCr1FHc3FxichB5BuanlNlrttfOQHsb1z0ZxYLvqB2+HstSVTKjxN2
-         LqH6CvRmLzWS+EJmUP0bZ5wEnQeL7GJ2UPzulQGSlZK4xbE135m4AYoZTf4jknIPj7is
-         rupWtO6iSdsw+MuyvJy5DqkW7MzHXgBKtI9JeEupA3RwIz7gaM1nRJXV94yuOrV5r5s2
-         o9R5ScdRjGAibevd7KtxRjQONKDJVVLQZKzAo/FlJJdI71i3hgWYKoHdlteNOOYVDLFF
-         RDNIJyib2TQs49A4rQDEgCs4Guw81hpzCCDZbtZuxa7q7N6r2hRN2DH4M8FJXb1mBgwj
-         yz5w==
+Received: (qmail 15437 invoked from network); 14 Mar 2026 20:07:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1773518844;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=30pXU4APMP1kolDwpbRzYIh4R3KqT+S4obXkqfexdlU=;
+	b=I3VbKFYa2TfDrC7DIzAN3ree6h5GuJjgregGmWHNx5O8WAlKRhKetK2ryINwMUbo5YkoJT
+	Y4u93jHc5JMoZhXF6+taABbS77TsQBuA/fSf4zqXi9C1ohsWUYp66GsJMnzmMNVd5BVgnN
+	IN9akJ5FjmRe0bU+ShYXT5qoTqUJKVo=
+X-MC-Unique: 2YgOYEC_NNe8LU1xwTXHrQ-1
+X-Mimecast-MFC-AGG-ID: 2YgOYEC_NNe8LU1xwTXHrQ_1773518842
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767127494; x=1767732294;
+        d=1e100.net; s=20251104; t=1773518842; x=1774123642;
         h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3jOzFA/lka8mk55yor44sakeh2xJsgz+JglDPlqkXew=;
-        b=OJFC8Yk+l7AKLKXIXV8Aq/fWs4uQBsK3iQuavLYy4LG1N9zzwR6zfb/7kv0Gjy8kf7
-         Rqmyy5UKrh39gBeF2aa56XkB0j7TeUamfVLW/D/C6/rJ4eqNWhMpM2dCoplShOZSwM8z
-         VRBPV7UKXKFjD+4bzAxGUfyHtyUMHsAxLR+tLP5euCTXiKJGATH5dkWJsHk1D4oC2YmP
-         rEkcHKaHU6ibQoRbuoWJC4Y3AGAuZHf+0FBazY52QH00jmOqchSs7Vx1GmKn75GAw7Tt
-         RzfA+idreX+RFlTuWvhoAIzNBHjExM+e1eWlX4/aWiRo5nccdXtvRCOf0j4RbCX2iXV/
-         kMdQ==
-X-Gm-Message-State: AOJu0YzzDBWx6nM2qh1CIWeckaketJ+H5X8NzVIUQFbUoK0f7xzOZw1z
-	KlwIRf1mvY0gW7xPqLibgq+lrIY//HMkOaJOEGAIGYK3DCeGhOZSJRAI7A3XGxVl/nsbQfs+SYl
-	u6iiwekmgtASIPz+he5ZS05QUwFpK3jkBu+5a
-X-Gm-Gg: AY/fxX71Z6rX5cPajf+P9RePiEkawtrQ9tpU5uVKdL+nqG0zueKbA9O6tvx9cO76kPS
-	3LwDaaQy0mFMkCWT73H1qYFXHjnMSJCJAl6vWXpdiQKEC3KltQ0lK8kANZpmDhJHxXA+4txKc0Z
-	EHRXL+HY3cyoizlRMy2EMqusycbQ+aSERWd7LpOHRxYx9CwoNL0Kr609v8w0lVHEpgAoVIlaFo8
-	7JaDvmkRD9fmaYBWTgvrQXE11sG+enSaa9SzIjjsIT7ESRSVcby1x8Jee8CMsBdyvjwv6Ss7Jow
-	5lUlhXg=
-X-Google-Smtp-Source: AGHT+IHofY9dUkl7ZQczrztCSEphxAqQXL/fV/wV8WGIeOR0tfTlxM2DzxVtpBw9SlWaimGmmb7oREpDPUgLM9IfJXQ=
-X-Received: by 2002:a05:6214:4285:b0:882:44cc:f58e with SMTP id
- 6a1803df08f44-88d8166590dmr644689006d6.2.1767127494206; Tue, 30 Dec 2025
- 12:44:54 -0800 (PST)
+        bh=30pXU4APMP1kolDwpbRzYIh4R3KqT+S4obXkqfexdlU=;
+        b=UKpj26OOm7Xa0KtAp1o0U05w9xc5ihIEqsGzWaaU8r2ywYPJKZcrpNWbeBq6m2jyzB
+         zEJhKp7UmxvOqty/fXohjmiEPLwg17Xo2F/KiMNqQmSrdcF0ZMm/rBqVeBuEmpdlWZui
+         NIt6oR9V/7F78yBvTXBNzjaRqTAzIy6802IcoU2vFoQLTjcrApduW3chUG+uCi92Vpxn
+         jcu2D+vm8DYjYm2qsLUCDUZxZXM7pXf/2ZeGgG7yHPag75l+h55yPN3Od0Wm0lNNFalN
+         mfRs8HTWjY2kH56tj5OJP8Nga+U23IxtBljXmFkF4d8pFbSA1dFDdmfukMOwYmI/aY/8
+         Fl1Q==
+X-Gm-Message-State: AOJu0YytcJkZ+GjC0/y82Ea2LlXV55scFYSal2GIy8Xya8zHfiNcRmUl
+	RITOzoQZa0s23M4r3jBaVfSU+A0vK3sIHmbku1UEMmGU4tDSFhYnjhKTSR6KBgnWRIykDDsLXLS
+	QPSCUgT4TwCs5Lw12P2utu43N8AiOFDluL1si2iZ7PsJvA/csOmYugsgOf2H2tO+GXbgkuwZd6J
+	PKCPlFRPMM9bv6wOAFXtzwJAArE+lniMbaNt0RTPxKv1KnlgGz25DJJ/Q=
+X-Gm-Gg: ATEYQzwdNmVR9LDILOsg8mJPtVpSVuPpNUvrD3NeuDCBnGO/HpYh7IkJZ0cPNOtLw8p
+	vClpQlwtH47tiy8BxlGv9jlG1ojcg0u/sDrwWDb0hWwpWO+v+tl4p0zddTWw+iaiWClQEbUrdRg
+	GkR3ZHMyGbQc4AJ1jZFJaFYqjiwCJqjoP4+PwNd8lmmLW5gLh98P/Zg2Jla/AdZ56LAr1WG7Dok
+	EI=
+X-Received: by 2002:a2e:86d9:0:b0:38a:45e7:17df with SMTP id 38308e7fff4ca-38a8966bf9cmr21682921fa.1.1773518841632;
+        Sat, 14 Mar 2026 13:07:21 -0700 (PDT)
+X-Received: by 2002:a2e:86d9:0:b0:38a:45e7:17df with SMTP id
+ 38308e7fff4ca-38a8966bf9cmr21682861fa.1.1773518841115; Sat, 14 Mar 2026
+ 13:07:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <d2c0f3cb-d66c-43ec-9b61-05802df1a048@posteo.org> <bd7c5319-8048-4dcf-b679-5e0355551650@posteo.org>
-In-Reply-To: <bd7c5319-8048-4dcf-b679-5e0355551650@posteo.org>
-From: Greg Dahlman <dahlman@gmail.com>
-Date: Tue, 30 Dec 2025 13:44:43 -0700
-X-Gm-Features: AQt7F2rR5WdfvuAJcrKIgDZyEBI63b1hka3uMOcEtIaEW6HIEdQaDzh7pJd_6Bs
-Message-ID: <CAM=PXV5UD8cajTnkcemP+cymphiLe7nRQYBBGAimz+S7svYVxA@mail.gmail.com>
+References: <210c77d7-6b3a-45b3-8618-d18635efc5e6@canonical.com> <20260314194919.GA4600@openwall.com>
+In-Reply-To: <20260314194919.GA4600@openwall.com>
+From: Dmitry Belyavskiy <dbelyavs@redhat.com>
+Date: Sat, 14 Mar 2026 21:07:10 +0100
+X-Gm-Features: AaiRm533Qk8qaoQUG8CZ_YmeoRDZjz1KJDfSEJhTfnQQIr_F0TdW5xSUX5fkHEY
+Message-ID: <CAOcQRVXj3Oky8tSG_rRJ1LNGsz5vL+dKg-c3Qz3gwNYf+XVAXw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="00000000000090a73d0647316ea0"
-Subject: Re: [oss-security] Systemd vsock sshd
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: Gn7KH-pNJBoGtXxyXf1IlcGTaxNdC29IjjPxA57bJlQ_1773518842
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000871086064d018873"
+Subject: Re: [oss-security] OpenSSH GSSAPI keyex patch issue
 
---00000000000090a73d0647316ea0
+--000000000000871086064d018873
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thanks for the reply Alex,
+Dear Alexander,
 
-I didn't include that option because I ran into an issue that I couldn't
-find the root cause for. Specifically on Fedora, a `dnf upgrade` resulted
-in the mask disappearing.  I could find some complaints with Fedora version
-upgrades, but couldn't find anything on package upgrade.
+Thanks for notifying!
+Yes, GSSAPIKeyExchange should be mentioned instead of GSSAPIAuthentication.
 
-As I don't have access to the RedHat support portal I decided to exclude it
-out of caution.
+On Sat, Mar 14, 2026 at 8:50=E2=80=AFPM Solar Designer <solar@openwall.com>=
+ wrote:
 
-It looked like there was nothing in /usr/lib/systemd/system-preset for
-sshd-vsock.socket that I found, and those should respect the mask for
-sshd-vsock.socket and wouldn't remove the
- /etc/systemd/system/sshd-vsock.socket symlink as I understand it.
-
-I think that because it doesn't show up in `busctl --activatable`, and no
-packages I can find "Wants" sshd-vsock.socket explicitly that would
-probably work.
-
-I just tried a fresh install of Fedora Linux 42 workstation and didn't
-experience the unintended unmasking with a dnf upgrade. That was reliable a
-few weeks ago. Maybe I just was unlucky with a package that was fixed?
-
-Either way I think it is an option for people who use configuration
-management tools that can periodically check sshd-vsock.socket is still
-disabled.
-
-Also for normal *systemd* services that need isolation from the vsock
-bridge you can use:
-
-RestrictAddressFamilies=3Dnone # disable all af families
-RestrictAddressFamilies=3DAF_INET # only AF_INET
-RestrictAddressFamilies=3D~AF_VSOCK # not AF_VSOCK
-
-
-The L4 bridge problem will be harder for projects that use CRI's that are
-not containerd like the k8s/podman/crun/runc.
-
-If anyone on here is involved with them, or sandboxing tools
-like bubblewrap etc... Filtering address family 40 will still be required
-by default to have any real intra-container/pod/process network isolation
-on a node.
-
-Thanks,
-
-Greg
-
-On Tue, Dec 30, 2025 at 12:12=E2=80=AFPM <wish42offcl98@posteo.org> wrote:
-
-> I have searched for that - instead of blacklisting the vsock module, I
-> did myself two measures:
-> - systemctl mask --now sshd-unix-local.socket
-> to kill and mask the sshd unix socket created by that generator,
-> - systemctl mask sshd-vsock.socket
-> to mask the sshd vsock created by that generator (use --now if the
-> socket has started or use systemctl stop... ).
+> On Thu, Mar 12, 2026 at 02:03:23PM -0400, Marc Deslauriers wrote:
+> > Jeremy Brown discovered a security issue in the GSSAPI Key Exchange
+> patch a
+> > lot of distros carry on top of the OpenSSH package.
 >
-> Though, vsock untested but I found that source mentioning that socket.
-> https://linux-audit.com/system-administration/commands/systemd-analyze/
-> Masking the sockets should stop them from starting again.
+> I'm Bcc'ing Jeremy on this.  Thank you for discovering and reporting
+> the issue, Jeremy!
 >
-> The vsock kernel module should not be blacklisted if some hypervisor
-> features are required:
-> https://libvirt.org/ssh-proxy.html
-> https://wiki.qemu.org/Features/VirtioVsock
->
-> Greetings
-> Alex
->
->
-> On 12/29/25 05:11, Jacob Bachmeyer wrote:
-> > On 12/27/25 21:46, Greg Dahlman wrote:
-> >> [...]
-> >>
-> >>   **Systemd v256 change** - When the *openssh-server* package is
-> >>   installed on a VM with vsock support, systemd now automatically
-> >>   starts an *sshd* instance that listens on the **af_vsock** socket in
-> >>   the **global network namespace** without any manual configuration.
+> > Unfortunately, there seems to be quite a few different versions of this
+> > patch being used, but a lot of them share the same core issue. Different
+> > compiler options also result in different outcomes, so the severity of
+> this
+> > issue varies.
 > >
-> > Obvious question:  what manual configuration is required to kill that
-> > listener?
+> > We have assigned CVE-2026-3497 to this issue.
 > >
+> > Attached is the full pdf from the reporter, along with the patch we used
+> in
+> > Ubuntu. I suggest reading the full pdf, but I have extracted some of the
+> > most important excerpts from it:
 > >
-> > -- Jacob
+> > "The patch contains a code defect where sshpkt_disconnect() (a
+> > non-terminating function that queues a disconnect message and returns)
+> is
+> > used where ssh_packet_disconnect()(which terminates the process) was
+> > intended. This causes the default: error-handling case in the GSSAPI KEX
+> > server loop to fall through into code that reads an uninitialized stack
+> > variable (recv_tok), sends its contents to the privileged monitor
+> process
+> > via IPC, and then passes it to gss_release_buffer() which may call
+> free()
+> > on a garbage pointer."
+> >
+> > "Bug: Non-terminating error handler (sshpkt_disconnect) in GSSAPI KEX
+> server
+> > code allows fallthrough to uninitialized variable use
+> >
+> > - Impact: Pre-auth uninitialized pointer dereference (CWE-824, CWE-908);
+> > confirmed heap corruption via free() on uninitialized pointer (SIGABRT
+> on
+> > x86_64); privsep boundary violation (up to 127KB of heap data to root
+> > monitor via IPC); SIGSEGV (signal 11) and SIGABRT (signal 6) on x86_64
+> with
+> > 90-second SSH lockout; 100% reliable child process crash
+> >
+> > - Trigger: Single crafted SSH packet (~300 bytes), no authentication or
+> > credentials needed
+> >
+> > - Potentially Affected: Ubuntu/Debian OpenSSH servers with
+> GSSAPIKeyExchange
+> > yes
+>
+> Red Hat has now acknowledged that RHEL 8, 9, 10 are also affected (but 6
+> and 7 are not):
+>
+> https://access.redhat.com/security/cve/cve-2026-3497
+>
+> They suggest setting "GSSAPIAuthentication no" to mitigate this, which I
+> find puzzling.  Per the brief discussion we had on the distros list
+> pre-disclosure, it appeared that GSSAPIKeyExchange is the option, and
+> moreover it was said that GSSAPIKeyExchange could conceivably be used
+> without GSSAPIAuthentication.  So which of these two options is/are
+> actually responsible for exposing the vulnerability?  Does it maybe vary
+> by patch revision (Debian vs. Red Hat) or (more likely?) is this just an
+> error in the current Red Hat statement?
+>
+> Also, the statement is worded such that it's implied the default
+> configuration is affected and the mitigation needs to be applied, but
+> prior understanding was that these features are disabled by default.
+>
+> > - Potential Fix: Replace sshpkt_disconnect() with
+> ssh_packet_disconnect()
+> > at the 3 server-side call sites in kexgsss.c"
+> >
+> > "The uninitialized recv_tok contains different stack residue depending
+> on
+> > compiler, optimization level, and flags."
+> >
+> > "Different compilers produce fundamentally different residue. Clang -O0
+> > leaves 0xfffbe600 with length 4. GCC -O2 -fno-stack-protector leaves a
+> > valid heap address with length 127344. The 8-build matrix shows that
+> > recv_tok.value ranges from NULL to stack addresses to heap addresses to
+> > unmapped addresses."
+>
+> Thank you for bringing this to oss-security, Marc!
+>
+> Alexander
 >
 >
 
---00000000000090a73d0647316ea0--
+--=20
+Dmitry Belyavskiy
+
+--000000000000871086064d018873--
+
