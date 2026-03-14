@@ -1,4 +1,4 @@
-Received: (qmail 30252 invoked by uid 550); 31 Mar 2026 18:39:21 -0000
+Received: (qmail 5943 invoked by uid 550); 14 Mar 2026 19:27:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,65 +8,75 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 30213 invoked from network); 31 Mar 2026 18:39:20 -0000
-Date: Tue, 31 Mar 2026 20:37:06 +0200
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 5286 invoked from network); 14 Mar 2026 19:27:37 -0000
+Date: Sat, 14 Mar 2026 20:27:29 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-Message-ID: <acwUUpdAhrOoJu0H@256bit.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Cc: Justin Swartz <justin.swartz@risingedge.co.za>
+Message-ID: <20260314192729.GA4355@openwall.com>
+References: <20260313043738.8600-1-justin.swartz@risingedge.co.za> <abQO9W_P5gstPcXT@symphytum.spacehopper.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Vim modeline bypass via various options affects Vim <
- 9.2.0276
+In-Reply-To: <abQO9W_P5gstPcXT@symphytum.spacehopper.org>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Some telnet clients leak environment variables
 
-Vim modeline bypass via various options affects Vim < 9.2.0276
-==============================================================
-Date: 31.03.2026
-Severity: High
-CVE: *not yet assigned*
-CWE: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') (CWE-78)
+On Fri, Mar 13, 2026 at 01:19:49PM +0000, Stuart Henderson wrote:
+> On 2026/03/13 06:37, Justin Swartz wrote:
+> >   OpenBSD 7.8 [PARTIAL LEAKAGE]
+> >   
+> >   The client blocks most variables which have not been explicitly
+> >   exported, but potentially sensitive variables such as DISPLAY,
+> >   XAUTHORITY and PRINTER are leaked without prior export.
+> 
+> ha, we've had that for a long time.
+> 
+> ---------------------
+> Date: 2005/02/27 15:46:42
+> Author: otto
+> Branch: HEAD
+> Tag: OPENBSD_3_7_BASE
+> Log:
+> - only send exported vars (based on a diff from Solar Designer)
+> - fix some buffer overflows (also some Solar Designer input)
+> 
+> ok deraadt@ cloder@
+> 
+> Members:
+>         authenc.c:1.6->1.7
+>         commands.c:1.47->1.48
+>         externs.h:1.13->1.14
+>         telnet.c:1.18->1.19
+> ---------------------
 
-## Summary
-A modeline sandbox bypass in Vim allows arbitrary OS command execution 
-when a user opens a crafted file. The `complete`, `guitabtooltip` and 
-`printheader` options are missing the `P_MLE` flag, allowing a modeline 
-to be executed. Additionally, the `mapset()` function lacks a 
-`check_secure()` call, allowing it to be abused from sandboxed 
-expressions.
+Oh, I didn't recall.
 
-## Description
-The `complete` option (`src/optiondefs.h:684`) accepts `F{func}` syntax 
-to register completion callbacks (added in patch 9.1.1178), similar to 
-how `completefunc` works. However, unlike `completefunc` which has 
-`P_SECURE`, `complete` has neither `P_SECURE` nor `P_MLE`, so the 
-modeline security check at `src/option.c:1565-1571` is bypassed and 
-arbitrary lambda expressions are accepted from modelines.
+Looking at this now:
 
-Similar effects can be achieved by setting the `guitabtooltip` and
-`printheader` options via a modeline and abusing the `mapset()` function 
-to execute arbitrary code on random key mappings.
+https://cvsweb.openbsd.org/src/usr.bin/telnet
 
-## Impact
-An attacker who can deliver a crafted file to a victim achieves 
-arbitrary command execution with the privileges of the user running Vim.
+I see that these exports are explicit in commands.c:
 
-## Acknowledgements
-The Vim project would like to thank "dfwjj x" and "Avishay Matayev" for 
-identifying the vulnerability chain, providing a detailed root cause 
-analysis and reproduction steps
+	env_export("DISPLAY");
+	env_export("PRINTER");
+	env_export("XAUTHORITY");
 
-## References
-The issue has been fixed as of Vim patch 
-[v9.2.0276](https://github.com/vim/vim/releases/tag/v9.2.0276)
+Also, there's support for the TERMINAL-TYPE (RFC 1091) and
+X-DISPLAY-LOCATION (RFC 1096) telnet protocol options in telnet.c, which
+would send TERM and DISPLAY even if these are not exported.
 
-- [Commit](https://github.com/vim/vim/commit/75661a66a1db1e1f3f1245c615f13a7)
-- [GitHub Advisory](https://github.com/vim/vim/security/advisories/GHSA-8h6p-m6gr-mpw9)
+Looking at RHEL 9 telnet-0.17-85.el9's telnet-0.17-env.patch against
+Linux NetKit, I see it also deliberately allows TERM and DISPLAY to be
+sent via these protocol options even if not exported.
 
-Best,
-Christian
--- 
-Der Mann ist Lyrisch, die Frau Episch, die Ehe dramatisch
-		-- Novalis (eig. Georg Philipp Friedrich Leopold von Hardenberg)
+Perhaps these default exports once made sense, but not anymore... except
+maybe for TERM, which still needs to work out of the box?
+
+I also found there's OpenBSD-derived telnet-bsd package in Gentoo
+(client and server) and OpenWrt (client only), originally ported by
+Thorsten Kukuk of SUSE.  I didn't check when it was forked, nor whether
+it already contains the 2005 fixes mentioned above or equivalent.
+Someone (perhaps involved with those distros) could want to check.
+
+Alexander
