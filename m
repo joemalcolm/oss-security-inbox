@@ -1,4 +1,4 @@
-Received: (qmail 27771 invoked by uid 550); 24 Jul 2023 17:41:49 -0000
+Received: (qmail 19955 invoked by uid 550); 16 Mar 2026 23:16:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,117 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 27747 invoked from network); 24 Jul 2023 17:41:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1690220497;
-	bh=pGcpvH7KuAAc7Myj2UgR0JCb0CPw2X4KYyJt2iwSx7Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type;
-	b=p9Dkf7nYCP43ELKFXnXeqlTBZUBCmswF4/KC05Bx2RGQ8WeGhE2+uL9dXxisYNEeo
-	 FoRZfurXxpM+JKzc7hZJtIz1hxpzHcBC/i8zh9dPhVhY94TfrYOQsw7rdZ+ZpDGv+W
-	 PXwplgIM1RhzwEaDG5lvtYMFDCgMp2B0XDZQsmZm67RYF8x0TEsxQjkgJjRWqBfQ23
-	 WIcLhHCwA3mBR9/gCXNrJ7yoPTfXA9N2uOJUvwzLN/a6RE5t1I6n5iSHo6owCE+Cl5
-	 MEEu4NYhoOrbpbOyMJytE/LzIdY2w4PyHn12os/YGFtLAV0XEFIgmGdzBsIo58m5Ji
-	 WzsNFmrieIx8A==
-Message-ID: <43f83e16-e492-4540-b34d-d2b51da2bb74@canonical.com>
-Date: Mon, 24 Jul 2023 13:41:36 -0400
+x-ms-reactions: disallow
+Received: (qmail 28637 invoked from network); 16 Mar 2026 22:35:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1773700498;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Vg41Cfz4NMYeJ+FsHaAGBBYTJ5X4F08DfHUMVSUjris=;
+	b=hENhskVFyBueaVK1DuZrJLFimBt89aHDDou0TiaeoWJJnfcHYziaMvnEZk0Q4R973RjBvp
+	SPByM3oZdbSvNx/mRe4nFVwN5xSejJ5cxvJwbBdEMVgo+MCp/WrCe/guqyQtSdDkhWJZ3Y
+	fEsJHDQbG3ernYAJ6DVFUau8ap7rXCNr9nbqFZoJ7/BeunPWPeiF5DP1uWRJqR5qt2LtWu
+	V4jtNmfvLnKvR1bKKNZv43p0e7AWL0pEkYGqNpQctiJeN1As52vzCG0C3X4O0rt4O+Cli9
+	p9BsJHIMxzhKZRtcny9MKnVPACKmq1zBNQi/IRgzXiT7Am0+mVW56IOA0Bhh3g==
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Content-Language: en-CA
-To: oss-security@lists.openwall.com
-References: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
-From: Marc Deslauriers <marc.deslauriers@canonical.com>
-In-Reply-To: <ZL6Kgih+pRaeA2e/@thinkstation.cmpxchg8b.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Mon, 16 Mar 2026 19:34:57 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <a2d5982ea53763b8473e9651c0b0d416@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] CVE-2023-20593: A use-after-free in AMD Zen2
- Processors
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleelheelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggfffhvffukfigtgfgsehtjehjtddttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeejheevfeefhfekjeejvdduhfegvddtjeetffekteetudeivdeuleekheeuhfekveenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhenucfkphepuddtrddvtddtrddvtddurdejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddtrddvtddtrddvtddurdejpdhhvghloheprhhouhhnuggtuhgsvgdrghgrnhguihdrnhgvthdpmhgrihhlfhhrohhmpehtihhmlhgvghhgvgestghprghnshgvtgdrohhrghdpqhhiugepffelieegleefgfeuveegpdhmohguvgepshhmthhpohhuthdpnhgspghrtghpthhtohepvddprhgtphhtthhopegtvhgvqdgrnhhnohhunhgtvgesshgvtghurhhithihrdhmvghtrggtphgrnhdrohhrghdprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhm
+X-GND-State: clean
+Subject: [oss-security] CVE-2026-4177: YAML::Syck versions through 1.36 for Perl has several
+ potential security vulnerabilities including a high-severity heap buffer
+ overflow in the YAML emitter
 
-Hi,
+========================================================================
+CVE-2026-4177                                        CPAN Security Group
+========================================================================
 
-There seems to be confusion regarding which is the correct commit:
+         CVE ID:  CVE-2026-4177
+   Distribution:  YAML-Syck
+       Versions:  through 1.36
 
-Your blog post says it's 0bc3126c9cfa0b8c761483215c25382f831a7c6f which is for 
-family 17h.
-
-This post says it's b250b32ab1d044953af2dc5e790819a7703b7ee6 which is for family 
-19h.
-
-I assume the 17h family one is the correct one?
-
-Thanks,
-
-Marc.
+       MetaCPAN:  https://metacpan.org/dist/YAML-Syck
+       VCS Repo:  https://github.com/cpan-authors/YAML-Syck
 
 
+YAML::Syck versions through 1.36 for Perl has several potential
+security vulnerabilities including a high-severity heap buffer overflow
+in the YAML emitter
 
-On 2023-07-24 10:28, Tavis Ormandy wrote:
-> Hello, this is CVE-2023-20593, a use-after-free in AMD Zen2 processors.
-> 
-> Yes, you read that right :)
-> 
-> This includes at least the following products:
-> 
-> - AMD Ryzen 3000 Series Processors
-> - AMD Ryzen PRO 3000 Series Processors
-> - AMD Ryzen Threadripper 3000 Series Processors
-> - AMD Ryzen 4000 Series Processors with Radeon Graphics
-> - AMD Ryzen PRO 4000 Series Processors
-> - AMD Ryzen 5000 Series Processors with Radeon Graphics
-> - AMD Ryzen 7020 Series Processors with Radeon Graphics
-> - AMD EPYC 7002 Series Processors
-> 
-> I've written a blog post with a detailed description of this bug,
-> it's available here:
-> 
-> https://lock.cmpxchg8b.com/zenbleed.html
-> 
-> # Background
-> 
-> The vector register file (RF) is a resource shared among all tasks on
-> the same physical core. The register allocation table (RAT) keeps track
-> of how RF resources are assigned and mapped to named registers. However,
-> no RF space is needed to store a register with a zero value - a flag
-> called the z-bit can simply be set in the RAT.
-> 
-> # Vulnerability
-> 
-> If the z-bit is set speculatively, then it would not be sufficient to
-> unset it again on branch misprediction. That's because the previously
-> allocated RF space could have been reallocated between those two events.
-> That would effectively be a UaF.
-> 
-> We have discovered that this really can happen under certain specific
-> conditions. Specifically, an instruction that uses merge optimization, a
-> register rename, and a mispredicted VZEROUPPER instruction must enter
-> the FP backend simultaneously.
-> 
-> # Impact
-> 
-> The practical result here is that you can spy on the registers of other
-> processes. No system calls or privileges are required.
-> 
-> It works across virtual machines and affects all operating systems.
-> 
-> I have written a poc for this issue that's fast enough to reconstruct
-> keys and passwords as users log in.
-> 
-> # Solution
-> 
-> AMD have released a patch for this issue available here:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=b250b32ab1d044953af2dc5e790819a7703b7ee6
-> 
-> There is a software workaround, you can set the chicken bit DE_CFG[9].
-> This may have some performance cost, and the microcode update is
-> preferred.
-> 
-> It is not sufficient to disable SMT.
-> 
-> # Credit
-> 
-> This bug was discovered by Tavis Ormandy of Google Information Security.
-> 
-> 
+Description
+-----------
+YAML::Syck versions through 1.36 for Perl has several potential
+security vulnerabilities including a high-severity heap buffer overflow
+in the YAML emitter.
 
+The heap overflow occurs when class names exceed the initial 512-byte
+allocation.
+
+The base64 decoder could read past the buffer end on trailing newlines.
+
+strtok mutated n->type_id in place, corrupting shared node data.
+
+A memory leak occurred in syck_hdlr_add_anchor when a node already had
+an anchor. The incoming anchor string 'a' was leaked on early return.
+
+Problem types
+-------------
+- CWE-122 Heap-based Buffer Overflow
+
+Solutions
+---------
+Upgrade to version 1.37 or higher when it is available.
+
+
+References
+----------
+https://github.com/cpan-authors/YAML-Syck/commit/e8844a31c8cf0052914b198fc784ed4e6b8ae69e.patch
+https://metacpan.org/release/TODDR/YAML-Syck-1.37_01/changes#L21
+
+Credits
+-------
+Todd Rinaldo, finder
