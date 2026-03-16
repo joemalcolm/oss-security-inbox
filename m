@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2816" "Friday" "10" "February" "2017" "08:23:18" "+1300" "Amos Jeffries" "squid3@treenet.co.nz" "<72ad0aa8-88c8-cba1-84d4-35cc69fc86af@treenet.co.nz>" "68" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" "^Date:" nil nil "2" "2017020919:23:18" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "        squid3@treen Feb 10   68/2816  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>" "<20170209142600.GJ12842@openstack.org>" "<20170209145409.GE2569@scully.more-magic.net>" "<f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26284 invoked by uid 550); 9 Feb 2017 19:30:58 -0000
+Received: (qmail 30209 invoked by uid 550); 16 Mar 2026 03:00:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,91 +6,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22032 invoked from network); 9 Feb 2017 19:24:20 -0000
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
- <20170209142600.GJ12842@openstack.org>
- <20170209145409.GE2569@scully.more-magic.net>
- <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
-Message-ID: <72ad0aa8-88c8-cba1-84d4-35cc69fc86af@treenet.co.nz>
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
-MIME-Version: 1.0
-In-Reply-To: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="Xq6D4Fbm0dQ2fdaiLrn6tmlqWfwgb1mxW"
-Date: Fri, 10 Feb 2017 08:23:18 +1300
-From: Amos Jeffries <squid3@treenet.co.nz>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+x-ms-reactions: disallow
+Received: (qmail 13763 invoked from network); 16 Mar 2026 02:58:24 -0000
+Date: Mon, 16 Mar 2026 03:58:16 +0100
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Message-ID: <20260316025816.GA14368@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] 10+ CVEs in GStreamer
 
---Xq6D4Fbm0dQ2fdaiLrn6tmlqWfwgb1mxW
-Content-Type: multipart/mixed; boundary="8QOW33aIcefn36jEtk6iJS9Nfuat6cSed";
- protected-headers="v1"
-From: Amos Jeffries <squid3@treenet.co.nz>
-To: oss-security@lists.openwall.com
-Message-ID: <72ad0aa8-88c8-cba1-84d4-35cc69fc86af@treenet.co.nz>
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <20170209091023.vrhpgjbhbzaqmaez@perpetual.pseudorandom.co.uk>
- <20170209142600.GJ12842@openstack.org>
- <20170209145409.GE2569@scully.more-magic.net>
- <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
-In-Reply-To: <f5e202ca-2709-8158-cb35-453a29d09e42@icu-project.org>
+Hi,
 
---8QOW33aIcefn36jEtk6iJS9Nfuat6cSed
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: quoted-printable
+As described on the homepage:
 
-On 10/02/2017 5:07 a.m., Steven R. Loomis wrote:
-> On 2/9/17 6:54 AM, Peter Bex wrote:
->> In an ideal world, free software project leaders should be
->> able to request a CVE ID _before_ announcing a vulnerability to their
->> user base.  If there were some way to register people as project leaders,
->> the "proof" should not be necessary, they should be able to request a
->> CVE ID with authority.
-> Peter,
->  I actually wondered about this very thing, if it was possible to
-> request an ID before the details were fully available. From your note,
-> it sounds like this is not the case currently.
->=20
-> Steven
->=20
+https://gstreamer.freedesktop.org
 
-I used to request CVE with a brief description suitable for the CVE
-record and reference URL(s) eg. where the upstream advisory was going to
-be located. Nowdays someone at mitre seems to be waiting for the URL to
-go public before assignment :-(.
+> GStreamer is a library for constructing graphs of media-handling
+> components. The applications it supports range from simple Ogg/Vorbis
+> playback, audio/video streaming to complex audio (mixing) and video
+> (non-linear editing) processing.
 
-AYJ
+> News - GStreamer 1.26.11 old-stable bug fix release   2026-03-10 17:00
+> 
+> The GStreamer team is pleased to announce another bug fix release in
+> the now old-stable 1.26 release series of your favourite cross-platform
+> multimedia framework!
+> 
+> Please note that the 1.26 old-stable series is no longer actively
+> maintained and has been superseded by the GStreamer 1.28 stable series
+> now.
+> 
+> This release only contains bugfixes, and it should be safe to update
+> from 1.26.x.
+> 
+> Highlighted bugfixes:
+> 
+>     Security fixes for the JPEG, H.265 and H.266 video parsers and the
+> DVB subtitle overlay
+>     Security fixes for the ASF, RealMedia and QuickTime/MP4 demuxers and
+> RIFF library
+>     Security fixes for the WAV audio parser and the RTP QDM2 depayloader
 
+> GStreamer 1.28.1 stable bug fix release   2026-02-26 02:00
+> 
+> The GStreamer team is pleased to announce the first bug fix release in
+> the new stable 1.28 release series of your favourite cross-platform
+> multimedia framework!
+> 
+> This release only contains bug fixes as well as a number of security
+> fixes. It should be safe to update from 1.28.0, and we recommend you do
+> so at your earliest convenience.
+> 
+> Highlighted bugfixes:
+> 
+>     Various security fixes and playback fixes
 
+The news story at:
 
---8QOW33aIcefn36jEtk6iJS9Nfuat6cSed--
+https://www.opennet.me/opennews/art.shtml?num=64964
 
---Xq6D4Fbm0dQ2fdaiLrn6tmlqWfwgb1mxW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+originally in Russian explains GStreamer usage as follows, translated to
+English here:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (MingW32)
+> The GStreamer library is used to parse multimedia files in Nautilus
+> (GNOME Files), GNOME Videos, and Rhythmbox, as well as in the
+> localsearch search engine (previously known as tracker-miners) developed
+> by the GNOME project. This engine is installed in many distributions as
+> a dependency of the tracker-extract package, which GNOME uses to
+> automatically parse metadata in new files. Among other things, this
+> service indexes all files in the user's home directory without any user
+> interaction. Therefore, to perform an attack, simply create a specially
+> crafted multimedia file in the user's home directory, and the
+> vulnerability will be exploited during its automatic indexing.
+> 
+> In most GNOME distributions, localsearch components (tracker-miners) are
+> enabled by default and loaded as a hard dependency of the Nautilus file
+> manager (GNOME Files). Starting with GNOME 46, the localsearch process
+> runs in sandbox isolation. To disable metadata extraction, you can
+> delete the rules files from the /usr/share/localsearch3/extract-rules/
+> or /usr/share/tracker3-miners/extract-rules/ directory.
 
-iQIcBAEBAgAGBQJYnMG7AAoJEGvSOzfXE+nLeYwQALWQ9ZapRh6eWSVtA2D4NiNw
-Mp+AQGHQ8Dj+pp2ExGmnXRAvyLJCQDgzVPg69Wf0SeapvW73TydJrLD5T7Bku4Qk
-zdU7DLeqX24cvr2fd6psTgojLNtnXTGO12TLP1prcn3nQW4TDnYCGM6JZZhF30Ht
-kU7JrY0WW989HzfxzXbbeyqZ8Vug2AWBluyz8llvG4uLlVaAACNis44zdSkSU9eA
-8tevoa3fAmD3zw719uaCNMfgBiIxMTfaaCFCJHfjR5rDIAm8/kuBQ/NiiaTjs4Ws
-2lE3dQiHb2+XsgIhZP4rN7YpO9Fccj8qGBpd7+Cggu+Ep9PedvrlZrSIu5CkstE4
-vNS/O/AsJfBQrM7r4rIJXwYAbfhKAVZOD0+h38nlOTLOLP1CaDckNxnk46NlJhjv
-RfLZQZaSYEMAGvtxIw1779rkAkVzCdoA+++ZD7iOup3+SEvE+Nxg57BKhYdnGhK8
-cebfGPVbEKEG3oPAuCZFNjQzxGuFbGJTLQODM+MjE5ueva/mupzfxESczS955Ogc
-MXqBVHg5h1WwtgY8/sqnrNnYqOzRcxsGFhrtsmvP0Lb1egTo8wXmZV4iTReDybOt
-h0lFW6ctTqRsEkMGQLzxQsjxniOnc2YlpzEPAf0o4MGHp++CTPzPXqNXW3bUrpXu
-4CU5hqHeWno2VjDIun9Y
-=tsx8
------END PGP SIGNATURE-----
+There are 10 GStreamer CVEs recently listed at:
 
---Xq6D4Fbm0dQ2fdaiLrn6tmlqWfwgb1mxW--
+https://www.zerodayinitiative.com/advisories/published/
+
+and even more at:
+
+https://gstreamer.freedesktop.org/security/
+
+so I'll quote from the latter page:
+
+> GStreamer-SA-2026-0012 	H.265 video parser potential denial-of-service 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0011
+> CVE-2026-3084
+> ZDI-CAN-28910 	Out-of-bounds write in H.266 video parser when parsing picture partitions 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0010
+> CVE-2026-3081
+> ZDI-CAN-28839 	Stack buffer overflow in H.266 video parser when parsing pic_timing SEIs 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0009
+> CVE-2026-3086
+> ZDI-CAN-28911 	Out-of-bounds buffer write in H.266 video parser when parsing Adaptation Parameter Set 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0008
+> CVE-2026-3083, CVE-2026-3085
+> ZDI-CAN-28851, ZDI-CAN-28850 	Multiple vulnerabilities in RTP QDM2 depayloader element 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0007
+> CVE-2026-2923
+> ZDI-CAN-28838 	Out-of-bounds read and write in DVB Subtitle Decoder 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0006
+> CVE-2026-2920
+> ZDI-CAN-28843 	Out-of-bounds write in ASF Demuxer 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0005
+> CVE-2026-2922
+> ZDI-CAN-28845 	Out-of-bounds write in RealMedia Demuxer 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0004
+> CVE-2026-2921
+> ZDI-CAN-28854 	Integer overflow in RIFF parser 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0003
+> CVE-2026-3082
+> ZDI-CAN-28840 	Heap-based Buffer Overflow on Huffman tables reading in JPEG parser 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0002 	Out-of-bounds read in MP4 demuxer 	2026-02-25 23:59
+> 
+> GStreamer-SA-2026-0001
+> CVE-2026-1940 	Out-of-bounds read in WAV parser 	2026-02-25 23:59
+
+Alexander
