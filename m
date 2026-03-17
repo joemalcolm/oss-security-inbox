@@ -1,4 +1,4 @@
-Received: (qmail 24185 invoked by uid 550); 29 Mar 2024 14:36:03 -0000
+Received: (qmail 17455 invoked by uid 550); 17 Mar 2026 11:56:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,43 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26206 invoked from network); 29 Mar 2024 14:31:19 -0000
+x-ms-reactions: disallow
+Received: (qmail 27663 invoked from network); 17 Mar 2026 06:29:10 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Arnout Engelen <engelen@apache.org>
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <c31a0654-b7d5-ba5f-1f0b-45ce8764d4e6@apache.org>
+Message-ID: <a50ba779-d385-b8f1-7304-ba2b38dcec02@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 29 Mar 2024 14:34:53 +0000
+Date: Tue, 17 Mar 2026 06:25:54 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2024-23539: Apache Fineract: Under certain system
- configurations, the sqlSearch parameter for specific endpoints was
- vulnerable to SQL injection attacks, potentially allowing attackers to
- manipulate database queries.  
+Subject: [oss-security] CVE-2026-28563: Apache Airflow: DAG authorization bypass 
 
-Severity: critical
+Severity: low=20
 
 Affected versions:
 
-- Apache Fineract through 1.8.4
+- Apache Airflow (apache-airflow) 3.0.0 before 3.1.8
 
 Description:
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL In=
-jection') vulnerability in Apache Fineract.This issue affects Apache Finera=
-ct: <1.8.5.
+Apache Airflow versions 3.1.0 through 3.1.7 /ui/dependencies endpoint retur=
+ns the full DAG dependency graph without filtering by authorized DAG IDs. T=
+his allows an authenticated user with only DAG Dependencies permission to e=
+numerate DAGs they are not authorized to view.
 
-Users are recommended to upgrade to version 1.8.5 or 1.9.0, which fix the i=
-ssue.
+
+Users are recommended to upgrade to Apache Airflow 3.1.8 or later, which re=
+solves this issue.
 
 Credit:
 
-Yash Sancheti of GH Solutions Consultants (finder)
+Masamune - Unit515 OPSWAT (finder)
+Shubham Raj (remediation developer)
 
 References:
 
-https://cwiki.apache.org/confluence/display/FINERACT/Apache+Fineract+Securi=
-ty+Report
-https://fineract.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2024-23539
+https://github.com/apache/airflow/pull/62046
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-28563
 
