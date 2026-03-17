@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5212" "Monday" "26" "April" "2021" "15:21:16" "+0200" "Matthias Gerstner" "mgerstner@suse.de" nil "139" "[oss-security] virtualbox: CVE-2021-2264: vboxautostart-service.sh allows injection of parameters in 'su' invocation" nil nil nil "4" nil nil (number mark "U       mgerstner@su Apr 26  139/5212  " thread-indent "\"[oss-security] virtualbox: CVE-2021-2264: vboxautostart-service.sh allows injection of parameters in 'su' invocation\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] virtualbox: CVE-2021-2264: vboxautostart-service.sh allows injection of parameters in 'su' invocation" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15845 invoked by uid 550); 26 Apr 2021 13:21:30 -0000
+Received: (qmail 19848 invoked by uid 550); 17 Mar 2026 12:05:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,155 +7,160 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15827 invoked from network); 26 Apr 2021 13:21:30 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Mon, 26 Apr 2021 15:21:16 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
-To: oss-security@lists.openwall.com
-Message-ID: <YIa+TGj3iH9HuCtU@f195.suse.de>
+x-ms-reactions: disallow
+Received: (qmail 19815 invoked from network); 17 Mar 2026 12:05:20 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="vLlDkjvdwMJWIvv6"
+X-Mailer: MIME-tools 5.510 (Entity 5.510)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1w2TAW-00DbXG-0N@xenbits.xenproject.org>
+Date: Tue, 17 Mar 2026 12:05:04 +0000
+Subject: [oss-security] Xen Security Advisory 480 v3 (CVE-2026-23554) - Use after free of
+ paging structures in EPT
+
+--=separator
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-Subject: [oss-security] virtualbox: CVE-2021-2264: vboxautostart-service.sh allows injection
- of parameters in 'su' invocation
+Content-Transfer-Encoding: 7bit
 
---vLlDkjvdwMJWIvv6
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Hello,
+            Xen Security Advisory CVE-2026-23554 / XSA-480
+                               version 3
 
-I recently discovered an issue in the script "vboxautostart-service.sh"
-which is distributed by Oracle as part of their virtualbox RPMs [1]. By
-default this script is not used but it can be enabled by an
-Administrator according to the manual [2].
+              Use after free of paging structures in EPT
 
-In the context of the autostart feature a directory "$VBOXAUTOSTART_DB"
-(by default /etc/vbox) is used. Local users in the system are granted
-write access to this directory. Users are supposed to create files of
-the form "<username>.start" to configure autostarting of their
-respective virtualbox VMs.
+UPDATES IN VERSION 3
+====================
 
-The version of the script in virtualbox release 6.1.18 (and older
-releases) runs as root and uses the following bash for loop in its
-`start()` function:
+Public release.
 
-```
-    for user in `ls $VBOXAUTOSTART_DB/*.start`
-    do
-        start_daemon `basename $user | sed -ne "s/\(.*\).start/\1/p"` $bina=
-ry $PARAMS > /dev/null 2>&1
-    done
+ISSUE DESCRIPTION
+=================
 
-    [...]
+The Intel EPT paging code uses an optimization to defer flushing of any cached
+EPT state until the p2m lock is dropped, so that multiple modifications done
+under the same locked region only issue a single flush.
 
-    start_daemon() {
-        usr=3D"$1"
-        shift
-        su - $usr -c "$*"
-    }
-```
+Freeing of paging structures however is not deferred until the flushing is
+done, and can result in freed pages transiently being present in cached state.
+Such stale entries can point to memory ranges not owned by the guest, thus
+allowing access to unintended memory regions.
 
-Since by design unprivileged users need to have write access to this
-directory, an unprivileged user can create arbitrarily named new files
-in it that will be processed by the for loop above.
+IMPACT
+======
 
-If a user creates a file like "$VBOXAUTOSTART_DB/--evil.start", then the
-for loop will pass "--evil" as parameter to `start_daemon()`, resulting
-in the command line flag `--evil` being passed to the `su` utility. A
-reproducer for the openSUSE virtualbox package, which uses an older but
-similarly vulnerable autostart script, looks like this:
+Privilege escalation, Denial of Service (DoS) affecting the entire host,
+and information leaks.
 
-    # emulate a malicious user that is a member of the vboxusers group
-    root# su -g vboxusers nobody
-    nobody$ cd /etc/vbox
-    # try to inject a parameter to 'su'
-    nobody$ touch -- '-s myshell.start'
-    nobody$ exit
-    # execute the autostart script
-    root# /usr/lib/virtualbox/vboxautostart.sh start
-    vboxautostart.sh: Starting VirtualBox VMs configured for autostart.
-    vboxautostart.sh: Starting VMs for user -s myshell.
-    # execution fails, because we cannot embed '/' characters in
-    # filenames
-    su: failed to execute  myshell: No such file or directory
+VULNERABLE SYSTEMS
+==================
 
-Luckily this is not a full local root exploit. Two aspects are reponsible f=
-or
-this:
+Xen 4.17 and onwards are vulnerable.  Xen 4.16 and older are not vulnerable.
 
-- filenames cannot contain '/' characters, therefore we cannot specify
-  any valid executable beyond the CWD (usually "/") of the autosart.sh scri=
-pt.
-- the $user argument is passed before the `-c /usr/lib/virtualbox/VBoxAutos=
-tart`
-  parameter. And the command line parsing logic of 'su' lets the final
-  `-c` parameter win, i.e. the attacker cannot influence the command that i=
-s run.
+Only x86 Intel systems with EPT support are vulnerable.
 
-Still a local attacker can specify arbitrary other parameters to `su` this =
-way
-e.g. the `--group=3Dmygroup` parameter. It could be a successful attack vec=
-tor
-when combined with other security issues.
+Only x86 HVM/PVH guests using HAP can leverage the vulnerability on affected
+systems.
 
-Beyond this any member of the vboxusers group can influence the autostart
-settings of other users, as long as the victim user is allowed to
-autostart via /etc/vbox/autostart.cfg.
+MITIGATION
+==========
 
-On a more generic level this design of /etc/vbox as "autostart DB"
-allows any member of the vboxusers group to trigger a run of
-/usr/lib/virtualbox/VBoxAutostart as any local user (by influencing the
-$user value) or as root with any local group (by setting $user to
---group=3Dmygroup).
+There are no mitigations.
 
-I privately reported this issue to Oracle Security on 2021-04-08. It has
-been fixed via a critical patch update by upstream on 2021-04-20. The
-fixed version of the script has stronger limitations on the accepatble
-*.start filenames and also requires that the username present in the
-file matches the owner of the file.
+CREDITS
+=======
 
-The openSUSE packages for virtualbox are about to receive updates [3].
+This issue was discovered by Roger Pau Monné of XenServer.
 
-[1]: https://www.virtualbox.org/wiki/Linux_Downloads
-[2]: https://www.virtualbox.org/manual/ch09.html#autostart-linux
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=3D1184542
+RESOLUTION
+==========
 
-Cheers
+Applying the attached patch resolves this issue.
 
-Matthias
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Phone: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-=20
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG N=FCrnberg
-Gesch=E4ftsf=FChrer: Felix Imend=F6rffer
+xsa480.patch           xen-unstable - Xen 4.17.x
 
---vLlDkjvdwMJWIvv6
-Content-Type: application/pgp-signature; name="signature.asc"
+$ sha256sum xsa480*
+578f8fec3f34656e085419f6376d43987ffd6ed32e067b4024d3c83ce03a5901  xsa480.patch
+$
 
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmCGvksACgkQFMQFyXGS
-NVMkfBAAo8O7s9d03kMmhete+Pf7G0b6Wd+xGW1UH6DpHmAX2C2X0RhtC4jllBai
-3mGKXR898s7+iObdenjQkvO76tMZBy5Lh5iVxp1DL5qZP7r+QA42WiRG71jxaM1T
-NPPdZWzQA2DEJ6prNSmisyz1nl4BN/KeJZOW7kPgyQHvj1RkPfb4v1Dl/E08DDMe
-Oa4ZcXGjLGxsGDrbVbIf3d9xBDrIoPMKnrmRrxQuaF5UB5WHhWuV/mBv76HxwoI6
-wM/ntkfKRQtFMscrxiF3CkVy3PSGnHv9/hLI7PC4TgCyLZcnxs/UCIoC+iC4pRi/
-vzxKPJ6sW9RTIDzZL1BOFAOe9iM+OLTbkLhVbYl5YLr1CSBiAD6DcqkSFlLn20DT
-EofOov5sIrM2udHZKQ0pAHUB/vzLx6CKGg1ZcfkKLvngxot9i9J9m1Nof1+AgND4
-8McWOQiNXQLOf0kdK967BYUoEeA6sK6wCabC0Ta3vTQWjQsyQNT7V23nU5lnLe5i
-DHoGeD49Q6CjB7UL0NfJghvczR+jiDSPbbFCNIyWp3urqvjuD0wWha/YWHemrp76
-ARr7SMC+EAFSrddTsxU24mGCZd0OwR/RAjyVNgtLFyRG0H1BwmwyxKH9ZfKRGhDw
-obf+3AKUBP22z7tDDIvm4UiA3jbsf7jZEWMc/R9+ZeHUffH4mCY=
-=bYPv
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmm5Q1MMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZKDgH/jDFwjlPNV0IQor3c5j9D7L++i5dFugypaF5OI+Q
+nboD7VEe6y1KexRsPa/a7UAvuabgGdudeS18IS3W34/9TZILZRITo9s3IgEnTfQR
+qqFlCTxymFuCn8Iptq8SJh37fG3nc9OJ/v28s+0+X9ERnjjjVcjhwcbQ5gQSpKU0
+7fAe+IpsO3YOMGb3fgpjhCWMjh9UTHnKOBmObNeDGZ3sXgh8+FYkt6snRs0bYwW4
+IcGpmEEgK+Id6n/0sG07Ntntb02EcCz3Vl8G0OflNQj/XOxHBuXbkFc36K2vpUDp
+dGrzGkIznA00Oz2UNlZrSrMWAQtKuHbB9+H2tU+7BNq+ag8=
+=RFix
 -----END PGP SIGNATURE-----
 
---vLlDkjvdwMJWIvv6--
+--=separator
+Content-Type: application/octet-stream; name="xsa480.patch"
+Content-Disposition: attachment; filename="xsa480.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSA0NWY2ODY2ZTM0YjdlOWVlOGI2YWMxNmQ2NDZhMmU5NTRjOTdlNDhlIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBSb2dlciBQYXUgTW9ubmUgPHJvZ2VyLnBhdUBjaXRyaXguY29t
+PgpEYXRlOiBUdWUsIDE3IEZlYiAyMDI2IDA5OjMzOjQzICswMTAwClN1YmplY3Q6IFtQQVRDSF0g
+eDg2L3AybTogaXNzdWUgYSBzeW5jIGZsdXNoIGJlZm9yZSBmcmVlaW5nIHBhZ2luZyBwYWdlcwpN
+SU1FLVZlcnNpb246IDEuMApDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9VVRGLTgK
+Q29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogOGJpdAoKSW4gdGhlIEVQVCBpbXBsZW1lbnRhdGlv
+biwgdGhlIGRlZmVyIGZsdXNoaW5nIGxvZ2ljIGlzIHVzZWQKdW5jb25kaXRpb25hbGx5LCBhbmQg
+dGhhdCB3b3VsZCBsZWFkIHRvIHBhZ2luZyBtZW1vcnkgYmVpbmcgcmV0dXJuZWQgdG8gdGhlCnBh
+Z2luZyBwb29sIGJlZm9yZSBpdHMgcmVmZXJlbmNlcyBoYWQgYmVlbiBmbHVzaGVkLgoKSXNzdWUg
+YW55IHBlbmRpbmcgZmx1c2hlcyBiZWZvcmUgZnJlZWluZyB0aGUgcGFnaW5nIG1lbW9yeSBiYWNr
+IHRvIHRoZQpwb29sLgoKTm90ZSBBTUQgKE5QVCkgYW5kIFNoYWRvdyBwYWdpbmcgYXJlIG5vdCBh
+ZmZlY3RlZCwgYXMgdGhleSBkb24ndCBpbXBsZW1lbnQKdGhlIGRlZmVycmVkIGZsdXNoaW5nIGxv
+Z2ljLgoKVGhpcyBpcyBYU0EtNDgwIC8gQ1ZFLTIwMjYtMjM1NTQKCkZpeGVzOiA0YTU5ZTZiYjNh
+OTYgKCJ4ODYvRVBUOiBzcXVhc2ggbWVhbmluZ2xlc3MgVExCIGZsdXNoIikKU2lnbmVkLW9mZi1i
+eTogUm9nZXIgUGF1IE1vbm7DqSA8cm9nZXIucGF1QGNpdHJpeC5jb20+ClJldmlld2VkLWJ5OiBK
+YW4gQmV1bGljaCA8amJldWxpY2hAc3VzZS5jb20+Ci0tLQogeGVuL2FyY2gveDg2L21tL3AybS5j
+IHwgNSArKysrKwogMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQoKZGlmZiAtLWdpdCBh
+L3hlbi9hcmNoL3g4Ni9tbS9wMm0uYyBiL3hlbi9hcmNoL3g4Ni9tbS9wMm0uYwppbmRleCBlOTE1
+ZGEyNmE4MzIuLmZkZGVjZGY5NzhlYyAxMDA2NDQKLS0tIGEveGVuL2FyY2gveDg2L21tL3AybS5j
+CisrKyBiL3hlbi9hcmNoL3g4Ni9tbS9wMm0uYwpAQCAtNDc5LDYgKzQ3OSwxMSBAQCB2b2lkIHAy
+bV9mcmVlX3B0cChzdHJ1Y3QgcDJtX2RvbWFpbiAqcDJtLCBzdHJ1Y3QgcGFnZV9pbmZvICpwZykK
+ICAgICBBU1NFUlQocDJtLT5kb21haW4pOwogICAgIEFTU0VSVChwMm0tPmRvbWFpbi0+YXJjaC5w
+YWdpbmcuZnJlZV9wYWdlKTsKIAorICAgIC8qCisgICAgICogSXNzdWUgYW55IHBlbmRpbmcgZmx1
+c2ggaGVyZSwgaW4gY2FzZSBpdCB3YXMgZGVmZXJyZWQgYmVmb3JlLiAgVGhlIHBhZ2UKKyAgICAg
+KiB3aWxsIGJlIHJldHVybmVkIHRvIHRoZSBwYWdpbmcgcG9vbCBub3cuCisgICAgICovCisgICAg
+cDJtX3RsYl9mbHVzaF9zeW5jKHAybSk7CiAgICAgcGFnZV9saXN0X2RlbChwZywgJnAybS0+cGFn
+ZXMpOwogICAgIHAybS0+ZG9tYWluLT5hcmNoLnBhZ2luZy5mcmVlX3BhZ2UocDJtLT5kb21haW4s
+IHBnKTsKIAotLSAKMi41MS4wCgo=
+
+--=separator--
