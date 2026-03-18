@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3983" "Saturday" "8" "October" "2016" "22:16:25" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<2323220.oXSkLC07fN@arcadia>" "101" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)" nil nil nil "10" "2016100820:16:25" "[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)" (number mark "U       ago@gentoo.o Oct  8  101/3983  " thread-indent "\"[oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7908 invoked by uid 550); 8 Oct 2016 20:16:17 -0000
+Received: (qmail 24081 invoked by uid 550); 18 Mar 2026 21:52:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,115 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7881 invoked from network); 8 Oct 2016 20:16:16 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+x-ms-reactions: disallow
+Received: (qmail 1082 invoked from network); 18 Mar 2026 21:13:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sanger.ac.uk; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	sendkey1; bh=XaDUbpswRqKN+4GvlG4MJMZktjCm2p2w64voC6m7TXc=; b=2Fl
+	pqf5qUFs25HOonlZPRD9qPSn89e+Ll9r1gdz/ldaJpJCEszYdIT6wf8LMI1c6rIf
+	mEC32DB3fsMyNhA0Q7vEflghgex90YNtwkk//8qc5O9TZsCzocgJY0KYYFR8GHsh
+	lxeNKwUPML+K0OtRiQxLSx0WJ6at7Lz/rWRVsn2DBCMGr5vxgQjpI0Jmie4ry9NK
+	soBSd6i/DLo0lwnG80PX+SxHkaN/OnxVG1j7iR3z/UUwne0ShccdBQAD2kuTAXFt
+	Mc72OJoLXTeJxemTREq4tRT8KpwMUYGotq41bxNXfYM+9B2IQDwNvCR1TBNQcSQ1
+	jSV+T9q9IcFCM7gTLwA==
+Date: Wed, 18 Mar 2026 21:13:05 +0000 (GMT)
+From: Robert Davies <rmd@sanger.ac.uk>
 To: oss-security@lists.openwall.com
-Date: Sat, 08 Oct 2016 22:16:25 +0200
-Message-ID: <2323220.oXSkLC07fN@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
+cc: samtools@sanger.ac.uk
+Message-ID: <alpine.DEB.2.21.2603182112090.16613@seq4-head1.internal.sanger.ac.uk>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] libdwarf: heap-based buffer overflow in _dwarf_get_abbrev_for_code (dwarf_util.c)
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+X-Authority-Analysis: v=2.4 cv=N/Ik1m9B c=1 sm=1 tr=0 ts=69bb1562 cx=c_pps
+ a=GB2mOsVFTDkI4gmwoe4Z0A==:117 a=GB2mOsVFTDkI4gmwoe4Z0A==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=x7bEGLp0ZPQA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=-A0x2dZHY_x99t24LF_B:22 a=_MkW9hIkd_p2jkqWG7xA:22
+ a=NEAV23lmAAAA:8 a=8r2qhXULAAAA:8 a=aSR_xum1AAAA:8 a=lwDGWbeVAAAA:8
+ a=HD1105xUHnsDwKqtXK4A:9 a=CjuIK1q_8ugA:10 a=ZXulRonScM0A:10
+ a=8gvLZcY7Nlvl4CGD_6nf:22 a=dYLx_L0FrD5e4YvVJn9e:22
+X-Proofpoint-GUID: 86goPbGGtrraJRwFQ4tDDcDhff_IL4MG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDE4MyBTYWx0ZWRfX5nIVbSK4E/H5
+ MxL+i1tDey1SMqwAF2n91jx6K9AOsp3qfgre0aLVUKV+e60MVxg+QbwT4Lf05hksaaluiymFV8d
+ thjmz8tB29Y1ZfGR12Zfb8loQM43oE93To0GzV75gqNW4Z3kmXG1sDKYRalhr1kvV7XU9RFkDp4
+ UKjDnObMjvSvLFYrn8tzD+xopCGHsa1Z9kFTJC5nqepGhPbQ2qa5hqFLlRohqiSzSLUhQwjralP
+ Nv2giCXnW9JLf9xG/ldEKLJxb1pBKx1wGl5ySBhWnyDSrMZQAsPfbqWqFyOfV3vPj4rX02delda
+ R+5fiJEpQXjgJCOCkylc2gKc5Cic0eStvJnavTAk7DUtYbyaYqlWocgNGsq7vrvQNsLpjW0nmLn
+ Wl+pdTp1+f916Hpy7tmWV2IeC5DgENBDkbgpF2HsRNfNvbsgNtjYjI7ZPY8zFraGe+RPFcbE7cz
+ UK16FoJdYDT7sdVO0Gw==
+X-Proofpoint-ORIG-GUID: 86goPbGGtrraJRwFQ4tDDcDhff_IL4MG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-18_01,2026-03-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 priorityscore=1501 adultscore=0 clxscore=1034
+ lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603180183
+Subject: [oss-security] CVE-2026-31973: samtools <= 1.23 NULL pointer dereference in
+ cram-size
 
-Description:
-libdwarf is a library to consume and produce DWARF debug information.
 
-A fuzzing revealed an out bounds read,
+Description
+-----------
 
-The complete ASan output:
+SAMtools is a program for reading, manipulating and writing bioinformatics
+file formats. In the "cram-size" command, used to write information about
+how well CRAM files are compressed, a check to see if the
+cram_decode_compression_header() was missing. If the function returned an
+error, this could lead to a NULL pointer dereference.
 
-# dwarfdump $FILE
-==30323==ERROR: AddressSanitizer: heap-buffer-overflow on address 
-0x611000005a00 at pc 0x000000606e87 bp 0x7ffe35e5e5b0 sp 0x7ffe35e5e5a8
-READ of size 1 at 0x611000005a00 thread T0
-    #0 0x606e86 in _dwarf_get_abbrev_for_code 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:624:43
-    #1 0x576086 in dwarf_siblingof_b 
-/tmp/dwarf-20161001/libdwarf/dwarf_die_deliv.c:1628:12
-    #2 0x517e73 in print_die_and_children_internal 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:1163:17
-    #3 0x517c6b in print_die_and_children_internal 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:1142:13
-    #4 0x5147cc in print_die_and_children 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:921:5
-    #5 0x5147cc in print_one_die_section 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:831
-    #6 0x512262 in print_infos 
-/tmp/dwarf-20161001/dwarfdump/print_die.c:371:16
-    #7 0x4faaea in process_one_file 
-/tmp/dwarf-20161001/dwarfdump/dwarfdump.c:1371:9
-    #8 0x4faaea in main /tmp/dwarf-20161001/dwarfdump/dwarfdump.c:654
-    #9 0x7f5912c2361f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #10 0x419588 in _start (/usr/bin/dwarfdump-asan+0x419588)
+Impact
+------
 
-0x611000005a00 is located 0 bytes to the right of 256-byte region 
-[0x611000005900,0x611000005a00)
-allocated by thread T0 here:
-    #0 0x4c0ad8 in malloc /var/tmp/portage/sys-devel/llvm-3.8.1-
-r2/work/llvm-3.8.1.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x7f5913cfd206 in __libelf_set_rawdata_wrlock /tmp/portage/dev-
-libs/elfutils-0.166/work/elfutils-0.166/libelf/elf_getdata.c:318
+Exploiting this bug causes a NULL pointer dereference. Typically this will
+cause the program to crash.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow 
-/tmp/dwarf-20161001/libdwarf/dwarf_util.c:624:43 in _dwarf_get_abbrev_for_code
-Shadow bytes around the buggy address:
-  0x0c227fff8af0: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
-  0x0c227fff8b00: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c227fff8b10: fd fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8b20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff8b40:[fa]fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c227fff8b50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b60: 00 fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff8b70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff8b80: 00 00 00 00 00 00 00 00 00 fa fa fa fa fa fa fa
-  0x0c227fff8b90: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==30323==ABORTING
+Severity
+--------
 
-Affected version:
-20161001 and past
+Moderate CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N
 
-Fixed version:
-N/A
+Patches
+-------
 
-Commit fix:
-https://sourceforge.net/p/libdwarf/code/ci/268c1f18d1d28612af3b72d7c670076b1b88e51c/tree/libdwarf/dwarf_util.c?diff=0b28b923c3bd9827d1d904feed2abadde4fa5de2
+Versions 1.23.1, 1.22.2 and 1.21.1 include fixes for this issue.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
+Workarounds
+-----------
 
-Timeline:
-2016-10-03: bug discovered
-2016-10-03: bug reported privately to upstream
-2016-10-03: upstream realeased a patch
-2016-10-04: blog post about the issue
+There is no workaround for this issue.
 
-Note:
-This bug was found with American Fuzzy Lop.
+References
+----------
 
-Permalink:
-https://blogs.gentoo.org/ago/2016/10/04/libdwarf-heap-based-buffer-overflow-in-_dwarf_get_abbrev_for_code-dwarf_util-c/
+https://github.com/samtools/samtools/security/advisories/GHSA-x86f-q6fj-cm43
+https://www.cve.org/CVERecord?id=CVE-2026-31973
 
+-- 
+
+The SAMtools team   https://www.htslib.org/  https://www.sanger.ac.uk/
+
+
+----------------------------------------------------------------------
+The Wellcome Sanger Institute is operated by Genome Research Limited, a charity registered in England with number 1021457 and a company registered in England with number 2742969, whose registered office is Wellcome Sanger Institute, Wellcome Genome Campus, Hinxton, CB10 1SA.
