@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2475" "Wednesday" "28" "August" "2019" "17:24:34" "+0200" "Daniel Beck" "ml@beckweb.net" nil "61" nil "^Date:" nil nil "8" nil nil (number mark "U       ml@beckweb.n Aug 28   61/2475  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9815 invoked by uid 550); 28 Aug 2019 15:24:48 -0000
+Received: (qmail 1822 invoked by uid 550); 18 Mar 2026 10:45:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +6,151 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9740 invoked from network); 28 Aug 2019 15:24:47 -0000
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
-Message-Id: <F41F4F95-9437-437A-A2C7-DC86D5A47AE2@beckweb.net>
-X-Mailer: Apple Mail (2.3445.104.11)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1567005887;b4fefd4b;
-X-HE-SMSGID: 1i2zoJ-0000VM-BV
-Date: Wed, 28 Aug 2019 17:24:34 +0200
-From: Daniel Beck <ml@beckweb.net>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Multiple vulnerabilities in Jenkins and Jenkins plugins
+x-ms-reactions: disallow
+Received: (qmail 4028 invoked from network); 18 Mar 2026 08:14:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1773821687;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=z24SFVVqorktZZFFR696rwVBtO9Yssb+riKyafuYRDY=;
+	b=M+plDw9u4cbt0cmUhY9kGCYVfGCw81eor9iYZP2p/Cj1BTEqF61ohLhJTdurY1cna4fGT4
+	FVQBkJO0VCjO5LS/QuWdIn3zW1QEcyIot4RlkqHgF/jCSy9kJ8zAnP3JJR1CgLMeZJ41K6
+	oBtWuaf5takd+jNYH+KXUw1jRWP1pMU=
+X-MC-Unique: 1g4LWW35OH6q2FJu05JldA-1
+X-Mimecast-MFC-AGG-ID: 1g4LWW35OH6q2FJu05JldA_1773821684
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773821683; x=1774426483;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z24SFVVqorktZZFFR696rwVBtO9Yssb+riKyafuYRDY=;
+        b=DPxgSeLsu5F1IBU0kWEZhaCU7qZGvX3/+YAIz7gQGfrwl+VdQbrGLsCRROgFzpEZYN
+         KD+yluaLyR9wXCo7z8/0y4+7NiLYKNjPDjN3a8EJEZAdEHhh6TxpW4SQjG5BkTePqFeO
+         efZ64g7rBYr+wpIPGKZkoyKLbhfPiHaGOnOrwJ8WOnBl7YUShgOT+dr6vKCbSAikCH16
+         vSak57KCdu6a3xZ486XQFek2PIqheKEIujxF/EXQDWFQaDVejtqzVo4F6ZBJ2aAdIWRm
+         vhmEKRzqtJ7OL0LozxxWJDkbwP0Vyernu5ovrl31cHkm70W9OcM64cRcSOGnyEuw7rAN
+         W1Sg==
+X-Gm-Message-State: AOJu0Yz7KrXnjt/GW6D73kphocSbTw5hSqwlUdTIPkn2GGxUbZV9JwpR
+	YLPsB2DKUPa0yPu01FC7hAmGgRECw9MycQ9sIJvWHEluy4ZEAES8fRgM/OZ2woYVux/LdeHnb1O
+	iji5ZrA+FJP1H8+JCROSLNRsUxIyhZ4FzQ+UPMXy+U3rRJNDU9hLJiejt69rJpjGnqMMZCcTFfq
+	hoLCaoJMu/SgKC61PaK4/oC5Wgj+qv81PcnYsJFaEGb5e1EwoV4FWp
+X-Gm-Gg: ATEYQzwuG8nDRE7cXyV2B5bU7mgjH78L8KmOhs1cdjcILKRayVlBeTQq+R5v213/MSj
+	rxapYD5cxcct/o1kQyP5D7pEi82oKLnNFGmPoXtAems64x+F3TiZB0urhl84x1idJHmEobdHj9z
+	o3XC6UJvEo5ZVKrZ+nmdHQsN8HsByQZXnwofkfaVMjvLNR2EoyH0NDgRmI6gQippcYVYw0vdpbc
+	cs=
+X-Received: by 2002:a05:6512:3718:b0:5a1:37ab:312b with SMTP id 2adb3069b0e04-5a279593e23mr712394e87.15.1773821682926;
+        Wed, 18 Mar 2026 01:14:42 -0700 (PDT)
+X-Received: by 2002:a05:6512:3718:b0:5a1:37ab:312b with SMTP id
+ 2adb3069b0e04-5a279593e23mr712375e87.15.1773821682234; Wed, 18 Mar 2026
+ 01:14:42 -0700 (PDT)
+MIME-Version: 1.0
+References: <210c77d7-6b3a-45b3-8618-d18635efc5e6@canonical.com>
+In-Reply-To: <210c77d7-6b3a-45b3-8618-d18635efc5e6@canonical.com>
+From: Dmitry Belyavskiy <dbelyavs@redhat.com>
+Date: Wed, 18 Mar 2026 09:14:31 +0100
+X-Gm-Features: AaiRm53ybXzP6Ev6z7CoSmmjrkgDqM9fa8B7GWfTFoRVtnJzkEoiol0sjkHM_U0
+Message-ID: <CAOcQRVW0Nestm-mMxnEzbb=cTEy_chVaoy8rm7Aqwc5OkadHVw@mail.gmail.com>
 To: oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: xd7OFLwQQX7zceaJ8yI7ECiEumIGsDjxsx0VCxZk6hY_1773821684
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="00000000000043cbf5064d480b39"
+Subject: Re: [oss-security] OpenSSH GSSAPI keyex patch issue
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+--00000000000043cbf5064d480b39
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Jenkins weekly 2.192
-* Jenkins LTS 2.176.3
-* IBM Application Security on Cloud 1.2.5
-* Splunk Plugin 1.8.0
+Dear colleagues,
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2019-08-28/
+Thanks for sharing your findings!
+Can we somehow establish some better coordination in case of widely used
+downstream patches, especially for such an important, ubiquitous and
+heavily patched component as OpenSSH?
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+On Thu, Mar 12, 2026 at 7:09=E2=80=AFPM Marc Deslauriers <
+marc.deslauriers@canonical.com> wrote:
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+> Hello,
+>
+> Jeremy Brown discovered a security issue in the GSSAPI Key Exchange patch
+> a lot
+> of distros carry on top of the OpenSSH package.
+>
+> Unfortunately, there seems to be quite a few different versions of this
+> patch
+> being used, but a lot of them share the same core issue. Different
+> compiler
+> options also result in different outcomes, so the severity of this issue
+> varies.
+>
+> We have assigned CVE-2026-3497 to this issue.
+>
+> Attached is the full pdf from the reporter, along with the patch we used
+> in
+> Ubuntu. I suggest reading the full pdf, but I have extracted some of the
+> most
+> important excerpts from it:
+>
+> "The patch contains a code defect where sshpkt_disconnect() (a
+> non-terminating
+> function that queues a disconnect message and returns) is used where
+> ssh_packet_disconnect()(which terminates the process) was intended. This
+> causes
+> the default: error-handling case in the GSSAPI KEX server loop to fall
+> through
+> into code that reads an uninitialized stack variable (recv_tok), sends its
+> contents to the privileged monitor process via IPC, and then passes it to
+> gss_release_buffer() which may call free() on a garbage pointer."
+>
+> "Bug: Non-terminating error handler (sshpkt_disconnect) in GSSAPI KEX
+> server
+> code allows fallthrough to uninitialized variable use
+>
+> - Impact: Pre-auth uninitialized pointer dereference (CWE-824, CWE-908);
+> confirmed heap corruption via free() on uninitialized pointer (SIGABRT on
+> x86_64); privsep boundary violation (up to 127KB of heap data to root
+> monitor
+> via IPC); SIGSEGV (signal 11) and SIGABRT (signal 6) on x86_64 with
+> 90-second
+> SSH lockout; 100% reliable child process crash
+>
+> - Trigger: Single crafted SSH packet (~300 bytes), no authentication or
+> credentials needed
+>
+> - Potentially Affected: Ubuntu/Debian OpenSSH servers with
+> GSSAPIKeyExchange
+> yes
+>
+> - Potential Fix: Replace sshpkt_disconnect() with ssh_packet_disconnect()
+> at the
+> 3 server-side call sites in kexgsss.c"
+>
+> "The uninitialized recv_tok contains different stack residue depending on
+> compiler, optimization level, and flags."
+>
+> "Different compilers produce fundamentally different residue. Clang -O0
+> leaves
+> 0xfffbe600 with length 4. GCC -O2 -fno-stack-protector leaves a valid heap
+> address with length 127344. The 8-build matrix shows that recv_tok.value
+> ranges
+> from NULL to stack addresses to heap addresses to unmapped addresses."
+>
+>
+> Thanks,
+>
+> Marc.
+> --
+> Marc Deslauriers
+> Ubuntu Security Engineer     | http://www.ubuntu.com/
+> Canonical Ltd.               | http://www.canonical.com/
+>
 
----
 
-SECURITY-1453 / CVE-2019-10383
-Jenkins did not properly escape the update site URL in some status=20
-messages shown in the update center, resulting in a stored cross-site=20
-scripting vulnerability that is exploitable by administrators and affects=20
-other administrators.
+--=20
+Dmitry Belyavskiy
 
-
-SECURITY-1491 / CVE-2019-10384
-Jenkins allowed the creation of CSRF tokens without a corresponding web=20
-session ID. This is the result of an incomplete fix for SECURITY-626 in=20
-the 2019-07-17 security advisory. This allowed attackers able to obtain a=20
-CSRF token without associated session ID to implement CSRF attacks with=20
-the following constraints:
-
-* The token had to be created for the anonymous user (and could only be=20
-  used for actions the anonymous user can perform)
-* The victim=E2=80=99s IP address needed to remain unchanged (unless the pr=
-oxy=20
-  compatibility option was enabled)
-* The victim must not have a valid web session at the time of the attack
-
-
-SECURITY-1294 / CVE-2019-10390
-Splunk Plugin has a form validation HTTP endpoint used to validate a user-
-submitted Groovy script through compilation, which was not subject to=20
-sandbox protection. This allowed attackers with Overall/Read access to=20
-execute arbitrary code on the Jenkins master by applying AST transforming=20
-annotations such as @Grab to source code elements.
-
-
-SECURITY-1512 / CVE-2019-10391
-IBM Application Security on Cloud Plugin stores service passwords in job
-configurations.
-
-While the password is stored encrypted on disk, it was transmitted in=20
-plain text as part of the configuration form. This could result in=20
-exposure of the password through browser extensions, cross-site scripting=20
-vulnerabilities, and similar situations.
+--00000000000043cbf5064d480b39--
 
