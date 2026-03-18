@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1244" "Wednesday" "8" "November" "2017" "15:51:54" "+0900" "Akira Ajisaka" "aajisaka@apache.org" "<dfb21a5f-dc61-a3d4-93ff-333a902623f9@apache.org>" "31" "[oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability" nil nil nil "11" "2017110806:51:54" "[oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability" (number mark "U       aajisaka@apa Nov  8   31/1244  " thread-indent "\"[oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 6001 invoked by uid 550); 8 Nov 2017 10:41:07 -0000
+Received: (qmail 24350 invoked by uid 550); 18 Mar 2026 01:06:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,48 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9378 invoked from network); 8 Nov 2017 06:52:09 -0000
+x-ms-reactions: disallow
+Received: (qmail 24299 invoked from network); 18 Mar 2026 01:06:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1773795986; bh=+4+Phl+DuVsr8M5EICIL8/hSKTXam0yaQrvEONss/8s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Qqqk9BZgn78L/KFx2ZNr4n22p4NLLw9HLlkCQjs2+jqjPuRHoIexBzPECe6BhtEKM
+	 SzSrrdnJ1dJyQc5kNqjQKm5tSFHYJKE8LUrYn/Xmmj+5Z8+a4YR8Bbs3erOpGKG1dc
+	 NDcDvswKJHrf5q+oB1S6tC8ZEJVqwzUaxwYA6Lk4=
+Date: Tue, 17 Mar 2026 21:06:24 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
 To: oss-security@lists.openwall.com
-From: Akira Ajisaka <aajisaka@apache.org>
-Message-ID: <dfb21a5f-dc61-a3d4-93ff-333a902623f9@apache.org>
-Date: Wed, 8 Nov 2017 15:51:54 +0900
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
- Gecko/20100101 Thunderbird/52.4.0
+Cc: qsa@qualys.com
+Message-ID: <abn6kAVrLGHG6kpo@mertle>
+References: <20260317193301.GA1285@localhost.localdomain>
+ <CALx_OUC5-oQsU630zpth=pCShZ+cT6jEBTnpxnRDMHa3TYjkKg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2017-3166: Apache Hadoop Privilege escalation
- vulnerability
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CALx_OUC5-oQsU630zpth=pCShZ+cT6jEBTnpxnRDMHa3TYjkKg@mail.gmail.com>
+Subject: Re: [oss-security] snap-confine + systemd-tmpfiles = root
+ (CVE-2026-3888)
 
-CVE-2017-3166: Apache Hadoop Privilege escalation vulnerability
+On 2026-03-17 13:58:17, Michal Zalewski wrote:
+> Nice work... flashbacks from 2002
+> (https://lcamtuf.coredump.cx/tmp_paper.txt). It's frankly somewhat
+> mind-boggling that distros keep a world-writable /tmp this day and
+> age. Whatever questionable benefits it has, it also contributed to
+> plenty of pointless and easily avoidable vulns.
 
-Severity: Important
+It's required by POSIX which, funny enough, forbids /tmp from being
+used the way snap-confine is using it. I wouldn't expect either of
+these projects to care about POSIX, but the same description was
+copied & pasted into the FHS. And to its credit, systemd has a
+page full of documentation on how to avoid this exact problem.
 
-Vendor: The Apache Software Foundation
-
-Versions Affected:
-Hadoop 2.6.1+, 2.7.x before 2.7.4, 3.0.0-alpha before 3.0.0-alpha4
-
-Description:
-In a cluster where the YARN user has been granted access to all HDFS
-encryption keys, if a file in an encryption zone with access permissions
-that make it world readable is localized via YARN's localization mechanism,
-e.g. via the MapReduce distributed cache, that file will be stored
-in a world-readable location and shared freely with any application
-that requests to localize that file, no matter who the application owner
-is or whether that user should be allowed to access files from the
-target encryption zone.
-
-Mitigation:
-Users on 2.6.1+ and 2.7.x before 2.7.4 should upgrade to 2.7.4 or later
-Users on 3.0.0-alpha before 3.0.0-alpha4 should upgrade to 3.0.0-alpha4 or later
-
-Impact:
-Users may gain access to files that should be protected by HDFS
-transparent encryption if those files have world readable access
-permissions and are localized through YARN's localization mechanism
-in a cluster where YARN has been granted access to all HDFS encryption keys.
-
-Credit:
-This issue was discovered by Luke Herbert.
+1. https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap10.html
+2. https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch03s18.html
+3. https://systemd.io/TEMPORARY_DIRECTORIES/
