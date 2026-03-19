@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1344" "Wednesday" "5" "October" "2016" "10:09:07" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkKKPfO-w1iBcLMdLF=ZGLQG43jJQRxMYYUwGFm7Wx0WHA@mail.gmail.com>" "33" "Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" "^Date:" nil nil "10" "2016100517:09:07" "[oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems" (number mark "        taviso@googl Oct  5   33/1344  " thread-indent "\"Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems\"\n") "<CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>" ("<CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>" "<20161005184753.417dd846@pc1>" "<CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>" "<CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24523 invoked by uid 550); 5 Oct 2016 17:09:41 -0000
+Received: (qmail 25682 invoked by uid 550); 19 Mar 2026 16:46:38 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,76 +6,122 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24505 invoked from network); 5 Oct 2016 17:09:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=pA7l1CJDQ7acysH2LafstXO+//L9CX5kzTdsJZdHBW4=;
-        b=bC4IjOVEElba9NURhZj3Su65PtQiDjhNktl21jzI+XewP7pDhmgDVgFcO6znfI8H6H
-         /7BIzjXg4ZrUrJLPNS8X2pnKiMPrN3lAwXKXGnFVGyU8aCuyTuZcjvmOf4KTXeybhj0e
-         n7SiJCbEx/kXzazyyZG3mu3q2WtxhDdH7m2h/jJtazjciu52UQOQFA/ySJBr3794QW4U
-         wHtkszY40c1Ach1bZtgUoYHGfzrjZNDXT7gJrsXpyF68lOUVCGGjCQymMFTN9MJoIRpD
-         Rk7uPEei0em4WWyKsVdhne/uXj1hInS9m4XUTa9Hm3PkHkK1RLJDNeNqJwebj41DzWVr
-         cwbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=pA7l1CJDQ7acysH2LafstXO+//L9CX5kzTdsJZdHBW4=;
-        b=kgfovDy96kovixt7cSldUxHJvRHiRsV98dd+O+Pk26FbWPvZqmfzyn9TBUguskBcSN
-         V3JdK8sm5qyI0RTCRb4khXZlRPSVVXPSQ93JwF5KQgPKZxnGRh3vI+l9+enDY5fK189V
-         l1LRqnLJ6QniUL7uRurKCgHhxapIKYSAZNsLNNSAC1KFamjUxVKQQuf/0hrkNVDYM9gm
-         W2LebyllxMdnGDAtPxWvzBBuitLu/IvmzHBsMUc4Om+rNqCQOAMxC0n9A+GnSg9XcddA
-         EbOf6+8twnCb6eea2ZFhUfoaNVVdzA/JZnt475a3PUemPWUk9/xnCcyKuWeS+BkoWSbk
-         4/6Q==
-X-Gm-Message-State: AA6/9RnSb/V5YK6htq6EE1NX/8UjsKsMipG5n+f3WZD9bPutY2DvY8zFBhqKTzz6iw18bZrdFEit0RGosbiUbieI
-X-Received: by 10.176.1.140 with SMTP id 12mr6473595ual.1.1475687368391; Wed,
- 05 Oct 2016 10:09:28 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>
-References: <CAJ_zFk+f8Q-4UQt0gv6X_v_gSb12UVVVQ1knJBdZjpA=MQ-S5w@mail.gmail.com>
- <20161005184753.417dd846@pc1> <CAJ_zFk+YYbsEy0EjPU+sgi3pamZt7jqjBLFS8JOeWjmGM=1a_g@mail.gmail.com>
- <CAJ_zFkJWWkqpKthw6u_YZn4hOiT0jJRy97StVD9WUtoOGGyUHA@mail.gmail.com>
-Message-ID: <CAJ_zFkKKPfO-w1iBcLMdLF=ZGLQG43jJQRxMYYUwGFm7Wx0WHA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 5 Oct 2016 10:09:07 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request - multiple ghostscript -dSAFER sandbox problems
+x-ms-reactions: disallow
+Received: (qmail 20305 invoked from network); 19 Mar 2026 16:45:44 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1773938734; cv=none;
+        d=google.com; s=arc-20240605;
+        b=T49P/5dzkOP85FOid2dEZFiFm9P+itM0l5ME0vqoTED7YGU7yEtwxxHdcwhFi8aC/S
+         MbeV5ARRILYYLty2IeoqXo3w6xKdvmRRLHLAOP8yo4E+rSVP0Ws8flUcj6pILvh58K+P
+         B3ouoN3IoKvO/yV96cAJ+53GpBNubG62qMDX6UGGMR9SzbvnWreplicBDJP+3ZMzVrQt
+         RqS7BGbB5HaRlfzwgJl301f2vslVaCXiIl/ea3WSQ3UVX0RZRWV5KAYVIDFaX57qkq64
+         GxvdyJ1TTVicTcjLaXl3qxUah5T6CmVJRWZ5jnZdLHoiXXE1Xrd8rVyqH5aPtmPcTa1Q
+         QKig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=gTdOq3n0p8/a8lNvmVj3ye3d0xVUWTC2u3Zp3dwsERY=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=llsBvsajAL5AoGiYsJJVJOC5jH5GXBrUaOhu2fbqGY7I1mPLQOuWRCiLrUyS0JzGsX
+         l4/s8hy4HMzEaWAOL803gRRi/+JuwmXf15j9e32A8C7Zvu7Riwar2WMkMyDE0CHZh+tY
+         Vz+CJvYyiMHmFE+YxyWlcQHDotThcGEiYSHaBfA8VV4IZXN1heMTpnnDTR+luSfhEI4q
+         id/+RObXI8zWXF3BdrWe/MBh5vFZzYyhACFyk58RvKhO/PbcqK/93V9sEoqpFXjMZIXr
+         9xY1rE3JTm7thdNl7EtlbtRmAdGw2rjouZwXv67lMTKoH+EaMVxBI+dMP8zVoZ8pBfii
+         LqIg==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773938734; x=1774543534; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=gTdOq3n0p8/a8lNvmVj3ye3d0xVUWTC2u3Zp3dwsERY=;
+        b=e8ZuIrVyRdarpxbbs7/JaUcY8yz/Ch+LfcG/YHh9lC+2RDPWi96XobASIi/TA508gJ
+         vu8rj29XTYgUA/EBIPiayNooNqGMnF+x3nayojF9wxwZ9VuYFsVWv4nG3hK8Cxmg6iLi
+         vjLToBq2Cz4+HLJErZfNF6nHIEi0SoLrbKkaEG/ngJUekHn3sbHr7cJsr+lILgyXCSd1
+         39o9An3qPnt1h/dvvO2BTgUOwYgC0g1FImicrOOTvfb8zqijce6eiLATChU/5dA+RRkl
+         fvdkzzXK8Udp9xmdOc/PiWGGryuYAynPT6JP8X3QxjDSdJihBVHAbRmsFjwPvNsDM8kY
+         xs/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773938734; x=1774543534;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gTdOq3n0p8/a8lNvmVj3ye3d0xVUWTC2u3Zp3dwsERY=;
+        b=L8eZpasLFzT7u+AyC2zgGtldtBMenYK91RN9qCqlB2PpsBJPmbu3q6vBdTruOlRJVj
+         SBinMjfD09ljiv0smZJNvCkaYwpCcaNdBclxdqummvF5Fb/bjsec3edANKQw9PdiokOi
+         ylQAhjB8zuHckRrBf2vTaiOYqFl41vjx/nIDlPKrbB3r6cuK9fX4ODDZ6peHf0rSQwfz
+         nvTeu2JocHf3vt7OUIkmj+HVXRPOXrnAtOAgOOgDeonD42qVDZE4G+FaTAqoYwHFWddC
+         PVE0b+WkJzbhON/Kd1FDPrAwwrfuneqTjVQy6PrVXqJdvmM+xPtvL2iz3EyLFZVglQ7G
+         r6HA==
+X-Gm-Message-State: AOJu0Yx5vpN93JGpnUkyV4fjr5oljfXJLN/OjJLI3wotvx15K20AxcPU
+	eFlN4dbQuOfa7uMElSikLwAPyYflVhsJvv6k4snIb6NOcakwMfj0x3Brdr5XTJm22pUuBUGKMRq
+	BYDgdmhT0vYFRZk8z9GubvHHrRS5bGxrG60WJ
+X-Gm-Gg: ATEYQzzKQCsmCdhiLD4RYnkxL601OQQCQ6yXRQr0rPlFSuDAsqjX2Xt0NRlSuncSBKQ
+	xsypEfz4DOfthf3u9rO8tfRwKy7ND/rMOy2mupKd4dxH+ZamvgLAugtI4mhAWmesqW4hDLYrtGC
+	DqCIj7sSzB3bGuHVm+3XZjId0onsBqEUkaReY9JQ8TbQffnvBA21rWPsuTpCy3qxexUO3gPZ5tW
+	FDhLYL1rzRAOHLXe6rR+7FHcl7Yikk9sH4G1/H1jZzMCSeejQClJppl4abu/DiRB0QmIjdbh1x6
+	9v6HBQ==
+X-Received: by 2002:a05:7301:fa0f:b0:2c0:d9be:eb09 with SMTP id
+ 5a478bee46e88-2c1093d1a00mr28051eec.0.1773938732914; Thu, 19 Mar 2026
+ 09:45:32 -0700 (PDT)
+MIME-Version: 1.0
+From: Ali Raza <elirazamumtaz@gmail.com>
+Date: Thu, 19 Mar 2026 21:45:20 +0500
+X-Gm-Features: AaiRm51ynJsYZ1MzBfNqjk8pCNORnqEDP79o7CYmiGxQx1zpRSHiRy9VWio5oDI
+Message-ID: <CALrEReYUaSySTPo_N1qYv3ah_4MGf-sCTZbEEm6dkuVcHGtNVA@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000075cb9064d634c73"
+Subject: [oss-security] Off-by-one heap buffer overflow in libuv
 
-On Wed, Oct 5, 2016 at 10:04 AM, Tavis Ormandy <taviso@google.com> wrote:
-> On Wed, Oct 5, 2016 at 9:54 AM, Tavis Ormandy <taviso@google.com> wrote:
->> On Wed, Oct 5, 2016 at 9:47 AM, Hanno B=C3=B6ck <hanno@hboeck.de> wrote:
->>> On Wed, 5 Oct 2016 09:13:03 -0700
->>> Tavis Ormandy <taviso@google.com> wrote:
->>>
->>>> If you're using ImageMagick, I would recommend disabling the PS, EPS,
->>>> PDF and XPS coders in policy.xml. Applications like gimp, evince,
->>>> claws, and most other applications that generate thumbnails of PDF/PS
->>>> documents should probably not do so without a prompt (NOTE: A lot of
->>>> packages do this
->>>
->>> I was surprised to see evince in this list. It uses poppler for pdf and
->>> libspectre for postscript, so there seems to be no use of
->>> ghostscript (maybe in an older version).
->>> Also for claws the only use of ghostscript is in a plugin that's not
->>> enabled by default.
->>
->> It might be an old version but the version I have on RHEL7 and Ubuntu
->> LTS both invoke gs by default.
->>
->> $ evince --version
->> GNOME Document Viewer 3.14.2
->
-> Oops, I think I may be wrong about that, I just saw that some of my
-> test cases repro and assumed it was using ghostscript.
->
-> Maybe there are poppler issues as well, sigh.
->
+--000000000000075cb9064d634c73
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ahh, no, I was right - it's using libgs, and the same issues apply there.
+Last few days ago I found an off-by-one heap buffer overflow in libuv.
+Off-by-one NUL write past a heap buffer in `uv_utf16_to_wtf8()` when called
+from the Windows TTY line-read path. When a user types or pastes CJK
+characters into a Windows console application backed by libuv, a 1-byte
+out-of-bounds NUL write occurs if the read buffer size is divisible by 3.
 
-Tavis.
+I found this while reading through the TTY code. `uv_utf16_to_wtf8()` in
+src/idna.c unconditionally writes a NUL terminator at:
+```c
+*target++ =3D '\0';   // idna.c:550 -- writes at target[target_len] when
+buffer is full
+```
+
+The function's own comment says `*target_len_ptr` should be the length
+_excluding_ space for NUL. Two callers in util.c handle this correctly:
+```c
+utf8_len =3D *size_ptr - 1; /* Reserve space for NUL */    // util.c:126
+*size -=3D 1; /* Reserve space for NUL. */                   // util.c:1121
+```
+
+But the TTY line-read path passes the full buffer size without the
+subtraction:
+```c
+read_bytes =3D bytes;    // tty.c:558 =E2=80=94 should be bytes - 1
+uv_utf16_to_wtf8(utf16, read_chars,
+                 &handle->tty.rd.read_line_buffer.base,
+                 &read_bytes);
+```
+
+The overflow happens when all the input characters encode to exactly 3
+UTF-8 bytes each (BMP characters in U+0800=E2=80=93U+FFFF range, like CJK
+ideographs). The TTY code computes `chars =3D bytes / 3` (tty.c:540), so wh=
+en
+`bytes % 3 =3D=3D 0`, the worst-case output `chars * 3` equals `bytes` exac=
+tly,
+and the NUL terminator writes one byte past the buffer.
+
+The buffer size comes from the application's `alloc_cb`. libuv suggests
+8192 (not divisible by 3), but any application returning a size that's
+divisible by 3 hits this.
+
+Introduced in v1.47.0 (commit f3889085, PR #4021), still present on v1.x
+HEAD.
+
+
+Best
+
+Ali Raza (@locus-x64)
+
+--000000000000075cb9064d634c73--
