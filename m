@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["992" "Tuesday" "28" "August" "2018" "15:18:00" "+0200" "Greg KH" "greg@kroah.com" "<20180828131800.GA14585@kroah.com>" "25" "Re: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem." "^Cc:" nil nil "8" "2018082813:18:00" "[oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem." (number mark "        greg@kroah.c Aug 28   25/992   " thread-indent "\"Re: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash (possible privesc) in kernel crypto subsystem.\"\n") "<63a8aed5-d44a-a975-a2a3-932374b57a6c@redhat.com>" ("<CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>" "<20180828125140.GA14413@kroah.com>" "<63a8aed5-d44a-a975-a2a3-932374b57a6c@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15969 invoked by uid 550); 28 Aug 2018 13:18:21 -0000
+Received: (qmail 8136 invoked by uid 550); 19 Mar 2026 15:15:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,73 +6,93 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15948 invoked from network); 28 Aug 2018 13:18:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; bh=Wj/T2w8ScWgVtGy/Q5GXPHrUjl2eh8o1FRWTmkFd1wM=; b=2KZft4uc
-	Mj5nG/mmnFvrPpMT6Z1taHLofbA47moqDtaXdZNpkmjGw9NYDP4hou9ICXGG8ESd
-	5MBje0dM3TkMBMaPsC2217V5SDXhuVe9w9kYhTGxPnWK2srSek8EqieHbV+Lx/Xf
-	6M94NMIXxO2uktSJ6RguJlHRSLYRv993h2ozE2gf8jqi8ktQ6GpQMuE1K1AXledH
-	60PbZFiUhoZafdsfhvKVTaEu36KIJgsaZWJoUWByUjHYhtXtNCR6eLGspnWRDH0P
-	evRxx8X+jeLiDo+mbrzTSYUIwcnERPOW+XYLHHWB9sujVqXYzyqx9V7iPILQnnc6
-	+bVdKA+ftX0EKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; bh=Wj/T2w8ScWgVtGy/Q5GXPHrUjl2eh
-	8o1FRWTmkFd1wM=; b=HWwBiaIOcqwF0BK2DVdcnwVK7jv7L619c2JKbnpWV5Gdp
-	+Pn89++urRSk0diA/ZILNA6uYwvnhio5JHG3zEwZmq+1ecEs6/I4tnwLVIqZBmC6
-	gGU3TXXMA1u46gJMFSoRk9rbCtyd9DJ3WbG1QY2TlImIg9gCy2UegNtX6OQkPJ6Y
-	gNLOPlfxcfuEAUWrPhE1T7HQgW2TcImeZ88BEKgEgqArxk81GSX16B4+sW2Wm9ka
-	Vf1J78yNdsRTFLDRXWsI0jb8kP66av62yT66LvLBqX+z4SBj4yRJ1uMMBtGFRVW0
-	nXIz0JGli/DUDJdjAo3q5/1xjN/4ea6fJIJ25bteA==
-X-ME-Proxy: <xmx:j0uFWxveYttCYs5v5afkpSHzBK3Dyotc6AR5sqd_SUcP-wCTA8h0iw>
-    <xmx:j0uFW_WqWuTHpjZ6yv666l55SP-K5C04xBflSy8gaa1A9ITlXfye3A>
-    <xmx:j0uFW9UwW_M2Vh4s3e484MWG2GGS-CzDVUa5C9l25WFNtc7PUFhsJw>
-    <xmx:j0uFW5d3EiLIzs7l5Txq3kBY81kRiT4MvyhgpTcWW6_4R1lANDUiSQ>
-    <xmx:j0uFW058llNaSl2FcLjZzwk0duB2R0PNw3EihidpqhVT-t39Ce3ahw>
-    <xmx:j0uFW3Uts5nL9d9CfMlwfeUwnXQ0VqVgSG4YL367ilkeYgDRe8OqVA>
-X-ME-Sender: <xms:j0uFW2uoeBarz2etKt0CaR1OppXGn4DfuKKrFY4TafTjHWJprST-rA>
-Message-ID: <20180828131800.GA14585@kroah.com>
-References: <CALJHwhQyQQjyWxczrjtBgt8GSmHHarzfSDPPFKt3xY0Sk0Sd_g@mail.gmail.com>
- <20180828125140.GA14413@kroah.com>
- <63a8aed5-d44a-a975-a2a3-932374b57a6c@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <63a8aed5-d44a-a975-a2a3-932374b57a6c@redhat.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Cc: oss-security@lists.openwall.com
-Date: Tue, 28 Aug 2018 15:18:00 +0200
-From: Greg KH <greg@kroah.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: CVE-2018-14619 kernel: crash
- (possible privesc) in kernel crypto subsystem.
-To: Florian Weimer <fweimer@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 25611 invoked from network); 19 Mar 2026 11:06:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1773918378;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Cfz50ffSJcCTFbJs2wBs27spWTlFuCKhBbPe6hL9s4M=;
+	b=MDt/3EUNLW0Lo8YERejgfcp4nQHC8lOWIpLRT+1rvVePmKUhDhcZg5dM/aoW3kI3KF4Hxh
+	jA1x1v8iZT14Pi2RZsjlHGXkDEpzbEO6LNA0dYMly/uhVy9dLGCtioGYcWUcdk/RVG+10V
+	t/CRweGnScROoO9Q6YMdfTk5lX7+IztFMDz9kh5o1xAkQKHEfBLbYVchHpjfxrz8Y1fNw4
+	Fjcx8TANuODwp8nWOnyIkhiEjMi7t2okuxDyRE4zH6tLK9xgjFwvnKtGjZY71cTyjuylnr
+	c65uqdkwyKJ9QrTsaqL03L6AA1QfXjVTZ8AXwLAwSWp/C2fsyXavhayg8gY6Yg==
+MIME-Version: 1.0
+Date: Thu, 19 Mar 2026 08:06:17 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <f364e074ecc549033a42517c76c38366@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeikeehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggfffhvffukfigtgfgsehtjehjtddttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeefheetteeuveevlefghefgledvvdejudevudefhfffheekffduveduiedvheegffenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhdptghprghnrdhorhhgnecukfhppedutddrvddttddrvddtuddrkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedutddrvddttddrvddtuddrkedphhgvlhhopehrohhunhgutghusggvrdhgrghnughirdhnvghtpdhmrghilhhfrhhomhepthhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgpdhqihgupedvueevvedufefgueekkedpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheptghvvgdqrghnnhhouhhntggvsehsvggtuhhrihhthidrmhgvthgrtghprghnrdhorhhgpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+Subject: [oss-security] CVE-2006-10002: XML::Parser versions through 2.47 for Perl could
+ overflow the pre-allocated buffer size cause a heap corruption (double free or
+ corruption) and crashes
 
-On Tue, Aug 28, 2018 at 03:08:18PM +0200, Florian Weimer wrote:
-> On 08/28/2018 02:51 PM, Greg KH wrote:
-> > On Tue, Aug 28, 2018 at 04:49:14PM +1000, Wade Mealing wrote:
-> > > Gday,
-> > > 
-> > > Syzkaller/syzbot found a use-after-free bug in the cryptographic
-> > > subsystem of the Linux kernel [1], that can be used to panic the
-> > > system and possibly escalate privileges.
-> > 
-> > Are we seriously now going to be assigning cves to everything that
-> > syzbot finds?  If so, great, this is going to be fun!
-> > 
-> > If not, why this specific patch?  What makes it specia from the hundreds
-> > of other syzbot finds that have been fixed (and not fixed yet)?
-> 
-> > If RHEL is not exposed, why does Red Hat care about this?
-> 
-> We have shipped supported kernels with this vulnerability.
-> 
-> But the real reason why I want this fixed is that the Python 3 test suite
-> triggers this bug and panics some of our RPM builders. 8-/
+========================================================================
+CVE-2006-10002                                       CPAN Security Group
+========================================================================
 
-Heh, ok, fair enough, thanks for being honest :)
+         CVE ID:  CVE-2006-10002
+   Distribution:  XML-Parser
+       Versions:  through 2.47
 
-greg k-h
+       MetaCPAN:  https://metacpan.org/dist/XML-Parser
+       VCS Repo:  http://github.com/toddr/XML-Parser
+
+
+XML::Parser versions through 2.47 for Perl could overflow the
+pre-allocated buffer size cause a heap corruption (double free or
+corruption) and crashes
+
+Description
+-----------
+XML::Parser versions through 2.47 for Perl could overflow the
+pre-allocated buffer size cause a heap corruption (double free or
+corruption) and crashes.
+
+A :utf8 PerlIO layer, parse_stream() in Expat.xs could overflow the XML
+input buffer because Perl's read() returns decoded characters while
+SvPV() gives back multi-byte UTF-8 bytes that can exceed the
+pre-allocated buffer size. This can cause heap corruption (double free
+or corruption) and crashes.
+
+Problem types
+-------------
+- CWE-122 Heap-based Buffer Overflow
+- CWE-176 Improper Handling of Unicode Encoding
+
+Workarounds
+-----------
+Apply the patch that has been publicly available since 2006-06-13.
+
+
+Solutions
+---------
+Apply the patch that has been publicly available since 2006-06-13 or
+upgrade to version 2.48 or later when it is released.
+
+
+References
+----------
+https://rt.cpan.org/Ticket/Display.html?id=19859
+https://github.com/cpan-authors/XML-Parser/issues/64
+https://github.com/cpan-authors/XML-Parser/commit/6b291f4d260fc124a6ec80382b87a918f372bc6b.patch
+
+Timeline
+--------
+- 2006-06-13: Issue logged in Request Tracker for XML::Parser
+- 2006-08-11: Patch provided in Request Tracker for XML::Parser
+- 2019-09-24: Issue migrated to github issue tracker
+- 2019-09-24: Patch provided in github issue tracker
+- 2026-03-16: PR created and commit merged to git repo
+
