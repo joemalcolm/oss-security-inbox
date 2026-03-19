@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2669" "Monday" "1" "May" "2017" "11:41:10" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<528854.035164358-sendEmail@localhost>" "66" "[oss-security] libmad: heap-based buffer overflow in mad_bit_skip (bit.c)" nil nil nil "5" "2017050111:41:10" "[oss-security] libmad: heap-based buffer overflow in mad_bit_skip (bit.c)" (number mark "U       ago@gentoo.o May  1   66/2669  " thread-indent "\"[oss-security] libmad: heap-based buffer overflow in mad_bit_skip (bit.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3821 invoked by uid 550); 1 May 2017 11:41:29 -0000
+Received: (qmail 9687 invoked by uid 550); 19 Mar 2026 15:15:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3736 invoked from network); 1 May 2017 11:41:28 -0000
-Message-ID: <528854.035164358-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:41:10 +0000
+x-ms-reactions: disallow
+Received: (qmail 8010 invoked from network); 19 Mar 2026 11:09:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1773918566;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=n+UhggIvr7rxQ+sh7OAVe0029K77bNi8W0fNi+cEqJQ=;
+	b=gF3B5MXwzQqrlEHceQxZMfYWBu0fNZG22h4ox7cHTNmGT9Ifra+rm/3Fvx7e4prMGW8muJ
+	jem3JUD8eKDJ7GlIAyPjsAzjx6HatJV8bcrkPYyk36cDd8opRtbxikxXMt61TgpPu2uEGO
+	YdUyt0aH48kIuGDug7JUSLRGNFC+Dk8j5a6gJSV+5YrxzuQ7Xc9PxG0leIEY2bJCpe3Tld
+	iXVDy7al+KIZMn9qqndS3EQw9iv2/gOqczoCIQVanHtZpd8C6d5sybe2jCS9IhB+8HL5Zx
+	7fqRgXMoDwXTBxCMA/ptzSYID8mFl/Ja21/hXnpJnqfBe74SR3KaR9vHgTudZw==
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-869439.675546349"
-Subject: [oss-security] libmad: heap-based buffer overflow in mad_bit_skip (bit.c)
-
-------MIME delimiter for sendEmail-869439.675546349
-Content-Type: text/plain;
-        charset="UTF-8"
+Date: Thu, 19 Mar 2026 08:09:25 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <416c62dde44caead4f52aac488b5de30@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdeikeeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeggfffhvffukfigtgfgsehtjehjtddttddvnecuhfhrohhmpefvihhmohhthhihucfnvghgghgvuceothhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgqeenucggtffrrghtthgvrhhnpeefheetteeuveevlefghefgledvvdejudevudefhfffheekffduveduiedvheegffenucffohhmrghinhepmhgvthgrtghprghnrdhorhhgpdhgihhthhhusgdrtghomhdptghprghnrdhorhhgnecukfhppedutddrvddttddrvddtuddrkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedutddrvddttddrvddtuddrkedphhgvlhhopehrohhunhgutghusggvrdhgrghnughirdhnvghtpdhmrghilhhfrhhomhepthhimhhlvghgghgvsegtphgrnhhsvggtrdhorhhgpdhqihgupedvleejvdekfefgueffffdpmhhouggvpehsmhhtphhouhhtpdhnsggprhgtphhtthhopedvpdhrtghpthhtoheptghvvgdqrghnnhhouhhntggvsehsvggtuhhrihhthidrmhgvthgrtghprghnrdhorhhgpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+X-GND-State: clean
+X-GND-Score: -100
+Subject: [oss-security] CVE-2006-10003: XML::Parser versions through 2.47 for Perl has an
+ off-by-one heap buffer overflow in st_serial_stack
 
-Description:
-libmad stays for “M”peg “A”udio “D”ecoder library.
+========================================================================
+CVE-2006-10003                                       CPAN Security Group
+========================================================================
 
-There is an heap overflow discovered through madplay.
+         CVE ID:  CVE-2006-10003
+   Distribution:  XML-Parser
+       Versions:  through 2.47
 
-The complete ASan output:
-
-# madplay -v -i -o raw:out $FILE
-==12603==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61200000c09f at pc 0x7f72d6aa05c0 bp 0x7fff03e32040 sp 0x7fff03e32038
-READ of size 1 at 0x61200000c09f thread T0
-    #0 0x7f72d6aa05bf in mad_bit_skip /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/bit.c:130:21
-    #1 0x7f72d6b032ad in III_huffdecode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:953:3
-    #2 0x7f72d6b032ad in III_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2403
-    #3 0x7f72d6af1a8e in mad_layer_III /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/layer3.c:2648:13
-    #4 0x7f72d6ab584d in mad_frame_decode /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/frame.c:453:7
-    #5 0x7f72d6ada4e4 in run_sync /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:404:11
-    #6 0x7f72d6ad8c59 in mad_decoder_run /tmp/portage/media-libs/libmad-0.15.1b-r8/work/libmad-0.15.1b/decoder.c:557:12
-    #7 0x5277a1 in decode /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1862:12
-    #8 0x5277a1 in play_one /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:1951
-    #9 0x5277a1 in play_all /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2041
-    #10 0x5215a2 in player_run /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/player.c:2768:14
-    #11 0x50c46c in main /tmp/portage/media-sound/madplay-0.15.2b-r1/work/madplay-0.15.2b/madplay.c:816:7
-    #12 0x7f72d599d78f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #13 0x41aa78 in _init (/usr/bin/madplay+0x41aa78)
-
-Affected version:
-0.15.1b
-
-Fixed version:
-N/A
-
-Commit fix:
-N/A
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8374
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00211-libmad-heapoverflow-mad_bit_skip
-
-Timeline:
-2017-01-01: bug discovered and reported to upstream
-2017-04-30: blog post about the issue
-2017-05-01: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/30/libmad-heap-based-buffer-overflow-in-mad_bit_skip-bit-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+       MetaCPAN:  https://metacpan.org/dist/XML-Parser
+       VCS Repo:  http://github.com/toddr/XML-Parser
 
 
-------MIME delimiter for sendEmail-869439.675546349--
+XML::Parser versions through 2.47 for Perl has an off-by-one heap
+buffer overflow in st_serial_stack
+
+Description
+-----------
+XML::Parser versions through 2.47 for Perl has an off-by-one heap
+buffer overflow in st_serial_stack.
+
+In the case (stackptr == stacksize - 1), the stack will NOT be
+expanded. Then the new value will be written at location (++stackptr),
+which equals stacksize and therefore falls just outside the allocated
+buffer.
+
+The bug can be observed when parsing an XML file with very deep element
+nesting
+
+Problem types
+-------------
+- CWE-193 Off-by-one Error
+- CWE-122 Heap-based Buffer Overflow
+
+Workarounds
+-----------
+Apply the patch that has been publicly available since 2006-06-13.
+
+
+Solutions
+---------
+Apply the patch that has been publicly available since 2006-06-13 or
+upgrade to version 2.48 or later when it is released.
+
+
+References
+----------
+https://rt.cpan.org/Ticket/Display.html?id=19860
+https://github.com/cpan-authors/XML-Parser/issues/39
+https://github.com/cpan-authors/XML-Parser/commit/3eb9cc95420fa0c3f76947c4708962546bf27cfd.patch
+
+Timeline
+--------
+- 2006-06-13: Issue logged and patch provided in Request Tracker for
+   XML::Parser
+- 2019-09-23: Issue migrated to github issue tracker
+- 2019-09-24: Patch provided in github issue tracker
+- 2026-03-16: PR created and commit merged to git repo
 
