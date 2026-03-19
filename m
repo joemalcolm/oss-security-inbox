@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1257" "Wednesday" "28" "August" "2019" "23:46:31" "-0800" "Michael McNally" "mcnally@isc.org" nil "35" nil nil nil nil "8" nil nil (number mark "U       mcnally@isc. Aug 28   35/1257  " thread-indent "\"[oss-security] Three vulnerabilities in Kea DHCP disclosed by ISC, 28 August 2019\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Three vulnerabilities in Kea DHCP disclosed by ISC, 28 August 2019" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16081 invoked by uid 550); 29 Aug 2019 07:54:21 -0000
+Received: (qmail 17819 invoked by uid 550); 19 Mar 2026 15:21:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,216 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16058 invoked from network); 29 Aug 2019 07:54:20 -0000
-To: oss-security@lists.openwall.com
-From: Michael McNally <mcnally@isc.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=mcnally@isc.org; keydata=
- mQENBE4I0bcBCACzmGY5YZuAL8eArSrHAIn2Y6Io7ZddCw5AKYLzCA+Ydcy4DEmBuQGVB8HY
- ZW8WQxkh9AYiCevuLtT9TOswtIrWquuTNkgG/ZfnD15feH4XDAK+l6FwqHP0MNBQHgxIFYNz
- Kheg3Y+X89e8DdEzkTGWKy9wEGH2/9p620ZD+7fT4Nh5m7MKEvP3glJdLMm/pU6X3LucJqnC
- ZdCkTnzZwhgPnUg8zw8ZhFruWcyCPA/+OJWZtAVJNKWyWIOselm3bG/mqSV9Py2ku3JlelBQ
- 9tGbzeW+li8gidp7lZdNvR3L/HvEwkxMw1/FdouXfvBNqKo84HlSQ5dR4NvGXPlMuMqTABEB
- AAG0IU1pY2hhZWwgTWNOYWxseSA8bWNuYWxseUBpc2Mub3JnPokBOAQTAQIAIgUCTgjRtwIb
- LwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQlumWUDlMmawMMAf/YWPFtyqpgUtrPlkT
- tA/j9DxI/0iD9zU5Xw7JwsO4A9Y3N1Es4+MGLkJdEcO/zq9fELmp+WFtR3GJ0xmg3Wd2vMRl
- Qz8nJnZpue0kK7CuSk3HaIuiTBqpp2SO/02fwQNfaIZb6TNzjGSYPdFx7Ws+Wo6acV6cvrtG
- jLBbcW/kRwwUB+Jx+E/swPNljBMGv3CSnLMxdqfOhrSAuZZZtylZcT33cTI+pCy3a4HPweXL
- C8p2vxI9lpU7ceDt6xJsv4dOC27jl5ZbC9CrhfkNl6UA7mZLtODy6t53VteOoUYPugUrOLr7
- MmCnOCQ87Djr0xLCON956d1lin2XwhAfQLmhtbkBDQROCNG3AQgAx2Yb/WoYxmtBoTp77U1L
- QbcGIJFIVDG59wWgR4pFhVQO/4bhR64VV05w6m4OpmkFBGxcjAy3mKy7b2J4OEyrwGImzX+C
- 9iXpuXBckW03Afp+F7N7gYjPzEENMeS/6bGU4OofUl2KbJZ0y5g0EDPN+ScTDisLqn1UWE3e
- dKW5Ua3i6LBVS0FrbjZmv1rrn4lX2bsbVGnO376akxYmmujPxJauiP3pVc6UZ4zKH/pt/kUs
- mh+y3aSmRSQCVNVh3PXWIoGyCowUEQPeufbtm6YG1DkI9foHlEsUEo+vS1XPSNovmahVU+4B
- ZmlLdk3PDLuvkJa2dvRCpdicdEKbOUYDsQARAQABiQI+BBgBAgAJBQJOCNG3AhsuASkJEJbp
- llA5TJmswF0gBBkBAgAGBQJOCNG3AAoJEDsbHdIEoEIy3WoH/RyMNtHL5jrCHMXY85YtaPH4
- DtA9bzuIRStPaoxxPtn7ar85pI/qvQ6gsPHfG3XifFoB1nhFC4b575+KMvFe+0HTdv8GoVNd
- y6y/tM8xV2zDas6f47uwq62EQE+VuOMx/0FqKHf1QiVv7qeIUxrouftho//iYSAYoiom44NB
- 8eNzzN3FUDYeEDZ/5it31TUFCAiYZV8qlB16fLetZ/w2Q5WM1GT8L5NRHHO89RTExNmn+7su
- S2aUJa/VcXbzZclyuvMv3jI/oYT1FL4ahYvV0P+QJn3vV5HjgptLoV0G5Q+JdtfsrmkI8Azz
- u3z1TeZ2Ud7bS5tDmEE5dwt/urRIYCKaeQgAoE0jUs6y5yXbITifkMAIApw/Su7Ez+vfS/al
- +58SmuR36zgpxBYRd0v3jXBqtofH/hwPkognm5suSUCjnBRxGS4mAx739eB1M+vQKWXvnKo/
- 3LU51Sybvz8VTMDuF50Vg7XhSQ0CBR652zn7A60owGgYQ0vy42veK4zyimg1WT034HNloxvq
- 886NBz0PpBbiaMMZquoOKbEt6w3iilFEbwDo6BeBit6zrox04tuKKHnCVnH0xJ2LPN34H+z0
- 2RZJUh91/QiwAeuc3Z+Dvk/FYgSzcCTZuMP7irBtH+mNEfsnDW48jCIfqzIlnh6lTPLqMdAW
- ORJz9bl+BiRdRg2YZg==
-Message-ID: <d8544143-4a18-ef44-b4bd-b2efc1c3aa60@isc.org>
-Date: Wed, 28 Aug 2019 23:46:31 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.8.0
+x-ms-reactions: disallow
+Received: (qmail 18286 invoked from network); 19 Mar 2026 15:18:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773933504; x=1774538304; darn=lists.openwall.com;
+        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=OKe2dG9438PSvqrgXshRybclEzNR5panm8L3o4AoO5w=;
+        b=leU4sNY+i6QQfNwg6BCkMDr5Fp7OkJ8LorIXJGtxS1lGoeOhN0R9WY9IwIBEKCffq/
+         XaSNCGBDVpNYzQoCnewBQ0hfXzPl5z5NkDH3iiqnjxKlm1uiTt2Fo6WF7xocFWKAP61+
+         gbO6iFKSwfXxtaeMcJJ2GPNQemU8w4B0xzCfJBzJ+6u6FD5T7YW9H8bLL/BdM7tys5FD
+         2Zkf7/LqlqOrR7f99aV4QuncDBqDxNVtrJatRaKnPhPNsnLTQ9pvqs8ShE4v8tm8NPyT
+         bUo2aYLw9BENxoHILjhx6AeAp/My1p3rB9rHbV+Nb/HUSWEn5LTgDVJbreRPnCp4vClE
+         3OaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773933504; x=1774538304;
+        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OKe2dG9438PSvqrgXshRybclEzNR5panm8L3o4AoO5w=;
+        b=oIYEYiRoAEA1y3+qw+pDo7krHGz1jqCuouWTcoXrXqoWMj7KpqZjpK0NXukI2k9pJQ
+         2nZayp8W/01vXN05W8dyoOUZVoheD32MPrFfxucwjnGPMpkGlAsKvNUS+q7PML6KNffG
+         3D/s+LWG50OhJ56C5QaxUH5HDPcmuj/pGEMplWjA6y36dNy9LVCLu1Fs+XTQnDSVBu5L
+         M62e1XIn6Emhb2U/tJCW8rfOTEZDC/wcdH/ZUU/Lb+VV5qrq1vfUVFVu5hmV3/PLkwvB
+         u3Gs2O5/o8sguaChzBb9u8iZgqXw6gwsIi3Pael5WolP2XLmEBcOR8fpdNCJsFQeZOXR
+         nymw==
+X-Gm-Message-State: AOJu0YyldnYmKg7GmnYgpRHVSYoulybZL40yZPm27P//1aOdsH193ViM
+	YUj2X45ILYsMXjT5tFCWUP8vPazCuKziIY2SEsekbhPzRWIWqps7FfrPGidnsA==
+X-Gm-Gg: ATEYQzyo5S5zzGHayxoQDxIrfnGkfvVcOh0ETbAN2E4W/0j4W4psSe8KzePSxwlqleV
+	7dVCe+eG2/UiS1j8J0iTqc/LQhwz7JbeMxWiFCGMJH/NJHmpxJlGGEa+k4AjVriuPOjocLYRcFG
+	W6xGjxoux5QSNQjOHGlfxFY5Gpog9q4G7HUCPUYMXBghiiU4vTIbcsK3VeyQt15WgwhiESHA+2M
+	MN2LZxcMKVvWwla+0sUGu2WQCCXbYeKd6tdQdBty4G/ra8sbSS1giISJoHMWQhGXOQYl+va/Sfo
+	yWjfbrsIKLDBprlQjlLK88wUpyoGQlVZstx0gqT/Pr+TEjvqDuis90mskeP0oevhK4VhoYikNix
+	fom9ybGQkPgyOt3IwYj77ytiB/MWKHTfmwLLpDnxnQPi8H0fqi/QaL91lGfQvRKWANt5BDxIm22
+	DNEBI6n5KmdmOYbZ4mEXlEGx2j48zVGTz4aRkwB0o1J+Y=
+X-Received: by 2002:a05:6214:21e9:b0:89c:40b3:1093 with SMTP id 6a1803df08f44-89c6b5624bdmr84150876d6.3.1773933504060;
+        Thu, 19 Mar 2026 08:18:24 -0700 (PDT)
+Message-ID: <fd9bf76e-e03d-4614-9486-f17419d5241f@gmail.com>
+Date: Thu, 19 Mar 2026 11:18:21 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Three vulnerabilities in Kea DHCP disclosed by ISC, 28 August 2019
+To: oss-security@lists.openwall.com
+From: Brian Rosmaita <rosmaita.fossdev@gmail.com>
+Autocrypt: addr=rosmaita.fossdev@gmail.com; keydata=
+ xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCXILiqVhbN
+ K0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNvbT7CmQQTFgoAQQIb
+ AwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3WbKuySXhmU+g0xidi2IVsBQJm
+ MopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZgUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UN
+ TZOMAQC1iHgitzwRcwYq+dshM81IMk+YRviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UB
+ BQEBB0CrqLr6OGnCrupbdrDZJNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYh
+ BFtHo/3WbKuySXhmU+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4
+ BSetYDSb1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG
+ 82zlf/nJBg==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------HHOON1xEP0SevxrlhK4N3g0D"
+Subject: [oss-security] [OSSA-2026-004] Glance: Server-Side Request Forgery (SSRF)
+ vulnerabilities in OpenStack Glance image import functionality
+ (CVE-2026-pending)
 
-Earlier today (28 Aug 2019) ISC disclosed three vulnerabilities in our
-Kea DHCP software.
+--------------HHOON1xEP0SevxrlhK4N3g0D
+Content-Type: multipart/mixed; boundary="------------CtUYfJZ1wb2A0zhvrOsxAr7V";
+ protected-headers="v1"
+Message-ID: <fd9bf76e-e03d-4614-9486-f17419d5241f@gmail.com>
+Date: Thu, 19 Mar 2026 11:18:21 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Brian Rosmaita <rosmaita.fossdev@gmail.com>
+Subject: [OSSA-2026-004] Glance: Server-Side Request Forgery (SSRF)
+ vulnerabilities in OpenStack Glance image import functionality
+ (CVE-2026-pending)
+Autocrypt: addr=rosmaita.fossdev@gmail.com; keydata=
+ xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCXILiqVhbN
+ K0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNvbT7CmQQTFgoAQQIb
+ AwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3WbKuySXhmU+g0xidi2IVsBQJm
+ MopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZgUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UN
+ TZOMAQC1iHgitzwRcwYq+dshM81IMk+YRviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UB
+ BQEBB0CrqLr6OGnCrupbdrDZJNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYh
+ BFtHo/3WbKuySXhmU+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4
+ BSetYDSb1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG
+ 82zlf/nJBg==
 
-   CVE-2019-6472 affects the Kea DHCPv6 server, which can exit
-   with an assertion failure if the DHCPv6 server process receives
-   a request containing DUID value which is too large.
-   (https://kb.isc.org/docs/cve-2019-6474)
+--------------CtUYfJZ1wb2A0zhvrOsxAr7V
+Content-Type: multipart/mixed; boundary="------------ZYrTJcpKbKqHp36aCs5wQz8X"
 
-   CVE-2019-6473 affects the Kea DHCPv4 server, which can exit with
-   an assertion failure if it receives a packed containing a malformed
-   option.  (https://kb.isc.org/docs/cve-2019-6473)
+--------------ZYrTJcpKbKqHp36aCs5wQz8X
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-   CVE-2019-6474 can cause a condition where the server cannot be
-   restarted without manual operator intervention to correct a problem
-   that can be deliberately introduced into the stored leases.
-   CVE-2019-6474 can only affect servers which are using memfile
-   for lease storage.  (https://kb.isc.org/docs/cve-2019-6474)
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT0NCk9TU0EtMjAyNi0wMDQ6IFNlcnZlci1TaWRlIFJlcXVlc3QgRm9yZ2VyeSAo
+U1NSRikgdnVsbmVyYWJpbGl0aWVzIGluDQpPcGVuU3RhY2sgR2xhbmNlIGltYWdlIGltcG9ydCBm
+dW5jdGlvbmFsaXR5DQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQo6RGF0ZTogTWFyY2ggMTksIDIwMjYNCjpDVkU6
+IENWRS0yMDI2LXBlbmRpbmcNCg0KDQpBZmZlY3RzDQp+fn5+fn5+DQotIEdsYW5jZTogPDI5LjEu
+MSwgPj0zMC4wLjAgPDMwLjEuMSwgPT0zMS4wLjANCg0KDQpEZXNjcmlwdGlvbg0Kfn5+fn5+fn5+
+fn4NCkh5ZW9uZ2V1bl9KaSBvZiBPcGVuIHRoZSBXaW5kb3cgYW5kIEFiaGlzaGVrIEtla2FuZSBv
+ZiBSZWQgSGF0DQpyZXBvcnRlZCBtdWx0aXBsZSBTZXJ2ZXItU2lkZSBSZXF1ZXN0IEZvcmdlcnkg
+KFNTUkYpDQp2dWxuZXJhYmlsaXRpZXMgaW4gR2xhbmNlIGltYWdlIGltcG9ydC4gQnkgdXNlIG9m
+IEhUVFAgcmVkaXJlY3RzLA0KYW4gYXV0aGVudGljYXRlZCB1c2VyIGNhbiBieXBhc3MgVVJMIHZh
+bGlkYXRpb24gY2hlY2tzIGFuZA0KcmVkaXJlY3QgdG8gaW50ZXJuYWwgc2VydmljZXMuDQoNCk9u
+bHkgZ2xhbmNlIGltYWdlIGltcG9ydCBmdW5jdGlvbmFsaXR5IGlzIGFmZmVjdGVkLiBJbiBwYXJ0
+aWN1bGFyLA0KdGhlICd3ZWItZG93bmxvYWQnIGFuZCAnZ2xhbmNlLWRvd25sb2FkJyBpbXBvcnQg
+bWV0aG9kcyBhcmUNCnN1YmplY3QgdG8gdGhpcyB2dWxuZXJhYmlsaXR5LCBhcyBpcyB0aGUgb3B0
+aW9uYWwgKG5vdCBlbmFibGVkIGJ5DQpkZWZhdWx0KSAnb3ZmX3Byb2Nlc3MnIGltYWdlIGltcG9y
+dCBwbHVnaW4uICBXZSBkaXNjdXNzIGVhY2ggb2YNCnRoZSB2dWxuZXJhYmlsaXRpZXMgaW4gdHVy
+biBiZWxvdy4NCg0Kd2ViLWRvd25sb2FkIEltcG9ydCBNZXRob2QgU1NSRg0KLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLQ0KVGhlIHdlYi1kb3dubG9hZCBpbXBvcnQgbWV0aG9kIGhhcyB0
+d28gU1NSRiB2dWxuZXJhYmlsaXRpZXM6DQoNCkhUVFAgUmVkaXJlY3QgQnlwYXNzDQorKysrKysr
+KysrKysrKysrKysrKw0KVGhlIHdlYi1kb3dubG9hZCBpbXBvcnQgbWV0aG9kIGRpZCBub3QgdmFs
+aWRhdGUgcmVkaXJlY3QNCmRlc3RpbmF0aW9ucyB3aGVuIGZvbGxvd2luZyBIVFRQIHJlZGlyZWN0
+cy4gQW4gYXR0YWNrZXIgY291bGQNCnByb3ZpZGUgYW4gaW5pdGlhbCBVUkwgdGhhdCBwYXNzZWQg
+dmFsaWRhdGlvbiBidXQgcmVkaXJlY3RlZCB0byBhbg0KaW50ZXJuYWwgb3IgZGlzYWxsb3dlZCBy
+ZXNvdXJjZTsgdGhlIHJlZGlyZWN0ZWQgVVJMIHdhcyBub3QNCnN1YmplY3QgdG8gc2VjdXJpdHkg
+Y2hlY2tzLg0KDQpUaGlzIGlzIGZpeGVkIGJ5IGltcGxlbWVudGluZyBhIFNhZmVSZWRpcmVjdEhh
+bmRsZXIgdGhhdCB2YWxpZGF0ZXMNCnJlZGlyZWN0IGRlc3RpbmF0aW9ucyBiZWZvcmUgZm9sbG93
+aW5nIHRoZW0sIHVzaW5nIHNhbWUNCnZhbGlkYXRlX2ltcG9ydF91cmkoKSBjaGVja3MgYXMgdGhl
+IGluaXRpYWwgVVJMLg0KDQpJUCBBZGRyZXNzIEVuY29kaW5nIEJ5cGFzcw0KKysrKysrKysrKysr
+KysrKysrKysrKysrKysNClRoZSB3ZWItZG93bmxvYWQgaW1wb3J0IG1ldGhvZCBVUkwgdmFsaWRh
+dGlvbiBjb3VsZCBiZSBieXBhc3NlZCBieQ0KZW5jb2RpbmcgSVAgYWRkcmVzc2VzIGluIGFsdGVy
+bmF0aXZlIGZvcm1hdHMgKGRlY2ltYWwgaW50ZWdlciwNCmhleGFkZWNpbWFsLCBvY3RhbCkuICBG
+b3IgZXhhbXBsZSwgMTI3LjAuMC4xIGNvdWxkIGJlIGVuY29kZWQgYXMNCjIxMzA3MDY0MzMgKGRl
+Y2ltYWwpIG9yIDB4N2YwMDAwMDEgKGhleGFkZWNpbWFsKSB0byBieXBhc3MNCmJsYWNrbGlzdCBj
+aGVja3MuDQoNClRoaXMgaXMgZml4ZWQgYnkgaW1wbGVtZW50aW5nIGEgbm9ybWFsaXplX2hvc3Ru
+YW1lKCkgZnVuY3Rpb24gdGhhdA0KdXNlcyB0aGUgUHl0aG9uIHN0YW5kYXJkIGxpYnJhcnkgaXBh
+ZGRyZXNzIG1vZHVsZSB0byB2YWxpZGF0ZSBJUA0KYWRkcmVzc2VzLiBUaGUgaXBhZGRyZXNzIG1v
+ZHVsZSBvbmx5IGFjY2VwdHMgc3RhbmRhcmQNCmRvdHRlZC1kZWNpbWFsIG5vdGF0aW9uIGZvciBJ
+UHY0IGFuZCBzdGFuZGFyZCBmb3JtYXQgZm9yIElQdjYsDQphdXRvbWF0aWNhbGx5IHJlamVjdGlu
+ZyBhbGwgZW5jb2RlZCBmb3JtYXRzIChkZWNpbWFsLCBoZXhhZGVjaW1hbCwNCm9jdGFsKS4gQW55
+IGF0dGVtcHQgdG8gdXNlIGVuY29kZWQgSVAgZm9ybWF0cyBpcyByZWplY3RlZCwgdGhlcmVieQ0K
+cHJldmVudGluZyBTU1JGIGJ5cGFzcyBhdHRhY2tzLg0KDQpnbGFuY2UtZG93bmxvYWQgSW1wb3J0
+IE1ldGhvZCBTU1JGDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQpUaGUgZ2xh
+bmNlLWRvd25sb2FkIGltcG9ydCBtZXRob2QgaGFkIHJlZGlyZWN0IHZhbGlkYXRpb24gYnlwYXNz
+DQp2dWxuZXJhYmlsaXRpZXMgaW4gdHdvIHN0ZXBzIG9mIHRoZSBpbXBvcnQgZmxvdzoNCg0KSW1h
+Z2UgRGF0YSBEb3dubG9hZA0KKysrKysrKysrKysrKysrKysrKw0KV2hlbiBkb3dubG9hZGluZyBp
+bWFnZSBkYXRhIGZyb20gYSByZW1vdGUgR2xhbmNlIGVuZHBvaW50LA0KcmVkaXJlY3RzIHdlcmUg
+bm90IHZhbGlkYXRlZCwgYWxsb3dpbmcgYXR0YWNrZXJzIHRvIHJlZGlyZWN0IHRvDQppbnRlcm5h
+bCBzZXJ2aWNlcy4NCg0KTWV0YWRhdGEgRmV0Y2gNCisrKysrKysrKysrKysrDQpXaGVuIGZldGNo
+aW5nIGltYWdlIG1ldGFkYXRhIGZyb20gYSByZW1vdGUgR2xhbmNlIGVuZHBvaW50LA0KcmVkaXJl
+Y3RzIHdlcmUgbm90IHZhbGlkYXRlZCwgYWxsb3dpbmcgYXR0YWNrZXJzIHRvIHJlZGlyZWN0IHRv
+DQppbnRlcm5hbCBzZXJ2aWNlcy4NCg0KQm90aCBzdGVwcyBhcmUgZml4ZWQgYnkgdXNpbmcgdGhl
+IFNhZmVSZWRpcmVjdEhhbmRsZXIgZGVzY3JpYmVkDQplYXJsaWVyIHRvIHZhbGlkYXRlIHJlZGly
+ZWN0IGRlc3RpbmF0aW9ucyBiZWZvcmUgZm9sbG93aW5nIHRoZW0uDQoNCk9WRiBQcm9jZXNzaW5n
+IFNTUkYNCi0tLS0tLS0tLS0tLS0tLS0tLS0NClRoZSBPVkYgcHJvY2Vzc2luZyBmdW5jdGlvbmFs
+aXR5IGhhZCBjcml0aWNhbCBTU1JGIHZ1bG5lcmFiaWxpdHkNCndpdGggemVybyBwcm90ZWN0aW9u
+IC0gbm8gVVJJIHZhbGlkYXRpb24sIG5vIHJlZGlyZWN0IHZhbGlkYXRpb24sDQphbmQgbm8gSVAg
+bm9ybWFsaXphdGlvbi4gVGhlIGNvZGUgZGlyZWN0bHkgY2FsbGVkDQp1cmxsaWIucmVxdWVzdC51
+cmxvcGVuKHVyaSkgd2l0aG91dCBhbnkgdmFsaWRhdGlvbiBjaGVja3MuIFRoaXMgaXMNCmZpeGVk
+IGJ5IGFkZGluZyBVUkkgdmFsaWRhdGlvbiB1c2luZyB2YWxpZGF0ZV9pbXBvcnRfdXJpKCkgYW5k
+DQpyZWRpcmVjdCB2YWxpZGF0aW9uIHVzaW5nIFNhZmVSZWRpcmVjdEhhbmRsZXIuDQoNCg0KDQoN
+ClBhdGNoZXMNCn5+fn5+fn4NCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTgxMzAwICgy
+MDIzLjEvYW50ZWxvcGUpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk4MTI5OSAoMjAy
+NC4yL2RhbG1hdGlhbikNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTgxMjk4ICgyMDI1
+LjEvZXBveHkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk4MTI5NyAoMjAyNS4yL2Zs
+YW1pbmdvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85ODEyOTYgKDIwMjYuMS9nYXpw
+YWNobykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTgxMjk1ICgyMDI2LjIvaGliaXNj
+dXMpDQoNCg0KQ3JlZGl0cw0Kfn5+fn5+fg0KLSBIeWVvbmdldW5fSmkgZnJvbSBPcGVuIHRoZSBX
+aW5kb3cgKENWRS0yMDI2LXBlbmRpbmcpDQotIEFiaGlzaGVrIEtla2FuZSBmcm9tIFJlZCBIYXQg
+KENWRS0yMDI2LXBlbmRpbmcpDQoNCg0KUmVmZXJlbmNlcw0Kfn5+fn5+fn5+fg0KLSBodHRwczov
+L2xhdW5jaHBhZC5uZXQvYnVncy8yMTM4NjAyDQotIGh0dHBzOi8vbGF1bmNocGFkLm5ldC9idWdz
+LzIxMzg2NzINCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1Z3MvMjEzODY3NQ0KLSBodHRwOi8v
+Y3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjYtcGVuZGluZw0K
+DQoNCk5vdGVzDQp+fn5+fg0KLSBBIENWRSByZXF1ZXN0IHdhcyBmaWxlZCB3aXRoIE1JVFJFIG9u
+IDIwMjYtMDItMTYuDQotIFByZXJlbGVhc2VzIG9mIE9wZW5TdGFjayBzb2Z0d2FyZSBhcmUgbm90
+IG9mZmljaWFsIHByb2R1Y3Rpb24gcmVsZWFzZXMNCiAgIGFuZCBzbyBub3QgY292ZXJlZCBieSB0
+aGUgYWZmZWN0ZWQgdmVyc2lvbnMgbGlzdC4gVGhlIGZpcnN0IEdsYW5jZQ0KICAgcmVsZWFzZSBj
+YW5kaWRhdGUgZm9yIGdhenBhY2hvICgzMi4wLjAuMHJjMSkgaXMgdnVsbmVyYWJsZTsNCiAgIDMy
+LjAuMC4wcmMyIHdpbGwgY29udGFpbiB0aGUgZml4Lg0KLSBUaGUgdW5tYWludGFpbmVkLzIwMjMu
+MSBicmFuY2gsIGJlaW5nIHVubWFpbnRhaW5lZCwgd2lsbCByZWNlaXZlIG5vDQogICBuZXcgcG9p
+bnQgcmVsZWFzZXMsIGJ1dCBhIHBhdGNoIGZvciBpdCBpcyBwcm92aWRlZCBhcyBhIGNvdXJ0ZXN5
+Lg0KDQo=
 
-To correct these vulnerabilities new releases of Kea were issued:
+--------------ZYrTJcpKbKqHp36aCs5wQz8X
+Content-Type: application/pgp-keys; name="OpenPGP_0xE834C62762D8856C.asc"
+Content-Disposition: attachment; filename="OpenPGP_0xE834C62762D8856C.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-   -  Kea 1.6.0
-   -  Kea 1.5.0-P1
-   -  Kea 1.4.0-P2
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xjMEY01PKxYJKwYBBAHaRw8BAQdAOa0HRLMXltP2O0ib20YOTSGK8inPjlX/VmCX=0A=
+ILiqVhbNK0JyaWFuIFJvc21haXRhIDxyb3NtYWl0YS5mb3NzZGV2QGdtYWlsLmNv=0A=
+bT7CmQQTFgoAQQIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBFtHo/3W=0A=
+bKuySXhmU+g0xidi2IVsBQJmMopuBQkGp6JDAAoJEOg0xidi2IVsR7QBANnfDjqZ=0A=
+gUyZ29nFhnDTXAc/VTH5aJAbPB8Y79UNTZOMAQC1iHgitzwRcwYq+dshM81IMk+Y=0A=
+RviPxSYwx6EhI1jfBc44BGNNTysSCisGAQQBl1UBBQEBB0CrqLr6OGnCrupbdrDZ=0A=
+JNyXhLDE9vTMTybNd675csuAOgMBCAfCfgQYFgoAJgIbDBYhBFtHo/3WbKuySXhm=0A=
+U+g0xidi2IVsBQJmMoqnBQkGp6J8AAoJEOg0xidi2IVsjLoA/3QExwr4BSetYDSb=0A=
+1XLaIu1Uu0D0TVZn3XFJVpfK8QmJAP4mb+r6P1X4l6RA5djJUn4Y006iTptiCyJG=0A=
+82zlf/nJBg=3D=3D=0A=
+=3D071n=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-any of which can be downloaded via the ISC downloads page,
-https://www.isc.org/downloads.
+--------------ZYrTJcpKbKqHp36aCs5wQz8X--
 
-If you are a distributor of packages based on ISC's Kea DHCP
-software, you may consider the issue publicly disclosed and proceed
-with your own packages.
+--------------CtUYfJZ1wb2A0zhvrOsxAr7V--
 
-Sincerely,
+--------------HHOON1xEP0SevxrlhK4N3g0D
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Michael McNally
-ISC Security Officer
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQRbR6P91myrskl4ZlPoNMYnYtiFbAUCabwTvQUDAAAAAAAKCRDoNMYnYtiFbIQd
+AP42gsNYQbp71ya+cLEA8bk6GDewAqh6TiNXDxNYD8jQXwD/XPUxfVqa0ourmEsGAjUdPFBKFCAi
+TVCp2md81RixjAo=
+=flWF
+-----END PGP SIGNATURE-----
+
+--------------HHOON1xEP0SevxrlhK4N3g0D--
