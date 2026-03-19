@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["734" "Friday" "22" "July" "2016" "19:18:13" "+0000" "Tim Allison" "tallison@apache.org" "<1145026931.4188822.1469215093907.JavaMail.yahoo@mail.yahoo.com>" "16" "[oss-security] [CVE-2016-5000] XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example" nil nil nil "7" "2016072219:18:13" "[oss-security] [CVE-2016-5000] XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example" (number mark "U       tallison@apa Jul 22   16/734   " thread-indent "\"[oss-security] [CVE-2016-5000] XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example\"\n") "<1145026931.4188822.1469215093907.JavaMail.yahoo.ref@mail.yahoo.com>" ("<1145026931.4188822.1469215093907.JavaMail.yahoo.ref@mail.yahoo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7472 invoked by uid 550); 22 Jul 2016 19:18:39 -0000
+Received: (qmail 7273 invoked by uid 550); 19 Mar 2026 17:03:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,46 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7454 invoked from network); 22 Jul 2016 19:18:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1469215106; bh=79y7//rVyQyN+zKpcw8X5XOwqRUhJSngMFp6cQ56H0o=; h=Date:From:Reply-To:To:Subject:References:From:Subject; b=WcYK/Pu0DmvzHkF89Fow6aBTlPLgWEM5ivauqw9sxLm4bQ1Mq9wQW448pORfDEwonMC19k+URd3+JofJR+iMrCjoNK68XLqT1sB9QykOLB7PwaR7yFzJimw02Zk10JxGJ1Gzge5OD9JZUnMMbCTHLuF39iaJLYnq5/xgKi28pjuIWmXLW1py5PeRrTUzV+YfZvCFw+bT2UMcARte0uviSjRK5cCbTrY6lq1QN8wf7rCX5taoRguB+L/Ae10VG5m/nH5xZIs4BHjjp4E7YoETmSbuqe+2FOU9mhmzkFS+wzASkcJALVNP87W42rcQgYWVfy11ixpNiAizaddw81oGnw==
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 504219.58927.bm@omp1055.mail.bf1.yahoo.com
-X-YMail-OSG: ptQH_ycVM1mXiF0r69BK9NFwQm9a0RjIy2XzF1jQLGk_8qKxlt1sOIVs.CQ0FU.
- Qk8exnMkS3SgnjIeM.QwvoQs4zX_.3yl5ayqUXWloASGFpynLQRRVZYlaHmCTHWwEQDVN8IQT3Dz
- tjuzITpqvegYdVUiSRFmUfIB99BUCRBf1_GVJRpuSBF8olum2i0OroVAJX2NL0mYb8i68bD8jUCF
- JAFarzGtmugge6MJY3HIGEXT8bDFdmK7a75VFsEybk48xk.JzXomYijYKG71HOFNOmVHgfBv.g5I
- bVJ_fnWdO.WIMVCw7.tt4sDrV.kx3qx0Ttl_7zShnBq59vj3pbmUe56pk1QvlcfcLwSJ1T5BxuUM
- QrlfVWDHq8KVDI.a2o6B0FrpEymF5snkTGreo7qBw2m19t5dKwEWbGQ3C8AJjlH8FPs9ggM8O9WB
- y0MlcrI1XXyXjVf1Dn6Q0U7s571hx0MEa53td.YL3jS9XwvAygmV3nA_CtsNxQlf_h3sfrwL1nVP
- pWY2foH2_LvrJjvWHtSXDagXN
-Date: Fri, 22 Jul 2016 19:18:13 +0000 (UTC)
-From: Tim Allison <tallison@apache.org>
-To: "security@apache.org" <security@apache.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>, 
-	"bugtraq@securityfocus.com" <bugtraq@securityfocus.com>, 
-	"dev@poi.apache.org" <dev@poi.apache.org>, 
-	"user@poi.apache.org" <user@poi.apache.org>
-Message-ID: <1145026931.4188822.1469215093907.JavaMail.yahoo@mail.yahoo.com>
+x-ms-reactions: disallow
+Received: (qmail 7229 invoked from network); 19 Mar 2026 17:03:29 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1773939795; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MqCGp+wWgSpERAJxX7GKUb4UQdRtU0z6we5dwUZpRhU=;
+	b=adKQDN4XhV6qNF2DO98kGNKwRJjvn1p6mvQYAd5A9g+qKhmocVNZF8OBbWxj/JJs2UDFF/
+	OAxCIq34LeJUL/Aw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1773939795; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=MqCGp+wWgSpERAJxX7GKUb4UQdRtU0z6we5dwUZpRhU=;
+	b=KW1OSW6uoMeMPx14vxTtlZcPL/daGrJjdV6pUk8mQbuP0KRHrvwH1FYCC1KUNMpZjOo4QQ
+	tZOreFqa9/uoPwQN9MMKF7rXFUH1X5CWJV/6l/9bHoZgbQjb9bx5ascEfmD1MQu1Xx0BaB
+	njPpMMZbfiAYjz4NHyZSsWA0P/h6mi4iP6mE9MzY9ZVkmp2ozfPoPyQIMeaeMATSkt/Pyu
+	sHTwhV1gUmtrq0rlOl3q2xw47smxGhLlyvN/tQE5OmJ3qiv7uzG70ceJYvmtTA1sVblUWw
+	FOo06TPwCk7Xe/xNmCKxa88/bZ7X4108JKmJ86EUMWui7xOovq1kMGt3Q1z0Nw==
+Date: Thu, 19 Mar 2026 17:03:15 +0000
+From: Stuart Henderson <stu@spacehopper.org>
+To: oss-security@lists.openwall.com
+Message-ID: <abwsU8O48wEKqJb2@symphytum.spacehopper.org>
+References: <CALrEReYUaSySTPo_N1qYv3ah_4MGf-sCTZbEEm6dkuVcHGtNVA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-References: <1145026931.4188822.1469215093907.JavaMail.yahoo.ref@mail.yahoo.com>
-Subject: [oss-security] [CVE-2016-5000] XML External Entity (XXE) Vulnerability in Apache
- POI's XLSX2CSV Example
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALrEReYUaSySTPo_N1qYv3ah_4MGf-sCTZbEEm6dkuVcHGtNVA@mail.gmail.com>
+Subject: Re: [oss-security] Off-by-one heap buffer overflow in libuv
 
-CVE-2016-5000: XML External Entity (XXE) Vulnerability in Apache POI's XLSX2CSV Example 
+On 2026/03/19 21:45, Ali Raza wrote:
+> Last few days ago I found an off-by-one heap buffer overflow in libuv.
+> Off-by-one NUL write past a heap buffer in `uv_utf16_to_wtf8()` when called
+> from the Windows TTY line-read path. When a user types or pastes CJK
+> characters into a Windows console application backed by libuv, a 1-byte
+> out-of-bounds NUL write occurs if the read buffer size is divisible by 3.
+> 
+> I found this while reading through the TTY code. `uv_utf16_to_wtf8()` in
+> src/idna.c unconditionally writes a NUL terminator at:
+> ```c
+> *target++ = '\0';   // idna.c:550 -- writes at target[target_len] when
+> buffer is full
+> ```
+> 
+> The function's own comment says `*target_len_ptr` should be the length
+> _excluding_ space for NUL. Two callers in util.c handle this correctly:
+> ```c
+> utf8_len = *size_ptr - 1; /* Reserve space for NUL */    // util.c:126
+> *size -= 1; /* Reserve space for NUL. */                   // util.c:1121
+> ```
+> 
+> But the TTY line-read path passes the full buffer size without the
+> subtraction:
+> ```c
+> read_bytes = bytes;    // tty.c:558 — should be bytes - 1
+> uv_utf16_to_wtf8(utf16, read_chars,
+>                  &handle->tty.rd.read_line_buffer.base,
+>                  &read_bytes);
+> ```
+> 
+> The overflow happens when all the input characters encode to exactly 3
+> UTF-8 bytes each (BMP characters in U+0800–U+FFFF range, like CJK
+> ideographs). The TTY code computes `chars = bytes / 3` (tty.c:540), so when
+> `bytes % 3 == 0`, the worst-case output `chars * 3` equals `bytes` exactly,
+> and the NUL terminator writes one byte past the buffer.
+> 
+> The buffer size comes from the application's `alloc_cb`. libuv suggests
+> 8192 (not divisible by 3), but any application returning a size that's
+> divisible by 3 hits this.
+> 
+> Introduced in v1.47.0 (commit f3889085, PR #4021), still present on v1.x
+> HEAD.
 
-Severity: Important 
+Seems the fix for this was merged last week?
 
-Vendor: The Apache Software Foundation 
+https://github.com/libuv/libuv/commit/ec0ab5d77d32d836a60b024fa43d54ed3ce3ce87
 
-Versions Affected: POI 3.5-3.13 
-
-Description: 
-
-Apache POI's XLSX2CSV example uses Java's XML components to parse OpenXML files. Applications and users that use XLSX2CSV and accept such files from end-users are vulnerable to XML External Entity (XXE) attacks, which allow remote attackers to bypass security restrictions and read arbitrary files via a crafted OpenXML document that provides an XML external entity declaration in conjunction with an entity reference.
-
-Mitigation: Upgrade to 3.14 or higher 
-
-
-Credit: This issue was discovered by Mauro Gentile of Minded Security.
