@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5037" "Sunday" "25" "November" "2018" "09:57:37" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20181125095737.5f7e726d@computer>" "108" "[oss-security] catdoc: out of bounds heap read and nullpointer / segfault" "^Date:" nil nil "11" "2018112508:57:37" "[oss-security] catdoc: out of bounds heap read and nullpointer / segfault" (number mark "        hanno@hboeck Nov 25  108/5037  " thread-indent "\"[oss-security] catdoc: out of bounds heap read and nullpointer / segfault\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7230 invoked by uid 550); 25 Nov 2018 08:57:48 -0000
+Received: (qmail 3154 invoked by uid 550); 20 Mar 2026 19:37:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,122 +6,271 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7193 invoked from network); 25 Nov 2018 08:57:48 -0000
-Message-ID: <20181125095737.5f7e726d@computer>
-X-Mailer: Claws Mail 3.17.1 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="MP_/nOLAFkeCzVq/qB2wQx2xsNN"
-Date: Sun, 25 Nov 2018 09:57:37 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] catdoc: out of bounds heap read and nullpointer / segfault
+x-ms-reactions: disallow
+Received: (qmail 3127 invoked from network); 20 Mar 2026 19:37:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=corp-2025-04-25; bh=XGA5pTWTy0yjj90v
+	dqjnxNGvE0kbGd3tKpOywd79ILs=; b=bjN4yg7GC5wXcuCv9o/IMkR53Jn9iZQH
+	AalbrPhJDD2wWB8eyg42bl7qS4SEBbOO0AzZGG8IHG94GwQ3sx4PRQ6CfitGhtQN
+	+ats1KqygqhZStapbR41q+gjxFkJ97pHGItTD03VqiEzhYRCtQjAx9J1gsnnBVcL
+	2xkTCLyfxM12FwJIi8VFvpYHNZrNkNHA3lRef9olxoM8pZxK0Ja+YOBEbM1CpWWY
+	s7IFzscmOz+SNbRz33MN2m4Zj+FWCJmsBBd3VKr0S/g4SuOD9+wJ0OlHzY33MWK9
+	vetpE1M6bCgWLCbuduFer0N624zb9JR8up/znTxEPeFUPFPRQ7l5CA==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=h+NAdE+sQR4fhtAqB/beSAgCxxaDE1jd8DZpfc4o3c6PcDoDe8CJi7sO5MOVriGVeEFkzegiWgQQsSk9I5iZvk2PgK8wXzTqJobirSX3vUAYGMrTVc9YyzpJlK/xFObQhUYSKBUcvWaxauzk/8YDtvq8P/lSUxb1t9l2gIceCWKjDrcgJRqR4Myhpm9azc0AOpgPxe9qNbQ0ELresSjoTqYz0njb2/A8CfrA6xbhLE8Ugt+LxLvq0hcaZJQ74HNGXJyu5O+T3XSi2MQ97+gPqicn3yH7UzuCPWTdjjADMAJzoJ3KslFiKLkfintXCMOhRoITBghzpBt6JhziDflCqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XGA5pTWTy0yjj90vdqjnxNGvE0kbGd3tKpOywd79ILs=;
+ b=Nrp5Af9Bd0TpnFaJvkb9t8DFOEbLjN7E1wF6iBPA4moRA2UaH4JjkcCvAa6HSAqg0cU8n50HTAH2v5i4jALIEqQ2gmVjIIgmjAXie2CXAGso71hvmLnum6c7tmaXIZU4qw5sB6t9zdUmu4GwD6JHoPpV9E90ILYKAblYMgvRO7ul+o483tPnfgF+igDXQ9xiaIOD3GFa45Wbv/Uc+0yrGH8me0E91RmOhlnDKsgwtJlvIFRt4y1EJZSZ+/ozl7bgbLfhbypvuZ9h6uiWCeQdch4LcOj2Ys7DFjCsnYulIpXipEijpAZKNok72/jlx8oh82KcKQ310g2ATtRjD5D8ig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XGA5pTWTy0yjj90vdqjnxNGvE0kbGd3tKpOywd79ILs=;
+ b=BfupM3HYQB+yd+LhRSA3OCCt/qxEhGoC967idcijDRXjWJx7GphCg8+CyK9aybGs/C/QfZC3r6JsWbckwrPfp52vNR/DWTa1hJSTAmzlmz5UeYw/Gy8toY2faSX3POUuTZZsaMw8FVci/1l2H/ltOcYG2R7/ewIDXY0+r52B4RM=
+Message-ID: <e823e8a6-4523-470a-8b4c-78e29d201df4@oracle.com>
+Date: Fri, 20 Mar 2026 12:37:09 -0700
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 To: oss-security@lists.openwall.com
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ xsFNBGcZqbgBEADGfkmk3rqQd6paZBga2gCwDhRSXTCUNcZnwDJg//yVZplZH0ezpWPKzw4d
+ Hm01b6wGEQhlhwU5jTzSgAzEYzKr6kFhMH06HYp03kU26mVS6pUzcISqNHdcFWpkJbhUKvOR
+ e4/DxXQvoIGPz/Pxqh4lAqA6Xce2+lKnH6n1oXXOvpNk+aLENhb0fD/xTwoHXb3rgLBD73gX
+ 82EhWHVaqeotLM1phak+gw6N3X1e17UkDBlFMPiGfkmoLxTeOlH+2fcPCtT5kO6/iidkeG81
+ bAsNG2ukhKzEavhaBwHMTwre5TMEZuRphu9WY7tQR+osCHMqsEeXlIuCP8JV9848CmIzTpJo
+ kz/nCQEdPPpvwL+nymHi53KG3Gn2VM8oiSrST2h5b38qz2Dv+pNLOKBD01Htv5mICkqNdYSk
+ 2T2sqfCEC0/wNbp8ykn8zwRvYRhK4Upoj3KucFkXyhJRfXaDfCW9/PjlspQzbMR9F/jJIZf7
+ +lCdPYF7nEvBk2cwaEgYqT/yWxSmYtloMvYus9wbyVsnn356lQX0xF6/UK3NECC3LqFM42P2
+ VMydo1nYap2JkFa7jlkWcljiYJRieTJ3HP09Hw4KIlwKMcRGx+ejnj8m+k0GGJFwez8KiG0P
+ BcuT8ednZlNCAvfEwD0YYDR4YwsKKuf28Ymz2POcz7Mg4SzmTwARAQABzS5BbGFuIENvb3Bl
+ cnNtaXRoIDxhbGFuLmNvb3BlcnNtaXRoQG9yYWNsZS5jb20+wsGUBBMBCgA+FiEEOrKFIyxG
+ rkPY4ZL02rD3jqbn4tIFAmcZqbgCGwMFCQPCZwAFCwkIBwMFFQoJCAsFFgMCAQACHgUCF4AA
+ CgkQ2rD3jqbn4tJNyg//XkV+XJxxTCeJa4ahNtfAiE5vv7nsk4gbKK26n41X68wl/ted3uAN
+ GEgtXnRfXu+kTZEeuukpAAyuQSS0NNnRe5sXBOj7uWMynXJTuThBuCYaVpqmmixicIQsdCUQ
+ VrxZVxOkw4Lil6hrAp9gInEN31/11lcVb/M3/4qt7KgbL8Bqbr5hnlxKGgL9zU4ke7ii7XCC
+ lT3djgAu+dfLVYcEkZwqhNG+x1oz1dFmRsOJxChwk4ErtFmy9VwbvRdRJ6PPgqN//gE9rdrU
+ clmfSx5JzGzpkXK7xJAqvfFm9J+079j97joO5A1YBPDXO30V5SIpWoi3lGhW2gNptbKfzHL8
+ pfbIbrCAzYDklRN+n7aoEhV7nffXf3qMvDARb4MAfz6QH2S+j6oHrGcf6Uw/xfRnQe4bkQrk
+ st5p4Bf8PfZC6fflut7sGqFvQLaItPRgSdNMB8D5XwruztkeZkBo+Viziybd30/1mJC5n3LZ
+ pN5+cwpjXKpdJFQij5MBW0VyxoescceI8q9YUv7fMy1y9NoSBU0xngTyOuNSpBaUaxPpPHqm
+ aInEec/PSFu5wvtGiebKLLxU2l6t0ZuKNjn4zEIYSFDeY7/sMYkL4ij1upSF2zBnjnZGlrwN
+ HmzcFkqGMnU4X8s+Ua/1lU4BHnvNEyEEWZ7TrVnkylMJd7snmIi4g//OwU0EZxmpuAEQAL0c
+ za3pfhQG82EeJLPHpx6Wn27Lo1ulO7eb/n/SAAYtfh8p7fonQcoRjdOR0p/9fN62doHALoY1
+ ruekEUKEuXmHfFMXq/4hPfRSEaW74aQ0UQ4HgLHBCZprhpUBmF6CyOzXPWcrUluqgXHyl0kC
+ 2XYmrRorbfGPCydKr4CWhsYzwuWFlyGfg2yE2BjynSXd4KUUmtCgUH1R1RVe5y1vOayMNcfb
+ K4IqG3HDtznR7VHardJbPfeezYqwedT+650pr4G7//Srs4mNPZ+RuGRgw65Y9bVmiu0Y3a35
+ c9/BdeP4hVIEBboFbPigXAjWz9HryJGaAdBJZrGVWNy2LRdBSgQwdxc+MnvkJ9nYKHukHjBF
+ hRYMSv1KrsYCWCoq9U8AteSVdgheHSCTm6vW47FfnAwyttacdn7J3sSz97EmQUoYyBdEJU6C
+ Oo9/sFvnglq3hPC0zjJNb6r9ysmjKDTU0OGmUJpx9gTaRUDqTNK7VO8dqSMUV41v1cTS9GHe
+ GZMcnkr4heMkUIj5s3uinj58R9lyjya//vvl6kBwPYq+IK4F63On3v2SyR38Lyi9DjDHY5he
+ YoV+1nsasPvy99V07v1HgFcBvpEahPFU6oazEbxo+iXeGiqXgzBsTzsIggtZeO8Wh7D3QtuG
+ kXjoyjCnVOojWzypAnp7Eym7eRsus8WlABEBAAHCwXwEGAEKACYWIQQ6soUjLEauQ9jhkvTa
+ sPeOpufi0gUCZxmpuAIbDAUJA8JnAAAKCRDasPeOpufi0tGkD/oC2s0fzqDL5xw/SoadZ/8j
+ njAS0WjhOdeljybRjdxuccEGLh/f7Mv437J7lMmEfPLkb8NyzyHs1T/6IUk5DejZUdZvmlvi
+ t7BgHU7pL4XI3t0WSsv0xN2KEC0JoITMMcS2W4lJjXduIotSMyfFf1Z0qKy2ZaGi5ZWKBjbD
+ CYgEbKXgiz+uIL9AEi94kHtqDu8e3LUzVlDDvSpDiq3ZBENJXWwIhM2j5TgOkFNci7kZCy9A
+ Gm134h7JRZCLi55ZIkKbkkEEoTFcT1lqvA+W7jyQnjLjmETYHDyZJ327ofi0bBmldych/1Ql
+ SKjIyNcVDDS3vwOh1D5Ohb1dywj17ZDUIfIWdT67admhm1kAkT5rhFaskILXtZxblWkMMBcT
+ 54lhY9k4JIvtO9rCG+3a+tHly2NHBlpKDfTywcf3xwga5sPK3L6Zjo7zDK4lV53v6NUvlxn8
+ AoIcsVJfLDWGdFBkWC1sog+Bt9GmAoXULSNBq1x38nc8Fn8cL7Oi5DHJ8upyJyTt49jcNfI3
+ Kf0utAwUosbZx1qMwluwFW/qeVcMVYWgoAPPivQgGWuiYtlSwofq1AEKMBbiqD4b8qluS1tm
+ FqDFBELvBeJdJLfCxcCuJvmJVh5JtTSg1Q/1XO5f+nGhRvZrAmzPC1R9N7/9E+oc7zIAHImw
+ 5V9JclVH6u5Gug==
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH8P222CA0021.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:510:2d7::6) To CH3PR10MB6739.namprd10.prod.outlook.com
+ (2603:10b6:610:147::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR10MB6739:EE_|PH7PR10MB6355:EE_
+X-MS-Office365-Filtering-Correlation-Id: 86f686d5-2fca-401f-e435-08de86b814a9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info:
+	2648lOPmU5zdvCO3ia9+5Ld4/dTi+GcJQkbmptnK9NryP2VMWCYsto2C7lN5kUMvzl+WUdbuRCjmT944WqABV/k1/KrcpcP6aMXxazPq9o2KRpIj2BwTVRPGV9Go1hpl6IbTp9hfIv65fKiQ2EvwVZodqSUOQU7M8py8wSQd11XoztkkWXvqeSazMVlKdl12O+zBZQxicskqKmwLZbyl6jgqum0tZFMx8o2oay8f22zfeiCuoyXHL1hwAYiXzlhfWCLHKdBwkXiBWdVAVsr/bN5xehJQw94VujzKHjMhIGFxJgaQ5pcDcOjV3+sXid6xmLfxwJWTFy/uR7KeE0Vv+JeyBqidye9Ha8OJxge6JDqKVpYLIIF582uP2YM6X/ZnPBoZXW+Qt/y34jzl5pSyXhmnj9B26A0D0bZa/kZzmLBTM05qBAMQkI8WMGSBObBvSXtsBlZtiHcDUcplF5fTCG++P9K6JlxxGMb3iRjvyVCr0n+ktsFye48mscw1iwJIzIDU4KbtqTLDvgFa0hYu0AKUFUJxDIlelYF0MouVlh4M5BuUzuzE9tvZR1jSxQWfk+OMqKnUBZtNmTYVcQdyKgKQ7653gCQCm5IHWVwBpL+app9/h86j1ucZ4ukaI0x8pal9F4PpKCBiqi8yhZISvqiOJlAQut7EiBGsBXUSS4wDNd1FGYCv7EQpKS54Odu3
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR10MB6739.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(18002099003)(56012099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?OUdseHFzQ2lMZTNxU29GYU9jclFsSWlJdHdTL0w5N3FEdkF5dmlXTS8zeXpH?=
+ =?utf-8?B?QzNraGdxdXpLdW1RdU5MWHlWVlZ4QWlZNE1iNXZjUXRDNFp1bHhBeFUrTXFY?=
+ =?utf-8?B?QVFYRmt5L0tLbFV6eGluUEVjMjRKUWIwVGx4dFlaSUx5c0xUVGY3S1dTSXBF?=
+ =?utf-8?B?WWVhMkc3ZzFqNTAxSFZoeHVOajRubmdyRTExRkpvOGVVUXBDRHVoMG9IVHNh?=
+ =?utf-8?B?ZGozUzRCVU5PLzFJMDZ4NGRHOWNtSUJPTXYwY1hoNEFEdGVqS2wwdlNBMzVR?=
+ =?utf-8?B?cU1Sc2xWdkhrY2pyMWYwbUxmWW1VNFl3T212MVg5QXI5dzVmMEFkcEhXNFk5?=
+ =?utf-8?B?aHF4NVliS09KVDZuRjA4NXd5ZUg0cUxONVZlSEdqRUpXVXRPVnVnOHF3dGtT?=
+ =?utf-8?B?dDgzQnlMMkV4N01jMVpMWHc3VUJxNExlYTR1M2twd1pZMnFac3NhM2s3WGxj?=
+ =?utf-8?B?OE9hWm1ReEs5Wkxwa1I4TDN1V29GckFkWTd0UkJlWmhZcFVxeE1Bem8rSlZJ?=
+ =?utf-8?B?QU5Zd0pTN2hYd3AxaDRNRVdYSFYwZlQyaGxicFgyV0Nybkh0cnFwZmQ3WTlV?=
+ =?utf-8?B?QzIydkFOdUVpTWwyL01yMDlkb3FqdDZSK3BCN0k2UTFWbkN4YW5LMEx3cWdw?=
+ =?utf-8?B?TEVIS0UvaFlucTJ1TkJLdXRwcHdqa1YxVkdTb3d3WEVib2cvSzluZVlNamFu?=
+ =?utf-8?B?anhBSDNhTDI1ZzE0R2cxQUpacy9JUlRMZHFwQjVoOWE1R21PbXVEZnJXb2J2?=
+ =?utf-8?B?RjlEOGJucVdzK1lVeXRaa2JLbW5kS3RtemxiL1V1TzY1cGlEWmE4UktqT3Zr?=
+ =?utf-8?B?ZVdaeDR3L2dhaUdkZDdSL28wUkFGdjgvV2JEeVBJcFgvMWZlNVk5SlltR2py?=
+ =?utf-8?B?MVUyNVZrNEtubUI0T0pjV3BSQnhvTC9wM0w1NlgvQ09IQkZEM1UrSUt6N0tw?=
+ =?utf-8?B?R1NYdEM1TnVBV2w4VzZFUGpDaWNjTGovTmk3TUNLOTlocTJJQmRHZ3YxbjIr?=
+ =?utf-8?B?YXhYQTI2RFR1cUFiTXpjZDRRUWdYNzZKVkRyNkJsbG81dWU5aEdacGt2L2R4?=
+ =?utf-8?B?VWlaYVN0K1IxdkZJN09ReG04MzA3MUlvaVBYRkZYTEtPL0pySisyWGF2Lzk0?=
+ =?utf-8?B?MCt1ZTdTcXZaWnhNaENVNlFmbzVyWERNem9YTElKSkFJQzJOY0tjaisyeEhk?=
+ =?utf-8?B?T3JSOXU5bzZxRDRwTzhOckcvWGtnbm9qa2JiL1VKSDBhbTl0TXZkeUFWcXQ0?=
+ =?utf-8?B?cm1DK1FSN04zMlh0Qm8rQzRtZmZLTStQSndRekpEeWlBVzBlSmZWeTVWUE10?=
+ =?utf-8?B?UVVOSWdQK3JxZE41dWw3eTJhZkxaY3o5RElySkVSS3Q1R1RMd25nN0V6YXpN?=
+ =?utf-8?B?akQvaFNJT2NLN0EwTmltNmlEVGVJLzJtKzJwYmpJVDYrZlJPRXZiMU4xT3Vp?=
+ =?utf-8?B?U2Z1RXNDZVgybmE0L0NaT2JDc2xzS243UkpCdVRjM0pucnRhSlozWjBQM1RK?=
+ =?utf-8?B?WjJ4dmZKaTB1L1VuNTJmMVl1T29ITXdLSmVvOGd0cXZnay9jV1cwWnJLemli?=
+ =?utf-8?B?R1NHNEdZUGZkV0xobU05bVRKY2t5cU9UVDdDWmdFak43cmU0Y1RocmM3WkN6?=
+ =?utf-8?B?SCswZ0IyWWN4RlhvZk9DYjY5NnVSWCtmUk1kdnhGa3BFaFVXREkvNXM5MEVu?=
+ =?utf-8?B?dENTYmZMR0tsdmt2ejZYcnhySlNaZW5HNW9aZkc4ajZBd1AvMlB4SmVyenVS?=
+ =?utf-8?B?a2RyV1JHcCtHekUrTjRCcHdoTm05MENNY2tQRyttQW8wTER4RG9TV1ZxRys3?=
+ =?utf-8?B?WlowQWg4Z1ZVRis3WVVnN2p4czEvaHJ2MHorMGpiazFMQXpJc3A2TW5ERE1X?=
+ =?utf-8?B?c1lrUS8xajQyajF5WUVwV1dxQmNYaGhrTnpiQ0w3U1pnNzArU2NweVExNUdp?=
+ =?utf-8?B?aHNyMktsNzVQMnQ3SzRjZ3QrbTJTTDdSZE43Mzlrbm5DQkxHb0ZjdCtXeHZ1?=
+ =?utf-8?B?K3J2WEdwVnlTbGtCZzNsNXNYVVNpQVcwQUUwU3hVNVQxdVRISHB1UHBDb0dL?=
+ =?utf-8?B?Mkc5dEluU2lMMTJ2ZEtCTmhiQkVYNXg5VXo0K1FOS2hXNDMrZ0VibXhLajl4?=
+ =?utf-8?B?T1hVbTh2NEJXaVlTcGxkRzBDekZxVHBRczJMYUJVRk1aR0l4aGE0OWtSWDBp?=
+ =?utf-8?B?Yi8rQWMwVEcyN0FEWWZKS1NvMzYvcnlEczA5WHVVNWJnclBXOHUxcnNsVFB4?=
+ =?utf-8?B?SkdVN0F0U2U1TE41Z0pqOFZRWTNvUnJGV1d1eTBzTDVLSmJiQ3l6UWJ6REtV?=
+ =?utf-8?B?M0ViNjdrSHZMT25kL29IUERqRW1rYU5xQU9pV0FMc3JkTk9JQmE4M2haSTdZ?=
+ =?utf-8?Q?M0sIJAfWsfimHJbs=3D?=
+X-Exchange-RoutingPolicyChecked:
+	SLyrbL8XGVddiN7PYphOMqKt0P/JUJYi1Gq8TQgYSCmOwtRy7MC0DAYb5aA9O/4mUU/OL0QCYV86WSgMpE0po/vWh0u9JKBMN851D9+0Hkgb0sKIX7N4DKG0hLyQhFYXQMW9YDv3xwHq5/A51bVqfRtgSfEuU5u9wFrUmKRzHfXmqdFd/ZlmnckP7btZGOcd0TJz+CQ2qPu32VhoQ2uApuf60hEJ2NCOKdCP9Bvy38Plsn6cy3pEvr2c3Vo++uplvvKZQVjoI01j232sSURQLO6t34XJHerETedkAAClz+4LDx7zgvv9DQxVnGSHEmtdeDROCFcmKDb4aEt0Ah8i2Q==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	gDLgChpNL9XVHqRvXriTUNmDhuZAmx3M3j13swA7WXFejf3+hlAmTVygrcYklMfOvl+eCUBtVem6hJVsE0nA17bN9Xlqk9zuxWW3nOja+OMvEY1zXNbgEyl6hb61ZyLo4ZvWM+27rKqOgGxk3Qn2hXGQ6h68fX7BCKqogHaceVDXfQTaD1O9jC1A+ZPQd6OMEimRv5WHh6s6l2JocgfSuqkIRuaC1X+MrcJXfRzKSwer96JmiovBFdzzsI+bIYXGUaLOWdemgdW+8zAGtsf4jwN4XIG9v7lrCvny3GSpyNSqCyNRAdGnegMP7w6gbsf+uj3aSE0mLOS/3S9qhAgKl6CYxqhFybs4uNl52Vgg5nGV+TPR6LjKqhHSakvAWsz0a+zuppigOMOZuAKuvDiMTVggg6gs5cUDBfJQVUFIWERlvnJ4TcUencz0dwGV2B5vvwV+YRe1JY4+VWNemF3JNBeyZQgnK5fwv4YK11stAiefNkJpytCP81X47qNYUlJRTk0ojBQoda5Ke5waCxCt5M8QDg2cbzUKmMQ55bqTD0fss4xnn/OFaOrxbkWhQvCaawYWnEUxDr42hNvnk0TyGaGjqlph/CNsnNFDpk0YXWo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 86f686d5-2fca-401f-e435-08de86b814a9
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB6739.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2026 19:37:11.4239
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: azg4XFsksr/lKYNupPyxfILlYvdm8WYFSVrl72CWaNXURGTuwbvgbvD32n0llaxVVfQ6ruyCiuBc1LXzWJgZWl4i+KGinPfWXxHkyRWIdAQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6355
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-20_03,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 mlxlogscore=564 phishscore=0
+ suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
+ definitions=main-2603200159
+X-Authority-Analysis: v=2.4 cv=X5Vf6WTe c=1 sm=1 tr=0 ts=69bda1ec b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=NEAV23lmAAAA:8
+ a=V5kXHrdOSIyTsyMC9KIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDE1OSBTYWx0ZWRfXz3JW+hZwW4yx
+ jWkEFXRppcNERJdEUVai4NuNay8dbMv5yuwdgLmOqM6zYCk41eVwIt17qxprhV1gN9+m2tn/R97
+ zjY6ou754z7An1jI//vcLPEpGlxxHGwLGnr47/INje3EeCemo2SW89v7bze/rXxkOWoiAJgU3OM
+ K1p+CgOADUFIUR/N3bTiTKsZJ0Q3T5QIDBZSyhICm+B5gWh1BQnUfp0HP9e40QLMP2O4+3kufEM
+ ZQG+WqrsCPKRUOVij1iAiVRby5ZOi8TlIiU8jPFsyxeTKKgugA2lt5Mw9DpHtTqVf+3VgpBdI6q
+ WfAxlxJcC/NfkapOChPA22aPX7uwzJdAtyNI0xB0W6pZzU/+wadXMFHAl0yHQQbGKTIC72Gw6pf
+ etfJLvl7k01khejiLOKtxEXVYLqD3lndPVz8ClMEEdSiasyUIhaTJE4Gmza6gbcCoc4MNfNDPAn
+ wOfWh/WJymWNzLy66dA==
+X-Proofpoint-GUID: UU7RRREZp2LyHol1137UK-VpX7yZLinM
+X-Proofpoint-ORIG-GUID: UU7RRREZp2LyHol1137UK-VpX7yZLinM
+Subject: [oss-security] nghttp2 Denial of service: Assertion failure due to
+ the missing state validation
 
---MP_/nOLAFkeCzVq/qB2wQx2xsNN
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-
-I reported two memory safety bugs in the command line tool catdoc.
-However the mails to the developer bounced.
-
-The first is an out of bounds heap read, to detect it catdoc needs to
-be compiled with address sanitizer (test it with -fsanitize=3Daddress in
-CFLAGS).
-
-The second is a null pointer and will just crash catdoc.
-
-
-ASAN crash traces:
-
-=3D=3D4036=3D=3DERROR: AddressSanitizer: heap-buffer-overflow on address 0x=
-6020000015d1 at pc 0x00000050560c bp 0x7ffe3d0b7d40 sp 0x7ffe3d0b7d38
-READ of size 1 at 0x6020000015d1 thread T0
-    #0 0x50560b in getlong /f/catdoc/catdoc-0.95/src/numutils.c:22:37
-    #1 0x506c7d in ole_init /f/catdoc/catdoc-0.95/src/ole.c:254:18
-    #2 0x4fa2df in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:58:17
-    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
-    #4 0x7fa1362ae4ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
-    #5 0x41b489 in _start (/r/catdoc/catdoc+0x41b489)
-
-0x6020000015d1 is located 0 bytes to the right of 1-byte region [0x60200000=
-15d0,0x6020000015d1)
-allocated by thread T0 here:
-    #0 0x4c5973 in malloc (/r/catdoc/catdoc+0x4c5973)
-    #1 0x505e70 in ole_init /f/catdoc/catdoc-0.95/src/ole.c:119:10
-    #2 0x4fa2df in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:58:17
-    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
-    #4 0x7fa1362ae4ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
-
-
-
-And:
-
-=3D=3D6151=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x00000000=
-0020 (pc 0x000000509f93 bp 0x0c18000000d1 sp 0x7fff4819ed80 T0)
-=3D=3D6151=3D=3DThe signal is caused by a READ memory access.
-=3D=3D6151=3D=3DHint: address points to the zero page.
-    #0 0x509f92 in calcFileBlockOffset /f/catdoc/catdoc-0.95/src/ole.c
-    #1 0x509f92 in ole_read /f/catdoc/catdoc-0.95/src/ole.c:493
-    #2 0x4fa3ec in analyze_format /f/catdoc/catdoc-0.95/src/analyze.c:64:14
-    #3 0x4f6bec in main /f/catdoc/catdoc-0.95/src/catdoc.c:180:6
-    #4 0x7f70645a64ea in __libc_start_main (/lib64/libc.so.6+0x244ea)
-    #5 0x41b489 in _start (/r/catdoc/catdoc+0x41b489)
-
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
-
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
-
---MP_/nOLAFkeCzVq/qB2wQx2xsNN
-Content-Type: application/zip
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=catdoc-bug-samples.zip
-
-UEsDBBQAAAAIABxMeU1dfGEvGwAAAAECAAAXABwAY2F0ZG9jLW9vYi1vbGVf
-aW5pdC5kb2NVVAkAAzde+lvpXvpbdXgLAAEEAAAAAAQAAAAAu3Be8MHCjVIP
-DbACBlQeFCAJ/cfBHgVDBQAAUEsDBBQAAAAIAG9MeU3pYtl/ggUAAAAkAAAv
-ABwAY2F0ZG9jLXNlZ2ZhdWx0LW51bGxwdHItY2FsY0ZpbGVCbG9ja09mZnNl
-dC5kb2NVVAkAA9Fe+ls+X/pbdXgLAAEEAAAAAAQAAAAA7ZldTFxFFMfP7Be7
-lMKyIEWKsqVbqLSlfFgKWpWvAm7lq1BR22oWFuxadhcXamnig7Ex8UFjjWmN
-iYnR4Isag5r44IuGRH0wVR/sQ99q9MXEh2p8sImw/Z+Ze2FZvu6uCK25f/Lj
-zp29M+fMzLlz58798Yfca+9+UvQzJel+stJc3EWOhDwBcvQTN5FFy5uLx+N6
-dtzUbaVZ7chjaMP42QGPeQZwAhfIBFtAFtgKsrUxd2tHU7evjlIUfxPkpcMU
-wTFG55KnglVVgIhJrM9ImTmD1xmVaT99+/r8ner9z88Bvv9zgQfkgXxwB3FM
-EG0DheBOUAS2g2Jwl2avBEevli7FcSfwgV2gDJSD3eAeUAH2gL1gH6gE+0EV
-qAY1oBbcCw6AOnAQ1IMGcB/x84zoEHgAPAgeAo2gCTSDFtAKDoM20A46wMPA
-D46AR0An6ALdoAf0gqOgD/SDY+BRMAAeA49rbTxOt+ZcKeCVNVPFkMNlkTHx
-lQqNNh6/ztBQLDoeHZnwDkRjwX2t0dNnwsORCRkTnX2c1xodkpHA6UqcyN8r
-6+mvhk+fXTEE5yXUMiJteRB1majl+MLKhJ5AaP4Rt/ARsdyF+S1GYQrQKKmY
-rvaJCp+opeYK6vZbqRe0+Asp3JFhGwdHOizU47dRpMPmnABP+u0UwO9PdTTY
-VvWljeZKBFkEx08GomcYNoMUwrz6NPGdk0N5U9cpf2qSHD6Bu6Pb74BxB4wX
-S4PKUDHiuNnN9XA8uxBVwzQpZ+hmtCQo52c3/jzBfCFQI+67qVeI76b9biE8
-wou0DbEaonGU4u7NJa47A/FeinpLRaP0rwXejeGKEGqNSP88qG1S+pcF/zyy
-U+qcgoty+086RZlsYY3gO9SOeyMCf9g7PsuTpZQlVpb0Q04WMrq46wudaobR
-0/rqMks7WtwJGT1qtOS/9oILwkg49KM5Ybg0ju7owvEsjvyI4+HnRh5APUbi
-rQ/dHKZBlOSgqS0zZr0JgRbSAi0ESyJ37TI8UIPwNIZy+mB4YX9Y1jVioE0H
-HbBkwLtjuJprjMoHPaYug+W65AIhKr1ii+xHK/x4Tp4FENwB6St6Df0k3GtW
-uGKbVe2L+7HXt95eNiMshfNVzG5fIxROyco7Z05/y3BaWeMo2SLP+NxG52UI
-LM7V/Wp3yGeZjHdT6ctTtf51Jt3tXoODlLInL6RaQGkuzmG0dEri0Lr20jt/
-3ug+5f7wdSftKf/sKvv0PKlZk3/n9Q2vzxpJrdF4fcLByesOnkCDpNZrY6S6
-4bdZoru1dLVWji5+wUVVWhOnY+9999rl8z/JZ8X037++xenl/P/9fSE6vS70
-6XXPlypLdZ02w2dTSyA6GojUL9OhLlsBlWcvnGctvWSR4vEc+fQQWtqRkE7W
-y/L/Jc3nSwZmEL4mf+3L5vWBUB5/LhZ7/gvOe/7VmkZpxtAjZ6lqMRaDCfa/
-F2pVbur/qRmx9p3zX8hCVzfBqilTpm4d8VvuKP544X1WvmmPYt2xdbPdMrVR
-4jUeKNDWe/TPZjtkaiPkqHOKk05h1df5s5vtkKmNltwB2UWHqqhk+sVK7/Q3
-TTumI7ZSsPNCxOYDtT1Eu2soe5WX6ZXefznHcuXylbcrt7vfeBPvv3tvfMz7
-8/akvBOkvjPo2zFuWnjXXSnf1ILW8/sf93PyN4Tlylh5t2SbSgtqkVuZY9RN
-g/RMyv57MKpskTd15C6zQemWBOyOYg2TrjJhne1aU7DP/uo7DdXUTwG0PF0f
-sjX7uoyUYV8valvvduqjM+j/sNwePSf39Efmv5gsfB1YSU7Y178ZGrXPe1Af
-aekBaStIrTgOSU+Gte1pYypKo/07gL7vZF9iObX+qE/DPn+XMt7CtZWq/cTv
-vzcBUEsBAh4DFAAAAAgAHEx5TV18YS8bAAAAAQIAABcAGAAAAAAAAAAAAICB
-AAAAAGNhdGRvYy1vb2Itb2xlX2luaXQuZG9jVVQFAAM3XvpbdXgLAAEEAAAA
-AAQAAAAAUEsBAh4DFAAAAAgAb0x5Teli2X+CBQAAACQAAC8AGAAAAAAAAAAA
-AICBbAAAAGNhdGRvYy1zZWdmYXVsdC1udWxscHRyLWNhbGNGaWxlQmxvY2tP
-ZmZzZXQuZG9jVVQFAAPRXvpbdXgLAAEEAAAAAAQAAAAAUEsFBgAAAAACAAIA
-0gAAAFcGAAAAAA==
-
---MP_/nOLAFkeCzVq/qB2wQx2xsNN--
+https://github.com/nghttp2/nghttp2/security/advisories/GHSA-6933-cjhr-5qg6
+advises:
+> 
+> Impact
+> ------
+> nghttp2 library stops reading the incoming data when user facing
+> public API nghttp2_session_terminate_session or
+> nghttp2_session_terminate_session2 is called by the application.
+> They might be called internally by the library when it detects the
+> situation that is subject to connection error.
+> 
+> Due to the missing internal state validation, the library keeps
+> reading the rest of the data after one of those APIs is called. Then
+> receiving a malformed frame that causes FRAME_SIZE_ERROR causes
+> assertion failure.
+> 
+> nghttp2_session_terminate_session and
+> nghttp2_session_terminate_session2 are used interchangeably in the
+> rest of this document.
+> 
+> The detailed execution paths that lead to assertion failure are:
+> 
+>   - nghttp2_session_terminate_session is called from
+>     nghttp2_on_invalid_frame_recv_callback when processing incoming
+>     ALTSVC (RFC 7838) frame, and then a malformed frame that causes
+>     FRAME_SIZE_ERROR is received.
+> 
+>   - nghttp2_session_terminate_session is called from
+>     nghttp2_on_frame_recv_callback when processing PRIORITY_UPDATE,
+>     ALTSVC, or user-defined extension frame, and then a malformed frame
+>     that causes FRAME_SIZE_ERROR is received.
+> 
+>   - nghttp2_session_terminate_session is called from
+>     nghttp2_on_extension_chunk_recv_callback when processing
+>     user-defined extension frame, and then a malformed frame that causes
+>     FRAME_SIZE_ERROR is received.
+> 
+>   - nghttp2_session_terminate_session is called from
+>     nghttp2_unpack_extension_callback when processing user-defined
+>     extension frame, and then a malformed frame that causes
+>     FRAME_SIZE_ERROR is received.
+> 
+>   - The malformed PRIORITY_UPDATE frame (e.g., stream_id == 0) is
+>     received, and then a malformed frame that causes FRAME_SIZE_ERROR is
+>     received.
+> 
+> For PRIORITY_UPDATE and ALTSVC frames, they must be explicitly enabled
+> via nghttp2_option_set_builtin_recv_extension_type to be affected.
+> 
+> For user-defined extension frames, they must be explicitly enabled via
+> nghttp2_option_set_user_recv_extension_type to be affected.
+> 
+> For the builds that disable assert macro (e.g, -DNDEBUG), it does
+> not hit assertion failure, but it might continue reading incoming
+> data, which itself does not cause any vulnerability as far as we know.
+> We still strongly encourage to apply the patch for those builds as
+> well.
+> 
+> The reporter found the cases where ALTSVC is involved. The other
+> cases have been investigated and discovered by the nghttp2 development
+> team.
+> 
+> Patches
+> -------
+> nghttp2 v1.68.1 adds missing state validation to avoid assertion
+> failure.
+> 
+> Workarounds
+> -----------
+> There is no workaround.
+> 
+> References
+> ----------
+> https://github.com/nghttp2/nghttp2/commit/5c7df8fa815ac1004d9ecb9d1f7595c4d37f46e1
+> fixes this vulnerability.
+> 
+> Severity
+> --------
+> High
+> 7.5 / 10
+> CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+> 
+> CVE ID
+> ------
+> CVE-2026-27135
+> 
+> Credits
+> -------
+> @AndrewMohawk
