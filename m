@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["9316" "Wednesday" "27" "May" "2020" "00:12:59" "-0600" "Damien Miller" "djm@openbsd.org" "<9739d4a6516e888a@openbsd.org>" "241" "[oss-security] Announce: OpenSSH 8.3 released" nil nil nil "5" "2020052706:12:59" "[oss-security] Announce: OpenSSH 8.3 released" (number mark "U       djm@openbsd. May 27  241/9316  " thread-indent "\"[oss-security] Announce: OpenSSH 8.3 released\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Announce: OpenSSH 8.3 released" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13508 invoked by uid 550); 27 May 2020 06:13:13 -0000
+Received: (qmail 3656 invoked by uid 550); 21 Mar 2026 20:20:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,251 +7,93 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13469 invoked from network); 27 May 2020 06:13:12 -0000
-From: Damien Miller <djm@openbsd.org>
-Date: Wed, 27 May 2020 00:12:59 -0600 (MDT)
+x-ms-reactions: disallow
+Received: (qmail 14016 invoked from network); 21 Mar 2026 20:16:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=risingedge.co.za; s=xneelo; h=Content-Transfer-Encoding:MIME-Version:
+	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:reply-to:sender:bcc
+	:content-type; bh=WK5+9O6qiTAcA0DGjHi56HfKyN9xcK8pfMwTRLUTWh4=; b=Xtm3oIdFeEm
+	pDU0XIGtMnQkc8NFTuWrxLWm2x6sIw2pVq9jrKvZQ8KRZ0TMZo4rA8GipO07Iayz9E06AwQLiCbLW
+	sfjBDnQoAb8x2aQAb+YTmPpYcSifdTqDemElFrJIgugC8hGQfKg5MDl1b+6iAWwug+Fa0QvCFvxpL
+	Kh45/jqUYwpnlHkMFE+ge+dPcVgAL4pQGiO+eJ5TyZai7tB+OqHG+9hx0AZ52TY86rUo/Rj0SC48Q
+	Qw1G8DS4TuyKYY8zE2rCvzpyKJp+Js5OuY6lNpK3yWwB2HSQE+o5VnbfPB8nVMSQoRwv0oVhAxYc3
+	Y3ZQuUuvdemFzDapRs9sXOw==;
+From: Justin Swartz <justin.swartz@risingedge.co.za>
 To: oss-security@lists.openwall.com
-Message-ID: <9739d4a6516e888a@openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 8.3 released
+Cc: justin.swartz@risingedge.co.za
+Date: Sat, 21 Mar 2026 22:16:52 +0200
+Message-Id: <20260321201652.9287-1-justin.swartz@risingedge.co.za>
+In-Reply-To: <20260321180013.GA20708@openwall.com>
+References: <EEDF7B9C-89E2-4544-A33D-DBF2B0FED6E0.1@smtp-inbound1.duck.com> <20260321180013.GA20708@openwall.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Sender: justin.swartz@risingedge.co.za
+X-Virus-Scanned: Clear
+X-Originating-IP: 188.40.1.173
+X-SpamExperts-Domain: risingedge.co.za
+X-SpamExperts-Username: 
+Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@risingedge.co.za
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.10)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuVqs0WOpGULDjzCSFuzrIJMDCjBckhsoymc
+ 2GXaiPadxCu2SmbhJN1U9FKs8X3+Nt0Io1idSgCc/506nnISAkPANvJkKIxakGlbxi+ggiqZlxxH
+ xN7wu8yGEPLNcyeaFTgKBQeFdTHzWpESYbmCLMe1BMmyNbDn7R5kilAhwr3KtFb3AgNUGvQRnUF+
+ Lycvfx+SVUSshQka8VpEeqGYZUq9E9d2wzwQxbXkmlRlwduBj4hSnw9YyoGHx/ukuag1WKBLWDaO
+ GAC1PCRtpOZuVuRfKVFCXTS2zVmMeFsPQMyMp5ya4EnB7foI3WDAWEIqQR42kI22V3+6/8VpCe4k
+ l4rBro7NG5FMnAx+YiDY2J/czJYIiHqfCgG4wrA3w4/kQTaLfhXaMgiD0j3v6Ie9X8yyJClZqIWe
+ ElTlhke8IyK52DdtyTpRDuDZactSZQHS5CIA4kv6jpHeL4itl5GdKHos6cTrAfIBtLJVe62uoyOA
+ UhmSvC6qJad8oDRDO7zv2HyvHObXCPPKSd2xpqdSbP9LdDgGQETciExfV//6y6W7Dk3621qUIfzc
+ FXeghALwUxUR37FaFlv3F2PbvabG99OCbPN7v9MApiZJ0jIuv2upMAEiRQv+PVjjwa+Z5RFCOMQ+
+ rkssTV42UJ+1K8svYHitXuUtdBRw0CzMOyehQ6vQGMvdVfFE4BvNT4payuSV1mxZzPImFuDj9wtn
+ CHpNAoiDqeFMEyid5arI9OX88Mez1seXwD4BM2jQz1LojaPvzWFG78u4Z9swKs6X6s50biZUTMJ7
+ bHbjQcSj2k6ROS/HeG5K61yXY75ytT3/xJ9H/2sMZidzpIMUsjKlj5Ezu+Gfw6YEC+Wo4SDETiTT
+ GiY2n/4bw2RxeVx5WfYBV5Z0ipKtF1VPccloD2rUVRwpPdcTfqb5R4VemuUI6bcEARsm0MIEL6H2
+ 5DNnVReRKfCEH3VMuaKkhDGeWUGKiyBKYF6y5eh+QfFP7pcU8NRnbcMqdtqW+IuA05DGXjIjSPSU
+ iMlahI4i4TNLKKi5WRMONPLcJy48BaQZ9dlwiO6d4xuBNw==
+X-Report-Abuse-To: spam@antispamquarantine.host-h.net
+X-Complaints-To: abuse@antispammaster.host-h.net
+Subject: [oss-security] Re: Buffer overflow in /bin/su from UNIX v4
 
-OpenSSH 8.3 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+Sat, 21 Mar 2026 19:00:13 +0100, Solar Designer wrote: 
+> On Sat, Mar 21, 2026 at 01:13:47PM -0400, kf503bla@...k.com wrote:
+> > why assign cve to something irrelvent?
+> 
+> I guess because (ir)relevance isn't among criteria for (not) assigning a
+> CVE, and because there may be value in having a non-ambiguous way to
+> refer to historical vulnerabilities for illustration of how the current
+> ones fit in historical context.
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+Beyond the historical context, there is an argument to be made
+for being aware of known defects in legacy codebases which have
+been resurrected for use on modern resource-constrained hardware.
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+For example, the RetroBSD [1] project provides a port of 2.11BSD
+intended for PIC32 (MIPS) targets. There's also an actively
+maintained RetroBSD fork, called DiscoBSD [2], which adds support
+for STM32F4 (ARM Cortex-M4) targets and had its last release [3]
+last month.
 
-Future deprecation notice
-=========================
+And then there's Serge Vakulenko's LiteBSD [4], a 4.4BSD port to
+PIC32.
 
-It is now possible[1] to perform chosen-prefix attacks against the
-SHA-1 algorithm for less than USD$50K. For this reason, we will be
-disabling the "ssh-rsa" public key signature algorithm by default in a
-near-future release.
+And who knows where Robert Nordier's port of UNIX V7, v7/x86 [5],
+may be running?
 
-This algorithm is unfortunately still used widely despite the
-existence of better alternatives, being the only remaining public key
-signature algorithm specified by the original SSH RFCs.
+While these projects might modernize parts of the kernel and/or
+userland, there's always the possibility of bug-ridden code (and
+bug-ridden assumptions) being inherited from their respective BSD
+and/or Research UNIX lineage - as we've all seen with BSD derived
+telnet server and client implementations recently.
 
-The better alternatives include:
+Regards,
+Justin
 
- * The RFC8332 RSA SHA-2 signature algorithms rsa-sha2-256/512. These
-   algorithms have the advantage of using the same key type as
-   "ssh-rsa" but use the safe SHA-2 hash algorithms. These have been
-   supported since OpenSSH 7.2 and are already used by default if the
-   client and server support them.
 
- * The ssh-ed25519 signature algorithm. It has been supported in
-   OpenSSH since release 6.5.
+--- Links ---
 
- * The RFC5656 ECDSA algorithms: ecdsa-sha2-nistp256/384/521. These
-   have been supported by OpenSSH since release 5.7.
-
-To check whether a server is using the weak ssh-rsa public key
-algorithm, for host authentication, try to connect to it after
-removing the ssh-rsa algorithm from ssh(1)'s allowed list:
-
-    ssh -oHostKeyAlgorithms=-ssh-rsa user@host
-
-If the host key verification fails and no other supported host key
-types are available, the server software on that host should be
-upgraded.
-
-A future release of OpenSSH will enable UpdateHostKeys by default
-to allow the client to automatically migrate to better algorithms.
-Users may consider enabling this option manually. Vendors of devices
-that implement the SSH protocol should ensure that they support the
-new signature algorithms for RSA keys.
-
-[1] "SHA-1 is a Shambles: First Chosen-Prefix Collision on SHA-1 and
-    Application to the PGP Web of Trust" Leurent, G and Peyrin, T
-    (2020) https://eprint.iacr.org/2020/014.pdf
-
-Security
-========
-
- * scp(1): when receiving files, scp(1) could be become desynchronised
-   if a utimes(2) system call failed. This could allow file contents
-   to be interpreted as file metadata and thereby permit an adversary
-   to craft a file system that, when copied with scp(1) in a
-   configuration that caused utimes(2) to fail (e.g. under a SELinux
-   policy or syscall sandbox), transferred different file names and
-   contents to the actual file system layout.
-
-   Exploitation of this is not likely as utimes(2) does not fail under
-   normal circumstances. Successful exploitation is not silent - the
-   output of scp(1) would show transfer errors followed by the actual
-   file(s) that were received.
-
-   Finally, filenames returned from the peer are (since openssh-8.0)
-   matched against the user's requested destination, thereby
-   disallowing a successful exploit from writing files outside the
-   user's selected target glob (or directory, in the case of a
-   recursive transfer). This ensures that this attack can achieve no
-   more than a hostile peer is already able to achieve within the scp
-   protocol.
-
-Potentially-incompatible changes
-================================
-
-This release includes a number of changes that may affect existing
-configurations:
-
- * sftp(1): reject an argument of "-1" in the same way as ssh(1) and
-   scp(1) do instead of accepting and silently ignoring it.
-
-Changes since OpenSSH 8.2
-=========================
-
-The focus of this release is bug fixing.
-
-New Features
-------------
-
- * sshd(8): make IgnoreRhosts a tri-state option: "yes" to ignore
-   rhosts/shosts, "no" allow rhosts/shosts or (new) "shosts-only"
-   to allow .shosts files but not .rhosts.
-
- * sshd(8): allow the IgnoreRhosts directive to appear anywhere in a
-   sshd_config, not just before any Match blocks; bz3148
-
- * ssh(1): add %TOKEN percent expansion for the LocalFoward and
-   RemoteForward keywords when used for Unix domain socket forwarding.
-   bz#3014
-
- * all: allow loading public keys from the unencrypted envelope of a
-   private key file if no corresponding public key file is present.
-    
- * ssh(1), sshd(8): prefer to use chacha20 from libcrypto where
-   possible instead of the (slower) portable C implementation included
-   in OpenSSH.
-
- * ssh-keygen(1): add ability to dump the contents of a binary key
-   revocation list via "ssh-keygen -lQf /path" bz#3132
-
-Bugfixes
---------
-
- * ssh(1): fix IdentitiesOnly=yes to also apply to keys loaded from
-   a PKCS11Provider; bz#3141
-
- * ssh-keygen(1): avoid NULL dereference when trying to convert an
-   invalid RFC4716 private key.
-
- * scp(1): when performing remote-to-remote copies using "scp -3",
-   start the second ssh(1) channel with BatchMode=yes enabled to
-   avoid confusing and non-deterministic ordering of prompts.
-
- * ssh(1), ssh-keygen(1): when signing a challenge using a FIDO token,
-   perform hashing of the message to be signed in the middleware layer
-   rather than in OpenSSH code. This permits the use of security key
-   middlewares that perform the hashing implicitly, such as Windows
-   Hello.
-
- * ssh(1): fix incorrect error message for "too many known hosts
-   files." bz#3149
-
- * ssh(1): make failures when establishing "Tunnel" forwarding
-   terminate the connection when ExitOnForwardFailure is enabled;
-   bz#3116
-
- * ssh-keygen(1): fix printing of fingerprints on private keys and add
-   a regression test for same.
-
- * sshd(8): document order of checking AuthorizedKeysFile (first) and
-   AuthorizedKeysCommand (subsequently, if the file doesn't match);
-   bz#3134
-
- * sshd(8): document that /etc/hosts.equiv and /etc/shosts.equiv are
-   not considered for HostbasedAuthentication when the target user is
-   root; bz#3148
- 
- * ssh(1), ssh-keygen(1): fix NULL dereference in private certificate
-   key parsing (oss-fuzz #20074).
-
- * ssh(1), sshd(8): more consistency between sets of %TOKENS are
-   accepted in various configuration options.
-
- * ssh(1), ssh-keygen(1): improve error messages for some common
-   PKCS#11 C_Login failure cases; bz#3130
-
- * ssh(1), sshd(8): make error messages for problems during SSH banner
-   exchange consistent with other SSH transport-layer error messages
-   and ensure they include the relevant IP addresses bz#3129
-
- * various: fix a number of spelling errors in comments and debug/error
-   messages
-
- * ssh-keygen(1), ssh-add(1): when downloading FIDO2 resident keys
-   from a token, don't prompt for a PIN until the token has told us
-   that it needs one. Avoids double-prompting on devices that
-   implement on-device authentication.
-
- * sshd(8), ssh-keygen(1): no-touch-required FIDO certificate option
-   should be an extension, not a critical option.
-    
- * ssh(1), ssh-keygen(1), ssh-add(1): offer a better error message
-   when trying to use a FIDO key function and SecurityKeyProvider is
-   empty.
-
- * ssh-add(1), ssh-agent(8): ensure that a key lifetime fits within
-   the values allowed by the wire format (u32). Prevents integer
-   wraparound of the timeout values. bz#3119
-
- * ssh(1): detect and prevent trivial configuration loops when using
-    ProxyJump. bz#3057.
-    
-Portability
------------
-
- * Detect systems where signals flagged with SA_RESTART will interrupt
-   select(2). POSIX permits implementations to choose whether
-   select(2) will return when interrupted with a SA_RESTART-flagged
-   signal, but OpenSSH requires interrupting behaviour.
-
- * Several compilation fixes for HP/UX and AIX.
-
- * On platforms that do not support setting process-wide routing
-   domains (all excepting OpenBSD at present), fail to accept a
-   configuration attempts to set one at process start time rather than
-   fatally erroring at run time. bz#3126
-
- * Improve detection of egrep (used in regression tests) on platforms
-   that offer a poor default one (e.g. Solaris).
-
- * A number of shell portability fixes for the regression tests.
-
- * Fix theoretical infinite loop in the glob(3) replacement
-   implementation.
-
- * Fix seccomp sandbox compilation problems for some Linux
-   configurations bz#3085
-
- * Improved detection of libfido2 and some compilation fixes for some
-   configurations when --with-security-key-builtin is selected.
-
-Checksums:
-==========
-
- - SHA1 (openssh-8.3.tar.gz) = 46c63b7ddbe46a0666222f7988c993866c31fcca
- - SHA256 (openssh-8.3.tar.gz) = M6CnZ+duGs4bzDio8hQNLwyLQChV+3wkUEO8HWLV35c=
-
- - SHA1 (/openssh-8.3p1.tar.gz) = 04c7adb9986f16746588db8988b910530c589819
- - SHA256 (openssh-8.3p1.tar.gz) = 8r774Ecv5+t10jNA6xdTHLazqsJAdeIGa0H4FOEjh7I=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available as RELEASE_KEY.asc from
-the mirror sites.
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
+[1] https://retrobsd.org
+[2] http://discobsd.org
+[3] https://github.com/chettrick/discobsd/releases/tag/DISCOBSD_2_6
+[4] https://github.com/sergev/LiteBSD
+[5] https://www.nordier.com/#v7x86
