@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1232" "Wednesday" "12" "August" "2015" "19:11:03" "+0300" "Solar Designer" "solar@openwall.com" "<20150812161103.GA11200@openwall.com>" "31" "Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" nil nil nil "8" "2015081216:11:03" "[oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities" (number mark "        solar@openwa Aug 12   31/1232  " thread-indent "\"Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities\"\n") "<55CA41A6.600@bluefrostsecurity.de>" ("<55CA41A6.600@bluefrostsecurity.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3429 invoked by uid 550); 12 Aug 2015 16:11:08 -0000
+Received: (qmail 8159 invoked by uid 550); 21 Mar 2026 17:35:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,49 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3403 invoked from network); 12 Aug 2015 16:11:08 -0000
-Message-ID: <20150812161103.GA11200@openwall.com>
-References: <55CA41A6.600@bluefrostsecurity.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <55CA41A6.600@bluefrostsecurity.de>
-User-Agent: Mutt/1.4.2.3i
-Cc: Moritz Jodeit <moritz@bluefrostsecurity.de>
-Date: Wed, 12 Aug 2015 19:11:03 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE request - OpenSSH 6.9 PAM privilege separation vulnerabilities
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 10020 invoked from network); 21 Mar 2026 17:13:56 -0000
+References: <9164016d-f642-4ceb-bde8-03e09303e038@oracle.com> <37aacb54-8bcf-4b7e-a747-6ff3ec8143c5@oracle.com> <031BCE73-BDEB-4D18-9EFD-8F3180E8527D.1@smtp-inbound1.duck.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <EEDF7B9C-89E2-4544-A33D-DBF2B0FED6E0.1@smtp-inbound1.duck.com>
+Date: Sat, 21 Mar 2026 13:13:47 -0400
+From: kf503bla@duck.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=duck.com; h=From:
+ Date: Message-ID: To: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: References: Subject; q=dns/txt; s=postal-KpyQVw;
+ t=1774113227; bh=Rkn8Ck4k7OemtIVxjSxS6CmX+LL+RQp1t+W0NT4Xpwo=;
+ b=icfhJf48LbQwh5b1xhLq7MOEgeN0Vdmb/vMseqxjkkl6NzrIsJmUHffzzSIVAx3v8nYdOslQJ
+ zxfJ5YgOew8Pd9vItDM/clET8b8kRJdkDed89+6ySgqNbC92aYmgeAYvAFaYFQs4keC5+atq39q
+ tIkmowiDni/kFM/L/tgT3bk=
+Subject: Re: [oss-security] Buffer overflow in /bin/su from UNIX v4
 
-Damien, Moritz -
+why assign cve to something irrelvent?
 
-On Tue, Aug 11, 2015 at 08:40:38PM +0200, Moritz Jodeit wrote:
-> could you please assign two CVE IDs for the following two security
-> issues fixed in OpenSSH 7.0 (directly taken from the release notes [1]):
-> 
->  * sshd(8): Portable OpenSSH only: Fixed a privilege separation
->    weakness related to PAM support. Attackers who could successfully
->    compromise the pre-authentication process for remote code
->    execution and who had valid credentials on the host could
->    impersonate other users.  Reported by Moritz Jodeit.
-> 
->  * sshd(8): Portable OpenSSH only: Fixed a use-after-free bug
->    related to PAM support that was reachable by attackers who could
->    compromise the pre-authentication process for remote code
->    execution. Also reported by Moritz Jodeit.
-> 
-> [1] http://www.openssh.com/txt/release-7.0
 
-Far more important than having CVEs would be to know when (in what
-version) these bugs were introduced, with what commits, and what commits
-fix them.  For checking derived versions, and for backports.
+On Saturday, March 21st, 2026 at 5:14 AM, Alan Coopersmith <alan.coopersmit=
+h_at_oracle.com_kf503bla@duck.com> wrote:
 
-Would you share this info, please?
+> On 1/5/26 09:27, Alan Coopersmith wrote:
+> > Late last year, a tape was found containing the only known copy of Bell=
+ Labs
+> > Research Unix Version 4 from 1973 - the version in which UNIX was rewri=
+tten
+> > from assembly into the then-new C programming language.  Since then a n=
+umber
+> > of folks have been running the recovered software in PDP-11 simulators.
+> >
+> > https://sigma-star.at/blog/2025/12/unix-v4-buffer-overflow/ examines the
+> > source code for su.c and shows that the buffer for password input is a
+> > simple 100 character array, but the loop to read password input has no
+> > boundary checks and will happily keep writing long past the end of the
+> > buffer.
+>=20
+> This has been assigned CVE-2025-71263 now:
+> https://www.cve.org/CVERecord?id=3DCVE-2025-71263
+>=20
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@oracle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>
 
-(I guess I could find it myself, but I think it's preferable to have it
-posted to oss-security anyway, so I prefer to ask you.)
-
-Thanks,
-
-Alexander
