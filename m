@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7519" "Wednesday" "29" "August" "2018" "13:43:22" "-0700" "Tavis Ormandy" "taviso@google.com" "<CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>" "211" "Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" "^Date:" nil nil "8" "2018082920:43:22" "[oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?" (number mark "        taviso@googl Aug 29  211/7519  " thread-indent "\"Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS coders in policy.xml by default?\"\n") "<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>" ("<alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>" "<CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>" "<CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>" "<CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>" "<alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>" "<5b7dd771.1c69fb81.a6d8.6521@mx.google.com>" "<alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>" "<5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com>" "<alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>" "<CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>" "<20180828092517.eteuy4vzcpdpr62p@suse.de>" "<CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 2045 invoked by uid 550); 29 Aug 2018 20:43:47 -0000
+Received: (qmail 24365 invoked by uid 550); 21 Mar 2026 01:39:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,261 +6,114 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 2027 invoked from network); 29 Aug 2018 20:43:46 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=iruMmtr3bGFARc59UZ1kUMxW9b6IkxMCoWXM+ZqsB+0=;
-        b=uUMKE9uQcjbwU9b11XjDd1mcdiDyr1D479dAdFBsRfYuVrpRPPix1wAQYYIdLIDcj0
-         0N9Jtbk+umXRtgYbTbxRMaCT185X4E8H5paa5t5Fz6yA1I7HEITer8rsMew2eRaFJ2Lx
-         mbUpL9GvW6gD3+EJVMXo7VayDDV/SbgLQkZUlxBax5/+VLsly2N7hJJtF1ep+4YoOp4Z
-         4DZw7zON7wGhuLV23jouSRrYYIzurpOb6C6s3IrOQSHS/QzQqQYcNJ79xL8GawTwQW+g
-         aNzI7fuoZ1N7eSyNKoAzBUsnpHe7XzDX5M4prwlc7nhb1G8qdPLOCXPJwhGMAlgJOuvv
-         tCyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=iruMmtr3bGFARc59UZ1kUMxW9b6IkxMCoWXM+ZqsB+0=;
-        b=Jez9V0cOnDN5CVTuJwgJUtEY3Hd8MlzFg6JqPc2KiRmMZmA+ESbnflArUCnBRmYKxq
-         YmAajiYWQUGup6vcjase9S0yYb7C+kuCZHNUdActpMoMEDKF+aekZ3SqICpLTYcPETXb
-         Gb5jSnCvbbv2Vl7SHFK6Y3UtQgbJ1LQKKQUQFexBNgHvrDGNGD3eph8HGhlvP+ZLGYzO
-         GkbYen8LJcCmEr/O1W3LwMdi+HUunJlgubr7OmCyDLGIiEmByG0QuvPEq/0bk/SNcpX1
-         tPzwpMRYrI5bMmgKYOmCnxp7f+QsaN3IHA/syxp4LFZd/iMO6eZ3fxbC68HE8AcRHEY6
-         9RHQ==
-X-Gm-Message-State: APzg51CMv7vugUShxm23T5j7rfrXt3DxWuQPiCiH8yT5osZJhpcTTeGk
-	WimyYNVWNuvlLjNWc5YMvnBjWAN6/8LT2CfAJ4YRYtqTI2c=
-X-Google-Smtp-Source: ANB0Vda30ftaxM1uZR+o6LlUG90W+HQlS2Ch7ikQOED4R09Mzw81Pg7sIsRGFQuHgYkVqrCx2b6weq8BHyqiGDlOA10=
-X-Received: by 2002:a0c:d6c3:: with SMTP id l3-v6mr8071939qvi.154.1535575413468;
- Wed, 29 Aug 2018 13:43:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <alpine.GSO.2.20.1808210951110.18862@scrappy.simplesystems.org>
- <CAFRnB2U+QMGmAMoZqbCgTjEx_o_NA+Y9eBE6eDBgJJ0hZdQ4GQ@mail.gmail.com>
- <CAJ_zFkJpnGtG6D3JZVaC5KJiNzsJ6vjJK0oXRfirR8QsdFbZVQ@mail.gmail.com>
- <CAOVKCF0Qehz2q3m2vPSAr3vKRAxdHrTbnyk71ApFYnVXuZ-P6Q@mail.gmail.com>
- <alpine.GSO.2.20.1808221612460.22335@scrappy.simplesystems.org>
- <5b7dd771.1c69fb81.a6d8.6521@mx.google.com> <alpine.GSO.2.20.1808230753470.3841@freddy.simplesystems.org>
- <5b7eb7b2.1c69fb81.6b98e.519f@mx.google.com> <alpine.GSO.2.20.1808230958120.3639@scrappy.simplesystems.org>
- <CAJ_zFk+yb9zEXSqs2fdANvKkipg2yQAU89xKr1HMv-EJG2-vxg@mail.gmail.com>
- <20180828092517.eteuy4vzcpdpr62p@suse.de> <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
-In-Reply-To: <CAJ_zFk+dpXH453R0Hy5iHzYO2DkZjrBK3Sqh00Aie1z4=VDQOQ@mail.gmail.com>
-Message-ID: <CAJ_zFkLXTpjCijqNsHs0ZR4NdVwM+16ojUmxjYu0aZAgW=QhKQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="0000000000000c4f020574990354"
-Date: Wed, 29 Aug 2018 13:43:22 -0700
-From: Tavis Ormandy <taviso@google.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: More Ghostscript Issues: Should we disable PS
- coders in policy.xml by default?
+x-ms-reactions: disallow
+Received: (qmail 3192 invoked from network); 21 Mar 2026 01:25:17 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1774056308; cv=none;
+        d=google.com; s=arc-20240605;
+        b=J+BhMeJmGEAPWXHwu/XPoJ9XqP8WmCzlnVwQyPiZiSushKQZv9r4YT7SxgFqCO/sWE
+         VSB3uizseVkcMTVqREw3ktXzkJ4dwqKsY9UrZ/0zuHgbTv89GkUHG5nKWtVRgduG/ztP
+         AxERPlCnEb65w8SKwKoCzr64fyjTBObqKVKxFtO2hqJxMOuniJLzQKAP7ApS1NkONOlZ
+         +AgEYdYkoN7Djt3JNCZFlAuXa9DB/g1gav5VwJ8P6GiemstZu9GttNbOCXDYyHAbmQvQ
+         8d0a2uLGnmZiI0/v88Y684fEKmJrKD9nE13sj74F5IA47YDQiW6pTNCeFXnDEvqnRZQF
+         QZzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=NeyYM3K7DrDgpZV1KdunoUqWraqX0pMQ+RIDiN281QE=;
+        fh=TBl1JIFbfxBfsQAD2QsCKltVENruLOShOAOuCsRmzQY=;
+        b=RxrW5IK0luOW+khQcgKXdsYc/zZDr5uWlO4/DOi+s7XI4CnEkk47e5RFxtQ8IJiIl/
+         5GSlcW7HnfuH2nIKPK9pzZJFU4yPJOyBkYwr3ryFC1TnsQZ/zXcLhHEnJsUDdiqQ4m8T
+         CBtq+oEt07pkaZe4zPQtoHm8zKuEB+QFBBUKe8RuXhZbso4bFET9ACsJEwV6WHtIO1kJ
+         uia668Mm9ic4TnPG47bo9RW/y23JiVDpdhNVupCMFIVxFx81dN3GEgc2cXCKbA/WMPRk
+         KCQKZH1WSXTeP7QlklwTN9lDB8QQVHy7o2+OODQJCpsMEG9luDzo8KhF9KAEPuDD60DG
+         QIyg==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774056308; x=1774661108; darn=lists.openwall.com;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NeyYM3K7DrDgpZV1KdunoUqWraqX0pMQ+RIDiN281QE=;
+        b=U4NZfIOqjzhNXhaCJp08GVB3i8vsmxzuvT2ZMLLds9+THA1tKF8hscj7CvLSWJMat2
+         zjjKi1Q+tS+EU9B8yjUNMgzlL2IulHwFQ5a1JTz5CtRHZoBcULubwAYPxUimS8ZpSazn
+         pXDWDb8COKuuALAnsxdQUJZ34Ksa80bsGAqU7aveQD4HLu1eFSNwOd5hUjsHrKfdQ8Sw
+         LUdpQyzE9t9rQXYHaOkg+k/R+gTBGqnXNLvRYdExVIkGhZWq0RM65ZRu5faFMzXDWQLj
+         fiOE7/BNMAsX0uA27j+mNunq/MldQGI7w8gr5ys+qda79+UI6CVLfgk9BgrG1Q3JQfKi
+         XUEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774056308; x=1774661108;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NeyYM3K7DrDgpZV1KdunoUqWraqX0pMQ+RIDiN281QE=;
+        b=P5t1MwSf6kjvdWrmvx1H+UgKQE+CruvJUp9mjcBayAvkJhC+w9B6xqACM/uNvOLIh+
+         sRB59WJfHA/PuO8yUQHzZB4/Ll0Qx47MYTlAq9mvoYEIZqL+lba0t530/AGpJqy5KsIO
+         In9TVpGU7JHQEw5vwAbqq59L94sgOhFYIi5bVsO6MG7NdWpw90IDuRvW7GLNJGDIPdpt
+         Arr8jv2cmsiOR6iwVvO8fO2OwYZBDQL857ewY8oSQgC44yHbUM2odEm9h09fB+d2mFaI
+         V8GurXQy0ugubR0i8niKjUKmF8Di+IsX8dk1WyZWMz7x3OqRhkKIfo7nhmwVi+wGveXE
+         BS6g==
+X-Gm-Message-State: AOJu0YzK6UOKpNlTorQp/IVryoIqeXvcVq5eEr5rUaNQpXsQR5+KzgpF
+	AS1ZR7VUE5T6H/QHlGrsquf6bYNnxomR6jYocJiqBzA1mZThpDmV6b/IH8LBuwiWRorB6wCGXFF
+	ef3ezRZl1n1ad6GroRYALDlL+QZpSjGL0k7Gg87Q=
+X-Gm-Gg: ATEYQzzNXOdfCVK+M0aQ23bWDtCpaXbHkI544jBvpCY0xJlGCrDIMizKjB0rNc7iz/x
+	HZVFeAmISFFaKv5+VcJx312Ok9TkZlb7q1P6x0IBut0eubjlEHaKpRpzFsVvTZfl691gCQwyMGu
+	qkSzbu/1SayK6SG+tmGEFaXKREGSBELEMOohOy0Q/0ULlpAlGxCxhe8sqtUNcXhtaZADmK8bcy/
+	gdwvdxMEMYmxS/CaaWlAb1+YXbYJSjenChmDY8JdmbMaC4IJi+rcvTmaNExb8/AKiyj2uTrPmwQ
+	ntWwKOvlIyPWQAtYeu5CNgnK1Fh9vu7duxKVjw0HXAQstD8ano3CYT2jWjeQELH2HqvsweiQ
+X-Received: by 2002:a05:6000:2704:b0:43b:494d:818b with SMTP id
+ ffacd0b85a97d-43b642731d0mr3012922f8f.6.1774056307749; Fri, 20 Mar 2026
+ 18:25:07 -0700 (PDT)
+MIME-Version: 1.0
+From: Abhinav Agarwal <abhinavagarwal1996@gmail.com>
+Date: Fri, 20 Mar 2026 18:24:41 -0700
+X-Gm-Features: AaiRm53Sxj9hLkeObyCFxtvmXnDQwQ6eRbM1dk6MR63UoNJIbxIrO7UW3Y68Lp0
+Message-ID: <CAK3hNHa=A2kB5658f3_DMdSnhXSdK84+93Mq0uFRuWD-VXmyzg@mail.gmail.com>
 To: oss-security@lists.openwall.com
-
---0000000000000c4f020574990354
+Cc: Akshat Sinha <akshat.snh@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2026-33150, CVE-2026-33179: libfuse io_uring memory safety
+ vulnerabilities (use-after-free, NULL deref)
 
-I should note, just add `userdict /setpagedevice undef` at the top if you
-want to test it with ImageMagick.
+Two memory safety vulnerabilities in libfuse's io_uring code path
+(introduced in 3.18.0) have been fixed in libfuse 3.18.2. Only the
+io_uring transport is affected; the traditional /dev/fuse path is not.
 
-Tavis.
+Affected versions: libfuse >= 3.18.0, < 3.18.2
+Fixed in: libfuse 3.18.2
+  https://github.com/libfuse/libfuse/releases/tag/fuse-3.18.2
 
-On Wed, Aug 29, 2018 at 1:14 PM Tavis Ormandy <taviso@google.com> wrote:
 
-> Thanks Marcus, here are some more necessary commits:
->
->
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=520bb0ea7519aa3e79db78aaf0589dae02103764
-> # 699654 D /invalidaccess checks stop working after a failed restore
->
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b5536fa88a9e885032bc0df3852c3439399a5c0
-> # 699670 gssetresolution memory corruption
->
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> # 699671 handling /undefined results in SEGV
->
-> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
-> # 699676 PDF interpreter can leave dangerous operators available
->
-> Please note that not all issues are resolved, and I have exploits that
-> still work against HEAD.
->
-> For example, this will still work if you pull master as of this writing:
->
-> $ cat testcase.pdf
-> %!PS
-> % This is ghostscript bug #699687 (split out from bug #699654)
->
-> a0 % just select a papersize to initialize page device
->
-> % You can't def HWResolution (for example), because currentpagedevice is
-> readonly:
-> %
-> % GS>currentpagedevice wcheck ==
-> % false
-> %
-> % But you can just put or astore into it, because the array itself is
-> writable:
-> % GS>currentpagedevice /HWResolution get wcheck ==
-> % true
-> %
-> % If you put some junk in there, then grestore stops working.
-> currentpagedevice /HWResolution get 0 (foobar) put
->
-> % this grestore will fail, `stopped` just handles the error instead of
-> aborting.
-> { grestore } stopped {} if
->
-> % now LockSafetyParams will be incorrectly unset, you can check like this:
-> % GS>mark currentdevice getdeviceprops .dicttomark /.LockSafetyParams get
-> == pop
-> % false
->
-> % we can change and configure devices now, so make sure we're using one
-> with
-> % a OutputFile property.
-> (ppmraw) selectdevice
->
-> % run a shell command
-> mark /OutputFile (%pipe%id) currentdevice putdeviceprops
-> showpage
-> $ evince testcase.pdf
-> uid=1000(taviso) gid=1000(taviso) groups=1000(taviso),10(wheel)
-> context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
-> (libspectre) ghostscript reports: ioerror -12
->
-> Tavis.
->
-> On Tue, Aug 28, 2018 at 2:26 AM Marcus Meissner <meissner@suse.de> wrote:
->
->> Hi,
->>
->> I had 4 CVEs assigned yesterday afternoon already working from CERTs list,
->> see inline comments below. Please adjust if something is incorrect in
->> them.
->>
->> CERT has mailed overnight that they will take care of the CVE assignment,
->> so
->> I am defering the rest to them.
->>
->> Ciao, Marcus
->>
->> On Mon, Aug 27, 2018 at 04:02:46PM -0700, Tavis Ormandy wrote:
->> > Here is an update, Artifex made a press release
->> > <
->> https://www.darkreading.com/prnewswire2.asp?rkey=20180824UN89145&filter=3930
->> >
->> > listing
->> > some necessary commits, but the list was incomplete.
->> >
->> > Here is a list of relevant commits I'm aware of so far, some issues are
->> > still open with working exploits available. It's my understanding that
->> no
->> > new release is planned until late September, and vendors need to either
->> > ship a git snapshot when all issues are resolved, or apply patches. I
->> have
->> > testcases for each problem, but I think the bugs will be visible
->> eventually
->> > so I'm not posting them here.
->> >
->> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=ea735ba37dc0fd5f5622d031830b9a559dec1cc9
->> > # 699671
->> > handling /undefined results in SEGV
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0edd3d6c63
->> > # 699659 missing type check in ztype
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=78911a01b6 #
->> > 699654 A /invalidaccess checks stop working after a failed restore
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5516c614dc33
->> #
->> > 699654 B /invalidaccess checks stop working after a failed restore
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=79cccf641486
->> #
->> > 699654 C /invalidaccess checks stop working after a failed restore
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b326a716 #
->> 699655
->> > - missing type checking in setcolor
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c3476dde #
->> 699656
->>
->>
->> > - LockDistillerParams boolean missing type checks
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=a054156d42
->>         CVE-2018-15910
->>
->>
->> > # 699658 - Bypassing PermitFileReading by handling undefinedfilename
->> errors
->>
->>
->> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0b6cd1918e1ec4ffd087400a754a845180a4522b
->> > # 699660 - shading_param incomplete type checking
->> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=e01e77a36cbb2e0277bc3a63852244bec41be0f6
->> > # 699660 - shading_param incomplete type checking
->>         CVE-2018-15909
->>
->>
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=c432131c3f
->> > # 699661 - pdf14 garbage collection memory corruption
->> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=971472c83a345a16dac9f90f91258bb22dd77f22
->> > # 699663 - .setdistillerkeys memory corruption
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=241d911127
->> > # 699664 - corrupt device object after error in job
->>
->>
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=0d3901189f
->> > # 699657 - .tempfile SAFER restrictions seem to be broken
->>         CVE-2018-15908
->>
->> >
->> http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=8e9ce5016db968b40e4ec255a3005f2786cce45f
->>
->>
->> > # 699665 - memory corruption in aesdecode
->> > http://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=b575e1ec42
->>
->>         CVE-2018-15911
->>
->> > # 699668 - .definemodifiedfont memory corruption if /typecheck is
->> handled
->> >
->> > Tavis
->> >
->> > On Thu, Aug 23, 2018 at 8:05 AM Bob Friesenhahn <
->> > bfriesen@simple.dallas.tx.us> wrote:
->> >
->> > > On Thu, 23 Aug 2018, Leonardo Taccari wrote:
->> > > >
->> > > > (Regarding the `file.ps2' and `file.ps3' examples without `PS2:' or
->> > > > `PS3:' prefixes according `convert -debug Policy -log "%e"' it seems
->> > > > that they ends up as:
->> > > >
->> > > > Domain: Coder; rights=Read; pattern="PS" ...
->> > > >
->> > > > ...so should be blocked by the workaround described in
->> > > > VU#332928. But please correct me if I'm wrong.)
->> > >
->> > > This is likely due to header magic detection (e.g. "%!PS-Adobe").  It
->> > > is possible that a different path will be taken if the common
->> > > Postscript header is not detected.  The file extension may then be
->> > > used as a hint.  Also, there are a wide varieties of ImageMagick
->> > > versions in use, with a wide variety of behaviors.
->> > >
->> > > The version of ImageMagick provided by the Ubuntu Linux I am using at
->> > > this moment dates from 2012!
->> > >
->> > > Bob
->> > > --
->> > > Bob Friesenhahn
->> > > bfriesen@simple.dallas.tx.us,
->> http://www.simplesystems.org/users/bfriesen/
->> > > GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
->> > >
->>
->> --
->> Marcus Meissner,SUSE LINUX GmbH; Maxfeldstrasse 5; D-90409 Nuernberg; Zi.
->> 3.1-33,+49-911-740 53-432,,serv=loki,mail=wotan,type=real <
->> meissner@suse.de>
->>
->
+CVE-2026-33150: Use-After-Free
+Severity: High (CVSS 7.8)
+CWE: CWE-416
 
---0000000000000c4f020574990354--
+Use-after-free in io_uring session shutdown path. A local user can
+crash the FUSE daemon or potentially execute arbitrary code.
+
+Advisory: https://github.com/libfuse/libfuse/security/advisories/GHSA-qxv7-xrc2-qmfx
+Fix: https://github.com/libfuse/libfuse/commit/49fcd891a58f622c098e2ca67d66086f7b213836
+Credit: Abhinav Agarwal (reporter)
+Remediation review: Akshat Sinha
+
+
+CVE-2026-33179: NULL Pointer Dereference + Memory Leak
+Severity: Moderate (CVSS 5.5)
+CWE: CWE-476
+
+Missing NULL checks and error-path cleanup in io_uring queue
+initialization can crash the FUSE daemon on allocation failure
+and leak NUMA memory.
+
+Advisory: https://github.com/libfuse/libfuse/security/advisories/GHSA-x669-v3mq-r358
+Fix: https://github.com/libfuse/libfuse/commit/7beb86c09b6ec5aab14dc25256ed8a5ad18554d7
+Credit: Abhinav Agarwal (reporter)
+Remediation review: Akshat Sinha
+
+
+Both issues were reported privately to the libfuse maintainer
+and fixed in a coordinated release.
+
+Timeline:
+  2026-03-16  first issue reported libfuse maintainer
+  2026-03-17  second issue reported libfuse maintainer
+  2026-03-18  Release 3.18.2 with fixes
+  2026-03-19  GHSA advisories published
