@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4298" "Sunday" "10" "May" "2015" "12:09:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150510160932.68C193321CE@smtpvbsrv1.mitre.org>" "89" "[oss-security] Re: CVE for Jentu" nil nil nil "5" "2015051016:09:32" "[oss-security] Re: CVE for Jentu" (number mark "        cve-assign@m May 10   89/4298  " thread-indent "\"[oss-security] Re: CVE for Jentu\"\n") "<554EA1F5.4060805@tripleback.net>" ("<554EA1F5.4060805@tripleback.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9759 invoked by uid 550); 10 May 2015 16:10:02 -0000
+Received: (qmail 28422 invoked by uid 550); 22 Mar 2026 01:17:04 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +6,121 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9673 invoked from network); 10 May 2015 16:09:44 -0000
-In-Reply-To: <554EA1F5.4060805@tripleback.net>
-Message-Id: <20150510160932.68C193321CE@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sun, 10 May 2015 12:09:32 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE for Jentu
-To: kash@tripleback.net
+x-ms-reactions: disallow
+Received: (qmail 16077 invoked from network); 22 Mar 2026 00:43:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1774140186; x=1774806852; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=ZLyd73J3hMWn9haPdti4GWzMPRrRvQJgoF6PpFGYiA4=;
+ b=eP1nC5TpDpW8PPMRTXD/WvcTssnoAwqYRoUAHRGses/xW3iYe49QF5wmeqhrYGoXcxBc52/2
+  mgSLR92chQ7PZrN/U/47UbWpNuS7WB+yxMhpRUf4b5/BMFrGM/3aMawGA+Jc4Kb1onkXK0yMFe
+  fkHT0K9NA5psiFJ30MwXeHdiO2RdbcrpGqFU4Mvg4vrXQMVFpEfQgheo5KyKO7fMnJGqlKiLld
+  gma6i9XijpZ3jafSEsBdcEzqd6aaQaoFoSUcdgihZZJGFdKmuUqr4v/tNd4Tqi8pOEYNMPri2L
+  p0vxcyd6ANsEx5iM1MvdqSINsKaOvEXRfVMLOnNgpks7vEUQ==
+Date: Sun, 22 Mar 2026 01:43:05 +0100
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
+To: oss-security@lists.openwall.com
+Message-ID: <20260322004305.7mutUkqn@steffen%sdaoden.eu>
+In-Reply-To: <20260321201652.9287-1-justin.swartz@risingedge.co.za>
+References: <EEDF7B9C-89E2-4544-A33D-DBF2B0FED6E0.1@smtp-inbound1.duck.com>
+ <20260321180013.GA20708@openwall.com>
+ <20260321201652.9287-1-justin.swartz@risingedge.co.za>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.9.25-760-g6e9cf3e81e-dirty
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] Buffer overflow in /bin/su from UNIX v4
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Justin Swartz wrote in
+ <20260321201652.9287-1-justin.swartz@risingedge.co.za>:
+ |Sat, 21 Mar 2026 19:00:13 +0100, Solar Designer wrote: 
+ |> On Sat, Mar 21, 2026 at 01:13:47PM -0400, kf503bla@...k.com wrote:
+ |>> why assign cve to something irrelvent?
+ |> 
+ |> I guess because (ir)relevance isn't among criteria for (not) assigning a
+ |> CVE, and because there may be value in having a non-ambiguous way to
+ |> refer to historical vulnerabilities for illustration of how the current
+ |> ones fit in historical context.
+ |
+ |Beyond the historical context, there is an argument to be made
+ |for being aware of known defects in legacy codebases which have
+ |been resurrected for use on modern resource-constrained hardware.
 
-> There are multiple vulnerabilities:
+I do not disagree with that.
+But regarding old Unix code the "great old ones upon which'
+shoulders we stand" (and luckily so, that is) themselves say
+... please let me just quote Douglas McIlroy, who said (on January
+5th on TUHS):
 
-> * Client servers do not do certificate validation against the Jentu server
+  So somebody spotted a buffer overflow in v4.5, ironically in su.
 
-Often this is a vulnerability that can have a CVE, but not always. Can
-you explain more about this, e.g., does one server confirm the
-integrity of another server's data in a different way, making
-certificate validation unnecessary? Is it plausible that "client
-servers" and "the Jentu server" communicate over an untrusted network?
-Are the terms "client servers" and "the Jentu server" related to
-anything on the jentu.net web site, e.g., "master server" and "slave
-servers"?
+  Overflowable buffers were common in those days. It was all too easy
+  when programming to shrug one's shoulders and opine that nobody would
+  ever want to input a 200-character line, say, so why bother writing
+  the extra code to catch it? We did gradually learn that automatically
+  generated input lines--particularly lines of code--could be much
+  longer than any person would write, so buffer overflows that actually
+  happened gradually got fixed.
 
+  Dennis once fed a couple-of-thousand-byte line on standard input to
+  everything in /bin. Crashes abounded, but so what? Wasn't a crash just
+  an ungraceful way for a program to say "I can't handle this"? Not
+  until the Morris worm (1988) did folks wake up to the real danger of
+  overflows.
 
-> * The web UI connection to the client server is restricted to only allow
-> "localhost" to connect, however, forged packets will allow an attacker
-> to execute arbitrary code as the www-data user on Linux (or www user on
-> FreeBSD). Because lighttpd is operating with sudo access to your entire
-> ZFS pool, the amount of damage that can be caused is huge.
+  Sometime after Dennis's casual experiment, a paper that announced the
+  same results got the reaction, "So what else is new?" from the Unix
+  room. It would be interesting to find the paper and compare its
+  "shocked, shocked" presentation to that of the rediscovery posted on
+  the cryptography mailing list.
 
-Why is this a vulnerability in the Jentu product? Would this issue
-normally be addressed by a host-based firewall that drops packets with
-(for example) 127.0.0.0/8 source IP addresses if they arrive from a
-non-localhost interface? Is the threat only from local users on a
-"client server" machine, e.g., are you suggesting that use of IP is
-inherently wrong and a different choice (such as a UNIX domain socket)
-should have been adopted instead?
+ |For example, the RetroBSD [1] project provides a port of 2.11BSD
+ |intended for PIC32 (MIPS) targets. There's also an actively
+ |maintained RetroBSD fork, called DiscoBSD [2], which adds support
+ |for STM32F4 (ARM Cortex-M4) targets and had its last release [3]
+ |last month.
+ |
+ |And then there's Serge Vakulenko's LiteBSD [4], a 4.4BSD port to
+ |PIC32.
+ |
+ |And who knows where Robert Nordier's port of UNIX V7, v7/x86 [5],
+ |may be running?
 
+The 2.11 BSD is also actively maintained; in fact patch #499 from
+January is *huge* (largest in ~30 years?, entire 4.4BSD I/O
+library ported back by ragge@ who maintains the PCC compiler).
 
-> * Jentu uses ZFS on Linux that currently lacks a working "zfs allow"
-> security interface, requiring lighttpd to have root access to certain
-> ZFS binaries with little (if any) command sanitization.
+ |While these projects might modernize parts of the kernel and/or
+ |userland, there's always the possibility of bug-ridden code (and
+ |bug-ridden assumptions) being inherited from their respective BSD
+ |and/or Research UNIX lineage - as we've all seen with BSD derived
+ |telnet server and client implementations recently.
+ |
+ |Regards,
+ |Justin
+ |
+ |
+ |--- Links ---
+ |
+ |[1] https://retrobsd.org
+ |[2] http://discobsd.org
+ |[3] https://github.com/chettrick/discobsd/releases/tag/DISCOBSD_2_6
+ |[4] https://github.com/sergev/LiteBSD
+ |[5] https://www.nordier.com/#v7x86
+ --End of <20260321201652.9287-1-justin.swartz@risingedge.co.za>
 
-Do you mean that the system architecture was designed on the basis
-that privilege escalation to root (from the account under which
-lighttpd is running) is not a threat that is intended to be addressed?
-Or do you mean that command sanitization is either partially
-implemented, or at least implied by documentation, but that the
-command sanitization was done incompletely?
-
-
-> * DNS rebinding attacks are possible against the client server, causing
-> DoS or even privilege escalation when combined with local iSCSI station
-> exploits: As the user browses to http://hackedsite.com which requests an
-> AJAX call to http://defaultgateway/clone.php?mac=00-11-22-33-44-55 where
-> 00-11-22-33-44-55 is the MAC of the victim machine.
-
-It is often difficult to assign CVE IDs based on an "attacks are
-possible" report. Is there a specific vulnerability in the Jentu code
-that is being reported here? For example, do you mean that it is
-impossible to use Jentu safely because validating the Host HTTP header
-was a design requirement, and this requirement was never implemented?
-Or do you mean that Jentu should have shipped with a deployment note
-about the DNS rebinding risk, perhaps stating that Jentu be deployed
-with internal IP addresses, and a DNS architecture that prevents a
-user from encountering a mapping from an arbitrary DNS name (such as
-hackedsite.com) to one of these internal IP addresses?
-
-
-> * The local iSCSI server, iscsitarget (iet) runs in "permissive" mode
-> that allows any one of the iSCSI systems on the network to connect to
-> and manipulate any other iSCSI target for unrelated systems.
-
-Is this an implementation flaw, e.g., use of "permissive" mode was
-completely unnecessary and the Jentu product should have been shipped
-with a different mode? Or are you suggesting that this, although often
-unsafe, is an inherent part of the design -- in other words, the
-documentation failed to mention an expectation of mutual trust among
-the iSCSI systems on the network?
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
-
-iQEcBAEBAgAGBQJVT4ISAAoJEKllVAevmvmsUZcH/Au0szO94oYvUy0yIzsU+8mf
-Fzdi44gxq2+AhjNYAQKau1XO+sHSvWUSHs6EULKnk4KsCz3v+9ZEWPD7T04Vys05
-Y362oTQbphLNl2oKx06nmO7eZGAPmygr258OLF1wzV9zcmsfNM8lLSO3fBCrhDsq
-I645I+TdnipAK/iTbFwChS9gYw26PfFz+SzG31ViVAxzzzTCzl+/7p1olOfrVpEM
-+AeRCcGeUP/DB0oZognWXMNZA5cTuMWPEVjZ7A85OyYTpF+LRDBWhKu1/N3qsv7s
-d3ZsaitZkeudA8gS1wwNdzJPjs2aBy/opAyky+l3VS4qHuaNK1NIhU40DE2jqL8=
-=BCyv
------END PGP SIGNATURE-----
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
