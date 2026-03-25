@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1160" "Friday" "4" "November" "2016" "03:03:42" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<402a5fef90b34b4d944e9a62a089723a@imshyb02.MITRE.ORG>" "30" "[oss-security] Re: CVE request:Lynx invalid URL parsing with '?'" "^CC:" nil nil "11" "2016110407:03:42" "[oss-security] Re: CVE request:Lynx invalid URL parsing with '?'" (number mark "        cve-assign@m Nov  4   30/1160  " thread-indent "\"[oss-security] Re: CVE request:Lynx invalid URL parsing with '?'\"\n") "<CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>" ("<CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28392 invoked by uid 550); 4 Nov 2016 07:03:55 -0000
+Received: (qmail 21613 invoked by uid 550); 25 Mar 2026 05:21:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,46 +6,147 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28374 invoked from network); 4 Nov 2016 07:03:54 -0000
-In-Reply-To: <CAPGxrc_N_=z12njMyN2WrSO74A9=ioEnppxs2YGExMn0qd6MJA@mail.gmail.com>
-Message-ID: <402a5fef90b34b4d944e9a62a089723a@imshyb02.MITRE.ORG>
-MIME-Version: 1.0
-Content-Type: text/plain
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<dickey@invisible-island.net>
-Date: Fri, 4 Nov 2016 03:03:42 -0400
-From: <cve-assign@mitre.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request:Lynx invalid URL parsing with '?'
-To: <rootredrain@gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 20338 invoked from network); 25 Mar 2026 04:25:21 -0000
+Message-ID: <9791e9d9-a77e-44c2-9e43-5ede3fb8c40c@treenet.co.nz>
+Date: Wed, 25 Mar 2026 17:20:11 +1300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Amos Jeffries <squid3@treenet.co.nz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [ADVISORY] SQUID-2026:1 Denial of Service in ICP Request handling
+ (CVE-2026-33526)
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+__________________________________________________________________
 
-> lynx  "http://google.com?@hackdog.me/"
-> wrongly make lynx send a request to hackdog.me
+     Squid Proxy Cache Security Update Advisory SQUID-2026:1
+__________________________________________________________________
 
-Use CVE-2016-9179.
+Advisory ID:       | SQUID-2026:1 (CVE-2026-33526)
+Date:              | March 25, 2026
+Summary:           | Denial of Service in ICP Request handling
+Affected versions: | Squid 3.x -> 3.5.28
+                    | Squid 4.x -> 4.17
+                    | Squid 5.x -> 5.9
+                    | Squid 6.x -> 6.14
+                    | Squid 7.x -> 7.4
+Fixed in version:  | Squid 7.5
+__________________________________________________________________
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Problem Description:
 
-iQIcBAEBCAAGBQJYHDILAAoJEHb/MwWLVhi2dR0P/2Zr1VU0tQcBP4Tu543JzPV6
-CiHZdspG7fRKuCOaH8QHFHXFWksirFSumHfSPSLt8QjQ9IQJc9iCqan/0Zg4A/5C
-yNSnpqdHMfGMK/z+oiuFBNbqEu3ik1DS63a3KR/H9O1qqfyDAx3BeAbXIV3GLNi1
-JqspcJy6XB/O0s2N5K8FfjG2/mwhAX+tESncJB7qssqR4x6DXfADXCeYmGcaE3Y2
-iucJGwM8mtJRWLibqIbg8zbtVImCkRMD5XC00ZbVY/i8+4DwE972Z1solumACD0i
-bI4y1T+5I8MEndCJiZ2viHqD/BItfjaPS6swEnV713WE1/5xTT1b/ser/lSZ0OwE
-/0lB04X1OmlU/cO2c+zzarkYlJYAzIZz6PedMy0oSO5CkZ3RsyqkTTxj9EueE12F
-Fcwoe01zZGNUmbz+C+2ObAn+nP7uFowG59ojfbOBE0oTpFBXiR9EypvkshehwU9S
-M0vgX+PZ8CTH8+Cy83f9A3JPdIDkdJYg59QOWZ5FslI0PdgTPxyKNfxobesf/nFV
-VmTMa6ht8uxfYZ/9w9BnwwJOC0641SvxpMBa2fRaUFiY8Iham+UOa6IljtVd5y2F
-hL7C2lVNracS2pCUSvL8JobCjaA5HPgKni/jf1chHjkRtMouWu0jDi8hdZQwI6W4
-tyL6v/kL4pVDf4OSBXw9
-=21bX
------END PGP SIGNATURE-----
+  Due to a heap Use-After-Free bug Squid is vulnerable to Denial
+  of Service when handling ICP traffic.
+
+__________________________________________________________________
+
+Severity:
+
+  This problem allows a remote attacker to perform
+  a reliable and repeatable Denial of Service attack against the
+  Squid service using ICP protocol.
+
+  This attack is limited to Squid deployments that explicitly
+  enable ICP support (i.e. configure non-zero icp_port).
+
+  This problem _cannot_ be mitigated by denying ICP queries
+  using icp_access rules.
+
+__________________________________________________________________
+
+Updated Packages
+
+  These bugs were fixed in Squid version 7.5.
+
+  In addition, patches addressing this problem for the stable
+  releases can be found in our patch archives:
+
+Squid 7:
+  <https://github.com/squid-cache/squid/commit/8a7d42f9d44befb8fcbbb619505587c8de6a1e91>
+
+  If you are using a prepackaged version of Squid then please
+  refer to the package vendor for availability information on
+  updated packages.
+
+__________________________________________________________________
+
+  Determining if your version is vulnerable
+
+  Run the following command to identify whether your Squid
+  has been configured with ICP enabled:
+
+   squid -k parse 2>&1 | grep -E "(icp|udp)_port" | tail -n1
+
+  All Squid configured with port 0 are not vulnerable.
+
+  All Squid-3.0 up to and including 7.4 configured with
+  a non-zero port should be assumed to be vulnerable.
+
+  All Squid-3.2 up to and including 7.4 configured without
+  any port value can be assumed to be not vulnerable.
+
+__________________________________________________________________
+
+Workaround
+
+Either,
+
+   * Do not enable ICP support,
+
+Or,
+
+  * explicitly disable ICP using "icp_port 0".
+
+
+  Warning: These problems _cannot_ be mitigated by denying ICP
+           queries using icp_access rules.
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+  For installation / upgrade support on binary packaged versions
+  of Squid: Your first point of contact should be your binary
+  package vendor.
+
+  If you install and build Squid from the original Squid sources
+  then the <squid-users@lists.squid-cache.org> mailing list is
+  your primary support point. For subscription details see
+  <https://www.squid-cache.org/Support/mailing-lists.html>.
+
+  For reporting of non-security bugs in the latest STABLE release
+  the squid bugzilla database should be used
+  <https://bugs.squid-cache.org/>.
+
+  For reporting of security sensitive bugs send an email to the
+  <squid-bugs@lists.squid-cache.org> mailing list. It's a closed
+  list (though anyone can post) and security related bug reports
+  are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits
+
+  Discovered by:
+
+   * Joshua Rogers with ZeroPath
+   * Asim Viladi Oglu Manizada
+
+  Fixed by:
+
+   * Joshua Rogers with ZeroPath
+
+__________________________________________________________________
+
+Revision history:
+
+2025-09-07 20:22:00 EDT Report of the first set of vulnerabilities
+2026-01-26 08:48:00 EDT Report of additional vulnerabilities
+2026-02-10 19:58:49 UTC official fixes in master branch
+
+__________________________________________________________________
+END
