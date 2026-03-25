@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["841" "Tuesday" "12" "June" "2018" "14:11:34" "-0700" "Anthony Baker" "abaker@pivotal.io" "<CAEwge-EDm10LZzjbz0wqWEHzOO03L_VMY7uEc66eRHj3TNTvFA@mail.gmail.com>" "24" "[oss-security] [SECURITY] CVE-2017-15695 Apache Geode remote code execution vulnerability" nil nil nil "6" "2018061221:11:34" "[oss-security] [SECURITY] CVE-2017-15695 Apache Geode remote code execution vulnerability" (number mark "U       abaker@pivot Jun 12   24/841   " thread-indent "\"[oss-security] [SECURITY] CVE-2017-15695 Apache Geode remote code execution vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11812 invoked by uid 550); 13 Jun 2018 04:08:58 -0000
+Received: (qmail 5825 invoked by uid 550); 25 Mar 2026 14:30:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,129 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7831 invoked from network); 12 Jun 2018 21:11:48 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=r8eRwpAQdc6pSVsYmIIe+Gt24I1d8TCmdQgHAXNuxWY=;
-        b=suIqqvSph+7GHSRFqHsVEZavJvS0o0TPl2fevvd/1wf/UiHyhjM9bjSM3an+iZTvDa
-         6eR7t9XKT4lYXYjFzwV0MQQvNCWzivOEFRPA+d5R6x0Gsh6jaom1VRNRn4npaWteVFtE
-         cVzoXA0qIn1cFST2xpDL8H10XJm+ScYBKkcr648RDvKmftCXPPsyJ508Qnsj8z0ZwbCx
-         ommDbQXTwOMwEmxF+dTLWHfDsP1s9iSAbHv6gkLFLyj5o19Xv8Ds7iQubc+oED8UUjrB
-         /7pz79NfaXbXmoozbx8qLgqavxGeYxPso/t3ssOCO0d/U6d6CUq6uu31Ukto/yVUHjVD
-         ky4g==
-X-Gm-Message-State: APt69E0/XsPIqm9L3LS28JQ4tFhTYnfpdxztx3g/SGVZijTLfeVx1H4z
-	2EHtRlPqZnYTBLebwW8IRA4P/A5kvcFbpTDbx4gA4ZYtyIxvVVj6fnEUbduZjOQC1gLZlsvYuK+
-	hH052G/vUk/MCQn8wd8jVFSQimYE4tRD4Tm85B+DU3YVTl91f7ELw+aB09FBXJF2J23Bxvg==
-X-Received: by 2002:a1f:8a09:: with SMTP id m9-v6mr1390168vkd.9.1528837895795;
-        Tue, 12 Jun 2018 14:11:35 -0700 (PDT)
-X-Google-Smtp-Source: ADUXVKI4NcyvyCwy/BDicjeIHygoQjQrYjMd6X+NC1k5e9Fs6fVw2gknIjkvXyicyjJdKZq2x8GF6NnQJYUWSy8U8Rw=
-X-Received: by 2002:a1f:8a09:: with SMTP id m9-v6mr1390160vkd.9.1528837895532;
- Tue, 12 Jun 2018 14:11:35 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 5795 invoked from network); 25 Mar 2026 14:30:45 -0000
+Date: Wed, 25 Mar 2026 10:30:35 -0400
+From: Jan Schaumann <jschauma@netmeister.org>
+To: oss-security@lists.openwall.com
+Message-ID: <acPxcn816qOzTzPk@netmeister.org>
 MIME-Version: 1.0
-From: Anthony Baker <abaker@pivotal.io>
-Date: Tue, 12 Jun 2018 14:11:34 -0700
-Message-ID: <CAEwge-EDm10LZzjbz0wqWEHzOO03L_VMY7uEc66eRHj3TNTvFA@mail.gmail.com>
-To: user@geode.apache.org, dev@geode.apache.org, announce@apache.org,
-        asf-security <security@apache.org>, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-06-12_13:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 priorityscore=1501 malwarescore=0
- suspectscore=1 phishscore=0 bulkscore=0 spamscore=0 clxscore=1011
- lowpriorityscore=0 mlxscore=0 impostorscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.0.1-1805220000
- definitions=main-1806120234
-Subject: [oss-security] [SECURITY] CVE-2017-15695 Apache Geode remote code execution vulnerability
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] backdoor in litellm version 1.82.7
 
-CVE-2017-15695 Apache Geode remote code execution vulnerability
+The python package 'litellm' was compromised
+(apparently via the earlier trivy compromise) and a
+malicious version included code to steal credentials
+and install a backdoor.
 
-Severity:  Important
+https://github.com/BerriAI/litellm/issues/24512
+https://github.com/advisories/GHSA-5mg7-485q-xm76
 
-Vendor: The Apache Software Foundation
+https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack/
 
-Versions Affected:  Apache Geode 1.0.0 through 1.4.0
+Full PYSEC-2026-2 advisory below:
 
-Description:
-When a Geode server is configured with a security manager, a user with
-DATA:WRITE privileges is allowed to deploy code by invoking an
-internal Geode function.  This allows remote code execution.  Code
-deployment should be restricted to users with DATA:MANAGE privilege.
+https://osv.dev/vulnerability/PYSEC-2026-2
 
-Mitigation:
-Users of the affected versions should upgrade to Apache Geode 1.5.0 or later.
+---
+Import Source
+https://github.com/pypa/advisory-database/blob/main/vulns/litellm/PYSEC-2026-2.yaml
 
-Credit:
-This issue was reported responsibly to the Apache Geode Security Team
-by Dan Smith from Pivotal Software.
+JSON Data
+https://api.osv.dev/v1/vulns/PYSEC-2026-2
 
-References:
-[1] https://issues.apache.org/jira/browse/GEODE-3974
-[2] https://cwiki.apache.org/confluence/display/GEODE/Release+Notes#ReleaseNotes-SecurityVulnerabilities
+Aliases
+* MAL-2026-2144
+
+Published
+2026-03-24T16:15:08.809028Z
+
+Modified
+2026-03-24T22:41:32.746566Z
+
+Summary
+Two litellm versions published containing credential harvesting
+malware
+
+Details
+
+After an API Token exposure from an exploited Trivy dependency,
+two new releases of litellm were uploaded to PyPI containing
+automatically activated malware, harvesting sensitive credentials
+and files, and exfiltrating to a remote API.
+
+The malicious code runs during importing any module from the
+package and scans the file system and environment variables,
+collecting all kinds of sensitive data, including but not limited
+to private SSH keys, credentials to Git and Docker repositories,
+dotenv files, tokens to Kubernetes service accounts, databases and
+LDAP configuration. Also exfiltrated are multiple shell history
+files and cryptowallet keys. The malware actively attempts to
+obtain cloud access tokens from metadata servers and retrieve
+secrets stored in AWS Secrets Manager. All collected data are sent
+to the domain models.litellm[.]cloud
+
+Furthermore, the code includes a persistence mechanism by
+configuring a SystemD service unit masqueraded as "System
+Telemetry Service" on the host it runs on, and in a Kubernetes
+environment also by creating a new pod. The persistence script
+then contacts hxxps://checkmarx[.]zone/raw for further
+instructions.
+
+Anyone who has installed and run the project should assume any
+credentials available to litellm environment may have been
+exposed, and revoke/rotate them accordingly. The affected
+environment should be isolated and carefully reviewed against any
+unexpected modifications and network traffic.
+
+References
+* https://inspector.pypi.io/project/litellm/1.82.8/packages/f6/2c/731b614e6cee0bca1e010a36fd381fba69ee836fe3cb6753ba23ef2b9601/litellm-1.82.8.tar.gz/litellm-1.82.8/litellm_init.pth#line.1
+* https://inspector.pypi.io/project/litellm/1.82.7/packages/79/5f/b6998d42c6ccd32d36e12661f2734602e72a576d52a51f4245aef0b20b4d/litellm-1.82.7-py3-none-any.whl/litellm/proxy/proxy_server.py#line.130
+* https://github.com/BerriAI/litellm/issues/24518
+* https://futuresearch.ai/blog/litellm-pypi-supply-chain-attack/
+* https://www.wiz.io/blog/teampcp-attack-kics-github-action
+
+Credits
+*    * Callum McMahon, Futuresearch - REPORTER
+*    * Mike Fiedler - COORDINATOR
+*    * Kamil Mańkowski - ANALYST
+
+Affected packages
+
+PyPI / litellm
+
+Package
+
+Name
+litellm
+View open source insights on deps.dev
+
+Purl
+pkg:pypi/litellm
+
+Affected ranges
+
+Type
+ECOSYSTEM
+
+Events
+Introduced
+1.82.7
+Last affected
+1.82.8
+
+Affected versions
+
+1.*
+1.82.7
+1.82.8
+
+Database specific
+
+source
+
+"https://github.com/pypa/advisory-database/blob/main/vulns/litellm/PYSEC-2026-2.yaml"
+
+PYSEC-2026-2 - OSV
