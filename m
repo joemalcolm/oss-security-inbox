@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1460" "Monday" "20" "June" "2016" "18:41:50" "+0200" "Lukas Reschke" "lukas@nextcloud.com" "<16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>" "33" "[oss-security] CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)" nil nil nil "6" "2016062016:41:50" "[oss-security] CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)" (number mark "U       lukas@nextcl Jun 20   33/1460  " thread-indent "\"[oss-security] CVE request for PHP bug #68978: \"XSS in header() with Internet Explorer\" (2015)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3639 invoked by uid 550); 20 Jun 2016 16:48:11 -0000
+Received: (qmail 23607 invoked by uid 550); 25 Mar 2026 05:21:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,140 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32440 invoked from network); 20 Jun 2016 16:42:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nextcloud.com;
-	s=mail; t=1466440911;
-	bh=2/iglnuBbQ5C4E8uJZHe27CVmq+U8qW+3PJT0GH8iPw=;
-	h=From:Subject:Date:Cc:To:From;
-	b=DkTG4uW7aRQfyud5Luv2aaXT1qHuyFVA5sI9RIBAQvlICkEamIyxH7DBwgIZ3beDh
-	 ALc23JqIhxfCFFUNEGhgPKLtO2M2X9AsVsM7rTseyaxs31cD6VvyJ7HPGKbKd5XPrk
-	 7EJH6trprx2RCgJNS2Lg1QqRCryTxNVGjelCk8hc=
-From: Lukas Reschke <lukas@nextcloud.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 20 Jun 2016 18:41:50 +0200
-Message-Id: <16A71325-B291-4AE5-8689-54374BA32C8F@nextcloud.com>
-Cc: cve-assign@mitre.org
+x-ms-reactions: disallow
+Received: (qmail 26221 invoked from network); 25 Mar 2026 04:21:23 -0000
+Message-ID: <bea34a30-362c-4017-9280-a50bb93f4799@treenet.co.nz>
+Date: Wed, 25 Mar 2026 17:21:12 +1300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Mime-Version: 1.0 (Mac OS X Mail 9.2 \(3112\))
-Subject: [oss-security] CVE request for PHP bug #68978: "XSS in header() with Internet Explorer" (2015)
+From: Amos Jeffries <squid3@treenet.co.nz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] [ADVISORY] SQUID-2026:2 Denial of Service in ICP Request handling
+ (CVE-2026-32748)
 
-Hi,
+__________________________________________________________________
 
-Considering CVE-2011-1398 (https://cve.mitre.org/cgi-bin/cvename.cgi?name=
-=3DCVE-2011-1398) we believe PHP security bug #68978 (https://bugs.php.net/=
-bug.php?id=3D68978) also warrants a CVE identifier:
+     Squid Proxy Cache Security Update Advisory SQUID-2026:2
+__________________________________________________________________
 
-> The filtering in header() function is not sufficient and this can lead to=
- header injection and content injection (XSS) when the client is Internet E=
-xplorer (in every tested version).
-> IE accepts %0A%20 or %0D%0A%20 as separator in HTTP while other browser t=
-reat the new line beginning with space as the continuation of the previous =
-header. This can lead to header injection or content injection (basically, =
-XSS) in IE.
+Advisory ID:       | SQUID-2026:2 (CVE-2026-32748)
+Date:              | March 25, 2026
+Summary:           | Denial of Service in ICP Request handling
+Affected versions: | Squid 3.x -> 3.5.28
+                    | Squid 4.x -> 4.17
+                    | Squid 5.x -> 5.9
+                    | Squid 6.x -> 6.14
+                    | Squid 7.x -> 7.4
+Fixed in version:  | Squid 7.5
+__________________________________________________________________
 
-PHP=E2=80=99s documentation (http://php.net/manual/en/function.header.php) =
-explicitly states that since version 5.2.1 PHP natively prevents header inj=
-ections:
+Problem Description:
 
-> This function now prevents more than one header to be sent at once as a p=
-rotection against header injection attacks.
+  Due to premature release of resource during expected lifetime and
+  heap Use-After-Free bugs, Squid is vulnerable to Denial of
+  Service when handling ICP traffic.
 
-My understanding is t hat the corresponding upstream commit can be found at=
- https://github.com/php/php-src/commit/996faf964bba1aec06b153b370a7f20d3dd2=
-bb8b=20
+__________________________________________________________________
 
-This has been patched in PHP 5.6.6, 5.5.22 and 5.4.38, since some distribut=
-ions ship older versions and have not backported this we=E2=80=99re therefo=
-re kindly requesting a CVE identifier and making OSS Security aware of this=
-. An issue directly to Ubuntu has been filed at https://bugs.launchpad.net/=
-ubuntu/+source/php5/+bug/1594041 for 14.04.
+Severity:
 
-Thanks,
-Lukas=
+  This problem allows a remote attacker to perform
+  a reliable and repeatable Denial of Service attack against the
+  Squid service using ICP protocol.
+
+  This attack is limited to Squid deployments that explicitly
+  enable ICP support (i.e. configure non-zero icp_port).
+
+  This problem _cannot_ be mitigated by denying ICP queries
+  using icp_access rules.
+
+__________________________________________________________________
+
+Updated Packages
+
+  This bug is fixed in Squid version 7.5.
+
+  In addition, patches addressing this problem for the stable
+  releases can be found in our patch archives:
+
+Squid 7:
+  <https://github.com/squid-cache/squid/commit/703e07d25ca6fa11f52d20bf0bb879e22ab7481b>
+
+  If you are using a prepackaged version of Squid then please
+  refer to the package vendor for availability information on
+  updated packages.
+
+__________________________________________________________________
+
+Determining if your version is vulnerable
+
+  Run the following command to identify whether your Squid
+  has been configured with ICP enabled:
+
+   squid -k parse 2>&1 | grep -E "(icp|udp)_port" | tail -n1
+
+  All Squid configured with port 0 are not vulnerable.
+
+  All Squid-3.0 up to and including 7.4 configured with
+  a non-zero port should be assumed to be vulnerable.
+
+  All Squid-3.2 up to and including 7.4 configured without
+  any port value can be assumed to be not vulnerable.
+
+__________________________________________________________________
+
+Workaround
+
+Either,
+
+   * Do not enable ICP support,
+
+Or,
+
+  * explicitly disable ICP using "icp_port 0".
+
+
+  Warning: These problems _cannot_ be mitigated by denying ICP
+           queries using icp_access rules.
+
+__________________________________________________________________
+
+Contact details for the Squid project:
+
+  For installation / upgrade support on binary packaged versions
+  of Squid: Your first point of contact should be your binary
+  package vendor.
+
+  If you install and build Squid from the original Squid sources
+  then the <squid-users@lists.squid-cache.org> mailing list is
+  your primary support point. For subscription details see
+  <https://www.squid-cache.org/Support/mailing-lists.html>.
+
+  For reporting of non-security bugs in the latest STABLE release
+  the squid bugzilla database should be used
+  <https://bugs.squid-cache.org/>.
+
+  For reporting of security sensitive bugs send an email to the
+  <squid-bugs@lists.squid-cache.org> mailing list. It's a closed
+  list (though anyone can post) and security related bug reports
+  are treated in confidence until the impact has been established.
+
+__________________________________________________________________
+
+Credits
+
+  Discovered and Fixed by Alex Rousskov, The Measurement Factory
+
+__________________________________________________________________
+
+Revision history:
+
+2026-02-08 21:20:00 EDT Report of vulnerability
+2026-02-18 21:13:26 UTC official fixes in master branch
+
+__________________________________________________________________
+END
+
