@@ -1,4 +1,4 @@
-Received: (qmail 32074 invoked by uid 550); 1 May 2026 18:04:41 -0000
+Received: (qmail 32626 invoked by uid 550); 25 Mar 2026 15:17:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,149 +8,142 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 20470 invoked from network); 1 May 2026 18:01:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1777658506;
-	bh=8d2xX5AjQncZ0ScZMo5QM41WVl9RHLDJDhi5eU0AKkM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V7E0krEemfO58kK6wjB9zDxy/bM1yRn0sNjHL4EPuJ7U0qiZLxWXcgK3FKLGxccs0
-	 scRR0mI5coJ3hYBAYx3aRCQMvnFuIpm1v1qrM/1kT9CX4+DVG8BPEVALt5jgCyd+1V
-	 NPPI7HRiUltfsM9DR0E6VtfdFwOZ5EXMg/ELWt427Tcg3HHgXZKJahJZR+0+xp4RHN
-	 voec4RECBCRVhgYdkXFerF48EUO8mW8AtgEvga9ArO7IB0fT7/p9iiUORGAEq2eeUp
-	 PshAm5ZPjl3oVfyihfleF7V15Pp7XJRwejaoZj/6EWs+ls6U9eCQedAA7O5ACb7gqM
-	 1UMSPNZiaWglg==
-Date: Fri, 1 May 2026 11:00:28 -0700
-From: Eric Biggers <ebiggers@kernel.org>
-To: Demi Marie Obenour <demiobenour@gmail.com>
-Cc: oss-security@lists.openwall.com,
-	Jan Schaumann <jschauma@netmeister.org>
-Message-ID: <20260501180028.GA2260@sol>
-References: <afJorKIje4O6dXbH@netmeister.org>
- <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
- <87se8dgicq.fsf@gentoo.org>
- <afL-QhLfEKqHZqka@eldamar.lan>
- <20260430071917.GB54208@sol>
- <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+Received: (qmail 11341 invoked from network); 25 Mar 2026 08:38:30 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1774427899; cv=none;
+        d=google.com; s=arc-20240605;
+        b=EL3dvFtvpR1z42DFRDvYrapOs5N7XYg3TGZfn815Ze7aPI6O5pd99bnCG3f9ZOMJDA
+         vNC3Ais5OI9q9EekF/c3c9g+jBQZgGh5pJfvDLqkfpqfkwzm8hPcZ/qdcqeAPQ6up+o1
+         Gfx0LntLUhmI5hWGZsj7YTRZN2P6buxWEaw/eibnozJ1Mg0kH3lGNhiWuL+QEzxHA2l2
+         t3dOzXy963xA3+edr4Y2nfGy1DIv7FLxyjZd0gvRRNmw88d4FyUGtJ3d1g4qyrbKXTJf
+         dBnFyW+JLOTbhetsgeTmFCy5fuTpIez2j/DZC6sUe3EZYOk3UDXs01K3cdRA8bN1PKx5
+         BrrQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vtPYSXUaFDbtbEIvUm1C/87w+xTC//mQ3+fJ1eA6ix0=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=XeaysczvRMGnbqaDHA6NitnB/fSEXyogEC+cjQIEtybWX6EOW4fqJ4brKZ81QOr2Ej
+         9pqrH0BbFy7CZe5+3qd53sqT1pk7R/a5bINpeHoK9TBiiUzT3aWLZ5uERlzXzbAjNmaH
+         Q9KjXt16DqKAZnvEV4k4Z4MzKTeckb7LxltAYjp+CR2fDQQ8wT3oauNgUmgpVjlmDt48
+         qX3XMkajv7XKBOv97GnqBWiAXZyHqEW1kBlq3keNau+CgrKEQlhYwQrWeCrSIlNf9p5V
+         1JYflrL0RWvLMrVavuiV8nOzG0nQzA9vv8GY4fRYdjcB5rkoCzQuOlx9SaB2aC1SIWhs
+         SPlw==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774427899; x=1775032699; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vtPYSXUaFDbtbEIvUm1C/87w+xTC//mQ3+fJ1eA6ix0=;
+        b=O/Poso84nvKHs2uG5OacBLrJV4pRIH2Hu3WxapPz5+PAmoNcZRIVgEJdubAGav/G0G
+         NQGmWKVz6U0PLUdI9it4oYkP0COIQIZ8k1BAJW16/zzdPq6nZZUDMKamKSNeWltlaIfL
+         GB8VEg4I7ztTAAHIdFZeSiNX5G0tjybPVKfBkFDDkuZ/ouF0L9KFwW84pM1UwsUc+ilx
+         D4aZwnVqxqj85Ln5V3PByd1yJ/MerHL1X4X+yI2b6ldmkBPIDOpEnl9nn6SBcXSRG8FJ
+         JSIGdYm5chcYmQz91G5/bQgkLmqxq8Dn1L6/sG4au9uomj8VWvxULCISa9HM4QB+t37b
+         LU2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774427899; x=1775032699;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vtPYSXUaFDbtbEIvUm1C/87w+xTC//mQ3+fJ1eA6ix0=;
+        b=pOei/ynagP6cnOHGAuIvMl7jtHkCxQtfCSc1gjBEXbYWVjH76hN9WHfrHI2YjBsKCE
+         sR1njruyDXmLUqshpn4veVElRAw5b7gAuZ5/ExoQZcQGcanWrHukMkex8SLe4X+nqXuW
+         lcRZYP1ow935XmNj+f2Tb+UT9D1x3uS/bKezXmrsn31ZXuIXwWgTvDk9pdtfivqifcdh
+         UiGvrWzFL1tzm6YaEqejhk60+bK7kq5Cxy07Hui9pEQLFFxIQ+5g7A8EgAaQh/dOKCkd
+         WvM3cSKpJhlMYyIZ1g5fIGfaQ6ffUlb7aKjmJV2lEepzXW0ZaH7Ppdi01uXy0sYfd/y8
+         yLPA==
+X-Gm-Message-State: AOJu0YxT94JMGiyndSBbnb1FcHa/XYE4axfMdNfjl19xGwlNxpQcCYnQ
+	r8gmDUFYRtmyEZD/2eiedVwrMAt7yn5qWOh86m7FrRTXGCbRsMoWvZi7bmeGnlIEu+VbdHhbmrp
+	EhzQl19zi6+I5xZhjGg4oU1rmMv8E+BUXl+xkbPkE/Q==
+X-Gm-Gg: ATEYQzycBoFI4VynAQc4dWrE98U36TG8E+NN3pfgLDVTCVZVHsQYqu7fyg30JFMZ9O6
+	aDTXElwgCcUaHzT/aSaJ0Fwu8eRL6SoGq4DnAW8uXufoiuq1395moMbHV+KIOxOdXljnG+BAbRT
+	BGAcH5jyvNxdLrh3GkoncOvgdhEe7iK2tNbQti7JMtsyxcW0Ogz/tw6ZUZdAvspBB5JhZstlicm
+	y2CKJut0Zc+oQcm4+APpm7xTi7/uUGg77Mgj68jAkw8s3upw3Vwd6WsXAXv3P1rNDrfODkSWmAR
+	vKReOKOtrVTUQ+uA6xKJnvTDR8cF8Dl7AdpTWVQE
+X-Received: by 2002:a05:600c:1e8f:b0:486:fb8a:fd9 with SMTP id
+ 5b1f17b1804b1-48715f03256mr24608275e9.0.1774427899095; Wed, 25 Mar 2026
+ 01:38:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
-Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
- scalation
+References: <CAK3hNHa=A2kB5658f3_DMdSnhXSdK84+93Mq0uFRuWD-VXmyzg@mail.gmail.com>
+In-Reply-To: <CAK3hNHa=A2kB5658f3_DMdSnhXSdK84+93Mq0uFRuWD-VXmyzg@mail.gmail.com>
+From: Abhinav Agarwal <abhinavagarwal1996@gmail.com>
+Date: Wed, 25 Mar 2026 01:37:52 -0700
+X-Gm-Features: AQROBzA2P-qyu0OXIMKu80RPrUrX9fbqjabEKW4pskM4nLUcbLFt82P7Cws0Wj4
+Message-ID: <CAK3hNHZzPyQaJL4y4CToEma7DFjEGREK4rz-53mx7DNc23dwqw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] Re: CVE-2026-33150, CVE-2026-33179: libfuse io_uring memory safety
+ vulnerabilities (use-after-free, NULL deref)
 
-On Fri, May 01, 2026 at 11:30:17AM -0400, Demi Marie Obenour wrote:
-> > But I also hope this finally provides some more impetus for AF_ALG to be
-> > deprecated and removed.  It's a massive, largely pointless attack
-> > surface which has been causing problems, including regular CVEs, ever
-> > since it was added to the kernel in 2010.  And of course it's gotten
-> > even worse lately, with LLMs now being able to find the bugs.
-> > 
-> > Userspace crypto libraries exist.  There's no need to escalate to kernel
-> > mode just to do some math.
-> 
-> The only reason I can think of to keep it is for embedded systems
-> with weak CPUs and crypto accelerators that are actually worth using.
-> However, those seem to be very rare outside of things like routers,
-> which run specialized distros like OpenWRT.  Even when the accelerator
-> exists and is worth using, AF_ALG is certainly not an efficient way
-> to access it.
-> 
-> Furthermore, an inline encryption engine in the NIC would be a much
-> better choice for future router designs.  AF_ALG doesn't work with
-> that at all.
+Following up with a detailed writeup covering root cause analysis,
+exploitation surface, and proof of concept for both CVEs:
 
-All correct, of course.
+https://abhinavagarwal07.github.io/posts/ringwraith/
 
-The main other claimed benefit of AF_ALG (and the similar KEYCTL_PKEY_*)
-that sometimes gets mentioned is, ironically, a security one: keys can
-be kept out of a particular userspace processes's address space.
+Key points beyond the original advisory:
+- The UAF (CVE-2026-33150) is triggered by pthread_create failure or
+  io_uring_queue_init_params failure, not by the CVE-2026-33179 sub-bugs
+- Container resource limits (cgroup pids.max, RLIMIT_NPROC) reliably
+  cause pthread_create failure in the io_uring startup path
+- CVE-2026-33179 has two independent sub-bugs: NULL deref on
+  numa_alloc_local failure, and error-swallowed-as-success causing a
+  filesystem hang; neither chains into the UAF in the shipped code
 
-But:
+Regards,
+Abhinav Agarwal
 
-- Different userspace processes have different address spaces too.  So
-  it already can be, and indeed often already is, done in userspace.
 
-- This security benefit is kind of besides the point when the interface
-  has a privilege escalation bug every few months.
-
-- The kernel often doesn't support the algorithm needed, or if it does,
-  some of them just aren't as well maintained as userspace libraries
-  like OpenSSL and BoringSSL.  For example, the kernel's RSA
-  signing/decryption code is vulnerable to timing side-channels.
-
-(I'd like to specifically call out
-https://blog.cloudflare.com/the-linux-kernel-key-retention-service-and-why-you-should-use-it-in-your-next-application/
-as being misleading and harmful.  It says to use the kernel for RSA
-private key operations.  But it fails to mention the kernel's RSA
-implementation being vulnerable to timing side-channels or the steady
-stream of vulnerabilities in the associated UAPIs.)
-
-> > On Linux systems with no programs that use AF_ALG, it can already be
-> > disabled in the kconfig by unsetting CONFIG_CRYPTO_USER_API_*.
-> > 
-> > But there are some holdouts like iwd (iNet wireless daemon) that are
-> > keeping general-purpose Linux distros from being able to disable it.
-> 
-> If AF_ALG was removed from the kernel, that would provide an incentive
-> for someone to patch iwd to use a userspace library instead.  Or if
-> iwd is unmaintained, it (sadly) needs to be removed from distros.
-> (Sadly because wpa-supplicant is much less well designed.)
-
-Where iwd is used, AF_ALG can't just be removed from the kernel
-unilaterally.  People would complain that iwd is broken and invoke the
-"no regressions" rule.  While only a few programs use it (iwd, bluez,
-cryptsetup with certain options), they are enough for this to happen.
-
-We do remove algorithms from AF_ALG occasionally, but we've been unable
-to remove ones like MD4 (yes, that MD4) that are still used by iwd:
-https://lore.kernel.org/linux-crypto/946591db-36aa-23db-a5c4-808546eab762@gmail.com/
-Likewise with removing support for SHA-1 from KEYCTL_PKEY_*
-(https://lore.kernel.org/linux-crypto/f0492c92-1015-48e3-bfce-598c7a4843d1@quicinc.com/).
-People even post the Linus quote "we simply do not break user space".
-
-Unfortunately, the developers and users of this small set of userspace
-programs are disconnected from the extraordinary amount of time and
-effort that the rest of the Linux community is putting in to maintain
-these UAPIs and respond to the continuous stream of vulnerabilities.
-
-To them these are simply APIs available that work.
-
-This is actually one of the reasons I've been making these public posts:
-this needs to be a community effort to deprecate these UAPIs.
-
-If the developers of these userspace programs aren't taking action yet,
-people need to volunteer to go in and fix these programs.  Again, it's
-actually a pretty small set of programs that even uses this stuff.
-
-This would be really impactful to the security of Linux.
-
-A lot of the discourse around this vulnerability has focused on the
-things that went wrong with the patching.  It did go very badly, but I
-feel it's also missing the point a bit.  AF_ALG and KEYCTL_PKEY_*
-actually have a continuous stream of vulnerabilities, which has only
-accelerated in the era of LLMs.  Just in the last year there have been
-at least 4 privilege escalations in AF_ALG, I think.  We need to fix the
-root cause of why this is happening.
-
-And I think it really can be fixed.  It's just a few programs that are
-using these UAPIs.  Many systems already don't need them at all.
-
-But people need to help.  Send patches to iwd, bluez, cryptsetup, etc.
-that make them use userspace crypto libraries instead of AF_ALG and
-KEYCTL_PKEY_*.  If the maintainers aren't convinced yet, then patch
-downstream in your distro as a starting point (and disable the UAPIs in
-your kernel).  Or help in other ways like writing blog posts that
-promote attack surface reduction and the alternatives to these UAPIs.
-
-I'd also like to explore some more incremental approaches, such as
-making these UAPIs require CAP_SYS_ADMIN, possibly configurable by a
-sysctl.  If anyone knows of anything important that would be broken by a
-CAP_SYS_ADMIN requirement on AF_ALG and KEYCTL_PKEY_*, let me know.
-
-I think there should also be an allowlist of algorithms, and the splice
-support should be removed.  (Interestingly, there's precedent for
-removing splice support from AF_ALG: it was already removed from the 6.1
-LTS kernel last year, seemingly accidentally.  That's why the copy.fail
-exploit didn't work on 6.1 but did work on other versions.)
-
-- Eric
+On Fri, Mar 20, 2026 at 6:24=E2=80=AFPM Abhinav Agarwal
+<abhinavagarwal1996@gmail.com> wrote:
+>
+> Two memory safety vulnerabilities in libfuse's io_uring code path
+> (introduced in 3.18.0) have been fixed in libfuse 3.18.2. Only the
+> io_uring transport is affected; the traditional /dev/fuse path is not.
+>
+> Affected versions: libfuse >=3D 3.18.0, < 3.18.2
+> Fixed in: libfuse 3.18.2
+>   https://github.com/libfuse/libfuse/releases/tag/fuse-3.18.2
+>
+>
+> CVE-2026-33150: Use-After-Free
+> Severity: High (CVSS 7.8)
+> CWE: CWE-416
+>
+> Use-after-free in io_uring session shutdown path. A local user can
+> crash the FUSE daemon or potentially execute arbitrary code.
+>
+> Advisory: https://github.com/libfuse/libfuse/security/advisories/GHSA-qxv=
+7-xrc2-qmfx
+> Fix: https://github.com/libfuse/libfuse/commit/49fcd891a58f622c098e2ca67d=
+66086f7b213836
+> Credit: Abhinav Agarwal (reporter)
+> Remediation review: Akshat Sinha
+>
+>
+> CVE-2026-33179: NULL Pointer Dereference + Memory Leak
+> Severity: Moderate (CVSS 5.5)
+> CWE: CWE-476
+>
+> Missing NULL checks and error-path cleanup in io_uring queue
+> initialization can crash the FUSE daemon on allocation failure
+> and leak NUMA memory.
+>
+> Advisory: https://github.com/libfuse/libfuse/security/advisories/GHSA-x66=
+9-v3mq-r358
+> Fix: https://github.com/libfuse/libfuse/commit/7beb86c09b6ec5aab14dc25256=
+ed8a5ad18554d7
+> Credit: Abhinav Agarwal (reporter)
+> Remediation review: Akshat Sinha
+>
+>
+> Both issues were reported privately to the libfuse maintainer
+> and fixed in a coordinated release.
+>
+> Timeline:
+>   2026-03-16  first issue reported libfuse maintainer
+>   2026-03-17  second issue reported libfuse maintainer
+>   2026-03-18  Release 3.18.2 with fixes
+>   2026-03-19  GHSA advisories published
