@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["666" "Tuesday" "4" "January" "2022" "05:55:31" "+0000" "Benoit Tellier" "btellier@apache.org" nil "22" "[oss-security] CVE-2021-40111: Apache James IMAP parsing Denial Of Service " nil nil nil "1" nil nil (number mark "U       btellier@apa Jan  4   22/666   " thread-indent "\"[oss-security] CVE-2021-40111: Apache James IMAP parsing Denial Of Service \"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-40111: Apache James IMAP parsing Denial Of Service " nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17604 invoked by uid 550); 4 Jan 2022 06:56:15 -0000
+Received: (qmail 8027 invoked by uid 550); 28 Mar 2026 00:08:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,35 +7,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21566 invoked from network); 4 Jan 2022 05:55:44 -0000
-Content-Type: text/plain; charset=utf-8
-From: Benoit Tellier <btellier@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <f4521c81-26b9-35d0-a5b4-f25b1a766d73@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 04 Jan 2022 05:55:31 +0000
+x-ms-reactions: disallow
+Received: (qmail 32155 invoked from network); 27 Mar 2026 22:41:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
+	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=w3E1BadPgiX3lHDqtxQJR9mTq/ZfJWxZ6zWh03TsqS4=; b=iE39czz4FOYR4qoK3JP68ScRs8
+	8q6+f48pz3sI594dqz95x632UD+KspfKJYmegngWYshuTyeVRK6n+LqAvKNpyAA/tIjLTJ4xUuSbH
+	S+IttxtDmlDExgHxokvdMbeUVk2YXEhAJmmrrreYvNCi5Wk0hc6l9w5Wl3H2Rsg5fQ065JZsb62jf
+	vLnV/R4cc7KuoUg+JiwpAbOCt7J9yVCKeVdx0W0TtV9bISrNgQpIJSA0Te/87jiSwy/LkLEUzBJCh
+	Txe7DzgTS5vC9l0XqdA/HUCHD3FwKpbAgYKQYM8hQ9upYdFwirK+loh5zEosarvOgyzOPY5nfkoCK
+	6sXW3Ytw==;
+Date: Sat, 28 Mar 2026 00:41:08 +0200
+Message-ID: <20260328004108.GB756636@igalia.com>
+From: Adrian Perez de Castro <aperez@igalia.com>
+To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
+Cc: security@webkit.org, oss-security@lists.openwall.com
+References:
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2021-40111: Apache James IMAP parsing Denial Of Service 
+Content-Type: multipart/signed; boundary="j8+8ilVGJSSmKpky"; micalg="pgp-sha256"; protocol="application/pgp-signature"
+Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2026-0002
 
-Severity: moderate
+--j8+8ilVGJSSmKpky
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: base64
 
-Description:
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
+eSAgICAgICAgICAgICAgICAgV1NBLTIwMjYtMDAwMgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
+b3J0ZWQgICAgICAgICAgIDogTWFyY2ggMjgsIDIwMjYKQWR2aXNvcnkgSUQgICAgICAgICAgICAg
+OiBXU0EtMjAyNi0wMDAyCldlYktpdEdUSyBBZHZpc29yeSBVUkwgIDogaHR0cHM6Ly93ZWJraXRn
+dGsub3JnL3NlY3VyaXR5L1dTQS0yMDI2LTAwMDIuaHRtbApXUEUgV2ViS2l0IEFkdmlzb3J5IFVS
+TCA6IGh0dHBzOi8vd3Bld2Via2l0Lm9yZy9zZWN1cml0eS9XU0EtMjAyNi0wMDAyLmh0bWwKQ1ZF
+IGlkZW50aWZpZXJzICAgICAgICAgOiBDVkUtMjAyNi0yMDY0MywgQ1ZFLTIwMjYtMjA2NjQsCiAg
+ICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjYtMjA2NjUsIENWRS0yMDI2LTIwNjkxLAog
+ICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI2LTI4ODU3LCBDVkUtMjAyNi0yODg1OSwK
+ICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNi0yODg2MSwgQ1ZFLTIwMjYtMjg4NzEu
+CgpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGRpc2NvdmVyZWQgaW4gV2ViS2l0R1RLIGFu
+ZCBXUEUgV2ViS2l0LgoKQ1ZFLTIwMjYtMjA2NDMKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJL
+aXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTIuMS4KICAgIENyZWRpdCB0byBUaG9tYXMg
+RXNwYWNoLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNv
+bnRlbnQgbWF5IGJ5cGFzcyBTYW1lCiAgICBPcmlnaW4gUG9saWN5LiBEZXNjcmlwdGlvbjogQSBj
+cm9zcy1vcmlnaW4gaXNzdWUgaW4gdGhlIE5hdmlnYXRpb24KICAgIEFQSSB3YXMgYWRkcmVzc2Vk
+IHdpdGggaW1wcm92ZWQgaW5wdXQgdmFsaWRhdGlvbi4KICAgIFdlYktpdCBCdWd6aWxsYTogMzA2
+MDUwCgpDVkUtMjAyNi0yMDY2NAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQg
+V1BFIFdlYktpdCBiZWZvcmUgMi41Mi4xLgogICAgQ3JlZGl0IHRvIERhbmllbCBSaGVhLCBTw7Zo
+bmtlIEJlbmVkaWt0IEZpc2NoZWRpY2sgKFRyaXB0b24pLCBFbXJvdnNreSAmCiAgICBTd2l0Y2gs
+IFlldmhlbiBQZXJ2dXNoeW4uCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3Jh
+ZnRlZCB3ZWIgY29udGVudCBtYXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNy
+YXNoLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92
+ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAzMDYxMzYKCkNWRS0yMDI2
+LTIwNjY1CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJl
+Zm9yZSAyLjUyLjEuCiAgICBDcmVkaXQgdG8gd2ViYi4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBt
+YWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBwcmV2ZW50CiAgICBDb250ZW50IFNl
+Y3VyaXR5IFBvbGljeSBmcm9tIGJlaW5nIGVuZm9yY2VkLiBEZXNjcmlwdGlvbjogVGhpcyBpc3N1
+ZQogICAgd2FzIGFkZHJlc3NlZCB0aHJvdWdoIGltcHJvdmVkIHN0YXRlIG1hbmFnZW1lbnQuCiAg
+ICBXZWJLaXQgQnVnemlsbGE6IDMwNDk1MQoKQ1ZFLTIwMjYtMjA2OTEKICAgIFZlcnNpb25zIGFm
+ZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNTIuMS4KICAgIENyZWRp
+dCB0byBHb25neXUgTWEgKEBNZXpvbmUwKS4KICAgIEltcGFjdDogQSBtYWxpY2lvdXNseSBjcmFm
+dGVkIHdlYnBhZ2UgbWF5IGJlIGFibGUgdG8gZmluZ2VycHJpbnQgdGhlCiAgICB1c2VyLiBEZXNj
+cmlwdGlvbjogQW4gYXV0aG9yaXphdGlvbiBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGlt
+cHJvdmVkIHN0YXRlIG1hbmFnZW1lbnQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDMwNjgyNwoKQ1ZF
+LTIwMjYtMjg4NTcKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJL
+aXQgYmVmb3JlIDIuNTIuMS4KICAgIENyZWRpdCB0byBOYXJjaXMgT2xpdmVyYXMgRm9udMOgcywg
+U8O2aG5rZSBCZW5lZGlrdCBGaXNjaGVkaWNrIChUcmlwdG9uKSwgRGFuaWVsCiAgICBSaGVhLCBO
+YXRoYW5pZWwgT2ggKEBjYWx5c3Rlb24pLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91
+c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgcHJv
+Y2VzcyBjcmFzaC4gRGVzY3JpcHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAg
+IGltcHJvdmVkIG1lbW9yeSBoYW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMzA3NzIzCgpD
+VkUtMjAyNi0yODg1OQogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdl
+YktpdCBiZWZvcmUgMi41Mi4xLgogICAgQ3JlZGl0IHRvIGdyZWVuYnlub3gsIEFybmkgSGFyZGFy
+c29uLgogICAgSW1wYWN0OiBBIG1hbGljaW91cyB3ZWJzaXRlIG1heSBiZSBhYmxlIHRvIHByb2Nl
+c3MgcmVzdHJpY3RlZCB3ZWIKICAgIGNvbnRlbnQgb3V0c2lkZSB0aGUgc2FuZGJveC4gRGVzY3Jp
+cHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkCiAgICB3aXRoIGltcHJvdmVkIG1lbW9yeSBo
+YW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMzA4MjQ4CgpDVkUtMjAyNi0yODg2MQogICAg
+VmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41Mi4x
+LgogICAgQ3JlZGl0IHRvIEhvbmd6ZSBXdSBhbmQgU2h1YWlrZSBEb25nIGZyb20gQW50IEdyb3Vw
+IEluZnJhc3RydWN0dXJlIFNlY3VyaXR5CiAgICBUZWFtLgogICAgSW1wYWN0OiBBIG1hbGljaW91
+cyB3ZWJzaXRlIG1heSBiZSBhYmxlIHRvIGFjY2VzcyBzY3JpcHQgbWVzc2FnZQogICAgaGFuZGxl
+cnMgaW50ZW5kZWQgZm9yIG90aGVyIG9yaWdpbnMuIERlc2NyaXB0aW9uOiBBIGxvZ2ljIGlzc3Vl
+IHdhcwogICAgYWRkcmVzc2VkIHdpdGggaW1wcm92ZWQgc3RhdGUgbWFuYWdlbWVudC4KICAgIFdl
+YktpdCBCdWd6aWxsYTogMzA3MDE0CgpDVkUtMjAyNi0yODg3MQogICAgVmVyc2lvbnMgYWZmZWN0
+ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi41Mi4xLgogICAgQ3JlZGl0IHRv
+IEBoYW1heWFuaGFtYXlhbi4KICAgIEltcGFjdDogVmlzaXRpbmcgYSBtYWxpY2lvdXNseSBjcmFm
+dGVkIHdlYnNpdGUgbWF5IGxlYWQgdG8gYSBjcm9zcy0KICAgIHNpdGUgc2NyaXB0aW5nIGF0dGFj
+ay4gRGVzY3JpcHRpb246IEEgbG9naWMgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXBy
+b3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDMwNTg1OQoKV2UgcmVjb21tZW5kIHVw
+ZGF0aW5nIHRvIHRoZSBsYXRlc3Qgc3RhYmxlIHZlcnNpb25zIG9mIFdlYktpdEdUSyBhbmQgV1BF
+CldlYktpdC4gSXQgaXMgdGhlIGJlc3Qgd2F5IHRvIGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVubmlu
+ZyBzYWZlIHZlcnNpb25zCm9mIFdlYktpdC4gUGxlYXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBmb3Ig
+aW5mb3JtYXRpb24gYWJvdXQgdGhlIGxhdGVzdApzdGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVyIGlu
+Zm9ybWF0aW9uIGFib3V0IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBzZWN1cml0eSBhZHZpc29y
+aWVzCmNhbiBiZSBmb3VuZCBhdDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0bWwg
+b3IKaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3VyaXR5LgoKVGhlIFdlYktpdEdUSyBhbmQgV1BF
+IFdlYktpdCB0ZWFtLAo=
 
-While fuzzing with Jazzer the IMAP parsing stack we discover that crafted A=
-PPEND and STATUS IMAP command could be used to trigger infinite loops resul=
-ting in expensive CPU computations and OutOfMemory exceptions.
-This can be used for a Denial Of Service attack. The IMAP user needs to be =
-authenticated to exploit this vulnerability.  This affected Apache James pr=
-ior to version 3.6.1.
+--j8+8ilVGJSSmKpky
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This issue is being tracked as JAMES-3634
+-----BEGIN PGP SIGNATURE-----
 
-Mitigation:
+iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaccHhAAKCRCRxVnb5MkS
+O9EUAJ9km5YejLWmMP19Hnn7hbip+6S0lACdEYlz7saHxJ9i8j1CXyk7ziVI8xU=
+=j+IK
+-----END PGP SIGNATURE-----
 
-This vulnerability had been patched in Apache James 3.6.1 and higher. We re=
-commend the upgrade.
-
-Credit:
-
-The Apache James PMC would like to thanks Benoit TELLIER for the report.
-
+--j8+8ilVGJSSmKpky--
