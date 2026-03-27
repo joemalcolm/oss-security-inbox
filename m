@@ -1,4 +1,4 @@
-Received: (qmail 17951 invoked by uid 550); 16 May 2026 07:55:57 -0000
+Received: (qmail 22334 invoked by uid 550); 27 Mar 2026 14:47:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,107 +8,76 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 17924 invoked from network); 16 May 2026 07:55:57 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1778918146;
-	 x=1779004546; bh=KSicuYOxU53GAuhY6Wjm29f3Wd4usqBtYDFsNqC0GuU=; b=
-	klAgKKLdmWBwImb/SsK1F08maOmeDfrvjAgSUSIZItCC6V3ekPRUC9M7FfM7GGYy
-	mCknE2xp8Jl7wF4zncqdMGtL1jrEvIENgTaNah5ZphgYvpGqk76XyXaoZ7SYuooJ
-	4Bm7tm3IgNZRV8iiVZ+s9N09vPOVUNmRJsQ6MyAini4ViSNYiosPTzz98ge+uWOQ
-	oCD6+ospXLpE50yLWXpPcYwRyynPDb79c/v+EWZMHAWVHG+Dw4bgKPtdQAq9bA7n
-	DtUQiTU+Ff9gBMf/pYlryh9qFJGla285jd+RuJhy4v7gOgq/o42dE0G5vrZr8Tyj
-	z3Bn69e4KVmmSYupky1NQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1778918146; x=1779004546; bh=K
-	SicuYOxU53GAuhY6Wjm29f3Wd4usqBtYDFsNqC0GuU=; b=P7T/fxzOO3A7EQ8aj
-	z++CjhGMJ3qq1T907JQJqs9Pbh/+Hvn9R2XCKJ9gefzfIchQNJAeAYdjSJhii7ak
-	Dj5nNMnM/uwY8/qKMaF85em7YL+QWPZVwsOQWNw5JV2zfg75EhDOSJhQaVR5LWdN
-	0t4vKcNgScchfbpEMk0oC2+//e28RpUYAdRW4oP8s52J8oqv1ssfbtmT52An9fbD
-	g2AYW1MuMKgGIH12yDbyrNBTFSly1ZviVxDnBSJIMyUUq+ZB/fVI1Vt21Z/K2jIG
-	bD1LQ2HGT2hJ6EQikSGA+fQKObk7t+n2TpJNQPs43Fh/WR4fItmYTHiAO/YBGbpm
-	GMtVw==
-X-ME-Sender: <xms:AiMIajuL8givSpKn40Wq1KRa3aTlAzC_04xYdHBD4S0Z4pLBM-6BNw>
-    <xme:AiMIaiaTmmRIyHhh7tTW1S-lyO4i9GZeIMxCVeriEZBPMTq6nBe3IeIdIGYxbrSSN
-    ylm0w5zNuu9QA8TK2igKan5_fEz2mx8ZVM-UrKpyMKp8tG49Q>
-X-ME-Received: <xmr:AiMIauVI0zqYfstpqwQ_18CJuEUJWRvNfG6PwOtZigLJNFB1QhDzFt7KdfI_iFsuvetTQyPunKmRsGUpXx7jUdIhhw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddufedvjeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggugfgjsehtkeertd
-    dttddunecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeen
-    ucggtffrrghtthgvrhhnpeehleeiudetleeuteehuddvgfevfefgjeffuefghffffedvhe
-    dvgfevtdetffejudenucffohhmrghinhepvghurhhophgrrdgvuhenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtg
-    homhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ohhsshdqshgvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
-X-ME-Proxy: <xmx:AiMIau6yJ0Zzh1a2mj8bAoTVP1-EHyYkhQIhVPS3iFqBeZYwF0UgGg>
-    <xmx:AiMIahi2pbzAPTpgaxVmeoi33ZQazmq7pQvfhUJBar2nE3YCMX0YgQ>
-    <xmx:AiMIatcPGpTOD4OoH7DMBWjt7vWkRzj1xXF4uVhCZZFinEfy4zJVyg>
-    <xmx:AiMIaufwBbppvfRaDz8RglLaaIxxektzd73_5aJWsQrPFMOWX8255Q>
-    <xmx:AiMIauGqr_-2AP-tdyMLgLaBYaplCFgaZ7rDuZ0d3fqhs8nvGGht8LAd>
-Feedback-ID: i787e41f1:Fastmail
-Date: Sat, 16 May 2026 09:55:00 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Message-ID: <2026051617-pellet-flatfoot-c07a@gregkh>
-References: <afDLFWVMK-r70PB0@yuggoth.org>
- <521d0295-6a93-4a28-be55-332d663ec457@gmail.com>
- <afI-PPAr7EP8SEsu@1wt.eu>
- <4386b3433ad85d4bb93e1ca2a07088d2b83bb23e.camel@debian.org>
- <2026051536-gatherer-excluding-f6ff@gregkh>
- <agdnYiFVMinGLHg3@voleno>
+Received: (qmail 31872 invoked from network); 27 Mar 2026 06:24:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1774592628;
+	bh=UHnlqXCZd/Sv7p01HuSlu8JjnKE1DHlAiKLFQX1JF8s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=1J6OOkj2p+ijrD9LprGjOL6VwM/rrKmNJ57qmSO5qX+jrkrNFSkxRzxKoDEMnBG1o
+	 vCLcBnoYsHNhoCCwy7k/HJwhM1p1GBCH4hbjUhLGsGVLvarUCL2QIW/mq8g4+ciWKJ
+	 iWbIveIgDNrI9RmulM8AIO+4W58aVplQ7pix9WCM=
+Date: Fri, 27 Mar 2026 07:23:24 +0100
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Qualys Security Advisory <qsa@qualys.com>
+Cc: "cve@kernel.org" <cve@kernel.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <2026032744-resale-jeep-2d72@gregkh>
+References: <20260312212345.GA2728@localhost.localdomain>
+ <20260312213345.GA3105@localhost.localdomain>
+ <20260326183559.GA22540@localhost.localdomain>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <agdnYiFVMinGLHg3@voleno>
-Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+In-Reply-To: <20260326183559.GA22540@localhost.localdomain>
+Subject: [oss-security] Re: Multiple vulnerabilities in AppArmor
 
-On Fri, May 15, 2026 at 03:35:14PM -0300, Santiago Ruano Rincón wrote:
-> El 15/05/26 a las 11:27, Greg KH escribió:
-> > On Fri, May 15, 2026 at 10:49:34AM +0200, Yves-Alexis Perez wrote:
-> > > On Wed, 2026-04-29 at 19:22 +0200, Willy Tarreau wrote:
-> > > > I'm increasingly doing that myself already, and predicted the death of
-> > > > embargoes a serveral months ago. Now I just remove unneeded details from
-> > > > commit messages, merging and issue releases to keep users protected.
-> > > 
-> > > Hey Willy,
-> > > 
-> > > Unfortunately that also has the side effects to hide security-relevant commits
-> > > from downstream integrators and users. Not that we really have the time to dig
-> > > each and every commit of each and every project (especially fast moving ones)
-> > > but we definitely miss things here and there without a heads up.
-> > 
-> > With the advent of the reporting requirements of the EU CRA law, as of
-> > the end of next year, all projects will have to be reporting their
-> > "security bugfixes" to the EU, so you will be able to go off of that
-> > feed.
-> > 
-> > Although that is a 18 months away, but something to look forward to :)
+On Thu, Mar 26, 2026 at 06:36:17PM +0000, Qualys Security Advisory wrote:
+> Since two weeks have passed now (since the fixes were released), would
+> it be possible to please assign CVEs to the remaining seven AppArmor
+> vulnerabilities:
 > 
-> While the full regulation will apply from December 2027, the Reporting
-> obligations of manufacturers (art14), "shall apply from 11 September
-> 2026", according to Article 71 (art71).
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/e38c55d9f834e5b848bfed0f5c586aaf45acb825
+> > - "[PATCH 02/11] apparmor: fix memory leak in verify_header" (a memory
+> >   leak);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/ab09264660f9de5d05d1ef4e225aa447c63a8747
+> https://git.kernel.org/stable/c/306039414932c80f8420695a24d4fe10c84ccfb2
+> > - "[PATCH 03/11] apparmor: replace recursive profile removal with
+> >   iterative approach" and "[PATCH 04/11] apparmor: fix: limit the number
+> >   of levels of policy namespaces" (the uncontrolled recursion detailed
+> >   in this advisory);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/8756b68edae37ff546c02091989a4ceab3f20abd
+> > - "[PATCH 05/11] apparmor: fix side-effect bug in match_char() macro
+> >   usage" (the out-of-bounds read detailed in this advisory);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/d352873bbefa7eb39995239d0b44ccdf8aaa79a4
+> > - "[PATCH 06/11] apparmor: fix missing bounds check on DEFAULT table in
+> >   verify_dfa()" (an out-of-bounds read and write);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/5df0c44e8f5f619d3beb871207aded7c78414502
+> > - "[PATCH 07/11] apparmor: Fix double free of ns_name in
+> >   aa_replace_profiles()" (the double-free detailed in this advisory);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/39440b137546a3aa383cfdabc605fb73811b6093
+> > - "[PATCH 09/11] apparmor: fix differential encoding verification" (an
+> >   infinite loop);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/a0b7091c4de45a7325c8780e6934a894f92ac86b
+> https://git.kernel.org/stable/c/8e135b8aee5a06c52a4347a5a6d51223c6f36ba3
+> > - "[PATCH 10/11] apparmor: fix race on rawdata dereference" and "[PATCH
+> >   11/11] apparmor: fix race between freeing data and fs accessing it"
+> >   (the use-after-free detailed in this advisory).
+> ------------------------------------------------------------------------
 > 
-> [art14] https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202402847#art_14
-> [art71] https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ:L_202402847#art_71
+> Thank you very much in advance! With best regards,
 
-Yes, but to be pedantic, September 2026 is when _manufacturers_ need to
-start reporting the bugs they are notified of or find on their own.  I
-predict that's just going to be a slow trickle, and that's what the EU
-is planning for.
-
-But, come December 2027, that's when all open source projects that end
-up under the "steward" category, requirements kick in.  That's when they
-are responsible for reporting all security-related issues that they have
-fixed to the EU.  That's when the real flood is going to start, AND is
-when manufacturers are going to have to be aware of that flood as it
-will be relevant for their products.
+We were told that these all required elevated privileges to hit, and so
+were not classified as individual vulnerabilities.  If the Apparmor
+maintainer tells us that these really all should be assigned a CVE, we
+will be glad to do so, but until then, we're just going to stick with
+the ones that we have assigned already.
 
 thanks,
 
