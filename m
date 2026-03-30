@@ -1,4 +1,4 @@
-Received: (qmail 15697 invoked by uid 550); 2 Oct 2023 09:22:08 -0000
+Received: (qmail 30559 invoked by uid 550); 30 Mar 2026 14:41:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,87 +7,237 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15676 invoked from network); 2 Oct 2023 09:22:08 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
-	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=EKj5euBWAvm/ZVRx9DijNvIqFAXLcdsYXer371fWBSI=; b=BXHP1m6dAyj+qQaCir4D5vFMzj
-	d7h36iItzRddfzu5KKZZ5dEKR0/jRr27KYfbhCpalcy8Y9v9ZyQDTjLZHzxzarznMyoRjYrdLayL3
-	172D1JIX09pb6joYNS7CForoA/sW2hAEPLnmhBqd0xDAJ5Gxm+YLtYWOd0VtLrWLV71PwTb6UX36w
-	JakgUGLj/REHktkE+3Kg2w6vvCIQmtqxMTZwBOhpposoo5iZP2BpTHj12hnOtgHZdQrghuvT7x90p
-	KEPATx2jKQM4BcNTRS46pyTtrJjw3mAEgRjVx2qYy+oAxFtuSzTTjDETq82/EIgSK9lhVTI3C6p9w
-	QvVVI+DQ==;
-Date: Mon, 2 Oct 2023 11:21:55 +0200
-From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <ZRqLs+ZoggKAcxBx@jumper.schlittermann.de>
-Mail-Followup-To: oss-security@lists.openwall.com
-References: <7b2e3fb3afc05aa39864e62b0c87a631b746f5c7.camel@runout.at>
- <ZRb180+B34Wmg1IM@jumper.schlittermann.de>
- <ZRmjAky/SBs4aCIw@jumper.schlittermann.de>
- <ZRnTNhtSBmN7GFfL@jumper.schlittermann.de>
+x-ms-reactions: disallow
+Received: (qmail 20090 invoked from network); 30 Mar 2026 06:04:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1774850660;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=yZ35VE7LvzLKyVQgmhuOPSoJRIiAfbazp4S83jm6ixY=;
+	b=NNB2wc0mnKsw0cm7OnxmtLFp34Y0GPeBY45Rcfw13pXCaYDRKDN7G/PzJm96KEqNtecTrc
+	odrcIT3oi1a8olXTrwfeagO863xaSWLki/5zsGwU3GeZL6APEtbTp5OXtDazuTza+KnCb1
+	VW0/iFnpj4j/XxjlFlheQnHsKVNoGds=
+X-MC-Unique: YY0pcAScN1CC6oHCsHiRHA-1
+X-Mimecast-MFC-AGG-ID: YY0pcAScN1CC6oHCsHiRHA_1774850657
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774850655; x=1775455455;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yZ35VE7LvzLKyVQgmhuOPSoJRIiAfbazp4S83jm6ixY=;
+        b=E9rZzXhnhHO4YSXQQLnS8Kn1+O28df5fMRvNlsX39UNhnpyGQ6d8+64BOv0+iYcFQe
+         Ly22gUVCIXDu+TEaLyUFZoPtMLx70HfBTiJlG8nHkhIwdJI3qQXrJL5jNGbhe3LSScpz
+         yQw8ziu6J5jw4zyScdcVEMBsmAJEHwbxM4Pcyy3fNICOVieuV/O7fBdlq0M+Vukjrw3P
+         Pp2aSiO+2Dfr4dORs70ugXACQEuvJNgllWss9R+WI7teOuBpVRev4f5K994BPHr+eUd7
+         8uRJdvvNfwCAJrVA10HwI9TjDYlpjfV0Cus/VL1/8Xzmox+z9FiLdOTxgRrCr2Wy8Bce
+         mwpA==
+X-Gm-Message-State: AOJu0YwXDXBoJtl6p4HI6NoutmPpW21Yb7xcM3hgKl0+l0QQMWMYy9nM
+	EfPsaWNQCxsgbBmwlMth72CB5V/WlcfysQE7Lv15Gw+wfJ9YB9kqxf2+5Va7/B03O7zhnYdnHOT
+	1Qu8xwXblplmGpbV3Oz/XR1jyc7g7YdXlHAUWk2mhkGiKTvmQKD0ObDnqZDOkyWSltksbIQq+HR
+	cxGd7B4usjzr+qtqV1CAZunoRoSBSoTmtZreRpC7tdgqrE/mQl6ZW7FXkfSA==
+X-Gm-Gg: ATEYQzwOeeLZV4dLLa9xId7lCTL1cy6HNo8RtjCajnBs0mBi30ihzBESpZ3nJS07kB8
+	PiZTHlNBteHClU1YatQE1ho/y5IRxiA6YM+G361VheWs5jEUmNrQEWZhFKChKM8RSw46qIALfFV
+	AURyYLmvMWOt972mmZoBF+iKj5QN2EOhUlxekkAlTS8dyG6vwlFsSIdw0ZpFfTQHnrVwR62fFa5
+	aKMCw==
+X-Received: by 2002:a05:651c:146e:b0:38b:f397:539a with SMTP id 38308e7fff4ca-38c731ba306mr38810081fa.1.1774850654985;
+        Sun, 29 Mar 2026 23:04:14 -0700 (PDT)
+X-Received: by 2002:a05:651c:146e:b0:38b:f397:539a with SMTP id
+ 38308e7fff4ca-38c731ba306mr38809961fa.1.1774850654307; Sun, 29 Mar 2026
+ 23:04:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yqlEinXgFEx6ILCW"
-Content-Disposition: inline
-In-Reply-To: <ZRnTNhtSBmN7GFfL@jumper.schlittermann.de>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Signal: +49.172.7909055
-X-Phone: +49.172.7909055
-X-SMS: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-Subject: Re: [oss-security] Exim4 MTA CVEs assigned from ZDI
+From: Sandipan Roy <saroy@redhat.com>
+Date: Mon, 30 Mar 2026 11:34:02 +0530
+X-Gm-Features: AQROBzD849VEJLOici5AnHvna_s-kayHhM3cmz4EisdE2_-dtzTafpEy2FUmFvg
+Message-ID: <CAJ33NAWbTShcWk04-Nu+eeUtkkXOWbXM-nNb64xtwp=gN6dUmA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Cc: Paolo Bonzini <pbonzini@redhat.com>, denis.pilipchuk@oracle.com, bkov@amazon.com, 
+	fgriffo@amazon.com, Yogesh Mittal <ymittal@redhat.com>, 
+	Mauro Matteo Cascella <mcascell@redhat.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: gbDRMgTUgCpFoTwhYjsQM57gexNsDW93zzJVtJ-lQFI_1774850657
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000c79e23064e379e00"
+Subject: [oss-security] KVM shadow EPT stale rmap use-after-free
 
---yqlEinXgFEx6ILCW
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--000000000000c79e23064e379e00
+Content-Type: text/plain; charset="UTF-8"
 
-We go public with the available fixes (addressing a subset of
-the issues) on Monday, Oct 2nd, 12:00 UTC.
+Hello OSS-Sec,
 
-The distribution points will be:
+Alexander Bulekov(bkov@amazon.com) and Fred Griffoul (fgriffo@amazon.com)
+reported a use-after-free in KVM's shadow paging code. The issue was found
+through fuzzing. It is
 
-- git://git.exim.org
-  branches:
-  - spa-auth-fixes (based on the current master)
-  - exim-4.96+security (based on exim-4.96)=20
-  - exim-4.96.1+fixes (based on exim-4.96.1 with the fixes from exim-4.96+f=
-ixes)
-  tags:
-  - exim-4.96.1
+exploitable from any x86 guest with nested virtualization enabled,
 
-- tarballs for exim-4.96.1: https://ftp.exim.org/pub/exim/exim4/
+on either Intel or AMD processors, or using shadow paging (ept=0 /
 
-    Best regards from Dresden/Germany
-    Viele Gr=C3=BC=C3=9Fe aus Dresden
-    Heiko Schlittermann
---
- SCHLITTERMANN.de ---------------------------- internet & unix support -
- Heiko Schlittermann, Dipl.-Ing. (TU) - {fon,fax}: +49.351.802998{1,3} -
- gnupg encrypted messages are welcome --------------- key ID: F69376CE -
+npt=0). The bug leads to kernel memory corruption and DoS issues.
 
---yqlEinXgFEx6ILCW
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
+Summary:
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAmUai7IACgkQr0zGdqa2
-wUJGCAf6AqCCsZm8O6GdE5BdL46vRUQVRqJtF1GzfUJizpeVUXVts8QzeZLRTNt4
-9nTVOBh4HS9v8z6+Qv8QsmkPnMBUnjONHnV0ymwn3+QS5LAIHfqs5h605KuCstTk
-v+5pNMCuJKwEj200pwBFsSncur+cDcU5p87Bi+GBagxXPGlYYjpEqzSW5xyyWO/h
-4ZBrhZa8igpqJFAa9P69/yb/RSUEoSL6LY4q7FKB13db6/3u/IkpHAKcMRN0hSB9
-vtAvNpC/L+AAKrIQcjC3PvzyDfKcF3RFLs6RapyqG2SyOQFlJMOYCZakYsBz3tSA
-TqEopfPB51X3oU8vadYCXgmNANBD7g==
-=bmQc
------END PGP SIGNATURE-----
+mark_mmio_spte() overwrites a present shadow SPTE via mmu_spte_set()
 
---yqlEinXgFEx6ILCW--
+without first calling drop_spte() to remove the rmap entry. When the
+
+shadow page is later freed through a level-conflict zap, the stale rmap
+
+points into freed memory. Subsequent rmap traversal (dirty-page-tracking,
+ksmd,
+
+NUMA balancing, ...) dereferences the stale pointer, resulting in a
+
+use-after-free.
+
+The bug was introduced by commit a54aa15c6bda ("KVM: x86/mmu: Handle
+
+MMIO SPTEs directly in mmu_set_spte()").  It is present from
+
+v5.13 through current upstream/kvm-next.
+
+
+OVE ID: OVE-20260330-0003
+
+CVE ID: Pending from kernel.org CNA.
+
+Root cause:
+
+Commit a54aa15c6bda moved MMIO SPTE handling to an early return in
+
+mmu_set_spte() that bypasses the rmap cleanup. The original code was
+
+safe because mark_mmio_spte was called inside set_spte(), which ran
+
+after mmu_set_spte() had already cleaned up the rmap via drop_spte().
+
+The reasoning in the commit message ("it should be impossible to
+
+convert a valid SPTE to an MMIO SPTE") is motivated by the earlier
+
+commit e0c378684b65 ("KVM: x86/mmu: Retry page faults that hit an
+
+invalid memslot").  However, this protection does not apply if
+
+the page table entry is rewritten via DMA, thus bypassing the
+
+write protection on the guest's shadowed page tables.
+
+
+Trigger Mechanism:
+
+L1 (e.g. a normal QEMU VM) cooperates with L2. Two EPT12 PD entries
+
+both point to the same guest PT page, so L0 creates one shadow page
+
+for both paths.
+
+1. L2 accesses GPA_A (via PD[0] -> PT[0]). L0 creates a shadow page
+
+   for the guest PT with a present SPTE at spt[0] and an rmap entry.
+
+2. L1 rewrites PT[0] to a noslot GPA via DMA (virtio-blk, bypasses
+
+   EPT01 write-protection). L0 does not invalidate EPT02.
+
+3. L2 accesses GPA_B (via PD[N] -> PT[0]). This is a fresh EPT02 miss
+
+   on a different GPA, no invalidation needed. L0 resolves PT[0] to
+
+   noslot. mark_mmio_spte() overwrites spt[0] without drop_spte(),
+
+   leaving a stale rmap.
+
+4. L1 rewrites EPT12 via DMA to create a level conflict (guest PT page
+
+   reused as PD).
+
+5. L2 accesses through the level-conflict path. L0 zaps the shadow
+
+   page. mmu_page_zap_pte() clears the MMIO SPTE with
+
+   mmu_spte_clear_no_track() (no rmap removal). Shadow page freed,
+
+   stale rmap points to freed slab.
+
+6. Rmap traversal (dirty logging, fork/madvise via MMU notifier, ksmd)
+
+   dereferences the freed sptep. Use-after-free read and write.
+
+On 6.1.74, CONFIG_KASAN=y reports issues such as:
+
+1. use-after-free Write of size 8 in mmu_spte_clear_track_bits
+
+2. use-after-free Read of size 8 in mmu_spte_clear_track_bits
+
+3. use-after-free Read of size 8 in rmap_write_protect
+
+4. use-after-free Read of size 4 in mmu_spte_clear_track_bits
+
+5. null-ptr-deref at addr 0x24 in mmu_spte_clear_track_bits
+
+6. user-memory-access in mmu_spte_clear_track_bits
+
+7. slab-out-of-bounds Read in mmu_spte_clear_track_bits
+
+8. kernel BUG at mmu.c:1110, BUG_ON(!is_shadow_present_pte(*sptep))
+
+   in rmap_write_protect
+
+These demonstrate guest-to-host DoS and guest-to-host kernel heap
+
+corruption, potentially aiding VM escape.
+
+On kernels 6.16 and newer the reproducer also triggers a WARN, present
+
+since commit 11d45175111d ("KVM: x86/mmu: Warn if PFN changes on
+
+shadow-present SPTE in shadow MMU").
+
+
+Backport instructions:
+
+The code has seen small changes but the logic has not changed substantially
+
+since Linux v5.13. The "if (flush)" branch added by the patch is the same
+
+as the one that is already present at the end of mmu_set_spte().
+
+
+Timeline:
+
+March 4, 2026: vulnerability reported to security@kernel.org by Alexander
+Bulekov <bkov@amazon.com>, with Cc to the KVM-x86 maintainers (Paolo
+Bonzini <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com)
+
+March 5, 2026: related WARN reported by Sean Christopherson
+
+March 6, 2026: final patches posted
+
+March 29, 2026: Patch Released as Public.
+
+
+Patches
+
+[1]
+https://lore.kernel.org/kvm/20260329162258.106549-1-pbonzini@redhat.com/T/#u
+
+[2]
+https://lore.kernel.org/kvm/20260329162258.106549-2-pbonzini@redhat.com/T/#u
+
+
+-- 
+*Sandipan Roy*
+
+Senior Product Security Engineer, Product Security
+
+Secure Engineering - Incident Response
+
+Email: sandipan@redhat.com
+
+PGP:0x4B5C7470051BB332 <https://bytehackr.fedorapeople.org/saroy.asc>
+
+*secalert@redhat.com <secalert@redhat.com>* For Urgent Response.
+<https://www.redhat.com/>
+
+--000000000000c79e23064e379e00--
+
