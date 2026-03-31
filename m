@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["517" "Tuesday" "7" "June" "2016" "09:34:51" "+0200" "Martin Prpic" "mprpic@redhat.com" "<87wpm1wixw.fsf@redhat.com>" "20" "[oss-security] Please reject duplicate CVE for libxml2" nil nil nil "6" "2016060707:34:51" "[oss-security] Please reject duplicate CVE for libxml2" (number mark "U       mprpic@redha Jun  7   20/517   " thread-indent "\"[oss-security] Please reject duplicate CVE for libxml2\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5173 invoked by uid 550); 7 Jun 2016 07:35:06 -0000
+Received: (qmail 30644 invoked by uid 550); 31 Mar 2026 16:35:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +7,91 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5155 invoked from network); 7 Jun 2016 07:35:05 -0000
-From: Martin Prpic <mprpic@redhat.com>
-To: "oss-security\@lists.openwall.com" <oss-security@lists.openwall.com>
-User-agent: mu4e 0.9.9.5; emacs 24.3.1
-cc: "Mitre CVE assign department" <cve-assign@mitre.org>
-Date: Tue, 07 Jun 2016 09:34:51 +0200
-Message-ID: <87wpm1wixw.fsf@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 18006 invoked from network); 31 Mar 2026 16:06:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1774973156;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=RS5jgG76aVixanEJB2RR0t4zF1rsJ5rG3XqvzPIlZzg=;
+	b=D1S9c15+PCFt/jbaOsh+JWyM6dgdIPbqNelTf6emNd1r6guVoWJsxjBRAWyUUQhk4tStZE
+	g6kGRfTjuYuED4eUV7sH7Xsg4zW1WAMakXTt5hDHm9wtK6qyqZOo0AxWfPHqqExJxqLN1S
+	O1asR65VzmXufSHFeXFHtrWyq+oVqI1U9CReAgqA8dxOjugoYFAxhHJ2dQoo6mSPJ+E6pu
+	/e+HGycf8Idj8SyTiSGer/rxF2qA5iS7BUT2q0++jdgD6q15VwQGiWjnOJRBylpqH12f9C
+	xGkKIikHZ6GOw9XK5g6kHHpKHomorcMqhbQpMRgW9TullISbORn1ckuZLe9XPA==
+Message-ID: <44ff4c48-8fb5-40a4-bba9-1926bf78a7a1@cpansec.org>
+Date: Tue, 31 Mar 2026 17:05:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB, en-ZA
+References: <50ef104c-c055-4dd3-adb3-0100267b7240@cpansec.org>
+From: Robert Rothenberg <rrwo@cpansec.org>
+To: oss-security@lists.openwall.com
+In-Reply-To: <50ef104c-c055-4dd3-adb3-0100267b7240@cpansec.org>
+X-Forwarded-Message-Id: <50ef104c-c055-4dd3-adb3-0100267b7240@cpansec.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Tue, 07 Jun 2016 07:34:54 +0000 (UTC)
-Subject: [oss-security] Please reject duplicate CVE for libxml2
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTGCjjqD1c4FQWdt+B0mefQfxEPchl6SJP+rphDK2fM9FxBzdQKzyX9BU5HdOX5T9OVPvaH51DzJxx3I5BstzIlPBsY9M+kuy9MZU4NAV8h+rlJNpA2idcIc1wDPnH5juh9jo6rv3CIj5HSqtXBc15uiraYeaJEHLH2ab1G7uYWpS2bUW7Fn8kZh8V2+ASy+BkO98hbTx8Tg8BsHFLC2+cT9S3Crz7osI8lcmf1PzM++ncdD54UQg9nuhJVrYJ3cBv+rd3KuTBat/1A+1JENRmMKIQT5r4jjSNNXdSYnYZQaL8QStihYNyP92N6lGWVXyj5weOiLo+shkDWZk9IxPFtpHXQMo4B9NKYWJepwW4WHriIsXEBeMmV/r1w2pjuU0K4A16xD6yJfmH8niSXFUVEx3VFWIvaCc0n5Txfm/wr9LwlqJo8ki/69q6ukWOk1wrafxK6prz52GEdUnX/cWP90xk2MqBtTYQVxRS+NBthpndOm9Bzrw/1Fe7u3+h3hE+iy77gBQx8Hld4NMB2GcRhG0hvKChvKo1EOIJsJGoz2htUfixPZoNLXJg9tUa6kC72hBpy46VJkQrOq1dQL0Yq2teBJIoa1e7xgWegdytH4cFNzW1XLL8qqvyi+/+TaFURTaW6mWPIovcW30l+bDNLkf9s4HuVTFKQ4+QUShF+DMA
+Subject: [oss-security] Fwd: CVE-2026-5087: PAGI::Middleware::Session::Store::Cookie versions
+ through 0.001003 for Perl generates random bytes insecurely
 
-Hi, it seems two CVEs were assigned for the same issue in libxml2:
+========================================================================
+CVE-2026-5087                                        CPAN Security Group
+========================================================================
 
-http://seclists.org/oss-sec/2016/q1/683
-http://seclists.org/oss-sec/2016/q2/214
+         CVE ID:  CVE-2026-5087
+   Distribution:  PAGI-Middleware-Session-Store-Cookie
+       Versions:  through 0.001003
 
-Daniel Veillard reported to us that these issues are the same and fixed
-by:
+       MetaCPAN: 
+https://metacpan.org/dist/PAGI-Middleware-Session-Store-Cookie
+       VCS Repo: 
+https://github.com/jjn1056/PAGI-Middleware-Session-Store-Cookie
 
-https://git.gnome.org/browse/libxml2/commit/?id=bdd66182ef53fe1f7209ab6535fda56366bd7ac9
 
-The upstream bug is:
+PAGI::Middleware::Session::Store::Cookie versions through 0.001003 for
+Perl generates random bytes insecurely
 
-https://bugzilla.gnome.org/show_bug.cgi?id=762100
+Description
+-----------
+PAGI::Middleware::Session::Store::Cookie versions through 0.001003 for
+Perl generates random bytes insecurely.
 
-Can CVE-2016-4483 please be rejected as a duplicate of CVE-2016-3627?
+PAGI::Middleware::Session::Store::Cookie attempts to read bytes from
+the /dev/urandom device directly. If that fails (for example, on
+systems without the device, such as Windows), then it will emit a
+warning that recommends the user install Crypt::URandom, and then
+return a string of random bytes generated by the built-in rand
+function, which is unsuitable for cryptographic applications.
 
-Thank you!
+This modules does not use the Crypt::URandom module, and installing it
+will not fix the problem.
 
--- 
-Martin Prpič / Red Hat Product Security
+The random bytes are used for generating an initialisation vector (IV)
+to encrypt the cookie.
+
+A predictable IV may make it easier for malicious users to decrypt and
+tamper with the session data that is stored in the cookie.
+
+Problem types
+-------------
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+- CWE-1204 Generation of Weak Initialization Vector (IV)
+
+Solutions
+---------
+Upgrade to version 0.001004 or newer.
+
+
+References
+----------
+https://metacpan.org/release/JJNAPIORK/PAGI-Middleware-Session-Store-Cookie-0.001003/source/lib/PAGI/Middleware/Session/Store/Cookie.pm#L156-173
+https://metacpan.org/release/JJNAPIORK/PAGI-Middleware-Session-Store-Cookie-0.001004/changes
+
+
+
