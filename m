@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["840" "Sunday" "2" "October" "2016" "20:06:25" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTriK94p6uR1j3fznZpOXVa+vOa7tLSvSMgGEDSgin7_bhMg@mail.gmail.com>" "37" "[oss-security] cJSON buffer out of bound read" nil nil nil "10" "2016100212:06:25" "[oss-security] cJSON buffer out of bound read" (number mark "U       marco.gra@gm Oct  2   37/840   " thread-indent "\"[oss-security] cJSON buffer out of bound read\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3997 invoked by uid 550); 2 Oct 2016 12:06:39 -0000
+Received: (qmail 3400 invoked by uid 550); 31 Mar 2026 23:28:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,73 +7,99 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3967 invoked from network); 2 Oct 2016 12:06:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=7UeBRRcFngvHpaV6IdNtH2hOSDX0tObndGdBpWliQq0=;
-        b=QDi635O5Yx2hwTk9aZjSr2Bow8p6Xe0hj7wBMIk7DqFbnkVtaBCy2sMYt9a4H2jFr2
-         7utZLAmw99zTa4qVgTrUzaCOz0pylfGuhqm7/VUkFqoekexcRDkoSK/mm4nwsDZ4wfml
-         6Ffum8zFbc/8Z5eQ0pzthMTjjizy4pupM3zP4FILDIrYQ/8vw8UcVJF9if1bdh1MWTLb
-         6Nl6Kl5X37b4FQ9Ni+VwNn5RpRL6c4tadf0DCve8NjB9pTAkP68jU3MU2vKnmt4IFumR
-         qoMeNahVvG2tjUxpJEq/OLrHEpEX4wawhuE0+WtCtWalWuFA8UogteeHjOfH45oHscgU
-         KEUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=7UeBRRcFngvHpaV6IdNtH2hOSDX0tObndGdBpWliQq0=;
-        b=XdizI//cfEhsrwrpLg4GvIp7ZcHvNW1GoVb27TeBeDcJm40W0mQdU38Fod8UrtqsmK
-         /HDNCSo47OHftF+Bs58yTjJb2vOnoAcVtggT23bl7QllK2KPHsZ50qY6MS7LgrvxzQR0
-         WJ7CgRpriuUMhVSTsjrBPIhPEml5WlQMSZw6cYmvC9uy3f0UrLzICdSKI2Y7JQ050g6t
-         fz1uGVpApuoAD47Pftuiszgr3WI/xl3flSzaw82L+ZN0Y5W9VBvjtwUxUu5SNg2umkfp
-         ZqCooi2CWWg3ZSswPNGI77Lelpq+ItpKcTVTXWgfAMcR7fsjnX7LfUPOrVPFTAu3HcaF
-         H16w==
-X-Gm-Message-State: AA6/9RlqlLa7kIb9W4NeJpA6PzG9HabM8ubOTrlotkFtujEPKuTWBfn5UUf+XX/9MqsNCF/Kmmk1QYuAiKSTbg==
-X-Received: by 10.107.57.139 with SMTP id g133mr19308222ioa.176.1475409985403;
- Sun, 02 Oct 2016 05:06:25 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 1285 invoked from network); 31 Mar 2026 20:48:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1774990086;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=KUQWsF7kqrehYVdH3Qn9tK8ZnUT8r27P4eo3XAiuDp0=;
+	b=W6OaRssnYqiU3kYtuKmlpoEbNkIuZnNzv5Qm1Qm551Fd/gq3Nzq4Im6TC8FgR1QRVqc+Z7
+	Co+ikCFgN7KHVlWnyIvC+rpfa2jWSeEzGUIrC5gLcRdT3/bC7EyJLl1x4BQra3uinMzMZC
+	DTYTnhdUcg0Bl8fxfIywocG5WgITZUU=
+X-MC-Unique: KFXAKJOZOiCNFOHLlEh-9g-1
+X-Mimecast-MFC-AGG-ID: KFXAKJOZOiCNFOHLlEh-9g_1774990083
+From: Aaron Conole <aconole@redhat.com>
+To: ovs-announce@openvswitch.org, oss-security@lists.openwall.com
+Date: Tue, 31 Mar 2026 16:48:00 -0400
+Message-ID: <f7t8qb7enen.fsf@redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-From: Marco Grassi <marco.gra@gmail.com>
-Date: Sun, 2 Oct 2016 20:06:25 +0800
-Message-ID: <CAFkTriK94p6uR1j3fznZpOXVa+vOa7tLSvSMgGEDSgin7_bhMg@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a114ac88a140224053de0a894
-Subject: [oss-security] cJSON buffer out of bound read
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: xO5_Puh2ca1TTzT8CBbIdPTtesdnPODWOCD6SDB_Rkw_1774990083
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain
+Subject: [oss-security] [ADVISORY] CVE-2026-34956: Open vSwitch: Invalid memory access in
+ conntrack FTP alg.
 
---001a114ac88a140224053de0a894
-Content-Type: text/plain; charset=UTF-8
+Description
+===========
 
-Hi,
+Multiple versions of Open vSwitch are vulnerable to crafted FTP payloads
+causing invalid memory accesses, potential denial of service, and possible
+remote code execution.  This impacts the userspace implementation of
+conntrack.  Triggering the vulnerability requires that Open vSwitch has
+configured conntrack flows specifying the FTP alg handler.  Conntrack
+handlers in userspace are not automatically applied.
 
-I would like to report a buffer out of bound read problem in cJSON, which
-is a embeddable JSON parser, used (I imagine) in embedded devices, or even
-bigger stuff like the ps4 (
-http://doc.dl.playstation.net/doc/ps4-oss/cjson.html).
+The issue is caused by type narrowing when copying FTP substrings.  It
+has existed in all versions of the userspace conntrack supporting the
+FTP handler.  This was introduced with Open vSwitch version 2.8.0 and
+affects all versions up to 3.7.0.
 
-patch:
-https://github.com/DaveGamble/cJSON/commit/94df772485c92866ca417d92137747b2e3b0a917
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has
+assigned CVE-2026-34956 identifier to this issue.  At the time of writing
+the flaw is considered with Moderate impact and 5.9 CVSS.
 
-issue:
-https://github.com/DaveGamble/cJSON/issues/30
 
-Poc with the malformed string
+Mitigation
+==========
 
-#include <stdio.h>
-#include <stdint.h>
-#include <fcntl.h>
-#include "cJSON.h"
+For any affected version of Open vSwitch, avoiding the FTP alg will
+prevent the issue from triggering.  The Open vSwitch team does not
+recommend attempting to mitigate the vulnerability this way because it
+may impact packet forwarding.
 
-static const char *my_json = "\"000000000000000000\\";
+By default, alg handlers are not installed, and must be added as part
+of the OpenFlow rules (via 'ct(alg=ftp)' for example).
 
-int main(int argc, const char * argv[]) {
-    cJSON * root = cJSON_Parse(my_json);
-    char * rendered = cJSON_Print(root);
-    printf("%s\n", rendered);
-    return 0;
-}
+Users can check if they are using affected flows by looking at their
+OpenFlow ruleset for their bridges, for example:
 
-thanks
+   ovs-ofctl dump-flows <bridge> | grep 'alg=ftp'
 
-Marco
+We have found that Open vSwitch may be subject to heap corruption when
+processing FTP messages.
 
---001a114ac88a140224053de0a894--
+
+Fix
+===
+
+Patches to fix this vulnerability in Open vSwitch 3.3 and newer are
+applied to the appropriate branches, and the original patch is located
+at:
+
+   https://mail.openvswitch.org/pipermail/ovs-dev/2026-March/431425.html
+
+
+Recommendation
+==============
+
+We recommend that users of Open vSwitch apply the included patch, or
+upgrade to a known patched version of Open vSwitch.  These include:
+
+* 3.3.9
+* 3.4.6
+* 3.5.4
+* 3.6.3
+* 3.7.1
+
+
+Acknowledgements
+================
+
+The Open vSwitch team wishes to thank the reporter:
+
+  * Seiji Sakurai <Seiji.Sakurai@outlook.com>
+
