@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2123" "Friday" "30" "September" "2016" "02:53:26" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160930065326.E65F713A5B9@smtpvmsrv1.mitre.org>" "50" "[oss-security] Re: git-hub: missing sanitization of data received from GitHub" "^Cc:" nil nil "9" "2016093006:53:26" "[oss-security] Re: git-hub: missing sanitization of data received from GitHub" (number mark "U       cve-assign@m Sep 30   50/2123  " thread-indent "\"[oss-security] Re: git-hub: missing sanitization of data received from GitHub\"\n") "<20160929154004.kphifrcks2b7boh6@jwilk.net>" ("<20160929154004.kphifrcks2b7boh6@jwilk.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20210 invoked by uid 550); 30 Sep 2016 06:53:39 -0000
+Received: (qmail 18246 invoked by uid 550); 31 Mar 2026 12:12:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,158 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20160 invoked from network); 30 Sep 2016 06:53:38 -0000
-In-Reply-To: <20160929154004.kphifrcks2b7boh6@jwilk.net>
-Message-Id: <20160930065326.E65F713A5B9@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri, 30 Sep 2016 02:53:26 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: git-hub: missing sanitization of data received from GitHub
-To: jwilk@jwilk.net
+x-ms-reactions: disallow
+Received: (qmail 18195 invoked from network); 31 Mar 2026 12:12:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=powerdns.com; h=
+	cc:content-type:content-type:date:from:from:message-id
+	:mime-version:reply-to:subject:subject:to:to; s=s1dus; bh=656qKD
+	pXPVth5EmPklvK2TGC0hqKjUhfxBW07yAkKlI=; b=Y9CTZMmILOI/vM7xTKxcpg
+	0KL1xjtqEOVrVv+G7Z8MCyUbtzCDqu55nMclsR0tStjwFiVVMf0UCoUR1ZBgiIMg
+	rG6go4ugqjWJoikMbdcRc33I+yC8sM20IUxC/FsF1x1AXBHYYrCTdrFWQ/gxZ+Fa
+	35OwcNyNyuuoLtZ9kV394TiaAQfhYMuuMPpHfKTdNmRjgUjOPJl9bxG6y1MMYMrq
+	NaZsZ/HI+AlsCveWH4vIL66ItN7akQsOaSKvvmybAF2tg7hpvTmRfh/98knTU77U
+	Ud/osUs9Q7qbEit8k2Fx3QgQIkByk+SOrlz0i9O6NVvq1zjsNii6T47dOYT79pvw
+	==
+Message-ID: <bcf2c942-420e-48d6-876e-375f0d42fc81@powerdns.com>
+Date: Tue, 31 Mar 2026 14:12:28 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+To: oss-security@lists.openwall.com
+Content-Language: en-GB
+Autocrypt: addr=remi.gacogne@powerdns.com; keydata=
+ xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
+ Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
+ WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
+ QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
+ 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
+ AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwJQEEwEKAD4C
+ GwMFCwkIBwQFFQoJCAsFFgIDAQACHgECF4AWIQTWMAyry/Rpu+OS5QOiCO1PivWERgUCZ2BL
+ BAUJGKx0/QAKCRCiCO1PivWERotnB/0YtsDe/gdEmoOs/tP/FCC9GbhVFKPFJOIBKtaurPAl
+ aCJsm+mlN/Ck1HZ8eT8iWG88Vx6rBtCPvxbI8zZthub9yGr8MQcweMHNzrF96VxleLu8ialw
+ 0HuoqVLZr2TzTxsoAQY7EYXaRii3GFauWF6Qm/pZonKhViDT1CWjEl8R6oVXRHVT1mg72B4r
+ CPVZiFMMylwryZEZyxzcNH9YbaS3JeyrRAeMGaIn3CYWTZjaHfvDTq7hpQwE1C5KaC34K+nB
+ lufGB48Pzwy0X0Bk4oUqbrfMzyJuNVejkPd8SLOI3L1qIhwCyYHh6z+OSXRyy2SQq5YWMVKK
+ q/XtmO74OHsHzsBNBFY4pAcBCACOvXERmHXKCWzOL3j4cs0VyBE+BE2S2Da/E4Z/rh0Ct4m8
+ vmIOtLaWsUySeHkE26PuclnavjQ45L3WgfWqRWT6/0LKj/fHAKkI49AKSHMem5BZegwYzD/f
+ /S0brNPGdh0L3319oIfSUsDygPAcIeVlIeCwf36pI3KNole9L4dWgZjPK5qdTo5MzsQzlztE
+ I+E2NP0nMcshKfBrGAOnCLsTPrK51yuDoOpL+5TCTI21bJ6zHUMX3LZUlQ3Brg0ogmRIf6eI
+ SjEr00F8ECYApzijn4o+zoG+m+mJhj2BMppovKk8c1y95BMMW//bpcfLOsJmbC4aVxgGNugf
+ 8FbMpuG5ABEBAAHCwIgEGAEKADICGwwECwkIBwYVCAIJCgsWIQTWMAyry/Rpu+OS5QOiCO1P
+ ivWERgUCZ2BLJwUJGKx1IAAKCRCiCO1PivWERk0mB/0bmMVKewslxYaCXdhkiNQ8JxyT/yvC
+ iNvB4QYsjgLrPp8/+XQu7Tj7xEgDQML7TkH2glC0S+tOLh9pMzmtC7gy0uGkYjqYXqdehiQ5
+ nXelYEA1bH4SKUOSYNSLVRtj5dcFzjenTwPVz8uqYEKftIHr65q+LWdKKB5jETUfDK9W4812
+ pyNpwweYFXBQrrYcA9fmVVVthyYaZXirIPCO+acLHt5XdpI4EZ4/wh+lD5jFYVaLnuZLYDmq
+ 5vdSn9/zxbxhRKHl+qxPkAzOBGry0lGWIi0jlfn6AQfd8MlODbSdfv9pyfcgWi9Ppk/nA3e3
+ /chbQDuea/l3YgcXRObOnf5N
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------HtnO4XTpC1s31E3Z0zzfMaMY"
+Subject: [oss-security] PowerDNS Security Advisory 2026-02 for DNSdist: Multiple issues
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--------------HtnO4XTpC1s31E3Z0zzfMaMY
+Content-Type: multipart/mixed; boundary="------------KA13cun07sIeL5Cln6LGxNDt";
+ protected-headers="v1"
+Message-ID: <bcf2c942-420e-48d6-876e-375f0d42fc81@powerdns.com>
+Date: Tue, 31 Mar 2026 14:12:28 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Remi Gacogne <remi.gacogne@powerdns.com>
+Subject: PowerDNS Security Advisory 2026-02 for DNSdist: Multiple issues
+To: oss-security@lists.openwall.com
+Content-Language: en-GB
+Autocrypt: addr=remi.gacogne@powerdns.com; keydata=
+ xsBNBFY4pAcBCACIU5HRkBG3VcBfJaqetxIoKdLRxW3XmeCwruLFt6DN3q8bTtsNuQMJHa8O
+ Y0aKWJoXjOQSbBoKSGVAFKTmpCUfH4vhErt8DWqyglRfio2L3cTe48GZjiObdXLZxnsINAx2
+ WbcpoCRKTjdWX0MH2Jg/yf5PS6nb+glclRsDQmVGQjt92v23nNdsCp8I9rjP1+bQy5iHB1Ii
+ QuFJ6DBQJhgWQzksT2azZ83aADvc4/+Fg7VFYSzZHkp98NfyzUkiUzYi0I5Oy4KvyoXeS/CX
+ 9WtQGM1vjZAXXiD+ODJ0OvB2EsCUT6t4i9pWWh/+LnNtRWIVn8PJeQbCAO2wJlMxX28BABEB
+ AAHNKFJlbWkgR2Fjb2duZSA8cmVtaS5nYWNvZ25lQHBvd2VyZG5zLmNvbT7CwJQEEwEKAD4C
+ GwMFCwkIBwQFFQoJCAsFFgIDAQACHgECF4AWIQTWMAyry/Rpu+OS5QOiCO1PivWERgUCZ2BL
+ BAUJGKx0/QAKCRCiCO1PivWERotnB/0YtsDe/gdEmoOs/tP/FCC9GbhVFKPFJOIBKtaurPAl
+ aCJsm+mlN/Ck1HZ8eT8iWG88Vx6rBtCPvxbI8zZthub9yGr8MQcweMHNzrF96VxleLu8ialw
+ 0HuoqVLZr2TzTxsoAQY7EYXaRii3GFauWF6Qm/pZonKhViDT1CWjEl8R6oVXRHVT1mg72B4r
+ CPVZiFMMylwryZEZyxzcNH9YbaS3JeyrRAeMGaIn3CYWTZjaHfvDTq7hpQwE1C5KaC34K+nB
+ lufGB48Pzwy0X0Bk4oUqbrfMzyJuNVejkPd8SLOI3L1qIhwCyYHh6z+OSXRyy2SQq5YWMVKK
+ q/XtmO74OHsHzsBNBFY4pAcBCACOvXERmHXKCWzOL3j4cs0VyBE+BE2S2Da/E4Z/rh0Ct4m8
+ vmIOtLaWsUySeHkE26PuclnavjQ45L3WgfWqRWT6/0LKj/fHAKkI49AKSHMem5BZegwYzD/f
+ /S0brNPGdh0L3319oIfSUsDygPAcIeVlIeCwf36pI3KNole9L4dWgZjPK5qdTo5MzsQzlztE
+ I+E2NP0nMcshKfBrGAOnCLsTPrK51yuDoOpL+5TCTI21bJ6zHUMX3LZUlQ3Brg0ogmRIf6eI
+ SjEr00F8ECYApzijn4o+zoG+m+mJhj2BMppovKk8c1y95BMMW//bpcfLOsJmbC4aVxgGNugf
+ 8FbMpuG5ABEBAAHCwIgEGAEKADICGwwECwkIBwYVCAIJCgsWIQTWMAyry/Rpu+OS5QOiCO1P
+ ivWERgUCZ2BLJwUJGKx1IAAKCRCiCO1PivWERk0mB/0bmMVKewslxYaCXdhkiNQ8JxyT/yvC
+ iNvB4QYsjgLrPp8/+XQu7Tj7xEgDQML7TkH2glC0S+tOLh9pMzmtC7gy0uGkYjqYXqdehiQ5
+ nXelYEA1bH4SKUOSYNSLVRtj5dcFzjenTwPVz8uqYEKftIHr65q+LWdKKB5jETUfDK9W4812
+ pyNpwweYFXBQrrYcA9fmVVVthyYaZXirIPCO+acLHt5XdpI4EZ4/wh+lD5jFYVaLnuZLYDmq
+ 5vdSn9/zxbxhRKHl+qxPkAzOBGry0lGWIi0jlfn6AQfd8MlODbSdfv9pyfcgWi9Ppk/nA3e3
+ /chbQDuea/l3YgcXRObOnf5N
 
-> https://github.com/sociomantic-tsunami/git-hub/issues/197
-> 
-> When you ask it to clone a repository, it will call:
-> 
->    git clone <repourl> <reponame>
-> 
-> where both <repourl> and <reponame> come from GitHub API, without any
-> sanitization. Operators of the GitHub server (or a MitM attacker) could
-> exploit it for directory traversal or, more excitingly, for arbitrary code
-> execution, either via option injection, e.g.:
-> 
->    git clone 'git://-esystem("cowsay pwned > \x2fdev\x2ftty")/' --config=core.gitProxy=perl
-> 
-> or more directly with git-remote-ext, e.g.:
-> 
->    git clone 'ext::sh -c cowsay% pwned% >% /dev/tty' moo
+--------------KA13cun07sIeL5Cln6LGxNDt
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Use CVE-2016-7793 for the missing validation of <repourl>, and use
-CVE-2016-7794 for the missing validation of <reponame>. Roughly
-speaking, the proper constraints on <reponame> will be simpler than
-the proper constraints on <repourl>. We do not feel it is sensible to
-break this down further (e.g., what specific validation rules are
-required by not yet implemented) because the validation strategy is
-still being discussed in 197.
+SGkgYWxsLA0KDQpUb2RheSB3ZSByZWxlYXNlZCB0d28gbmV3IHZlcnNpb25zIG9mIEROU2Rpc3Qs
+IDEuOS4xMiBhbmQgMi4wLjMsIGZpeGluZyANCnNldmVyYWwgc2VjdXJpdHkgaXNzdWVzIHRoYXQg
+aGF2ZSBiZWVuIHJlcG9ydGVkIHRvIHVzLiBUaGVzZSBzZWN1cml0eSANCmlzc3VlcyBhcmUgbG93
+LXNldmVyaXR5IG9yIGludm9sdmUgdW51c3VhbCBjb25maWd1cmF0aW9ucy4NCg0KVGhlIGlzc3Vl
+cyBmaXhlZCBpbiB0aGVzZSByZWxlYXNlcyBhcmU6DQotIENWRS0yMDI2LTAzOTY6IEFuIGF0dGFj
+a2VyIG1pZ2h0IGJlIGFibGUgdG8gaW5qZWN0IEhUTUwgY29udGVudCBpbnRvIA0KdGhlIGludGVy
+bmFsIHdlYiBkYXNoYm9hcmQgYnkgc2VuZGluZyBjcmFmdGVkIEROUyBxdWVyaWVzIHRvIGEgRE5T
+ZGlzdCANCmluc3RhbmNlIHdoZXJlIGRvbWFpbi1iYXNlZCBkeW5hbWljIHJ1bGVzIGhhdmUgYmVl
+biBlbmFibGVkIHZpYSBlaXRoZXIgDQoiRHluQmxvY2tSdWxlc0dyb3VwOnNldFN1ZmZpeE1hdGNo
+UnVsZSIgb3IgDQoiRHluQmxvY2tSdWxlc0dyb3VwOnNldFN1ZmZpeE1hdGNoUnVsZUZGSSINCi0g
+Q1ZFLTIwMjYtMDM5NzogV2hlbiB0aGUgaW50ZXJuYWwgd2Vic2VydmVyIGlzIGVuYWJsZWQgKGRl
+ZmF1bHQgaXMgDQpkaXNhYmxlZCksIGFuIGF0dGFja2VyIG1pZ2h0IGJlIGFibGUgdG8gdHJpY2sg
+YW4gYWRtaW5pc3RyYXRvciBsb2dnZWQgdG8gDQp0aGUgZGFzaGJvYXJkIGludG8gdmlzaXRpbmcg
+YSBtYWxpY2lvdXMgd2Vic2l0ZSBhbmQgZXh0cmFjdCBpbmZvcm1hdGlvbiANCmFib3V0IHRoZSBy
+dW5uaW5nIGNvbmZpZ3VyYXRpb24gZnJvbSB0aGUgZGFzaGJvYXJkDQotIENWRS0yMDI2LTI0MDI4
+OiBBbiBhdHRhY2tlciBtaWdodCBiZSBhYmxlIHRvIHRyaWdnZXIgYW4gb3V0LW9mLWJvdW5kcyAN
+CnJlYWQgYnkgc2VuZGluZyBhIGNyYWZ0ZWQgRE5TIHJlc3BvbnNlIHBhY2tldCwgd2hlbiBjdXN0
+b20gTHVhIGNvZGUgdXNlcyANCiJuZXdETlNQYWNrZXRPdmVybGF5IiB0byBwYXJzZSBETlMgcGFj
+a2V0cw0KLSBDVkUtMjAyNi0yNDAyOTogV2hlbiB0aGUgImVhcmx5X2FjbF9kcm9wIiAoImVhcmx5
+QUNMRHJvcCIgaW4gTHVhKSANCm9wdGlvbiBpcyBkaXNhYmxlZCAoZGVmYXVsdCBpcyBlbmFibGVk
+KSBvbiBhIEROUyBvdmVyIEhUVFBzIGZyb250ZW5kIA0KdXNpbmcgdGhlICJuZ2h0dHAyIiBwcm92
+aWRlciwgdGhlIEFDTCBjaGVjayBpcyBza2lwcGVkLCBhbGxvd2luZyBhbGwgDQpjbGllbnRzIHRv
+IHNlbmQgRG9IIHF1ZXJpZXMgcmVnYXJkbGVzcyBvZiB0aGUgY29uZmlndXJlZCBBQ0wNCi0gQ1ZF
+LTIwMjYtMjQwMzA6IEFuIGF0dGFja2VyIG1pZ2h0IGJlIGFibGUgdG8gdHJpY2sgRE5TZGlzdCBp
+bnRvIA0KYWxsb2NhdGluZyB0b28gbXVjaCBtZW1vcnkgd2hpbGUgcHJvY2Vzc2luZyBETlMgb3Zl
+ciBRVUlDIG9yIEROUyBvdmVyIA0KSFRUUC8zIHBheWxvYWRzLCByZXN1bHRpbmcgaW4gZGVuaWFs
+IG9mIHNlcnZpY2UNCi0gQ1ZFLTIwMjYtMjc4NTM6IEFuIGF0dGFja2VyIG1pZ2h0IGJlIGFibGUg
+dG8gdHJpZ2dlciBhbiBvdXQtb2YtYm91bmRzIA0Kd3JpdGUgYnkgc2VuZGluZyBjcmFmdGVkIERO
+UyByZXNwb25zZXMgdG8gYSBETlNkaXN0IHVzaW5nIHRoZSANCiJETlNRdWVzdGlvbjpjaGFuZ2VO
+YW1lIiBvciAiRE5TUmVzcG9uc2U6Y2hhbmdlTmFtZSIgbWV0aG9kcyBpbiBjdXN0b20gDQpMdWEg
+Y29kZS4gSW4gc29tZSBjYXNlcyB0aGUgcmV3cml0dGVuIHBhY2tldCBtaWdodCBiZWNvbWUgbGFy
+Z2VyIHRoYW4gDQp0aGUgaW5pdGlhbCByZXNwb25zZSBhbmQgZXZlbiBleGNlZWQgNjU1MzUgYnl0
+ZXMsIHBvdGVudGlhbGx5IGxlYWRpbmcgdG8gDQphIGNyYXNoIHJlc3VsdGluZyBpbiBkZW5pYWwg
+b2Ygc2VydmljZQ0KLSBDVkUtMjAyNi0yNzg1NDogRGVuaWFsIG9mIHNlcnZpY2Ugd2hlbiB1c2lu
+ZyANCkROU1F1ZXN0aW9uOmdldEVETlNPcHRpb25zIG1ldGhvZCBpbiBjdXN0b20gTHVhIGNvZGUN
+Cg0KDQpUaGUgZnVsbCBzZWN1cml0eSBhZHZpc29yeSBjYW4gYmUgZm91bmQgYXQgDQpodHRwczov
+L3d3dy5kbnNkaXN0Lm9yZy9zZWN1cml0eS1hZHZpc29yaWVzL3Bvd2VyZG5zLWFkdmlzb3J5LWZv
+ci1kbnNkaXN0LTIwMjYtMDIuaHRtbA0KDQpNaW5pbWFsIHBhdGNoZXMgY2FuIGJlIGZvdW5kIGF0
+IA0KaHR0cHM6Ly9kb3dubG9hZHMucG93ZXJkbnMuY29tL3BhdGNoZXMvMjAyNi0wMi8NCg0KUGxl
+YXNlIGZlZWwgZnJlZSB0byBjb250YWN0IG1lIGRpcmVjdGx5IGlmIHlvdSBoYXZlIGFueSBxdWVz
+dGlvbi4NCg0KQmVzdCByZWdhcmRzLA0KLS0gDQpSZW1pIEdhY29nbmUNClBvd2VyRE5TLkNPTSBC
+ViAtIGh0dHBzOi8vd3d3LnBvd2VyZG5zLmNvbS8NCg==
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+--------------KA13cun07sIeL5Cln6LGxNDt--
+
+--------------HtnO4XTpC1s31E3Z0zzfMaMY
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJX7gsWAAoJEHb/MwWLVhi2E8AP/j7PSkFw3SXjin0TVbXv3EmH
-xSGpLV0UKT6QUwq5UOU3t8B676rCoQR3u1p401pvQRiEBnRrLk9O/Qm4aQDovXvE
-NnT2D5nlc9XOOD9i2mffWsebhe/KXwIb8c9YLmBrhsIvQZxNlkn7SMz9VrkoI/Wp
-6qwcl05asMSaayrkSuZs73mpQU3vF2FK04hVK/LNsUT0Sym+XZG5Ir1I9zgrNsxB
-AqhdnL2ODDTIRB2f/0UQsLrokvFJwzaHfwkbUEw6g+e4e35gaPLzG7Si2o4cmGiE
-+WsyGZJV9owX/0yhxJ9VMxOC9wCr8KPNX+vJjEoAJWai3kDe7xGPSAPVEhICUmCN
-MfH7brfQV+wIXfqP4HTb+bFZmrkizQE4jowqqUObpWkpnAatmi8KrOTTUbx0ZIcX
-vmqdaRYFkS/66SRr47Dm05hZ/6WbcEbw5IemxNJtMYjDd/lgFJb0aTiJt1LjeaUc
-OzdmiD2cQRKlO7ylDsqtx0vIOC6+pM11waw+uhtwZxEHUZQrdHQ+q2sA/u6C2JEd
-8jx/5b/Tnudanx3FWlVTGOkiSqMtoSCVdeC1WcAECcRfx4dT0qgkoV5kT8RlRCcD
-3efnJPsEocUuPTNv22jzz+v2E8lFgjKYTmHxSLT+lG/XGmpQyIdRD+LyXebHS5Rj
-CKOO5Su92yI9fZCpnboN
-=2FzE
+iQEzBAEBCgAdFiEE1jAMq8v0abvjkuUDogjtT4r1hEYFAmnLui0ACgkQogjtT4r1
+hEZavwf7BK7w6pBEft3cN3F/6oA5uJTKKRgeMycZz72xMotcG5hH6DI7mz2PmK8X
+MqvrJUfgFpLE74S56AOVCADItAGQolVQ5tgAojmckY2nvl/umVPeI4yKNBTXm62V
+cxjONYmg+SUN3Blba239JEoYHnAWhQYO/MpfJeT+6zzaOKSIxFybOPR1L1+D5saR
+3e3YmBjjB2+23OLWniDPGBGu/b75rR+zWo3KIDAunwxZpE5uz08s/hXr/vqTEmZc
+Ulero3oKyQGP8K86ezu4gE0EXFnUXh3R03Fha3sG3GuRlVVLn2wPghSvf2On3kH1
+bnHDvXr6auiNlU2hmbeMR5z6jFwcOw==
+=PRNe
 -----END PGP SIGNATURE-----
+
+--------------HtnO4XTpC1s31E3Z0zzfMaMY--
+
