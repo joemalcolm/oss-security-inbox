@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1201" "Tuesday" "20" "September" "2016" "00:06:00" "+0200" "Solar Designer" "solar@openwall.com" "<20160919220600.GA17104@openwall.com>" "26" "Re: [oss-security] Re: ezmlm warning" nil nil nil "9" "2016091922:06:00" "[oss-security] Re: ezmlm warning" (number mark "U       solar@openwa Sep 20   26/1201  " thread-indent "\"Re: [oss-security] Re: ezmlm warning\"\n") "<CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>" ("<1436834771.18369.ezmlm-warn@lists.openwall.com>" "<CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com>" "<CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com>" "<20150718174051.GB2727@openwall.com>" "<CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24004 invoked by uid 550); 19 Sep 2016 22:06:35 -0000
+Received: (qmail 9899 invoked by uid 550); 1 Apr 2026 08:37:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +7,147 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23863 invoked from network); 19 Sep 2016 22:06:07 -0000
-Date: Tue, 20 Sep 2016 00:06:00 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20160919220600.GA17104@openwall.com>
-References: <1436834771.18369.ezmlm-warn@lists.openwall.com> <CAPiURgVcmtPDG6APOESc5tG_sAjaA2JHOwThc+ByeSHQftDb8g@mail.gmail.com> <CALPTtNUgpuWSznYT77cY8fTFPMgzDW-TN-VC3agv982Socc4Qg@mail.gmail.com> <20150718174051.GB2727@openwall.com> <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>
-Mime-Version: 1.0
+x-ms-reactions: disallow
+Received: (qmail 9539 invoked from network); 1 Apr 2026 08:37:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1775032641; x=1775119041; bh=D9X4OStqi+
+	eeTDrlJSUe/xEkgQM4JpLCHKhaZXEsQ4w=; b=alWRdT/9b3dJc0RMAnjV9uGP2a
+	UjWsZF5FPOhkz3Lzw+GfZ589SKzUVfkWyTdyQmjuBnsvIg6nvhH4kbgDv2rvJZd1
+	GnoSY3tfQuW8TqLi+ETS9xWbcWuVyoqljoi6IlC9FJD2o12VV7UHSaasK3QZTCwv
+	6v4ASLr4RtGG4bzlDRtgTSxblodq/+VeXzEFWFQHjPU3IoyYAgkr23O1VmjMedb5
+	FFIeW80fqXEneDzEZimJHipE0sikRMMeBzp7D+3IJLYsz2QygovPsqC/WVgPXQk6
+	n4ZJPfF5TORfiLwuRS7qU5lQcd0YRMISQY68k+tgpHjQKVfNESy/zw5VaSsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1775032641; x=1775119041; bh=D9X4OStqi+eeTDrlJSUe/xEkgQM4JpLCHKh
+	aZXEsQ4w=; b=ZG/FPJ7Dunw2AQifFQzffrT1m3okNSRzoPuGufUfwzPZ475PIRX
+	W/3uWK0Xc6X1G21Hq2eVPQycNqPkX0ch2EdnOM0hGtI2CRMTr3Y1PTJMFfVqOx5m
+	Wjm6RBrry+FVvdYGvZ58cDdYXCWWRdJ/84Pl4Dd/3wVqBiXyI4HSciKEW6sUfTa3
+	BRM+MUA5dv8LbGSH5pWJY8LNYllG9CFJlcYt386p3uHNXxn9sUPYGmCcZnleMsZX
+	whacyB/8cs/L3kCzzPpdmrxcNkMyF5/ZsKOg6Jquw8Bm0/WhAo+o58EbBy67R8U/
+	zxeBlvYAlbGdwbMp4BBAIgN3w+1DNaMVW2Q==
+X-ME-Sender: <xms:QNnMaSCcw5dTSJo2vZKtOwkhZYQJgsgHfwwBjd-Z81wnVAMVzXZCIw>
+    <xme:QNnMaV2p--26rgD59Jndxwgq8rFEjObdH4jFxsOi9eSZQom87typZRJ5Lnf_Ixsvv
+    5qnk_iyunlA5za-BcUA8lHYrwqy86xiDG8lRPP-Ko-kUTV7dsQ>
+X-ME-Received: <xmr:QNnMac15gpxQ7La7ofYfWFlg_fkevJL-oP34Q1R02_WzkcGz0rls8HVOasz46oMNGhYDXzsPPEPL7OwExFfO4mA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddvieegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttd
+    dvnecuhfhrohhmpefirhgvghcumffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucgg
+    tffrrghtthgvrhhnpeegheeuhefgtdeluddtleekfeegjeetgeeikeehfeduieffvddufe
+    efleevtddtvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvghgsehkrhhorghhrdgtoh
+    hmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehq
+    shgrsehquhgrlhihshdrtghomhdprhgtphhtthhopegtvhgvsehkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehoshhsqdhsvggtuhhrihhthieslhhishhtshdrohhpvghnfigrlhhl
+    rdgtohhm
+X-ME-Proxy: <xmx:QNnMaSApKHu4yH8l5X065rMb4f1f1d9rez-WHWywlsXE81YfOxNGdw>
+    <xmx:QNnMaT65lDwjAzC3E84ChZE7NlmZDkRWx3FL5ENmafKNXhgw84kwpw>
+    <xmx:QNnMabKXtvH6m6LlZSQqox9JE5L5rtQgmXDCV_eKcc9ClTHACH6dYg>
+    <xmx:QNnMacteZBaUmKVh7rA5vqQBREVZqUrYgqwJXFNfQ-Meq-bPFz7HJg>
+    <xmx:QdnMaVMjJxhn3rSFtIL5YIxYMVYm3Aw-lZQoKkUqNxktbHRkRyMHCBbZ>
+Feedback-ID: i787e41f1:Fastmail
+Date: Wed, 1 Apr 2026 10:36:13 +0200
+From: Greg KH <greg@kroah.com>
+To: Qualys Security Advisory <qsa@qualys.com>
+Cc: "cve@kernel.org" <cve@kernel.org>,
+	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <2026040107-marshland-preflight-83a4@gregkh>
+References: <20260312212345.GA2728@localhost.localdomain>
+ <20260312213345.GA3105@localhost.localdomain>
+ <20260326183559.GA22540@localhost.localdomain>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CALPTtNX6gO6We7_3=Wf4xXdt6er8PwmPNjCWTwhZ-0jQ5GkU-g@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Re: ezmlm warning
+In-Reply-To: <20260326183559.GA22540@localhost.localdomain>
+Subject: [oss-security] Re: Multiple vulnerabilities in AppArmor
 
-On Mon, Sep 19, 2016 at 02:01:08PM -0700, Reed Loden wrote:
-> On Sat, Jul 18, 2015 at 10:40 AM, Solar Designer <solar@openwall.com> wrote:
-> > On Thu, Jul 16, 2015 at 05:41:35PM -0700, Reed Loden wrote:
-> > > Likely, the ezmlm instance on lists.openwall.com needs to be updated to get
-> > > some of the DMARC compliance changes that were made last year (
-> > > http://untroubled.org/ezmlm/archive/7.2.2/CHANGES).
-> >
-> > Thank you.  I assume you mean primarily this one:
-> >
-> > - Added optional rewritefrom feature to ezmlm-send, automatically
-> >   enabled when the sender has a "reject" DMARC policy.
+On Thu, Mar 26, 2026 at 06:36:17PM +0000, Qualys Security Advisory wrote:
+> Hi Linux kernel CVE assignment team, all,
 > 
-> Alexander,
+> We saw that last week you assigned two CVEs to two of the nine AppArmor
+> vulnerabilities that were fixed and released on March 12, thank you very
+> much for these:
 > 
-> Any update on getting the ezmlm instance on oss-security updated so people
-> with e-mail providers who have implemented DMARC don't get their e-mails
-> rejected? Would be much appreciated.
+> ------------------------------------------------------------------------
+> https://lore.kernel.org/linux-cve-announce/2026031846-CVE-2026-23268-6be3@gregkh/T/#u
+> > - "[PATCH 08/11] apparmor: fix unprivileged local user can do privileged
+> >   policy management" (the confused-deputy problem detailed in this
+> >   advisory);
+> ------------------------------------------------------------------------
+> https://lore.kernel.org/linux-cve-announce/2026031846-CVE-2026-23269-2bf7@gregkh/T/#u
+> > - "[PATCH 01/11] apparmor: validate DFA start states are in bounds in
+> >   unpack_pdb" (an out-of-bounds read);
+> ------------------------------------------------------------------------
+> 
+> Since two weeks have passed now (since the fixes were released), would
+> it be possible to please assign CVEs to the remaining seven AppArmor
+> vulnerabilities:
+> 
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/e38c55d9f834e5b848bfed0f5c586aaf45acb825
+> > - "[PATCH 02/11] apparmor: fix memory leak in verify_header" (a memory
+> >   leak);
 
-This is on my back burner.  I might approach experimenting with this
-some months later.  I'm afraid I have other priorities right now.  For
-now, I recommend that you don't use DMARC for addresses that you use on
-mailing lists (posting and/or subscribing); in fact, I am likely to
-continue to recommend this even if we do deploy a workaround for the
-lists hosted at Openwall.
+Now assigned to CVE-2026-23403
 
-Alexander
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/ab09264660f9de5d05d1ef4e225aa447c63a8747
+
+CVE-2026-23404
+
+> https://git.kernel.org/stable/c/306039414932c80f8420695a24d4fe10c84ccfb2
+
+CVE-2026-23405
+
+> > - "[PATCH 03/11] apparmor: replace recursive profile removal with
+> >   iterative approach" and "[PATCH 04/11] apparmor: fix: limit the number
+> >   of levels of policy namespaces" (the uncontrolled recursion detailed
+> >   in this advisory);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/8756b68edae37ff546c02091989a4ceab3f20abd
+
+CVE-2026-23406
+
+> > - "[PATCH 05/11] apparmor: fix side-effect bug in match_char() macro
+> >   usage" (the out-of-bounds read detailed in this advisory);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/d352873bbefa7eb39995239d0b44ccdf8aaa79a4
+
+CVE-2026-23407
+
+> > - "[PATCH 06/11] apparmor: fix missing bounds check on DEFAULT table in
+> >   verify_dfa()" (an out-of-bounds read and write);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/5df0c44e8f5f619d3beb871207aded7c78414502
+
+CVE-2026-23408
+
+> > - "[PATCH 07/11] apparmor: Fix double free of ns_name in
+> >   aa_replace_profiles()" (the double-free detailed in this advisory);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/39440b137546a3aa383cfdabc605fb73811b6093
+
+CVE-2026-23409
+
+> > - "[PATCH 09/11] apparmor: fix differential encoding verification" (an
+> >   infinite loop);
+> ------------------------------------------------------------------------
+> https://git.kernel.org/stable/c/a0b7091c4de45a7325c8780e6934a894f92ac86b
+
+CVE-2026-23410
+
+> https://git.kernel.org/stable/c/8e135b8aee5a06c52a4347a5a6d51223c6f36ba3
+
+CVE-2026-23411
+
+Hope that helps people's accounting systems :)
+
+thanks,
+
+greg k-h
