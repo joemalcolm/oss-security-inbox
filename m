@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["367" "Friday" "8" "October" "2021" "20:37:33" "+0200" "Yann Ylavic" "ylavic.dev@gmail.com" nil "13" "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil "10" nil nil (number mark "U       ylavic.dev@g Oct  8   13/367   " thread-indent "\"Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9290 invoked by uid 550); 8 Oct 2021 18:46:36 -0000
+Received: (qmail 3811 invoked by uid 550); 2 Apr 2026 15:55:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,68 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3985 invoked from network); 8 Oct 2021 18:37:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=WgBkk9HjShDyU0UoE1/c5ypeXis3lDDtJtaRYdS/trQ=;
-        b=SFq2U+rd5Ss7JuE6/fEpwvgbRyipV012qshjAf3z62IcfBFBtWmGnGbAgIzxTGFz4S
-         KQUutgIrgd97ZJNV0fkPXH2R6XrdmpDPEx5m9G8PuuizPeXMQkv0yPOwwBlE3XDTEbDF
-         enCJbGllUX3FSJO6p9FLs8fMjDEGeUCScB2CkUPBUFVX1cXxI7Bav6j/Wy3xZD6Ly9Ie
-         p/Ir1yhASnrjHtytKhq4B3wSAA+4kbxUmYQV1+Suu1hEwDh403txcgG6XgaFUlGoRBf+
-         3wRgbsSC1iAD/IPBQYLBar+3g6T5R0RWvtPau7lAkwYLeKURy6tCROcswBBRInpf16SL
-         DrFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=WgBkk9HjShDyU0UoE1/c5ypeXis3lDDtJtaRYdS/trQ=;
-        b=OVQeqSKPVbQfU+2yj201V10sqytqWcriYCoh68gGw4PtUCFLoIFX26zHZ4VMKO+V3E
-         k/pKf5/VNxTCVeT9BI5TmIrdLk4+DFQMFKopEbTGHdqVlixklpg9lpXMly9XvhPU3ZO6
-         UdDQ61vIxd+9Y8PNsgpL2osBHmzQ8x0slLejNN7o1KjzUNF7M6HZQHHS1Ve+HM/jj7HV
-         cVaYHYHIfxNXodRMZy9nDB6N07QwLiOAy+OEUJZrhVfvPVxBB+8n0jk0zDehZFS6zj6R
-         3q0BAVW7OVBUXBIlnGTRwRw1ZAdt5nGWp7HPPIBi0Jl1SKTbjKZxC6c2G7QhDy0WXD6H
-         G0Pg==
-X-Gm-Message-State: AOAM532i/Hfcj1ZZuuOC5RzeYDTmY9RnQ/gdkrbGJMTQML/NQVxZPHOc
-	r0MO90OcOlwIJSLwmRqtOnShQKGzVXfpeNkN6g1Gzv2ZYn0=
-X-Google-Smtp-Source: ABdhPJwYnYXSFmyqZRHC9NjegUa4ij/KQA6Q9ivF/mZL3DP9IWN0iEfgCyQO4FbB42YwVMoyFwzAiNq1W/8slwFgyOs=
-X-Received: by 2002:a17:906:9a07:: with SMTP id ai7mr6217057ejc.55.1633718264754;
- Fri, 08 Oct 2021 11:37:44 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 30288 invoked from network); 2 Apr 2026 15:36:17 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775144163; bh=B436MJckMPjU17nEnOfe35CIZ8grRNbfERJof7U1Fd0=;
+	h=From:Date:Subject:To:Cc:From;
+	b=JXn9Lhmdhfe9YPCOeOB0v3zQ79HACun0YWANCY2EbVYxlxIAcNsF73rvvN8ijvsrn
+	 shIwlo5QD9ffy+RN1pdnyNp7gl1nat0/+E7e87blyeIDeVkMPyeU2p68DjRTrX1+3+
+	 b1mJkzepFNpFJBzIf0ZWrN3w13C74bpKLoKUYcPRmpOQ//fCbpFCrlD1NTsQVeoYcp
+	 9OFMsxTJaLMhsIqcieKlsVhoItXgoKPsOEEyeihNU4ULQGm7BQZMe51CAeIHdX+lzp
+	 YNBZH9BzQCM1F8qUXEjMHk4hWxZNkxSd4pyTqbmdXQf5R6kHTFRaLmEb2TEXg0M7+S
+	 zuZbVI0UtmCFw==
+X-Gm-Message-State: AOJu0Yxv53ONIszCwDyFVtZjl8pG2Dub5LExmX/uWUANxK34Bc/MGYfj
+	CkF3SxM1C8tRXGREn4i+J6cjvcy21L/UOl7C6Nucbua2KAxrHPAT+hZDAo5ZuR4L7KyHGwdgfcA
+	5npB7+IKUwHaSfpXYnDe7MNP+9CHlNGY=
+X-Received: by 2002:a17:903:183:b0:2ae:aa16:acf7 with SMTP id
+ d9443c01a7336-2b269c949b7mr80075925ad.40.1775144161796; Thu, 02 Apr 2026
+ 08:36:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <a2cd6ccf-b381-5513-3c7c-598a6da8c9c9@apache.org> <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com>
-In-Reply-To: <0d7be57c-87ae-c4aa-7207-2337c1a51c6d@rs-labs.com>
-From: Yann Ylavic <ylavic.dev@gmail.com>
-Date: Fri, 8 Oct 2021 20:37:33 +0200
-Message-ID: <CAKQ1sVMn=09uimvWxVZrrVRGSDk5HLCB0TQViFJp1WFNG7jvWg@mail.gmail.com>
-To: oss-security@lists.openwall.com
+From: Masakazu Kitajo <maskit@apache.org>
+Date: Thu, 2 Apr 2026 09:35:50 -0600
+X-Gmail-Original-Message-ID: <CAGjw+kNQQdrjU3ypPr716M83omaoBT3+KsVxX8zMEDWPgsoLgQ@mail.gmail.com>
+X-Gm-Features: AQROBzAKHjiU4T-7CdS8pclkuSRCdvilYUE_4tobHEIoFt4GKnpTOAsPpJ0KbuU
+Message-ID: <CAGjw+kNQQdrjU3ypPr716M83omaoBT3+KsVxX8zMEDWPgsoLgQ@mail.gmail.com>
+To: announce@trafficserver.apache.org, Dev <dev@trafficserver.apache.org>, 
+	users <users@trafficserver.apache.org>, security@trafficserver.apache.org
+Cc: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000306c29064e7bf51a"
+Subject: [oss-security] [ANNOUNCE] ATS is vulnerable to HTTP requests with body
+
+--000000000000306c29064e7bf51a
 Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] CVE-2021-42013: Path Traversal and Remote Code
- Execution in Apache HTTP Server 2.4.49 and 2.4.50 (incomplete fix of CVE-2021-41773)
 
-On Fri, Oct 8, 2021 at 8:53 AM Roman Medina-Heigl Hernandez
-<roman@rs-labs.com> wrote:
->
-> I posted RCE exploit for this (it works for both CVEs: 41773 & 42013)
-> and some other details regarding requirements / exploitability, which
-> you may find useful at:
->
-> https://twitter.com/roman_soft/status/1446252280597078024
+Description:
+ATS is vulnerable to HTTP requests with body.
 
-Thanks, that's fair analysis.
+CVE:
+CVE-2025-58136 - A simple legitimate POST request causes a crash
+CVE-2025-65114 - Malformed chunked message body allows request smuggling
 
-Cheers;
-Yann.
+Reported By:
+Masakazu Kitajo (CVE-2025-58136)
+Katsutoshi Ikenoya (CVE-2025-65114)
+
+Vendor:
+The Apache Software Foundation
+
+Version Affected:
+ATS 9.0.0 to 9.2.12
+ATS 10.0.0 to 10.1.1
+
+Mitigation:
+9.x users should upgrade to 9.1.13 or later versions
+10.x users should upgrade to 10.1.2 or later versions
+
+For CVE-2025-58136, old version users
+can set proxy.config.http.request_buffer_enabled to 0 (the default value is
+0) to prevent the crash.
+There is no workaround for CVE-2025-65114.
+
+CVE:
+https://www.cve.org/CVERecord?id=CVE-2025-58136
+https://www.cve.org/CVERecord?id=CVE-2025-65114
+
+--000000000000306c29064e7bf51a--
