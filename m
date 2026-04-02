@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1124" "Friday" "10" "May" "2019" "11:37:54" "+0300" "Henri Salo" "henri@nerv.fi" nil "27" nil nil nil nil "5" nil nil (number mark "U       henri@nerv.f May 10   27/1124  " thread-indent "\"Re: [oss-security] XSS via EXIF tag in Serendipity blog\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] XSS via EXIF tag in Serendipity blog" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7380 invoked by uid 550); 10 May 2019 08:38:11 -0000
+Received: (qmail 3945 invoked by uid 550); 2 Apr 2026 15:27:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7362 invoked from network); 10 May 2019 08:38:11 -0000
-X-Virus-Scanned: Debian amavisd-new at coconut.nerv.fi
-Date: Fri, 10 May 2019 11:37:54 +0300
-From: Henri Salo <henri@nerv.fi>
+x-ms-reactions: disallow
+Received: (qmail 18081 invoked from network); 2 Apr 2026 07:48:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deepin.org;
+	s=ukjg2408; t=1775116075;
+	bh=7LG12F0YaCZyS6KkconlEf2kLRNbi7B+/qGBtsUArag=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=U3yydhFCsrMdRicBwuuPGBUXUMB2N3edMkpiDYDlIy8pokc4cPWZ+AGFO/kAx13zq
+	 lIMgn6jqEbBcEdMEi24t7QBWE5kUTMCNU0ghFB+BhSBgi+5obTZOirqPFHfW8sSLUc
+	 XtubieOox9XKRwCDtwD9XSml10xCEv4Z+vmmF2/4=
+X-QQ-mid: zesmtpip3t1775116071t263be377
+X-QQ-Originating-IP: hLaLmg+C2L/s3k5aYdqv62TxVV3fTENt0EWNzeZw8cQ=
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7511321657618496775
+Date: Thu, 2 Apr 2026 15:47:48 +0800
+From: Tianyu Chen <sweetyfish@deepin.org>
 To: oss-security@lists.openwall.com
-Cc: Hanno =?iso-8859-1?Q?B=F6ck?= <hanno@hboeck.de>
-Message-ID: <20190510083754.ts7ll2fi2532sjox@tunkki.bugs.fi>
-References: <20190503174218.79d22fbc@computer>
+Cc: Christian Brabandt <cb@256bit.org>
+Message-ID: <78956342F5383230+ac4fJDMjKT0_L7em@ut005408-PC>
+References: <aco9Ai89pj+OQ0YS@256bit.org>
+ <ac4aBrA6ssztvsrp@256bit.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; x-action=pgp-signed
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190503174218.79d22fbc@computer>
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] XSS via EXIF tag in Serendipity blog
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ac4aBrA6ssztvsrp@256bit.org>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:deepin.org:qybglogicsvrgz:qybglogicsvrgz3a-1
+X-QQ-XMAILINFO: MQ/e1nFgk5LjNp35OelPgLaYTPv18kbnyOBtYxEA3eaBgdWQv7jr2Ow0
+	1UUrgqAMhn/yHgau3N/Y4z20f5IF8Dnko0qf+oHs8lG+PLzTYqYTFe7ubvd/y/SUkPXFlxc
+	00sPNsWJbFgyadHQ1q3wur9GyR/9Whsmbrbj5SRyNkcB0s1k00o4zdD2qQznkEhv45LfUne
+	gOdJNyzKYif66IR+EQ9d+cPwpbwX6iBnCamE5HbhtXXN50HJsPXJjZbDl8YkqqyHLa6v3MQ
+	znx+NkA9ZYB371k+4U8YKQkgSCfxhr/2yrnT5LXcWg6g5Y/Xr9p59BwrnvO4zgLzzDwSve9
+	dHcd3kW0RpWpbiHrr4B2r6DLPJ7BOP6oZnI/b+6IAfrDMUVdIfy7kWDoFQOFFMbHJXyi3LA
+	cqpiqG1yzWe4e50tPtKPdBXtEDi/PSuX04EISLIOfoDVJodZcFJwHJ7ql6V2QwredLUrlad
+	R5jSpz0szkYcoEXvqPxVGebwzONsNI7W/Lcyn8L05fKHABf9F/i24vjgYczWqcQ0apm0ZrS
+	D//Ruy/SoefF825hILwZ3dP4Ul3weThzwlOPwtFi5SNihq864KB545Mt2XAFktVrtntEzz/
+	mkLoRbFw6gT47yc2cqtLDTHvw8oHpuRNMJc0nR2CtxFD97NhxjxCnjcH/fwGTrpaSM2uM89
+	ZdK9DlS4ukWqDAmA6j+jD96xqWchHQ9foEsdiCi7PLZqNf9pxkmKoh0oW/1arooZGza1cEi
+	AmpRHbHG6+Zr6REwGCmfm0CnQwsJB1txn8Wk/ZujsFobFI74fhhxJON/LlGII8+SqvQyOlu
+	UP+9kZzgpfKWXI9ur6HcE/M2FODqvhQVpMlK0/G4PxMpt98M9fKS/uGeUjJ8BwrYM/GJ93P
+	VVBoBTpn0SNoF2DOOCEGdPF7LhlvBe8lNzCwysV7sPnSbYk9Mbm/6Au5RGXSeXz3OzeaGqs
+	tzIg6RvG65YjBHv8RxksIszurP1XIipGijx2HdWEpZEVKb06a/XatTLTch0YVy/v3sztvE4
+	EANGifMOp9srbUfF9AJzPhDKx7/oA4DYsvhnzeMQ==
+X-QQ-XMRINFO: NI4Ajvh11aEjEMj13RCX7UuhPEoou2bs1g==
+X-QQ-RECHKSPAM: 0
+Subject: Re: [oss-security] [vim-security] Vim tabpanel modeline escape
+ affects Vim < 9.2.0272
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Apr 02, 2026 at 09:25:58AM +0200, Christian Brabandt wrote:
+> 
+> Sorry for being potentially off-topic, but I am wondering if I am doing 
+> something wrong here. Did anybody request a CVE for this? I got a 
+> notification from Github Support (after 10 hours or so) that they cannot 
+> assign a CVE for this, as there was already one assigned.
+> 
+> I typically hit the *Request CVE* button before I publish an advisory 
+> and send out the notifications, and usually github assigns those pretty 
+> fast, but not this time.
+> 
+> Does anybody here know how this works? Or did I do something wrong?
 
-On Fri, May 03, 2019 at 05:42:18PM +0200, Hanno Böck wrote:
-> https://github.com/s9y/Serendipity/issues/598
-> https://blog.s9y.org/archives/282-Serendipity-2.1.5-released.html
+Isn't it CVE-2026-34714? I saw it noted on
+https://github.com/vim/vim/security/advisories/GHSA-2gmj-rpqf-pxvh.
 
-MITRE assigned CVE-2019-11870 for this issue.
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE/aVSDznAZReWTkxKJ633pE6qdXQFAlzVOGIACgkQJ633pE6q
-dXT6lhAArWXR0Lp36yH57N6sgGLLF+gQavAOK+DfGjpOIkGsr9stlFzdfSD5HvSM
-EASX//8sMenVEXNblPiwbhhJK8cQRnjk/cbIyEACSXngGxU9L4oTAOFCM5PM35On
-Yy7rHqUxLeRhNHviAmSPq0D/n4Kwavc8GQBir4O4nYkwzkhoGTS9FCOyQvzFWGir
-0cv1hpYxvsLigw02g9qnCspnCrKty7FJoawUJ9G5RhYSJkwzEZYNhAAIKWl+Epb/
-xnJXQ5qBuU2KtWpF/Hp5O49GSF1Qd+/Ufdu43jSjbUPKXdD+SbnNRZJXgytj5Nvy
-w4BnHprzBRBHor+jlM8gDBUHfJsN6qdU8b1EyfTYHV/WzDZzXAEOViwuheTp5+b7
-8kb60uvklRfnwhnoQgz7AowcG9+qIruvDPFvXFRRMsSJh/xGHRkNLvLhngEDdzX5
-fVbLkVWmMCuQT6HXQOxCjC4gU59tIa2m1Y75sIT2ZbGcI2XKf/K2mTEcZAIBhV+a
-46Qh7/zakZId4w1q+tjkK8dETIBiVLmjsvg1AZWWnTKt2gL28u1ZXyWLJZzmBEHT
-3szdmlwbh4p/nvR4qqcY7tn6jy+FAs+gDmacaI/iMVaAb0+/vjOu0EdfORY+h/MJ
-9roi5AgpVCrsxxF6DhFPUp9n0ZVO5E5lJlGJv/6HPRowNO+FIq4=
-=q1XV
------END PGP SIGNATURE-----
+Best regards,
+Tianyu Chen @ deepin
