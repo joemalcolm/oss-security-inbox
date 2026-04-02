@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1333" "Friday" "18" "December" "2015" "20:53:00" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151219015300.4F586B2E2A5@smtpvbsrv1.mitre.org>" "31" "[oss-security] Re: CVE request: Blueman: Privilege escalation in blueman dbus API" nil nil nil "12" "2015121901:53:00" "[oss-security] Re: CVE request: Blueman: Privilege escalation in blueman dbus API" (number mark "U       cve-assign@m Dec 18   31/1333  " thread-indent "\"[oss-security] Re: CVE request: Blueman: Privilege escalation in blueman dbus API\"\n") "<20151218211732.GA20355@eldamar.local>" ("<20151218211732.GA20355@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17660 invoked by uid 550); 19 Dec 2015 01:53:13 -0000
+Received: (qmail 16000 invoked by uid 550); 2 Apr 2026 23:07:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,123 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17627 invoked from network); 19 Dec 2015 01:53:12 -0000
-From: cve-assign@mitre.org
-To: carnil@debian.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20151218211732.GA20355@eldamar.local>
-Message-Id: <20151219015300.4F586B2E2A5@smtpvbsrv1.mitre.org>
-Date: Fri, 18 Dec 2015 20:53:00 -0500 (EST)
-Subject: [oss-security] Re: CVE request: Blueman: Privilege escalation in blueman dbus API
+x-ms-reactions: disallow
+Received: (qmail 5573 invoked from network); 2 Apr 2026 20:27:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nesten.eu;
+	s=simplycom2; t=1775161646;
+	bh=VEgqGzkvfsO20v/cJVmHvV7yaKj79DPsl9tm8IKWN+4=;
+	h=From:Subject:Date:To;
+	b=Iu7yqgJEaE/zZwRtrRXTTKU43LSzQOrYOi0m+QaBJM5NEfPkODp1q/KLesIejsGt/
+	 hK6kdqi0706fz8GnXzWRHCJqkuttZOcEq6tFLkRnsfh3VDUhvaOIszUdQL9ufRpNFI
+	 ONr3R+UbCpVZujL/fssssoMVD4pOSz5s13+PDOaDOg7MngfR+Gqa6QYBSlOb5F7/78
+	 80+8X6Jh3ZNw5SwksZ4x0DK/NBR1YDWwbsR2xCzY5ldWHKj0xtnPyU2VZi3VuUO2IT
+	 30tyZvHvSYCekpuyNeDaStok1W/b4xGpqDHN216cqRf2JDOiLRIdv/cAVb71Wa7pRC
+	 gBSRwMHnscgZQ==
+From: =?utf-8?Q?Jens_Jarl_Nest=C3=A9n_Hansen-Nord?= <jens@nesten.eu>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_1FA1C9D0-74AA-48BD-92E8-8AD5E72D2797"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Message-Id: <D88F611E-18F2-4250-9726-5BC891A1073E@nesten.eu>
+Date: Thu, 2 Apr 2026 22:27:38 +0200
+To: oss-security@lists.openwall.com
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
+Subject: [oss-security] [libc musl] - Algorithmic complexity DoS in iconv GB18030 decoder
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Apple-Mail=_1FA1C9D0-74AA-48BD-92E8-8AD5E72D2797
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-> https://github.com/blueman-project/blueman/issues/416
-> https://github.com/blueman-project/blueman/commit/a3845bbed5fdddf14daec436b7e74f62719a71c1 (2-0-stable)
-> https://github.com/blueman-project/blueman/commit/e3d249391654da3fefe08b5389c2030fff1b12ea (master)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+libc musl Security Advisory: April 2, 2026
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Description:
+The GB18030 4-byte decoder in musl libc's iconv() implementation contains a=
+ gap-skipping loop that performs a full linear scan of the gb18030126 looku=
+p table (23,940 entries) on each iteration of an outer loop whose iteration=
+ count is input-dependent. For 4-byte sequences whose linear index falls ju=
+st below the dense CJK Unified Ideographs range, the outer loop executes ap=
+proximately 20,905 times, resulting in approximately 500 million comparison=
+s per input character.=20
+Classification:
+Inefficient Algorithmic Complexity (CWE-407)
+Impact:
+This allows a remote attacker to cause denial of service via CPU exhaustion=
+ by sending a crafted GB18030 payload to any network service that uses musl=
+'s iconv() for character encoding conversion. Measured on musl 1.2.6 and 1.=
+2.5: a single 4-byte input character (bytes 0x82 0x35 0x8F 0x33) takes appr=
+oximately 260ms to decode, compared to approximately 13 microseconds for a =
+benign character =E2=80=94 a 19,000x slowdown. A payload of 40kB will take =
+~43 minutes to decode.
 
-Use CVE-2015-8612.
+Versions affected:=20
+musl 0.8.0 to 1.2.6
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Status:
+The issue has been confirmed and fixed by maintainer, Rich Felker.=20
+A CVE has been requested and is pending assignment.
 
-iQIcBAEBCAAGBQJWdLdjAAoJEL54rhJi8gl5GzYQAJ6XhDSfMnu1mLHxJZOOKM/F
-xSJc8hUassvaaGzSkvK6hakXJ1VxCSlGE3YOlSg3E8o01nTWjBapX4O6Qc40dVG2
-PnTWaE9RPt4f+Xk5xVL5CBSf0EcygMG/6QgGJOsrxEPDJGXj9YvACPpYGoJRsbYc
-0yRaULXKfijpzeSCm/uQyCpMOFZWh11OWx/bd/E1zgYvAu1qMOReQkYWkqsxp+HE
-wOXAJkuxfSV0Rho0nvvyj7zw6RJMqEyZcgcI84INE81yDmgvlnZNyeXESUwTGne4
-lR5Upygiv5E1WhvNLg219h/REzvsz83gXeiWaJW3kwo/2I0YCF+SelkqrSxhPQMM
-aCiRAF00RG/1nkO4/hdUWLHK0/NNTYb2p7yhWEomhmpzVS/P9vPdygFknRccWQGY
-W4ZKTiGgClEQV4wWbMdEJghf+Zesqq7EUeK3+Mvcc0fZOY6LM16JH1MAQBVL1ILz
-ghXn5ycrfYsg3sd5qvFB5zGaT25BQNjJG3UpJAVLU6mH6utAcm8Of13IMPdEvC5r
-VRyGPiJ+DxBixqAeUqQaO57jYKGylUe2wUQpA0Ta7Kjp/g8EXKqGq1z5a1BXhyDF
-FjwtxLqSASUx6DrFbHQbOg/sA5JBP/Nz0R35l9cbDFMCoqONHScNgrx4tEuLr+O1
-9KGluO0fVmYTdBgD8yjv
-=8nNf
------END PGP SIGNATURE-----
+Reported by:
+Jens Jarl Nest=C3=A9n Hansen-Nord
+
+Upstream fix:
+Iconv-gb18030-fix.diff
+
+diff --git a/src/locale/iconv.c b/src/locale/iconv.c
+index 52178950..e559aa4c 100644
+--- a/src/locale/iconv.c
++++ b/src/locale/iconv.c
+@@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] =3D {
+ #include "gb18030.h"
+ };
+=20
++static const unsigned short gb18030utf[][2] =3D {
++#include "gb18030utf.h"
++};
++
+ static const unsigned short big5[89][157] =3D {
+ #include "big5.h"
+ };
+@@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
+    }
+ }
+=20
++#define countof(a) (sizeof (a) / sizeof *(a))
++
+ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **=
+restrict out, size_t *restrict outb)
+ {
+    size_t x=3D0;
+@@ -430,16 +436,14 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *=
+restrict inb, char **restri
+                d =3D *((unsigned char *)*in + 3);
+                if (d-'0'>9) goto ilseq;
+                c +=3D d-'0';
+-               c +=3D 128;
+-               for (d=3D0; d<=3Dc; ) {
+-                   k =3D 0;
+-                   for (int i=3D0; i<126; i++)
+-                       for (int j=3D0; j<190; j++)
+-                           if (gb18030[i][j]-d <=3D c-d)
+-                               k++;
+-                   d =3D c+1;
+-                   c +=3D k;
++               for (int i=3D0; i<countof(gb18030utf); i++) {
++                   if (c<gb18030utf[i][1]) {
++                       c +=3D gb18030utf[i][0];
++                       break;
++                   }
++                   c -=3D gb18030utf[i][1];
+                }
++               c +=3D 0x10000;
+                break;
+            }
+            d -=3D 0x40;
+
+
+
+
+
+--Apple-Mail=_1FA1C9D0-74AA-48BD-92E8-8AD5E72D2797--
