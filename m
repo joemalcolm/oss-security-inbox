@@ -1,4 +1,4 @@
-Received: (qmail 9528 invoked by uid 550); 28 May 2024 15:28:50 -0000
+Received: (qmail 15844 invoked by uid 550); 3 Apr 2026 00:46:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,111 +7,115 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4037 invoked from network); 28 May 2024 15:26:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1716909973; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=AboT7JT61PFgr8r8mTxdXFw/BxnuHRCChhAiYFjd6bM=;
-	b=QcSfFbSPQuTFoSxJtaJxsep9smg1ZinGsys3jWzKZ2WPmhId3dBKqvmwjDgEBqUEuvfhf1
-	qCHTAJl0ffziumjtKM4Nn+hbh8EoUf7j1C7uPuvuIJ/vnkJ8biV2LV3o8Ji7Umhqshtr1I
-	+8M+mOx5LSY4OdoPG+0WLspfFJq8NcbpfiZgKArOgbzCxX8Rm78lHQhxaC9lpdQH4q5UGH
-	0uUDM7EH/r7IiJodJqoJCzQQ5OwedpWGhHux3kdowCMs4qVqUI+rAGcqQB1Ur3D7xxsl7M
-	IH6gk4vQY+CwwE9j44qigrtIIqxX56o6wNQBm1MS1qeK+lZLhoP300NsJy6kKw==
-Date: Tue, 28 May 2024 15:26:13 +0000
-From: Matt Caswell <matt@openssl.org>
+x-ms-reactions: disallow
+Received: (qmail 15747 invoked from network); 3 Apr 2026 00:46:06 -0000
+Date: Thu, 2 Apr 2026 20:45:57 -0400
+From: Rich Felker <dalias@libc.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZlX3lfGufFqFOMMH@openssl.org>
+Message-ID: <20260403004556.GA23840@brightrain.aerifal.cx>
+References: <D88F611E-18F2-4250-9726-5BC891A1073E@nesten.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <D88F611E-18F2-4250-9726-5BC891A1073E@nesten.eu>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+Subject: Re: [oss-security] [libc musl] - Algorithmic complexity DoS in iconv
+ GB18030 decoder
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, Apr 02, 2026 at 10:27:38PM +0200, Jens Jarl Nestén Hansen-Nord wrote:
+> ==========================================
+> libc musl Security Advisory: April 2, 2026
+> ==========================================
+> Description:
+> The GB18030 4-byte decoder in musl libc's iconv() implementation
+> contains a gap-skipping loop that performs a full linear scan of the
+> gb18030126 lookup table (23,940 entries) on each iteration of an
+> outer loop whose iteration count is input-dependent. For 4-byte
+> sequences whose linear index falls just below the dense CJK Unified
+> Ideographs range, the outer loop executes approximately 20,905
+> times, resulting in approximately 500 million comparisons per input
+> character.
+> Classification:
+> Inefficient Algorithmic Complexity (CWE-407)
+> Impact:
+> This allows a remote attacker to cause denial of service via CPU
+> exhaustion by sending a crafted GB18030 payload to any network
+> service that uses musl's iconv() for character encoding conversion.
+> Measured on musl 1.2.6 and 1.2.5: a single 4-byte input character
+> (bytes 0x82 0x35 0x8F 0x33) takes approximately 260ms to decode,
+> compared to approximately 13 microseconds for a benign character — a
+> 19,000x slowdown. A payload of 40kB will take ~43 minutes to decode.
+> 
+> Versions affected: 
+> musl 0.8.0 to 1.2.6
+> 
+> Status:
+> The issue has been confirmed and fixed by maintainer, Rich Felker. 
+> A CVE has been requested and is pending assignment.
+> 
+> Reported by:
+> Jens Jarl Nestén Hansen-Nord
+> 
+> Upstream fix:
+> Iconv-gb18030-fix.diff
+> 
+> diff --git a/src/locale/iconv.c b/src/locale/iconv.c
+> index 52178950..e559aa4c 100644
+> --- a/src/locale/iconv.c
+> +++ b/src/locale/iconv.c
+> @@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] = {
+>  #include "gb18030.h"
+>  };
+>  
+> +static const unsigned short gb18030utf[][2] = {
+> +#include "gb18030utf.h"
+> +};
+> +
+>  static const unsigned short big5[89][157] = {
+>  #include "big5.h"
+>  };
+> @@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
+>     }
+>  }
+>  
+> +#define countof(a) (sizeof (a) / sizeof *(a))
+> +
+>  size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restrict out, size_t *restrict outb)
+>  {
+>     size_t x=0;
+> @@ -430,16 +436,14 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restri
+>                 d = *((unsigned char *)*in + 3);
+>                 if (d-'0'>9) goto ilseq;
+>                 c += d-'0';
+> -               c += 128;
+> -               for (d=0; d<=c; ) {
+> -                   k = 0;
+> -                   for (int i=0; i<126; i++)
+> -                       for (int j=0; j<190; j++)
+> -                           if (gb18030[i][j]-d <= c-d)
+> -                               k++;
+> -                   d = c+1;
+> -                   c += k;
+> +               for (int i=0; i<countof(gb18030utf); i++) {
+> +                   if (c<gb18030utf[i][1]) {
+> +                       c += gb18030utf[i][0];
+> +                       break;
+> +                   }
+> +                   c -= gb18030utf[i][1];
+>                 }
+> +               c += 0x10000;
+>                 break;
+>             }
+>             d -= 0x40;
+> 
+> 
+> 
+> 
 
-OpenSSL Security Advisory [28th May 2024]
-=========================================
+The above patch was a proposal for testing. It should mitigate the
+extreme slowness for characters encoded in GB18030's UTF, but it does
+not work correctly and has not been confirmed not to have other
+problems. I will follow up with a correct patch.
 
-Use After Free with SSL_free_buffers (CVE-2024-4741)
-====================================================
-
-Severity: Low
-
-Issue summary: Calling the OpenSSL API function SSL_free_buffers may cause
-memory to be accessed that was previously freed in some situations
-
-Impact summary: A use after free can have a range of potential consequences such
-as the corruption of valid data, crashes or execution of arbitrary code.
-However, only applications that directly call the SSL_free_buffers function are
-affected by this issue. Applications that do not call this function are not
-vulnerable. Our investigations indicate that this function is rarely used by
-applications.
-
-The SSL_free_buffers function is used to free the internal OpenSSL buffer used
-when processing an incoming record from the network. The call is only expected
-to succeed if the buffer is not currently in use. However, two scenarios have
-been identified where the buffer is freed even when still in use.
-
-The first scenario occurs where a record header has been received from the
-network and processed by OpenSSL, but the full record body has not yet arrived.
-In this case calling SSL_free_buffers will succeed even though a record has only
-been partially processed and the buffer is still in use.
-
-The second scenario occurs where a full record containing application data has
-been received and processed by OpenSSL but the application has only read part of
-this data. Again a call to SSL_free_buffers will succeed even though the buffer
-is still in use.
-
-While these scenarios could occur accidentally during normal operation a
-malicious attacker could attempt to engineer a stituation where this occurs.
-We are not aware of this issue being actively exploited.
-
-The FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.
-
-OpenSSL 1.0.2 is also not affected by this issue.
-
-OpenSSL 3.3, 3.2, 3.1, 3.0 and 1.1.1 are vulnerable to this issue.
-
-OpenSSL 3.3 users should upgrade to OpenSSL 3.3.1 once it is released.
-
-OpenSSL 3.2 users should upgrade to OpenSSL 3.2.2 once it is released.
-
-OpenSSL 3.1 users should upgrade to OpenSSL 3.1.6 once it is released.
-
-OpenSSL 3.0 users should upgrade to OpenSSL 3.0.14 once it is released.
-
-OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1y once it is released
-(premium support customers only).
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit e5093133c3 (for 3.3),
-commit c88c3de510 (for 3.2), commit 704f725b96 (for 3.1) and commit b3f0eb0a29
-(for 3.0) in the OpenSSL git repository. It is available to premium support
-customers in commit f7a045f314 (for 1.1.1).
-
-This issue was reported on 10th April 2024 by William Ahern (Akamai). The fix
-was developed by Matt Caswell and Watson Ladd (Akamai).
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20240528.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmZV9w0ACgkQ2cTSbQ5g
-RJFleggAunT15ijQEKk29rztc82qEl01c/mDCAKCNLD0WqCr/D00lIjYhOjAcj7W
-f4h9c7N8TqX4fkc1pBmV3KMM4qCzMkNdFE+lxYiDn2A/HAsZgSmh+WGpcMju7obI
-5TvaINrBZbndXTa3o+10Wo4QT7oVGji/WLwsc06QzofZRLWj7BxU1h7i2JDR9Gd/
-SYkg5ivgwixAgMzxpy7nQetQYKAfl6spKSUDHDymkYk0ATTvr9P14pQ5+Sr2T/gT
-V8V5uTOYcxjpJCRipUbUPDN5ZUy379thry3XmR9wd2GE0AeXoVOJQMpOVK7TDhzm
-TFookLZ04kCDtSU6gM0XXI8WAoEDUQ==
-=UFjh
------END PGP SIGNATURE-----
+Rich
