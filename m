@@ -1,87 +1,105 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/1
-Message-ID: <87tsnskt3e.fsf@athena.silentflame.com>
-Date: Mon, 14 Sep 2026 11:47:17 +0100
-From: Sean Whitton <spwhitton@...hitton.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/03/1
+Message-ID: <20260403004556.GA23840@oevtugenva.nrevsny.pk>
+Date: Thu, 2 Apr 2026 20:45:57 -0400
+From: Rich Felker <dalias@...c.org>
 To: oss-security@...ts.openwall.com
-Cc: Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>, Stefan Monnier <monnier@....umontreal.ca>, João Távora <joaotavora@...il.com>, Bas Alberts <anticomputer@...hub.com>
-Subject: Emacs arbitrary code execution: incomplete fix for CVE-2024-53920
+Subject: Re: [libc musl] - Algorithmic complexity DoS in iconv GB18030 decoder
 Content-Type: text/plain; charset=utf-8
 
-Bas Alberts of the GitHub Security Lab discovered that the fix for
-CVE-2024-53920, an arbitrary code execution flaw in Emacs, was
-incomplete.  Viewing or editing untrusted text files in modes other than
-Emacs Lisp mode can also permit arbitrary code execution.  For example:
+On Thu, Apr 02, 2026 at 10:27:38PM +0200, Jens Jarl Nestén Hansen-Nord wrote:
+> ==========================================
+> libc musl Security Advisory: April 2, 2026
+> ==========================================
+> Description:
+> The GB18030 4-byte decoder in musl libc's iconv() implementation
+> contains a gap-skipping loop that performs a full linear scan of the
+> gb18030126 lookup table (23,940 entries) on each iteration of an
+> outer loop whose iteration count is input-dependent. For 4-byte
+> sequences whose linear index falls just below the dense CJK Unified
+> Ideographs range, the outer loop executes approximately 20,905
+> times, resulting in approximately 500 million comparisons per input
+> character.
+> Classification:
+> Inefficient Algorithmic Complexity (CWE-407)
+> Impact:
+> This allows a remote attacker to cause denial of service via CPU
+> exhaustion by sending a crafted GB18030 payload to any network
+> service that uses musl's iconv() for character encoding conversion.
+> Measured on musl 1.2.6 and 1.2.5: a single 4-byte input character
+> (bytes 0x82 0x35 0x8F 0x33) takes approximately 260ms to decode,
+> compared to approximately 13 microseconds for a benign character — a
+> 19,000x slowdown. A payload of 40kB will take ~43 minutes to decode.
+> 
+> Versions affected: 
+> musl 0.8.0 to 1.2.6
+> 
+> Status:
+> The issue has been confirmed and fixed by maintainer, Rich Felker. 
+> A CVE has been requested and is pending assignment.
+> 
+> Reported by:
+> Jens Jarl Nestén Hansen-Nord
+> 
+> Upstream fix:
+> Iconv-gb18030-fix.diff
+> 
+> diff --git a/src/locale/iconv.c b/src/locale/iconv.c
+> index 52178950..e559aa4c 100644
+> --- a/src/locale/iconv.c
+> +++ b/src/locale/iconv.c
+> @@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] = {
+>  #include "gb18030.h"
+>  };
+>  
+> +static const unsigned short gb18030utf[][2] = {
+> +#include "gb18030utf.h"
+> +};
+> +
+>  static const unsigned short big5[89][157] = {
+>  #include "big5.h"
+>  };
+> @@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
+>     }
+>  }
+>  
+> +#define countof(a) (sizeof (a) / sizeof *(a))
+> +
+>  size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restrict out, size_t *restrict outb)
+>  {
+>     size_t x=0;
+> @@ -430,16 +436,14 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restri
+>                 d = *((unsigned char *)*in + 3);
+>                 if (d-'0'>9) goto ilseq;
+>                 c += d-'0';
+> -               c += 128;
+> -               for (d=0; d<=c; ) {
+> -                   k = 0;
+> -                   for (int i=0; i<126; i++)
+> -                       for (int j=0; j<190; j++)
+> -                           if (gb18030[i][j]-d <= c-d)
+> -                               k++;
+> -                   d = c+1;
+> -                   c += k;
+> +               for (int i=0; i<countof(gb18030utf); i++) {
+> +                   if (c<gb18030utf[i][1]) {
+> +                       c += gb18030utf[i][0];
+> +                       break;
+> +                   }
+> +                   c -= gb18030utf[i][1];
+>                 }
+> +               c += 0x10000;
+>                 break;
+>             }
+>             d -= 0x40;
+> 
+> 
+> 
+> 
 
-    #!/usr/bin/perl
-    # -*- mode: perl; mode: flymake -*-
-    BEGIN { system("touch uh_oh.txt"); }
+The above patch was a proposal for testing. It should mitigate the
+extreme slowness for characters encoded in GB18030's UTF, but it does
+not work correctly and has not been confirmed not to have other
+problems. I will follow up with a correct patch.
 
-This problem affects all Emacs versions affected by CVE-2024-53920.
-This means Emacs 24 and newer, and possibly also older versions.
-
-A minimal fix, attached, is queued up for release with Emacs 31.2.
-We (the Emacs upstream maintainers) don't expect to backport the fix to
-older Emacs releases ourselves.
-
-This fix is more aggressive than the one we have on our master branch in
-that it also implicitly disables the Eglot flymake backend.
-I think we will be able to undo that before releasing Emacs 31.2, but I
-wanted to get this notification out as soon as possible.
-
-I would be grateful if someone could assign us a CVE for this issue.
-
--- >8 --
-From: Stefan Monnier <monnier@....umontreal.ca>
-Date: Mon, 14 Sep 2026 11:30:39 +0100
-Subject: [PATCH] flymake.el: Generalize trusted-content-p check to all
- backends
-
-Minimal safe backport of this change:
-
-    Author:     Stefan Monnier <monnier@....umontreal.ca>
-    AuthorDate: Fri Sep 11 21:48:55 2026 -0400
-
-      flymake.el: Generalize trusted-content-p check to all backends
-
-      Rather than have each and every backend check
-      'trusted-content-p' if it feels necessary, implement the check
-      once and forall in flymake.el and provide a wat for backends to
-      skip that test, so we replace an "opt-in" with an "opt-out"
-      that's a bit more secure by design.
-
-      * lisp/progmodes/elisp-mode.el (elisp-flymake-byte-compile):
-      Move 'trusted-content-p' to flymake.el.
-      * lisp/progmodes/flymake.el (flymake--run-backend):
-      Move 'trusted-content-p' from elisp-mode.el.
-
-      * lisp/progmodes/eglot.el (eglot-flymake-backend): Mark as safe.
-
-* lisp/progmodes/flymake.el (flymake--run-backend): Copy
-trusted-content-p check from elisp-mode.el.  Do not merge to
-master.
----
- lisp/progmodes/flymake.el | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/lisp/progmodes/flymake.el b/lisp/progmodes/flymake.el
-index fff42696761..40761031dc2 100644
---- a/lisp/progmodes/flymake.el
-+++ b/lisp/progmodes/flymake.el
-@@ -1271,8 +1271,13 @@ with a report function."
-             (flymake--state-disabled state) nil
-             (flymake--state-reported-p state) nil))
-     (condition-case-unless-debug err
--        (apply backend (flymake-make-report-fn backend run-token)
--               args)
-+        (if (or (trusted-content-p) (function-get backend 'flymake-always-safe))
-+            (apply backend (flymake-make-report-fn backend run-token)
-+                   args)
-+          (message "Disabling %S in %s (untrusted content)"
-+                   backend (buffer-name))
-+          (user-error "Disabling %S in %s (untrusted content)"
-+                      backend (buffer-name)))
-       (error
-        (flymake--disable-backend backend err)))))
--- 
-Sean Whitton
+Rich
