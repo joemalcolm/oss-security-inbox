@@ -1,4 +1,4 @@
-Received: (qmail 17846 invoked by uid 550); 7 Feb 2023 17:25:22 -0000
+Received: (qmail 11275 invoked by uid 550); 3 Apr 2026 03:24:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,166 +7,454 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17811 invoked from network); 7 Feb 2023 17:25:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
- subject : to : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2022-7-12;
- bh=wDFTb1hQHSDL/FEI3NWxO/rPHhypw6G4LDXoOXsUBvY=;
- b=H/3uGQ4tUjcEPQLZr+nFci1yaM7bw+SVsYHjLhq2/X85UTnCokPfUlgOlL32s4s8ypjf
- 3ZE2EufNSru8cf0MffjECqFgunfUSt89vNHG7OMYrMf/isYPFrq8WxFET8FRwAiXPEe2
- 0DQkUeGlyZr+J8PF4hKBtPgQEP9D4hhQ1We6066rO8XvFDSVLMkFg1Y2p/SqRmucWNLH
- qEeuXjUvaK+MRUMzdcADK61YiNNbPamCfAhPQbyhx1pCgB2Iv7tgA9ePt1C9UalYHcdL
- 3aZV0EPgyXoxNmt1VwaJiC8QRE7tv4xALYzHdmI3ynrb75v+VnUeWj7qEWml0C94WeeR jw== 
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=lKhh0+YCd17LaOdlEAehmvCZ3rKBLQMpG/FSoAaL0iPHdGxx9qlkjKc1pCqusFmgU6C5YXfdmET6iKkoJalinEzzvCahigIvoNDvK0CbYVd2LLm2TCq11UemTsg0B4AUlOy4+0QK0kJSwtMxgXdWi/tnRbzEpH7FAme1/VViVrbgQmL2bWPMqMb4y6kgm7rNBvrJO+lK0BxKvvoeMcr9S3C2T4SJr65y7LNQFMy4an+phH4VYqQflYumuX/D2YFhR79yWvzTwscZbMQSH6DCJyKiU5qsNr1JDvRsTZXscH9J48GtHQTmZBbWPV2YyobE+iwwP68OlV5nBERuEKVfSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wDFTb1hQHSDL/FEI3NWxO/rPHhypw6G4LDXoOXsUBvY=;
- b=l+4E89f31dvDr1oaiTDWJ3OCKcyWqAvmQLEFaWrS6US324yaGS5JHXL5CqCkAoBxn7Ss0eAQBPRptIMWX7CDbaXd4MGsVkptLL03eonmU4ffU10ATWLHokLFLR08CEhb5wIVDHsHU/k1FOmLKY1++NT96xnG6VR2WNF8aOvYnKsG2lKhFtsAuSTQamnfZ9wnQFD8i/gBcocISPzM5JqXyn+1e1MgIli+efFVCe2GuurY5rXia51g9ywCRFTwSNEhyDxr3ZuVzoJq1tXnMF7mjD7yk9JJjOLBAu6VIcZfuro0Ij3R1D/Xccia4Ummwun36u1a+PsT0mE5u+fTTlnYrQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wDFTb1hQHSDL/FEI3NWxO/rPHhypw6G4LDXoOXsUBvY=;
- b=miGDV9I6ErDstaeVIB/p1IK/tPMN0JYDBxPuAhMTHZFD7TUBuEt7+i+Vwgqom/UBUbTdPx/QCRuYwF6GrGzhClXsfGNppbD08l68B6JhYRnT8KqKJJfMVOPxSO1QAnqQVEX+Cb0AOUJNtFNt+ARSYnWcXzdhQjdkRa/4AhUOBFA=
-Message-ID: <63fc7caa-6f5c-d45b-9cb6-aa9d56a3a243@oracle.com>
-Date: Tue, 7 Feb 2023 09:25:00 -0800
-User-Agent: Mozilla/5.0 (X11; SunOS i86pc; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Content-Language: en-US
-To: oss-security@lists.openwall.com,
-        Peter Hutterer <peter.hutterer@redhat.com>
-References: <9afca616-11f3-ac36-4d5f-918487e1a756@redhat.com>
-From: Alan Coopersmith <alan.coopersmith@oracle.com>
-In-Reply-To: <9afca616-11f3-ac36-4d5f-918487e1a756@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: DM6PR07CA0093.namprd07.prod.outlook.com
- (2603:10b6:5:337::26) To PH0PR10MB5730.namprd10.prod.outlook.com
- (2603:10b6:510:148::19)
+x-ms-reactions: disallow
+Received: (qmail 10157 invoked from network); 3 Apr 2026 03:24:47 -0000
+Date: Thu, 2 Apr 2026 23:24:37 -0400
+From: Rich Felker <dalias@libc.org>
+To: oss-security@lists.openwall.com
+Message-ID: <20260403032437.GB23840@brightrain.aerifal.cx>
+References: <D88F611E-18F2-4250-9726-5BC891A1073E@nesten.eu>
+ <20260403004556.GA23840@brightrain.aerifal.cx>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB5730:EE_|SN7PR10MB7047:EE_
-X-MS-Office365-Filtering-Correlation-Id: f498ca04-86ba-48fc-1301-08db09303fea
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 
-	6wXMZaPHDgES7WTrsL2F0iIyHxovIpR3Cr3qnOQ7K7KIsP/XbDdZZhH9+HhfRhzqoeyeFUhrsJluhp0ZXsBAhKXHOHioDsNvLDEYraJL0GqzXk/SfQx/JPZmvowgArkpFWEt3jnGv5Vl5R3AHO+Th21HdjYr2EnV5NkhDaS1mrZZub52GY6TPtUhl0nk7Y0+r9fnToVRhVyz4dKX+c8bTPW8pzzgNPvG5paXcoJMUxoJW4zm3VaDbA70dkVuT/Ejv70989i8ijKHQ8Pr3AcAkVPGNdwB4Fvo1MTUb1tewuDW2FoYpsXUCgpTQYoL0Bd5cYGClycq1cdflnJeVk6ZtAOU8iNjf2pMRNCgFkS0NSGgWlb4ekVq2heps2r6x31A1rEzSkDn//MjFd5wGOSF+Q3A9Debc8IFRav0gPQ5IueY8a7Fu8ENht5p6tMRJC4ni3b8QQ+yejsLlw1tlxskyMPwAbvO6DaxDOVTTtyhd5/jtYuv47S4GXL0FqRYbmf2cSMoeQvknm5pf8blY0VVKtU5szuBAS695WJekW2+ZO/zDdEB/adi8jDz9PBUT7HuHwrvdcGuu4T2+t+XoABstToxfZ0hzuczE1AO32ikBVuKWrSRAfLCATOl/sCVPYdong4YvFgWZpOON/imhVWVJ7CmmGy23FhOwytibglFz5m1L95avkswsnPyr4pFiMHfaqWEDXxSHENvp8jMkUte3enIn0HiuAujtN6fY9+hElXgFp++u+trH3hn3vLUElF/1s5x1QdOCbNxMRk/N94ZJUICs23EirV+fJU5z+DOMCh0l7onKX1UPmmYytNkrVXn
-X-Forefront-Antispam-Report: 
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB5730.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(366004)(39860400002)(396003)(346002)(376002)(136003)(451199018)(31696002)(36756003)(38100700002)(86362001)(316002)(478600001)(44832011)(966005)(8936002)(6486002)(5660300002)(41300700001)(66946007)(66556008)(6916009)(83380400001)(8676002)(6666004)(15650500001)(66476007)(26005)(6512007)(186003)(53546011)(2616005)(6506007)(2906002)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 
-	=?utf-8?B?UGQxR3ZIblpuMHZad2RnSXdyaVN4M2FPK2ZnRGxncmc1ZUJYd08rM1BHTWQ1?=
- =?utf-8?B?TE5LejdGbjRzOGJsUG5HWktyT1FLMDhXdXZwRkM5bjhIdkFRWjZpNmp4TGIv?=
- =?utf-8?B?bHFUZ0ZyYTBDWStiQm13aEJjZWNZRWw4OWdLVWNveXdwdnZzejhBOVczemJL?=
- =?utf-8?B?ZTVkS2NtaGNzZWFHKzJGc0REb0JwNGdVcytCeHZqd2lYWFBqbWVUK2JSOS85?=
- =?utf-8?B?eG0xaFFXTjd4OTMyaHNjU1Z2akxjQVNVK2RDSjR1UVVzWGd0QWY0U2dIcnIv?=
- =?utf-8?B?Q2RCLy81c2E0V044WnV0ak1jMnZyV2w0dHQ5ekZaZDFOYVptVks2OW5WMi9N?=
- =?utf-8?B?WDJrcnJKQU1xdE9Ec3RLeUdPSzJMVVJiMnlYQ29FdU8yWXNtVVg2eHFNaE9L?=
- =?utf-8?B?T2xFT1cxVWp3UGtJWmVSQmcxaW5YcWJRU2p4M3R5eFI1SWdKMWttQ1NQMEw5?=
- =?utf-8?B?NkRIekRuTW5aSyt0WlJsVnpkTFJDYlByWGhhSFk0UWpZVVR0RkRnVkhTNFly?=
- =?utf-8?B?U2dmTzhtSHRUaExxZVJaZ0JxRjdCVWhkekJIeEtxaXdWbURnSTAxaWlvWWNt?=
- =?utf-8?B?czVGVEJiRHhFdlJSTHRwTlk5ZEZRRDFqWWc2S0lwL1E5bmhuWmFGcE0yZHdM?=
- =?utf-8?B?WThmdFVwRkRNbEdBVVY2NHZ1b0xLeGlXVUNQM3I3Y3RuaEUzTDFyUmhTdDNj?=
- =?utf-8?B?cGRPcERlZ2pEMWVXRVp3OUp5blluQWE3aVRqUk9rNlNGWGVUS2VEazRnS01Z?=
- =?utf-8?B?THFQTWJqUjFGekdTV2ZOL2pEcjh0amxMR2lTQ2lBMlZWYkd6TFhlQkMxVHJP?=
- =?utf-8?B?RjdNOGNLNUZONzA2NHpyaGJsM1NTWVIrV3V1Y2dpUTNPWXg1ZmpwR2tSTTlY?=
- =?utf-8?B?MEQraGNxb0d3aDlFQnFNUnk4emxFRjRwRjhzUVZjWXROZUowTXZwU29YNFpD?=
- =?utf-8?B?dHJJVDZMWS9DOUFndlY2SGlPQkxnYXBVbFBaa2Uybnh5emFwOEtsVWhXeDFs?=
- =?utf-8?B?MDhUSk5oMGs0Si9uVXJ3RVZseFp2WmFiYjdQV0xzcXByWk5tY2tGMStKNlFH?=
- =?utf-8?B?Z0JYVUdmVFhvV0oxVUR5RmpsV1lYRDd0UFhWbUN6YXFvcGxxcTlUVHVQMVZZ?=
- =?utf-8?B?VDBZcHdDNHc1a3JUS09OMUNESTB0YnVxZDI2MEwrbDRiVGJBMlBtL2lxRjRU?=
- =?utf-8?B?blArVHYyNGxSNmtFWGkvUUFFN2RVZFQ1SmlUSWIrU21FZy95bS84ZFFocHlV?=
- =?utf-8?B?NkdUc3dwT3BMSXdscUpiMlVPcFFibTRSVWhWOHpQcTdVQVAzKy9yd3FpUlVq?=
- =?utf-8?B?aDFIeE5QUFhWTjUydndPQTZIZmUrQjlUUlVoWUxqeTcvbGtiZjI4akNCZ2Zt?=
- =?utf-8?B?UnZxWEFYSDlML3JGWE1JendvRmYwb1Flck5xYmdiY2tMY014cnh0MHBhMkty?=
- =?utf-8?B?Njd3N0U5MXZmdnF4TzZUQW81N3ZieGNJT2IzaWdnWXFjcXR2VlNRVnl0SDJt?=
- =?utf-8?B?enRsY2l2Q1hMODBrZ29PZHJZKzVYcCtpb1JuaUt3bE83SlFjaDVzcmIvOWhz?=
- =?utf-8?B?SFF3dUdUMXdkNzVwN3ZPSlJmTVJ3aDNGSG40VmtyQ29sZ3JNc01pRjBsRWds?=
- =?utf-8?B?OGxTSDFWUjdSWGpnZXZZL1pNTmhGYWkxa3FpaWd5M1c5eHE2ZmszbDdvaitG?=
- =?utf-8?B?ODYvWjVQTUpjZGlFV3oyYzVGRm9DRzdVbEhVRjA2RjlpL0RzeWs5UjRpdGtD?=
- =?utf-8?B?Ri8zT21RZUpUK2x4MlVhQlZHT1dCaGVrZVhuZk10ck80Vm1GUFNmdTZubDZx?=
- =?utf-8?B?RjlucDVwRnF6cUVJRDJtZjBmTFovSC9Lb2lCb2pLa3VGZzF2ejFQUCsrU3oy?=
- =?utf-8?B?Uzlub1k4WGplSERCWUlQQnNTTnp4Q1UydHFMS1hvb0hBQTdSUnZrZktMM1pu?=
- =?utf-8?B?RUQvZHZVdGdiMWpad3ZFUjY1Y0NadTFOczcrVDUwNGszazlpRE1IM1hFVW1k?=
- =?utf-8?B?UUloQjNZdXVDNUhEaFJBSVVuMGhad1NzKzhIYmJwUW1BdmNQUFpvcERUL2ZS?=
- =?utf-8?B?OS8rdGxoZ0lxbXVsL3dNK0o1YUFtUFpoeXNQT3FZbG5mbUo3bitkMjNTYThY?=
- =?utf-8?B?T0FPZEV2MzJFUFByY29qeEg1SW94d2ltaGc2QUxlSDhxL2ZCN1h2WHhFTy93?=
- =?utf-8?B?Z0E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
-	XGuobSd26jXnPhJZcC5+ZC7Q68NlWotyMvZw1gmX57O68WUhTmRpJGLLX3W21GtRnRS9xgkGXtUGE3chT9gMMEo1TM8JGKfasXh/2V4G4qs+fhaiGvgAL6OWGkoXz9+pnDzkQJdnd0hPbmY6TGjgjtAmsPfSb+lvRCdWBr1Pbtlv6KNiuC1XEyX9wo7nwQ3paDmvI1i+Uc9YFBMfVMEP8bJGqnG7tXraHJIlCoiCymDj8lasNVzejBAysM32LNc+BdTpHbSawQKrFH1hTjXP+/LZuqE9hf4ptH9N8RNBbcuWNeEzWmO47eA9P1mDyN1bjKPm/AVygGNEvIKawpVQ528KnWBIGDDTXk8kB8+Afjm2d02MQ1K2uk7XFU8FIvGwBXVBhLgpsZ+y4ftS3XMwdObzth/N5kEMmpdWzWuNpt/dUboA5EZvGmmN8EKN9x6ryUBk3dGu0ExYhHNzPWBl0z4Pgqz2ZEjeHmy7yczjBonZNS7YFjywCTcJ+/AXj4lROZOPO0tNl9+HdqVLa45Tq6rA09NRlWor8jwtVjdSfX9mzKBARjTaft6+DAgBzv9GQSOtkAcBCdsU0ro4xNi3FmW1XaKiuqgeABh7cMhE+/6cKV946BzFwHULOiD+rKXACrqcs22sUm+F5Oi+Ai2gPhoqo6vyOfuthJ/U0KpGr8LzQsZnjC2BJM/qf4lkRdrcaEm2tcm9RqqjiGc/NJgBdbyy4kRvahd4tqxUZnR0rlofX4q5pgk8MZKnznLwqkOr3tFGhHi++NnNk1AMYSimayjeVqzR7hKgOYCERJAhpSo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f498ca04-86ba-48fc-1301-08db09303fea
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5730.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2023 17:25:04.0004
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nETMlrRq+aO0jwKDTuhnUXQLRYFU6GNo/te3uW6IoiyjE+5QusU+ey3Wnsl3bVOllgXaHHfQtY1+yD8AiS4ICpKhHyXj2SJgHoBQ763PnR8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB7047
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-02-07_09,2023-02-06_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0 suspectscore=0 adultscore=0
- malwarescore=0 mlxscore=0 phishscore=0 spamscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2212070000
- definitions=main-2302070155
-X-Proofpoint-ORIG-GUID: a60QA4RA2t5oJsLpiUrb50jUnljgZnpw
-X-Proofpoint-GUID: a60QA4RA2t5oJsLpiUrb50jUnljgZnpw
-Subject: Re: [oss-security] X.Org Security Advisory: Security issue in the X
- server
+Content-Type: multipart/mixed; boundary="LZvS9be/3tNcYl/X"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260403004556.GA23840@brightrain.aerifal.cx>
+User-Agent: Mutt/1.9.5 (2018-04-13)
+Subject: Re: [oss-security] [libc musl] - Algorithmic complexity DoS in iconv
+ GB18030 decoder
 
-Fixes have been released now in:
+--LZvS9be/3tNcYl/X
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-xorg-server 21.1.7:
-https://lists.x.org/archives/xorg-announce/2023-February/003321.html
+On Thu, Apr 02, 2026 at 08:45:57PM -0400, Rich Felker wrote:
+> On Thu, Apr 02, 2026 at 10:27:38PM +0200, Jens Jarl Nestén Hansen-Nord wrote:
+> > ==========================================
+> > libc musl Security Advisory: April 2, 2026
+> > ==========================================
+> > Description:
+> > The GB18030 4-byte decoder in musl libc's iconv() implementation
+> > contains a gap-skipping loop that performs a full linear scan of the
+> > gb18030126 lookup table (23,940 entries) on each iteration of an
+> > outer loop whose iteration count is input-dependent. For 4-byte
+> > sequences whose linear index falls just below the dense CJK Unified
+> > Ideographs range, the outer loop executes approximately 20,905
+> > times, resulting in approximately 500 million comparisons per input
+> > character.
+> > Classification:
+> > Inefficient Algorithmic Complexity (CWE-407)
+> > Impact:
+> > This allows a remote attacker to cause denial of service via CPU
+> > exhaustion by sending a crafted GB18030 payload to any network
+> > service that uses musl's iconv() for character encoding conversion.
+> > Measured on musl 1.2.6 and 1.2.5: a single 4-byte input character
+> > (bytes 0x82 0x35 0x8F 0x33) takes approximately 260ms to decode,
+> > compared to approximately 13 microseconds for a benign character — a
+> > 19,000x slowdown. A payload of 40kB will take ~43 minutes to decode.
+> > 
+> > Versions affected: 
+> > musl 0.8.0 to 1.2.6
+> > 
+> > Status:
+> > The issue has been confirmed and fixed by maintainer, Rich Felker. 
+> > A CVE has been requested and is pending assignment.
+> > 
+> > Reported by:
+> > Jens Jarl Nestén Hansen-Nord
+> > 
+> > Upstream fix:
+> > Iconv-gb18030-fix.diff
+> > 
+> > diff --git a/src/locale/iconv.c b/src/locale/iconv.c
+> > index 52178950..e559aa4c 100644
+> > --- a/src/locale/iconv.c
+> > +++ b/src/locale/iconv.c
+> > @@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] = {
+> >  #include "gb18030.h"
+> >  };
+> >  
+> > +static const unsigned short gb18030utf[][2] = {
+> > +#include "gb18030utf.h"
+> > +};
+> > +
+> >  static const unsigned short big5[89][157] = {
+> >  #include "big5.h"
+> >  };
+> > @@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
+> >     }
+> >  }
+> >  
+> > +#define countof(a) (sizeof (a) / sizeof *(a))
+> > +
+> >  size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restrict out, size_t *restrict outb)
+> >  {
+> >     size_t x=0;
+> > @@ -430,16 +436,14 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restri
+> >                 d = *((unsigned char *)*in + 3);
+> >                 if (d-'0'>9) goto ilseq;
+> >                 c += d-'0';
+> > -               c += 128;
+> > -               for (d=0; d<=c; ) {
+> > -                   k = 0;
+> > -                   for (int i=0; i<126; i++)
+> > -                       for (int j=0; j<190; j++)
+> > -                           if (gb18030[i][j]-d <= c-d)
+> > -                               k++;
+> > -                   d = c+1;
+> > -                   c += k;
+> > +               for (int i=0; i<countof(gb18030utf); i++) {
+> > +                   if (c<gb18030utf[i][1]) {
+> > +                       c += gb18030utf[i][0];
+> > +                       break;
+> > +                   }
+> > +                   c -= gb18030utf[i][1];
+> >                 }
+> > +               c += 0x10000;
+> >                 break;
+> >             }
+> >             d -= 0x40;
+> > 
+> > 
+> > 
+> > 
+> 
+> The above patch was a proposal for testing. It should mitigate the
+> extreme slowness for characters encoded in GB18030's UTF, but it does
+> not work correctly and has not been confirmed not to have other
+> problems. I will follow up with a correct patch.
 
-xwayland 22.1.8:
-https://lists.x.org/archives/xorg-announce/2023-February/003322.html
+The attached patch has now been tested to work. Compared to the
+previous version above, it corrects one value in the table, an
+erroneous += 0x10000 above, and missing logic for characters U+10000
+and up.
 
-      -Alan Coopersmith-              alan.coopersmith@oracle.com
-        X.Org Security Response Team - xorg-security@lists.x.org
+Rich
 
-On 2/6/23 17:36, Peter Hutterer wrote:
-> X.Org Security Advisory: February 07, 2023
-> 
-> Security issue in the X server
-> ==============================
-> 
-> This issue can lead to local privileges elevation on systems
-> where the X server is running privileged and remote code execution for
-> ssh X forwarding sessions.
-> 
-> * CVE-2023-0494/ZDI-CAN-19596: X.Org Server DeepCopyPointerClasses
-> use-after-free
-> 
-> A dangling pointer in DeepCopyPointerClasses can be exploited by
-> ProcXkbSetDeviceInfo() and ProcXkbGetDeviceInfo() to read/write into
-> freed memory.
-> 
-> Patches
-> -------
-> A patch for this issue has been committed to the xorg server git
-> repository. xorg-server 21.1.7 will be released shortly and will include
-> this patch.
-> 
-> - commit 0ba6d8c37071131a49790243cdac55392ecf71ec
-> 
->    Xi: fix potential use-after-free in DeepCopyPointerClasses
-> 
->    CVE-2023-0494, ZDI-CAN 19596
-> 
-> 
-> Thanks
-> ======
-> 
-> The vulnerabilities have been discovered by Jan-Niklas Sohn working with
-> Trend Micro Zero Day Initiative.
-> 
+--LZvS9be/3tNcYl/X
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="0001-fix-pathological-slowness-incorrect-mappings-in-icon.patch"
+
+From 67219f0130ec7c876ac0b299046460fad31caabf Mon Sep 17 00:00:00 2001
+From: Rich Felker <dalias@aerifal.cx>
+Date: Mon, 30 Mar 2026 16:00:50 -0400
+Subject: [PATCH] fix pathological slowness & incorrect mappings in iconv
+ gb18030 decoder
+
+in order to implement the "UTF" aspect of gb18030 (ability to
+represent arbitrary unicode characters not present in the 2-byte
+mapping), we have to apply the index obtained from the encoded 4-byte
+sequence into the set of unmapped characters. this was done by
+scanning repeatedly over the table of mapped characters and counting
+off mapped characters below a running index by which to adjust the
+running index by on each iteration. this iterative process eventually
+leaves us with the value of the Nth unmapped character replacing the
+index, but depending on which particular character that is, the number
+of iterations needed to find it can be in the tens of thousands, and
+each iteration traverses the whole 126x190 table in the inner loop.
+this can lead to run times exceeding an entire second per character on
+moderate-speed machines.
+
+on top of that, the transformation logic produced wrong results for
+BMP characters above the the surrogate range, as a result of not
+correctly accounting for it being excluded, and for characters outside
+the BMP, as a result of a misunderstanding of how gb18030 encodes
+them.
+
+this patch replaces the unmapped character lookup with a single linear
+search of a list of unmapped ranges. there are only 206 such ranges,
+and these are permanently assigned and unchangeable as a consequence
+of the character encoding having to be stable, so a simple array of
+16-bit start/length values for each range consumes only 824 bytes, a
+very reasonable size cost here.
+
+this new table accounts for the previously-incorrect surrogate
+handling, and non-BMP characters are handled correctly by a single
+offset, without the need for any unmapped-range search.
+
+there are still a small number of mappings that are incorrect due to
+late changes made in the definition of gb18030, swapping PUA
+codepoints with proper Unicode characters. correcting these requires a
+postprocessing step that will be added later.
+---
+ src/locale/gb18030utf.h | 206 ++++++++++++++++++++++++++++++++++++++++
+ src/locale/iconv.c      |  33 +++++--
+ 2 files changed, 230 insertions(+), 9 deletions(-)
+ create mode 100644 src/locale/gb18030utf.h
+
+diff --git a/src/locale/gb18030utf.h b/src/locale/gb18030utf.h
+new file mode 100644
+index 00000000..322a2440
+--- /dev/null
++++ b/src/locale/gb18030utf.h
+@@ -0,0 +1,206 @@
++{ 0x80, 36 },
++{ 0xa5, 2 },
++{ 0xa9, 7 },
++{ 0xb2, 5 },
++{ 0xb8, 31 },
++{ 0xd8, 8 },
++{ 0xe2, 6 },
++{ 0xeb, 1 },
++{ 0xee, 4 },
++{ 0xf4, 3 },
++{ 0xf8, 1 },
++{ 0xfb, 1 },
++{ 0xfd, 4 },
++{ 0x102, 17 },
++{ 0x114, 7 },
++{ 0x11c, 15 },
++{ 0x12c, 24 },
++{ 0x145, 3 },
++{ 0x149, 4 },
++{ 0x14e, 29 },
++{ 0x16c, 98 },
++{ 0x1cf, 1 },
++{ 0x1d1, 1 },
++{ 0x1d3, 1 },
++{ 0x1d5, 1 },
++{ 0x1d7, 1 },
++{ 0x1d9, 1 },
++{ 0x1db, 1 },
++{ 0x1dd, 28 },
++{ 0x1fa, 87 },
++{ 0x252, 15 },
++{ 0x262, 101 },
++{ 0x2c8, 1 },
++{ 0x2cc, 13 },
++{ 0x2da, 183 },
++{ 0x3a2, 1 },
++{ 0x3aa, 7 },
++{ 0x3c2, 1 },
++{ 0x3ca, 55 },
++{ 0x402, 14 },
++{ 0x450, 1 },
++{ 0x452, 7102 },
++{ 0x2011, 2 },
++{ 0x2017, 1 },
++{ 0x201a, 2 },
++{ 0x201e, 7 },
++{ 0x2027, 9 },
++{ 0x2031, 1 },
++{ 0x2034, 1 },
++{ 0x2036, 5 },
++{ 0x203c, 112 },
++{ 0x20ad, 86 },
++{ 0x2104, 1 },
++{ 0x2106, 3 },
++{ 0x210a, 12 },
++{ 0x2117, 10 },
++{ 0x2122, 62 },
++{ 0x216c, 4 },
++{ 0x217a, 22 },
++{ 0x2194, 2 },
++{ 0x219a, 110 },
++{ 0x2209, 6 },
++{ 0x2210, 1 },
++{ 0x2212, 3 },
++{ 0x2216, 4 },
++{ 0x221b, 2 },
++{ 0x2221, 2 },
++{ 0x2224, 1 },
++{ 0x2226, 1 },
++{ 0x222c, 2 },
++{ 0x222f, 5 },
++{ 0x2238, 5 },
++{ 0x223e, 10 },
++{ 0x2249, 3 },
++{ 0x224d, 5 },
++{ 0x2253, 13 },
++{ 0x2262, 2 },
++{ 0x2268, 6 },
++{ 0x2270, 37 },
++{ 0x2296, 3 },
++{ 0x229a, 11 },
++{ 0x22a6, 25 },
++{ 0x22c0, 82 },
++{ 0x2313, 333 },
++{ 0x246a, 10 },
++{ 0x249c, 100 },
++{ 0x254c, 4 },
++{ 0x2574, 13 },
++{ 0x2590, 3 },
++{ 0x2596, 10 },
++{ 0x25a2, 16 },
++{ 0x25b4, 8 },
++{ 0x25be, 8 },
++{ 0x25c8, 3 },
++{ 0x25cc, 2 },
++{ 0x25d0, 18 },
++{ 0x25e6, 31 },
++{ 0x2607, 2 },
++{ 0x260a, 54 },
++{ 0x2641, 1 },
++{ 0x2643, 2110 },
++{ 0x2e82, 2 },
++{ 0x2e85, 3 },
++{ 0x2e89, 2 },
++{ 0x2e8d, 10 },
++{ 0x2e98, 15 },
++{ 0x2ea8, 2 },
++{ 0x2eab, 3 },
++{ 0x2eaf, 4 },
++{ 0x2eb4, 2 },
++{ 0x2eb8, 3 },
++{ 0x2ebc, 14 },
++{ 0x2ecb, 293 },
++{ 0x2ffc, 4 },
++{ 0x3004, 1 },
++{ 0x3018, 5 },
++{ 0x301f, 2 },
++{ 0x302a, 20 },
++{ 0x303f, 2 },
++{ 0x3094, 7 },
++{ 0x309f, 2 },
++{ 0x30f7, 5 },
++{ 0x30ff, 6 },
++{ 0x312a, 246 },
++{ 0x322a, 7 },
++{ 0x3232, 113 },
++{ 0x32a4, 234 },
++{ 0x3390, 12 },
++{ 0x339f, 2 },
++{ 0x33a2, 34 },
++{ 0x33c5, 9 },
++{ 0x33cf, 2 },
++{ 0x33d3, 2 },
++{ 0x33d6, 113 },
++{ 0x3448, 43 },
++{ 0x3474, 298 },
++{ 0x359f, 111 },
++{ 0x360f, 11 },
++{ 0x361b, 765 },
++{ 0x3919, 85 },
++{ 0x396f, 96 },
++{ 0x39d1, 14 },
++{ 0x39e0, 147 },
++{ 0x3a74, 218 },
++{ 0x3b4f, 287 },
++{ 0x3c6f, 113 },
++{ 0x3ce1, 885 },
++{ 0x4057, 264 },
++{ 0x4160, 471 },
++{ 0x4338, 116 },
++{ 0x43ad, 4 },
++{ 0x43b2, 43 },
++{ 0x43de, 248 },
++{ 0x44d7, 373 },
++{ 0x464d, 20 },
++{ 0x4662, 193 },
++{ 0x4724, 5 },
++{ 0x472a, 82 },
++{ 0x477d, 16 },
++{ 0x478e, 441 },
++{ 0x4948, 50 },
++{ 0x497b, 2 },
++{ 0x497e, 4 },
++{ 0x4984, 1 },
++{ 0x4987, 20 },
++{ 0x499c, 3 },
++{ 0x49a0, 22 },
++{ 0x49b8, 703 },
++{ 0x4c78, 39 },
++{ 0x4ca4, 111 },
++{ 0x4d1a, 148 },
++{ 0x4daf, 81 },
++{ 0x9fa6, 14426 },
++{ 0xe76c, 1 },
++{ 0xe7c8, 1 },
++{ 0xe7e7, 13 },
++{ 0xe815, 1 },
++{ 0xe819, 5 },
++{ 0xe81f, 7 },
++{ 0xe827, 4 },
++{ 0xe82d, 4 },
++{ 0xe833, 8 },
++{ 0xe83c, 7 },
++{ 0xe844, 16 },
++{ 0xe856, 14 },
++{ 0xe865, 4295 },
++{ 0xf92d, 76 },
++{ 0xf97a, 27 },
++{ 0xf996, 81 },
++{ 0xf9e8, 9 },
++{ 0xf9f2, 26 },
++{ 0xfa10, 1 },
++{ 0xfa12, 1 },
++{ 0xfa15, 3 },
++{ 0xfa19, 6 },
++{ 0xfa22, 1 },
++{ 0xfa25, 2 },
++{ 0xfa2a, 1030 },
++{ 0xfe32, 1 },
++{ 0xfe45, 4 },
++{ 0xfe53, 1 },
++{ 0xfe58, 1 },
++{ 0xfe67, 1 },
++{ 0xfe6c, 149 },
++{ 0xff5f, 129 },
++{ 0xffe6, 26 },
+diff --git a/src/locale/iconv.c b/src/locale/iconv.c
+index 52178950..4151411d 100644
+--- a/src/locale/iconv.c
++++ b/src/locale/iconv.c
+@@ -74,6 +74,10 @@ static const unsigned short gb18030[126][190] = {
+ #include "gb18030.h"
+ };
+ 
++static const unsigned short gb18030utf[][2] = {
++#include "gb18030utf.h"
++};
++
+ static const unsigned short big5[89][157] = {
+ #include "big5.h"
+ };
+@@ -224,6 +228,8 @@ static unsigned uni_to_jis(unsigned c)
+ 	}
+ }
+ 
++#define countof(a) (sizeof (a) / sizeof *(a))
++
+ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restrict out, size_t *restrict outb)
+ {
+ 	size_t x=0;
+@@ -430,15 +436,24 @@ size_t iconv(iconv_t cd, char **restrict in, size_t *restrict inb, char **restri
+ 				d = *((unsigned char *)*in + 3);
+ 				if (d-'0'>9) goto ilseq;
+ 				c += d-'0';
+-				c += 128;
+-				for (d=0; d<=c; ) {
+-					k = 0;
+-					for (int i=0; i<126; i++)
+-						for (int j=0; j<190; j++)
+-							if (gb18030[i][j]-d <= c-d)
+-								k++;
+-					d = c+1;
+-					c += k;
++				/* Starting at 90 30 81 30 (189000), mapping is
++				 * linear without gaps, to U+10000 and up. */
++				if (c >= 189000) {
++					c -= 189000;
++					c += 0x10000;
++					if (c >= 0x110000) goto ilseq;
++					break;
++				}
++				/* Otherwise we must process an index into set
++				 * of characters unmapped by 2-byte table. */
++				for (int i=0; ; i++) {
++					if (i==countof(gb18030utf))
++						goto ilseq;
++					if (c<gb18030utf[i][1]) {
++						c += gb18030utf[i][0];
++						break;
++					}
++					c -= gb18030utf[i][1];
+ 				}
+ 				break;
+ 			}
+-- 
+2.21.0
+
+
+--LZvS9be/3tNcYl/X--
