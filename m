@@ -1,4 +1,4 @@
-Received: (qmail 30377 invoked by uid 550); 2 Aug 2025 01:05:54 -0000
+Received: (qmail 10108 invoked by uid 550); 6 Apr 2026 13:26:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,130 +8,59 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 19552 invoked from network); 1 Aug 2025 22:28:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=iLNyhCd/dOJE8VgJHpt0PIIfe+AfBRMIBG4tJNGn5Hc=; b=IoHeaPHl3m6Bcxh84huvWLP48B
-	eDoSGIISHCSE/Ey6l65yBdRxYFAC+Qmr6clExVWUw1qHN+GqNw/bggT7AP8oKjaT1rEew9JOfWKi1
-	4jWY1agMxHM5UhJjVsmBN+vfjeGph/qERg7fkYuvTGAON8RTTzZmGFMhFnN8wyqlOEmHiss7JrI5Y
-	jnaouKsxZyMTcftzhLhYlx49JYE+I+IhiYNmzN5MwM+ic9lTAaSB6SaHimF+7Lxjmc/AcrRRXrdbk
-	fQrNhl79NWZieikoviIYjP6RAkQLFrMr7CEbqGcy2zR3PBi2DRZjpnaMVVPoWKv3LjtOvZMVXevEC
-	8sAp36oA==;
-Date: Sat, 2 Aug 2025 01:28:23 +0300
-Message-ID: <20250802012823.GK1900@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="GWUEoDuVUT5FGN/S"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0005
-
---GWUEoDuVUT5FGN/S
+Received: (qmail 26393 invoked from network); 6 Apr 2026 13:08:30 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+From: "Christopher L. Shannon" <cshannon@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <bf0d6b16-01de-4249-1f8c-0daccf102f14@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 06 Apr 2026 13:07:18 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-33227: Apache ActiveMQ Client, Apache ActiveMQ Broker,
+ Apache ActiveMQ, Apache ActiveMQ Web: Improper Limitation of a Pathname to
+ a Restricted Directory 
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwNQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogQXVndXN0IDAyLCAyMDI1CkFkdmlzb3J5IElEICAgICAgICAgICAg
-IDogV1NBLTIwMjUtMDAwNQpXZWJLaXRHVEsgQWR2aXNvcnkgVVJMICA6IGh0dHBzOi8vd2Via2l0
-Z3RrLm9yZy9zZWN1cml0eS9XU0EtMjAyNS0wMDA1Lmh0bWwKV1BFIFdlYktpdCBBZHZpc29yeSBV
-UkwgOiBodHRwczovL3dwZXdlYmtpdC5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwNS5odG1sCkNW
-RSBpZGVudGlmaWVycyAgICAgICAgIDogQ1ZFLTIwMjUtMjQxODksIENWRS0yMDI1LTMxMjczLAog
-ICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTMxMjc4LCBDVkUtMjAyNS00MzIxMSwK
-ICAgICAgICAgICAgICAgICAgICAgICAgICBDVkUtMjAyNS00MzIxMiwgQ1ZFLTIwMjUtNDMyMTYs
-CiAgICAgICAgICAgICAgICAgICAgICAgICAgQ1ZFLTIwMjUtNDMyMjcsIENWRS0yMDI1LTQzMjI4
-LAogICAgICAgICAgICAgICAgICAgICAgICAgIENWRS0yMDI1LTQzMjQwLCBDVkUtMjAyNS00MzI2
-NSwgQ1ZFLTIwMjUtNjU1OC4KClNldmVyYWwgdnVsbmVyYWJpbGl0aWVzIHdlcmUgZGlzY292ZXJl
-ZCBpbiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQuCgpDVkUtMjAyNS0yNDE4OQogICAgVmVyc2lv
-bnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC4wLgogICAg
-Q3JlZGl0IHRvIGFuIGFub255bW91cyByZXNlYXJjaGVyLgogICAgSW1wYWN0OiBQcm9jZXNzaW5n
-IG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8KICAgIG1lbW9yeSBj
-b3JydXB0aW9uLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAg
-aW1wcm92ZWQgY2hlY2tzLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyODQzMzIKCkNWRS0yMDI1LTMx
-MjczCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9y
-ZSAyLjQ4LjUuCiAgICBDcmVkaXQgdG8gWXVoYW8gSHUsIFlhbiBLYW5nLCBDaGVuZ2dhbmcgV3Us
-IGFuZCBYaWFvamllIFdlaS4KICAgIEltcGFjdDogUHJvY2Vzc2luZyBtYWxpY2lvdXNseSBjcmFm
-dGVkIHdlYiBjb250ZW50IG1heSBsZWFkIHRvCiAgICBtZW1vcnkgY29ycnVwdGlvbi4gRGVzY3Jp
-cHRpb246IFRoZSBpc3N1ZSB3YXMgYWRkcmVzc2VkIHdpdGgKICAgIGltcHJvdmVkIG1lbW9yeSBo
-YW5kbGluZy4KICAgIFdlYktpdCBCdWd6aWxsYTogMjkzNTc5CgpDVkUtMjAyNS0zMTI3OAogICAg
-VmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC41
-LgogICAgQ3JlZGl0IHRvIFl1aGFvIEh1LCBZYW4gS2FuZywgQ2hlbmdnYW5nIFd1LCBhbmQgWGlh
-b2ppZSBXZWkuCiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIg
-Y29udGVudCBtYXkgbGVhZCB0bwogICAgbWVtb3J5IGNvcnJ1cHRpb24uIERlc2NyaXB0aW9uOiBU
-aGUgaXNzdWUgd2FzIGFkZHJlc3NlZCB3aXRoCiAgICBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcu
-CiAgICBXZWJLaXQgQnVnemlsbGE6IDI5MTc0MgoKQ1ZFLTIwMjUtNDMyMTEKICAgIFZlcnNpb25z
-IGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3JlIDIuNDguNS4KICAgIENy
-ZWRpdCB0byBZdWhhbyBIdSwgWWFuIEthbmcsIENoZW5nZ2FuZyBXdSwgYW5kIFhpYW9qaWUgV2Vp
-LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIHdlYiBjb250ZW50IG1heSBsZWFkIHRvIGEgZGVuaWFs
-LW9mLXNlcnZpY2UuCiAgICBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0
-aCBpbXByb3ZlZCBtZW1vcnkgaGFuZGxpbmcuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5MzczMAoK
-Q1ZFLTIwMjUtNDMyMTIKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBX
-ZWJLaXQgYmVmb3JlIDIuNDguNS4KICAgIENyZWRpdCB0byBOYW4gV2FuZyAoQGV0ZXJuYWxzYWt1
-cmExMykgYW5kIFppbGluZyBDaGVuLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5
-IGNyYWZ0ZWQgd2ViIGNvbnRlbnQgbWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgU2FmYXJp
-IGNyYXNoLiBEZXNjcmlwdGlvbjogVGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1w
-cm92ZWQgbWVtb3J5IGhhbmRsaW5nLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTMxOTcKCkNWRS0y
-MDI1LTQzMjE2CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0
-IGJlZm9yZSAyLjQ4LjUuCiAgICBDcmVkaXQgdG8gSWduYWNpbyBTYW5taWxsYW4gKEB1bGV4ZWMp
-LgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0ZWQgd2ViIGNvbnRlbnQg
-bWF5IGxlYWQgdG8gYW4KICAgIHVuZXhwZWN0ZWQgU2FmYXJpIGNyYXNoLiBEZXNjcmlwdGlvbjog
-QSB1c2UtYWZ0ZXItZnJlZSBpc3N1ZSB3YXMKICAgIGFkZHJlc3NlZCB3aXRoIGltcHJvdmVkIG1l
-bW9yeSBtYW5hZ2VtZW50LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTUzODIKCkNWRS0yMDI1LTQz
-MjI3CiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2ViS2l0IGJlZm9y
-ZSAyLjQ4LjUuCiAgICBDcmVkaXQgdG8gR2lsYWQgTW9hdi4KICAgIEltcGFjdDogUHJvY2Vzc2lu
-ZyBtYWxpY2lvdXNseSBjcmFmdGVkIHdlYiBjb250ZW50IG1heSBkaXNjbG9zZQogICAgc2Vuc2l0
-aXZlIHVzZXIgaW5mb3JtYXRpb24uIERlc2NyaXB0aW9uOiBUaGlzIGlzc3VlIHdhcyBhZGRyZXNz
-ZWQKICAgIHRocm91Z2ggaW1wcm92ZWQgc3RhdGUgbWFuYWdlbWVudC4KICAgIFdlYktpdCBCdWd6
-aWxsYTogMjkyODg4CgpDVkUtMjAyNS00MzIyOAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktp
-dEdUSyBhbmQgV1BFIFdlYktpdCBiZWZvcmUgMi40OC41LgogICAgQ3JlZGl0IHRvIEpheWRldiBB
-aGlyZS4KICAgIEltcGFjdDogVmlzaXRpbmcgYSBtYWxpY2lvdXMgd2Vic2l0ZSBtYXkgbGVhZCB0
-byBhZGRyZXNzIGJhcgogICAgc3Bvb2ZpbmcuIERlc2NyaXB0aW9uOiBUaGUgaXNzdWUgd2FzIGFk
-ZHJlc3NlZCB3aXRoIGltcHJvdmVkIFVJLgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTQzNzQKCkNW
-RS0yMDI1LTQzMjQwCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IGJlZm9yZSAyLjQ4LjUuCiAgICBDcmVkaXQgdG8gU3lhcmlmIE11aGFtbWFkIFNhamphZC4K
-ICAgIEltcGFjdDogQSBkb3dubG9hZCdzIG9yaWdpbiBtYXkgYmUgaW5jb3JyZWN0bHkgYXNzb2Np
-YXRlZC4KICAgIERlc2NyaXB0aW9uOiBBIGxvZ2ljIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aCBp
-bXByb3ZlZCBjaGVja3MuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5Mzk5NAoKQ1ZFLTIwMjUtNDMy
-NjUKICAgIFZlcnNpb25zIGFmZmVjdGVkOiBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgYmVmb3Jl
-IDIuNDguNS4KICAgIENyZWRpdCB0byBIZXhSYWJiaXQgKEBoM3hyNGJiMXQpIGZyb20gREVWQ09S
-RSBSZXNlYXJjaCBUZWFtLgogICAgSW1wYWN0OiBQcm9jZXNzaW5nIG1hbGljaW91c2x5IGNyYWZ0
-ZWQgd2ViIGNvbnRlbnQgbWF5IGRpc2Nsb3NlCiAgICBpbnRlcm5hbCBzdGF0ZXMgb2YgdGhlIGFw
-cC4gRGVzY3JpcHRpb246IEFuIG91dC1vZi1ib3VuZHMgcmVhZCB3YXMKICAgIGFkZHJlc3NlZCB3
-aXRoIGltcHJvdmVkIGlucHV0IHZhbGlkYXRpb24uCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5NDE4
-MgoKQ1ZFLTIwMjUtNjU1OAogICAgVmVyc2lvbnMgYWZmZWN0ZWQ6IFdlYktpdEdUSyBhbmQgV1BF
-IFdlYktpdCBiZWZvcmUgMi40OC41LgogICAgQ3JlZGl0IHRvIENsw6ltZW50IExlY2lnbmUgYW5k
-IFZsYWQgU3RvbHlhcm92IG9mIEdvb2dsZSdzIFRocmVhdCBBbmFseXNpcwogICAgR3JvdXAuCiAg
-ICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBtYXkg
-bGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBTYWZhcmkgY3Jhc2guIERlc2NyaXB0aW9uOiBUaGlz
-IGlzIGEgdnVsbmVyYWJpbGl0eSBpbgogICAgb3BlbiBzb3VyY2UgY29kZSBhbmQgQXBwbGUgU29m
-dHdhcmUgaXMgYW1vbmcgdGhlIGFmZmVjdGVkIHByb2plY3RzLgogICAgVGhlIENWRS1JRCB3YXMg
-YXNzaWduZWQgYnkgYSB0aGlyZCBwYXJ0eS4gTGVhcm4gbW9yZSBhYm91dCB0aGUgaXNzdWUKICAg
-IGFuZCBDVkUtSUQgYXQuCiAgICBXZWJLaXQgQnVnemlsbGE6IDI5NjQ1OQoKV2UgcmVjb21tZW5k
-IHVwZGF0aW5nIHRvIHRoZSBsYXRlc3Qgc3RhYmxlIHZlcnNpb25zIG9mIFdlYktpdEdUSyBhbmQg
-V1BFCldlYktpdC4gSXQgaXMgdGhlIGJlc3Qgd2F5IHRvIGVuc3VyZSB0aGF0IHlvdSBhcmUgcnVu
-bmluZyBzYWZlIHZlcnNpb25zCm9mIFdlYktpdC4gUGxlYXNlIGNoZWNrIG91ciB3ZWJzaXRlcyBm
-b3IgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGxhdGVzdApzdGFibGUgcmVsZWFzZXMuCgpGdXJ0aGVy
-IGluZm9ybWF0aW9uIGFib3V0IFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBzZWN1cml0eSBhZHZp
-c29yaWVzCmNhbiBiZSBmb3VuZCBhdDogaHR0cHM6Ly93ZWJraXRndGsub3JnL3NlY3VyaXR5Lmh0
-bWwgb3IKaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3VyaXR5LgoKVGhlIFdlYktpdEdUSyBhbmQg
-V1BFIFdlYktpdCB0ZWFtLAo=
+Severity: low=20
 
---GWUEoDuVUT5FGN/S
-Content-Type: application/pgp-signature; name="signature.asc"
+Affected versions:
 
------BEGIN PGP SIGNATURE-----
+- Apache ActiveMQ Client (org.apache.activemq:activemq-client) before 5.19.3
+- Apache ActiveMQ Client (org.apache.activemq:activemq-client) 6.0.0 before=
+ 6.2.2
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.3
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before=
+ 6.2.2
+- Apache ActiveMQ (org.apache.activemq:activemq-all) before 5.19.3
+- Apache ActiveMQ (org.apache.activemq:activemq-all) 6.0.0 before 6.2.2
+- Apache ActiveMQ Web (org.apache.activemq:activemq-web) before 5.19.3
+- Apache ActiveMQ Web (org.apache.activemq:activemq-web) 6.0.0 before 6.2.2
 
-iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaI0/hwAKCRCRxVnb5MkS
-O4H0AJ4quKFMehQAgCf/fQe0hnDjUKeDAgCdHtCK6Hbvue2803BY4mpBIYUuAF8=
-=fMvM
------END PGP SIGNATURE-----
+Description:
 
---GWUEoDuVUT5FGN/S--
+Improper validation and restriction of a classpath path name vulnerability =
+in Apache ActiveMQ Client, Apache ActiveMQ Broker, Apache ActiveMQ All.
+
+In two instances (when creating a Stomp consumer and also browsing messages=
+ in the Web console) an authenticated user provided "key" value could be co=
+nstructed to traverse the classpath due to path concatenation. As a result,=
+ the application is exposed to a classpath path resource loading vulnerabil=
+ity that could potentially be chained together with another attack to lead =
+to exploit.This issue affects Apache ActiveMQ Client: before 5.19.3, from 6=
+.0.0 before 6.2.2; Apache ActiveMQ Broker: before 5.19.3, from 6.0.0 before=
+ 6.2.2; Apache ActiveMQ All: before 5.19.3, from 6.0.0 before 6.2.2.
+
+Users are recommended to upgrade to version 5.19.4 or 6.2.3, which fixes th=
+e issue. Note: 5.19.3 and 6.2.2 also fix this issue, but that is limited to=
+ non-Windows environments due to a path separator resolution bug fixed in 5=
+.19.4 and 6.2.3.
+
+Credit:
+
+Dawei Wang (finder)
+
+References:
+
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-33227
+
