@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["646" "Tuesday" "29" "August" "2017" "22:15:17" "+0530" "P J P" "ppandit@redhat.com" "<nycvar.YSQ.7.76.1708292212520.5828@wniryva>" "23" "[oss-security] CVE-2017-13711 Qemu: Slirp: use-after-free when sending response" nil nil nil "8" "2017082916:45:17" "[oss-security] CVE-2017-13711 Qemu: Slirp: use-after-free when sending response" (number mark "U       ppandit@redh Aug 29   23/646   " thread-indent "\"[oss-security] CVE-2017-13711 Qemu: Slirp: use-after-free when sending response\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 6007 invoked by uid 550); 29 Aug 2017 16:45:41 -0000
+Received: (qmail 5523 invoked by uid 550); 7 Apr 2026 18:47:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,42 +7,73 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5949 invoked from network); 29 Aug 2017 16:45:40 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com B35805F7B1
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx10.extmail.prod.ext.phx2.redhat.com; spf=fail smtp.mailfrom=ppandit@redhat.com
-Date: Tue, 29 Aug 2017 22:15:17 +0530 (IST)
-From: P J P <ppandit@redhat.com>
-X-X-Sender: pjp@javelin
-To: oss security list <oss-security@lists.openwall.com>
-cc: wjjzhang <wjjzhang@tencent.com>
-Message-ID: <nycvar.YSQ.7.76.1708292212520.5828@wniryva>
+x-ms-reactions: disallow
+Received: (qmail 1205 invoked from network); 7 Apr 2026 18:47:33 -0000
+Date: Tue, 7 Apr 2026 20:45:11 +0200
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <adVQtx62JGiqoBC1@256bit.org>
 MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.13
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.39]); Tue, 29 Aug 2017 16:45:28 +0000 (UTC)
-Subject: [oss-security] CVE-2017-13711 Qemu: Slirp: use-after-free when sending response
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Netbeans command injection in Vim < v9.2.0316
 
-    Hello,
+Netbeans command injection in Vim < v9.2.0316
+=============================================
+Date: 07.04.2026
+Severity: Medium
+CVE: *requested, but not yet assigned*
+CWE: Improper Neutralization of Special Elements used in an OS Command (CWE-78)
 
-Quick emulator(Qemu) built with the Slirp networking support is vulnerable to 
-an use-after-free issue. It occurs due to Socket referenced from multiple 
-packets is freed while responding to a message.
+## Summary
+A command injection vulnerability in Vim's netbeans interface allows a malicious
+netbeans server to execute arbitrary Ex commands when Vim connects to it, via
+unsanitized strings in the defineAnnoType and specialKeys protocol messages.
 
-A user/process could use this flaw to crash the Qemu process on the host 
-resulting in DoS.
+## Description
+Vim includes a netbeans interface (`:help netbeans`) which allows an external
+editor server to communicate with Vim over a TCP connection. The interface
+handles a `defineAnnoType` message that defines sign and highlight group names,
+and a `specialKeys` message that defines key mappings.
 
-Upstream patch:
----------------
-   -> https://lists.gnu.org/archive/html/qemu-devel/2017-08/msg05201.html
+In `defineAnnoType`, the `typeName`, `fg`, and `bg` fields are interpolated
+directly into Ex commands via `coloncmd()` without sanitization. Because Vim
+interprets `|` as a command separator in Ex commands, a malicious server can
+inject arbitrary Ex commands by embedding `|cmd|` in any of these fields.
 
-Reference:
-----------
-   -> https://bugzilla.redhat.com/show_bug.cgi?id=1486400
+Similarly, in `specialKeys`, key tokens are passed unsanitized into a map
+command string, allowing injection via characters such as `|` or `<`.
 
-This issue was reported by Wjjzhang.
+Exploitation requires:
+- The user starts Vim with the `-nb` flag pointing to a server controlled by
+  the attacker (e.g. `vim -nb:localhost:PORT:pwd file`).
+- The attacker's server sends a malicious `defineAnnoType` or `specialKeys`
+  message after the connection handshake.
 
-Thank you.
---
-Prasad J Pandit / Red Hat Product Security Team
-47AF CE69 3A90 54AA 9045 1053 DD13 3D32 FE5B 041F
+## Impact
+Impact is **medium**. Exploitation requires the user to connect to a malicious
+netbeans server, but once connected, arbitrary Ex commands could be executed,
+although Vim may output error messages. This can lead to arbitrary file reads
+and writes, or further code execution via Ex commands such as `:call system()`.
+
+## Acknowledgements
+The Vim project would like to thank Github user @Wang1rrr for identifying the
+vulnerability.
+
+## References
+The issue has been fixed as of Vim patch [v9.2.0316](https://github.com/vim/vim/releases/tag/v9.2.0316).
+
+- [Commit](https://github.com/vim/vim/commit/7ab76a86048ed492374ac6b19)
+- [GitHub Advisory](https://github.com/vim/vim/security/advisories/GHSA-mr87-rhgv-7pw6)
+
+
+Best,
+Christian
+-- 
+Nichts hasset man so, als die erste Äußerung eines Lasters, das man
+nicht erwartet.
+		-- Jean Paul
