@@ -1,4 +1,4 @@
-Received: (qmail 28091 invoked by uid 550); 21 Dec 2022 18:42:17 -0000
+Received: (qmail 22265 invoked by uid 550); 7 Apr 2026 14:40:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,56 +7,41 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28061 invoked from network); 21 Dec 2022 18:42:17 -0000
-Date: Wed, 21 Dec 2022 19:42:03 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 18124 invoked from network); 7 Apr 2026 14:00:03 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Michael Semb Wever <mck@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20221221194203.40e37b41@computer>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.35; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <d3798384-1752-9075-fb65-4203017fdf3e@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Directory traversal in sharutils/uudecode and python uu module
+Date: Tue, 07 Apr 2026 13:57:54 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CASSANDRA-21202: CVE-2026-32588: Apache Cassandra: Authenticated
+ DoS via ALTER ROLE Password Hashing 
 
-Hi
+Severity: low=20
 
-uuencode is an old method to encode binary data in ascii.
+Affected versions:
 
-uuencoded files start with a line of this type:
-begin 644 [filename]
+- Apache Cassandra (org.apache.cassandra:cassandra-all) 4.0 through 4.0.19
+- Apache Cassandra (org.apache.cassandra:cassandra-all) 4.1 through 4.1.10
+- Apache Cassandra (org.apache.cassandra:cassandra-all) 5.0 through 5.0.6
 
-If the implementation does not check for it this allows a directory
-traversal attack, e.g. like this:
-begin 644 /etc/shadow
+Description:
 
-Or
-begin 644 ../../../../../etc/shadow
+Authenticated DoS over CQL in Apache Cassandra 4.0, 4.1, 5.0 allows authent=
+icated user to raise query latencies via repeated password changes.
+Users are recommended to upgrade to version 4.0.20, 4.1.11, 5.0.7, which fi=
+xes this issue.
 
-If one can convince someone with root privileges to decode such a file
-this may thus compromise a system.
+Credit:
 
-I discovered two implementations vulnerable to this: The uudecode tool
-shipped with GNU sharutils and the uu module in python (only if no
-explicit filename is given). Both are vulnerable to both variations.
+Youlong Chen, Institute of Computing Technology, Chinese Academy of Science=
+s (reporter)
 
-I reported both on November 27th. The python security team asked me to
-report it to their public bug tracker, as they don't consider it a high
-risk issue:
-https://github.com/python/cpython/issues/99889
+References:
 
-The python uu module is deprecated and will be removed in python 3.13.
-The python developers pointed out that it is rarely used, and it is not
-vulnerable if an output file name is given.
-The python binascii module contains an uu decoder that is unaffected
-(as it does not directly write a file, it decodes to a variable) and no
-deprecation or removal is planned. I guess this means if you're using
-the python uu module you should probably switch to binascii.
+https://cassandra.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-32588
 
-I got a reply confirming the report from the sharutils developers,
-pointing out that this can be interpreted as expected behavior
-according to the posix standard. I don't expect a fix any time soon,
-their latest release is from 2015.
-
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
