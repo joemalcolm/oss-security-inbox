@@ -1,4 +1,4 @@
-Received: (qmail 21680 invoked by uid 550); 7 Feb 2024 13:00:00 -0000
+Received: (qmail 20428 invoked by uid 550); 7 Apr 2026 14:40:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,42 +7,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1181 invoked from network); 7 Feb 2024 12:46:46 -0000
+x-ms-reactions: disallow
+Received: (qmail 13912 invoked from network); 7 Apr 2026 13:58:57 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: =?UTF-8?Q?Istv=C3=A1n_Fajth?= <pifta@apache.org>
+From: Michael Semb Wever <mck@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <dfb97456-33c7-be39-5288-c341a34fef0a@apache.org>
+Message-ID: <b64d5fc2-2b98-672e-6e3b-bedcc2951a24@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 07 Feb 2024 12:49:17 +0000
+Date: Tue, 07 Apr 2026 13:57:41 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-39196: Apache Ozone: Missing mutual TLS authentication in
- one of the service internal Ozone Storage Container Manager endpoints 
+Subject: [oss-security] CVE-2026-27314: Apache Cassandra: Privilege escalation via ADD
+ IDENTITY authorization bypass 
 
-Severity: moderate
+Severity: low=20
 
 Affected versions:
 
-- Apache Ozone 1.2.0 through 1.3.0
+- Apache Cassandra (org.apache.cassandra:cassandra-all) 5.0 through 5.0.6
 
 Description:
 
-Improper Authentication vulnerability in Apache Ozone.
+Privilege escalation=C2=A0in Apache Cassandra 5.0 on an mTLS environment us=
+ing MutualTlsAuthenticator=C2=A0allows a user with only CREATE permission=
+=C2=A0to associate their own certificate identity with an arbitrary role,
+including a superuser role, and authenticate as that role=C2=A0via ADD IDEN=
+TITY.
 
-The vulnerability allows an attacker to download metadata internal to the S=
-torage Container Manager service without proper authentication.
-The attacker is not allowed to do any modification within the Ozone Storage=
- Container Manager service using this vulnerability.
-The accessible metadata does not contain sensitive information that can be =
-used to exploit the system later on, and the accessible data does not make =
-it possible to gain access to actual user data within Ozone.
-This issue affects Apache Ozone: 1.2.0 and subsequent releases up until 1.3=
-.0.
+Users are recommended to upgrade to version 5.0.7+, which fixes this issue.
 
-Users are recommended to upgrade to version 1.4.0, which fixes the issue.
+This issue is being tracked as CASSANDRA-21219=20
+
+Credit:
+
+Sho Odagiri, GMO Cybersecurity by Ierae, Inc. (reporter)
 
 References:
 
-https://ozone.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-39196
+https://cassandra.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-27314
+https://issues.apache.org/jira/browse/CASSANDRA-21219
 
