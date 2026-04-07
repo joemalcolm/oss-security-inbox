@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1018" "Monday" "29" "October" "2018" "14:42:29" "+0100" "Daniel Beck" "ml@beckweb.net" "<34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>" "28" "[oss-security] Script sandbox bypass in multiple Jenkins plugins" nil nil nil "10" "2018102913:42:29" "[oss-security] Script sandbox bypass in multiple Jenkins plugins" (number mark "U       ml@beckweb.n Oct 29   28/1018  " thread-indent "\"[oss-security] Script sandbox bypass in multiple Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 16053 invoked by uid 550); 29 Oct 2018 13:42:42 -0000
+Received: (qmail 19897 invoked by uid 550); 7 Apr 2026 14:40:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16017 invoked from network); 29 Oct 2018 13:42:41 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Message-Id: <34DCD4E4-8427-4B0F-889A-75AEEAC76146@beckweb.net>
-Date: Mon, 29 Oct 2018 14:42:29 +0100
+x-ms-reactions: disallow
+Received: (qmail 30389 invoked from network); 7 Apr 2026 11:49:01 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775562530; bh=K2emg5TympipQQa57v8EbrDS7GhgOj6erlVufj2kAX8=;
+	h=Reply-To:From:Date:Subject:To:From;
+	b=LKDkGxf4mIhY6VNEc/Vosm7WwlhCUXgM4VBEZeO+Fgu+dzyZzwTzLdyapM/m01VEy
+	 lOU7Ga0lBq6wrQS48aVtc31aPcXjHxhZDQ2ODArHx5BqacGcv4gSZ1P9ZWdKLybhK8
+	 MNdCGWhr12eTksnV2h4z2JiOSS7tGxeq31OzVSYhLuLHu6eK47AWjqBzXcB5awkKjQ
+	 CWxP21+7gf/xuIVNl9DxL222hSME3THSI5xWDtzt96MQvLX1L7yLzC682cGkSA0QRS
+	 jPtKYw37aoEOgDdouCWythUs9+VepG0XHyjKG0QxABqQ6VajwIBmuBha79Os5ao2el
+	 tA0zsxAf1RhrA==
+X-Gm-Message-State: AOJu0YxJAok8Trh5FnO4ZPNObIJwhEt87LOLJcktuycb5Wds+RcC8Aiy
+	NBXce4tqy9y2qTbVefbQrW+ENhcJZZjviFn+u6sE/67d2NCXC/Q0jX+kHj/p5Dedeg6cQVw+PYf
+	avyNaxi24LnAds1tDbf45K0B0Qbp470g=
+X-Received: by 2002:a05:6512:1381:b0:5a2:b0ba:7169 with SMTP id
+ 2adb3069b0e04-5a33758f26emr5904064e87.38.1775562530438; Tue, 07 Apr 2026
+ 04:48:50 -0700 (PDT)
+MIME-Version: 1.0
+From: Manikumar <manikumar@apache.org>
+Date: Tue, 7 Apr 2026 17:18:36 +0530
+X-Gmail-Original-Message-ID: <CAMVt_AyXVuh4RV5jQ0vs3vNKR5zDxWLvDjQRnmqhX+CcVkjTdA@mail.gmail.com>
+X-Gm-Features: AQROBzA17MCXLRKzSgnZ4Yyl-1EWE70N1LIXSFwhbba5nZ61cHkBrJYGWRjbERc
+Message-ID: <CAMVt_AyXVuh4RV5jQ0vs3vNKR5zDxWLvDjQRnmqhX+CcVkjTdA@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3445.9.1)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1540820561;7037be3c;
-X-HE-SMSGID: 1gH7oM-0005jE-26
-Subject: [oss-security] Script sandbox bypass in multiple Jenkins plugins
+Content-Type: multipart/alternative; boundary="000000000000e7438f064edd5d5b"
+Subject: [oss-security] CVE-2026-35554: Apache Kafka Clients: Kafka Producer Message
+ Corruption and Misrouting via Buffer Pool Race Condition
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+--000000000000e7438f064edd5d5b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Pipeline: Groovy 2.60
-* Script Security 1.48
+Severity: moderate
 
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-10-29/
+Affected versions:
 
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
+- Apache Kafka Clients (org.apache.kafka:kafka-clients) 2.8.0 through 3.9.1
+- Apache Kafka Clients (org.apache.kafka:kafka-clients) 4.0.0 through 4.0.1
+- Apache Kafka Clients (org.apache.kafka:kafka-clients) 4.1.0 through 4.1.1
 
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
+Description:
 
----
+A race condition in the Apache Kafka Java producer client=E2=80=99s buffer
+pool management can cause messages to be silently delivered to
+incorrect topics.
 
-SECURITY-1186
-The Groovy Sandbox library used by Script Security Plugin and Pipeline Groovy
-Plugin did not apply sandbox restrictions to finalize methods. This could be
-used to invoke arbitrary constructors and methods, bypassing sandbox
-protection.
+When a produce batch expires due to delivery.timeout.ms while a
+network request containing that batch is still in flight, the batch=E2=80=
+=99s
+ByteBuffer is prematurely deallocated and returned to the buffer pool.
+If a subsequent producer batch=E2=80=94potentially destined for a different
+topic=E2=80=94reuses this freed buffer before the original network request
+completes, the buffer contents may become corrupted. This can result
+in messages being delivered to unintended topics without any error
+being reported to the producer.
 
-Finalize methods are now prohibited in classes subject to sandbox security.
 
+Data Confidentiality:
+Messages intended for one topic may be delivered to a different topic,
+potentially exposing sensitive data to consumers who have access to
+the destination topic but not the intended source topic.
+
+Data Integrity:
+Consumers on the receiving topic may encounter unexpected or
+incompatible messages, leading to deserialization failures, processing
+errors, and corrupted downstream data.
+
+This issue affects Apache Kafka versions =E2=89=A4 3.9.1, =E2=89=A4 4.0.1, =
+and  =E2=89=A4 4.1.1.
+
+Kafka users are advised to upgrade to 3.9.2, 4.0.2, 4.1.2, 4.2.0, or
+later to address this vulnerability.
+
+Credit:
+
+Bharath Vissapragada <bharathv@apache.org> (reporter)
+Donny Nadolny <donny.nadolny@hotmail.com> (finder)
+Donny Nadolny <donny.nadolny@hotmail.com> (remediation developer)
+
+References:
+https://issues.apache.org/jira/browse/KAFKA-19012https://kafka.apache.org/c=
+ommunity/cve-listhttps://www.cve.org/CVERecord?id=3DCVE-2026-35554
+
+--000000000000e7438f064edd5d5b--
