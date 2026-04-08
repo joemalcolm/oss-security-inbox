@@ -1,4 +1,4 @@
-Received: (qmail 16225 invoked by uid 550); 2 Feb 2026 13:58:54 -0000
+Received: (qmail 30521 invoked by uid 550); 8 Apr 2026 21:12:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,48 +8,43 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 32585 invoked from network); 2 Feb 2026 11:53:49 -0000
-Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: =?UTF-8?Q?Francesco_Chicchiricc=C3=B2?= <ilgrosso@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <5da4dee8-3b76-bb95-5fcd-6388f98395e1@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Mon, 02 Feb 2026 11:51:45 +0000
+Received: (qmail 3124 invoked from network); 8 Apr 2026 20:32:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=samba.org;
+	s=42; h=To:From:Date:Message-ID:CC;
+	bh=JCIrTcBZ9UcUi69pDs3genPaIztw6MZvKqzmeHdbiDg=; b=QjPy0sTd7na6aFpshu0bGbrZ9Z
+	WgtDNpy5EHr7nuu9NWUkXy8ePRJCZ1nIbkApVnB14r28IsaqGOql25cP24ekNxe4JbdLCA5aVgoGF
+	iIkY15sc8FsX/MMnpkOvIIFiSulRpDUIkqB4LddXDTQQMBWAdQ8EngMXXWvs0+qwQuk7m74IG7SL9
+	w+u+7DTx4ZQV8UP8E5vFa4oNgGCOtut/4vfHTuyabHCL2UtS/6adQdcyfTB+CcZFGEB9iZbMk6st2
+	F6pQ7YHGACXt0JN3GEXh8ZuzurlC0Fkw3OfhjxfxhvPpbzSHLVW0tbk7n3d2dk9XZBridGyNDbth3
+	qCVQbtuqkWTG5cFouj4/FGUSDnAlLeH82tTH30zAccqHPyB/dNjZVvcScppR+3XIhwu8grzTn60fQ
+	xMsnU0H7sMO3VbQyNwupjIPj1G6+P5R1WbYydHu5cwruPh5v0tZ1jzi8C+MgKocPPZUjjTfonWLwn
+	WSjXkTFmYVDQCM0QnZ/fOEC3;
+Message-ID: <621ffb04-9b12-416d-b4f6-46185f342de6@samba.org>
+Date: Thu, 9 Apr 2026 08:32:18 +1200
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-23795: Apache Syncope: Console XXE on Keymaster
- parameters 
+User-Agent: Mozilla Thunderbird
+From: Douglas Bagnall <dbagnall@samba.org>
+To: oss-security@lists.openwall.com
+References: <d9b75448-c072-40ec-9740-1c68d4cee279@samba.org>
+ <2f748af7-2d2e-40e5-9c96-7927fd10b12c@samba.org>
+Content-Language: en-NZ
+In-Reply-To: <2f748af7-2d2e-40e5-9c96-7927fd10b12c@samba.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] Re: Heads-up: Upcoming Samba security releases
+ (2026-04-09)
 
-Severity: moderate=20
+On 07/04/2026 4:10 pm, Douglas Bagnall wrote:
+> On 06/04/2026 2:53 pm, Douglas Bagnall via samba-technical wrote:
+>> This is a heads-up that there will be Samba security updates for
+>> 4.22, 4.23, and 4.24 on Thursday, April 9, 2026. Please make sure
+>> that your Samba servers will be updated soon after the release!
+>> 
+> Release is still Thursday 9 April.
+Sorry again. The release has been postponed because we found an
+issue in one of the fixes.
 
-Affected versions:
+We will announce a new date as soon as possible.
 
-- Apache Syncope (org.apache.syncope.client.idrepo:syncope-client-idrepo-co=
-nsole) 3.0 through 3.0.15
-- Apache Syncope (org.apache.syncope.client.idrepo:syncope-client-idrepo-co=
-nsole) 4.0 through 4.0.3
-
-Description:
-
-Improper Restriction of XML External Entity Reference vulnerability in Apac=
-he Syncope Console.
-An administrator with adequate entitlements to create or edit Keymaster par=
-ameters via Console can construct malicious XML text to launch an XXE attac=
-k, thereby causing sensitive data leakage occurs.
-
-This issue affects Apache Syncope: from 3.0 through 3.0.15, from 4.0 throug=
-h 4.0.3.
-
-Users are recommended to upgrade to version 3.0.16 / 4.0.4, which fix this =
-issue.
-
-Credit:
-
-follycat (finder)
-Y0n3er (finder)
-
-References:
-
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2026-23795
+Douglas
 
