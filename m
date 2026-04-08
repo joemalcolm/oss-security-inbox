@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1363" "Monday" "23" "March" "2015" "20:27:06" "+0200" "Henri Salo" "henri@nerv.fi" "<20150323182706.GE4431@kludge.henri.nerv.fi>" "33" "[oss-security] CVE request: Chamilo LMS 1.9.10 Multiple XSS & CSRF Vulnerabilities" nil nil nil "3" "2015032318:27:06" "[oss-security] CVE request: Chamilo LMS 1.9.10 Multiple XSS & CSRF Vulnerabilities" (number mark "        henri@nerv.f Mar 23   33/1363  " thread-indent "\"[oss-security] CVE request: Chamilo LMS 1.9.10 Multiple XSS & CSRF Vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 29856 invoked by uid 550); 23 Mar 2015 18:27:25 -0000
+Received: (qmail 11492 invoked by uid 550); 8 Apr 2026 15:44:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,83 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 29835 invoked from network); 23 Mar 2015 18:27:25 -0000
-Message-ID: <20150323182706.GE4431@kludge.henri.nerv.fi>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Cc: Rehan Ahmed <knight_rehan@hotmail.com>
-Date: Mon, 23 Mar 2015 20:27:06 +0200
-From: Henri Salo <henri@nerv.fi>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request: Chamilo LMS 1.9.10 Multiple XSS & CSRF Vulnerabilities
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 11881 invoked from network); 8 Apr 2026 05:56:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1775627790;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=8hQNjkv5kjXB4Re9N2Vltq822zG0DKbiW4eG90odp2w=;
+	b=exWtFavfTu0uVA+poOdhbPtmL6iqzygi+/znqHPGA36IOM164YdPqEiOuc6OmuaLVlAtvQ
+	a7mnaqyFDlxvZFnsOTB0hk8dhgYLAHpxWO0LPLtppFnrkk2JWW+C2NzL9ftKaIELzVUasA
+	ARSdjT1zGWV9fDB8yYlxIJkZVWKJQ9iZvemOuJ4pisKnqp9e5RJ4FQopTAmnElM6MWfubc
+	ZUFrEIiSW8eeBi/fbQOZbuG88/3KMHWxiks77HTsmAeQIeQvoBNAALKxr1PNEo/46PEgZn
+	wAiCC2RMZ/WMymmVQBgoZvnPFqYlPYxgMfILrMsm//V9brXMNzVLGgPUoPmqPA==
+Message-ID: <987708f9-b499-43e3-97be-e290c722b9cd@cpansec.org>
+Date: Wed, 8 Apr 2026 06:56:29 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTEBSqca8+QiMbnSI8h/g2Usa2daB4x2dfzQcUPkCf6+LeAy3vGUJXi5ni86XkJSRmngUF4wI8eFWA6d8a2GRiLfFrEZprrpV/CYk5J9yvFrgBHEU12W10tbAyhaxP5OCh2jMqdXhPFrL/HwtZXLYkd8cO8alMVrKH76JqxGCwJaP4ZW3St2aX9JaeN/p+koxfT6hlzW4sgOnqBD/vu1mARWyCa3W7usA6xAiWSF4kdvkk0Wxossit2AXraxINvhvbjxMc/Cf5JodhtkdUNqX3q9F+n5jPTh1vG3v3HkhY+WrXMrhaSJLvWa2O1mpgKwi1R4CLN5QTigRlPU8O790VD+S0OLpGTP/0pvkpF8Vz16oEG6p9vZrYohAwIwo0Cj8tG8DAMmQKR/zTxVr2VJwat+jxg+jnbbv/4DIhzgOJ5AaWnJqlt9u1xkIN7MsjdUutgeipf/bI7VO4igRu43LKeWIHDgRH6coRag+nuqayIWL+kCQfSGxKqfu4etYkkuRBD6r/Ik6xZysJDuiU8oFMGvAfLGAOprpaWLMzFdVL1zPxSe9La0A/FdLwNSIyVUVRnqes+bUlK/i3n+pBvFxmbTui5rh1SomRvvyByht9t4tL5me8dcfjdyENDy8vVmHGyCw/86zET1tIRnl2rFxHLslew6BF2oTbFJc4sDlqryJQ
+X-GND-State: clean
+X-GND-Score: 0
+Subject: [oss-security] CVE-2026-5083: Ado::Sessions versions through 0.935 for Perl
+ generates insecure session ids
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+========================================================================
+CVE-2026-5083                                        CPAN Security Group
+========================================================================
 
-Advisory URL: http://seclists.org/fulldisclosure/2015/Mar/125
-Software URL: www.chamilo.org https://github.com/chamilo/chamilo-lms/
+         CVE ID:  CVE-2026-5083
+   Distribution:  Ado
+       Versions:  through 0.935
 
-"""Chamilo LMS 1.9.10 or prior versions are prone to a multiple Cross-Site
-Scripting (Stored + Reflected) & CSRF vulnerabilities. These vulnerabilities
-allows an attacker to gain control over valid user accounts in LMS, perform
-operations on their behalf, redirect them to malicious sites, steal their
-credentials, and more."""
+       MetaCPAN:  https://metacpan.org/dist/Ado
+       VCS Repo:  https://github.com/kberov/Ado
 
-Fixed in: 1.9.11
 
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Ado::Sessions versions through 0.935 for Perl generates insecure
+session ids
 
-iQIcBAEBAgAGBQJVEFr6AAoJECet96ROqnV08BgP/3NH5eW1Vf88ZjhKT99iUwEH
-VxfsvRPVecX0VbZz7cBQ1PcfJAux7qft6SpSECGJNWrwLm1pwVPzsxt2ZB+bD5w6
-oOkXCYVUKqp7Zc2CyB3Fde1M2K1tH6dQnLrhHwkYjhXGPqtHb8BgOf7A9AdI7W8x
-ZQB5vwfh1hgXkdH4o6h/aU53IdKAMPN37apUHcIG6VJ7myEbjGvBOxa1aUeGYTXg
-a7fNnbN8lIJrXqNGX29luttLeeMROkYYRZUzGXc29otCGrz7yCEySgPwQ0J8qQFj
-Wkcx9FQaGrWfx7XsRnPzxeM33sR+VPTB5+ApnaFqpPJr1Ifq3mu4Hf4bzytp5C5y
-91j6lIyimb4bYPCSW9L7xy+pQVIc8EbMNh6PaNku6f9Ap/DG0EVdsz0woTBRto4g
-JdbCoJWzrEUGN2Lw4QK79DOCAie8SfJovUteg38rN86uJyG456N0rAmqfAAjWvAM
-JDjOEzqxlDoRaoPqDhkukv/JbVSzLm3zr6KuXlM66Gk6FqKGB/+vNrz26wWM880Q
-Pnu3Eck45yvy+Hlwxvv54i162EdgD39EGmAlb0ef+ziu1Ml4SYkxeQnm3ywIAvH+
-ypbV0pyPwq1Wu8RbTRdVTwVGHe0WRPHWwBVIoCFfaLzuv5xX7wAHziuM6klkOVoE
-ULS6Hpw949OCSmauAxcS
-=hUg1
------END PGP SIGNATURE-----
+Description
+-----------
+Ado::Sessions versions through 0.935 for Perl generates insecure
+session ids.
+
+The session id is generated from a SHA-1 hash seeded with the built-in
+rand function, the epoch time, and the PID. The PID will come from a
+small set of numbers, and the epoch time may be guessed, if it is not
+leaked from the HTTP Date header. The built-in rand function is
+unsuitable for cryptographic usage.
+
+Predicable session ids could allow an attacker to gain access to
+systems.
+
+Note that Ado is no longer maintained, and has been removed from the
+CPAN index. It is still available on BackPAN.
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+References
+----------
+https://github.com/kberov/Ado/issues/112
+https://backpan.perl.org/authors/id/B/BE/BEROV/Ado-0.935.tar.gz
+https://security.metacpan.org/docs/guides/random-data-for-security.html
+
+Timeline
+--------
+- 2017-09-02: Last version of Ado was released on CPAN.
+- 2018-09-24: Announcement that Ado will not be updated anymore.
+
+
+
