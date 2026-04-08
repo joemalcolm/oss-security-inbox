@@ -1,4 +1,4 @@
-Received: (qmail 25644 invoked by uid 550); 4 Jun 2026 02:29:18 -0000
+Received: (qmail 1653 invoked by uid 550); 8 Apr 2026 02:19:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,77 +8,119 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 16260 invoked from network); 4 Jun 2026 02:09:10 -0000
-Date: Thu, 4 Jun 2026 04:09:00 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjcj.net; s=dkim;
-	t=1780538941;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=xtHo6Fi2/DDd0Gjl0PHqFekIKX1VTiYh1Fy4T7q7PlU=;
-	b=BMOb+2YVRSD5oIPsJ+t+TC/xt11QhEEIW8htikqGc07zv7IbOyyYfrCJXEBI/Jg5Ye6DFP
-	gNU37CftgJni4veBn3sI2mPdcP72tyjCmyxd1YK/yBQzsQcp/oMorB63EQCupG04lBqetn
-	hST8MLd4pdlvmr53dpxD7cfWx2x9mu++inJK9FtgW1pjUMMcM59bOSpWZAVOfTpaTQeEs/
-	FFatwO4fSaRwyVs4HkpEJ+lmTleqb2ICiXJy5n5c4pjQZ5nwd9yDTsfFYr1vJopxXtisE0
-	oYOh6WAl6OJbDjF4N3E8VV+q7Q5kMAON9Zqw9D8D3KL9xMud0RUjA1EFkLFltg==
-Authentication-Results: pjcj.com;
-	auth=pass smtp.mailfrom=paul@pjcj.net
-From: Paul Johnson <paul@pjcj.net>
-To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
-Message-ID: <aiDdcEmfzgURIFfh@pjcj.com>
-MIME-Version: 1.0
+Received: (qmail 23615 invoked from network); 8 Apr 2026 02:19:13 -0000
+Date: Wed, 8 Apr 2026 04:19:08 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20260408021908.GA8285@openwall.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Subject: [oss-security] CVE-2026-8829: HTML::Entities versions before 3.84 for Perl read
- freed heap memory in _decode_entities
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Fwd: [siren] Severity: High =?utf-8?B?4oCT?=
+	=?utf-8?Q?_Potential_Maliciou?=
+	=?utf-8?Q?s?= Campaign Underway Targeting Open Source Developers via Slack
 
-========================================================================
-CVE-2026-8829                                        CPAN Security Group
-========================================================================
+Also seen at https://lists.openssf-vuln.org/g/siren/message/7
 
-        CVE ID:  CVE-2026-8829
-  Distribution:  HTML-Parser
-      Versions:  before 3.84
+----- Forwarded message from "Christopher Robinson via lists.openssf-vuln.org" <christopher.robinson=linuxfoundation.org@lists.openssf-vuln.org> -----
 
-      MetaCPAN:  https://metacpan.org/dist/HTML-Parser
-      VCS Repo:  https://github.com/libwww-perl/HTML-Parser
+Subject: [siren] Severity: High – Potential Malicious Campaign Underway Targeting Open Source Developers via Slack
+To: siren@lists.openssf-vuln.org
+From: "Christopher Robinson via lists.openssf-vuln.org" <christopher.robinson=linuxfoundation.org@lists.openssf-vuln.org>
+Date: Tue, 07 Apr 2026 18:10:04 -0700
+Mailing-List: list siren@lists.openssf-vuln.org; contact siren+owner@lists.openssf-vuln.org
+Reply-To: siren@lists.openssf-vuln.org,christopher.robinson@linuxfoundation.org
 
-
-HTML::Entities versions before 3.84 for Perl read freed heap memory in
-_decode_entities
-
-Description
------------
-HTML::Entities versions before 3.84 for Perl read freed heap memory in
-_decode_entities.
-
-The XS routine backing HTML::Entities::_decode_entities cached a
-pointer (repl) into the entity-value SV returned by hv_fetch on the
-entity2char hash. When the input SV was identical to a value SV in that
-hash, and that value contained its own key as an entity reference, a
-later call to grow_gap() reallocated the SV's PV buffer and freed the
-backing allocation that repl still pointed into. The subsequent copy
-loop read repl_len bytes from the freed allocation.
-
-The read may disclose adjacent heap contents into the destination SV.
-
-Problem types
--------------
-- CWE-416 Use After Free
-
-Solutions
----------
-Upgrade to HTML-Parser 3.84 or later.
+Date: April 7, 2026
+Severity: High – Potential Malicious Campaign Underway Targeting Open Source Developers via Slack
 
 
-References
-----------
-https://github.com/libwww-perl/HTML-Parser/pull/56
-https://github.com/libwww-perl/HTML-Parser/commit/6922552b0778c90a9587a3894e248be4d3a25e1c.patch
+# Overview #
+The community has received reports of an active social engineering campaign targeting open source developers via Slack (including ToDoGroup and related communities).  In the reported incident, an attacker impersonated a well-known Linux Foundation community leader and attempted to lure the victim into following a malicious link:
 
-Timeline
---------
-- 2026-05-12: Issue reported.
-- 2026-05-19: HTML-Parser 3.84 released.
 
--- 
-Paul Johnson - paul@pjcj.net
+>> https://sites.google.com/view/workspace-business/join <<
+
+
+The link mimics a legitimate Google Workspace flow but redirects users to a fraudulent authentication process. Victims are prompted to enter credentials and then instructed to install a “Google certificate,” which is in fact malicious.  This activity represents a multi-stage attack involving impersonation, phishing, certificate spoofing, and malware delivery.
+
+
+# Observed Attack Behavior #
+- Impersonation: Attacker poses as a trusted community leader in Slack
+- Phishing Link: Uses a lookalike domain (sites.google.com/...) instead of legitimate Google Workspace domains
+- Credential Harvesting: Requests email and verification code
+- Certificate Spoofing: Prompts user to install a fake root certificate impersonating Google
+
+
+# Malware Delivery #
+- macOS: Script downloads and executes a binary (gapi) from a remote IP (2.26.97.61)
+- Windows: Prompts installation of a malicious certificate via browser trust dialog
+
+
+Installing the certificate enables interception of encrypted traffic and credential theft. Executing the binary may result in full system compromise.
+
+
+# What You Should Do #
+Please take the following precautions immediately:
+1. Verify Identities
+- Do not trust messages based solely on name or profile.
+- Confirm unusual requests through a separate, known communication channel.
+
+
+2. Avoid Suspicious Links
+- Do not click links that look similar to, but are not, official domains.
+- When in doubt, navigate manually to known trusted sites.
+
+
+3. Never Install Certificates from Links
+- Legitimate services do not require users to manually install root certificates.
+- Treat any such request as malicious unless explicitly verified by your organization.
+
+
+4. Do Not Run Untrusted Software
+- Do not execute scripts, installers, or binaries received via Slack or unknown websites.
+- Avoid commands that download and execute code (e.g., curl | bash).
+
+
+5. Treat Unexpected Security Prompts as Suspicious
+- Messages about “expired certificates” or urgent updates should be independently verified
+
+
+# If You May Have Been Affected #
+If you interacted with the link, installed a certificate, or executed any files:
+- Disconnect from the network immediately
+- Remove any newly installed certificates
+- Run endpoint security scans
+- Rotate all credentials (GitHub, SSH keys, cloud access, etc.)
+- Revoke active sessions and tokens
+- Report the incident to your security team or organization
+
+
+# Community Recommendations #
+- Enable multi-factor authentication (MFA) on all developer and collaboration accounts
+- Be cautious of unsolicited outreach, even from familiar names
+- Establish team practices for verifying sensitive requests
+- Share this advisory with your teams and contributors
+
+
+# Key Takeaway #
+This campaign highlights a growing trend: attackers are targeting developer workflows and trust relationships, not just software vulnerabilities. Staying vigilant and verifying before acting are critical to protecting both individual environments and the broader open source ecosystem.
+
+
+If you have observed similar activity or have additional indicators to share, please report them to your security team or appropriate community channels.
+
+
+Stay safe,
+
+
+Christopher "CRob" Robinson
+OpenSSF | The Linux Foundation
+Chief Technology Officer |  Chief Security Architect
+
+
+–
+TLP:CLEAR
+
+----- End forwarded message -----
