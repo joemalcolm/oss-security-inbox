@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2653" "Wednesday" "19" "February" "2020" "17:14:16" "+0000" "Jeremy Stanley" "fungi@yuggoth.org" nil "81" nil "^Date:" nil nil "2" nil nil (number mark "        fungi@yuggot Feb 19   81/2653  " thread-indent "\"[oss-security] [OSSA-2020-001] Nova can leak consoleauth token into log files (CVE-2015-9543)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [OSSA-2020-001] Nova can leak consoleauth token into log files (CVE-2015-9543)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25849 invoked by uid 550); 19 Feb 2020 17:14:30 -0000
+Received: (qmail 5993 invoked by uid 550); 8 Apr 2026 16:51:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,102 +6,70 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25814 invoked from network); 19 Feb 2020 17:14:29 -0000
-Message-ID: <20200219171416.vofjngtntxvlocx2@yuggoth.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rjgbnf2cz2pfmqn6"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170113 (1.7.2)
-X-SA-Exim-Connect-IP: 2001:4802:7801:102:be76:4eff:fe20:63e0
-X-SA-Exim-Rcpt-To: oss-security@lists.openwall.com
-X-SA-Exim-Mail-From: fungi@yuggoth.org
-X-SA-Exim-Scanned: No (on azathoth.yuggoth.org); SAEximRunCond expanded to false
-Date: Wed, 19 Feb 2020 17:14:16 +0000
-From: Jeremy Stanley <fungi@yuggoth.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [OSSA-2020-001] Nova can leak consoleauth token into log files
- (CVE-2015-9543)
+x-ms-reactions: disallow
+Received: (qmail 16115 invoked from network); 8 Apr 2026 16:12:01 -0000
+Authentication-Results: mail.gathman.org; iprev=pass policy.iprev="2001:470:8:809::1010" (mail.gathman.org); auth=pass (CRAM-MD5 sslbits=256) smtp.auth=stuart
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gathman.org; 
+ i=@gathman.org; q=dns/txt; s=rsa2048; t=1775664697; 
+ h=date : from : to : subject : in-reply-to : message-id : 
+ references : mime-version : content-type : date : from : 
+ subject; bh=8HuR0UQiQq3TXWvgL1kF40MKlXELsGaWhx3BddVsQ1U=; 
+ b=daSyhfxEbn3AHQQz3K0mLiijiJZ8nKWpMV24MdMSgOCtNU+9ZYLSPbkt
+ l4T3JOtHy36LA25BDsDk0Bujj0eoTWQ0G3U5ruEJSumsD+dEQT11Jo43Dp
+ uhv9GbRiTKM0zNmk1sgAiY29VGBBZYg1a7c6HkTz+3qHqSD0TijjGe7S+U
+ hhKD9OxbT5rK1iS5aTDYw/0TrW5QizhI9mHrXJ58bPoAWX/EwtRp5szFj2
+ UgZ+jhEcjZgAlbUZGR8RIsxAt3qQTXsoRD/+TUHLAg+Elm4BjEGHAfo4w5
+ OKAoAr+ftAUnEIn0E1fWCfd8kPPdCTnzjCPi8Fci5pgqbBbhXMcNDA==
+Date: Wed, 8 Apr 2026 12:11:33 -0400 (EDT)
+From: Stuart D Gathman <stuart@gathman.org>
 To: oss-security@lists.openwall.com
+In-Reply-To: <20260408021908.GA8285@openwall.com>
+Message-ID: <7f70dce9-af6-4c25-5b2f-544f8ccd7ba@gathman.org>
+References: <20260408021908.GA8285@openwall.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="1085201697-1965025136-1775664697=:21237"
+Subject: =?UTF-8?Q?Re=3A_=5Boss-security=5D_Fwd=3A_=5Bsiren=5D_Severity=3A?=
+ =?UTF-8?Q?_High_=E2=80=93_Potential_Malicious_Campaign_Underw?=
+ =?UTF-8?Q?ay_Targeting_Open_Source_Developers_via_Slack?=
 
---rjgbnf2cz2pfmqn6
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--1085201697-1965025136-1775664697=:21237
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-OSSA-2020-001: Nova can leak consoleauth token into log files
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+On Wed, 8 Apr 2026, Solar Designer wrote:
 
-:Date: February 19, 2020
-:CVE: CVE-2015-9543
+> Also seen at https://lists.openssf-vuln.org/g/siren/message/7
 
+> Subject: [siren] Severity: High – Potential Malicious Campaign Underway Targeting Open Source Developers via Slack
+> # Overview #
+> The community has received reports of an active social engineering
+> campaign targeting open source developers via Slack (including
+> ToDoGroup and related communities).  In the reported incident, an
+> attacker impersonated a well-known Linux Foundation community leader
+> and attempted to lure the victim into following a malicious link:
+etc
 
-Affects
-~~~~~~~
-- Nova: <18.2.4,>=3D19.0.0<19.1.0,>=3D20.0.0<20.1.0
+As listed in this and other recent OSS emails, platforms exploited included
+Slack, Teams, Google, etc
 
+The method is to create a convincing fake account on the centralized platform.
 
-Description
-~~~~~~~~~~~
-Paul Carlton from HP reported a vulnerability in Nova. An attacker
-with read access to the service=C3=A2=E2=82=AC=E2=84=A2s logs may obtain to=
-kens used for
-console access. All Nova setups using novncproxy are affected.
+Is this a weakness that is aggravated by centralized platforms?
 
+Federated protocols like SMTP, Matrix, XMPP, etc would require a
+deceptive domain name (like the legendary lBM.com of Arial font fame)
+for a similar attack.  (Fully decentralized protocols like SSB 
+just have pubkeys - but I suppose users might get fooled by a new
+pubkey with icons and earlier messages that look like a party
+being impersonated.)
 
-Patches
-~~~~~~~
-- https://review.opendev.org/707845 (Queens)
-- https://review.opendev.org/704255 (Rocky)
-- https://review.opendev.org/702181 (Stein)
-- https://review.opendev.org/696685 (Train)
-- https://review.opendev.org/220622 (Ussuri)
+Is this evidence for a general recommendation against centralized
+platforms for open source development?  More to the surprise of
+my preconceived ideas - are fully decentralized protocols subject
+to similar social engineering?  There is not much difference between
+a Facebook internal account number and a pubkey for most end users.
 
-
-Credits
-~~~~~~~
-- Paul Carlton from HP (CVE-2015-9543)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/1492140
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=3DCVE-2015-9543
-
-
-Notes
-~~~~~
-- The stable/queens branch is under extended maintenance and will receive no
-  new point releases, but a patch for it is provided as a courtesy.
-
---=20
-Jeremy Stanley, on behalf of OpenStack Vulnerability Management
-
---rjgbnf2cz2pfmqn6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEl65Jb8At7J/DU7LnSPmWEUNJWCkFAl5NbOhfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDk3
-QUU0OTZGQzAyREVDOUZDMzUzQjJFNzQ4Rjk5NjExNDM0OTU4MjkACgkQSPmWEUNJ
-WCne6w/+OkVjD2kyNxJUgMWkOxKS9dNVu/H7zJXf5NDTpGRrqJvLkSJ3Nj9ZqGLD
-fO8NT1e8PpHKtRaEdRwiJrwToBFLrzb1RWBwqvHd1gpyPM41WEfytXuY24dZv1vg
-rgZ5RL7cKyRNgQ4VKIGNHoGxHkPsdaA8StlX94Cl7/Awjad73juaAA5BDlrL/zNE
-CTrnw1AY3v6oGF0QtJD65P/qavwimdAnhUWSWFGHLYJZQfeLwIa7uYYH1m02TDr+
-yFLM0sf7RHqLcjjC7tidcBWe+lADS+fWcNz/ZM2H2njE7E/UOqUQkGJwOjfV+x+3
-FP8BgqnvNigLkFVMPbx+/8fRwW8/+ow2SX/QBXFCsKPdsHNW547yiTVapOn80YGV
-NQcyadcPXWUSqKaVEWVdD1i+Hd5Suulay+7+9gzLgMAVl/rh6LcyxLPu9ceVghh9
-q+HCm+Dblnzgfz3PcXFGD8RjvOug0XrBXA80JsR92oyx3QXqMS5ZBEOauJ5kKeZq
-PBJJa3kL08BsmZnyvWJQLqCpaXTpgOLwy9csTHwTNkCCJwQlhJE7vl1Xwl4fb5Lx
-0T+uzEMPeizBs1kBFovzPcLDQL5/297M7SOi1tvrG18S1YsAADBO5Y6TSC3pjsAQ
-eHZFS4/wIRrx9o6pLv9Kqj1tS2eX5aKIv8y2cKitrK1wu417AwU=
-=Run8
------END PGP SIGNATURE-----
-
---rjgbnf2cz2pfmqn6--
+The issue with federated protocols is that any trusted CA can forge
+any TLS cert - a "serial reliability" problem.
+--1085201697-1965025136-1775664697=:21237--
