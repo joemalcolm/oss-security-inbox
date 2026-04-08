@@ -1,4 +1,4 @@
-Received: (qmail 28541 invoked by uid 550); 25 Mar 2026 15:16:52 -0000
+Received: (qmail 20158 invoked by uid 550); 8 Apr 2026 00:25:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,129 +8,106 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 22149 invoked from network); 25 Mar 2026 08:23:39 -0000
-ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org E9B6C4E429B
-Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
-ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1774427008; cv=none; b=Ixec4+famuajxFsj6qCPYxaS01P9lI6mQvfx/VoZOy1SzG5J7R8PvE0Yor7r0F8edNz1uuutJRCpFn0SPQ0FIgM+v1RbSkH8UVZIW/u6896UBxYNKm2V75FEP9hPtm8uc85zuDuKkv7ifPB4jOkB9hu+z9XmFqap3gCCULrb4U8=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1774427008;
-	c=relaxed/relaxed; bh=MdTfJOPndintEZEZVbrfV6Ktg6AjODcZifmAldDy8eY=;
-	h=DKIM-Signature:DKIM-Signature:Message-ID:Date:MIME-Version:To:
-	 From:Subject; b=nlQay8g8AKPS/ejZcDxeiYqHijEQaKJS5rLvntg5RyGLVLvCZIHwEaXrunVOYEu+Ix2Ua/UavAS97lvm4pdya8qi8kEAbweKAj7ehsM9b9A15XYnf9ZP8s5k1qz3xjG6/Zwc9Vw+Ihg5AE0WDwYU9hZhjqseW+GIXk+5yehEbpc=
-ARC-Authentication-Results: i=1; mx.pao1.isc.org
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org E9B6C4E429B
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1774427007; bh=MdTfJOPndintEZEZVbrfV6Ktg6AjODcZifmAldDy8eY=;
-	h=Date:To:Cc:From:Subject;
-	b=QegE8lwV3oKKYzhprxd0KRVkTSBbXLwGhTnYmwvx5Gn8HpyZfNdnvjo/kLeety7Hj
-	 X1Ktn+OkJRomSA5BuDGi7nmlBSlFqzusDJ4+nmPfGgKA0VSDEdRPaS1wP4lmyqXgNy
-	 CFfsZXOnDOzuOiMrOz93jFmP+3rydNPKe1fWn5jk=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org CF7332E6030A
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1774427007;
-	bh=MdTfJOPndintEZEZVbrfV6Ktg6AjODcZifmAldDy8eY=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=ISPDGJHcGwdShqpIiCY4dER1kxToUO8LUFOzo9r2Wx11I3h4KY0olhz4OnM7cP083
-	 zHnFROU61nHlqpypwuYs/V96TzC0BSmFOMgDaHdsXjqM/CeQEUY5JYhk04ggidveB5
-	 AuqyI/6K1ciwOziKleTWubd4sfqnp5q03b72zLTo=
-Message-ID: <596f43c3-54bd-413f-bfda-e42cac84ea95@isc.org>
-Date: Wed, 25 Mar 2026 09:23:25 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
+Received: (qmail 26343 invoked from network); 8 Apr 2026 00:09:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1775606951; bh=JamLv/iLFjgsdPOXQfBiApdAqEPw57aMDDvKy7KUaKM=;
+	h=Date:From:To:Cc:Subject:From;
+	b=SG9Y7ftTdEPZx406QsjAgU/K/3xtFCIfABmXIy4yIcl1s52XWXjaW0BBFKXP98gL9
+	 lrSI2znpXWBraDsJ+SDAvd//wpUp4K6lPVqdWRDEaOpDXT3mZqN9ub5mO7J8OhEgQJ
+	 oDVLkNwVIMd5bdYym7+OYxhVWqg67HxfWLr0KvUE=
+X-Riseup-User-ID: 6742F29A4E52E219CCA852BF51CAA7550D5BC643D17F6159801F50303CF955C2
+Date: Tue, 7 Apr 2026 20:09:06 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
 To: oss-security@lists.openwall.com
-Cc: "security-officer@isc.org" <security-officer@isc.org>
-From: Peter Davies <peterd@isc.org>
-Autocrypt: addr=peterd@isc.org; keydata=
- xjMEXqr0/hYJKwYBBAHaRw8BAQdAxXduMttgJDy3cbKcHDxMZJE/dgIneqhFCnFYQlIdH9nN
- HVBldGVyIERhdmllcyA8cGV0ZXJkQGlzYy5vcmc+wpAEExYIADgWIQQpYNJ6zqtdOvyTgWGh
- eR3xxh+xLAUCYY49eQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCheR3xxh+xLP5R
- AQCuPIZCUw2YqV8FVpZbfBATx3AV05S7IWf5LuNxg8jerAEAr3nGHrUjoIVoY46SGqFUVngc
- MT2sZwp573SOg0yEQQHOOAReqvT+EgorBgEEAZdVAQUBAQdASXica7ntFOvkRDgdRPMiO1db
- 1mtUf+L7qH+pa4rKWDcDAQgHwoIEGBYIACAWIQQpYNJ6zqtdOvyTgWGheR3xxh+xLAUCYY49
- egIbDAAUCRCheR3xxh+xLAkQoXkd8cYfsSzzSQEAzIh/IpSNuVDXiVXxcX+VklkVks913ttu
- fGKxS8314MgBANheYCZVUfkc/THpEy5YttejaWZIhV0vEmkbdCAjj1UO
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Wi288jhpnARFBkgo9ECubwtU"
-Subject: [oss-security] ISC has disclosed one vulnerability in Kea (CVE-2026-3608)
-
---------------Wi288jhpnARFBkgo9ECubwtU
-Content-Type: multipart/mixed; boundary="------------SFNOKC5S70rdjbdONbstC0mE";
- protected-headers="v1"
-Message-ID: <596f43c3-54bd-413f-bfda-e42cac84ea95@isc.org>
-Date: Wed, 25 Mar 2026 09:23:25 +0100
+Cc: adrelanos@whonix.org, arraybolt3@gmail.com
+Message-ID: <20260407200906.14b9bcc0@riseup.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-Cc: "security-officer@isc.org" <security-officer@isc.org>
-From: Peter Davies <peterd@isc.org>
-Subject: ISC has disclosed one vulnerability in Kea (CVE-2026-3608)
-Autocrypt: addr=peterd@isc.org; keydata=
- xjMEXqr0/hYJKwYBBAHaRw8BAQdAxXduMttgJDy3cbKcHDxMZJE/dgIneqhFCnFYQlIdH9nN
- HVBldGVyIERhdmllcyA8cGV0ZXJkQGlzYy5vcmc+wpAEExYIADgWIQQpYNJ6zqtdOvyTgWGh
- eR3xxh+xLAUCYY49eQIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgAAKCRCheR3xxh+xLP5R
- AQCuPIZCUw2YqV8FVpZbfBATx3AV05S7IWf5LuNxg8jerAEAr3nGHrUjoIVoY46SGqFUVngc
- MT2sZwp573SOg0yEQQHOOAReqvT+EgorBgEEAZdVAQUBAQdASXica7ntFOvkRDgdRPMiO1db
- 1mtUf+L7qH+pa4rKWDcDAQgHwoIEGBYIACAWIQQpYNJ6zqtdOvyTgWGheR3xxh+xLAUCYY49
- egIbDAAUCRCheR3xxh+xLAkQoXkd8cYfsSzzSQEAzIh/IpSNuVDXiVXxcX+VklkVks913ttu
- fGKxS8314MgBANheYCZVUfkc/THpEy5YttejaWZIhV0vEmkbdCAjj1UO
-Autocrypt-Gossip: addr=security-officer@isc.org; keydata=
- xsBNBEsnyOQBCAC+WKYHcaDGD9a2ztwdccmhnzo0YJ9SOPVIonqGxCa6o8TwfipyH9Wh5uFq
- c6Ne+I0+vWohQtBIeodQHgGGlbjdxMp3QxohvqCmZcoObH7kjI1lpKQ6TMvRvo79pq5WRIuE
- +Jbm6Rt9Hz3w9APrYzISzeCuHFK7vlZfaLdoI0SxzEuzMmyOvQpa6dgSKQF6G2Nsbz1RYujZ
- 6fE6GXtc+I9q44yJS4llYpUqYpPh5CsfbDx8HwMWPj9eYOwjf3/vniFeG9tHIB8E+p7UBTG7
- bTVRlEgmyC1Ry0OPO3UPKjL/Dja8IeeJamT0dlsRCD/O/WTyxQg9EceCgUvOz65puKkrABEB
- AAHNL0lTQyBTZWN1cml0eSBPZmZpY2VyIDxzZWN1cml0eS1vZmZpY2VyQGlzYy5vcmc+wsBx
- BBMBAgAbBQJLJ8jkAhsDBgsJCAcKAgQVCggCAh4BAheAAAoJEL2X3GOe6MR7gZYIAI4uSaX7
- HwU2ywaCO77q5O/Zzzp6M+Oi+z7G00GFpACMSDSjX8kbZoIIW7FXb9US/9XLwqDtjlrGOLbd
- zcZ/+EMsJM/HpT796YH8Y9gMpsH5SZq5gByeguT6KgjqF2w8yNX7/r0AM3psfVSv9l595CoJ
- WNbDBHqGpqMi55SqKLCQOJ8noDp4x+JVNcJ1AdK/QVSk+gEhLqrvoYNyG8B/C2LL1fBQC8sF
- kX/M1mKlkM83GnJlPWCrig69VlR+relppEuZ5G34z93c9NtCqdH6zLzzej2qmwLb/dYJYvhE
- EMDlgvlSWw6yaJTuuEfuqHonrgOTXgb3Ln8A7XJECuSgWrLOwE0ESyfI5AEIAKUsrY4AxF87
- HvBEqhCXIt1o8plzVoIT5kY/p2n48U+oNGl5v4qNiC4SQZIvsA+Fcew8BhAYbNFTOsK/NKVO
- yiLkLOqQnkuBlESzzvMcl0gSuX1t99V2SJpCKukCa+jkTcjJnURODJn5Wp9GLAWXutxJvJnT
- t4oxcnAKun6Zt1vyOQs2lI9zXCTi8AdDKTiA/Es66CPVCRcMFUS6l9ArN57gUP0KRj8N0OfO
- QPdzShnGrSdtM0D2Ei2pmUcgkvSIeNU5HRd2iMpWGO1L8yfGQvp7dzjWbG7i/2RTnZ+KR3a2
- OMmtXUNuWQF3AfohS0TRTAcAR7IgOLzyy2prT9XKtCcAEQEAAcLAXwQYAQIACQUCSyfI5AIb
- DAAKCRC9l9xjnujEeze1CAC4A+KZdRi08gBxG4hKuvpL0fHfwnVmrLR39c0mQR9tE+iUcOez
- qER3z2fn/Zm5nMTZcauzCXMmFXwKWlGufiDrXVqKCyEHkYyBnn3U9ksRigo8eG/X3+G3US9k
- 0c7FfWaIrOY2IdGWUQic0ENOu/94VAFaleI4BBQvnDIY6hr4Fm14qXgssF7YwcEreoUU+Ayh
- Yc52tlDssU9DUaX/vn7OD42FIzpUzgUyoZ97UtPX+m9P5YN2Teeq0iVkcxxmT9wuNYCCZb1W
- 03hvcA8uwvRkNDbdQ//dma2gXdUPoXfBJT4kLo1/KV5GimPHdn0h172E1RKLgKtrJ58TVTJ6
- UV1r
+Content-Type: multipart/signed; boundary="Sig_/H2euY6D9UhYLoyRvXfna2c4";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] systemd-journald in systemd 259 does not escape characters in emerg
+ messages that are wall'd to other user's terminals
 
---------------SFNOKC5S70rdjbdONbstC0mE
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+--Sig_/H2euY6D9UhYLoyRvXfna2c4
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-T24gMjUgTWFyY2ggMjAyNiwgSW50ZXJuZXQgU3lzdGVtcyBDb25zb3J0aXVtIGRpc2Nsb3NlZCBv
-bmUgDQp2dWxuZXJhYmlsaXR5IGFmZmVjdGluZyBvdXIgS2VhIHNvZnR3YXJlOg0KDQotIENWRS0y
-MDI2LTM2MDg6wqAgwqAgwqAgwqAgU3RhY2sgb3ZlcmZsb3cgaW4gS2VhIGRhZW1vbnMgDQpodHRw
-czovL2tiLmlzYy5vcmcvZG9jcy9jdmUtMjAyNi0zNjA4DQoNCk5ldyB2ZXJzaW9ucyBvZiBLZWEg
-YXJlIGF2YWlsYWJsZToNCg0KLSBodHRwczovL2Rvd25sb2Fkcy5pc2Mub3JnL2lzYy9rZWEvMi42
-LjUvDQotIGh0dHBzOi8vZG93bmxvYWRzLmlzYy5vcmcvaXNjL2tlYS8zLjAuMy8NCg0KRm9yIG1v
-cmUgaW5mb3JtYXRpb24gYW5kIG90aGVyIHJlbGVhc2UgZm9ybWF0cywgY29uc3VsdCB0aGUgSVND
-IHNvZnR3YXJlIA0KZG93bmxvYWQgcGFnZTogaHR0cHM6Ly93d3cuaXNjLm9yZy9kb3dubG9hZC8N
-Cg0KV2l0aCB0aGUgcHVibGljIGFubm91bmNlbWVudCBvZiB0aGVzZSB2dWxuZXJhYmlsaXRpZXMs
-IHRoZSBlbWJhcmdvIA0KcGVyaW9kIGlzIGVuZGVkIGFuZCBhbnkgdXBkYXRlZCBzb2Z0d2FyZSBw
-YWNrYWdlcyB0aGF0IGhhdmUgYmVlbiANCnByZXBhcmVkIG1heSBiZSByZWxlYXNlZC4NCg0KLS0g
-DQpQZXRlciBEYXZpZXMNClN1cHBvcnQgRW5naW5lZXINCkludGVybmV0IFN5c3RlbXMgQ29ycG9y
-YXRpb24NCnBldGVyZEBpc2Mub3JnDQowMDEgNjUwLTQyMy0xNDYwDQoNCg==
+Going over this semi-briefly:
+=20=20
+* systemd-journald is configured with the `ForwardToWall=3Dyes` and
+  `MaxWallLevel=3Demerg` settings by default in Ubuntu 26.04 pre-release
+  images and Arch Linux. (I think this is because these are enabled by
+  default in systemd upstream but haven't tried to verify this.) In my
+  testing, this will result in systemd-journald copying emerg-level
+  log messages to all logged-in TTYs and at least some root-owned PTYs
+  (if any exist).
+* Any user on the system can write an emerg-level log message using
+  `logger -p emerg 'msg...'`.
+* Potentially dangerous character sequences in log messages (like ANSI
+  escape sequences) are not sanitized by systemd-journald before it
+  prints those messages to other user's terminals.
+* Therefore, one can use systemd-journald to write malicious things to
+  other people's terminals, which can be used to exploit terminal
+  emulator vulnerabilities. There have been vulnerabilities in
+  terminal emulators like XTerm in the past that would allow this to
+  be used to execute arbitrary code as root if someone is unlucky
+  enough to have a PTY to a root shell open in a vulnerable terminal
+  when an attacker writes their malicious log message.
 
---------------SFNOKC5S70rdjbdONbstC0mE--
+An easy proof-of-concept for this (assuming your system has `sudo`
+configured to allocate a new PTY) is:
 
---------------Wi288jhpnARFBkgo9ECubwtU
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+1. Open two terminal windows as a non-root user.
+2. In one terminal window, open a root shell by running `sudo -i`.
+3. In the other terminal window, run
+   `logger -p 'emerg' $'\033[31mHello!\033[0m'` as a non-root user.
+
+You will see a wall message printed in the terminal emulator window
+that you ran `sudo -i` in, with the word 'Hello' written in red.
+
+A more involved proof-of-concept that demonstrates how this can be
+used to escalate privileges is:
+
+1. Compile a version of XTerm that is vulnerable to CVE-2022-45063.
+   (XTerm patch #369 worked for me last time I tried this.)
+2. Open two instances of XTerm at once as a non-root user.
+3. In one XTerm window, open a root shell by running `sudo -i`.
+4. In the other XTerm window, as a non-root user, run
+   `pwned=3D$'\e]50;i$(cp /etc/shadow /home/user/shadow && chown user:user =
+/home/user/shadow)\a\e]50;?\a\n'`
+   (replacing 'user' with your non-root user's username where
+   appropriate).
+5. In the same non-root XTerm window, run
+   `logger -p 'emerg' "$pwned"`. You should now have a copy of the
+   system's shadow password file in your home directory, readable by
+   your non-root user.
+
+Affected users can mitigate this by setting `ForwardToWall=3Dno` in
+systemd-journald's configuration (`/etc/systemd/journald.conf`), or by
+adding `systemd.journald.forward_to_wall=3Dno` to their kernel command
+line.
+
+I discovered this while doing work for the Kicksecure and Whonix
+projects. This bug was reported privately to upstream on December 23,
+2025. As per Kicksecure's Vulnerability Disclosure Policy [1], we're
+disclosing it publicly on April 7, 2026, 90 days + a 14-day grace
+period later. An upstream bug report can be seen at [2].
+
+--
+Aaron
+
+[1] https://www.kicksecure.com/wiki/Vulnerability_Disclosure_Policy
+[2] https://github.com/systemd/systemd/issues/41549
+
+--Sig_/H2euY6D9UhYLoyRvXfna2c4
+Content-Type: application/pgp-signature
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wnsEABYIACMWIQQpYNJ6zqtdOvyTgWGheR3xxh+xLAUCacObfQUDAAAAAAAKCRCheR3xxh+xLI5e
-AQCC4kmnLtAUjZa0RcZUtnpxWh5KF91MLg/UUAng09z/ewD+NQ35VhNUkIlRf/SZ4iXg2ON6Ikxd
-WGjMXzBigs6INQc=
-=hSOM
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCadWcogAKCRA5rdye4jrr
+CEMvAQC3fdNMpN+sRbT2XMoBW3+/iMhqmfLXwxbSePQK/zglbAD/SDm+dqNUxJA3
+772ciE+MfGjtG3akoqeBGRKj2jk8QA0=
+=Zc3z
 -----END PGP SIGNATURE-----
 
---------------Wi288jhpnARFBkgo9ECubwtU--
+--Sig_/H2euY6D9UhYLoyRvXfna2c4--
