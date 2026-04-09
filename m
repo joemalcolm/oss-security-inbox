@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["306" "Friday" "3" "February" "2017" "18:26:35" "+1000" "Justin Steven" "justin@justinsteven.com" "<20170203082635.7htlwilcixrd4l3p@diablo>" "10" "Re: [oss-security] curiosity for CVE-2016-10000" nil nil nil "2" "2017020308:26:35" "[oss-security] curiosity for CVE-2016-10000" (number mark "U       justin@justi Feb  3   10/306   " thread-indent "\"Re: [oss-security] curiosity for CVE-2016-10000\"\n") "<20170203071134.GB5666@suse.de>" ("<834080593.18312469.1486030496674.JavaMail.zimbra@redhat.com>" "<1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com>" "<20170203071134.GB5666@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13979 invoked by uid 550); 3 Feb 2017 09:10:37 -0000
+Received: (qmail 28032 invoked by uid 550); 9 Apr 2026 21:16:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22183 invoked from network); 3 Feb 2017 08:26:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=justinsteven-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=UWgtg61G6TjxKdB3ua2sCMxtHN31/BgMfOwwXLkvd7U=;
-        b=RQ1pmEJrZ3iC778iiIYRQJDaRbSgDC8GJ22ssnGfP1GcngngV2JuGq15rgZtdlVHwy
-         MSgLzI5eWpWh9MmK1I/5kOuurG9Y37V72psTNw43GFoUnXwMhbsnalctsp6tDJ5FY5ba
-         NUYy965iOHNjDDfDiStvMwVENL6tSryryAu6b/nosc837YNKxWYyj+ZwXq3qs+oWxxz8
-         n1GGqNiOTTCcl1yxW0coeLzR+qkWUm+/VGjfJciFvSFpRiTlqF+ot1KT7h6uXY0PZV3x
-         HmKhzIagSW6nKOLvCyk+ZzxDbHuckuGcSbXWpSWZwjU0ijTGquvFxA0GKPQW8E4ALVGj
-         Sw+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UWgtg61G6TjxKdB3ua2sCMxtHN31/BgMfOwwXLkvd7U=;
-        b=HpgxsXvE/5C7avBLpX2FiyncefNRTO9T4bzYy6ohgJ6CyUudoNw6XILafUXDxnkCO9
-         kQQGG9idfu71DG3FKB7LYIr2LNR3Y9Af/Kq1v+1r1Hs+RMu9euYBcKtGHBzvRWVJfKra
-         OX3YoCarbyHMbGyyK1a+IPsrP9zl4pynGdgKt4c+rJa/uioyDc1oc/ZGAEaGifLo6f33
-         vQIEYa3wc6S7VG9x4O3J1AekPCvlkDkwxLqMLXel6Uj9vIoKOz6oO6NTch7LzkTDWTN4
-         zxTz4HPziibRRNElH/LfiXqhGMgfJgwlI/AoKg6y2zVZsY6GqHRwpRPeEYz7KEp4l4qw
-         wAcQ==
-X-Gm-Message-State: AIkVDXIp75UCqwmcw1H+fdJN54/RaAsgOwR6NTKwG0pOSto5ZP2Bpbq9Dkke6aPKE552Vw==
-X-Received: by 10.98.149.93 with SMTP id p90mr16593392pfd.72.1486110400737;
-        Fri, 03 Feb 2017 00:26:40 -0800 (PST)
-Date: Fri, 3 Feb 2017 18:26:35 +1000
-From: Justin Steven <justin@justinsteven.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20170203082635.7htlwilcixrd4l3p@diablo>
-References: <834080593.18312469.1486030496674.JavaMail.zimbra@redhat.com>
- <1403781878.18312805.1486030686130.JavaMail.zimbra@redhat.com>
- <20170203071134.GB5666@suse.de>
+x-ms-reactions: disallow
+Received: (qmail 24413 invoked from network); 9 Apr 2026 19:49:53 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775764184; bh=iiVvxIeGsSJGfEeTSCtwzcb+rtS4NBt5/Ltx1xsTncg=;
+	h=Date:To:From:Subject:From;
+	b=57TOsdbF3ttKwf6Br2atC4Oj6vZR2qdcE72uGVUyPFy4NMO6o8PknvwtY18JuxQEq
+	 nEzRX9gx7w83RShXOH2H5YR9rNiw4wgrgo8IftpjM0RfkxDABQw9MR95WjktBrWIN6
+	 rKWUzag6Nk3avPxtlC3nX9ZhbleLS4Sa32Tq8UkIsVCRTdT/EKPXirHRZYsKq3NlMy
+	 lk4MUmCyfX693nGBRTVU4locrkCSbVNwAZk7AwBahv8X+gVCTeRRqgzvVKDfWYao3/
+	 U0RoKsoWHzv8hNz7GkjEr11Q9eCmR1oshEqvzFeCXtQcc8JeZYdS4u4rU5PddiK6Nz
+	 tyl/xgxonrFmA==
+Message-ID: <a266e26f-3129-40dc-8b43-47f4994d7e95@apache.org>
+Date: Thu, 9 Apr 2026 20:49:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170203071134.GB5666@suse.de>
-User-Agent: NeoMutt/20161104 (1.7.1)
-Subject: Re: [oss-security] curiosity for CVE-2016-10000
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-32990: Apache Tomcat: Fix for CVE-2025-66614 is incomplete
 
-As I understand, it is indeed DWF which I believe is a bona fide CNA.
+Severity: moderate
 
-See
-<https://github.com/distributedweaknessfiling/DWF-Database/blob/master/DWF-Database-2016.csv>
+Affected versions:
 
-Do these allcoations (as well as the 2015 and 2017 allocations) need to be
-pushed upstream and synced with Mitre's dataset?
+- Apache Tomcat 11.0.15 through 11.0.19
+- Apache Tomcat 10.1.50 through 10.1.52
+- Apache Tomcat 9.0.113 through 9.0.115
 
--- 
-Justin
+Description:
+
+Improper Input Validation vulnerability in Apache Tomcat due to an 
+incomplete fix of CVE-2025-66614.
+
+This issue affects Apache Tomcat: from 11.0.15 through 11.0.19, from 
+10.1.50 through 10.1.52, from 9.0.113 through 9.0.115.
+
+Users are recommended to upgrade to version 11.0.20, 10.1.53 or 9.0.116, 
+which fix the issue.
+
+Credit:
+
+zhengg (finder)
+
+References:
+
+https://lists.apache.org/thread/1nl9zqft0ksqlhlkd3j4obyjz1ghoyn7
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-32990
