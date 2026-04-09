@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["855" "Wednesday" "16" "November" "2016" "16:11:57" "+0000" "John Haxby" "john.haxby@oracle.com" "<c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>" "18" "Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" "^Date:" nil nil "11" "2016111616:11:57" "[oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell" (number mark "        john.haxby@o Nov 16   18/855   " thread-indent "\"Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell\"\n") "<20161116155529.GJ5329@io.lakedaemon.net>" ("<88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>" "<20161116155529.GJ5329@io.lakedaemon.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20158 invoked by uid 550); 16 Nov 2016 16:12:12 -0000
+Received: (qmail 18361 invoked by uid 550); 9 Apr 2026 09:27:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,38 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20137 invoked from network); 16 Nov 2016 16:12:11 -0000
-References: <88958a9e-25c1-97ce-1800-bc4bff93d9a9@hmarco.org>
- <20161116155529.GJ5329@io.lakedaemon.net>
-Message-ID: <c3d2c492-8f94-f84e-1042-ca3e7663567e@oracle.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-In-Reply-To: <20161116155529.GJ5329@io.lakedaemon.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Source-IP: userv0022.oracle.com [156.151.31.74]
-Date: Wed, 16 Nov 2016 16:11:57 +0000
-From: John Haxby <john.haxby@oracle.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2016-4484: - Cryptsetup Initrd root Shell
+x-ms-reactions: disallow
+Received: (qmail 13824 invoked from network); 9 Apr 2026 08:58:21 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <2acf7656-23bd-438e-36e7-c88c31cfdeb4@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 09 Apr 2026 08:57:57 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-34538: Apache Airflow: Authorization bypass in DagRun
+ wait endpoint (XCom exposure) 
 
-On 16/11/16 15:55, Jason Cooper wrote:
-> How does this differ from an attacker setting 'init=/bin/sh' on the
-> kernel command line?  Or, booting from attacker provided media?  Or, in
-> OS X, booting in single user mode?
-> 
-> Your Discussion section at the end mentions facilities (GRUB passwords,
-> BIOS passwords, etc) for preventing this "Developer friendliness".  How
-> do you envision the installer enabling these while providing a failsafe
-> that an attacker can't exploit?
+Severity: low=20
 
-If you set a grub password then the attacker cannot set init=/bin/sh on
-the kernel command line without knowing the grub password.   However,
-when the boot process prompts you for the encrypted volume password you
-can just hit enter until you eventually get a shell prompt.  Of course,
-the attacker needs to be able to see the console where the password is
-typed in ...
+Affected versions:
 
-jch
+- Apache Airflow (apache-airflow) 3.0.0 before 3.2.0
+
+Description:
+
+Apache Airflow versions 3.0.0 through 3.1.8 DagRun wait endpoint returns XC=
+om result values even to users who only have DAG Run read permissions, such=
+ as the Viewer role.This behavior conflicts with the FAB RBAC model, which =
+treats XCom as a separate protected resource, and with the security model d=
+ocumentation that defines the Viewer role as read-only.
+
+Airflow uses the FAB Auth Manager to manage access control on a per-resourc=
+e basis. The Viewer role is intended to be read-only by default, and the se=
+curity model documentation defines Viewer users as those who can inspect DA=
+Gs without accessing sensitive execution results.
+
+Users are recommended to upgrade to Apache Airflow 3.2.0 which resolves thi=
+s issue.
+
+Credit:
+
+selen (finder)
+Kevin Yang (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/64415
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-34538
+
