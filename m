@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1153" "Monday" "5" "September" "2016" "15:57:48" "+0200" "Greg KH" "greg@kroah.com" "<20160905135748.GA11745@kroah.com>" "32" "Re: [oss-security] CVE request: Linux kernel mbcache lock contention denial of service." nil nil nil "9" "2016090513:57:48" "[oss-security] CVE request: Linux kernel mbcache lock contention denial of service." (number mark "U       greg@kroah.c Sep  5   32/1153  " thread-indent "\"Re: [oss-security] CVE request: Linux kernel mbcache lock contention denial of service.\"\n") "<CALJHwhSmb-Fx6VYaqW4FwNg=GTm=q2d7LqqoZ10U5TjA1=nTOA@mail.gmail.com>" ("<CALJHwhSmb-Fx6VYaqW4FwNg=GTm=q2d7LqqoZ10U5TjA1=nTOA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21643 invoked by uid 550); 5 Sep 2016 13:58:15 -0000
+Received: (qmail 28176 invoked by uid 550); 9 Apr 2026 21:16:28 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,59 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21624 invoked from network); 5 Sep 2016 13:58:14 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:from:in-reply-to:message-id:mime-version:references
-	:subject:to:x-sasl-enc:x-sasl-enc; s=smtpout; bh=3oo4dvvQZkjsGyt
-	jcd/emSOTzpA=; b=I5GasQv9ubwluJoAGJ19X1pe5MCS50mWrIx4KJBV8VwCXbo
-	v8XSmpqB9OfIpsxp2dvqqEkDcFRVP17+nqcLB/tmKVcKNRbz33P/3oRp3Rc8moJf
-	ezetrvsfZimAkfJ6ORKpGCcnN8Ntf6/IRJbN73Ih5ht16154cQJYHGJY1rPg=
-X-Sasl-enc: hUpyq6CEwoiTxQ3lFgQkbpe5aTrdepXRM/9YCGHYWLdO 1473083881
-Date: Mon, 5 Sep 2016 15:57:48 +0200
-From: Greg KH <greg@kroah.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <20160905135748.GA11745@kroah.com>
-References: <CALJHwhSmb-Fx6VYaqW4FwNg=GTm=q2d7LqqoZ10U5TjA1=nTOA@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 25798 invoked from network); 9 Apr 2026 19:50:21 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775764212; bh=GlZBiV9/u1k9OejqUsic57NU/7HG3dK69CWjdC3w6Pc=;
+	h=Date:To:From:Subject:From;
+	b=77lsl0b8yFnC8Yd+yQU04cNNcPlveoy9OtdoXK1quajGnlrr02lSjFIt+2l+WKjRF
+	 1bQZPkXNiUGWMFe5x5vmDLyvaAYe2t2hdDl5AmgeAEXaWLHCkT2T20AwnoPcHWzWN8
+	 nly+P7r87b3kj6uXuoW1zc/jY62983TWVLaaA5HqgRkwyfhW0RR9wQ+SdqfZMhx1Tj
+	 GxAZN+7ZY1H3/amynf6aydeQ7XC9A3U1Lr2MzARdzlklGGFVKuYiUNr1i4ggAO+7wH
+	 MVnZ+/nkAdY0dUvWlP8NKNvrnZU1UaZmFQPHLmfwJZNXeJepOQtbcLWIGEkLoFJ0LA
+	 mPvSPIe3ZjPIQ==
+Message-ID: <d1a2220d-54bc-4571-b1cb-932705d6eb98@apache.org>
+Date: Thu, 9 Apr 2026 20:50:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALJHwhSmb-Fx6VYaqW4FwNg=GTm=q2d7LqqoZ10U5TjA1=nTOA@mail.gmail.com>
-User-Agent: Mutt/1.7.0 (2016-08-17)
-Subject: Re: [oss-security] CVE request: Linux kernel mbcache lock contention
- denial of service.
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-34483: Apache Tomcat: Incomplete escaping of JSON access
+ logs
 
-On Mon, Aug 22, 2016 at 03:28:51PM +1000, Wade Mealing wrote:
-> Gday,
-> 
-> A design flaw was found in the file extended attribute handling of the
-> linux kernels handling of cached attributes.  Too many entries in the
-> cache cause a soft lockup while attempting to iterate the cache and
-> access relevant locks.
-> 
-> Upstream has replaced the mbcache code with an updated version which
-> was not a patch but a clear-cut reimplementation of the code, no
-> single diff
-> 
-> Soft lockup information is in both the bugzilla.kernel.org and
-> referred to in the LWN article.  This would affect containers running
-> with ext4 as it shares the same mbcache between all containers/host.
-> 
-> This did not affect Red Hat Enterprise Linux versions 5,6 or 7, so I
-> can't validate the claim that it does affect other newer kernels.
-> This may be worthwhile tracking for others who are affected by this
-> flaw.
-> 
-> For those following along at home, this seemed to be fixed in:
-> 
->  ±  git tag --contains be0726d33cb8f411945884664924bed3cb8c70ee
-> v4.6
+Severity: low
 
-That commit is for only the ext2 filesystem, how would it fix an issue
-in ext4?
+Affected versions:
 
-totally confused,
+- Apache Tomcat 11.0.0-M1 through 11.0.20
+- Apache Tomcat 10.1.0-M1 through 10.1.53
+- Apache Tomcat 9.0.40 through 9.0.116
+- Apache Tomcat 8.5.84 through 8.5.100
+- Apache Tomcat through 8.5.83 unaffected
 
-greg k-h
+Description:
+
+Improper Encoding or Escaping of Output vulnerability in the 
+JsonAccessLogValve component of Apache Tomcat.
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.20, from 
+10.1.0-M1 through 10.1.53, from 9.0.40 through 9.0.116.
+
+Users are recommended to upgrade to version 11.0.21, 10.1.54 or 9.0.117 
+, which fix the issue.
+
+Credit:
+
+Bartlomiej Dmitruk, striga.ai (finder)
+
+References:
+
+https://lists.apache.org/thread/j1w7304yonlr8vo1tkb5nfs7od1y228b
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-34483
