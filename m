@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["411" "Friday" "24" "November" "2017" "10:08:23" "+0100" "Greg KH" "greg@kroah.com" "<20171124090823.GA6922@kroah.com>" "16" "Re: [oss-security] New Linux kernel XFRM privilege escalation" nil nil nil "11" "2017112409:08:23" "[oss-security] New Linux kernel XFRM privilege escalation" (number mark "U       greg@kroah.c Nov 24   16/411   " thread-indent "\"Re: [oss-security] New Linux kernel XFRM privilege escalation\"\n") "<20171124084800.GB4755@suse.de>" ("<20171124084800.GB4755@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24207 invoked by uid 550); 24 Nov 2017 09:08:29 -0000
+Received: (qmail 32495 invoked by uid 550); 9 Apr 2026 15:28:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,43 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24186 invoked from network); 24 Nov 2017 09:08:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; bh=HLShEbdIvLk3/NgzXMWD1YdRCZ0E2
-	eTKzXpYLAkYlYg=; b=NqCc3GkN9QMvsKye4HVWnE/sgl6UKUZracUxsNS6/bfGU
-	ZItXq43wtsEBF4MfEIMpFpI/p1u9YQikVGlXZEbRanK+xsy2NCj49j11XM+XT8gz
-	4Eeu8Q5OjjtXgjBzpu5+PQhs37GU+/jknCQxYd8JLLQwnJFWHf3piIUDmYhC5JdF
-	O9GAwrs0V8pvc/cBW1GLd2P7WHNl6aD4DP6J48EIygh1AcJiYG1yTdhdvqyeWV1p
-	lFjKYuGiEcDyTy82ETNVQfmEY4Wt4n+ptQvoXST3d2M3T0pjzneuSWdChU/8q9+r
-	+pJW5F1xUjS7HLvixWrA6xoDEnnaIx+pCQ9bSzmtA==
-X-ME-Sender: <xms:geEXWvbTqU1uR6O8ls3R5mA8sbjpsxPZ3laSvRzAfcyfrCnDfVr_dw>
-Date: Fri, 24 Nov 2017 10:08:23 +0100
-From: Greg KH <greg@kroah.com>
+x-ms-reactions: disallow
+Received: (qmail 7566 invoked from network); 9 Apr 2026 06:30:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=deepin.org;
+	s=ukjg2408; t=1775716203;
+	bh=CGZmoPFN06o6OgytzHaucSQGCMv6ZKef5zL+450fRlY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version;
+	b=yyqgO1L9xrRR1RudKLIupmWAqGU2iPwBNL7fnopynoR1VfqnIzmv4Fq61bfazxttJ
+	 AB35MhY51gMY0DU7FfRcXZs9YC7afAv4uxMY6lz66C4cvuXeLxctNSbqrJvnuWe98j
+	 AJo83YiZ4ykAntFiq+7dlQsnqg1uE46sXecpjkMg=
+X-QQ-mid: zesmtpip3t1775716198t7355362e
+X-QQ-Originating-IP: zhxdxx/klF913w4lKiTDhRYHHTKWRcN2SCBjFCSMLIw=
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 7514892915362823764
+Date: Thu, 9 Apr 2026 14:29:55 +0800
+From: Tianyu Chen <sweetyfish@deepin.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20171124090823.GA6922@kroah.com>
-References: <20171124084800.GB4755@suse.de>
+Cc: morgan@kernel.org, elirazamumtaz@gmail.com
+Message-ID: <FF535D49DCDE0939+addHY0xl6rD04Ddg@ut005408-PC>
+References: <CACmP8U+CbkozUQ1OqxsXMxLgMYvQS85QsWaGtVGBD8BFox34=w@mail.gmail.com>
+ <fa4662c4-ce58-48ec-85a4-b0272ca9931a@seltendoof.de>
+ <20260409013620.GA13098@openwall.com>
+ <CACmP8UKMsyDGzMSbuu_tORKR9p2EUhCE_qY6YcFf_w19ZcZaqw@mail.gmail.com>
+ <20260409035050.GA14884@openwall.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20171124084800.GB4755@suse.de>
-User-Agent: Mutt/1.9.1 (2017-09-22)
-Subject: Re: [oss-security] New Linux kernel XFRM privilege escalation
+In-Reply-To: <20260409035050.GA14884@openwall.com>
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:deepin.org:qybglogicsvrgz:qybglogicsvrgz3a-1
+X-QQ-XMAILINFO: OW3qjH3bC/TAnozFat2MHXmqPdtgD2iWEW6kztT32vXExWb3HRpF6tYB
+	BgIWTYXhFwlmsz+GbuZYV5RLt2tzgjVlC/C7XNx3WEQuZRKuKs6ctL9QF2z3VGdDUtYl40M
+	CEUE0JH8H2S/uh21tRg6hkW8Rf4KCZ5qmmpw62sHnuNxap/ipyoyXFkdRDArV4D1kynzRWU
+	eOOa+MKHERZ4CjB1Xa673L8uyYOJbIIdDDERzCRhDVytj8XLXlwD20Be15H4hky3xqZpNPv
+	OD+nn05z2jbPVw0iBiCQ4GQuugBc37B4gZxpZx3OEk/2Ko8Cj685axZ6qLeg1Wgk+A9Os1C
+	zWRgFplu5EE6ZJU/EOGxJbfZREZtQTQv5rZuNECqqqqW78/nWk7Vk0S8Nq5DfrVY4/SVPlG
+	uzsXIOZkG3p4vC3Gx1nsQ9UmxcBT9jQwyruKJhj7Hfgmdqy0HTEbZEKk7QgN2f1C3RtxDUB
+	ZgwIZBTBDrNRRAUbzqwZRHOEact+t6EO/6KXduR4yoVfKqK5nwYIhZGkWTZfgc9aE4BrGU5
+	0UaoIJdDJ37y8XqiU8xsXX8rGiO48eeaIKXiiObKsnB3N+uT+4UxTzUYsbfx2utn3FzL4G1
+	D2uuXq4ISCXqRCPzpkNuDqs5bP+x2/pK+tYk5uKBlZGxfDVB4376+mYaOqxZhyN107pfpbn
+	MUKaD/yWlPZcK5dETdKWuLy8MJsqOv27I3fWb5XX60mT9Pj0M21RppJbkBiaUV+RZGx0lOD
+	EvOX6fluSBCbV4uCpAYjZ4O9v/9vTBtD478P1bKjFIK/+ZV3S26CU1QmcN4fgwQLmfnqSNV
+	XVoXwJMgdk8kNgFNNXqEnkKZy4Gz4W9AVADWDUgP4KdTUocjetd6oJvGK9J1NvzoXqK7FL7
+	5pHh5BYmNyCuHlS74b6Gk49cPqXHqJ42/NS+LDqGKH4c9iJEiJ7I5tae9T8DruqOH9EI2SY
+	HKAbW40tlFxqNM68m0z2UuGvNjgiWOCewSnNRxOIX4g5g8aTaQvFbYHqK9mopXVGFo+AMlD
+	hifLnae6xy98okgBAi
+X-QQ-XMRINFO: Mp0Kj//9VHAxzExpfF+O8yhSrljjwrznVg==
+X-QQ-RECHKSPAM: 0
+Subject: Re: [oss-security] libcap-2.77 (since libcap-2.04) has TOCTOU
+ privilege escalation issue
 
-On Fri, Nov 24, 2017 at 09:48:00AM +0100, Marcus Meissner wrote:
-> Hi,
-> 
-> posted to bugtraq:
-> 
-> http://seclists.org/fulldisclosure/2017/Nov/40
-> https://blogs.securiteam.com/index.php/archives/3535
-> https://github.com/torvalds/linux/commit/1137b5e2529a8f5ca8ee709288ecba3e68044df2
-> 
-> affects 2.6.28 up to 4.14 I would say.
+On Thu, Apr 09, 2026 at 05:50:50AM +0200, Solar Designer wrote:
+> I would still like to know if there's a way I could extract Markdown
+> source from third-party GitHub advisories, if anyone knows.
 
-Looks like this was fixed in 4.14-rc7, so 4.14 should be ok.
+GitHub's REST API can be used for that:
 
-thanks,
+$ curl -s https://api.github.com/repos/AndrewGMorgan/libcap_mirror/security-advisories/GHSA-f78v-p5hx-m7hh | jq -r .description
 
-greg k-h
+https://docs.github.com/en/rest/security-advisories/repository-advisories
+
+Best regards,
+Tianyu Chen @ deepin
