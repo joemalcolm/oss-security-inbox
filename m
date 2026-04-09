@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["631" "Monday" "19" "July" "2021" "14:18:05" "-0400" "Jeffrey Walton" "noloader@gmail.com" nil "19" "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil "7" nil nil (number mark "U       noloader@gma Jul 19   19/631   " thread-indent "\"Re: [oss-security] Polipo: denial-of-service using range\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Polipo: denial-of-service using range" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28271 invoked by uid 550); 19 Jul 2021 18:21:51 -0000
+Received: (qmail 27971 invoked by uid 550); 9 Apr 2026 21:16:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +7,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26265 invoked from network); 19 Jul 2021 18:19:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:reply-to:from:date:message-id
-         :subject:to;
-        bh=HuSaXc7fd5T7ubpL8W7/8Oux96BCsAs5hhhMgMa2JX4=;
-        b=eyuy7sbZaZeF8n8aixoWnWEvVSVyQhnZOFwgQDnAxutFJzE3s86FSVhRaljOgEOUwf
-         7ZENQ4A9hw2oGGC3WWBaRvYqGZFGZNhUjkd2LqlISoU7JBY1rHBX3Q/TyHesT5J7gXOF
-         puA7gQJ7YW8smv2KHp8LqIMncZxb39F2JFiaHJtht0xbx48h2ZXvI24t0PhjuV6RxDc7
-         r2pwNhsUnXelFuhnG1tzPUO4k5ETNDjusrN4R+ywGmLGxKhO/HLIY3EeYoxDDtpx1VhZ
-         wazYhM5mw49ydEKA+iU2e12LGiUd6qAkZVAgiOtcfmSy26xf+1lQdsmwqpCCgXbo+kQw
-         da9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:reply-to
-         :from:date:message-id:subject:to;
-        bh=HuSaXc7fd5T7ubpL8W7/8Oux96BCsAs5hhhMgMa2JX4=;
-        b=MUlnKjBeeQE4IQCgf7oZSBABXI10MG3hGO83QtzRhhjw9S5IfpF7F9AmfCsy185bh8
-         RGsXjsGShOZqJ/9QQtCm4MOOcYhmmvwldQFpA73yUT726BQgvJgUAEXMp0gfEaCty6wb
-         Zt9tZK3rsy3ldjBRAyHQeXItNJqGK3Vvkv3PhTrfLrnDDGEtezqNDcT9reoyK2E9GtcZ
-         wkUEcnKp/K2aNKD6680pfZlIO/fG8c+Q/UvfC2CyJQXojhxQ7opmTqh6BMNlyWyPev9Y
-         pEJpWoBgaSDn44gyxovK6/KDOvcUlRPuj3EJGAp9bavVNNZTVj7GsnW6MQNlKUoNwSAH
-         Nx/Q==
-X-Gm-Message-State: AOAM5335QEeNeobvke9iRGDl6pUyoQ1/W0/zPbYhfxbxsU2isSxShzST
-	pLLTy9BofP2Bojr8zpOmD0UzH06m/623ta8qVbU6isR66HPg6g==
-X-Google-Smtp-Source: ABdhPJzR7H69EzuW6+pCTBuo7/BiRvhuntUJA5TZejdIoOqMHxVcLSt89e9S1PEdw4U/hvDu+213P5DaV5HAt1iEY4Q=
-X-Received: by 2002:a05:6e02:b24:: with SMTP id e4mr17724327ilu.41.1626718761818;
- Mon, 19 Jul 2021 11:19:21 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 24198 invoked from network); 9 Apr 2026 19:49:29 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775764158; bh=M5JAYPDaLVOiyi6NqTBl96Fwr4G4O3Yi0oH/vQZAFbg=;
+	h=Date:To:From:Subject:From;
+	b=CkTRGOeczw8ALpjzg2bpVYFHA3z0MP3mYE22u1kDk0ZWP8pX+3a1e8qJLbUOAmlBW
+	 YiH1BcDsEcLVFGZkpxBWNCLqNXQ1Ab3IQohvJuI9+E/sITfADTNpMEvLdqA5Mx9M0u
+	 ejwS258Ki6Aw2EuHr+127MA+zR354TlC2o9yP55QzK4086kQHr0heXX5egGDbKjw3s
+	 54CrkeIajrVhaD2yEa277KfUupjsCyc2F2BhMdt9+KIY5bEnIL55nWpW/7dFb9GR3i
+	 ViDMGraVGKxPxkw48wS9gCAv1024jBCCJcdyGtder6gp8jgUj8zLCCAsaHYadW3Aqv
+	 tFox7Ggkv0JnA==
+Message-ID: <95b627e0-f5b5-48e7-8625-c3a9bf32b6b1@apache.org>
+Date: Thu, 9 Apr 2026 20:49:18 +0100
 MIME-Version: 1.0
-References: <20201118171206.443be0215d1b142b5ce7584e@gmail.com>
-In-Reply-To: <20201118171206.443be0215d1b142b5ce7584e@gmail.com>
-From: Jeffrey Walton <noloader@gmail.com>
-Date: Mon, 19 Jul 2021 14:18:05 -0400
-Message-ID: <CAH8yC8nDTF9-aBtuKG+81rEYmf4QigMfwB3EEw8hwYiGHP+AeQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Polipo: denial-of-service using range
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-29146: Apache Tomcat: EncryptInterceptor vulnerable to
+ padding oracle attack by default
 
-> I found a vulnerability in the Polipo [1],
-> lightweight, caching web proxy.
-> ...
->
-> Polipo doesn't ignore/reject the malformed header. Instead, it has
-> an assertion:
->
->     server.c:1473: assert(from >= 0 && (to < 0 || to > from));
->
-> So, a malformed Range header ("Range: bytes=3-2" for example) will
-> cause an assertion failed.  This error handling allows an attacker
-> to cause a denial of service.
+Severity: important
 
-I would be interested to know what happens when NDEBUG is defined so
-the assert goes away. Does the server crash, does it lead to memory
-corruption, an information leakage (like a private key), or something
-else?
+Affected versions:
 
-Jeff
+- Apache Tomcat 11.0.0-M1 through 11.0.18
+- Apache Tomcat 10.0.0-M1 through 10.1.52
+- Apache Tomcat 9.0.13 through 9.0.115
+- Apache Tomcat 8.5.38 through 8.5.100
+- Apache Tomcat 7.0.100 through 7.0.109
+
+Description:
+
+Padding Oracle vulnerability in Apache Tomcat's EncryptInterceptor with 
+default configuration.
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.18, from 
+10.0.0-M1 through 10.1.52, from 9.0.13 through 9..115, from 8.5.38 
+through 8.5.100, from 7.0.100 through 7.0.109.
+
+Users are recommended to upgrade to version 11.0.19, 10.1.53 and 
+9.0.116, which fixes the issue.
+
+Credit:
+
+Uri Katz and Avi Lumelsky (Oligo Security) (finder)
+
+References:
+
+https://lists.apache.org/thread/lzt04z2pb3dc5tk85obn80xygw3z1p0w
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-29146
