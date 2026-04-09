@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1042" "Thursday" "6" "January" "2022" "19:55:58" "+0800" "Xiaoxiang Yu" "xxyu@apache.org" nil "22" "[oss-security] CVE-2021-45456: Apache Kylin: Command injection" nil nil nil "1" nil nil (number mark "U       xxyu@apache. Jan  6   22/1042  " thread-indent "\"[oss-security] CVE-2021-45456: Apache Kylin: Command injection\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-45456: Apache Kylin: Command injection" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22090 invoked by uid 550); 6 Jan 2022 13:54:06 -0000
+Received: (qmail 1889 invoked by uid 550); 9 Apr 2026 03:50:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1205 invoked from network); 6 Jan 2022 11:57:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=TMYkJ
-	ZmFlYjKTpjp3pAm37qFkqUCChl739SjzN9xdyk=; b=jEkrf7Y8w/EHbTBAo80nw
-	LxEh0qiUBLUYE+K+2QF78NSakK0L3y21fwdOFqUp9/q51hAot5DffBr7TRo0hdYS
-	E/F0PQXXORORBaSNkRFawV8S/1pvK9Hs6Txr4+cJHvBFqUT2HbhhqTOqGcSKlIYU
-	XCQbgkphjFr4vTjVLxtQtw=
-X-Originating-IP: [116.228.210.42]
-Date: Thu, 6 Jan 2022 19:55:58 +0800 (CST)
-From: "Xiaoxiang Yu" <xxyu@apache.org>
-To: oss-security@lists.openwall.com
-Cc: pwntester@github.com
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20210622(1d4788a8)
- Copyright (c) 2002-2022 www.mailtech.cn 126com
-Sender: hit_lacus@126.com
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_67460_307295099.1641470158804"
-MIME-Version: 1.0
-Message-ID: <1eb37be5.47c4.17e2f3ee7d4.Coremail.xxyu@apache.org>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: NMqowAAXmPHP2NZhjaQNAA--.61078W
-X-CM-SenderInfo: pklwszpdfx2qqrswhudrp/1tbikwiA4lpEDKjX0AADsH
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Subject: [oss-security] CVE-2021-45456: Apache Kylin: Command injection
+x-ms-reactions: disallow
+Received: (qmail 1743 invoked from network); 9 Apr 2026 03:50:53 -0000
+Date: Thu, 9 Apr 2026 05:50:50 +0200
+From: Solar Designer <solar@openwall.com>
+To: "Andrew G. Morgan" <morgan@kernel.org>
+Cc: oss-security@lists.openwall.com, Ali Raza <elirazamumtaz@gmail.com>
+Message-ID: <20260409035050.GA14884@openwall.com>
+References: <CACmP8U+CbkozUQ1OqxsXMxLgMYvQS85QsWaGtVGBD8BFox34=w@mail.gmail.com> <fa4662c4-ce58-48ec-85a4-b0272ca9931a@seltendoof.de> <20260409013620.GA13098@openwall.com> <CACmP8UKMsyDGzMSbuu_tORKR9p2EUhCE_qY6YcFf_w19ZcZaqw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACmP8UKMsyDGzMSbuu_tORKR9p2EUhCE_qY6YcFf_w19ZcZaqw@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] libcap-2.77 (since libcap-2.04) has TOCTOU privilege escalation issue
 
-------=_Part_67460_307295099.1641470158804
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+On Wed, Apr 08, 2026 at 07:19:31PM -0700, Andrew G. Morgan wrote:
+> On Wed, Apr 8, 2026 at 6:53 PM Solar Designer <solar@openwall.com> wrote:
+> > On Tue, Apr 07, 2026 at 10:14:42PM +0200, Christian Göttsche wrote:
+> > > Apr 7, 2026 18:54:22 Andrew G. Morgan <morgan@kernel.org>:
+> > > > The fix for pretty much that whole range of libcap releases is this commit:
+> > > >
+> > > > https://git.kernel.org/pub/scm/libs/libcap/libcap.git/commit/?id=286ace1259992bd0c5d9016715833f2e148ac596
+> > >
+> > > Hi,
+> > >
+> > > the new code suppports changing the file capabilities of all kinds of files (not just regular)(given that the caller has read permissions).
+> > > Is that intended?
+> >
+> > Andrew, please comment on this.  I do also see it in the patch that the
+> > S_ISREG check is now below the added fast path code for readable files.
+> > It doesn't matter that the S_ISLNK check is also below (in fact, it's
+> > now redundant anyway) due to O_NOFOLLOW,
 
-U2V2ZXJpdHk6IG1vZGVyYXRlCgpEZXNjcmlwdGlvbjoKCkFwYWNoZSBreWxp
-biBjaGVja3MgdGhlIGxlZ2l0aW1hY3kgb2YgdGhlIHByb2plY3QgYmVmb3Jl
-IGV4ZWN1dGluZyBzb21lIGNvbW1hbmRzIHdpdGggdGhlIHByb2plY3QgbmFt
-ZSBwYXNzZWQgaW4gYnkgdGhlIHVzZXIuIFRoZXJlIGlzIGEgbWlzbWF0Y2gg
-YmV0d2VlbiB3aGF0IGlzIGJlaW5nIGNoZWNrZWQgYW5kIHdoYXQgaXMgYmVp
-bmcgdXNlZCBhcyB0aGUgc2hlbGwgY29tbWFuZCBhcmd1bWVudCBpbiBEaWFn
-bm9zaXNTZXJ2aWNlLiBUaGlzIG1heSBjYXVzZSBhbiBpbGxlZ2FsIHByb2pl
-Y3QgbmFtZSB0byBwYXNzIHRoZSBjaGVjayBhbmQgcGVyZm9ybSB0aGUgZm9s
-bG93aW5nIHN0ZXBzLCByZXN1bHRpbmcgaW4gYSBjb21tYW5kIGluamVjdGlv
-biB2dWxuZXJhYmlsaXR5LgpUaGlzIGlzc3VlIGFmZmVjdHMgQXBhY2hlIEt5
-bGluIDQuMC4wLgoKTWl0aWdhdGlvbjoKClVzZXJzIG9mIEt5bGluIDQuMC4w
-IHNob3VsZCB1cGdyYWRlIHRvIDQuMC4xIG9yIGFwcGx5IHBhdGNoIGh0dHBz
-Oi8vZ2l0aHViLmNvbS9hcGFjaGUva3lsaW4vcHVsbC8xNzgxLgoKQ3JlZGl0
-OgoKQWx2YXJvIE11bm96IC0tCgpCZXN0IHdpc2hlcyB0byB5b3UgISAKRnJv
-bSCjulhpYW94aWFuZyBZdQ==
+Correcting myself: not redundant due to O_NOFOLLOW because
+O_PATH|O_NOFOLLOW can actually open a symlink as such, but still
+redundant with "|| !S_ISREG".  Anyway, fine to keep it.
 
-------=_Part_67460_307295099.1641470158804--
+I don't get why you wanted to use O_PATH instead of just letting the
+open() fail on symlinks with plain O_NOFOLLOW.  Just to set a different
+errno and debug message maybe.  Anyway, that's also fine.
 
+> > but bypass of the S_ISREG check
+> > appears to be a functional change.
+> 
+> Not sure I follow. This check is in the cap_set_fd() function itself.
+
+Oh, indeed.  I didn't look beyond patch context, maybe Christian did not
+either.  I think this addresses the concern.
+
+int cap_set_fd(int fildes, cap_t cap_d)
+{
+    struct vfs_ns_cap_data rawvfscap;
+    int sizeofcaps;
+    struct stat buf;
+
+    if (fstat(fildes, &buf) != 0) {
+	_cap_debug("unable to stat file descriptor %d", fildes);
+	return -1;
+    }
+    if (S_ISLNK(buf.st_mode) || !S_ISREG(buf.st_mode)) {
+	_cap_debug("file descriptor %d for non-regular file", fildes);
+	errno = EINVAL;
+	return -1;
+    }
+
+> Just to be clear, and credit where it is due, the text of this was
+> authored by Ali Raza.
+> 
+> The markdown source is as follows:
+
+Thank you both.
+
+I would still like to know if there's a way I could extract Markdown
+source from third-party GitHub advisories, if anyone knows.
+
+Alexander
