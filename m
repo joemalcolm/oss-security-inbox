@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4654" "Wednesday" "30" "November" "2016" "11:50:44" "-0500" "Vladis Dronov" "vdronov@redhat.com" "<1694510907.826086.1480524644407.JavaMail.zimbra@redhat.com>" "83" "[oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c" nil nil nil "11" "2016113016:50:44" "[oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c" (number mark "U       vdronov@redh Nov 30   83/4654  " thread-indent "\"[oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c\"\n") "<1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>" ("<865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com>" "<590204934.12153620.1478870673670.JavaMail.zimbra@redhat.com>" "<1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14188 invoked by uid 550); 30 Nov 2016 16:50:58 -0000
+Received: (qmail 27672 invoked by uid 550); 9 Apr 2026 21:16:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,103 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14164 invoked from network); 30 Nov 2016 16:50:57 -0000
-Date: Wed, 30 Nov 2016 11:50:44 -0500 (EST)
-From: Vladis Dronov <vdronov@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <1694510907.826086.1480524644407.JavaMail.zimbra@redhat.com>
-In-Reply-To: <1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>
-References: <865310648.12141994.1478868686544.JavaMail.zimbra@redhat.com> <590204934.12153620.1478870673670.JavaMail.zimbra@redhat.com> <1285487368.13047975.1479285134573.JavaMail.zimbra@redhat.com>
+x-ms-reactions: disallow
+Received: (qmail 22187 invoked from network); 9 Apr 2026 19:48:29 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775764083; bh=KJb6fFkXlFnECY/qDr3nn5S77phZljeOeQ5SFvqMQJg=;
+	h=Date:To:From:Subject:From;
+	b=H24UoCSLAHJrWOfLZykX743Y/XNB9Bi2P+IvqAkLvuVZiiPQzJRDaoT52KxHlW9KF
+	 tyLWv+W3/hNk8ayNrjiomvhM+QPEWj/nrcprSuqTCLo2W7eF0YSMYjNJH55S3R1kyO
+	 G13hq2r9iL4frhr0G2wlD6lnvecLzfzzwy1kDOifTicydWwaYHoEjx/EZykeJBCSKC
+	 c+rydLOYNVD0RW9rQ8vYeRo6iK4Ha11Lx96VPA3lW1MhEr4/uTeHCIXN/W0BOPTGhT
+	 STrelsJnc7C9pEbx8dHtaki+hc+ZpsbRfNUQV7zYwxIdInF2Jhhnp2smTk+eNmzE7J
+	 jIXKhcKUVqYwA==
+Message-ID: <ee9b3aae-8f6e-4907-b29c-271d7c7cca0f@apache.org>
+Date: Thu, 9 Apr 2026 20:48:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.40.0.222]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF50 (Linux)/8.0.6_GA_5922)
-Thread-Topic: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit in net/ipv4/tcp_input.c
-Thread-Index: a2o3R48ijNWqeyo+GpNHc3juzljDmlEJgVsLelzgPMlNrIhU2A==
-Subject: [oss-security] Re: CVE-2016-8645: linux kernel: net: a BUG() statement can be hit
- in net/ipv4/tcp_input.c
+Subject: [oss-security] CVE-2026-29129: Apache Tomcat: TLS cipher order is not preserved
 
-Hello,
+Severity: low
 
-A further investigation was made to find out the Linux kernel commit which has
-introduced the flaw. It appeared that previous Linux kernel versions are vulnerable,
-down to v3.6-rc1. This fact was hidden by 'net.ipv4.tcp_fastopen' set to 0 by default,
-and now it is easier to notice since kernel v3.12 due to commit 0d41cca490 where the
-default was changed to 1. With 'net.ipv4.tcp_fastopen' set to 1, previous Linux
-kernels including RHEL-7 ones are also vulnerable (see [0] below).
+Affected versions:
 
-The bug is here since tcp-fastopen feature was introduced in kernel v3.6-rc1, the first
-commit when the reproducer starts to panic the kernel with net.ipv4.tcp_fastopen=1 is
-cf60af03ca, which is a part of commit serie 2100c8d2d9..67da22d23f introducing
-net-tcp-fastopen feature:
+- Apache Tomcat 11.0.16 through 11.0.18
+- Apache Tomcat 10.1.51 through 10.1.52
+- Apache Tomcat 9.0.114 through 9.0.115
 
-$ git bisect bad cf60af03ca4e71134206809ea892e49b92a88896
-cf60af03ca4e71134206809ea892e49b92a88896 is the first bad commit
-commit cf60af03ca4e71134206809ea892e49b92a88896
-Author: Yuchung Cheng <ycheng@google.com>
-Date:   Thu Jul 19 06:43:09 2012 +0000
+Description:
 
-So, formally, the Linux kernel upstream commit ac6e780070 fixing the bug should have
-"Fixes: cf60af03ca" statement, unfortunately, this investigation was not completed at
-the time the patch was accepted upstream.
+Configured cipher preference order not preserved vulnerability in Apache 
+Tomcat.
 
-Best regards,
-Vladis Dronov | Red Hat, Inc. | Product Security Engineer
+This issue affects Apache Tomcat: from 11.0.16 through 11.0.18, from 
+10.1.51 through 10.1.52, from 9.0.114 through 9.0.115.
 
-=== [0] =====
+Users are recommended to upgrade to version 11.0.20, 10.1.53 or 9.0.116, 
+which fix the issue.
 
-$ uname -r
-3.10.0-123.el7.x86_64
+References:
 
-$ sysctl net.ipv4.tcp_fastopen
-net.ipv4.tcp_fastopen = 1
-
-$ ./poc
-[   67.356749] ------------[ cut here ]------------
-[   67.357016] kernel BUG at net/ipv4/tcp_input.c:4563!
-[   67.357016] invalid opcode: 0000 [#1] SMP 
-[   67.357016] CPU: 2 PID: 1317 Comm: poc Not tainted 3.10.0-123.el7.x86_64 #1
-[   67.357016] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.8.2-20150714_191134- 04/01/2014
-[   67.357016] task: ffff880135cc4440 ti: ffff8800b8552000 task.ti: ffff8800b8552000
-[   67.357016] RIP: 0010:[<ffffffff8151f493>]  [<ffffffff8151f493>] tcp_collapse+0x433/0x440
-[   67.357016] RSP: 0018:ffff8800b8553a20  EFLAGS: 00010282
-[   67.357016] RAX: 00000000fffffff2 RBX: ffff880135d550f8 RCX: 0000000000000db0
-[   67.357016] RDX: ffff8800b84cb110 RSI: 0000000000000000 RDI: ffff880135d550f8
-[   67.357016] RBP: ffff8800b8553a70 R08: 0000000000000ec0 R09: 0000000000000db0
-[   67.357016] R10: ffff8800b140be00 R11: 0000000000000000 R12: 00000000606804a0
-[   67.357016] R13: ffff8800b16e0090 R14: 0000000000000000 R15: 0000000000000db0
-[   67.357016] FS:  00007fd1e51a6800(0000) GS:ffff88013fc80000(0000) knlGS:0000000000000000
-[   67.357016] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   67.357016] CR2: 000000002002a000 CR3: 00000000b14fd000 CR4: 00000000001406e0
-[   67.357016] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[   67.357016] DR3: 0000000000000000 DR6: 00000000ffff0ff0 DR7: 0000000000000400
-[   67.357016] Stack:
-[   67.357016]  606814a000000004 ffff8800b16e0000 ffff8800b140be00 ffffffff00000db0
-[   67.357016]  ffff880000000000 ffff8800b16e0680 0000000000000900 ffff880135d55af8
-[   67.357016]  ffff8800b16e0000 ffff8800b16e0680 ffff8800b8553aa8 ffffffff8151f66b
-[   67.357016] Call Trace:
-[   67.357016]  [<ffffffff8151f66b>] tcp_try_rmem_schedule+0x1cb/0x410
-[   67.357016]  [<ffffffff8151fe41>] tcp_data_queue+0x291/0xcf0
-[   67.357016]  [<ffffffff81523014>] tcp_rcv_established+0x1e4/0x8d0
-[   67.357016]  [<ffffffff815a11a6>] tcp_v6_do_rcv+0x2e6/0x6b0
-[   67.357016]  [<ffffffff81525f8a>] ? tcp_schedule_loss_probe+0x13a/0x1d0
-[   67.357016]  [<ffffffff81526c95>] ? tcp_write_xmit+0x215/0xb80
-[   67.357016]  [<ffffffff814c0b11>] ? __alloc_skb+0xa1/0x2d0
-[   67.357016]  [<ffffffff814bbfd1>] release_sock+0xa1/0x170
-[   67.357016]  [<ffffffff81518652>] tcp_sendmsg+0x132/0xdb0
-[   67.357016]  [<ffffffff81542a24>] inet_sendmsg+0x64/0xb0
-[   67.357016]  [<ffffffff814b79b0>] sock_sendmsg+0xb0/0xf0
-[   67.357016]  [<ffffffff8114fd1e>] ? lru_cache_add+0xe/0x10
-[   67.357016]  [<ffffffff81176ad1>] ? page_add_new_anon_rmap+0x91/0x130
-[   67.357016]  [<ffffffff814b7f21>] SYSC_sendto+0x121/0x1c0
-[   67.357016]  [<ffffffff815ed58a>] ? do_page_fault+0x1a/0x70
-[   67.357016]  [<ffffffff814b89ae>] SyS_sendto+0xe/0x10
-[   67.357016]  [<ffffffff815f2119>] system_call_fastpath+0x16/0x1b
-[   67.357016] Code: 00 48 89 42 08 48 89 10 e8 cb 1c fa ff 48 8b 45 b8 48 8b 40 30
-48 8b 80 30 01 00 00 65 48 ff 80 b0 01 00 00 e9 af fc ff ff 0f 0b <0f> 0b 66 66 2e
-0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 55 48 89 
-[   67.357016] RIP  [<ffffffff8151f493>] tcp_collapse+0x433/0x440
-[   67.357016]  RSP <ffff8800b8553a20>
-[   67.390450] ---[ end trace c5a1da3f9a89016e ]---
-[   67.390741] Kernel panic - not syncing: Fatal exception in interrupt
+https://lists.apache.org/thread/r4h1t6f8xhxsxfm6c2z5cprolsosho3f
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-29129
