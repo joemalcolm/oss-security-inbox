@@ -1,4 +1,4 @@
-Received: (qmail 26584 invoked by uid 550); 24 Oct 2023 15:14:46 -0000
+Received: (qmail 28359 invoked by uid 550); 9 Apr 2026 21:16:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,116 +7,54 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25726 invoked from network); 24 Oct 2023 15:12:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1698160322; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=RBJPsixIZPW4C28SAgYD5VKQWTjNyO2xuF11FOpVN0o=;
-	b=dcRQsJBiqheKGHAiICLg6bz5pHLdj+vFgGP9v6KbTCvFtupU3dbTbjV1AWZke3y6PC+tp3
-	C5w4eki5pSuAY7Z+gopYR78GZaZfjLDmSOdArnd67i21KKgvxzbqap0tfeHfc9KxTFD4gp
-	3JY6T1chcMr2MyOiAaFIbk24mTC7m5Hv99v8Qo4+KuSyztHrqJSgnTBvXJqcvN5gri9sKL
-	fC4yLYDWB78d6mFy7gbT8AXtAJs86npCm9LvwSl/5GVLmZtcJ0HzINCv90d2V5wiZlcLGN
-	Dx3eWhD9edWobsQyHai2rM0d00Jupzqe0AtXWUklu7rR3pgSZg+SxtPEoCW0pg==
-Date: Tue, 24 Oct 2023 15:12:02 +0000
-From: OpenSSL <openssl@openssl.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZTfewnLUAolOmzp0@openssl.org>
+x-ms-reactions: disallow
+Received: (qmail 30094 invoked from network); 9 Apr 2026 19:52:27 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775764244; bh=ZL/yhlp1/VcUt8+rOVw2INNxQlEbWf/VRpUNGGyZJHc=;
+	h=Date:To:From:Subject:From;
+	b=lMRRgC/IBSlPD68tw2EXxy6gAUPmjklwLNQG7q8TBAnDOeIei/0LX7BaIrVnB+40L
+	 bQ+POCzHsVll1qnqAni8FVgaDLBetisFir5llQHR43oY0uKqOOYL/6tvK23CRAkJGH
+	 KWSB5hPClj3dIRH2RPBLYgxr+/9v5yLwNIq/KVgrYzGxO+cU1z4aDVBH8sZwHPlO5F
+	 hrz3fLBpSeZcKMMqKWQ01WTPZfkcm84vWhgLI8fW0P2VR50o7F2NEUnwuwEvdeiFto
+	 NXr90MgtGqQXHnk9BzJQM7ZGuXAX6SGr8Cutx55nJHfUuIpBVyMUOhuQA0eol/3bch
+	 HWUx4fcrz1ZeA==
+Message-ID: <3b643c68-e595-4101-8b80-a5598cb793ca@apache.org>
+Date: Thu, 9 Apr 2026 20:50:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: OpenSSL Project
-X-Web-Homepage: http://www.openssl.org/
-Subject: [oss-security] OpenSSL Security Advisory
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-34486: Apache Tomcat: Fix for CVE-2026-29146 allowed bypass
+ of EncryptInterceptor
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important
 
-OpenSSL Security Advisory [24th October 2023]
-=============================================
+Affected versions:
 
-Incorrect cipher key & IV length processing (CVE-2023-5363)
-===========================================================
+- Apache Tomcat 11.0.20
+- Apache Tomcat 10.1.53
+- Apache Tomcat 9.0.116
 
-Severity: Moderate
+Description:
 
-Issue summary: A bug has been identified in the processing of key and
-initialisation vector (IV) lengths.  This can lead to potential truncation
-or overruns during the initialisation of some symmetric ciphers.
+Missing Encryption of Sensitive Data vulnerability in Apache Tomcat due 
+to the fix for CVE-2026-29146 allowing the bypass of the EncryptInterceptor.
 
-Impact summary: A truncation in the IV can result in non-uniqueness,
-which could result in loss of confidentiality for some cipher modes.
+This issue affects Apache Tomcat: 11.0.20, 10.1.53, 9.0.116.
 
-When calling EVP_EncryptInit_ex2(), EVP_DecryptInit_ex2() or
-EVP_CipherInit_ex2() the provided OSSL_PARAM array is processed after
-the key and IV have been established.  Any alterations to the key length,
-via the "keylen" parameter or the IV length, via the "ivlen" parameter,
-within the OSSL_PARAM array will not take effect as intended, potentially
-causing truncation or overreading of these values.  The following ciphers
-and cipher modes are impacted: RC2, RC4, RC5, CCM, GCM and OCB.
+Users are recommended to upgrade to version 11.0.21, 10.1.54 or 9.0.117, 
+which fix the issue.
 
-For the CCM, GCM and OCB cipher modes, truncation of the IV can result in
-loss of confidentiality.  For example, when following NIST's SP 800-38D
-section 8.2.1 guidance for constructing a deterministic IV for AES in
-GCM mode, truncation of the counter portion could lead to IV reuse.
+Credit:
 
-Both truncations and overruns of the key and overruns of the IV will
-produce incorrect results and could, in some cases, trigger a memory
-exception.  However, these issues are not currently assessed as security
-critical.
+Bartlomiej Dmitruk at striga.ai (finder)
 
-Changing the key and/or IV lengths is not considered to be a common operation
-and the vulnerable API was recently introduced. Furthermore it is likely that
-application developers will have spotted this problem during testing since
-decryption would fail unless both peers in the communication were similarly
-vulnerable. For these reasons we expect the probability of an application being
-vulnerable to this to be quite low. However if an application is vulnerable then
-this issue is considered very serious. For these reasons we have assessed this
-issue as Moderate severity overall.
+References:
 
-The OpenSSL SSL/TLS implementation is not affected by this issue.
-
-The OpenSSL 3.0 and 3.1 FIPS providers are not affected by this because
-the issue lies outside of the FIPS provider boundary.
-
-OpenSSL 3.1 and 3.0 are vulnerable to this issue.
-
-OpenSSL 3.0 users should upgrade to OpenSSL 3.0.12.
-OpenSSL 3.1 users should upgrade to OpenSSL 3.1.4.
-
-This issue was reported on 21st September 2023 by Tony Battersby of
-Cybernetics.  The fix was developed by Dr Paul Dale.  This problem was
-independently reported on the 3rd of December 2022 as part of issue
-#19822, but it was not recognised as a security vulnerability at that
-time.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20231024.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/general/security-policy.html
-
-OpenSSL 1.1.1 is out of support and no longer receiving public updates. Extended
-support is available for premium support customers:
-https://www.openssl.org/support/contracts.html
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE78CkZ9YTy4PH7W0w2JTizos9efUFAmU33bsACgkQ2JTizos9
-efVwAg/8Dh8qiBA3LEzTP39JtwAZzf0MPUEe0I5bvS7GUXIX8EemYojcNyoa/i+x
-Lr/DQtRJ0j/woiy2PhMFbej+NNMwtHD4Cu83JB+wEEiXbnt4n5yi+rWb9hw19Fs6
-g17EDbsi1j5fgCQ81Psgxg02bgC/3iE2AnDYty6mRQnfMPe599SMUEnUsRfeGdTh
-QGOwLbAH58a3OydMFD5tUHY6JKKwU7WhLrYanAT7YIlU4oQbAIEKL7+K0roIzhyq
-3o7EjtfKAr2ttcl+iOXdJYRb+0OwP59y/BBAOOOdCcb2oqDs1fPvXB8BXHhR43Ew
-i5EF47fUFxICu2kuXEe00RbbJipAqF5S0KvIKurYPjepukWjOqnNBQc4euned0gN
-bYcQgMLjYoZAp79V42kRMTQ+uMP1ElUCx4gwY8iOn6R65TmHloiNWv/q0I3XhWeH
-piLOv9lm/pMNmArpFGpySQzTY/wyyEvc9ZQcThSdWSiJOIebG4wFLYP+LvzG81/Q
-KX0yMK1dB8nyD6n+p14aIxhaWHr/7YgNO0882YbG11OQftIB5HXIXsQT5XFdVm8h
-OUCJfj1iPv1O3Xr7UkTISzGzRZyYLoUxFSi9+DrMHWaK9pQqSYDjqB6XE8vImnZN
-wJJj9hGRRZzCON5pXuh5+bIPSozdUPaZtWWm9ICobB/PLyvD05M=
-=aGd3
------END PGP SIGNATURE-----
+https://lists.apache.org/thread/9510k5p5zdvt9pkkgtyp85mvwxo2qrly
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-34486
