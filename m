@@ -1,4 +1,4 @@
-Received: (qmail 5949 invoked by uid 550); 1 Nov 2025 19:36:07 -0000
+Received: (qmail 28451 invoked by uid 550); 9 Apr 2026 21:16:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,95 +8,55 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 5903 invoked from network); 1 Nov 2025 19:36:06 -0000
-From: Russ Allbery <eagle@eyrie.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <20251101030054.GA3031@openwall.com> (Solar Designer's message of
-	"Sat, 1 Nov 2025 04:00:54 +0100")
-Organization: The Eyrie
-References: <aP_msOoiyHJ_M4Yx@mertle>
-	<20251027163220.8c7ede47-6b3a-4190-ad4b-e52761b341de@korelogic.com>
-	<20251028014909.GA6430@openwall.com>
-	<76f8e74c-d9cc-4f20-8061-488598f85fe7@protonmail.com>
-	<20251101030054.GA3031@openwall.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Sat, 01 Nov 2025 12:35:56 -0700
-Message-ID: <875xbtlf4z.fsf@hope.eyrie.org>
+Received: (qmail 30225 invoked from network); 9 Apr 2026 19:52:31 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1775764275; bh=/DyZoYc+vPCKZmg/Pr08iIkXAvqsoHBL8za1SmG3zv8=;
+	h=Date:To:From:Subject:From;
+	b=SR1G5unpGff5UizC9vB14UZOww7gn9N1QP2PJh8TV88LXR/7OJOxewdGUUXeC72RE
+	 eeHn8phjrnNu7mTqWD0Oe53r0geIS09N5jD8YrWSQB4ZLJszFi+4nI4Desav5/mkhd
+	 Nt1+RWn4aPtE/YvXHt049imgISRs59Enp8B58/0oDlZByDaRGB01449EeQjhjDmqOq
+	 NHSkcFaWi8n89xQNRZ3pmpje9BtL4PKz9Ai1VF+SZvbvP4iEznKTrXItmpZGRkfzxA
+	 6R9DmWAyxu598uFuoqig7JttDlpi6n6GwW7nEDrdWMrvsMtEsQs5ReyoAQCQ4EusWl
+	 NO5A0GW5uLthg==
+Message-ID: <a0f1d0ae-afc7-47f2-b005-661178871229@apache.org>
+Date: Thu, 9 Apr 2026 20:51:14 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] Questionable CVE's reported against dnsmasq
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-34487: Apache Tomcat: Cloud membership for clustering
+ component exposed the Kubernetes bearer token
 
-Solar Designer <solar@openwall.com> writes:
+Severity: low
 
-> I don't think a "check that the config file is root-owned and not
-> user-writable" would be relevant since a maybe-relevant threat model
-> involves config files intentionally created by other software such as a
-> web UI, which would set permissions such that the file is processed, and
-> since such checks are uncommon and the lack of them does not mean the
-> software supports untrusted config files.
+Affected versions:
 
-> Other than that, I see that this gets tricky for a CNA to evaluate
-> without input from the maintainers, so I may have been unnecessarily
-> harsh on VulDB.
+- Apache Tomcat 11.0.0-M1 through 11.0.20
+- Apache Tomcat 10.1.0-M1 through 10.1.53
+- Apache Tomcat 9.0.13 through 9.0.116
 
-This is a bit of an "ask the Lazyweb" question since I have done only
-minimal research, but is there any way for me to declare, as the software
-maintainer, what I consider to be the security boundaries of the software
-in a way that can be at least partially machine-readable? I know there are
-tons of modeling languages for *building* software, imposing or checking
-access control, etc., but is there a way for me to *label* a free software
-project to communicate information such as "edit access to the
-configuration file is arbitrary code execution by design"?
+Description:
 
-It feels like this problem is arising regularly with automated and
-semi-automated security testing and fuzzing, and there are regular
-complaints about security "bugs" that the maintainer considers meaningless
-because they don't cross a privilege boundary in the maintainer's model,
-and then endless disputes about edge-case usage where no, actually, that
-is a security boundary.
+Insertion of Sensitive Information into Log File vulnerability in the 
+cloud membership for clustering component of Apache Tomcat exposed the 
+Kubernetes bearer token.
 
-I don't think the argument over what the security boundary should be in
-the abstract is winnable; there will always be someone who disagrees. But
-documentation of the *maintainer's* intended security boundary is an
-objective fact about the software maintenance practices. If the maintainer
-says "if you can write to the configuration file / inject arbitrary
-command line parameters / control the input to the program, the program
-will execute arbitrary code and this is by design and I'm not going to
-change it," this feels like useful information for both users and security
-researchers. Or even if the answer is that weird behavior in that scenario
-will be considered a bug but not a security issue, and therefore won't be
-treated with much urgency, won't result in a new software release when
-fixed, won't be backported, etc.
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.20, from 
+10.1.0-M1 through 10.1.53, from 9.0.13 through 9.0.116.
 
-One can disagree with the maintainer and try to change the maintainer's
-mind, but failing that, if you want a different security model than what
-the software declares it supports, the answer is to use a different piece
-of software (such as a fork) or enforce the security boundary yourself
-somehow, not to file a CVE.
+Users are recommended to upgrade to version 11.0.21, 10.1.54 or 9.0.117, 
+which fix the issue.
 
-It would be really nice if the maintainer could somehow declare this in
-such a way that CVE issuers could retrieve that declaration and check the
-CVE report against it, ideally in a semi-automated fashion. I say "semi"
-because I think a human will have to be involved to some extent, or the
-expression language problem will be too hard, but it would be nice if
-automation could take a reliable first cut at filtering things down to the
-bits a human has to look at.
+Credit:
 
-Beyond the perpetually-discussed case of configuration files, since there
-are indeed some programs that consider configuration file parsing to be a
-security boundary and treat failure to safely parse an attacker-controlled
-configuration file as a security bug, this would also provide a way to
-represent the difference between (to exaggerate for clarity) a command to
-do malware scanning (should be runnable on arbitrary untrusted input) and,
-say, "bash" or "python" (will never be possible to run on arbitrary
-untrusted input by design).
+Bartlomiej Dmitruk, striga.ai (finder)
 
-I can of course stick such a statement in the documentation and the
-security bug reporting instructions and so forth, and that would be a good
-start and I'm not doing that in all the places that I should, but if we
-could agree on a language for representing this, that feels a bit more
-satisfying. Part of the ongoing problem is a constant fight over
-definition of terms, so having some pre-defined terms feels useful.
+References:
 
--- 
-Russ Allbery (eagle@eyrie.org)             <https://www.eyrie.org/~eagle/>
+https://lists.apache.org/thread/4xpkwolpkrj8v5xzp5nyovtlqp3y850h
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-34487
