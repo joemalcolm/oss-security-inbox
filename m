@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1696" "Tuesday" "4" "October" "2016" "20:01:21" "+0200" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20161004200121.711be7fd@pc1>" "45" "[oss-security] CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)" "^Cc:" nil nil "10" "2016100418:01:21" "[oss-security] CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)" (number mark "        hanno@hboeck Oct  4   45/1696  " thread-indent "\"[oss-security] CVE request for code execution via gem name collission in bundler (was Re: [oss-security] CVE Request)\"\n") "<DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>" ("<DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9862 invoked by uid 550); 4 Oct 2016 18:01:34 -0000
+Received: (qmail 28544 invoked by uid 550); 9 Apr 2026 00:33:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,175 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9841 invoked from network); 4 Oct 2016 18:01:33 -0000
-Message-ID: <20161004200121.711be7fd@pc1>
-In-Reply-To: <DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>
-References: <DD111A77-208D-4A66-8A39-93872A2FBA24@collectiveidea.com>
-X-Mailer: Claws Mail 3.14.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-27321-1475604082-0001-2"
-Cc: oss-security@lists.openwall.com
-Date: Tue, 4 Oct 2016 20:01:21 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE request for code execution via gem name collission in bundler
- (was Re: [oss-security] CVE Request)
-To: Steve Richert <steve@collectiveidea.com>
-
---=_zucker.schokokeks.org-27321-1475604082-0001-2
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+x-ms-reactions: disallow
+Received: (qmail 28405 invoked from network); 9 Apr 2026 00:33:01 -0000
+Date: Thu, 9 Apr 2026 02:32:56 +0200
+From: Solar Designer <solar@openwall.com>
+To: oss-security@lists.openwall.com
+Message-ID: <20260409003256.GA12812@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] 4 security fixes in Flatpak, including critical CVE-2026-34078: Complete sandbox escape leading to host file access and code execution in the host context
 
 Hi,
 
-For readability of this mailing list I think it should be good practice
-to say something meaningful in the subject.
-We have tons of CVE requests here all the time, therefore "CVE Request"
-is not meaningful.
+Flatpak releases 1.16.4 and 1.17.4 are documented to include 4 security
+fixes, including one for a critical severity issue.  Flatpak releases
+1.16.5 and 1.17.5 fix regressions caused by the critical security fix:
 
-I'm not the maintainer of this mailing list, but I'm sure everyone
-agrees that something mentioning the name of the affected product and a
-short indication of what kind of bug it is would be apprechiated.
+https://github.com/flatpak/flatpak/releases
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+The security page:
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+https://github.com/flatpak/flatpak/security
 
---=_zucker.schokokeks.org-27321-1475604082-0001-2
-Content-Type: application/pgp-signature
-Content-Transfer-Encoding: 7bit
-Content-Description: OpenPGP digital signature
+lists the 4 security issues as follows (I reversed the order here):
 
------BEGIN PGP SIGNATURE-----
+> CVE-2026-34078: Complete sandbox escape leading to host file access and code execution in the host context
+> GHSA-cc2q-qc34-jprg published yesterday by swick
+> Critical
+> 
+> CVE-2026-34079: Arbitrary file deletion on the host filesystem
+> GHSA-p29x-r292-46pp published yesterday by swick
+> Moderate
+> 
+> Arbitrary read-access to files in the system-helper context
+> GHSA-2fxp-43j9-pwvc published yesterday by swick
+> Low
+> 
+> flatpak-system-helper: cross-user CancelPull orphans another user's ongoing pull
+> GHSA-89xm-3m96-w3jg published yesterday by swick
+> Low
 
-iQIcBAEBCAAGBQJX8+5xAAoJEKWIAHK7tR5CoEcP/jAXaNkM39dME6ui4HFNn/tR
-59yo/b5Pudq11nqi6hK4pFkQ6Hd5GndhkY8YkpaiZSpyZvQVatlaz9K6k+Mt9CPW
-lezM7MMp+3zFwrGsPLfTEuljT3e1sxnEa77/lf6mps3bNP/D1tFZrvr8kmNSiyML
-FeMZ4VOTzOq56cnmM4CLDMLRy1ElTfsNUwZdlcpUIbbhFXJExTEXYtahZJpv5ka0
-wVdddKxtPZPW4qop0N6NWvMStzH1iLuCZAfEJInF6/aGEVJbS8Cliy+IByKlXpBo
-yD7noaQCnHz6m387+jolmxmI8Lunc624fmdqCzaX0OPagSfdwy/LEcpe9YzerBEQ
-ltwBi9CxV1fX7j33RQ0UmMEYt+FNUYLOR64XxrqOeTPSQHItVU9+PnHZjcDxWkM2
-0naHjPi+yw3ZWND8NBQZCaAG677dfGbVnN+dOHq13C4FP7E+BQ94k843BaNy2foJ
-rHkcOS/VtsdOrZ91UymMJ+hU/VPhXwTd4zj/QiaZ6/o2om3gfue+9/jPz5jOxyw0
-wSzhFqQOzg+wiA3A5C5PoGSARUeCvgpiQK1NWpq+tvpUOZ+/TPw5YKKIeVetEv1U
-qeclhzkl5adxWUN+Ss89d2s97K9W4B97AETX+qirw21E0SMm0v6JdZhc8Kif9ThR
-ahzZWI2gUHOHjH6+mXJD
-=ldfU
------END PGP SIGNATURE-----
+Here they are individually:
 
---=_zucker.schokokeks.org-27321-1475604082-0001-2--
+https://github.com/flatpak/flatpak/security/advisories/GHSA-cc2q-qc34-jprg
+
+> CVE-2026-34078: Complete sandbox escape leading to host file access and code execution in the host context
+> Critical
+> swick published GHSA-cc2q-qc34-jprg yesterday
+> 
+> Affected versions
+> <1.16.4
+> Patched versions
+> 1.16.4
+> 
+> Impact
+> 
+> Every Flatpak app is able to read and write arbitrary files on the host and execute code in the host context.
+> 
+> Description
+> 
+> The Flatpak portal accepts paths in the sandbox-expose options which can be app-controlled symlinks pointing at arbitrary paths. Flatpak run mounts the resolved host path in the sandbox. This gives apps access to all host files and can be used as a primitive to gain code execution in the host context.
+> 
+> Patches
+> 
+> The issue has been patched in version 1.16.4 and will be patched in the upcoming version 1.18.0.
+> 
+> Mitigations
+> 
+> Disabling the Flatpak Portal mitigates the issue but can result in misbehaving apps.
+> 
+> sudo systemctl --global mask flatpak-portal.service && systemctl --user stop flatpak-portal.service
+> 
+> Credits
+> 
+> Reported by Codean Labs
+
+https://github.com/flatpak/flatpak/security/advisories/GHSA-p29x-r292-46pp
+
+> CVE-2026-34079: Arbitrary file deletion on the host filesystem
+> Moderate
+> swick published GHSA-p29x-r292-46pp yesterday
+> 
+> Affected versions
+> <1.16.4
+> Patched versions
+> 1.16.4
+> 
+> Impact
+> 
+> Every Flatpak app is able to delete arbitrary files on the host.
+> 
+> Description
+> 
+> The caching for ld.so removes outdated cache files without properly checking that the app controlled path to the outdated cache is in the cache directory.
+> 
+> Patches
+> 
+> The issue has been patched in version 1.16.4 and will be patched in the upcoming version 1.18.0.
+> 
+> Mitigations
+> 
+> No know mitigation other than updating
+> 
+> Credits
+> 
+> Reported by Codean Labs
+
+https://github.com/flatpak/flatpak/security/advisories/GHSA-2fxp-43j9-pwvc
+
+> Arbitrary read-access to files in the system-helper context
+> Low
+> swick published GHSA-2fxp-43j9-pwvc yesterday
+> 
+> Affected versions
+> <1.16.4
+> Patched versions
+> 1.16.4
+> 
+> Impact
+> 
+> A malicious user can get read-access to files in the system-helper context if a system OCI repository is configured.
+> 
+> Description
+> 
+> The OCI code paths in the system helper will follow symlinks when importing OCI images which are under the user's control.
+> 
+> Patches
+> 
+> The issue has been patched in version 1.16.4 and will be patched in the upcoming version 1.18.0.
+> 
+> Mitigations
+> 
+> Remove all OCI system remotes.
+> 
+> Credits
+> 
+> @smcv
+
+https://github.com/flatpak/flatpak/security/advisories/GHSA-89xm-3m96-w3jg
+
+> flatpak-system-helper: cross-user CancelPull orphans another user's ongoing pull
+> Low
+> swick published GHSA-89xm-3m96-w3jg yesterday
+> 
+> Affected versions
+> <1.16.4
+> Patched versions
+> 1.16.4
+> 
+> Impact
+> 
+> Ongoing pulls cannot be stopped.
+> 
+> Description
+> 
+> By calling org.freedesktop.Flatpak.SystemHelper.CancelPull on another user's pull, the pull does not get cancelled but removed from internal tracking, making it impossible to stop it.
+> 
+> Patches
+> 
+> The issue has been patched in version 1.16.4 and will be patched in the upcoming version 1.18.0.
+> 
+> Mitigations
+> 
+> No known mitigation other than updating.
+> 
+> Credits
+> 
+> Asim Viladi Oglu Manizada
+
+Alexander
