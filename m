@@ -1,4 +1,4 @@
-Received: (qmail 1723 invoked by uid 550); 3 Oct 2023 20:40:24 -0000
+Received: (qmail 30330 invoked by uid 550); 9 Apr 2026 00:42:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,84 +7,61 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1140 invoked from network); 3 Oct 2023 20:39:06 -0000
-Date: Tue, 3 Oct 2023 22:38:53 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3288 invoked from network); 9 Apr 2026 00:33:59 -0000
+Date: Thu, 9 Apr 2026 02:33:48 +0200
+From: Vincent Lefevre <vincent@vinc17.net>
 To: oss-security@lists.openwall.com
-Cc: Andreas Kling <kling@serenityos.org>
-Message-ID: <20231003203853.GA24745@openwall.com>
-References: <bd99e07a-8d8c-4652-9089-7c0fc2e86409@oracle.com> <ZRXlPoozp5n+cWv1@itl-email> <fu34pmyckhgrjugxc2pqbj5afhtsf5jisnbpjghhkr7rfie3my@53a2ma3ekn6i> <ZRb8vSZlWXIJtPjS@itl-email>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <20260409003348.GA2042518@qaa.vinc17.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZRb8vSZlWXIJtPjS@itl-email>
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] Wuffs (was: CVE-2023-5217: Heap buffer overflow in vp8 encoding in libvpx)
+Content-Transfer-Encoding: 8bit
+X-Mailer-Info: https://www.vinc17.net/mutt/
+User-Agent: Mutt/2.3+4 (71f3e314) vl-169878 (2026-01-27)
+Subject: [oss-security] lftp 4.9.3 does not filter non-printable characters in the output to
+ the terminal
 
-On Fri, Sep 29, 2023 at 12:35:07PM -0400, Demi Marie Obenour wrote:
-> On Thu, Sep 28, 2023 at 05:10:09PM -0700, nightmare.yeah27@aceecat.org wrote:
-> > On Thu, Sep 28, 2023 at 04:42:33PM -0400, Demi Marie Obenour wrote:
-> > 
-> > > How long will it take for corporations to accept that writing media
+I've just reported the following issue:
 
-Demi Marie, for further occasions I'd appreciate it if such tangential
-topics be started in their own threads (OK to refer to current context,
-but not mix with it in same thread) and be worded non-provocatively.
+  https://github.com/lavv17/lftp/issues/781
 
-Luckily, we got quite reasonable follow-ups this time - much better than
-typical (anti-)Rust flamewars on tech news sites.  So I don't really
-complain.  But I was reluctant and worried about accepting the above.
+lftp does not filter non-printable characters in the output to the
+terminal. For instance:
 
-> > > codecs in C, C++, or any other memory-unsafe language is a
-> > > fundamentally bad idea, and that it is better to rewrite the codecs
-> > > in a safe language (such as Wuffs or Rust) than to try to secure the
-> > > existing ones?
-> > 
-> > Wouldn't the low-level code have to ultimately depend on unsafe Rust
-> > modules, or similar feature in other safe language?
-> 
-> In Wuffs, every memory access is checked for safety at compile-time, and
-> that includes being in-bounds.  If the compiler cannot prove that every
-> access is safe, the code will not compile.  There are no bounds checks
-> at runtime.
-> 
-> Interfacing with hardware accelerators obviously will need unsafe code,
-> but my understanding is that most vulnerabilities are in various
-> parsers or in the code the accelerators replace, not in the code that
-> interfaces with the accelerators.
+$ mkdir /tmp/dir
+$ cd /tmp/dir
+$ touch "file$(tput smacs)" foo
+$ ls
+'file'$'\033''(0'   foo
+$ lftp sftp://localhost/tmp/dir
+cd ok, cwd=/tmp/dir
+lftp localhost:/tmp/dir> dir
+drwxr-xr-x    2 vinc17   vinc17         80 Apr  9 02:07 .
+drwxrwxrwt   22 root     root          560 Apr  9 02:07 ..
+-rw-r--r--    1 vinc17   vinc17          0 Apr  9 02:07 file
+-⎼┬-⎼--⎼--    1 ┴␋┼␌17   ┴␋┼␌17          0 A⎻⎼  9 02:07 °⎺⎺
+┌°├⎻ ┌⎺␌▒┌␤⎺⎽├:/├└⎻/␍␋⎼>
 
-The mention of Rust triggered people, but let's not overlook Wuffs,
-"Wrangling Untrusted File Formats Safely":
+and
 
-https://github.com/google/wuffs
+$ lftp sftp://localhost/tmp/dir
+cd ok, cwd=/tmp/dir
+lftp localhost:/tmp/dir> get file^[(0
+get: /home/vinc17/file: F␋┌␊ ␊│␋⎽├⎽
+┌°├⎻ ┌⎺␌▒┌␤⎺⎽├:/├└⎻/␍␋⎼>
 
-I was actually unaware of Wuffs, so I appreciate learning of it.  As I
-understand, it's a language currently transpiled to C:
+(note: I typed "get file", then the Tab key to complete).
 
-https://github.com/google/wuffs/tree/main/release/c
+Remote directories may contain untrusted data. In particular, a
+malicious user may have created file names with specially chosen
+escape sequences to introduce issues with the terminal and possibly
+security implications in some terminal configurations.
 
-> Wuffs the Library ships as a "single file C library", also known as a
-> "header file library".
-> 
-> To use that library in your C/C++ project, you just need to copy one
-> file from this directory, or otherwise integrate that one file into your
-> build system.
+Tested with lftp 4.9.3 under Debian/unstable.
 
-The C file containing all of the parsers currently implemented in Wuffs
-is around 2 MB in size.  That's a lot, but then there are many parsers:
-
-https://github.com/google/wuffs/tree/main/std
-
-$ ls std/
-adler32  bmp  bzip2  cbor  crc32  deflate  gif  gzip  jpeg  json  lzw
-netpbm  nie  png  tga  wbmp  zlib
-
-Curiously, some of these optionally use SIMD - all while retaining the
-language's safety guarantees?
-
-Even though this looks like a Google project, I think a better place for
-its initial adoption could be a hobbyist OS and web browser project like
-what Andreas Kling is working on.  I'm not saying this is necessarily a
-good idea, it just feels more realistic to me.
-
-Alexander
+-- 
+Vincent Lefèvre <vincent@vinc17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
