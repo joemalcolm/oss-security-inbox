@@ -1,4 +1,4 @@
-Received: (qmail 5965 invoked by uid 550); 2 Aug 2024 06:39:15 -0000
+Received: (qmail 18286 invoked by uid 550); 10 Apr 2026 15:08:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,52 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5945 invoked from network); 2 Aug 2024 06:39:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1722580746; bh=T6Ya1+MPRt4YDg3CBaSJMDUIcofBia0DEUW3gcOPXok=;
-	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=PgqrZ7yjmXy+Y3HLhm5TxKqLxwKSgaQx/QZ0U49TvangY2n8JIFa66BApjPcnZpNb
-	 I6kMFqQ84/g7FInH4wDwUliMl9Qec3q1rCoSH49CJW3qvQZo5K6RQRBi1/4xMn2Ev6
-	 mnVXvm+xc5Fr+9jAALD2cMWvBSECBdPwfHA1WQiYMYfOoytrGy2fGu6FyljhNdXqLN
-	 HYLGlHkKIb0pHp1CL5dkK9clVHBQuosgXsATEWAdWjYZWORd1Kcq7LiLsdbqwE6EV1
-	 QAyZqBaSavyy+imf/+/2h4O9voqNAbia5T0AL1IQIC2FxgHevj695N3TceRYR9JSUI
-	 smVBAgxwKUXNw==
-Original-Subject: Re: [oss-security] CPython CVE-2024-6923: Email header injection
- due to unquoted newlines
-Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
-Date: Fri, 2 Aug 2024 08:39:04 +0200
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 17788 invoked from network); 10 Apr 2026 13:46:11 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Piotr Karwasz <pkarwasz@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20240802083904.7b05d8fa@computer>
-In-Reply-To: <f787c960-d069-43c5-b106-fb72bda132cd@oracle.com>
-References: 
- <CAADqWPRxo1cNtsjvmYjgZgUdkzjQSb6XBekKweDiXvknvs5SUQ@mail.gmail.com>
-	<f787c960-d069-43c5-b106-fb72bda132cd@oracle.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <fd4852d5-227d-f06a-25c4-8ed439eb85a5@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CPython CVE-2024-6923: Email header injection
- due to unquoted newlines
+Date: Fri, 10 Apr 2026 13:42:13 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-34481: Apache Log4j JSON Template Layout: Improper
+ serialization of non-finite floating-point values in JsonTemplateLayout 
 
-Hi,
+Severity: moderate=20
 
-For what it's worth, I found a somewhat similar issue in PHP not so
-long ago.
+Affected versions:
 
-PHP has two interfaces to pass additional mail headers, one just passing
-a multiline string (which unavoidably creates injection risks), and
-another one with an array. The latter can avoid newline injections, but
-it only did so for "\r\n", not for "\n". (Whether that'll be accepted
-depends I believe on the mail server, but most will *ceterum censeo
-Hanno moaning about the misguided robustness principle*...)
+- Apache Log4j JSON Template Layout (org.apache.logging.log4j:log4j-layout-=
+template-json) 2.14.0 before 2.25.4
+- Apache Log4j JSON Template Layout (org.apache.logging.log4j:log4j-layout-=
+template-json) 3.0.0-alpha1 through 3.0.0-beta3
 
-I hadn't really seen this as a security vulnerability, more a hardening
-issue, so I reported it as a suggestion to PHP, and they improved their
-filtering. It was fixed/improved:
-https://github.com/php/php-src/issues/13402
+Description:
 
---=20
-Hanno B=C3=B6ck - Independent security researcher
-https://itsec.hboeck.de/
+Apache Log4j's  JsonTemplateLayout https://logging.apache.org/log4j/2.x/man=
+ual/json-template-layout.html , in versions up to and including 2.25.3, pro=
+duces invalid JSON output when log events contain non-finite floating-point=
+ values (NaN, Infinity, or -Infinity), which are prohibited by RFC 8259. Th=
+is may cause downstream log processing systems to reject or fail to index a=
+ffected records.
+
+An attacker can exploit this issue only if both of the following conditions=
+ are met:
+
+  *  The application uses JsonTemplateLayout.
+  *  The application logs a MapMessage containing an attacker-controlled fl=
+oating-point value.
+
+
+Users are advised to upgrade to Apache Log4j JSON Template Layout 2.25.4, w=
+hich corrects this issue.
+
+Credit:
+
+Ap4sh (Samy Medjahed) and Ethicxz (Eliott Laurie) (finder)
+
+References:
+
+https://github.com/apache/logging-log4j2/pull/4080
+https://logging.apache.org/security.html#CVE-2026-34481
+https://logging.apache.org/cyclonedx/vdr.xml
+https://logging.apache.org/log4j/2.x/manual/json-template-layout.html
+https://logging.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-34481
+
+Timeline:
+
+2026-02-16: Vulnerability reported by Ap4sh and ethicxz
+2026-03-10: Candidate patch internally shared by Piotr P. Karwasz
+2026-03-24: Fix shared publicly by Piotr P. Karwasz as pull request #4080
+2026-03-25: Fix verified by the reporter
+2026-03-28: Log4j 2.25.4 released
+
