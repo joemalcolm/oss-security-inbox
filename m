@@ -1,4 +1,4 @@
-Received: (qmail 21642 invoked by uid 550); 1 Apr 2026 16:33:22 -0000
+Received: (qmail 14253 invoked by uid 550); 10 Apr 2026 23:22:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,83 +8,35 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 21602 invoked from network); 1 Apr 2026 16:33:22 -0000
-Date: Wed, 1 Apr 2026 18:31:08 +0200
-From: Christian Brabandt <cb@256bit.org>
+Received: (qmail 14225 invoked from network); 10 Apr 2026 23:22:51 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=d7OhwpxJOY01lXMUyfYQsQw8zaM2jxdftErL9xqRiAM=; b=PjpBWv1KJ0aeSqba/Cv9ohE5+z
+	5sycl9aSNyz9FabgAHcnFRfzn1fyeoBcEnFoi1cbSVAb8n3t1DwtXBsAVJNsjwocG+2XVcJqdkjtN
+	/bvmjvpdToQz3empkOTXKoPEO1udNuVkp0T5w3kMqcOxN9LyftLsBOEqgaHvD+gQ8Dr7GZ2q6q83O
+	RSo7EKd1BJEKRHgWFJev6Y0fv876WmiMPIjTZBlbrRl2zROyzkL5XyBzo6ao48pbhH0HUxrnzCiEU
+	eyJngHYxgUeNDAZWd5rp0KNCc+A5byGWqvA1q9IjVzcZRIJG2LLtPsW6btGWLYfgR9zp+Xq8bwQKL
+	MpJakJrQ==;
+Date: Sat, 11 Apr 2026 00:22:41 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ac1ITEgogng5SRlF@256bit.org>
+Message-ID: <admGQUalTr1TtMJt@definition.pseudorandom.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security] Path traversal issue with zip.vim and special crafted
- zip archives in Vim < v9.2.0280
+X-Debian-User: smcv
+Subject: [oss-security] xdg-dbus-proxy CVE-2026-34080: Eavesdrop filter
+ bypass allows message interception
 
-Path traversal issue with zip.vim and special crafted zip archives in Vim < v9.2.0280
-=====================================================================================
-Date: 01.04.2026
-Severity: Low
-CVE: *not yet assigned*
-CWE: Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') (CWE-22)
+https://github.com/flatpak/xdg-dbus-proxy/security/advisories/GHSA-vjp5-hjfm-7677
 
-## Summary
+Codean Labs reported that a D-Bus match rule parsing bug in 
+xdg-dbus-proxy allows bypassing the proxy's eavesdropping restrictions. 
+In practice xdg-dbus-proxy is mainly used by Flatpak, so a typical 
+attacker would be a malicious or compromised Flatpak app.
 
-A path traversal bypass in Vim's zip.vim plugin allows overwriting of arbitrary
-files when opening specially crafted zip archives, circumventing the previous fix
-for CVE-2025-53906.
-
-## Description
-
-Vim includes the zip.vim plugin, which enables viewing and editing of files
-within zip archives. A prior fix for CVE-2025-53906 added a check rejecting
-archive member paths beginning with `../`. However, that check can be bypassed
-by prefixing the traversal with a dummy directory component (e.g.,
-`a/../../../../../../tmp/foobar`). The leading `a/` causes the original pattern
-`^[.]\?[.]/` to not match, while the path still escapes the intended directory
-after normalization.
-
-Exploitation requires the same conditions as CVE-2025-53906:
-
-- The user opens a specially crafted archive in Vim.
-- The user selects and attempts to edit one of the malicious files within the archive.
-- Vim writes the file back to disk using `:w`.
-
-Only after all these steps are performed would Vim overwrite an existing file
-outside the intended working directory.
-
-- Vim does display the full path to be written, so a careful user may notice
-  suspicious behavior.
-- Standard zip utilities typically do not extract such paths and will warn or
-  skip them. This issue only affects Vim's internal handling, not the zip tool
-  itself.
-
-## Impact
-
-Impact is **low** because exploitation requires direct user interaction.
-However, successful exploitation can lead to overwriting sensitive files or
-placing executable code in privileged locations, depending on the permissions
-of the process editing the archive.
-
-The victim must edit such a file using Vim, which will reveal the filename
-and file content - a careful user may suspect something suspicious.
-
-## Acknowledgements
-The Vim project would like to thank Michał Majchrowicz for identifying the
-vulnerability chain, providing a detailed root cause analysis and reproduction
-steps.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.0280](https://github.com/vim/vim/releases/tag/v9.2.0280).
-
-- [Commit](https://github.com/vim/vim/commit/7088926316d8d4a7572a242d0765)
-- [GitHub Advisory](https://github.com/vim/vim/security/advisories/GHSA-jc86-w7vm-8p24)
-
-
-Best,
-Christian
--- 
-Wie man sein Kind nicht nennen sollte: 
-  Tino Saurier 
+The impact is that clients can read D-Bus messages on the session bus 
+that they should not have had access to. This is fixed in xdg-dbus-proxy 
+0.1.7.
