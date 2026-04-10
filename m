@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["601" "Monday" "17" "August" "2015" "16:33:42" "+0200" "Tomas Hoger" "thoger@redhat.com" "<20150817163342.38f432df@redhat.com>" "17" "Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" nil nil nil "8" "2015081714:33:42" "[oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)" (number mark "        thoger@redha Aug 17   17/601   " thread-indent "\"Re: [oss-security] Double free corruption in JasPer JPEG-2000 implementation (CVE-2015-5203)\"\n") "<20150816184849.GA32213@zoho.com>" ("<CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>" "<20150816184849.GA32213@zoho.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7859 invoked by uid 550); 17 Aug 2015 14:34:00 -0000
+Received: (qmail 17932 invoked by uid 550); 10 Apr 2026 23:09:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,37 +6,39 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7831 invoked from network); 17 Aug 2015 14:34:00 -0000
-Message-ID: <20150817163342.38f432df@redhat.com>
-In-Reply-To: <20150816184849.GA32213@zoho.com>
-References: <CACn5sdSnp7LMeeV_rFbgVQCeQkoqGGTvHLZ3Xo_xgU70bhbOYw@mail.gmail.com>
-	<20150816184849.GA32213@zoho.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
-Cc: oss-security@lists.openwall.com, gustavo.grieco@gmail.com
-Date: Mon, 17 Aug 2015 16:33:42 +0200
-From: Tomas Hoger <thoger@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Double free corruption in JasPer JPEG-2000
- implementation (CVE-2015-5203)
-To: mancha <mancha1@zoho.com>
+x-ms-reactions: disallow
+Received: (qmail 17905 invoked from network); 10 Apr 2026 23:09:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:Content-Type:MIME-Version:Message-ID:
+	Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:In-Reply-To:References;
+	bh=iYd8bQv/AqwvczJmf/M3SHaOcPbSCKnFIh3wbv8ccNs=; b=kryyJvfurrYNX+nyu+eVVMpDtX
+	8ox9xJZ36xXoKeTNaF+wzY+rWKU6jFVeArTKKMhoV1mlGvl/bxfSXUr5wfH4TPe60XprtEeMEQMde
+	QaRUG18umBWWoJqmwKpkkZwCdVQfiCbYt2t8FrHnM/5m2zpzKGMR+A3AwPMW+vMKB/GZxdsD4GM9T
+	DjyjAUgYsfozgUdUiuCCq8b5jDCkyVn5uPussrDmb836FW2XWDOcc+XAf6NrDHBwOS9b5n7ea3UPE
+	kX9h+Q4ykH0h1z3Oaf5BHjElzjX7OYJV2FiG/4gzmXOEamOLN+9wF9fqqZeGDom4IEZRV7W2wFlXx
+	jlY7RvHg==;
+Date: Sat, 11 Apr 2026 00:08:55 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <admDB8Eiz6MGYYu0@definition.pseudorandom.co.uk>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+X-Debian-User: smcv
+Subject: [oss-security] xdg-desktop-portal GHSA-rqr9-jwwf-wxgj: Trashing of
+ arbitrary host files
 
-On Sun, 16 Aug 2015 18:48:49 +0000 mancha wrote:
+xdg-desktop-portal's Trash portal is designed to allow sandboxed apps to
+ask for a file or directory accessible to the app to be moved to the trash.
 
-> On Sun, Aug 16, 2015 at 05:22:50PM +0200, Gustavo Grieco wrote:
-> > A new double free affecting JasPer JPEG-2000 (libjasper 1.900) has
-> > been found triggered by function jasper_image_stop_load.  Despite this
-> > library is used by many programs (
-> > http://www.ece.uvic.ca/~frodo/jasper/#overview), there is no one
-> > providing support, so there is no fix so far.
-> 
-> If you email me your crasher I can look into a fix.
+Similar to CVE-2026-34078 in Flatpak (but less serious), Codean Labs
+reported that a malicious or compromised Flatpak app could ask the portal
+to trash a file that it owns, then replace that file with a symlink,
+exploit a time-of-check/time-of-use mismatch and make the portal trash
+the target of the symlink on the host system instead.
 
-More details noted in:
+This is fixed in stable release 1.20.4 and development prerelease 1.21.1.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=1254242#c3
-
--- 
-Tomas Hoger / Red Hat Product Security
+https://github.com/flatpak/xdg-desktop-portal/security/advisories/GHSA-rqr9-jwwf-wxgj
