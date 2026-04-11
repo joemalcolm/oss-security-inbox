@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1380" "Sunday" "8" "January" "2017" "14:47:40" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<328b2aec213f4e34b3cbc4c6b4707b37@imshyb02.MITRE.ORG>" "37" "[oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm" nil nil nil "1" "2017010819:47:40" "[oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm" (number mark "U       cve-assign@m Jan  8   37/1380  " thread-indent "\"[oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm\"\n") "<20170108084501.ncsnqkhyytpawpbh@eldamar.local>" ("<20170108084501.ncsnqkhyytpawpbh@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28622 invoked by uid 550); 8 Jan 2017 19:47:53 -0000
+Received: (qmail 32406 invoked by uid 550); 11 Apr 2026 13:31:48 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,51 +7,42 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28590 invoked from network); 8 Jan 2017 19:47:52 -0000
-From: <cve-assign@mitre.org>
-To: <carnil@debian.org>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>
-In-Reply-To: <20170108084501.ncsnqkhyytpawpbh@eldamar.local>
-Message-ID: <328b2aec213f4e34b3cbc4c6b4707b37@imshyb02.MITRE.ORG>
-Date: Sun, 8 Jan 2017 14:47:40 -0500
+x-ms-reactions: disallow
+Received: (qmail 32367 invoked from network); 11 Apr 2026 13:31:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=notcom.org;
+	s=jk; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-ID:
+	Content-Description; bh=j2LndgQrzkLEMh6Ofeo2XavDqI8f6mesQERC7jAsczc=;
+	i=b49a205f73f09af5fde31f6781a721d6b26ace42@notcom.org; t=1775914309;
+	x=1776562309; b=RyQWl7hoXkZawGXBfpqYe2XW14fEkVLxx/Z9zC2WYDyM1bPb+Nks0ch/QzX3b
+	BdNV0URFBi+HLBfWWoWXHz3Aik2KVTiz/dPq1kDZSACjgLAr+u5hcBImMSP+osvoIGfd2eduX2GsD
+	+XapfDsdjdQQNs4wL96yc29R3kVomX7K5nIuLWpOgAEJd5qFjnM+VEIROStk5Ep6bzpik8W9zkTo9
+	EoCO/ehdqeokSmqn+DwHbPuaRme0GesmcHA8fuVV/7tJXaGAHCbQsulfKHcTdFcnZDwuSTkxBSzLh
+	7516ATTlcvRalUwfXF34sIzjOJpYjgUd/F+crnA45SaPBdcOmQ==;
+Date: Sat, 11 Apr 2026 16:31:34 +0300
+From: Valtteri Vuorikoski <vuori@notcom.org>
+To: oss-security@lists.openwall.com
+Message-ID: <adpLiEEu1l6h8ecF@donburi.himad.notcom.org>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <ado-k2ivxft6BukD@donburi.himad.notcom.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: CVE Request: icoutils: exploitable crash in wrestool programm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ado-k2ivxft6BukD@donburi.himad.notcom.org>
+User-Agent: NeoMutt/20251211-3-1d6324
+Subject: Re: [oss-security] CVE-2026-35537+more: Roundcube arbitrary write +
+ ID/XSS/etc. prior to 1.6.14
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Addendum: versions 1.5.15/1.6.15 were released March 29 that correct regressions introduced
+in 1.5.14/1.6.14 and fix one more cross-site issue:
 
-> an exploitable crash in wrestool from the icoutils
+  * SVG Animate FUNCIRI Attribute Bypass — Remote Image Loading via
+  fill/filter/stroke, reported by class_nzm.
 
-> https://bugs.debian.org/850017
-> https://anonscm.debian.org/git/users/cjwatson/icoutils.git/plain/debian/patches/check-offset-overflow.patch
+Announcement is at
+<https://roundcube.net/news/2026/03/29/security-updates-1.7-rc6-1.6.15-1.5.15>. This
+appears to be CVE-2026-35545.
 
->> wrestool/fileread.c
-
->> On 64-bit systems, the result of subtracting two pointers exceeds the
->> size of int
-
-Use CVE-2017-5208.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJYcpb7AAoJEHb/MwWLVhi2kLwP/A+G4NM3R2Ad/IKIDemtxNpC
-qKNMumJCh3kS2tiUcWZgfChZiED2lpQIQRwE6z/DQznt8iXbIxEolipRBj8PlEIe
-Z8L7A10OxVQLKf9pYZmN4JmomcAFcI1Nzt3sgMsS+7leClf606kXAdPiVlxjgH3E
-LFaQRqatsD1UA7eftvul8MZeBFQUtQttH6fIvqj9/L3HifNQ6xYkBdT/8C8MbEku
-KzRNOFk803YBrfbgvsZhk65N8KXpX+fBXiXS8gu7TyUxnS1UxqaT8F7NkoPiHCqk
-M2t+l5M152nD/Gjf0/2y+Nfb+fi3sNDvLgE2ElmnRmC2InGI1JBITEtuflM5znYn
-z6Wz5ts1rvQenqEzAxPLYBFdUTMFyyheqLKRYo2I+tQ5LM69HlHZnsTclGHGCUyx
-tD+MPLz54kuPXaXj6HUG+eK49QxWLoDTlRS/TOrCUC1YsXIRfleo1QO00BcpBVHw
-jcdEvebEXzCMG0+Av6pcBKmBwlGOy+y7ckJHUnQ7c8PvbKlk5nunlSmrLqHvDBSL
-V4V4rE5WmFu/GSuGcr+pz/IhFZViwDgydz7dagTv8CJsMAvJGean93r0AO+WXhA9
-jdFg5tbrvzH3nHh1v5GZ/SZaWi34de1/9rG3cxLmlMStyOGMTxpOeO/Scb9Bkqp2
-6d2/HyseA0dKnDgxtrIi
-=vxi7
------END PGP SIGNATURE-----
+ -Valtteri
+ 
