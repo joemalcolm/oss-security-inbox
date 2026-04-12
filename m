@@ -1,4 +1,4 @@
-Received: (qmail 7720 invoked by uid 550); 20 Mar 2026 19:14:35 -0000
+Received: (qmail 16191 invoked by uid 550); 12 Apr 2026 23:11:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,51 +8,59 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 28075 invoked from network); 20 Mar 2026 18:44:45 -0000
+Received: (qmail 29743 invoked from network); 12 Apr 2026 18:23:45 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Justin Bertram <jbertram@apache.org>
+From: Richard Zowalla <rzo1@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <c2ca2c1a-f97a-8323-a296-fe84bfbd3dbe@apache.org>
+Message-ID: <3f55d45c-12c3-7652-51bd-71290acf24e1@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 20 Mar 2026 18:44:28 +0000
+Date: Sun, 12 Apr 2026 18:23:33 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2026-32642: Apache Artemis, Apache ActiveMQ Artemis: Temporary
- address auto-created for OpenWire consumer without createAddress
- permission 
+Subject: [oss-security] CVE-2026-35337: Apache Storm Client: RCE through Unsafe
+ Deserialization via Kerberos TGT Credential Handling 
 
-Severity: low=20
+Severity: important=20
 
 Affected versions:
 
-- Apache Artemis (org.apache.artemis:artemis-openwire-protocol) 2.50.0 thro=
-ugh 2.52.0
-- Apache ActiveMQ Artemis (org.apache.activemq:artemis-openwire-protocol) 2=
-.0.0 through 2.44.0
+- Apache Storm Client (org.apache.storm:storm-client) before 2.8.6
 
 Description:
 
-Incorrect Authorization (CWE-863)=C2=A0vulnerability in Apache Artemis, Apa=
-che ActiveMQ Artemis exists when an application using the OpenWire protocol=
- attempts to create a non-durable JMS topic subscription on an address that=
- doesn't exist with an authenticated user which has the "createDurableQueue=
-" permission but does not have the "createAddress" permission and address a=
-uto-creation is disabled. In this circumstance, a temporary address will be=
- created whereas the attempt to create the non-durable subscription should =
-instead fail since the user is not authorized to create the corresponding a=
-ddress. When the OpenWire connection is closed the address is removed.
+Deserialization of Untrusted Data vulnerability in Apache Storm.
 
-This issue affects Apache Artemis: from 2.50.0 through 2.52.0; Apache Activ=
-eMQ Artemis: from 2.0.0 through 2.44.0.
+Versions Affected:
+before 2.8.6.
 
-Users are recommended to upgrade to version 2.53.0, which fixes the issue.
+
+Description:
+When processing topology credentials submitted via the Nimbus Thrift API, S=
+torm deserializes the base64-encoded TGT blob using ObjectInputStream.readO=
+bject() without any class filtering or validation.=C2=A0An authenticated us=
+er with topology submission rights could supply a crafted serialized object=
+ in the "TGT" credential field, leading to remote code execution in both th=
+e Nimbus and Worker JVMs.
+
+
+Mitigation:
+2.x users should upgrade to 2.8.6.
+
+
+Users who cannot upgrade immediately should monkey-patch an ObjectInputFilt=
+er allow-list to ClientAuthUtils.deserializeKerberosTicket() restricting de=
+serialized classes to javax.security.auth.kerberos.KerberosTicket and its k=
+nown dependencies. A guide on how to do this is available in the release no=
+tes of 2.8.6.
+
+Credit: This issue was discovered by K.
 
 Credit:
 
-Stephen Higgs <shiggs@redhat.com> (reporter)
+K (finder)
 
 References:
 
-https://artemis.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2026-32642
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-35337
 
