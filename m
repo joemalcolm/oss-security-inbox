@@ -1,4 +1,4 @@
-Received: (qmail 9558 invoked by uid 550); 18 Apr 2023 15:40:42 -0000
+Received: (qmail 9864 invoked by uid 550); 13 Apr 2026 14:24:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,72 +7,44 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9451 invoked from network); 18 Apr 2023 15:40:23 -0000
-Date: Tue, 18 Apr 2023 17:40:16 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 5536 invoked from network); 13 Apr 2026 14:23:11 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
-Cc: Ruihan Li <lrh2000@pku.edu.cn>
-Message-ID: <20230418154016.GA959@openwall.com>
-References: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <w7boj4fg4x2o2bjz7a7zkjk4bgxqvqyuxycdqqw2dl3bhanh6a@h4jtbccffxgv>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2023-2002: Linux Bluetooth: Unauthorized management command execution
+Message-ID: <e7923a9f-c4de-2d86-6098-debe70249584@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 13 Apr 2026 14:21:22 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-33858: Apache Airflow: Unsafe Deserialization via Legacy
+ Serialization Keys (__type/__var) Bypass in XCom API 
 
-On Sun, Apr 16, 2023 at 06:12:18PM +0800, Ruihan Li wrote:
-> The exploitation works as long as there are setuid programs (or more
-> precisely, programs with the CAP_NET_ADMIN capability) that invokes ioctl
-> calls on stdin, stdout, or stderr. In most Linux distros, a quick (but very
-> coarse) test reveals that quite a few setuid programs are using ioctl system
-> calls, which are marked with 'V' in the table below:
-> ```
-> # find . -user root -perm -4000 -exec sh -c "strace -e trace=ioctl {} < /dev/null 2>&1 > /dev/null | grep ioctl > /dev/null && echo -n 'V ' || echo -n 'S '; echo {};" \; | sort
-> S ./chage
-> S ./expiry
-> S ./fusermount
-> S ./fusermount3
-> S ./gpasswd
-> S ./ksu
-> S ./mount.cifs
-> S ./sg
-> S ./umount
-> V ./chfn
-> V ./chsh
-> V ./mount
-> V ./newgrp
-> V ./passwd
-> V ./pkexec
-> V ./screen-4.9.0
-> V ./su
-> V ./sudo
-> V ./unix_chkpwd
-> ```
-> After manually checking the strace output, it is found that all of these ioctl
-> users are using ioctl calls on stdin, stdout, or stderr to get or set some tty
-> parameters. Note that exactly no arguments are passed to these setuid
-> programs. If some crafted arguments are passed, the number of ioctl users may
-> increase. As a result, a number of linux distros can be vulnerable to the
-> exploitation.
+Severity: low=20
 
-BTW, even with the kernel bug fixed, there are ioctl number clashes
-between different devices, so even e.g. isatty(3) is not necessarily
-safe if called with elevated privileges under a possible confused deputy
-scenario.  Here's strace showing some clashes on older Linux/i386:
+Affected versions:
 
-$ cat isatty.c
-int main(void) { return isatty(0); }
-$ gcc isatty.c -o isatty
-$ strace -e ioctl ./isatty
-ioctl(0, SNDCTL_TMR_TIMEBASE or SNDRV_TIMER_IOCTL_NEXT_DEVICE or TCGETS, {B38400 opost isig icanon echo ...}) = 0
+- Apache Airflow (apache-airflow) 3.1.8 before 3.2.0
 
-IIRC, I was the one to add this feature to strace 20+ years ago:
+Description:
 
-* Sat Jun 08 2002 Solar Designer <solar-at-owl.openwall.com>
-- Updated to today's CVS version (post-4.4) with an additional fix for
-displaying all possible ioctl names when there's more than one match,
+Dag Authors, who normally should not be able to execute code in the webserv=
+er context could craft XCom payload causing the webserver to execute arbitr=
+ary code. Since Dag Authors are already highly trusted, severity of this is=
+sue is Low.
 
-So the number clashes were known, but the security relevance maybe not.
 
-Alexander
+Users are recommended to upgrade to Apache Airflow 3.2.0, which resolves th=
+is issue.
+
+Credit:
+
+wooseokdotkim (finder)
+Amogh Desai (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/64148
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-33858
+
