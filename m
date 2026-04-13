@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3254" "Monday" "15" "June" "2015" "02:54:01" "-0500" "sec@inventropy.us" "sec@inventropy.us" "<0FF80D13-DF38-4489-B6DF-AC5E32D07AD3@inventropy.us>" "67" "[oss-security] Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS" nil nil nil "6" "2015061507:54:01" "[oss-security] Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS" (number mark "        sec@inventro Jun 15   67/3254  " thread-indent "\"[oss-security] Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14059 invoked by uid 550); 15 Jun 2015 08:05:22 -0000
+Received: (qmail 27802 invoked by uid 550); 13 Apr 2026 14:02:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,82 +6,80 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7556 invoked from network); 15 Jun 2015 07:54:15 -0000
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0FF80D13-DF38-4489-B6DF-AC5E32D07AD3@inventropy.us>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Date: Mon, 15 Jun 2015 02:54:01 -0500
-From: "sec@inventropy.us" <sec@inventropy.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Yoast Wordpress SEO Plugin <= 2.1.1 Stored, Authenticated XSS
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 29959 invoked from network); 13 Apr 2026 07:00:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1776063627;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=LNIgz6YikiZBQGFxNd686+k4UaJUH6zmy/7ONstiQXg=;
+	b=HFn4wvE+7iiz5nkvnlFzMKqtIYB7YqtkOxeKOv1lwcI5ww1WvUP9vCXCgv/qZ2DatvVORy
+	yeXFF0Cy4VYtWXyU6oXDO3p7qhf+FLPH7GgJSa8oJxyz6irFwv36WVXcMgO/9sq5hjGIoH
+	v39vRmA/04bo3KJEh7okqzdtjFLWZMF0srJGK4z8U2a/zhf+oe/5Lxpg8UwStAnRzRkkM0
+	iFTAcrUB0Jm7hQINsD88fmKeVFQMGfjEDMhMWTfIhcwFFbVaoiBBqL/t4KuJPodgwCR8k6
+	osbKXE8vtX4fe9v1mx/tH3di3yPNz9JhcJ1fAqOH1GP2z1iWjVkhPbA5+qPASA==
+Message-ID: <cb29954e-6432-4cbb-8851-45a8c14d4263@cpansec.org>
+Date: Mon, 13 Apr 2026 08:00:24 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFxP9rEqaswTGWNBdkjI/MsVWr4JmGPzd3vpk3yh5AgOFN6JaI9wAocBTVX7R7jG7I9ZE9uydkoAwWRTii7yea8mYa85Dxe+TL3RVngoKG00gqcyzTuVB1Af/xvIxUB34PgMiS7C2wn/YC0CMfMkHgeC1+JAPpPn02Qix4NgBBBrJ8W0Q29Taffkg0FwB+AwXnZn7EsBsRLoyqrmEPZt2BGxwraaPOnlZ4RtJcWQ71+tjb3hzf2Wz+Q/wjTJyD1SKdtbdmaie3lvLmofL1MZRM3QfqA2LKheLwB3sglRl2wWfwlEFeMrLk+ikHN28K4DayZjudu4I8lZIRUdfgBMLvaAmGXypn2aAeGLzLJvFnTdyGiZVStMSyqoIA3jew6h5n3n94F6ShDLh0NZpiII3BzNmfUKFOKGHBfuzeSFHFsTeg1SYzX12OK5cl2Ng707rppEtpqC1/HEM8B6zcYVuB/W68BOaBwy1M68Ky9fewL00pO/N5cgO2YNvC7+hoAsYAdrGg1JAVrESGtEWYoZmNa1HEjWkPE58s5j2wMAwGxOEiOHD140LOaSsrTJsY2oSLLbEmNToEwHjp8bvfeBiU9s2FQoloxK2oyi+XXkQdzN5fdsBvKhQXN12yGNBjtCwLpK3j0RoDyZXiLeIaBoh/wLexMOjC8xhOUAGEAbqNbng
+X-GND-State: clean
+Subject: [oss-security] CVE-2026-5085: Solstice::Session versions through 1440 for Perl
+ generates session ids insecurely
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Info
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Affects:         Yoast Wordpress SEO Plugin <=3D 2.1.1
-Download URL:    https://wordpress.org/plugins/wordpress-seo/
-Advisory URL:    https://inventropy.us/blog/yoast-seo-plugin-cross-site-scr=
-ipting-vulnerability/
-Acknowledgement: https://wordpress.org/plugins/wordpress-seo/changelog/
+========================================================================
+CVE-2026-5085                                        CPAN Security Group
+========================================================================
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+         CVE ID:  CVE-2026-5085
+   Distribution:  Solstice
+       Versions:  through 1440
+
+       MetaCPAN:  https://metacpan.org/dist/Solstice
+
+
+Solstice::Session versions through 1440 for Perl generates session ids
+insecurely
+
 Description
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-The "snippet preview" functionality of the Yoast WordPress SEO plugin prior=
- to version 2.2 was susceptible to=20
-cross-site scripting in the admin panel, related to the "metabox" functiona=
-lity. This vulnerability appears to have=20
-been reported 2 years ago by someone named "badconker" (link: https://wordp=
-ress.org/support/topic/security-issue-with-post-title-field-xss-vulnerabili=
-ty#post-3575617), but the plugin author said that it had already been patch=
-ed at the time.
+-----------
+Solstice::Session versions through 1440 for Perl generates session ids
+insecurely.
 
-The issue can be triggered by entering arbitrary HTML into the post title f=
-ield, such as in the example URL provided below.
+The _generateSessionID method returns an MD5 digest seeded by the epoch
+time, a random hash reference, a call to the built-in rand() function
+and the process id.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerable URL
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-http://example.site/wp-admin/post-new.php?post_title=3D<img onerror=3Dalert=
-(1) src=3D>
+The same method is used in the _generateID method in
+Solstice::Subsession, which is part of the same distribution.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Vulnerable Code
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-try {
-        str =3D jQuery('<div/>').html(str).text();
-        str =3D str.replace(/<\/?[^>]+>/gi, '');
-        str =3D str.replace(/\[(.+?)\](.+?\[\/\\1\])?/g, '');
-} catch (e) {}
+The epoch time may be guessed, if it is not leaked in the HTTP Date
+header. Stringified hash refences will contain predictable content. The
+built-in rand() function is seeded by 16-bits and is unsuitable for
+security purposes. The process id comes from a small set of numbers.
 
-Link: https://github.com/Yoast/wordpress-seo/blob/2.1.1/js/wp-seo-metabox.j=
-s#L1-13
+Predictable session ids could allow an attacker to gain access to
+systems.
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Fix
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Updating to the latest version (2.2.1 at the time of this advisory) will fi=
-x this issue.=
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+References
+----------
+https://metacpan.org/dist/Solstice/source/lib/Solstice/Session.pm#L481
+https://metacpan.org/dist/Solstice/source/lib/Solstice/Subsession.pm#L105
+https://security.metacpan.org/docs/guides/random-data-for-security.html
+
+
+
