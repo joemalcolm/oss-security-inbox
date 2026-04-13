@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2924" "Thursday" "1" "March" "2018" "02:26:43" "+0000" "Cantor, Scott" "cantor.2@osu.edu" "<DC701A09-7FAD-4064-8B6F-89D8202B65F9@osu.edu>" "48" "[oss-security] Apache Xerces-C Security Advisory for versions < 3.2.1 [CVE-2017-12627]" nil nil nil "3" "2018030102:26:43" "[oss-security] Apache Xerces-C Security Advisory for versions < 3.2.1 [CVE-2017-12627]" (number mark "U       cantor.2@osu Mar  1   48/2924  " thread-indent "\"[oss-security] Apache Xerces-C Security Advisory for versions < 3.2.1 [CVE-2017-12627]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5887 invoked by uid 550); 1 Mar 2018 02:27:00 -0000
+Received: (qmail 11284 invoked by uid 550); 13 Apr 2026 02:29:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,150 +7,276 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5841 invoked from network); 1 Mar 2018 02:26:59 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=osu.edu; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=RHcOkMGm4rDLHg5gm2qkjNI+agyBBHxEIlaQs2RiPX0=;
- b=VTpB6K5AN4CUiyd/Sghy8o0ih1wfG9ExS+2nrpWoelFP/7a28McGUILdSvNg4Knr7+HvFAV3wkHBO4z4bCcMcthYzepJsKj75uYQhdeR43qH4Ttz3p1KlxSbZJTGEhim4ZypL1fstMcG2KVpvitWU6jsPDB7Qk4aOpDzEsAObpE=
-Authentication-Results: spf=pass (sender IP is 128.146.138.10)
- smtp.mailfrom=osu.edu; lists.openwall.com; dkim=none (message not signed)
- header.d=none;lists.openwall.com; dmarc=pass action=none header.from=osu.edu;
-Received-SPF: Pass (protection.outlook.com: domain of osu.edu designates
- 128.146.138.10 as permitted sender) receiver=protection.outlook.com;
- client-ip=128.146.138.10; helo=cio-socc-esr05.osuad.osu.edu;
-From: "Cantor, Scott" <cantor.2@osu.edu>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: Apache Xerces-C Security Advisory for versions < 3.2.1
-  [CVE-2017-12627]
-Thread-Index: AQHTsQS9Raw9nnkfxk6izQcXcH0zHw==
-Date: Thu, 1 Mar 2018 02:26:43 +0000
-Message-ID: <DC701A09-7FAD-4064-8B6F-89D8202B65F9@osu.edu>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [75.188.233.142]
-x-header-sapphire: true
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <C277AD270F0E274BBDC056E18637EB7A@osu.edu>
-Content-Transfer-Encoding: base64
+x-ms-reactions: disallow
+Received: (qmail 11266 invoked from network); 13 Apr 2026 02:29:07 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1776047338; cv=none;
+        d=google.com; s=arc-20240605;
+        b=E0sy6EgsPwNTputR8x2YCfsz4brEvR3v4mrTWcSv1tX0FI80sW+pKvsvFaEV3SDxE0
+         UA1TLbE/AOZp92MGFU+yvvfYFI+dnH9Ed4vT9Db3CcB8MIywtVoJPx/2df0pypYuNBt4
+         hhgPUugmdOuFJ+EqHNw3m/y/QLf21EWvaY0qLDtdO7Xf2M9P96c3k9iTsgiHXQBjflHG
+         cmJDwdjqKSZSRi3ZRYBCn+NFka/1APA1lnhgHekwtBnZ5g22UQmpH+T1e9SQnHmblxaU
+         dAeJMDedwUg/MsPzMjW8VF7yT4HG4Vk8XunI4bJPD5Zz4yzH479PtA6NpSKAyzKAp66w
+         5yfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :dkim-signature;
+        bh=scvbtqWAvxsijhh7JlQ+fOVgHVEJm3pytqj4/x+BGlg=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=coBXo0NicIMFm1tg7/gg8yR3LgAw1jLLRWh6j9z2UwbpsAwI3FBI6tLeDG1KdGHErM
+         KRAmkScnG/jN690GIYmNH4icOCf1J3FWEsqrmbMurpNRgVs4FZ5VKeBTlnS4Gt9AJRXw
+         4IL4hxMLiNp5xrxFpMI1xpOzkZsJsTkgHMT2r/jq4olGjFHLhaKa7O3KUvQRMnzeQz8V
+         mXA4h10savnMH2t9X9V5Q582hD6DZbmAzyRlc5v/E0VlZcCLgAnZLyy8iPdTLN69HY/B
+         qDeVe3ODmakXz47q8gr/WjsLOXeRyZ+ejcrhqnQFGJqeo+RYSjGfx1vpolGwiTM/6ExW
+         MWaA==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776047338; x=1776652138; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=scvbtqWAvxsijhh7JlQ+fOVgHVEJm3pytqj4/x+BGlg=;
+        b=Il/5DybxuU8tIRnNbn5u/vgsNP6QKFw63ee1CPCxvll0YRptY59sHuWFp31p1dVnQD
+         9+Nz7xxlbxbuufU5JFW/nGBGqqjyHUkeVLcxFQeA2HNx6OIkFa1CDQWRvBBN8p4QfNd1
+         3NR8KOM/13OyfFq7FpjPhLWgIsSukzwpkpluqU+VbyqoUgpJShZqgQ7RnDHYowX+4ZHN
+         82+BJE1qebwiSAX76xqLPb+fjDKteXj/upLvEr9y33J88ofKbhRfpql6hqLlfTywT73K
+         QKqFKoWqKiIbV5LqCxmOSkwPA6nhNakbixyrWLj/mwkZV1TBS0qO3LlsX8cT5UJ5O01O
+         Ys7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776047338; x=1776652138;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=scvbtqWAvxsijhh7JlQ+fOVgHVEJm3pytqj4/x+BGlg=;
+        b=Ld/B4YQjE1RHgOdnIyoJ+hXOZmXEeGLQRmZO/FIsrT6GONLtViodcvA4HTd3jYUg/f
+         NBdqh7Obc//neYBphDXGZz7PT99syzP5pmdKh5xYhuSmBPTjhMAO+mWS0nO6FJlYwE4u
+         bLzWuFmHpvB6RHRZDRIgA3NA5CSGY8eOI/wcfR1q37NjAUfNa5sgekHZ9iLBxHX8OejE
+         zOIJJ4YlvrSBwzXCwGCblfmOuByv+N6mDlBpov68JFPSbQ5mnu8dW3KsMxiJrSFhPtl0
+         vcM5xPeJElDcsXRyLDx3dYPbkrYVadQd+CRfs/idWsP5+SbMqbePsCNPBd2S9u6VjdiA
+         SGKQ==
+X-Gm-Message-State: AOJu0YypVLHa0hj1bquuxn6b6UwQrT6IR+RbbmPTdq86WuQJr6S5cgHe
+	/pXfBR7v+0BLs46Dt4mOXGT0WHWPSIk3i4XuL7G5Pw2WH5S+hMYvZqZweyqcMAs3+1vceyUcTtH
+	B8f99h+hh0+6j1w/pndd2p2B4edLWxtC0WA==
+X-Gm-Gg: AeBDietcpRHjpJTey5/M0St71N6na/GdWHrWj94do7Yr0eJ0uLXeCRjZkglKiTv2YFT
+	Vt3kpZO+0GR2+6bf6IO8ogMoiguCHKqeT8jPeHsR4OlIV/1CvvY//DbxCUlGQwg/TUAyAe60tTW
+	I3o06wr4su39h9VFMUBqmj4ABvgLQczfy1HkyUpZXaIl8TlJXYJt+IFiWjRdWuYzsyRlsyaDNAe
+	pSTzOmJWjXgHy4V8tuEZODp0eNJhOPp/huBiHEboBv4gokZIZV7VBZXS/xihXkz8M389NSu1NOW
+	oVXpYIrrlk1156w2gla/VfiCCQocP2TRhiWsWYKCvbv4YtykSiV4Y7GJX0Al4e5CCLfMXtT5IyL
+	u5p9MAkcxpnZodk7z/24/duOV9A==
+X-Received: by 2002:a0c:e014:0:b0:89c:5d56:bca8 with SMTP id
+ 6a1803df08f44-8ac861a9385mr180044736d6.16.1776047338049; Sun, 12 Apr 2026
+ 19:28:58 -0700 (PDT)
 MIME-Version: 1.0
-X-CFilter-Loop: Reflected
-X-EOPAttributedMessage: 0
-X-Forefront-Antispam-Report:
-	CIP:128.146.138.10;IPV:NLI;CTRY:US;EFV:NLI;SFV:NSPM;SFS:(10019020)(346002)(396003)(376002)(39860400002)(39380400002)(2980300002)(438002)(54524002)(189003)(50944005)(199004)(7596002)(478600001)(7736002)(966005)(59450400001)(305945005)(336011)(2900100001)(14454004)(33656002)(106466001)(109096001)(2351001)(75432002)(356003)(23676004)(5640700003)(7696005)(2486003)(50466002)(316002)(102836004)(786003)(106002)(26005)(66066001)(2420400007)(15650500001)(47776003)(5660300001)(6306002)(82746002)(575784001)(10710500007)(86362001)(246002)(2501003)(83716003)(88552002)(3846002)(2906002)(6116002)(5250100002)(186003)(8676002)(8936002)(6916009)(36756003)(11970500010);DIR:OUT;SFP:1102;SCL:1;SRVR:SN6PR01MB3870;H:cio-socc-esr05.osuad.osu.edu;FPR:;SPF:Pass;PTR:cio-socc-esr05.osuad.osu.edu;MX:1;A:1;LANG:en;
-X-Microsoft-Exchange-Diagnostics: 1;BY2NAM05FT016;1:fbTDsx9S+JRnOVPX3QtlOOmW+yIDOt794NknwvsUKvqROrFtkLM0onzrHV54lksahh41tvH5iSItnp4gRxrnsArpUFFCUUdP9KQhP4+0o3OV/QkyHTbqpVJgsFinjlcv
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 30bd1d73-8a93-4d52-d4b8-08d57f1be102
-X-Microsoft-Antispam:
-	UriScan:;BCL:0;PCL:0;RULEID:(7020095)(4652020)(8989060)(4534165)(4627221)(201703031133081)(201702281549075)(8990040)(5600026)(4604075)(4608076)(2017052603307)(7153060)(7193020);SRVR:SN6PR01MB3870;
-X-Microsoft-Exchange-Diagnostics:
-	1;SN6PR01MB3870;3:pEkRmv/cG95CWMFrlJEdeLjKeBROb0d1eT8qt3bdmQbicU5PDaszn4NBa14ZLl5y/T9PaLlDe4/xopgzrjgmoSYIkLnUTuLRCDOVSnr+GZosg0JotK+KTwy6Rx+AXYWSnUpx7n37OtaWnhmAbeb91MG29zt8OySZHoKIc7OJQIwGJATD/VvEkbVf3R6y/4MYHeHoItKxMaYfkuJWbjU4LHzx8Dh+zf04dtkwAXpa2wvl07Abc/dyJ3WsSRSBaNZdku5mLPnLJKjzSB9JFjBcUay5US44l6PiE4qy7VmchZu10znJF/lTwdgcYvtIpxi7S5E79YAsPLtJojZS06/cMNxudah2SFGgLwgPrjs/v1w=;25:42UYl1kRzvld+O04B054PuYck3IyTR8dLpO9Hnvoq+wrW0hE8emXRq2r+4h1si9fvxQLxhWONhrj0T3Vt5SJXjf9hjjhjNL3g+SzW0S4campZ1bqOgIFAJSuw9B68KNOXPeNiqs0Gn15qwZ4rK7ZYBMJUSUB4Fqafd4G0YttaHlDUHee0a/vNe2W1EeG8ARa2B69U7F2wqQ62Iyo1AyITH+A8DGPG/pvMLYeDe6yyGw1Ad97bZddjh9rhL9PbqBrMA9mYVlaA9uuqNaSB3ib+xq6+LHZGAWbWd4RnvqXBvMit7PJIoOXYVwj1QgtDKEQtH/iFwwXMGjnbYrwWOTBQw==
-X-MS-TrafficTypeDiagnostic: SN6PR01MB3870:
-X-Microsoft-Exchange-Diagnostics:
-	1;SN6PR01MB3870;31:KkocCYpFjp4SieZ2St1d+NUfVY+2i2jozhk+JOjKJBOTLVUX++v0TiwM4h6WsXm5rckYIJzxPRzLOFlm86qCm3a5VhV0P4ej4G8xhFHOHi6l1+mVJNAomp6mQRs9u+a5o0vW2HD3DZV0bvaYApvngVRNw67g4X0yZY1mtm7BRerEwFSl06SGzJfUnOzFrphiwNC0JbsVq5owxaV8G6hsGjJ3bY3qX40tb41unXQlOZs=;20:5nQs9v3OqXOazbUJyA94I8PHfKbbdIHS1z/DFx6THCnqvcMtN13R6DUSzo8fbLjjKJGqstpwIHJvtGYB30EtqLAUk5NsUMIV61o46750oop6ETCaB+9lsqoJqWrEUEyKa7yoAYXcT/yJr/QTikDlgK2huKJG3VnX9l2vh2SFYrVNjsAC8ZojDtYU1I8MJTvLtvWEWq+CKywrDM91VdhbXvdnbokuRykD2a0ENi+bTaY9emvjWA6B9Cup66KsjeP+j8fjEzCGOXncSQWLJQ29iAKettiy39RM5WON6Gb1XcmhzbmmzPV2Z8nf6ymXbKmcRNisYVGF1yoyqGzLooeFvWVCvJl80vcGPhooTa9M3nTdulsrc8w24wt366AuTOhvBZMn1tCiy9u9f2n8kO1JXLDj7CeKrC6o1txyedTBXz/0NUG5K7QycUXawXeAx0jpCwHkikh62ygwlEuXH5VQb2IfdjhIWQkC2gcw/rMnu4GIMVzBz67OyXcFD/bLX0M3
-X-Microsoft-Antispam-PRVS:
-	<SN6PR01MB3870106E6E31386C01F290CBD0C60@SN6PR01MB3870.prod.exchangelabs.com>
-X-Exchange-Antispam-Report-Test:
-	UriScan:(278428928389397)(192374486261705)(263151948205354);
-X-Exchange-Antispam-Report-CFA-Test:
-	BCL:0;PCL:0;RULEID:(6040501)(2401047)(8121501046)(5005006)(93006095)(93004095)(3231220)(944501222)(3002001)(10201501046)(6041288)(20161123560045)(201703131423095)(201702281529075)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123564045)(20161123562045)(20161123558120)(6072148)(201708071742011);SRVR:SN6PR01MB3870;BCL:0;PCL:0;RULEID:;SRVR:SN6PR01MB3870;
-X-Microsoft-Exchange-Diagnostics:
-	1;SN6PR01MB3870;4:HDZRlkIUpJd75CLpmlGdJZG9rVdqIoMnxxC2Tn5ka6XTY3xs4MnxLNkCwexqtbRQ8UvUT2jxN7g9eueaLHXOMbiTdZA0BnLEXm7N9kTPsxApOKrV/0BUvvGhZO68FMTeJTUnYrV70yThH0X5VpckFGldnq/L9LD4mHceIfdIcFqtC2dGEJLbTBplfYRAeVAdOP1kXlfU9noIhU41luBu66PyzCEBehxkt/OE4NbZuAWKtasZ4dPr/zRYvZjJIui2CnmQZ9M12jJDLfNkmE1BOGmV0ZcHXcr+eJtSJfCx1Vg6LWyM39Omz9mDNznS8E5HPJSTwiWHzqXfEOvVuPRq0uYdFlkh/EuHceplt4gP8vZOIqV7Pt+U4NNHasIzUOu1
-X-Forefront-PRVS: 05986C03E0
-X-Microsoft-Exchange-Diagnostics:
-	=?utf-8?B?MTtTTjZQUjAxTUIzODcwOzIzOlpTNDdqT2tyOFl5cEFRb0JTODZQamNmc2JV?=
- =?utf-8?B?MDlqQUd0enNmZy8xUUlIS21lU1NJc0xId3YvVWovSS93djNPOXRWcjNJQWgr?=
- =?utf-8?B?RzA4NGpFVEZkL3Bjb25Bai9ScTZ6Uko3VCtybEpibTBia0xQK0NMdUhJbnRQ?=
- =?utf-8?B?MS8rb09mQ25ZU0ZTai9sNVpwTEtCUnhDaGdIMzVybFhIUDZTVzJablZNelVw?=
- =?utf-8?B?SXpQaVFsaWZwNzdsd2tUeVJaQllwWUFvNkFsUXhFU1c1dkJBYm0zK21zckd6?=
- =?utf-8?B?R3lLYXFYL3lsQWRhU04vQWVkREtEdjdjaVlwNEV6VkxRTWgwY3ZHaWt1M2E1?=
- =?utf-8?B?QkFjOFRCT0lVWERzZUpHVm5LRG5MSU11OUNDRk5lOHZyUkpyWEtvcWVndW9h?=
- =?utf-8?B?MmhEMmVzdlFQM3VoNnFjMzFocUtueWF2dloycStqWFVubm5qbU5qZW5WMVpt?=
- =?utf-8?B?eGpmZlZla2pvcHJhYnFkY2RGekN4c3lwUlIrTnhzOEt4bDVUZjc1MmdSZW1L?=
- =?utf-8?B?TERBSUhxS1NhdWRxWWViZWFDR09MK2ZhMjEwd1loeXV2L3U3bFMxaUZkM216?=
- =?utf-8?B?SGg4Rzc0YXIwc2xUVGU4bjhWdy8rYkV2dEdkbW02RDdlQkE1eHhNelo3UXNC?=
- =?utf-8?B?bDNCMlVaMXhCTEVJRGM3VWphMFVYTEl4aWF5bXliWlBoeGRwVE4wblRlbmdO?=
- =?utf-8?B?bDl6R3ZYSk1VVHlLbWRSb0lDc2RKYWZXV2VkaWFzeE1nVHY0ZXlhS1daVkpI?=
- =?utf-8?B?bTBWWXhPZ3V1R0dIZ1huNHF6WnRqc1RLQVJRUElsQnNRZFQ4T1lYdmhTRklB?=
- =?utf-8?B?bFgvQXp2eEsvd1ZrTHlFNjh2T3E3MUoxWVVMNXpWUjg1V25JZDFaa3cvYzZR?=
- =?utf-8?B?S2RqUXRLcGZzbjJ2eFRoaE1aUjFaeEowc0dZS3BMVFRCQTlwQTRYek5oTjg0?=
- =?utf-8?B?Z1dSQjV2L3dZWXdNQzl6NkV3OUM1c1NPZFlGZWQrVHhHeXEwWERLUHRza3di?=
- =?utf-8?B?dkFqQWlERlduenM2N1JaUnY4RTgzNlFpUW84ZWx1cWR1WHRBRTNsSDVrL0Vi?=
- =?utf-8?B?b3BNZGRObmRoaUE1V09oTlZKOHJVcmxnZUd2UzJGdjVqcmlkQkRTU0dsV0JL?=
- =?utf-8?B?NEhWS2RNT1BBaEJCLzVXT1JaV3JTVkcvQ1NndFZ4azIxV2J2aHdRMjkxdjBp?=
- =?utf-8?B?UFpGRGp4WDg4Y0w5TEYzdEdDSUFRVGszTlJNbWpab3pBdCtUbG1udzBZWjFG?=
- =?utf-8?B?aG5SWU5UendaVFpGTHhwZUVteStPLzlHcUxvU2VoSUxLSXozQXZZOWdGRTJP?=
- =?utf-8?B?NUFGNjJ3Znh4Y21oY3BhSXFtYmMzNFR5azlPcVpkMGFIVS9EMHRrU3V6bmpQ?=
- =?utf-8?B?RmtPMlpsOFdxZEFtMjF3cDJKb3lLTWQwWkd4WkpKN3ZkY1gxNE41anVhUS9w?=
- =?utf-8?B?Q0xuWkJWcUdicGlKZjZWRmhBUUhaTjRic2kvY2kyZ3kyMTFFZENXS3hERXdR?=
- =?utf-8?B?Z1pGb3NIZ1lMRHNYemN5ZFBkNHAzTFMvblhac0JTTWhVUUJOVnNodFhURGJP?=
- =?utf-8?B?S2lON2lhRUpqWGlIMDlFdDhuTUtrVEIwTHFxNTlFazgrSGdJSlpyTHlDYmYv?=
- =?utf-8?B?UTdWYnpRNjNmQ0ZreWRPeHdRVUxKSzB2Tm5BRExQZnkvWXZoZGVMdWJTWGUx?=
- =?utf-8?B?NHlQZDBSQ2c0VURtNFh5M1hudkJSRHdKQ2I2QW5qQXZzdDZvazAvVmVRS3lw?=
- =?utf-8?B?NFp1SnFNRU12L1FtTGYrM0F1dmFUeW15ODltOU55Y2dXOVI1N3IzZjA3Q3lB?=
- =?utf-8?B?VW8zeHJHbDl1OUxQZjZnNGN1c1N3Q0J6U1NYYk9IcDFvbWdlQ1ZRK2lFa3M3?=
- =?utf-8?Q?HaC+QcSyVc0=3D?=
-X-Microsoft-Exchange-Diagnostics:
-	1;SN6PR01MB3870;6:oPiMOLjKPvABBSOZ/mPrbjskc+BloVY1TSUcvzJ0qPXarIlzxZRzYUWJbOvLpWOPyQJ8jEEx3mdsI34Dd+UxJbjxfPk3qpZpIUg/1tT7LiQ0rDSfUadQv662WlDzks83ELJ179awRrFT8NjXL7DJcjY1KFTbfbKJli8A1aPWArt49dzFILHEp8GvFZ9eLuAESMIHjhJlaGZxVStKIZ2QqwlS2PenCA/ilCQv3rw0VoPfI7QqD+PGja2pC9HjetC5lPHtfwQa+sbCOEE7K+rdx9Tw34Dn1qJZJ6OcicT3NXm+02C9BK7L2NTWhE4Z/+NEEBOOJPRL3Fg/axibsRyhLw6CNIyg6gva62iK3hVIT2c=;5:B3JVDYdlpRo7rTFDnvo5G+/og+pKfVpnkMRpmOOEBBEsaRLHWrTqRDer0s6Nf7rek0E0d9Xox8PDB+/AmcAinpEAGg0yLBcsRUXF3+Dc2eXXTwlxbHRofjZUMnIkGLGzjRMDohvJcWB4UQibixKR7yfXgs9C6DsCD4Kuzr+WjtM=;24:ZnQUN3fhozpclwd49uR1l0s+/9luyXJl3o7Pls4ydTnYToBhiUgLXtqU7m+eO+GGoBUjb89edirgsifU4jQNua4BTkDpY5UIsIzpM44GkfI=;7:w16trBoG1Gxvdqsy4TtYAku+3rq70E2YgUP7jLQS8tcfLGeHp959/XGmH8peu67ui2S6V1Kdpg7YV2nnZvYN/xWwEQ9GKBfVzeXK8UuK48xj0UuY084kowBHsGOVEbQMzQdq2Vu7G2Srk6a+IeTjqtJ5aZuAEHqjOCSkJ3xY/IPcfmtGUc04bRPYLkYCozglEt3Vyi99+wQETD8APZdSh/Vo2NGZWRdr2p2zSyqkHtYq1EeF1ys/GftBEfEGVClF
-SpamDiagnosticOutput: 1:99
-SpamDiagnosticMetadata: NSPM
-X-OriginatorOrg: osu.edu
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Mar 2018 02:26:45.6978
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 30bd1d73-8a93-4d52-d4b8-08d57f1be102
-X-MS-Exchange-CrossTenant-Id: eb095636-1052-4895-952b-1ff9df1d1121
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=eb095636-1052-4895-952b-1ff9df1d1121;Ip=[128.146.138.10];Helo=[cio-socc-esr05.osuad.osu.edu]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR01MB3870
-Subject: [oss-security] Apache Xerces-C Security Advisory for versions < 3.2.1
-  [CVE-2017-12627]
+References: <6579b4c2-c2d2-4059-8d89-fada89a9534d@oracle.com>
+In-Reply-To: <6579b4c2-c2d2-4059-8d89-fada89a9534d@oracle.com>
+From: Alexander Patrakov <patrakov@gmail.com>
+Date: Mon, 13 Apr 2026 10:28:31 +0800
+X-Gm-Features: AQROBzCKx8scRbRSMUmJ2UzPkfoLIFgym51yxm9s7eqybrtsdjFbCc7_9lJvlLE
+Message-ID: <CAN_LGv3uxE6EjPPbRreaQPL-UTOwLmmZ8NxxiZBx-wcaAF1Ykw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="000000000000b05383064f4e3e1e"
+Subject: Re: [oss-security] Security Audit of Hex, the Erlang package manager
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQ0KSGFzaDogU0hB
-NTEyDQoNCg0KQ1ZFLTIwMTctMTI2Mjc6IEFwYWNoZSBYZXJjZXMtQyBEVEQg
-dnVsbmVyYWJpbGl0eSBwcm9jZXNzaW5nIGV4dGVybmFsIHBhdGhzDQoNClNl
-dmVyaXR5OiBNZWRpdW0NCg0KVmVuZG9yOiBUaGUgQXBhY2hlIFNvZnR3YXJl
-IEZvdW5kYXRpb24NCg0KVmVyc2lvbnMgQWZmZWN0ZWQ6IEFwYWNoZSBYZXJj
-ZXMtQyBYTUwgUGFyc2VyIGxpYnJhcnkgdmVyc2lvbnMNCnByaW9yIHRvIFYz
-LjIuMQ0KDQpEZXNjcmlwdGlvbjogVGhlIFhlcmNlcy1DIFhNTCBwYXJzZXIg
-bWlzaGFuZGxlcyBjZXJ0YWluIGtpbmRzIG9mIGV4dGVybmFsDQpEVEQgcmVm
-ZXJlbmNlcywgcmVzdWx0aW5nIGluIGRlcmVmZXJlbmNlIG9mIGEgTlVMTCBw
-b2ludGVyIHdoaWxlIHByb2Nlc3NpbmcNCnRoZSBwYXRoIHRvIHRoZSBEVEQu
-IFRoZSBidWcgYWxsb3dzIGZvciBhIGRlbmlhbCBvZiBzZXJ2aWNlIGF0dGFj
-ayBpbg0KYXBwbGljYXRpb25zIHRoYXQgYWxsb3cgRFREIHByb2Nlc3Npbmcg
-YW5kIGRvIG5vdCBwcmV2ZW50IGV4dGVybmFsIERURA0KdXNhZ2UsIGFuZCBj
-b3VsZCBjb25jZWl2YWJseSByZXN1bHQgaW4gcmVtb3RlIGNvZGUgZXhlY3V0
-aW9uLg0KDQpNaXRpZ2F0aW9uOiBBcHBsaWNhdGlvbnMgdGhhdCBhcmUgdXNp
-bmcgbGlicmFyeSB2ZXJzaW9ucyBvbGRlciB0aGFuDQpWMy4yLjEgc2hvdWxk
-IHVwZ3JhZGUgYXMgc29vbiBhcyBwb3NzaWJsZS4gRGlzdHJpYnV0b3JzIG9m
-IG9sZGVyIHZlcnNpb25zDQpzaG91bGQgYXBwbHkgdGhlIHBhdGNoIGZyb20g
-dGhpcyBzdWJ2ZXJzaW9uIHJldmlzaW9uOg0KDQpodHRwOi8vc3ZuLmFwYWNo
-ZS5vcmcvdmlld3ZjP3ZpZXc9cmV2aXNpb24mcmV2aXNpb249MTgxOTk5OA0K
-DQpBcHBsaWNhdGlvbnMgc2hvdWxkIHN0cm9uZ2x5IGNvbnNpZGVyIGJsb2Nr
-aW5nIHJlbW90ZSBlbnRpdHkgcmVzb2x1dGlvbg0KYW5kL29yIG91dHJpZ2h0
-IGRpc2FibGluZyBvZiBEVEQgcHJvY2Vzc2luZyBpbiBsaWdodCBvZiB0aGUg
-Y29udGludWVkDQppZGVudGlmaWNhdGlvbiBvZiBidWdzIGluIHRoaXMgYXJl
-YSBvZiB0aGUgbGlicmFyeS4NCg0KQ3JlZGl0OiBUaGlzIGlzc3VlIHdhcyBy
-ZXBvcnRlZCBieSBBbGJlcnRvIEdhcmNpYSwgRnJhbmNpc2NvIE9jYSwNCmFu
-ZCBTdWxlbWFuIEFsaSBvZiBPZmZlbnNpdmUgUmVzZWFyY2ggYXQgU2FsZXNm
-b3JjZS5jb20uDQoNClJlZmVyZW5jZXM6DQpodHRwOi8veGVyY2VzLmFwYWNo
-ZS5vcmcveGVyY2VzLWMvc2VjYWR2L0NWRS0yMDE3LTEyNjI3LnR4dA0KDQot
-LS0tLUJFR0lOIFBHUCBTSUdOQVRVUkUtLS0tLQ0KDQppUUl6QkFFQkNnQWRG
-aUVFM0tvVkFIdnRuZWFRelpVak40dUVWQUluZVdJRkFscVhYOVFBQ2drUU40
-dUVWQUluDQplV0lRYUJBQWlrUjg3aTByeGljcnlGTzh4VmtoRW5ybmVXbjRB
-TTFoNTVIWk5sSWRZWHpremZjUXFlTGJ0VlNPDQpiSmV5NXhaSWlMNmxvK3li
-TUtYeW9JcnFqdGtEMUxqcW5IY3lGUE5DRlpNRDU5dlMrQjQ3Yzg2VTJKVTdq
-RVBJDQpOK1EzM1U4ZzhIMGZBUGhkb3AwWG5oVWlYQkJ2ZnBXSWZsdW5VV2Vm
-TEUreWJkOEo1L0I3Q0s1NGZlQzAvOENLDQpRNDdMbWowYU1LRHRDTTM3Z0FE
-YmQ2Z0k2UE1KN0txamY1eWI0NW9rcDJxaFVaRnArOHpyYmN6Vm1rL1c5T3B0
-DQpKY3VveEpGeCt5ZnF1TXZzK3lFZWxPcjBtOHZHdFZKU0ZFSklMWllFcGJp
-TWpNRnZ2QmJYTkNTUXNQcDdjN0I5DQppZExTZWN0OVpEaDVmL3IzdkVXS1dx
-NjNkSUx4TkJWbTNENks5UHlFc1lNazNyT1RMZVlpbjRLTTVSUnNtUlY2DQo4
-UVVDMExTNXk3cThac0U4b3UzWG9GbkJOd2NrSFkzeWl4Wjk5a3BsTTdTbnpB
-TjdOMUVIQmxRc0dZT3NFb1ErDQpycUlXU1ByYlJFNkF4ZGJycW84Rk1qd3Er
-a0JCM3p1NC9BVmw5VmJVclY5bzFkUUdwcFd4cXBSdGhVQUl6NmhTDQo3YWJx
-UVhyZHJwWHdWT3gvZFBOOS9WSzhFd21pQkxjdmdHSUdtbG9BQmtQcnp0N0Rx
-Z3FRZlVVZU5TVWJRbEJEDQpleGhja3A0aXZKcmUvRjJsYmROY1lxNEVUU0J5
-YkIrK1JDSkY3NERLaHA2RXd1RmRkQ1FmVjVicWplaW9DdTlLDQpjWWpUYnpM
-Ym96OGpWclhUaWF2cVkxUnBhenYyYWdwK2J2MWpUVStuVjBXUVZhb1NkMGM9
-DQo9NEJRNA0KLS0tLS1FTkQgUEdQIFNJR05BVFVSRS0tLS0tDQoNCg==
+--000000000000b05383064f4e3e1e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello Alan,
+
+How am I, as a user, supposed to authenticate these PDFs as materials
+really produced by the parties Hex claims they are from? The PDFs are
+offered for download from the audited-party domain, not from the auditors'
+domains, and do not contain any digital signatures.
+
+On Mon, Apr 13, 2026 at 4:16=E2=80=AFAM Alan Coopersmith <
+alan.coopersmith@oracle.com> wrote:
+
+> https://hex.pm/blog/security-audit announces the completion of a
+> security audit & penetration testing of Hex, the Erlang package manager,
+> funded by the OpenSSF and overseen by the Erlang Ecosystem Foundation.
+>
+> This work was done by two independent security firms, Paraxial.io and
+> zentrust partners GmbH, who each produced their own reports:
+>   - https://hex.pm/reports/2026/paraxial.pdf
+>   - https://hex.pm/reports/2026/zentrust.pdf
+>
+> The announcement reports:
+>
+> > What was found
+> > --------------
+> >
+> > Across both audits, a number of issues were identified, ranging from hi=
+gh
+> > severity vulnerabilities to low-severity hardening gaps.
+> >
+> > Examples include:
+> >
+> >  * Unsafe deserialization in hex_core that could lead to RCE under
+> certain
+> >    conditions
+> >  * A denial of service condition during package uploads
+> >  * Weaknesses in authentication flows and API key handling
+> >  * Gaps in CI/CD hardening (GitHub Actions)
+> >  * Missing or incomplete security controls in some areas
+> >
+> > Importantly, the audits focused on realistic attack scenarios such as:
+> >
+> >  * cross-account package tampering
+> >  * bypassing integrity checks
+> >  * injection in public-facing features
+> >  * CI/CD compromise
+> >
+> > What we fixed
+> > -------------
+> >
+> > Most findings have been remediated during the engagement and confirmed =
+in
+> > re-tests.
+> >
+> > Highlights:
+> >
+> >  * Fixed unsafe deserialization in hex_core (CVE-2026-21619)
+> >  * Fixed API key privilege escalation (CVE-2026-21621)
+> >  * Fixed password reset issues (CVE-2026-21622)
+> >  * Fixed XSS in OAuth device flow (CVE-2026-21618)
+> >  * Fixed denial of service in package upload (CVE-2026-23940)
+> >  * Removed sensitive credentials from repositories
+> >  * Hardened authentication flows (including "sudo mode" for sensitive
+> actions)
+> >  * Disabled legacy TLS versions
+> >  * Improved CSP and other browser security controls
+> >
+> > Re-tests by both firms confirmed that the majority of vulnerabilities
+> were
+> > successfully remediated.
+> >
+> > Several remaining items are either:
+> >
+> >  * accepted risks with clear rationale (for example UX trade-offs or
+> staged
+> >    migrations), or
+> >  * dependent on ecosystem-wide changes (for example client updates)
+> >
+> > What we decided not to change (yet)
+> > -----------------------------------
+> >
+> > Some findings reflect intentional trade-offs or transitional states
+> rather
+> > than vulnerabilities.
+> >
+> > Examples:
+> >
+> >  * Basic authentication and optional 2FA are still supported for
+> compatibility
+> >    with existing clients. Both will be phased out once all clients
+> support the
+> >    OAuth2 device flow.
+> >  * Certain features (like documentation hosting) intentionally allow
+> >    user-provided content and are being isolated rather than restricted.
+> >
+> > These decisions were reviewed jointly by the Hex.pm team and the EEF.
+>
+> These issues appear to be reported against the hexpm server side, not the
+> client
+> side that end users & distros are likely to be running:
+>
+>   - Cross-site scripting (XSS) in OAuth Device Authorization screen
+> (CVE-2026-21618)
+>     https://github.com/hexpm/hexpm/security/advisories/GHSA-6cw9-5gg4-rhpj
+>
+>   - Improper Scope Enforcement in OAuth client_credentials Flow Allows
+> Read-Only
+>     API Key to Escalate to Full Access with Valid 2FA Code (CVE-2026-2162=
+1)
+>     https://github.com/hexpm/hexpm/security/advisories/GHSA-739m-8727-j6w3
+>
+>   - Password Reset Tokens Do Not Expire (CVE-2026-21622)
+>     https://github.com/hexpm/hexpm/security/advisories/GHSA-6r94-pvwf-mxqm
+>
+>   - Path Traversal in Local File Store Backend (Development and Self-Host=
+ed
+>     Registry Setups) (CVE-2026-23939)
+>     https://github.com/hexpm/hexpm/security/advisories/GHSA-42mv-r64p-4869
+>
+>   - Publishing Oversized Package Can Trigger Denial of Service
+> (CVE-2026-23940)
+>     https://github.com/hexpm/hexpm/security/advisories/GHSA-jp8w-gxf6-8hcr
+>
+> That leaves one CVE for distros and end users to worry about -
+> https://github.com/hexpm/hex_core/security/advisories/GHSA-hx9w-f2w9-9g96
+> reports:
+> > Unsafe Deserialization of Erlang Terms in hex_core
+> > --------------------------------------------------
+> >
+> > maennchen published GHSA-hx9w-f2w9-9g96 Feb 27, 2026
+> >
+> > Package:            hex (otp)
+> > Affected versions:  >=3D 2.3.0 and <=3D 2.3.2
+> > Patched versions:   2.3.2
+> >
+> > Package:            hex_core (Erlang)
+> > Affected versions:  <=3D 0.12.1
+> > Patched versions:   0.12.1
+> >
+> > Package:            rebar3 (otp)
+> > Affected versions:  >=3D 3.9.1 and <=3D 3.27.0
+> > Patched versions:   3.27.0
+> >
+> > Impact
+> > ------
+> > The Hex client (hex_core) deserializes Erlang terms received from the
+> > Hex API using binary_to_term/1 without sufficient restrictions.
+> >
+> > If an attacker can control the HTTP response body returned by the Hex
+> API,
+> > this allows denial-of-service attacks such as atom table exhaustion,
+> leading
+> > to a VM crash. No released versions are known to allow remote code
+> execution.
+> >
+> > Patches
+> > -------
+> >
+> https://github.com/hexpm/hex_core/commit/cdf726095bca85ad2549d146df1e831a=
+e93c2b13
+> >
+> https://github.com/hexpm/hex/commit/636739f3322514e9303ca335fb630696fcbb3=
+c95
+> >
+> https://github.com/erlang/rebar3/commit/1d4478f527e373de0b225951e53115450=
+e0d9b9d
+> >
+> > Workarounds
+> > -----------
+> > Ensure that the Hex API URL (HEX_API_URL) points only to trusted
+> endpoints.
+> > There is no client-side workaround that fully mitigates this issue
+> without
+> > applying the patch.
+> >
+> > References
+> > ----------
+> > - hex_core Module:
+> https://github.com/hexpm/hex_core/blob/main/src/hex_api.erl
+> > - Hex Vendored Module:
+> https://github.com/hexpm/hex/blob/main/src/mix_hex_api.erl
+> > - Rebar3 Vendored Module:
+> https://github.com/erlang/rebar3/blob/main/apps/rebar/src/vendored/r3_hex=
+_api.erl
+> > - hex_core Patch: cdf7260
+> > - Hex Vendored Patch: hexpm/hex@636739f
+> > - Rebar3 Vendored Patch: erlang/rebar3@1d4478f
+> >
+> > Severity: Low - 2.0 / 10
+> > CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:A/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N
+> > CVE ID: CVE-2026-21619
+> > Weaknesses:
+> > - CWE-400: Uncontrolled Resource Consumption
+> > - CWE-502: Deserialization of Untrusted Data
+>
+>
+>
+
+--=20
+Alexander Patrakov
+
+--000000000000b05383064f4e3e1e--
