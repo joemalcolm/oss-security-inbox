@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1407" "Tuesday" "6" "October" "2020" "22:22:59" "+1100" "Michael Ellerman" "mpe@ellerman.id.au" "<87o8lf38fg.fsf@mpe.ellerman.id.au>" "38" "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil "10" "2020100611:22:59" "[oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" (number mark "U       mpe@ellerman Oct  6   38/1407  " thread-indent "\"Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?\"\n") "<20201005204820.GA8410@openwall.com>" ("<CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com>" "<20201005204820.GA8410@openwall.com>") nil nil nil nil nil nil nil "Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3266 invoked by uid 550); 6 Oct 2020 11:24:32 -0000
+Received: (qmail 18199 invoked by uid 550); 13 Apr 2026 23:49:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,62 +7,71 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1979 invoked from network); 6 Oct 2020 11:23:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ellerman.id.au;
-	s=201909; t=1601983385;
-	bh=V/52xWy3P0j+/NevZuVXmr4mE2YwalblT4FB3xBxsCo=;
-	h=From:To:Subject:In-Reply-To:References:Date:From;
-	b=ad90QbByoBM5DaF019wYpTVWhdDf0mgFk+rCB3F6s3J0vqjAK+JUK/xYJa05JbQx2
-	 z4Y7nta3kCReOlFsdYQZ602UxEq1HHoJYlvFpfT/ab5wRmauHeQ5tXM6zOH77cG2Kl
-	 J1Y1DglrhhgB0oH2FFbf+Kz53lEOD34UrlyHZvYSH0EXhvHVLLFS5h8u5fhKqlcNRb
-	 R5OsTI/cQdTFBO0CQVkO1LoUHaEhqZDmvXoLnAKo9tiwG/zobCC1UsZzXr/jTi4/aB
-	 3OLSOiKphvJDhI7xlODeZT8jSUWpOw/828CDG1DPv1iNU+D25FcBhUuGfx8FBNSXpf
-	 iHRzFedaWRgdg==
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: Solar Designer <solar@openwall.com>, oss-security@lists.openwall.com
-In-Reply-To: <20201005204820.GA8410@openwall.com>
-References: <CAGUWgD_aZ6chnKWNf79_Ru=u=dFhMVX_qZEDv8tU1BajEx5ejw@mail.gmail.com> <20201005204820.GA8410@openwall.com>
-Date: Tue, 06 Oct 2020 22:22:59 +1100
-Message-ID: <87o8lf38fg.fsf@mpe.ellerman.id.au>
+x-ms-reactions: disallow
+Received: (qmail 14002 invoked from network); 13 Apr 2026 22:58:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1776121071;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=D+QUoLBjtNyIFFgT1nJr18htG5XIL2xqOgoEJ+/JHKQ=;
+	b=O4r4IWndY36697HJ+BXxbgwiHk9xeQKUIP0l9M1BsPXVeIB86REOEKChj+RTBuWpP2s5Kk
+	EQTpkJ+Wjnfdwk8rYBoRTXR3678NpwvqMtFGJkrhvcRr3E/55Apx8xmlrVC+StCG2U+C1m
+	ADW199Ik7M78G/Gv8N8LOZLHDIyRRxixHLCNWxYdzmV3vQZKvE9uq6L7zEzeTcfqY02LoD
+	GiVT0uF7QiUItpPTnYgvx+zkvzokyHF3kXeysZTDQAWV+mZkZaRNVKn1ch9cr6pcA/zliZ
+	GZYju9vdR7EHO5IK9si3XuUEeNvYc3icoFBh+eTqIy1NX1Sv3BAn/oVvS22hZQ==
+Message-ID: <3648aefb-aeb4-4f05-bcb2-fff9f726535c@cpansec.org>
+Date: Mon, 13 Apr 2026 23:57:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: Re: [oss-security] major changes if gnu/linux dominates the desktop and/or mobile market?
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFmiVC/Gm9rjSVY+NVVsb2pIHstYpjTbMqE9FuaWGDNZmma9LETZEGbvdVkuTejRlPj8CyGvbzgmb4N2GAzE4LvjdTA0z7oBXHMiwPY4v/XND4knrB1RDwh6m7exmecMAUy5/bZjZylUWb21/RBeDaIWyUbmkuhbLwXIYkJlEfg5iqri1rQAi1FD9sW6zuIOoqqn82rszqDl2u5bSKNOu3DXRlytZyBy3aeLgs6kvhQXxK7Ot+7kbDrwHkQchDAD6SaaKdly1weSZhHhbqfzWEXM8PBenQUk10fxqA8qeCIWITFd1wyo7U4FIt2SE99UFJYjlsCJ73LrQSdr4xxIvlAa2kZiCdphy4mG7mAimXvnAeWmpXkOZ1lzKjOcp4I8ukGX93/dnlvbQPnnihI9nOjHspgWWfD/p1TQksFDMuvx5BzrX5GuiPmjzAMs5gYTBYYjbhf8P+XMwSSsfpJcvYa9X8iFNRR400hxk5qjIJXkaphRizuvNDVJLy+j2ycjQRXuRW3MZFif9Od4SZbTJVk5UCtCRVSI46by2iOryQCc8bLexS7hovyp35xC5EShzbsFEmm8DlOlXSVq8Zwvbm9owdHMrvVnULJQrGYkP5ZkqCk3e6CmH79y14tjpfixFAbmcijy/7L0CayLdiwC2EgcHpe4+lXwsgHOdNG96NF3A
+Subject: [oss-security] CVE-2026-5086: Crypt::SecretBuffer versions before 0.019 for Perl is
+ suseceptible to timing attacks
 
-Solar Designer <solar@openwall.com> writes:
-> Hi all,
->
-> As a moderator I approved all messages in this thread so far, but I am
-> unhappy about the quality of both Georgi's message and the replies.
->
-> This is a valid topic, but there's no room in it for trolling (that's
-> how Georgi's message came across, even if maybe unintentionally) nor for
-> responding only about the presumed trolling.  Just assume good faith and
-> post a response that's actually useful to others in here.  I'll try:
->
-> On Mon, Oct 05, 2020 at 03:02:33PM +0300, Georgi Guninski wrote:
->> Are there major security changes needed if
->> gnu/linux dominates the desktop and/or mobile phone
->> markets?
->
-> I'd say yes, major security changes are needed.
+========================================================================
+CVE-2026-5086                                        CPAN Security Group
+========================================================================
 
-Agree.
+         CVE ID:  CVE-2026-5086
+   Distribution:  Crypt-SecretBuffer
+       Versions:  before 0.019
 
-> On the desktop, major Linux distributions (and by the way *BSDs and
-> Solaris are not very different in this respect, I think) when used as
-> single-user desktop systems lack security isolation between applications
-> of the user.
+       MetaCPAN:  https://metacpan.org/dist/Crypt-SecretBuffer
+       VCS Repo: https://github.com/nrdvana/perl-Crypt-SecretBuffer
 
-You can get some isolation fairly easily using firejail.
 
-It's not as secure as eg. Qubes, but it's available in most distros and
-can be as simple as sticking "firejail" in front of a command.
+Crypt::SecretBuffer versions before 0.019 for Perl is suseceptible to
+timing attacks
 
-You can use it to isolate your browser/irc/mail client, or possibly more
-importantly your build environment, from your wider home directory.
+Description
+-----------
+Crypt::SecretBuffer versions before 0.019 for Perl is suseceptible to
+timing attacks.
 
-As usual the arch wiki has good doco:
+For example, if Crypt::SecretBuffer was used to store and compare
+plaintext passwords, then discrepencies in timing could be used to
+guess the secret password.
 
-  https://wiki.archlinux.org/index.php/firejail#Usage
+Problem types
+-------------
+- CWE-208 Observable Timing Discrepancy
 
-cheers
+Solutions
+---------
+Upgrade to version 0.019 or later.
+
+
+References
+----------
+https://metacpan.org/release/NERDVANA/Crypt-SecretBuffer-0.019/source/Changes
+
+
+
