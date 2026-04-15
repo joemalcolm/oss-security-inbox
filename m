@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5119" "Saturday" "23" "April" "2016" "23:55:25" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160424035525.34E9472E09B@smtpvbsrv1.mitre.org>" "129" "[oss-security] Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases" nil nil nil "4" "2016042403:55:25" "[oss-security] Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases" (number mark "U       cve-assign@m Apr 23  129/5119  " thread-indent "\"[oss-security] Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases\"\n") "<570BFDF5.4080908@vorlons.info>" ("<570BFDF5.4080908@vorlons.info>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21565 invoked by uid 550); 24 Apr 2016 03:55:39 -0000
+Received: (qmail 28490 invoked by uid 550); 15 Apr 2026 20:31:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,141 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21547 invoked from network); 24 Apr 2016 03:55:38 -0000
-From: cve-assign@mitre.org
-To: matthias@vorlons.info
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <570BFDF5.4080908@vorlons.info>
-Message-Id: <20160424035525.34E9472E09B@smtpvbsrv1.mitre.org>
-Date: Sat, 23 Apr 2016 23:55:25 -0400 (EDT)
-Subject: [oss-security] Re: CVE request: PHP issues fixed in 7.0.5, 5.6.20 and 5.5.34 releases
+x-ms-reactions: disallow
+Received: (qmail 28457 invoked from network); 15 Apr 2026 20:31:06 -0000
+Date: Wed, 15 Apr 2026 22:30:56 +0200
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ad/1gN7NN5nfWqHw@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Command injection via backtick expansion in tag
+ filenames in Vim < v9.2.0357
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Command injection via backtick expansion in tag filenames in Vim < v9.2.0357
+============================================================================
+Date: 15.04.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Special Elements used in an OS Command
+     ('OS Command Injection') (CWE-78)
 
->> http://www.ubuntu.com/usn/usn-2952-1/
+## Summary
+A command injection vulnerability exists in Vim's tag file processing.
+When resolving a tag, the filename field from the tags file is passed
+through wildcard expansion to resolve environment variables and wildcards.
+If the filename field contains backtick syntax (e.g., `` `command` ``), Vim
+executes the embedded command via the system shell with the full privileges of
+the running user.
 
-> - -  Buffer over-write in finfo_open with malformed magic file
-> https://bugs.php.net/bug.php?id=71527
-> http://bugs.gw.com/view.php?id=522
-> https://github.com/file/file/commit/6713ca45e7757297381f4b4cdb9cf5e624a9ad36
-> http://git.php.net/?p=php-src.git;a=commit;h=fe13566c93f118a15a96320a546c7878fd0cfc5e
+## Description
+Vim includes built-in support for tag navigation (`:tag`, `Ctrl-]`).
+When a tag is resolved, `jumpto_tag()` calls `expand_tag_fname()` to
+resolve the filename field of the matching tags file entry.
+`expand_tag_fname()` passes this filename to `ExpandOne()`, which
+performs wildcard expansion. Because backtick characters cause
+`mch_has_wildcard()` to return TRUE, `ExpandOne()` calls
+`expand_backtick()`, which invokes `get_cmd_output()` and executes the
+backtick-embedded string as a shell command.
 
->> It was discovered that the PHP Fileinfo component incorrectly handled
->> certain magic files. An attacker could use this issue to cause PHP to
->> crash, resulting in a denial of service, or possibly execute arbitrary
->> code.
+A malicious tags file entry of the form:
 
-Use CVE-2015-8865 for this issue affecting file before 5.23 (see the
-http://bugs.gw.com/view.php?id=522#c1237 comment). The security
-relevance depends, in part, on "If a compiled magic file is found
-alongside a file or directory, it will be used instead" in the
-https://github.com/file/file/blob/master/doc/file.man man page.
+    main	`touch /tmp/pwned`	/^int main(int argc, char **argv) {$/;"	f
 
+is sufficient to trigger execution when the user navigates to the `main`
+tag.
 
-> - - Integer overflow in php_raw_url_encode
-> https://bugs.php.net/bug.php?id=71798
-> https://git.php.net/?p=php-src.git;a=commit;h=95433e8e339dbb6b5d5541473c1661db6ba2c451
+Exploitation requires the following conditions:
+- The user opens Vim in a directory containing a malicious `tags` file,
+  or has configured additional tag sources via `set tags+=...`.
+- The user performs tag navigation (`:tag`, `Ctrl-]`, or `vim -t`) for a
+  malicious tag target.
 
->> It was discovered that the PHP rawurlencode() function incorrectly handled
->> large strings. A remote attacker could use this issue to cause PHP to
->> crash, resulting in a denial of service.
+Tag files in the working directory are consulted by default, making
+repository-hosted `tags` files (e.g. in a cloned git repository) a
+plausible delivery mechanism.
 
-Use CVE-2016-4070.
+## Impact
+Impact is **medium** because exploitation requires the user to perform
+tag navigation, but no further confirmation or interaction is needed
+once that navigation is triggered. Successful exploitation results in
+arbitrary shell command execution with the privileges of the Vim
+process.
 
-Note that the 71798 [2016-03-27 21:25 UTC] comment says "Not sure if
-this qualifies as security issue (probably not)."
+## Acknowledgements
+The Vim project would like to thank Srinivas Piskala Ganesh Babu and
+Andy Ngo for identifying the vulnerability, providing a call graph
+analysis and proof-of-concept reproduction.
 
-
-> - - php_snmp_error() Format String Vulnerability
-> https://bugs.php.net/bug.php?id=71704
-> https://git.php.net/?p=php-src.git;a=commit;h=6e25966544fb1d2f3d7596e060ce9c9269bbdcf8
-
->> It was discovered that the PHP php_snmp_error() function incorrectly
->> handled string formatting. A remote attacker could use this issue to cause
->> PHP to crash, resulting in a denial of service, or possibly execute
->> arbitrary code.
-
-Use CVE-2016-4071.
-
-
-> - - Invalid memory write in phar on filename containing \0 inside name
-> https://bugs.php.net/bug.php?id=71860
-> https://gist.github.com/smalyshev/80b5c2909832872f2ba2
-> https://git.php.net/?p=php-src.git;a=commit;h=1e9b175204e3286d64dfd6c9f09151c31b5e099a
-
->> It was discovered that the PHP phar extension incorrectly handled certain
->> filenames in archives. A remote attacker could use this issue to cause PHP
->> to crash, resulting in a denial of service, or possibly execute arbitrary
->> code.
-
-Use CVE-2016-4072.
-
-
-> - - AddressSanitizer: negative-size-param (-1) in mbfl_strcut
-> https://bugs.php.net/bug.php?id=71906
-> https://gist.github.com/smalyshev/d8355c96a657cc5dba70
-> https://git.php.net/?p=php-src.git;a=commit;h=64f42c73efc58e88671ad76b6b6bc8e2b62713e1
-
->> It was discovered that the PHP mb_strcut() function incorrectly handled
->> string formatting. A remote attacker could use this issue to cause PHP to
->> crash, resulting in a denial of service, or possibly execute arbitrary
->> code.
-
-Use CVE-2016-4073.
+## References
+The issue has been fixed as of Vim patch [v9.2.0357](https://github.com/vim/vim/releases/tag/v9.2.0357).
+- [Commit](https://github.com/vim/vim/commit/c78194e41d5a0b05b0ddf383b6679b1503f977fb)
+- [GitHub Advisory](https://github.com/vim/vim/security/advisories/GHSA-cwgx-gcj7-6qh8)
 
 
->> http://www.openwall.com/lists/oss-security/2016/04/21/8
 
-> 1- libxml_disable_entity_loader setting is shared between threads
-> 
-> https://bugs.php.net/bug.php?id=64938
-> https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1509817
-> http://git.php.net/?p=php-src.git;a=commit;h=de31324c221c1791b26350ba106cc26bad23ace9
-
->> It was discovered that the PHP libxml_disable_entity_loader() setting was
->> shared between threads. When running under PHP-FPM, this could result in
->> XML external entity injection and entity expansion issues.
-
-Use CVE-2015-8866.
-
-Note that the related
-http://framework.zend.com/security/advisory/ZF2015-06 issue was
-already assigned CVE-2015-5161.
-
-
-> 2- openssl_random_pseudo_bytes() is not cryptographically secure
-> 
-> https://bugs.php.net/bug.php?id=70014
-> https://bugs.launchpad.net/ubuntu/+source/php5/+bug/1534203
-> http://git.php.net/?p=php-src.git;a=commit;h=16023f3e3b9c06cf677c3c980e8d574e4c162827
-
->> It was discovered that the PHP openssl_random_pseudo_bytes() function did
->> not return cryptographically strong pseudo-random bytes.
-
->>> Fix bug #70014 - use RAND_bytes instead of deprecated RAND_pseudo_bytes
-
-Use CVE-2015-8867.
-
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXHEKSAAoJEHb/MwWLVhi2HHwP/RHXiG+18j0extiWJbw2cWTx
-nWe5+2WsBPJlpmuUpe/P62KGmbpIIzsrceYtm6GGam8Az4XH2R9JGK6oFBOPoVzl
-t40kRgQWHB2yROHUylS8hbdspsUU4gKqZxzphqqAS7LHfOEfX2nNgbYuHYBtI1WF
-g5yY0RimAkKqe7mPsamms7eKlk0+jKVkE6tgxA/I3RmeuEzwEtJ9uJwpWze3HZTa
-aMGFt0bCuPdlVMEGtE+son4NDP8D2V7CFarJMEl1U6OLpxGjQATVn550YOcy50Lf
-MCjOpJ2LPkLA80ZLVn+fKkkAPQG99U5axPnMWcTxCiC1I374WHqKY0vjqrpKivrq
-VXsqPixF/jUxghFMYKKb/xg+GCr4oId13KrWVXpKDAwoxwYNHC/c9UgNwgPRdjeg
-sNSpJP46UH1vvC8GD3wBnd6IE8rPc3Zc/zEHSCe0F4Za2w5HmaT5cxkz97mPVzF6
-jEQemPGfZjQDgNQyGtHhMCqxUUJ7bTXo3vg9NkpUHl1Wpg8C+YFIb8lwtBRR/5qc
-Rf0/+ho7fPYi4u1IClYMp+zBA9SJHD+XzK6gFTHjTq/XFYJEJkxDZQGQ9JmroABg
-GIK+zQDyn7SSRblpZyBmkzBUjToa/zvYwh0n9GfXPEWZc/px9eDPJsu0v+d7j1Tt
-vmqTwo44mo+NdkNIyBTA
-=bA5Y
------END PGP SIGNATURE-----
+Best,
+Christian
+-- 
+Es gibt Menschen, die nur lesen, um nicht denken zu müssen.
