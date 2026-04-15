@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3757" "Saturday" "14" "May" "2016" "09:55:43" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160514135543.9BF946C050C@smtpvmsrv1.mitre.org>" "88" "[oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses" nil nil nil "5" "2016051413:55:43" "[oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses" (number mark "U       cve-assign@m May 14   88/3757  " thread-indent "\"[oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses\"\n") "<20160508221902.04889595@pc1>" ("<20160508221902.04889595@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29921 invoked by uid 550); 14 May 2016 13:56:02 -0000
+Received: (qmail 4036 invoked by uid 550); 15 Apr 2026 00:37:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,100 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 29871 invoked from network); 14 May 2016 13:55:55 -0000
-From: cve-assign@mitre.org
-To: hanno@hboeck.de
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <20160508221902.04889595@pc1>
-Message-Id: <20160514135543.9BF946C050C@smtpvmsrv1.mitre.org>
-Date: Sat, 14 May 2016 09:55:43 -0400 (EDT)
-Subject: [oss-security] Re: dosfstools / fsck.vfat: Several invalid memory accesses
+x-ms-reactions: disallow
+Received: (qmail 7650 invoked from network); 15 Apr 2026 00:17:57 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jarek Potiuk <potiuk@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ced1eecf-af20-b18a-18a6-8f1d5c64d1d0@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 15 Apr 2026 00:17:07 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2025-54550: Apache Airflow: RCE by race condition in
+ example_xcom dag 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: Low=20
 
-These reports are about command-line programs that realistically
-encounter untrusted input. However,
-https://github.com/dosfstools/dosfstools/blob/master/README.md says
-"dosfstools consists of the programs mkfs.fat, fsck.fat and fatlabel
-to create, check and label file systems of the FAT family." It does
-not state that dosfstools provides a library that can be used to build
-other programs that a user may want. In particular, there does not
-seem to be a use case in which a provided program needs to remain
-running to process additional filesystems after encountering an
-invalid filesystem.
+Affected versions:
 
+- Apache Airflow (apache-airflow) before 3.2.0
 
-> https://github.com/dosfstools/dosfstools/issues/11
-> Global out of bounds read file_stat() / check_dir()
-> https://github.com/dosfstools/dosfstools/commit/2aad1c83c7d010de36afbe79c9fde22c50aa2f74
-> Git commit / fix
+Description:
 
-As far as we can tell, this one is not a vulnerability in the
-above-described context. It seems to be an out-of-bounds read that
-doesn't affect the flow of control.
+The example example_xcom=C2=A0that was included in airflow documentation im=
+plemented unsafe pattern of reading value
+from xcom in the way that could be exploited to allow UI user who had acces=
+s to modify XComs to perform arbitrary
+execution of code on the worker. Since the UI users are already highly trus=
+ted, this is a Low severity vulnerability.
 
+It does not affect Airflow release - example_dags are not supposed to be en=
+abled in production environment, however
+users following the example could replicate the bad pattern. Documentation =
+of Airflow 3.2.0 contains version of
+the example with improved resiliance for that case.
 
-> https://github.com/dosfstools/dosfstools/issues/12
-> Unclear invalid memory access in get_fat()
-> https://github.com/dosfstools/dosfstools/commit/07908124838afcc99c577d1d3e84cef2dbd39cb7
-> Git commit / fix
-> 
-> that was a nasty one: FAT12 corruption when a certain FAT entry at the
-> end is changed.
-> 
-> set_fat(): Fix off-by-2 error leading to corruption in FAT12
-> 
-> If the third to last entry was written on a FAT12 filesystem with an
-> odd number of clusters, the second to last entry would be corrupted.
-> This corruption may also lead to invalid memory accesses when the
-> corrupted entry becomes out of bounds and is used later.
+Users who followed that pattern are advised to adjust their implementations=
+ accordingly.
 
-Use CVE-2015-8872.
+Credit:
 
+Vincent55 Yang (finder)
 
-> https://github.com/dosfstools/dosfstools/issues/25
-> Heap overflow in read_fat()
-> https://github.com/dosfstools/dosfstools/issues/26
-> Heap out of bounds read in get_fat()
-> https://github.com/dosfstools/dosfstools/commit/e8eff147e9da1185f9afd5b25948153a3b97cf52
-> Git commit / fix for both issues
-> 
-> it's a failure to properly catch a zero length FAT in read_fat() and
-> continuing with that and the other corrupt values
-> 
-> read_boot(): Handle excessive FAT size specifications
-> 
-> The variable used for storing the FAT size (in bytes) was an unsigned
-> int. Since the size in sectors read from the BPB was not sufficiently
-> checked, this could end up being zero after multiplying it with the
-> sector size while some offsets still stayed excessive. Ultimately it
-> would cause segfaults when accessing FAT entries for which no memory
-> was allocated.
+References:
 
-Use CVE-2016-4804 (this applies to both issues/25 and issues/26, even
-though the impact in 25 is a heap-based buffer overflow with write
-access, and the impact in 26 is a heap-based buffer over-read).
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2025-54550
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJXNy15AAoJEHb/MwWLVhi25VEP/iMdL0X84Xo9ysSMP9D0hxZz
-1v3OtKF16jmGPpKBiC++PHoBN533jVi+K7epBhkvHC2ycKTsHHK6ImmWCguRU2C5
-w+rpoqEHMsqmiCf9M/XjutMHvgCdsFbNf4pe4dkJBt5oAK+oqThzUZ2kFK1Jvs0U
-HBDQHs9XKWIMals6N+FyF1TanIX2dUtchaky+Ba92piL3rdN95vs1/Mt1C6l+7bw
-ZUt8uqIZMNOCgr5Cq1gMvc16VFYOi8ZYWol1FBq0kFpxzjsOn8dpeJ4lxn+JKyyp
-hpAKUBPAgv+OWogtq+LsklD9qoGuaBKClrZiVL6qbr9YYA9NBabXuMqJJghGHUTy
-omKQsTOE+SuQXLLiV/gKs0bCUkWbK7yScSRUG2lEb1qtbWqHByZTq/FHTC2Kc5IY
-n0VUEayp2IFwfny11pM+D1O6VeWBFRvZNgc849VHNSo5KbTo1z9aFQSmld38t5sW
-DOzg6IvV86P+jP/OzCv7uDbJG6aSDoy8fELv4xisCp4cFq+K+9aLUqWj9HrPr+on
-3AEntSjDmvrEMvmNxY6I7ayan2AphcEGblUNnuu+2k0KnOEKjS1oIcCXSbnS8F0J
-NGI1jYf+Y5LPMX6aLmJEazyU0fXtNJx6BAKhmaGNzTBXpZdhD9nkw88puLQKMBv2
-TZGsWop91NEPNGjtPSRa
-=tWe9
------END PGP SIGNATURE-----
