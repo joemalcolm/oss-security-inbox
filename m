@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1220" "Wednesday" "11" "May" "2016" "20:36:56" "-0700" "David Chan" "david@dchanm.com" "<e82d52b0-9a85-8fd5-b599-23f0786cba86@dchanm.com>" "32" "Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"" "^Date:" nil nil "5" "2016051203:36:56" "[oss-security] GraphicsMagick Response To \"ImageTragick\"" (number mark "        david@dchanm May 11   32/1220  " thread-indent "\"Re: [oss-security] GraphicsMagick Response To \"ImageTragick\"\"\n") "<1462820605.18084.2.camel@nixnuts.net>" ("<alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>" "<20160509172045.GC9754@perpetual.pseudorandom.co.uk>" "<1462820605.18084.2.camel@nixnuts.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 31764 invoked by uid 550); 12 May 2016 11:23:57 -0000
+Received: (qmail 1645 invoked by uid 550); 16 Apr 2026 18:49:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +6,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5528 invoked from network); 12 May 2016 03:37:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dchanm.com; s=dchanm;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=lCpyWhf2ZV8i1J3B+pzfUiIoeweI6gnEM/5od3XIYN4=;
-        b=JmJeTYByxshIsDvnNYO0Yjp2NAQBmv4sL8ehc7kDCchGi/pvJG1YSDPAII+yXXfxD0
-         k7Re84aC/WhuS5mqiD8YF53nDyQSrmUtKaNX8YDh5jfEqIhKxhxciPLOJl0YodcZ/BtA
-         d8yrrFCdxOceQT9P3RFUGj69MO26tgDmTkDc8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=lCpyWhf2ZV8i1J3B+pzfUiIoeweI6gnEM/5od3XIYN4=;
-        b=eB6sPGpxCjdhFUKsaVIR2ukQrWAxLnWjT9eoz/vjIbjrF0YvDTZi53a4HlDbCGlTGO
-         BxF2ZzylYwdTf+k8ifyVbYyvSBZZj8NpMgIkpinhdsCBj+1QNaRHoBm4qzF+j4hWnFgd
-         6EsbO7wjyaXRBapY54LRiZt0VR2IRXst7kSIr05GM63xeAAf+HRLhp0jHgQfCuGL0m6c
-         Q1wKLoQoGMmua+0udeHCsNLUlAVIzBIZX3So7K0pU0p/xphZlv7cFpBNizkcUOyJ6hiu
-         DeozqFGo1Nqc1sNdA28WDRUXCyOSw2rRsMaXySf19ysiu+SHn6FuKXRhdHM4+P62ALhD
-         BJCQ==
-X-Gm-Message-State: AOPr4FWRlsA8iL0zJE8e5dt9N0O/uWGuAl9g1PjA8MsP+p7eK4BcmgeVLmxKQit0QcIHng==
-X-Received: by 10.66.90.196 with SMTP id by4mr10316810pab.117.1463024219091;
-        Wed, 11 May 2016 20:36:59 -0700 (PDT)
-References: <alpine.GSO.2.20.1605090828220.23612@freddy.simplesystems.org>
- <20160509172045.GC9754@perpetual.pseudorandom.co.uk>
- <1462820605.18084.2.camel@nixnuts.net>
-Message-ID: <e82d52b0-9a85-8fd5-b599-23f0786cba86@dchanm.com>
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.0
-MIME-Version: 1.0
-In-Reply-To: <1462820605.18084.2.camel@nixnuts.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Date: Wed, 11 May 2016 20:36:56 -0700
-From: David Chan <david@dchanm.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] GraphicsMagick Response To "ImageTragick"
+x-ms-reactions: disallow
+Received: (qmail 1626 invoked from network); 16 Apr 2026 18:49:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776365353; x=1776970153; darn=lists.openwall.com;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Lj4zhLXkG++oJH7gItek38sz6bSRdFuUaGuWpr5RKvA=;
+        b=JQ2lPJuH5RvL/MuY8SwIAwrLFYYnwBR/QRwJxcIXc3k4nMZboIfOUm5mRg3tWT8NxL
+         vh4ay6zwLnHcNNvz53lwkPTC5ZlGAJTstp1nNHAu4PazbT24tKOz2In7aDUCcnGBDjeJ
+         nyWi9y2GcfyrcaDtJ82XB2cEmt1p07kS/NonM6Cf63OPZuBIRDDV4RcyX0oAqLg3GMHt
+         oZQaKcXf9PDaxJR8ehQA4taFgZJjNifwME3KnFa/yqdC7moSJoxiqvvq2C8A8uNnkyOW
+         8ln51Npj9rdtRiqj11qqWTQh9D7W0K3fJ3PuHKIhdaWxQx+jP4wyu4Z17mQRBsIigtmC
+         6Mhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776365353; x=1776970153;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Lj4zhLXkG++oJH7gItek38sz6bSRdFuUaGuWpr5RKvA=;
+        b=TGWL4kYJ9GwjwhdskfeylxxTx0p9ZNxDQrU89OJoESbHLWf8coryqgXjoo0ayPbJjy
+         ZQ7eLUJUerhvKUOeeuV3Tq2phVK1kpfukkVXOI7CZKnUS7nYJNIJlFBJL1Pf/bXGUeYF
+         lq8fJIDsYuQwFDCsIwUA8uLQdLnl+kE4S3WOTxMoQ6ugsw3EpMjL9OqLBIBrRofoSLuM
+         R8snnP9JdLy7+PWVpGaDA8DLFnPhFrgai5FPya9ozn0T7atB3PX17xi8edI4hRdtUerI
+         6dv+GZQrgojIvFvk9FC0+j9Ok0ohxrzevrXGbbBGfHhzZ2mrtSZiArZIXD1qdhJuhFzE
+         PVFA==
+X-Gm-Message-State: AOJu0YzyXeHOmie41pt/3xrxL29dxaJH79/MYMecoO5K9lxr/G04k7cI
+	Gmu20EdIPDpv4iE4NoU2iJjz1KoPTZWFh5c5z8RNdKsZpnxbUOUpTGA4bXQoPADH
+X-Gm-Gg: AeBDietUxO5r9rmANgD16qlpYb+UqzgT5Pj1ahQp8mHtnD2aELddEIdFk15kHdnklha
+	J/tSE+P+CG+n7XXGNXciB5bVjzMcRARJ7XO2JnBQVVuWDAcDtxi0tBPwlxUyV/grX5Jw7WZDHOT
+	qaJqezkiK/j5qVHWQdH2UsFyLwGYLMgaYEHxF8Qsi1fPFY2O+KF+e086AUW/G6iXPbLWoBU4I79
+	mg6Vzoe3rSzPyMKJ1E0QPQ8k3Fb8mey9kQLRqPDugY8t4jO2OyeWETJlBufJ9uJdSjsjf0xBeUm
+	QBGKLQjq0e8jMePYXY+y5+NbtoirH438on3Q9iHx+Zceh8q24lmDaP1F11yiIj/tzNXbD7fs4EC
+	kSMx9MAyeLnPD60y+YRqjYM7lntqGYBDfgL+PTYgk3/mHdNSdxpn3iKzgb168AXP9FgS50nrQJf
+	/X2iEYK0xlykAvJW4irDbWyUHLLWxWdPg/TJnRy7uQ29ar52JPRQYrwX7C54tZqpT1kwYybBBLI
+	mXj9SYK
+X-Received: by 2002:a05:600d:8447:b0:488:a2ac:a340 with SMTP id 5b1f17b1804b1-488fb27b8cemr1204155e9.12.1776365353182;
+        Thu, 16 Apr 2026 11:49:13 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Thu, 16 Apr 2026 20:49:10 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: oss-security@lists.openwall.com
+Cc: Przemyslaw Frasunek <przemyslaw@frasunek.com>
+Message-ID: <aeEvJiKxmf8p27s8@eldamar.lan>
+References: <69b791e8-91d6-47cd-ad81-827d13cc0b65@frasunek.com>
+ <31793cef-eaac-4bc8-a8d5-956f60607d10@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <31793cef-eaac-4bc8-a8d5-956f60607d10@oracle.com>
+Subject: Re: [oss-security] UAF in rsync 3.4.1 and below
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+hi,
 
-On 5/9/2016 12:03 PM, John Lightsey wrote:
-> On Mon, 2016-05-09 at 18:20 +0100, Simon McVittie wrote:
->> On Mon, 09 May 2016 at 08:29:40 -0500, Bob Friesenhahn wrote:
+On Thu, Apr 16, 2026 at 08:27:56AM -0700, Alan Coopersmith wrote:
+> On 4/15/26 22:49, Przemyslaw Frasunek wrote:
+> > 7. TIMELINE
+> > 
+> > 2008-03-07  Bug introduced in commit d724dd186 (rsync 3.0.1pre1).
+> >              The commit added qsort to receive_xattr() for sorting xattrs
+> >              after namespace prefix munging in --fake-super mode.
+> > 2026-04-16  This report.
 > 
-> 
-> The "man" attack vector needs the same determination.
-> 
-> It is similar to CVE-2016-3717 in impact, but uses a different
-> codepath. The existing fixes for CVE-2016-3717 do not address it.
-> 
+> Have you notified the rsync maintainers about this?  When?
 
-The patch which fixes the gplt vector also fixes a related vector in gs.
-The lack of -dSAFER when invoking Ghostscript allows for arbitrary
-file read/write. Sander Bos noticed that ImageMagick isn't affected
-by this bug. Given that the -dSAFER bug is specific to GraphicsMagick,
-I think a separate CVE should be assigned.
+FWIW, it looks this got CVE-2026-41035 assigned:
+https://www.cve.org/CVERecord?id=CVE-2026-41035
 
-David
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQEcBAEBCAAGBQJXM/pYAAoJEFNDksGFxk4g+kMH/2oeXMLdfZqup02Zq5IJ1zIf
-cDpU2CLrDcNyyKAC81WviR6A8jj7VX58rI4O4be/OBlO+6X6CP5PVZzERisqlqdO
-sIpHryXReA1rjPPDB3WWXY3ijLPVozitTmM0p+81TfHrkL0LTc/ZXUMeAEw2xRgw
-dzU31nAMTIKV/FS87VkTesScotDLAEXXAxeD4LEepGoxTCqVctjLvk0yXBg9tpZc
-LwB+2EKMA45bMo0mRNRUnSCIhQXNHSdTpjnmR53nd5BYZtVPvVy3n31QaSXmt4MF
-OsghVcp44/Nb8Etkictu78yHusnXa6stTctdLzRS+51XzGj6nvW4VF89T+ASl/Q=
-=yy3S
------END PGP SIGNATURE-----
+Regards,
+Salvatore
