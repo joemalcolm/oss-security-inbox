@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["286" "Wednesday" "2" "September" "2015" "22:50:34" "+0200" "Julien Cristau" "jcristau@debian.org" "<20150902205034.GE3107@betterave.cristau.org>" "10" "Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" nil nil nil "9" "2015090220:50:34" "[oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue" (number mark "        jcristau@deb Sep  2   10/286   " thread-indent "\"Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue\"\n") "<CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>" ("<alpine.LFD.2.20.1509030058080.6240@wniryva>" "<CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3950 invoked by uid 550); 2 Sep 2015 20:50:47 -0000
+Received: (qmail 3437 invoked by uid 550); 16 Apr 2026 16:32:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,31 +6,44 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3932 invoked from network); 2 Sep 2015 20:50:46 -0000
-Message-ID: <20150902205034.GE3107@betterave.cristau.org>
-References: <alpine.LFD.2.20.1509030058080.6240@wniryva>
- <CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CANO=Ty3i9JGHOm9J=XbQDLq9POLa2=G5FVzKs58b4YHrS=-iqA@mail.gmail.com>
-X-Operating-System: Linux 4.1.0-1-amd64 x86_64
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Virus-Scanned: ClamAV using ClamSMTP
-Cc: Prasad Pandit <ppandit@redhat.com>, lianyihan@360.cn
-Date: Wed, 2 Sep 2015 22:50:34 +0200
-From: Julien Cristau <jcristau@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE-2015-5239 Qemu: vnc infinite loop issue
+x-ms-reactions: disallow
+Received: (qmail 14331 invoked from network); 16 Apr 2026 13:30:18 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <dfb8ec95-d826-45a1-f879-8b619e3425b1@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 16 Apr 2026 13:30:05 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-31987: Apache Airflow: JWT token appearing in logs 
 
-On Wed, Sep  2, 2015 at 14:28:59 -0600, Kurt Seifried wrote:
+Severity: Moderate=20
 
-> PJP are you sure this isn't
-> https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-5239 ? Mitre: can you
-> please hold off in case this already has a CVE assigned. Thanks.
-> 
-Subject does mention this CVE.
+Affected versions:
 
-Cheers,
-Julien
+- Apache Airflow (apache-airflow) 3.0.0 before 3.2.0
+
+Description:
+
+JWT Tokens used by tasks were exposed in logs. This could allow UI users to=
+ act as Dag Authors.=20
+Users are advised to upgrade to Airflow version that contains fix.
+
+Users are recommended to upgrade to version 3.2.0, which fixes this issue.
+
+Credit:
+
+unixengineer (finder)
+Jason Imison (finder)
+Pineapple (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/62964
+https://github.com/apache/airflow/issues/62428
+https://github.com/apache/airflow/issues/62773
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-31987
+
