@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11372" "Tuesday" "26" "October" "2021" "20:14:20" "+0800" "Lin Horse" "kylin.formalin@gmail.com" nil "225" "Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil "10" nil nil (number mark "U       kylin.formal Oct 26  225/11372 " thread-indent "\"Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 8144 invoked by uid 550); 26 Oct 2021 12:18:45 -0000
+Received: (qmail 8180 invoked by uid 550); 16 Apr 2026 15:03:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,269 +7,311 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5691 invoked from network); 26 Oct 2021 12:14:43 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=N7JBYmnC3uvSXRSDxccUsbAuuxfWqfs4A6kfiMLf8ls=;
-        b=cAFfnekKjRDBjQrsLlvpYUy+OLzmimrQFw9i00Omfz2pqChi72pdU2IAu2rrfswPmx
-         kYrWDHn/5YQ1vQ3axst/dzCWLuI+9XYENDUhJ41eiNjOc6OsF7b4BIBe8JUWanCMEINq
-         OJdCfpl1x037DuHAsa1fvD8UqKLd1xTN/4hXcdBXSlPyMCpYHc/y0AaniT6AZ2TR1b2b
-         NFlKYWbMQ1/1laAxb6X20uC2xx/99I96qn8qG5+FX8lFaRTQKORG2CPtu7MrT/3celJs
-         owYGlWxECNr8zn86Y5XYgousjO3wEVcGAjKykQRfZ5qUfSxWHRyL9JsFijbDNpfM4YHK
-         fVYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=N7JBYmnC3uvSXRSDxccUsbAuuxfWqfs4A6kfiMLf8ls=;
-        b=F+Xicgt8Jn014qMXm9kkQGXsPtafGq7aLOQ80xgrqu1uTC7TkMMHuqrAPoSyMxP2tP
-         UbOe72BOGV05clJ88PTL+1iIy/bhO+9b4hhxrNahO5cKgxs1at2IH/1GJ178GBmNfEqz
-         4LHPrEVeyG57djc+HwlKd212fbO+0r4396o0UI9BYF8GNb7UEXELED4OzXH3D4YenOA8
-         SQO55p30xruxVOBJPuH4Yz6tHf6fHzvyQg7cQdgOsuivsX6b2ss/UIQYqxAPg2v0PYJ8
-         rexuMLOt6GEqqhyhDdA31R5dAU8GqYe5JWtJI4cCQYV73E03AKg1hJdFIyPiGy5jnY17
-         rVPA==
-X-Gm-Message-State: AOAM532U9gKHBgYa5smJ7xfo3ggQc41KXXZ74HPwLPJzhROEoeFBxxdZ
-	zDkFWcMe3pa/gJyGwdqnYpVtXcdIvn9oqj6C1FiFjw+lwCJdHw==
-X-Google-Smtp-Source: ABdhPJyzjWAldoo4jgN3CxZWmUptddI+GkoidQEG09ZRDfTx5ncTR5xrfUbgmKnZY43dnFW3u2mPsPH49SelY36RdZI=
-X-Received: by 2002:a25:509:: with SMTP id 9mr25502769ybf.332.1635250471830;
- Tue, 26 Oct 2021 05:14:31 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 8144 invoked from network); 16 Apr 2026 15:03:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1776351805; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=D+bYe8tpCw6UeOHCZQM57vW8QemaWuuJtMLCv18AvXo=;
+	b=XvWnv4b8ZkZgZIM97ELCn8Ra6MXZTmjDwPhVKrJfhaeNlvjDUI2Pmo9CyyHXawIJpqJ6Sf
+	+l0tcqI3BMbBUjLel9KWFUBjsO7tNmtJ3p0JqmNwysXUQbu2cmsPG5/Ics/SHf8tLffVB8
+	DJNl4FT2oSsq6kImKdVLMlXCBRR01Uc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1776351805;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=D+bYe8tpCw6UeOHCZQM57vW8QemaWuuJtMLCv18AvXo=;
+	b=P6ecf1rRp/Bt4jNQBFCN34SMcrwLQeILulBxBQXizTvmKqodgYAlq/kHvA5DS6EXJ3bnYo
+	mJYes5MLoSxdgyCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1776351800; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=D+bYe8tpCw6UeOHCZQM57vW8QemaWuuJtMLCv18AvXo=;
+	b=zThArvKEgSryWYp4wyWI6E/7T1yENm5gU1+/heREtJ4mIVddh+38ZyfqB5ix0jSVhzUJvV
+	fBTwSEN5GVBVbsVXLXkXlDVcgkHBkf42HqKvvCYbtzMoTTkU110NoR6r3wzVzD0kdnFbZp
+	2P0TOjBT7DmapqkXTFZjS8QOWmCx07k=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1776351800;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type;
+	bh=D+bYe8tpCw6UeOHCZQM57vW8QemaWuuJtMLCv18AvXo=;
+	b=YufCzQIOq/bb94JPD8tWyzk8AacHfqs2NPkJVLVeLtjcYGMiQgPL1aBUHGTRHHfYHJmjDJ
+	xZ6dt4fj46t2U1Bw==
+Date: Thu, 16 Apr 2026 17:03:17 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Message-ID: <aeD6OL7b7OqTenX6@kasco.suse.de>
 MIME-Version: 1.0
-References: <CAJjojJsrNyz+ML+Q81JB9iF2-DTKfAEkUP1cSTgyvCL6NebhzQ@mail.gmail.com>
- <20211026115947.GA29482@openwall.com>
-In-Reply-To: <20211026115947.GA29482@openwall.com>
-From: Lin Horse <kylin.formalin@gmail.com>
-Date: Tue, 26 Oct 2021 20:14:20 +0800
-Message-ID: <CAJjojJu4y96+mMEWQ_Qg1Bb+z=SP0FYqMBi24dBryr=7aQ9kWg@mail.gmail.com>
-To: Solar Designer <solar@openwall.com>
-Cc: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000007e077305cf406bac"
-Subject: Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free
- vulnerability of ndev->rf_conn_info object
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="tG1Qj1Isvl30vZRV"
+Content-Disposition: inline
+X-Spam-Flag: NO
+X-Spam-Score: -6.40
+X-Spam-Level: 
+Subject: [oss-security] cosmic-greeter: Unsafe File System Operations in User Home
+ Directories (CVE-2026-25704)
 
---0000000000007e077305cf406bac
-Content-Type: text/plain; charset="UTF-8"
+--tG1Qj1Isvl30vZRV
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Date: Thu, 16 Apr 2026 17:03:17 +0200
+From: Matthias Gerstner <mgerstner@suse.de>
+To: oss-security@lists.openwall.com
+Subject: cosmic-greeter: Unsafe File System Operations in User Home
+ Directories (CVE-2026-25704)
 
-Hi Alexander,
+Hello list,
 
-Thanks for the reply
+this is a security report about issues in cosmic-greeter. We also
+offer a rendered  version of this report on our blog [1].
 
-> 1. The original notification by Lin to linux-distros did include "I'd
-> like to ask for 14 days of the embargo", which is OK'ish, but ideally
-> such messages should include the proposed public disclosure date/time -
-> and that's what the instructions ask for.  When it's just "N days", I
-> guess people think "that's OK'ish" and move on.  When it's a specific
-> date/time, it's easier for everyone to notice it approaching - not only
-> for people specifically tasked with that.  That's just a psychological
-> detail that I guess nevertheless statistically affects the outcomes.
->
-> So I think that the distros tasked with reviewing initial notifications
-> should insist on the actual date/time being present in there, or add it
-> on their own in an immediate follow-up.  Those distros currently are
-> Oracle and Wind River.  I'd appreciate them confirming that they accept
-> this clarification.
+Summary: Cosmic is a modern Linux desktop environment implemented in
+Rust. One of its components, cosmic-greeter, contains a D-Bus service
+which operates in user home directories in an unsafe manner, leading to
+potential privilege escalation or local Denial-of-Service.
 
-Gotcha, I was always got confused about the embargo date and public
-disclosure data/time. This suggestion is great.
+Introduction
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-> "Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date/time) -
-> primary: Oracle, backup: Wind River"
->
-> 2. While Lin's original message to linux-distros included a "SUGGESTED
-> FIX" section (with a patch in it) and "I will do my best to work with
-> the developer on fixing this", no further messages on a fix were sent to
-> linux-distros.  Lin, if you did in fact work with upstream on this, you
-> should have kept linux-distros aware of the progress, and especially of
-> the fix getting to public Linux kernel mailing lists or public commits,
-> as that ends the embargo.
+Cosmic is a Linux desktop environment [2] written in the Rust
+programming language. There is an ongoing effort to package it for
+openSUSE Tumbleweed; in this context we reviewed a number of Cosmic
+components, among them a D-Bus service [3] found in cosmic-greeter [4].
+We found issues when the service accesses home directories of
+unprivileged users, which will be described further below. This report
+is based on cosmic-greeter version 1.0.8.
 
-I have no idea about that before today. This is quite sense-making as I was
-once thought that I only need to send the original report and wait. Now I
-understand what I should do to with both sides.
+Overview
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-> Further, distros failed to handle the corresponding "contributing back"
-> tasks.  There was no activity by Gentoo lately at all, and while there
-> is recent helpful activity by Amazon, they didn't act this time.
->
-> "Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first) - primary: Gentoo, backup: Amazon
->
-> Monitor relevant public channels (mailing lists, code repositories,
-> etc.) and inform the reporter and the list in case an issue is made
-> public prematurely (that is, leaks or is independently rediscovered) -
-> primary: Amazon, backup: SUSE
->
-> Make sure the mandatory oss-security posting is made promptly and is
-> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-> backup: Amazon"
->
-> I'd like replies by Gentoo and Amazon on this, please.  They should
-> either state that they'd be handling these tasks from this point on, or
-> we should reassign the tasks.
->
-> Incidentally, I've already unassigned the statistics task from Gentoo
-> and Amazon a while ago, as that one was obviously not handled by them.
-> We still need another distro or two to volunteer for this one.  As I had
-> mentioned, an important desirable side-effect of keeping the statistics
-> up-to-date is that this would catch issues that were not reported to
-> oss-security in time or at all.  For example, if someone were updating
-> statistics for September on October 15 (by which point nothing from
-> September is supposed to still be embargoed), they'd catch this issue
-> 10 days earlier.
->
-> 3. The only "contributing back" activity on this issue consisted of 3
-> postings to linux-distros: prompt CVE ID assignment by Red Hat, a
-> reminder about 14 days having passed by SUSE on September 17 (that is,
-> already 3 days past the embargo period end), and another reminder by (a
-> different engineer from) SUSE on October 25 (this one worked).
->
-> SUSE isn't formally tasked with this - Gentoo and Amazon are - but SUSE
-> happened to do it - thanks!  SUSE is formally a backup for "Monitor
-> relevant public channels ...", which I guess could have worked as well,
-> but in this case the embargo period was already over by the time SUSE
-> first commented, so that aspect was irrelevant by then.
->
-> 4. There's still no (reference to) fix for this issue on oss-security.
-> Lin, you write "2021-10-26 patch upstream" - can you please refer to the
-> actual upstream commit?  Also, can you please let us all know when the
-> patch became public (possibly first on a public mailing list)?
+`cosmic-greeter-daemon` is implemented in daemon/src/main.rs [5], runs
+with full root privileges and offers a D-Bus interface
+"com.system76.CosmicGreeter" on the D-Bus system bus. The interface only
+provides a single D-Bus method "com.system76.CosmicGreeter.GetUserData".
 
-The commit for the fix is 1b1499a817c90fd1ce9453a2c98d2a01cca0e775 (link:
-https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=
-=3D1b1499a817c90fd1ce9453a2c98d2a01cca0e775
-)
+This D-Bus method is only allowed to be called by members of the
+`cosmic-greeter` group, not by arbitrary other unprivileged users. What
+the method does [6] is basically looking up all non-system user accounts
+in `/etc/passwd` and gathering Cosmic configuration data from every
+user's home directory.
 
-> This issue itself is not that important, which is part of why it almost
-> slipped through the cracks, but it's our reminder and opportunity to fix
-> things before anything more important is mishandled.
+Security Issues
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-> Alexander
+The code contains a comment [7], outlining that it is important to drop
+privileges to the owner of the home directory being processed, to
+prevent security issues. While this is a good starting point, the actual
+implementation of this logic is still lacking in a number of spots.
 
+Following is an excerpt of an `strace` of the `cosmic-greeter-daemon`
+process during invocation of the D-Bus method. The output will help
+illustrate some of the issues in question:
 
-> P.S. The Subject of this message as sent by Lin to oss-security
-> contained only the CVE ID and no description.  I took the liberty to
-> edit it, adding the Subject string that was used on linux-distros,
-> before approving the message as list moderator.
+    setresuid(-1, 1000, -1) =3D 0
+    <...>
+    statx(AT_FDCWD, "/var/lib/AccountsService/icons/<user>", AT_STATX_SYNC_=
+AS_STAT, STATX_ALL, 0x7feb5d5f8a50) =3D -1 ENOENT (No such file or director=
+y)
+    statx(AT_FDCWD, "/home/<user>/.local/share/cosmic/com.system76.CosmicTh=
+eme.Mode/v1", AT_STATX_SYNC_AS_STAT, STATX_ALL, 0x7feb5d5f8800) =3D -1 ENOE=
+NT (No such file or directory)
+    mkdir("/home/<user>/.config/cosmic/com.system76.CosmicTheme.Mode/v1", 0=
+777) =3D -1 EEXIST (File exists)
+    statx(AT_FDCWD, "/home/<user>/.config/cosmic/com.system76.CosmicTheme.M=
+ode/v1", AT_STATX_SYNC_AS_STAT, STATX_ALL, {stx_mask=3DSTATX_ALL|STATX_MNT_=
+ID, stx_attributes=3D0, stx_mode=3DS_IFDIR|0755, stx_size=3D4096, ...}) =3D=
+ 0
+    statx(AT_FDCWD, "/home/<user>/.config/cosmic/com.system76.CosmicTheme.M=
+ode/v1/is_dark", AT_STATX_SYNC_AS_STAT, STATX_ALL, {stx_mask=3DSTATX_ALL|ST=
+ATX_MNT_ID, stx_attributes=3D0, stx_mode=3DS_IFCHR|0666, stx_size=3D0, ...}=
+) =3D 0
+    mkdir("/home/<user>/.config/cosmic/com.system76.CosmicTheme.Dark/v1", 0=
+777) =3D -1 EEXIST (File exists)
+    openat(AT_FDCWD, "/home/<user>/.config/cosmic/com.system76.CosmicTheme.=
+Dark/v1/palette", O_RDONLY|O_CLOEXEC) =3D 11
+    <...>
+    setresuid(-1, 0, -1 <unfinished ...>
 
-Thanks about that >.<
-And thanks for all the replies again, I will summarize these and try to
-make the people around me clear about that.
+What we are seeing here is that the privilege drop only concerns the
+effective user ID of the `cosmic-greeter-daemon` process. The root group
+credentials are retained. This means any potential attacks by the owner
+of a home directory can still try to leverage root group credentials to
+their advantage.
 
-Best wishes
-Lin
+Given this, the file operations performed in the user's home directory
+are subject to a range of security issues:
 
-Solar Designer <solar@openwall.com> =E4=BA=8E2021=E5=B9=B410=E6=9C=8826=E6=
-=97=A5=E5=91=A8=E4=BA=8C =E4=B8=8B=E5=8D=888:00=E5=86=99=E9=81=93=EF=BC=9A
+- directory components within the path can be replaced by symbolic
+  links. E.g. if a user places a symlink like this:
 
-> On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
-> > 2021-09-01 Report to security and linux-distro
-> > 2021-09-01 CVE-2021-3760 assigned
-> > 2021-10-26 patch upstream
-> >
-> > Sorry for the delay of this report T.T
->
-> Ouch.  Let's use this opportunity to learn from the mishandling of this
-> issue and avoid that for other issues.  Many things went wrong here:
->
-> 1. The original notification by Lin to linux-distros did include "I'd
-> like to ask for 14 days of the embargo", which is OK'ish, but ideally
-> such messages should include the proposed public disclosure date/time -
-> and that's what the instructions ask for.  When it's just "N days", I
-> guess people think "that's OK'ish" and move on.  When it's a specific
-> date/time, it's easier for everyone to notice it approaching - not only
-> for people specifically tasked with that.  That's just a psychological
-> detail that I guess nevertheless statistically affects the outcomes.
->
-> So I think that the distros tasked with reviewing initial notifications
-> should insist on the actual date/time being present in there, or add it
-> on their own in an immediate follow-up.  Those distros currently are
-> Oracle and Wind River.  I'd appreciate them confirming that they accept
-> this clarification.
->
-> "Promptly review new issue reports for meeting the list's requirements
-> and confirm receipt of the report and, when necessary, inform the
-> reporter of any issues with their report (e.g., obviously not actionable
-> by the distros) and request and/or propose any required yet missing
-> information (most notably, a tentative public disclosure date/time) -
-> primary: Oracle, backup: Wind River"
->
-> 2. While Lin's original message to linux-distros included a "SUGGESTED
-> FIX" section (with a patch in it) and "I will do my best to work with
-> the developer on fixing this", no further messages on a fix were sent to
-> linux-distros.  Lin, if you did in fact work with upstream on this, you
-> should have kept linux-distros aware of the progress, and especially of
-> the fix getting to public Linux kernel mailing lists or public commits,
-> as that ends the embargo.
->
-> Further, distros failed to handle the corresponding "contributing back"
-> tasks.  There was no activity by Gentoo lately at all, and while there
-> is recent helpful activity by Amazon, they didn't act this time.
->
-> "Stay on top of issues to ensure progress is being made, remind others
-> when there's no apparent progress, as well as when the public disclosure
-> date for an issue is approaching and when it's finally reached (unless
-> the reporter beats you to it by making their mandatory posting to
-> oss-security first) - primary: Gentoo, backup: Amazon
->
-> Monitor relevant public channels (mailing lists, code repositories,
-> etc.) and inform the reporter and the list in case an issue is made
-> public prematurely (that is, leaks or is independently rediscovered) -
-> primary: Amazon, backup: SUSE
->
-> Make sure the mandatory oss-security posting is made promptly and is
-> sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-> backup: Amazon"
->
-> I'd like replies by Gentoo and Amazon on this, please.  They should
-> either state that they'd be handling these tasks from this point on, or
-> we should reassign the tasks.
->
-> Incidentally, I've already unassigned the statistics task from Gentoo
-> and Amazon a while ago, as that one was obviously not handled by them.
-> We still need another distro or two to volunteer for this one.  As I had
-> mentioned, an important desirable side-effect of keeping the statistics
-> up-to-date is that this would catch issues that were not reported to
-> oss-security in time or at all.  For example, if someone were updating
-> statistics for September on October 15 (by which point nothing from
-> September is supposed to still be embargoed), they'd catch this issue
-> 10 days earlier.
->
-> 3. The only "contributing back" activity on this issue consisted of 3
-> postings to linux-distros: prompt CVE ID assignment by Red Hat, a
-> reminder about 14 days having passed by SUSE on September 17 (that is,
-> already 3 days past the embargo period end), and another reminder by (a
-> different engineer from) SUSE on October 25 (this one worked).
->
-> SUSE isn't formally tasked with this - Gentoo and Amazon are - but SUSE
-> happened to do it - thanks!  SUSE is formally a backup for "Monitor
-> relevant public channels ...", which I guess could have worked as well,
-> but in this case the embargo period was already over by the time SUSE
-> first commented, so that aspect was irrelevant by then.
->
-> 4. There's still no (reference to) fix for this issue on oss-security.
-> Lin, you write "2021-10-26 patch upstream" - can you please refer to the
-> actual upstream commit?  Also, can you please let us all know when the
-> patch became public (possibly first on a public mailing list)?
->
-> This issue itself is not that important, which is part of why it almost
-> slipped through the cracks, but it's our reminder and opportunity to fix
-> things before anything more important is mishandled.
->
-> Alexander
->
-> P.S. The Subject of this message as sent by Lin to oss-security
-> contained only the CVE ID and no description.  I took the liberty to
-> edit it, adding the Subject string that was used on linux-distros,
-> before approving the message as list moderator.
->
+      $HOME/.config/cosmic =E2=86=92 /root/.config/cosmic
 
---0000000000007e077305cf406bac--
+  then the daemon would actually process root's Cosmic configuration
+  files, provided that root's home directory is accessible for members
+  of the root group.
+- since the daemon also attempts to create directories under some
+  conditions, these directories could be created in arbitrary locations
+  where the root group has write permission.
+- the daemon checks the type of files via `stat()` before trying to open
+  configuration files, for example. This is a typical
+  Time-of-Check/Time-of-Use (TOCTOU) race condition, however, because
+  the owner of the home directory can attempt to replace a regular file
+  by a symbolic link or special file by the time the actual `open()`
+  call is performed by the daemon. This can lead to the following
+  potential issues:
+  - parsing of private files accessible to the root group. Whether the
+    data parsed from such files could ever leak into the context of a
+    local attacker is a matter that we did not investigate more closely
+    for the purpose of this report.
+  - by placing a symbolic link to e.g. `/dev/zero`, an out-of-memory
+    situation can be triggered in the daemon, causing it to be killed by
+    the kernel, leading to a local Denial-of-Service (DoS).
+  - by placing a FIFO named pipe in the location the daemon would block
+    on it forever, also leading to a local DoS.
+- the daemon considers accounts with user IDs =E2=89=A5 1000 as regular user
+  accounts [8]. On many Linux distributions this means that also the
+  `nobody` user account is included (UID 65534). As a result, the daemon
+  also attempts to process Cosmic configuration in
+  `/var/lib/nobody` on openSUSE. This grants processes operating with
+  `nobody` privileges the opportunity to attempt to exploit the daemon's
+  logic.
+
+The severity of these issues is reduced by the fact that only members of
+the `cosmic-greeter` group are allowed to invoke the `GetUserData` D-Bus
+method, thus potential attackers have to wait for an authorized process
+to call the function to attempt to exploit it. We don't have enough
+insight into the bigger picture of the Cosmic desktop environment, but
+it could be possible that local users are able to indirectly trigger the
+execution of this D-Bus method by using other APIs made available by
+Cosmic.
+
+Suggested Fixes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+We suggested the following improvements to upstream to deal with the
+issues:
+
+- the privileges should be fully dropped to the target user account,
+  including group ID and the supplementary group IDs.
+- to prevent potential DoS attack surface, the daemon should carefully
+  open target paths element by element, passing `O_NOFOLLOW|O_NONBLOCK`
+  to prevent symlink attacks, then perform an `fstat()` on the open file
+  to determine its type in a race-free fashion.
+- the `nobody` user account should be explicitly excluded based on its
+  name for distributions that set a valid shell for this account.
+- as additional hardening, the systemd unit
+  `cosmic-greeter-daemon.service` can be extended with directives like
+  `ProtectSystem=3Dfull`. This needs some tuning, though, since the daemon
+  still needs to be able to read files in home directories of other
+  users.
+
+Upstream Bugfix
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Upstream implemented commit 63cd93bddd0 [9] containing the following
+changes:
+
+- the daemon properly drops its group and supplementary group IDs to the
+  target user's.
+- only user IDs in the range defined by `UID_MIN` and `UID_MAX` as
+  configured in `/etc/login.defs` will be considered.
+- icon files in `/var/lib/accountservice` will be opened with
+  `O_NOFOLLOW` (actually an unrelated change / security hardening).
+
+This bugfix is part of upstream release 1.0.9 [10] and newer.
+
+What is still missing from our point of view is the prevention of local
+DoS attack surface when accessing files in the user's home directory. We
+informed upstream about this but have not heard back about this topic
+for a while.
+
+CVE Assignment
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Upstream has not expressed any wishes regarding CVE assignment, or
+whether one should be assigned at all. We decided to assign a single
+CVE-2026-25704 from our pool to track the main aspect of this report,
+the incomplete privilege drop in the daemon.
+
+Timeline
+=3D=3D=3D=3D=3D=3D=3D=3D
+
+2026-03-11: We forwarded this report to security@system76.com and the main =
+developer of cosmic-greeter, offering coordinated disclosure.
+2026-03-11: Upstream confirmed the issue and opted out of coordinated discl=
+osure.
+2026-03-11: We got a follow-up response asking us to keep the information p=
+rivate for while longer after all.
+2026-03-11: We received a patch from upstream corresponding to commit 63cd9=
+3bddd0 [9] and have been asked to review it.
+2026-03-12: Upstream meanwhile created a public pull request based on this =
+bugfix and informed us that the report no longer needed to be private.
+2026-03-13: We assigned CVE-2026-25704 to track the main aspect of the vuln=
+erability, an incomplete privilege drop.
+2026-03-13: We shared the CVE with upstream and provided feedback on the bu=
+gfix, mainly pointing out that local Denial-of-Service (DoS) attack service=
+ still remains.
+2026-03-13: Upstream informed us that they are going to address these remai=
+ning issues as well.
+2026-03-24: We asked upstream about the status of the additional fixes, but=
+ received no response so far.
+2026-04-16: Publication of this report.
+
+References
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+[1]: https://security.opensuse.org/2026/04/16/cosmic-greeter.html
+[2]: https://system76.com/cosmic
+[3]: https://bugzilla.suse.com/show_bug.cgi?id=3D1259401
+[4]: https://github.com/pop-os/cosmic-greeter
+[5]: https://github.com/pop-os/cosmic-greeter/blob/epoch-1.0.8/daemon/src/m=
+ain.rs
+[6]: https://github.com/pop-os/cosmic-greeter/blob/epoch-1.0.8/daemon/src/m=
+ain.rs#L62
+[7]: https://github.com/pop-os/cosmic-greeter/blob/epoch-1.0.8/daemon/src/m=
+ain.rs#L9
+[8]: https://github.com/pop-os/cosmic-greeter/blob/epoch-1.0.8/daemon/src/m=
+ain.rs#L65
+[9]: https://github.com/pop-os/cosmic-greeter/commit/63cd93bddd01bf714e9855=
+3966d4da12eac0ee5b
+[10]: https://github.com/pop-os/cosmic-greeter/releases/tag/epoch-1.0.9
+
+Cheers
+
+Matthias
+
+--=20
+Matthias Gerstner <matthias.gerstner@suse.de>
+Security Engineer
+https://www.suse.com/security
+GPG Key ID: 0x14C405C971923553
+=20
+SUSE Software Solutions Germany GmbH
+HRB 36809, AG N=C3=BCrnberg
+Gesch=C3=A4ftsf=C3=BChrer: Jochen Jaser, Andrew McDonald, Werner Knoblich
+
+--tG1Qj1Isvl30vZRV
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAABCAA5FiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmng+jUbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTEsMiwyAAoJEBTEBclxkjVTAGkQAIUaAVUd/tQP29fmshrR
+o0/u1d3YjGGnLbJ6uWzFNYP/QPXjSwGtE8deX39W3VyQEUoJIvB9asJrJVM1lAbD
+vqm+oz23z6LqbT/AIbwaLlWcLB1U3wQxO8c113fLtmzMnE+vArPCwCyyexWRqEgj
+YLv/lHkMkCPXS6SKTSImE4hd3xSBr8h0I5sJlC9m+F4p8PH8K8XuitEWIKDdXP0F
+zA0nwWt9MQmyyyXAEWFJVARn1R6PxZMe0NEQkTqOljou/gAnLnDLcHcDKqhhJyM+
+CnPhliKNmQeeVATbmXEl0r3aeXYZVtiNqS5Rtzg2rL51nwtU27noU3lM3pqcGULO
+SJNc9hrqleVu5dUjXXnC4tVQgnl7rnIx5poJ10HNHLqUoqbxi1YfMKrk21agmZYR
+4F7BDBTuApd7K1b5WViuEFA8e5op3nhXM7vvKNPPfnL1lvgjPdkbq+PKlO3GW2sY
+ezAR2+LnHe4PejrF9WMnToOUja3qGFHzoVCTOvXLne2ezL51FKs4kWRyg4J5U0M7
+tmY+8IaogykWPvUU84SXXyWBaWeYLdoQAB1oiylANP7fSvzp5hMZqrT0/ehXu0/l
+fanM5MX6OvrTFmAhPzcMqzPUN9sZMpG7YGxN2Lv7zS2tlPgrnuMBL4UZX5gen0va
+bgVcY5JqR2Aj8qpb2/xp1fvA
+=ojdh
+-----END PGP SIGNATURE-----
+
+--tG1Qj1Isvl30vZRV--
