@@ -1,4 +1,4 @@
-Received: (qmail 5409 invoked by uid 550); 17 Feb 2026 21:27:48 -0000
+Received: (qmail 1031 invoked by uid 550); 16 Apr 2026 19:25:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,87 +8,81 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 28204 invoked from network); 17 Feb 2026 21:21:21 -0000
-DKIM-Signature: v=1; a=ed25519-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=ed2303; h=Content-Type:MIME-Version:Message-ID:Date:
-	References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Zqt4kAS+DVHn9JKVk1SERNBrKhT+lk2cYNSXlkUGACY=; t=1771363282; x=1772572882; 
-	b=r0BLAmIzjSntf0dzPt2w1N6mufDavfknyFLDEr1UJB7gStENVTpnL53QtOTxZ8ZFVVFcFEmCrtO
-	+BieJAIiBDw==;
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=josefsson.org; s=rsa2303; h=Content-Type:MIME-Version:Message-ID:Date:
-	References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=Zqt4kAS+DVHn9JKVk1SERNBrKhT+lk2cYNSXlkUGACY=; t=1771363282; x=1772572882; 
-	b=RAtwWq0DVz6yHmuyU9DKHXwB5lTCmwP4PfULRepw/vQj1XwJrvqTkvpR1R6Piob7GeC8z2YZjIR
-	8Br9fb8mLBsb56l07HcJeKNIu3Zhuj/YHC3CYTsA0KS/kR2QIqPJLxX9WsLNOvAgAf7VfZt5Kb/5S
-	IRryFKHeUeS3+xbnXP3VN5Hp89cwqJrSY7Ns6lyLdp6Ss+uvhe2dMyEgyKxQ8lAzCf7vkFeE11M0f
-	V4JU1oKKz/yUZAo7m74g26U+gCunHIAQsyJWa+IFw6ExqW914NXSsl/qD1BqbaeeNqyH4mGv0AbpG
-	GK8yApj22p5P9BFEzCDD8WCUiOCQhPMa/1acdyAuNcYeFHhijSMrfeWacjbz6GHa7JgnfG3BoskKJ
-	mmrIWOLGc0lMZJ/wKrxrc2W/HKyhq1V8e5Qf4DekXYCwYeI84AratDMqj1P2XdwYTovTTNDSz;
-From: Simon Josefsson <simon@josefsson.org>
-To: Sam James <sam@gentoo.org>
-Cc: oss-security@lists.openwall.com
-In-Reply-To: <87seazqslh.fsf@gentoo.org> (Sam James's message of "Tue, 17 Feb
-	2026 15:48:10 +0000")
-References: <87seazqslh.fsf@gentoo.org>
-OpenPGP: id=B1D2BD1375BECB784CF4F8C4D73CF638C53C06BE;
- url=https://josefsson.org/key-20190320.txt
-X-Hashcash: 1:23:260217:sam@gentoo.org::yCS9pjdttSxo2EhE:8yVs
-X-Hashcash: 1:23:260217:oss-security@lists.openwall.com::gB3N0YUzQlWAkwVC:9xE3
-Date: Tue, 17 Feb 2026 22:21:17 +0100
-Message-ID: <87a4x7awxe.fsf@josefsson.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: (qmail 19472 invoked from network); 16 Apr 2026 19:23:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776367380; x=1776972180; darn=lists.openwall.com;
+        h=mime-version:content-transfer-encoding:references:in-reply-to
+         :subject:cc:to:from:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3DxHgAFutbnYRNcUrr2WsJRJ4+XYrXaBTHdSuYmauGI=;
+        b=GMMJV26eOfiS7OJlZ9C8xYZzyZ8Dh8KK9IC08cSY5KX5SogCXV+ctbXgqHmfqT/07U
+         AaViVuT4QJtgr2koXwL4uGb0eUQ0aPKdzWqo4LZlup00QRCUR0m5yVAEPFKMBwvgJJg7
+         o0ZAq4QaUjkCKT+QIHwq0hqUZHPHxfLrMhDONprRa2PFu9twBsK4wJoq3FLEjfVGx702
+         o0iLSWzVbKhsjT2lYXqIkQONPB0/Ieh0ylawoBP/RN7fSc3QNOPI021HNc4Dq+R7N0r0
+         jaYklujd9g5xSHDJ8uUV9+xSCKNOyHDvoSG37NwsVA5U7NhhQmZXFBkO8tHV7cuMljUf
+         Rhlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776367380; x=1776972180;
+        h=mime-version:content-transfer-encoding:references:in-reply-to
+         :subject:cc:to:from:date:message-id:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3DxHgAFutbnYRNcUrr2WsJRJ4+XYrXaBTHdSuYmauGI=;
+        b=F3id4soRvZb3oEsEYmOaopEb9XNneADdTrHakUTxg+Nw3NPo7hjy0uGje2N1J64WQi
+         uZU4rpKPO9APWIJU19NJOgVSyH0OMUpA/mY1X+7oiym50Uj2R+Xxskn4sbar7apPOMLh
+         omJswzRifq/HRCd5Q/I00p0mXe6Q4Wh46Cg54OLdMaS9u6L8faRjm4SZEeuoj+QaseRw
+         9OP/m28gCKSwyAuS8Yrx8ptX8VKNuMQZRcLLGkUe7Fvnmykx66YNw8jVUFVmhF2CZ+TA
+         fNm/TiMzH6n7S4Ue63E2g2gMvtqjbNZccEDKMUIMbYxLVgKqKqTbtk5L8ZdJBfpPxjnF
+         +GOQ==
+X-Gm-Message-State: AOJu0Yw+VSE4cNZb/OAey8RvmwNIponKHc206JIS5T3WT8Pj4i5RYToS
+	pEhPYsEDXFoIWy65ri682CAASjCr4kNbkXZKFhrMPfo+pKSZmFlD57Hgn82Cu4Qr
+X-Gm-Gg: AeBDieveL4VihpFQ4IuOeiFZGNJHVl+nzAuspP9fK+CWJ9OrF602ifGbRPPie/2G4VA
+	vKYg/v6UTh0jBNMuYvgfPAE8Wh6JLhW7y+Dhs0xWQf4u8O349WDCKuVk2SvbsZmRZmMadLXPwkq
+	PtFaoH+48iglqRG6GgseVXxIab/JdjGfEI4XoL6HBKNrjSnRmqAc4WLj2DaH48KJKRxPLStFiyu
+	AXz6OUG7glUlDIz4Vtrrr0Zdtcp4oTzLIoIOm4ObcHxQPu9fu7YW7CwBIwCAiLmL37C3qImbk1s
+	Ch0p/pnY45tFmfP//74FudrRQyRl5+U04ztQyvpO+dC3HDYWHjyCsEZbMsI+8hW0l8NltOxXFfS
+	65IIBZ6VKlU7HhQuOwrNau+LQzTxJ5/cLrFSdaBFjJEgCnDJL3DhvGZcMly0dpEUTZmCSZysz/K
+	53EB2NM5Go3UDa4firpkduUnetBvtnIuyOfbwunxLZFVkb8kmjji2n9njvGG9Rk6xmUAw=
+X-Received: by 2002:a17:90a:d2d0:b0:35d:a542:2dbf with SMTP id 98e67ed59e1d1-3613e006955mr703502a91.20.1776367379805;
+        Thu, 16 Apr 2026 12:22:59 -0700 (PDT)
+Message-ID: <69e13713.170a0220.289f9f.6db1@mx.google.com>
+Date: Thu, 16 Apr 2026 12:22:59 -0700 (PDT)
+From: yangjincheng1998@gmail.com
+To: oss-security@lists.openwall.com
+Cc: alan.coopersmith@oracle.com
+In-Reply-To: <7ddbe893-6bf2-4142-bbcd-c382a21dbed8@oracle.com>
+References: <69e0d549.170a0220.2844e6.1a9b@mx.google.com>
+ <7ddbe893-6bf2-4142-bbcd-c382a21dbed8@oracle.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha512; protocol="application/pgp-signature"
-Subject: [oss-security] Re: zlib security audit by 7asecurity
+Subject: Re: [oss-security] Apache Kvrocks affected by CVE-2024-31449 and
+ CVE-2025-49844 (Redis Lua); fixed but no formal advisory
 
---=-=-=
-Content-Type: text/plain
+Hi Alan,
 
-Great to see audits of widely used code!  Gzip next?
+Good catch -- sorry for the confusion. The "Duplicate - please ignore"
+titles on #3433 and #3434 are my own housekeeping rename, done on
+2026-04-11, AFTER the Kvrocks maintainers had already closed both
+issues on 2026-04-09 via a single fix PR. The original bodies were
+the actual vulnerability reports.
 
-Sam James <sam@gentoo.org> writes:
+The authoritative, non-renamed evidence on the Kvrocks side is:
 
-> * ZLB-01-001 WP2: Heap Buffer Overflow via Legacy gzprintf Implementation (High)
+  https://github.com/apache/kvrocks/pull/3435
+  Title: "fix(script): upgrade Lua version to fix CVE-2024-31449
+         and CVE-2025-49844"
+  Author: jihuayu (Kvrocks committer)
+  Merged: 2026-04-09 03:57 UTC
+  Auto-closed #3433 and #3434.
 
-That vulnerability seems to require that zlib was built with
--DNO_vsnprintf -DNO_snprintf, targetting a system lacking 'snprintf'.
+So the Kvrocks project itself, in its own fix PR title, names both
+CVEs as applicable to apache/kvrocks. The downstream impact is not
+in doubt -- what remains pending is a formal ASF advisory / GHSA /
+Kvrocks-specific CVE ID, which was the original subject of my post.
 
-Does anyone know of a real-world environment using that configuration?
+Off-list update: ASF Security has since confirmed they plan to
+coordinate with Kvrocks to publish CVEs for these issues.
 
-I don't see the applicability discussed in the report, and before
-assigning a severity rating to this problem, I think it is relevant to
-understand what environments really are affected.
-
-/Simon
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQNoBAEWCgMQFiEEo8ychwudMQq61M8vUXIrCP5HRaIFAmmU280UHHNpbW9uQGpv
-c2Vmc3Nvbi5vcmfCHCYAmDMEXJLOtBYJKwYBBAHaRw8BAQdACIcrZIvhrxDBkK9f
-V+QlTmXxo2naObDuGtw58YaxlOu0JVNpbW9uIEpvc2Vmc3NvbiA8c2ltb25Aam9z
-ZWZzc29uLm9yZz6IlgQTFggAPgIbAwULCQgHAgYVCAkKCwIEFgIDAQIeAQIXgBYh
-BLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XQkBQkNZGbwAAoJENc89jjFPAa+BtIA
-/iR73CfBurG9y8pASh3cbGOMHpDZfMAtosu6jbpO69GHAP4p7l57d+iVty2VQMsx
-+3TCSAvZkpr4P/FuTzZ8JZe8BrgzBFySz4EWCSsGAQQB2kcPAQEHQOxTCIOaeXAx
-I2hIX4HK9bQTpNVei708oNr1Klm8qCGKiPUEGBYIACYCGwIWIQSx0r0Tdb7LeEz0
-+MTXPPY4xTwGvgUCZ9F0SgUJDWRmSQCBdiAEGRYIAB0WIQSjzJyHC50xCrrUzy9R
-cisI/kdFogUCXJLPgQAKCRBRcisI/kdFoqdMAQCgH45aseZgIrwKOvUOA9QfsmeE
-8GZHYNuFHmM9FEQS6AD6A4x5aYvoY6lo98pgtw2HPDhmcCXFItjXCrV4A0GmJA4J
-ENc89jjFPAa+wUUBAO64fbZek6FPlRK0DrlWsrjCXuLi6PUxyzCAY6lG2nhUAQC6
-qobB9mkZlZ0qihy1x4JRtflqFcqqT9n7iUZkCDIiDbg4BFySz2oSCisGAQQBl1UB
-BQEBB0AxlRumDW6nZY7A+VCfek9VpEx6PJmdJyYPt3lNHMd6HAMBCAeIfgQYFggA
-JgIbDBYhBLHSvRN1vst4TPT4xNc89jjFPAa+BQJn0XTSBQkNZGboAAoJENc89jjF
-PAa+0M0BAPPRq73kLnHYNDMniVBOzUdi2XeF32idjEWWfjvyIJUOAP4wZ+ALxIeh
-is3Uw2BzGZE6ttXQ2Q+DeCJO3TPpIqaXDAAKCRBRcisI/kdFojR5AP9agEi3oCLA
-lOLnh/KT5Syhzh6oapik9Mx1tq1EJdVPhQD+Oc07ok9FNWeyk83oxHYp/DXcOWi/
-i1An/jIhj6fsHAY=
-=ZYMw
------END PGP SIGNATURE-----
---=-=-=--
+Best,
+Jincheng Yang
+Xidian University
