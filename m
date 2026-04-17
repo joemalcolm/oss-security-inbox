@@ -1,4 +1,4 @@
-Received: (qmail 31865 invoked by uid 550); 21 May 2023 10:11:33 -0000
+Received: (qmail 17708 invoked by uid 550); 17 Apr 2026 15:54:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,37 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23565 invoked from network); 21 May 2023 08:19:40 -0000
+x-ms-reactions: disallow
+Received: (qmail 4049 invoked from network); 17 Apr 2026 10:34:53 -0000
 Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
-From: Charles Zhang <dockerzhang@apache.org>
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <3dd3f588-efe8-afb6-a553-8ac595133319@apache.org>
+Message-ID: <c7bd19a3-9560-12fb-0625-3ec6e19f1d71@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 21 May 2023 08:19:26 +0000
+Date: Fri, 17 Apr 2026 10:34:42 +0000
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-31101: Apache InLong: Users who joined later can see the
- data of deleted users 
+Subject: [oss-security] CVE-2026-25917: Apache Airflow: API extra-links triggers XCom
+ deserialization/class instantiation (Airflow 3.1.5) 
 
-Severity: important
+Severity: low=20
 
 Affected versions:
 
-- Apache InLong 1.5.0 through 1.6.0
+- Apache Airflow (apache-airflow) before 3.2.0
 
 Description:
 
-Insecure Default Initialization of Resource Vulnerability in Apache Softwar=
-e Foundation Apache InLong.This issue affects Apache InLong: from 1.5.0 thr=
-ough 1.6.0.  Users registered in InLong who joined later can see deleted us=
-ers' data. Users are advised to upgrade to Apache InLong's 1.7.0 or cherry-=
-pick [1] to solve it.
+Dag Authors, who normally should not be able to execute code in the webserv=
+er context could craft XCom payload causing the webserver to execute arbitr=
+ary code. Since Dag Authors are already highly trusted, severity of this is=
+sue is Low.
 
-[1]=C2=A0 https://github.com/apache/inlong/pull/7836 https://github.com/apa=
-che/inlong/pull/7836
+Users are recommended to upgrade to Apache Airflow 3.2.0, which fixes the i=
+ssue.
+
+Credit:
+
+Mahammad Huseynkhanli (finder)
+Amogh Desai (remediation developer)
 
 References:
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=3DCVE-2023-31101
+https://github.com/apache/airflow/pull/61641
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-25917
 
