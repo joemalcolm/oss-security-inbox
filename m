@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2675" "Tuesday" "21" "June" "2016" "11:45:01" "+0200" "Sebastian Krahmer" "krahmer@suse.com" "<20160621094501.GA21668@suse.de>" "90" "[oss-security] SELinux troubles" nil nil nil "6" "2016062109:45:01" "[oss-security] SELinux troubles" (number mark "U       krahmer@suse Jun 21   90/2675  " thread-indent "\"[oss-security] SELinux troubles\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5298 invoked by uid 550); 21 Jun 2016 09:45:18 -0000
+Received: (qmail 13733 invoked by uid 550); 17 Apr 2026 15:54:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,108 +7,40 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5203 invoked from network); 21 Jun 2016 09:45:13 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Date: Tue, 21 Jun 2016 11:45:01 +0200
-From: Sebastian Krahmer <krahmer@suse.com>
+x-ms-reactions: disallow
+Received: (qmail 18279 invoked from network); 17 Apr 2026 10:29:07 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20160621094501.GA21668@suse.de>
+Message-ID: <b67b94b2-7f13-6c8a-70c6-c7ee6cbddd8f@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Fri, 17 Apr 2026 10:28:55 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Subject: [oss-security] SELinux troubles
+Subject: [oss-security] CVE-2026-30898: Apache Airflow: Bad example of BashOperator shell
+ injection via dag_run.conf 
 
+Severity: low=20
 
-Hi
+Affected versions:
 
-As per list policy, this is the repost to oss-sec. CRD was
-set to today. PoC may be found as straight-shooter.c inside
-old troubleshooter git.
-Please also note the container-damaging beauty this time.
+- Apache Airflow (apache-airflow) before 3.2.0
 
-Sebastian
+Description:
 
-----8<---------------
+An example of BashOperator in Airflow documentation suggested a way of pass=
+ing dag_run.conf in the way that could cause unsanitized user input to be u=
+sed to escalate privileges of UI user to allow execute code on worker. User=
+s should review if any of their own DAGs have adopted this incorrect advice.
 
-Hi
+Credit:
 
-Due to a review request, it was necessary to have a look at setroubleshoot
-again.
+Peyton Kennedy (p80n-sec) from Endor Labs (finder)
+Kevin Yang (remediation developer)
 
-setroubleshoot (still) contains various code injection vulns, leading to
-full (unconfined) root.
-PoC has been tested on CentOS 6.6, 6.8 and 7. PoC as well works inside
-Docker containers to achieve running in a setroubleshoot domain with
-uid 0 on "the host". (PoC most likely also works on RHEL 6.x and 7 if
-CentOS maps to it).
-This is not CVE-2015-1815 and PoC runs on systems that are patched against it.
+References:
 
-Here are the details:
-
-
-1)
-
-This bug is mitigated since setroubleshoot that is found on RHEL 7.2,
-by running it as a dedicated user (untested).
-
-Shell injection issue in setroubleshoot/audit_data.py:
-
-def _set_tpath(self):
-[...]
-	if path.startswith("/") == False and inodestr:
-		import subprocess
-		command = "locate -b '\%s'" % path
-		try:
-	    	    output = subprocess.check_output(command,
-		 	                             stderr=subprocess.STDOUT,
-                                                     shell=True)
-[...]
-
-
-taking 'path' off AVC denial messages and constructing a command thats
-passed to "sh -c".  o.O
-Note that AVC denial messages appear outside of containers, so
-a setroubleshoot is usually run on the host, processing AVC messages
-from containers. This allows for an easy breakout.
-
-
-2)
-
-I did not test this, but even though the run_fix() function in
-SetroubleshootFixit.py is protected by auth_admin polkit rules, it looks
-like theres good chance to pass XML documents via setroubleshoots
-RPC/DBUS API that contains evil local_id or analysis_id fields and trick
-real admins to "fix" AVC denials that inject code:
-
-[...]
-    def run_fix(self, local_id, analysis_id):
-         import commands
-         command = "sealert -f %s -P %s" % ( local_id, analysis_id)
-         return commands.getoutput(command)
-[...]
-
-This is not mitigated by the run-as-user, since SetroubleshootFixit.py
-still runs as root (and probably needs to).
-
-
-There are various other occurences of subprocess calls for "rpm" and others,
-which have already been mentioned in the CVE-2015-1815 report but probably
-still unfixed because of "missing PoC".
-
-The codebase is huge, and I wonder what kind of lax handling and
-user-surfacing code inside critical SELinux components this is, in particular
-where SELinux' aim is to harden the system.
-
-Sebastian
-
--- 
-
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
-
+https://github.com/apache/airflow/pull/64129
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-30898
 
