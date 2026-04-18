@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2190" "Sunday" "16" "October" "2016" "20:52:39" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<4660482.3AE3K0588b@arcadia>" "64" "[oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)" nil nil nil "10" "2016101618:52:39" "[oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)" (number mark "U       ago@gentoo.o Oct 16   64/2190  " thread-indent "\"[oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5724 invoked by uid 550); 16 Oct 2016 18:52:27 -0000
+Received: (qmail 30145 invoked by uid 550); 18 Apr 2026 17:36:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5478 invoked from network); 16 Oct 2016 18:52:24 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sun, 16 Oct 2016 20:52:39 +0200
-Message-ID: <4660482.3AE3K0588b@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] mupdf: mujstest: strcpy-param-overlap in main (jstest_main.c)
+x-ms-reactions: disallow
+Received: (qmail 27707 invoked from network); 18 Apr 2026 17:36:36 -0000
+Date: Sat, 18 Apr 2026 19:36:40 +0200
+From: Solar Designer <solar@openwall.com>
+To: cyber security <cs7778503@gmail.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20260418173640.GA24846@openwall.com>
+References: <CAPmip_xXkz6hjTUUKbaHr1hwq5ROfpNwn5Rq-t9cxMgs6uXhZQ@mail.gmail.com> <CAPmip_xVPZ_mFkTUjGd=k_3K222BQxPhySy1ei2VieqBp=pBng@mail.gmail.com> <CAPmip_zm57=Za1HVTM4RMr9xZiS3YNRcYRwXHXwPN3yMRC_eug@mail.gmail.com> <CAPmip_yuO6dEb7VNUmysMU3u1=4bjxpJyq=Q3SMAbM-ijAvqEA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPmip_yuO6dEb7VNUmysMU3u1=4bjxpJyq=Q3SMAbM-ijAvqEA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] [CVE-2026-33691] OWASP CRS whitespace padding bypass vulnerability
 
-A note outside the blog post:
-This issue does not affect any library, but it is only in the mujstest binary.
-There aren't known applications which use mujstest, but if you have an 
-application or website which relies on mujstest you are invited to apply the 
-patch or use the newer package when it will be released. Thanks.
+Hi,
 
-Description:
-Mujstest, which is part of mupdf is a scriptable tester for mupdf + js.
+On Sat, Apr 18, 2026 at 08:14:12AM -0400, cyber security wrote:
+> Also you can use CVE-2026-33691, to disable security headers while bypassing CRS
+> 
+> More info at https://unlockoldupload.hashnode.dev/turn-off-security-headers-using-cve-2026-33691
 
-A fuzzing revealed a strcpy-param-overlap.
+This gives a 404 Page Not Found, but more importantly actual content
+should have been directly included in your posting, not only referenced
+via a link (although providing a link as well would then be OK).
 
-The complete ASan output:
+> On Sat, Apr 18, 2026 at 3:00 AM cyber security <cs7778503@gmail.com> wrote:
+> > After deep analysis we confirm, that CVE-2026-33691 aka it alias
+> > UnlockOldUpload, can even disable ModSecurity WAF
+> >
+> > More info at https://unlockoldupload.hashnode.dev/disable-modsecurity-waf-using-cve-2026-33691.
 
-# mujstest $FILE
-==26843==ERROR: AddressSanitizer: strcpy-param-overlap: memory ranges 
-[0x0000013c5d40,0x0000013c62ed) and [0x0000013c6285, 0x0000013c6832) overlap
-    #0 0x473129 in __interceptor_strcpy /var/tmp/portage/sys-devel/llvm-3.8.0-
-r3/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_interceptors.cc:545
-    #1 0x4f7910 in main /var/tmp/portage/app-
-text/mupdf-1.9a/work/mupdf-1.9a/platform/x11/jstest_main.c:353:6
-    #2 0x7f8af37a961f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #3 0x41ade8 in _init (/usr/bin/mujstest+0x41ade8)
+This one exists.  The gist of it is:
 
-0x0000013c6140 is located 0 bytes to the right of global variable 'filename' 
-defined in 'platform/x11/jstest_main.c:15:13' (0x13c5d40) of size 1024
-0x0000013c6285 is located 5 bytes inside of global variable 'getline_buffer' 
-defined in 'platform/x11/jstest_main.c:24:13' (0x13c6280) of size 4096
-SUMMARY: AddressSanitizer: strcpy-param-overlap /var/tmp/portage/sys-
-devel/llvm-3.8.0-r3/work/llvm-3.8.0.src/projects/compiler-
-rt/lib/asan/asan_interceptors.cc:545 in __interceptor_strcpy
-==26843==ABORTING
+"upload a file called .htaccess with the content SecRuleEngine Off"
 
-Affected version:
-1.9a
+which should have been directly in your message.
 
-Fixed version:
-1.10 (not yet released)
+With this, I think you've said enough about this CVE already, and should
+stop here - no further examples are needed.
 
-Commit fix:
-http://git.ghostscript.com/?p=mupdf.git;h=cfe8f35bca61056363368c343be36812abde0a06
+Thanks,
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Timeline:
-2016-08-04: bug discovered
-2016-08-05: bug reported to upstream
-2016-09-22: upstream released a patch
-2016-09-25: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/09/25/mupdf-mujstest-strcpy-param-overlap-in-main-jstest_main-c/
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+Alexander
