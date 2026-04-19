@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3361" "Friday" "27" "October" "2017" "20:25:11" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<93509.5195631845-sendEmail@localhost>" "75" "[oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)" nil nil nil "10" "2017102720:25:11" "[oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)" (number mark "U       ago@gentoo.o Oct 27   75/3361  " thread-indent "\"[oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1710 invoked by uid 550); 27 Oct 2017 20:25:33 -0000
+Received: (qmail 9805 invoked by uid 550); 19 Apr 2026 21:11:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,98 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1681 invoked from network); 27 Oct 2017 20:25:32 -0000
-Message-ID: <93509.5195631845-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Fri, 27 Oct 2017 20:25:11 +0000
+x-ms-reactions: disallow
+Received: (qmail 24168 invoked from network); 19 Apr 2026 20:46:52 -0000
+Date: Sun, 19 Apr 2026 22:46:43 +0200
+From: Matthias Ferdinand <ml.oss-security@mfedv.net>
+To: oss-security@lists.openwall.com
+Message-ID: <aeU_M_lpglZoXOqI@xoff>
+References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
+ <20260410025803.GA20948@openwall.com>
+ <aeILrE9J6sYYPmEh@xoff>
+ <545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
+ <87mrz1tbu3.fsf@gentoo.org>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-22789.9549800021"
-Subject: [oss-security] binutils: NULL pointer dereference in concat_filename (dwarf2.c) (INCOMPLETE FIX FOR CVE-2017-15023)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87mrz1tbu3.fsf@gentoo.org>
+Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
+ security fixes
 
-------MIME delimiter for sendEmail-22789.9549800021
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+[ hopefully, discussing binary releases is not off-topic ]
 
-Description:
-binutils is a set of tools necessary to build programs.
+On Sat, Apr 18, 2026 at 12:18:44AM +0100, Sam James wrote:
+> Eli Schwartz <eschwartz@gentoo.org> writes:
+> 
+> > On 4/17/26 6:30 AM, Matthias Ferdinand wrote:
+> >> Perhaps the message did not spread wide enough. Or are many Go programs
+> >> just not affected?
 
-The commit fix for this issue says:
-
-The PR22200 fuzzer testcase found one way to put NULLs into .debug_line file tables. PR22205 finds another.
-So mitre considers this an incomplete fix.
-
-The complete ASan output of the issue:
-
-# nm -A -a -l -S -s --special-syms --synthetic --with-symbol-versions -D $FILE
-==19042==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x0000006a76a6 bp 0x7ffde0afde30 sp 0x7ffde0afde00 T0)
-==19042==The signal is caused by a READ memory access.
-==19042==Hint: address points to the zero page.
-    #0 0x6a76a5 in concat_filename /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8
-    #1 0x696ff3 in decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:2265:44
-    #2 0x6a2d36 in comp_unit_maybe_decode_line_info /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3651:26
-    #3 0x6a2d36 in comp_unit_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:3686
-    #4 0x6a0369 in _bfd_dwarf2_find_nearest_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:4798:11
-    #5 0x5f332e in _bfd_elf_find_line /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/elf.c:8695:10
-    #6 0x5176a3 in print_symbol /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1003:9
-    #7 0x514e4d in print_symbols /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1084:7
-    #8 0x514e4d in display_rel_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1200
-    #9 0x510976 in display_file /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1318:7
-    #10 0x50f4ce in main /var/tmp/portage/sys-devel/binutils-9999/work/binutils/binutils/nm.c:1792:12
-    #11 0x7f6c6d793680 in __libc_start_main /var/tmp/portage/sys-libs/glibc-2.23-r4/work/glibc-2.23/csu/../csu/libc-start.c:289
-    #12 0x41a638 in chmod (/usr/x86_64-pc-linux-gnu/binutils-bin/git/nm+0x41a638)
-
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /var/tmp/portage/sys-devel/binutils-9999/work/binutils/bfd/dwarf2.c:1601:8 in concat_filename
-==19042==ABORTING
-
-Affected version:
-2.29.51.20170925 and maybe past releases
-
-Fixed version:
-N/A
-
-Commit fix:
-https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;h=a54018b72d75abf2e74bf36016702da06399c1d9
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-15939
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00380-binutils-NULLptr-concat_filename
-
-Timeline:
-2017-09-25: bug discovered and reported to upstream
-2017-09-26: upstream released a patch
-2017-10-24: blog post about the issue
-2017-10-27: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-This bug was identified with bare metal servers donated by Packet. This work is also supported by the Core Infrastructure Initiative.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/10/24/binutils-null-pointer-dereference-in-concat_filename-dwarf2-c-incomplete-fix-for-cve-2017-15023/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+> For serious issues, it may make sense for projects distributing binaries
+> (provided they know it was built by a buggy compiler) in the same way
+> they might do for a vulnerable OpenSSL DLL in their Windows offering.
 
 
-------MIME delimiter for sendEmail-22789.9549800021--
+> > $ emerge @golang-rebuild
+> > ...
+> > fixing. It is regular like clockwork, so do people really need an
+> > invitation to do so?
 
+Personally, I am guilty of not compiling packages myself (except for
+some pkgsrc) and using mostly distributions in binary package form
+(Debian, Ubuntu, Alma). Also, many projects on github release binary
+packages. Doing a fresh release with no change except for the compiler
+used (and some new release version or build number) may make sense for
+those projects with affected binaries.
+
+
+> > IIRC it is possible to determine which packages actually need rebuilding
+> > for any given CVE, but to do so you need to locally extract the entire
+> > recursive deps-included source code of every package, and run some
+> > arcane undocumented `go ....` invocation. Functionally, what you're
+> > doing is checking which programs link to an internal static library
+> > distributed with the go compiler. (This is not exactly correct, but it
+> > is a useful mental model.)
+
+Don't know enough Go to check affectedness of any project myself, but if
+it is that difficult it makes me worry even more :-) In the original
+advisory I did not see any mention if/how these issues propagate into
+compiled applications, and I only started worrying after reading the
+blog post about the memory safety issues and seeing that some projects
+had started issuing updates.
+
+A vulnerability in the build chain of course takes more time to assess
+and solve for all binaries in a binary distribution. Or you could just
+issue package updates for all Go applications (as proposed by Eli
+Schwarz).
+Not sure if I would really to want to see either every project/package
+using Go listed under the existing CVEs, or a new CVE issued for each
+just for increased visibility. I just wondered why the impact on
+binaries and binary packages is not being discussed more broadly
+(anywhere, not just oss-security).
+
+https://security-tracker.debian.org/tracker/CVE-2026-... only lists
+golang packages as affected, with some as already fixed and released,
+e.g.  https://security-tracker.debian.org/tracker/CVE-2026-33810 (DNS
+contraints).
+
+https://ubuntu.com/security/CVE-2026-... are still showing "Needs
+evaluation" for the golang packages, but they contain a comment by Marc
+Deslauriers: "Packages built using golang need to be rebuilt once the
+vulnerability has been fixed."
+
+Alpine has bumped build numbers, as Chad Dougherty wrote here
+    From: Chad Dougherty <crd477@icloud.com>
+     Not an advisory, but Alpine did this:
+     https://git.alpinelinux.org/aports/commit/?h=3.23-stable&id=f43ed43f4d329cb8cbca59b90c9560ab9e6d8f42
+Alpine also had fresh releases on 2026-04-15, including some updates
+"rebuild with Go ..."
+
+Arch linux appears not to have recompiled Go applications (or at least
+not all of them, only checked restic)
+
+repo.almalinux.org does not show updated golang versions, so probably
+no recompiled Go applications either.
+
+
+Matthias
