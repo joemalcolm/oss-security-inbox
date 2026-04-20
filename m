@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["23808" "Saturday" "4" "July" "2015" "09:23:48" "+0200" "Adam Zabrocki" "pi3@pi3.com.pl" "<20150704072348.GA24700@pi3.com.pl>" "541" "[oss-security] Follow-up on Exploiting \"BadIRET\" vulnerability (CVE-2014-9322)" nil nil nil "7" "2015070407:23:48" "[oss-security] Follow-up on Exploiting \"BadIRET\" vulnerability (CVE-2014-9322)" (number mark "U       pi3@pi3.com. Jul  4  541/23808 " thread-indent "\"[oss-security] Follow-up on Exploiting \"BadIRET\" vulnerability (CVE-2014-9322)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21671 invoked by uid 550); 4 Jul 2015 07:25:53 -0000
+Received: (qmail 18353 invoked by uid 550); 20 Apr 2026 18:50:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,557 +7,216 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21615 invoked from network); 4 Jul 2015 07:25:43 -0000
-X-Virus-Scanned: amavisd-new at pi3.com.pl
-Date: Sat, 4 Jul 2015 09:23:48 +0200
-From: Adam Zabrocki <pi3@pi3.com.pl>
+x-ms-reactions: disallow
+Received: (qmail 18274 invoked from network); 20 Apr 2026 18:50:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=qZ5qQuuDpVFU8OS/UjAOxjehuoRWBEn95bk0mCUI8qM=; b=
+	JW3+ibtFSzqC3W2mlc5MVcgbLtcS4rt3+nGeFlDS+Sp0TNok6jdEhTfoHQqMUyH2
+	MuDHUF+VXEgQgQv0bn7SEdWdSDogbxrpgkyMlQxPo4UYiKBUDVUobJO7R6jmQv4e
+	x5d9fTAwinnRFtKctI/PC+IeTk5GuhN5BCSBV987CGQAE/Mto//2LYNRj5ccJcEt
+	F3beDbKkir7mcFVGRDg6bG9sjxSHqvUK3zvNyTID8lCbu8cpPzhxm6ZrwXRPMACe
+	DfdwM+4llyGjkFM6rvAbTfYeGPda3wQvtDgfjtaWPUud8LAxb1O7/X0VS5GfdtNb
+	l7QXVVLKL4KHJYo+VcE0DA==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hSEL5gUYFLBbBghSVzjSEmFmVkkusGfDwyreUcDehyTfu0bVviPH8beAA9KHewNVRwAQ6WrP0tAr0wN2lpX7rm8xAxdiIsTY7LfOENtyujvsrWNauEwjtrGbZrPJ43HUoYKI75xS5uzsdJ73oduj65jj7ECNWkW0xkhmFeTsLH8e49+HD6DZBrhpgRV2ATBcsy/DlPvsEPxWrNYC3pDXtceykb1mPwJXh2p6GI4lGyhDl7m/kpINoKe7jn8jvBgobOe5aW+GsinRl4IU2hBlJKMkT56bDxl8LYbnRQJ57pDUcFgtZXjlL7m0tEUdFOMRjeXgGeu/8Zur0GQgiPp69w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qZ5qQuuDpVFU8OS/UjAOxjehuoRWBEn95bk0mCUI8qM=;
+ b=HPq/ekdkBD2YJGbaiPM3Qnalv0d5k8mLq8I1xv7wdbSGbUkb59sczhgHhYTqBzOj4Q1layLu6X9f/aZxJs44jUopmRPNglS8cCuytREnZtJ17XvgowecpACXgZ/+zfb+hbmseNkzDS17D8lxOkyg+TBLyym9UGIwFrD0jDR9vfH0NRpBN5chc2mWPN9CXTi21Cuxvtc0bB/NKhcJRCwrXmuWXbziOWVAfTdfvzIEjd9fyJuP4SSo5GTmot0kjlESUdxscl79t3rlI3BP1y1dNTEhVL+k+cE/8y17AU1dGKOF3jr+OMBnSTBrN2m2wdd/OLW6LcqzB/Qm0U7DLWLsaA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qZ5qQuuDpVFU8OS/UjAOxjehuoRWBEn95bk0mCUI8qM=;
+ b=NisOwmPeKobP7ZHfAgcyepHe6gEHp5Efcfuh16YUSwnn+RZCTZ5y4N2EKV7Zs3OGT0QlZxewyxJpEepPqfMKEvyz0qifdqSxjy8b0awvv3CWGyeZplsMryPT/e9mHeORUUW/dJ3CeZNdD/MiQIgQXCOerl//7hZEvn2oALFdA+0=
+Message-ID: <a54bb1f5-61ad-4083-a1eb-c1a501143b7c@oracle.com>
+Date: Mon, 20 Apr 2026 11:49:55 -0700
+User-Agent: Mozilla Thunderbird
+References: <CAADqWPRTJqedtJW1A6Qi5UZYEOVfftJqbmGbLz+wnE_u-1x9tg@mail.gmail.com>
+Content-Language: en-US
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 To: oss-security@lists.openwall.com
-Message-ID: <20150704072348.GA24700@pi3.com.pl>
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ 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
+ 5V9JclVH6u5Gug==
+In-Reply-To: <CAADqWPRTJqedtJW1A6Qi5UZYEOVfftJqbmGbLz+wnE_u-1x9tg@mail.gmail.com>
+X-Forwarded-Message-Id: <CAADqWPRTJqedtJW1A6Qi5UZYEOVfftJqbmGbLz+wnE_u-1x9tg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH7P220CA0162.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:33b::31) To CH3PR10MB6739.namprd10.prod.outlook.com
+ (2603:10b6:610:147::6)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Subject: [oss-security] Follow-up on Exploiting "BadIRET" vulnerability (CVE-2014-9322)
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR10MB6739:EE_|SA1PR10MB997712:EE_
+X-MS-Office365-Filtering-Correlation-Id: fdd1b019-838c-48d8-a3ce-08de9f0d9e4f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|4022899009|366016|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info:
+	5DUE3ZwUaMNa6H/m12Aa/ubzZuxx3sfl0pt6uG26jy0+acRL3NQ+ptLAWlVVMKrMYSFR9LgwjlhTRR5wBeaxcBWN1Drzx+rr0EMzpwKiAYgIBNrxsZsHCqoksbewi02aijghLc4jr7vmc4sPAyOCMdpAR6BDBnk6TEw2fp11zPw2KzSzotGV+cIvtqScCOQhz8K1QlkpTnmiHURtWoc8iemJPlerTtoX5pnj7DU1UHUWzaGMWD4/TC1+hvwnizrlKgmK+nZd5VJaxSooFpaGxgW6BgWkMooZfFiCb6nyfp1Xq1WHWlantfXFpM6/ItjVHNNqZWuFYqldPcimAOCuIirKxBbSmYv0RLNEvEDV8hjPatpj5XleLklXp4Ks37/TvrET/nU/B0fw7ypcRqqbao3W3npuFFUfrhxZ3CoOX54z0SbYGAZBk8pD7/SCjXLWYbXHoOF3GJzl1v96je04UIZss4lKgrVCj9iWKABdpfHS5BWR9AYpcfMm+wTotrzu4EupU45eDbpZz4+qTu+wvoAPSAdn7cdyYqtcJvCxKoQ+BYwCyUecV4Ass821Yre6b127rKnv8ChFUcHVkJsSlPe3d95bSLp4VYb7vPyK9W/53NhdUG1cyXCE5bOFnaheSEUs6+d3RWLkWA/ZzODUE3XW9h+UJuF+3EM8w0NS4TmTtq3TpK7LUFVtPpDP9xhyBzSMkpUNxk1KJnFDa4MVzEY3xFUiLErcFWMTntSzcTa3yxfwU28HhfdVSrwVVvk7
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR10MB6739.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(4022899009)(366016)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dUszNGg2NW85bFVnQ3BvQVp2ckdMVk01WlNYTkJ6MW1Xbk9rZ002SDJqT0pH?=
+ =?utf-8?B?OEpseSs0SExaNWwzMFJkVVkzazA5OGQ1Ukp3ZUEvTGh1M2FlbFp4cHZEWUhW?=
+ =?utf-8?B?U3Nicm1IWUZMc0VPWUZnS0Z3VzQwNGw2RjJ6UXh5VXhDZ1I0RmIxTTZyZk0r?=
+ =?utf-8?B?ZXRFeFBaTFU2TU9VVTNtT3FVdUZCNXVLeTRRSVhhVE14UC9KKzVOa2dqWkNt?=
+ =?utf-8?B?L3EvaUF6akpyQnlRL21jRnE3dDVMOW11UlR3WGVWOFBINi9HWlFrbEdlMUNv?=
+ =?utf-8?B?KzdTM1BIUGs1RWZuREtScHgzMUtqZ3RyeGxqc2EvNTA5bDZXb0p5ZThWbXFw?=
+ =?utf-8?B?MTRLclU3dm5aSndzSitrNzJYVUlNc0RDTW1BeDNNTHg5VW5yckNQcWVPU2M5?=
+ =?utf-8?B?c0JjMFVWQkVRWEN6MEtvaFBIdlloTktJQTg3YmljNm40TG94MmF1NVBHZ1VP?=
+ =?utf-8?B?c0R6S08yUFg4UHVBNXBVVXhBRCtQbHpkRHMxakJIWDd1WmR2OEI5dXhVcFor?=
+ =?utf-8?B?UWNsSnhacjNvS2ltVTAvM25qWkI0R3FLSkwvVDdtQitCL3Q3ZXc2YmVqbGRm?=
+ =?utf-8?B?L3IzK2lodHNJNFdSZ2Vrc2dtd1ZhSGxyR0ZJeXJucXAxYTg0L3BTbHFZVjcx?=
+ =?utf-8?B?UDNFWXFrU0dhOGhiRWI4MU5yK0dBMUNGS3Y0N0hyUjJMWlcvblBXZGZzSzFG?=
+ =?utf-8?B?WXA4dU9lKy9XUzNIbkZXdHIwYzRGYm41SEtJaTIvY1hlbDNtZHduRjhBZzNr?=
+ =?utf-8?B?Q0h3RjV5eE01b1BXQk5Fb1JTVzNTbWxRcUx6VDlEcC9mUWFQYmVsWXNZdUF2?=
+ =?utf-8?B?UHNrK3VDeGpoWTBpcFFZZ28rUEV2c2ZyVmZ4R1FMWEtrN0FnUys3NTB0MkpO?=
+ =?utf-8?B?WDQrYzZQbXErV09vUlE2bVY1V3VxdE1PSHF3WnovRW42c1lZUTFRSGRGY2lD?=
+ =?utf-8?B?djZveHIxdHRSdzMwNUFFSHhoclpid0tCL0ZxSCtTTmpMa25TdjZYdHBRaXh3?=
+ =?utf-8?B?b0ZuK3BDTlFHNzFrcWk3ZmlHdXFORlFUSFQxdkI5NitFcjlUK3N6NEs0VGly?=
+ =?utf-8?B?SjgxczJ4STFIY2xHcm4zRHk2NnljeURDMHlyblkydUR4Z0ZaTFR4R0RKNzUy?=
+ =?utf-8?B?Z2w1NVIxeFBrdWlXaTFPQi9kWkc4MVNvNjJTK25LOTdEZXA5bGJHeU0yWC9q?=
+ =?utf-8?B?cXVuT1F4SktZZSt4eTdhSm9Xa0phekt2Q0JwcWFGa211VDlhMEdrVDJRVGRV?=
+ =?utf-8?B?MkJOYkVGM05FWHpkTVlaZmhuVzdpdFlUd3pIbklSb2RqNitUYUl5WUQzK2ln?=
+ =?utf-8?B?SEJaNXh4dURLNlJSeG9TRkxYMGx1RDRqMk16MERwRGtLd09kUXAvNDgyTVRN?=
+ =?utf-8?B?azJFMkNGVVIrMFlRdytUdnVvUWRYdUtoTC9CMkRRcVh2clBLNmZMbHpzN2RT?=
+ =?utf-8?B?RW9rWkhZTTQ4VVU4cU10aG9iUlh1aW1qNnoxRHQvaGtiSGhha2NCMnc4UVJs?=
+ =?utf-8?B?bUprdkk3eUJuSDNPQUwzK0lRK3puRnhvaUxaNkNnVCtydWkralZ1TVNxSFdG?=
+ =?utf-8?B?R3ZUSzM3c2xPdVR1WU5JUnNaMmh4OE9qRGdZejJPY1VmZ21RYUwzUUphTThn?=
+ =?utf-8?B?S2o1akl2c2RISk9ON29YYUZmS0tRTEovRXhGWCtOekcrcnJ3TEx0a0dKU3Yy?=
+ =?utf-8?B?NWJEVnJFWDU5MVpCTmhhNEpNZFUxcGZuUklCV1pTVWl2dEVXU3JqamN6SkJ5?=
+ =?utf-8?B?NllQSVpxc0d2Q3I1aXlXNXpEOXpOaGptTDc5ejBIbXN1ZGIrR3dSVTlTUG5v?=
+ =?utf-8?B?WGl0S0gxVUNvajZkSkZKcXo1MU5hRVRmODBIcEpaNjdGZldFRGxzNFV2MlFv?=
+ =?utf-8?B?T3hVVitPT1VqOTU3ZmZIOVR2WmJabUdNREkvejljbUJxOU4xR0FoQ0JJNnRX?=
+ =?utf-8?B?ZkFzNTJsR1BKZ1FDYnF5eFhjdGprTG5OclVzanBlZFFiZkFpZElJby9qaXQ4?=
+ =?utf-8?B?MFZVNmZIZHN3YlF6bnpIN1FLU1BNQnorS25VeVlxNUlseTkzT2RLRFJDL3hw?=
+ =?utf-8?B?RmpCRkZ3RXdEd01tRjZQc2o3bS9qOS9CMi8rSE5RMXYwcG9DVzlMOStVZmU4?=
+ =?utf-8?B?bHBpUU1MNkhtNE9JVVdMR1dtaFB3WUd6VFEyRGF5QWl6YjdHTWs1R2xIaExO?=
+ =?utf-8?B?S01vOUkvc28vK2VVUi9BNzBIS2dRQ1VOdnh6aXJxZGVQZGR1NkNXQmtWYjFx?=
+ =?utf-8?B?eWhadDZJVjZleGkrQ2pObW5tWlBPbFk5cTdQa0Q0ZXpOSHlpM1FkVTZUZFl6?=
+ =?utf-8?B?Z1lleUhhTlhDZkNtRWdydDltbUhwWUdKa3lSL2Fkeks3Z3FkbHFjbUd1NW5j?=
+ =?utf-8?Q?CiTgqMYxb7V7Gh7w=3D?=
+X-Exchange-RoutingPolicyChecked:
+	HOcR50cKLO4tkoKptj5enuSSqBiywSmIsMzrOSx+/GUQkWpYxdTDXbabcKQ9pBEc/rUmwGoTwfUEm0Lf7tW068Q9TBFVVpSUhbBYOtp3sKHc8wVopoqeeIkQ9Fm7sENaH9U/FkpW5kIN0U1OSa433dvAeURMMSfykGhALOR6o3JwuUmAfi822wDPvD0uaU+J2vyn0bcdFbpVIZyCkX90fKRTqN50+Fg9KHCJ02Bl246SH0BvjKwqgtkjUQ/5VfL1Mft/wyhaMbOmcOPr7P/If/ZSNXLGXwJYax9+U5f9Gum7Ogtm3u9S1EBaTuqJrnUmsHb4E3gs0axQUaou4qb3NQ==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	wp56i1SW+HnM41LCMSxBoys/kZC5oPR08ftR4ZcdXgKyYdwpKz/jqRyMJR6Eg9he4QO/WhszngjTCmhYQPAjgnYqhoqsW7w7p42d2OVyJQhAriRs2cjQBobhih1Ix/flxejRHh5gBnaNdTCA25DBUg9krpKYZ1iSvGb+lQ9pcflJCR7iqMJCJaej5A00HF8al6hiQGzyKYoE9M+L+UJnAv26rfBfeU41GF6DlROCbr13s2lpREnpxKDDUMKquKfx5Pw2lC1Yo3X95haAGmrFhZEUcu9chsQ4+L7rhn2hsYF7BdLYPV/LA1bDAsprVhX9qoSTGZpTP9WsDQggL+QtgHGTEQug7M6E7VmIUdB4Gzy+SisfMSvP0m29kEKbbXDyfUlH0RaFzQX6iqj1upQpgqTUolnXShr2E4I/q6ZbD9oEzAVOOwkxaTT7A5S10ZKoGovF3Juwnlor0SzGT+sWpUAkeFF0GnJELTPGv4wTZY8K1NEuGXuJtJdjF6H/YsyrcOxbMPeoQnb+IWhX1SBwyPHK0jfl8jULD4dLUMhtBK2qXOXmfQpr3YzcL7PTdce+YMegU5luTllNMn0L3LVtO7iueKdqHtAovVF7PdVryts=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fdd1b019-838c-48d8-a3ce-08de9f0d9e4f
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB6739.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Apr 2026 18:49:57.4803
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UTuOYM0JYw9z7s1tDuVhnTxFw/+Fea4Zs4xiHezQC6tJFE5WzqkyD4AlmlkC2ar8Srp8bhfdd9yN7fm2rGYTypEXWB4bkhjD43iIdzn97qQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB997712
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-20_03,2026-04-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=999 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2604070000 definitions=main-2604200182
+X-Authority-Analysis: v=2.4 cv=U46iy+ru c=1 sm=1 tr=0 ts=69e67558 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=A5OVakUREuEA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=8r2qhXULAAAA:8
+ a=NEAV23lmAAAA:8 a=8AHkEIZyAAAA:8 a=GvQvSb2e5d0-4sTuDWQA:9 a=QEXdDO2ut3YA:10
+ a=8gvLZcY7Nlvl4CGD_6nf:22
+X-Proofpoint-ORIG-GUID: NMuqeIoRgKwBBqOWlic3vMe_hSHdsdFU
+X-Proofpoint-GUID: NMuqeIoRgKwBBqOWlic3vMe_hSHdsdFU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDIwMDE4MiBTYWx0ZWRfXyeokbLSquZuY
+ vFL5UKCTUN5U13rc5l6jf9qJyGwieiOoXbCqeFG3PMCP81BCRqQGLSZkSxKsP9K3/4U+audcTrd
+ Y1gIdZsNQ/cJ8HxKXfaVUlrc9o5P+ISTdvq+McxKEl43CsgQsS3dqVsCE0UKyBdXJMCsQOPJy2Q
+ NzY+5XOi0w+T0ALRTpfcfI9GwFER5svl6z71cMlAXSZ9eHaHerWanjui0V1n9eTsVgeJL16hMmB
+ +PcHyLNHbfOLgSrbOuXhY+xBCZDI9jrk45sXbNrTnhYBjx9OQHy/k5ypfYyN/+o27ZjpPoaxZF4
+ CCxzErjqJu8veneFFdzckl+qh03vw948HJBUk59eDJ5BwZZTQucC4CgWZCdRp5DvN89aPtmliuv
+ V7MWNQuEE8pCAcW2WgKJZ+9V5r4A9q9X+c1d8EBcFBKaEEvUEhD4wSdDn12avWe8AMeyrxu+PqB
+ mG0jQhn+mZ9+9tEgujw==
+Subject: [oss-security] Fwd: [CVE-2026-3219] pip doesn't reject concatenated
+ ZIP and tar archives
+
+
+
+
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-3219] pip doesn't reject concatenated ZIP 
+and tar archives
+Date: 	Mon, 20 Apr 2026 15:02:13 +0000
+From: 	Seth Larson <seth@python.org>
+Reply-To: 	security-sig@python.org
+To: 	security-announce@python.org
 
-Hi,
 
-The journey into CVE-2014-9322 is not straightforward but it is worth to sp=
-end some time on it and analyze all available information. I will try my be=
-st...
 
+There is a MEDIUM severity vulnerability affecting pip.
 
-1) Introduction - non-technical (almost)
+pip handles concatenated tar and ZIP files as ZIP files regardless of filename 
+or whether a file is both a tar and ZIP file. This behavior could result in 
+confusing installation behavior, such as installing "incorrect" files according 
+to the filename of the archive. New behavior only proceeds with installation if 
+the file identifies uniquely as a ZIP or tar archive, not as both.
 
-Everything starts from the CVE-2014-9090. This vulnerability was discovered=
- by Andy Lutomirski which allows you (quoting MITRE):
+Please see the linked CVE ID for the latest information on affected versions:
 
-"The do_double_fault function in arch/x86/kernel/traps.c in the Linux kerne=
-l through 3.17.4 does not properly handle faults associated with the Stack =
-Segment (SS) segment register, which allows local users to cause a denial o=
-f service (panic) (...)"
+* https://www.cve.org/CVERecord?id=CVE-2026-3219
+* https://github.com/pypa/pip/pull/13870
 
-which essentially may results in local DoS attack. It doesn't sounds so cri=
-tical from the defender's point of view (but still it takes attention espec=
-ially from the nature of vulnerability point of view) neither from the atta=
-ckers perspective. Mainly because of the potential limited benefits after s=
-uccessful exploitation.
-
-The "fun" starts after Borislav Petkov asked some questions about CVE-2014-=
-9090. Andy Lutomirski discovered another vulnerability in the same function=
-ality which was masked by first one. (Un)fortunately this time it was very =
-serious (I would say critical) flaw. Linux kernel does not properly handle =
-faults associated with the Stack Segment (SS) register in the x86 architect=
-ure. Quoiting MITRE again:
-
-"(...) allows local users to gain privileges by triggering an IRET instruct=
-ion that leads to access to a GS Base address from the wrong space."
-
-Does the nature of vulnerability sound familiar?
-What about Rafal 'n3rgal' Wojtczuk research which ends up receiving CVE-201=
-2-0217? (which was directly connected with CVE-2006-0744).
-Yes... in principals both vulnerabilities gave us same thing - we can force=
- kernel to be executed under user-controlled GS base address (via %gs regis=
-ter).
-
-For some reasons CVE-2014-9322 didn't take much attention (again similariti=
-es to CVE-2006-0744) until Rafal 'n3rgal' Wojtczuk didn't point it out on 2=
-nd of February 2015 via publish amazing research on Bromium Labs blog:
-
-http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-201=
-4-9322-linux-kernel-privilege-escalation/
-
-about how the nature of vulnerability works, how it can be used to achieve =
-code-exec (which is not trivial - great research!) and using single NULL-by=
-te write primitive turn into fully weaponized exploit which bypasses SMEP m=
-itigation (not SMAP). Highly recommended to review it in details.
-
-After this publication vulnerability started to get more and more attention=
- (especially from the grsecurity twitter account :)). Until now (almost hal=
-f a year) there is not known public real exploit which will fully implement=
- Rafal's idea to achieve code-execution. There is only Proof-Of-Concept ava=
-ilable which results in DoS attack (so the same as results of CVE-2014-9090=
- - not very useful):
-
-https://rdot.org/forum/showthread.php?t=3D3341
-
-which ends up being here:
-
-https://www.exploit-db.com/exploits/36266/
-
-
-2) More technical part (based on Fedora 20 -> kernel: 3.11.10-301.fc20.x86_=
-64)
-
-I decided to take a challenge and fully implement Rafal's idea and end-up b=
-eing successed solving some interesting problems during the work. I will st=
-art where Rafal finished his write-up, which means we end up successfully s=
-tack pivoting and executing ROP gadgets (in his case disabling SMEP in CR4 =
-register and executing 'real' shellcode/kernelcode in userland page).
-
-*) Stack pivoting and ROP are being executed in the context of follow_link(=
-) function which is inlined in path_openat(). The context flow can be summa=
-rized as follow:
-
-SyS_open -> SYSC_open -> do_sys_open -> do_filp_open -> path_openat -> foll=
-ow_link()
-
-Inlined function do relative call which in the end redirect transfer to our=
- code:
-
-...
-   0xffffffff811b84ab <+955>:   jmpq   0xffffffff811b81b3 <path_openat+195>
-   0xffffffff811b84b0 <+960>:   movl   $0x4,0x40(%r12)
-   0xffffffff811b84b9 <+969>:   mov    0x30(%r15),%rax
-   0xffffffff811b84bd <+973>:   mov    %r15,%rdi
-   0xffffffff811b84c0 <+976>:   mov    %r12,%rsi
-   0xffffffff811b84c3 <+979>:   mov    0x20(%rax),%rax
-   0xffffffff811b84c7 <+983>:   callq  *0x8(%rax)
-                                ^^^^^^^^^^^^^^^^^
-   0xffffffff811b84ca <+986>:   cmp    $0xfffffffffffff000,%rax
-   0xffffffff811b84d0 <+992>:   mov    %rax,%r15
-   0xffffffff811b84d3 <+995>:   jbe    0xffffffff811b8532 <path_openat+1090>
-   0xffffffff811b84d5 <+997>:   mov    %r12,%rdi
-   0xffffffff811b84d8 <+1000>:  mov    %eax,%ebx
-   0xffffffff811b84da <+1002>:  callq  0xffffffff811b2930 <path_put>
-...
-
-After our code has being executed first problems start (cleaning part). Eve=
-ry call to function path_put(), do_last(), dput(), mntput() or put_link(), =
-may ends up playing with kernel locks. Because the stack is pivoted this wi=
-ll not going to be=20
-happy ending. Additionally, path_openat() has inline many functionalities, =
-some registers have special meaning (pointers to the structures/objects) wh=
-ich kernel will try to access at some point at may results in kernel crash =
-and/or panic. At the beginning I was trying to track down all problematic e=
-xecution and manually fixing it but there is just too many correlation betw=
-een registers/objects/spinlocks... (btw. Linux kernel 3.xx changed internal=
- representation of raw_spin_lock=20
-comparing to previous kernels which is (un)fortunately much more problemati=
-c when you want manually synchronize it).
-There needed to be better solution, and if you think about pivoting itself =
-you may find one. If you instead of manual fixing all necessary problems fo=
-rce kernel to do it you may win that game. If you find a way to "restore" o=
-riginal stack frame=20
-for the function before stack pivoting was taken kernel should naturally re=
-move all locks and correctly unwind the stack and system will be stable. Th=
-is can be achieved via let's call it reverse stack pivoting :) Directly aft=
-er stack pivot, in=20
-temporary register you should have valid address of the stack which you wan=
-t to know. In our case situation is a bit more complicate because we are lo=
-sing 32 most significant bits of the address. ROP gadget looks like:
-
-   0xffffffff8119f1ed <__mem_cgroup_try_charge+1949>:   xchg   %eax,%esp
-   0xffffffff8119f1ee <__mem_cgroup_try_charge+1950>:   retq
-
-why this gadget was taken and we lose 32bits (we want to)? Please read Rafa=
-l's write-up.
-So if we find some ROP gadget which directly after stack pivoting will save=
- 32 least significant bits of original stack pointer in safe place, we coul=
-d try to restore it and reconstruct original address before we gave control=
- to the kernel. I've=20
-chosen following ROP-gadget:
-
-   0xffffffff8152d8fe <kernel_listen+14>:       push   %rax
-   0xffffffff8152d8ff <kernel_listen+15>:       pop    %rax
-   0xffffffff8152d900 <kernel_listen+16>:       pop    %rbp
-   0xffffffff8152d901 <kernel_listen+17>:       retq
-
-which essentially push %rax value (in fact high bits are zeroed) and move s=
-tack pointer after stored value. At this point we may precisely calculate w=
-here it will be stored.
-
-Problem solved (reverse-stack pivot won :P)
-
-*) If your shellcode is going to be executed for too long there is high cha=
-nce scheduler will preempt you which sometimes may be critical - depends on=
- the current stage of execution and what is going to be preempting you. Qui=
-te often you may=20
-receive APIC timer interrupt connected with updating process times (known a=
-s tick'ing) which may screw you up on some corner cases - it should be take=
-n into account!
-
-btw. if you have bad luck you may be preempted as soon as you did stack piv=
-oting ;p
-
-*) Our code is executed while proc_root structure is corrupted... :) This i=
-s NOT what we would like to have. It dramatically increases chance of kerne=
-l crash if other process will do any operation on /proc pseudo-filesystem. =
-proc_root.subdir value must be restored as soon as it can be to decrease th=
-e chance of random crash. There is few possible ways of doing it:
-
-a) instead of overwriting 6 bytes of subdir do only 5 of them which will le=
-ave 3 bytes untouched. This means we can easily reconstruct original value =
-by adding 0xffff8800 value at the most significant bits (for that kernel) a=
-nd trying to find=20
-only 1 byte which is 256 possibilities. Chance of crash is very low (touchi=
-ng not mapped page). Additionally this requires allocation in user space ar=
-ound 16 MB to have guarantee that after referencing overwritten proc_root.s=
-ubdir always ends up=20
-in our controlled memory.
-
-b) we can brute force full address by 'preventing' from Page Fault (#PF). F=
-or the short period of time we can overwrite #PF handler with simple code:
-- Get the exception from the stack
-- Change the address which caused crash to smth which we know is mapped
-- Restart faulting instruction
-
-original brute force loop will continue running
-
-c) Ignore all of the problems and just reconstruct address as much as it ca=
-n be and do brute force rest of the bytes. Apparently it's quite reliable a=
-nd effective. We know that high significant bytes are 0xffff8800 and we hav=
-e 2 least=20
-significant bytes. We need to find 2 bytes which are unknown for us. On Lin=
-ux (as opposed to Windows) kernel memory are not being paged out (swapped o=
-ut). Chance of hitting unmapped page is quite low when we brute force just =
-2 bytes in the=20
-middle of reconstructed address - believe me or not, it works well :)
-
-Problem is also how we judge if the address is correct or not. It's quite s=
-imple, struct proc_dir_etry has 'parent' field. We must find address which =
-will have on the specific offset, address of proc_root (which is known). In=
- the end we check 65536 addresses and chance of FP is low as well. I've nev=
-er hit that situation.
-
-
-Summarizing our shellcode must:
-- save original stack pointer value
-- disable interrupts (to prevent from being preempted) and start to reconst=
-ruct corrupted proc_root.subdir value
-- do REAL (s)hellcode
-- restore original stack pointer
-- restore frame pointer
-- restore registers pointing to the internal objects
-- enable interrupts and return to the normal kernel execution
-
-
-3) Grsecurity =3D> UDEREF
-
-As I mentioned Rafal's research has been "sighted" by spender via:
-
-http://twitter.com/grsecurity/status/562363332079144960
-http://twitter.com/grsecurity/status/562363788125831172
-
-Additionally some people suggests UDEREF is as effective as SMAP with block=
-ing exploitation of this vulnerability:
-
-http://seclists.org/oss-sec/2014/q4/1052
-
-"This is likely to be easy to exploit for privilege escalation, except
-on systems with SMAP or UDEREF.  On those systems, assuming that the
-mitigation works correctly, the impact of this bug may be limited to
-massive memory corruption and an eventual crash or reboot."
-
-This is not completely true. UDEREF may be as effective (in fact even more)=
- as SMAP or only as effective as SMEP (on AMD64) which will not prevent exp=
-loitation at all (using described technique). So what's going on? :) Curren=
-tly UDEREF for AMD64 has 3 different implementations:
-
-- slow / weak legacy implementation
-- strong implementation on Sandy Bridge and later
-- fast / weak implementation on Sandy Bridge and later
-
-First implementation of UDEREF on AMD64 was "weak" implementation and infor=
-mation about it was described by PaX team here:
-
-http://grsecurity.net/pipermail/grsecurity/2010-April/001024.html
-
-I will quote the essential part of it:
-
-"(...) so what does UDEREF do on amd64? on userland->kernel transitions it =
-basically
-unmaps the original userland address range and remaps it at a different add=
-ress
-using non-exec/supervisor rights (so direct code execution as used by most
-exploits is not possible at least). (...)"
-
-and next:
-
-"(...) UDEREF/amd64 doesn't ensure that the (legitimate) userland accessor
-functions cannot actually access kernel memory when only userland is allowed
-(some in-kernel users of certain syscalls can temporarily access kernel mem=
-ory
-as userland, and that is enforced on UDEREF/i386 but not on amd64). so if
-there's a bug where userland can trick the kernel into accessing a userland
-pointer that actually points to kernel space, it'll succeed, unlike on i386.
-
-the other bad thing is the presence of the userland shadow area. this has
-two consequences: 1. the userland address space size is smaller under UDEREF
-(42 vs. 47 bits, with corresponding reduction of ASLR of course), 2. this
-shadow area is always mapped so kernel code accidentally accessing its range
-may not oops on it and can be exploited (such accesses can usually happen o=
-nly
-if an exploit can make the kernel dereference arbitrary addresses in which
-case the presence of this area is the least of your concerns though).(...)"
-
-=3D=3D weak UDEREF =3D=3D
-This means it works essentially similar to SMEP. So how to exploit CVE-2014=
--9322 under this specific implementation of UDEREF? You just need to change=
- the ROP. Instead of disabling SMEP bit in CR4 register and execute code fr=
-om the user land,=20
-implement full shellcode as ROP. It is possible and it won't be stop by wea=
-k implementation of UDEREF.
-
-
-=3D=3D "new" UDEREF =3D=3D
-Why strong implementation of UDEREF is different and why does it require Sa=
-ndy Bridge architecture?
-Yes, that's the fun part. I haven't seen any official write-up regarding "n=
-ew" UDEREF. I wasn't even aware about those changed since I was playing wit=
-h that exploit :)
-
-Strong implementation of UDEREF using Sandy Bridge++ feature called as PCID=
- to make 'tags' in TLB. By doing it UDEREF may completely separate user lan=
-d from kernel (via creating new PGD tables):
-
-static inline void enter_lazy_tlb(struct mm_struct *mm, struct task_struct =
-*tsk)
-{
-++#if defined(CONFIG_X86_64) && defined(CONFIG_PAX_MEMORY_UDEREF)
-+     if (!(static_cpu_has(X86_FEATURE_PCID))) {
-+             unsigned int i;+                pgd_t *pgd;
-++            pax_open_kernel();
-+             pgd =3D get_cpu_pgd(smp_processor_id(), kernel);
-+             for (i =3D USER_PGD_PTRS; i < 2 * USER_PGD_PTRS; ++i)
-+                     set_pgd_batched(pgd+i, native_make_pgd(0));
-+             pax_close_kernel();
-+     }
-+#endif
-
-+#if defined(CONFIG_X86_64) && defined(CONFIG_PAX_MEMORY_UDEREF)
-+             if (static_cpu_has(X86_FEATURE_PCID)) {
-+                     if (static_cpu_has(X86_FEATURE_INVPCID)) {
-+                             u64 descriptor[2];
-+                             descriptor[0] =3D PCID_USER;
-+                             asm volatile(__ASM_INVPCID : : "d"(&descripto=
-r), "a"(INVPCID_SINGLE_CONTEXT) : "memory");
-+                             if (!static_cpu_has(X86_FEATURE_STRONGUDEREF)=
-) {
-+                                     descriptor[0] =3D PCID_KERNEL;
-+                                     asm volatile(__ASM_INVPCID : : "d"(&d=
-escriptor), "a"(INVPCID_SINGLE_CONTEXT) : "memory");
-+                             }
-+                     } else {
-+                             write_cr3(__pa(get_cpu_pgd(cpu, user)) | PCID=
-_USER);
-+                             if (static_cpu_has(X86_FEATURE_STRONGUDEREF))
-+                                     write_cr3(__pa(get_cpu_pgd(cpu, kerne=
-l)) | PCID_KERNEL | PCID_NOFLUSH);
-+                             else
-+                                     write_cr3(__pa(get_cpu_pgd(cpu, kerne=
-l)) | PCID_KERNEL);
-+}
-+             } else
-+#endif
-
-
-
-In the end context run in kernel mode will NOT see any usermode pages. This=
- implementation I personally believe is much stronger than SMAP. Why?
-
-1. You can't just disable one bit in CR4 register to fully turn off this mi=
-tigation
-2. In case of SMAP, you can see userland pages (there is existing Page Tabl=
-es translating userland addresses. 'P' bit is set) but you just can't touch=
- it. In "new" UDEREF you don't see userland at all (PGD is completely diffe=
-rent for kernel context and there is no Page Tables describing userland add=
-resses. 'P' bit is unset).
-
-This version of UDEREF was firstly introduced on grsecurity version 3.0 in =
-February 2014. Good work! Will be nice if PaX/grsecurity may publish some d=
-etails of their research and great implementation :)
-
-
-Btw. In both cases result of touching userland addresses is the same - #PF =
-will be generated :)
-Btw2. The same "strong" UDEREF functionality may be achieved without hardwa=
-re PCID feature. The main difference is performance. Without hardware suppo=
-rt for PCID it should be a mess from the performance point of view.
-
-
-=3D=3D Summarizing =3D=3D
-This vulnerability can be exploited under UDEREF and can NOT be exploited u=
-nder "new" UDEREF which is enabled on Sandy Bridge++ architecture.
-
-In fact you can still use this vulnerability to fully DoS machine under "ne=
-w" UDEREF? How? It's quite funny and tricky, you can force infinitive loop =
-of #PF :) As soon as kernel enters to the do_general_protection() function =
-it will try to read GDT bia GS base by executing following instruction:
-
-    0xffffffff8172910e <do_general_protection+30>:       mov    %gs:0xa880,=
-%rbx
-
-at this situation GS base is pointing to the userland memory. Because there=
- is no PTE entry for that address (kernel context doesn't see userland at a=
-ll), #PF will be generated. page_fault() function will be executed and foll=
-owing:
-
-page_fault -> do_page_fault -> __do_page_fault -> restore_args
-
-it will try to read GDT again and next #PF will be generated and so on... s=
-o on... so on... :) So yes, you can still crash the kernel but there is no =
-way to do anything else because there is no even room for exploitation. Vul=
-nerability has being stopped at principals.
-
-
-4) Funny facts :)
-
-a) Some versions of libthread requires to create memory with RWX permission=
- when you call pthread_create() function. This is not allowed under PaX/grs=
-ec hardening of mmap() and as soon as internal implementation pthread_creat=
-e() will call=20
-mmap(), process will be killed :) I met this situation on default installat=
-ion of Ubuntu LTS where I was testing kernel with grsecurity hardening.
-
-b) on kernel 3.11.10-301.fc20.x86_64 implementation of __switch_to() functi=
-on using OSXSAVE extension (bit 18 in CR4 register) without checking if CPU=
- has this extension or not:
-
-     0xffffffff81011714 <__switch_to+644>    xsaveopt64 (%rdi)
-
-__switch_to() is executed under disabled interrupts but if OSXSAVE extensio=
-n is not enabled CPU will generate #UD and it will be deadlock. Before ente=
-ring to __switch_to() instruction regardless disabling interrupts also ther=
-e is locked runqueue which will never be unlocked in case of #UD.
-I wonder if someone hit this problem in real life :)
-
-c) Fedora 20 exploitation is pretty stable (source code available on my web=
-site):
-
-[pi3@localhost clean_9322]$ cat z_shell.c
-#include <stdio.h>
-
-int main(void) {
-
-   char *p_arg[] =3D { "/bin/sh", NULL };
-
-   setuid(0);
-   seteuid(0);
-   setgid(0);
-   setegid(0);
-   execv("/bin/sh",p_arg,NULL);
-
-}
-[pi3@localhost clean_9322]$ gcc z_shell.c -o z_shell
-[pi3@localhost clean_9322]$ cp z_shell /tmp/pi3
-[pi3@localhost clean_9322]$ ls -al /tmp/pi3
--rwxrwxr-x 1 pi3 pi3 8764 May  6 23:09 /tmp/pi3
-[pi3@localhost clean_9322]$ id
-uid=3D1000(pi3) gid=3D1000(pi3) groups=3D1000(pi3)
-[pi3@localhost clean_9322]$ /tmp/pi3
-sh-4.2$ id
-uid=3D1000(pi3) gid=3D1000(pi3) groups=3D1000(pi3)
-sh-4.2$ exit
-exit
-[pi3@localhost clean_9322]$ gcc -o procrop procrop.c setss.S
-[pi3@localhost clean_9322]$ gcc -o p_write8 swapgs.c setss.S -lpthread
-swapgs.c: In function =E2=80=98main=E2=80=99:
-swapgs.c:175:29: warning: cast from pointer to integer of different size [-=
-Wpointer-to-int-cast]
-               : "r"(4), "r"((int)p_to_d), "r"(1)
-                             ^
-[pi3@localhost clean_9322]$ ./procrop
-
-        ...::: -=3D[ Exploit for CVE-2014-9322 ]=3D- :::...
-                           by Rafal 'n3rgal' Wojtczuk
-                           && Adam 'pi3' Zabrocki
-
-                Usage: ./procrop <number>
-
-                        Number:
-
-                                1 - kernel [3.11.10-301.fc20.x86_64]
-
-[pi3@localhost clean_9322]$ ./procrop 1 &
-[1] 5827
-[pi3@localhost clean_9322]$
-        ...::: -=3D[ Exploit for CVE-2014-9322 ]=3D- :::...
-                           by Rafal 'n3rgal' Wojtczuk
-                           && Adam 'pi3' Zabrocki
-
-        [+] Using kernel target: 3.11.10-301.fc20.x86_64
-
-[pi3@localhost clean_9322]$
-[pi3@localhost clean_9322]$
-[pi3@localhost clean_9322]$ ps aux |grep procr
-pi3       5827 83.0  0.0   4304   320 pts/1    RL   23:12   0:05 ./procrop 1
-pi3       5829  0.0  0.1 112660   916 pts/1    S+   23:12   0:00 grep --col=
-or=3Dauto procr
-[pi3@localhost clean_9322]$ ./p_write8
-
-        ...::: -=3D[ Exploit for CVE-2014-9322 ]=3D- :::...
-                           by Rafal 'n3rgal' Wojtczuk
-                           && Adam 'pi3' Zabrocki
-
-                Usage: ./p_write8 <number>
-
-                        Number:
-
-                                1 - kernel [3.11.10-301.fc20.x86_64]
-
-[pi3@localhost clean_9322]$
-[pi3@localhost clean_9322]$ ./p_write8 1
-
-        ...::: -=3D[ Exploit for CVE-2014-9322 ]=3D- :::...
-                           by Rafal 'n3rgal' Wojtczuk
-                           && Adam 'pi3' Zabrocki
-
-        [+] Using kernel target: 3.11.10-301.fc20.x86_64
-        [+] mmap() memory in first 2GB of address space... DONE!
-        [+] Preparing kernel structures... DONE! (ovbuf at 0x602140)
-        [+] Creating LDT for this process... DONE!
-        [+] Press enter to start fun-game...
-[exploit] pthread=20
-runningAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA[1]+=20=20
-Done                    ./procrop 1
-Segmentation fault (core dumped)
-[pi3@localhost clean_9322]$ ls -al /tmp/pi3
--rwsrwsrwx 1 root root 8764 May  6 23:09 /tmp/pi3
-[pi3@localhost clean_9322]$ id
-uid=3D1000(pi3) gid=3D1000(pi3) groups=3D1000(pi3)
-[pi3@localhost clean_9322]$ /tmp/pi3
-sh-4.2# id
-uid=3D0(root) gid=3D0(root) groups=3D0(root),1000(pi3)
-sh-4.2# exit
-exit
-[pi3@localhost clean_9322]$
-
-
-
-References:
-1) http://labs.bromium.com/2015/02/02/exploiting-badiret-vulnerability-cve-=
-2014-9322-linux-kernel-privilege-escalation/
-2) https://rdot.org/forum/showthread.php?t=3D3341
-3) https://www.exploit-db.com/exploits/36266/
-4) http://blog.pi3.com.pl/?p=3D509
-5) http://twitter.com/grsecurity/status/562363332079144960
-6) http://twitter.com/grsecurity/status/562363788125831172
-7) http://site.pi3.com.pl/exp/p_cve-2014-9322.tar.gz
-8) http://seclists.org/oss-sec/2014/q4/1052
-9) http://grsecurity.net/pipermail/grsecurity/2010-April/001024.html
-
-
-
-Best regards,
-Adam 'pi3' Zabrocki
-
-
---=20
-pi3 (pi3ki31ny) - pi3 (at) itsec pl
-http://pi3.com.pl
+_______________________________________________
+Security-announce mailing list -- security-announce@python.org
+To unsubscribe send an email to security-announce-leave@python.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
