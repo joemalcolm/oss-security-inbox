@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1824" "Tuesday" "24" "January" "2017" "09:55:01" "+0100" "Sebastian Krahmer" "krahmer@suse.com" "<20170124085501.GA9322@suse.de>" "55" "[oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)" "^Date:" nil nil "1" "2017012408:55:01" "[oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)" (number mark "        krahmer@suse Jan 24   55/1824  " thread-indent "\"[oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5895 invoked by uid 550); 24 Jan 2017 08:55:15 -0000
+Received: (qmail 7410 invoked by uid 550); 20 Apr 2026 15:52:03 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,74 +6,127 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5868 invoked from network); 24 Jan 2017 08:55:14 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170124085501.GA9322@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: Felix =?utf-8?Q?Imend?=
- =?utf-8?Q?=F6rffer?= =?utf-8?Q?=2C?= Jane Smithard, Graham Norton, HRB 21284
- (AG Nuernberg)
-User-Agent: Outlook
-Date: Tue, 24 Jan 2017 09:55:01 +0100
-From: Sebastian Krahmer <krahmer@suse.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Headsup: systemd v228 local root exploit (CVE-2016-10156)
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 5624 invoked from network); 20 Apr 2026 09:01:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1776675692;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=emF8nWXRKzeprduR9MR1OIcdRqQgEob3j+1n/aOxECI=;
+	b=F+Gjt1k6TkgQGa6ofqw0VAiAHI6xkkB9casjZMWCvBzMU6RFFWIoqMV4S7GXDPHoupfgYm
+	1aST4pjKS8fHE2w68DEllJVAh9C5u0VoA4SjFO6XejcgzBdh+s5Cn1ezr//No7XWkTdzcK
+	DSrfc7jmmkrHotMaW/XdZSP9FQqYwbE=
+X-MC-Unique: sq0Z5axvP6WDWlMdEcDPVA-1
+X-Mimecast-MFC-AGG-ID: sq0Z5axvP6WDWlMdEcDPVA_1776675689
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776675689; x=1777280489;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=emF8nWXRKzeprduR9MR1OIcdRqQgEob3j+1n/aOxECI=;
+        b=M1yfU7yqwiFdilB/VprjmjjNxotDUVoTu30f/QdxABX87HlLYa1fRsD8fbDmfaLok4
+         JM1gURzQgf/lShSNPo+LvmE3cW7LOYQwueIE9UTbs30LlpOjWC9HdgjA+Tnqc+y3q6ni
+         fVnGfGeUyUGDoNouASC4WDE7tr+pN2r9gJ+sLmvGIRa/fSnp7wCEPKfQP2MLdXUBO9I4
+         VV1IgdT5VI0jbJaUkgivPt043n7b9KbdBor170Zt3TIUGWqDncRYCID2F4MBisobghjk
+         F0zR6kAEyrOgykvpcrbJWB5NnZU2D8MpV92f1PZ/l0VWG6EI2heuMgVkvYeXkSfhcgDW
+         7dyA==
+X-Forwarded-Encrypted: i=1; AFNElJ/ovxKITMVV+QxpMChcW/8uuC6juMrlUhdEPISvzNXevbYwkCl3HSSoWSkToj7rhW2tBRs0eNw/8fPfXWA=@lists.openwall.com
+X-Gm-Message-State: AOJu0YzKMcX5wVCDL3JLN/ipnAG+Np5ERAWYgmNkeLGSIAgmHBSl63mO
+	mK0jzZgVC7k6E/HF/SViZrTQE8EtkMbTTP36OLbrm/akYMEwYiH/eIAxtb7mzSxwshgAxRiVVDf
+	rbId6j+GtOsyGvv8FAE0HPGw7ITcyacEs8GpbF144Y2kdUns5hQ8LWS1RIqxNVX4QVtwPpSnLZy
+	pRuRJodWtjAWMzOJVVWGwD0Y5M8eG3qua9o3xYET2YkLpts6rii4j025U=
+X-Gm-Gg: AeBDieuDzPLhuRaTlBimg7DMlvtJQTGL0qMivSZvUwkYAHdzria00mgsHzYHB0gbbG4
+	NueULa8e2vU2ZoxLwwhLcS7XHUyxNTQXWzR59x4APQ6hfcUyPVghh76yg/+mN2XAWP4pWpQO7DQ
+	pPPJ4sD59yk9AYavQXoPVU5WEIrUWZshMk2MQZD5Xl1ynPFAIQzeORyCLEqFTnUN8vkUJIr4NRj
+	XUBnmj3XwF4vXDRr2Yuz3rJV2F1eo3M8Mg41zVeZQdS1LorKT0xUVGZCMqBEhoJplxX6CG32F+i
+	ZPvcOeezGTmDjwmchiAkFu87KziFxgaO7Pf8IkPc0TiLyBKD6rcxpbCgF52s6d9R0G1cUtx8tg6
+	STxq78q+7OJ2lcIEcFAwuhEszxuvd3DM+LdTni4ehA2nvuEECTF0Kcf37
+X-Received: by 2002:a05:690e:d56:b0:650:18fc:f557 with SMTP id 956f58d0204a3-65310a82f1dmr9963580d50.56.1776675688612;
+        Mon, 20 Apr 2026 02:01:28 -0700 (PDT)
+X-Received: by 2002:a05:690e:d56:b0:650:18fc:f557 with SMTP id
+ 956f58d0204a3-65310a82f1dmr9963560d50.56.1776675688131; Mon, 20 Apr 2026
+ 02:01:28 -0700 (PDT)
+MIME-Version: 1.0
+From: Ales Musil <amusil@redhat.com>
+Date: Mon, 20 Apr 2026 11:01:16 +0200
+X-Gm-Features: AQROBzCEu0M-QGjXZjdnqXOtF5OwADSwRAdJ49gBzq60IkdMJxflziEFo4pmNF0
+Message-ID: <CALVEqe4=vz3wuJvn6T2=6As+1gh-qd+Ze_m+UXBVFAmyVy8ykA@mail.gmail.com>
+To: ovs-announce@openvswitch.org, oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: 3HJDYS6dhRBMpY-PnL6dz9o928Q_yhAe6mUKPY_ME58_1776675689
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="00000000000045c1bc064fe08b54"
+Subject: [oss-security] [ADVISORY] CVE-2026-5367: Heap over-read in OVN DHCPv6 Client ID processing
 
-Hi
+--00000000000045c1bc064fe08b54
+Content-Type: text/plain; charset="UTF-8"
 
-This is a heads up for a trivial systemd local root exploit, that
-was silently fixed in the upstream git as:
+Description
+===========
 
-commit 06eeacb6fe029804f296b065b3ce91e796e1cd0e
-Author: ....
-Date:   Fri Jan 29 23:36:08 2016 +0200
+Multiple versions of OVN (Open Virtual Network) are vulnerable to
+crafted DHCPv6 packets that could potentially read out-of-bounds,
+leaking adjacent info stored on the heap.
 
-    basic: fix touch() creating files with 07777 mode
-    
-    mode_t is unsigned, so MODE_INVALID < 0 can never be true.
-    
-    This fixes a possible DoS where any user could fill /run by writing to
-    a world-writable /run/systemd/show-status.
+OVN supports configuring DHCPv6 options for Logical Switch Ports.
+When configured we allow handling of DHCPv6 requests in a userspace
+thread called pinctrl. The thread accesses user-controlled packet data
+and copies some of it in the process of creating a reply packet.
 
-The analysis says that is a "possible DoS", but its a local root
-exploit indeed. Mode 07777 also contains the suid bit, so files
-created by touch() are world writable suids, root owned. Such
-as /var/lib/systemd/timers/stamp-fstrim.timer thats found on a non-nosuid mount.
+When building a DHCPv6 ADVERTISE reply, the handler echoes the
+Client ID option using the option's self-declared length without
+validating it against the actual packet bounds. A workload can send
+a crafted DHCPv6 SOLICIT with an inflated Client ID length field,
+causing ovn-controller to copy heap memory beyond the valid packet
+data into the reply. The reply is then delivered back to the
+attacker's VM port.
 
-This is trivially exploited by something like:
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has
+assigned the CVE-2026-5367 identifier to this issue.
 
-http://www.halfdog.net/Security/2015/SetgidDirectoryPrivilegeEscalation/CreateSetgidBinary.c
+A way to determine if any LSP has DHCPv6 options configured:
 
-with minimal changes, so I wont provide a PoC here.
+  $ ovn-nbctl --columns name,dhcpv6_options list logical_switch_port
 
-The bug was possibly introduced via:
+If the above command returns at least one dhcpv6_option, the Logical
+Switch Port is configured to respond to DHCPv6 SOLICIT messages.
 
-commit ee735086f8670be1591fa9593e80dd60163a7a2f
-Author: ...
-Date:   Wed Nov 11 22:54:56 2015 +0100
+Mitigation
+==========
 
-    util-lib: use MODE_INVALID as invalid value for mode_t everywhere
+The only potential mitigation is to disable the DHCPv6 feature for
+workloads attached to OVN logical ports, e.g.:
 
+ovn-nbctl clear logical_switch_port <workload-port> dhcpv6_options.
 
-So we believe that this mostly affects v228 of systemd, but its recommended
-that distributors cross-check their systemd versions for vulnerable
-touch_*() functions. We requested
-a CVE for this issue from MITRE by ourselfs: CVE-2016-10156
+We do not recommend mitigating the vulnerability this way because it
+will also disable legitimate DHCPv6 traffic originating from
+workloads connected to logical switch ports.
 
-We would like to see that systemd upstream retrieves CVE's themself
-for their own bugs, even if its believed that its just a local DoS.
-This would make distributors life much easier when we read the git logs
-to spot potential issues. The systemd git log is really huge, with
-lots of commits each week ("new services as a service").
+Fix
+===
 
-Sebastian
+Patches to fix this vulnerability in OVN 24.03 and newer are
+applied to the appropriate branches.
 
--- 
+Recommendation
+==============
 
-~ perl self.pl
-~ $_='print"\$_=\47$_\47;eval"';eval
-~ krahmer@suse.com - SuSE Security Team
+We recommend that users of OVN apply the patches, or upgrade to
+a known patched version of OVN.  These include:
+
+ * v24.03.8
+ * v24.09.4
+ * v25.03.3
+ * v25.09.3
+ * v26.03.1
+
+Acknowledgments
+===============
+
+The OVN team wishes to thank the reporter:
+
+  Seiji Sakurai <Seiji.Sakurai@outlook.com>
+
+--00000000000045c1bc064fe08b54--
 
