@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["982" "Friday" "30" "September" "2016" "21:15:35" "-0300" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsv2SWT=HDdeDRXC-CvfFo7g37m-CL0Sd9sONEBGhX2Mrw@mail.gmail.com>" "26" "[oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation" "^Date:" nil nil "9" "2016100100:15:35" "[oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation" (number mark "U       dawid@legalh Sep 30   26/982   " thread-indent "\"[oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root Privilege Escalation\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 10016 invoked by uid 550); 1 Oct 2016 06:04:38 -0000
+Received: (qmail 5344 invoked by uid 550); 20 Apr 2026 15:51:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,63 +6,141 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3923 invoked from network); 1 Oct 2016 00:15:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=MBKm7xHhRrWIXE8gM37R7P6BPPYEWE5qxZUuxfn5WAI=;
-        b=0BPg9cOH1YdeG9sHJLJ03jfu45Hh3x7AiygiKok5oVZA7TBRAvZBlM6vpAdOLk7/Dg
-         iG2YYQw146ZwfjynZrcabWgyXlh/TD4HHPVzuEBrJ5+7CIbSXgcPMD1DXebC0gDv6z1s
-         gXjuNq4h8oxwuZvVzOTbkNFNDdQ2lqCkWflMISRMnRn+wsaTf0Vb5SYv1TmyVlVxhYHp
-         MzmnMzWJvJsSddLaOITOyicL18lAfC+I0FyhlVRwaIvlk/r8/OGTlx2uknM7hbkobcbk
-         0azhNBBWkHDgq76l/QcTEioXW8P1h9ZKk468UuhEaBvZ9jeTewWXUKD672mwXmfgFRDr
-         vuUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=MBKm7xHhRrWIXE8gM37R7P6BPPYEWE5qxZUuxfn5WAI=;
-        b=LanP0qciFxJ5ExxIr3LnjgWKwSizpoirg3ezyQCnxfm8eBo5eUYWnbiDtQT0aRK+3x
-         QvBAeJvgEZljwRvt6JJSVIIk26AfhAg3sCag/Cc2ynKmEfDHpkSeFfhphihRokvu6PGc
-         bchlsCX7U9l12eaeT2J+EciAzRvQDbvP2FzF6PqyONr6/zVbPFs4lgXdPp1jZnRs95BT
-         Zt9CIfByTfUV3kob0Fzp2rF139FOEdybNF/6hr29PzwGOIEzJVWFu5Oo5cMAfkH+aHy/
-         3vK/1pCkEya3SE9KnNAYH6KpEnUvaOlxBn+8BB3bwYhWWPjzGVnmt2MVAOEcduVDxw7e
-         wUjQ==
-X-Gm-Message-State: AA6/9Rn5WcvZ69H34Qw0niDDKSX/SH52WpzPrxWJU8PLS32qWsbwZfgY8hBUuD5XQJgKpRKeg9lpbpVQVYu3jQ==
-X-Received: by 10.194.90.174 with SMTP id bx14mr8426682wjb.41.1475280935698;
- Fri, 30 Sep 2016 17:15:35 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CADSYzsv2SWT=HDdeDRXC-CvfFo7g37m-CL0Sd9sONEBGhX2Mrw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 30 Sep 2016 21:15:35 -0300
-From: Dawid Golunski <dawid@legalhackers.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2016-1240 - Tomcat packaging on Debian-based distros - Local Root
- Privilege Escalation
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 5582 invoked from network); 20 Apr 2026 09:01:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1776675691;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=o5gSLxB8jk/OL6/ApSL8kKT/wwy05qAhsSQPQT31f6g=;
+	b=L0UMsxeIOlSCGUfAu7r42KuDmBxAjft1WktugJ0rivfxv+okSqlW2EEMm2o8Qsv71gqCpr
+	ndhFb7+22exTKYskA84uMJXh1ewMubnSwgHbXem4y/EF/jjR7zcayMmynOtjgDM7TTkrcG
+	kUi8uvXDxVmabKEhMDXsvBIw2051gaM=
+X-MC-Unique: vHpsOOn9N56w1ohruYTKvw-1
+X-Mimecast-MFC-AGG-ID: vHpsOOn9N56w1ohruYTKvw_1776675687
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776675687; x=1777280487;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o5gSLxB8jk/OL6/ApSL8kKT/wwy05qAhsSQPQT31f6g=;
+        b=PCV6ViBdBlfpJPyIWlXcv/04Jcg4FxUZzt/OQdTKqLHiqyBas2EWKdoCvKL0bR2BrM
+         w0TSQQecysjq3SbaZu9JeHd7pd5nESbztTO+EtZf951h7Ii3v/x4/sUEtlRBnlkNTMnW
+         0dHAnzXeKw6nLCuTAA3RPAHdb4dKxMxM4sedOfLk0zC93SEb8bye7xE4uu0r6ts1i/sA
+         cUyVzOdsgHtQhEOw1qMArW1cQkWgz1tjU4TohT7EwP9Lst4B1MRv5vdTkE00akmvlayq
+         YYJ8Fx5bz/FZhAo8gd4Px9ddZiSo08NoebVlmqMViTerKLkiPX8MJrbKr+lrJtvOlWwo
+         MR3g==
+X-Forwarded-Encrypted: i=1; AFNElJ8QDBvFBs6BridR+FuY/dBxbD+2BZYHDJ12HOg9p0dFktjmAbGV+9b+eegJ5XEO/qyIEWcJot/xagA/K9I=@lists.openwall.com
+X-Gm-Message-State: AOJu0YySs3MvetBWM8MSIuY5dhTD7af8/SHIiYLKY67BpFm9KFI7AhXM
+	5q2LaazZTHTOVxvmSo2ENODHc33F8BQcz04VZcoMvzFOCb6vW4KyzRyhTf3BrH53BB/4992htZd
+	rI3oH1zMNyYyOMx9cfPilzpDY+FzWDAHtvDSY5OszHwDVtnVH8/ljqkorRFHdP8kDMU4s6pO8Cd
+	4lnrHL9nwjqCeVpbRjoATWwX7ujKDxDFVr2JzmApXksMY3
+X-Gm-Gg: AeBDiesobyhci3GwmO6J562+1a53eC4OAra5SR+20MXcrQyWU3nxRAeU3smou0x6k/z
+	5ZgrG7JvMashXqCLK9RL7pTYRueq7UMFRIx6q1ffrg92oXzw48gdPEOmBBGlk9qjA60FEGi50Fz
+	uH1nU9aQF0wUvVXEfh8JVQJXkujR3/Ryve/Cf41AmG3BlSfYp97as/5O/aJd2dr7/hpTfiQl2yn
+	5P4/gJIRQlaJPCSaGwk6Eb6hH7g6t+Hu+2dw9GS4/pT2BB19IdGnn/1HHxNwiAzAK3zNEXZjhBS
+	BxdCvRaF5ig26T7kjK3Tg8VgKJ12FB5fz+Cuyfvit6Lxau9Ked7YGX/dCsf4FiRVrq5DBVuIu+Q
+	bBJvyPeGXFWeNK5jsObv1HUes0sM/QwKMGCMGzgPKDSeNmF5RZXaOKL+J
+X-Received: by 2002:a53:d748:0:b0:64c:9ec3:d71a with SMTP id 956f58d0204a3-65310a737b1mr8785308d50.48.1776675687261;
+        Mon, 20 Apr 2026 02:01:27 -0700 (PDT)
+X-Received: by 2002:a53:d748:0:b0:64c:9ec3:d71a with SMTP id
+ 956f58d0204a3-65310a737b1mr8785282d50.48.1776675686705; Mon, 20 Apr 2026
+ 02:01:26 -0700 (PDT)
+MIME-Version: 1.0
+From: Ales Musil <amusil@redhat.com>
+Date: Mon, 20 Apr 2026 11:01:15 +0200
+X-Gm-Features: AQROBzAxi0lW2ojvpXspAEOWlb19dyTuN8zTQrJ6pMFGB_tpAhjgCMx_j3Ib0n8
+Message-ID: <CALVEqe6a8yXmfG9R_v1rsBF0x_OSpJw_soxxk9-mSYUNHOMwjg@mail.gmail.com>
+To: ovs-announce@openvswitch.org, oss-security@lists.openwall.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: zelzXYV76tJTMK6zJVsRPaUiCBFygZmuH6e-ZokmjLc_1776675687
+X-Mimecast-Originator: redhat.com
+Content-Type: multipart/alternative; boundary="000000000000306b79064fe08b73"
+Subject: [oss-security] [ADVISORY] CVE-2026-5265: Heap Over-Read in ICMP Error Response Generation
 
-CVE: CVE-2016-1240
-Vulnerability: Tomcat packaging on Debian-based distros - Local Root
-Privilege Escalation
-Affected packages: Tomcat 6/7/8 deb packages (up to 8.0.36-2)
-Systems affected: Debian & Ubuntu & possibly others (using the
-affected deb packages)
+--000000000000306b79064fe08b73
+Content-Type: text/plain; charset="UTF-8"
 
-Discovered by:
-Dawid Golunski (http://legalhackers.com)
+Description
+===========
 
-Tomcat (6, 7, 8) packages provided by default repositories on Debian-based
-distributions (including Debian, Ubuntu etc.) provide a vulnerable
-tomcat init script that allows local attackers who have already gained access
-to the tomcat account (for example, by exploiting an RCE vulnerability
-in a java web application hosted on Tomcat, uploading a webshell etc.) to
-escalate their privileges from tomcat user to root and fully compromise the
-target system.
+Multiple versions of OVN (Open Virtual Network) are vulnerable to
+crafted IP packets that could potentially read out-of-bounds,
+leaking adjacent info stored on the heap.
 
-The full Advisory and a PoC exploit can be found at:
+OVN supports sending ICMP error messages in multiple scenarios, e.g.
+reject ACLs, PMTU discovery via Gateway MTU, Load Balancer without
+any backends that are configured to reject a packet. The ICMP error
+is generated in the userspace thread called pinctrl. The thread accesses
+user-controlled packet data and copies some of it in the process of
+creating a reply packet.
 
-http://legalhackers.com/advisories/Tomcat-DebPkgs-Root-Privilege-Escalation-Exploit-CVE-2016-1240.html
+When generating an ICMP Destination Unreachable or Packet Too
+Big response, the handler copies a portion of the original packet into
+the ICMP error body using the IP header's self-declared total length
+(ip_tot_len for IPv4, ip6_plen for IPv6) without validating it against
+the actual packet buffer size. A VM can send a short packet with an
+inflated IP length field that triggers an ICMP error (e.g., by hitting a
+reject ACL), causing ovn-controller to read heap memory beyond the valid
+packet data and include it in the ICMP response sent back to the workload.
 
--- 
-Regards,
-Dawid Golunski
-http://legalhackers.com
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has
+assigned the CVE-2026-5265 identifier to this issue.
+A way to determine if any reject ACL is configured:
+
+  $ ovn-nbctl --columns match,action find acl action=reject
+
+If the command above returns at least one ACL, the Logical Switch
+configured with that ACL rejects packets matching the condition.
+
+A way to determine if a Gateway MTU is configured:
+
+  $ ovn-nbctl --columns name,options list logical_router_port
+
+If the output from the command above returns at least one Logical
+Router Port with gateway_mtu in the options column, that port is
+configured to perform the MTU check.
+
+A way to determine if a Load Balancer has a reject action:
+    $ ovn-nbctl --columns name,options list load_balancer
+
+If the output from the command above returns at least one Load
+Balancer with gateway_mtu in the options column, that Load Balancer
+is configured to reject the traffic if it lacks any backends.
+
+Mitigation
+==========
+
+The only potential mitigation is to remove or disable all affected ACLs,
+Load Balancers or Gateway MTU settings on Logical Router Ports.
+
+We do not recommend mitigating the vulnerability this way because it
+will also affect legitimate traffic going through the cluster.
+
+Fix
+===
+
+Patches to fix this vulnerability in OVN 24.03 and newer are
+applied to the appropriate branches.
+
+Recommendation
+==============
+
+We recommend that users of OVN apply tthe patches, or upgrade to
+a known patched version of OVN.  These include:
+
+ * v24.03.8
+ * v24.09.4
+ * v25.03.3
+ * v25.09.3
+ * v26.03.1
+
+Acknowledgments
+===============
+
+The OVN team wishes to thank the reporter:
+
+  Seiji Sakurai <Seiji.Sakurai@outlook.com>
+
+--000000000000306b79064fe08b73--
+
