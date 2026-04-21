@@ -1,62 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/22/4
-Message-ID: <d5ad206c-89d9-4778-9dbe-5f3ce730169f@cpansec.org>
-Date: Mon, 22 Jun 2026 12:31:58 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-11373: Net::Statsite::Client versions through 1.1.0 for Perl allow metric injections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/1
+Message-ID: <87v7dknhe1.fsf@gentoo.org>
+Date: Tue, 21 Apr 2026 22:16:38 +0100
+From: Sam James <sam@...too.org>
+To: oss-security@...ts.openwall.com
+Cc: Robert Rothenberg <rrwo@...nsec.org>
+Subject: Re: CVE-2017-20230: Storable versions before 3.05 for Perl has a stack overflow
 Content-Type: text/plain; charset=utf-8
 
+Robert Rothenberg <rrwo@...nsec.org> writes:
 
-========================================================================
-CVE-2026-11373                                       CPAN Security Group
-========================================================================
+> ========================================================================
+> CVE-2017-20230                                       CPAN Security Group
+> ========================================================================
+>
+>         CVE ID:  CVE-2017-20230
+>   Distribution:  Storable
+>       Versions:  before 3.05
+>
+>       MetaCPAN:  https://metacpan.org/dist/Storable
+>       VCS Repo:  https://github.com/Perl/perl5/
+>
+>
+> Storable versions before 3.05 for Perl has a stack overflow
+>
+> Description
+> -----------
+> Storable versions before 3.05 for Perl has a stack overflow.
+>
+> The retrieve_hook function stored the length of the class name into a
+> signed integer but in read operations treated the length as unsigned.
+> This allowed an attacker to craft data that could trigger the overflow.
 
-         CVE ID:  CVE-2026-11373
-   Distribution:  Net-Statsite-Client
-       Versions:  through 1.1.0
+I'm always suspicious by default of anything involving
+serialisation. The perldoc for Storable [0] says:
+> Do not accept Storable documents from untrusted sources! There is no
+> way to configure Storable so that it can be used safely to process untrusted data. 
 
-       MetaCPAN:  https://metacpan.org/dist/Net-Statsite-Client
-       VCS Repo:  https://github.com/avast/Net-Statsite-Client
+and later (between much other omitted text):
+> With the default setting of $Storable::flags = 6, creating or
+> destroying random objects, even renamed objects can be controlled by
+> an attacker.
+> See CVE-2015-1592 and its metasploit module.
 
+Is this vulnerability valid in light of that? Thanks.
 
-Net::Statsite::Client versions through 1.1.0 for Perl allow metric
-injections
+[0] https://perldoc.perl.org/Storable#SECURITY-WARNING
 
-Description
------------
-Net::Statsite::Client versions through 1.1.0 for Perl allow metric
-injections.
+> [...]
 
-Net::Statsite::Client is a client for the statsite protocol, which is a
-variant of statsd.
+sam
 
-Newlines are not removed from metric names, allowing metric injections.
-
-Values are not sanitised for newlines or other protocol control
-characters such as colons or pipes, allowing metric injections.
-
-Problem types
--------------
-- CWE-93 Improper Neutralization of CRLF Sequences
-- CWE-150 Improper Neutralization of Escape, Meta, or Control Sequences
-
-Workarounds
------------
-Apply the patch.
-
-Otherwise ensure that metric names and values come from trusted sources
-or are properly sanitised.
-
-
-References
-----------
-https://metacpan.org/release/JASEI/Net-Statsite-Client-1.1.0/view/lib/Net/Statsite/Client.pm
-https://security.metacpan.org/patches/N/Net-Statsite-Client/1.1.0/CVE-2026-11373-r1.patch
-http://armon.github.io/statsite
-https://www.cve.org/CVERecord?id=CVE-2026-46719
-https://www.cve.org/CVERecord?id=CVE-2026-46720
-https://www.cve.org/CVERecord?id=CVE-2026-46739
-
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
