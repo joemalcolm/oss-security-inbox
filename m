@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1707" "Thursday" "9" "July" "2015" "15:14:45" "-0400" "Larry W. Cashdollar" "larry0@me.com" "<4ADF6D0B-2A2B-4F81-B53E-1E9C446D62A2@me.com>" "51" "[oss-security] Remote file download vulnerability in ibs-Mappro v0.6 Wordpress plugin" nil nil nil "7" "2015070919:14:45" "[oss-security] Remote file download vulnerability in ibs-Mappro v0.6 Wordpress plugin" (number mark "U       larry0@me.co Jul  9   51/1707  " thread-indent "\"[oss-security] Remote file download vulnerability in ibs-Mappro v0.6 Wordpress plugin\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1811 invoked by uid 550); 9 Jul 2015 19:15:07 -0000
+Received: (qmail 11350 invoked by uid 550); 21 Apr 2026 16:31:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,71 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1733 invoked from network); 9 Jul 2015 19:14:57 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.14.151,1.0.33,0.0.0000
- definitions=2015-07-09_10:2015-07-08,2015-07-09,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1412110000 definitions=main-1507090272
-From: "Larry W. Cashdollar" <larry0@me.com>
-Content-type: text/plain; charset=utf-8
-Content-transfer-encoding: quoted-printable
-Message-id: <4ADF6D0B-2A2B-4F81-B53E-1E9C446D62A2@me.com>
-Date: Thu, 09 Jul 2015 15:14:45 -0400
-To: Open Source Security <oss-security@lists.openwall.com>
-MIME-version: 1.0 (Mac OS X Mail 8.2 \(2098\))
-X-Mailer: Apple Mail (2.2098)
-Subject: [oss-security] Remote file download vulnerability in ibs-Mappro v0.6 Wordpress plugin
+x-ms-reactions: disallow
+Received: (qmail 21756 invoked from network); 21 Apr 2026 15:29:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1776785331;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=NnLcNHk5xy+HQGBfncQKfCg5jAgTJban+Of6kGz721w=;
+	b=eEG8gaTNlPHkSyJZFL54ssQ4kBUgoRt2dgCoDQOHGxcuXgwOKCshP/4gdSr9TsjIuGnxHu
+	PRNFUtjfGMNGJ2gOH9ShT28zL5Tu+X4OCaVt3m0JTFZ5wqGxrBwP8ARLP6WblWMNR4U+Me
+	FRds6LGwjanKiu+FUejYLZG4iV2+2mssXBv7GzWUn/kHbeLLx51VJlwB3oGl5YDVGRD5Gd
+	UNzMaQEm2fZsICUN+RAfMv3bBkkAFsyxxDt0yv4Lb/L8fze6cLo+w5GII6dbzCw6bCSu7n
+	Mf60vebvMB8kEFU7qJBhLjwkMBf9O9skPy5iP52hjCEPQ3XlEdRiE9EzLwWGRw==
+Message-ID: <fb88abe3-8fa4-4b59-954a-b13e1226f7ee@cpansec.org>
+Date: Tue, 21 Apr 2026 16:28:50 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFvJV6At/gQstTw1tKflecmlSeKf5w36Kvja4Sw2lqDmZItEsa6kBe0pb6BMvZLveJXxhtuYtR/YcN7JbPcbl3nHIkCoRerjv7LV3orkV0Aon2NHipm/oud0jyjZr6FeHCjAIhmPzKHzKzM66iXiS9PuSz1hSjWuqflSWtr+NQCxXsY0QxhrOSNCssX2MukBVupewr/7bdwwHuRzAINjO7pHnRnpQt9rdJeUuH/RuowmXrViDjGzL40JlHdiiAyxexXdeqv3zYYJZ7/YJbguhve6BNkssk0ldox/NKdgCpQFMM+LUncf6FhHMOaXDQC/hqpnGEcpoVj4p4s6zxGJtWmYxDOU0eGBAJxvwq3c4T7FRcsLdrh+ePOahAzTQ1rEz8kglXVe0fdpgXWSwgVIpybncklo7SuM3gJQhCftfzLdN6L/DoXxQ94WpzP9MDSow8tJyuGtTmhNYB3QcAgBxx5V+ChEQmKdH/gUWTvBeIcZ+M2PvWL1uz7DS4S9uzyTLZMdXWUGTjqRfi4TksU1jR+I7oZvF9C3LX7E7R3zPfGLqoHfNh1lcb7el4R8MZMK6EVUlGWlTAmmKgs1DdftaIayL1RCeJOlkYkjX/9YbMswc6FokvPzGW8NENaOiVWE7QHYlpUav8eOk/02oC9rDQW4fcrHcIvPQI6EcXHn++dLg
+Subject: [oss-security] CVE-2017-20230: Storable versions before 3.05 for Perl has a stack
+ overflow
 
-Title: Remote file download vulnerability in ibs-Mappro v0.6 Wordpress plug=
-in
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-07-08
-Download Site: https://wordpress.org/plugins/ibs-mappro/
-Vendor: Hmoore71
-Vendor Notified: 2015-07-08, resolved in v1.0.
-Vendor Contact: Contacted via webform
-Advisory: http://www.vapid.dhs.org/advisory.php?v=3D137
-Description: IBS Mappro is a comprehensive map creator, editor, and view ge=
-nerator based on the Google Maps API v3 and supports kml, kmz, and gpx map =
-files.
-Vulnerability:
-the download.php script allows any remote user to download files off of the=
- server:
-if (isset($_GET)) {
-   $filename =3D $_GET['file'];
-   $info =3D pathinfo($filename);
-   $name =3D $info['basename'];
-   if (file_exists($filename)) {
-       header('Set-Cookie: fileDownload=3Dtrue; path=3D/');
-       header('Cache-Control: max-age=3D60, must-revalidate');
-       header('Content-Disposition: attachment; filename=3D"' . $title . '-=
-' . $timestamp . '.csv"');
-       header('Content-Description: File Transfer');
-       header('Content-Type: application/octet-stream');
-       header('Content-Disposition: attachment; filename=3D"' . $name . '"'=
-);
-       header('Content-Transfer-Encoding: binary');
-       header('Expires: 0');
-       header('Cache-Control: must-revalidate, post-check=3D0, pre-check=3D=
-0');
-       header('Pragma: public');
-       header('Content-Length: ' . filesize($filename));
-       ob_clean();
-       flush();
-       readfile($filename);
-       exit;
-   } else {
-       die;
-   }
-} else {
-   die;
-}
-?>
+========================================================================
+CVE-2017-20230                                       CPAN Security Group
+========================================================================
 
-CVEID: Please assign.
-OSVDB: TDB
-Exploit Code:
-	=E2=80=A2 http://example.com/wp-content/plugins/ibs-mappro/lib/download.ph=
-p?file=3D/etc/passwd=
+         CVE ID:  CVE-2017-20230
+   Distribution:  Storable
+       Versions:  before 3.05
+
+       MetaCPAN:  https://metacpan.org/dist/Storable
+       VCS Repo:  https://github.com/Perl/perl5/
+
+
+Storable versions before 3.05 for Perl has a stack overflow
+
+Description
+-----------
+Storable versions before 3.05 for Perl has a stack overflow.
+
+The retrieve_hook function stored the length of the class name into a
+signed integer but in read operations treated the length as unsigned.
+This allowed an attacker to craft data that could trigger the overflow.
+
+Problem types
+-------------
+- CWE-121 Stack-based Buffer Overflow
+
+Solutions
+---------
+Upgrade to Storable version 3.05 or newer.
+
+
+References
+----------
+https://github.com/Perl/perl5/issues/15831
+https://github.com/Perl/perl5/commit/a258c17c6937f79529c8319a829310e09cdbd216.patch
+https://metacpan.org/release/RURBAN/Storable-3.05/changes
+https://www.nntp.perl.org/group/perl.perl5.porters/2017/01/msg242533.html
+https://www.nntp.perl.org/group/perl.perl5.porters/2017/01/msg242703.html
+
+Timeline
+--------
+- 2017-01-24: Perl bug RT#30635 reported.
+- 2017-01-25: Patch committed.
+- 2017-01-29: Storable version 3.05 released.
+- 2018-02-20: Perl v5.27.9 released with Storable 3.06.
+- 2018-10-06: issue assigned CPANSA-Storable-2017-01 in the CPANSA
+   distribution.
+
+
+
