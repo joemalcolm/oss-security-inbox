@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1487" "Monday" "3" "June" "2019" "11:24:19" "-0500" "Federico Mena Quintero" "federico@gnome.org" "<878f6a682e3b533c003e3c06569784b1f442ad67.camel@gnome.org>" "42" "[oss-security] Crash / fix in bzip2" nil nil nil "6" "2019060316:24:19" "[oss-security] Crash / fix in bzip2" (number mark "U       federico@gno Jun  3   42/1487  " thread-indent "\"[oss-security] Crash / fix in bzip2\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Crash / fix in bzip2" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7509 invoked by uid 550); 3 Jun 2019 16:31:05 -0000
+Received: (qmail 11657 invoked by uid 550); 21 Apr 2026 11:36:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,57 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3320 invoked from network); 3 Jun 2019 16:24:41 -0000
-Message-ID: <878f6a682e3b533c003e3c06569784b1f442ad67.camel@gnome.org>
-From: Federico Mena Quintero <federico@gnome.org>
+x-ms-reactions: disallow
+Received: (qmail 11602 invoked from network); 21 Apr 2026 11:36:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
+	t=1776771368; bh=ydWZkqhgOrEQcGq+tRdI3LMu6k+6GVUEUISLYAoN6WE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=L3JP5k1JzHU7FhPiNklxYKx237APKe0deoKeUVVIRlCFO0i5Uo8y7tlREJrha96TQ
+	 L/6YO9K8ltuHpTkLOoXIiQjrnUE9WFTTxEncSaZXBpP7Cyft/hEkofJ6iBBXZdr/CS
+	 r5+3ztH67/VJOFybL1qEuaB96NgdgmHI+UxXJZnc=
+Date: Tue, 21 Apr 2026 07:36:06 -0400
+From: Michael Orlitzky <michael@orlitzky.com>
 To: oss-security@lists.openwall.com
-Cc: Albert Astals Cid <aacid@kde.org>
-Date: Mon, 03 Jun 2019 11:24:19 -0500
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-lzYf6TSnFDZ79yyVeP1G"
-User-Agent: Evolution 3.30.4 
-Mime-Version: 1.0
-Subject: [oss-security] Crash / fix in bzip2
+Cc: Morten Linderud <morten@linderud.pw>
+Message-ID: <aedhJq1VF7pR2sc1@mertle>
+References: <82bd2839-9db9-4ab4-9a7a-915e225a4450@oracle.com>
+ <20260410025803.GA20948@openwall.com>
+ <aeILrE9J6sYYPmEh@xoff>
+ <545dcd82-c8f3-4702-ae81-8b5207791d95@gentoo.org>
+ <87mrz1tbu3.fsf@gentoo.org>
+ <aeU_M_lpglZoXOqI@xoff>
+ <aeZOttxgx4WSc-Kj@framework>
+ <5a747a70-61e1-4efe-914f-13cedca4c229@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="8G6NP8eot0W4vSyj"
+Content-Disposition: inline
+In-Reply-To: <5a747a70-61e1-4efe-914f-13cedca4c229@gmail.com>
+Subject: Re: [oss-security] Go 1.26.2 and Go 1.25.9 are released with 10
+ security fixes
 
---=-lzYf6TSnFDZ79yyVeP1G
-Content-Type: text/plain; charset="UTF-8"
+--8G6NP8eot0W4vSyj
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On 2026-04-20 13:10:13, Demi Marie Obenour wrote:
+>=20
+> I wonder if build infra needs to be updated to support automated
+> rebuilds when a reverse dependency is updated.  My understanding is
+> that FreeBSD ports, Nix, and OBS already support this.
 
-oss-fuzz found a crasher in bzip2, and Albert Astals Cid has written a
-patch for it.  The full context of the bug is here:
+On its own this isn't sufficient because many packages pin their
+dependencies to specific versions or git commits. This causes a
+cascade of problems:
 
-https://gitlab.com/federicomenaquintero/bzip2/merge_requests/1
+ * Most dependencies can't be packaged separately, because eventually
+   two applications will require two different versions of the same
+   library, not to mention the labor involved.
 
-The patch itself is this:
+ * You can try to loosen the dependency constraints yourself, but with
+   everyone else bundling, no one cares about API/ABI stability and
+   breakage is likely.
 
-https://gitlab.com/federicomenaquintero/bzip2/commit/15c918f1de00588321c857=
-a10d0afdbaf96e4ce9
+ * OTOH with dependencies left bundled and pinned to specific
+   versions, rebuilding does nothing except change mtimes.
 
-  Federico
-
---=-lzYf6TSnFDZ79yyVeP1G
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
+--8G6NP8eot0W4vSyj
+Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEimgzR293D4MftvsWbaDEzbyzCLMFAlz1SbMACgkQbaDEzbyz
-CLMr/A//bV/AIu27a5kqvqGZeBKOUV66GHTqcPN0y99vAUm6FpTzrXxk1h4ml3VE
-XkV6zNk6fPdzCuVQsiAkdHbR5xTreZl7Xd+tlSMXQorYTjq7lSaSNHrgLZJQcxau
-tzHXfTP2zLH5my7kSf6DXpFGCeCKhbFd5hTk6ogjX1DRwe3Rh9kS5hcY4isDIlIh
-cAZ2NRtU7NyMzJaVSpepeTBvQOhY72iqM8T3qsX7qpjtGnYStB3eBgJgwaqzZw6z
-XqKRjipKPYi2pcAV3knT+wfy0Dcg4nH5fiBVh1wjNC+KFafL/1Tv8D3F9W/nU8nB
-G0udEg+puT2knkfQQNA54l0YonBJcZSlDoKIpZSSK0Jd6+7TBlrHO/btsScg3/sh
-UlWDJMjNzf+wSxjA10HCdsaeoeOgeXl+49I3m+IJLCBMnpNSEMfPf1xAym3xM4fo
-hdEoNkDHY8PiuePOZJx4rYK23QakiZug0TAzOoeY+6pYysiejNQIu6N+pa5GlbKY
-QmjW0xugnjKwxhnMFxLnDX1feRGejr/QwUX4kpghllgahCJXrUdP4qDRpArA/K65
-lyW7LiGi+t+dl+eMz/EMObb7mzvajR4Nmi7Ojv1pIpS1gOwyIIrSqDNFydO8vn/2
-SPcf+t1HSuJXoTcHQrUTkJ/Aid9udMUVCF8NZWBQA9fVvZNg01s=
-=zl+7
+iQJPBAABCAA5FiEEFOnXLXsa/e/AtBwfb0jT2gXC2tsFAmnnYSEbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMCwyAAoJEG9I09oFwtrb2ZMQALFqcp69+OToGtW8iR0/
+IB4osqIaDJISJCcf5IVMYFNNqK7Vxg0byDQiqN87QcI3muDBSEjIgj1E+p2fD7Em
+w9tfFWSdoeKYul57HL6ktJNpSYuvEorNsgwmLdJNLaVvlneAW5rSsKCgGlY7WADD
+9Z++Crb9aoLVDie7m1bMDb1ndZIxyOZE/cu3x74yy7IQ+0DnV4BOv++PJiA67wYY
+X9WQ3azYMxihZdlmRSLNqvs/r8iAuFpTJn9CJOeQvRuM+vXHu5ccw91MYn6hA265
+Bo7W8Bs6kPsFdUSNbrMherEztq2Ku6S36FKIjKe3F58KOO3QKb9vNHlIeI09+Z8v
+PmOC573LO10nR6bRJMo9CJTxOrQdH7ruRRXGE1SLG6sisghfhujKx+undjp3vU0L
+QM1PcMTF9qeeAJ5QTiv7l2GBRCvR1jNn6sX89R8phj6OzGKup3oVbx8oGfJUg9hh
+DOJlPpnsWxE4jb5PNNfbW2RBU01J2zUeZm/iLatiEXFj/F+6QAY75DEjGJDDQfyH
+Enr2kZpBUfVxZXB9HkMz2g6KYLy14Ecxcio2zFikuZHuKqN3oB0gmDngt+UAYSvD
+m/mfEkVxT9YhqmEh4c1oLPudH7Gx6/3GeNY+Ll4FK/mAph0KlE+Us801gvrvJTFY
+PXhGq+6/ZIRZBa8XgG3UYpVN
+=BXCu
 -----END PGP SIGNATURE-----
 
---=-lzYf6TSnFDZ79yyVeP1G--
-
+--8G6NP8eot0W4vSyj--
