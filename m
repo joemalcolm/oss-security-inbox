@@ -1,49 +1,77 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/2
-Message-ID: <CAAHN_R31+jha61vPK-_p4QGij9VcCBFm22v=cB-8QpnWDxbvJA@mail.gmail.com>
-Date: Thu, 10 Sep 2026 21:26:20 -0400
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/7
+Message-ID: <20260422153514.G-euM1kA@steffen%sdaoden.eu>
+Date: Wed, 22 Apr 2026 17:35:14 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: The GNU C Library security advisory update for 2026-09-10
+Subject: Re: CVE-2017-20230: Storable versions before 3.05 for Perl has a stack overflow
 Content-Type: text/plain; charset=utf-8
 
-The following security advisory has been published:
+Sam James wrote in
+ <87bjfcnh0n.fsf@...too.org>:
+ |Sam James <sam@...too.org> writes:
+ |> Robert Rothenberg <rrwo@...nsec.org> writes:
+ ...
+ |>>         CVE ID:  CVE-2017-20230
+ |>>   Distribution:  Storable
+ |>>       Versions:  before 3.05
+ |>>
+ |>>       MetaCPAN:  https://metacpan.org/dist/Storable
+ |>>       VCS Repo:  https://github.com/Perl/perl5/
+ |>>
+ |>> Storable versions before 3.05 for Perl has a stack overflow
+ ...
+ |> I'm always suspicious by default of anything involving
+ |> serialisation. The perldoc for Storable [0] says:
+ ...
+ |> and later (between much other omitted text):
+ ...
+ |> Is this vulnerability valid in light of that? Thanks.
+ |
+ |In fact, the linked patch in the original message from Robert has in its
+ |commit message:
+ |> No CVE since p5p believes local Storable
+ |> files are not exploitable.
+ |
+ |Has the p5p policy changed on this? If so, could the perldoc be updated
+ |please?
+ |
+ |(My own view is that it should not change, of course.)
 
-GLIBC-SA-2026-0016:
-===================
+I am still disappointed because of CVE-2023-31486, for HTTP::Tiny
+etc; it had a similar very clear and understandable policy
+documented in the manual, but switched entirely because of
+that "safe by default" policy.  Ie commit [77f557ef84698ef]:
 
-Stack overflow in nscd due to unbounded alloca use
+  -B<By default, HTTP::Tiny does not verify server identity>.
+  -
+  -Server identity verification is controversial and potentially tricky because it
+  -depends on a (usually paid) third-party Certificate Authority (CA) trust model
+  -to validate a certificate as legitimate.  This discriminates against servers
+  -with self-signed certificates or certificates signed by free, community-driven
+  -CA's such as L<CAcert.org|http://cacert.org>.
+  +B<By default, HTTP::Tiny verifies server identity>.
 
-The nscd service in the GNU C Library 2.3.4 and newer may crash due to a
-stack overflow when a malicious DNS server returns too large a response
-for a DNS query, resulting in degraded DNS resolution for the system.
+  -By default, HTTP::Tiny does not make any assumptions about your trust model,
+  -threat level or risk tolerance.  It just aims to give you an encrypted channel
+  -when you need one.
+  +This was changed in version 0.083 due to security concerns. The previous default
+  +behavior can be enabled by setting C<$ENV{PERL_HTTP_TINY_SSL_INSECURE_BY_DEFAULT}>
+  +to 1.
 
-Exploitation of this bug needs a system that has nscd enabled and using
-an untrusted DNS server for name resolution, with the compromised DNS
-server being capable of processing records large enough to result in a
-stack overflow in an nscd thread stack.  During experimentation, bind 9
-was unable to handle large records, but that could change in future or
-with a different name server.  In typical installations, nscd is
-executed in an isolated context as its own user without a shell, due to
-which any compromise of that service is isolated.
+That gives me an entire oil tanker, really.  For free, that is.
+I know someone who uses TOFU for connections to the internet; he
+seems to be under DoS, unfortunately, hard times; i wanted to
+include a link to his software.  But what i mean is, do we really
+sit broad behind a CA pool, and have given up on the rest?  Like,
+even, MTA-STS, and what more to come in that area?  I mean, where
+is TOFU mode in firefox, for example.  Wouldn't that make sense,
+and they have myriads of database instances, anyway.  With
+a timeout.  I mean, CA pool, a first class security relief.
 
-There is a remote possibility of nscd cache corruption if an attacker
-manages to get the stack pointer into a desired point in the heap,
-potentially resulting in other caches in nscd being overwritten with
-corrupt data through the stack overflow, until the buggy code path
-eventually results in a crash.
-
-Finally, a crash in nscd may result in performance degradation when
-resolving names, but it does not result in a denial of service.
-
-CVE-Id: CVE-2026-89092
-CVSS: CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L - 4.2
-Public-Date: 2026-09-10
-Vulnerable-Commit: d19687d6ebc545b633e14c07429f7892a599d0b9
-Reported-by: Anmol Singh Rajput
-
-Notes:
-======
-
-Published advisories are available directly in the project git repository:
-https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
