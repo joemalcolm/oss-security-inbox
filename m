@@ -1,57 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/27/4
-Message-ID: <trinity-bf1a3684-6b1f-40fe-a7a4-d1043f151218-1782504659972@trinity-msg-rest-gmx-gmx-live-7bdfdcd756-q5f6f>
-Date: Fri, 26 Jun 2026 20:11:00 +0000
-From: "Alexander A. Shvedov" <shvedov@....fr>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2025-60467: Use-After-Free in GPAC/MP4Box via gf_filter_pid_inst_swap_delete_task on crafted MPEG-2 TS file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/4
+Message-ID: <e0f7836e-eba5-45f5-b6d2-014444530ff6@gmail.com>
+Date: Tue, 21 Apr 2026 21:25:17 -0400
+From: Demi Marie Obenour <demiobenour@...il.com>
+To: oss-security@...ts.openwall.com, Michael Orlitzky <michael@...itzky.com>
+Cc: Morten Linderud <morten@...derud.pw>
+Subject: Re: Go 1.26.2 and Go 1.25.9 are released with 10 security fixes
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  gpac/gpac prior to fix commit (see References)
-CVE:       CVE-2025-60467
-CWE:       CWE-416 (Use After Free)
-CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
-Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
+On 4/21/26 07:36, Michael Orlitzky wrote:
+> On 2026-04-20 13:10:13, Demi Marie Obenour wrote:
+>>
+>> I wonder if build infra needs to be updated to support automated
+>> rebuilds when a reverse dependency is updated.  My understanding is
+>> that FreeBSD ports, Nix, and OBS already support this.
+> 
+> On its own this isn't sufficient because many packages pin their
+> dependencies to specific versions or git commits. This causes a
+> cascade of problems:
+> 
+>  * Most dependencies can't be packaged separately, because eventually
+>    two applications will require two different versions of the same
+>    library, not to mention the labor involved.
 
-Description:
-  The gf_filter_pid_inst_swap_delete_task() function in GPAC's filter
-  session core (filter_core/filter_pid.c:574) is a scheduled task that
-  deletes a GF_FilterPidInstance structure during filter PID teardown.
-  When MP4Box inspects a crafted MPEG-2 TS file that drives the filter
-  pipeline through PID reconfiguration and deletion,
-  gf_filter_pid_inst_swap_delete() at filter_core/filter_pid.c:544 frees
-  the pid_inst allocation before the scheduled delete task has executed.
+I believe Fedora manages to package multiple versions of Rust libraries
+without any problems.  They don't ship them to users, though.
 
-  The task callback subsequently performs a READ of 4 bytes at address
-  0x513000000e7c from the already-freed structure without verifying that
-  the instance is still valid, resulting in a heap-use-after-free and
-  process crash (Denial of Service).
+>  * You can try to loosen the dependency constraints yourself, but with
+>    everyone else bundling, no one cares about API/ABI stability and
+>    breakage is likely.
+> 
+>  * OTOH with dependencies left bundled and pinned to specific
+>    versions, rebuilding does nothing except change mtimes.
 
-  Crash is reproducible on the current master branch at the time of
-  discovery. No authentication or special privileges required beyond
-  ability to provide a crafted file.
+At least Rust libraries generally *do* care about API stability.
+You're correct that nobody cares about ABI stability, but cascading
+rebuilds are exactly what that is meant to avoid.  'cargo install'
+doesn't use the lockfile by default, so problems with newer but
+semver-compatible dependency versions are likely to be caught.
 
-Reproduction:
-  -Build-opts: --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0" ;
-  -Command: ./MP4Box -info 37_gf_filter_pid_inst_swap_delete_task_filter_core_filter_pid_c_574
+I don't know if the Go ecosystem has the same problem.  I know Maven
+does have that problem.
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
+Download attachment "OpenPGP_0xB288B55FFF9C22C1.asc" of type "application/pgp-keys" (7141 bytes)
 
-Asan-log:
-==2014352==ERROR: AddressSanitizer: heap-use-after-free on address 0x513000000e7c at pc 0x7fd50dc51b7d bp 0x7ffe25104a20 sp 0x7ffe25104a18
-READ of size 4 at 0x513000000e7c thread T0
-    #0 0x7fd50dc51b7c in gf_filter_pid_inst_swap_delete_task filter_core/filter_pid.c:574
-    #1 0x7fd50dcc3465 in gf_fs_thread_proc filter_core/filter_session.c:2420
-    #2 0x7fd50dcc86c4 in gf_fs_run filter_core/filter_session.c:2727
-
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/37/37_gf_filter_pid_inst_swap_delete_task_filter_core_filter_pid_c_574
-
-References:
-  https://github.com/gpac/gpac/issues/3286
-  https://www.cve.org/CVERecord?id=CVE-2025-60467
-  https://infosec.exchange/@sigdevel/116780518074911144
-
-
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
