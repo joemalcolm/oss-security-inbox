@@ -1,30 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/7
-Message-ID: <c4b978c5-7692-8b73-b4ef-3650fc2600f5@apache.org>
-Date: Wed, 12 Aug 2026 13:23:58 +0000
-From: Rahul Vats <rahulvats@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/8
+Message-ID: <aej+xp8kzTsXycYF@256bit.org>
+Date: Wed, 22 Apr 2026 19:00:54 +0200
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-59244: Apache Airflow: Secrets masker: `var.json` Variable values not masked in the Rendered Templates UI 
+Subject: [vim-security] OS Command Injection in netrw affects Vim < 9.2.0383
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+OS Command Injection in netrw affects Vim < 9.2.0383
+=====================================================
+Date: 21.04.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') (CWE-78)
 
-Affected versions:
+## Summary
+An OS command injection vulnerability exists in the `netrw` standard
+plugin bundled with Vim. By inducing a user to open a crafted URL (e.g.,
+using the `sftp://` or `file://` protocol handlers), an attacker can
+execute arbitrary shell commands with the privileges of the Vim process.
 
-- Apache Airflow (apache-airflow) before 3.3.1
+## Description
+When Netrw processes remote or local URLs such as `sftp://host/path` or
+`file://host/path`, it may create temporary files to store transferred
+content. The temporary file name is derived in part from the original
+file name, including its suffix.
 
-Description:
+The vulnerability exists because the suffix extraction logic in
+`s:GetTempfile()` previously allowed arbitrary characters after the `.` 
+in a filename. This permitted shell metacharacters (e.g., `;`, `|`, `&`) 
+to be embedded in the suffix and propagated into the generated temporary 
+file name.
 
-Apache Airflow's secrets masker did not mask `var.json` Variable values whose value is a dict in the Rendered Templates UI — the dict value failed an `isinstance(str)` guard — so a secret stored as a JSON Variable and referenced in a template via `var.json` was displayed in cleartext to any user with access to that task's Rendered Templates view. Users are advised to upgrade to apache-airflow 3.3.1 or later, which masks nested Variable values regardless of type.
+Since this temporary file name was passed to external commands (such as
+`sftp` or configured file handlers) without proper escaping, attackers 
+could inject arbitrary shell commands. 
 
-Credit:
+## Impact
+The vulnerability allows for arbitrary shell command execution in the 
+context of the Vim process. Exploitation requires the user to open a 
+specially crafted URL, and the injected payload is typically visible in 
+the filename, making stealthy exploitation less likely. Therefore, the 
+severity is rated medium.
 
-Juan Pablo Guereca (@jpgerek) (finder)
-Juan Pablo Guereca (@jpgerek) (remediation developer)
+## Acknowledgements
+The Vim project would like to thank Joshua Rogers of [AISLE Research 
+Team](https://aisle.com/) for reporting the issue.
 
-References:
+## References
+The issue has been fixed as of Vim patch [v9.2.0383](https://github.com/vim/vim/releases/tag/v9.2.0383).
+- [Commit](https://github.com/vim/vim/commit/405e2fb6d54d5653523809e2853d99d1c000a5fc)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-85ch-p2qr-m5gx)
 
-https://github.com/apache/airflow/pull/68975
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-59244
 
+Best,
+Christian
+-- 
+Majestät ist das Vermögen, ohne Rücksicht auf Belohnung oder
+Bestrafung recht oder unrecht zu handeln.
+		-- Goethe, Maximen und Reflektionen, Nr. 730
