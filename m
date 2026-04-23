@@ -1,37 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/21
-Message-ID: <8f937f3e-a825-ede0-1089-c25a034f06ba@apache.org>
-Date: Sun, 05 Jul 2026 11:52:21 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/23/6
+Message-ID: <c415be0d-df29-bc84-a358-fadf9ba562a7@apache.org>
+Date: Thu, 23 Apr 2026 17:04:42 +0000
+From: "Christopher L. Shannon" <cshannon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49086: Apache Camel: Camel-Dapr: The Dapr Pub/Sub consumer copied the inbound CloudEvent's pub/sub-name and topic into producer-direction routing headers, allowing an actor who can publish to the subscribed topic to redirect the re-published message to an arbitrary Dapr Pub/Su 
+Subject: CVE-2026-41044: Apache ActiveMQ, Apache ActiveMQ Broker, Apache ActiveMQ All: Authenticated user can perform RCE via DestinationView MBean exposed by Jolokia 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-dapr) 4.12.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-dapr) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-dapr) 4.19.0 before 4.21.0
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.6
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.5
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.6
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.2.5
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.6
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.5
 
 Description:
 
-Improper Input Validation, Unintended Proxy or Intermediary ('Confused Deputy') vulnerability in Apache Camel DAPR component.
+Improper Input Validation, Improper Control of Generation of Code ('Code Injection') vulnerability in Apache ActiveMQ, Apache ActiveMQ Broker, Apache ActiveMQ All.
 
-The camel-dapr Dapr Pub/Sub consumer (DaprPubSubConsumer) copied two fields from each inbound CloudEvent - its Pub/Sub component name and its topic - into the CamelDaprPubSubName and CamelDaprTopic Exchange headers. These two headers are producer-direction routing headers: when the route republishes through a Dapr producer, DaprConfigurationOptionsProxy reads them back and prefers them over the destination configured on the endpoint. As a result, in a route that consumes from one Dapr Pub/Sub topic and republishes to another (for example from('dapr-pubsub:p:t').to('dapr-pubsub:p:other')), an actor able to publish a message to the subscribed topic could set the CloudEvent's pub/sub-name and topic to values of their choosing and cause the re-published message to be delivered to an arbitrary Dapr Pub/Sub component and topic instead of the configured destination - redirecting or exfiltrating the message and bypassing the route's intended routing and any topic-level access controls in the underlying broker. Exploitation requires the ability to publish to the topic the route subscribes to; no other authentication or user interaction is needed.
-This issue affects Apache Camel: from 4.12.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+An authenticated attacker can use the admin web console page to construct a malicious broker name that bypasses name validation to include an xbean binding that can be later used by a VM transport to load a remote Spring XML application.
+The attacker can then use the DestinationView mbean to send a message to trigger a VM transport creation that will reference this malicious broker name which can lead to loading the malicious Spring XML context file.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, remove the CamelDaprPubSubName and CamelDaprTopic headers from the Exchange between the Dapr consumer and any Dapr producer in the route (for example removeHeaders('CamelDaprPubSubName', 'CamelDaprTopic')), and restrict who can publish to the subscribed Dapr Pub/Sub topic so that only trusted producers can send to it.
+
+Because Spring's ResourceXmlApplicationContext instantiates all singleton beans before the BrokerService validates the configuration, arbitrary code execution occurs on the broker's JVM through bean factory methods such as Runtime.exec().
+
+This issue affects Apache ActiveMQ: before 5.19.6, from 6.0.0 before 6.2.5; Apache ActiveMQ Broker: before 5.19.6, from 6.0.0 before 6.2.5; Apache ActiveMQ All: before 5.19.6, from 6.0.0 before 6.2.5.
+
+Users are recommended to upgrade to version 6.2.5 or 5.19.6, which fixes the issue.
 
 Credit:
 
-Leon Zlobecki (finder)
-Andrea Cosentino (remediation developer)
+jsjcw (finder)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-49086.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49086
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-41044
 
