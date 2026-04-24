@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/5
-Message-ID: <183222c7-18fe-61f1-e4a7-9487fbd38a7a@apache.org>
-Date: Wed, 05 Aug 2026 06:39:40 +0000
-From: Piotr Karwasz <pkarwasz@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/24/1
+Message-ID: <f7d25943-18cd-73b0-a174-2f612d1d8d4e@apache.org>
+Date: Fri, 24 Apr 2026 02:19:19 +0000
+From: Wenjun Ruan <wenjun@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-61484: Apache Lucy: LucyX::Remote::SearchServer unauthenticated remote Storable::thaw -> RCE/DoS 
+Subject: CVE-2026-23902: Apache DolphinScheduler: Users are able to use tenants that are not defined on the platform during workflow execution. 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Lucy (Lucy): all versions
+- Apache DolphinScheduler (org.apache.dolphinscheduler:dolphinscheduler-api) before 3.4.1
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** Deserialization of Untrusted Data vulnerability in Apache Lucy.
+Incorrect Authorization vulnerability in Apache DolphinScheduler allows authenticated users with system login permissions to use tenants that are not defined on the platform during workflow execution.
 
-This issue affects Apache Lucy: all versions.
+This issue affects Apache DolphinScheduler versions prior to 3.4.1. 
 
-As this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative or restrict access to the instance to trusted users.
+Users are recommended to upgrade to version 3.4.1, which fixes this issue.
 
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+Credit:
+
+Jihang Yu (reporter)
 
 References:
 
-https://attic.apache.org/projects/lucy.html
-https://www.cve.org/CVERecord?id=CVE-2026-61484
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-23902
 
