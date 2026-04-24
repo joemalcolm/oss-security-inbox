@@ -1,38 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/14
-Message-ID: <6f889b16-d6ce-63e3-7b74-d13981adac91@apache.org>
-Date: Thu, 10 Sep 2026 06:42:12 +0000
-From: Pasquale Congiusti <pcongiusti@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/24/4
+Message-ID: <ff08e4eb-e2c3-6f56-6156-09567fbf869c@apache.org>
+Date: Fri, 24 Apr 2026 12:24:03 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-80351: Apache Camel K: Camel K Tenant repositories reach Maven execution inside operator pod 
+Subject: CVE-2026-40690: Apache Airflow: Assets graph view bypasses DAG level access control displaying unrelated topologies and all DAGs names to unauthorized users 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: low 
 
 Affected versions:
 
-- Apache Camel K (apache/camel-k) 2.0.0 before 2.9.3
-- Apache Camel K (apache/camel-k) 2.10.1 before 2.10.2
+- Apache Airflow (apache-airflow) before 3.2.1
 
 Description:
 
-Improper neutralization of directives in dynamically evaluated code ('eval injection') vulnerability in Apache Camel K.
+The asset dependency graph did not restrict nodes by the viewer's DAG read permissions: a user with read access to at least one DAG could browse the asset graph for any other asset in the deployment and learn the existence and names of DAGs and assets outside their authorized scope.
 
+Users are recommended to upgrade to version 3.2.1, which fixes this issue.
 
+Credit:
 
-An improper neutralization of directives in dynamically evaluated Maven configuration allows tenant-controlled repository content to influence code execution within the operator pod, potentially enabling tenants to execute arbitrary code with the privileges of the operator.
-
-
-
-This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2.
-
-
-
-Users are recommended to upgrade to version 2.9.3, 2.10.2 or 2.11.0, which fixes the issue.
+Saurabh (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-80351.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-80351
+https://github.com/apache/airflow/pull/65273
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40690
 
