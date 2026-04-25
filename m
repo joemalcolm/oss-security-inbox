@@ -1,57 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/17
-Message-ID: <23f1fc83-400a-4a02-8f6d-751d5cc71e2f@cpansec.org>
-Date: Wed, 10 Jun 2026 19:36:00 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-50637: Metrics::Any::Adapter::Statsd versions before 0.04 for Perl does not protect against metric injections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/25/1
+Message-ID: <aeygshq_JaijQUUm@definition.pseudorandom.co.uk>
+Date: Sat, 25 Apr 2026 12:08:34 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: bubblewrap CVE-2026-41163: Privilege escalation if setuid root, via ptrace
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-50637                                       CPAN Security Group
-========================================================================
+https://github.com/containers/bubblewrap/security/advisories/GHSA-xq78-7hw4-5jvp
+Vulnerable: bubblewrap >= 0.11.0 if installed setuid
+Fixed: bubblewrap >= 0.11.2
+Not believed to be vulnerable: bubblewrap < 0.11.0
 
-         CVE ID:  CVE-2026-50637
-   Distribution:  Metrics-Any-Adapter-Statsd
-       Versions:  before 0.04
+If bubblewrap 0.11.0 or 0.11.1 is installed in setuid mode, then the 
+user can use ptrace to attach to bubblewrap and control the unprivileged 
+part of the sandbox setup phase. This allows a local attacker to 
+arbitrarily use the privileged operations, and in particular the 
+"overlay mount" operation, allowing the creation of overlay mounts which 
+is otherwise not allowed in the setuid version of bubblewrap.
 
-       MetaCPAN: https://metacpan.org/dist/Metrics-Any-Adapter-Statsd
+A mitigation is that most Linux distributions do not install bubblewrap 
+as setuid root. This was historically done on distros where a hardened 
+or feature-limited kernel did not allow unprivileged users to create new 
+user namespaces, mainly Debian <= 10 and RHEL <= 7. Debian >= 11 and 
+RHEL >= 8 already switched to installing bubblewrap as non-setuid, which 
+is the recommended configuration.
 
+Arch Linux has a non-default bubblewrap-suid package, intended for use 
+with their non-default linux-hardened kernel package, which would have 
+been vulnerable to this attack (it was fixed earlier today). Similarly, 
+unfixed versions of Gentoo's bubblewrap package would be vulnerable if 
+built with the "suid" USE flag. Any distro's bubblewrap packages of an 
+affected version would be vulnerable if the local sysadmin had manually 
+set the executable to be setuid root.
 
-Metrics::Any::Adapter::Statsd versions before 0.04 for Perl does not
-protect against metric injections
+The bubblewrap maintainers recommend that it should not be installed 
+setuid root. By default the 0.11.2 release will refuse to run if it 
+detects that it is setuid, but for backward compatibility it has a 
+build-time option that will allow the setuid mode. As a hardening 
+measure, the next upstream release (0.12.0) will remove the build-time 
+option, and instead, unconditionally refuse to run when setuid.
 
-Description
------------
-Metrics::Any::Adapter::Statsd versions before 0.04 for Perl does not
-protect against metric injections.
+The older vulnerabilities CVE-2020-5291 and CVE-2016-8659 were similarly 
+only relevant when installed setuid root, and were avoided by the 
+recommended configuration.
 
-The statsd protocol (and extensions) allow mutiple metrics,separated by
-newlines, to be sent per packet.
-
-The send method does not validate the contents of the metric names or
-values. If the names have newlines and statsd control characters
-(colon, pipe) then metric injections are possible.
-
-Version 0.04 fixed this by modifying the _make method to block metric
-names with characters below ASCII 32 (which includes the newline), or
-colons or pipes.
-
-Problem types
--------------
-- CWE-93 Improper Neutralization of CRLF Sequences
-
-Solutions
----------
-Upgrade to v0.04 or later.
-
-
-References
-----------
-https://metacpan.org/release/PEVANS/Metrics-Any-Adapter-Statsd-0.04/changes
-https://www.cve.org/CVERecord?id=CVE-2026-46719
-https://www.cve.org/CVERecord?id=CVE-2026-46720
-https://www.cve.org/CVERecord?id=CVE-2026-46739
-
-
-
+Thanks to fdiakh for reporting this vulnerability and helping to address 
+it.
