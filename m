@@ -1,45 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/05/5
-Message-ID: <87ld9fe8v5.fsf@gentoo.org>
-Date: Sat, 05 Sep 2026 21:33:34 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/25/2
+Message-ID: <207ffd7a-8f43-dc1b-e2b5-9b607db021d9@apache.org>
+Date: Sat, 25 Apr 2026 16:59:13 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Security vulnerabilities fixed in WeeChat 4.10.1
+Subject: CVE-2026-40557: Apache Storm Prometheus Reporter: Disabling TLS verification for Prometheus Reporter also disables it for all other connections 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
--------------------- Start of forwarded message --------------------
-Date: Sat, 5 Sep 2026 19:31:16 +0200
-From: Sébastien Helleu <flashcode@...shtux.org>
-To: weechat-security@...gnu.org
-Subject: Security vulnerabilities fixed in WeeChat 4.10.1
+Affected versions:
 
-Hi all,
+- Apache Storm Prometheus Reporter (org.apache.storm:storm-metrics-prometheus) 2.6.3 before 2.8.7
 
-Six security vulnerabilities have been fixed in WeeChat 4.10.1, which was
-released on September 5th, 2026:
+Description:
 
-- WSA-2026-15: [Xfer] Write of DCC file received outside of configured download
-  path.
-- WSA-2026-16: [Xfer] Missing size limit for the unterminated Xfer chat
-  message.
-- WSA-2026-17: [Xfer] Bypass of user authorization for start of DCC file
-  transfer.
-- WSA-2026-18: [Relay] Missing size limit for the unterminated Relay text
-  message received from a client.
-- WSA-2026-19: [Relay] Missing rejection of invalid websocket frames.
-- WSA-2026-20: [Relay] Missing size limit of data queued for sending to
-  clients.
+Improper Certificate Validation via Global SSL Context Downgrade in Apache Storm Prometheus Reporter
 
-For more information, see the security page:
-https://weechat.org/doc/weechat/security/
 
--- 
-Sébastien Helleu
+Versions Affected: from 2.6.3 to 2.8.6
 
-web: weechat.org / flashtux.org
-irc: FlashCode @ irc.libera.chat
 
--------------------- End of forwarded message --------------------
+Description: 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+In production deployments where an administrator enables storm.daemon.metrics.reporter.plugin.prometheus.skip_tls_validation (by default it is disabled) intending to affect only the Prometheus reporter, the undocumented global side effect creates an attack surface across every TLS-protected communication channel in the Storm daemon.
+
+
+The PrometheusPreparableReporter class implements an INSECURE_TRUST_MANAGER that accepts all SSL certificates without validation, with empty checkClientTrusted and checkServerTrusted methods. Most critically, when the storm.daemon.metrics.reporter.plugin.prometheus.skip_tls_validation configuration option is enabled (default = disabled) for HTTPS Prometheus PushGateway connections, the INSECURE_CONNECTION_FACTORY calls SSLContext.setDefault(sslContext), which globally replaces the JVM's default SSL context rather than applying the insecure context only to the Prometheus connection. This payload flows through storm.yaml configuration → PrometheusPreparableReporter.prepare() → INSECURE_CONNECTION_FACTORY → SSLContext.setDefault(), resulting in a JVM-wide TLS security downgrade. All subsequent HTTPS connections in the process - including ZooKeeper, Thrift, Netty, and UI connections - silently trust all certificates, including self-signed, expired, and attacker-generated ones, enabling man-in-the-middle interception of cluster state, topology submissions, tuple data, and administrative credentials.
+
+
+
+
+Mitigation: 2.x users should upgrade to 2.8.7 if the Prometheus Metrics Reporter is used. Prometheus Metrics Reporter Users who cannot upgrade immediately should remove the storm.daemon.metrics.reporter.plugin.prometheus.skip_tls_validation: true setting from their storm.yaml configuration and instead configure a proper truststore containing the PushGateway's certificate.
+
+Credit:
+
+K (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40557
+
