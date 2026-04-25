@@ -1,77 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/7
-Message-ID: <20260422153514.G-euM1kA@steffen%sdaoden.eu>
-Date: Wed, 22 Apr 2026 17:35:14 +0200
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/25/3
+Message-ID: <3a6e7252-aa72-5c9b-8f85-87761a86c7bd@apache.org>
+Date: Sat, 25 Apr 2026 16:59:41 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2017-20230: Storable versions before 3.05 for Perl has a stack overflow
+Subject: CVE-2026-41081: Apache Storm Client: Anonymous principal assigned on TLS client certificate verification failure 
 Content-Type: text/plain; charset=utf-8
 
-Sam James wrote in
- <87bjfcnh0n.fsf@...too.org>:
- |Sam James <sam@...too.org> writes:
- |> Robert Rothenberg <rrwo@...nsec.org> writes:
- ...
- |>>         CVE ID:  CVE-2017-20230
- |>>   Distribution:  Storable
- |>>       Versions:  before 3.05
- |>>
- |>>       MetaCPAN:  https://metacpan.org/dist/Storable
- |>>       VCS Repo:  https://github.com/Perl/perl5/
- |>>
- |>> Storable versions before 3.05 for Perl has a stack overflow
- ...
- |> I'm always suspicious by default of anything involving
- |> serialisation. The perldoc for Storable [0] says:
- ...
- |> and later (between much other omitted text):
- ...
- |> Is this vulnerability valid in light of that? Thanks.
- |
- |In fact, the linked patch in the original message from Robert has in its
- |commit message:
- |> No CVE since p5p believes local Storable
- |> files are not exploitable.
- |
- |Has the p5p policy changed on this? If so, could the perldoc be updated
- |please?
- |
- |(My own view is that it should not change, of course.)
+Severity: moderate 
 
-I am still disappointed because of CVE-2023-31486, for HTTP::Tiny
-etc; it had a similar very clear and understandable policy
-documented in the manual, but switched entirely because of
-that "safe by default" policy.  Ie commit [77f557ef84698ef]:
+Affected versions:
 
-  -B<By default, HTTP::Tiny does not verify server identity>.
-  -
-  -Server identity verification is controversial and potentially tricky because it
-  -depends on a (usually paid) third-party Certificate Authority (CA) trust model
-  -to validate a certificate as legitimate.  This discriminates against servers
-  -with self-signed certificates or certificates signed by free, community-driven
-  -CA's such as L<CAcert.org|http://cacert.org>.
-  +B<By default, HTTP::Tiny verifies server identity>.
+- Apache Storm Client (org.apache.storm:storm-client) before 2.8.7
 
-  -By default, HTTP::Tiny does not make any assumptions about your trust model,
-  -threat level or risk tolerance.  It just aims to give you an encrypted channel
-  -when you need one.
-  +This was changed in version 0.083 due to security concerns. The previous default
-  +behavior can be enabled by setting C<$ENV{PERL_HTTP_TINY_SSL_INSECURE_BY_DEFAULT}>
-  +to 1.
+Description:
 
-That gives me an entire oil tanker, really.  For free, that is.
-I know someone who uses TOFU for connections to the internet; he
-seems to be under DoS, unfortunately, hard times; i wanted to
-include a link to his software.  But what i mean is, do we really
-sit broad behind a CA pool, and have given up on the rest?  Like,
-even, MTA-STS, and what more to come in that area?  I mean, where
-is TOFU mode in firefox, for example.  Wouldn't that make sense,
-and they have myriads of database instances, anyway.  With
-a timeout.  I mean, CA pool, a first class security relief.
+Improper Handling of TLS Client Authentication Failure Leading to Anonymous Principal Assignment in Apache Storm
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Versions Affected: up to 2.8.7
+
+Description: When TLS transport is enabled in Apache Storm without requiring client certificate authentication (the default configuration), the TlsTransportPlugin assigns a fallback principal (CN=ANONYMOUS) if no client certificate is presented or if certificate verification fails. The underlying SSLPeerUnverifiedException is caught and suppressed rather than rejecting the connection.
+
+This fail-open behavior means an unauthenticated client can establish a TLS connection and receive a valid principal identity. If the configured authorizer (e.g., SimpleACLAuthorizer) does not explicitly deny access to CN=ANONYMOUS, this may result in unauthorized access to Storm services. The condition is logged at debug level only, reducing visibility in production.
+
+Impact: Unauthenticated clients may be assigned a principal identity, potentially bypassing authorization in permissive or misconfigured environments.
+
+Mitigation: Users should upgrade to 2.8.7 in which TLS authentication failures are handled in a fail-closed manner.
+
+Users who cannot upgrade immediately should:
+- Enable mandatory client certificate authentication (nimbus.thrift.tls.client.auth.required: true)
+- Ensure authorization rules explicitly deny access to CN=ANONYMOUS
+- Review all ACL configurations for implicit default-allow behavior
+
+Credit:
+
+K (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-41081
+
