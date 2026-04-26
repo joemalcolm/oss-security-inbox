@@ -1,55 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/4
-Message-ID: <f1c1d2ad-bd5b-4fbd-8262-264a44b08ede@apache.org>
-Date: Tue, 25 Aug 2026 22:52:20 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/10
+Message-ID: <23644412-7eef-b3cc-5a8d-41e52806cc9e@apache.org>
+Date: Sun, 26 Apr 2026 18:09:56 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65905: Apache Tomcat: Limited replay attack possible with DIGEST authentication
+Subject: CVE-2026-40860: Apache Camel: Unsafe Deserialization of JMS ObjectMessage in camel-jms, camel-sjms, camel-sjms2 and camel-amqp 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: important 
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.24
-- Apache Tomcat 10.1.0-M1 through 10.1.57
-- Apache Tomcat 9.0.0.M1 through 9.0.120
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.30 through 7.0.109
+- Apache Camel (org.apache.camel:camel-jms) 3.0.0 before 4.14.7
+- Apache Camel (org.apache.camel:camel-jms) 4.15.0 before 4.18.2
+- Apache Camel (org.apache.camel:camel-jms) 4.19.0 before 4.20.0
 
 Description:
 
-Authentication Bypass by Capture-replay vulnerability in Apache Tomcat's 
-DIGEST authenticator. If, before windowSize requests have been made, a 
-client makes a DIGEST
-authenticated request with a nonceCount on the upper boundary of the
-replay window then that request is replayable once only while the
-associated nonceCount remains within the replay window.
+JmsBinding.extractBodyFromJms() in camel-jms, and the equivalent JmsBinding class in camel-sjms, deserialized the payload of incoming JMS ObjectMessage values via javax.jms.ObjectMessage.getObject() without applying any ObjectInputFilter, class allowlist or class denylist. Because this code path is reached whenever the mapJmsMessage option is enabled (the default) and Camel acts as a JMS consumer, an attacker able to publish a crafted ObjectMessage to a queue or topic consumed by a Camel application could achieve remote code execution when a deserialization gadget chain was present on the classpath. The same handling was reached transitively through camel-sjms2 (whose Sjms2Endpoint extends SjmsEndpoint) and through camel-amqp (whose AMQPJmsBinding extends JmsBinding), and by other JMS-family components built on JmsComponent such as camel-activemq and camel-activemq6.
 
+This issue affects Apache Camel: from 3.0.0 before 4.14.7, from 4.15.0 before 4.18.2, from 4.19.0 before 4.20.0.
 
+Users are recommended to upgrade to version 4.20.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.7. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.2.
 
-
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
-10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120.
-
-
-
-The following versions were EOL at the time the CVE was created but are
-known to be affected: from 8.5.0 through 8.5.100, from 7.0.30 through 
-7.0.109. Other unsupported versions may also be affected.
-
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, 
-which fix the issue.
+This issue is being tracked as CAMEL-23321 
 
 Credit:
 
-4ra1n, pyn3rd and unam4 (finder)
+Venkatraman Kumar from Securin (finder)
 
 References:
 
-https://lists.apache.org/thread/9v114xlpgbzrrbzz5vf9f6r2q4wnxwwj
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65905
+https://camel.apache.org/security/CVE-2026-40860.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40860
+https://issues.apache.org/jira/browse/CAMEL-23321
+
