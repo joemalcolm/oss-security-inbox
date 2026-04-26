@@ -1,64 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/2
-Message-ID: <CAK3hNHZ2DfYt+yROnk4MQw3v=UVJswxcMNehQ35f57jCVTXyQw@mail.gmail.com>
-Date: Tue, 30 Jun 2026 22:13:35 -0700
-From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/8
+Message-ID: <5fe7a2fb-786f-8f60-9bc6-d6846ea42b89@apache.org>
+Date: Sun, 26 Apr 2026 18:09:00 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: hostapd: OOB write in Wi-Fi 7 MLD association parsing (pre-auth DoS)
+Subject: CVE-2026-40473: Apache Camel: Camel-Mina: Unsafe Deserialization in MinaConverter.toObjectInput() via TCP/UDP 
 Content-Type: text/plain; charset=utf-8
 
-MITRE assigned CVE-2026-58374 with a CVSS score of 6.5
-CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+Severity: moderate 
 
--- Abhinav
+Affected versions:
 
-On Mon, Jun 29, 2026 at 7:50 PM Abhinav Agarwal
-<abhinavagarwal1996@...il.com> wrote:
->
-> A Wi-Fi 7 / IEEE 802.11be MLD parsing issue in hostapd AP mode has
-> been fixed upstream:
->
-> https://w1.fi/security/2026-1/missing-ml-parsing-validation.txt
->
-> Issue:
->   Missing link ID validation in hostapd_process_ml_assoc_req()
->   (src/ap/ieee802_11_eht.c). link_id is masked with 0x000f
->   (values 0-15), but links[] only has valid entries 0..14
->   (MAX_NUM_MLD_LINKS=15). A crafted Per-STA Profile with
->   link_id=15 can write past the end of links[] during association
->   processing.
->
->   This is reachable before the 4-way handshake; no credentials are
->   required. An attacker within radio range can trigger it with a
->   crafted association request.
->
-> Affected:
->   hostapd v2.11 and newer repository snapshots before v2.12, built
->   with CONFIG_IEEE80211BE and running Wi-Fi 7 / MLD AP configuration.
->
-> Impact:
->   hostapd process termination / denial of service, and small memory
->   corruption, per the upstream advisory.
->
-> Fix:
->   https://git.w1.fi/cgit/hostap/commit/?id=46dd5a4ffc9bcf44cf8fc45120b3e1e5ec922187
->
->   Additional related fixes are listed in the upstream advisory.
->
-> Mitigation:
->   Update to hostapd v2.12 or newer once available, or apply the
->   upstream fixes and rebuild.
->
-> CVE status:
->   CVE assignment requested from MITRE under CAN-2026-2032030
->
-> Credit:
->   The upstream advisory credits Sebastián Alba Vives, with independent
->   discovery and report by Abhinav Agarwal.
->
-> Timeline:
->   2026-05-14  reported to upstream
->   2026-06-05  upstream published security advisory
->
-> --
-> Abhinav Agarwal
+- Apache Camel (org.apache.camel:camel-mina) 3.0.0 before 4.14.6
+- Apache Camel (org.apache.camel:camel-mina) 4.15.0 before 4.18.2
+- Apache Camel (org.apache.camel:camel-mina) 4.19.0 before 4.20.0
+
+Description:
+
+The camel-mina component's MinaConverter.toObjectInput(IoBuffer) type converter wraps an IoBuffer in a java.io.ObjectInputStream without applying any ObjectInputFilter or class-loading restrictions. When a Camel route uses camel-mina as a TCP or UDP consumer and requests conversion to ObjectInput (for example via getBody(ObjectInput.class) or @Body ObjectInput), an attacker sending a crafted serialized Java object over the network to the MINA consumer port can trigger arbitrary code execution in the context of the application during readObject().
+
+This issue affects Apache Camel: from 3.0.0 before 4.14.6, from 4.15.0 before 4.18.2, from 4.19.0 before 4.20.0.
+
+Users are recommended to upgrade to version 4.20.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.6. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.2.
+
+This issue is being tracked as CAMEL-23319 
+
+Credit:
+
+Venkatraman Kumar from Securin (finder)
+
+References:
+
+https://camel.apache.org/security/CVE-2026-40473.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40473
+https://issues.apache.org/jira/browse/CAMEL-23319
+
