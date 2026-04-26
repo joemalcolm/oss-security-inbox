@@ -1,67 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/26
-Message-ID: <05e3f335-cf51-4c69-a043-0d13ad5bff37@gmail.com>
-Date: Tue, 28 Jul 2026 08:27:58 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/9
+Message-ID: <a6c17ec3-2bdb-27fb-fef5-0d8046d99733@apache.org>
+Date: Sun, 26 Apr 2026 18:09:28 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-030] OpenStack Swift: S3API header authorization bypass (CVE-2026-pending)
+Subject: CVE-2026-40858: Apache Camel: Camel-Infinispan: Unsafe Deserialization in Remote Aggregation Repository 
 Content-Type: text/plain; charset=utf-8
 
-======================================================
-OSSA-2026-030: Swift S3API header authorization bypass
-======================================================
+Severity: important 
 
-:Date: July 28, 2026
-:CVE: CVE-2026-pending,
-       CVE-2026-pending
+Affected versions:
 
+- Apache Camel (org.apache.camel:camel-infinispan) 4.0.0 before 4.14.7
+- Apache Camel (org.apache.camel:camel-infinispan) 4.15.0 before 4.18.2
+- Apache Camel (org.apache.camel:camel-infinispan) 4.19.0 before 4.20.0
 
-Affects
-~~~~~~~
-- Swift: >=2.18.0 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
+Description:
 
+The camel-infinispan component's ProtoStream-based remote aggregation repository deserializes data read from a remote Infinispan cache using java.io.ObjectInputStream without applying any ObjectInputFilter. An attacker who can write to the Infinispan cache used by a Camel application can inject a crafted serialized Java object that, when read during normal aggregation repository operations such as get or recover, results in arbitrary code execution in the context of the application.
 
-Description
-~~~~~~~~~~~
-Christian Schwede from NVIDIA reported two authorization bypass 
-vulnerabilities in Swift's S3API middleware. Insufficient validation of 
-request headers allows an attacker to copy and read objects belonging to 
-other tenants. The first issue affects the default ``s3_acl=false`` 
-configuration; the second affects deployments with ``s3_acl=true``. Both 
-require the attacker to know the target container and object names. All 
-deployments using the S3API middleware with versions between 2.18.0 and 
-the fixed releases listed below are affected.
+This issue affects Apache Camel: from 4.0.0 before 4.14.7, from 4.15.0 before 4.18.2, from 4.19.0 before 4.20.0.
 
+Users are recommended to upgrade to version 4.20.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.7. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.2.
 
+The JIRA ticket:  https://issues.apache.org/jira/browse/CAMEL-23322  refers to the various commits that resolved the issue, and have more details. This issue follows the same class of vulnerability previously addressed in CVE-2024-22369, CVE-2024-23114 and CVE-2026-25747.
 
-Patches
-~~~~~~~
-- https://review.opendev.org/998948 (2025.1/epoxy)
-- https://review.opendev.org/998949 (2025.1/epoxy)
-- https://review.opendev.org/998946 (2025.2/flamingo)
-- https://review.opendev.org/998947 (2025.2/flamingo)
-- https://review.opendev.org/998944 (2026.1/gazpacho)
-- https://review.opendev.org/998945 (2026.1/gazpacho)
-- https://review.opendev.org/998942 (2026.2/hibiscus (development))
-- https://review.opendev.org/998943 (2026.2/hibiscus (development))
+This issue is being tracked as CAMEL-23322 
 
+Credit:
 
-Credits
-~~~~~~~
-- Christian Schwede from NVIDIA
+Feng Ning from Innora Pte. Ltd. (finder)
 
+References:
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2158733
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+https://camel.apache.org/security/CVE-2026-40858.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40858
+https://issues.apache.org/jira/browse/CAMEL-23322
 
---
-Goutham Pacha Ravi
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
