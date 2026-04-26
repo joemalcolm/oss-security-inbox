@@ -1,32 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/39
-Message-ID: <2abbadd5-e2eb-fd3b-1900-51ec2a5c2473@apache.org>
-Date: Fri, 24 Jul 2026 21:43:06 +0000
-From: Jens Geyer <jensg@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/4
+Message-ID: <7783bab0-773f-c9eb-d3c0-3adc87ca06f4@apache.org>
+Date: Sun, 26 Apr 2026 18:06:52 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-55968: Apache Thrift: Node.js quadratic-time DoS in server receive transports 
+Subject: CVE-2026-33454: Apache Camel: Inbound Header Filter Missing in MailHeaderFilterStrategy Allows Remote Code Execution via MIME Header Injection (CVE-2025-30177 Variant) 
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: important 
 
 Affected versions:
 
-- Apache Thrift (thrift) before 0.24.0
+- Apache Camel (org.apache.camel:camel-mail) 3.0.0 before 4.14.6
+- Apache Camel (org.apache.camel:camel-mail) 4.15.0 before 4.18.1
 
 Description:
 
-Inefficient Algorithmic Complexity, Allocation of Resources Without Limits or Throttling vulnerability in Apache Thrift Node.js bindings.
+The Camel-Mail component is vulnerable to Camel message header injection. The custom header filter strategy used by the component (MailHeaderFilterStrategy) only filters the 'out' direction via setOutFilterStartsWith, while it does not configure the 'in' direction via setInFilterStartsWith. As a result, when a Camel application consumes mail through camel-mail (for example via from(\"imap://...\") or from(\"pop3://...\")) the inbound filter check is skipped and Camel-prefixed MIME headers are mapped unfiltered into the Exchange. An attacker who can deliver an email to a mailbox monitored by such a consumer can inject Camel-specific headers that, for some Camel components downstream of the mail consumer (such as camel-bean, camel-exec, or camel-sql), can alter the behaviour of the route. This is the same pattern that was previously addressed in camel-undertow (CVE-2025-30177) and the broader incoming-header filter (CVE-2025-27636 and CVE-2025-29891).
 
-This issue affects Apache Thrift: before 0.24.0.
+This issue affects Apache Camel: from 3.0.0 before 4.14.6, from 4.15.0 before 4.18.1.
 
-Users are recommended to upgrade to version 0.24.0, which fixes the issue.
+Users are recommended to upgrade to version 4.19.0, which fixes the issue. If users are on the 4.18.x LTS releases stream, then they are suggested to upgrade to 4.18.1. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.6.
+
+This issue is being tracked as CAMEL-23222 
 
 Credit:
 
-Song Jihoon (finder)
+Hyunwoo Kim (@v4bel) (finder)
 
 References:
 
-https://thrift.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-55968
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-33454
+https://issues.apache.org/jira/browse/CAMEL-23222
 
