@@ -1,4 +1,4 @@
-Received: (qmail 7236 invoked by uid 550); 12 May 2026 15:56:28 -0000
+Received: (qmail 30630 invoked by uid 550); 28 Apr 2026 12:01:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,103 +8,162 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 28666 invoked from network); 12 May 2026 15:31:29 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1778598940; bh=rfPTOWbF31yMXBsrKUS89UPjhQyevj+10mP5AKpAz+E=;
-	h=Date:To:From:Subject:From;
-	b=VBBtCNjMZBBAjVFy+C2CLBYNF3mk/82wDuO2XyMkPlrL+3AwiPjDgeHmGeHlbNh8S
-	 A996yzItzJxNKeahbU0zktY9DynbwTxDxUX1CIygqWZqS336DFxrvJ7C1v76zs+hvO
-	 k7VpQIJZyBBEs0TQSkIvcZrgymGDEF3TRjVw98DQdxbv5jKbUxDrWcFx7LQ/7b0ckC
-	 G7BMdn556zKL4ZPor6w/UzV0GkVjTT1l8CVp7vr1Re2SslnfkeSK35uFXmcfw0RW/y
-	 loe8QpoU9xxjmQShO6Lwu3cdH6I573OZfZNouctiKK/eC7fHgvYe/cEu1nLVbiYzhX
-	 xL8E/yB1FGznQ==
-Message-ID: <a922b2dc-a69f-43e6-b17a-3a98e24f1ab5@apache.org>
-Date: Tue, 12 May 2026 16:15:38 +0100
+Received: (qmail 30549 invoked from network); 28 Apr 2026 12:01:59 -0000
+Content-Type: multipart/mixed; boundary="=separator"; charset="utf-8"
+Content-Transfer-Encoding: binary
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB
-To: oss-security@lists.openwall.com
-From: Mark Thomas <markt@apache.org>
-Autocrypt: addr=markt@apache.org; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2026-41284: Apache Tomcat: Unbounded read in WebDAV LOCK and
- PROPFIND handling
+X-Mailer: MIME-tools 5.510 (Entity 5.510)
+To: xen-announce@lists.xen.org, xen-devel@lists.xen.org,
+ xen-users@lists.xen.org, oss-security@lists.openwall.com
+From: Xen.org security team <security@xen.org>
+CC: Xen.org security team <security-team-members@xen.org>
+Message-Id: <E1wHh8H-006n23-2q@xenbits.xenproject.org>
+Date: Tue, 28 Apr 2026 12:01:41 +0000
+Subject: [oss-security] Xen Security Advisory 485 v2 (CVE-2026-31786) - Linux kernel out
+ of bounds read via Xen-related sysfs file
 
-CVE-2026-41284: Apache Tomcat: Unbounded read in WebDAV LOCK and 
-PROPFIND handling
+--=separator
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Severity: low
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+            Xen Security Advisory CVE-2026-31786 / XSA-485
+                               version 2
 
-- Apache Tomcat 11.0.0-M1 through 11.0.21
-- Apache Tomcat 10.1.0-M1 through 10.1.54
-- Apache Tomcat 9.0.0.M1 through 9.0.117
-- Apache Tomcat 10.0.0-M1 through 10.0.27
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 4.0 through 7.0.109
+      Linux kernel out of bounds read via Xen-related sysfs file
 
-Description:
+UPDATES IN VERSION 2
+====================
 
-Allocation of Resources Without Limits or Throttling vulnerability in 
-Apache Tomcat.
+Public release.
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.21, from 
-10.1.0-M1 through 10.1.54, from 9.0.0.M1 through 9.0.117.
-Older, unsupported versions may also be affected.
+ISSUE DESCRIPTION
+=================
 
-Users are recommended to upgrade to version [FIXED_VERSION], which fixes 
-the issue.
+The Linux sysfs file /sys/hypervisor/properties/buildid does not
+contain printable information, but a binary value of typically 16 or
+20 bytes, which is not terminated by a zero byte.
 
-Credit:
+The kernel driver making this information available is using the
+sprintf() function for writing the data into the user readable buffer,
+resulting in a potential out of bounds read past the buildid retrieved
+from the Xen hypervisor. In rare cases even writing past the sysfs
+buffer of 4kB might happen, if no zero byte is found in the 4kB of
+data following the start of the buildid.
 
-Dariusz Gońda (finder)
+This might result in users being capable to read kernel secrets or
+even overwrite kernel memory located after the sysfs buffer.
 
-References:
+IMPACT
+======
 
-https://lists.apache.org/thread/2nvqjr7ovjmvx2vbhb7s61ycd5msc8qc
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-41284
+Inside any Linux Xen domain information leaks, Denial of Service (DoS)
+and privilege escalation might be possible.
+
+VULNERABLE SYSTEMS
+==================
+
+All Linux domains with a kernel version 4.13 or later are vulnerable.
+Domains up to kernel version 4.12 are not vulnerable.
+
+MITIGATION
+==========
+
+There is no known mitigation available.
+
+CREDITS
+=======
+
+This issue was discovered by Frediano Ziglio of XenServer.
+
+RESOLUTION
+==========
+
+Applying the appropriate attached patch resolves this issue.
+
+xsa485-linux.patch     Linux
+
+$ sha256sum xsa485*
+c70b792093d7b314b8c476e39df88a62a2d98fb0efc6328590d0ad3266c77831  xsa485-linux.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of patches or mitigations is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
+
+This is because the patch needs to be applied to the guests.
+
+Deployment is permitted only AFTER the embargo ends.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmnwoQIMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZu7cH/0KeJ7rnA7tE5l1TYcD2Enh0jYjMtBw0DIH/bYwd
+EGNklioe02/aVGs9TooQDeZZRMOg6tyA3c7skl2jGN51RlHrPMc27tNDGdFR9/F/
+0Mp614K4lfoKfEYQTdWxWYPPerIhfkDSkUOmKlOwS/NyJ5HnuQ+LT8j7e+1YKs04
+BOjqNorArGoxsRIleRAXIUzZPOreCPrUBRIQwVsULnsGMIkcFSnt4CyV/sPFzILh
+2KHCFPZHpQ70SxbgZgVmEb1emwDysps9LoVzrRQcuHsD1AsqtgSvsHau0Wi1juY4
+CjygNQUML3r6ZH46DNsovpdHHW08HfhgYuASZ85erwsxM0Q=
+=wJb9
+-----END PGP SIGNATURE-----
+
+--=separator
+Content-Type: application/octet-stream; name="xsa485-linux.patch"
+Content-Disposition: attachment; filename="xsa485-linux.patch"
+Content-Transfer-Encoding: base64
+
+RnJvbSAwYWU1ZWEwMGNjNTExMTEwNzMzNjY1YjI5MzVhMTU0ZDVlNTY5NDgwIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBGcmVkaWFubyBaaWdsaW8gPGZyZWRpYW5vLnppZ2xpb0BjaXRy
+aXguY29tPgpEYXRlOiBGcmksIDI3IE1hciAyMDI2IDE0OjEzOjM4ICswMTAwClN1YmplY3Q6IFtQ
+QVRDSF0gQnVmZmVyIG92ZXJmbG93IGluIGRyaXZlcnMveGVuL3N5cy1oeXBlcnZpc29yLmMKClRo
+ZSBidWlsZCBpZCByZXR1cm5lZCBieSBIWVBFUlZJU09SX3hlbl92ZXJzaW9uKFhFTlZFUl9idWls
+ZF9pZCkgaXMKbmVpdGhlciBOVUwgdGVybWluYXRlZCBub3IgYSBzdHJpbmcuCgpUaGUgZmlyc3Qg
+Y2F1c2VzIGEgYnVmZmVyIG92ZXJmbG93IGFzIHNwcmludGYgaW4gYnVpbGRpZF9zaG93IHdpbGwK
+cmVhZCBhbmQgY29weSB0aWxsIGl0IGZpbmRzIGEgTlVMLgoKMDAwMDAwMDAgIGY0IDkxIDUxIGY0
+IGRkIDM4IDllIDlkICA2NSA0NyA1MiBlYiAxMCA3MSBkYiA1MCAgfC4uUS4uOC4uZUdSLi5xLlB8
+CjAwMDAwMDEwICBiOSBhOCAwMSA0MiA2ZiAyZSAzMiAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIHwuLi5Cby4yfAowMDAwMDAxNwoKU28gdXNlIGEgbWVtY3B5IGluc3RlYWQgb2Ygc3ByaW50
+ZiB0byBoYXZlIHRoZSBjb3JyZWN0IHZhbHVlOgoKMDAwMDAwMDAgIGY0IDkxIDUxIGY0IGRkIDAw
+IDllIDlkICA2NSA0NyA1MiBlYiAxMCA3MSBkYiA1MCAgfC4uUS4uLi4uZUdSLi5xLlB8CjAwMDAw
+MDEwICBiOSBhOCAwMSA0MiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwu
+Li5CfAowMDAwMDAxNAoKKHRoZSBhYm92ZSBoYXZlIGEgaGFjayB0byBlbWJlZCBhIHplcm8gaW5z
+aWRlIGFuZCBjaGVjayBpdCdzCnJldHVybmVkIGNvcnJlY3RseSkuCgpUaGlzIGlzIFhTQS00ODUg
+LyBDVkUtMjAyNi0zMTc4NgoKRml4ZXM6IDg0Yjc2MjU3MjhlYSAoInhlbjogYWRkIHN5c2ZzIG5v
+ZGUgZm9yIGh5cGVydmlzb3IgYnVpbGQgaWQiKQpTaWduZWQtb2ZmLWJ5OiBGcmVkaWFubyBaaWds
+aW8gPGZyZWRpYW5vLnppZ2xpb0BjaXRyaXguY29tPgpSZXZpZXdlZC1ieTogSnVlcmdlbiBHcm9z
+cyA8amdyb3NzQHN1c2UuY29tPgpTaWduZWQtb2ZmLWJ5OiBKdWVyZ2VuIEdyb3NzIDxqZ3Jvc3NA
+c3VzZS5jb20+Ci0tLQogZHJpdmVycy94ZW4vc3lzLWh5cGVydmlzb3IuYyB8IDggKysrKysrLS0K
+IDEgZmlsZSBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pCgpkaWZmIC0t
+Z2l0IGEvZHJpdmVycy94ZW4vc3lzLWh5cGVydmlzb3IuYyBiL2RyaXZlcnMveGVuL3N5cy1oeXBl
+cnZpc29yLmMKaW5kZXggYjFiYjAxYmE4MmY4Li45MTkyMzI0MmE1YWUgMTAwNjQ0Ci0tLSBhL2Ry
+aXZlcnMveGVuL3N5cy1oeXBlcnZpc29yLmMKKysrIGIvZHJpdmVycy94ZW4vc3lzLWh5cGVydmlz
+b3IuYwpAQCAtMzY2LDYgKzM2Niw4IEBAIHN0YXRpYyBzc2l6ZV90IGJ1aWxkaWRfc2hvdyhzdHJ1
+Y3QgaHlwX3N5c2ZzX2F0dHIgKmF0dHIsIGNoYXIgKmJ1ZmZlcikKIAkJCXJldCA9IHNwcmludGYo
+YnVmZmVyLCAiPGRlbmllZD4iKTsKIAkJcmV0dXJuIHJldDsKIAl9CisJaWYgKHJldCA+IFBBR0Vf
+U0laRSkKKwkJcmV0dXJuIC1FTk9TUEM7CiAKIAlidWlsZGlkID0ga21hbGxvYyhzaXplb2YoKmJ1
+aWxkaWQpICsgcmV0LCBHRlBfS0VSTkVMKTsKIAlpZiAoIWJ1aWxkaWQpCkBAIC0zNzMsOCArMzc1
+LDEwIEBAIHN0YXRpYyBzc2l6ZV90IGJ1aWxkaWRfc2hvdyhzdHJ1Y3QgaHlwX3N5c2ZzX2F0dHIg
+KmF0dHIsIGNoYXIgKmJ1ZmZlcikKIAogCWJ1aWxkaWQtPmxlbiA9IHJldDsKIAlyZXQgPSBIWVBF
+UlZJU09SX3hlbl92ZXJzaW9uKFhFTlZFUl9idWlsZF9pZCwgYnVpbGRpZCk7Ci0JaWYgKHJldCA+
+IDApCi0JCXJldCA9IHNwcmludGYoYnVmZmVyLCAiJXMiLCBidWlsZGlkLT5idWYpOworCWlmIChy
+ZXQgPiAwKSB7CisJCS8qIEJ1aWxkIGlkIGlzIGJpbmFyeSwgbm90IGEgc3RyaW5nLiAqLworCQlt
+ZW1jcHkoYnVmZmVyLCBidWlsZGlkLT5idWYsIHJldCk7CisJfQogCWtmcmVlKGJ1aWxkaWQpOwog
+CiAJcmV0dXJuIHJldDsKLS0gCjIuNTMuMAoK
+
+--=separator--
