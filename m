@@ -1,4 +1,4 @@
-Received: (qmail 25646 invoked by uid 550); 19 Mar 2026 20:17:35 -0000
+Received: (qmail 32431 invoked by uid 550); 28 Apr 2026 23:02:00 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,69 +8,64 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 25608 invoked from network); 19 Mar 2026 20:17:34 -0000
-Date: Thu, 19 Mar 2026 21:15:31 +0100
-From: Christian Brabandt <cb@256bit.org>
-To: oss-security@lists.openwall.com
-Message-ID: <abxZYydMOIzzewqE@256bit.org>
+Received: (qmail 30183 invoked from network); 28 Apr 2026 22:15:59 -0000
+To: MOHAMED AZIZ RAHMOUNI <mohamedaziz.rahmouni@insat.ucar.tn>,
+ oss-security@lists.openwall.com, secalert@redhat.com
+References: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
+From: Dmitry Butskoy <buc@buc.spb.ru>
+Message-ID: <2d6df6ac-419b-2b12-cafb-58b3cfd76936@buc.spb.ru>
+Date: Wed, 29 Apr 2026 01:15:50 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101
+ Thunderbird/128.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: cb@256bit.org
-X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
-Subject: [oss-security] [vim-security]: Command injection via newline in glob() affects Vim
- < 9.2.0202
+In-Reply-To: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] =?UTF-8?Q?Re:_[SECURITY]_Out-of-Bounds_Read_in_MPLS_Extension_Parsi?=
+ =?UTF-8?Q?ng_=e2=80=94_traceroute_2.1.2?=
 
-Command injection via newline in glob() affects Vim < 9.2.0202
-==============================================================
-
-Date: 19.03.2026
-Severity: Medium
-CVE: CVE-2026-33412
-CWE: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') (CWE-78)
-
-## Summary
-
-A command injection vulnerability exists in Vim's `glob()` function on
-Unix-like systems. By including a newline character (`\n`) in a pattern 
-passed to `glob()`, an attacker may be able to execute arbitrary shell 
-commands. This vulnerability depends on the user's 'shell' setting.
-
-## Description
-
-Vim's `glob()` function and other features performing wildcard expansion 
-eventually call `mch_expand_wildcards()` on Unix-based systems. This 
-function constructs a command string to be executed by the system shell 
-to perform the expansion.
-
-Because the newline character (`\n`) was missing from the 
-`SHELL_SPECIAL` list of characters to be escaped, it was passed to the 
-shell unquoted. The success and behavior of this exploit depend on the 
-user's 'shell' setting. 
-
-## Impact
-
-This vulnerability poses a significant risk if a Vimscript plugin
-passes untrusted user input into the `glob()` functions. An attacker can 
-achieve arbitrary code execution with the privileges of the user running 
-Vim. 
+Thanks for the report. I'll review it in the next few hours.
 
 
-## Acknowledgements
+MOHAMED AZIZ RAHMOUNI wrote:
+> Hello,
+>
+> I am reporting a security vulnerability I discovered in traceroute 
+> 2.1.2 during manual code review and dynamic fuzzing.
+>
+> Summary:
+> An out-of-bounds read exists in traceroute/traceroute.c. After 
+> recvmsg() returns, bufp is advanced past the IPv4 header (bufp += 
+> hlen) but n is not decremented accordingly. The subsequent call:
+>
+>     handle_extensions(pb, bufp + offs, n - offs, step);
+>
+> passes a len value that is hlen bytes (20 for IPv4, 40 for IPv6) 
+> larger than the actual data available from bufp + offs. This causes 
+> the MPLS extension parser to read past the received packet boundary 
+> into uninitialized stack memory within buf[1280].
+>
+> The vulnerability is remotely triggerable by any on-path network 
+> device that can send a crafted ICMP Time Exceeded response with MPLS 
+> extensions to a traceroute -e invocation. I have confirmed the issue 
+> with a working proof of concept.
+>
+> Proposed fix (single line addition after line 1427):
+>
+>     bufp += hlen;
+>     n -= hlen;   // add this line
+>
+> I have attached a full technical report including root cause analysis, 
+> proof of concept code, memory layout analysis, and impact assessment.
+>
+> I am following a 90-day responsible disclosure policy. I intend to 
+> publish details publicly on 2026-07-27 unless a patch is available 
+> sooner, at which point I will coordinate the disclosure timeline with you.
+>
+> Please confirm receipt of this report.
+>
+> Regards,
+> Security researcher Zyyz
+>
+> Mohamed Aziz Rahmouni
 
-The Vim project would like to thank pyllyukko for identifying the 
-vulnerability and providing a detailed analysis of the call chain and a 
-reproducible example.
-
-## References
-
-The issue has been fixed as of Vim patch v9.2.0202
-
-- [Commit](https://github.com/vim/vim/commit/645ed6597d1ea896c712cd7dd)
-- [GitHub Advisory](https://github.com/vim/vim/security/advisories/GHSA-w5jw-f54h-x46c)
-
-Thanks,
-Christian
--- 
-Ist der Virus erst entdeckt, ist die Platte schon verreckt.
