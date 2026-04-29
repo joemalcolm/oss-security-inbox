@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1536" "Thursday" "28" "October" "2021" "05:58:05" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" nil "46" "Re: [oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil "10" nil nil (number mark "U       carnil@debia Oct 28   46/1536  " thread-indent "\"Re: [oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Linux kernel: powerpc: KVM guest can trigger host crash on Power8" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17952 invoked by uid 550); 28 Oct 2021 03:58:18 -0000
+Received: (qmail 11838 invoked by uid 550); 29 Apr 2026 23:01:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,92 +7,110 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17934 invoked from network); 28 Oct 2021 03:58:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Rd6zCtdbs2Rh9eLyPdLWC7QfjiBZneX2Pqf4p8XquB4=;
-        b=a1iu/fP5TzuYTFr++xaSjuv7mLYIpvIUVBZDRjlHZlOzxUsN707HqC5FDhk0OodcZE
-         F/XsII69uyg7tO3/kalMXCbRv0TbJpKo0YseDHSn1yZn62m5fZJjFJBX5RnlOCqMquJf
-         07q3e1Ypq8n6CuqFgQdhMRa30oYO1W75wiOGTkE/rLiHoSPngE17V6JkWgXhnpMnRUZd
-         +HQiKDKUo580k8iqy4jh7UyfS7qglWurwDFz6MT4sS6k7YgZMjQOhcsIodiiZYhka1zn
-         z48AeHxhtIJLm5JBln9aZclXOeaEVaOD3juzI/xEjUANJcFrUITHbMaUk29JDHkHT5hx
-         f3sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=Rd6zCtdbs2Rh9eLyPdLWC7QfjiBZneX2Pqf4p8XquB4=;
-        b=VT0nnKwEWh5AB1cUuuSC664pj5PFmyX3Z99q8D4EzHWLwvuArk6wwAI3p7kY7gnZuv
-         w2mtM8Ay2fvQ+BjPtRWOWRkAH6OP/rZ5LnRM4a94eczcrROKW2czT54DDt19T2Cd5RoK
-         oZmA3kpd0HE/JQ7asMeUgQE9DHeBOyTvBvCKyEpv0tdU2r3bNAUocAF9MLcIKn3mlxVG
-         7UPhoWLxKtPNqtqes5PkWrU4uVqE7XIkRNQXps8fMxN8DAJgPO4RE7LTXGqBt6xG0yW7
-         fTqZ4KXHoPhbDgTFVVwQrLIm3vayg94aLcpxZ4GGmoidXwhGpjjgQ/nh/JLo3Rw9cAPF
-         6+bA==
-X-Gm-Message-State: AOAM533ssJAgcPTB7rb6fUL4/B1V0FvpwMRpPqx4zyaevkpAtNMUNilp
-	8Nnzw0+VYqW5HluuKVmwJucdN+Q48JsINg==
-X-Google-Smtp-Source: ABdhPJws+hi+VGk4x9F3GsElqwOzk1Tf9/PmXVzVvbGPqLyjMn0UCHa/LfOj0e4muFxGG+LIRvWXzw==
-X-Received: by 2002:a2e:a78e:: with SMTP id c14mr2101680ljf.208.1635393487069;
-        Wed, 27 Oct 2021 20:58:07 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Thu, 28 Oct 2021 05:58:05 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Michael Ellerman <mpe@ellerman.id.au>
-Cc: oss-security@lists.openwall.com, linuxppc-dev@lists.ozlabs.org,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Message-ID: <YXofzUCGm3N7lfNf@elende.valinor.li>
-References: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
+x-ms-reactions: disallow
+Received: (qmail 8144 invoked from network); 29 Apr 2026 22:15:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1777500920;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=s1LmO1PWIzKl+3rxHTQgWqlJeXdMniIfg6mMUDLGAjY=;
+	b=Z/pYL5kg9FA1Jqd7wRTjYptlrvSdOLGNyauP2zsl2JxoUL9v2DP4iDEhgzRqnHnJMJv+WJ
+	mElVapvcYnI7FGIF7TTdPRKQIavbbp1m4Eqz6LUYNw2QdXLMmRywRzQe5s1znDBvWcds8y
+	4P+4z5bkWE2FzY3NzzU8qTMif5vhl5oLe/IBWqoIht5NPagRhUXvXks6NG6Tgv8AJln12f
+	Tury/5kxGfqVFjC2nZAnM9rMGqhdtBaahwXj/O30pM6NzcFS9GEuFivqGmXhjHDrPI7GTX
+	5for1B3MZ8CCV7XoyJw7VsNKK2F1z2pCobpPd6Nj1+JIamm3k/tLoORnte9TXQ==
+Message-ID: <b8d9f060-6e83-42a5-8d34-4b34fe19b97f@cpansec.org>
+Date: Wed, 29 Apr 2026 23:15:19 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87pmrtbbdt.fsf@mpe.ellerman.id.au>
-Subject: Re: [oss-security] Linux kernel: powerpc: KVM guest can trigger host
- crash on Power8
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTF6TobR6Sy5xQI+MRxpRYdUQ3ijkhrhTq/05Sw2ZgKDH0LB53+1fa+Fd69SXRO2/JNLNH5xlPuu8SOXLUcqzgh/uG0hAqRVxBqPAH3guUB+2+jFQSGP8fyKCn6R/jjOJitZLDIQ55IGzfNdgVlVsoVkLRdjw6agIPRQXUymVrusAAa1vuhGR2byzS0aeAAeAXzctmCyVtdTTBfOdZCmXl3nJEYI/t+lLNeClLaCmtGSkwzL57BvH5v1yyzS4WQfNIWhXObVJ9/CdYCUnNOop25gefhlHpZLq8IBJDA5r9qH3Y2sR+upCrdG+wvUQ3gez1mGBjkj5Do4s5sfrq1V+ASLW20hAPwa3XtobOul+igts1uGw0xc968JETstKpZ0j/qMyiS/YHmnb6JvdjCchflUYCwfd+gx694dyKPLfVqTH8mwFwbiD/m+UM1NJLuEicsJAzLMpDgpZX1b1YoNXw3yu/hww+vKqdVgyFgcUsTqr3dtriylZRVGeeVmw9F2Ux78v5qCvxuJUnMAPTBB1e+NE9/HxmqHSRTkBi61qE+S/l4kIewa35Pa/cqW7e16WvzkmAI7K4NLdGByX2g1asSMGUMgUXa/ye/b8152/pDJ3r0akuxQlygPC+HdT9A8UB6x8wf+PV33x/G3h1pkg8zVwz8RELHxiD36SDOKhZR4sA
+X-GND-State: clean
+X-GND-Score: -6
+Subject: [oss-security] CVE-2026-7381: Plack::Middleware::XSendfile versions through 1.0053
+ for Perl can allow client-controlled path rewriting
 
-Hi,
+========================================================================
+CVE-2026-7381                                        CPAN Security Group
+========================================================================
 
-On Mon, Oct 25, 2021 at 10:18:54PM +1100, Michael Ellerman wrote:
-> The Linux kernel for powerpc since v5.2 has a bug which allows a
-> malicious KVM guest to crash the host, when the host is running on
-> Power8.
-> 
-> Only machines using Linux as the hypervisor, aka. KVM, powernv or bare
-> metal, are affected by the bug. Machines running PowerVM are not
-> affected.
-> 
-> The bug was introduced in:
-> 
->     10d91611f426 ("powerpc/64s: Reimplement book3s idle code in C")
-> 
-> Which was first released in v5.2.
-> 
-> The upstream fix is:
-> 
->   cdeb5d7d890e ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
-> 
-> Which will be included in the v5.16 release.
-> 
-> Note to backporters, the following commits are required:
-> 
->   73287caa9210ded6066833195f4335f7f688a46b
->   ("powerpc64/idle: Fix SP offsets when saving GPRs")
-> 
->   9b4416c5095c20e110c82ae602c254099b83b72f
->   ("KVM: PPC: Book3S HV: Fix stack handling in idle_kvm_start_guest()")
-> 
->   cdeb5d7d890e14f3b70e8087e745c4a6a7d9f337
->   ("KVM: PPC: Book3S HV: Make idle_kvm_start_guest() return 0 if it went to guest")
-> 
->   496c5fe25c377ddb7815c4ce8ecfb676f051e9b6
->   ("powerpc/idle: Don't corrupt back chain when going idle")
-> 
-> 
-> I have a test case to trigger the bug, which I can share privately with
-> anyone who would like to test the fix.
+         CVE ID:  CVE-2026-7381
+   Distribution:  Plack
+       Versions:  through 1.0053
 
-The issue has been assigned CVE-2021-43056.
+       MetaCPAN:  https://metacpan.org/dist/Plack
+       VCS Repo:  https://github.com/plack/Plack
 
-Regards,
-Salvatore
+
+Plack::Middleware::XSendfile versions through 1.0053 for Perl can allow
+client-controlled path rewriting
+
+Description
+-----------
+Plack::Middleware::XSendfile versions through 1.0053 for Perl can allow
+client-controlled path rewriting.
+
+Plack::Middleware::XSendfile allows the variation setting (sendfile
+type) to be set by the client via the X-Sendfile-Type header, if it is
+not considered in the middleware constructor or the Plack environment.
+
+A malicious client can set the X-Sendfile-Type header to
+"X-Accel-Redirect" to services running behind nginx reverse proxies,
+and then set the X-Accel-Mapping to map the path to an arbitrary file
+on the server.
+
+Since 1.0053, Plack::Middleware::XSendfile is deprecated and will be
+removed from future releases of Plack.
+
+This is similar to CVE-2025-61780 for Rack::Sendfile, although
+Plack::Middleware::XSendfile has some mitigations that disallow regular
+expressions to be used in the mapping, and only apply the mapping for
+the "X-Accel-Redirect" type.
+
+Problem types
+-------------
+- CWE-200 Exposure of Sensitive Information to an Unauthorized Actor
+- CWE-441 Unintended Proxy or Intermediary
+- CWE-913 Improper Control of Dynamically-Managed Code Resources
+
+Workarounds
+-----------
+Users can configure the X-Sendfile-Type in the middleware constructor,
+and the reverse proxy to unset the X-Sendfile-Type header and (on
+nginx) the X-Accel-Mapping request header.
+
+
+Solutions
+---------
+Users are encouraged to set the appropriate header directly in their
+applications, or write their own middleware layer that does not allow
+configuration to be passed via HTTP request headers.
+
+
+References
+----------
+https://metacpan.org/release/MIYAGAWA/Plack-1.0053/changes
+https://metacpan.org/release/MIYAGAWA/Plack-1.0053/view/lib/Plack/Middleware/XSendfile.pm#DEPRECATION-NOTICE
+https://nvd.nist.gov/vuln/detail/CVE-2025-61780
+
+Timeline
+--------
+- 2025-10-10: Issue for Rack::Sendfile reported
+- 2026-04-27: Issue reported to maintainer of Plack
+- 2025-04-28: Plack 1.0052 released with improved security
+   documentation in Plack::Middleware::XSendfile
+- 2025-04-29: Plack 1.0053 released that deprecates
+   Plack::Middleware::XSendfile
+
+Credits
+-------
+CPANSec, finder
+
+
+
