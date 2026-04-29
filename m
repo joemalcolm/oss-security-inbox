@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1442" "Thursday" "3" "March" "2016" "14:07:37" "+0100" "Marcus Meissner" "meissner@suse.de" "<20160303130737.GN22595@suse.de>" "42" "[oss-security] CVE-2004-0230 additions and Linux Kernel fix" "^Date:" nil nil "3" "2016030313:07:37" "[oss-security] CVE-2004-0230 additions and Linux Kernel fix" (number mark "        meissner@sus Mar  3   42/1442  " thread-indent "\"[oss-security] CVE-2004-0230 additions and Linux Kernel fix\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23634 invoked by uid 550); 3 Mar 2016 13:07:49 -0000
+Received: (qmail 7928 invoked by uid 550); 29 Apr 2026 23:01:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,62 +6,78 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23616 invoked from network); 3 Mar 2016 13:07:49 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20160303130737.GN22595@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Date: Thu, 3 Mar 2016 14:07:37 +0100
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2004-0230 additions and Linux Kernel fix
-To: OSS Security List <oss-security@lists.openwall.com>,
-	cve-assign@mitre.org
+x-ms-reactions: disallow
+Received: (qmail 24059 invoked from network); 29 Apr 2026 22:05:42 -0000
+DKIM-Filter: OpenDKIM Filter v2.10.3 james.steelbluetech.co.uk CE365BFC14
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ehuk.net; s=default;
+	t=1777500329; bh=iQKoO+Cx73SovsCz8wIzwOBdakcnAuWOeZHwzr1Igu4=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=M97gDyhI3+eby/weYUWryZI2U+PDV4rNuPOYGCDu1xbUwHv1vKfmaCTvY4zz3vrq+
+	 SyJvkDNlZpySszYivxUnMlSjwrAH6CZ8SQNPh+HJKJLIXYjqzkYmx2uK3Vprb/msov
+	 VVXEg2qzCgJ6XalDhbopJMlpnCJNzBa3FiuG3sgn/ysQ8VpFUe4LMuho/EMP43R9Od
+	 kDdNSCU4M5+zPS/ZNoeutia7lz+LouZe6cVfSBdX3CGCzuLB3JG7gWhgubTLxuxi8J
+	 dGh5gZKdUPLI6wwMHbT0Nh9ezOEjdOu4Zyd/BI86Fk/pLaB9EEmgycjMDSywR7IZAZ
+	 Kx74Iq+Il0pzQ==
+Message-ID: <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
+Date: Wed, 29 Apr 2026 23:05:29 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, Jan Schaumann <jschauma@netmeister.org>
+References: <afJorKIje4O6dXbH@netmeister.org>
+Content-Language: en-GB
+From: Eddie Chapman <eddie@ehuk.net>
+In-Reply-To: <afJorKIje4O6dXbH@netmeister.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
-Hi,
+On 29/04/2026 21:23, Jan Schaumann wrote:
+> Affected and fixed versions
+> ===========================
+> 
+> Issue introduced in 4.14 with commit
+> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
+> 6.18.22 with commit
+> fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
+> 
+> Issue introduced in 4.14 with commit
+> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
+> 6.19.12 with commit
+> ce42ee423e58dffa5ec03524054c9d8bfd4f6237
+> 
+> Issue introduced in 4.14 with commit
+> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
+> 7.0 with commit
+> a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
+> 
+> https://git.kernel.org/stable/c/fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
+> https://git.kernel.org/stable/c/ce42ee423e58dffa5ec03524054c9d8bfd4f6237
+> https://git.kernel.org/stable/c/a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
 
-CVE-2004-0230 is an old standing TCP protocol issue complained about by shitty network vulnerability scanners (I am looking at you Nessus).
+So this is one of the worst make-me-root vulnerabilities in the kernel 
+in recent times. I see that on the 11th of April 6.19.12 & 6.18.22 were 
+released with the fix backported.
 
-There has been however some progress since 2004...
+Longterm 6.12, 6.6, 6.1, 5.15, 5.10 have not received the fix and I 
+don't see anything in the upstream stable queues yet as I write. My 
+guess is backporting that far back is not as straightforward. As this 
+was introduced in 2017 all those older kernels are affected, right? Or 
+am I missing something?
 
-It has new references to add:
+If so, this is no reflection on Greg and Sasha, it's not up to them to 
+produce backports, they have enough of a job co-ordinating stable 
+releases for so many kernels, which I see them do an amazing job of week 
+in, week out. Evidently no one produced the needed backports?
 
-RFC 5961 was written to address this CVE: https://tools.ietf.org/html/rfc5961
+IIUC many installations with these older kernel could already be 
+protected by now, in an ideal world.
 
-And the Linux Kernel has implemented this in
+What went wrong, has the embargo been broken early today? Not looking to 
+point any fingers, those who make things happen in our communities work 
+dam hard and deserve respect and support, especially with the extra 
+burden of AI slop now.
 
-http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=282f23c6ee343126156dd41218b22ece96d747e3
-
-commit 282f23c6ee343126156dd41218b22ece96d747e3
-Author: Eric Dumazet <edumazet@google.com>
-Date:   Tue Jul 17 10:13:05 2012 +0200
-
-    tcp: implement RFC 5961 3.2
-    
-    Implement the RFC 5691 mitigation against Blind
-    Reset attack using RST bit.
-    
-    Idea is to validate incoming RST sequence,
-    to match RCV.NXT value, instead of previouly accepted
-    window : (RCV.NXT <= SEG.SEQ < RCV.NXT+RCV.WND)
-    
-    If sequence is in window but not an exact match, send
-    a "challenge ACK", so that the other part can resend an
-    RST with the appropriate sequence.
-    
-    Add a new sysctl, tcp_challenge_ack_limit, to limit
-    number of challenge ACK sent per second.
-    
-    Add a new SNMP counter to count number of challenge acks sent.
-    (netstat -s | grep TCPChallengeACK)
-    
-    Signed-off-by: Eric Dumazet <edumazet@google.com>
-    Cc: Kiran Kumar Kella <kkiran@broadcom.com>
-    Signed-off-by: David S. Miller <davem@davemloft.net>
-
-Ciao, Marcus
+Eddie
