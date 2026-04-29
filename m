@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2143" "Saturday" "28" "November" "2015" "13:05:57" "-0500" "Larry W. Cashdollar" "larry0@me.com" "<5659ED05.3060502@me.com>" "58" "[oss-security] SQL injection in wordpress plugin double-opt-in-for-download v2.0.8" nil nil nil "11" "2015112818:05:57" "[oss-security] SQL injection in wordpress plugin double-opt-in-for-download v2.0.8" (number mark "U       larry0@me.co Nov 28   58/2143  " thread-indent "\"[oss-security] SQL injection in wordpress plugin double-opt-in-for-download v2.0.8\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 31825 invoked by uid 550); 28 Nov 2015 18:07:08 -0000
+Received: (qmail 26127 invoked by uid 550); 29 Apr 2026 03:19:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,80 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30154 invoked from network); 28 Nov 2015 18:06:11 -0000
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,,
- definitions=2015-11-28_05:,, signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=13
- kscore.is_bulkscore=0 kscore.compositescore=1 compositescore=0.9
- suspectscore=3 phishscore=0 bulkscore=0 kscore.is_spamscore=0 rbsscore=0
- spamscore=13 urlsuspectscore=0.9 adultscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.0.1-1510090000 definitions=main-1511280347
-To: oss-security@lists.openwall.com
-From: "Larry W. Cashdollar" <larry0@me.com>
-Message-id: <5659ED05.3060502@me.com>
-Date: Sat, 28 Nov 2015 13:05:57 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
-MIME-version: 1.0
-Content-type: text/plain; charset=utf-8; format=flowed
-Content-transfer-encoding: 7bit
-Subject: [oss-security] SQL injection in wordpress plugin double-opt-in-for-download v2.0.8
+x-ms-reactions: disallow
+Received: (qmail 26070 invoked from network); 29 Apr 2026 03:19:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777432736; x=1778037536; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rRQ/rmwh3IToQjBSJLsVmuii2FWjZ1bfTvmBPriqfCQ=;
+        b=aV1KT1dZAxnOFS7JyUhY8eco95U3JgQx7VRwh+GFwOJ4hc/yQ1Q0sYyAXWA5H7tn9p
+         16PlcisTZH/ItK92mJobrh7ypSNLKC2GT2b7aEa15PFzPdlmc23bB7ILLWsZlCs6AK/6
+         SLEmp/mu6eYxdMCyUNBCVnnF/TtnKwiUGVlU5eAKR1Gpv9NWo3Uirv+vtatOUGkJ4/ZB
+         NK2H8FfHb70tPyiijnuirXR7DGdh5dlvJtlBnH/I9Iv3ghQuDIYLdQlZZiXk0yYvzSpu
+         TxgUuDbIfIqPyDJBFN2A35ij1xOJMxsyLCZ8Rkxn6Eh2O9Chcs+E52270eKKDeQriWHP
+         lQ4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777432736; x=1778037536;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rRQ/rmwh3IToQjBSJLsVmuii2FWjZ1bfTvmBPriqfCQ=;
+        b=PfyKewxFqR8cngNZN0bor3GcKXb9fPx4yhOLyUAKZJ5yDA19uYxFxlyKzuE6pzCDGX
+         hitxES99acVI5oDelREsedm44uznfYBZH1mHmv0splz3fdlq0o3xZOOLFgUkukXrfwny
+         UGoVsDASGLC7CJF3GqvEQ15FA2qG4Cgbc9hOJoxQrYIlRKwp9jZPjlJtDtO0itI3aBU6
+         XxnXhSbDl9kpNpvHRh9KUbBYpQtd5ukl5qMV5WRApJC7rK0+xTMhGh9GSKrAPkCOCRpb
+         gqlKQb/TWI9DhU8L91QjJXJvVM/XuR9z1sK6tFfk2aujReI0aaKOQIHhjIokcNFPVEDg
+         Ke4A==
+X-Gm-Message-State: AOJu0YxA8wU0BC2+2iw5DaRKciqahBwqBbW9dKK3+X6yACBukAggYCJ7
+	T5VGlnpTmn99i2jmDsPZyS1cVCsP+SHen73Jyiu6RYEiaBUu4cGlv+/mMQPHv6bE
+X-Gm-Gg: AeBDiev9pTpREY7Vq8G6MIPWhaigEB7TKhRDKh/6iwbdxuX7qu2Z/IlIEHVlmr+MwKS
+	3Bo3rMbbnfwD2owo5Nj2P2NErshmBQgC6+Kj5w+pf9PA6HDYD3woDramwiUntwC2PBiEWDmoq21
+	H0+Xh48wGRyi3n5bitLDLREN0SGOAPQPrsqZUM9tpqV0ym4bO9YA7rdmtmJBOV1nUDZ2G+hgm4R
+	23hK8GUaxBPlRIhxiKpPo61dCxK4KVN5C1JQrmBHH/s6Yjvj0hmo61XLM41gUUODBaly0TWUZrR
+	POKglDcMPAqBeBFMhMiqPT6cJXd/C5TFXARAwEuJu7tQ+FiNZ6cNpz1Unv0WmVwuCBKIRXQTtnd
+	zDNvIn4AH533smTpLuWggNF4VaiibEMgSghOCdHzcEPQv7N9rQYXULEXSuJJtytQ1pm7uBNRGP1
+	oXgOWsUBb7CX0vfF+muL6lReQbiCve
+X-Received: by 2002:a05:6808:d4a:b0:479:a90b:a011 with SMTP id 5614622812f47-47c29044165mr3126430b6e.41.1777432736670;
+        Tue, 28 Apr 2026 20:18:56 -0700 (PDT)
+Message-ID: <91b42b0c-9103-4ef3-a806-26e9de10e177@gmail.com>
+Date: Tue, 28 Apr 2026 22:18:46 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com,
+ MOHAMED AZIZ RAHMOUNI <mohamedaziz.rahmouni@insat.ucar.tn>,
+ secalert@redhat.com, Dmitry@butskoy.name
+References: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <CAJBym6AuYxQE1pvsUj6zhRpJd1UqY-iNXD4HhhALJjB-9N=Y+Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: =?UTF-8?Q?Re=3A_=5Boss-security=5D_=5BSECURITY=5D_Out-of-Bounds_Rea?=
+ =?UTF-8?Q?d_in_MPLS_Extension_Parsing_=E2=80=94_traceroute_2=2E1=2E2?=
 
-Title: SQL injection in wordpress plugin double-opt-in-for-download v2.0.8
-Author: Larry W. Cashdollar, @_larry0
-Date: 2015-11-24
-Download Site: https://wordpress.org/plugins/double-opt-in-for-download/
-Vendor: https://profiles.wordpress.org/andyba45/ 
-http://www.labwebdesigns.com
-Vendor Notified: 2015-11-24
-Vendor Fixed: 2015-11-24 in v2.0.9
-Description: Capture visitors names and email addresses by offering FREE
-downloads to your visitors in exchange for their email address with our
-Double Opt-In Plug
-Vulnerability:
-The file 
-double-opt-in-for-download/public/includes/class-doifd-download.php the 
-lines 61 & 110:
+On 4/28/26 17:03, MOHAMED AZIZ RAHMOUNI wrote:
+> Hello,
+>
+> I am reporting a security vulnerability I discovered in traceroute 
+> 2.1.2 during manual code review and dynamic fuzzing.
+>
+> [...]
+>
+> I am following a 90-day responsible disclosure policy. I intend to 
+> publish details publicly on 2026-07-27 unless a patch is available 
+> sooner, at which point I will coordinate the disclosure timeline with you.
+>
+> Please confirm receipt of this report.
 
-38                 $ver = $_GET[ 'ver' ];
-.
-.
-61                     $checkallowed = $wpdb->get_row ( "SELECT 
-doifd_downloads    _allowed FROM " . $wpdb->prefix . 
-"doifd_lab_subscribers  WHERE doifd_verifi    cation_number = '$ver' " );
-.
-.
-110                             $wpdb->query (
-111                                     "
-112                         UPDATE $wpdb->doifd_subscribers
-113                         SET doifd_downloads_allowed = 
-doifd_downloads_allowe    d+1 WHERE doifd_verification_number = '$ver'
-114                     "
-115                             );
+Oops.  The oss-security mailing list is public.  If you want to do 
+coordinated disclosure, you might want to avoid sending the initial 
+report to a public mailing list.  :-)
 
-Allows Blind SQL injection at the $ver parameter as it is not properly 
-sanitized or passed through a prepare() function first.
+It is very fortunate that, as Dmitry Butskoy indicated in his reply, 
+your copy appears to have been tampered with and the official sources do 
+not have this problem.
 
-In file 
-double-opt-in-for-download/public/includes/class-doifd-landing-page.php 
-line 71 allows for SQL injection via the $ver parameter.
 
-  26     public function getVerification() {
-  27         $this->verification = $_GET[ 'ver' ];
-  28         return $this->verification;
-  29     }
-.
-.
+-- Jacob
 
-  71         $sql = "SELECT *
-  72                 FROM {$wpdb->prefix}doifd_lab_subscribers
-  73                 INNER JOIN {$wpdb->prefix}doifd_lab_downloads
-  74                 ON 
-{$wpdb->prefix}doifd_lab_downloads.doifd_download_id = {$ 
-wpdb->prefix}doifd_lab_subscribers.doifd_download_id
-  75                 WHERE doifd_verification_number = 
-'$this->verification'";
-  76
-  77         $this->data = $wpdb->get_row( $sql, ARRAY_A );
-CVEID: 2015-7517
-Advisory: http://www.vapidlabs.com/advisory.php?v=157
+
