@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4386" "Saturday" "6" "July" "2019" "21:37:37" "+0200" "Solar Designer" "solar@openwall.com" "<20190706193737.GA23344@openwall.com>" "86" "Re: [oss-security] linux-distros membership application - Microsoft" "^Date:" nil nil "7" "2019070619:37:37" "[oss-security] linux-distros membership application - Microsoft" (number mark "        solar@openwa Jul  6   86/4386  " thread-indent "\"Re: [oss-security] linux-distros membership application - Microsoft\"\n") "<20190628170812.GG11506@sasha-vm>" ("<20190626141358.GK7898@sasha-vm>" "<20190627140321.GA29338@openwall.com>" "<20190627170508.GB11506@sasha-vm>" "<20190628125743.GA2187@openwall.com>" "<20190628170812.GG11506@sasha-vm>") nil nil nil nil nil nil nil "Re: [oss-security] linux-distros membership application - Microsoft" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24466 invoked by uid 550); 6 Jul 2019 19:39:17 -0000
+Received: (qmail 20420 invoked by uid 550); 29 Apr 2026 03:18:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,103 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22451 invoked from network); 6 Jul 2019 19:37:52 -0000
-Message-ID: <20190706193737.GA23344@openwall.com>
-References: <20190626141358.GK7898@sasha-vm> <20190627140321.GA29338@openwall.com> <20190627170508.GB11506@sasha-vm> <20190628125743.GA2187@openwall.com> <20190628170812.GG11506@sasha-vm>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190628170812.GG11506@sasha-vm>
-User-Agent: Mutt/1.4.2.3i
-Date: Sat, 6 Jul 2019 21:37:37 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] linux-distros membership application - Microsoft
+x-ms-reactions: disallow
+Received: (qmail 20394 invoked from network); 29 Apr 2026 03:18:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777432717; x=1778037517; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=bYLvenzKxwnvLPMXfNYi7fhY8MxU0KiDmHc+3ZfaRxU=;
+        b=bejZTdgHLho4m7AvOhIHVx5697YuJyb97tit+cVy4mucI8OiHMuCktSJZww2xBK5Lh
+         da8jX+VrYh+/y6E3cHmdPBQ8SJFiZEBJF3bgrb+s2G+H8CtHTvyDxxkk9mFxromgbq+4
+         S9wgwjO01l+cesfxRHfw8G9dqKSvMbDyg+k66q9YtTkjnnxcNFaCUWM30yiW4xp5194X
+         4IMB6OWi4uDSMDjW9vIlglqT86GIkeW9c/d9DdpA+/zEwA+lsmPbrVRD0s3yWE/EbNVl
+         L26GUUJrlyD6wFxxUv4s2fAZKnSRoTHIJj812ZBrAXyRorkpEka58Rj3ab5wMM5kQfWR
+         M51A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777432717; x=1778037517;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bYLvenzKxwnvLPMXfNYi7fhY8MxU0KiDmHc+3ZfaRxU=;
+        b=EnT49n0J/m0LHgtM7xNnf1RyOwrd3ROBusFZpCapmAugssUnv+921U7nEGC2KYtB6u
+         C9XUBK7zpSYLHuYe2WW+FQ3hy8pPxiaPpvtKatBJF8p3wZW6E8Q+YQnok5gHouu8tM2T
+         wDa+m4c7lgOwtmZIR37d0cZIru5pQqQxfPI+UMRH/yqaN4/iADD7scB3fpoPMMsUJa/2
+         6lIA8TtfAUvEUQOAzo0cK/87CvEsJuVg5CYLxMosVzSY5yijEOkoTiztPC+gtF2ci2ym
+         F1V/OiRj3/clw2ghjGcTb30uBIgKgPDopEr9QEsQmvji54JU+Ep2c2IXQdN64zaFBKr+
+         5voA==
+X-Gm-Message-State: AOJu0YwLEZrgdvEzFUnQ5TIqHYvIwIQfXnwK7UM+IasdFbAvJ4RGP2Qt
+	yb8TqB1CA1D45XfTY4kI+bXNSkqYkLUuzfX5TAoCEvU1bVs9OWz2EhDNMKNR6PBI
+X-Gm-Gg: AeBDietiCnC+NKtmTVz/cDrb4CfDAB0iB5WYRPCgmcPEsUaRwKuWodkujJ2TmWkQhGp
+	r1dSYsNr8HkEMm63W5Oa0+ThnvIafUCUa/WiQ1/bRP3eo18jYpHLOwwINC3uCPNRuMuuInPwMQL
+	Ay4wSmcX43+ox4ncsXfGCuB+3GJxj9D30zhnHAAPUzxEZfiWUbABBdruxDBpH5ww+g5HtBmyzsZ
+	TSmofVqVJPLC7wgerr9k9rkvT3rzCq16efId3vR6Ut7kxBERhaj+6s3ekF02P1roIaTRo0y0Vjg
+	ZA3mOLpp6uIxtwwMgOj2DJ7zGNguaPM7Cx6O3D+EROa0kbuVkRhH/sNGCp7YQt7gYURzvTTXgDX
+	XETaIQp/EnVsgogwJbgS4wNdD3UwEtoxZ8RZEc6fDcoEq0h7nyEBwY+PYItWLJPezRrLKeb/l2P
+	80Z0y3tENo7P19hLPoy7hkxOt0HwoC
+X-Received: by 2002:a05:6820:4802:b0:696:2674:89f6 with SMTP id 006d021491bc7-69669786f8dmr536679eaf.0.1777432716654;
+        Tue, 28 Apr 2026 20:18:36 -0700 (PDT)
+Message-ID: <521d0295-6a93-4a28-be55-332d663ec457@gmail.com>
+Date: Tue, 28 Apr 2026 22:18:08 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+References: <afDLFWVMK-r70PB0@yuggoth.org>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <afDLFWVMK-r70PB0@yuggoth.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
 
-Hi all,
+On 4/28/26 09:58, Jeremy Stanley wrote:
+> As I'm sure is the case for everyone, the projects I work in are under 
+> a seemingly unending deluge of vulnerability reports from researchers 
+> using LLMs to mine for security gold in our software. At the same 
+> time, we see maintainers on our projects relying on LLM-oriented tools 
+> to develop fixes for vulnerabilities and compose prose for advisories.
+>
+> While I take a moment to catch my breath, this new Bizarro World we're 
+> all living in has gotten me thinking about the risks of public LLM 
+> services to embargoed vulnerability handling workflows and traditional 
+> coordinated disclosure. The operators of these LLM services are known 
+> to feed prompts and results back into their training data, presumably 
+> making it faster and easier for the same information to be found later 
+> by other users of the same service. Would keeping embargoes short help 
+> to mitigate related risks of parallel rediscovery or outright 
+> disclosure to other LLM users? It seems to me that there must be some 
+> inherent lag in this process, but how much?
 
-Per our current policy and precedents, I see no valid reasons not to
-subscribe Microsoft (or part(s) of it, see below) to linux-distros.  So
-I intend to figure out some detail and proceed with the subscription.
+The biggest risk is parallel discovery.  If an LLM can find a bug for a 
+whitehat, it can do the same for a blackhat.
 
-The only voiced reasons not to, such as in Georgi Guninski's posting and
-in comments on some technology news sites that covered Microsoft's
-request, are irrelevant per our currently specified membership criteria.
+> I'm sorely tempted, both due to the increased volume and the risk of 
+> premature disclosure, to just assume that any vulnerability reported 
+> as a result of research using an LLM is trivially discoverable by 
+> others, and give up trying to pretend there's any point to working it 
+> under embargo.
 
-Besides, (at least to me) Microsoft doesn't look all that different from
-many other large corporations, including some which already have their
-Linux distro teams represented on the list.  Microsoft has a lasting
-stigma from its past actions from long ago.  IMO, we shouldn't let that
-result in a biased decision against current Microsoft, effectively
-favoring other corporations who might not be any better currently, but
-just don't have that established stigma.
+You are correct here:  you should assume that any LLM will give a 
+similar result to another person who asks a similar question.  In other 
+words, LLM-discovered vulnerabilities should be considered already 
+publicly known.
 
-On Fri, Jun 28, 2019 at 01:08:12PM -0400, Sasha Levin wrote:
-> Can I suggest that we fork the discussion around security-bugs.rst to
-> LKML? I can suggest an initial patch to address your comments here but I
-> think that this is better handled on LKML.
+> Similarly, it makes sense to me that patch development and descriptive 
+> prose shouldn't be produced with LLM assistance for any vulnerability 
+> that is being worked under an embargo.
 
-Yes, please.
+This is not a problem if, and only if, you only use local LLMs. Use of 
+cloud LLM services should be assumed to break an embargo---they would be 
+immensely valuable "watering hole" targets for blackhats if such use 
+became common.
 
-> Microsoft's history with Linux is a rather recent one. I can offer the
-> following examples if you're willing to give us a few months off of the
-> "1 year" requirement:
-> 
-> CVE-2018-1002105: 
-> https://azure.microsoft.com/en-us/updates/aks-clusters-patched-for-kubernetes-vulnerability/
-> CVE-2018-5391, CVE-2018-5390: 
-> https://azure.microsoft.com/en-us/blog/security-bulletin-for-august-2018/
-> CVE-2019-5736: 
-> https://azure.microsoft.com/en-us/updates/iot-edge-fix-cve-2019-5736/
-> CVE-2019-11477, CVE-2019-11478, CVE-2019-11479: 
-> https://azure.microsoft.com/en-us/updates/security-advisory-on-linux-kernel-tcp-vulnerabilities-for-hdinsight-clusters/
 
-The oldest of these is August 8, 2018, which is just 1 month short of
-the 1 year term.  I suppose we could either give Microsoft this 1 month
-off as you suggest based on Microsoft's track record of promptly dealing
-with security issues in non-Linux products, or subscribe Microsoft to
-linux-distros in August 2019 (or later).
+-- Jacob
 
-More importantly, maybe we shouldn't list "Microsoft" as a member of
-linux-distros.  Microsoft is so much more than the recent Linux-based
-products and services.  We similarly list "Amazon Linux AMI" rather than
-"Amazon", and "Chrome OS" rather than "Google" (and we had separately
-listed "Android", which has since unsubscribed), and "Ubuntu" rather
-than "Canonical".  OTOH, we were not as careful to list proper products,
-etc. for some others such as "Oracle".
 
-If we list "Microsoft", this might be especially confusing since issues
-being reported might also be relevant to Windows.  The reporters need to
-know they're not reaching Windows security team unless they specifically
-authorize that.
-
-Any suggestions on the above?
-
-Regardless, the list policy only allows use of the information for
-"getting the issue fixed for your distro's users and, only in rare
-extreme cases, for deployment of maximally non-revealing changes to
-maintain security of your distro's infrastructure most essential to the
-distro users' security in face of the security issue being dealt with.
-The need-to-know condition is met only if the person needs to
-participate in one of these two activities."  This is meant to preclude
-sharing within the organization beyond its parts responsible for the
-"distro" the organization is subscribed for.
-
-> On Fri, Jun 28, 2019 at 02:57:43PM +0200, Solar Designer wrote:
-> >If Microsoft joins for its Linux offerings (including Linux on top of
-> >Windows), then checking if the Linux issues also affect Windows (itself)
-> >would involve sharing beyond the need-to-know condition of
-> >(linux-)distros list policy, so isn't allowed by default.  It could
-> >still be done with explicit approval of the reporter, though, and I
-> >expect most people would give such approval if asked.
-> 
-> I'd love to develop a framework that would allow for sharing of reports
-> between linux-distros/security@k.o/MSRC given the explicit approval of
-> the reporter. I think that the current "silo" model is broken.
-> 
-> Microsoft in general, and MSRC in particular have proved during
-> Meltdown/Spectre that they are a trusted entity which can work well with
-> the open source community to advance our common goals. 
-
-Alexander
