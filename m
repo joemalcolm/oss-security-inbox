@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11868" "Friday" "14" "December" "2018" "15:14:54" "+0100" "Jann Horn" "jannhorn@googlemail.com" "<CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>" "263" "Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" "^Cc:" nil nil "12" "2018121414:14:54" "[oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)" (number mark "        jannhorn@goo Dec 14  263/11868 " thread-indent "\"Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)\"\n") "<20181212142415.GA11037@openwall.com>" ("<CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>" "<20181212142415.GA11037@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26357 invoked by uid 550); 14 Dec 2018 14:36:59 -0000
+Received: (qmail 12009 invoked by uid 550); 29 Apr 2026 06:01:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,312 +6,116 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3356 invoked from network); 14 Dec 2018 14:15:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l9AySUWKi3ijwM9sXbq414/NClCcHaJ0L3KbEY/P87w=;
-        b=S9+lICuDjVuWvshVRd9eNK9iducGDEcIZx2WAXjSQG3+G7oW+JI+lJkAQ+d74VFFmV
-         XLr50hICzpyyoMi7U+/eOWYfsUr0MRzAUtBqFm9upm9YS5Oh//8x1iDIWFDxOnvwaDP+
-         dWYL+LcxMJMUZLQDFZnUpqxxPOdjCQDt7r9fUK3stg+PZZuL9eAa2NojwFiKROvRoxW8
-         ALTur9QR5H/zF6QkPTkQUVH1w29jIap/uzfSONh7JfRMnqoEtbdVgrRTz/4qy6f7AVXh
-         IfGxSE/5/2nxder2ddyr8ky7IW3K7BnEBELwJKex3vNlbfzxexQrAG76BXuLt6Gla+Ak
-         nfhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l9AySUWKi3ijwM9sXbq414/NClCcHaJ0L3KbEY/P87w=;
-        b=CpcTmKkKyIGGfg8NuoiEL+v6uBg9JWRw8Np3XArjNSc9yfuBysobtB8T2THYTxWGn3
-         mgTaxA1h/r2SPe9SthKOX6s5aKJ7TzPzY2xViRqz/DdCvNheLxwj9Zb7IUGPqO/s+o0s
-         9ejifTHXrZcl9V4jaziuxRNs5SEV69MBrcN75iW3ye1iaojtS3K96TVbs5fcfQ6cp+qC
-         bDHXD7rj75/+hCvysCW7BUDhZrTMO4fV0/qlCna5/RAGB9ePuFsxEF7LFjxniioHXcqw
-         PvY9Ghq++USqQfCxePnV0UeJoNPZfRZKtaQlLT2um9nv3SAwn7Cc6vDrzKdg4SIi59um
-         2BTA==
-X-Gm-Message-State: AA+aEWaNL1dddqC+BJfc8bpU1U4sr8m4qvVLDOmiwRQiMKPYd4bBwJNZ
-	nY1AryvnzSM2dAYI4eTbRsK6dCDQ2Ik=
-X-Google-Smtp-Source: AFSGD/VoOrlpmkVncbYaAce33fUB4mWKDSeBXv1HEelt1GgoBxOaQ4bGjlKPkjDv1WpT7RFL8XX4dg==
-X-Received: by 2002:aca:4fc5:: with SMTP id d188mr1764491oib.138.1544796923070;
-        Fri, 14 Dec 2018 06:15:23 -0800 (PST)
-X-Received: by 2002:a9d:4e06:: with SMTP id p6mr2304948otf.73.1544796921648;
- Fri, 14 Dec 2018 06:15:21 -0800 (PST)
-MIME-Version: 1.0
-References: <CAG48ez37UKxsRzpkxa8HbrWGAXWQ7H9OYjGzkaZgEmzY+QOF2Q@mail.gmail.com>
- <20181212142415.GA11037@openwall.com>
-In-Reply-To: <20181212142415.GA11037@openwall.com>
-X-Gmail-Original-Message-ID: <CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>
-Message-ID: <CAG48ez0FUckA3EfwRM5ha3u7PiA_b2NbQw-sE5oq4iuORBgr8A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Cc: oss-security@lists.openwall.com, Greg KH <greg@kroah.com>, 
-	Yves-Alexis Perez <corsac@debian.org>, Brad Spengler <spender@grsecurity.net>, Jann Horn <jannh@google.com>
-Date: Fri, 14 Dec 2018 15:14:54 +0100
-From: Jann Horn <jannhorn@googlemail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel: userfaultfd bypasses tmpfs file
- permissions (CVE-2018-18397; since 4.11; fixed in 4.14.87 and 4.19.7)
-To: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 11982 invoked from network); 29 Apr 2026 06:01:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1777442452; bh=32jqBgUuXUnGQ+QHDBQxL7PQ8QEGo2bgcG3yyje55Tg=;
+	h=Date:From:To:Subject:From;
+	b=HT0mgIm9LMjX1wXYxar0zBYoTRsFb+PLJuzYspLJwqi+taf2ifRch8XduZq4668Ft
+	 QQ/xgn+xX7SI8VjCQtS3mcvl3ezFYoKBYNaXFdOgZ6gvgk4g2ND1PaqdShSmyfKJDj
+	 3ADgYrRr3NbmNgzRs87ZPUZT3x2iRU75D00OLLmlxu9T9AEljtsuZmNbakXD4YpD55
+	 V8996kebVglK7ABQy7gvzEAtLV5DE3mK7tDa1ydYIT9XUXsWKJfFZ9wXcdqR/Hhu17
+	 f68dyekuRhuHqQc18nbayPV05h4ULHPNKzvWJ2R07eHd4FtsDWs1TfeMHVq5v4GBIR
+	 TNXJbgwG1ykgg==
+Date: Wed, 29 Apr 2026 08:00:52 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <9q402657-2253-sq6n-32s8-opn6q2oop62n@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl: CVE-2026-4873: connection reuse ignores TLS
+ requirement
 
-On Wed, Dec 12, 2018 at 3:24 PM Solar Designer <solar@openwall.com> wrote:
-> On Wed, Dec 12, 2018 at 01:27:13AM +0100, Jann Horn wrote:
-> > NOTE: I have requested a CVE identifier, and I'm sending this message,
-> > to make tracking of the fix easier; however, to avoid missing security
-> > fixes without CVE identifiers, you should *NOT* be cherry-picking a
-> > specific patch in response to a notification about a kernel security
-> > bug.
->
-> (I resisted the urge to comment on this piece in previous postings.)
->
-> What should distros/users do, then?  Use latest mainline or upstream
-> stable kernels?  That would expose them to the many recent bugs like
-> this one, but which haven't yet been found (or not yet made public,
-> which is worse).
->
-> As far as I can tell, by far most Linux kernel vulnerabilities (that are
-> eventually found and made public) are in relatively recent (as of that
-> time) kernel versions.  So a user or a distro would avoid most
-> vulnerabilities (that are eventually found and made public) by staying
-> sufficiently behind current versions, and relying on backports, even if
-> at risk of missing untracked vulnerabilities.  Currently this can be
-> achieved e.g. by using RHEL7'ish kernels forked by Red Hat off 3.10, but
-> probably not anything newer than that yet.  (And when RHEL7 was just
-> released, its kernels were not quite ready for such use.  It takes
-> even RHEL kernels a few years and a few hundred revisions to mature and
-> become a lower security risk.  Fortunately, there's a previous RHEL at a
-> few years and a few hundred revisions old yet still maintained during
-> that time.)
+connection reuse ignores TLS requirement
+========================================
 
-I think one additional aspect here is the kernel config. From what
-I've seen, distros tend to turn on all the config options because they
-probably have some user, somewhere, who wants to use that feature; and
-if you use that strategy for your kernel config, then yes, new
-releases probably add new features and attack surface.
+Project curl Security Advisory, April 29 2026
+[Permalink](https://curl.se/docs/CVE-2026-4873.html)
 
-But since you're able to use a 3.10 kernel, evidently you don't need
-those features. So I think it makes sense to, instead of comparing a
-3.10 distro kernel and a 4.19 distro kernel, look at an old and a new
-kernel with the same feature set enabled.
+VULNERABILITY
+-------------
 
-Looking at the public Linux kernel bugs I filed in our bugtracker
-(which, of course, are a very small number of bugs and probably not
-very representative):
+A vulnerability exists where a connection requiring TLS incorrectly reuses an
+existing unencrypted connection from the same connection pool. If an initial
+transfer is made in clear-text (via IMAP, SMTP, or POP3), a subsequent request
+to that same host will bypass the TLS requirement and instead transmit data
+unencrypted.
 
+INFO
+----
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=807
-"Linux: perf_event_open() can race with execve()"
-probably exploitable since 3.7, since that's when
-PERF_SAMPLE_REGS_USER was added?
+This flaw requires a rather special series of events to trigger. Such a series
+is unlikely to be used much in the wild.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=808
-"Linux: UAF via double-fdput() in bpf(BPF_PROG_LOAD) error path"
-exploitable since 4.4
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+This issue only happens for transfers done using `IMAP://`, `POP3://` or
+`SMTP://` URL schemes. The initial transfer and the second transfer both need
+to be done to the same host, use the same credentials and the same URL
+schemes. The login and the initial transfer is done over clear-text, so the
+user is obviously already accepting an insecure transmission for this. This
+flaw still makes it worse as the second transfer is intended to be secured by
+TLS but is not.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=809
-"Linux: reference count overflow using BPF maps"
-exploitable since 4.4
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2026-4873 to this issue.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=822
-"Linux: arbitrary memory read on arm/arm64 via perf_event_open()"
-My PoC was written against 3.10, so being on 3.10 doesn't help here.
+CWE-319: Cleartext Transmission of Sensitive Information
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=836
-"Linux: Stack overflow via ecryptfs and /proc/$pid/environ"
-I think this probably also worked on v3.10, haven't tested though.
-Newer kernels mitigate this bug class (kernel stack overflow) on
-x86-64 and ARM64, turning it into a clean kernel crash.
+Severity: Low
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=854
-"Linux: SELinux W+X protection bypass via AIO"
-I think this is an old bug?
+AFFECTED VERSIONS
+-----------------
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1251
-"Linux: eBPF verifier log leaks lower half of map pointer"
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+- Affected versions: curl 7.20.0 to and including 8.19.0
+- Not affected versions: curl < 7.20.0 and >= 8.20.0
+- Introduced-in: https://github.com/curl/curl/commit/ec3bb8f727405642a
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1431
-"Linux: mincore() discloses uninitialized kernel heap pages"
-introduced in 4.0
-(depends on CONFIG_HUGETLB_PAGE, but I guess probably almost everyone
-has that on)
+libcurl is used by many applications, but not always advertised as such!
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1454
-"arbitrary read+write via incorrect range tracking in eBPF"
-introduced in 4.14
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1496
-"eBPF verifier bug backported to 4.9-stable"
-introduced in 4.12
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+This flaw also affects the curl command line tool.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1559
-"Linux RNG flaws"
-introduced in 4.8
+SOLUTION
+--------
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1574
-"Linux: 4-byte infoleak via uninitialized struct field in compat
-adjtimex syscall"
-introduced in 4.13
-depends on COMPAT
+curl 8.20.0 fixes this logical flaw
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1580
-"Linux ext4: out-of-bounds memcpy via non-inline system.data xattr"
-introduced in 4.13
+- Fixed-in: https://github.com/curl/curl/commit/507e7be573b0a76fca597b75
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1611
-"Linux/Ubuntu: other users' coredumps can be read via setgid directory
-and killpriv bypass"
-I think this one's a really old bug.
+RECOMMENDATIONS
+---------------
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1626
-"Linux: reiserfs: heap overflow in listxattr_filler()"
-introduced in 2.6.30
-depends on CONFIG_REISERFS_FS
+We suggest you take one of the following actions immediately, in order of
+preference:
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1628
-"Linux: percpu refcounts on struct mount are racy"
-introduced in 3.13
+  A - Upgrade to curl and libcurl 8.20.0
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1633
-"Linux: insufficient shootdown for paging-structure caches"
-introduced in 4.14
+  B - Apply the patch and rebuild libcurl
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1650
-"Linux: arbitrary kernel read into dmesg via missing address check in
-segfault handler"
-introduced in 4.18
+  C - Do not use clear-text IMAP/POP3/SMTP transfers
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1655
-"Linux: kernel ptr leak via BPF: broken subtraction check"
-introduced in 4.15
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+TIMELINE
+---------
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1657
-"Linux: semi-arbitrary task stack read on ARM64 (and x86) via /proc/$pid/stack"
-introduced in 2.6.29, I think
-(depends on CONFIG_STACKTRACE, but that's probably on)
-heightened impact on kernels before 4.4 if you don't have a backport
-of "fork: unconditionally clear stack on fork"
+It was reported to the curl project on March 22nd 2026. We contacted
+distros@openwall on April 23.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1664
-"Linux: VMA use-after-free via buggy vmacache_flush_all() fastpath"
-introduced in 3.15
+libcurl 8.20.0 was released on April 29th 2026, coordinated with the
+publication of this advisory.
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1686
-"Linux: bpf verifier: 32-bit RSH verification doesn't truncate input
-before the ALU op"
-introduced in 4.15
-depends on CONFIG_BPF_SYSCALL, which only exists since 3.18
+CREDITS
+-------
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1695
-"Linux: mremap() TLB flush too late with concurrent ftruncate()"
-introduced in 3.2
-heightened impact on kernels before 4.9
+- Reported-by: Arkadi Vainbrand
+- Patched-by: Daniel Stenberg
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
-"Linux: userfaultfd bypasses tmpfs file permissions"
-introduced in 4.16
-depends on CONFIG_USERFAULTFD, which only exists since 4.3
+Thanks a lot!
 
-https://bugs.chromium.org/p/project-zero/issues/detail?id=1712
-"Linux: broken uid/gid mapping for nested user namespaces with >5 ranges"
-introduced in 4.15
+-- 
 
-
-So by my count, that's roughly:
-
-A) 5 bugs that were already in 3.10 (reiserfs, coredump leak, W+X
-bypass, ARM64 perf_event_open(), perf_event_open()/execve() race)
-B) 3 additional bugs that were already in 3.10, and where the bug was
-worse in old kernels than in the affected one (UAF via late TLB flush;
-infoleak from the stack), or where modern kernels would mitigate the
-issue (stack overflow)
-C) 8 bugs that are gated behind config flags that you won't have set
-if you haven't enabled new features after 3.10 (BPF and userfaultfd)
-D) 9 bugs that are newer than 3.10 and that might be compiled in even
-if you haven't enabled new features since 3.10 (user namespaces, VMA
-UAF, kernel read into dmesg, TLB race, percpu refcounts, ext4, compat
-adjtimex, RNG issues, mincore heap leak)
-
-(But again, this isn't exactly a large sample set.)
-
-> A question to ask may be: out of Linux kernel vulnerabilities being
-> patched, are there more high and critical overall severity (e.g., as
-> risk impact times risk probability) vulnerabilities found in "too
-> recent" kernels than there are high and critical severity untracked
-> vulnerabilities (also or instead) affecting "sufficiently old" kernels?
-> My gut feeling is there are many more such vulnerabilities in "too
-> recent" kernels than there are those untracked vulnerabilities in
-> "sufficiently old" kernels.  (BTW, a vulnerability being untracked
-> likely correlates with it being a lower risk probability at least for
-> non-targeted attacks.)  Hence optimal strategy for a distro and their
-> users is to stay with "sufficiently old" base versions and backport
-> whatever is known to be worthy of a backport.
->
-> There are no maintained upstream stable branches started long enough ago
-> for them to be as mature as e.g. RHEL7 kernels are now.  Besides,
-> upstream stable branches also suffer from lack of backports of fixes for
-> untracked vulnerabilities.
->
-> The recommendation to use latest mainline or upstream stable kernels is
-> safe to give (and in a way even the most responsible one to give), but
-> not necessarily the best to follow.
->
-> I do not have a suggestion on what to do about that as it relates to
-> recommendations/disclaimers on postings such as Jann's.  Ideally, we
-> wouldn't have so many new security vulnerabilities being introduced to
-> new Linux kernels all the time, but that seems unrealistic given the
-> pace of Linux kernel development and growth.
-
-I think it might be helpful to ensure that kernels used in
-environments where you care about security are not configured with the
-maximum amount of features possible, but instead adjusted to actual
-requirements via kernel config and sysctls. Examples:
-
-Regarding the specific bug that started this thread: userfaultfd is
-enabled by distro kernels, but the only current usecase I'm aware of
-is reduction of downtime for QEMU live migration. You probably don't
-need it.
-You might not need compat support.
-You probably don't need support for every single filesystem Linux knows about.
-eBPF is useful for some networking and performance tracing stuff, but
-you probably don't actually need it to be available for non-root, even
-if you do have a use for it.
-
-This should let you avoid many bugs that are introduced as part of new
-features; but of course, it doesn't do much against bugs introduced by
-performance optimizations and such.
-
-It sucks that distros shipping binary kernels kinda have to do the
-opposite of this in order to fulfill their users' needs, at least for
-config options where "build as a module" isn't an option. :( If
-distros want to use a single kernel image for everything, perhaps
-having more sysctls to lock down new features, in addition to the
-kernel config, would help...
-
-> > In Linux kernel versions since 4.11, userfaultfd can be used to write
-> > arbitrary data into holes in sparse tmpfs files to which an attacker
-> > has read-only access.
-> >
-> > This is CVE-2018-18397.
-> >
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=29ec90660d68bbdd69507c1c8b4e33aa299278b1
-> > https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.14.87
-> > https://cdn.kernel.org/pub/linux/kernel/v4.x/ChangeLog-4.19.7
-> > https://bugs.chromium.org/p/project-zero/issues/detail?id=1700
->
-> Interesting.  How did you find this?
-
-I was specifically looking through the userfaultfd code for security
-bugs. I think this was the first time I looked at the userfaultfd code
-this way (instead of just looking for ).
-
-> Alexander
->
-> P.S. I guess Jann's message did not reach subscribers who are on Gmail
-> and such because of google.com's DMARC policy.  So I made sure to quote
-> all of it above.
-
-Bleeh... I guess maybe I should use a @googlemail.com account for that...
+  / daniel.haxx.se || https://rock-solid.curl.dev
