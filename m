@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1202" "Wednesday" "16" "March" "2022" "14:51:01" "-0500" "Everett B. Fulton" "ebf@isc.org" nil "32" "[oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)" nil nil nil "3" nil nil (number mark "U       ebf@isc.org  Mar 16   32/1202  " thread-indent "\"[oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220, CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13756 invoked by uid 550); 16 Mar 2022 19:55:04 -0000
+Received: (qmail 31934 invoked by uid 550); 29 Apr 2026 22:35:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +7,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11824 invoked from network); 16 Mar 2022 19:51:16 -0000
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 3164E3AB026
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1647460264; bh=SlJubT0p53wK/+AMKFsVc21DHH+QINo+dC5M+/pifvY=;
-	h=Date:To:From:Subject;
-	b=FO9EhMoOSBvGC5K//EZiuJyWV1JBpWEuV0gnO3MPZ0XqJoNO+uv1MP7RKl2XLMPAH
-	 C0s8+HF1bhXkhBF6kaiSHQFRtQlMy+odn28c3xE7Alj0wxU9zeD7aVWIsk7noUwtLs
-	 FT41Tq4v8dzxHgR3fJuBpYw5zuxm5GMoyRFc9h7I=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbrang.isc.org 1CACD10E9E63
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1647460248;
-	bh=7uum2WbPmZviuclbBomc24ha+PPm3WAgWL3WOBG7Mz0=;
-	h=Message-ID:Date:MIME-Version:To:From;
-	b=gMjNvIC/ihh98Gw4OApAY7b6sibqFWOtVeLHaPmpHq6Vsc5nSMLzF45b8HbX6Lrgo
-	 ZY4VybQbMuXlC8zUMwxsuXoGVUn9RKu+axir6WWuLVz7HTXx6xHtojVNwBzVQcTTxp
-	 7NpwLm0SjnRUUxdtNBTfuKLaRY0w9OtWhMplQeds=
-Message-ID: <c4f4fbb4-04fb-a4e5-0aba-d18533ddaaa9@isc.org>
-Date: Wed, 16 Mar 2022 14:51:01 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Content-Language: en-US
+x-ms-reactions: disallow
+Received: (qmail 31915 invoked from network); 29 Apr 2026 22:35:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	linuxpenguins.xyz; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to; s=fm3; t=1777502123; x=1777588523; bh=+C67H1JopNunjB4TtmOSG
+	n8oMqn7PLiJz8+RRiuFZ1c=; b=BpWw02F+WCEXuguyRcMhbHBKaSoYu3N4XGnrC
+	64heWeNEEgXTTZVGQWda6Q3XmwogmoAy1aBjj5Qh2LspyQsekLDPJaY5JNnsXOfA
+	Ddx00CdMOOfj2eoyC6dC703IEYhGvBQoXI02HYcgXcfxiu71TlMepcd5EY3gSrhY
+	T4TjgmWrspr/2Par0oEC+gdrq0ORO6lLFOV3wN8vuUBlsUL85neUvm1XG+Ah9ND8
+	ydLdIH699yW8QoEYmBa6hkG3q7YbWdYy2RZbe9Z1b/rk0tkKFjxmFGIpvCc1zrCi
+	vEStH6Zube2XTnygXPLxAbsv6VFFsAI1NAfkbMhsM2OfbTwXw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1777502123; x=1777588523; bh=+
+	C67H1JopNunjB4TtmOSGn8oMqn7PLiJz8+RRiuFZ1c=; b=nRwa1h8Sz+yQ12ssG
+	Tn07D0HxcS+P8pXciwCMZhhQh22SV/lnpCBW731cPLMcaG1TGO2I/U+Pri8oDcDT
+	jaNg64UEYztaihAWvFCvCJcs5aPwywgnRGK+liVFQvW2Lsk6TPheZ/E9dUEwpTpq
+	Z8YHPkV5Q6SOPIMoNH0FSmGphIzX5i1M1nNFr/8jZfXhjliUHnw97vHx3/10HEPm
+	Wx9REmMk9PTpdrp1nxJNNms52ImOpvfqnZmHALJm1ujXGs+Y2sFn4gQRFpHS1A0L
+	wRZ15W7tkj65MYqsqtAjFWjYjgW7wVg3OJ+Js9Xl2XbbMVXncJ3wSyXb6JCVsTor
+	zdhhw==
+X-ME-Sender: <xms:q4fyaVtwYBGZR9TMcddLgbDFbxQHQKmSTrmOjrxV_kgOCcBKq1jrKA>
+    <xme:q4fyaVathS96YuoTTM0AzZASmYUVErHVWOboa2c6zXoKouw4UVOXhDkPXmfKAKHcW
+    O4wp9H6UUWQkbjmz-CndvqfTm3K5Wn9P2Hyr4gXwPwdpFiOD4sxz7s>
+X-ME-Received: <xmr:q4fyaeZ8EDG5vn5oxwjMLTAfg4NLEFHVhuJhpRwwy8tpRaxKJ3yho97JgOg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekheeihecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhephffvufgjfh
+    ffkfggtgfgsehtqhertddttdejnecuhfhrohhmpeeurhhirghnucforgihuceosghrihgr
+    nheslhhinhhugihpvghnghhuihhnshdrgiihiieqnecuggftrfgrthhtvghrnhepfeduge
+    fhiedugeeiveeludektdeludfhkefhgeffvdehtdejiefhuedukedtkeffnecuffhomhgr
+    ihhnpehsfihttghhrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepsghrihgrnheslhhinhhugihpvghnghhuihhnshdrgiihiidpnhgs
+    pghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhsshdqsh
+    gvtghurhhithihsehlihhsthhsrdhophgvnhifrghllhdrtghomh
+X-ME-Proxy: <xmx:q4fyaRVTubQSCE_r2C8ku6CFj12IxeQW0tcRXkhHSfrc1shaIUx1Mg>
+    <xmx:q4fyaV0zDuKh2TLBqoRQenkbWgb9OpW4OarsWQyn-QIc8AMY_htKlQ>
+    <xmx:q4fyaYZZmMMiW31heKToNO7Yoww0CK0Gio2ir-FS6nkA2w6yd5JbVw>
+    <xmx:q4fyaYqL0_JkrKX559lb_o6sM-9v7wjwvzsqH40wCVWV2XZ5qWOx-w>
+    <xmx:q4fyaWlYLN5R-YW_TOyohEmzv9sxU8dFP5NGeY4Pq9BW5LB3AWlmRSnB>
+Feedback-ID: i377146fc:Fastmail
+From: Brian May <brian@linuxpenguins.xyz>
 To: oss-security@lists.openwall.com
-From: "Everett B. Fulton" <ebf@isc.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Four vulnerabilities disclosed in BIND (CVE-2021-25220,
- CVE-2022-0396, CVE-2022-0635 and CVE-2022-0667)
+In-Reply-To: <dc97be31-0762-4a91-a1ad-6795abaab8a9@foolishgames.com>
+References: <afDLFWVMK-r70PB0@yuggoth.org>
+ <dc97be31-0762-4a91-a1ad-6795abaab8a9@foolishgames.com>
+Date: Thu, 30 Apr 2026 08:35:18 +1000
+Message-ID: <87340d2y55.fsf@linuxpenguins.xyz>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
 
-On March 16 2022, we (Internet Systems Consortium) disclosed four
-vulnerabilities affecting our BIND 9 software:
+Lucas Holt <luke@foolishgames.com> writes:
+> At a minimum, if you're going to go public, use your AI to include a=20
+> possible patch too.=C2=A0 Don't just drop work on a random person because=
+ you=20
+> got to find it first.=C2=A0 That's not cool.
 
-   CVE-2021-25220: DNS forwarders - cache poisoning vulnerability
-   https://kb.isc.org/docs/CVE-2021-25220
+Need to be careful here; simple patches that look good can in fact be
+hiding serious security issues.
 
-   CVE-2022-0396: DoS from specifically crafted TCP packets
-   https://kb.isc.org/docs/cve-2022-0396
+Thinking of the September 2006 Debian openssl issue here.
 
-   CVE-2022-0635: DNAME insist with synth-from-dnssec enabled
-   https://kb.isc.org/docs/cve-2022-0635
-
-   CVE-2022-0667: Assertion failure on delayed DS lookup
-   https://kb.isc.org/docs/cve-2022-0667
-
-New versions of BIND are available from https://www.isc.org/downloads
-
-Operators and package maintainers who prefer to apply patches
-selectively can find individual vulnerability-specific patches in the
-"patches" subdirectory of the release directories for our three stable
-release branches (9.11. 9.16 and 9.18)
-
-   https://downloads.isc.org/isc/bind9/9.11.37/patches/
-   https://downloads.isc.org/isc/bind9/9.16.27/patches/
-   https://downloads.isc.org/isc/bind9/9.18.1/patches/
-
-With the public announcement of these vulnerabilities, the embargo
-period is ended and any updated software packages that have been
-prepared may be released.
--- 
-Everett B. Fulton
-ISC Support
+https://research.swtch.com/openssl
+--=20
+Brian May @ Linux Penguins
