@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3776" "Friday" "18" "September" "2015" "14:02:36" "+0200" "up201407890@alunos.dcc.fc.up.pt" "up201407890@alunos.dcc.fc.up.pt" "<20150918140236.16423e1uvmlvi544@webmail.alunos.dcc.fc.up.pt>" "99" "Re: [oss-security] s/party/hack like it's 1999" nil nil nil "9" "2015091812:02:36" "[oss-security] s/party/hack like it's 1999" (number mark "        up201407890@ Sep 18   99/3776  " thread-indent "\"Re: [oss-security] s/party/hack like it's 1999\"\n") "<55FBD48F.7080401@redhat.com>" ("<20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>" "<55FBD48F.7080401@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11853 invoked by uid 550); 18 Sep 2015 12:27:11 -0000
+Received: (qmail 16022 invoked by uid 550); 29 Apr 2026 06:01:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,122 +6,107 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9837 invoked from network); 18 Sep 2015 12:22:50 -0000
-Message-ID: <20150918140236.16423e1uvmlvi544@webmail.alunos.dcc.fc.up.pt>
-References: <20150917180319.1933609esmj3aaw4@webmail.alunos.dcc.fc.up.pt>
-	<55FBD48F.7080401@redhat.com>
-In-Reply-To: <55FBD48F.7080401@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset=UTF-8;
-	DelSp="Yes";
-	format="flowed"
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Internet Messaging Program (IMP) H3 (4.2)
-X-Virus-Scanned: amavisd-new at alunos.dcc.fc.up.pt
-Date: Fri, 18 Sep 2015 14:02:36 +0200
-From: up201407890@alunos.dcc.fc.up.pt
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] s/party/hack like it's 1999
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 15995 invoked from network); 29 Apr 2026 06:01:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=haxx.se; s=silly;
+	t=1777442479; bh=mxbTvLuxMjMudi3k18pqSgS2N9Nq8ApjOG7lEKYHAoU=;
+	h=Date:From:To:Subject:From;
+	b=ZQmZOlQb8mlBoCzRDWVfKTi4MK4cKdHcC+HkmHJ2JcCXqKmRhtfnttGzJUN6hLVeA
+	 HZQmzQVDCPOTjCAObnUdr5oZq9b+J41Tc4dshR68qeqGNfWTSmrRr/HKS3o8Z8PBgG
+	 gWulhev0RM0omaC0mD0T3x78uoMRLJxBFYxDXuTDit2+Y/hjSArEHcyXjrliQnBEPJ
+	 8Z0U1OAAyzowP1YesBKUt7oaOs/ubCjk96FerxrTaelBL2kM8yzcGF1idw4hdBXTiA
+	 +iMHSB+PKkwkPpMkYESTlSffhISiSdBxxL7aIgdXc8STY+ozFmWF9w697HLyCNKHIv
+	 k/2rYRTkKqpHQ==
+Date: Wed, 29 Apr 2026 08:01:19 +0200 (CEST)
+From: Daniel Stenberg <daniel@haxx.se>
+To: curl security announcements -- curl users <curl-users@lists.haxx.se>, 
+    curl-announce@lists.haxx.se, libcurl hacking <curl-library@lists.haxx.se>, 
+    oss-security@lists.openwall.com
+Message-ID: <685315s4-3r44-sn64-5qsq-q62100341506@unkk.fr>
+X-fromdanielhimself: yes
+MIME-Version: 1.0
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Subject: [oss-security] [ADVISORY] curl: CVE-2026-6429: netrc credential leak with reused
+ proxy connection
 
-Date: Thu, 17 Sep 2015 12:33:28 -0430
-From: Manuel G=C3=B3mez <targen@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: s/party/hack like it's 1999
+netrc credential leak with reused proxy connection
+==================================================
 
-On Thu, Sep 17, 2015 at 12:33:28 AM, <targen@gmail.com> wrote:
-> On Thu, Sep 17, 2015 at 11:33 AM,  <up201407890@...nos.dcc.fc.up.pt> wrot=
-e:
->> Federico Bento <up201407890@...nos.dcc.fc.up.pt>
->>
->> [=E2=80=A6]
->>
->> As you can see, our beloved 'cat' cheated on us. Why?
->> Because instead of displaying the character-sequence, the escape sequence
->> \033[XA (being X the number of times) performed some action.
->> And this action moves the cursor up X times, overwriting what is above i=
-t X
->> lines.
->> But this doesn't affect only 'cat', it affects everything that interprets
->> escape sequences.
->>
->> [=E2=80=A6 examples with head, tail, more, curl, wget =E2=80=A6]
->>
->> 'diff' also interprets escape sequences and so do the resulting patches
->>
->> [=E2=80=A6 examples with diff =E2=80=A6]
->>
->> Hint:
->> 'less' doesn't interpret escape sequences unless the -r switch is used,
->> so stop aliasing it to 'less -r' just because there's no colored output.
+Project curl Security Advisory, April 29 2026
+[Permalink](https://curl.se/docs/CVE-2026-6429.html)
 
-> Not a single one of those programs does anything to its input that
-> ought to be considered any form of interpretation in the sense you
-> imply.  They simply produce outputs that correspond to their inputs.
-> If that output is later presented to a terminal emulator, *then* some
-> characters happen to produce effects that go beyond simply displaying
-> them as glyphs on a screen, one by one.
->
-> There is absolutely nothing wrong with `head`, `tail`, `more`, `curl`,
-> `wget` or `diff`.  They are not meant to =E2=80=9Cinterpret=E2=80=9D anyt=
-hing of the
-> sort that is being addressed, and indeed they do not.  `less` *does*
-> have special processing rules active by default for input sequences
-> that would cause terminals to do anything special; indeed, the default
-> behaviour of `less`, without the `-r` option, is the only mentioned
-> behaviour that may be considered a form of interpretation.
+VULNERABILITY
+-------------
 
-Yes, that is correct. I should have rephrased that better, thanks for=20=20
-clearing that up.
+When asked to both use a `.netrc` file for credentials and to follow HTTP
+redirects, libcurl could leak the password used for the first host to the
+followed-to host under certain circumstances.
 
->> It's no secret, most of us rely on 'cat' to view files. I guess this is =
-one
->> black kitty, giving you bad luck.
->
-> Perhaps =E2=80=9Cmost of us=E2=80=9D should use `view` to view files.
+INFO
+----
 
-Also correct. There are several ways one can go about this, but the=20=20
-point is, do people actually do that? Do they take that extra care=20=20
-sometimes? :)
+To trigger, this flaw requires that both the original URL and the redirect URL
+are using clear text `http://` URLs, that both are performed over the same
+HTTP proxy and that the same connection is reused.
 
-I'd also like to point out that the title should've been=20=20
-"s/party/hack/ like it's 1999", I guess that's what you get when=20=20
-you're trying to write up things fast, but that's not really the point=20=20
-of the post ;-)
+Similar to [CVE-2024-11053](https://curl.se/docs/CVE-2024-11053.html)
 
+The Common Vulnerabilities and Exposures (CVE) project has assigned the name
+CVE-2026-6429 to this issue.
 
+CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 
-Quoting "Cliff Perry" <cperry@redhat.com>:
+Severity: Medium
 
->> Interesting. I woul advocate usage of something like cat -A.
->>  - something I learned to find end of line chars.
->>
->> [cperry@cperry ~]$ printf '#!/bin/bash\necho doing something=20=20
->> evil!\nexit\n\033[2Aecho doing something very nice!\n' > backdoor.sh
->> [cperry@cperry ~]$ chmod +x backdoor.sh
->> [cperry@cperry ~]$ cat backdoor.sh
->> #!/bin/bash
->> echo doing something very nice!
->> [cperry@cperry ~]$ cat -A backdoor.sh
->> #!/bin/bash$
->> echo doing something evil!$
->> exit$
->> ^[[2Aecho doing something very nice!$
->> [cperry@cperry ~]$
->>
->> Also, my terminal prompt jumped a line when doing the normal cat.
->>
->> Cliff
+AFFECTED VERSIONS
+-----------------
 
-Yes, there are several ways to go about this, but the point is that=20=20
-'cat -A file' isn't something that people do in their day to day lives!
+- Affected versions: from curl 7.14.0 to and including 8.19.0
+- Not affected versions: curl < 7.14.0 and >= 8.20.0
+- Introduced-in: https://github.com/curl/curl/commit/01165e08e0d131b399fb
 
-I believe some adjustments to the script would make it not jump a line=20=20
-for other terminal emulators.
+libcurl is used by many applications, but not always advertised as such!
 
+This bug is not considered a *C mistake*. It is not likely to have been
+avoided had we not been using C.
 
-----------------------------------------------------------------
-This message was sent using IMP, the Internet Messaging Program.
+This flaw does **not** affect the curl command line tool.
 
+SOLUTION
+--------
+
+- Fixed-in: https://github.com/curl/curl/commit/b4024bf808bd558026fdc6
+
+RECOMMENDATIONS
+---------------
+
+We suggest you take one of the following actions immediately, in order of
+preference:
+
+  A - Upgrade to curl and libcurl 8.20.0
+
+  B - Apply the patch and rebuild libcurl
+
+  C - Avoid using the combination netrc, HTTP and HTTP proxy
+
+TIMELINE
+---------
+
+It was reported to the curl project on April 16th 2026. We contacted
+distros@openwall on April 23.
+
+libcurl 8.20.0 was released on April 29th 2026, coordinated with the
+publication of this advisory.
+
+CREDITS
+-------
+
+- Reported-by: Muhamad Arga Reksapati
+- Patched-by: Daniel Stenberg
+
+Thanks a lot!
+
+-- 
+
+  / daniel.haxx.se || https://rock-solid.curl.dev
