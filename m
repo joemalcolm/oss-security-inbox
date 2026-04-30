@@ -1,4 +1,4 @@
-Received: (qmail 19759 invoked by uid 550); 10 Oct 2025 08:35:04 -0000
+Received: (qmail 32426 invoked by uid 550); 30 Apr 2026 05:28:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,97 +8,82 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 19690 invoked from network); 10 Oct 2025 08:35:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=selector1; bh=I9pZe3RDug
-	5mq36H2z30tXoVA957DUl25fn8XxzjCgk=; h=subject:to:date:from;
-	d=openbsd.org; b=WFNUbC/5mnnXrq+ldm5cncBb2Lsjj3RUTh7nuXuBSG9y3OFCstRrs
-	u/NE8xVw3hW/Tc4tNWUj1l8onvz96hnvaCbDWg0SC3dE0tcDwMBgVF7FaX2ubRUU4LV1+f
-	UTT4mtA3KrUUFgFHXKAjVkpWmczfuc3VusU0xiripi1cdm4AfzaadkNx7tOTJMiTZGOhVE
-	GA2U1Dnqi39faQUurN25KT7ZZR7BY594fNTHJk5y+96NbZPW3XYJKZINx6OAH1tfo9h96b
-	4PYQWDDM5N8eiXFPjmQyBdI/mrwV7GX/uNK4SZfuA2vsn1H0d7pEvlrebjIG3Vo0r7ZszI
-	4gH+f9d/g==
-From: Damien Miller <djm@cvs.openbsd.org>
-Date: Fri, 10 Oct 2025 02:34:52 -0600 (MDT)
+Received: (qmail 3858 invoked from network); 30 Apr 2026 04:57:53 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <dd126c0edfbc705b@cvs.openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 10.2 released
+In-Reply-To: <CAK3hNHa+V=00APzyAHRaER+9JDJR-Az0wscFVX7JX5PgYd-9LA@mail.gmail.com>
+Organization: Gentoo
+References: <CAK3hNHa+V=00APzyAHRaER+9JDJR-Az0wscFVX7JX5PgYd-9LA@mail.gmail.com>
+User-Agent: mu4e 1.14.1; emacs 31.0.50
+Date: Thu, 30 Apr 2026 05:57:39 +0100
+Message-ID: <87jytpgi4c.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] lcms2 <= 2.18 CubeSize() integer overflow: stock
+ Ubuntu 24.04 Poppler / evince-thumbnailer / OpenJDK crashers (different
+ triggers), no CVE
 
-OpenSSH 10.2 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+--=-=-=
+Content-Type: text/plain
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+Abhinav Agarwal <abhinavagarwal1996@gmail.com> writes:
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+> A 992-byte PDF crashes a bunch of stock Ubuntu 24.04 consumers:
+> evince-thumbnailer, Poppler (pdftoppm / pdftocairo / pdfimages),
+> the cups-filters PDF-to-raster print filter, Okular, and GIMP's
+> PDF plug-in all segfault inside liblcms2. OpenJDK 21 on Ubuntu
+> crashes too, and Windows Temurin 21.0.9 crashes in its bundled
+> lcms.dll (3/3 independent runs). There's also a coarse seed-
+> correlated heap-read primitive on Linux glibc with ASLR off - a
+> real CWE-200 channel, though not a generic arbitrary read. Upstream
+> fixed it on master in February/March but hasn't cut a release, no
+> advisory, no CVE. The GHSA I filed was closed without a reply.
+> Looking for a CVE and for distro attention.
+>
+> [...]
+>
+> Timeline
+> --------
+>
+>   2010-10      CubeSize() check-after-multiply pattern introduced.
+>   2026-02-19   Fix 1: da6110b.
+>   2026-03-12   Fix 2: e0641b1.
+>   2026-04-13   GHSA-4xp6-rcgg-m9qq filed (private advisory).
+>   2026-04-14   MITRE CVE request filed (CVE Request 2025002).
+>                 Submitted with the evidence that existed at the time.
+>   2026-04-16   Asked the maintainer on the GHSA whether he'd triage,
+>                told him I'd publish otherwise.
+>   2026-04-17   GHSA closed without engagement. Public disclosure
 
-Future deprecation warning
---------------------------
+Upstream have amended their policy now [0]:
+> Please contact me instead. Security advisories are immediatly deleted without checking due to high level of SPAM received.
 
- * A future release of OpenSSH will deprecate support for SHA1 SSHFP
-   records due to weaknesses in the SHA1 hash function. SHA1 SSHFP
-   DNS records will be ignored and ssh-keygen -r will generate only
-   SHA256 SSHFP records.
+[0] https://github.com/mm2/Little-CMS/commit/5afc7476582b29a2b3f967a1999cf14d60a93943
 
-   The SHA256 hash algorithm, which has no known weaknesses, has
-   been supported for SSHFP records since OpenSSH 6.1, released in
-   2012.
+There have also been two fixes in master that didn't come up here:
+* 'A try to get rid of spam reports about "vulnerabilities" that are not
+real.' (https://github.com/mm2/Little-CMS/commit/429ea284550f1925d5b1b4b9ef901dfd62031158)
 
-Changes since OpenSSH 10.1
-==========================
+* 'Add guard on integer overflow when reading .cube files' (https://github.com/mm2/Little-CMS/commit/704896b7d690a0f31845d9622681058e812e9b53)
 
-This is a bugfix release, primarily to fix a problem that rendered
-ssh(1) unusable when ControlPersist was enabled.
+I have not analysed either.
 
-Bugfixes
---------
+> [...]
 
- * ssh(1): fix mishandling of terminal connections when
-   ControlPersist was active that rendered the session unusable.
-   bz3872
+sam
 
- * ssh-keygen(1): fix download of keys from PKCS#11 tokens.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
- * ssh-keygen(1): fix CA signing operations when the CA key is held
-   in a ssh-agent(1). bz3877
+-----BEGIN PGP SIGNATURE-----
 
-
-Portability
------------
-
- * All: support platforms without mmap(2), e.g. WASM builds such as
-   https://hterm.org
-
- * All: fix builds on FreeBSD for missing fnctl.h include.
-
- * All: fix builds on MacOS <10.12 Sierra, which lacks
-   clock_gettime(3)
-
- * sshd(8): don't PAM_RHOST if the remote host is the "UNKNOWN"
-   placeholder name. Avoids potential hangs in some PAM modules as
-   they try to resolve it. Note, sshd(8) only uses the "UNKNOWN"
-   name when the connection is not on an IPv4 or IPv6 socket.
-
-Checksums:
-==========
-
-SHA1 (openssh-10.2.tar.gz) = 6fcda8004bad0fb0eaee60e8308f91b605ad0dce
-SHA256 (openssh-10.2.tar.gz) = y0rCEdrVc4OJRZLg0u3F0frAgz87ydeTktCk3rQfVj8=
-
-SHA1 (openssh-10.2p1.tar.gz) = c34efade16109f065ec8c834f237bcedd8d7ef5c
-SHA256 (openssh-10.2p1.tar.gz) = zMQsBBmTeVkmP6Hb0W2vwYxWuYTANWLSk3zlamD3mLI=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmny4UMbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkFVc
+AP9u/gMUihFyNsuqSos+AAjfzv4WbleqMLO582G/HcnZFgD/Wvn4F8ewGOdBmYb4
+tP3Vbr6txCObgrWy6PN519LvYgk=
+=SRJ+
+-----END PGP SIGNATURE-----
+--=-=-=--
