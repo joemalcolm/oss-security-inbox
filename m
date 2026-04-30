@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["588" "Friday" "12" "June" "2020" "08:16:23" "-0400" "Michael Orlitzky" "michael@orlitzky.com" "<34ddbebf-ee5e-a8de-918b-bc9878352e84@orlitzky.com>" "18" "Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context" "^Date:" nil nil "6" "2020061212:16:23" "[oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context" (number mark "U       michael@orli Jun 12   18/588   " thread-indent "\"Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context\"\n") "<20200612095428.GD12592@f195.suse.de>" ("<20200612095428.GD12592@f195.suse.de>") nil nil nil nil nil nil nil "Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script allows for symlink attack in the icinga user context" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14334 invoked by uid 550); 12 Jun 2020 12:16:40 -0000
+Received: (qmail 3658 invoked by uid 550); 30 Apr 2026 18:21:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,118 +6,99 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 14313 invoked from network); 12 Jun 2020 12:16:40 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1591964188; bh=RK+meubiVh7lOUsNxAexPKKs9fVJMSg8jgYh9QJ51AE=;
-	h=Subject:To:References:From:Date:In-Reply-To;
-	b=B3eIAZAKmbJKw26rveS4ERBDhC/KnRuR2iiCLD7mlEpWEk277I2LUrr2kWhBTntUt
-	 T7tKV2Who2F8CxxO5QDGT4q8FM+acexNWHYZmez+McFkOObHyP2yww/rDalY+Xpy2/
-	 s916h+nQeuI+Q8zw1+y15iQHpWkXNKPzstNhW2e8=
-References: <20200612095428.GD12592@f195.suse.de>
-Autocrypt: addr=michael@orlitzky.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <34ddbebf-ee5e-a8de-918b-bc9878352e84@orlitzky.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.9.0
-MIME-Version: 1.0
-In-Reply-To: <20200612095428.GD12592@f195.suse.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-Date: Fri, 12 Jun 2020 08:16:23 -0400
-From: Michael Orlitzky <michael@orlitzky.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] icinga2: CVE-2020-14004: prepare-dirs script
- allows for symlink attack in the icinga user context
+x-ms-reactions: disallow
+Received: (qmail 3248 invoked from network); 30 Apr 2026 18:21:36 -0000
+Date: Thu, 30 Apr 2026 20:21:26 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
+Cc: Bernard Quatermass <bernardq@exim.org>, security@exim.org
+Message-ID: <20260430182126.GA28748@openwall.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] Exim 4.99.2 fixes 4 CVEs
 
-On 2020-06-12 05:54, Matthias Gerstner wrote:
-> Hello list,
-> 
-> during the review of directories with special permissions in openSUSE
-> distributions I noticed an icinga user privilege escalation issue in the
-> icinga2 monitoring software [1].
+Bernard helpfully notified distros of this upcoming security release on
+April 24 and then of the release itself on April 29, but unfortunately
+did not bring this to oss-security as expected - so I am doing it now,
+delayed by one day.
 
-face -> palm
+This was also sent to the public exim-announce list yesterday:
 
-https://github.com/Icinga/icinga2/issues/5793
+https://lists.exim.org/lurker/message/20260429.121733.f58d9686.en.html
+
+but it isn't prominently visible on the Exim website now.  I tried
+clicking the Security link in the navigation on top, but this merely
+opened a directory listing with some text files and subdirectories in
+there, with all file timestamps showing as 30-Apr-2026 10:29 and so
+nothing clearly standing out as new.  Looks like something to improve.
+
+----- Forwarded message from Bernard Quatermass <bernardq@exim.org> -----
+
+From: Bernard Quatermass <bernardq@exim.org>
+To: "Distros @ oss-security openwall" <distros@vs.openwall.org>
+Subject: Re: [vs-plain] EXIM-Security-2026-04-24
+CC: "security@exim.org" <security@exim.org>
+Date: Wed, 29 Apr 2026 13:19:42 +0100
+
+we are pleased to announce the availability of release 4.99.2 of Exim.
+
+This is a security release.
+
+It fixes the following vulnerabilities.
+
+CVE-2026-40684     Possible crash with malicious DNS data when using musl libc
+
+   On systems using musl libc (not glibc) due to an oddity in octal printing
+   it is possible to crash the connection instance when malformed DNS data
+   is present in PTR records.
+
+CVE-2026-40685     Possible OOB read/write on corrupt JSON in header
+
+   configurations using json operators on invalid externally-provided input
+   could trigger heap corruption.
+
+CVE-2026-40686     Possible OOB read with large UTF8 trailing characters
+
+   configurations using utf8 operators on malformed utf8 in headers could
+   trigger OOB reads and might trigger some data leak if error
+   messages are required for subsequent emails in the current connection
+   and similar malformed headers are present.
+
+CVE-2026-40687     Possible OOB read/write with SPA authenticator
+
+   in configurations using the SPA authentication driver to a hostile/compromised
+   external SPA/NTLM connnection it is possible to trigger an OOB read/write
+   and crash the connection instance or possibly leak heap data to the instance.
+
+Older Exim versions may or may not be vulnerable but are not actively maintained.
 
 
-> But it could still turn out to be subject to
-> race conditions on older or alternative `chown` implementations. It
-> would also be problematic if the Linux kernel hardlink protection is
-> turned off for some reason.
+We would like to thank the thousands of unnamed and uncredited authors whose
+works were ingested into the slopbots to "assist" in the reports for these vulnerabilities.
 
-Hardlink protection is off by default in the vanilla kernel.
+
+
+Exim 4.99.2 is available:
+
+  * as tarball
+    * https://ftp.exim.org/pub/exim/exim4/
+    * https://code.exim.org/exim/exim/releases
+
+  * directly from Git: https://code.exim.org/exim/exim
+    tag: exim-4.99.2
+
+
+The signatures on the release tarballs should be
+
+  *  key ID 0xBCE58C8CE41F32DF
+     Email: jgh@exim.org
+
+
+
+-- 
+Bernard Quatermass
+
+----- End forwarded message -----
