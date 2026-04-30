@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1014" "Thursday" "6" "October" "2016" "11:43:49" "+0100" "Mark Thomas" "markt@apache.org" "<d6eac17d-a019-fde7-0904-1f26a2bc9455@apache.org>" "29" "[oss-security] [SECURITY] CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer overflow" nil nil nil "10" "2016100610:43:49" "[oss-security] [SECURITY] CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer overflow" (number mark "U       markt@apache Oct  6   29/1014  " thread-indent "\"[oss-security] [SECURITY] CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer overflow\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 20172 invoked by uid 550); 6 Oct 2016 11:27:06 -0000
+Received: (qmail 29894 invoked by uid 550); 30 Apr 2026 02:26:02 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,45 +7,94 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30672 invoked from network); 6 Oct 2016 10:44:50 -0000
-From: Mark Thomas <markt@apache.org>
+x-ms-reactions: disallow
+Received: (qmail 13554 invoked from network); 30 Apr 2026 02:22:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=innora.ai;
+	s=protonmail2; t=1777515762; x=1777774962;
+	bh=TZI0AkJUG3sd4wdkuXto0MEZLLacS0FQvWmHY0yWg+o=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=azo2hj0ml3Mf9ECw53eiSG962QxTfgD69sPGf7cJGmgSYteh+lLlUn0h8J4oJG8jX
+	 aMJnwCxcZk0baHFbx6IPMqGDIq9UvbG7rK68PBc5A297tmAM8LD+zbNE9yuFnIFoAE
+	 dX66Ki+frDfnIci17RB7ihjjtn7eJHr2/AHWJM6OfT5aVwjh/L+ZJnF6xfusoSGPlX
+	 4qzpBipb8ogPgVTIvCZC5qz7aV5bIAMLBQfrXHxHi7woltRf7ev3jF/KvVJoZ7WyaR
+	 m4zJfIMa9fJb3l+N1JGTMjQzWVZG65cC0RGmqdNIqyQUOTUmRA5VVFZ9dplxB7hz13
+	 DMf+SOfOZzHkw==
+Date: Thu, 30 Apr 2026 02:22:36 +0000
 To: oss-security@lists.openwall.com
-Message-ID: <d6eac17d-a019-fde7-0904-1f26a2bc9455@apache.org>
-Date: Thu, 6 Oct 2016 11:43:49 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
+From: Feng Ning <feng@innora.ai>
+Message-ID: <afK86CC-LCeCSOZM@ans-MacBook-Pro.local>
+Feedback-ID: 140578448:user:proton
+X-Pm-Message-ID: b3c0f2d88f02796da0c231e1549bfd29ae3f4e92
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] [SECURITY] CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer
- overflow
+Content-Transfer-Encoding: quoted-printable
+Subject: [oss-security] [CVE-2026-37555] libsndfile IMA-ADPCM integer overflow (incomplete fix for CVE-2022-33065)
 
-CVE-2016-6808 Apache Tomcat JK ISAPI Connector buffer overflow
+Hi,
 
-Severity: Moderate
+I'm disclosing an integer overflow vulnerability in libsndfile's IMA-ADPCM =
+decoder that leads to heap corruption when processing crafted WAV files.
 
-Vendor: The Apache Software Foundation
+**CVE:** CVE-2026-37555
+**Product:** libsndfile (Erik de Castro Lopo)
+**Affected:** Current master and all release versions through 1.2.2
+**CWE:** CWE-190 (Integer Overflow)
+**CVSS 3.1:** 7.8 (AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H)
+**Credit:** Feng Ning, Innora Security Research
 
-Versions Affected:
-- Apache Tomcat JK ISAPI Connector 1.2.0 to 1.2.41
+## Summary
 
-Description
-The IIS/ISAPI specific code implements special handling when a virtual
-host is present. The virtual host name and the URI are concatenated to
-create a virtual host mapping rule. The length checks prior to writing
-to the target buffer for this rule did not take account of the length of
-the virtual host name, creating the potential for a buffer overflow.
-It is not known if this overflow is exploitable.
+This is an incomplete fix for CVE-2022-33065. The original fix in src/ima_a=
+dpcm.c correctly cast the multiplication to sf_count_t on the AIFF code pat=
+h (line 241) but missed two other locations performing the same type of ari=
+thmetic.
 
-Mitigation
-Users of affected versions should apply one of the following mitigations
-- Upgrade to Apache Tomcat JK ISAPI Connector 1.2.42
-- Where available, use IIS configuration to restrict the maximum URI
-  length to 4095 - (the length of the longest virtual host name)
+## Details
 
-Credit:
-This issue was discovered by The Apache Tomcat Security Team.
+In src/ima_adpcm.c, sample count calculations use int*int multiplication th=
+at overflows before assignment to sf_count_t:
 
+**Line 235 (WAV open path):**
+```c
+sf.frames =3D samplesperblock * blocks;
+```
 
-References:
-[1] http://tomcat.apache.org/security-jk.html
+**Line 167 (close path):**
+```c
+sf.frames =3D samplesperblock * blockcount / channels;
+```
+
+Both `samplesperblock` and `blocks`/`blockcount` are `int`. When their prod=
+uct exceeds INT32_MAX, the multiplication wraps. For example, samplesperblo=
+ck=3D50000 and blocks=3D50000 yields 2,500,000,000, which overflows int32 t=
+o -1,794,967,296. This negative value propagates into frame count calculati=
+ons, leading to undersized buffer allocations and heap corruption during de=
+coding.
+
+For comparison, the AIFF path at line 241 was already fixed in the CVE-2022=
+-33065 patch:
+```c
+sf.frames =3D (sf_count_t) samplesperblock * blocks / channels;
+```
+
+## Fix
+
+Cast the first operand to sf_count_t on lines 235 and 167, matching the exi=
+sting fix on line 241:
+
+```c
+sf.frames =3D (sf_count_t) samplesperblock * blocks;
+sf.frames =3D (sf_count_t) samplesperblock * blockcount / channels;
+```
+
+## References
+
+- CVE-2022-33065 (original fix, incomplete)
+- MITRE ticket #2019024
+
+I've contacted the maintainer. No patch has been released yet.
+
+Regards,
+Feng Ning
+
