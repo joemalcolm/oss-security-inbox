@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["866" "Tuesday" "22" "December" "2015" "10:49:39" "+0000" "CSW Research Lab" "disclose@cybersecurityworks.com" "<CAMWaY3NgKkaktuxkBLFX0mA=+FJQPu-vzEQAckVHp2vGU-xUrg@mail.gmail.com>" "31" "[oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site Scripting Vulnerability" "^Date:" nil nil "12" "2015122210:49:39" "[oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site Scripting Vulnerability" (number mark "U       disclose@cyb Dec 22   31/866   " thread-indent "\"[oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site Scripting Vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1644 invoked by uid 550); 22 Dec 2015 10:58:22 -0000
+Received: (qmail 7946 invoked by uid 550); 30 Apr 2026 17:12:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,91 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28555 invoked from network); 22 Dec 2015 10:50:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=cybersecurityworks-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=KGn3OMVwPAW138FxR5/8NCegdyokqjleRkQ9806K8t4=;
-        b=ZCWlElA1DMrQj98VwQgGxE06KY0yNPQbxkncApAR8PW04yGJ0Q5g2GjkG/0Mp5RPlb
-         oopGZ74HubZneeLo99oUv2t50dBd/7qq0/9IJsbI4vjOloJIF1WhejLeNlUaGp5Nc2DD
-         Y4T6O8CjdshTReerzYRNmfypWMCAxqbaRfPEvLBXdbekSehFJVR41nlx/4uR0iaiNWST
-         SWiAf3QOb/ktQQyu/YSg8HVVgvsVShPyZXgZrT8gN+MhQ5LQefnn01lGa2n2EHO0FdGk
-         SbNSm5iAtG/5K0EfbRSeeUc/kBAj4udfnl6J5s1xd9Z9bMHmkIEMJEojIZrhPQx1qDvt
-         jayQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=KGn3OMVwPAW138FxR5/8NCegdyokqjleRkQ9806K8t4=;
-        b=UCTlwBSJgEkN+YRMpNCHB4D4d68U7uh3UAxQnFtAzrCXoGVPK65pJt7J8TwiBhtXWL
-         Vzb+Yqku5jcQAFpFkOvRPxuRKmlX2fkLHPkGTuE3m8kf1M53+yFO5OwfkLHOjaj4VHat
-         h4u53fsmt+t4tIxTn/f8hjS4CO3b6pizfAwqPBCaHH/8qzl0rQDx10MvL0H2k4byWUzs
-         M0FW6e9SuCHU3yKLpDgc7wL7kwEQoR2lJYaFLxiqXU1BTOaUgpVuO4AK0P0va7FhJuLZ
-         P4qLS05jsm0uXLnu2XeNEyAnNKPSB+GDwRl5RmLqpIhoRabHGFYp+NOmHM9CZhmrpZvp
-         rMlg==
-X-Gm-Message-State: ALoCoQnJIagFFDZaYI7V4n7rVeosf0K1X3Yt5dBFT76VGXJ7yA0p6S2ErxUsQnFOXz74uVG7zAceBL5cou9Z1sBBMmEVCbMaLw==
-X-Received: by 10.107.34.133 with SMTP id i127mr13737672ioi.150.1450781388660;
- Tue, 22 Dec 2015 02:49:48 -0800 (PST)
-MIME-Version: 1.0
-Message-ID: <CAMWaY3NgKkaktuxkBLFX0mA=+FJQPu-vzEQAckVHp2vGU-xUrg@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140ef84516ee205277a5dc2
-Date: Tue, 22 Dec 2015 10:49:39 +0000
-From: CSW Research Lab <disclose@cybersecurityworks.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Symphony CMS 2.6.3 - Multiple Reflected Cross-site
- Scripting Vulnerability
-To: "cve-assign@mitre.org" <cve-assign@mitre.org>, 
-	"oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3577 invoked from network); 30 Apr 2026 11:52:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1777549962;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=66/JXeOgRXnde2Z20qekRZ/zBRxEsLbVPCKE/tJOe54=;
+	b=EMsdCabcKk+1lIx4V8K5rnMsguSCFFcejP9+6Ih3qkMPHG0HNU5raTj+75vhyY8yvcx8OG
+	Qz6lLtJMcPogz08mov19wCOr8SuJN0LR2gXzBXM0ACONi9QDAWONFpn4lh/bXLbk8kaCm5
+	L9Pt6NkSOpPoSBwN6d0FBv49VXZae9mvyK6kKMDQOAE6Yoi+DX4Skt168Z7vfTAfJZWG9B
+	lxwSvp7KtmfPZh4sb7UQqiENtLoaMzhVo9IyaDAkULrDpYgIGGttWd6h/T1UGtCVVBPokF
+	EwaEN9zf6FS31RSM6T/+Fxl8Cerql3tx+kRTdLJzHOUAFt3jLFDds52kK5Psow==
+Message-ID: <43836cfa-83b9-4fa9-b320-660321b7c6a8@cpansec.org>
+Date: Thu, 30 Apr 2026 12:52:41 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTFboS8hkIGgAVMRNel6X1rS3TkaPs6DL9XqIwZoFuzP1Q9RuJ1U5U7sRsbAeHDbcJwJXgY9EkaFIV6Y0eKOuQKvJq1195a8iRXiLa5r80yNGeHK4NDOlC6xH3LA7OtYG0HWoNhiQHhmcBsdIDMmKsBmiYUJ+nzeYeMHMqk7Tak0EEh+AhaaORimfrPPv1xvLci4BW4IvTCW9EQaHO47w8h/btWF2jf7gjb6oyIbpb8qrwe3srji8700DNAUehqFAOE+Sn3gQPL7hYdtbD03U8HxJkw21QUfBlwyvuioB6iNY/EOMnzwc/H9XZsZzcX5C52Q3XO6z2JY10UlSaYmuRVTdb+FcOVwjvGnLaNIHt6Oq305LasyiOMYeDIUvoFNJdjt2EUFzvW0PEoPMYl7nESZYiQ+2IWuf0Hp6NWTj4vRnybYluqN+X6Lb66/avU8C6pLOHKGvSfANtnkW8A+LmquiNM3J7d2H5hmnP/a8VItg0R1WOIFY80TPI5fbl4ztlg5Gk0Rj8FNlpHirGGtpeBYaRaHkLsBFg0nlVK7nBmjryctwMt1Y8dyZ4/2pjx5J9y0SiztiX+f/yl4bHa9gOm88TccJ73e4tf2rlQAUCF5lk50ZraIsPAtvDdvImV9+sVSdJb/Sif9ucbhbfJILSnv8ZD5jGBB9gH1/kpfRs9wZA
+X-GND-State: clean
+X-GND-Score: 0
+Subject: [oss-security] CVE-2026-5080: Dancer::Session::Abstract versions through 1.3522 for
+ Perl generates session ids insecurely
 
---001a1140ef84516ee205277a5dc2
-Content-Type: text/plain; charset=UTF-8
+========================================================================
+CVE-2026-5080                                        CPAN Security Group
+========================================================================
 
-Hi all
+         CVE ID:  CVE-2026-5080
+   Distribution:  Dancer
+       Versions:  through 1.3522
 
-can you please assign CVE for this issue ?
+       MetaCPAN:  https://metacpan.org/dist/Dancer
+       VCS Repo:  https://github.com/PerlDancer/Dancer
+
+
+Dancer::Session::Abstract versions through 1.3522 for Perl generates
+session ids insecurely
 
 Description
-***************
-Symphony CMS 2.6.3 is prone to Cross-site scripting vulnerability because
-it fails to sanitize user-supplied input in default email settings.An
-attacker may leverage this issue to execute arbitrary script code in the
-browser of an unsuspecting user of the affected site.
+-----------
+Dancer::Session::Abstract versions through 1.3522 for Perl generates
+session ids insecurely.
+
+The session id is generated from summing the character codepoints of
+the absolute pathname with the process id, the epoch time and calls to
+the built-in rand() function to return a number between 0 and
+999-billion, and concatenating that result three times.
+
+The path name might be known or guessed by an attacker, especially for
+applications known to be written using Dancer with standard
+installation locations.
+
+The epoch time can be guessed by an attacker, and may be leaked in the
+HTTP header.
+
+The process id comes from a small set of numbers, and workers may have
+sequential process ids.
+
+The built-in rand() function is seeded with 32-bits and is considered
+unsuitable for security applications.
+
+Predictable session ids could allow an attacker to gain access to
+systems.
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Apply the linked patch.
 
 
-Proof of Concept URL
-***************************
-[+] http://192.168.56.101/symphony/symphony/system/preferences/
+References
+----------
+https://security.metacpan.org/patches/D/Dancer/1.3522/CVE-2026-5080-r1.patch
+https://metacpan.org/release/BIGPRESH/Dancer-1.3522/source/lib/Dancer/Session/Abstract.pm#L85-102
 
-Vulnerable Parameter
-**************************
-[+] email_sendmail[from_name]
-[+] email_sendmail[from_address]
-[+] email_smtp[from_name]
-[+] email_smtp[from_address]
-[+] email_smtp[host]
-[+] email_smtp[port]
-[+] it_image_manipulation[trusted_external_sites]
-[+] maintenance_mode[ip_whitelist]
 
---001a1140ef84516ee205277a5dc2--
+
