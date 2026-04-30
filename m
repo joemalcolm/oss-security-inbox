@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5246" "Tuesday" "21" "April" "2020" "21:15:10" "+0200" "Jelle van der Waa" "jelle@vdwaa.nl" "<6e208a52-10a1-3559-cf2e-44bca791941b@vdwaa.nl>" "115" "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil "4" "2020042119:15:10" "[oss-security] Pacman package manager - taking untrusted input" (number mark "U       jelle@vdwaa. Apr 21  115/5246  " thread-indent "\"Re: [oss-security] Pacman package manager - taking untrusted input\"\n") "<20200421184747.GA93069@espresso.pseudorandom.co.uk>" ("<20200421184747.GA93069@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] Pacman package manager - taking untrusted input" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17610 invoked by uid 550); 21 Apr 2020 19:33:52 -0000
+Received: (qmail 13314 invoked by uid 550); 30 Apr 2026 00:59:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,183 +7,293 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 32039 invoked from network); 21 Apr 2020 19:15:32 -0000
+x-ms-reactions: disallow
+Received: (qmail 3326 invoked from network); 30 Apr 2026 00:13:01 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vdwaa-nl.20150623.gappssmtp.com; s=20150623;
-        h=subject:to:references:from:autocrypt:message-id:date:user-agent
-         :mime-version:in-reply-to;
-        bh=80wJHrIXS0XbEX51bHB+h6rAPpI5PERAvhkINCSj6uw=;
-        b=WN3In0arlKl649jPnGnEpy+V3rHo0HJr22YlDOnH/zktKdSjQg+iL70XowrOW9mWBz
-         Z9XVD82SfiF+6OcU/406baZwAWNtXrCd2ZFIS86I2+znhDM2j/gG/gZ6tRvc85rZprSI
-         5AtXf8B7Iwm2KzrACy18cNk+MARoB1TyZ81chAbVyKCUe7I8bs+NFY85SG378LTC0DTH
-         CvmcGVYhvZEJYzcQ6o9QWCnEXY2VuVgxcTnc0JhJvV3lvrkEIJviiyPgZZNV7ZobV8fb
-         psM6RNvMzQn0H3+hvMnCSyKor8o8lJQTOCLYqVXi7PWXXeTEE7vXl40efOc7G2QbaarP
-         VqJQ==
+        d=gmail.com; s=20251104; t=1777507972; x=1778112772; darn=lists.openwall.com;
+        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=kfkf9fD/BO+m+W716xyY3y29dtDznu/lsVSTKTd2UBM=;
+        b=CzOSgucTynj8S4u/DcMMcEFKXRuvLH9UWgI8gdLgY2O00dDCHFDwe3Lspz1Xzip0p2
+         gHwAMO/7u7/CHvQBXr9E8qyKBk1aWB8b0/YEBq8m5i9sO22UDffKkY1VEH1xqHF3HWdX
+         M2Ovr1ivtnu+n53hWDNTYn9z6OQGPBnC97vrcnAAFEIWwVHskdutWTGP5mjiZ3s1JTCX
+         auOA1YA1DprPgehnxJXx1tfT36kllqa44nxWPvL02ibcOlPF2WluLM+zg2mnN6DhlyJL
+         28Jy6Egb/Cgp0JfwlvS27NJsZe8w7z3zXTWLdVAFF2JXw7tslbKYTZ6pnPc6eXRrtS30
+         CH3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:autocrypt:message-id
-         :date:user-agent:mime-version:in-reply-to;
-        bh=80wJHrIXS0XbEX51bHB+h6rAPpI5PERAvhkINCSj6uw=;
-        b=jwmaDtFbDbtNrF8Ega4n+4mLI1Q/gWo6TwcD+fUde1kZvNt+F8tp6boKiqZ0MuMGj/
-         iyq73jJhIfg1Oi050mFdqgFmzKMvuTr5yrpCDci4alnatCr338+dWl7tsREFPeqHnbml
-         H//POh0Ycuu1Su6a9ZabJvU4G7Cdf6jp68T4sLis9um/hBKmOqayqTPnl8jG329YkyWE
-         K+VhJms5YVzN6Xzwrfv+ow1hwAGBIhao83B4nMjKwGN5w+jTLDqmbxoeyoSP2faHiWSz
-         +/rkeAK6yPwoWRbpXujvAF1d3yCxyQVhbF/T6vQ3Q0JLk9qb9MSBoIzSZGDcWMULKiv2
-         pCrw==
-X-Gm-Message-State: AGi0Pua4LNHWVmD4w/X//fsQAGYz0euR2/JPwmpvm0Ov/2bFXr1TxowV
-	M6Bc95iViAYCtDwAwXM7prUa3CiXBa5N7g==
-X-Google-Smtp-Source: APiQypIKYVWwyeukvZAjT4OKps14jWtbC84G+zNUP5YsyvvUAcSYJQhXbFdOY/veLr2dEp1fzsZbqg==
-X-Received: by 2002:adf:f704:: with SMTP id r4mr26290850wrp.5.1587496520704;
-        Tue, 21 Apr 2020 12:15:20 -0700 (PDT)
-To: oss-security@lists.openwall.com
-References: <20200421184747.GA93069@espresso.pseudorandom.co.uk>
-From: Jelle van der Waa <jelle@vdwaa.nl>
-Autocrypt: addr=jelle@vdwaa.nl; keydata=
- mQENBE6QLAIBCAC3O6LmF+GKvOh7IV00TG+EKAQHAwjESnHGJOW58lKK7eAYn62ZM1uy0+6h
- yCMu5PD7+ND6U1gcgTTHYwNK8AaJt7yY4FRssgdcJk59uJBwROZtllotClJ893CuB6Wgr68b
- 07gIRbENYrB8rEoGfpUG//8/ep7sY8PS03jnFb4ll6mPlUE2oQVdYOlXgF4f9qkkIi4SQeE2
- MTuERaOrDuUNDlroJ7Yfx3J/rL5Qjn578/TKCAxg0pns6VIA/P9spRGmLhT4zP+OxZXeSZme
- IxcwFdJJXHr4oGaZvqe1yHlMmKR98rrIfPWhkw2Ls/XIZIxf6prT0XyczbzBnC2y1JyNABEB
- AAG0IkplbGxlIHZhbiBkZXIgV2FhIDxqZWxsZUB2ZHdhYS5ubD6JATsEEwECACUCGwMGCwkI
- BwMCBhUIAgkKCwQWAgMBAh4BAheABQJUX8WhAhkBAAoJEMBghjN8UHc+mFwH/jjN+Qob4O36
- YiieajRwVLGuYdUDt9Z655oQYU8V4qbWf2tjUtqTYXrxLnaY6xQoYouRz9yFbh9dIKZb67ir
- 7AeVgCOtWVesGxAlGH6EY5JBZcsN0v0ScsivqQAv/Mv+4HK+XM57YlyRagD8tkprYskioWHg
- OwQfXAO6nlm4BJHWO9bHJUMgiGs7I190IKQG7iLBnJuGjsOFuy5KTLpnv+w7twmz0H+pkUPe
- jVHfJlJWdN4v1PigpgpjOR6ZepSIggMk7dHsa6GNLUOzi61yYVFe60+EGXhwyJIqSt56a4oR
- jMUcXaOugGr+JwC8Eq7Pg2+aFk+8fbe0oUzZJucHGnC5AQ0ETpAsAgEIAK4Usb7B00WRxCZG
- HtM973F7V4OhOKv4kZKduxtu71bVUZsTuzn4h+m8guJ51uY/I2icUrN9gJG5aEzRqPuQi2L7
- KmZUjs3pscZWgUgiT8UZFDR6RuQ4k3CcWobsRCjYZdSblSZ8ccrLJE7xSbwKMXjAh2PEiaQT
- lS6wQbn6mHv4y3H9QVHs7+jXbmfHCxnVcwLqRmpuegSmezDaL5TlSc102voiXinhrWEZUvAB
- KDh6VuJ/60Y6zelCXVsEjRaApz90iXY1nifLhkHM8B2wG7Pum3V3X0Y0QTVD+z3EL1iq5mFu
- epKp//IOeeJN5iwHcRSJGy2s1oOzjRDyPv6v1AUAEQEAAYkBHwQYAQIACQUCTpAsAgIbDAAK
- CRDAYIYzfFB3PvDuB/0dI13hSYHW27c2Rq8BaGbIhXYYETtPD5B25/P1JJ5OQZkPmVq+vSHw
- uzUaDZHy3ZcwE+xFXzlkwXGdWos07JUGo74zV3HfeZxVEPv0HB9ACqQVU/JKjLZNj2SfhgzL
- 4F+O4Zgdsf0YaZG09F5PbMvbhoCZLfAaKWz/4fLEfhrDJLhrphUyPDXosn0UxPkDv0iiixn4
- V+bEZ5/wd8dRWi58R/iND+gRGsBREm5SpzdhnsarwoX6YdsQ449379enDNUN7jV4C3Gkon2s
- VwI2ZZbS10cY8rFSAV/CJA2E9daRoz40DI0tgXgLBAVhy7y5HWZJsDZexU0HFKJfkDi7RUPj
-Message-ID: <6e208a52-10a1-3559-cf2e-44bca791941b@vdwaa.nl>
-Date: Tue, 21 Apr 2020 21:15:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+        d=1e100.net; s=20251104; t=1777507972; x=1778112772;
+        h=autocrypt:subject:from:to:content-language:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kfkf9fD/BO+m+W716xyY3y29dtDznu/lsVSTKTd2UBM=;
+        b=fvWSAJQ+J2ngCObS2QQuucTbReMnDYKUguyNn1fanjuBHc/Rd4t5VOTpRZWC+/ThOl
+         t8t2wwDydfjUrFjDORpn0f5WxttqeWtxg2yjkTLwD5yQdq9Jja19I1iwxbQYcxrlWnFn
+         z6D2zQb0Nl1n6b+tApNBCTAtN7I3BDeI9lmi8mMYamgqqW106nN2zjPyjo0ZMIqo5Sln
+         P4vkyOC4FCAVrV/E4mp6BAsGrNGyJUNGyld5mwqSw4i9z8IfiSMrbLd71lGQzthXDIme
+         oB3UzyKL8Wv3ZQwrBRPFrP/GSBeqeL0rB2d3zDot3jGdH12Sf158cTzxR4kgWl6NbSIZ
+         4rbw==
+X-Gm-Message-State: AOJu0YyF/PNBBn6448TTmrkadztTRWCo+7jZfvJVqSwmmcCLsNyBsOEC
+	sYmkm+UXzLBerCtVm8geHaKt8/Z5N5DiJN0+vbV8hqT4o40r/uw5gHagfdxyUz0l
+X-Gm-Gg: AeBDietLjlmpVYet1mYKDd6yQE+3jatCYk3XWedBIyGESSsNqi6n0pvTQVDMUQu7OX8
+	FAlMVGlWtU6p1xITUGopzy3HhsrX1+gUIBv3E/pBn/15UzGowm3VzKEpq16jRS5aC+MFutHYpik
+	WA/L/OnRzJAGdBrlvZ53mHjwFyVeeeVUoR79JJNfC77smECg+kw8c62oGkV77dWirhyy103QSQU
+	ZqQidtTIz8xfIZ9eT09CKtFy8rGe2V3EPTiFV+2h9L/PgnHUFUynBj9GfGxHP8ktN2RVjU+HGX9
+	wT14l5Qvnbnub2qJxfdAgQLVGj2X6QODk913mcUuEZwSJFpSc9ULhVguaeW9ZLsLIAjvfvZPhOV
+	afyh+VCzcnq1wTjvaijEQCb3qv6uZTRJEfFdGkDJfFje+sPStKR4d1YsMunZ94pe1Dkr/Tm4olX
+	GqQgwFG5pHjDQgC8awgJsP4gDFZR0/ufDVC6sR1g3MObLAAxHOXpgT+H/roih40hjGsXgxCER95
+	5p2JSHo7WYInSoo+9PQ
+X-Received: by 2002:a05:6a20:3944:b0:39b:81bf:15ed with SMTP id adf61e73a8af0-3a3cf951304mr614296637.52.1777507971386;
+        Wed, 29 Apr 2026 17:12:51 -0700 (PDT)
+Message-ID: <0c6e9ffe-f3da-47dd-9d53-d0dcdb4c435d@gmail.com>
+Date: Wed, 29 Apr 2026 17:12:49 -0700
 MIME-Version: 1.0
-In-Reply-To: <20200421184747.GA93069@espresso.pseudorandom.co.uk>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+In-Reply-To: <9ca6dc44-f9a3-4700-be42-eac488a6c61c@jvf.cc>
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtqV1s3x8C7
+ GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8eBByL3sNRR3RHovA
+ VpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSbSptiPPOkncn/i10uGAIHN884
+ Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtDxDG6wKf8VcFg538a8deJsPUNONrdOYwj
+ H4xAYao5yrktALQC2zEbHLmNZnFRHJ6zGs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW
+ 0L6QwKh0n2grWs264dD5bV/rPIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7d
+ iXOa+YvWehaE4ItoNd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI
+ 4R2iRSSgHuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ
+ dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q5J/H6xHV
+ hANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQABzStHb3V0aGFtIFBh
+ Y2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGzBBMBCABdFiEEwo5Vl+U+phfa
+ PpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFudTIsMi41KzEuMTIsMCwzAhsDBQkDwmcA
+ BQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvi
+ oUeyBJp1GnGN1lcXNQYIFOB+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3
+ AJOQGE1YMTToxdxiOCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2
+ FWSSGd7KrY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6
+ U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF97dBu2FR
+ 8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4pl6EeSGz0Xp6LXD6Y
+ uwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdglMNGFnf++euaQBqfQT9W6mQqF
+ GQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8vrnSGUFfW31PGJ/SVV3nJtWoygToacNz
+ wUUwT3Y8VWFcfypC9hI856BDlvOlb7X0JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi
+ 4M423ThAByjERzYoGPmb/mJFtcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTI
+ L2w6TppylLJTi1jIyNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uE
+ LMCV+Sy8Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk
+ 6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15lezk3HOnJ
+ axKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcyhpxihTZFyKhGkKSu
+ 2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5jDKWamnlrjbxllI77c9+fvp2l
+ kt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77gfIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdc
+ na7eyw+zTXrl6Grjj6P0olrBCzvwvFex3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ0
+ 3EVS+IxOlaExiF/wIm7S7VgHZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5k
+ NwAoB0+izqOD9Cy/syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lv
+ Le6Yn3avy8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR
+ AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu
+ dTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPEjSFIH4HYoEsBE2wB
+ iJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ/4iGlBvdYn7rwB1Yb2/LIO5P
+ csc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WM
+ BR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKY
+ BLHyNNATkl97VdAUgaFE28Q4Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBL
+ d7HqyjXY7tG7pPnP4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqme
+ jykliW+T6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI
+ 81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNAWNzZu3qe
+ BJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPcnV7MQp38mYdfj9T1
+ t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe+qGYa3LmV2soXmdh0GFZ5KFj
+ VYvdtAgTRIrQIz/K
 Content-Type: multipart/signed; micalg=pgp-sha256;
  protocol="application/pgp-signature";
- boundary="69sVJgaDUNtFWdzkg5bEF0Kaq3YNCEBbc"
-Subject: Re: [oss-security] Pacman package manager - taking untrusted input
+ boundary="------------R0TBf6cHoSqm0g5jwkT0kirP"
+Subject: [oss-security] OSSA-2026-008: OpenStack Ironic: Command Injection in Ironic IPMI
+ Console Implementations (CVE-2026-42510) - errata 1
 
---69sVJgaDUNtFWdzkg5bEF0Kaq3YNCEBbc
-Content-Type: multipart/mixed; boundary="n53ZZeodt8P9UdNDCle9HqccuhVmfuRTS"
-
---n53ZZeodt8P9UdNDCle9HqccuhVmfuRTS
-Content-Type: text/plain; charset=utf-8
+--------------R0TBf6cHoSqm0g5jwkT0kirP
+Content-Type: multipart/mixed; boundary="------------6DpBeX31smAQ8S7I4TOXPCVx";
+ protected-headers="v1"; hp="clear"
+Message-ID: <0c6e9ffe-f3da-47dd-9d53-d0dcdb4c435d@gmail.com>
+Date: Wed, 29 Apr 2026 17:12:49 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Subject: OSSA-2026-008: OpenStack Ironic: Command Injection in Ironic IPMI
+ Console Implementations (CVE-2026-42510) - errata 1
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ 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
+ VYvdtAgTRIrQIz/K
+
+--------------6DpBeX31smAQ8S7I4TOXPCVx
+Content-Type: multipart/mixed; boundary="------------YOcaV5SdIsbPgtz60RrUDJOU"
+
+--------------YOcaV5SdIsbPgtz60RrUDJOU
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT0NCk9TU0EtMjAyNi0wMDg6IENvbW1hbmQgSW5qZWN0aW9uIGluIElyb25p
+YyBJUE1JIENvbnNvbGUgSW1wbGVtZW50YXRpb25zDQo9PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQo6RGF0ZTog
+QXByaWwgMjcsIDIwMjYNCjpDVkU6IENWRS0yMDI2LTQyNTEwDQoNCg0KQWZmZWN0cw0Kfn5+fn5+
+fg0KLSBJcm9uaWM6ID49NC4zLjAgPDI2LjEuNiwgPj0yNy4wLjAgPDI5LjAuNSwgPj0zMC4wLjAg
+PDMyLjAuMSwgPj0zMy4wLjAgDQo8MzUuMC4xDQoNCg0KRGVzY3JpcHRpb24NCn5+fn5+fn5+fn5+
+DQpEbWl0cnkgVGFudHN1ciBhbmQgVHVvbW8gVGFuc2thbmVuIGZyb20gdGhlIE1ldGFsMy5pbyBT
+ZWN1cml0eSBUZWFtIA0KcmVwb3J0ZWQgYSB2dWxuZXJhYmlsaXR5IGluIElyb25pYydzIElQTUkg
+Y29uc29sZSBiYWNrZW5kcy4gQSBwcm9qZWN0IA0KbWFuYWdlciBmb3IgdGhlIHByb2plY3QgbWFy
+a2VkIGFzIGEgYGBub2RlLm93bmVyYGAgY2FuIGluamVjdCBhcmJpdHJhcnkgDQpjb21tYW5kcyB3
+aGljaCBhIGNvbmR1Y3RvciBleGVjdXRlcyBvbiBjb25zb2xlIGFjdGl2YXRpb24uDQpObyBjb25z
+b2xlIGJhY2tlbmRzIGFyZSBlbmFibGVkIGJ5IGRlZmF1bHQgaW4gSXJvbmljLiBPbmx5IGluc3Rh
+bGxhdGlvbnMgDQp3aGljaCBoYXZlIHNldCBgYFtjb25kdWN0b3JdL2VuYWJsZWRfY29uc29sZV9p
+bnRlcmZhY2VzYGAgdG8gZW5hYmxlIA0KZWl0aGVyIGBgaXBtaXRvb2wtc2hlbGxpbmFib3hgYCBv
+ciBgYGlwbWl0b29sLXNvY2F0YGAgYXJlIHZ1bG5lcmFibGUuDQoNCg0KDQpFcnJhdGENCn5+fn5+
+fg0KV2hlbiB0aGUgb3JpZ2luYWwgYWR2aXNvcnkgd2FzIHB1Ymxpc2hlZCBhIENWRSBudW1iZXIg
+d2FzIG5vdCBhc3NpZ25lZC4gDQpDVkUtMjAyNi00MjUxMCB3YXMgYXNzaWduZWQgb24gMjAyNi0w
+NC0yOS4NCg0KDQpQYXRjaGVzDQp+fn5+fn5+DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3Jn
+L2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4NjQxOCANCigyMDIzLjEvYW50ZWxvcGUgKHVubWFpbnRh
+aW5lZCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8r
+Lzk4NjQxNyAoMjAyNC4xL2NhcmFjYWwgDQoodW5tYWludGFpbmVkKSkNCi0gaHR0cHM6Ly9yZXZp
+ZXcub3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTg2MzYzICgyMDI0LjIvZGFsbWF0
+aWFuKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29wZW5zdGFjay9pcm9uaWMvKy85
+ODYzNjIgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvYy9vcGVu
+c3RhY2svaXJvbmljLysvOTg2MzYxICgyMDI1LjIvZmxhbWluZ28pDQotIGh0dHBzOi8vcmV2aWV3
+Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk4NjIzNSAoMjAyNi4xL2dhenBhY2hv
+KQ0KDQoNCkNyZWRpdHMNCn5+fn5+fn4NCi0gRG1pdHJ5IFRhbnRzdXIgZnJvbSBNZXRhbDMuaW8g
+U2VjdXJpdHkgVGVhbQ0KLSBUdW9tbyBUYW5za2FuZW4gZnJvbSBNZXRhbDMuaW8gU2VjdXJpdHkg
+VGVhbQ0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+fn4NCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0
+L2J1Z3MvMjE0ODMzMQ0KLSBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dp
+P25hbWU9Q1ZFLTIwMjYtNDI1MTANCg0KDQpOb3Rlcw0Kfn5+fn4NCi0gQSBDVkUgcmVxdWVzdCB3
+YXMgZmlsZWQgd2l0aCBNSVRSRSBvbiAyMDI2LTA0LTI3Lg0KLSBQYXRjaGVzIGZvciB1bm1haW50
+YWluZWQgYnJhbmNoZXMgYXJlIHByb3ZpZGVkIGFzIGEgY291cnRlc3kuDQotIFRoZSBgYGlwbWl0
+b29sLXNoZWxsaW5hYm94YGAgY29uc29sZSBpbnRlcmZhY2UgaXMgYWxyZWFkeSBzY2hlZHVsZWQN
+CiAgIGZvciByZW1vdmFsIGZyb20gSXJvbmljIGZvciBsYWNrIG9mIHNlY3VyaXR5IHN1cHBvcnQg
+Zm9yIHNoZWxsaW5hYm94Lg0KICAgU2VjdXJpdHkgc2Vuc2l0aXZlIG9wZXJhdG9ycyBhcmUgc3Ry
+b25nbHkgZW5jb3VyYWdlZCB0byBzdG9wIHVzZSBvZg0KICAgdGhpcyBjb25zb2xlIGludGVyZmFj
+ZSBpbW1lZGlhdGVseS4NCg0KDQpPU1NBIEhpc3RvcnkNCn5+fn5+fn5+fn5+fg0KLSAyMDI2LTA0
+LTI5IC0gRXJyYXRhIDENCi0gMjAyNi0wNC0yNyAtIE9yaWdpbmFsIFZlcnNpb24NCg0KDQotLQ0K
+R291dGhhbSBQYWNoYSBSYXZpDQpPcGVuU3RhY2sgVnVsbmVyYWJpbGl0eSBNYW5hZ2VtZW50IFRl
+YW0NCmh0dHBzOi8vc2VjdXJpdHkub3BlbnN0YWNrLm9yZy92bXQuaHRtbA0K
+
+--------------YOcaV5SdIsbPgtz60RrUDJOU
+Content-Type: application/pgp-keys; name="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Description: OpenPGP public key
 Content-Transfer-Encoding: quoted-printable
 
-On 21/04/2020 20:47, Simon McVittie wrote:
-> On Tue, 21 Apr 2020 at 21:51:56 +0430, Amin Vakil wrote:
->> On 4/21/20 8:57 PM, jellicent@protonmail.com wrote:
->>> The code supports database signatures, so the real issue is the distro
->>> infrastructure.
->=20
-> I interpret this as: pacman can accept either signed or unsigned
-> databases, but the various distros that use pacman (such as Arch Linux)
-> currently only publish unsigned databases in practice. Is that correct?
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtq=0A=
+V1s3x8C7GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8=0A=
+eBByL3sNRR3RHovAVpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSb=0A=
+SptiPPOkncn/i10uGAIHN884Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtD=0A=
+xDG6wKf8VcFg538a8deJsPUNONrdOYwjH4xAYao5yrktALQC2zEbHLmNZnFRHJ6z=0A=
+Gs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW0L6QwKh0n2grWs264dD5bV/r=0A=
+PIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7diXOa+YvWehaE4Ito=0A=
+Nd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI4R2iRSSg=0A=
+HuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ=0A=
+dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q=0A=
+5J/H6xHVhANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQAB=0A=
+zStHb3V0aGFtIFBhY2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGz=0A=
+BBMBCABdFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu=0A=
+dTIsMi41KzEuMTIsMCwzAhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H=0A=
+AheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvioUeyBJp1GnGN1lcXNQYIFOB+=0A=
+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3AJOQGE1YMTToxdxi=0A=
+OCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2FWSSGd7K=0A=
+rY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6=0A=
+U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF=0A=
+97dBu2FR8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4p=0A=
+l6EeSGz0Xp6LXD6YuwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdgl=0A=
+MNGFnf++euaQBqfQT9W6mQqFGQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8=0A=
+vrnSGUFfW31PGJ/SVV3nJtWoygToacNzwUUwT3Y8VWFcfypC9hI856BDlvOlb7X0=0A=
+JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi4M423ThAByjERzYoGPmb/mJF=0A=
+tcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTIL2w6TppylLJTi1jI=0A=
+yNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uELMCV+Sy8=0A=
+Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk=0A=
+6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15l=0A=
+ezk3HOnJaxKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcy=0A=
+hpxihTZFyKhGkKSu2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5j=0A=
+DKWamnlrjbxllI77c9+fvp2lkt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77g=0A=
+fIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdcna7eyw+zTXrl6Grjj6P0olrBCzvwvFex=0A=
+3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ03EVS+IxOlaExiF/wIm7S7VgH=0A=
+ZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5kNwAoB0+izqOD9Cy/=0A=
+syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lvLe6Yn3av=0A=
+y8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR=0A=
+AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAA=0A=
+BAAObWFudTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPE=0A=
+jSFIH4HYoEsBE2wBiJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ=0A=
+/4iGlBvdYn7rwB1Yb2/LIO5Pcsc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV=0A=
+7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WMBR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/=0A=
+H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKYBLHyNNATkl97VdAUgaFE28Q4=0A=
+Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBLd7HqyjXY7tG7pPnP=0A=
+4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqmejykliW+T=0A=
+6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI=0A=
+81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNA=0A=
+WNzZu3qeBJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPc=0A=
+nV7MQp38mYdfj9T1t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe=0A=
++qGYa3LmV2soXmdh0GFZ5KFjVYvdtAgTRIrQIz/K=0A=
+=3Drf4K=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-This is correct for Arch Linux and this is also something the Arch Linux
-team wants to work on and is held up by figuring out a 'sane' way to
-sign a pacman database using gpg without compromising the signing key.
+--------------YOcaV5SdIsbPgtz60RrUDJOU--
 
-> Can pacman be configured to *only* accept signed databases, so that a
-> mirror containing an unverifiable database (unsigned, signed with a key
-> that is not explicitly trusted, or with an invalid signature) is treated
-> as an error? If it cannot, then there's an obvious downgrade attack:
-> a malicious mirror could substitute an unsigned database and the pacman
-> client would happily use that.
+--------------6DpBeX31smAQ8S7I4TOXPCVx--
 
-It can using SigLevel =3D Required in pacman.conf, as can be found in the
-man page http://jlk.fjfi.cvut.cz/arch/manpages/man/pacman.conf.5
-
-There is however another scenario which could be used even if the
-database was signed.
-
-1. Wait till a package has a critical security issue (RCE in nginx for
-example)
-2. As malicious mirror withhold updates, ie. no longer sync the
-repository with upstream
-3. Since the mirror is not updated the user will stay on the vulnerable
-version
-
-As a sidenote this can be circumvented by the administrator wondering
-why there are no updates (pretty rare for Arch :-) ) or running
-arch-audit which checks if the system has any vulnerable packages
-installed which hopefully gives away that the mirror is out of date and
-should be reported and changed.
-
-Note that we do remove mirrors which do not keep up from our mirrorlist,
-but changing mirror is still a manual task.
-
-> On Tue, 21 Apr 2020 at 17:41:42 +0000, jellicent@protonmail.com wrote:
->> An attacker need only find a bug in how Pacman does
->> parsing/reading of the database file to potentially get code execution
->> on the box as root.
->=20
-> My understanding is that this is a risk, and at least arguably a design
-> flaw, but not generally considered to be a vulnerability (CVE IDs,
-> etc.) unless/until an unfixed parser bug with the necessary severity
-> is found.
->=20
-> Of course, that doesn't mean it wouldn't be a good idea to authenticate
-> the database before parsing it: that would mitigate a lot of potential
-> vulnerabilities.
->=20
-> Something that might be considered to be a vulnerability already (or not,
-> depending on the pacman and distro maintainers' threat models) is that
-> an attacker could substitute a database that lists obsolete packages
-> with known vulnerabilities. Those packages will presumably be validly
-> signed by distro developers (because at one time they were considered
-> to be the best version available). Presumably pacman won't normally
-> downgrade from the version it has installed to a strictly older version
-> from a mirror, but if a user installs a new (not currently installed)
-> package using that mirror/database, they'll unknowingly be installing
-> an older package that has known vulnerabilities.
->=20
-> That form of attack is difficult to address in general, because it needs
-> a revocation or expiry mechanism. apt-based distros are starting to
-> address equivalent issues by setting a Valid-Until field on their archive
-> metadata, so that clients will warn their user if presented with outdated
-> archive metadata (the equivalent of pacman's database) - although this is
-> somewhat awkward to deploy, because it requires a signing key to be
-> made available on a regular basis, which conflicts with the idea that
-> high-value signing keys should be kept offline when not in use.
-
-A pacman developer has proposed a patchset to implement an expiry for
-repo database.
-
-https://lists.archlinux.org/pipermail/pacman-dev/2019-December/023909.html
-
-P.S. for reporting security issues regarding Arch Linux's infra,
-packages and package manager security@archlinux.org is preferred to be
-used :)
-
-
---n53ZZeodt8P9UdNDCle9HqccuhVmfuRTS--
-
---69sVJgaDUNtFWdzkg5bEF0Kaq3YNCEBbc
-Content-Type: application/pgp-signature; name="signature.asc"
+--------------R0TBf6cHoSqm0g5jwkT0kirP
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
 Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCAAdFiEE5JnHn1PJalTlcv7hwGCGM3xQdz4FAl6fRkEACgkQwGCGM3xQ
-dz4QowgAjXft09iXX7cLO2AqoMbusNdeP4+s98hfDJY3uOPqxpFkx1hx6wXkh1+R
-l5A1nlkw2kO6aUZPt29HXHP9RNtDkEJSLzecyxWsumnnCwAjbN0AI0zBRMzl86Ja
-IcKE6VTVfIDVuZmpplv3/jA9KPVVI0i/6CmjkRpxHKvNI6XlWg0NT95LGsXD2h0C
-weGhAIsv2LVz+BEVJgts8PQhHz/cUWD4VmyZljShPRQAxZJyiZzK2qmRFguJcYEe
-opddqP1kMuTA7ChN3WhUsal29snzem5+DqR/c5L8uMYmsP4OtClncHkRYrfgsD8d
-dJyVOzxckvXPMx86mgxrIkLxXji/zg==
-=2uLU
+wsF5BAABCAAjFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmnynoEFAwAAAAAACgkQBjja07gsOYiN
+5xAAiyASywFgefOVQ89qSUvCkbH+MAbKoiUPtpeXaWazq7qHEVSN7WlhsA08qaeQdKvPiwr9SlL6
+NIKCVB0wtOfkjSDgW4r5CKm9d3sGt+ovf5Z/o1D2b3XGI1XysEFjbIQIK+814VgbzHbWmAWUrSZ+
+lX7RQOrv2RSWmDBYqx3yM6T4iH5U82aibGJPxj9VbyY6kapzDawI8gRkvFx5MnEZgjeuzBDloZra
+5LNtBq2tpkJYAIwZCxOOhSi5g/bSwgfKQVBUz22oRojpDWoWB6Spc5yOTiWsYXGqWoFPabC+/16C
+me8wy9Iy8FaqZQRN0h+uICc8XuX62fdcm5ol+IBj240dmAq2kmZxPz2xzBX/lOFZO4bpSrm35H00
+X0pdbWddTonl9YMOSiS6kt/cdsgdzQUeG7xq2zehpohv0vbeFWgmVhWo2hE0H0OYbOi1HFdr8aXa
+2au+pu1ipvCsCxWIjE+q4jONcOgEYjYGl/+OuP4Iwc9/m8vKfxOkqNe7Pw8aP0GgFVDhAPuoBEwv
+kSMJExfq/n4TrloH7bV8LKSSjGC8trnHWK0KARsIFANo0XEkZjHXcVGkPY/Z4YIPsl3c6+5ve1a3
+5q9MHDpQJPFV4+GagETTaILu6TSRwl09SWR53HKLN+cZ7bVX8Gj1Zi6qT7AQ4d8JjXXonFgp5yP3
+2UE=
+=Zc5f
 -----END PGP SIGNATURE-----
 
---69sVJgaDUNtFWdzkg5bEF0Kaq3YNCEBbc--
+--------------R0TBf6cHoSqm0g5jwkT0kirP--
