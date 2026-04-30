@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1255" "Tuesday" "21" "April" "2015" "12:07:49" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150421160749.142C7132F33B@smtpvbsrv1.mitre.org>" "32" "[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host" nil nil nil "4" "2015042116:07:49" "[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host" (number mark "        cve-assign@m Apr 21   32/1255  " thread-indent "\"[oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host\"\n") "<alpine.LFD.2.11.1504211330230.30344@wniryva>" ("<alpine.LFD.2.11.1504211330230.30344@wniryva>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 9346 invoked by uid 550); 21 Apr 2015 16:08:01 -0000
+Received: (qmail 16022 invoked by uid 550); 30 Apr 2026 15:56:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,45 +6,106 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 9323 invoked from network); 21 Apr 2015 16:08:01 -0000
-In-Reply-To: <alpine.LFD.2.11.1504211330230.30344@wniryva>
-Message-Id: <20150421160749.142C7132F33B@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Tue, 21 Apr 2015 12:07:49 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request Qemu: malicious PRDT flow from guest to host
-To: ppandit@redhat.com
+x-ms-reactions: disallow
+Received: (qmail 1255 invoked from network); 30 Apr 2026 07:20:45 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777533634;
+	bh=r1CY4+LPZzvpNAQyVfrXKeOMnPepyOCqALvV35m34bk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KHB/2EUwmTxbGBU9c2KGWNjvwK0l6o9hAErH5KVj9R9evsM3gvTuKUD0xsHveaocL
+	 5/wrbAPOdty3h33KFAocctRd3K6r4bPpac2LVMHjV7+heOXCsSDntKzJDa3/V216Eo
+	 7wcVOvTdPPhZxMGoikrYOCYLiH/ARYHSvkT3EkVCOJzxU4drZye0HoAqPSFcSq0BpM
+	 2bxcdMNDC0MtWmk8CUMwkemjXMb0/XAUl2q+TvU0uA6NxsVnY8ZLiHG9ICjAsjgBgM
+	 KDb1UG6NGf1a1QjxPTxGdKWJWOuLfFHWqW4MOUGipX1+Y6kQbCbVnC5dtNWxc9Dbtz
+	 HZpu8acro4qYw==
+Date: Thu, 30 Apr 2026 00:19:17 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: oss-security@lists.openwall.com
+Cc: Jan Schaumann <jschauma@netmeister.org>
+Message-ID: <20260430071917.GB54208@sol>
+References: <afJorKIje4O6dXbH@netmeister.org>
+ <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
+ <87se8dgicq.fsf@gentoo.org>
+ <afL-QhLfEKqHZqka@eldamar.lan>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <afL-QhLfEKqHZqka@eldamar.lan>
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Thu, Apr 30, 2026 at 09:01:22AM +0200, Salvatore Bonaccorso wrote:
+> Hi,
+> 
+> On Thu, Apr 30, 2026 at 05:52:37AM +0100, Sam James wrote:
+> > Eddie Chapman <eddie@ehuk.net> writes:
+> > 
+> > > On 29/04/2026 21:23, Jan Schaumann wrote:
+> > >> Affected and fixed versions
+> > >> ===========================
+> > >> Issue introduced in 4.14 with commit
+> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
+> > >> 6.18.22 with commit
+> > >> fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
+> > >> Issue introduced in 4.14 with commit
+> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
+> > >> 6.19.12 with commit
+> > >> ce42ee423e58dffa5ec03524054c9d8bfd4f6237
+> > >> Issue introduced in 4.14 with commit
+> > >> 72548b093ee38a6d4f2a19e6ef1948ae05c181f7 and fixed in
+> > >> 7.0 with commit
+> > >> a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
+> > >> https://git.kernel.org/stable/c/fafe0fa2995a0f7073c1c358d7d3145bcc9aedd8
+> > >> https://git.kernel.org/stable/c/ce42ee423e58dffa5ec03524054c9d8bfd4f6237
+> > >> https://git.kernel.org/stable/c/a664bf3d603dc3bdcf9ae47cc21e0daec706d7a5
+> > >
+> > > So this is one of the worst make-me-root vulnerabilities in the kernel
+> > > in recent times. I see that on the 11th of April 6.19.12 & 6.18.22
+> > > were released with the fix backported.
+> > >
+> > > Longterm 6.12, 6.6, 6.1, 5.15, 5.10 have not received the fix and I
+> > > don't see anything in the upstream stable queues yet as I write. My
+> > > guess is backporting that far back is not as straightforward. As this
+> > > was introduced in 2017 all those older kernels are affected, right? Or
+> > > am I missing something?
+> > 
+> > It does not apply cleanly, no. Attached is the workaround we're going to
+> > use. I'm not an expert on IPSec but I think this is the lesser evil.
+> > 
+> > I attempted a backport but ran into a few API changes and wasn't
+> > confident enough to muck around with it, especially for something to
+> > deploy immediately.
+> 
+> Backports have just been posted, for 6.12.y:
+> https://lore.kernel.org/stable/2026043038-unwilling-slogan-a20e@gregkh/T/#t
+> 
+> (but I do not see them yet for all versions, but guess following soon)
 
->> http://git.qemu.org/?p=qemu.git;a=commit;h=3251bdcf1c67427d964517053c3d185b46e618e8
+Yes, no one else was doing it, so I posted backports:
 
->> A privileged user inside guest could use this flaw to crash the system,
->> resulting in DoS.
+6.12 and 6.6: https://lore.kernel.org/stable/20260430060702.110091-1-ebiggers@kernel.org/
+6.1: https://lore.kernel.org/stable/20260430062731.140497-1-ebiggers@kernel.org/
+5.15: https://lore.kernel.org/stable/20260430063604.173525-1-ebiggers@kernel.org/
+5.10: https://lore.kernel.org/stable/20260430070128.219863-1-ebiggers@kernel.org/
 
-> |   1A: one CVE ID for the use of "return s->io_buffer_size != 0" - this
-> |       made it impossible for other parts of the code to distinguish
-> |       between the "0 bytes" case and the "0 complete sectors" case,
-> |       and caused both impacts: "leaked memory for short PRDTs" and
-> |       "infinite loops and resource usage"
+But I also hope this finally provides some more impetus for AF_ALG to be
+deprecated and removed.  It's a massive, largely pointless attack
+surface which has been causing problems, including regular CVEs, ever
+since it was added to the kernel in 2010.  And of course it's gotten
+even worse lately, with LLMs now being able to find the bugs.
 
-Use CVE-2014-9718.
+Userspace crypto libraries exist.  There's no need to escalate to kernel
+mode just to do some math.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+On Linux systems with no programs that use AF_ALG, it can already be
+disabled in the kconfig by unsetting CONFIG_CRYPTO_USER_API_*.
 
-iQEcBAEBAgAGBQJVNnVTAAoJEKllVAevmvms0B0H/RzX6rXmwAwPdSsbHlTfpzKy
-Kusz9igrWRwcDnymK6n+I7zcz7Faf5k4TH7TYW3l+aNsuVbxy9WDKJBS4l6zTdst
-s3OBdCr9JaQyQc9iPcaBqa3BzZuWHrkAaa/m5oc2hPigziom2o16Tf04WHAQyJeb
-4BASKG/VCZYPEt9K8Yg4+ib3cjfO4FeC3gcfqMZqrE2ICXGpkYDPlgtRi0OSqpAl
-Z/ROodVc2YvBulQYt61Og1AOIXbdd1RM6NYsKWJNzcCtTaD1RUGOHt1TCuKao1Rx
-fKruqHAXok9G+Vs0BU0jPPzZx7mkadygxkeKcqh4l8nKVWBQakWFv9xeTFp9uTA=
-=OypJ
------END PGP SIGNATURE-----
+But there are some holdouts like iwd (iNet wireless daemon) that are
+keeping general-purpose Linux distros from being able to disable it.
+
+It may also be time for a sysctl that allows restricting it to root, or
+only to certain algorithms, etc.  There is zero reason for "authencesn"
+(which the exploit uses) to be accessible, for example.
+
+- Eric
