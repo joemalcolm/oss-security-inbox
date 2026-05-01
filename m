@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["978" "Tuesday" "4" "June" "2019" "12:43:11" "+0200" "Heiko Schlittermann" "hs@schlittermann.de" "<20190604104311.xt2gunr7g2zqgnew@jumper.schlittermann.de>" "31" "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil "6" "2019060410:43:11" "[oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" (number mark "U       hs@schlitter Jun  4   31/978   " thread-indent "\"Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit\"\n") "<20190604102246.GA15069@espresso.pseudorandom.co.uk>" ("<20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>" "<20190604102246.GA15069@espresso.pseudorandom.co.uk>") nil nil nil nil nil nil nil "Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible remote exploit" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3767 invoked by uid 550); 4 Jun 2019 11:01:23 -0000
+Received: (qmail 32074 invoked by uid 550); 1 May 2026 18:04:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,67 +7,150 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 18168 invoked from network); 4 Jun 2019 10:43:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=schlittermann.de; s=dd201504; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Cc:Content-Description:Content-ID:
-	Content-Transfer-Encoding:Resent-Cc:Resent-To;
-	bh=uSyBU8IKuRMjHdWTKjhi/fNBdu+bQ9eNjjlW0ij/SWs=; b=T75OEhpcUMPql2uWw4GxN5m1Q8
-	ebbWwiPojBx+B9uu5aGI4iw7shZmFgQ9LpC4c5OJQGqboILRyap1iy5pDq7hfWzDTCRKfnopDiX3B
-	QMhNZFyfPwFpmuOBBO93Y8KdXuaRBZYQz2NztZmqmVGWtLR4N54CNYaujY3v0HdGcYNY=;
-Date: Tue, 4 Jun 2019 12:43:11 +0200
-From: Heiko Schlittermann <hs@schlittermann.de>
-To: oss-security@lists.openwall.com
-Message-ID: <20190604104311.xt2gunr7g2zqgnew@jumper.schlittermann.de>
-References: <20190603201923.akdidsegyfzq3ykj@jumper.schlittermann.de>
- <20190604102246.GA15069@espresso.pseudorandom.co.uk>
+x-ms-reactions: disallow
+Received: (qmail 20470 invoked from network); 1 May 2026 18:01:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777658506;
+	bh=8d2xX5AjQncZ0ScZMo5QM41WVl9RHLDJDhi5eU0AKkM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=V7E0krEemfO58kK6wjB9zDxy/bM1yRn0sNjHL4EPuJ7U0qiZLxWXcgK3FKLGxccs0
+	 scRR0mI5coJ3hYBAYx3aRCQMvnFuIpm1v1qrM/1kT9CX4+DVG8BPEVALt5jgCyd+1V
+	 NPPI7HRiUltfsM9DR0E6VtfdFwOZ5EXMg/ELWt427Tcg3HHgXZKJahJZR+0+xp4RHN
+	 voec4RECBCRVhgYdkXFerF48EUO8mW8AtgEvga9ArO7IB0fT7/p9iiUORGAEq2eeUp
+	 PshAm5ZPjl3oVfyihfleF7V15Pp7XJRwejaoZj/6EWs+ls6U9eCQedAA7O5ACb7gqM
+	 1UMSPNZiaWglg==
+Date: Fri, 1 May 2026 11:00:28 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Demi Marie Obenour <demiobenour@gmail.com>
+Cc: oss-security@lists.openwall.com,
+	Jan Schaumann <jschauma@netmeister.org>
+Message-ID: <20260501180028.GA2260@sol>
+References: <afJorKIje4O6dXbH@netmeister.org>
+ <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
+ <87se8dgicq.fsf@gentoo.org>
+ <afL-QhLfEKqHZqka@eldamar.lan>
+ <20260430071917.GB54208@sol>
+ <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="25o3pwcyx57b6k5m"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20190604102246.GA15069@espresso.pseudorandom.co.uk>
-Organization: schlittermann -- internet & unix support
-X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
- QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
- y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
- X?H&`
-X-Telegram: @HeikoSchlittermann
-X-Threema: T5RPWMSS
-X-Phone: +49.172.7909055
-X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
-X-GPG-Key-ID: F69376CE
-User-Agent: NeoMutt/20170113 (1.7.2)
-Subject: Re: [oss-security] CVE-2019-10149: Exim 4.87 to 4.91: possible
- remote exploit
+In-Reply-To: <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
---25o3pwcyx57b6k5m
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+On Fri, May 01, 2026 at 11:30:17AM -0400, Demi Marie Obenour wrote:
+> > But I also hope this finally provides some more impetus for AF_ALG to be
+> > deprecated and removed.  It's a massive, largely pointless attack
+> > surface which has been causing problems, including regular CVEs, ever
+> > since it was added to the kernel in 2010.  And of course it's gotten
+> > even worse lately, with LLMs now being able to find the bugs.
+> > 
+> > Userspace crypto libraries exist.  There's no need to escalate to kernel
+> > mode just to do some math.
+> 
+> The only reason I can think of to keep it is for embedded systems
+> with weak CPUs and crypto accelerators that are actually worth using.
+> However, those seem to be very rare outside of things like routers,
+> which run specialized distros like OpenWRT.  Even when the accelerator
+> exists and is worth using, AF_ALG is certainly not an efficient way
+> to access it.
+> 
+> Furthermore, an inline encryption engine in the NIC would be a much
+> better choice for future router designs.  AF_ALG doesn't work with
+> that at all.
 
-Simon McVittie <smcv@debian.org> (Di 04 Jun 2019 12:22:46 CEST):
-> On Mon, 03 Jun 2019 at 22:19:23 +0200, Heiko Schlittermann wrote:
-> > t0    is expected to be 2019-06-04, 10:00 UTC
-> > t0+7d is expected to be 2019-06-04, 10:00 UTC
->
-> Was t0+7d meant to be 2019-06-11?
+All correct, of course.
 
-Yes. Definitly.
---
-Heiko
+The main other claimed benefit of AF_ALG (and the similar KEYCTL_PKEY_*)
+that sometimes gets mentioned is, ironically, a security one: keys can
+be kept out of a particular userspace processes's address space.
 
---25o3pwcyx57b6k5m
-Content-Type: application/pgp-signature; name="signature.asc"
+But:
 
------BEGIN PGP SIGNATURE-----
+- Different userspace processes have different address spaces too.  So
+  it already can be, and indeed often already is, done in userspace.
 
-iQEzBAABCgAdFiEE0L/WueylaUpvFJ3Or0zGdqa2wUIFAlz2Sz4ACgkQr0zGdqa2
-wUKt/QgA28mUdW8WQRDGFsU63QInG4wEkst9g4cC1m+Kly7/zas1kajgKqP+00ZY
-XadWpt/P/O8nXm7YwxhcxujcYkF2N0KC8fed7RMJtcHRET14Yk0JOfHcsNaEGiUG
-bQRBeI4nvWCbqIYoo3HViJlRN1GwQajMc4Bt7KRWomCLfG30p+6zOcNa3hwqKa9L
-/f1cNqvREk3xchuh6gkm9jZDjpPkoBoVbRVPdpEOToN+H12u4ffY9SMqPuRFU6BW
-P3BmFt9U/1hKiDigUeRjkaPhK2MqOYzcppKVsyd3fnuTDWX7z5lb2kDOrmiS1Mot
-dMO/WgQRxeK32kApLry0LGvNC/QDoQ==
-=rSlj
------END PGP SIGNATURE-----
+- This security benefit is kind of besides the point when the interface
+  has a privilege escalation bug every few months.
 
---25o3pwcyx57b6k5m--
+- The kernel often doesn't support the algorithm needed, or if it does,
+  some of them just aren't as well maintained as userspace libraries
+  like OpenSSL and BoringSSL.  For example, the kernel's RSA
+  signing/decryption code is vulnerable to timing side-channels.
+
+(I'd like to specifically call out
+https://blog.cloudflare.com/the-linux-kernel-key-retention-service-and-why-you-should-use-it-in-your-next-application/
+as being misleading and harmful.  It says to use the kernel for RSA
+private key operations.  But it fails to mention the kernel's RSA
+implementation being vulnerable to timing side-channels or the steady
+stream of vulnerabilities in the associated UAPIs.)
+
+> > On Linux systems with no programs that use AF_ALG, it can already be
+> > disabled in the kconfig by unsetting CONFIG_CRYPTO_USER_API_*.
+> > 
+> > But there are some holdouts like iwd (iNet wireless daemon) that are
+> > keeping general-purpose Linux distros from being able to disable it.
+> 
+> If AF_ALG was removed from the kernel, that would provide an incentive
+> for someone to patch iwd to use a userspace library instead.  Or if
+> iwd is unmaintained, it (sadly) needs to be removed from distros.
+> (Sadly because wpa-supplicant is much less well designed.)
+
+Where iwd is used, AF_ALG can't just be removed from the kernel
+unilaterally.  People would complain that iwd is broken and invoke the
+"no regressions" rule.  While only a few programs use it (iwd, bluez,
+cryptsetup with certain options), they are enough for this to happen.
+
+We do remove algorithms from AF_ALG occasionally, but we've been unable
+to remove ones like MD4 (yes, that MD4) that are still used by iwd:
+https://lore.kernel.org/linux-crypto/946591db-36aa-23db-a5c4-808546eab762@gmail.com/
+Likewise with removing support for SHA-1 from KEYCTL_PKEY_*
+(https://lore.kernel.org/linux-crypto/f0492c92-1015-48e3-bfce-598c7a4843d1@quicinc.com/).
+People even post the Linus quote "we simply do not break user space".
+
+Unfortunately, the developers and users of this small set of userspace
+programs are disconnected from the extraordinary amount of time and
+effort that the rest of the Linux community is putting in to maintain
+these UAPIs and respond to the continuous stream of vulnerabilities.
+
+To them these are simply APIs available that work.
+
+This is actually one of the reasons I've been making these public posts:
+this needs to be a community effort to deprecate these UAPIs.
+
+If the developers of these userspace programs aren't taking action yet,
+people need to volunteer to go in and fix these programs.  Again, it's
+actually a pretty small set of programs that even uses this stuff.
+
+This would be really impactful to the security of Linux.
+
+A lot of the discourse around this vulnerability has focused on the
+things that went wrong with the patching.  It did go very badly, but I
+feel it's also missing the point a bit.  AF_ALG and KEYCTL_PKEY_*
+actually have a continuous stream of vulnerabilities, which has only
+accelerated in the era of LLMs.  Just in the last year there have been
+at least 4 privilege escalations in AF_ALG, I think.  We need to fix the
+root cause of why this is happening.
+
+And I think it really can be fixed.  It's just a few programs that are
+using these UAPIs.  Many systems already don't need them at all.
+
+But people need to help.  Send patches to iwd, bluez, cryptsetup, etc.
+that make them use userspace crypto libraries instead of AF_ALG and
+KEYCTL_PKEY_*.  If the maintainers aren't convinced yet, then patch
+downstream in your distro as a starting point (and disable the UAPIs in
+your kernel).  Or help in other ways like writing blog posts that
+promote attack surface reduction and the alternatives to these UAPIs.
+
+I'd also like to explore some more incremental approaches, such as
+making these UAPIs require CAP_SYS_ADMIN, possibly configurable by a
+sysctl.  If anyone knows of anything important that would be broken by a
+CAP_SYS_ADMIN requirement on AF_ALG and KEYCTL_PKEY_*, let me know.
+
+I think there should also be an allowlist of algorithms, and the splice
+support should be removed.  (Interestingly, there's precedent for
+removing splice support from AF_ALG: it was already removed from the 6.1
+LTS kernel last year, seemingly accidentally.  That's why the copy.fail
+exploit didn't work on 6.1 but did work on other versions.)
+
+- Eric
