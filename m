@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5187" "Tuesday" "26" "October" "2021" "13:59:47" "+0200" "Solar Designer" "solar@openwall.com" nil "100" "Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil "10" nil nil (number mark "U       solar@openwa Oct 26  100/5187  " thread-indent "\"Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14223 invoked by uid 550); 26 Oct 2021 12:01:09 -0000
+Received: (qmail 7497 invoked by uid 550); 1 May 2026 15:11:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,117 +7,53 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13789 invoked from network); 26 Oct 2021 12:00:05 -0000
-Date: Tue, 26 Oct 2021 13:59:47 +0200
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3120 invoked from network); 1 May 2026 08:21:15 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1777623663; bh=0iknPLM7ZEA4ky+lAzzJjWtgJR7O3atQaw2qDkD88EM=;
+	h=Reply-To:From:Date:Subject:To:From;
+	b=kkfOqRU3Uqcx0UqfaLYi+zmv6kx3F1ZsAuS7d/mQ+bZPVbwSzijUM1TjWk0PxhuYG
+	 OmVWvEn6K/qBKajghA1GnoPgRnblc4m3tWTAV35q0xTXrDLOYqnJtC17edDqG7VSMj
+	 bUgK7HMujmZthsK3L5WqhyQYXcJ6Y4TbJKHuCJgVU2bq0DRDQWk1BIWF4pxkHj104K
+	 OlmLrxTkt8AR6gcY9tunE/oCX0iHJBTDOj5VTpMEkxP5G9wyR3ufnjT09ow8/O8gpS
+	 IC/J1rnDcCP2qTg2+OS6fi/iI1S9CHhtUamG+4tVRxj8LsLkgCgI51ckG/I3PCHXkd
+	 x+ewn2Krevj/Q==
+X-Gm-Message-State: AOJu0YxmuQyWlbUhUCSwnNJy9FhvvaRBatj/VKSyL9Y5c8znwPMaXQGJ
+	APps1UgmZGQPXSdsrtzTddhNKikfDsiIZxsOvzgRXtxtXIJqyjNJ8FGekRFEp72aI6ULow1EaOo
+	za612vSpmxFEVLdXQo0o6YQtBVjjw7vY=
+X-Received: by 2002:a17:90b:2e4c:b0:364:6558:99bf with SMTP id
+ 98e67ed59e1d1-364c309bdc9mr6265695a91.14.1777623661978; Fri, 01 May 2026
+ 01:21:01 -0700 (PDT)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Fri, 1 May 2026 09:20:48 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGCYxL3hdpf2zBGefs7QJUSc901Kx-_-9L3WegrzGSDP9g@mail.gmail.com>
+X-Gm-Features: AVHnY4Kp6aE_txrkUl5M3Em8z6BJK2FdyF2jCBOea0l9Suj3EgWxaDXcWcP-P8Q
+Message-ID: <CAB8XdGCYxL3hdpf2zBGefs7QJUSc901Kx-_-9L3WegrzGSDP9g@mail.gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Lin Horse <kylin.formalin@gmail.com>
-Message-ID: <20211026115947.GA29482@openwall.com>
-References: <CAJjojJsrNyz+ML+Q81JB9iF2-DTKfAEkUP1cSTgyvCL6NebhzQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJjojJsrNyz+ML+Q81JB9iF2-DTKfAEkUP1cSTgyvCL6NebhzQ@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] CVE-2021-3760: Linux kernel: Use-After-Free vulnerability of ndev->rf_conn_info object
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2026-42403: Apache Neethi: Circular Policy Reference Infinite Loop
 
-On Tue, Oct 26, 2021 at 02:37:20PM +0800, Lin Horse wrote:
-> 2021-09-01 Report to security and linux-distro
-> 2021-09-01 CVE-2021-3760 assigned
-> 2021-10-26 patch upstream
-> 
-> Sorry for the delay of this report T.T
+Severity: High
 
-Ouch.  Let's use this opportunity to learn from the mishandling of this
-issue and avoid that for other issues.  Many things went wrong here:
+Affected versions:
 
-1. The original notification by Lin to linux-distros did include "I'd
-like to ask for 14 days of the embargo", which is OK'ish, but ideally
-such messages should include the proposed public disclosure date/time -
-and that's what the instructions ask for.  When it's just "N days", I
-guess people think "that's OK'ish" and move on.  When it's a specific
-date/time, it's easier for everyone to notice it approaching - not only
-for people specifically tasked with that.  That's just a psychological
-detail that I guess nevertheless statistically affects the outcomes.
+- Apache Neethi before 3.2.2
 
-So I think that the distros tasked with reviewing initial notifications
-should insist on the actual date/time being present in there, or add it
-on their own in an immediate follow-up.  Those distros currently are
-Oracle and Wind River.  I'd appreciate them confirming that they accept
-this clarification.
+Description:
 
-"Promptly review new issue reports for meeting the list's requirements
-and confirm receipt of the report and, when necessary, inform the
-reporter of any issues with their report (e.g., obviously not actionable
-by the distros) and request and/or propose any required yet missing
-information (most notably, a tentative public disclosure date/time) -
-primary: Oracle, backup: Wind River"
+Apache Neethi does not properly detect circular references in policy
+definitions. When a WS-Policy document contains circular policy
+references (where Policy A references Policy B which references Policy
+A), the policy normalization process can enter an infinite loop or
+cause excessive recursion, leading to a stack overflow or application
+hang. An attacker can craft malicious policy documents with circular
+references to cause a Denial of Service condition
 
-2. While Lin's original message to linux-distros included a "SUGGESTED
-FIX" section (with a patch in it) and "I will do my best to work with
-the developer on fixing this", no further messages on a fix were sent to
-linux-distros.  Lin, if you did in fact work with upstream on this, you
-should have kept linux-distros aware of the progress, and especially of
-the fix getting to public Linux kernel mailing lists or public commits,
-as that ends the embargo.
+Users are recommended to upgrade to version 3.2.2, which fixes this issue.
 
-Further, distros failed to handle the corresponding "contributing back"
-tasks.  There was no activity by Gentoo lately at all, and while there
-is recent helpful activity by Amazon, they didn't act this time.
+References:
 
-"Stay on top of issues to ensure progress is being made, remind others
-when there's no apparent progress, as well as when the public disclosure
-date for an issue is approaching and when it's finally reached (unless
-the reporter beats you to it by making their mandatory posting to
-oss-security first) - primary: Gentoo, backup: Amazon
-
-Monitor relevant public channels (mailing lists, code repositories,
-etc.) and inform the reporter and the list in case an issue is made
-public prematurely (that is, leaks or is independently rediscovered) -
-primary: Amazon, backup: SUSE
-
-Make sure the mandatory oss-security posting is made promptly and is
-sufficiently detailed, and remind the reporter if not - primary: Gentoo,
-backup: Amazon"
-
-I'd like replies by Gentoo and Amazon on this, please.  They should
-either state that they'd be handling these tasks from this point on, or
-we should reassign the tasks.
-
-Incidentally, I've already unassigned the statistics task from Gentoo
-and Amazon a while ago, as that one was obviously not handled by them.
-We still need another distro or two to volunteer for this one.  As I had
-mentioned, an important desirable side-effect of keeping the statistics
-up-to-date is that this would catch issues that were not reported to
-oss-security in time or at all.  For example, if someone were updating
-statistics for September on October 15 (by which point nothing from
-September is supposed to still be embargoed), they'd catch this issue
-10 days earlier.
-
-3. The only "contributing back" activity on this issue consisted of 3
-postings to linux-distros: prompt CVE ID assignment by Red Hat, a
-reminder about 14 days having passed by SUSE on September 17 (that is,
-already 3 days past the embargo period end), and another reminder by (a
-different engineer from) SUSE on October 25 (this one worked).
-
-SUSE isn't formally tasked with this - Gentoo and Amazon are - but SUSE
-happened to do it - thanks!  SUSE is formally a backup for "Monitor
-relevant public channels ...", which I guess could have worked as well,
-but in this case the embargo period was already over by the time SUSE
-first commented, so that aspect was irrelevant by then.
-
-4. There's still no (reference to) fix for this issue on oss-security.
-Lin, you write "2021-10-26 patch upstream" - can you please refer to the
-actual upstream commit?  Also, can you please let us all know when the
-patch became public (possibly first on a public mailing list)?
-
-This issue itself is not that important, which is part of why it almost
-slipped through the cracks, but it's our reminder and opportunity to fix
-things before anything more important is mishandled.
-
-Alexander
-
-P.S. The Subject of this message as sent by Lin to oss-security
-contained only the CVE ID and no description.  I took the liberty to
-edit it, adding the Subject string that was used on linux-distros,
-before approving the message as list moderator.
+https://ws.apache.org/neethi/security.html
+https://www.cve.org/CVERecord?id=CVE-2026-42403
