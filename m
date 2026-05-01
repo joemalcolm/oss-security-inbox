@@ -1,4 +1,4 @@
-Received: (qmail 13939 invoked by uid 550); 4 Jun 2026 22:53:11 -0000
+Received: (qmail 32675 invoked by uid 550); 1 May 2026 17:12:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,325 +8,95 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 3593 invoked from network); 4 Jun 2026 21:55:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780610116; x=1781214916; darn=lists.openwall.com;
-        h=in-reply-to:autocrypt:content-language:references:to:from:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3hy8afvaZeIBe0FBVoMzY/CMS0hJmTKGc3vrtrmDVMI=;
-        b=dpfdbMhLaNNML3Sk8Q54lhgPPuHMJS54ULKF9Bl/Wj5WFyhTTJWqJQKpUTJ0qwVWUr
-         giOO+uCf1xaQhDTCfZ/hAh6tgyEDqth5HjDvMTKA+I0yKZ0DyHiI+Nu7Jjj7FWjm/i2a
-         V5zx9Mr7XCJRt08jpfbD2szXQoR9hv8mg3Aa1/tiVu3wkrAH9wIpXGQqTYhphjGdXZc0
-         FibgdWByPH2uC5U3bOB0rnfQdVMqM8XrLXuu3Qctw+CxI5p7CkCLaj3JvPyImazNftAG
-         +XXsPMitTxtAlxRAohKUt/mXkwppAI18uSFKBSbnR0CZ6i6+nx3WBM3Mud8lNp3AB14h
-         vipg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780610116; x=1781214916;
-        h=in-reply-to:autocrypt:content-language:references:to:from:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3hy8afvaZeIBe0FBVoMzY/CMS0hJmTKGc3vrtrmDVMI=;
-        b=iEoxDOlhI/bDEqKiI8qbz4NmumnO9GVjdvNJ+nEZLuEOWEoxvghXGWVYHurPzxdnH/
-         hRFsKPTtPUfbOJVsd8NiAu2gxgaP7e+/3/Y7G135ntwA8WH+3sUDnvv4UhWRwgyT09xs
-         arTU4oibcpn2IlecuIibp4K0IamFF1uaA48Y5RJ8UXMOSzqiOr5zJWRtawItFSORLmky
-         zgdkQU143akrVKvqRm1cTU9lV2qG9S+3D76dqWFpqdCJVheiUqeXxS19+tzhLYSr1zZO
-         /kI8B60uden7a4wArp6sZaBhkSXqLGCShLLvq3K9NGo6jPnyvpS9jisNmOkOaz83rtEd
-         A8XQ==
-X-Gm-Message-State: AOJu0Yxw0zEXFtfXjtkxx/hnhIss/bxE0jcQJAbT6L5D2nJfFBVMLxIs
-	vHawGkIaEz6aCLcpYk2d57MLcRtGO6nZREXgImnBS10nmkn6rRqnz/VqnRpnHw==
-X-Gm-Gg: Acq92OFNY+hHarZJ1943FWyuE2uAyDaIE/6pyLqBbKqrCe5dHcd5yLDb41yqFFfGjSJ
-	/7dJ7V36hkB0vM2iw24lG1F8vGWRostCJ4cDG3fU/vHZJ1VH8298YbY0LFf0rLdVx+KEvu7eio1
-	7YT42I5QeQXzk50rxe36Y+Mw+I2cf086z2m8mLAhJdl+u1pKdVzgwxx4FFP8E1XV2S5fY2HIJru
-	OQW35xXQjCoR7+bFOdTlacIJxpJ/jxmBBB9HqA2vzGwF3/nPXtYytGG69x3xs3/ATz3qpZfdd3m
-	61EMos5GDxinpa4Z5OKPFRpIMicPe2BsSG2LzkuV8EVganHXbhJEa/kZPVyNF0DRoBMerEc5mJo
-	M52tp37G3koWH1RJTUIs9Oa++XlYAli53Zwzxw0i/yeITw6dIGnnlVxAYEfOTurLKuQ+uElCv04
-	5xokaOYrMfybzahJtWW9WZxRH1jb01mKG6XDtigZlll4oeT492u70R0nhmar/PBN3njWUw9YSwN
-	7NE35IVwtY6eZmAmc4I
-X-Received: by 2002:a05:6a00:1d8b:b0:842:670d:f6ff with SMTP id d2e1a72fcca58-842b0fffad4mr492420b3a.44.1780610115629;
-        Thu, 04 Jun 2026 14:55:15 -0700 (PDT)
-Message-ID: <b089f8f5-424b-4bc2-8085-c76762092360@gmail.com>
-Date: Thu, 4 Jun 2026 14:55:13 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Received: (qmail 17859 invoked from network); 1 May 2026 16:51:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=risingedge.co.za; s=xneelo; h=Content-Transfer-Encoding:Bcc:MIME-Version:
+	References:In-Reply-To:Message-Id:Date:Subject:To:From:reply-to:sender:cc:
+	content-type; bh=903EVuChwcUVy3zOLEPWNQOf8ga3izadKjuMFBfjW0M=; b=I1RNs+ncRe7H
+	KY1rfppwNh5Qi6JC2asbtX4BZ/BTqX9wtfUDBKbIUc9yWspGpeJFljCkk59hnzaqmoBQXb9AYWTdW
+	fMHyMtRaVErhsFttjwLGfPm5rFRP1k95vlr34q6EkCmasShziHyGPJxdOf0AWawwve+eRdNC2kjF0
+	Oe8yoERtfy+UIFRHAKaZTNseRga9MLoX/CPhVp05YeOZpwATktPue5UKdZZrWCP0Q0ZG5gS7kRDGv
+	worWZ5MY4w1QADaBgK2dDi3eHqyzhiss5F26N8ZZDmi0Kn1w9mmwg52ChWqZVV0k4C+1X2FhTmRoe
+	DTQeKBwB2eouw3Oj/SWuIg==;
+From: Justin Swartz <justin.swartz@risingedge.co.za>
 To: oss-security@lists.openwall.com
-References: <b1dbd135-2db1-43fb-9c3f-df36c0ebb8c2@gmail.com>
-Content-Language: en-US
-Autocrypt: addr=gouthampravi@gmail.com; keydata=
- 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
- VYvdtAgTRIrQIz/K
-In-Reply-To: <b1dbd135-2db1-43fb-9c3f-df36c0ebb8c2@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------85hegKvWdO0mzdeAzhC39UAE"
-Subject: [oss-security] Re: [OSSA-2026-021] OpenStack Neutron: Neutron port RBAC policy
- bypass allows project managers to set trusted device owners on shared
- networks (CVE-2026-pending)
-
---------------85hegKvWdO0mzdeAzhC39UAE
-Content-Type: multipart/mixed; boundary="------------UaTuI6jWa9a9b2d3g40zMVcB";
- protected-headers="v1"; hp="clear"
-Message-ID: <b089f8f5-424b-4bc2-8085-c76762092360@gmail.com>
-Date: Thu, 4 Jun 2026 14:55:13 -0700
+Date: Fri,  1 May 2026 18:52:19 +0200
+Message-Id: <20260501165221.27420-1-justin.swartz@risingedge.co.za>
+In-Reply-To: <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
+References: <afJorKIje4O6dXbH@netmeister.org> <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org> <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh> <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com> <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com> <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [OSSA-2026-021] OpenStack Neutron: Neutron port RBAC policy
- bypass allows project managers to set trusted device owners on shared
- networks (CVE-2026-pending)
-From: Goutham Pacha Ravi <gouthampravi@gmail.com>
-To: oss-security@lists.openwall.com
-References: <b1dbd135-2db1-43fb-9c3f-df36c0ebb8c2@gmail.com>
-Content-Language: en-US
-Autocrypt: addr=gouthampravi@gmail.com; keydata=
- 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
- VYvdtAgTRIrQIz/K
-In-Reply-To: <b1dbd135-2db1-43fb-9c3f-df36c0ebb8c2@gmail.com>
+Content-Transfer-Encoding: 8bit
+X-Authenticated-Sender: justin.swartz@risingedge.co.za
+X-Virus-Scanned: Clear
+X-Originating-IP: 188.40.1.173
+X-SpamExperts-Domain: risingedge.co.za
+X-SpamExperts-Username: 
+Authentication-Results: host-h.net; auth=pass (login) smtp.auth=@risingedge.co.za
+X-SpamExperts-Outgoing-Class: ham
+X-SpamExperts-Outgoing-Evidence: Combined (0.03)
+X-Recommended-Action: accept
+X-Filter-ID: 9kzQTOBWQUFZTohSKvQbgI7ZDo5ubYELi59AwcWUnuWw8qj3//FKmfrjzsLBLTEbGG+a8WmFNtaX
+ 7bqdsv6sUSu2SmbhJN1U9FKs8X3+Nt0Io1idSgCc/506nnISAkPANvJkKIxakGlbxi+ggiqZlxxH
+ xN7wu8yGEPLNcyeaFThLht9RW9ZusvAkMUu9zeo0BMmyNbDn7R5kilAhwr3KtFb3AgNUGvQRnUF+
+ Lycvfx+SVUSshQka8VpEeqGYZUq9x6uBPuq+Gm7dtLrcVMrJoohSnw9YyoGHx/ukuag1WKCaQS9E
+ zrNt4RDoLk/DvkzRKVFCXTS2zVmMeFsPQMyMp5ya4EnB7foI3WDAWEIqQR42kI22V3+6/8VpCe4k
+ l4rBro7NG5FMnAx+YiDY2J/czJYIiHqfCgG4wrA3w4/kQTaLfhXaMgiD0j3v6Ie9X8yyJClZqIWe
+ ElTlhke8IyK52DdtyTpRDuDZactSZQHS5CIA4kv6jpHeL4itl5GdKHos6cTrAfIBtLJVe62uoyOA
+ UhmSvC6qJad8oDRDO7zv2HyvHObXCPPKSd2xpqdSbP9LdDgGQETciExfV//6y6W7Dk3621qUIfzc
+ FXeghALwUxUR37FaFlv3F2PbvabG99OCbPN7v9MApiZJ0jIuv2upMAEiRQv+PVjjwa+Z5RFCOMQu
+ z9knZhBaoF6Lw1fiOpu7XuUtdBRw0CzMOyehQ6vQGEQpYEYddjOcPBNniis1CyVZzPImFuDj9wtn
+ CHpNAoiDqeFMEyid5arI9OX88Mez1seXwD4BM2jQz1LojaPvzWFG78u4Z9swKs6X6s50biZUTMJ7
+ bHbjQcSj2k6ROS/HeG5K61yXY75ytT3/xJ9H/2sFUQa5nonzdPpu3jhiX5e64/dKv8vj/xNTb/z/
+ Z6X5Fv4bw2RxeVx5WfYBV5Z0ipKtF1VPccloD2rUVRwpPdcTfqb5R4VemuUI6bcEARsm0MIEL6H2
+ 5DNnVReRKfCEH3VMuaKkhDGeWUGKiyBKYF6y5eh+QfFP7pcU8NRnbcMqdtqW+IuA05DGXjIjSPSU
+ iMlahI4i4TNLKKi5WRMONPLcJy48BaQZ9dlwiO6d4xuBNw==
+X-Report-Abuse-To: spam@antispamquarantine.host-h.net
+X-Complaints-To: abuse@antispammaster.host-h.net
+Subject: [oss-security] Re: CVE-2026-31431: CopyFail: linux local privilege scalation
 
---------------UaTuI6jWa9a9b2d3g40zMVcB
-Content-Type: multipart/mixed; boundary="------------QnF0hQDkndR6W23WTHnjPuek"
+On Fri, 2026-05-01 at 11:08 -0400, Reid Sutherland wrote:
+> Does anything load the vulnerable module by default or not?  If not,
+> this should be low-rated IMO.
 
---------------QnF0hQDkndR6W23WTHnjPuek
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+An unprivileged user requesting an AF_ALG socket will trigger the kernel
+module autoloader:
 
-RXJyYXRhIDEgZm9yIE9TU0EtMjAyNi0wMjE6IENWRS0yMDI2LTUwMjY2IGhhcyBiZWVuIGFzc2ln
-bmVkLg0KDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09DQpPU1NBLTIwMjYtMDIxOiBOZXV0cm9uIHBvcnQgUkJBQyBwb2xpY3kgYnlw
-YXNzIGFsbG93cyBwcm9qZWN0IG1hbmFnZXJzIA0KdG8gc2V0IHRydXN0ZWQgZGV2aWNlIG93bmVy
-cyBvbiBzaGFyZWQgbmV0d29ya3MNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT0NCg0KOkRhdGU6IEp1bmUgMDQsIDIwMjYNCjpDVkU6
-IENWRS0yMDI2LTUwMjY2DQoNCg0KQWZmZWN0cw0Kfn5+fn5+fg0KLSBOZXV0cm9uOiA+PTI1LjAu
-MCA8MjUuMi40LCA+PTI2LjAuMCA8MjYuMC40LCA+PTI3LjAuMCA8MjcuMC4zLCA9PTI4LjAuMA0K
-DQoNCkRlc2NyaXB0aW9uDQp+fn5+fn5+fn5+fg0KVGltIFNoZXBoYXJkIGZyb20gcm9pYWkuY2Eg
-cmVwb3J0ZWQgYSBwb2xpY3kgZW5mb3JjZW1lbnQgYnlwYXNzIGluIA0KTmV1dHJvbidzIGRlZmF1
-bHQgcG9ydCBSQkFDIHJ1bGVzLiBBIHByb2plY3QgbWFuYWdlciBjYW4gY3JlYXRlIG9yIA0KdXBk
-YXRlIGEgcG9ydCBvbiBhIHNoYXJlZCBuZXR3b3JrIG93bmVkIGJ5IGFub3RoZXIgcHJvamVjdCBh
-bmQgc2V0IA0KYGBkZXZpY2Vfb3duZXJgYCB0byBhIHRydXN0ZWQgbmV0d29yay1zZXJ2aWNlIHZh
-bHVlIHN1Y2ggYXMgDQpgYG5ldHdvcms6ZGhjcGBgLiBEZXBlbmRpbmcgb24gYmFja2VuZCBhbmQg
-ZGVwbG95bWVudCwgdGhpcyBjYW4gYnlwYXNzIA0KYW50aS1zcG9vZmluZyBhbmQgc2VjdXJpdHkg
-Z3JvdXAgcHJvdGVjdGlvbnMuIFRoaXMgaXMgYSByZWdyZXNzaW9uIG9mIA0KQ1ZFLTIwMTUtNTI0
-MCAoT1NTQS0yMDE1LTAxOCkgaW50cm9kdWNlZCBieSB0aGUgbWFuYWdlciByb2xlIHN1cHBvcnQg
-DQpjaGFuZ2UuIERlcGxveW1lbnRzIHJ1bm5pbmcgTmV1dHJvbiAyNS4wLjAgb3IgbGF0ZXIgYXJl
-IGFmZmVjdGVkLg0KDQoNCg0KRXJyYXRhDQp+fn5+fn4NCkNWRS0yMDI2LTUwMjY2IGhhcyBiZWVu
-IGFzc2lnbmVkIGZvciB0aGlzIHZ1bG5lcmFiaWxpdHkuDQoNCg0KDQpQYXRjaGVzDQp+fn5+fn5+
-DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MTUyMyAoMjAyNS4xL2Vwb3h5KQ0KLSBo
-dHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTAzNTYgKDIwMjUuMi9mbGFtaW5nbykNCi0gaHR0
-cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkwMzUzICgyMDI2LjEvZ2F6cGFjaG8pDQotIGh0dHBz
-Oi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MDI3MyAoMjAyNi4yL2hpYmlzY3VzKQ0KDQoNCkNyZWRp
-dHMNCn5+fn5+fn4NCi0gVGltIFNoZXBoYXJkIGZyb20gcm9pYWkuY2EgKENWRS0yMDI2LTUwMjY2
-KQ0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+fn4NCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1
-Z3MvMjE1MjExNQ0KLSBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25h
-bWU9Q1ZFLTIwMjYtNTAyNjYNCg0KDQpOb3Rlcw0Kfn5+fn4NCi0gVGhpcyBpcyBhIHJlZ3Jlc3Np
-b24gb2YgQ1ZFLTIwMTUtNTI0MCAoT1NTQS0yMDE1LTAxOCkuDQoNCg0KT1NTQSBIaXN0b3J5DQp+
-fn5+fn5+fn5+fn4NCi0gMjAyNi0wNi0wNCAtIEVycmF0YSAxDQotIDIwMjYtMDYtMDQgLSBPcmln
-aW5hbCBWZXJzaW9uDQoNCi0tDQpHb3V0aGFtIFBhY2hhIFJhdmkNCk9wZW5TdGFjayBWdWxuZXJh
-YmlsaXR5IE1hbmFnZW1lbnQgVGVhbQ0KaHR0cHM6Ly9zZWN1cml0eS5vcGVuc3RhY2sub3JnL3Zt
-dC5odG1sDQoNCg0KT24gNi80LzI2IDg6MDAgQU0sIEdvdXRoYW0gUGFjaGEgUmF2aSB3cm90ZToN
-Cj4gPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PQ0KPiBPU1NBLTIwMjYtMDIxOiBOZXV0cm9uIHBvcnQgUkJBQyBwb2xpY3kgYnlwYXNz
-IGFsbG93cyBwcm9qZWN0IG1hbmFnZXJzIA0KPiB0byBzZXQgdHJ1c3RlZCBkZXZpY2Ugb3duZXJz
-IG9uIHNoYXJlZCBuZXR3b3Jrcw0KPiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09DQo+IA0KPiA6RGF0ZTogSnVuZSAwNCwgMjAyNg0K
-PiA6Q1ZFOiBDVkUtMjAyNi1wZW5kaW5nDQo+IA0KPiANCj4gQWZmZWN0cw0KPiB+fn5+fn5+DQo+
-IC0gTmV1dHJvbjogPj0yNS4wLjAgPDI1LjIuNCwgPj0yNi4wLjAgPDI2LjAuNCwgPj0yNy4wLjAg
-PDI3LjAuMywgPT0yOC4wLjANCj4gDQo+IA0KPiBEZXNjcmlwdGlvbg0KPiB+fn5+fn5+fn5+fg0K
-PiBUaW0gU2hlcGhhcmQgZnJvbSByb2lhaS5jYSByZXBvcnRlZCBhIHBvbGljeSBlbmZvcmNlbWVu
-dCBieXBhc3MgaW4gDQo+IE5ldXRyb24ncyBkZWZhdWx0IHBvcnQgUkJBQyBydWxlcy4gQSBwcm9q
-ZWN0IG1hbmFnZXIgY2FuIGNyZWF0ZSBvciANCj4gdXBkYXRlIGEgcG9ydCBvbiBhIHNoYXJlZCBu
-ZXR3b3JrIG93bmVkIGJ5IGFub3RoZXIgcHJvamVjdCBhbmQgc2V0IA0KPiBgYGRldmljZV9vd25l
-cmBgIHRvIGEgdHJ1c3RlZCBuZXR3b3JrLXNlcnZpY2UgdmFsdWUgc3VjaCBhcyANCj4gYGBuZXR3
-b3JrOmRoY3BgYC4gRGVwZW5kaW5nIG9uIGJhY2tlbmQgYW5kIGRlcGxveW1lbnQsIHRoaXMgY2Fu
-IGJ5cGFzcyANCj4gYW50aS1zcG9vZmluZyBhbmQgc2VjdXJpdHkgZ3JvdXAgcHJvdGVjdGlvbnMu
-IFRoaXMgaXMgYSByZWdyZXNzaW9uIG9mIA0KPiBDVkUtMjAxNS01MjQwIChPU1NBLTIwMTUtMDE4
-KSBpbnRyb2R1Y2VkIGJ5IHRoZSBtYW5hZ2VyIHJvbGUgc3VwcG9ydCANCj4gY2hhbmdlLiBEZXBs
-b3ltZW50cyBydW5uaW5nIE5ldXRyb24gMjUuMC4wIG9yIGxhdGVyIGFyZSBhZmZlY3RlZC4NCj4g
-DQo+IA0KPiANCj4gUGF0Y2hlcw0KPiB+fn5+fn5+DQo+IC0gaHR0cHM6Ly9yZXZpZXcub3BlbmRl
-di5vcmcvOTkxNTIzICgyMDI1LjEvZXBveHkpDQo+IC0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5v
-cmcvOTkwMzU2ICgyMDI1LjIvZmxhbWluZ28pDQo+IC0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5v
-cmcvOTkwMzUzICgyMDI2LjEvZ2F6cGFjaG8pDQo+IC0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5v
-cmcvOTkwMjczICgyMDI2LjIvaGliaXNjdXMpDQo+IA0KPiANCj4gQ3JlZGl0cw0KPiB+fn5+fn5+
-DQo+IC0gVGltIFNoZXBoYXJkIGZyb20gcm9pYWkuY2EgKENWRS0yMDI2LXBlbmRpbmcpDQo+IA0K
-PiANCj4gUmVmZXJlbmNlcw0KPiB+fn5+fn5+fn5+DQo+IC0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0
-L2J1Z3MvMjE1MjExNQ0KPiAtIGh0dHA6Ly9jdmUubWl0cmUub3JnL2NnaS1iaW4vY3ZlbmFtZS5j
-Z2k/bmFtZT1DVkUtMjAyNi1wZW5kaW5nDQo+IA0KPiANCj4gTm90ZXMNCj4gfn5+fn4NCj4gLSBB
-IENWRSByZXF1ZXN0IGhhcyBiZWVuIGZpbGVkIHdpdGggTUlUUkUgKENBTi0yMDI2LTIwMzA3MDIp
-Lg0KPiAtIFRoaXMgaXMgYSByZWdyZXNzaW9uIG9mIENWRS0yMDE1LTUyNDAgKE9TU0EtMjAxNS0w
-MTgpLg0KPiANCj4gLS0gDQo+IEdvdXRoYW0gUGFjaGEgUmF2aQ0KPiBPcGVuU3RhY2sgVnVsbmVy
-YWJpbGl0eSBNYW5hZ2VtZW50IFRlYW0NCj4gaHR0cHM6Ly9zZWN1cml0eS5vcGVuc3RhY2sub3Jn
-L3ZtdC5odG1sDQoNCg==
+$ su -l
+Password:
 
---------------QnF0hQDkndR6W23WTHnjPuek
-Content-Type: application/pgp-keys; name="OpenPGP_0x0638DAD3B82C3988.asc"
-Content-Disposition: attachment; filename="OpenPGP_0x0638DAD3B82C3988.asc"
-Content-Description: OpenPGP public key
-Content-Transfer-Encoding: quoted-printable
+# cat > /root/modprobe << "EOF"
+#!/bin/sh
+echo "$(date -u) modprobe $@" >> /tmp/modprobe.log
+exec /sbin/modprobe "$@"
+EOF
 
------BEGIN PGP PUBLIC KEY BLOCK-----=0A=
-=0A=
-xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtq=0A=
-V1s3x8C7GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8=0A=
-eBByL3sNRR3RHovAVpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSb=0A=
-SptiPPOkncn/i10uGAIHN884Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtD=0A=
-xDG6wKf8VcFg538a8deJsPUNONrdOYwjH4xAYao5yrktALQC2zEbHLmNZnFRHJ6z=0A=
-Gs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW0L6QwKh0n2grWs264dD5bV/r=0A=
-PIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7diXOa+YvWehaE4Ito=0A=
-Nd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI4R2iRSSg=0A=
-HuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ=0A=
-dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q=0A=
-5J/H6xHVhANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQAB=0A=
-zStHb3V0aGFtIFBhY2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGz=0A=
-BBMBCABdFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu=0A=
-dTIsMi41KzEuMTIsMCwzAhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H=0A=
-AheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvioUeyBJp1GnGN1lcXNQYIFOB+=0A=
-TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3AJOQGE1YMTToxdxi=0A=
-OCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2FWSSGd7K=0A=
-rY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6=0A=
-U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF=0A=
-97dBu2FR8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4p=0A=
-l6EeSGz0Xp6LXD6YuwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdgl=0A=
-MNGFnf++euaQBqfQT9W6mQqFGQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8=0A=
-vrnSGUFfW31PGJ/SVV3nJtWoygToacNzwUUwT3Y8VWFcfypC9hI856BDlvOlb7X0=0A=
-JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi4M423ThAByjERzYoGPmb/mJF=0A=
-tcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTIL2w6TppylLJTi1jI=0A=
-yNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uELMCV+Sy8=0A=
-Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk=0A=
-6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15l=0A=
-ezk3HOnJaxKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcy=0A=
-hpxihTZFyKhGkKSu2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5j=0A=
-DKWamnlrjbxllI77c9+fvp2lkt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77g=0A=
-fIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdcna7eyw+zTXrl6Grjj6P0olrBCzvwvFex=0A=
-3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ03EVS+IxOlaExiF/wIm7S7VgH=0A=
-ZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5kNwAoB0+izqOD9Cy/=0A=
-syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lvLe6Yn3av=0A=
-y8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR=0A=
-AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAA=0A=
-BAAObWFudTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPE=0A=
-jSFIH4HYoEsBE2wBiJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ=0A=
-/4iGlBvdYn7rwB1Yb2/LIO5Pcsc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV=0A=
-7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WMBR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/=0A=
-H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKYBLHyNNATkl97VdAUgaFE28Q4=0A=
-Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBLd7HqyjXY7tG7pPnP=0A=
-4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqmejykliW+T=0A=
-6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI=0A=
-81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNA=0A=
-WNzZu3qeBJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPc=0A=
-nV7MQp38mYdfj9T1t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe=0A=
-+qGYa3LmV2soXmdh0GFZ5KFjVYvdtAgTRIrQIz/K=0A=
-=3Drf4K=0A=
------END PGP PUBLIC KEY BLOCK-----=0A=
+# chmod 700 /root/modprobe
 
---------------QnF0hQDkndR6W23WTHnjPuek--
+# cat /proc/sys/kernel/modprobe
+/sbin/modprobe
 
---------------UaTuI6jWa9a9b2d3g40zMVcB--
+# echo "/root/modprobe" > /proc/sys/kernel/modprobe
+# cat /proc/sys/kernel/modprobe
+/root/modprobe
 
---------------85hegKvWdO0mzdeAzhC39UAE
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+# exit
 
------BEGIN PGP SIGNATURE-----
+$ lsmod | grep aead | wc -l
+0
 
-wsF5BAABCAAjFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmoh9EEFAwAAAAAACgkQBjja07gsOYjr
-dw/8CAnuiO+F0g1rmRyMCLQW52+24ODZUgXEhlcjKp+Uvxfbn+XebB0dCCyY+tq3t+DwXCDKv+zi
-m/BBDvDH18OIhg97mOCArYgMtNug5xK8GP1uOXyUas5nCNLoZLxA3uAupLUnqaFz1+F1UTYgch70
-34ekx8eSvBtCkToWeAVKwpVYq5EyTip9OOgwn9itCw74ncWk2IUYTBwbKxEnLNjaexTIP2CYCV06
-+fWUtXNLlE4BHKdEwHjbf3tANce2o2/PDuRLxmbKpRs5NEKpm86rjmqPyElwrtkFnYuH1lQFCumj
-1gtyRsBts7RCTXeCmXFOwi1vXdQTKuZabU+ldpSgGUsAYZJDvrw+QholJk3oM65fkhMA8kb7kH68
-og3PiGVy/U+ZivpMLUAuFe8oqqoPJbvaUFaWkjLcmR8KF0E21fbugOcwVJ/752iauE/QJLALbRxl
-IPRuEgR8BlRpPFO5aulfeLJAQBaQ6+R6vNzElO++2WWQTTwvjFfNRlyVT6HcWLe2ruNfFyXRCfFU
-9Zt6TScb+4lROSGQGBw3DhOOfyAujpIPyvrLNvSnR3rqsIV6stwOAc0eN/0qFM95BF7SUWIoVX6x
-EhwxrvAELq9NZwbe0TAFMbLgSH1LdklZtju3MWcFE/i69u7GMfJCcG1qSvZ45VyQtT6csCGdZXSN
-7QU=
-=kNep
------END PGP SIGNATURE-----
+$ date -u && ./copy_fail_exp.py
+Fri 01 May 2026 16:08:24 UTC
 
---------------85hegKvWdO0mzdeAzhC39UAE--
+# cat /tmp/modprobe.log
+Fri May  1 16:08:24 UTC 2026 modprobe -q -- net-pf-38
+Fri May  1 16:08:24 UTC 2026 modprobe -q -- algif-aead
+
+# lsmod | grep aead
+algif_aead             16384  0
+af_alg                 36864  1 algif_aead
+
+# echo "/sbin/modprobe" > /proc/sys/kernel/modprobe
+# cat /proc/sys/kernel/modprobe
+/sbin/modprobe
+
+# exit
