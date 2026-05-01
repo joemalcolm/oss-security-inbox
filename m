@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["742" "Wednesday" "6" "May" "2015" "18:43:53" "+0300" "Vasily Kulikov" "segoon@openwall.com" "<20150506154353.GA7500@cachalot>" "22" "Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" nil nil nil "5" "2015050615:43:53" "[oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam" (number mark "        segoon@openw May  6   22/742   " thread-indent "\"Re: [oss-security] CVE request for a fixed bug existed in all versions of linux kernel from KeenTeam\"\n") "<20150502125329.GA6820@openwall.com>" ("<CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>" "<20150502125329.GA6820@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32396 invoked by uid 550); 6 May 2015 15:44:07 -0000
+Received: (qmail 9363 invoked by uid 550); 1 May 2026 15:11:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32313 invoked from network); 6 May 2015 15:44:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZtPcyiN4+KRz9rpMSKo4MioTOxVQ9JSIMbvmrJ++1bk=;
-        b=h6cUIK3TxAYEWw24Z9VOcynNQhEx9We3B+tVx4r1qXO3X8Kf9HgVvlAbeeuHUvCm9j
-         82ys+ez6yhnlG5Zt7T/n1e9Uk1I8CxXo7/nruU7V+YW3Cg8ykxPdmLEYdVE3wjaV4Ous
-         9hZT9SCAOrdETNDm2xZPtSEAGGctvCQpbfxNoNFSx2kUBujzBfYI4xEO6f+aZxGQm+8l
-         H9fYPQ1clDJjFpWf8e1OCNdz76jCuvhLzZE39M4qj4P5GPqP7CjLMNH/bE5Y6NqRMZos
-         VWm8d+extPzhQFHGQCTx3cCh3Sehb5xOQ/l8VvGNftrkdBnmhFNAc3TVzlxKpKFft9yO
-         Lysw==
-X-Received: by 10.112.188.194 with SMTP id gc2mr23759492lbc.25.1430927035575;
-        Wed, 06 May 2015 08:43:55 -0700 (PDT)
-Message-ID: <20150506154353.GA7500@cachalot>
-References: <CADOUnBK=jW36v6X2Q6EXLL35Wxqait7cWJR-adCFwRaMJtucPQ@mail.gmail.com>
- <20150502125329.GA6820@openwall.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20150502125329.GA6820@openwall.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: Wen Xu <hotdog3645@gmail.com>, oss-security@lists.openwall.com
-Date: Wed, 6 May 2015 18:43:53 +0300
-From: Vasily Kulikov <segoon@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Sender: Vasiliy Kulikov <segooon@gmail.com>
-Subject: Re: [oss-security] CVE request for a fixed bug existed in all
- versions of linux kernel from KeenTeam
-To: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 20373 invoked from network); 1 May 2026 08:22:30 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1777623738; bh=aYUIbkWNKykmndSySQxJzlb60yBJdZGdcb4pf+h3Eb8=;
+	h=Reply-To:From:Date:Subject:To:From;
+	b=Zo3P1QZQYM+l74X2rEZ8rbeaSu9GBGoUkRfio+MvvJoqNON2YItnwf45qtJbLxjAG
+	 EMq8aLA4sYZgSpXmANj7XGvuMOWSALVaD7zOq5DXaMN421kK0hvnkeVu5fdIoARmo6
+	 3XrGGWJU4O3JAdo/BBcmiMDDnS80nCoTzED7s+IMbZWKBV6Zv4sNx3geV+4FfDN/L8
+	 rN/Y8sKHUIMmL+LkNh+WEwQZ/JtTCwnpOmC41AoEwssEh5dI0j904H2tM7rIwLui1F
+	 f4C11HNwZhIA+4VQDQRG7TFK0vn5S4nq0Ct9amqDuKte72sk4VkYwdK2SaRepcP/xX
+	 7Ox6TYMXxwWDw==
+X-Gm-Message-State: AOJu0Yzs1plQ66kphqpvb6E6MRTU5vwwl5+5tprKgvdJzgDmTojE1BjL
+	4n/i5l0l1wcxdU+qKPThTdCUOWSl9KJeAC1KG3prF4keBbh/GUrplu3F1Z6F99kphsMX50QWJNC
+	VNG+FqPf1yZVvb8MQZgLiJLcCwuXzoJ8=
+X-Received: by 2002:a17:90b:51c2:b0:35e:3aec:718b with SMTP id
+ 98e67ed59e1d1-364ef507f6amr2211831a91.15.1777623737176; Fri, 01 May 2026
+ 01:22:17 -0700 (PDT)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Fri, 1 May 2026 09:22:03 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGBXhqXV9t9Edoe09x5yzvvFbpzRSYaUV7oWFkEwx0cFXw@mail.gmail.com>
+X-Gm-Features: AVHnY4Ibkngwm1Cj8w-La-w0NyRETcsSNa448nDn5XvWjGC4zMGGG4p0tO1uu6U
+Message-ID: <CAB8XdGBXhqXV9t9Edoe09x5yzvvFbpzRSYaUV7oWFkEwx0cFXw@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2026-42404: Apache Neethi: Unrestricted HTTP Redirect Following
+ in Policy References
 
-Hi,
+Severity: Medium
 
-On Sat, May 02, 2015 at 15:53 +0300, Solar Designer wrote:
-> On Sat, May 02, 2015 at 06:31:12PM +0800, Wen Xu wrote:
-> > The bug exists in all versions of linux kernel.
-> 
-> "All" as in "all upstream versions that contain the feature at all
-> (3.0+), and likely some backports".  It appears the bug got introduced
-> in Vasily's forward-porting of the functionality to newer 2.6.x kernels
-> before it finally got merged in this thread:
-> 
-> https://lkml.org/lkml/2011/5/13/382
+Affected versions:
 
-I confirm this bug was introduced during forward-porting of the ICMP
-patch to the upstream kernel.  The bug is not present in Owl's version
-of the patch.
+- Apache Neethi before 3.2.2
 
-Thanks,
+Description:
 
--- 
-Vasily Kulikov
-http://www.openwall.com - bringing security into open computing environments
+Apache Neethi does not impose any restrictions on URIs when manually
+fetching remote policy references through the PolicyReference API.
+When an application explicitly calls the API to retrieve a policy from
+a remote URI, an outbound request is made for arbitrary protocols and
+internal IP adddresses. From 3.2.2, only http or https URIs are
+allowed, and link-local/multicast/any-local addresses are forbidden.
+
+Users are recommended to upgrade to version 3.2.2, which fixes this issue.
+
+References:
+
+https://ws.apache.org/neethi/security.html
+https://www.cve.org/CVERecord?id=CVE-2026-42404
