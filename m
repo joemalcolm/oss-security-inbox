@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1841" "Monday" "11" "January" "2016" "12:43:11" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160111174311.7B06D6C00D9@smtpvmsrv1.mitre.org>" "42" "[oss-security] Re: CVE Request: Linux kernel - SCTP denial of service during heartbeat timeout functions." nil nil nil "1" "2016011117:43:11" "[oss-security] Re: CVE Request: Linux kernel - SCTP denial of service during heartbeat timeout functions." (number mark "U       cve-assign@m Jan 11   42/1841  " thread-indent "\"[oss-security] Re: CVE Request: Linux kernel - SCTP denial of service during heartbeat timeout functions.\"\n") "<993560327.6397475.1452519141475.JavaMail.zimbra@redhat.com>" ("<993560327.6397475.1452519141475.JavaMail.zimbra@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17460 invoked by uid 550); 11 Jan 2016 17:43:24 -0000
+Received: (qmail 1138 invoked by uid 550); 1 May 2026 15:13:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,54 +7,48 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17412 invoked from network); 11 Jan 2016 17:43:23 -0000
-From: cve-assign@mitre.org
-To: wmealing@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <993560327.6397475.1452519141475.JavaMail.zimbra@redhat.com>
-Message-Id: <20160111174311.7B06D6C00D9@smtpvmsrv1.mitre.org>
-Date: Mon, 11 Jan 2016 12:43:11 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: Linux kernel - SCTP denial of service during heartbeat timeout functions.
+x-ms-reactions: disallow
+Received: (qmail 24404 invoked from network); 1 May 2026 15:08:37 -0000
+Message-ID: <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
+From: Reid Sutherland <reid@thirddimension.net>
+To: oss-security@lists.openwall.com
+Date: Fri, 01 May 2026 11:08:25 -0400
+In-Reply-To: <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
+References: <afJorKIje4O6dXbH@netmeister.org>
+	 <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
+	 <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh>
+	 <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
+	 <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+MIME-Version: 1.0
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Thu, 2026-04-30 at 10:25 -0700, Alan Coopersmith wrote:
 
-> A case can occur when sctp_accept() is called by the user during
-> a heartbeat timeout event after the 4-way handshake.  Since
-> sctp_assoc_migrate() changes both assoc->base.sk and assoc->ep, the
-> bh_sock_lock in sctp_generate_heartbeat_event() will be taken with
-> the listening socket but released with the new association socket.
-> The result is a deadlock on any future attempts to take the listening
-> socket lock.
+> On 4/30/2026 12:17 AM, cyber security wrote:
+>=20
+> > That is very terrifying, is it is 10.0 score?
+>=20
+>=20
+> A 10.0 score would require that a vulnerability be exploitable over
+> the network, without having to login to a local account on the system
+> first to run the exploit script.
 
-> Ensure the socket taken is also the same one that is released by
-> saving a copy of the socket before entering the timeout event
-> critical section.
 
-> https://bugzilla.redhat.com/show_bug.cgi?id=1297389
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/net/sctp/sm_sideeffect.c?id=635682a14427d241bab7bbdeebb48a7d7b91638e
+Sorry but I'm having a hard time understanding the actual threat level
+of this vulnerability.
 
-Use CVE-2015-8767.
+# lsmod |grep aead=20=20
+#
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Does anything load the vulnerable module by default or not?  If not,
+this should be low-rated IMO.
 
-iQIcBAEBCAAGBQJWk+k+AAoJEL54rhJi8gl5nzEP/R0YgH6KMRbLsizjooACajGq
-DEFdPkZnEKKUY846dC5wE7FOv9REuXCqAxszvg9M5r+Oje7riOKJl5pnFSvC5abx
-zgUWCjdKgOOZE74YKfsNPd6EVh6qmhPvJ7y5/hNW6zYqLOEJhqlk9Gkfqmx/0O2A
-941849R/aPvsZ4Wcg/MvmEk7kuol8LcufauXAQyUWc5cAFnwHPtsyvlpLFcoOU30
-QwYqTPVx2NzOuYN/aoJlIZyAzcuacp/RLrBW2VOL6fOA8FNFexDf0G0yWM5xSbab
-DRPqY/eNx1iOzQUNFOi8tVdc//HrQXemM3vIdesJc2/BVWiNslhTdkc9m7IRou0i
-reBUqqqjkBaHjzN6dHYCqw8O1H9Nsdv0Z8nKAzzoaGSO4TuXlxj/sjbbolfQpg2B
-0QUhbkB977ARyxrUjnstL9jyBoXxJGLanSByq7imsXBjSCWyhs9k3BkUsjwavE8J
-thNB1ULSn4KbeGHrIM1jj3qAVIvQtwa+cUWp0CXHPN+oevH+kUCGJK2fpb+t9g1b
-s3w4uLyXeMEoHKjn1jrwO4jl8L17f7uGMUXpxPV0bWuLg182V4zvf2WekfvzKGgB
-McFeoNTpUCvg8lM5eja0rR5GjAyR1zJR2xc/zQsDBmFMITJcmOk7ZXYTbMuxfu3c
-/IrELQSgNN9Svqk1Rjyg
-=CDOr
------END PGP SIGNATURE-----
+Is this a big test to highlight all the people that have no idea what
+they're doing (about to find out if that's me)?  Right now I'm seeing
+people blindly copy/paste an advisory with "RHEL 14.3" in it.
+
+
