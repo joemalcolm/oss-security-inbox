@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["270" "Tuesday" "8" "January" "2019" "16:38:35" "+0100" "Greg KH" "gregkh@linuxfoundation.org" "<20190108153835.GA20418@kroah.com>" "11" "[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability." nil nil nil "1" "2019010815:38:35" "[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability." (number mark "U       gregkh@linux Jan  8   11/270   " thread-indent "\"[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability.\"\n") "<CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>" ("<CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>" "<20190108152627.GA19359@kroah.com>" "<CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21876 invoked by uid 550); 8 Jan 2019 16:00:25 -0000
+Received: (qmail 25795 invoked by uid 550); 2 May 2026 19:46:58 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,37 +7,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 11747 invoked from network); 8 Jan 2019 15:38:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1546961917;
-	bh=L6P/iaGAHRg21tqaDk1fKm9ZQGdts6H3THsbBGJJ5CY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E3h/54qaG3OM7SnVlwQhiTvNhsPfP0HglFmIfQp540u8MSUyNzlHIO8bHFpjYJv3d
-	 E/aZwTxA0ma6kLp2EGMW1rOrZC65IPuMM1ncpNKpz1b9Wnl/XJIyIdSehf3YlhwMfB
-	 hXvEmgoiTNuPWLUTp+CzrKsGkjDVTNHHQLKeddbI=
-Date: Tue, 8 Jan 2019 16:38:35 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Entropy Moe <3ntr0py1337@gmail.com>
-Cc: security@kernel.org, oss-security@lists.openwall.com
-Message-ID: <20190108153835.GA20418@kroah.com>
-References: <CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>
- <20190108152627.GA19359@kroah.com>
- <CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 7223 invoked from network); 2 May 2026 19:13:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=terraraq.uk
+	; s=20170701; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Cc:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=8j8a48KJUz1aLaA5Mf389osnMD8UPX0uUM4B67UxbVQ=; b=f6ZToOjTmSuagiKf80yu9ktmsN
+	PWYBe7rYvDpXQGqNp3VelX7YXGv81Ruwmw7u+5XBWatNdqQkkpzz2QN42WwwIGlxD541EL5o1OJRp
+	LHvcUdEEfO8EGy3i9J+Kbg4rUuEer/tbJJ2SeVMW7rtt8AQ6nvn3qE8b7BAx/OTXEzebsZBm+PNgO
+	RSjdFEt7Yd23BHjkpHCpKlBDq4aM0SdG8sZqeNJG19eq9EpP8/lbTjevEbPtRTOviqoeCs7dpfCYY
+	e2iYNTm16VUO6T+L9lOziXJt9N2qf5IDULyzME46pMA3Gl+OoTP9nCFM7ToX4Y7V/EwY1Fp3tl4VD
+	QfB9G2Lg==;
+Message-ID: <cfe5a1f5-f7fe-44a5-8af9-8e4c8d68b3d7@terraraq.uk>
+Date: Sat, 2 May 2026 20:13:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALzBtjLafJkFNKBEw4iH8D3fc_eMKV5bqt1F4n_7Edf=Lj9NMw@mail.gmail.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
-Subject: [oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability.
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <afJorKIje4O6dXbH@netmeister.org>
+ <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
+ <afL-QhLfEKqHZqka@eldamar.lan> <20260430071917.GB54208@sol>
+ <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+Content-Language: en-GB
+From: Richard Kettlewell <rjk@terraraq.uk>
+In-Reply-To: <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Score: -2.9 (--)
+X-Spam-Report: Spam detection software, running on the system "mantic.terraraq.uk",
+ has NOT identified this incoming email as spam.  The original
+ message has been attached to this so you can view it or label
+ similar future email.  If you have any questions, see
+ postmaster@terraraq.uk for details.
+ 
+ Content analysis details:   (-2.9 points, 5.0 required)
+ 
+  pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+ -1.0 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+ -1.9 BAYES_00               BODY: Bayes spam probability is 0 to 1%
+                             [score: 0.0000]
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
-On Tue, Jan 08, 2019 at 07:34:24PM +0400, Entropy Moe wrote:
-> Hello Greg,
-> thank you for reply,
-> I have have them tested on the new kernel 5
+On 01/05/2026 16:30, Demi Marie Obenour wrote:
+> On 4/30/26 03:19, Eric Biggers wrote:
+>> But I also hope this finally provides some more impetus for AF_ALG to be
+>> deprecated and removed.  It's a massive, largely pointless attack
+>> surface which has been causing problems, including regular CVEs, ever
+>> since it was added to the kernel in 2010.  And of course it's gotten
+>> even worse lately, with LLMs now being able to find the bugs.
+>>
+>> Userspace crypto libraries exist.  There's no need to escalate to kernel
+>> mode just to do some math.
+> 
+> The only reason I can think of to keep it is for embedded systems
+> with weak CPUs and crypto accelerators that are actually worth using.
+> However, those seem to be very rare outside of things like routers,
+> which run specialized distros like OpenWRT.  Even when the accelerator
+> exists and is worth using, AF_ALG is certainly not an efficient way
+> to access it.
 
-What do you mean by this?  You have tested them and all is good?  Or
-not?  Or something else?
+I have that use case, although fortunately it's in a context where 
+splice() is disabled. But the requirement is for access to the SoC's 
+accelerator - the interface doesn't need to be via AF_ALG in particular, 
+it doesn't have to offer software crypto (and it might be better if it 
+didn't), and it needn't be independent of the specific hardware 
+(although in the bigger picture it'd be a shame if it wasn't).
 
-Please be specific.
+ttfn/rjk
 
-greg k-h
