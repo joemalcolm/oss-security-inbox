@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3093" "Saturday" "3" "October" "2015" "02:07:08" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151003060708.E1F076C0055@smtpvmsrv1.mitre.org>" "71" "[oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report" nil nil nil "10" "2015100306:07:08" "[oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report" (number mark "        cve-assign@m Oct  3   71/3093  " thread-indent "\"[oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report\"\n") "<20151002144933.GA10319@localhost.localdomain>" ("<20151002144933.GA10319@localhost.localdomain>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7355 invoked by uid 550); 3 Oct 2015 06:07:27 -0000
+Received: (qmail 3337 invoked by uid 550); 2 May 2026 20:30:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,84 +6,98 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7237 invoked from network); 3 Oct 2015 06:07:20 -0000
-In-Reply-To: <20151002144933.GA10319@localhost.localdomain>
-Message-Id: <20151003060708.E1F076C0055@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat,  3 Oct 2015 02:07:08 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Qualys Security Advisory - OpenSMTPD Audit Report
-To: qsa@qualys.com
+x-ms-reactions: disallow
+Received: (qmail 25626 invoked from network); 2 May 2026 20:19:13 -0000
+Message-ID: <3fee55702aa90f0003b1758d047c65ea42141fb0.camel@thirddimension.net>
+From: Reid Sutherland <reid@thirddimension.net>
+To: oss-security@lists.openwall.com
+Date: Sat, 02 May 2026 16:19:02 -0400
+In-Reply-To: <20260502185608.24115-1-justin.swartz@risingedge.co.za>
+References: <afJorKIje4O6dXbH@netmeister.org>
+	 <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
+	 <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh>
+	 <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
+	 <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
+	 <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
+	 <20260501165221.27420-1-justin.swartz@risingedge.co.za>
+	 <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
+	 <20260502185608.24115-1-justin.swartz@risingedge.co.za>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+MIME-Version: 1.0
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local
+ privilege scalation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Sat, 2026-05-02 at 20:56 +0200, Justin Swartz wrote:
+> On Fri, May 1, 2026 at 20:25:17 -0400, Reid Sutherland wrote:
+> > Why is userspace allowed to load modules in any capacity?
+>=20
+> It's potentially useful for autoloading driver modules when PnP
+> devices are connected, which could be considered deadweight if
+> they were loaded, or baked into the kernel itself, when the
+> respective devices aren't present.
+>=20
 
-> (Sorry for the "CVE-2015-ABCD" place-holders in the report, but
-> OpenSMTPD's developers were ready with the patches before MITRE was
-> ready with the CVE-IDs.)
+This is userspace software loading an administrative driver.  Not even
+close to the same as physically connecting a device.
 
-Qualys had previously sent MITRE a specific disclosure date for the
-OpenSMTPD Audit Report that was later than 2015-10-02.
 
-> However, the project is pretty much in its infancy (the first
-> stable version, 5.3, was released on March 17, 2013), which explains why
-> we discovered various vulnerabilities during our security assessment:
 
-Here are our initial comments:
+>=20
+> > Why do we need kernel modules for math?
+>=20
+> To interact with cryptographic acceleration hardware, if present or
+> desired, and to provide support for kernel subsystems that rely on
+> encryption, like IPSec or WireGuard.
+>=20
+>=20
 
-1. Historically, there have been very few, or perhaps no, other
-research reports that identified this volume of distinct bugs and
-presented the findings as a complex set of interrelationships among
-the bugs.
+Then why is it exposed to userland?  Attack surface continues to
+expand.
 
-2. Ideally, we would model this in the normal way (e.g., by
-identifying primary and resultant weaknesses); however, it is possible
-that we will choose a different approach so that something loosely
-resembling a CVE mapping will be available sooner (and remain the
-final CVE mapping for this one report).
 
-3. With either of those two options, we feel it is unlikely that the
-set of CVE IDs would correspond directly to the CVE-2015-ABCD labels
-used in the report.
+> > I'm assuming any thoroughly qualified platform engineer compiles
+> > the host kernel without module support.=C2=A0 At least, that needs to
+> > make a comeback, bring back applying grsec patches and make
+> > menuconfig..
+>=20
+> I'm thoroughly unqualified, so take my opinion with a bag of salt:
+>=20
+> If you have a use case that allows you to avoid loadable kernel
+> modules indefinitely in a completely monolithic kernel then, by
+> all means, roll your kernel as such and you'll be slightly safer
+> than those who don't.
+>=20
 
-4. We have been studying some parts of the report and have reached a
-tentative conclusion that the use-after-free bug is probably the most
-important issue (or among the most important issues) for actual
-OpenSMTPD users, because of its role in enabling remote code
-execution. At present, this issue has a CVE ID; the remainder of the
-report does not yet have a CVE mapping, and we will send another
-message here when we have chosen a CVE mapping for it.
+Slightly is the wrong word to use in this recent case.  It is likely
+what separated the secure from vulnerable in major cloud environments.
 
-Specifically, for this finding:
 
-  - In the IMSG_{SMTP,MTA}_SSL_VERIFY case, PROC_LKA does not reset the
-    static pointer req_ca_vrfy_{smtp,mta} to NULL after free(), but trusts
-    PROC_PONY to always send an IMSG_{SMTP,MTA}_SSL_VERIFY_CERT (which
-    re-initializes this static pointer) before sending an
-    IMSG_{SMTP,MTA}_SSL_VERIFY{_CHAIN,} (use-after-free
+> Kernel configuration minification doesn't seem to be spoken of
+> much anymore except by those who have fairly resource constrained
+> embedded systems that run Linux on some application processor.
+>=20
+> If you're prepared to go that far, why not roll your own distro?
+>=20
 
-use CVE-2015-7687.
+Because I'm not invested.  Clearly billions are poured into this
+environment and it's all hinged on an insecure chain (using math in
+kernel space and loading modules from userspace).
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This whole using math in the kernel and exposing it, the complexity of
+code written for algorithms is often very high, this is a breeding
+ground for "oops I messed up" root vulnerabilities (hindsight 20/20).
 
-iQIcBAEBCAAGBQJWD2/1AAoJEL54rhJi8gl5pEcQAL18JC5G0nxCznlCxy22odvc
-TCDtrrRXlx6oa5JZebFBdndo1vqVLbe1HY9Mld2WEX+6EvhVaa7zVqXnmEdZbBfF
-NXeQZF38hCmVc7JU8AbftfF8Q+au9n2gTBM2nlf07j0dNde7vr9pOS5Ri01O9sRI
-vTXCF8b0Yb5qrpevnilp0lRs+A7DcJGciXf+gwQC6Os5isKdmI6L7k9w+g21c5n+
-JxeeuuGdviHEl7V/HGu/RmtvfH+7RIi+9sHwkVCC0+/CLXa7FiQ2TGyhnNn4tQCQ
-Vq55FKPBOdmya9jDOhRKB1i+pBydn6xS1NRHofIZ+DMg/fckEkI8xQOZaiyr1MoO
-oPmbGLH+ZSmCBwuBJoG0NZyP+Tqc8lGsJbgjcAwFcPtz68O6p9l+eCg3qG8rNkEb
-yFatKC7v5c8I4KnhahqhcCVbJj/H9Yms5btCcx363DptJlOiEhWl/1lSTggvn0m3
-QuBexKBSqn6Cvt4p4CkDbua9QHqAZgQ7tkYJBrFw5x4tFZPvsmeM3gu70TdMCDWW
-pWV+fViBcivs1N4anlBTRKRvw5c1lK8vDL+mYYrP2+znoRMYlFcN4zVKbt+UHbHH
-wHCuT+jUcfSCw6lO2GMZaNpR2dve2GQe+Ghsz0vRwq9pJsyEU4dUnsw2DdjliE7V
-VId8hoQ0y/ovTx8yi8p+
-=p4wc
------END PGP SIGNATURE-----
+
+> LFS is a potentially good starting point, but you can get by with
+> even less. For example: Linux, musl, busybox, just the applications
+> (and mandatory dependencies) you need, and some init scripts to tie
+> it all together.
+
+
+I agree it's easy in theory, but unless the people are paid and
+passionate, it's not going to last.  We need a serious push for a
+hardened platform kernel after this.
+
