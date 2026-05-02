@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["747" "Wednesday" "6" "July" "2016" "11:01:13" "+0200" "Salvatore Bonaccorso" "carnil@debian.org" "<20160706090113.GA3916@eldamar.local>" "20" "Re: [oss-security] Browsing and attaching images considered harmful in Linux" "^Cc:" nil nil "7" "2016070609:01:13" "[oss-security] Browsing and attaching images considered harmful in Linux" (number mark "        carnil@debia Jul  6   20/747   " thread-indent "\"Re: [oss-security] Browsing and attaching images considered harmful in Linux\"\n") "<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>" ("<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5737 invoked by uid 550); 6 Jul 2016 09:01:13 -0000
+Received: (qmail 9346 invoked by uid 550); 2 May 2026 13:26:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,65 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5719 invoked from network); 6 Jul 2016 09:01:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9gPux+lDaSMnPDqaf5gotCVHsZU3Sx/wHvqu5ScqbTE=;
-        b=b8B2ysh6EaU89ztasN8xY3MuRoRs6hKqv4ZS9WYB+2PmVmnuuFF5MlD4GFqBa0Btjx
-         4tnt70zCsK4QbBrGXVh8YuLz212YtP2KsZ6/rqtFKqofaKsBkQ2xLg+vCeqkitOGjZku
-         hYUr94T0f8Hd6AydA+Jj2Cu3QmPtE4HgAnAK8yvIe7P3nAZkbiPJrtIgKVe11WGYSAUl
-         vZAjkYymPzuTYz54EtypdvQgdza45ni+ZQInrHkNUYJv8SGX4nNeyGTsgaRIvCZ6pEvX
-         nvVvLLvNnea0UUu5S7ds0ZNO0wDobp1ckV6aIP2b82Pn3mrv6Q6Rwlz2GmmYlv6LV7sa
-         4L1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9gPux+lDaSMnPDqaf5gotCVHsZU3Sx/wHvqu5ScqbTE=;
-        b=jwihUzk9bAePz4Ltv1f6YjDgJD0apIpjyctXqzPRsYRwsAewVPuc/BqC9YCx8Vfeib
-         GSydCcxSdtZmtECdVzsAuMiytjChJuS8YFEx//6U0jaX525ve9S+DNrPXpj9hcpfPUjB
-         2/lpWn0BC0OEO0HiCuUJEOaOpmGuRab69GQjU1elz3QluUg6Rri/qE68wKDx+pGHWg7z
-         k9lZcu2h37YGPvqU57B/YyMJ+8fbUtAse/7Oqr3pqUQTPidWbq0LDwxrHSqoQtQUwD7U
-         TOwmhB21TtgDhBBeC2hEO1zzm+PACS7nZM9/LUc7WDSwoMLWyLf5UB/CB7yL7mcGHCG+
-         hgrg==
-X-Gm-Message-State: ALyK8tK6dK7MeATlTt9YnLamPP9mSd0fzT8IZc+hy5ZuthpN6TMR2exCcZGaPuREqZsrTQ==
-X-Received: by 10.195.11.40 with SMTP id ef8mr19347670wjd.137.1467795661702;
-        Wed, 06 Jul 2016 02:01:01 -0700 (PDT)
-Message-ID: <20160706090113.GA3916@eldamar.local>
-References: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
+Reply-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 19670 invoked from network); 2 May 2026 03:36:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777692958;
+	bh=wuzaKHHAs2TCciaYI3jFGkq0gEk3KhXszQpFtWqF0W8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cycwGkWOz3EyyV0iM5hE1CgBg5ZTar7Ko1/pwlBMZwzfaX1qAroWG0fHTRdRsJVuE
+	 0Vk81uz1HmpM0fKYr7STMmq2vgoUN1yKgNvSKVPV9HKBCaM6md2COelJKf2hNtHvj7
+	 I0SdtbppqjvTReKWG6uhtdbCGwJuSYX7uCKn5AycNJ0dnOEis4Wsl1/BHRTKS2OpyG
+	 iMzYAUM6vk9E8+fqY9LFYLcBqXMe/LglNaH4kVDZv1J8rBGts/TTHN5PmBiYH80/q1
+	 K/Loj+b3UlIZKRQ82Hno2JK2iHMVQ5HjtixGxDQ/vxjZBNPaRNGyOOJEgm9fcYriwY
+	 1xnMaFUvUZx0A==
+Date: Sat, 2 May 2026 03:35:56 +0000
+From: Eric Biggers <ebiggers@kernel.org>
+To: Demi Marie Obenour <demiobenour@gmail.com>
+Cc: oss-security@lists.openwall.com,
+	Jan Schaumann <jschauma@netmeister.org>, iwd@lists.linux.dev
+Message-ID: <20260502033556.GA3872267@google.com>
+References: <afJorKIje4O6dXbH@netmeister.org>
+ <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
+ <87se8dgicq.fsf@gentoo.org>
+ <afL-QhLfEKqHZqka@eldamar.lan>
+ <20260430071917.GB54208@sol>
+ <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+ <20260501180028.GA2260@sol>
+ <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
+ <20260501201841.GA2540@quark>
+ <c13dd3c5-ddc1-431e-bc7d-2de39c551f8e@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
-User-Agent: Mutt/1.6.0 (2016-04-01)
-Cc: oss-security@lists.openwall.com
-Date: Wed, 6 Jul 2016 11:01:13 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] Browsing and attaching images considered harmful
- in Linux
-To: Gustavo Grieco <gustavo.grieco@gmail.com>
+In-Reply-To: <c13dd3c5-ddc1-431e-bc7d-2de39c551f8e@gmail.com>
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
-Hi
+On Fri, May 01, 2026 at 08:21:27PM -0400, Demi Marie Obenour wrote:
+> I think the single biggest hardening win for AF_ALG would be to move
+> to the crypto library.  The recent CVEs you mentioned mostly seem
+> to relate to the crypto API, and with a hard-coded list of allowed
+> algorithms there's no need to use the crypto API anymore.  I'm not
+> familiar enough with kernel code to do this easily, but for anyone
+> with basic knowledge of the existing code it should (hopefully) be
+> straightforward.
+> 
+> In the meantime, only using synchronous algorithms and not using
+> hardware drivers would also be a useful simplification.  The latter
+> would make it especially clear that AF_ALG is deprecated, because
+> its one potential advantage (being able to use hardware acceleration)
+> would no longer be present.
 
-On Mon, Jul 04, 2016 at 09:13:05PM +0200, Gustavo Grieco wrote:
-> Fortunately, this issue is already solved in the last revision of
-> librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
-> suitable). Nevertheless, I reported such vulnerability to Mozilla more
-> than a month ago hoping that they will disable the svg support in the
-> open/attach widget. After some discussion, it was marked as WONTFIX.
-> While i understand why, i still feel it can be productive to discuss
-> this here.
+The kernel's crypto library
+(https://docs.kernel.org/crypto/libcrypto.html) does greatly simplify a
+lot of kernel code that needs to use crypto algorithms.  Yes, AF_ALG
+doesn't use it directly yet.  Currently AF_ALG puts all the data in
+(zero-copy) scatterlists, then invokes the "traditional crypto API"
+which is very complex and has full scatterlist support, asynchronous
+execution support, an algorithm template system, etc.  In some cases the
+crypto library is then used internally, but it's not called directly.
 
-If I correctly bisected with the reproducer, then the fix should be
-around
-https://git.gnome.org/browse/librsvg/commit/?id=0035e95118a60c0cd3949c2300472d805e16a022
-(2.40.7).
+So the idea would be something along the lines of:
 
-If anyone can confirm that would be great.
+- Add an algorithm allowlist to AF_ALG.  It would include only what the
+  small set of userspace programs that uses it actually needs.  Bizarre
+  stuff like "authencesn" wouldn't be included.
 
-Regards,
-Salvatore
+- Change AF_ALG to make it copy any data written to an AF_ALG file
+  descriptor into an internal kernel buffer.  Put the output in another
+  internal kernel buffer, then copy it to userspace.  No zero-copy, and
+  no scatterlists.  Both restrictions would greatly reduce the chance of
+  bugs: the actual crypto algorithms would operate only on these
+  internal buffers, not on pagecache data (e.g. the contents of 'su') or
+  buffers that userspace can concurrently modify.  The use of simple
+  virtual addresses would eliminate all the scatterlist complexity.
+
+- AF_ALG would implement each algorithm by invoking the corresponding
+  the crypto library functions
+  (https://docs.kernel.org/crypto/libcrypto.html#api-documentation).  No
+  asynchronous execution, no buggy hardware crypto drivers, etc.
+
+It sounds good to me.  For people who feel like the su binary on their
+system is a bit too restrictive and would like to fix that, these
+changes might not be all that great for them.  But for the rest of us,
+they should work rather well.
+
+Of course, it'll also be a fair a bit of work, and unfortunately I also
+expect pushback from people who (incorrectly IMO) think that AF_ALG
+performance is important, even moreso than security.
+
+Either way, the first step will be to create the algorithm allowlist,
+which should happen anyway, regardless of the other changes.
+
+(By the way, for context: I maintain the kernel's crypto library, but
+not the kernel's "traditional crypto API".  The latter is where AF_ALG
+and all these problems are, unfortunately.)
+
+- Eric
