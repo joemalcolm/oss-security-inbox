@@ -1,4 +1,4 @@
-Received: (qmail 24396 invoked by uid 550); 24 Feb 2024 14:16:57 -0000
+Received: (qmail 28017 invoked by uid 550); 2 May 2026 23:21:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,100 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30317 invoked from network); 24 Feb 2024 08:19:24 -0000
+x-ms-reactions: disallow
+Received: (qmail 26608 invoked from network); 2 May 2026 22:39:08 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlers.com; s=googlers; t=1708762960; x=1709367760; darn=lists.openwall.com;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pUpB/8+e0q+bnoYZhuwXiTXEXAJNYkYxC4Vdg0bc4Zo=;
-        b=CK1xRBPl+6gNrZPgVS6rwK7/oa/2qG0iIVytrCyN3KXxrfdLodfAlKrba3dSqsJyBw
-         yAg2SLIiEdjhH+jDxqI/BTS4JDkweYvr5o9qmg3ggRar5ynpoXCb0TvYBU2LnJNH/kQh
-         8tmYs2A+lXxmUmsOMylW56AkHp7gjkkxvKRY4=
+        d=gmail.com; s=20251104; t=1777761539; x=1778366339; darn=lists.openwall.com;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tk7bV6QvOTLNgH3RD32+yKPb/e+XNvUgrzpzI/gAj/8=;
+        b=opKIP8OD5gebvMq0e8ShtuAoV5WKOaudRT0Hsen9Nlf2IgtA3Whuv71eC/NPXKRDTp
+         i1yOqfYH5cJcYtr4iT2rIlXExIHm7zdF52PgaQUoq1LDMJt5X0ij1NzrMyO2MixrIayj
+         nyuZaGAcQVYOvV15emy/2wV4LKMQ2j1CFODwomUtzLr1n1Sl/kSsgzYjaQLZ886oyoMx
+         eLg5UrBMFNIl1y9RGqTqFKums2zdDoPLvV6AoUi/jY51SFn+C2mrAwQBXKOAUOmlvaR7
+         FDhmhPepuQfJhUncpQDPvISYgniLIDI8xS/lQ/l/tjk9tjgpXJRdYqghs7eos6qe90TF
+         eDgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708762960; x=1709367760;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pUpB/8+e0q+bnoYZhuwXiTXEXAJNYkYxC4Vdg0bc4Zo=;
-        b=Nesu98lel7ThEbHP4169SaPGmCrJkHJVsTKUW6Oi1TS6YnbX4uaO9XSBR6X9nn771W
-         TuaQXyQckbag22+2E8jOuDGYgkhDtqfY8cdxTcTLQVQ7yc6L//1kNJ+NxvV1B5szGVPJ
-         QIIon1O8sMy45njEmEVhz+7nBTmpHUfT3vHTaAnjmj8HjokeOrxQHzNAt6UmHhBmfsBj
-         zG85CYjAhiaEbtJfYWX4Idbf7PU5gPnDsFL/GTMZANIw8/R2gpbVjOy4JsAaKxNxHuo0
-         qO6PccgIjvshik6tKbeQHBn46RDGKu2llSu+Tg+FIBpANYXCU8N1F8KbeiMe0RYOKCtx
-         pl5A==
-X-Gm-Message-State: AOJu0Yx6lk471vQH4p2M5Ab5By4H1jJnRe7kXlKq1vJBAymoigKfd8g2
-	dvvASDocvW5dfN/j5Uw8D7wxmqtE7Su5Hvq8PuDIw+uEX7iPrGgcCLNjCc6MSDK4MoSySmMzelV
-	ALaR9bY60NG+HQqzbZgcfVxFd6CO7z8YLeFJvrnzoAmsEC5fIsg==
-X-Google-Smtp-Source: AGHT+IFwsqxNht4TOOvWGYvs9PSqEqM02Tk5PxiXe5ydZAiItBwYCw484qhEXOd0chy4/hiXH5/jWh7J1A6dYWtAu9U=
-X-Received: by 2002:ac8:74d9:0:b0:42e:4888:7986 with SMTP id
- j25-20020ac874d9000000b0042e48887986mr153334qtr.29.1708762959491; Sat, 24 Feb
- 2024 00:22:39 -0800 (PST)
-MIME-Version: 1.0
-References: <7e78b8d8-860c-47f5-bbec-a967c277d539@oracle.com>
- <20240222200542.GA14535@openwall.com> <2024022358-appeasing-obtuse-a598@gregkh>
-In-Reply-To: <2024022358-appeasing-obtuse-a598@gregkh>
-From: eduardo vela <evn@googlers.com>
-Date: Sat, 24 Feb 2024 09:22:29 +0100
-Message-ID: <CAFswPa8A2EeST20UtGzVDFo+bVh5QVYCKO+W861PvQTonkZKKw@mail.gmail.com>
+        d=1e100.net; s=20251104; t=1777761539; x=1778366339;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tk7bV6QvOTLNgH3RD32+yKPb/e+XNvUgrzpzI/gAj/8=;
+        b=JhI7qQSehfH5scAviigUBN99qnUikWtvR2SqnI/rIMjwTUlnUcO+Lg9hQbDOZEAY/t
+         aAJMF/bV8WtpHvQUuPb9fWjdEIaDymxTtuyfK7HbMdDIrxZh6o+HOF+HInuaXjkE86UJ
+         Ql3PvCyN3FCyLsCvzIxoZXnyMSkx1wmL3nt2GuhGtk37EPqAQkIYp9F7+Nc7dF8OtZbR
+         QBDEbtu5B7iz79ZAOj9cMJnfyvGhXGZFdd531WRcbDO8XLRaSttKL2iAgqa2uqJZrPRt
+         a1Y9t9TSR5ASzTLDChsKWNZznN5t7jS2iPkZkYddP5IkvPqg7oWgeAlRduHOvJllB7Dr
+         RPiA==
+X-Gm-Message-State: AOJu0YzS/LCxEEIWH4Gqx6QPGWvbnwJnFxrNgKqaCrVv1rXag+O+Gmo+
+	jG2tXJ4/fh1Osbmtn/K2e7IGv3/v3A/66DakxyuDBj/NHtCRa6TbqI/idwGMzg==
+X-Gm-Gg: AeBDietN8YR9yyqBRJ3dt6FywmL2K5m+D/rfx2WNRHN8N4Szebdc7x+yLJ+QYRr8cFA
+	IzXzVrWgGHrEX27+E15srOU5vZMJeMQQIM6D1Dle4/p7BKHdE1aTA6lwUhLphF3IdVFNWs3PHW5
+	nVBkt/q+G+J+AWI68oTQ5HtS2DqvG9H9WNLJaB6Qp97Pjf9IDwpeen73HMI07oE34wGhUH1PtU6
+	puqF6sCZKdjxx6DCMsUUcWFdIuEetXaH5To3agd7gt1ysHUlhmtBC7CXGn7+VlQdHuX+hAUeuwM
+	p3jQWHe94G1viSLkTllMnvrSqaH8J36R6Q2RFZtuw9a3F3ffQ05sHoVpsqGcZu2RDxiLFfUodK1
+	Io8Z74G+NwijnkSdBhjc1SW8HFLFfvSo5YMe9g1w/hHMPodWFW1EdUOPFqVVf+alX1WiW5+mVvO
+	Mxh7s5mWKn4o8sczY=
+X-Received: by 2002:a05:7022:ec88:b0:12d:de3f:d84c with SMTP id a92af1059eb24-12dfd82bb23mr1860700c88.37.1777761538667;
+        Sat, 02 May 2026 15:38:58 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000003521c406121c61ea"
-Subject: Re: [oss-security] CVEs issued by the Linux kernel CNA
+In-Reply-To: <afZmueWiq1XOBvF2@gxis.de>
+References: <87se8dgicq.fsf@gentoo.org> <afL-QhLfEKqHZqka@eldamar.lan>
+	<2026043026-treat-devotion-23d7@gregkh>
+	<CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
+	<12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
+	<315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
+	<20260501165221.27420-1-justin.swartz@risingedge.co.za>
+	<56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
+	<20260502185608.24115-1-justin.swartz@risingedge.co.za>
+	<20260502200500.GB229884@google.com> <afZmueWiq1XOBvF2@gxis.de>
+Date: Sat, 02 May 2026 15:38:57 -0700
+Message-ID: <87zf2he8se.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+Subject: Re: [oss-security] Re: Re: CVE-2026-31431: CopyFail: linux local
+ privilege scalation
 
---0000000000003521c406121c61ea
-Content-Type: text/plain; charset="UTF-8"
+Alexander Bochmann <ab@lists.gxis.de> writes:
 
-On Fri, 23 Feb 2024, 06:40 Greg KH, <greg@kroah.com> wrote:
+> ...on 2026-05-02 20:05:00, Eric Biggers wrote:
+>
+>  > What it does break are a small set of userspace programs that made the
+>  > shortsighted decision to use AF_ALG, instead of simply following the
+>  > standard practice of using a userspace crypto library.
+>
+> For some added fun - I noticed that Debian 13, for example, 
+> ships an openssl build with an AF_ALG engine, so uh, yeah, 
+> depending on how you use your userspace crypto library... 
+>
+> No idea if that has any actual consumers anywhere out there 
+> today.
+>
+> $ openssl version
+> OpenSSL 3.5.5 27 Jan 2026 (Library: OpenSSL 3.5.5 27 Jan 2026)
+> $ openssl engine afalg -c
+> (afalg) AFALG engine support
+>  [AES-128-CBC, AES-192-CBC, AES-256-CBC]
 
-> On Thu, Feb 22, 2024 at 09:05:42PM +0100, Solar Designer wrote:
-> > Speaking of which, we allow for CVEs to be requested via linux-distros,
-> > to be assigned by one of the CNAs in there.  The current Linux kernel
-> > CVE documentation is very strict about rejecting such third-party
-> > assignments if they're "for an actively supported kernel":
->
-> That's the rules from CVE themselves, it's not unique to the kernel
-> here.  You will run into this more as more open source projects take
-> over the CVE process for their codebases.  curl and python are two
-> examples of which linux-distros are not allowed to do this for either.
->
-> > "Any CVE that is assigned against the Linux kernel for an actively
-> > supported kernel version, by any group other than the kernel assignment
-> > CVE team should not be treated as a valid CVE. Please notify the kernel
-> > CVE assignment team at <cve@kernel.org> so that they can work to
-> > invalidate such entries through the CNA remediation process."
-> >
-> > So I guess we should now exclude upstream actively supported kernels
-> > from this offer/practice.
->
-> Yes, that is a requirement that all CNAs must now follow.
->
-> > Distro CNAs can still assign CVEs for issues limited to
-> > downstream/distro kernels and for issues in upstream kernels that are
-> > not currently supported upstream.
->
-> Yes.
->
-> > I guess they can also assign
-> > CVEs against downstream/distro kernels even if the code is the same as
-> > in an upstream actively supported kernel, but the threat model is
-> > different (e.g., untrusted filesystem images are brought into the threat
-> > model in a distro).  Sounds right?
->
-> That is probably NOT ok as per the CVE rules, sorry.
+You can build GNU coreutils with './configure --with-linux-crypto' if
+you want. It is disabled by default since OpenSSL was faster when it was
+tested (and I assume that is still the case). AFAIK, no distributions
+use it though.
 
-
-This would likely result in MITRE (the root) just asking the conflicting
-CNAs to decide who will issue the CVE.
-
-RedHat and Google are root CNAs, so it likely would be resolved on the
-roots meeting.
-
-All CNAs should know how to handle this, otherwise they wouldn't be
-> allowed to be a CNA.  Whomever was acting as a CNA for linux-distros
-> knows these rules, please discuss this with them if you have specific
-> questions.
->
-> thanks,
->
-> greg k-h
->
-
---0000000000003521c406121c61ea--
+Collin
