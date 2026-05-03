@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1423" "Wednesday" "18" "November" "2015" "13:16:07" "+0100" "Florian Weimer" "fweimer@redhat.com" "<564C6C07.1020702@redhat.com>" "37" "Re: [oss-security] Re: Fwd: x86 ROP mitigation" nil nil nil "11" "2015111812:16:07" "[oss-security] Re: Fwd: x86 ROP mitigation" (number mark "U       fweimer@redh Nov 18   37/1423  " thread-indent "\"Re: [oss-security] Re: Fwd: x86 ROP mitigation\"\n") "<20151118015718.GA31188@openwall.com>" ("<20151117153951.GA28672@openwall.com>" "<564B52D6.9090205@t-online.de>" "<564B54BA.6090203@redhat.com>" "<20151118015718.GA31188@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23597 invoked by uid 550); 18 Nov 2015 12:16:21 -0000
+Received: (qmail 16079 invoked by uid 550); 3 May 2026 17:58:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +7,72 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23579 invoked from network); 18 Nov 2015 12:16:20 -0000
-To: oss-security@lists.openwall.com, Bernd Schmidt <bschmidt@redhat.com>
-References: <20151117153951.GA28672@openwall.com>
- <564B52D6.9090205@t-online.de> <564B54BA.6090203@redhat.com>
- <20151118015718.GA31188@openwall.com>
-Cc: Jeff Law <law@redhat.com>
-From: Florian Weimer <fweimer@redhat.com>
-Message-ID: <564C6C07.1020702@redhat.com>
-Date: Wed, 18 Nov 2015 13:16:07 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.3.0
+x-ms-reactions: disallow
+Received: (qmail 7877 invoked from network); 3 May 2026 15:50:38 -0000
+Message-ID: <0610241d156806108139c9055b210bcfd4a7c554.camel@thirddimension.net>
+From: Reid Sutherland <reid@thirddimension.net>
+To: oss-security@lists.openwall.com
+Date: Sun, 03 May 2026 11:50:27 -0400
+In-Reply-To: <87qzntmqqr.fsf@linuxpenguins.xyz>
+References: <afJorKIje4O6dXbH@netmeister.org>
+	 <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net> <87se8dgicq.fsf@gentoo.org>
+	 <afL-QhLfEKqHZqka@eldamar.lan> <2026043026-treat-devotion-23d7@gregkh>
+	 <CAPmip_zqswCZ6PfnW_DPEoSuY6Jewfw1eyeP_azYH4JFgRipNA@mail.gmail.com>
+	 <12a8c210-2f79-4fa2-a9c6-bbd203325f42@oracle.com>
+	 <315f9a67337d8e930cfb95a4b644946bf2f69687.camel@thirddimension.net>
+	 <20260501165221.27420-1-justin.swartz@risingedge.co.za>
+	 <56cd1494d297ad327a8c2a4cc77308559fbee7f8.camel@thirddimension.net>
+	 <87qzntmqqr.fsf@linuxpenguins.xyz>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-In-Reply-To: <20151118015718.GA31188@openwall.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
-Subject: Re: [oss-security] Re: Fwd: x86 ROP mitigation
+Subject: Re: [oss-security] Re: CVE-2026-31431: CopyFail: linux local
+ privilege scalation
 
-On 11/18/2015 02:57 AM, Solar Designer wrote:
+On Sun, 2026-05-03 at 07:43 +1000, Brian May wrote:
+> Reid Sutherland <reid@thirddimension.net> writes:
+>=20
+> > I'm assuming any thoroughly qualified platform engineer compiles
+> > the
+> > host kernel without module support.=C2=A0 At least, that needs to make a
+> > comeback, bring back applying grsec patches and make menuconfig..
+>=20
+> Kernel modules here are good, not bad. If everything was compiled
+> into
+> the kernel it would be harder to solve this sort of security issue.
+>=20
 
-> I'd like more detail on the plan of dealing with function epilogues, if
-> there is a plan for that.
-> 
-> I'm not sure if this fits under:
-> 
->>   * Look into an idea Florian had for improving stack-protector
->>     epilogues.
-> 
-> or if that's (more likely) something entirely different.
+Yeah but there's a series of problems here, like autoloading modules on
+a server that doesn't change.
 
-It's about things like this:
+Thinking about the math functions, there's a good benefit in the kernel
+carrying common interfaces for functions they have already solved.  But
+we need a new unprivileged layer in the kernel, like a library layer,
+if this is desired.
 
-   1c6d3:       48 8b 4c 24 58          mov    0x58(%rsp),%rcx
-   1c6d8:       64 48 33 0c 25 28 00    xor    %fs:0x28,%rcx
-   1c6df:       00 00
-   1c6e1:       75 31                   jne    1c714
-   1c6e3:       48 83 c4 68             add    $0x68,%rsp
-   1c6e7:       5b                      pop    %rbx
-   1c6e8:       5d                      pop    %rbp
-   1c6e9:       41 5c                   pop    %r12
-   1c6eb:       41 5d                   pop    %r13
-   1c6ed:       41 5e                   pop    %r14
-   1c6ef:       41 5f                   pop    %r15
-   1c6f1:       c3                      retq
-…
-   1c714:       e8 47 b7 ff ff          callq  <__stack_chk_fail@plt>
-   1c719:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
+Microsoft had to rework the kernel security after Crowdstrike ruined
+everything with that ridiculous outage.
 
-It seems to me that if the stack canary check happened directly before
-the RET instruction, after restoring the registers, it would make it
-more difficult to abuse the RET instruction.  With the code above, you
-can just jump to the address 1c6e7 and have access to quite a few useful
-POP instructions.
 
-Florian
+> In this case, it often just meant disabling the module that often
+> wasn't
+> even loaded.=C2=A0 The only exception was if I tested the vulnerabilty
+> before
+> hand :-). Even then, easy to unload the module and disable it.
+>=20
+> But I heard some enterprise kernels came with the code compiled into
+> the
+> kernel, and these required a kernel command line option and a reboot
+> to
+> fix.
+>=20
+> Of course, maybe there is the argument that only the things you need
+> should be enabled; but this would be a lot harder for distros to keep
+> everyone happy. Maybe an argument for building your own custom
+> kernels
+> not relying on distro kernels.
+
+
+Yeah that would be it.  You boot with the default kernel and then build
+your system specific kernel.
