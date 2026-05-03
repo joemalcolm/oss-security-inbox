@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1088" "Tuesday" "12" "December" "2017" "16:18:34" "+0100" "Hanno =?UTF-8?B?QsO2Y2s=?=" "hanno@hboeck.de" "<20171212161834.3818cdd2@pc1>" "36" "[oss-security] ROBOT attack (WolfSSL, Bouncy Castle, Erlang)" "^Date:" nil nil "12" "2017121215:18:34" "[oss-security] ROBOT attack (WolfSSL, Bouncy Castle, Erlang)" (number mark "        hanno@hboeck Dec 12   36/1088  " thread-indent "\"[oss-security] ROBOT attack (WolfSSL, Bouncy Castle, Erlang)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3732 invoked by uid 550); 12 Dec 2017 15:18:48 -0000
+Received: (qmail 3439 invoked by uid 550); 3 May 2026 00:59:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3686 invoked from network); 12 Dec 2017 15:18:47 -0000
-Message-ID: <20171212161834.3818cdd2@pc1>
-X-Mailer: Claws Mail 3.15.1-dirty (GTK+ 2.24.31; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Tue, 12 Dec 2017 16:18:34 +0100
-From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ROBOT attack (WolfSSL, Bouncy Castle, Erlang)
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 29832 invoked from network); 3 May 2026 00:58:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1777769897;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=+eL2AmKoLFzS0SSJXVFkaVqzb+wK7Lg3y76S1Y9oTcU=;
+	b=XukrHBQQuAQ93U23/aUtP0HuBpGZrWuKRFFkQtpoleqQcR8h8EQJqq90eGW2KtGqQL9n4I
+	gbddxhVOCElSa6zJuFbhVRfOaYmqYDncsmMkbNf95S1WpPrsEqA2gCs5koE24ptCA0SAbp
+	kfcRfCmI+yFnWHqQoW7AEnbrZQBxk6SyqBEo9b4itNkpT2v5SFfDll3T+uhSNOgEobkrHV
+	QiBlZF3ItW/IlhqC+ffiI3ASOOiAKNjGK6n4OvtjpZ74OLapcMtfMxnnIy38qCpfQyKTzB
+	FfxbqRyjX5j/tB1W2xfUUJjjShLISR3vsNI7MxtcNZ8NkcC0G90DA5l3BnRsPQ==
+MIME-Version: 1.0
+Date: Sat, 02 May 2026 21:58:17 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <10082513d5e5a74bb60932ea9550e909@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: dmFkZTGshT+YwmRwKtpOZKB/9GadlHwun0jCiFAYq6S/d7ntq9GfRCgeHWfzOrpf3v0b7vsKg3GO14hlx0SZr72M/Qrxj14fewOjs8qUmNCF4xGqA/ozSdwI/sLFY56UcNaar5jrh73IbUOx9YqC03WudCQEpxAljIelN+X2B5ajOY2lOZRqfQqm+KFiXJThiNezRQFhO+8V/bdSo0K61i0gqMe8Qth4LNi+fl9xDwVACW7v9rlPhx/L6/GrEJu9DbDp3T+ZJ+rsr6BZ6lmTjYS/RZ9Qtd0q9eHmd8uOycSPBfN6VKxiMJcM4Wzl02hQIVpmhRXRNFL4OWSE2XuIk9FlAQJgcC2gaizdDblanlQ/QBHSVIS/bzeij/JbvzZtLYgMprfHZk94Slr+gjHcloCQKfx4SlWH+vGcAhE1e2EgCNiRoUMwxISQwt68FjftjC5l60yq14e2BTIDQY2KTRdeReZeZCP1gD+RKE9FloE7V2BWzUth3ITgb8pYrSeyBpfiQJMa24s0rUy107HsyLe30rcqy9F1/O6QO5vaJKLNhRoQQrZqw/SkU6C60eVVckWsfiY4UwPACHNmfeiVvhlvi46SUjfXEIN/aym9Ai6j0wC82+3eDYhS3RX1Z/tOPExWUo5cIeC1pBGhqTAoR2bYhJKrUO7uAT2ljhJRZF1xMOJsXg
+Subject: [oss-security] CVE-2026-40561: Starlet versions through 0.31 for Perl allows HTTP
+ Request Smuggling via Improper Header Precedence
 
-Hi,
+========================================================================
+CVE-2026-40561                                       CPAN Security Group
+========================================================================
 
-I published details about the ROBOT attack today, it's a couple of
-minor variations of the old Bleichenbacher attack.
-(Return Of Bleichenbacher's Oracle Threat)
+         CVE ID:  CVE-2026-40561
+   Distribution:  Starlet
+       Versions:  through 0.31
 
-https://robotattack.org/
+       MetaCPAN:  https://metacpan.org/dist/Starlet
+       VCS Repo:  https://github.com/kazuho/Starlet
 
-It is mostly about proprietary appliances, but also affects three FOSS
-TLS stacks.
 
-The attack is based on the fact that an attacker can distinguish valid
-and invalid RSA PKCS #1 v1.5 paddings based on different server
-responses.
+Starlet versions through 0.31 for Perl allows HTTP Request Smuggling
+via Improper Header Precedence
 
-Erlang (CVE-2017-1000385):
-http://erlang.org/pipermail/erlang-questions/2017-November/094257.html
-http://erlang.org/pipermail/erlang-questions/2017-November/094256.html
-http://erlang.org/pipermail/erlang-questions/2017-November/094255.html
+Description
+-----------
+Starlet versions through 0.31 for Perl allows HTTP Request Smuggling
+via Improper Header Precedence.
 
-WolfSSL (CVE-2017-13099):
-https://github.com/wolfSSL/wolfssl/pull/1229
-(only a pull req for now, no new release yet)
+Starlet incorrectly prioritizes "Content-Length" over
+"Transfer-Encoding: chunked" when both headers are present in an HTTP
+request. Per RFC 7230 3.3.3, Transfer-Encoding must take precedence.
 
-Bouncy Castle (CVE-2017-13098):
-https://github.com/bcgit/bc-java/commit/a00b684465b38d722ca9a3543b8af8568e6=
-bad5c
-1.59 beta 9 contains the fix:
-https://downloads.bouncycastle.org/betas/
+An attacker could exploit this to smuggle malicious HTTP requests via a
+front-end reverse proxy.
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+Problem types
+-------------
+- CWE-444 Inconsistent Interpretation of HTTP Requests ('HTTP
+   Request/Response Smuggling')
 
-mail/jabber: hanno@hboeck.de
-GPG: FE73757FA60E4E21B937579FA5880072BBB51E42
+Workarounds
+-----------
+Migrate to Starman 0.4018 or later which has fixed this issue or apply
+the patch.
+
+
+References
+----------
+https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.3
+https://github.com/kazuho/Starlet/commit/a7d5dfd1862aafa43e5eaca0fdb6acf4cc15b2d0.patch
+
+Timeline
+--------
+- 2026-04-12: Issue identified
+- 2026-04-28: Maintainer notified
+- 2026-05-02: Determined that the issue was already public on GitHub
+
+Credits
+-------
+CPANSec, finder
