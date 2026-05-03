@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2673" "Tuesday" "26" "September" "2017" "14:40:44" "-0500" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1709261422390.12755@scrappy.simplesystems.org>" "52" "Re: [oss-security] Linux kernel CVEs not mentioned on oss-security" "^Date:" nil nil "9" "2017092619:40:44" "[oss-security] Linux kernel CVEs not mentioned on oss-security" (number mark "        bfriesen@sim Sep 26   52/2673  " thread-indent "\"Re: [oss-security] Linux kernel CVEs not mentioned on oss-security\"\n") "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>" ("<EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov>" "<1978278.8CZP0B31Sj@wanheda>" "<alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org>" "<CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12248 invoked by uid 550); 26 Sep 2017 19:40:58 -0000
+Received: (qmail 11470 invoked by uid 550); 3 May 2026 18:47:49 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,70 +6,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12218 invoked from network); 26 Sep 2017 19:40:57 -0000
-X-X-Sender: bfriesen@scrappy.simplesystems.org
-In-Reply-To: <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
-Message-ID: <alpine.GSO.2.20.1709261422390.12755@scrappy.simplesystems.org>
-References: <EB502BBD-AA97-4FC5-A0E7-D148B0E33FF7@lanl.gov> <1978278.8CZP0B31Sj@wanheda> <alpine.GSO.2.20.1709261217310.12755@scrappy.simplesystems.org> <CANO=Ty21NECXP_c4SiJ0ajbvi7wQFyA1RnyWeS0qu9e=sPQuYQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; format=flowed; charset=US-ASCII
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Tue, 26 Sep 2017 14:40:45 -0500 (CDT)
-Date: Tue, 26 Sep 2017 14:40:44 -0500 (CDT)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Linux kernel CVEs not mentioned on oss-security
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 31906 invoked from network); 3 May 2026 18:30:17 -0000
+Date: Sun, 3 May 2026 20:30:06 +0200
+From: Christian Brabandt <cblists@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <afeULjoRjfjh3mzK@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cblists@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] OS Command Injection via 'path' completion affects
+ Vim < 9.2.0435
 
-On Tue, 26 Sep 2017, Kurt Seifried wrote:
+OS Command Injection via 'path' completion affects Vim < 9.2.0435
+=================================================================
+Date: 02.05.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') (CWE-78)
 
-> On Tue, Sep 26, 2017 at 11:31 AM, Bob Friesenhahn <
->>
->> It is incredibly difficult for most non-commercial upstreams to do this
->> since they have limited manpower, they are not informed of all the
->> applicable CVEs, and the CVE information received is essentially hearsay,
->> received from unknown/unverifiable sources.  I am thinking that it is best
->> for most non-commercial upstreams to not mention CVEs at all.
->>
->
-> Uhm. Where to begin. Ok, well for one thing just because we can't have 100%
-> perfect coverage doesn't mean we should simply give up. Also CVE's aren't
-> "hearsay", they are claims based, with evidence being needed (the stronger
-> the claim, the more likely you are to get a CVE), especially in the open
-> source world where I typically require a link to either the vuln code, or
-> the code patch in order to give a CVE to something (if you can't tell me
-> what code is vuln, in open source, then chances are you need to understand
-> the vuln more before we CVE it up, exceptions of course can be made, e.g.
-> when someone has a reproducer that works reliably).
+## Summary
+An OS command injection vulnerability exists in Vim's `:find`
+command-line completion.  When the `path` option contains
+backtick-enclosed shell commands, those commands are executed during
+file name completion. Because the `path` option lacks the `P_SECURE`
+flag, it can be set from a modeline, allowing an attacker who controls
+the contents of a file to execute arbitrary shell commands when the user
+opens that file in Vim and triggers `:find` completion.
 
-I did not mean that the CVE itself is "hearsay".  What I meant is the 
-way an upstream maintainer is informed about a CVE is often no better 
-than "hearsay".  In some cases the information comes from someone who 
-is already known and trusted while in other cases it is impossible to 
-even tell who is providing the information since the person providing 
-the information has intentionally obfusticated their identity.
+## Description
+The `path` option is used by `:find` Ex commands to locate files.  When
+command-completion is invoked on these commands, the value of `path` is
+processed by `expand_in_path()`, which ultimately reaches
+`mch_expand_wildcards()`.  The latter constructs a shell command from
+each path entry and any matching glob characters; in the process, text
+enclosed in backticks is executed by the shell.
 
-If an upstream maintainer reports that a release resolves a particular 
-CVE, then he could easily have provided wrong information given that 
-the upstream maintainer does not have access to the technical details 
-of the report and analysis which initiated the CVE and may confuse one 
-issue with another.
+The `expand_in_path()` code path has no check for backtick expansion.
+Additionally, the `path` option is missing the `P_SECURE` flag in
+`optiondefs.h`, so a modeline can set it to a value containing
+backticks.  Once the modeline has been applied, the `secure` global is
+no longer set, and the subsequent `:find` completion executes the
+backtick contents.
 
-It may be that the upstream maintainer fixes a problem and some weeks 
-later the CVE is created related to the problem which was fixed.
+## Impact
+The vulnerability allows arbitrary shell command execution in the
+context of the Vim process when the user invokes `:find`, `:sfind`,
+`:tabfind` or related completion and the path option has been set to
+include backticks.
 
-> You can check the CVE Database? There is the official MITRE one:
-> cve.mitre.org and the DWF for Open Source (and yes, I lag in submissions to
-> MITRE) at https://github.com/distributedweaknessfiling/DWF-CVE-Database/ in
-> both cases the CVEs will have reference link(s) that ideally point to the
-> upstream making it easy to match up.
+Exploitation via modeline requires `'modeline'` to be enabled (the
+default in Vim <9.2.0350) and the user to trigger file completion after
+opening the file.
 
-The database entries do not contain enough information for an upstream 
-maintainer to identify one issue from another similar issue.  They 
-only contain sanitized information.
+The severity is rated Medium because exploitation requires opening an
+attacker-controlled file and pressing Tab during a common completion
+operation.
 
-Bob
+Vim 9.2.0350 and later are not affected from the modeline vulnerability
+because the `'modelinestrict'` hardening prevents `'path'` from being
+set via modeline.
+
+## Acknowledgements
+The Vim project would like to thank github user @q1uf3ng for reporting
+the issue.
+
+## References
+The issue has been fixed as of Vim patch [v9.2.0435](https://github.com/vim/vim/releases/tag/v9.2.0435).
+- [Commit](https://github.com/vim/vim/commit/190cb3c2b9c769a3972bcfd991a7b5b6cb771ef0)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-hwg5-3cxw-wvvg)
+
+Best,
+Christian
 -- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Yow!  Maybe I should have asked for my Neutron Bomb in PAISLEY --
