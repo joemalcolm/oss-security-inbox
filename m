@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1669" "Thursday" "23" "July" "2020" "13:56:45" "+0200" "Solar Designer" "solar@openwall.com" nil "37" nil "^Date:" nil nil "7" nil nil (number mark "        solar@openwa Jul 23   37/1669  " thread-indent "\"Re: [oss-security] Contributing Back\"\n") nil nil nil nil nil nil nil nil nil "Re: [oss-security] Contributing Back" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5787 invoked by uid 550); 23 Jul 2020 11:57:08 -0000
+Received: (qmail 1292 invoked by uid 550); 5 May 2026 00:00:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,54 +6,75 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5678 invoked from network); 23 Jul 2020 11:56:50 -0000
-Message-ID: <20200723115645.GA20752@openwall.com>
-References: <ea742763-f1bb-bf13-3ecf-f61aaf1e0b43@windriver.com> <20200711175842.GA8907@openwall.com> <3f3d2ab5-259b-ab88-c7e4-7cc0efce3e7c@windriver.com> <20200720184054.GA11135@openwall.com> <CAC5HUDxonM84K=q2+gsVhOuYBuM_dESB5VZqb5kDAQ2zYy=U_g@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAC5HUDxonM84K=q2+gsVhOuYBuM_dESB5VZqb5kDAQ2zYy=U_g@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 23 Jul 2020 13:56:45 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Contributing Back
+x-ms-reactions: disallow
+Received: (qmail 8112 invoked from network); 4 May 2026 23:45:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1777938291; bh=VRitl5AlYzYQeUFJ6uQRqUQSPphCA3yw2np7cEGP1NM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=RetdNc5326mA4a5CbWyx4EFsmqy8EQvdyonj04alBSlPAg9JG9Rk6tB5JpEkED5i0
+	 iUKIazr8XZX3Hs/0N8Ca490rnKpp2Rx1Wdpfy7+IK3vJNcyDOpIMdRtKizzVFun4h0
+	 x0fdxTJW8vsLyB4T7BvbW6sjsM3yuGwzUhxCPD70=
+X-Riseup-User-ID: 579611A71CECA403C2D0159C05141DE32D414F82932A50B5A5FB5B65E4039721
+Date: Mon, 4 May 2026 19:44:47 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
 To: oss-security@lists.openwall.com
+Cc: adrelanos@whonix.org, arraybolt3@gmail.com
+Message-ID: <20260504194400.76c91ed7@riseup.net>
+In-Reply-To: <20260407200906.14b9bcc0@riseup.net>
+References: <20260407200906.14b9bcc0@riseup.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/X5e0FtRIGrPgQIMOR01xBrL";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] Re: systemd-journald in systemd 259 does not escape characters in
+ emerg messages that are wall'd to other user's terminals
 
-On Thu, Jul 23, 2020 at 01:51:17PM +0530, Mohammad Tausif Siddiqui wrote:
-> I think the ball is on the CNA: Hackerone side to get it published to
-> MITRE, so that they can show it up on their page.
-> 
-> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
-> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
-> the CVE was assigned on distros list or elsewhere. That closes the reminder
-> loop.
-> 
-> There's no pull request for CVE-2020-8177 at
-> https://github.com/CVEProject/cvelist/pulls
-> We cannot determine if they used the alternative, web form:
-> https://cveform.mitre.org/
-> 
-> You may want to reach Hackerone from the CNA contacts
-> <https://cve.mitre.org/cve/request_id.html#cna_participants>, for this
-> exception of delay.
+--Sig_/X5e0FtRIGrPgQIMOR01xBrL
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Most of the above is once again too specific to the given CVE ID,
-whereas we need a general understanding of whether the task Xiao
-proposes and volunteers for is worthwhile or not.  I'd appreciate a
-direct answer to that.
+On Tue, 7 Apr 2026 20:09:06 -0400
+Aaron Rainbolt <arraybolt3@riseup.net> wrote:
 
-Do I interpret this paragraph correctly as implying the answer is no? -
+> Going over this semi-briefly:
+>=20=20=20
+> * systemd-journald is configured with the `ForwardToWall=3Dyes` and
+>   `MaxWallLevel=3Demerg` settings by default in Ubuntu 26.04 pre-release
+>   images and Arch Linux. (I think this is because these are enabled by
+>   default in systemd upstream but haven't tried to verify this.) In my
+>   testing, this will result in systemd-journald copying emerg-level
+>   log messages to all logged-in TTYs and at least some root-owned PTYs
+>   (if any exist).
+> * Any user on the system can write an emerg-level log message using
+>   `logger -p emerg 'msg...'`.
+> * Potentially dangerous character sequences in log messages (like ANSI
+>   escape sequences) are not sanitized by systemd-journald before it
+>   prints those messages to other user's terminals.
+> * Therefore, one can use systemd-journald to write malicious things to
+>   other people's terminals, which can be used to exploit terminal
+>   emulator vulnerabilities. There have been vulnerabilities in
+>   terminal emulators like XTerm in the past that would allow this to
+>   be used to execute arbitrary code as root if someone is unlucky
+>   enough to have a PTY to a root shell open in a vulnerable terminal
+>   when an attacker writes their malicious log message.
 
-> CNAs are provided with weekly reports by the root CNA: MITRE, which lists
-> Reserved But Public "RBP" CVEs owned by that CNA, irrespective of whether
-> the CVE was assigned on distros list or elsewhere. That closes the reminder
-> loop.
+Someone (not sure who) did the kind service of getting a CVE assigned
+for this: https://www.cve.org/CVERecord?id=3DCVE-2026-40228 To whoever
+that was, thank you :)
 
-In other words, CNAs receive their reminders from MITRE weekly, so
-there's no need for anyone else reminding them, correct?  However, can
-it happen that MITRE wouldn't recognize a CVE ID as "Reserved But
-Public", continuing to treat it as merely reserved, in which case there
-would be no reminder to correct that?  Could Xiao help with this?
+--
+Aaron
 
-Alexander
+--Sig_/X5e0FtRIGrPgQIMOR01xBrL
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCafkvbwAKCRA5rdye4jrr
+CDSVAQCMW6SZafl6VA2ulWUSKLZWMSQNQG43B2qr8AkkpbGYhQEAoHT033MsT7hi
+xDMQqNFQ/UD27tloHe1MSCmUz9B2QwQ=
+=L8lI
+-----END PGP SIGNATURE-----
+
+--Sig_/X5e0FtRIGrPgQIMOR01xBrL--
