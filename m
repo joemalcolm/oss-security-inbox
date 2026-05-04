@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["724" "Wednesday" "1" "July" "2020" "20:15:07" "-0700" "Mike Jumper" "mjumper@apache.org" "<CALKeL-NrWzYLfautHShBxs3xsnxq5oO5fUhC1VAoDaX8rSBTbg@mail.gmail.com>" "20" "[oss-security] [SECURITY] CVE-2020-9498: Apache Guacamole: Dangling pointer in RDP static virtual channel handling" nil nil nil "7" "2020070203:15:07" "[oss-security] [SECURITY] CVE-2020-9498: Apache Guacamole: Dangling pointer in RDP static virtual channel handling" (number mark "U       mjumper@apac Jul  1   20/724   " thread-indent "\"[oss-security] [SECURITY] CVE-2020-9498: Apache Guacamole: Dangling pointer in RDP static virtual channel handling\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [SECURITY] CVE-2020-9498: Apache Guacamole: Dangling pointer in RDP static virtual channel handling" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26587 invoked by uid 550); 2 Jul 2020 07:37:38 -0000
+Received: (qmail 17915 invoked by uid 550); 4 May 2026 16:09:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,41 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19769 invoked from network); 2 Jul 2020 03:15:55 -0000
-X-Gm-Message-State: AOAM531J3rMkAL9MNFSTRVJBtDeYbnqSIHiLSfauPaVeK4T1TvGPyJLv
-	+nivTWMmHeJR/vBkpoVut7a1VIV66Ie9rQ+uprkGmQ==
-X-Google-Smtp-Source: ABdhPJwrKEemswV2dMBwcbHy/Y0j4gs+/MLdXxikFx4EhugoimYw/+/7TYtls5D4AwxUuwgbO8WCx1IaGbh8+YgHA8c=
-X-Received: by 2002:a17:906:d9d9:: with SMTP id qk25mr27054397ejb.448.1593659742272;
- Wed, 01 Jul 2020 20:15:42 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 1121 invoked from network); 4 May 2026 14:16:24 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Eric Covener <covener@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <e6a48645-bb78-c3df-755f-56456a8e58f3@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 04 May 2026 14:15:25 +0000
 MIME-Version: 1.0
-From: Mike Jumper <mjumper@apache.org>
-Date: Wed, 1 Jul 2020 20:15:07 -0700
-X-Gmail-Original-Message-ID: <CALKeL-NrWzYLfautHShBxs3xsnxq5oO5fUhC1VAoDaX8rSBTbg@mail.gmail.com>
-Message-ID: <CALKeL-NrWzYLfautHShBxs3xsnxq5oO5fUhC1VAoDaX8rSBTbg@mail.gmail.com>
-To: announce@apache.org, announce@guacamole.apache.org, 
-	dev@guacamole.apache.org, user@guacamole.apache.org
-Cc: security@guacamole.apache.org, oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] [SECURITY] CVE-2020-9498: Apache Guacamole: Dangling pointer in RDP
- static virtual channel handling
+Subject: [oss-security] CVE-2026-29169: Apache HTTP Server: mod_dav_lock indirect lock
+ crash 
 
-CVE-2020-9498: Dangling pointer in RDP static virtual channel handling
+Severity: low=20
 
-Versions affected:
-Apache Guacamole 1.1.0 and earlier
+Affected versions:
+
+- Apache HTTP Server through 2.4.66
 
 Description:
-Apache Guacamole 1.1.0 and older may mishandle pointers involved in
-processing data received via RDP static virtual channels. If a user
-connects to a malicious or compromised RDP server, a series of
-specially-crafted PDUs could result in memory corruption, possibly
-allowing arbitrary code to be executed with the privileges of the
-running guacd process.
 
-Mitigation:
-Users of versions of Apache Guacamole 1.1.0 and older that provide
-access to untrusted RDP servers should upgrade to 1.2.0.
+A NULL pointer dereference in mod_dav_lock in Apache HTTP Server 2.4.66 and=
+ earlier may allow an attacker to crash the server with a malicious request=
+.mod_dav_lock is not used internally by mod_dav or mod_dav_fs.
+
+The only known use-case for mod_dav_lock was mod_dav_svn from Apache Subver=
+sion earlier than version 1.2.0.
+
+Users are recommended to upgrade to version 2.4.66, which fixes this issue,=
+ or remove mod_dav_lock.
 
 Credit:
-We would like to thank Eyal Itkin (Check Point Research) for reporting
-this issue.
+
+Pavel Kohout, Aisle Research, Aisle.com (finder)
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-29169
+
+Timeline:
+
+2026-03-04: Report received
+2026-05-04: 2.4.67 released
+2026-05-04: fixed in 2.4.x by r1933354
+
