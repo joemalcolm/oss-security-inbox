@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2013" "Wednesday" "3" "February" "2016" "12:12:16" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160203171216.EA851332075@smtpvbsrv1.mitre.org>" "48" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" "^Cc:" nil nil "2" "2016020317:12:16" "[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function" (number mark "        cve-assign@m Feb  3   48/2013  " thread-indent "\"[oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function\"\n") "<20160126203428.GA30775@eldamar.local>" ("<20160126203428.GA30775@eldamar.local>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28155 invoked by uid 550); 3 Feb 2016 17:12:36 -0000
+Received: (qmail 17561 invoked by uid 550); 4 May 2026 16:07:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,61 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28088 invoked from network); 3 Feb 2016 17:12:29 -0000
-In-Reply-To: <20160126203428.GA30775@eldamar.local>
-Message-Id: <20160203171216.EA851332075@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed,  3 Feb 2016 12:12:16 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Out-of-bounds Read in the libxml2's htmlParseNameComplex() function
-To: carnil@debian.org
+x-ms-reactions: disallow
+Received: (qmail 3572 invoked from network); 4 May 2026 06:45:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777877105;
+	bh=GcSGGqP6V1jmYg4gECCJk2Kfg0QcCDiEZx5H+wEc7IE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UsCoXrttsPit6HgPOtU7iRbzellEM+2VlWUSQ5NydY+4M/WTAMUdgRRhxMhUuP2/U
+	 bHjNlueA/hBk9QZra54g4CfT4LJ+YJppBUVFHYUWmzH1YoRPz0tGCp0fxKWyD7xDZA
+	 8L2ff37LYNQwvNetSESCbOpavjtezy5Decjwmb5N18zCZep2kKGLZ+d1h4ig+XRmlL
+	 iB8ZlvNS95X3PUel9tnOEVq3qEOFuIiE9x7v5M/ZNga92QGdRFeQpuN2poyot5lox4
+	 QZ0/B0bjMgoCgdoNASx/fujPma/BBR0FgLBbTiip2VbtteAM/SfD+YOTpked5y1Npr
+	 l/KxWr47lMTvg==
+Date: Sun, 3 May 2026 23:43:46 -0700
+From: Eric Biggers <ebiggers@kernel.org>
+To: Demi Marie Obenour <demiobenour@gmail.com>
+Cc: Milan Broz <gmazyland@gmail.com>, oss-security@lists.openwall.com,
+	Jan Schaumann <jschauma@netmeister.org>, iwd@lists.linux.dev
+Message-ID: <20260504064346.GA112568@sol>
+References: <afJorKIje4O6dXbH@netmeister.org>
+ <d6111caa-db61-498a-92cb-ea7a0aa0a5e2@ehuk.net>
+ <87se8dgicq.fsf@gentoo.org>
+ <afL-QhLfEKqHZqka@eldamar.lan>
+ <20260430071917.GB54208@sol>
+ <177abb5d-8ba9-4bb9-8b23-9fbc868ed3cd@gmail.com>
+ <20260501180028.GA2260@sol>
+ <19837ef5-e5b6-45f4-8336-3ce07423dfb1@gmail.com>
+ <021503ca-8a9b-4f9d-8b8e-81661572a018@gmail.com>
+ <16a713ee-4cf3-4f40-a532-8a937eaffd21@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <16a713ee-4cf3-4f40-a532-8a937eaffd21@gmail.com>
+Subject: Re: [oss-security] CVE-2026-31431: CopyFail: linux local privilege
+ scalation
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On Mon, May 04, 2026 at 02:13:01AM -0400, Demi Marie Obenour wrote:
+> > - It is used for benchmarking, where we actually need kernel crypto.
+> > 
+> > As it will be used in real dm-crypt mapping later, benchmarking
+> > userspace lib just does not make sense.
+> > (Requiring CAP_SYS_ADMIN here is not such a big issue, and it is
+> > a very rough test - but useful for relative comparison, not for the
+> > real numbers.)
+> 
+> Would an API to ask the kernel to benchmark its own algorithms work
+> for this?  That would be a more accurate benchmark as it removes
+> syscall overhead.
 
->> > From: Salvatore Bonaccorso
->> >
->> > While checking upstream bugzilla to see if that was reported I noticed
->> >
->> > https://bugzilla.gnome.org/show_bug.cgi?id=749115
->> >
->> > Does this have the same root cause?
->>
->> The CVE-2016-2073 PoC is an '&' followed by three characters, one of
->> which is a 0273 character. The PoC in 749115 has an unexpected
->> character immediately after a "<!DOCTYPE html" substring. We feel that
->> the CVE-2016-2073 report can have that unique ID on the basis of (at
->> least) a different attack methodology. CVE assignment for 749115 is
->> also possible unless 749115 already has a CVE ID.
+For what it's worth, I've always been frustrated by
+'cryptsetup benchmark' and the numbers that people report with it
+because they underestimate the fast algorithms so significantly.
 
-> ... Can you assign an additional CVE for
-> the 749115 issue?
+For example, on my desktop (if I enable AF_ALG so that it works) it
+reports 15585 MiB/s for AES-256-XTS encryption.
 
-Use CVE-2015-8806 for 749115. (We don't know of any additional
-information about a CVE-2015-8806/CVE-2016-2073 interrelationship, or
-about other CVE IDs that could potentially apply to an 'unexpected
-character immediately after a "<!DOCTYPE html" substring' scenario.)
+Yet, a userspace port of the kernel's VAES+AVX512 optimized AES-256-XTS
+assembly code runs at 33600 MiB/s: over twice as fast.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+(Yes, encryption is that fast now on the newer AMD processors.)
 
-iQIcBAEBCAAGBQJWsjQMAAoJEL54rhJi8gl5ygUQAM4hAERzVI/E9CpMfv6esYFh
-qu3drRJ0HyXvxCix9Qq1CvzegF3sFVUcvTjlz1gtNeZ4akP+k+U4VHwavU3yEuLN
-ALvOYERtEP+rv841VYXnWwyb717zYqcoy5H3mN3xIIetvLDhNjq2WDduLZTDXLYg
-szlt3pQpZIWdzURkfiZC05wcgi3JmRJG5rZQYI2gK2ijWW6yYI8Q+1R1fJT1mvO1
-Zp5Z+k6e3eaStEvR+8N9QXsLEL36EDb72B9KCF2Vu500g+cfTkA/KDGyM4h9dB1I
-6d2pENAtkt7ur42mMgU36VxZGF6thAtG2EaLJaD2U2DLh8DWwzqCtesBV0xK4u4z
-7KOKl9j46XmYvO6AbgrjdK1Ij0QWeOmDbNE3/gRfOTTLZrgH/uwWVx45e05SG9m/
-rs2Fb8zHkCfWrHJbBnKgh7biKYrnfg6oj/RELOf3mMdZZ8OVA015IIiI4zLPvdE3
-153o4nbiWs9rIXmFhNbuLB7FuCjg2mFl6Ffv7XgzL/BD6OIw5N53i1hxzmE+cV57
-JuUMZPCzfdQ75xyBm/UfMc7bpY4auLuegrSQYUkZI4HKaa+QVMdnSJOIA0RAAxsE
-9pkvHu9eF5s+j7X+M9u2xJxrwhLDRNolM10jkivTrgTjAPFYUdQ2ppfzJ0AUaYtQ
-UMHN8iEju9U93dGVuYRT
-=v0jI
------END PGP SIGNATURE-----
+So in this case most of the time is spent in AF_ALG overhead, not the
+actual algorithm that the benchmark is supposed to be measuring.
+
+(And this is yet another example of why going through AF_ALG instead of
+just calling a userspace crypto library isn't very efficient...)
+
+I know the cryptsetup folks consider this tolerable since 'cryptsetup
+benchmark' is meant to be a rough estimate anyway.  But I think it
+clearly shows that AF_ALG has never been all that great for the
+"benchmarking the kernel's crypto code" use case, either.
+
+In the case of benchmarking done during kernel development, we've
+actually already been solving that in a different way: adding KUnit
+tests with benchmarks included.
+
+But for benchmarking by end users, yes, I suppose if really needed it
+could be done using a new UAPI.  It would just provide the speed of each
+algorithm and nothing else.
+
+- Eric
