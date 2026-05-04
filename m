@@ -1,4 +1,4 @@
-Received: (qmail 14284 invoked by uid 550); 27 May 2026 05:38:23 -0000
+Received: (qmail 3527 invoked by uid 550); 4 May 2026 16:57:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,210 +8,138 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 23980 invoked from network); 27 May 2026 04:39:19 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=catalyst.net.nz;
-	s=default; t=1779856747;
-	bh=4Xs+w32A5Ko+MCLtPOagf7ahs4h7I2bbrHU9bPuXSIU=;
-	h=Date:Subject:References:To:From:In-Reply-To:From;
-	b=PGmIUIVBSbxjOzh1IsxwphmPLqKW37lUSegOMM+Lk0YCFeoRM74c4bHLWdelVg5pE
-	 5iiB6gX3Koe1emlWYMqczoj2qZ9Zj9aNh1izrLBBA2p0SN0wP44tmQFgSfhUT2KkQl
-	 3YsABPUEgVZ/2TKvc6ha/kucLHVNgoGLxpq08qa5nC9+Bd/DN7dLfO4WOliyvoFs+o
-	 7AEkriQwBZcOYUZ98RB6P0tk1QQtdxCO13jIl6V7uVy5f2VjnGf51VhHYkYR/6if6R
-	 lL9khnkkv9sqGiuKeYCAUSjad+gyCkblGFYoY1/YlsBiqii/F3A3I4GL7DRq4QnS3h
-	 hrjhhYQNZQmQw==
-Message-ID: <f591083f-b117-4829-a7dc-f8214cb5848e@catalyst.net.nz>
-Date: Wed, 27 May 2026 16:39:06 +1200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-References: <ahWSPqvIsy3zT7nq@SERNOX25>
-Content-Language: en-NZ
+Received: (qmail 30248 invoked from network); 4 May 2026 16:35:51 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-From: Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-Autocrypt: addr=douglas.bagnall@catalyst.net.nz; keydata=
- xsBNBFTZNuABCACnBtS+eLzGts68jAJrZstbH5vM0d/4+OsGcvFkrXGPE9D6PsRdVM+jPT1Z
- fASzsarvWkx0b7p6/XTwTo2Al3KRRVLq3FQFPOLyKzSXK8u+vUi/py7Cv133t4Uea7+Pp+YM
- tWjXGwB/y3s5TBwJkYShSTBpAhDnkKjxRSQXIr7gIE0fIPIS1uy19g1q/BuXuj1sfcISRMpp
- z8qs9cAsk45tG1JItaLjO7+K47Q3LEfskChGPbhwh7tWCquDzreQC7q+h3dK6A1AOrorskON
- +Wy3aucRoOw6scNfV2H1y6lDza2lwZxCDRs6zkn7SQVjX62j9kVczShyi5udgqfWsW2jABEB
- AAHNMURvdWdsYXMgQmFnbmFsbCA8ZG91Z2xhcy5iYWduYWxsQGNhdGFseXN0Lm5ldC5uej7C
- wHgEEwECACIFAlTZNuACGwMGCwkIBwMCBhUIAgkKCwQWAgMBAh4BAheAAAoJEHcqM0mxsX5t
- XIoH/jiHvUuw4xrBKuk9KzAE5JNd5rcTQdaRgiIvM/6C6X/uobzO2CDKFEUOmTpYSSXkq0/3
- YmwCRqWMja/5N1886qFrkcrIkTMRb0imxkNVwd7JIPdryK6dFCzCRUC1hByqeI8EwO41ROX+
- qw6DT+H/o6QkPWAB1P8ODVtq0F3TUZ0/Xpe3xYK1QF6Ud0BKWVcKBMAdS7CWTsVRD6m9it80
- Mp4N3y6Ka0vrgZ6IEskBHGVJ/Mm6ONrHIjl4OAbAKK4PuFha5PjPx1YYYOnsp4JvhrSJQDag
- A9vDdm7mbJpxxVY0Rx4t7xRvh+jsZ1f6yVGx5UTpdtvSbriZ2SZ3F29hBGfOwE0EVNk24AEI
- ANSG9xaPHGxr7l1Wcz8J51IDT0EE7ozS3TSYRE80OSH8oB26w5StLbQkC+iWj0GsTveJL9x6
- Vp/dfsPGfG9CP9J0C4ZOwY7+V9ex1d10xzr32zetKiUt7ZEimzIiCnmnR9K54jVbGDvVfJie
- uTOGruqRLIUAO69ZyhplRywyee6MRtgmfLpJlnOySgvihR4kHmq03zHe6whhJ0RmbKSIwb/F
- Ri/ZmpujNZ7PTYcmw7sp/5HpE4taYA0f3QvK9/DTjuoITdugrxhOwBdv6jLAAzI8d0quOFf+
- 5IeGizYTa6HPmBtIUyyzVajjiUpXiB8WuhgTL5pP0BT5j6BtW8Li/YEAEQEAAcLAXwQYAQIA
- CQUCVNk24AIbDAAKCRB3KjNJsbF+bYRnB/94DaFuxGVA65kkr5iubWbwKnaiTWlZLIFQp0RH
- QRk/jgdpuQj3E4D660QdfoMqhTeozOPTBH3cJOCjgN/klI7xrkvdq8sLTMWyM5Bbu+XhDaSr
- 8hnjvdhZM7bHQdaH3FI5zdm2rMbP8nB6IH8wYSxHzywjR9vks6PTsqxqeCoupqdVO/kZ3jsU
- F0LOxxnMTlT8YZIn8lFVptsz5HMOKFnUdR3fYpcO+CTc9vXqcLWqnMwchdSQPp1cjZ5eUl+G
- jmq9xwOWLG/0u5b9stC3cEiCNSZn8Nyy7KaY8fQeKn//sBeyu3htjZ2wZ+oRVuc/XR/+/hl6
- QCGP/4UC6mJGdmU0
-In-Reply-To: <110d1661-716f-48d2-84c6-fbc9959b7c39@catalyst.net.nz>
-X-Forwarded-Message-Id: <ahWSPqvIsy3zT7nq@SERNOX25>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: [oss-security] Samba 4.24.3, 4.23.8 and 4.22.10 Security Releases are available for
- Download
+Organization: Gentoo
+References: <4g81Yq4Bj4zJrP1@spike.porcupine.org>
+User-Agent: mu4e 1.14.1; emacs 31.0.50
+Date: Mon, 04 May 2026 17:35:38 +0100
+Message-ID: <87se878751.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [oss-security] Fwd: [pfx] Postfix stable release 3.11.2 and legacy releases
+ 3.10.9, 3.9.10, 3.8.16
 
+--=-=-=
+Content-Type: text/plain
 
+The most significant one here seems to be the first entry under "Fixed
+in Postfix 3.8, 3.9, 3.10:".
 
+-------------------- Start of forwarded message --------------------
+To: Postfix announce <postfix-announce@postfix.org>
+Date: Sun, 3 May 2026 19:43:27 -0400 (EDT)
+CC: Postfix users <postfix-users@postfix.org>
+Subject: [pfx] Postfix stable release 3.11.2 and legacy releases 3.10.9, 3.9.10, 3.8.16
+From: Wietse Venema via Postfix-users <postfix-users@postfix.org>
 
--------- Forwarded Message --------
-Subject: [Announce] Samba 4.24.3, 4.23.8 and 4.22.10 Security Releases 
-are available for Download
-Date: Tue, 26 May 2026 14:29:50 +0200
-From: Stefan Metzmacher via samba-technical 
-<samba-technical@lists.samba.org>
-Reply-To: Stefan Metzmacher <metze@samba.org>
-To: samba-announce@lists.samba.org, samba@lists.samba.org, 
-samba-technical@lists.samba.org
+[An on-line version of this announcement will be available at
+https://www.postfix.org/announcements/postfix-3.11.2.html]
 
-Release Announcements
----------------------
+Fixed in Postfix 3.11:
 
-This is a security release in order to address the following defects:
+  * Bugfix (defect introduced: Postfix 3.11): the proxymap(8) daemon
+    dereferenced an uninitialized pointer after a request protocol
+    error. This daemon is not exposed to local or remote users.
+    Found by Claude Opus 4.6.
 
-o CVE-2026-1933:   Missing access checks on reparse point operations
+  * Bugfix (defect introduced: 20260309) a change, to set the
+    service_name default value to "amnesiac", violated a test that
+    parameter names in postconf output must match 1:1 with parameter
+    names in the postlink script.
 
-                    On a share marked "read only = yes" and
-                    on file handles opened R/O users can set
-                    or delete the reparse point xattrs on files
-                    that the user has write-access in the file
-                    system for.
+Fixed in Postfix 3.10:
 
-                    https://www.samba.org/samba/security/CVE-2026-1933.html
+  * Bugfix (defect introduced: Postfix 3.10): The RFC 2047 encoder
+    for the sender "full name" could loop when a very long
+    full_name_encoding_charset value was configured in main.cf.
+    Found by Claude Opus 4.6.
 
+Fixed in Postfix 3.8, 3.9, 3.10:
 
-o CVE-2026-2340:   WORM vfs module does not block overwrites
+  * Bugfix (defect introduced: Postfix 2.3, date: 20050323): buffer
+    over-read when Postfix an enhanced status code is not followed
+    by other text. For example, "5.7.2" without text after the
+    three-number code. This CANNOT be triggered with an SMTP or
+    LMTP server response; is confirmed with an access(5) table and
+    likely with a policy server response; can possibly be triggered
+    with pipe-to-command output, header_checks(5), body_checks(5),
+    an error(8) transport in transport_maps, or a milter response;
+    and is confirmed with a DNSBL server TXT response while Postfix
+    is configured with "$rbl_code $rbl_text" in rbl_reply_maps or
+    default_rbl_reply. This could result in process termination.
+    Problem reported by Kamil Frankowicz.
 
-                    The WORM (Write-Once, Read Many) vfs module
-                    is supposed to lock write access to shared
-                    files, so they cannot be altered after initial
-                    writes. It was allowing files to be overwritten
-                    by renaming a newly created file over a protected
-                    file.
+  * For older Postfix versions, a buffer over-read patch is included
+    at the end of this text.
 
-                    https://www.samba.org/samba/security/CVE-2026-2340.html
+  * Code cleanup: log a fatal error instead of dereferencing a null
+    pointer after a first/next cursor initialization failure. Fedor
+    Vorobev. This affected the Berkeley DB client.
 
+Fixed in Postfix 3.8, 3.9, 3.10. 3.11:
 
-o CVE-2026-3012:   auto-enrolment GPO installing CA certificate over http
-                    without verification
+  * Portability: support for recent FreeBSD, NetBSD, and OpenBSD
+    versions. Brad Smith.
 
-                    To bootstrap a certificate chain a domain member must
-                    fetch a certificate without TLS. It was trusting HTTP
-                    for this when a more secure encrypted LDAP channel
-                    was also available.
+  * Bugfix (defect introduced: Postfix 2.2, date 20041207): When
+    truncating a database file, the cdb: database client looked at
+    the file size from before requesting an exclusive lock on a
+    database file, instead of the file size after the exclusive
+    lock was granted. Found by Claude Opus 4.6.
 
-                    https://www.samba.org/samba/security/CVE-2026-3012.html
+  * Bugfix (defect introduced: Postfix alpha, date 19980309): file
+    descriptor leak after fork() failure. Found by Claude Opus 4.6.
 
+  * Mistakes in debug logging. Found by Claude Opus 4.6. This
+    affected two files in Postfix 3.8 and 3.9, three files in Postfix
+    3.10 and 3.11.
 
-o CVE-2026-3238:   Denial of service against AD DC WINS server
+  * Unchecked null pointer results after an out-of-memory condition
+    in a library dependency. Found by Claude Opus 4.6. The fix is
+    to return an error status or to log a fatal error. This affected
+    three source files.
 
-                    The WINS server component of the Active
-                    Directory Domain controller code in Samba
-                    is vulnerable to a NULL pointer dereference
-                    and crash caused by a unauthenticated UDP
-                    packet.
+  * Missing or incomplete guards for ssize_t or int overflow, found
+    by Claude Opus 4.6. This affected three source files. These
+    limits are unlikely to be exceeded because the size of in-memory
+    objects is limited by design (the number of in-memory objects
+    is also limited).
 
-                    https://www.samba.org/samba/security/CVE-2026-3238.html
+You can find the updated Postfix source code at the mirrors listed
+at https://www.postfix.org/.
 
+	Wietse
 
-o CVE-2026-4408:   Unauthenticated Remote Code Execution in Samba 
-DCE/RPC SAMR
-                    server
+Buffer over-read patch for Postfix 2.3 .. 3.7:
 
-                    Samba file servers and classic (non-AD) domain 
-controllers
-                    with samba-dcerpcd started as a system service and 
-with a
-                    "check password script" that has the %u substitution
-                    character are vulnerable to a remote code execution.
+--- /var/tmp/postfix-3.8.15/src/global/dsn_util.c	2006-01-07 20:28:37.000000000 -0500
++++ src/global/dsn_util.c	2026-05-01 16:59:50.961688175 -0400
+@@ -155,5 +155,5 @@
+ 	strncpy(dp->dsn.data, cp, len);
+ 	dp->dsn.data[len] = 0;
+-	cp += len + 1;
++	cp += len;
+     } else if ((len = dsn_valid(def_dsn)) > 0) {
+ 	strncpy(dp->dsn.data, def_dsn, len);
+_______________________________________________
+Postfix-users mailing list -- postfix-users@postfix.org
+To unsubscribe send an email to postfix-users-leave@postfix.org
+-------------------- End of forwarded message --------------------
 
-                    https://www.samba.org/samba/security/CVE-2026-4408.html
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-o CVE-2026-4480:   Unauthenticated Remote Code Execution in Samba printing
-                    subsystem
-
-                    Samba print servers with a "print command"
-                    that has the %J substitution character
-                    are vulnerable to a Remote Code Execution.
-
-                    https://www.samba.org/samba/security/CVE-2026-4480.html
-
-
-Changes
--------
-
-o  Douglas Bagnall <douglas.bagnall@catalyst.net.nz>
-    * BUG 15997: CVE-2026-2340
-    * BUG 16003: CVE-2026-3012
-    * BUG 16033: CVE-2026-4480
-    * BUG 16034: CVE-2026-4408
-
-o  Pavel Kohout <pavel@aisle.com>
-    * BUG 15997: CVE-2026-2340
-
-o  Volker Lendecke <vl@samba.org>
-    * BUG 15992: CVE-2026-1933
-    * BUG 16012: CVE-2026-3238
-
-o  Stefan Metzmacher <metze@samba.org>
-    * BUG 15992: CVE-2026-1933
-    * BUG 16033: CVE-2026-4480
-    * BUG 16034: CVE-2026-4408
-    * BUG 16059: (4.23-only) CVE-2026-40170: thirdparty ngtcp2 needs to 
-be updated
-    * BUG 16073: (4.22/23-only) Winbind can change Ownership Of / To A 
-User Who
-      has Homedir / In passwd
-
-#######################################
-Reporting bugs & Development Discussion
-#######################################
-
-Please discuss this release on the samba-technical mailing list or by
-joining the #samba-technical:matrix.org matrix room, or
-#samba-technical IRC channel on irc.libera.chat.
-
-If you do report problems then please try to send high quality
-feedback. If you don't provide vital information to help us track down
-the problem then you will probably be ignored.  All bug reports should
-be filed under the Samba 4.1 and newer product in the project's Bugzilla
-database (https://bugzilla.samba.org/).
-
-
-======================================================================
-== Our Code, Our Bugs, Our Responsibility.
-== The Samba Team
-======================================================================
-
-
-
-================
-Download Details
-================
-
-The uncompressed tarballs and patch files have been signed
-using GnuPG (ID AA99442FB680B620).  The source code can be downloaded
-from:
-
-         https://download.samba.org/pub/samba/stable/
-
-The release notes are available online at:
-
-         https://www.samba.org/samba/history/samba-4.24.3.html
-         https://www.samba.org/samba/history/samba-4.23.8.html
-         https://www.samba.org/samba/history/samba-4.22.10.html
-
-Our Code, Our Bugs, Our Responsibility.
-(https://bugzilla.samba.org/)
-
-                         --Enjoy
-                         The Samba Team
-
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn4ytobFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkHbR
+AQDPjeyBtx91054AduhI0YD0/Th1LwISnAx6pFi/sszu3gEAtZXc3cCk81S6xDnU
+JHV5nM6aBJnZ5v1OhMTXXaCRIwU=
+=EhLN
+-----END PGP SIGNATURE-----
+--=-=-=--
