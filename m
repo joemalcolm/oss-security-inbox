@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6189" "Monday" "25" "June" "2018" "16:10:22" "+0200" "Daniel Beck" "ml@beckweb.net" "<E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>" "171" "[oss-security] Multiple vulnerabilities in Jenkins plugins" nil nil nil "6" "2018062514:10:22" "[oss-security] Multiple vulnerabilities in Jenkins plugins" (number mark "U       ml@beckweb.n Jun 25  171/6189  " thread-indent "\"[oss-security] Multiple vulnerabilities in Jenkins plugins\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3583 invoked by uid 550); 25 Jun 2018 14:10:35 -0000
+Received: (qmail 26412 invoked by uid 550); 4 May 2026 16:02:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,187 +7,114 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3556 invoked from network); 25 Jun 2018 14:10:34 -0000
-From: Daniel Beck <ml@beckweb.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Message-Id: <E00DE545-C35C-4E5F-8AEF-022602DEB087@beckweb.net>
-Date: Mon, 25 Jun 2018 16:10:22 +0200
+x-ms-reactions: disallow
+Received: (qmail 7193 invoked from network); 4 May 2026 10:14:27 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1777889656; cv=none;
+        d=google.com; s=arc-20240605;
+        b=DrMsApYNl+BJ3VIwsFf4qBkdl7oMdYzNPJG9Dv3QW6N4kbLztvXmq1w7iM+ZOgGqC8
+         1dZvhI5Hq8+YVzs6MX42B9duqWTZbTqwXzYZq10oUkkAXOtIzyQg58c3hbEa916RuuLk
+         tOJcBMrzsI/Fjj6GvlGN67BxQ83WJ8H91esQIkEA4LX/pJBzl2sclVeJ1dNtyyaTUh7Q
+         OuN8GtLdKtBwRXSiW15JSAF3PQ3Jo0hGGT/j1+NlFpX5a7567/8js5PDvDrYkgOabL5r
+         A9netWkYZP+4LSJel2Ab+MM14CXNg/ZHn73kJdkvWPGlVCrQ52y+h4Mw110VqH4uHCxy
+         alHQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=d4uQPtcjVHR84m7daH3LMpCdLNDN194LArPTLZrDtR0=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=JngrQ7nswir9A6StoF86muUsavu8LUNC1EwC/fnF7EyYkXgCx2jjwbcjeSUnKH45kF
+         cnuVz2f/opeqKRpR7GK1ESLNh76HA/jBjUzQOt69DOdGw2JJOI9EDp5byimDRF8SZNfJ
+         UhIYuJ5chwDjpogv9EKKwX0AcA/LOQClfebtjiUplJ2ygbSjr1T8rolfx4S7c8b251AA
+         ivfht09SRn04MhHapx2mi307IaAMV9aLLYtfzdUjmJIuwxl3xAmJ/77GYW6pdZFCARoa
+         N6hKc/4aAgpw1XOj4VM75BH+DEfe3PqJK+HM6A9PFo5+3U5JY0SVi+zWc38eeHRPKcr8
+         FVnQ==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1777889656; x=1778494456; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d4uQPtcjVHR84m7daH3LMpCdLNDN194LArPTLZrDtR0=;
+        b=K4eukIiWkft3R8A4pfDIVDhu0TL/zZQNsuKgARrwQFZMlUOAPBoVaFPhLXtF6NTkDl
+         9Ip2BI/gb/gtLC3KNMEiqtPm4Y0/gmVL5pa6ZTBRZKcftlqypj8kWmNGra3sd2xq9IuZ
+         e2yTqRDhaIGtzN2JnQJkz3ti4aP5AHrx1Z8aXUE74PO5Kcowksjv/RzzzUANuZUfJ6u/
+         5gMhOaxEhATiBpB+XN4eU1tFHrfxZKZJahLEO9ODAnEM0jA5rdk+waGpc3sNv/4sFehT
+         SJ0r26jxgaOWkJOH6xJCZ1uPWdq8GXn3B231sh3IexGaCEab74VfAmtsK9LR83j/aqWd
+         1W5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1777889656; x=1778494456;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=d4uQPtcjVHR84m7daH3LMpCdLNDN194LArPTLZrDtR0=;
+        b=duxNSFbJE4S0GoJcgCcfKM1RPaIHffYaSQJlsAC3/XEzER4s5Cmo/Fvnui81glUyh+
+         cF1Z+d7v5Ytl3tuPI/KXcR+Dy7n5ByFfUKn/po5oPUXOCFRJnB+pEo2ibYrB0ovm3cj9
+         A4dK4XUkgDEQx+kXww7lhs03Jc8Hg749PyDgCi9fuRXFE3LexjDYiWMVTU3jsf6ckkn8
+         jyj9QA0i3HG3Ar044RxuyEQ/GPwp7qwtchYVHNHvw7y5E+KyfAx6YImKg2V5OnbHfOs5
+         zh5PQsPvb18yLiT2pbc1MhY+e/Y9BBmz8YuQ16DIWf0hOkOIG2/Ewj63KbcHlCYSmnN3
+         MWqA==
+X-Gm-Message-State: AOJu0Yz0gPAJXk4WjvK+KhttvbMh8LuaD8vELYpE9CPTVZl0pYHUWdtc
+	Ua6ksVdfTs9RoRhisxvj7hfVxYyui86jsLM4C+JoSM6XQg1Qw1NK3lgtX2CYaTtZtY4sUhhI33q
+	suLQHZGLQ3px9JVj6CVxME7liWcJ2R2eKDA==
+X-Gm-Gg: AeBDievTPBU9PRjIrcim7N/DZ7xwp3TjnMMdfzMGy2fJB/LJJTWeeB3ksLlN09Cpm3e
+	S/L53MW8ICHMgC2VlRqCzhgN2viw4ZV6p+btf70g9CJ+4CvuiVhlBsjIIwXyJR30/xLnnC9/naL
+	Eafoncj+q6+s9a1ERmSeQkzfm9LUlREQ7aGfwKOEoaAPDMLM3cqijqsiAwurZ1S3ni1DnbLcgBo
+	SYEBc6YCu9n3dOeNOx+plfDu70rMhoG6JH/gQr0LKtWZwpb/U1OXCGKaK83HuAwqfqAY1UY1mn6
+	b69fyGBfGMkBX5Y8eYY=
+X-Received: by 2002:a05:6512:3f14:b0:5a4:1977:dcfe with SMTP id
+ 2adb3069b0e04-5a862eb87e8mr1629725e87.2.1777889656177; Mon, 04 May 2026
+ 03:14:16 -0700 (PDT)
+MIME-Version: 1.0
+References: <87mryiinrq.fsf@gmail.com> <20260504100844.w73zrvl732of7wqs@jwilk.net>
+In-Reply-To: <20260504100844.w73zrvl732of7wqs@jwilk.net>
+From: cyber security <cs7778503@gmail.com>
+Date: Mon, 4 May 2026 06:14:03 -0400
+X-Gm-Features: AVHnY4KSYQ4yesWKV_wNhI80xb4NVjhtaXqXiKJkmh8fqWcOUce7vDARBcANg1s
+Message-ID: <CAPmip_zR5WVXiie_NOMPD89NQNtj_Rt=pQFKp9DN=NwRhYg+zw@mail.gmail.com>
 To: oss-security@lists.openwall.com
-X-Mailer: Apple Mail (2.3273)
-X-bounce-key: webpack.hosteurope.de;ml@beckweb.net;1529935834;6e35a651;
-X-HE-SMSGID: 1fXSCE-0005Pq-Pu
-Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] uutils coreutils CVEs
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software. The following
-releases contain fixes for security vulnerabilities:
+of course, it is a vuln, of low severity by example
 
-* AWS CodeBuild 0.27
-* AWS CodeDeploy 1.20
-* AWS CodePipeline 0.37
-* Badge 1.5
-* CollabNet 2.0.5
-* Configuration as Code 0.8-alpha
-* Fortify CloudScan 1.5.2
-* GitHub 1.29.2
-* IBM z/OS Connector 2.0.0
-* Openstack Cloud 2.36
-* SAML 1.0.7
-* SSH Credentials 1.14
-* URLTrigger 0.43
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://jenkins.io/security/advisory/2018-06-25/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-915
-A form action method in GitHub Plugin did not check the permission of the=20
-user accessing it, allowing anyone with Overall/Read access to Jenkins to=20
-cause Jenkins to send a GitHub API request to create an API token to a an=20
-attacker specified URL.
-
-This allowed users with Overall/Read access to Jenkins to connect to an=20
-attacker-specified URL using attacker-specified credentials IDs obtained=20
-through another method, capturing credentials stored in Jenkins.
-
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-440
-SSH Credentials Plugin allowed the creation of SSH credentials with keys=20
-"From a file on Jenkins master". Credentials Binding Plugin 1.13 and newer=
-=20
-allows binding SSH credentials to environment variables. In combination,=20
-these two features allow users with the permission to configure a job to=20
-read arbitrary files on the Jenkins master by creating an SSH credential=20
-referencing an arbitrary file on the Jenkins master, and binding it to an=20
-environment variable in a job.
-
-
-SECURITY-916
-SAML Plugin did not invalidate the previous session and create a new one=20
-upon successful login, allowing attackers able to control or obtain=20
-another user=E2=80=99s pre-login session ID to impersonate them.
-
-
-SECURITY-808
-Openstack Cloud Plugin did not perform permission checks on methods=20
-implementing form validation. This allowed users with Overall/Read access=20
-to Jenkins to connect to an attacker-specified URL using attacker-
-specified credentials IDs obtained through another method, capturing=20
-credentials stored in Jenkins, and to cause Jenkins to submit HTTP=20
-requests to attacker-specified URLs.
-
-Additionally, these form validation methods did not require POST requests,=
-=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-825 / CVE-2018-1000402
-AWS CodeDeploy Plugin could persist environment variables from the last=20
-run of any project with the post-build step configured in the job=E2=80=99s
-config.xml file.
-
-In some cases, this allowed users with file system access or Extended Read=
-=20
-permission to obtain those potentially sensitive environment variables by=20
-accessing the project=E2=80=99s config.xml.
-
-
-SECURITY-833 / CVE-2018-1000403
-AWS CodeDeploy Plugin stored the AWS Secret Key in its configuration=20
-unencrypted in jobs' config.xml files on the Jenkins master. This key=20
-could be viewed by users with Extended Read permission, or access to the=20
-master file system.
-
-While masked from view using a password form field, the AWS Secret Key was=
-=20
-transferred in plain text to users when accessing the job configuration=20
-form.
-
-
-SECURITY-834 / CVE-2018-1000404
-AWS CodeBuild Plugin stored the AWS Secret Key in its configuration=20
-unencrypted in jobs' config.xml files on the Jenkins master. This key=20
-could be viewed by users with Extended Read permission, or access to the=20
-master file system.
-
-While masked from view using a password form field, the AWS Secret Key was=
-=20
-transferred in plain text to users when accessing the job configuration=20
-form.
-
-
-SECURITY-967 / CVE-2018-1000401
-AWS CodePipeline Plugin stored the AWS Secret Key in its configuration=20
-unencrypted in jobs' config.xml files on the Jenkins master. This key=20
-could be viewed by users with Extended Read permission, or access to the=20
-master file system.
-
-While masked from view using a password form field, the AWS Secret Key was=
-=20
-transferred in plain text to users when accessing the job configuration=20
-form.
-
-
-SECURITY-906
-Badge Plugin stored and displayed user-provided HTML for badges and=20
-summaries unprocessed, allowing users with the ability to control badge=20
-content to store malicious HTML to be displayed within Jenkins.
-
-
-SECURITY-941
-CollabNet Plugin disabled SSL/TLS certificate validation for the entire=20
-Jenkins master JVM by default.
-
-
-SECURITY-819
-A form validation method in URLTrigger Plugin did not check the permission=
-=20
-of the user accessing them, allowing anyone with Overall/Read access to=20
-Jenkins to cause Jenkins to send a GET request to a specified URL.
-
-Additionally, this form validation method did not require POST requests,=20
-resulting in a CSRF vulnerability.
-
-
-SECURITY-870
-Fortify CloudScan Plugin did not validate file names in rulepack ZIP=20
-archives it extracts, resulting in an arbitrary file write vulnerability.
-
-
-SECURITY-950
-IBM z/OS Connector Plugin did not encrypt password credentials stored in=20
-its configuration. This could be used by users with master file system=20
-access to obtain the password.
-
-While masked from view using a password form field, the AWS Secret Key was=
-=20
-transferred in plain text to administrators when accessing the global=20
-configuration form.
-
-
-SECURITY-927
-Configuration as Code Plugin lacked a permission check in the method=20
-handling the URL exporting the system configuration. This allows users=20
-with Overall/Read access to Jenkins to obtain this YAML export.
-
-
-SECURITY-929
-Configuration as Code Plugin logged secrets set via its configuration to=20
-the Jenkins master system log in plain text. This allowed users with=20
-access to the Jenkins log files to obtain these passwords and similar=20
-secrets.
-
+On Mon, May 4, 2026 at 6:09=E2=80=AFAM Jakub Wilk <jwilk@jwilk.net> wrote:
+>
+> * Collin Funk <collin.funk1@gmail.com>, 2026-05-01 18:49:
+> >* CVE-2026-35352
+> >
+> >We can see that uutils 'mkfifo' creates the fifo with world readable
+> >and writable permissions and then uses chmod() which introduces a
+> >TOCTOU race that can be exploited by another user creating a symbolic
+> >link in it's place:
+> >
+> >    $ mkfifo --version
+> >    mkfifo (uutils coreutils) 0.8.0
+> >    $ strace mkfifo -m 700 /tmp/fifo
+> >    [...]
+> >    umask(000)                              =3D 002
+> >    umask(002)                              =3D 000
+> >    mknodat(AT_FDCWD, "/tmp/fifo", S_IFIFO|0666) =3D 0
+> >    chmod("/tmp/fifo", 0700)                =3D 0
+>
+> Creating the FIFO with default permission could allow other users to
+> open it before the chmod(..., 0700) call. This is indeed a
+> vulnerability, but unrelated to symlinks, and it's a different issue
+> than the one in the description of CVE-2026-35352:
+>
+> >A Time-of-Check to Time-of-Use (TOCTOU) race condition exists in the
+> >mkfifo utility of uutils coreutils. The utility creates a FIFO and then
+> >performs a path-based chmod to set permissions. A local attacker with
+> >write access to the parent directory can swap the newly created FIFO
+> >for a symbolic link between these two operations.
+>
+> Note that this attack doesn't work in /tmp, because the sticky bit
+> prevents the attacker from deleting or renaming other users' files. The
+> victim would have to do something like "mkfifo /home/mallory/fifo". So,
+> uh, don't do that?
+>
+> It's questionable if this is a vulnerability at all.
+>
+> --
+> Jakub Wilk
