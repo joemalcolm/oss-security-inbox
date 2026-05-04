@@ -1,4 +1,4 @@
-Received: (qmail 18330 invoked by uid 550); 17 May 2026 14:33:30 -0000
+Received: (qmail 1450 invoked by uid 550); 4 May 2026 10:08:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,45 +8,60 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 32351 invoked from network); 17 May 2026 13:48:18 -0000
-Message-ID: <282213fe-14f1-408b-86f4-d880fd800d8c@molgen.mpg.de>
-Date: Sun, 17 May 2026 15:48:00 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+Received: (qmail 1430 invoked from network); 4 May 2026 10:08:57 -0000
+Authentication-Results:garm.ovh; auth=pass (GARM-101G004ec088204-689e-4203-8170-ad6321e90a48,
+                    97EA7B6FB89449FE9755007344C6695B317325E4) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:37.248.226.145
+Date: Mon, 4 May 2026 12:08:44 +0200
+From: Jakub Wilk <jwilk@jwilk.net>
 To: oss-security@lists.openwall.com
-References: <20260516150545.7570323b@hboeck.de>
- <agiIlGxE-XCWbpVp@client.brlink.eu>
-Content-Language: en-US
-From: Donald Buczek <buczek@molgen.mpg.de>
-In-Reply-To: <agiIlGxE-XCWbpVp@client.brlink.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Recent Kernel exploits, attack surface reduction,
- example IPSEC
+Message-ID: <20260504100844.w73zrvl732of7wqs@jwilk.net>
+Mail-Followup-To: oss-security@lists.openwall.com
+References: <87mryiinrq.fsf@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <87mryiinrq.fsf@gmail.com>
+x-ovh-tracer-id: 8083679857627654783
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: dmFkZTGuPANEz+QmtHOFS4LOzuHmGgPu6jy5NFfuTjA3ObinKvzS1Tftxrmw6W20yZqAcx8bJmRwn6oP79gwxkrEhPWBhkjlbK3BorPdct0t6mNAwvbpN8lfU7KLzlMxvEcBkn4WikRLGA0cw/jEb7ACjZeEXBabbWcl6Dv4qETxFQFNqbCXtBBrzSOrB4xSQWo6mV3RO8keVRQ76VvsASLsF3tBs7X7NHueKIDi3TbZnbzGp8zPXr+9fvRU7x6++5J283AkDTD8gr5fSmfZPkRUm1n+SXRkhXggEafkYcOiMJLTWI8v40kGl1FZqLOhsI3VWcbWV6t2koHTdbdeQc3lAl6AWvWixYynvJSkDNodfeDHLaGzzUvPvsApytbLwD5YC3MW/bJ3T/mSPn+/iRmmtenzCVLxTgswtxnBWOMv5ubXbeA+t6QOjvpbC+fw87Zy8VvA6+d2qqTHQu1PuAVKasSkfi97Z8/hgaamh3tXUm+t5hlX+pC5cD8KYglbGJUr9ymFFyTNWtkSAnmFZOQr1wYSkgHqy0JeZSnK8EKWSKN9rAFCMPYcxDpVcKLY47vXuz3sVWIVatVBsLOGek3SsGPnQx5m9/qoZ6FBIgcDER4UGoEkdSdoWslNG67r1mcA7W78phxmbkDTBODNKLrX7ZcTpK9lL5anJP8uxNVe8cG/9Q
+Subject: Re: [oss-security] uutils coreutils CVEs
 
-On 5/16/26 17:09, Bernhard R. Link wrote:
-> Security wise, supporting allow-lists instead of only deny-lists
-> would make it easier for systems where you know beforehand what you
-> want (I guess many server systems might end up in there). Of course
-> you can just load everything and disable module loading, but then
-> you'll need a restart whenever what you load needs to be changed.
+* Collin Funk <collin.funk1@gmail.com>, 2026-05-01 18:49:
+>* CVE-2026-35352
+>
+>We can see that uutils 'mkfifo' creates the fifo with world readable 
+>and writable permissions and then uses chmod() which introduces a 
+>TOCTOU race that can be exploited by another user creating a symbolic 
+>link in it's place:
+>
+>    $ mkfifo --version
+>    mkfifo (uutils coreutils) 0.8.0
+>    $ strace mkfifo -m 700 /tmp/fifo
+>    [...]
+>    umask(000)                              = 002
+>    umask(002)                              = 000
+>    mknodat(AT_FDCWD, "/tmp/fifo", S_IFIFO|0666) = 0
+>    chmod("/tmp/fifo", 0700)                = 0
 
-By the way, I've just added such a feature to kmod for us:
+Creating the FIFO with default permission could allow other users to 
+open it before the chmod(..., 0700) call. This is indeed a 
+vulnerability, but unrelated to symlinks, and it's a different issue 
+than the one in the description of CVE-2026-35352:
 
-https://github.molgen.mpg.de/mariux64/kmod/compare/v34.2...v34.2-mpi
+>A Time-of-Check to Time-of-Use (TOCTOU) race condition exists in the 
+>mkfifo utility of uutils coreutils. The utility creates a FIFO and then 
+>performs a path-based chmod to set permissions. A local attacker with 
+>write access to the parent directory can swap the newly created FIFO 
+>for a symbolic link between these two operations.
 
-Previously, we experimented with a wrapper script for /proc/sys/kernel/modprobe:
+Note that this attack doesn't work in /tmp, because the sticky bit 
+prevents the attacker from deleting or renaming other users' files. The 
+victim would have to do something like "mkfifo /home/mallory/fifo". So, 
+uh, don't do that?
 
-https://github.molgen.mpg.de/mariux64/mxtools/pull/532
+It's questionable if this is a vulnerability at all.
 
-But this would guard only the modules requested by the kernel, not the modules
-pulled in as dependencies. So I think we'll discontinue that approach and use
-the kmod modification instead.
-
-Best
-Donald
 -- 
-Donald Buczek
-buczek@molgen.mpg.de
-Tel: +49 30 8413 1433
-
+Jakub Wilk
