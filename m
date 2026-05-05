@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2600" "Wednesday" "9" "December" "2015" "14:15:34" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty2gYBsn7nT8=QyaS=ReZr=khgcT4TTvxp_SqcgOi5Rjew@mail.gmail.com>" "69" "[oss-security] Re: CVE for git issue - please use CVE-2015-7545" "^Cc:" nil nil "12" "2015120921:15:34" "[oss-security] Re: CVE for git issue - please use CVE-2015-7545" (number mark "        kseifried@re Dec  9   69/2600  " thread-indent "\"[oss-security] Re: CVE for git issue - please use CVE-2015-7545\"\n") "<DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>" ("<CANO=Ty2buv0k_vfSBuQGKV60NmJM6T=VjUgmh7EvqisKyRHGng@mail.gmail.com>" "<DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24342 invoked by uid 550); 9 Dec 2015 21:15:48 -0000
+Received: (qmail 30446 invoked by uid 550); 5 May 2026 18:22:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +6,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24315 invoked from network); 9 Dec 2015 21:15:47 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=EFtRBhszput5oymkwv1xz/l/u26uiuumB7n+hF/1Jjo=;
-        b=FaPoQCoN86UgEpbXfpVa0jyh7B2aRE2Br3r4obDmvi+OXpjdOTMZIhYTJ2ooGe4osI
-         KtsKWRUd5nVA2nvB7zijgnsta2uO/J8kXs/2dozFFW6EMZEg61ZFcomvw9++pU2AYdI3
-         neqNgyx0GeTqmt1hDvp8RuLMZ5+s6qW0jjSQmGUQxMuM5FhwaxyVxCSbUlvMz+SixZc1
-         Dft/j6ThdaiX06+cxkNxtmZTsRTZ/osl9W+5PorlszggLGHYhdiMKFRoYdPEG8XvGHQo
-         t7oTu8Cb5MlBQe2yQOs6IgF5douu1dBPbQbdjm1+IiArIH9d+gxMpxuvXbFqg0RO82bT
-         xXBw==
-X-Gm-Message-State: ALoCoQnjlOHFNjFxSYk/p9vqb9Hy/1ecB+atR0fnI4vsZnRta8fE6lrBmyrANnwmf8PvbGXGsRvnGYEaNG3Kc7oBm+tuMkf5aRZ2GZq4Zz8wibpp89x7/pY=
-MIME-Version: 1.0
-X-Received: by 10.129.133.2 with SMTP id v2mr2207667ywf.76.1449695735073; Wed,
- 09 Dec 2015 13:15:35 -0800 (PST)
-In-Reply-To: <DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>
-References: <CANO=Ty2buv0k_vfSBuQGKV60NmJM6T=VjUgmh7EvqisKyRHGng@mail.gmail.com>
-	<DM2PR09MB027022D8FA55B820E2975AF0CCE80@DM2PR09MB0270.namprd09.prod.outlook.com>
-Message-ID: <CANO=Ty2gYBsn7nT8=QyaS=ReZr=khgcT4TTvxp_SqcgOi5Rjew@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114f1e8852883b05267d97a4
-Cc: oss-security <oss-security@lists.openwall.com>, CVE ID Requests <cve-assign@mitre.org>
-Date: Wed, 9 Dec 2015 14:15:34 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE for git issue - please use CVE-2015-7545
-To: "Evans, Jonathan L." <jevans@mitre.org>
+x-ms-reactions: disallow
+Received: (qmail 17501 invoked from network); 5 May 2026 17:58:07 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1778003878; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iwnCg1Xgk8ZIe5Sg8ZHwkUbEZGdDlkNZm9QZkpXDZ67+JMTby6pbouJBSGzTd7auZy
+         hLuDuz07Vx6cbjVhGZGZ/vhw/inxFVxqlbfqweHBnKoxnDCyyZ1vPQyzNczBTHOJT1OD
+         aqGBNdDj1Th9UYYr4iJFygjTfede7Uk7hlC6eKdjucBgLnGHblMIRFe5T9F4ghozEtS6
+         bhvHBpwj4OsVbPfSKDAtZRxN7RLqQyKEzcCqxUQXGxoMJJUoMxA/H2nDz99q1FvcxT18
+         6xOpkNI8vb+4en86e0RHM1oATmFVE22ExINlxnDZjiOUrkuhao7qI6mGsEPCqxVwB3MT
+         Fe5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=G3rETW5hjb8f2y6I1eyyHMK5jeOBs+MXvpkekB+YPhQ=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=PITyQ2byHwJuH5aWNHT39hDOwchy5vYQwyNeCJyv+ffaa8MTRoegqhUhvugxUSUqRF
+         6PdDz0w0mZll234LvO8M7bOkZMuB8tYPiBFAUeRggVcrDXZVeXKIKKrmtnG4va+2VHvf
+         V83O1Pq9ZOX+2NrbvsSWkef5LclbqyGvHHsRm63lVXyS/BO5X5Oz+9X5LHvkFFrlogqz
+         B8Eep+s+8B5yW2V1Ys4Km3QoDzz/rJrQuyas0N8ojn+IeHi3814tCoQ+oBRyLI7M7Dpa
+         vblhTd15vv/4AJpUqjhXxOcNVPEbW8XxvEhvUGO9agVxCCuJq5jz7lte+qi7n8hXm5lG
+         7sKg==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778003878; x=1778608678; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=G3rETW5hjb8f2y6I1eyyHMK5jeOBs+MXvpkekB+YPhQ=;
+        b=Gd1dL8iPe0xXJEhxMowpvjNIc8uBrlMMMTKAFl9ojx+2Y47uwwpykeok7fe+yg5VSL
+         fkweWBGPCihl1zVI811LnyGAdxvhTCTJLC0r2iVfxSaibOWAgWdOR82tVhMXW2SVo7Zj
+         4JMv9b4cWGa2uNIeeTVtyyh3lR6WATONMGLfzRRljG1cRhNafUSNsq9mZY/K1PIfEKus
+         aGwOAPkFVy2dIwUInw71tQMj0MczdGu5MnRrXo/TZGQpXfXldEZLRrY2153wQJdWiGZv
+         EE565/I/ry6IvbF55ipI06xU8ke0fSxYhMzLk5GNcN+9kw5XZCrGVARk+ufcQxE0soJG
+         oXwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778003878; x=1778608678;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G3rETW5hjb8f2y6I1eyyHMK5jeOBs+MXvpkekB+YPhQ=;
+        b=RsPTr975aBJ4Ddg6+GqVYBhhuZee6sXDuQir9btXB0xF7yJxitzqPHTK40BwG0eShU
+         p4MOMcESbT9NSbbBV8f0bPlLZxn/A0Myppo0B7VbMM3gal+pIGT8AmOs/T0L0RyU5plR
+         xADcVijy9GPIjUQD6jRTH9EKV0t5AV6l7l4bX0qJ8fa6p/bIKhrm9eIR5uCUO78a1le1
+         t0l8i3YVkEUAgzdMVFyS94AyoceGvTG6SgsRz0F4bXkWhsRjW8FZcziuaT9znTknTQrr
+         0EVu3g77uvtPhP1auMuOW8ojq9oCxC4HHPw6kpT8++/8sgJHPTUTKHxW0jVVZ93K9hNo
+         Mqqw==
+X-Gm-Message-State: AOJu0YyEET9GGyF/jPW0/8ePp3BbM7JvreMgVjbfpwHCzMSXh38uhL0X
+	6nHmuJhrkqk0sSKVGOQoKrhUHn/AG6SXBs7QekEhO5pG6HVn4fLIi2gg/ovE8b3nctN6O9dgeYu
+	cWpw3dqX49DlPmRXxcwljxQAWYwHKLF/zs9Mb18A=
+X-Gm-Gg: AeBDiet5f1yNfw/pC6012Cvm5hcSE/rCW0jmWTiAn01ZjBgC0eHd9gi2LzGdMWT9fwB
+	tCJ7kThHx8pZG/B6gYBaYtrkigCvgeJ3MHbdjyBmawijPGLx/9mEjN7KMmGkiGOE35Km1b6Prq3
+	Kw2vTlsp9WUGFrH9q41vWGVff0Zl/L+CJ1m7DUHwpUxTIi1agKyBhKCakJTT0X87ROJdVTJJdSr
+	mnJT+Osp8TACGXAj11Q+Y0rjP5oldN1fT0IXPVFchdgoAqXCfDaKuuNClXiY2TAhqyHKI2SBD93
+	PEQys//7Bd65swk9AE2ZCA74WkhH/Vk2SJJM4Hs/6BPvD6o+iWYomEDyEwRK
+X-Received: by 2002:a05:651c:3250:b0:392:4308:b8b with SMTP id
+ 38308e7fff4ca-393c3ef7988mr1478401fa.0.1778003877548; Tue, 05 May 2026
+ 10:57:57 -0700 (PDT)
+MIME-Version: 1.0
+From: Akshat Sinha <akshat.snh@gmail.com>
+Date: Tue, 5 May 2026 10:57:45 -0700
+X-Gm-Features: AVHnY4LZ_-tSDYF8aOckSEbZp29Cw2wgAs3Za9jKkNLcLBr035ebWlyhs_FbSz0
+Message-ID: <CAJNb=Zp7rsHLU6s7KHLO-=DRmFSUz57f0JQqO3rd2BGGAO4wvQ@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000087d83b065115c9b5"
+Subject: [oss-security] vm2: sandbox escape in NodeVM with nesting:true (CVE-2026-44007)
 
---001a114f1e8852883b05267d97a4
-Content-Type: text/plain; charset=UTF-8
+--00000000000087d83b065115c9b5
+Content-Type: text/plain; charset="UTF-8"
 
-I'm pretty sure people expect git recursive fetch to result in data being
-fetched (potentially quite a lot) but that it does NOT result in arbitrary
-command/code execution. As such (the potential for remote code execution)
-we feel this is a security issue, hence the security updates from Red Hat.
+Package: patriksimek/vm2
+Affected versions: <= 3.11.0
+Fixed version: 3.11.1
+Severity: Critical
 
+vm2 before 3.11.1 is vulnerable to sandbox escape / host OS command
+execution when `NodeVM` is used with `nesting: true` and untrusted code.
 
+In the vulnerable case, sandboxed code can `require('vm2')` regardless of
+the outer VM's `require` restrictions, including `require: false`, then
+create an inner `NodeVM` with attacker-chosen settings and execute
+arbitrary OS commands on the host.
 
-On Wed, Dec 9, 2015 at 1:26 PM, Evans, Jonathan L. <jevans@mitre.org> wrote:
+The 3.11.1 fix rejects `new NodeVM({ nesting: true, require: false })` at
+construction time. The maintainer also notes that `nesting: true` remains
+an escape hatch by design; untrusted code should not be run with
+`nesting: true` enabled.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA1
->
-> We are not certain if the assignment of CVE-2015-7545 is correct.  The
-> vendor
-> may not officially support the "blindly enable recursive fetch" scenario,
-> i.e.
-> the user is expected to accept the risk of executing a recursive fetch
-> from an
-> untrusted source, and the change should be considered a security hardening
-> feature for the convenience of their users.
->
-> MITRE has been actively working with the upstream vendor to determine the
-> appropriate number of CVEs for the vulnerabilities.  There was no
-> oss-security
-> post from us because the context of MITRE's work was related to previous
-> private
-> communication from and to the upstream vendor.
->
-> In the future, we plan to respond quickly to requests like the initial one,
-> asking the requester for the appropriate information needed to assign a
-> CVE ID.
->
-> - --
-> Jonathan Evans
-> CVE assignment team, MITRE CVE Numbering Authority M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA [ PGP key available through
-> http://cve.mitre.org/cve/request_id.html ]
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1
->
-> iQIcBAEBAgAGBQJWaI5KAAoJEL54rhJi8gl5WDsQAL1khrVZkPxjgxauyLhaaPKA
-> +zQogmqLzJmAlx6JNj5ehKNvSkPFX9J4TzJ7IyYdEiVaeoUvbWJHu+CCNfmsiEXv
-> jmMDCfMOTeHUhHBi0DaeAklspzN11a78m+y4LV1ixB2/75PRHapNR36Ff2OLB6L0
-> PDCW3Kwl0QBRWg+ezF4SeOfJNqCYUaat6oW16wgL33b1NTPveP7Iop0INHwb/ebd
-> UEak3vZTeHowT0IP0/5wbUyqEmYXONvUuXfRvLuQQzVL2qfValAN6KMbFq2mjYEm
-> SeGj9uNTBf16ATF/BboN3IWElBtGLfIwY3Rleu8NtMmKruR8rEP9tqDZKdnZI50K
-> +c6S3sdqlfzc8F2m99dGE5FuXe/qY0WfALo8vDgNs58zR5uh23rIIGZwgU4zxl32
-> V71ssQr/hbfxen8u3ZJ258bRVmhh8SFyykKznYdC0iq1Zf58oIwmUgja5AbNNkqI
-> 39jeBeAVrdmmMIMrrw+hYDRRFcRXHRkGM95gMCSjBSHY68/duKfN+G3CIRntxtek
-> /Cu3IIy50FybOfOERdy+NBsQV8yK2LR+PXWXMmik0JgYMRXkwH6zSf5opbwGDWQb
-> 0nI+HIKSUXdmjGHyVE8YqgeFcb52W9+EbdybuRkdbZq09rUWUr94FPjR73VNA8Yj
-> 755moYSPJKuOLPJK33pi
-> =IV1v
-> -----END PGP SIGNATURE-----
->
+References:
+https://github.com/patriksimek/vm2/security/advisories/GHSA-8hg8-63c5-gwmx
+https://github.com/patriksimek/vm2#5-nesting-true-is-an-escape-hatch
+https://github.com/patriksimek/vm2/releases/tag/v3.11.1
+https://github.com/patriksimek/vm2/blob/main/docs/ATTACKS.md#attack-category-25-nodevm-nesting-true--require-false-configuration-trap
 
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---001a114f1e8852883b05267d97a4--
+--00000000000087d83b065115c9b5--
