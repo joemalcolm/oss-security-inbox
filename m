@@ -1,4 +1,4 @@
-Received: (qmail 32066 invoked by uid 550); 20 Aug 2025 19:46:25 -0000
+Received: (qmail 23928 invoked by uid 550); 6 May 2026 23:21:30 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,61 +8,88 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 32022 invoked from network); 20 Aug 2025 19:46:25 -0000
-Authentication-Results: apache.org; auth=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
-	t=1755719145; bh=UcBkcDdJY651atYqlVBVrdoLRr3EDswCJ801BfNFN9M=;
-	h=Reply-To:From:Date:Subject:To:From;
-	b=qNoRqHOFMzT5371ZVR+0MhJegMy//QLuDoLzl+GSWyIjcYuh6DR4eJUpm1jHrlZv2
-	 sgZcKwXBdojh96GqE6eVUHKnG86rYZkn4m8ocgQScnJeQ8nCxPDdkd3FncjT0p9HZO
-	 AgPvHHLOe/WgrQiapLCo6v1qBJ0YGAEeSnvS6b64TnfNk52ZmOwC74xnyuJyfeSTQG
-	 Wr7yD4sVtNt8zcsrhcHK4eo86tlrxE8SY+4vEOK85vbRvsSR79JX9wANr0Ej0rhYQF
-	 TWmaFEXKGizGUmURtM6qvFsqgukxCNV54vpILKAV9cKe3AR2t6rKU6iYOlS91vZV9z
-	 Yra8CRD/H49fQ==
-X-Gm-Message-State: AOJu0Yyy+ABCF46DV3VO1tew9Me4Vje5TMEdYk1E3IarKmW2KhPgJ23C
-	YBzng4SGb3XfeVKgmVmkT497uBEFjlU86onk8FO5UkzpvbzNDe78D6j+pff/IDsPmQHX6I/fzZn
-	ReoGaHhh/mdrzzn0tLOJOxLjXwn/ow40=
-X-Google-Smtp-Source: AGHT+IFUeZB+ra78UN1FVjwGqoJmi1mHI09QV0Qv0PQ9ag5jzYJ7EBdbowtWhMnCY13bYfK3a6ffP/mXyBpvKpc5GPY=
-X-Received: by 2002:a05:6870:aa08:b0:30b:90f4:ca08 with SMTP id
- 586e51a60fabf-311229856f3mr2230714fac.22.1755719145010; Wed, 20 Aug 2025
- 12:45:45 -0700 (PDT)
-MIME-Version: 1.0
-From: Tim Allison <tallison@apache.org>
-Date: Wed, 20 Aug 2025 15:45:33 -0400
-X-Gmail-Original-Message-ID: <CAC1dCwVM3rxqS=KQf3=kWScQE5=NQ5ZvRH=srcF72JZROMb4hA@mail.gmail.com>
-X-Gm-Features: Ac12FXwWY_Nfl6BZ6HmvIk63WN218OaFQTuaQhAF0h-6gDIS56SK82q9vDfhWmM
-Message-ID: <CAC1dCwVM3rxqS=KQf3=kWScQE5=NQ5ZvRH=srcF72JZROMb4hA@mail.gmail.com>
+Received: (qmail 23824 invoked from network); 6 May 2026 21:47:22 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] CVE-2025-54988: Apache Tika PDF parser module: XXE vulnerability in
- PDFParser's handling of XFA
+Organization: Gentoo
+User-Agent: mu4e 1.14.1; emacs 31.0.50
+Date: Wed, 06 May 2026 22:47:09 +0100
+Message-ID: <87mryccisi.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: [oss-security] Vulnerability fixes in Tor 0.4.9.7
 
-Severity: critical
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Affected versions:
+=46rom diffing 0.4.9.6 and 0.4.9.7 [0]:
+```
++Changes in version 0.4.9.7 - 2026-05-06
++  This is a security release fixing several major bugfixes that were repor=
+ted
++  in the past weeks. Huge thanks to everyone that reported these issues! We
++  strongly recommend upgrading as soon as possible.
++
++  o Major bugfixes (cell handling):
++    - Fix out-of-bounds read (OOB) when END, TRUNCATE and TRUNCATED cell
++      have no reason in their payload. TROVE-2026-011. Found by Found by
++      Brian Carpenter (geeknik). Fixes bug 41254; bugfix
++      on 0.1.1.1-alpha.
++
++  o Major bugfixes (conflux):
++    - Do not attempt or accept BEGIN_DIR via conflux legs. TROVE-2026-
++      008. Credit to Anas Cherni from Calif.io in collaboration with
++      Claude and Anthropic Research. Fixes bug 41243; bugfix
++      on 0.4.8.1-alpha.
++
++  o Major bugfixes (conflux, relay):
++    - Adjust conflux out-of-order queue accounting when clearing a
++      queue. TROVE-2026-010. Found by aptupdate. Fixes bug 41251; bugfix
++      on 0.4.8.1-alpha.
++
++  o Major bugfixes (pathbias):
++    - Fix a client-side crash caused by double-close of a circuit while
++      under circuit queue memory pressure. TROVE-2026-009. Found by
++      cypherpunks. Fixes bug 41237; bugfix on 0.3.3.6-rc.
++
++  o Major bugfixes (relay):
++    - Fix null pointer dereference when receiving a CERT cell out of
++      order. TROVE-2026-006. Found by Fwame. Fixes bug 41240; bugfix
++      on 0.2.4.4-alpha.
++
++  o Major bugfixes (relay, onion service):
++    - Fix off-by-one out-of-bounds read if a malformed BEGIN cell is
++      received. TROVE-2026-007. Found by Flanagan. Fixes bug 41245;
++      bugfix on 0.2.4.7-alpha.
++
++  o Minor features (fallbackdir):
++    - Regenerate fallback directories generated on May 06, 2026.
++
++  o Minor features (geoip data):
++    - Update the geoip files to match the IPFire Location Database, as
++      retrieved on 2026/05/06.
++
+```
 
-- Apache Tika PDF parser module
-(org.apache.tika:tika-parser-pdf-module) 1.13 through 3.2.1
+The referenced bugs are private, so no more details are available
+yet. There were several recent other security releases too for Tor.
 
-Description:
+[0] https://gitlab.torproject.org/tpo/core/tor/-/blob/tor-0.4.9.7/ReleaseNo=
+tes#L5
 
-Critical XXE in Apache Tika (tika-parser-pdf-module) in Apache Tika
-1.13 through and including 3.2.1 on all platforms allows an attacker
-to carry out XML External Entity injection via a crafted XFA file
-inside of a PDF. An attacker may be able to read sensitive data or
-trigger malicious requests to internal resources or third-party
-servers. Note that the tika-parser-pdf-module is used as a dependency
-in several Tika packages including at least:
-tika-parsers-standard-modules, tika-parsers-standard-package,
-tika-app, tika-grpc and tika-server-standard.
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Users are recommended to upgrade to version 3.2.2, which fixes this issue.
+-----BEGIN PGP SIGNATURE-----
 
-Credit:
-
-Paras Jain and Yakov Shafranovich of Amazon. (reporter)
-
-References:
-
-https://tika.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2025-54988
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn7tt0bFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkPKh
+AP46pKRF1edKSWvY3qtsAwE7UR/+syzn89p2pJvctTegkgEA3HXyrPpnt8RkHokM
+7MK0JOfSncxKYe+BSIppBKXsgwg=
+=455r
+-----END PGP SIGNATURE-----
+--=-=-=--
