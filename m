@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5516" "Tuesday" "1" "October" "2019" "10:48:07" "+0200" "=?UTF-8?B?SmVucyBNw7xsbGVy?=" "jens.a.mueller@rub.de" "<eec1e835-fd6c-5c7c-25b8-5684ce8efafc@rub.de>" "104" "[oss-security] PDFex: Security weakness in PDF encryption" "^Date:" nil nil "10" "2019100108:48:07" "[oss-security] PDFex: Security weakness in PDF encryption" (number mark "U       jens.a.muell Oct  1  104/5516  " thread-indent "\"[oss-security] PDFex: Security weakness in PDF encryption\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] PDFex: Security weakness in PDF encryption" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 29707 invoked by uid 550); 1 Oct 2019 10:05:45 -0000
+Received: (qmail 29758 invoked by uid 550); 8 May 2026 16:04:32 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,174 +6,167 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 5804 invoked from network); 1 Oct 2019 08:48:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rub.de; s=mail-2017;
-	t=1569919688; bh=ObYLgvpfLD7zFGBHL24xv9Nys0LJplleBU7uvoTULyg=;
-	h=From:Subject:To:Date:From;
-	b=BQW/IbSQhWan8ywc6QkA0OkBp9AT5a7ieg9iYyFT9gV87g+4TLaRcqLtITfn+g4re
-	 vphFkXd4XPEc3bXGtdfrwHYrjv6dPw1y80GOVmpIdBxjGhDQ+ddXiVlF9P6nTqGR//
-	 NerxJBJtvIwlViMqYEZE7TXrNn/ZITmy60R5625I=
-X-Envelope-Sender: <jens.a.mueller@rub.de>
-X-RUB-Notes: Internal origin=134.147.42.227
-Openpgp: preference=signencrypt
-Autocrypt: addr=jens.a.mueller@rub.de; prefer-encrypt=mutual; keydata=
- mQINBFFtL30BEAC9vREugWDICvWjfGqXPOjYIuTI9RuW96RAI+v2QXDi5Q3+cjkcz5uu36Ov
- qTt6EH1QXpQ+fjT1SlfO8a/aXr6W25giKqLp0cBzON6v3sIdOfUw6AnP24QvpslQ9IwsLRu3
- OjazmUFoi6ZovWPQ37vjmsZkHtPsjJnB2bOajDiS3pkq1QGD/addg07wEmFQefjhGgLtwQFl
- hN/meEjk9v7VjiDX0GvKhl12TVauqiqOopbY8Nn880bIqX1ib6SpuvEvbNmag2CmsL9BiMda
- 7fhDzCAFOmdyoEnzyQn9YvIMa84KWRTgd5Y7wEcCrkdyOVgC+zPbgvsf35Q/LW43TjOfAQby
- /wNX5JppuCCX3gG1FrJwqtm4rEFOPwcz99q2ulTp/x3vzv2/fGSUQ6X9E2b0g3lXWv37yyEh
- faXzfp/yHO/XXL+RaxuWgVgxjZZh/MmbBawa9ds6looPFkN2DCtv57xUK/8SVqOLsxDUfdSF
- iDa2qQMVMQaCjRJ8KWVD8linzTuTZ77QRsPJ7yxCJlldQbfzw+JhcBezRPMfYqDgPZfIaC+P
- fELQ/ixK2xjAB2hevJbAdSGhio2C17hVdMM06KHSG2CFkP4bxSK44DQ1Y8ZpEuUR5WsCq+rM
- J8Yg6wFu/iXkdID/f+1tqhh7O5R7mqEt4ng2Hyah+iwUM2kKzwARAQABtCRKZW5zIE11ZWxs
- ZXIgPGplbnMuYS5tdWVsbGVyQHJ1Yi5kZT6JAjgEEwECACIFAlFtL30CGwMGCwkIBwMCBhUI
- AgkKCwQWAgMBAh4BAheAAAoJEK+jHloMryeBt34QALazzWGE+yUmNS9B6nUrlK7CPMRb+BC2
- eya0a/wkeprpO7CDerliHhS0gHCNQd05QXh825K7OAmuqgTbTBROiaLbvfOZlmpSCb4GrYvL
- EdiBjh+TKGxz9GCOePbxSFIFIfEpDh9yGQm5TGkRtVe6RerZ9YUmKKXT7zpZyM42/h9OsJgD
- al93ECnLF/iU05nHr3PVRRkYfVbEEwUUwUK9mFco7lGQS04Z6+zBlAzeGFtF12fjGZrR0LJ2
- w8ovPmuFtT6h5nCVtgmVVJyEkDShUTb57Q3QTfuKM1SwRT8mrppzu13xsQmXUIJkzkCB+170
- LX6etUXbWNXuIMT+nYb6dQq024UsPyIN3nUiRFO9L8n0hg1svkzaVZ7oo3qX0m21Bk1rdJTR
- S4HWoJ3MPZC6D/N1gey6A3I7vXj+11ahT3T64XoNWsb6RzFbSMYaEwPCLpjV5whOyQR8LpVf
- iZ+NgagWaF8JN63fgUERyHkisyWqiyIcNIXM4vfzgPz9wEb4l2Q3/EMH+NtaLoucutYgvu/z
- ffDSSBPtl2Tpx+rkJn4cS8iMu/OfEv7vxkb2yqk46Nlg9YgHfHfqaEaU6P4iSmrbxEcEYNQ/
- G0aCENCC/Q1Y+XMARTx0Jw65AnoippS4TvzZsGRvnJDFn4F2UGe9M4dgZ1h4nK7YiV7PF3L3
- IzG4uQINBFFtL30BEAC+4ePAXSSf2L97g3D2XedP07B5ydWQKCrPnfO+aJ4tPipu5TrRkbxE
- Qg5Zrfp8ZLykk2mArDG6s/0wt1+Nnal/WXJkT5AjPxMrLoupWul+K31FVMLDnTbATQgFeza3
- zePbb8p1GCw6d1z4oNlPy6LwpFnJy5ZVfGw0yXCYguH1Zo+sbl3BsyoxEDibQVRioqPOG0K+
- dRlca8h0j3zLPdaN3hNKoemDoEqzi9smwKrEbtO53+BCMQsa7yBS8CxnxraWy/v04hNqVXGP
- Nww+0MmN8E2ZSdd70YO+b/JmERWNIiGXBOGbjsC3sO+TodYJAqi6guY/KlVD899lVhp5SioM
- 8nISOjUaj3mxqvxzZWvDowCQ9/TuRYlNvzJa9jrq5I+ucw1OqYOORJHWgy5YzOpqIxW3+1UG
- RORBjHgSqGf+MpAnglYiJcT2GitmWNgBj+p4IvGEL2pzRFgSYc8+9JGckUMt9o3bmfJaECtm
- i2BHwXGEtZ8cETtTw/vDgCHBaOA0am6PaAL4Y5GDg5sYrBrY98+255ik3XoCzdD/7GIjW5IP
- Y/2MODNyzu66QXnn5LeDClXA/3jCmLSpWOISxlBRz1OHYYV0sWUOM033sG+jq6dkzwWubJ3C
- iYNN+imqTr6xktYQlmX+jXO7QSKLTgmvToBqXKFjcpaut7Wi1CDhmwARAQABiQIfBBgBAgAJ
- BQJRbS99AhsMAAoJEK+jHloMryeB4uQP/jyWuD6F+5eUdJoblCsPY4ae0jokmIFWg/+OUmp+
- 9QaCwvwrZbBB2pJk6LTsgXhwpjo92+h6Jp3uGqk0eVAfywCbr0ifNASvzMN15vLBYN7kli+Q
- l2wNjzfdHa33iF3SwBLrzLVn63+1SsNqP+cRcx4R78tmlVtVa6DxiomM48asMMqptjHp9xAh
- Cvk/di1EinOG3Eil5HL+cn5C3BY5RT/5BaMtpuRFXHHt9nvz/sSxUX0ArlQ1GGsDOsFMtwls
- LXFZYd+kAwnn3binlDIu15WJPCqi58qOS4oJNpRDSx220i96PwYNz4KWIz+TBnWMT967yRgl
- b1XnXiEDWawxJ03qKZKT8DfIhbaLVXOd1FW/z7qu4ENye3yjXXYX4NWoynD1MP57AGjKRtIw
- Eh6uoE4fgmFjATqF4hYwPgwQf/OT0orWG2jZ0hnVExz9lfYqMWMmycE9hNNvYLJrWMCxNVm6
- ndUNZmnnyCV7tARcypLFiDT1tf2VYwjOKnHNP9NBirkLIlD8kfgr76Kxwd84jvQ3tq5YYP5C
- +dtD9M+yNXcd0kBp1gbjAOGHVD0pobiJcK/e9EgiJxNgb6kuDqe0p+wKscY+mZe9ZnVDguQW
- H8znUoWEVapP1BTczAA8pozTrfMRmPp+Wgq00xH019KCzjhC6zeNUKxOqtEfnhg3ZzO7
-Message-ID: <eec1e835-fd6c-5c7c-25b8-5684ce8efafc@rub.de>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.99.4 at mail1.mail.ruhr-uni-bochum.de
-X-Virus-Status: Clean
-Date: Tue, 1 Oct 2019 10:48:07 +0200
-From: =?UTF-8?Q?Jens_M=c3=bcller?= <jens.a.mueller@rub.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] PDFex: Security weakness in PDF encryption
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 20423 invoked from network); 8 May 2026 12:34:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kernel-dk.20251104.gappssmtp.com; s=20251104; t=1778243645; x=1778848445; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zs1JSBnYMJ93Xp0xhGo617gYklY23k2ZqtphwKTvfq4=;
+        b=GaxY9vOMTDd+mtMXBC8PMpL3NK/mqmE+rphwmnuWkdtQPINPhgkWa35ShOeWvRt2u9
+         2DT5s5jqsr4c4iAj77+iqBC77N4THeeLcIWbGn7Lcwmxj+ClS1GzSb3VVsqTpDfY89bc
+         mWomkDCfM6yqNak/aqVBEYJHsZ4YxlfnoYJ2o173rR3qCeiNkEh+lWFyAuD17+F6Tzle
+         /qDqMr1SvqBHErdANMlv/eoH/gZoKqX79a865IdYIouhP3FnvQT7G8Wa6a+AY9EdQoes
+         Ag9gxF6dsmk174bIFIGXka6Dnp96RR3N4NEEITOsJkZ00oIDi+m4ieoLUIhjSoTvfqFg
+         LHHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778243645; x=1778848445;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zs1JSBnYMJ93Xp0xhGo617gYklY23k2ZqtphwKTvfq4=;
+        b=jIKe7OKnKFAy3un4IEqpQQoFglAOYb7sGr08riuOGQaiuxsAIkHk9jUZixrrIhcWH3
+         0VN2rJxYpC/Hvk9fkBgWM6e4L8xZoM7cRpGEz2F8ebBopiB8U7ZEDq2YJhykn5LOT8MT
+         jy2cM7V3lRCPk7XfmRJ17fqZ5EjDjw87TlhNYSzmQQibhmuhYeAIGDZ9lFbVEzJ4Xrkg
+         M4/rGHdU/0jOy39oHNeYHBReKktK4AsswW8hYMMSHOl6j9Ld9FmSrW3v2F+c2hL9MkCC
+         rvps/qiUJ8jluH0E6WQunpuTop/3HuMf5b8zQjU2+eewwI4z9hLsC2VvKP6A1ywXZavm
+         k86g==
+X-Gm-Message-State: AOJu0Yx5PXoYFffYBnX0TwRUjreOvf5XXEX0i2rOBoh3vYrWOoGNmF+J
+	huG8tyFDA4Yvpw4UDG8b6+rPqEZT2AmR/Qsmk6f1J9kVCRcCbDA2FpB9CKPjM+te6DU=
+X-Gm-Gg: AeBDiesM8gei03dWgK6BMbaRDT+x8dlqMP6GWjz/wmJMBtOeTRLFjXVEXdwfPcKYpIf
+	nEFDpu9eZh73UVtno++3DQf3k1nKlwB7V1VCw7xCZIVOVbMeE5xOxjFtrjFQkaIcuAhHKzkw4to
+	YHpm6g+CdeAJJqNHG69NZuNWF7dWwf03X9SGjj0RcyhlHOWuosclWtZT9oxrgJJCFRus2WBv502
+	WuZbFuvl3A+8NOZ5bKbhwLCsPeA3k9QIR/nCF2EacRBwGwh6TH28Xy0Bwd8+0F6KrQ7D2xrlQbS
+	EfDE4hLOe8VD7vaAaQN4N9NGwNTk3F3EJFeCR8ogUoAGE1BzibSOD5PA16eRfP0vfiUgSkC/udL
+	TUJhoqR7BHsX1+SnSXJep4BFqX7SsOjzdfvsgj2dveEQbDRihMEova6eE8b1vvGEytPLLgllmiB
+	z+SAKTj1xcaN6Adbyx8FY1bjx1yjIYoF46slaMxFp1h5MRbtJrq63N9KJ5kCwupTltNJnYMuVtA
+	Oxn9cFOnw==
+X-Received: by 2002:a05:6808:300c:b0:47b:bd7b:10de with SMTP id 5614622812f47-480420dcf12mr6785583b6e.7.1778243645257;
+        Fri, 08 May 2026 05:34:05 -0700 (PDT)
+Message-ID: <4a1d2a85-0e44-4d90-9610-9c96a10f9805@kernel.dk>
+Date: Fri, 8 May 2026 06:34:03 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: Solar Designer <solar@openwall.com>
+Cc: oss-security@lists.openwall.com,
+ Mohamed salem Eddah <medsalemeddah@gmail.com>, security@kernel.org,
+ Pavel Begunkov <asml.silence@gmail.com>
+References: <CAMrV8J7FfiB0ptMZFU+EKdRt1NPgtTe_YJWPFw7AQdB-vAQ75w@mail.gmail.com>
+ <2b8f2e56-15be-4732-baf5-7a3df4f8a1fe@gmail.com>
+ <20260507174811.GA4838@openwall.com>
+ <6e6f95c6-3880-4b11-858b-82c47d991d3f@kernel.dk>
+ <20260508023240.GA8796@openwall.com>
+Content-Language: en-US
+From: Jens Axboe <axboe@kernel.dk>
+In-Reply-To: <20260508023240.GA8796@openwall.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE request: io_uring zcrx freelist OOB write
 
-TL;DR In the scope of academic research at Ruhr University Bochum and
-Münster and University of Applied Sciences, Germany, two severe flaws
-in the PDF encryption standard have been discovered, which both lead
-to full plaintext exfiltration in an active-attacker scenario.
+On 5/7/26 8:32 PM, Solar Designer wrote:
+> On Thu, May 07, 2026 at 04:28:56PM -0600, Jens Axboe wrote:
+>> On 5/7/26 11:48 AM, Solar Designer wrote:
+>>> I only skimmed, but as far as I can tell Mohamed isn't the original
+>>> finder of this issue and the report and PoCs are AI-generated, which
+>>> could be why Mohamed is not communicating further.  It's becoming a
+>>> trend - someone sends AI-generated report and doesn't communicate.
+>>> Which doesn't mean the report is useless, but it does complicate its
+>>> handling.
+> 
+> I'm sorry Mohamed for just assuming you didn't communicate further; I
+> got too used to send-and-forget kind of vulnerability reports lately.
+> 
+>> I'm pretty sure that issue was fixed by:
+>>
+>> commit 003049b1c4fb8aabb93febb7d1e49004f6ad653b
+>> Author: Kai Aizen <kai@snailsploit.com>
+>> Date:   Wed Feb 18 17:36:41 2026 +0000
+>>
+>>     io_uring/zcrx: fix user_ref race between scrub and refill paths
+>>
+>> which is already in stable.
+>>
+>> CC'ing in Pavel, who was inexplicably dropped from the emails, even
+>> though he is the one guy that should indeed be on the CC list.
+> 
+> I'm at fault for dropping Pavel.  The oss-security list adds Reply-To
+> pointing to the list, which at least with Mutt replaces what's in From
+> in reply-to-all, and I forgot to override that.  I then realized, but
+> thought (maybe wrongly) that since Pavel had replied to the thread he
+> must be either on the list or on s@k.o anyway.  Sorry, and thank you
+> Jens for re-adding Pavel.
+> 
+>>> Meanwhile, it looks like there's a blog post (by someone else? I am
+>>> confused) on exploitation of this issue, with exploit files attached:
+>>>
+>>> https://ze3tar.github.io/post-zcrx.html
+>>
+>> I won't comment too much on this to avoid offending anyone, but I'm a
+>> bit puzzled by:
+>>
+>> "Once we have the address of modprobe_path (from KASLR step above), we
+>> write our script path via /proc/sys/kernel/modprobe: c
+>>
+>> int fd = open("/proc/sys/kernel/modprobe", O_WRONLY);
+>> write(fd, "/var/tmp/evil.sh", 16);
+>>
+>> This sysctl entry writes directly into modprobe_path in kernel memory
+>> and is writable with CAP_SYS_ADMIN, which we already have via
+>> CAP_NET_ADMIN on container configurations that grant both."
+>>
+>> as surely the point of a local exploit is, in fact, to gain root in the
+>> first place. If you already have CAP_SYS_ADMIN, what is the point?
+>>
+>> But hey, someone wrote a blog post about something that sounds
+>> dangerous.
+> 
+> Oh, wow.  That is indeed ridiculous, and puts everything else in this
+> report in (greater) doubt.  Not only would that require privileges to
+> write into that sysctl, but also why determine "the address of
+> modprobe_path" if we were going to just use sysctl.  The actual code in
+> zcrx_lpe.c tries to determine the address, but then does not use the
+> address, and does not use sysctl either.  So it would not do what's
+> claimed even if run as root, as far as I can see.  Note that "mp" is a
+> local variable that's only checked for non-NULL and not passed anywhere:
+> 
+>     uint64_t mp = kallsyms_addr("modprobe_path");
+>     uint64_t kt = kallsyms_addr("_text");
+>     if (mp) printf("[+] modprobe_path @ 0x%lx\n", mp);
+>     else    printf("[!] modprobe_path unreadable (kptr_restrict)\n");
+>     if (kt) printf("[+] _text @ 0x%lx\n", kt);
+> 
+>     time_t t0 = write_evil_sh();
+>     printf("[*] evil.sh written (t0=%ld)\n", t0);
+> 
+>     if (method == 0 || method == 1) method_a(ifname);
+>     if (method == 0 || method == 2) method_b(ifname);
+>     if (method == 0 || method == 3) method_c(ifname);
+> 
+>     printf("\n[*] dmesg:\n");
+>     system("dmesg 2>/dev/null | tail -20 | "
+>            "grep -iE 'warn_on|bug:|oob|free_count|zcrx|niov|kasan|panic' "
+>            "|| echo '    (nothing)'" );
+> 
+>     if (mp) {
+>         printf("\n[*] modprobe escalation...\n");
+>         trigger_modprobe(t0);
+>         escalate(t0);
+>     }
+> 
+>     printf("\n[*] done\n");
+>     return 0;
+> 
+> So AI slop it is.  The question is whether there's any substance here?
 
-* Website, including proof-of-concept exploits: pdf-insecurity.org
-* Paper: pdf-insecurity.org/download/paper-pdf_encryption-ccs2019.pdf
+As far as I can tell, none. There was a real bug which I referenced
+higher up, fixed by 003049b1c4fb8aabb93febb7d1e49004f6ad653b. Which
+is from 3 months ago and is in -stable. Flagging some WARN_ON_ONCE()
+sanity check thing as any kind of real fix is, indeed, nonsense and
+just shows what kind of real thought went into this.
 
+-- 
+Jens Axboe
 
-*How to break PDF Encryption*
------------------------------
-To guarantee confidentiality, PDF files can be encrypted. This enables
-the secure transfer and storing of sensitive documents without any
-further protection mechanisms. The key management between the sender and
-recipient may be password based (the recipient must know the password
-used by the sender, or it must be transferred to them through a secure
-channel) or public key based (i.e., the sender knows the X.509
-certificate of the recipient). In this research, we analyze the security
-of encrypted PDF documents and show how an attacker can exfiltrate the
-content without having the corresponding keys.
-
-
-*So what is the problem?*
--------------------------
-The security problems known as "PDFex" can be summarized as follows:
-
-* 1. Even without knowing the corresponding password, the attacker
-possessing an encrypted PDF file can manipulate parts of it. More
-precisely, the PDF specification allows the mixing of ciphertexts with
-plaintexts. In combination with further PDF features which allow the
-loading of external resources via HTTP, the attacker can run direct
-exfiltration attacks once a victim opens the file.
-
-* 2. PDF encryption uses the Cipher Block Chaining (CBC) encryption mode
-with no integrity checks, which implies ciphertext malleability. This
-allows an attacker to create self-exfiltrating ciphertext using CBC
-malleability gadgets. We use this technique not only to modify existing
-plaintext but to construct entirely new encrypted objects.
-
-
-*How bad is it?*
----------------
-In order to measure the impact of the vulnerabilities in the PDF
-specification, we analyzed 27 widely used PDF viewers. We found 23 of
-them (85%) to be vulnerable to direct exfiltration attacks and all of
-them to be vulnerable to CBC gadgets. You can find the detailed results
-of our evaluation below.
-
-Application           Version tested   Direct Exfiltration  CBC Gadgets
------------------------------------------------------------------------
-Adobe Acrobat DC      2019.008.20081   [XX]                 [X]
-Foxit Reader          9.2.0.9297       [X]                  [X]
-PDF-XChange Viewer    2.5.322.9        [XX]                 [X]
-Perfect PDF Reader    8.0.3.5          [XX]                 [XX]
-PDF Studio Viewer     2018.1.0         [XX]                 [XX]
-Nitro Reader          5.5.9.2          [X]                  [XX]
-Acrobat Pro DC        2017.011.30127   [XX]                 [X]
-Foxit PhantomPDF      9.5.0.20723      [X]                  [X]
-PDF-XChange Editor    7.0.326.1        [XX]                 [X]
-Perfect PDF Premium   10.0.0.1         [XX]                 [XX]
-PDF Studio Pro        12.0.7           [XX]                 [XX]
-Nitro Pro             12.2.0.228       [XX]                 [XX]
-Nuance Power PDF      3.0.0.17         [XX]                 [X]
-iSkysoft PDF Editor   6.4.2.3521       [X]                  [X]
-Master PDF Editor     5.1.36           [XX]                 [XX]
-Soda PDF Desktop      11.0.16.2797)    [X]                  [X]
-PDF Architect         7.0.23.3193      [X]                  [X]
-PDFelement            6.8.0.3523       [X]                  [X]
------------------------------------------------------------------------
-Preview               3.32.0           -                    [X]
-Skim                  1.4.37           -                    [X]
------------------------------------------------------------------------
-Evince                10.0.944.4       [X]                  [X]
-Okular                1.7.3            [X]                  [X]
-MuPDF                 1.14.0           [X]                  [X]
------------------------------------------------------------------------
-Chrome                70.0.3538.67     [XX]                 [XX]
-Firefox               66.0.2           -                    [X]
-Safari                11.0.3           -                    [X]
-Opera                 57.0.3098.106    [XX]                 [XX]
------------------------------------------------------------------------
-       [XX] | Insecure: Exfiltration (no user interaction)
-        [X] | Insecure: Exfiltration (with user interaction)
-         -  | Secure: No exfiltration / not vulnerable
-
-
-*How can I protect myself?*
----------------------------
-We strictly followed the responsible disclosure procedure by reporting
-the results on 17th of May 2019. In cooperation with the BSI-CERT, we
-contacted all vendors, provided proof-of-concept exploits, and helped
-them to mitigate the issues.
-
-
-*Who uses PDF Encryption?*
---------------------------
-PDF encryption is deployed in many areas to securely exchange
-confidential information via the Internet. Various medical IT systems
-and devices are capable, for example, of encrypting and transferring
-medical records as PDF files. MFPs also provide PDF encryption to
-protect scanned documents. In business environments, emails are
-sometimes sent as encrypted PDF documents when other encryption methods
-are not available (e.g., various organizations use special gateways to
-automatically encrypt email messages as encrypted PDF attachments).
