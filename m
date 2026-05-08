@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1556" "Wednesday" "14" "April" "2021" "09:06:02" "-0700" "Tim Allclair" "timallclair@gmail.com" nil "63" "[oss-security] [kubernetes] CVE-2021-25735: Validating Admission Webhook does not observe some previous fields" nil nil nil "4" nil nil (number mark "U       timallclair@ Apr 14   63/1556  " thread-indent "\"[oss-security] [kubernetes] CVE-2021-25735: Validating Admission Webhook does not observe some previous fields\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [kubernetes] CVE-2021-25735: Validating Admission Webhook does not observe some previous fields" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17674 invoked by uid 550); 14 Apr 2021 16:11:55 -0000
+Received: (qmail 10236 invoked by uid 550); 8 May 2026 16:03:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,101 +7,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15454 invoked from network); 14 Apr 2021 16:06:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=D+SLvtbsICT+V27hD6tmWMWb4JEdOesDX0tqZQM347o=;
-        b=eKXoSYh66B10Io9CBXpMmVAW0cziblpoW7cAVlj30oYIRJGoQQ5WIABq9jN79yrcoj
-         uC8TIta+HFQu8IY05u1z+Uvu7VhLckbODyxUqrZdsjOBvSIyeie4IPEW0YSL7k9V6NCz
-         ILGwFMztiZOuKKRaCQp3i4i+ER62sl+TaMESrPWV0zUgLsQ9C99WH+tWleifZ3Oh7vAB
-         n6bbNEq+/f1XKnJ7xG9RdSvgocaALQSFb0fGHmNCHUiRg4FATBlqoTyQ0sR8978HZ2yr
-         9mB7ZKcl1Nrh/mMEOwhYW2ykTzraCUPHkQ3gKjvhVAlD50PPSFTd8aO8+sh3z48MIf4x
-         zK4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=D+SLvtbsICT+V27hD6tmWMWb4JEdOesDX0tqZQM347o=;
-        b=E54UOKcNsY6iVBIKQ4tDMmSuZU/E6VtilSWvw6aKC9+IImEeJ0/X4XupkgrJ9gA83u
-         Ds8jo/nxfmHZ3WjMMCpiCsAeZ1StYgAbjUuci0eZS0l7VWkwRRgSLxe+loTv/i+v/Z+z
-         wyOlq91hXQ4HMrC5xhKvzDdJN0GTZH/ZpxGPmd9Mg3bbCLCwd30gUhKph8KIZR/nKXrW
-         Zlj80wnnphzDCvGdFdaHvb3PZw6ZfIyqIpzLTCk5micxnt0EryDLbQ2Ni3Z6RZg54Obq
-         gI+w1sQmZQH4PFHqFqbuB7wx40GAzVMb/TS2pgEq9aLaVSaeIVktpIDF4Cfgzbi29a/d
-         ouZw==
-X-Gm-Message-State: AOAM533vtpoK/LZquY5nkocD1CURPonHUnpxY7Kds81Rq8yPL/2gD+nJ
-	CWJhEhb5IG4xc+XasZd/Quf5l/ChuQwYQ7CWO7w3T1YDrgc=
-X-Google-Smtp-Source: ABdhPJzC+0wNxneYrdkZbdlsoxSAMVp+547mlPUnSEKY/94yUq049WA5oi6aqWDic94Wj8Ic5wnWtm4Eg4cuKOHNI9M=
-X-Received: by 2002:a0c:e950:: with SMTP id n16mr17381419qvo.43.1618416373157;
- Wed, 14 Apr 2021 09:06:13 -0700 (PDT)
-MIME-Version: 1.0
-From: Tim Allclair <timallclair@gmail.com>
-Date: Wed, 14 Apr 2021 09:06:02 -0700
-Message-ID: <CALXpagwmiKsVvPB4BooBhtTshuzg7JNPhTO_MZKZNmSMo7YCRw@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 13822 invoked from network); 8 May 2026 10:05:56 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="0000000000000551cd05bff0edfc"
-Subject: [oss-security] [kubernetes] CVE-2021-25735: Validating Admission Webhook does not
- observe some previous fields
+Cc: letters@lwn.net,  jzb@lwn.net
+In-Reply-To: <65e733e1-1db0-4c06-926f-e587e6c10caf@afflicted.sh>
+Organization: Gentoo
+References: <65e733e1-1db0-4c06-926f-e587e6c10caf@afflicted.sh>
+User-Agent: mu4e 1.14.1; emacs 31.0.50
+Date: Fri, 08 May 2026 11:05:37 +0100
+Message-ID: <878q9u43ny.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] Copy Fail 2 / Dirty Frag =?utf-8?Q?=E2=80=94?=
+ n-day from public
+ commit, not embargo break
 
---0000000000000551cd05bff0edfc
-Content-Type: text/plain; charset="UTF-8"
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-A security issue was discovered in kube-apiserver that could allow node
-updates to bypass a Validating Admission Webhook. You are only affected by
-this vulnerability if you run a Validating Admission Webhook for Nodes that
-denies admission based at least partially on the old state of the Node
-object.
+SiCk <sick@afflicted.sh> writes:
 
-This issue has been rated Medium (
-CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H
-<https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H>),
-and assigned CVE-2021-25735.
+> Hi, I'm _SiCk
 
-Note: This only impacts validating admission plugins that rely on old
-values in certain fields, and does not impact calls from kubelets that go
-through the built-in NodeRestriction admission plugin.
-Affected Versions
+Hi,
 
-   -
+>
+> (afflicted.sh, 0xdeadbeefnetwork on GitHub).
+>
+>  The May 7 LWN piece on "Dirty Frag" raises the question of how the bug s=
+urfaced before Hyunwoo Kim's May 12 coordinated
+> disclosure.
+>
+>  At least one of the public artifacts in circulation =E2=80=94 my "Copy F=
+ail 2: Electric Boogaloo" repo =E2=80=94 is an n-day built from
+> the public netdev fix commit, not a break from inside the embargo.=20
+>
+> Timeline on my end: - Steffen Klassert's fix landed publicly on netdev/ne=
+t.git as commit=20
+> f4c50a4034e62ab75f1d5cdd191dd5f9c77fdff4.=20=20=20
+>
+>  Brad Spengler (@spendergrsec) publicly called the commit copyfail-class.=
+ - I read the commit, recognized the xfrm
+> ESP-in-UDP MSG_SPLICE_PAGES no-COW path against shared pipe pages as an L=
+PE primitive, and built a PoC.=20
+>
+> - Published to GitHub and afflicted.sh on May 7. The repo credits Kim and=
+ Chen (discovery, upstream fix), Klassert
+> (maintainer fix), Spengler (public call-out), and Theori/Xint (original C=
+opy Fail, CVE-2026-31431) directly in the
+> README.
+>
+>  I had no contact with anyone on the linux-distros embargo, no awareness =
+of the May 12 disclosure date, and no access to
+> Kim's write-up or PoC. The work is n-day weaponization from a public upst=
+ream commit, which is standard practice once a
+> security-relevant fix lands in a public tree. Flagging this so parallel n=
+-day work isn't characterized as a leak from
+> inside the coordinated process.
 
-   kube-apiserver v1.20.0 - v1.20.5
-   -
+Thank you for stating this clearly. I've seen a few people confused by
+this and it's important to correct the record.
 
-   kube-apiserver v1.19.0 - v1.19.9
-   -
+It's also important because it tells us a lot about how folks are
+quickly going from fixes -> exploits.
 
-   kube-apiserver <= v1.18.17
+> [...]
 
-Fixed Versions
+sam
 
-This issue is fixed in the following versions:
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
-   -
+-----BEGIN PGP SIGNATURE-----
 
-   kube-apiserver v1.21.0
-   -
-
-   kube-apiserver v1.20.6
-   -
-
-   kube-apiserver v1.19.10
-   -
-
-   kube-apiserver v1.18.18
-
-Detection
-
-If you find evidence that this vulnerability has been exploited, please
-contact security@kubernetes.io
-Additional Details
-
-See Kubernetes Issue #100096
-<https://github.com/kubernetes/kubernetes/issues/100096> for more details.
-Acknowledgements
-
-This vulnerability was reported by Rogerio Bastos & Ari Lima from RedHat
-
-Thank You,
-
-Tim Allclair on behalf of the Kubernetes Product Security Committee
-
---0000000000000551cd05bff0edfc--
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmn9tXUbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkFfm
+AP43EaHwD8FO+0gNht93CSPgwl7AtdfvxIKCp0oRouBKHQEA+oemCpGwF7GkvkBF
+hWdlTo0VWDMeAQJKBxPFlJvltQk=
+=jemd
+-----END PGP SIGNATURE-----
+--=-=-=--
