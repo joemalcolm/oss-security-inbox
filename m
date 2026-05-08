@@ -1,4 +1,4 @@
-Received: (qmail 9456 invoked by uid 550); 3 May 2023 19:20:24 -0000
+Received: (qmail 24336 invoked by uid 550); 8 May 2026 02:09:35 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +7,156 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 7248 invoked from network); 3 May 2023 19:16:18 -0000
-Message-ID: <6d30fdfb-ad9a-2839-9ad1-93ff478a8459@thirddimension.net>
-Date: Wed, 3 May 2023 15:15:47 -0400
+x-ms-reactions: disallow
+Received: (qmail 17849 invoked from network); 8 May 2026 02:04:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778205870; x=1778810670; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xF9EbFz8BRGfSnpNSUQFvW2eONaAzt4ByjVV0Faxz7Y=;
+        b=apO7Ra+3pahTPDMyLsy/lv+Kvm/fhS44dXCV1FVjaqrjutL4vqTMc3dIqlt8sbJ0F+
+         r2f3w2JxHLSRMkPXeyfX8YLEInaWOqB50uDb4PmANcfbF3g/7dfx6o0I4VqKjqBlheBt
+         jcflab+vZhCbfO653167+R4R22AT+mLjRrmfU8CFF2aLx7LzfRMMtVZJo092GKiNIIIz
+         ZQnyqsf9aBGxU89U3DKB7h80UnkcGLVSvDRfhh6gMiF37S06SCCXv46HelugpRCIXenQ
+         vkKwhWSIh38JQkbcgg1SUIkAXx+XumMOqj8AKURhQLatwyIolrWWAquZ2dex1Ol849ln
+         UXWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778205870; x=1778810670;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xF9EbFz8BRGfSnpNSUQFvW2eONaAzt4ByjVV0Faxz7Y=;
+        b=VuA5wEfOmLoAzEYXwGZSfvcE/0lySUFEakAef1pK9DUeZiec1O/OFmuKk4ATJDkDbU
+         pccGCFt6sDOWPYlXSXYNWNT64t8laFduo9JlV+A/j614GAwN+wRm2B2Epc3bzjgxR6v7
+         xd5fXYe1rjqmwikZhff6Bi0uCn3XTfr5ijHsRcFSy1HuFN6o6iaTJhZcSJxo9UC0qeKl
+         e4oK+V1Bi9GDkGi5UZkMPWEzDSDVJMqKrmTFVnWZgeND3kuPyVxJAGNLzFcTDKCVONRp
+         qCe+vuOFC6ITXvkCiKKUg68ZS+G5jJ1Fwip8HvxvbjWXALll0FXX4wR76FSd4W4rXbmi
+         mliA==
+X-Forwarded-Encrypted: i=1; AFNElJ8EKVznxiZoniq7f8NQSYGp+A55mEbrFZMU00DpMwxewH/tMaKRPtsAS4iwZH4OW1QjdxUJ5Tuu43cF4Y0=@lists.openwall.com
+X-Gm-Message-State: AOJu0YzvxlQxW03wFVNZ8pHOdUlqlIFb1ol5DuBQJ+xAcL+K8S0YRxkd
+	s6HsyTjsLzoRDD/a56m4dknOQngy2GALwaA7TPZODkQcLpIuab4cWvU3
+X-Gm-Gg: Acq92OGCCQoqoAPrp+3WD3XgVUa4o8AKx83/nuigq66O7tqqfAnvhIqo2vyU1I32FM5
+	I4JH1IE+01xVHs3/fekGDOe89EAC4hHBDqWCtF8lFD9FfA01NEjplEAYx3IgnJq6pWKzQxSyEFs
+	oaRGlaeTGkRN8ml5G53lSZxNOy1GmbB78nKd6I92atJsHg+yYi5ph8TKOBmZHnzUm1/CAdX5kjK
+	CVRrP++iAEoNOZM9eQrUQfxwHeTsQCgNRSimPPGAxdag9ksNNVIL7mYTpD2X8Pksuj5lwzN864Y
+	JPvWmjJ7aI/jemDclyOp0kR2So23XxRCAZZuGN/euQc1ldn/Se59Bo9AuCmYZDhBQfErhqBNrOJ
+	WtFiV4jAuZWifW/Ib1s7/r5hLPKzFdDBGs6aE7rosohISLCyLYJi60IzuCsBi/6Cp8DUuH5sGcI
+	ZwfTJvta/JI2PAsOmotLtmIWSVAmQwxHD6Lq205c+J5wS5/APe1TgK2ffIyeXVKmjJmkfvxqrXB
+	WgOp5QRpjGIAk25HRGLBuY5pU3sLTsLHH66i34jUjnIdFbZAyTWiw==
+X-Received: by 2002:a5d:6950:0:b0:451:6770:575c with SMTP id ffacd0b85a97d-4516770577fmr10953321f8f.0.1778205869519;
+        Thu, 07 May 2026 19:04:29 -0700 (PDT)
+Message-ID: <a62d1b48-9e5f-4dca-bd34-dc86fbd97344@gmail.com>
+Date: Fri, 8 May 2026 03:04:15 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-To: oss-security@lists.openwall.com
-References: <20230418154630.eoheygqyom3c7ovw@stig.io>
- <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+User-Agent: Mozilla Thunderbird
+To: Jens Axboe <axboe@kernel.dk>, Solar Designer <solar@openwall.com>,
+ oss-security@lists.openwall.com
+Cc: Mohamed salem Eddah <medsalemeddah@gmail.com>, security@kernel.org
+References: <CAMrV8J7FfiB0ptMZFU+EKdRt1NPgtTe_YJWPFw7AQdB-vAQ75w@mail.gmail.com>
+ <2b8f2e56-15be-4732-baf5-7a3df4f8a1fe@gmail.com>
+ <20260507174811.GA4838@openwall.com>
+ <6e6f95c6-3880-4b11-858b-82c47d991d3f@kernel.dk>
 Content-Language: en-US
-From: Reid Sutherland <reid@thirddimension.net>
-In-Reply-To: <20230429100407.3yqdy2vtzokv3t5l@stig.io>
+From: Pavel Begunkov <asml.silence@gmail.com>
+In-Reply-To: <6e6f95c6-3880-4b11-858b-82c47d991d3f@kernel.dk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Subject: Re: [oss-security] Perl's HTTP::Tiny has insecure TLS cert default,
- affecting CPAN.pm and other modules
+Subject: Re: [oss-security] CVE request: io_uring zcrx freelist OOB write
 
-Who actually decides when something receives a CVE?  This can be used to 
-defame projects and products as in this case.
+On 5/7/26 23:28, Jens Axboe wrote:
+> On 5/7/26 11:48 AM, Solar Designer wrote:
+>> On Mon, May 04, 2026 at 07:02:30AM +0100, Pavel Begunkov wrote:
+>>> On 5/3/26 12:00, Mohamed salem Eddah wrote:
+>>>> I am reporting a security issue in the Linux kernel involving an
+>>>> out-of-bounds heap write in io_uring/zcrx.c.
+>>>>
+>>>> This issue appears to have been addressed in commit 770594e
+>>>> (?io_uring/zcrx: warn on freelist violations?, April 21, 2026),
+>>>> however it
+>>>> was not assigned a CVE and does not appear to have been included in a
+>>>> formal security advisory. As a result, multiple stable and downstream
+>>>> distribution kernels are still affected.
+>>>> ------------------------------
+>>>> Vulnerability Summary
+>>>>
+>>>> *File:* io_uring/zcrx.c
+>>>> *Function:* io_zcrx_return_niov_freelist()
+>>>> *Introduced:* Linux 6.12 (initial ZCRX merge)
+>>>
+>>> FWIW, it was added IIRC in 6.15, but not 6.12
+>>>
+>>>> *Fixed upstream:* 770594e (Apr 21, 2026)
+>>>> *Status:* Fix not yet present in stable releases
+>>> Did you trigger the problem or the warning in a new kernel
+>>> without the attached modules? Which kernel version / hash
+>>> was it? There was a fix for the scrub case, but otherwise
+>>> don't immediately see how that can happen. I'll take a look.
+>>
+>> I only skimmed, but as far as I can tell Mohamed isn't the original
+>> finder of this issue and the report and PoCs are AI-generated, which
+>> could be why Mohamed is not communicating further.  It's becoming a
 
+To be fair, he did reply, but I didn't notice that he dropped
+all CC.
 
-On 4/29/23 06:04, Stig Palmquist wrote:
+>> trend - someone sends AI-generated report and doesn't communicate.
+>> Which doesn't mean the report is useless, but it does complicate its
+>> handling.
 > 
-> - CVE-2023-31484 for CPAN.pm
-> - CVE-2023-31485 for GitLab::API::v4
-> - CVE-2023-31486 for HTTP::Tiny
+> I'm pretty sure that issue was fixed by:
 > 
-> On 2023-04-18 17:46, Stig Palmquist wrote:
->> HTTP::Tiny v0.082, a Perl core module since v5.13.9 and available
->> standalone on CPAN, does not verify TLS certs by default. Users must
->> opt-in with the verify_SSL=>1 flag to verify certs when using HTTPS.
->>
->> We grepped trough CPAN to find distributions using HTTP::Tiny that
->> didn't specify cert verification behaviour, possibly exposing users to
->> mitm attacks. Here are some examples with patches:
->>
->> - CPAN.pm v2.34 downloads and executes code from https://cpan.org
->>    without verifying server certs. Fixed in v2.35-TRIAL.
->>    https://github.com/andk/cpanpm/commit/9c98370287f4e709924aee7c58ef21c85289a7f0
->>
->> - GitLab::API::v4 v0.26 exposes API secrets to a network attacker.
->>    https://github.com/bluefeet/GitLab-API-v4/pull/57
->>
->> - Finance::Robinhood v0.21 is maybe exposing API secrets and financial
->>    information to a network attacker.
->>    https://github.com/sanko/Finance-Robinhood/pull/6
->>
->> - Paws (aws-sdk-perl) v0.44 is maybe exposing API secrets to a network
->>    attacker.
->>    https://github.com/pplu/aws-sdk-perl/pull/426
->>
->> - CloudHealth::API v0.01 is maybe exposing API secrets to a network
->>    attacker.
->>    https://github.com/pplu/cloudhealth-api-perl/pull/2
->>
->> ... and more. We have generated a list of over 300 potentially affected
->> CPAN distributions.
->>
->> More info in our blog post:
->> https://blog.hackeriet.no/perl-http-tiny-insecure-tls-default-affects-cpan-modules/
->>
->> -- 
->> Stig Palmquist <stig@stig.io>
+> commit 003049b1c4fb8aabb93febb7d1e49004f6ad653b
+> Author: Kai Aizen <kai@snailsploit.com>
+> Date:   Wed Feb 18 17:36:41 2026 +0000
 > 
+>      io_uring/zcrx: fix user_ref race between scrub and refill paths
+> 
+> which is already in stable.
+
+Not even that, the reproducer couldn't ever work. I asked David
+to run it to humour it with predictable results as well. I'm sure
+Mohamed has never run any of that.
+
+> CC'ing in Pavel, who was inexplicably dropped from the emails, even
+> though he is the one guy that should indeed be on the CC list.
+
+Urgh, I'm better to avoid commenting on that.
+
+>> Meanwhile, it looks like there's a blog post (by someone else? I am
+>> confused) on exploitation of this issue, with exploit files attached:
+>>
+>> https://ze3tar.github.io/post-zcrx.html
+
+That looks like AI hallucination, I'd rather save my time
+instead of taking it apart point by point. It seems like the
+blog came from the same person, and, Mohamed, publishing a full
+disclosure for something you think is a real issue before the
+investigation has concluded is a sure way to piss people off.
+
+> I won't comment too much on this to avoid offending anyone, but I'm a
+> bit puzzled by:
+> 
+> "Once we have the address of modprobe_path (from KASLR step above), we
+> write our script path via /proc/sys/kernel/modprobe: c
+> 
+> int fd = open("/proc/sys/kernel/modprobe", O_WRONLY);
+> write(fd, "/var/tmp/evil.sh", 16);
+> 
+> This sysctl entry writes directly into modprobe_path in kernel memory
+> and is writable with CAP_SYS_ADMIN, which we already have via
+> CAP_NET_ADMIN on container configurations that grant both."
+> 
+> as surely the point of a local exploit is, in fact, to gain root in the
+> first place. If you already have CAP_SYS_ADMIN, what is the point?
+> 
+> But hey, someone wrote a blog post about something that sounds
+> dangerous.
+
+but at least it's better than "step 1: insert a broken module" as
+it was in the original submission :)
+
+-- 
+Pavel Begunkov
+
