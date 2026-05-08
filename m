@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["10479" "Monday" "6" "November" "2017" "16:31:41" "+0100" "Jonas 'Sortie' Termansen" "sortie@maxsi.org" "<4e069c7c-85a2-f3ce-6ce2-8a9b4bf86a41@maxsi.org>" "258" "[oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams" "^Date:" nil nil "11" "2017110615:31:41" "[oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams" (number mark "U       sortie@maxsi Nov  6  258/10479 " thread-indent "\"[oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong datagrams\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26297 invoked by uid 550); 6 Nov 2017 15:35:13 -0000
+Received: (qmail 30377 invoked by uid 550); 9 May 2026 04:22:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,286 +6,57 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 21912 invoked from network); 6 Nov 2017 15:32:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-	d=maxsi.org; s=20140924;
-	h=from:subject:date:message-id:to:mime-version:content-type:
-	 content-transfer-encoding;
-	bh=Lkjb6RXJSYRfZvaVsXRDZ8c+rUk67OqAZ8C7OE4BAKE=;
-	b=p65BWunX2ns36xxWqyFnZpoIoxo9p44SrMVHXA0h4ET+OLT2CXDkPjnvbcTiwnJsTDnko4K6YVgzW
-	 BjD1KMsPfftH8ZYFJU2OVTNoMvpyCpt0/qhiwCo2PrCNsO6pmjy7XefhM4E56CC7UMyEVkwkUbEM7G
-	 cuyLX8vcBG50WbVI=
-X-HalOne-Cookie: 5aaea63f1dda44105fce4006802f891225a8f3c2
-X-HalOne-ID: 9654d329-c307-11e7-b91f-d0431ea8a283
-Message-ID: <4e069c7c-85a2-f3ce-6ce2-8a9b4bf86a41@maxsi.org>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.4.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-Date: Mon, 6 Nov 2017 16:31:41 +0100
-From: Jonas 'Sortie' Termansen <sortie@maxsi.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Race condition between UDP bind(2) and connect(2) delivers wrong
- datagrams
+x-ms-reactions: disallow
+Received: (qmail 22049 invoked from network); 8 May 2026 12:04:06 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1778241834; bh=fwpe5kVeuhgELtMx6ZjY4XVLj4XnmMbmOuKolOaSpMA=;
+	h=Date:From:To:Reply-To:Subject:From;
+	b=c3s97Z6K+CcRRIQMFTccbRKnzovTqy4LGlvDLoh4dMxHAlOfCOuBkdc3y/cEWHlCz
+	 +TuaSVPl8Rank/D+YU/UtQvGtuLn6cyGU09luw/x0XlAlN6mVA0raTiztlh+AwRnVN
+	 NMjtjtG8z0tX8HPU/71p7YXVZUKihV/sTYaWeABHliq2mheSSSmnj8arGIFytvU05V
+	 QXB/51ZsJCyaB+WiaABPtbCWRs7yUTrz7AQpke5m189RHCePGT+3g5yg0WybLBdl+E
+	 0vNzraybMnz9pt00zhfVKtHiN55aNwx/acA75CUI48MxHkK4kOGJFrYiF2+wO7K+qh
+	 QQJ6wnDkgDWsA==
+Message-ID: <54227cb1-d0c7-41c8-9da9-59e874f8488a@apache.org>
+Date: Fri, 8 May 2026 14:03:49 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: "Piotr P. Karwasz" <pkarwasz@apache.org>
+Content-Language: en-US
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-66170: Apache CloudStack: Any user can list backups that
+ they should not have access to
 
-Hi oss-security,
+Severity: low
 
-When you connect(2) a UDP socket to an address, any subsequent recv(2) must
-only receieve datagrams from that address. However, if the UDP socket is
-first given a local address with bind(2), there is a race condition before
-the connect(2) where datagrams received from any address is added to the
-socket's receieve queue. Unfortunately, all of Darwin, DragonFly, FreeBSD,
-GNU/Hurd, Haiku, Linux, Minix, NetBSD, OpenBSD, and OpenIndiana don't purge
-the receieve queue of datagrams with the wrong source on connect(2).
-Instead, they deliver datagrams already in the recieve queue even if they
-have the wrong source. I've failed to find any operating system that handles
-this case correctly.
+Affected versions:
 
-This race condition affects software with a UDP socket that bind(2) to a
-particular address or port before using connect(2) to ensure datagrams are
-only received from an approved source, and then not using recvfrom(2) nor
-recvmsg(2) and checking the sender's address (instead relying on the kernel
-having done this check).
+- Apache CloudStack 4.21.0.0 through 4.22.0.0
 
-I don't believe the impact to be high, but I wouldn't know. I think it's
-rare that software bind(2) a UDP socket to a particular local port and then
-connect(2) (since connecting would bind to an appropriate inferface and port
-for you). DHCP is a case where the client will want to use port 68, but
-there's no reason to connect(2) due to the broadcast nature of DHCP. Another
-case is software that bind(2) to a local address to ensure the traffic is
-routed over a particular network interface, and then connect(2) to a remote.
-I don't know how common that case is.
+Description:
 
-Even though it can be difficult to exploit this bug, it is a validation bug
-in the kernels. POSIX 2008 (2016 edition) says[1]:
+The CloudStack Backup plugin has an improper authorization logic in
+versions 4.21.0.0 and 4.22.0.0. Anyone with authenticated user-account
+access in CloudStack 4.21.0.0+ environments, where this plugin is
+enabled and has access to specific APIs can list backups from any
+account in the environment. This vulnerability does not allow them to
+see the contents of the backup.
 
-    "For SOCK_DGRAM sockets, the peer address identifies where all datagrams
-     are sent on subsequent send() functions, and limits the remote sender
-     for subsequent recv() functions."
+Users are recommended to upgrade to version 4.22.0.1, which fixes the issue.
 
-Similar statements can be found in the manual pages for Darwin, DragonFly,
-FreeBSD, GNU/Hurd, Linux, NetBSD, and OpenBSD. Haiku, Minix, and OpenIndiana
-do not document this behavior as far as I can tell.
+Credit:
 
-Software can work around this bug by using recvfrom(2) or recvmsg(2) and
-verifying the sender's address.
+Gabriel Ortiga Fernandes <gabriel.ortiga@hotmail.com> (reporter)
+Fabricio Duarte <fabricio.duarte.jr@gmail.com> (reporter)
+Gabriel Pordeus Santos <gabrielpordeus@gmail.com> (reporter)
 
-The nc(1) provided in the netbsd-openbsd package (netcat-1.10) on my local
-Linux distro is vulnerable:
+References:
 
-    strace nc -u -p 1234 192.0.2.0 1234
-    ...
-    bind(3, {sa_family=AF_INET, sin_port=htons(1234),
-             sin_addr=inet_addr("0.0.0.0")}, 16) = 0
-    ...
-    connect(3, {sa_family=AF_INET, sin_port=htons(1234),
-                sin_addr=inet_addr("192.0.2.0")}, 16) = 0
-    ...
-    read(3, "x\n", 2048)                    = 2
+https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2025-66170
 
-Here nc(1) fails to use recvfrom(2) and verify the sender and it will accept
-any datagrams receieved during the race condition. It's unclear to me if
-anyone uses nc(1) in this way.
-
-I've not been able to think of / find any other software that bind(2) a UDP
-socket to an address and then use connect(2) to fix a particular peer, but
-I don't have time to do a thorough search. Please let me know if you can
-think of any.
-
-It would be prudent to modify each operating system kernel to warn if a UDP
-socket is bound and then connected, and then use the systems normally, and
-see if any system software is affected. I haven't had the time available to
-do so.
-
-Below you'll find a test program that checks for this bug. I discovered this
-bug during the development of my UDP POSIX API testcase suite[2] and the
-test program is a mix of the trio-send-wrong-y-connect set of testcases.
-
-I have not reported this bug to any operating system vendors yet. I am
-writing here to fully assess the security impact of this bug and come up
-with a plan.
-
-The solution is for connect(2) to drop any datagrams from the receive queue
-that don't have the new source address. Note that a UDP socket can be
-connected (and unconnected with AF_UNSPEC) multiple times. The source
-information is available in the receieve queue since it might need to be
-provided to a recvfrom(2)/recvmsg(2) call.
-
-Note that it is insufficient to merely add another source check to
-recvmsg(2), as the poll(2) and such will say there is a datagram in the
-receive queue that mysteriously isn't there when recvmsg(2) is called. If
-the problem is solved with a lazy check in recvmsg(2), one should also be
-added to poll(2). However, such lazy checks can be observable if the socket
-is reconnected multiple times. Note that is wrong for connect(2) to drop the
-receive queue entirely as datagrams from the right source should remain in
-the receive queue. Therefore, I believe the proper fix is for connect(2) to
-iterate the receive queue and drop datagrams from the wrong source.
-
-Jonas
-
-[1] http://pubs.opengroup.org/onlinepubs/9699919799/functions/connect.html
-[2] https://sortix.org/os-test/#udp
-
---
-
-/*
- * Create three UDP sockets on the loopback address, connect the second socket
- * to the first socket, connect the third socket to the first socket, send 'y'
- * on the third socket to the first socket, send 'x' on the second socket to the
- * first socket, connect the first socket to the second socket, and then test
- * if 'x' or 'y' is received on the first socket.
- *
- * POSIX and the documentation of several operating systems says 'x' will be
- * received, however there is a race condition between bind and connect on the
- * first socket where the 'y' packet is received and not rejected, and connect
- * is supposed to remove the 'y' packet from the receive queue, or it would
- * wrongly deliver 'y' on the next recv call.
- *
- * This bug has been confirmed on:
- *
- *  - Darwin 17.0.0 x86_64
- *  - DragonFly 4.8-RELEASE x86_64
- *  - FreeBSD 11.1-RELEASE amd64
- *  - GNU 0.9 i686-AT386 (debian-hurd-2017-i386-CD-1.iso)
- *  - Haiku 1 x86_64 (haiku-nightly-hrev51498-x86_64-anyboot.zip)
- *  - Linux 4.4.0-98-generic x86_64
- *  - Minix 3.4.0 i386 (minix_R3.4.0rc6-d5e4fc0.iso)
- *  - NetBSD 7.1 amd64
- *  - OpenBSD 6.2 amd64
- *  - OpenIndiana (illumos-0c950529ae / SunOS 5.11 i86pc)
- */
-
-#ifdef __HAIKU__
-#define _BSD_SOURCE // and -lsocket -lbsd
-#endif
-
-#include <sys/socket.h>
-
-#include <err.h>
-#include <netinet/in.h>
-#include <poll.h>
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-
-int main(void)
-{
-	int verdict = 0;
-	struct sockaddr_in any;
-	struct sockaddr_in local1, local2, local3;
-	socklen_t locallen1 = sizeof(local1);
-	socklen_t locallen2 = sizeof(local2);
-	socklen_t locallen3 = sizeof(local3);
-	int fd1, fd2, fd3;
-	char x = 'x';
-	char y = 'y';
-	char z;
-	struct pollfd pfd;
-	int num_events;
-	ssize_t amount;
-
-	/* Create first UDP socket (server). */
-	fd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if ( fd1 < 0 )
-		err(1, "Wrong: first socket");
-	/* Bind first socket (socket) to the loopback interface. */
-	memset(&any, 0, sizeof(any));
-	any.sin_family = AF_INET;
-	any.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
-	any.sin_port = htons(0);
-	if ( bind(fd1, (const struct sockaddr*) &any, sizeof(any)) < 0 )
-		err(1, "Wrong: first bind");
-	/* Find the address the first socket (server) was bound to. */
-	if ( getsockname(fd1, (struct sockaddr*) &local1, &locallen1) < 0 )
-		err(1, "Wrong: first getsockname");
-
-	/* Create second socket (correct client). */
-	fd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if ( fd2 < 0 )
-		err(1, "Wrong: second socket");
-	/* Connect second socket (correct client) to the first socket
-	   (server). */
-	if ( connect(fd2, (const struct sockaddr*) &local1, locallen1) < 0 )
-		err(1, "Wrong: second connect");
-	/* Find the address the second UDP socket was bound to. */
-	if ( getsockname(fd2, (struct sockaddr*) &local2, &locallen2) < 0 )
-		err(1, "Wrong: second getsockname");
-
-	/* Create third UDP socket (wrong client). */
-	fd3 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if ( fd3 < 0 )
-		err(1, "Wrong: second socket");
-	/* Connect third UDP socket to the first UDP socket. */
-	if ( connect(fd3, (const struct sockaddr*) &local1, locallen1) < 0 )
-		err(1, "Wrong: second connect");
-	/* Find the address the third UDP socket was bound to. */
-	if ( getsockname(fd3, (struct sockaddr*) &local3, &locallen3) < 0 )
-		err(1, "Wrong: second getsockname");
-
-	/* The first socket (server) is bound, but hasn't yet been connected to
-	   the second socket (correct client). The third socket (wrong client
-	   now sends a datagram to the first socket (server). */
-	if ( send(fd3, &y, sizeof(y), 0) < 0 )
-		err(1, "Wrong: send of y");
-	/* Ensure the datagram has been delivered. */
-	sleep(1);
-
-	/* Connect the first socket (server) to the second socket (correct
-	   client). This will according to POSIX "For SOCK_DGRAM sockets, the
-	   peer address identifies where all datagrams are sent on subsequent
-	   send() functions, and limits the remote sender for subsequent recv()
-	   functions." */
-	if ( connect(fd1, (const struct sockaddr*) &local2, locallen2) < 0 )
-		err(1, "Wrong: first connect");
-
-	/* Test if POLLIN is set suggesting the datagram from the third socket
-	   (wrong client) is ready to be received, but a subsequent recv call
-	   must not deliver that datagram. */
-	memset(&pfd, 0, sizeof(pfd));
-	pfd.fd = fd1;
-	pfd.events = POLLIN;
-	num_events = poll(&pfd, 1, 0);
-	if ( num_events < 0 )
-		err(1, "Wrong: poll");
-	if ( num_events == 1 && pfd.revents & POLLIN )
-		printf("Wrong: POLLIN says wrong datagram was received\n");
-	else
-	{
-		printf("Correct: POLLIN unset after wrong datagram\n");
-		verdict++;
-	}
-
-	/* Send a datagram from the second socket (correct client) to the first
-	   socket (server). */
-	if ( send(fd2, &x, sizeof(x), 0) < 0 )
-		err(1, "Wrong: send of x");
-	/* Ensure the datagram has been delivered. */
-	sleep(1);
-
-	/* Receive a datagram on the first socket (server). This must not
-	   receive the datagram sent from the third socket (wrong client) as the
-	   connect call must ensure this subsequent recv() only delivers
-	   datagrams from the second socket (correct client). Rather the
-	   datagram from the second socket (correct client) must be received. */
-	amount = recv(fd1, &z, sizeof(z), MSG_DONTWAIT);
-	if ( amount < 0 )
-		err(1, "Wrong: recv");
-	else if ( amount == 0 )
-		puts("Wrong: Neither datagram was received");
-	else if ( amount != 1 )
-		printf("Wrong: %zi bytes were received instead of 1\n", amount);
-	else if ( z == 'y' )
-		puts("Wrong: Received datagram from wrong client");
-	else if ( z == 'x' )
-	{
-		puts("Correct: Received datagram from correct client");
-		verdict++;
-	}
-	else
-		printf("Wrong: Received wrong byte");
-
-	return verdict != 2 ? 1 : 0;
-}
