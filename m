@@ -1,4 +1,4 @@
-Received: (qmail 26443 invoked by uid 550); 23 Aug 2024 15:41:09 -0000
+Received: (qmail 7341 invoked by uid 550); 9 May 2026 04:22:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,116 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19497 invoked from network); 23 Aug 2024 15:38:28 -0000
-Authentication-Results: ext-mx-out011.mykolab.com (amavis);
- dkim=pass (2048-bit key) reason="pass (just generated, assumed good)"
- header.d=kolabnow.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kolabnow.com; h=
-	in-reply-to:content-transfer-encoding:content-disposition
-	:content-type:content-type:mime-version:references:message-id
-	:subject:subject:from:from:date:date:received:received:received;
-	 s=dkim20240523; t=1724427497; x=1726241898; bh=86pPlofiDqzXsgTQ
-	hQB5r/hlMaKRFylGgtk6m9iv6/E=; b=b2ig0nRdMH2wQ52c+ly0/4IjeWRGPh62
-	X7uiW5+F/9x5P+Yb3f/idpTgsubmlT0h5mMu1FOdkyOuM/+siNT+wSd2wKLLS00J
-	bf8/7OIQYGYBrc+tER2cH2aWiY8oHYbUuvMmyrgHAR82gJtnBSuqszifq0Klybl0
-	wG/JkADxyyao1wHOo0hBaa7heATWvkzFj7Oie+fFhT2KpYw8gjmKrcl/S2n0f10j
-	pBEyScGkpiiba95tV8ZIWRf5TjvgkIU1bUkVJW426HcUD0s5XWpv2qIO1iieH34D
-	0OEzFaOlAx8nhm3YyU+I5ZK/HTiZw8hAfGEIEL1905tbQU8YMOmOMA==
-X-Virus-Scanned: amavis at mykolab.com
-Date: Fri, 23 Aug 2024 17:38:16 +0200
-From: Fay Stegerman <flx@obfusk.net>
-To: oss-security@lists.openwall.com
-Message-ID: <Zsis6Gx2qq_laiC7@nihonium>
-References: <CAADqWPQNv110yAGhdYGYi7FyzpO2MB9v=sQWsV_cd+=XmB-FUA@mail.gmail.com>
- <aafef56c-c8eb-4c11-9c87-cdee03f97616@oracle.com>
- <Zsep2UnG7WHvlEnh@nihonium>
+x-ms-reactions: disallow
+Received: (qmail 6097 invoked from network); 8 May 2026 12:17:58 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1778242667; bh=7am6SoNvhepJpshoY1FoUEMaH4Ughga0KIVBVeC241s=;
+	h=Date:To:From:Reply-To:Subject:From;
+	b=Ofihel/puiIjCQQavBhSZuRwK+ATX27nYuma0SYZFP/3J/GRrbrE2crlM1IGndB4Y
+	 1TlMp8aqNMCiqpC5wcZNGWw/QiwOn4tfKqBMdAYqW/wt8lXo2RaRUmORavtj5w9uzW
+	 /rBJ3qv22Yb505ecJa2GpSLTmJK0GK4Q9/xVLrBANZO59+AQYM9GTSKSiQcyBFuXkn
+	 Z/BS3pu23NY1/bOqo29tSoEWqyP22w9yzb9MOEad3Ne4qNvM97uJLuXricYbkJofb/
+	 SL17sSqL2FeyzRkvr6lYPgAL+KNQpSc6qIDQ+wIZayv6GNGfT8oguFQdMi8/zTHDhj
+	 AxvM18ebjDzCw==
+Message-ID: <de79607e-b1df-487e-a4d5-d8d23da3bda0@apache.org>
+Date: Fri, 8 May 2026 14:17:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zsep2UnG7WHvlEnh@nihonium>
-Subject: Re: [oss-security] CPython: CVE-2024-8088: Infinite loop when
- iterating over zip archive entry names
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+From: "Piotr P. Karwasz" <pkarwasz@apache.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-69233: Apache CloudStack: Domain/account resources limits
+ not honored
 
-* Fay Stegerman <flx@obfusk.net> [2024-08-22 23:12]:
-> * Alan Coopersmith <alan.coopersmith@oracle.com> [2024-08-22 20:56]:
-> > -------- Forwarded Message --------
-> > Subject: 	[Security-announce][CVE-2024-8088] Infinite loop when iterating
-> > over zip archive entry names
-> > Date: 	Thu, 22 Aug 2024 13:40:20 -0500
-> > From: 	Seth Larson <seth@python.org>
-> > Reply-To: 	security-sig@python.org
-> > To: 	security-announce@python.org
-> >
-> > There is a HIGH severity vulnerability affecting the CPython "zipfile" module.
-> >
-> > When iterating over names of entries in a zip archive (for example, methods
-> > of "zipfile.ZipFile" like "namelist()", "iterdir()", "extractall()", etc)
-> > the process can be put into an infinite loop with a maliciously crafted
-> > zip archive. This defect applies when reading only metadata or extracting
-> > the contents of the zip archive. Programs that are not handling
-> > user-controlled zip archives are not affected.
-> >
-> > Please see the linked CVE ID for the latest information on affected versions:
-> >
-> > * https://www.cve.org/CVERecord?id=CVE-2024-8088
-> > * https://github.com/python/cpython/pull/122906
-> > * https://github.com/python/cpython/issues/122905
->
-> A small correction/addendum based on reading the vulnerability report and the PR
-> that fixes this (as well as being quite familiar with Python zipfile.ZipFile
-> internals and confused how this would affect it): it's not zipfile.ZipFile and
-> its methods that are affected, at least not directly, but zipfile.Path.  The
-> issue being this code in zipfile._path._ancestry():
->
->   path = path.rstrip(posixpath.sep)
->   while path and path != posixpath.sep:
->       yield path
->       path, tail = posixpath.split(path)
->
-> Which results in an infinite loop because for example posixpath.split("//") ==
-> ("//", "") but "//" != posixpath.sep:
->
->   >>> it = zipfile._path._parents("//foo")
->   >>> next(it)
->   '//'
->   >>> next(it)
->   '//'
->   >>> next(it)
->   '//'
->
-> The infinite loop has been fixed by sanitising the paths.
+Severity: moderate
 
-Forgot to mention this: the infinite loop is triggered when zipfile.Path adds
-"implied directories" -- using _parents(), which calls _ancestry() -- in the
-overridden .namelist() for the custom zipfile.ZipFile subclass it wraps.  Which
-is (indirectly) used by almost all of the zipfile.Path methods like .iterdir(),
-.glob(), .exists(), .joinpath() etc.
+Affected versions:
 
-  >>> zf = zipfile.ZipFile(io.BytesIO(), "w")
-  >>> zf.filename = "foo.zip"
-  >>> zf.writestr("a/b/c", "abc")
-  >>> zf.writestr("d/e", "de")
-  >>> zf.namelist()
-  ['a/b/c', 'd/e']
-  >>> zf.__class__
-  <class 'zipfile.ZipFile'>
+- Apache CloudStack 4.0.0 through 4.20.2.0
+- Apache CloudStack 4.21.0.0 through 4.22.0.0
 
-  >>> p = zipfile.Path(zf)
-  >>> p.root.namelist()
-  ['a/b/c', 'd/e', 'a/b/', 'a/', 'd/']
-  >>> list(p.iterdir())
-  [Path('foo.zip', 'a/'), Path('foo.zip', 'd/')]
-  >>> zf.__class__
-  <class 'zipfile._path.CompleteDirs'>
+Description:
 
-  >>> zf.writestr("//oops", "oops")
-  >>> # infinite loop via joinpath -> resolve_dir -> _name_set -> namelist ->
-  >>> # _implied_dirs -> _ancestry
-  >>> p / "foo"
+Due to multiple time-of-check time-of-use race conditions in the
+resource count check and increment logic, as well as missing
+validations, users of the platform are able to exceed the allocation
+limits configured for their accounts/domains. This can be used by an
+attacker to degrade the infrastructure's resources and lead to denial of
+service conditions.
 
-As zipfile.Path modifies the class of the original ZipFile, calling .namelist()
-or .extractall() on the original ZipFile used to create the Path afterwards is
-also affected even though zipfile.ZipFile as such is not.
+Users are recommended to upgrade to Apache CloudStack versions 4.20.3.0
+or 4.22.0.1, or later, which fixes this issue.
 
-- Fay
+Credit:
+
+Fernando Oliveira <ferolicar82@gmail.com> (reporter)
+Gustavo Viana <viana.gust@gmail.com> (reporter)
+
+References:
+
+https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2025-69233
+
