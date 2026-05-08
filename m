@@ -1,4 +1,4 @@
-Received: (qmail 22075 invoked by uid 550); 10 Jul 2025 17:35:58 -0000
+Received: (qmail 11797 invoked by uid 550); 9 May 2026 04:23:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,45 +8,77 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 28548 invoked from network); 10 Jul 2025 17:21:09 -0000
+Received: (qmail 5609 invoked from network); 8 May 2026 12:22:48 -0000
 Authentication-Results: apache.org; auth=none
-Content-Type: text/plain; charset=utf-8
-From: Eric Covener <covener@apache.org>
-To: oss-security@lists.openwall.com
-Message-ID: <d22efe03-5f68-b462-6b00-99935b222139@apache.org>
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 10 Jul 2025 17:14:08 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1778242958; bh=jQ2gU9BWGRhAQZa8zAZ969/7+Gzi9nURJy2/Iq0P8hg=;
+	h=Date:To:From:Reply-To:Subject:From;
+	b=vfUWFEHXgRLBMe3c7DmfhhWsEfPJT+ZmdrImoT8OJYB1UzpMlhn84lxlJpR0Sd+7m
+	 b1icfM8C0inPJFuWFiqH22CfXjYbPWMoE7X7CNuu/TetGbFc4SrkvRAgqhjRm3Kyty
+	 z5rziQiPo14/VXBGJCh8Gr5ZAs5Q3DDuDcSnWY40sbeEd72808LJsu/BAylPOzK5Za
+	 7vCzkJkqICsaQgIn59AyMk2BvWUkSjrWgwh8FF64xnh5IFTu08cI+giJUA8BDwlUTA
+	 W5OmPsXP/oQX5r5BNYXlkIzmrBg1dxg1krFhjYVn53n4A3j5xHcnaB42n4SKpupkHL
+	 mIk9masUsEOFA==
+Message-ID: <59b3a1d7-b7e5-445a-b8e9-45fd55a8f36b@apache.org>
+Date: Fri, 8 May 2026 14:22:37 +0200
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2025-49630: Apache HTTP Server: mod_proxy_http2 denial of
- service 
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+From: "Piotr P. Karwasz" <pkarwasz@apache.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-25199: Apache CloudStack: Proxmox Extension Allows
+ Unauthorized Cross-Tenant Instance Access
 
-Severity: low=20
+Severity: moderate
 
 Affected versions:
 
-- Apache HTTP Server 2.4.26 through 2.4.63
+- Apache CloudStack 4.21.0 through 4.22.0
 
 Description:
 
-In certain proxy configurations, a denial of service attack against=C2=A0Ap=
-ache HTTP Server versions 2.4.26 through to 2.4.63 can be triggered by untr=
-usted clients causing an assertion in mod_proxy_http2.
+Instances deployed via the Proxmox extension allow unauthorized access
+to instances belonging to other tenants.
 
-Configurations affected are a reverse proxy is configured for an HTTP/2 bac=
-kend, with ProxyPreserveHost set to "on".
+
+
+
+This issue affects Apache CloudStack: from 4.21.0.0 through 4.22.0.0.
+
+
+
+
+The Proxmox extension for CloudStack improperly uses a user-editable
+instance setting, proxmox_vmid, to associate CloudStack instances with
+Proxmox virtual machines. Because this value is not restricted or
+validated against tenant ownership and Proxmox VM IDs are predictable, a
+non-privileged attacker can modify the setting to reference a VM
+belonging to another account. This allows unauthorized cross-tenant
+access and enables full control over the targeted VM, including
+starting, stopping, and destroying the virtual machine.
+
+
+
+
+Users are recommended to upgrade to version 4.22.0.1, which fixes this
+issue.
+
+
+
+
+As a workaround for the existing installations, editing of the
+proxmox_vmid instance detail by users can be prevented by adding this
+detail name to the global configuration parameter - user.vm.denied.details.
 
 Credit:
 
-Anthony CORSIEZ (finder)
+Sander Grendelman <sander.grendelman@axians.com> (reporter)
 
 References:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=3DCVE-2025-49630
-
-Timeline:
-
-2025-06-04: Report received
-2025-07-07: 2.4.x revision 1927044
+https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-25199
 
