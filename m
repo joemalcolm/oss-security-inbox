@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4492" "Thursday" "10" "November" "2016" "16:54:24" "+0200" "Henri Salo" "henri@nerv.fi" "<20161110145424.GA18402@tunkki>" "132" "[oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability" nil nil nil "11" "2016111014:54:24" "[oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability" (number mark "U       henri@nerv.f Nov 10  132/4492  " thread-indent "\"[oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15877 invoked by uid 550); 10 Nov 2016 14:54:44 -0000
+Received: (qmail 7791 invoked by uid 550); 8 May 2026 02:10:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,148 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15857 invoked from network); 10 Nov 2016 14:54:43 -0000
-X-Virus-Scanned: Debian amavisd-new at mango.nerv.fi
-Date: Thu, 10 Nov 2016 16:54:24 +0200
-From: Henri Salo <henri@nerv.fi>
-To: cve-request@mitre.org
-Cc: oss-security@lists.openwall.com, Egidio Romano <n0b0d13s@gmail.com>
-Message-ID: <20161110145424.GA18402@tunkki>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; x-action=pgp-signed
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Subject: [oss-security] CVE request: Piwik <= 2.16.0 (saveLayout) PHP Object Injection
- vulnerability
+x-ms-reactions: disallow
+Received: (qmail 9901 invoked from network); 8 May 2026 02:06:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kernel-dk.20251104.gappssmtp.com; s=20251104; t=1778205960; x=1778810760; darn=lists.openwall.com;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=irwZDxIe2uw5rHGGnro+dg4XanNbUTojwmkXgSaFg8I=;
+        b=ARX/e95vfhovUOGJE21QuL6NVx7ZTJsB7MxBnxg1/q9mHDQUxhGsPSNwyJFzBzfUY6
+         7IqyawuxPFKUCgIvLKf32D5DGYTBLffOVSzsmOOYX9h95rw42Cj7ApcKnInWB9eXyp8c
+         IHB/yIgV0W04QazbmR3emu2wylyUy3xtGL5s2Dj05S76AprlT2edg61YZh8n0p+9K65q
+         LIiV4NO/AFwZEov+mgP5BwO3N+0tDcq8FmQjAArSax2Ewmrfz2Ms687rI3616rI+9Trx
+         OnCPcYA2yFoJ1F34OACuTXH4zXDa5Hj2w6/NT/8V3mDf6p7oo+Q+gTmyQ4i2CbVWwbaa
+         PfCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778205960; x=1778810760;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=irwZDxIe2uw5rHGGnro+dg4XanNbUTojwmkXgSaFg8I=;
+        b=fuq336ee8Mv1drbiFvLtgyvaE73D6sANIYmuZvNfBTSYPvoPPXXJ/8jyPqdulwWK8G
+         1+8+92nkie1CbcbwlI5fp2m447NbS5sgXevm09n/TuJyBcaI1YtzCU5IHznhp7g+Fvdu
+         yB0S2NzovkBOKDZeZq2ct9uuXfuSorS6EKul4BHu0KicXpQdFtXHrzx8HwKBdnmHq5S8
+         B06XeuFMl1X8U0SAnRJufeLLojD8CCLpWsE+/9f8WZOzXkYjuQ23cRnKJBylBcuzMEqJ
+         /uitU++573L9eQnFOpBYkDrpLL5aFEXVhZxA705ZO5ySLfw0TBBLoyZJ712zm8DqKmKs
+         vziw==
+X-Gm-Message-State: AOJu0YwPiWBUHpAOn6qL7JPByH4enrfr5xxZfenl3PRtgJD0l9b3IidG
+	+W2+i1prfDyhtH/4cC8DrQF9Ewdi0k3nQHi4bRholU0RizixE7vjicVizB1kULZwzYGBeLz0ncd
+	FIEGQkEI26A==
+X-Gm-Gg: AeBDiev7trirMax+KesDBJWlic6JFC0UxJMyJ00GDNXChHB+DhhnkdIh9D+Q9WlFCF/
+	FbKAHAftN1jFfWZpMC5j8uU0QmBOiIkXQrYb7FyNU5Yb844zXIusSjKn15OU1loy3DeWScEs6Yi
+	CD11Nw3VOoJ8ohXLu2kNVzOXTPCnLY5UQZL5glgDf4g4uPGHSaboY0nyNI2XgCP2VabZXC7nLQe
+	QcnzltNEeF8wmD3EwNUC4woYKyRv2s2w3UxNszKCVV5x4zM0KuPwrP1/AkihROxTLLgglxJgRTf
+	I3E7+EdDzPZ9pp817Dk40f8Jvb/gW0OLJeMpcGOtaA0VLn6D0BClAgfRz60f8d4ErG9KcsCbu6/
+	Ma0rys4RewJKf4dKrfiE4EDtyMh+m9zrxXYs1q7qRnE6iTQ/8dH/Zpxv5uYPPHfWwGGeij5eouO
+	gvy6WxTpHDFPayVSYC0c09T0NXUikH1RHzaGdS/nF3ww11lqJjneH55TeszUaNFLOaCDrbx+mPN
+	+wy4auYPghuI078D66nFznHI/qiz6Adninm4RrrvuC61OU=
+X-Received: by 2002:a05:7022:20b:b0:132:270d:7bb4 with SMTP id a92af1059eb24-132270d7ddemr3719882c88.21.1778205959769;
+        Thu, 07 May 2026 19:05:59 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Jens Axboe <axboe@kernel.dk>
+Mime-Version: 1.0 (1.0)
+Date: Thu, 7 May 2026 20:05:47 -0600
+Message-Id: <F55C79CE-5812-43F3-93E0-EF3429BC2C75@kernel.dk>
+References: <d9038011-c2e9-407c-b28b-8461e995df1f@benhays.org>
+Cc: oss-security@lists.openwall.com
+In-Reply-To: <d9038011-c2e9-407c-b28b-8461e995df1f@benhays.org>
+To: Benjamin Hays <ben@benhays.org>
+X-Mailer: iPhone Mail (23E261)
+Subject: [oss-security] Re: CVE request: io_uring zcrx freelist OOB write
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On May 7, 2026, at 7:24=E2=80=AFPM, Benjamin Hays <ben@benhays.org> wrote:
+>=20
+> =EF=BB=BFOn 5/7/26 18:28, Jens Axboe wrote:
+>> I won't comment too much on this to avoid offending anyone, but I'm a
+>> bit puzzled by:
+>>=20
+>> "Once we have the address of modprobe_path (from KASLR step above), we
+>> write our script path via /proc/sys/kernel/modprobe: c
+>>=20
+>> int fd =3D open("/proc/sys/kernel/modprobe", O_WRONLY);
+>> write(fd, "/var/tmp/evil.sh", 16);
+>>=20
+>> This sysctl entry writes directly into modprobe_path in kernel memory
+>> and is writable with CAP_SYS_ADMIN, which we already have via
+>> CAP_NET_ADMIN on container configurations that grant both."
+>>=20
+>> as surely the point of a local exploit is, in fact, to gain root in the
+>> first place. If you already have CAP_SYS_ADMIN, what is the point?
+>>=20
+>> But hey, someone wrote a blog post about something that sounds
+>> dangerous.
+>=20
+> I'm not the original author of the blog post, so I can't speak for their =
+intent; however, I imagine the impact for the proposed scenario would a con=
+tainer escape of some kind? It's not exactly uncommon to see containers wit=
+h lax permissions such as the above, given under the assumption that the un=
+derlying containerization technologies will provide a sufficient level of s=
+ecurity.
 
-Please assign CVE identifier for Piwik <= 2.16.0 (saveLayout) PHP Object
-Injection vulnerability, thanks. For the previous request MITRE responded that
-Piwik is out of scope, but there has been lots of CVEs assigned for Piwik so
-could you please clarify for the oss-security mailing list why this one didn't
-get assigned. At least following CVEs has been assigned before:
+Well, go read the post in detail and see what you think.=20
 
-CVE-2011-0004, CVE-2011-0398, CVE-2011-0399, CVE-2011-0400, CVE-2011-0401
-CVE-2011-4941, CVE-2012-4541, CVE-2013-0193, CVE-2013-0195, CVE-2013-1844
-CVE-2013-2633, CVE-2015-7815, CVE-2015-7816
-
-In case you are changing the policy for some software products about CVE
-assignment what are the reasoning for this and where are these cases listed
-publicly?
-
-Details of the vulnerability below.
-
-http://karmainsecurity.com/KIS-2016-13
-http://lists.openwall.net/full-disclosure/2016/11/07/13
-
-"""
-- ---------------------------------------------------------------
-Piwik <= 2.16.0 (saveLayout) PHP Object Injection Vulnerability
-- ---------------------------------------------------------------
-
-
-[-] Software Link:
-
-https://piwik.org/
-
-
-[-] Affected Versions:
-
-Version 2.16.0 and prior versions.
-
-
-[-] Vulnerability Description:
-
-The vulnerability can be triggered through the saveLayout() method 
-defined in /plugins/Dashboard/Controller.php:
-
-210.    public function saveLayout()
-211.    {
-212.        $this->checkTokenInUrl();
-213.
-214.        $layout      = 
-Common::unsanitizeInputValue(Common::getRequestVar('layout'));
-215.        $layout      = strip_tags($layout);
-216.        $idDashboard = Common::getRequestVar('idDashboard', 1, 'int');
-217.        $name        = Common::getRequestVar('name', '', 'string');
-218.
-219.        if (Piwik::isUserIsAnonymous()) {
-220.            $session = new SessionNamespace("Dashboard");
-221.            $session->dashboardLayout = $layout;
-222.            $session->setExpirationSeconds(1800);
-
-User input passed by anonymous users through the "layout" request 
-parameter is being stored into
-a session variable at line 221, and this is possible by invoking an URL 
-like this:
-
-http://[piwik]/index.php?module=Dashboard&action=saveLayout&token_auth=anonymous&layout=[injection]%26%2365536;
-
-Since Piwik is not using "utf8mb4" collations for its database, this can 
-be exploited in combination with a MySQL
-UTF8 truncation issue in order to corrupt the session array, allowing 
-unauthenticated attackers to inject arbitrary
-PHP objects into the application scope and carry out Server-Side Request 
-Forgery (SSRF) attacks, delete arbitrary
-files, execute arbitrary PHP code, and possibly other attacks. 
-Successful exploitation of this vulnerability
-requires Piwik to use the database to store session data (dbtable 
-option) and the application running on
-PHP before version 5.4.45, 5.5.29, or 5.6.13.
-
-
-[-] Solution:
-
-Update to version 2.16.1 or later.
-
-
-[-] Disclosure Timeline:
-
-[08/02/2016] - Vendor notified
-[09/02/2016] - Vendor replied not to be able to reproduce the issue
-[11/02/2016] - Proof of concept tested on demo.piwik.org sent to the vendor
-[11/02/2016] - Vendor response stating the issue will be fixed in 2.16.1 
-release
-[17/02/2016] - Bug bounty received
-[11/04/2016] - Version 2.16.1 released: 
-http://piwik.org/changelog/piwik-2-16-1/
-[16/06/2016] - CVE number requested
-[07/11/2016] - Public disclosure
-
-
-[-] CVE Reference:
-
-The Common Vulnerabilities and Exposures project (cve.mitre.org)
-has not assigned a CVE identifier for this vulnerability.
-
-
-[-] Credits:
-
-Vulnerability discovered by Egidio Romano.
-
-
-[-] Original Advisory:
-
-http://karmainsecurity.com/KIS-2016-13
-"""
-
-- -- 
-Henri Salo
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBAgAGBQJYJIogAAoJECet96ROqnV0K/gP+gNrSA0+itbFsvOmcHfVr2Xx
-XUPEMtPZ6OH9BgVP7Qhegb6UyeaMoCKjcHe6kw1zY8EpPE5hdZHKdb570OMFFECj
-2lIOtcDauOwIy4K+2Vop2LyEdxXvyAPDR/piJda3rZyMITA4cBJ9Y3gQVlhpd349
-T9/MYYhnZxNQCOmHd1Tg+jvekOKcFB+icOGNxVFMuc2skNMqsk0H8F/IXbX+36MF
-MDiM2oRINgsed6gEz1q6Ev3MvLYf9d0EECPYymmm0A0aYq02RIxg+vOtXEqzIsqC
-OASMOn1vrhdsBskpz3wUHnV/urCLI+h7H+p5QjggMAhUoby+EajN0LPXAKf+t+TC
-ihFlIxobJ/ztl/wWKrTDMVSLXoqZLTh2+skcuQWiuv3XyUlnnrpIFXw6B7JfxlJJ
-n7j4UJTO8CTjEDrp4wF9P2neJYaS3OdasmQumuod5CPPu2uTrenw03F+T5rDbT/b
-u/zr1/nfiq53oMC55GiZvuPHcQtsFAas8nW60vlG25fhOGBi4MRmxrkRigFdS2PD
-Gynli9EL8y3Nx7FUbkRPYrOpM0Ipr4On3v2pc75YGrBDh+FYQD8JqJvBB8LNXmdW
-cVMJG6c4Du7rteih0aBIfEXFIQYqQwnPA519Sm47Jr4ayjTv0LmfMyQVLMSthWcl
-BxXgPUr79nFXoAGV3TKj
-=7SR1
------END PGP SIGNATURE-----
