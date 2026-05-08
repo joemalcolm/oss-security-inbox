@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1155" "Thursday" "20" "August" "2015" "22:15:19" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty186705BppnjgQz8Tm1OvX_Pb6kMtbz2u8hj5qkjg7aAg@mail.gmail.com>" "52" "[oss-security] CVE-2015-5185 sblim-sfcb: lookupProviders() null pointer dereference" nil nil nil "8" "2015082104:15:19" "[oss-security] CVE-2015-5185 sblim-sfcb: lookupProviders() null pointer dereference" (number mark "U       kseifried@re Aug 20   52/1155  " thread-indent "\"[oss-security] CVE-2015-5185 sblim-sfcb: lookupProviders() null pointer dereference\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28444 invoked by uid 550); 21 Aug 2015 04:15:32 -0000
+Received: (qmail 26484 invoked by uid 550); 8 May 2026 08:56:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,83 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28423 invoked from network); 21 Aug 2015 04:15:32 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=r/xeI428ZXfamyWDcRnhYflrpMo/zTC3V6upc9jASSg=;
-        b=HVuD/yRZNuLdX2vFdhW6k+BeZEL5EETwQCN9N+nTPJbWywePb/RPfCzr5Yh6mgpifb
-         m1BX3cQMNQZGrpCp+sbygpQlQOASZfbUfNnQ71d2vGCtDonV/mxZ91bZiOOEi/mlI5MV
-         4S3A9OHMLwsoiISQYdJ0zTbpvxtLZMNJqNl2nY8+zlDXq48CWdn5G2mEE0dg2JY1Wb1F
-         cqmJUZokoEht62/KlvhQ+0ZykMUmTEKzqb3fqLHSg1eFXvflxnrZ6y8/qhMWHW2G6mwT
-         Lw083kch50qmbfD7ucHRTSv5zW4wjAaMjUrQ505Z+MOhdJS92SNvBPxNkB28D4N00EHF
-         WW4w==
-X-Gm-Message-State: ALoCoQk/JjfaUNfkqtBuDZ+VheQQXJEvZZSZPcXiVcNdcGTK0Y/loINM0KPf3WpcEDDAnGxATr5p
+x-ms-reactions: disallow
+Received: (qmail 26463 invoked from network); 8 May 2026 08:56:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1778230585;
+	 x=1778316985; bh=3VRN32EX9cYCJxijIRjcXA02ydwsYcXRAImNPZCiU1E=; b=
+	eYVWl70fxhfoyW288VrY0AK8v/3ydl2BDrox4+FCRo7IN/2llLPoOjrGdOkjWJbw
+	8WMtd7CG5E9N17vmmPEvV2M/BFEjEEfjmmBoCniXZ3aIBv+9iDZ0oUhf+GmK2SeN
+	CDNdArAxX1OSGQsNG4UGUBYDe/Bd2PGlUWlzq30OlgBvccDM2PqTOpe3gki3OtzU
+	mOU0PZDKrVfigq5Z5lpAYxrZRDibKlJAuaX7s106St/XQiwX21t0h0yKJqEsnIHU
+	q8KYTftokWocoBKCawV5ZqyPFDC9EmzpW7Dtn5ikT2GrkbL4PfMMqHQycSQ4mwHp
+	Q9Yciu1tFMm6kQCcnfwkbw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1778230585; x=
+	1778316985; bh=3VRN32EX9cYCJxijIRjcXA02ydwsYcXRAImNPZCiU1E=; b=t
+	V7J+YlENNImLzGrcIPpQ4utRcbsLq+zlalu0G9OaXpbVezBaUxmWR6Ydy/Gdslxw
+	1/S8D13N19Zvb3IFLXRQp7dP1lT0voyX3AjD7p1RPJEt4T/+3CkXwmCJhlIk5oBi
+	6CUkI56RsfOY8tFHb6Yr0jXUoE7D+vYzmer4bF/9gMXQ1IuGxFZIVVD9NvD4qrR/
+	rLOYCl5B5s36XA3FgZIcXNiDax55Q/u7HIK6m5kyvSjZIICo8TMGPQgBGsnNyepV
+	Lj5Yel8NpmJGvd1YipASo6Tz30ZXQvkwMgO0kJSetN7DN7+FjEFk3KDb0L4PD1LB
+	oX56rDWHy8vwpQw+pjtWQ==
+X-ME-Sender: <xms:OKX9aU7oJQKRCtor16YP4kLGsg9wffnwOoBQPSKXoCDpCrrBbpM8gg>
+    <xme:OKX9af4aqzmGpTgtBGhwcoiKXLc75XjAio6qFn0OwGFmhwMALRsBUtY_uHESXHbzP
+    WejcitokbZ85Ui4eDCNhdUZXFQMsjnIbWRz5BXY7osyJPIAaw>
+X-ME-Received: <xmr:OKX9aaFAgZa3xhXUDVf6rzx4k8EQz9TBQOeR2hDJVHsRMu-GXJc-szVDzHvGe_KktWqQeTwMbwbVmkvWGz2Fhs7UFg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddutdelledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefirhgvghcu
+    mffjuceoghhrvghgsehkrhhorghhrdgtohhmqeenucggtffrrghtthgvrhhnpefgkeffie
+    efieevkeelteejvdetvddtledugfdvhfetjeejieduledtfefffedvieenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhh
+    drtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshgrrhhohiesrhgvughhrghtrdgtohhmpdhrtghpthhtohepohhsshdqshgvtghurh
+    hithihsehlihhsthhsrdhophgvnhifrghllhdrtghomhdprhgtphhtthhopegtvhgvsehk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopehimhhvgegsvghlsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:OKX9aXUoPUjsZ_MvZhhMVQPalfbHf_txMECp_NDApXU7xItUv9zg2g>
+    <xmx:OKX9aWWoAvnV3qUlgedDgKpjuEgw2UitNh44v9TmAvSFIHayjUJgug>
+    <xmx:OKX9aVJRPG9Hy7UtB0-ZFddX8h76AdMI0Zlzrai6I_qcMsYwy7H68Q>
+    <xmx:OKX9aeAgdCgXgwYD1Rt0-7Ddw_mzbhAJBj7mXoIJYGsIc_KPsBFc5w>
+    <xmx:OaX9abgO5t_zGy9jmetLuiY1T_Q3il75Oyy8gj4_BJyGZNy89cCiseIw>
+Feedback-ID: i787e41f1:Fastmail
+Date: Fri, 8 May 2026 10:56:23 +0200
+From: Greg KH <greg@kroah.com>
+To: Sandipan Roy <saroy@redhat.com>
+Cc: oss-security@lists.openwall.com, cve@kernel.org, imv4bel@gmail.com
+Message-ID: <2026050820-unabashed-viral-ef9d@gregkh>
+References: <afzgS2SCWNcZU3vU@v4bel>
+ <CAJ33NAVT3SKdcF6LFSnn4zuCUyxnjih0KET_cCTrMmgnhwNPbA@mail.gmail.com>
+ <2026050843-chump-specks-dd29@gregkh>
 MIME-Version: 1.0
-X-Received: by 10.129.79.21 with SMTP id d21mr8574482ywb.159.1440130519820;
- Thu, 20 Aug 2015 21:15:19 -0700 (PDT)
-Date: Thu, 20 Aug 2015 22:15:19 -0600
-Message-ID: <CANO=Ty186705BppnjgQz8Tm1OvX_Pb6kMtbz2u8hj5qkjg7aAg@mail.gmail.com>
-From: Kurt Seifried <kseifried@redhat.com>
-To: oss-security <oss-security@lists.openwall.com>
-Content-Type: multipart/alternative; boundary=94eb2c0546de10b79d051dca84f0
-Subject: [oss-security] CVE-2015-5185 sblim-sfcb: lookupProviders() null pointer dereference
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2026050843-chump-specks-dd29@gregkh>
+Subject: Re: [oss-security] Dirty Frag: Universal Linux LPE
 
---94eb2c0546de10b79d051dca84f0
-Content-Type: text/plain; charset=UTF-8
+On Fri, May 08, 2026 at 09:24:01AM +0200, Greg KH wrote:
+> On Fri, May 08, 2026 at 12:43:59AM +0530, Sandipan Roy wrote:
+> > Hi,
+> > 
+> > This stated that “no patches or CVEs exist” because the embargo was broken.
+> > Could you please provide an update on the CVE assignment status for this
+> > issue?
+> 
+> CVE-2026-43284 is now assigned.
 
-So the reporter specifically asked us to handle disclosure just now, so
-here you go:
+That was for the first issue, and that is now fixed in the latest round
+of stable kernel updates.  The second has CVE-2026-43500 reserved for it
+if you need to track this, and is not fixed in any released kernel
+version yet.
 
+thanks,
 
-Qinghao Tang of QIHU 360 reports:
-
-The function lookupProviders() in sblim-sfcb of version 1.3.4 and 1.3.18
-exists a null dereference vulnerability , a remote attacher can cause a
-denial of servise (sblim-sfcb crash) via a crafted packet without
-"className" info.
-
-
-Let`s see how this issue happened,the code below is from
-./sblim-sfcb-1.3.18/providerMgr.c :
-
-
-static UtilList *lookupProviders(long type, char *className, char
-*nameSpace,
-CMPIStatus *st)
-{
-UtilList *lst;
-UtilHashTable **ht=provHt(type,1);
-char *id;
-int rc;
-
-_SFCB_ENTER(TRACE_PROVIDERMGR, "lookupProviders");
-
-//here, className should be checked
-id=(char*)malloc(strlen(nameSpace)+strlen(className)+8);
-strcpy(id,nameSpace);
-strcat(id,"|");
-
-...
-
-}
-
-
-Red Hat BZ: https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-5185
-
-
-
--- 
-
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
-
---94eb2c0546de10b79d051dca84f0--
+greg k-h
