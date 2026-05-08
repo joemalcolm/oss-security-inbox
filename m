@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1938" "Monday" "5" "October" "2015" "20:56:47" "-0700" "Seth Arnold" "seth.arnold@canonical.com" "<20151006035647.GG16643@hunt>" "50" "[oss-security] CVE Request: git" nil nil nil "10" "2015100603:56:47" "[oss-security] CVE Request: git" (number mark "        seth.arnold@ Oct  5   50/1938  " thread-indent "\"[oss-security] CVE Request: git\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 19993 invoked by uid 550); 6 Oct 2015 03:57:02 -0000
+Received: (qmail 32564 invoked by uid 550); 8 May 2026 14:37:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,48 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 19964 invoked from network); 6 Oct 2015 03:57:01 -0000
-Message-ID: <20151006035647.GG16643@hunt>
-Mail-Followup-To: oss-security@lists.openwall.com, security@ubuntu.com
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="hTiIB9CRvBOLTyqY"
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Cc: security@ubuntu.com
-Date: Mon, 5 Oct 2015 20:56:47 -0700
-From: Seth Arnold <seth.arnold@canonical.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: git
+x-ms-reactions: disallow
+Received: (qmail 32539 invoked from network); 8 May 2026 14:37:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
+	s=manitu-webhosting; t=1778251054;
+	bh=ByqvhDbNEs8LbaHkAUxNmKL2ePQ7SKIYwnJLgjb/9Y8=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=bGqupyXEaj9Qx51jNhyxWmk4Np+WsD9h6NkmlioHk3o/ZAoM0SqPc+nzvKHKwT670
+	 aCHtblPOjyTisn+7VtPJMtkmdhU3ZnUPQKSE8gYySa4IPzGsA9fzdrja6aK/MEXNg5
+	 PKztztP2ChPl7NY/KABU9sMFb+cTkIrdNFOU8iCBmu+06EAPTk2l/zb/psJPqhQQli
+	 L/+HLujDIv+T3Zfiyw8WMOJi686X41rqjpNIa0UmXixVUF2HsJZjx//xE6RaE0sYlz
+	 4cgkAO6wF6V7NdmsSMtnwVf6wu8ZJwHG8/LoDTsQ74xwUf+KZO8fNx29SR3UtVZ9m3
+	 6Yt6NfgfsYl/g==
+Message-ID: <c716f684-e75f-495d-9d5b-b09db268c7a0@pipping.org>
+Date: Fri, 8 May 2026 16:37:34 +0200
+MIME-Version: 1.0
 To: oss-security@lists.openwall.com
+References: <875x4zk7k4.fsf@alyssa.is>
+ <24898a59-3315-4132-8f35-0dc6db414b78@gmail.com>
+Content-Language: en-US
+From: Sebastian Pipping <sebastian@pipping.org>
+In-Reply-To: <24898a59-3315-4132-8f35-0dc6db414b78@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] XSS in Postorius (Mailman 3) 1.3.13 and earlier
 
---hTiIB9CRvBOLTyqY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 5/8/26 06:19, Demi Marie Obenour wrote:
+> I know that the
+> (unrelated) h2o project (a C HTTP server library and daemon) does
+> tell users to use its master branch.
 
-Hello MITRE, all,
+I would like to note that telling users to use the default branch
+means to ask them to watch that branch for new commits and to 
+potentially re-deploy after every push to that branch, not just
+after every release.
 
-The git project announced v2.6.1 https://lkml.org/lkml/2015/10/5/683
-and included the following text:
+With my upstream-elsewhere hat on, keeping the default branch in
+releasable shape and doing a new release soon after security fixes
+should be feasible. If it's not feasible, that probably indicates other
+problems. (I mean that in general and not with regard to Postorius or
+h2o, specially. I have not looked at these or their processes in
+detail.)
 
-	 * Some protocols (like git-remote-ext) can execute arbitrary code
-	   found in the URL. The URLs that submodules use may come
-	   from arbitrary sources (e.g., .gitmodules files in a remote
-	   repository), and can hurt those who blindly enable recursive
-	   fetch. Restrict the allowed protocols to well known and
-	   safe ones.
+Best, Sebastian
 
-The following commits appear to implement the restrictions:
-
-https://kernel.googlesource.com/pub/scm/git/git/+/a5adaced2e13c135d5d9cc65be9eb95aa3bacedf%5E%21/
-https://kernel.googlesource.com/pub/scm/git/git/+/33cfccbbf35a56e190b79bdec5c85457c952a021%5E%21/
-https://kernel.googlesource.com/pub/scm/git/git/+/5088d3b38775f8ac12d7f77636775b16059b67ef%5E%21/
-https://kernel.googlesource.com/pub/scm/git/git/+/f4113cac0c88b4f36ee6f3abf3218034440a68e3%5E%21/
-https://kernel.googlesource.com/pub/scm/git/git/+/b258116462399b318c86165c61a5c7123043cfd4%5E%21/
-
-I do not know if this is exhaustive.
-
-The announcement also mentions some int-based overflows but does not
-describe any situations that would allow crossing privilege boundaries.
-
-Please assign CVEs as appropriate.
-
-Thanks
-
---hTiIB9CRvBOLTyqY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJWE0Z/AAoJEPMhclmdjS6X4NUH/2DxA1psIjhIUSkVlD9ACuHy
-Rc5cVlsZkUI2mvSrC6I6nFCR/bI/bfFuBD9rZI4L5QRejvENZgZTglw4ZD2nIc+e
-rv3dTyLZP2MlPkt+Ra7cGu72hA9M34zSbIzdzJNhUnaH5QCipZ3MbyU7NwkSmIX/
-wJfvlaXzQeIs10uIR2hiYmw77JK9hPrWlj2HDfi/KFXVnWpZJzQPGFxWhq+qXEqf
-rryXsAu7tvrZ1yAGvUw0zSp6TjVutlqCH97hsdjMCMlo1WBOzz8EGyruXKpzw2fP
-wusSHcJTq5qiyLEdzWla9WvcNh7ZXiP7WiUcmcYzyEYxV8hX6Re6lM+tRkLBxzw=
-=bmXS
------END PGP SIGNATURE-----
-
---hTiIB9CRvBOLTyqY--
