@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1499" "Wednesday" "10" "October" "2018" "02:55:17" "+0000" "Doran Moppert" "dmoppert@redhat.com" "<20181010025517.GC7851@dmoppert.redhat.com>" "39" "Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" "^Cc:" nil nil "10" "2018101002:55:17" "[oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)" (number mark "U       dmoppert@red Oct 10   39/1499  " thread-indent "\"Re: [oss-security] ghostscript: bypassing executeonly to escape -dSAFER sandbox (CVE-2018-17961)\"\n") "<CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>" ("<CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>" "<20181009153006.GF21509@takahe.colorado.edu>" "<CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>" "<alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>" "<20181009182643.5d601a06@jabberwock.cb.piermont.com>" "<CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>" "<CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 1305 invoked by uid 550); 10 Oct 2018 02:55:39 -0000
+Received: (qmail 9464 invoked by uid 550); 9 May 2026 04:23:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,66 +6,59 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1281 invoked from network); 10 Oct 2018 02:55:38 -0000
-Message-ID: <20181010025517.GC7851@dmoppert.redhat.com>
-References: <CAJ_zFk+nnBgWaDNKgvLnVjp4rz3SttBQvjCCXjiqC71rV6bBrA@mail.gmail.com>
- <20181009153006.GF21509@takahe.colorado.edu>
- <CAJ_zFkJZ1E-Wsrp92mvHL6TFmChPECbRsN+JGngqENKHCmALAA@mail.gmail.com>
- <alpine.GSO.2.20.1810091703270.29158@scrappy.simplesystems.org>
- <20181009182643.5d601a06@jabberwock.cb.piermont.com>
- <CAJ_zFkJ=n=xriGFHYLG5LdySg_BdLioG_wA1p8NV71_DzvBdPA@mail.gmail.com>
- <CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-In-Reply-To: <CAFRnB2XFut-kOS4Zt=1-roq-CAzxwK7Gsc9kNGZg4motFWWm4g@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.29]); Wed, 10 Oct 2018 02:55:26 +0000 (UTC)
-Cc: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
-Date: Wed, 10 Oct 2018 02:55:17 +0000
-From: Doran Moppert <dmoppert@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] ghostscript: bypassing executeonly to escape
- -dSAFER sandbox (CVE-2018-17961)
+x-ms-reactions: disallow
+Received: (qmail 10050 invoked from network); 8 May 2026 12:23:19 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1778242872; bh=BQRpOOyeaTe+WuXSpFARH9cU4Fa8FNKp0gd69H2jEXA=;
+	h=Date:To:From:Reply-To:Subject:From;
+	b=djUDxnOxangxG+oLV4Ps51F7Om5UuVHhj0WH1hlbBz42dU9ym9bJCOivXO9DgwslA
+	 BcYpJHH54ItEy7V8DH8VauTV5OiZgCDNJywWa3YDhNFPWW5Bk5GFDj8JEI8bFJg5rs
+	 tXKEioeGp4nvi8fstVZ0neaWrDVCuXnMpslws+wKf/kzE6Kw4bo+VGzgUWHe8imegd
+	 OqVOb603woIFkRghZsOunojIkGHaJWpF+/dyVgMFqRWUyNcL6Ug9K4KaI4+AhI3uC3
+	 0Mdw0RuxvypsBiKiSx2nVoh0Q/GCxFCuiLWAubN6Tu3muWNJXFoxPCRpL6NzdBTAXG
+	 5tyMMrl1bTZGA==
+Message-ID: <10c796d8-d900-4d3c-9ae1-d1b838ce8ec2@apache.org>
+Date: Fri, 8 May 2026 14:21:09 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
+From: "Piotr P. Karwasz" <pkarwasz@apache.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-25077: Apache CloudStack: Unauthenticated Command Injection
+ in Direct Download Templates
 
-Given the number of eyes & hours on these issues my question has to be 
-naive, so I apologise, but couldn't seccomp provide a safe "safe mode" 
-relatively easily?  What syscalls does legit ghostscript need once the 
-input and output streams are open?
+Severity: important
 
-On Tue, Oct 09, 2018 at 06:34:23PM -0400, Alex Gaynor wrote:
->Would they consider making a build-time "safe PS only" flag that ensured it
->was compiled without things like shell-invocation? Then we could just try
->to convince Linux distros to package it that way :-)
->
->Alex
->
->On Tue, Oct 9, 2018 at 6:33 PM Tavis Ormandy <taviso@google.com> wrote:
->
->> On Tue, Oct 9, 2018 at 3:27 PM Perry E. Metzger <perry@piermont.com>
->> wrote:
->>
->> > I keep wondering if there isn't a way to fully remove the dangerous
->> > bits from a postscript interpreter so it can _only_ be used to view
->> > the document and literally has no file system access compiled in at
->> > all, so there's no way to touch the fs etc. regardless of what flags
->> > the interpreter is invoked with.
->> >
->> > (I, too, find removing the ability to look at historical postscript
->> > documents a bit more draconian than I like.)
->> >
->> >
->> I've discussed it with upstream, it's a hard no because they feel it would
->> make ghostscript non-conforming (i.e. non-conforming with the Adobe
->> PostScript Language Reference Manual)
->>
->> We probably have similar thoughts on this, but that is the final word from
->> upstream.
->>
->> Tavis.
+Affected versions:
 
--- 
-Doran Moppert
-Red Hat Product Security
+- Apache CloudStack 4.11.0 through 4.20.2.0
+- Apache CloudStack 4.21.0.0 through 4.22.0.0
+
+Description:
+
+Account users are allowed by default to register templates to be
+downloaded directly to the primary storage for deploying instances using
+the KVM hypervisor. Due to missing file name sanitization, an attacker
+can register malicious templates to execute arbitrary code on the KVM
+hosts. This can result in the compromise of resource integrity and
+confidentiality, data loss, denial of service, and availability of the
+KVM-based infrastructure managed by CloudStack.
+
+
+Users are recommended to upgrade to Apache CloudStack versions 4.20.3.0
+or 4.22.0.1, or later, which fixes this issue.
+
+Credit:
+
+Reza at HazardLab (https://hazardlab.ninja) (reporter)
+
+References:
+
+https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-25077
+
