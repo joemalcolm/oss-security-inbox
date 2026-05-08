@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1206" "Friday" "5" "May" "2017" "11:22:58" "+0200" "Marcus Meissner" "meissner@suse.de" "<20170505092258.GF25854@suse.de>" "29" "Re: [oss-security] rpcbomb: remote rpcbind denial-of-service" "^Date:" nil nil "5" "2017050509:22:58" "[oss-security] rpcbomb: remote rpcbind denial-of-service" (number mark "        meissner@sus May  5   29/1206  " thread-indent "\"Re: [oss-security] rpcbomb: remote rpcbind denial-of-service\"\n") "<20170504005520.GD12174@hunt>" ("<CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>" "<20170504005520.GD12174@hunt>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7545 invoked by uid 550); 5 May 2017 09:23:12 -0000
+Received: (qmail 1822 invoked by uid 550); 8 May 2026 16:02:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,51 +6,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7521 invoked from network); 5 May 2017 09:23:11 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20170505092258.GF25854@suse.de>
-References: <CAO5O-EKoyVe5oxT3nx6pOYsHwhvp9SxcezkV-m5pnpw4Q_4j8A@mail.gmail.com>
- <20170504005520.GD12174@hunt>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170504005520.GD12174@hunt>
-Organization: SUSE Linux GmbH, GF: =?iso-8859-1?Q?Felix_?=
- =?iso-8859-1?Q?Imend=F6rffer=2C_Jane_Smithard=2C_Graham_Norton=2C_HRB_212?=
- =?iso-8859-1?Q?84_=28AG_N=FCrnberg=29?=
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Date: Fri, 5 May 2017 11:22:58 +0200
-From: Marcus Meissner <meissner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] rpcbomb: remote rpcbind denial-of-service
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 15639 invoked from network); 8 May 2026 07:46:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1778226358;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Lza2Wz+pdfZxFoeQ31Q8IFgBkRt60fXOnUHUYKwaWRc=;
+	b=a9kGmEEYiTiy1jMhaj1USQBx/SLxt+ndadAJc18/h3+H3OauhJO3OZWmz3KO8L95T+2os7
+	U5i/TTvNWuSxopB1mpWuUgrRavRCRB4zO6JtlKbxQ0GBd3g5Dop5DN3brPWfPXwS5LDXF0
+	elWOfpdrFiYTIZoXq00ihhwIM4DIZ1ezl+LnpH07YhqNq4Byfcgg+axK+H3lnkP3z8AmtR
+	wH6JeDW0oAFOisbksioyqcmOYEwoCuEC4A/Ydag1PqrlN4Fg/1rb4i2vBmDHF3Ap75U0D4
+	0Kl+MgROQiZvCHbv8HkZBhbwKCtbrzzCvEBrN6k9bFDpQTx4y3jmMvyGDRyRww==
+Message-ID: <6d030a89-4b22-4b13-950d-ce5a6cd48caf@cpansec.org>
+Date: Fri, 8 May 2026 08:45:57 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Score: 0
+X-GND-Cause: dmFkZTF/L4BH392kdC8tJ+d7X+N792djtR/fok5kgLZ9QzTiYj5kqOVpvfN+BQcpuGdVbUUNYPr0k/jASHyr3bG8RjQcouxCe85R44Xv3+Y41Fb6gvtxZArm1pcjoI/N598wu3HKJTNuPttDd6Wrmgn62lH29PH7U8bFomiK5MDv9799bKP7L5VJbj6PpspaDzKAvVJfcpWARkPwcUXatUilvzxH3Hw7Eh9D3t4wIxgRzKOUu//CJXzcB4gu72H9PzQTLn48rvfOKKiGuKfKtEwBQjmwnB/+KTiTLfzGJ6uF2mN1De3Ukbiqzgu1X/rsmjrt2Mw3dW05YRN/anfI6EWfwuAJpgtTIv4k6iNQspfDNtUU6HjiqNLIuqXepxddhnwMCtKWuX07LnwLszb9gSPAE/su5qp0VKQHTZO5ug6s3TJnYeROwl+LB9OucWh84qMS+erXGlXEDrgz83J+43eB1cwUEUcBxEqaAcjd9dPTCegUTG2zg7iqu6A+ESQ6E9RtVHq9aCzAyCItoiNBiWx/q2Ek8fr/jHKqbJfovldHHNTNyOVqXtnFCsj8wySbg/gsvSwWcqLyzwuvAU7Llum8etMST+WAA3/9ahQUJngbEi/bowXQhBLo10S5EgLJb/UBFqJ/Lcr2A4Da1k4kZa3c8xHbt0dO1olEnI/sRcHS5VSpsg
+X-GND-State: clean
+Subject: [oss-security] CVE-2013-10075: Apache::Session versions through 1.94 for Perl
+ re-creates deleted sessions
 
-On Wed, May 03, 2017 at 05:55:20PM -0700, Seth Arnold wrote:
-> On Wed, May 03, 2017 at 08:55:23PM +0200, Guido Vranken wrote:
-> > This vulnerability allows an attacker to allocate any amount of bytes
-> > (up to 4 gigabytes per attack) on a remote rpcbind host, and the
-> > memory is never freed unless the process crashes or the administrator
-> > halts or restarts the rpcbind service.
-> > [...]
-> > An extensive write-up can be found here:
-> > https://guidovranken.wordpress.com/2017/05/03/rpcbomb-remote-rpcbind-denial-of-service-patches/
-> > 
-> > Exploit + patches: https://github.com/guidovranken/rpcbomb/
-> 
-> Hello Guido, nice find. Have CVE numbers been requested for this issue
-> yet? Have you investigated if ntirpc is affected too? Much of the code
-> looks similar:
-> 
-> http://sources.debian.net/src/ntirpc/1.4.3-3/src/rpc_generic.c/#L728
+========================================================================
+CVE-2013-10075                                       CPAN Security Group
+========================================================================
 
-We also saw glibc affected.
+         CVE ID:  CVE-2013-10075
+   Distribution:  Apache-Session
+       Versions:  through 1.94
 
-https://bugzilla.suse.com/show_bug.cgi?id=1037559#c7
+       MetaCPAN:  https://metacpan.org/dist/Apache-Session
+       VCS Repo:  http://github.com/chorny/Apache-Session
 
-That said, your reproducer allocates virtual memory, and on systems with overcommit
-there is only neglible impact on overall memory pressure.
 
-The rpc service will however likely crash at some point though when there is no virtual
-address space left for it.
+Apache::Session versions through 1.94 for Perl re-creates deleted
+sessions
 
-Ciao, Marcus
+Description
+-----------
+Apache::Session versions through 1.94 for Perl re-creates deleted
+sessions.
+
+The session stores Apache::Session::Store::File and
+Apache::Session::Store::DB_File will create a session that does not
+exist.    This can lead to sessions being revived, potentially with data
+that was to be deleted.
+
+Problem types
+-------------
+- CWE-672 Operation on a Resource after Expiration or Release
+
+Workarounds
+-----------
+Use a database store based on Apache::Session::Store::DBI.
+
+
+References
+----------
+https://rt.cpan.org/Public/Bug/Display.html?id=83525
+
+Timeline
+--------
+- 2013-02-21: Issue reported
+
+Credits
+-------
+Thomas Sibley, finder
+
+
+
