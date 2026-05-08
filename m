@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1777" "Thursday" "12" "May" "2016" "23:53:59" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160513035359.77D777BC065@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: CVE Request - OpenJPEG: Security Fixes" nil nil nil "5" "2016051303:53:59" "[oss-security] Re: CVE Request - OpenJPEG: Security Fixes" (number mark "U       cve-assign@m May 12   43/1777  " thread-indent "\"[oss-security] Re: CVE Request - OpenJPEG: Security Fixes\"\n") "<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>" ("<1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 21734 invoked by uid 550); 13 May 2016 03:54:12 -0000
+Received: (qmail 3937 invoked by uid 550); 9 May 2026 04:22:47 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,55 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21713 invoked from network); 13 May 2016 03:54:11 -0000
-From: cve-assign@mitre.org
-To: winsonliu@tencent.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1F2D4DA31CA62740BFF46830A0E6A4F706575A62@EXMBX-TJ003.tencent.com>
-Message-Id: <20160513035359.77D777BC065@smtpvmsrv1.mitre.org>
-Date: Thu, 12 May 2016 23:53:59 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - OpenJPEG: Security Fixes
+x-ms-reactions: disallow
+Received: (qmail 27856 invoked from network); 8 May 2026 12:16:44 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1778242546; bh=q9ML7cUeujB/9Rz5dUWB43J+e9u5EI50pCXEE4U3dMw=;
+	h=Date:To:From:Reply-To:Subject:From;
+	b=p2TRfBcDcsmGLVXdvx4MR1Me59uLDbe1zOm3oiaRt0LSVZvh4SRKhDecKJCeDVGge
+	 +HnWs4UttXEZKFhz9m7yZkMSztXMOwTOS7iz6pfOaY7C6DMhcbcs024dhXObKlY7Rx
+	 8iaQkcSePCPcMSxM/AyA3BAJHDa7W0h58bx+WxxXQWuAa/msbSGxq+1DiOY7ft+EJ5
+	 Zb4/9UEkgnbQdZciVj9DaNRB+CY5X8eFTIyEfs9+OZukbk8uf4ydDT6fupw+7PBW5U
+	 Z2shWw8vBHuITPI5ucZOq8IPakUt+FVFqVfVZNbj18NEKxM3BexsiSOs53M1i6RgHx
+	 jj5YkyEwbGgPQ==
+Message-ID: <81d1ff17-4bcb-41db-8bfc-ed9e125b166b@apache.org>
+Date: Fri, 8 May 2026 14:15:43 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+From: "Piotr P. Karwasz" <pkarwasz@apache.org>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2025-66467: Apache CloudStack: MinIO policy remains intact on
+ bucket deletion
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important
 
-> 1. Issue 774
-> OpenJPEG Heap Buffer Overflow in function color_cmyk_to_rgb of color.c
-> Fixed via https://github.com/uclouvain/openjpeg/commit/162f6199c0cd3ec1c6c6dc65e41b2faab92b2d91
+Affected versions:
 
-Use CVE-2016-4796.
+- Apache CloudStack 4.19.0.0 through 4.20.2.0
+- Apache CloudStack 4.21.0.0 through 4.22.0.0
 
+Description:
 
-> 3. Issue 733
-> OpenJPEG division-by-zero in function opj_tcd_init_tile of tcd.c
-> Fixed via https://github.com/uclouvain/openjpeg/commit/8f9cc62b3f9a1da9712329ddcedb9750d585505c
+Missing MinIO policy cleanup on bucket deletion via Apache CloudStack
+allows users to retain access to buckets which they previously owned. If
+another user creates a new bucket with the same name, the previous
+owners can gain unauthorized read and write access to it by using the
+previously generated access and secret keys.
 
-Use CVE-2016-4797. Note that the problematic
-"(OPJ_UINT32)-1) / l_data_size" was apparently introduced in a patch
-addressing out-of-bounds read (or heap-based buffer over-read)
-vulnerabilities. See the pdfium.googlesource.com reference in
-CVE-2014-7947. In other words, CVE-2016-4797 exists because of an
-incorrect fix for CVE-2014-7947.
+Users are recommended to upgrade to Apache CloudStack versions 4.20.3.0
+or 4.22.0.1, or later, which fixes this issue.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Credit:
 
-iQIcBAEBCAAGBQJXNU9PAAoJEHb/MwWLVhi28X4QAIGR60vQpZzIhEywfDxkjIBR
-dSoym8oeHcYmXJ3ss2YRbh7+SWIstc3gu9cM3BXTuvyIQqsjN0uMf4/GOYanYUe4
-5BtBptTnJlZW+mR+SfZ3Q/ykY3ysTgQMx93114gSj+5+JPS22rb3SM9PiaofeMgh
-1NMGfI91bpp/KotoChumac2ySmA6ozyPXitOhBcu/fYipJAAnymxg0msmXqemjY8
-HC9yjamL5RxvNSl8ljJsB67A7HJ9tvW8zvDUv6w6Q7s6LvbnCdQKJi62gj8/s+u4
-bPP5KlfFdqDSVmQuMbhFwC+g1LfH5wPzjeKo9B2HFZnXPU/MMlHiTLM+Sw2ZPaAK
-y1iZiHJWgoVcgEWRDmBim698GqITbkvkIuIhr/Wwr5JG9VogTmwkEyoHsSUpvybh
-0xtT9po9hyWpli0pzCrEVMOEhg3IIa8l2HY7QK0QwpQgIiOS5FqoDQGx+rE257zX
-ycEjCotU9ut0x9NvuoEZ4Vcij9uuN4LOq936TwbDCL7Mrl2+/sKzUggl9NdiwLOz
-zulrm15VG76PcyrdlBxg5Mz+T3jKnGeASvuIFGvFNAqgDbo1a9aNPsqZqt9PQGms
-tYOD46BI1j04y0lO0+0kzuKM6KQD2I5P481mlxwNkpak8ZbYh2nk+v+sbtE6mQh/
-f76PMrF6mhLea5mECvFK
-=0Yri
------END PGP SIGNATURE-----
+Roman Kozello <roman.kozello@gmail.com> (reporter)
+
+References:
+
+https://lists.apache.org/thread/n8mt5b7wkpysstb8w7rr9f02kc5cq2xm
+https://cloudstack.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2025-66467
+
