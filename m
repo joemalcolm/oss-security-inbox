@@ -1,4 +1,4 @@
-Received: (qmail 22137 invoked by uid 550); 12 Jul 2024 17:26:19 -0000
+Received: (qmail 1666 invoked by uid 550); 12 May 2026 15:28:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,147 +7,230 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9515 invoked from network); 12 Jul 2024 17:06:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=citron; t=1720803965; x=1721470631; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  mime-version:content-type:content-transfer-encoding:author:from:subject:
-  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
-  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-  mime-version:content-type:content-transfer-encoding:content-disposition:
-  content-id:content-description:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=gjc9aHOxIswKloqGLruTYp4V2yC9cF5R++tLEzzQCVs=;
- b=kNst5yTIITeHflIjRSsDTc0OVxKqNBsj3J32p6WB1P9TZE4kwJH82eUho8sSsfILsKE1FRco
-  cGyXj2v2IviiQSQQAsnwpidwdxHoIqv9be753qqmWzKWTLl5I7+KV5rILv+5PNNI8mxKqPdMvu
-  IvfuJds+HOH77vNUni3IwNVeAJf6M+/1Jq9f53DIL3KTlnJ4sRFN0KKTLbYF4A4aoAdLSMI5cA
-  6J1gevRDcv5m+OJYOyfzFB+b1HkHR2v3qmZBuQ87Xy+SyWGcOu2W/8evwDkmhMNdavlI2PChsU
-  Q+0ORLIk9PcG06n7c+jrFpzZYwCbMqI/0IXbOWGLIzC0+TOA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=sdaoden.eu;
- s=orange; t=1720803965; x=1721470631; h=date:author:from:to:subject:
-  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
-  mime-version:content-type:content-transfer-encoding:author:from:subject:
-  date:to:cc:resent-author:resent-date:resent-from:resent-sender:resent-to:
-  resent-cc:resent-reply-to:resent-message-id:in-reply-to:references:
-  mime-version:content-type:content-transfer-encoding:content-disposition:
-  content-id:content-description:message-id:mail-followup-to:openpgp:
-  blahblahblah; bh=gjc9aHOxIswKloqGLruTYp4V2yC9cF5R++tLEzzQCVs=;
- b=vNoluiGkM63xV9KpF8yzDNghTLKJODW9Werco5fkL8vETrVI60ai5X7BiPqtbDD3FmUv/g10
-  QBgT1bPEtucODg==
-Date: Fri, 12 Jul 2024 19:06:03 +0200
-Author: Steffen Nurpmeso <steffen@sdaoden.eu>
-From: Steffen Nurpmeso <steffen@sdaoden.eu>
-To: oss-security@lists.openwall.com
-Message-ID: <20240712170603.XJ6iwd6q@steffen%sdaoden.eu>
-In-Reply-To: <83F0CF09-6257-4949-9332-E6990CFE14C7@dwheeler.com>
-References: <30400489-6c59-4133-a3ce-fa0c16b63c02@analygence.com>
- <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>
- <20240710214412.8IXhxf8b@steffen%sdaoden.eu>
- <83F0CF09-6257-4949-9332-E6990CFE14C7@dwheeler.com>
-Mail-Followup-To: oss-security@lists.openwall.com
-User-Agent: s-nail v14.9.24-621-g0d1e55f367
-OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
- url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
-BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
- the world can make no bugs.
+x-ms-reactions: disallow
+Received: (qmail 9782 invoked from network); 12 May 2026 13:41:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dovecot.fi; h=cc
+	:content-type:content-type:date:from:from:message-id
+	:mime-version:reply-to:subject:subject:to:to; s=s1dus; bh=KOFwel
+	3oK7pOOXkgI4qR9re28Ij12VwvCl+SY8kT3M8=; b=CQHEOHOJedtv9LZza2WSsG
+	nSJ11662hCVQURMJzg7pLRVt+2z2CBKeYO+AxP0rirjQEOvaMr9OG8JOjuwPPlt/
+	JQoe0hz2K2dDYm9eRuVIzzktlb1BJdD7JcaZyEo7zlAyZPWxxCqR+ck9TiERvVl3
+	h4zl5lBLifkHKt63cn1JyarMEkhoBjeokjpEOH5Kozl4gUyQZKAHBJNTUs0KOh0h
+	7x9g7iW/T+Yn3oNGDW8MLW/i37dH/L096AQ2pDH+VnvXBVAponW3ejfnngUV/6OJ
+	dMAeikPrvMZa7GsnqzT+oAspq7YAfR1LKwkkFLcf9RRVkvld0yHwh3b3c6Dtojkw
+	==
+Date: Tue, 12 May 2026 16:41:29 +0300 (EEST)
+From: Aki Tuomi <aki.tuomi@dovecot.fi>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Message-ID: <835140174.3112.1778593289745@appsuite-pro-sync-core-mw-groupware-1.appsuite-pro-sync-core-mw-hazelcast-headless.appsuite-dev.svc.cluster.local>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; 
+	boundary="----=_Part_3111_1155673163.1778593289745"
+X-Priority: 3
+Importance: Normal
+X-Mailer: Open-Xchange Mailer v8.50.38
+X-Originating-Client: open-xchange-appsuite
+Autocrypt: addr=aki.tuomi@open-xchange.com; prefer-encrypt=mutual; keydata=
+ mDMEaXi1dhYJKwYBBAHaRw8BAQdAEJLvpgP+itb+MHN5qNwpxsEyWR2bv6IKdlQeqv/pbki0JkFraSB
+ UdW9taSA8YWtpLnR1b21pQG9wZW4teGNoYW5nZS5jb20+iJkEExYKAEEWIQT34Vip1fobtOBS8RZERu
+ Pm7I2FiQUCaXi1dgIbAwUJEswDAAULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgAAKCRBERuPm7I2Fi
+ ZIbAP4opRSCiqfcSe0q5zuPvjYQDsvWsw5TYG+7aIxpCeFZJAD/Q8dzjlbEtX5TUD5GR0JQU+IICiWb
+ KQMUE8wJ7x74hwa4OARpeLV2EgorBgEEAZdVAQUBAQdAooB16zM4KEY+auRTWotyH+S2cxc1NWEQi5k
+ hshkscEUDAQgHiH4EGBYKACYWIQT34Vip1fobtOBS8RZERuPm7I2FiQUCaXi1dgIbDAUJEswDAAAKCR
+ BERuPm7I2FiY4hAQD2ViPE5xDImMIj+f0xhguEchlGyOL9xcaTdEEq5Dge7QD/Va8DzBJYuRnEvOlU0
+ VmL+JzzV4mMpQoviAlb/Abjfg8=
+Subject: [oss-security] Dovecot Security Advisory OXDC-2026-0002
+
+------=_Part_3111_1155673163.1778593289745
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] ASLRn't is still alive and well on x86
- kernels, despite CVE-2024-26621 patch
 
-David A. Wheeler wrote in
- <83F0CF09-6257-4949-9332-E6990CFE14C7@dwheeler.com>:
- |Yves-Alexis Perez wrote in
- |> <6771f9536d49185fc8f1ea9905c13cf4dd8776d2.camel@debian.org>:
- |> ...
- |>|mmap(NULL, 2097152, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 0, 0) =3D 0xf=
-7df\
- |>|3000
- |
- |On Jul 10, 2024, at 5:44 PM, Steffen Nurpmeso <steffen@sdaoden.eu> wrote:
- |> I thought on Linux MAP_DENYWRITE is actually an ignored flag.
- |
- |I believe you're correct, but I believe what Yves-Alexis Perez is showing=
- \
- |is the
- |flags that are being *passed* to the kernel (whether or not they DO \
- |anything).
- |Which is why there's a proposal to *make* MAP_DENYWRITE do something \
- |in this case.
- |
- |My plea is that if this DOES start doing something, PLEASE document \
- |that ASAP
- |(including a note that it USED to be ignored). I fear that this security \
- |property
- |might, on some platforms, depend on a quiet undocumented change.
+Hi!
 
-Well i mean, i do not know, i am a user space programmer.
-And then the mmap(2) manual says
+We're sharing our latest advisory with you and like to thank everyone who c=
+ontributed in finding and solving those vulnerabilities. This advisory is a=
+lso published at https://documentation.open-xchange.com/dovecot/security/ad=
+visories/html/2026/oxdc-adv-2026-0002.html
 
-   MAP_DENYWRITE
-          This  flag  is  ignored.  (Long ago=E2=80=94Linux 2.0 and earlier=
-=E2=80=94it sig=E2=80=90
-          naled that attempts to write to the underlying file  should  fail
-          with  ETXTBSY.   But  this  was a source of denial=E2=80=90of=E2=
-=80=90service at=E2=80=90
-          tacks.)
+---
 
-which is nice (i think bitsavers.org does not have any info, and
-we all know shall a future exist, this "cultural" epoch will be
-a whiteout beside that).
+Classification: TLP:GREEN
 
-But .. if you log the kernel you see for example
-6e16f5133501440699dcca3c5aba367cf6f9c227 from 2023-07-24 saying
+Internal reference: DOV-8967
+Type: CWE-235 (Improper Handling of Extra Parameters)
+Component: core
+Report confidence: Confirmed
+Solution status: Fixed by vendor
+Last affected revision: OX Dovecot Pro core 3.1.4, OX Dovecot CE core 2.4.3
+First fixed revision: OX Dovecot Pro core 3.1.5, OX Dovecot CE core 2.4.4
+Discovery date: 2026-03-29
+Solution date: 2026-05-05
+Disclosure date: 2026-05-05
+Researcher credits: caprinuxx@yeswehack
+CVE: CVE-2026-27851
+CVSS: 7.4 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
 
-    selftests/mm: fix thuge-gen test bugs
-    ...
-    thuge-gen was also calling mmap with SHM_HUGETLB flag (bit 11 set), whi=
-ch
-    is actually MAP_DENYWRITE in mmap context.  The man page says this flag=
- is
-    ignored in modern kernels.  I'm pretty sure from the context that the
-    author intended to pass the MAP_HUGETLB flag so I've fixed that up too.
+Details:
+lib-var-expand: Safe filter leaks to all following pipelines. When safe fil=
+ter is used with variable expansion, all following pipelines on the same st=
+ring are incorrectly interpreted as safe too, enabling unsafe data to be un=
+escaped.
 
-or 49624efa65ac9889f4e7c7b2452b2e6ce42ba37d from 2021-09-04
+Risk:
+This can enable SQL / LDAP injection attacks when used in authentication. N=
+o publicly available exploits are known.
 
-    Pull MAP_DENYWRITE removal from David Hildenbrand:
-     "Remove all in-tree usage of MAP_DENYWRITE from the kernel and remove
-      VM_DENYWRITE.
+Solution:
+Avoid using safe filter until on fixed version.
 
-      There are some (minor) user-visible changes:
-    ...
 
-or 6128b3af2a5e42386aa7faf37609b57f39fb7d00 from 2021-04-23
 
-    mm: ignore MAP_DENYWRITE in ksys_mmap_pgoff()
+---
 
-    Let's also remove masking off MAP_DENYWRITE from ksys_mmap_pgoff():
-    the last in-tree occurrence of MAP_DENYWRITE is now in LEGACY_MAP_MASK,
-    which accepts the flag e.g., for MAP_SHARED_VALIDATE; however, the flag
-    is ignored throughout the kernel now.
 
-    Add a comment to LEGACY_MAP_MASK stating that MAP_DENYWRITE is ignored.
 
-so that is not too far in the past, and, sorry, but i am not so
-deep in the kernel / memory system scene to get an immediate
-notion, yet i think the topic is interesting for any (user space)
-programmer of any programming language that supports mapping
-memory directly.  So if someone says "this  was a source of
-denial=E2=80=90of=E2=80=90service attacks" then i need to wrap my head, and=
- it is
-not as if an in-between-the-lines reference to MAP_DENYWRITE ring
-any bells except that i think the flag has been removed.  And then
-someone who seems to know uses it nonetheless in a small showcase
-program, likely trying to say even more in-between-the-lines.  And
-thus i live on the edge in between the Red Hot ChilliPeppers "if
-you have to ask, you will never know", and the Sesame Street,
-which at least in Germany was "sometimes you simply have to ask to
-understand a matter".  Granted that "i think this flag was
-removed" is not a question as such.
+Internal reference: DOV-8948
+Type: CWE-400 (Uncontrolled Resource Consumption)
+Component: core
+Report confidence: Confirmed
+Solution status: Fixed by vendor
+Last affected revision: OX Dovecot Pro core 2.3.0
+First fixed revision: OX Dovecot Pro core 3.1.5, OX Dovecot CE core 2.4.4
+Discovery date: 2026-03-24
+Solution date: 2026-05-05
+Disclosure date: 2026-05-05
+Researcher credits: djvirus@yeswehack
+CVE: CVE-2026-40016
+CVSS: 5.3 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H)
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+Details:
+Sieve :contains/:matches O(N=C3=97M) Substring Match Bypasses sieve_max_cpu=
+_time Limit (130=C3=97 Overrun). Attacker can upload a malicious Sieve scri=
+pt over ManageSieve service (or locally) to bypass configured CPU time limi=
+ts for Sieve up to 130 times of the configured limit.
+
+Risk:
+Attacker can use this to degrade server performance and bypass configured C=
+PU time limits for Sieve scripts. No publicly available exploits are known.
+
+Solution:
+Install fixed version, or alternatively prevent direct access to Sieve scri=
+pts via ManageSieve or local access.
+
+
+
+---
+
+
+
+Internal reference: DOV-9030
+Type: CWE-99 (Improper Control of Resource Identifiers ('Resource Injection=
+'))
+Component: core
+Report confidence: Confirmed
+Solution status: Fixed by vendor
+Last affected revision: OX Dovecot Pro core 3.1.0, OX Dovecot CE core 2.4.0
+First fixed revision: OX Dovecot Pro core 3.1.5, OX Dovecot CE core 2.4.4
+Discovery date: 2026-04-08
+Solution date: 2026-05-05
+Disclosure date: 2026-05-05
+Researcher credits: ylwango613@yeswehack
+CVE: CVE-2026-33603
+CVSS: 6.8 (CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N)
+
+Details:
+login: Base64 input can contain tabs that bypass IPC protection. Attacker c=
+an use a specially crafted base64 exchange between Dovecot and Client to fa=
+ke SCRAM TLS channel binding. This requires that the attacker is able to po=
+sition itself between Dovecot and the client connection.
+
+Risk:
+If successful, the attacker can eavesdrop communications between Dovecot an=
+d client as MITM proxy. No publicly available exploits are known.
+
+Solution:
+Install fixed version.
+
+
+
+---
+
+
+
+Internal reference: DOV-9040
+Type: CWE-284 (Improper Access Control)
+Component: core
+Report confidence: Confirmed
+Solution status: Fixed by vendor
+Last affected revision: OX Dovecot Pro core 2.3.0
+First fixed revision: OX Dovecot Pro core 3.1.5, OX Dovecot CE core 2.4.4
+Discovery date: 2026-04-08
+Solution date: 2026-05-05
+Disclosure date: 2026-05-05
+Researcher credits: ilhamaf@yeswehack
+CVE: CVE-2026-40020
+CVSS: 3.1 (CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:L)
+
+Details:
+IMAP folders can be shared-spammed to everyone. Attacker can use the IMAP S=
+ETACL command to inject the anyone permission to user's dovecot-acl file ev=
+en if imap_acl_allow_anyone=3Dno. This causes folders to be spammed to all =
+users.
+
+Risk:
+The impact is limited to being able to spam folders to other users, no unex=
+pected access is gained. No publicly available exploits are known.
+
+Solution:
+Install to fixed version.
+
+
+
+---
+
+
+
+Internal reference: DOV-9138
+Type: CWE-400 (Uncontrolled Resource Consumption)
+Component: core
+Report confidence: Confirmed
+Solution status: Fixed by vendor
+Last affected revision: OX Dovecot Pro core 3.0.5, OX Dovecot Pro core 3.1.=
+4, OX Dovecot CE core 2.4.3
+First fixed revision: OX Dovecot Pro core 3.1.5, OX Dovecot CE core 2.4.4
+Discovery date: 2026-04-27
+Solution date: 2026-05-05
+Disclosure date: 2026-05-05
+Researcher credits: D4RKCYPH3R@yeswehack
+CVE: CVE-2026-42006
+CVSS: 4.3 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L)
+
+Details:
+imap-login: Excessive memory usage DoS - Try 2. An attacker can cause uncon=
+trolled memory usage with excessive bracing over IMAP. The fix in CVE-2026-=
+27857 was incomplete, only blocking one way of doing this, so there was sti=
+ll another way left open. In particular, the fix was for closing braces, bu=
+t you could still use open braces to bypass the limit.
+
+Risk:
+Using excessive bracing, attacker can cause memory usage up to configured m=
+emory limit. No publicly available exploits are known.
+
+Solution:
+Install fixed version, or configure vsz_limit for imap process to low value.
+
+------=_Part_3111_1155673163.1778593289745
+Content-Type: application/pgp-signature
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: BCPG v1.79
+
+iF4EABYKAAYFgmoDLgkACgkQREbj5uyNhYkoEQD9EC2WWlmkSNBRnPvMUBeOpXjG
+BK3EDHEXRSBOaPDaIlsBAMWRQNGki7EVKEnHm+qtc/jI1Wsk/jh2/BKkvkm4z1AB
+=76Mh
+-----END PGP SIGNATURE-----
+
+------=_Part_3111_1155673163.1778593289745--
+
