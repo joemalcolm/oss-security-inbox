@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1684" "Wednesday" "20" "December" "2017" "06:59:18" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20171220055918.GA32086@lorien.valinor.li>" "59" "Re: [oss-security] GIMP parser bugs (FLIMP and more)" "^Date:" nil nil "12" "2017122005:59:18" "[oss-security] GIMP parser bugs (FLIMP and more)" (number mark "        carnil@debia Dec 20   59/1684  " thread-indent "\"Re: [oss-security] GIMP parser bugs (FLIMP and more)\"\n") "<20171219171119.3f4c7ae5@pc1>" ("<20171219171119.3f4c7ae5@pc1>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13468 invoked by uid 550); 20 Dec 2017 05:59:32 -0000
+Received: (qmail 15778 invoked by uid 550); 12 May 2026 15:57:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,104 +6,100 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13450 invoked from network); 20 Dec 2017 05:59:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4OBISYyxx17Gfyf+C9iC5WbMd5i8IIuEf5APWL4Zfy0=;
-        b=eFH3XTgsNLPQM7g6H9blnf0XkJ8gnuN2bJQ/beMQZGRUVkX+3fY0V3RKg7nbtOf+qH
-         fYtera999VZCdYz6Ov55eNKu1Tvj5Bicr9zujZO7pj89Fas++mwGeiYPqjTLgLz1niez
-         uTJRuD+UVrzG6inSWsRhpmNs/MHdcmWrrZ9Lp8lEcVte+1UAf5NqZqhTmKO6a41iR4gS
-         m0lIFcyCExfiieCpFCQB5w5msQOjjNw10ElRNmh5eTt5hcSZ6epQy1xPR8cHj94IUbXz
-         Hn12ClwerzmeMJaVuFnzBk2ehGzJqtv5rHUAngssZcq9xEgA5RXfMwl3PTA03P6+ZjnM
-         QJHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4OBISYyxx17Gfyf+C9iC5WbMd5i8IIuEf5APWL4Zfy0=;
-        b=VWASh8oiaBSVQF86iQ5SdcEUU+aJV3KIrUJtgmzJFF0R9HO1w+ome3Ca37RNMAwmvq
-         kzHzJfGSxGG3AV4gOxIKkEIyMZ6X0A4QVwyRFXBRRAJjgwF1GDbDQTDcM0qZ130gfWpP
-         sfK+ZgQE+g8PNDlFlqsqNYega3hJi//Ec6K9SeoXytzfddPaBkazl6tg3GoUjcMb9UYj
-         yiZn2kLK/pYzYOPwK4yyw8G8PRSjXf5doxxXC7fWVDTGb275275gb2z87SJ1jzEuAcBp
-         /suv++MeJueK84ZuzZE6LwOwgLuIHZZuT22rBw4dp8q4dNZ++NbJ98f08NTLj7aeA9nk
-         Ai/Q==
-X-Gm-Message-State: AKGB3mL/RigTHkVBcKg5WNkWxC+apQaTiCccAmrudv9f95oiGvF/11Mb
-	mjFE7t+4Nxci7VcKHiUy0XnMBQ==
-X-Google-Smtp-Source: ACJfBoucCgWFn0+ryqwqBLgBbxKwdRvBO96kcLdxGfZ+dQMg7abDV+cGkQeKd7TG7QBV+0UjjmSlxA==
-X-Received: by 10.223.176.86 with SMTP id g22mr7739868wra.267.1513749560273;
-        Tue, 19 Dec 2017 21:59:20 -0800 (PST)
-Message-ID: <20171220055918.GA32086@lorien.valinor.li>
-References: <20171219171119.3f4c7ae5@pc1>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20171219171119.3f4c7ae5@pc1>
-User-Agent: Mutt/1.9.2 (2017-12-15)
-Date: Wed, 20 Dec 2017 06:59:18 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Subject: Re: [oss-security] GIMP parser bugs (FLIMP and more)
+x-ms-reactions: disallow
+Received: (qmail 26544 invoked from network); 12 May 2026 15:36:35 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1778599207; bh=kWKtX97ogoMhb1mFYDccOKvvNT2k1N2ddPmSGXAVypg=;
+	h=Date:To:From:Subject:From;
+	b=dHbbUf8tCZvvpt2cj7ifmCX+xoMUM1iY53z+vGB1Gtzxk9WYjaRiy1G5r5ttN6KCR
+	 RGaZlgBto+wiU4Bi08BeC/Z7APLEqJtKq9v0V850kkLH2YrkVgFtKGaF8Co+Zvv4Mp
+	 FTB1jAg+kIQouNfAy3BxQlQ7EDZfpWajmsB8qkrUU2Rlmp1RHEx6gbWt5h+B3X9LdU
+	 t4YJwH6lOZE74K/QOyft3lKbyO57PxCDVaKvOt+H5XRNoNJ9RKB0ReiUhYzb/n6Azn
+	 3sAaMWy2G3HjoKgxt98XPxWFLFpXHFJ835Z9B1ol5XAWLRQmpNh6x3R+lkP3YEyXSM
+	 Jbf1NfIXCIkzA==
+Message-ID: <fad565c9-c494-4ca9-abf0-8dd5c94380d3@apache.org>
+Date: Tue, 12 May 2026 16:20:06 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-GB
 To: oss-security@lists.openwall.com
+From: Mark Thomas <markt@apache.org>
+Autocrypt: addr=markt@apache.org; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: [oss-security] CVE-2026-41293: Apache Tomcat: HTTP/2 request headers not validated
 
-Hi
+Severity: low
 
-On Tue, Dec 19, 2017 at 05:11:19PM +0100, Hanno B??ck wrote:
-> Hi,
-> 
-> See also
-> https://flimp.fuzzing-project.org/
-> 
-> Background: In 2014, back when I started the fuzzing project, I
-> reported two bugs in GIMP in their more obscure parsers. Recently I was
-> contacted by Tobias St??ckmann who wrote a working exploit (on freebsd <-
-> no aslr, thus easier) for one of those bugs in the FLIC parser. He also
-> submitted a patch.
-> 
-> The bugs were ignored all the time, patches as well.
-> 
-> I reported a couple of more bugs and also contacted the GNOME security
-> team. Some have patches, others not, ony one got handled. It seems
-> overall the file format importers are unmaintained.
-> I also tried to submit a fuzzing guide to the gimp wiki, which failed,
-> because the people who are supposed to hand out user accounts don't
-> answer. (gimp is not fuzzing friendly.)
-> 
-> The bugs:
+Affected versions:
 
-The following CVEs were assigned:
+- Apache Tomcat 11.0.0-M1 through 11.0.21
+- Apache Tomcat 10.1.0-M1 through 10.1.54
+- Apache Tomcat 9.0.0.M1 through 9.0.117
+- Apache Tomcat 10.0.0-M1 through 10.0.27
+- Apache Tomcat 8.5.0 through 8.5.100
 
-> Heap overflow in FLI import (the one where we have an exploit):
-> https://bugzilla.gnome.org/show_bug.cgi?id=739133
+Description:
 
-CVE-2017-17785
+Improper Input Validation vulnerability in Apache Tomcat.
 
-> OOB read in TGA (with patch)
-> https://bugzilla.gnome.org/show_bug.cgi?id=739134
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.21, from 
+10.1.0-M1 through 10.1.54, from 9.0.0.M1 through 9.0.117, from 10.0.0-M1 
+through 10.0.27.
+Older, end of support versions may also be affected.
 
-CVE-2017-17786
+Users are recommended to upgrade to version [FIXED_VERSION], which fixes 
+the issue.
 
-> OOB read in XCF (patch, the only one that got merged and fixed)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790783
+Credit:
 
-CVE-2017-17788
+Dawit Jeong (@dawitngoliath) (finder)
 
-> OOB read in GBR (no patch, looks like string/utf8 issue)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790784
+References:
 
-CVE-2017-17784
-
-> Heap overflow in PSP (no patch, doesn't look straightforward to fix)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790849
-
-CVE-2017-17789
-
-> OOB read in PSP (no patch)
-> https://bugzilla.gnome.org/show_bug.cgi?id=790853
-
-CVE-2017-17787
-
-Regards,
-Salvatore
+https://lists.apache.org/thread/qwg0q16z7xkb2qrr853wdll5531mvl1r
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-41293
