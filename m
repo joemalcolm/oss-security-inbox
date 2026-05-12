@@ -1,4 +1,4 @@
-Received: (qmail 12272 invoked by uid 550); 30 Apr 2024 07:41:43 -0000
+Received: (qmail 16059 invoked by uid 550); 12 May 2026 13:19:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,71 +7,106 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 12253 invoked from network); 30 Apr 2024 07:41:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1714462893; x=1715067693; darn=lists.openwall.com;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:sender:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=AsqymBIF/gpM/Q2HEyqUQ65U1E9h9X8Dvts4gLh9KIc=;
-        b=Z8XaQbML9qFnLsEcY7HaSyFyprjcweCdtA3No/RGXw3yFITscgsIcbg1gGRG/sq+cu
-         x+h8jbEG7Bw8fGT+bUmlifS5BHnsnHVJ41VNHC1HGxrcOjSPMdlI2+XUacp8BHaexvTp
-         KjctYwq9lIEcKzgQVoiD7aQVW5WaCUbfK0aJBpGk85gqYYbRVna6QVKBTSwpjNOx0mQj
-         JxTC1zDb+XNDsKhcySqKq9NKN1mgnR9xZRZnl+qsfr/EQx8PLY2KcbLDfMpVjlh0+Ut2
-         R2myMUSUjk0fHXDuAFhz4OZg6w/2Qy1Q0zKxQt2TrUM9f0kX7Yq5EvU4j7R0O0NOn8+m
-         nQ5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1714462893; x=1715067693;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:to:from:date:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AsqymBIF/gpM/Q2HEyqUQ65U1E9h9X8Dvts4gLh9KIc=;
-        b=am28OAeaHXvUhHHn0L+JnjhyPvgVABWkvcK+6YIbjDYPkv5JtV+v+VQsM7jchbzE7C
-         H1HylDf3Xaa8Ov1yddT0m7PIjASoKI7IWx6WrkAZg5Uv9le+K1hZRqr7KoSrVDV2W+y5
-         kywn/8tRjj+8v93Z4IvvfVkATHYTsyT+AO74v9XuBiGxTS4UyznSX6zhcJBdhUdjpcVo
-         m2hvyQ99HeVfrgDrIA/+/Cu+639+NUthCOQzSAby8PuEM+rYeoeyytyd4LoS5S3jqrmj
-         KVrv5bKmrXxn1oYBhpj7ScNNakJw/HwJg6MVJt436I6ubR2PwS+LvVmpp9WWkTD/++Wo
-         7ScA==
-X-Gm-Message-State: AOJu0Yxzyq5dNXuB5pDrA2J/QrexoHXkXJg+iR2mQ4PstcOSsVKFJCVz
-	W2VuI++2JHLgtQral4JYjwuuVCBfD3UZF9Ny4gkjMKdNVJoro2ezTSHi/axw
-X-Google-Smtp-Source: AGHT+IEvSP5d/+nc0PnnCkG3jICJCPrg+ONVz14gtr20mBNAZSBjiSxnnWlZj6pHLJPA9iDswRf7XQ==
-X-Received: by 2002:a17:906:48d4:b0:a55:5620:675c with SMTP id d20-20020a17090648d400b00a555620675cmr1085613ejt.34.1714462893128;
-        Tue, 30 Apr 2024 00:41:33 -0700 (PDT)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Tue, 30 Apr 2024 09:41:31 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <ZjCgq5y_tKM0oXW7@eldamar.lan>
-References: <5222127.EKZ5pzy0G1@sinistra.local>
+x-ms-reactions: disallow
+Received: (qmail 16022 invoked from network); 12 May 2026 13:19:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pipping.org;
+	s=manitu-webhosting; t=1778591982;
+	bh=vON5YNsTRtFwNC0bzpJGWRU18tCOISOAg0LFBneY9Ps=;
+	h=Date:Subject:To:References:Cc:From:In-Reply-To;
+	b=eYWjhG0EqV+aY2b19rHc6ZfOx2PjbWDyAdkA2cfj8gy/2+RJeHwCdXX8hN7N9oFg9
+	 s0fuX465e/FqLrpatr+t4aFBHuryGGfY7IWgkpBVUpEd20vworOSyVIVLHbe6uIdG+
+	 HiQ09ujgMYTRykxWV0KsUhksAFKxA+asAqQUfmKmzvmvS/QytKP7Nidl15SJXhFnQh
+	 UnYxMyegIJvVN56t07TSp0TCaYOHgJ60MiYZMPy9W+r6MP5zWH/3gUppYXdaI+l0CA
+	 T4AsYP/htB073Mp5EzYnnUL4J8xmoZbVqMKT0//xImK0kXl1Fls6iI3QaU0rLzihQL
+	 u03cS7a1vBH6A==
+Message-ID: <c67530db-c586-4921-bc3f-67a12e389eb1@pipping.org>
+Date: Tue, 12 May 2026 15:19:39 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5222127.EKZ5pzy0G1@sinistra.local>
-Subject: Re: [oss-security] libksieve (used by kmail/kontact) sent password
- as username
+To: oss-security@lists.openwall.com
+References: <958c7edc-400f-44e9-aac4-78161e999db4@pipping.org>
+ <20260510074756.GA17210@openwall.com>
+Content-Language: en-US
+Cc: solar@openwall.com
+From: Sebastian Pipping <sebastian@pipping.org>
+In-Reply-To: <20260510074756.GA17210@openwall.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] uriparser 1.0.2 fixes CVE-2026-44927 and
+ CVE-2026-44928
 
-On Thu, Apr 25, 2024 at 06:10:54PM +0200, Jonas Schäfer wrote:
-> Hello list,
-> 
-> Managesieve is a protocol to configure the email filtering system Sieve via 
-> TCP/IP. It is typically authenticated just like IMAP is. The managesieve 
-> client implementation in KDE (libksieve) had a bug which used the password as 
-> username.
-> 
-> That exposed the password in plaintext server logs, as usernames are commonly 
-> logged on failed login attempts.
-> 
-> This bug has existed for several years and made it into multiple Debian 
-> releases. It has only recently been fixed upstream [1] and even more recently 
-> been fixed in Debian [2] (stable package updates still pending). As this bug 
-> has been documented in the internet at various places [3] [4] but I haven't 
-> seen any mention of it here yet, I thought sharing it here made sense.
-> 
-> As far as I know, no CVE has been allocated for this.
+Hi Alexander,
 
-FTR, https://www.cve.org/CVERecord?id=CVE-2023-52723 was assigned for
-this issue.
 
-Regards,
-Salvatore
+On 5/10/26 09:47, Solar Designer wrote:
+> On Sat, May 09, 2026 at 08:18:49PM +0200, Sebastian Pipping wrote:
+>> just a quick note that uriparser 1.0.2 released today is fixing
+>> vulnerabilities CVE-2026-44927 and CVE-2026-44928.
+> 
+> Thanks, but let's please be including vulnerability descriptions right
+> in the postings.  Also, when it's one vulnerability, its title should be
+> in the Subject line.  When it's more than one, then if there's a way to
+> group them e.g. by category or severity, that could go into the Subject.
+> 
+>> Some key links are:
+>>
+>> - The change log of release 1.0.2
+>>    https://github.com/uriparser/uriparser/blob/uriparser-1.0.2/ChangeLog
+> 
+> This says:
+> 
+>>>>>>>>>>>>>> SECURITY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>    * Fixed: [CVE-2026-44927]
+>        Stop truncating `ptrdiff_t` to `int`
+>        Thanks for the report to Ilia Alshanetsky and Joshua W. Windle!
+>        (GitHub #304)
+>    * Fixed: [CVE-2026-44928]
+>        Fix `EqualsUri` with regard to `.absolutePath`
+>        Thanks for the report to Ilia Alshanetsky! (GitHub #305)
+>>>>>>>>>>>>>> SECURITY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+>    * Fixed: Fix OOM related memory leak in `CopyUriMm`
+>        Thanks for the report to Ilia Alshanetsky! (GitHub #306)
+> 
+>> - The fixing pull requests
+>>    - https://github.com/uriparser/uriparser/pull/304
+>>    - https://github.com/uriparser/uriparser/pull/305
+>>
+>> - The official CVE metadata
+>>    - https://nvd.nist.gov/vuln/detail/CVE-2026-44927
+>>    - https://nvd.nist.gov/vuln/detail/CVE-2026-44928
+> 
+> These only say a little:
+> 
+> CVE-2026-44927: In uriparser before 1.0.2, there is pointer difference
+> truncation to int in various places.
+> 
+> CVE-2026-44928: In uriparser before 1.0.2, the function family EqualsUri
+> can misclassify two unequal URIs as equal.
+> 
+> For CVE-2026-44927, it could help to clarify actual security exposure
+> and impact.
+
+I understand.
+
+My understanding of the impact of the ptrdiff_t truncation
+(CVE-2026-44927) was "DoS or more", and I focussed on fixing this in the
+about 15 places rather than analyzing the impact in more detail.
+
+Ilia and Joshua considered impact more than me, and I'm BCC'ing them
+so they can reply to this mail directly if they like, please do not feel
+pushed.
+
+Let me add that the public CVSS score input for CVE-2026-44927 is 
+(again) mistaken; none of these are correct:
+
+- Attack vector: Local
+- Attack complexity: High
+- Availability: None
+
+(Seen at https://github.com/advisories/ghsa-gmxg-5w57-j63q just now.)
+
+Best
+
+
+
+Sebastian
+
