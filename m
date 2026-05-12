@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1119" "Tuesday" "1" "August" "2017" "19:06:37" "+0200" "Solar Designer" "solar@openwall.com" "<20170801170637.GA15254@openwall.com>" "28" "Re: [oss-security] Syslog forwarding with IP spoofing" "^Cc:" nil nil "8" "2017080117:06:37" "[oss-security] Syslog forwarding with IP spoofing" (number mark "U       solar@openwa Aug  1   28/1119  " thread-indent "\"Re: [oss-security] Syslog forwarding with IP spoofing\"\n") "<1501597646.744346.23695.25373@mail.rambler.ru>" ("<1501597640.407871.9894.30815@mail.rambler.ru>" "<1501597646.744346.23695.25373@mail.rambler.ru>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15597 invoked by uid 550); 1 Aug 2017 17:07:08 -0000
+Received: (qmail 1164 invoked by uid 550); 12 May 2026 03:02:51 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,47 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15379 invoked from network); 1 Aug 2017 17:06:42 -0000
-Message-ID: <20170801170637.GA15254@openwall.com>
-References: <1501597640.407871.9894.30815@mail.rambler.ru> <1501597646.744346.23695.25373@mail.rambler.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1501597646.744346.23695.25373@mail.rambler.ru>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Tue, 1 Aug 2017 19:06:37 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Syslog forwarding with IP spoofing
-To: =?koi8-r?B?4czFy9PBzsTSIO7P08HSxdc=?= <nosarev-ay@rambler.ru>
+x-ms-reactions: disallow
+Received: (qmail 1243 invoked from network); 12 May 2026 01:39:57 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1778549989; cv=none; 
+	d=zohomailcloud.ca; s=zohoarc; 
+	b=A7O1l8G9M3Lpj784tyjm3dvwheJBvLLdnMDR6w9vviwIokEF3tg3NTaC/Gcbt2MiRhIaY70qD57KA6V2+DEmGKiiOx8c/RIxnQhSRK/cyVkNzrtaMq1D0VJJGonV2fXl0psFXgIhWg0RMu3UUqeSdqYE06oEg56NUaefd90i07U=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomailcloud.ca; s=zohoarc; 
+	t=1778549989; h=Content-Type:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=QjsHgxRJBw9xPFpLJW1a9WLjxKNF4Qd69YzCkKprECo=; 
+	b=lcXYH9pmxlxK8NduZZs/AbplgVWBUJDRKQJR4TIxC0csm3SCDlSMLG6OC/GcuvlISFSwsD8xz9kUQwi4oPOIcdSovFVyJDUhBWC+kmCiua8lalKg9v7YZ79FmxTFTBe4Zgm6/HzRRX4YzhumDPODfg6loDbr0Yg5+6/Losc7Kxs=
+ARC-Authentication-Results: i=1; mx.zohomailcloud.ca;
+	dkim=pass  header.i=roiai.ca;
+	spf=pass  smtp.mailfrom=tim@roiai.ca;
+	dmarc=pass header.from=<tim@roiai.ca>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1778549989;
+	s=zmail; d=roiai.ca; i=tim@roiai.ca;
+	h=Date:Date:From:From:To:To:Message-Id:Message-Id:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Reply-To:Cc;
+	bh=QjsHgxRJBw9xPFpLJW1a9WLjxKNF4Qd69YzCkKprECo=;
+	b=Rff/AZpYmYwOgqIOgFTzLqw6B0gqVBCUCXaPTUkV/IB3CVVATi+loOkUjko3Vstm
+	+gt+q/Pqu2cUQP+1drKU5KgLFSoSHNYp1hOepnxm3JK66/4/4nADKdf10g2fMa/z9mg
+	SILVcBJKu7nmAm4aGOhvTStZcwfVXLwiCra0IV1k=
+Date: Mon, 11 May 2026 18:39:47 -0700
+From: Tim Shephard <tim@roiai.ca>
+To: "oss-security" <oss-security@lists.openwall.com>
+Message-Id: <19e19d71894.80289f98195045.3101805823226928719@roiai.ca>
+In-Reply-To: 
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_454025_1673504968.1778549987476"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Subject: [oss-security] Public security analysis and LLM-assisted variant discovery
+
+------=_Part_454025_1673504968.1778549987476
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Hi all,
 
-On Tue, Aug 01, 2017 at 05:27:26PM +0300, Александр Носарев wrote:
-> I need to recive syslog messages, filter them and send them forward to the 
-> SIEM.
-> 
-> Also HOST field is not represented in syslog, so i need to spoof IP of 
-> forwarding
-> packets to bind messages recived by SIEM to it's original source IP.
-> 
-> If i will try to add some marks to syslog message, I will need to override
-> parsers for each syslog source type, so it seems like abad idea.
-> 
-> Is there any open source tool for that task?
+I wanted to raise a process concern around detailed security analysis in pu=
+blic bug records, code reviews, commit messages, and advisories.
 
-Somehow we almost didn't have this sort of messages - someone seeking an
-open source security tool - sent in here so far.  Do we want them in
-here going forward?  The current list content guidelines do not address
-this possibility, as it certainly wasn't the purpose of the oss-security
-list so far.  Is there another mailing list where the above message
-would have been more appropriate?
+I have been using LLM-assisted review across these sources to find real vul=
+nerabilities, and one thing that has become clear is that this material is =
+increasingly useful for finding variants, regressions, and related insecure=
+ patterns. Even after a specific bug is fixed, detailed reasoning about exp=
+loitability and nearby security sensitive code paths can remain valuable to=
+ attackers.
 
-http://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+I am not arguing against thorough security analysis or useful public adviso=
+ries. I am suggesting we distinguish between public impact/fix guidance and=
+ deeper security analysis that may be better kept in restricted channels.
 
-Meanwhile, please feel free to address the actual question about the
-tool.  (I don't know of such a tool.)
+I realize this cuts against some disclosure norms, but I think AI-assisted =
+variant discovery changes the tradeoff enough to merit discussion.=C2=A0=C2=
+=A0
 
-Alexander
+Cheers,
+
+Tim
+Confidential communication. No warranties or commitments unless in a signed=
+ agreement. If received in error, notify sender and delete. Unauthorized us=
+e prohibited.
+
+
+
+
+------=_Part_454025_1673504968.1778549987476--
