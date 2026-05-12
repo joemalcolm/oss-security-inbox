@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["725" "Friday" "25" "March" "2016" "15:56:57" "+0600" "Maxim Solodovnik" "solomax@apache.org" "<CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>" "21" "[oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description" nil nil nil "3" "2016032509:56:57" "[oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description" (number mark "U       solomax@apac Mar 25   21/725   " thread-indent "\"[oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7642 invoked by uid 550); 25 Mar 2016 10:35:07 -0000
+Received: (qmail 14238 invoked by uid 550); 12 May 2026 14:20:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,39 +7,85 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 10025 invoked from network); 25 Mar 2016 09:57:10 -0000
-X-Gm-Message-State: AD7BkJJIgofLweSY0YZDrOqHSjWqRLwHwSizD6ImE1DMAO+wN6J/4MxPMcjVoYmRLXqHGDgL1O2ByRB1eSrVxA==
+x-ms-reactions: disallow
+Received: (qmail 14204 invoked from network); 12 May 2026 14:20:10 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:To:From:Date:Cc:
+	Content-Description:Content-ID:Content-Transfer-Encoding:Resent-Cc:Resent-To;
+	bh=j/5gDFh8TnFjA88ESrpBA9rEMJkzoTFnePBkkqzM194=; b=BqQYiYsPEWABqHmOSNUWVq8bPn
+	A1NO9gdA+a8Cvh1lYvfwlSYc4VhAcI8hsf1W6RRGQDep4u8mo96JXbu+A6gQaeFbUeDOgfoEbPuUs
+	HfEoRUfAyRcycwgi+HpHzpOhwrRrbi54o1ay6kvtV9FHv7i6wetPfEtSQZ8PpYLaLdHbLJU0r79/4
+	bVkyQP2ep7sZMuU3icC9Lrj/MFKJqMYDRDwi1ZuIShtSeKegU32A+qNfzjbkSoF039K4kf3YomOXz
+	Khk25u5HSJbrER/j6IdulrphB3+sOUF1btOhFhaUN9qtfBiJ1yNk52AKmTf1r0bfwWe4UPEQrQsSR
+	FFVKFuPQ==;
+Date: Tue, 12 May 2026 16:20:00 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+To: oss-security <oss-security@lists.openwall.com>
+Message-ID: <agM3EHs7GCjOmS_m@jumper.schlittermann.de>
+Mail-Followup-To: oss-security <oss-security@lists.openwall.com>
+References: <agM156T24FZJCljf@jumper.schlittermann.de>
 MIME-Version: 1.0
-X-Received: by 10.98.14.2 with SMTP id w2mr19715336pfi.35.1458899817302; Fri,
- 25 Mar 2016 02:56:57 -0700 (PDT)
-Date: Fri, 25 Mar 2016 15:56:57 +0600
-X-Gmail-Original-Message-ID: <CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>
-Message-ID: <CAJmbs8jiQ3sp4b9BEsJsHy2j4eywP_xYZeVD9nOhgs1VwKPSqw@mail.gmail.com>
-From: Maxim Solodovnik <solomax@apache.org>
-To: Openmeetings user-list <user@openmeetings.apache.org>, dev <dev@openmeetings.apache.org>, 
-	security@openmeetings.apache.org, security@apache.org, 
-	oss-security@lists.openwall.com, bugtraq@securityfocus.com
-Content-Type: text/plain; charset=UTF-8
-Subject: [oss-security] [CVE-2016-2163] Stored Cross Site Scripting in Event description
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="bSFQ6u7G5eVJLQ5b"
+Content-Disposition: inline
+In-Reply-To: <agM156T24FZJCljf@jumper.schlittermann.de>
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Signal: +49.172.7909055
+X-Phone: +49.172.7909055
+X-SMS: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+Subject: [oss-security] Re: [EXIM-Security-2026-05-01.1] Security Release 4.99.3
 
-Severity: Moderate
+--bSFQ6u7G5eVJLQ5b
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Vendor: The Apache Software Foundation
+Heiko Schlittermann <hs@nodmarc.schlittermann.de> (Di 12 Mai 2026 16:15:03 =
+CEST):
+> - Repository: https://code.exim.org/exim-/exim (branch: exim-4.99+fixes, =
+tag: exim-4.99.3) (signed by me)
 
-Versions Affected: Apache OpenMeetings 1.9.x - 3.0.7
+There was a typo.
 
-Description:
-When creating an event, it is possible to create clickable URL links in
-the event description. These links will be present inside the event details
-once a participant enters the room via the event. It is possible to create a
-link like "javascript:alert('xss')", which will execute once the link is
-clicked. As the link is placed within an <a> tag, the actual link is not
-visible to the end user which makes it hard to tell if the link is
-legit or not.
+    Repository: https://code.exim.org/exim/exim (branch: exim-4.99+fixes, t=
+ag: exim-4.99.3) (signed by me)
+    https://code.exim.org/exim/exim/releases/tag/exim-4.99.3 (signed by me)
 
-All users are recommended to upgrade to Apache OpenMeetings 3.1.1
+    Best regards from Dresden/Germany
+    Viele Gr=C3=BC=C3=9Fe aus Dresden
+    Heiko Schlittermann
+--=20
+ SCHLITTERMANN.de ---------------------------- internet & unix support -
+ Heiko Schlittermann, Dipl.-Ing. (TU)              fon +49.351.8029981 -
+ gnupg encrypted messages are welcome --------------- key ID: F69376CE -
 
-Credit: This issue was identified by Andreas Lindh
+--bSFQ6u7G5eVJLQ5b
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-Apache OpenMeetings Team
+iQIzBAABCgAdFiEE3ZjZI1nenjwmY/KRaX8O3WgJn28FAmoDNw8ACgkQaX8O3WgJ
+n2/X8w/9FvdybgfMZwydaPGz+smfgTfmylrz5ffuPKaWdkezQ456ENcIExCN8Uvi
+ihHeBeh/o4395c39wWhlKymhyEX/YNo3iL/s9COYpIoofVU4t6QI1Q6v7syC/EXA
+xQc/+I8GANZme8md1Rx8LZHeJanISKEya1zdtuS4u//8q6IN9IQAQd8Ffsk0tyIp
+Nw3CoUGtIqw+F/uUHfg9W2thVne19VcRFBxhOzN/Mbbf2OrddVYXX9JN3iU5NOAI
+UTekd0eTSHX++DQLWR2B03aMGts9aRR71Ql98Vz5Ux59mw+WMXJpUbKTCWGL+5fJ
+GDejYbVZm6W6Wgo9P+IuqK58Akjpt5C67kHmeKHkwKsu0zXSTTsUG0xHAOgSXRF8
+4SflvwVzEKZMISkp/SsgiU1HcE8mwRMOF0zVVq5XhT95zZEcVuV3aDPVIHQcje2n
+p6mGTco6TFXYgMjfw8XXqdpZFe06mWNbXyQr6CUHgL005N3fqqwmN+n7hR1IcowG
+3lNhQmF8WsFitfNjqQpOTOeZwivdoefjc/Qy/8sgXzyrOGdEArq8ZvfShloEDmrX
+6mI/8AvQayD/KMpr4nM0pdgCE+vCIHgi6S3mwvBqeSzcX93VfwQ4WwvydEP8twQi
+ELyr2hDGV80+ZtbeKXgfGMEV9Cvbh8b/rR+GJR9gAJczt92ryCI=
+=O+qY
+-----END PGP SIGNATURE-----
+
+--bSFQ6u7G5eVJLQ5b--
