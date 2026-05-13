@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2040" "Wednesday" "20" "November" "2019" "19:52:11" "+0000" "ISC Security Officer" "security-officer@isc.org" "<4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>" "65" "[oss-security] BIND9 CVE-2019-6477" nil nil nil "11" "2019112019:52:11" "[oss-security] BIND9 CVE-2019-6477" (number mark "U       security-off Nov 20   65/2040  " thread-indent "\"[oss-security] BIND9 CVE-2019-6477\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] BIND9 CVE-2019-6477" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 11878 invoked by uid 550); 20 Nov 2019 20:23:57 -0000
+Received: (qmail 15791 invoked by uid 550); 13 May 2026 01:14:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +7,149 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30634 invoked from network); 20 Nov 2019 19:52:26 -0000
+x-ms-reactions: disallow
+Received: (qmail 14318 invoked from network); 13 May 2026 01:14:20 -0000
+Date: Wed, 13 May 2026 03:14:13 +0200
+From: Solar Designer <solar@openwall.com>
 To: oss-security@lists.openwall.com
-From: ISC Security Officer <security-officer@isc.org>
-Openpgp: preference=signencrypt
-Autocrypt: addr=security-officer@isc.org; prefer-encrypt=mutual; keydata=
- mQENBEsnyOQBCAC+WKYHcaDGD9a2ztwdccmhnzo0YJ9SOPVIonqGxCa6o8TwfipyH9Wh5uFq
- c6Ne+I0+vWohQtBIeodQHgGGlbjdxMp3QxohvqCmZcoObH7kjI1lpKQ6TMvRvo79pq5WRIuE
- +Jbm6Rt9Hz3w9APrYzISzeCuHFK7vlZfaLdoI0SxzEuzMmyOvQpa6dgSKQF6G2Nsbz1RYujZ
- 6fE6GXtc+I9q44yJS4llYpUqYpPh5CsfbDx8HwMWPj9eYOwjf3/vniFeG9tHIB8E+p7UBTG7
- bTVRlEgmyC1Ry0OPO3UPKjL/Dja8IeeJamT0dlsRCD/O/WTyxQg9EceCgUvOz65puKkrABEB
- AAG0L0lTQyBTZWN1cml0eSBPZmZpY2VyIDxzZWN1cml0eS1vZmZpY2VyQGlzYy5vcmc+iQEx
- BBMBAgAbBQJLJ8jkAhsDBgsJCAcKAgQVCggCAh4BAheAAAoJEL2X3GOe6MR7gZYIAI4uSaX7
- HwU2ywaCO77q5O/Zzzp6M+Oi+z7G00GFpACMSDSjX8kbZoIIW7FXb9US/9XLwqDtjlrGOLbd
- zcZ/+EMsJM/HpT796YH8Y9gMpsH5SZq5gByeguT6KgjqF2w8yNX7/r0AM3psfVSv9l595CoJ
- WNbDBHqGpqMi55SqKLCQOJ8noDp4x+JVNcJ1AdK/QVSk+gEhLqrvoYNyG8B/C2LL1fBQC8sF
- kX/M1mKlkM83GnJlPWCrig69VlR+relppEuZ5G34z93c9NtCqdH6zLzzej2qmwLb/dYJYvhE
- EMDlgvlSWw6yaJTuuEfuqHonrgOTXgb3Ln8A7XJECuSgWrK5AQ0ESyfI5AEIAKUsrY4AxF87
- HvBEqhCXIt1o8plzVoIT5kY/p2n48U+oNGl5v4qNiC4SQZIvsA+Fcew8BhAYbNFTOsK/NKVO
- yiLkLOqQnkuBlESzzvMcl0gSuX1t99V2SJpCKukCa+jkTcjJnURODJn5Wp9GLAWXutxJvJnT
- t4oxcnAKun6Zt1vyOQs2lI9zXCTi8AdDKTiA/Es66CPVCRcMFUS6l9ArN57gUP0KRj8N0OfO
- QPdzShnGrSdtM0D2Ei2pmUcgkvSIeNU5HRd2iMpWGO1L8yfGQvp7dzjWbG7i/2RTnZ+KR3a2
- OMmtXUNuWQF3AfohS0TRTAcAR7IgOLzyy2prT9XKtCcAEQEAAYkBHwQYAQIACQUCSyfI5AIb
- DAAKCRC9l9xjnujEeze1CAC4A+KZdRi08gBxG4hKuvpL0fHfwnVmrLR39c0mQR9tE+iUcOez
- qER3z2fn/Zm5nMTZcauzCXMmFXwKWlGufiDrXVqKCyEHkYyBnn3U9ksRigo8eG/X3+G3US9k
- 0c7FfWaIrOY2IdGWUQic0ENOu/94VAFaleI4BBQvnDIY6hr4Fm14qXgssF7YwcEreoUU+Ayh
- Yc52tlDssU9DUaX/vn7OD42FIzpUzgUyoZ97UtPX+m9P5YN2Teeq0iVkcxxmT9wuNYCCZb1W
- 03hvcA8uwvRkNDbdQ//dma2gXdUPoXfBJT4kLo1/KV5GimPHdn0h172E1RKLgKtrJ58TVTJ6 UV1r
-Organization: Internet Systems Consortium
-Message-ID: <4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>
-Date: Wed, 20 Nov 2019 19:52:11 +0000
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
- Gecko/20100101 Thunderbird/60.9.1
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7"
-Subject: [oss-security] BIND9 CVE-2019-6477
-
---tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7
-Content-Type: multipart/mixed; boundary="PyUP5nzwCeyzYaEi7Ofxbw45PE8QGBytO";
- protected-headers="v1"
-From: ISC Security Officer <security-officer@isc.org>
-To: oss-security@lists.openwall.com
-Message-ID: <4a79bee5-ad58-83bf-8279-26c3f7224ee0@isc.org>
-Subject: BIND9 CVE-2019-6477
-
---PyUP5nzwCeyzYaEi7Ofxbw45PE8QGBytO
+Cc: Jim Meyering <jim@meyering.net>
+Message-ID: <20260513011413.GA4475@openwall.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.4.2.3i
+Subject: [oss-security] CVE-2026-5958: GNU sed: TOCTOU race in sed -i --follow-symlinks
 
-Today (2019-11-20) ISC announced a vulnerability in our BIND 9 software.
+Hi,
 
-   CVE-2019-6477, TCP-pipelined queries can bypass tcp-clients limit
+Jim kindly brought the below to linux-distros last month (thank you,
+Jim!), but seems to have failed to bring it to oss-security on the
+public disclosure date as required.  I only discovered this now while
+processing the distros list statistics for April.
 
-This issue affects BIND 9.11, BIND 9.14, and BIND 9.15.
+Gentoo and Amazon failed to stay on top of this, even though that was
+their contributing-back task.  We already figured this out with Gentoo
+in context of another issue, but I am yet to hear from Amazon.
 
-Our full CVE text can be found at:
+Also, in the brief discussion on linux-distros and with Jim we did
+realize this may need to have been on the full distros list rather than
+just linux-distros, as GNU sed exists e.g. in pkgsrc, which is a member
+of the full distros list.  However, we decided that this time the issue
+was too minor, so noted this for next time.
 
-    https://kb.isc.org/docs/cve-2019-6477
+I now see that Jim indeed made public announcements - just not here:
 
-New releases of BIND, including security fixes for this vulnerability,
-are available at:
+https://lists.gnu.org/archive/html/info-gnu/2026-04/msg00009.html
+https://lists.gnu.org/archive/html/sed-devel/2026-04/msg00012.html
 
-    https://www.isc.org/download
+> * Noteworthy changes in release 4.10 (2026-04-21) [stable]
+> 
+> ** Bug fixes
 
-Release notes for the new versions can be obtained using the following
-links:
+>   'sed --follow-symlinks -i' no longer has a TOCTOU race that could let
+>   an attacker swap a symlink between resolution and open, causing sed to
+>   read attacker-chosen content and write it to the original target.
+>   [bug introduced in sed 4.1e]
 
+Also listed are many other bug fixes that are not considered security.
 
-https://downloads.isc.org/isc/bind9/9.15.6/RELEASE-NOTES-bind-9.15.6.html
+There's also:
 
-https://downloads.isc.org/isc/bind9/9.14.8/RELEASE-NOTES-bind-9.14.8.html
+https://cert.pl/en/posts/2026/04/CVE-2026-5958/
 
-https://downloads.isc.org/isc/bind9/9.11.13/RELEASE-NOTES-bind-9.11.13.html
+> Vulnerability in GNU sed software
+> 20 April 2026 | CERT Polska | #vulnerability, #warning, #cve
+> 
+> CVE ID 	CVE-2026-5958
+> Publication date 	20 April 2026
+> Vendor 	GNU
+> Product 	sed
+> Vulnerable versions 	From 4.1e below 4.10
+> Vulnerability type (CWE) 	Time-of-check Time-of-use (TOCTOU) Race Condition (CWE-367)
+> Report source 	Report to CERT Polska
+> 
+> Description
+> 
+> CERT Polska has received a report about vulnerability in GNU sed
+> software and participated in coordination of its disclosure.
+> 
+> The vulnerability CVE-2026-5958: When sed is invoked with both -i
+> (in-place edit) and --follow-symlinks, the function open_next_file()
+> performs two separate, non-atomic filesystem operations on the same
+> path: 1. resolves symlink to its target and stores the resolved path for
+> determining when output is written, 2. opens the original symlink path
+> (not the resolved one) to read the file. Between these two calls there
+> is a race window. If an attacker atomically replaces the symlink with a
+> different target during that window, sed will: read content from the new
+> (attacker-chosen) symlink target and write the processed result to the
+> path recorded in step 1. This can lead to arbitrary file overwrite with
+> attacker-controlled content in the context of the sed process.
+> 
+> This issue was fixed in version 4.10.
+> 
+> Credits
+> 
+> We thank Michał Majchrowicz and Marcin Wyczechowski (AFINE Team) for
+> the responsible vulnerability report.
 
---=20
-Cathy Almond
-ISC Support
-Acting Security Officer
+and NIST NVD lists this score:
 
+> CNA:  CERT.PL
+> CVSS-B 2.1 LOW
+> Vector:  CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N
 
---PyUP5nzwCeyzYaEi7Ofxbw45PE8QGBytO--
+Alexander
 
---tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+----- Forwarded message from Jim Meyering <jim@meyering.net> -----
 
------BEGIN PGP SIGNATURE-----
-Comment: GPGTools - https://gpgtools.org
+From: Jim Meyering <jim@meyering.net>
+To: linux-distros@vs.openwall.org
+Subject: [vs-plain] GNU sed: CVE-2026-5958: TOCTOU race in sed -i --follow-symlinks
+CC: Michał Majchrowicz <mmajchrowicz@afine.com>,
+ Paul Eggert <eggert@cs.ucla.edu>
+Date: Fri, 10 Apr 2026 18:40:17 -0700
 
-iQEzBAEBCgAdFiEEempHtfnhIzrSVStcvZfcY57oxHsFAl3VmWsACgkQvZfcY57o
-xHuzUwgAiMH1FxlGK56bGPzHIN2nI1uQox8vNvWQQGViKe6YaChlZ9Yc6xijTs2F
-TKGK3r5euE0rKAa9/30SQNpEPiXQYY5+1e77NWzv91hDDatwP3U3QeToZqi2qeyL
-1L0Bmuzz6/V3e2whBLTo9Aa8huvkJS4az/k5wHx52EMutVVTIB00TMXr2cBFC73Y
-vnR4eij36hkBkyurvN3WEYZRPcq6qjrmSjhzaqtibAw7JKVth0NKnw8w9N6Bsv43
-XmKoWyZ94j6dTSUm9qlYKnwECFXbVh1hM3YQbUyuWEJ8MqNjqUq7fFYqunr+t+16
-G6q+d6mV/SUBkqaIRQAsmTSF1WV6/g==
-=HxkV
------END PGP SIGNATURE-----
+A TOCTOU race in GNU sed allows an attacker to cause sed -i
+--follow-symlinks to read attacker-controlled content and write it to
+an unintended file. This can lead to arbitrary file overwrite as the
+sed process's user when a privileged process (e.g., root) runs sed on
+a path the attacker can influence.
 
---tS17z1qfWmu69PdcR2SRtv9RLT7u5eWs7--
+CVE: CVE-2026-5958
+CWE: CWE-367 (Time-of-Check Time-of-Use Race Condition)
+Affected: GNU sed 4.1e through 4.9 (all current releases with --follow-symlinks)
+Severity: Moderate: requires privileged sed invocation on an
+attacker-influenced path; a survey of Debian and GitHub shows
+--follow-symlinks is overwhelmingly used on root-owned paths
+
+Bug: follow_symlink() resolves the symlink via readlink(), then
+ck_fopen() reopens the original symlink path. Between these two
+syscalls, the symlink can be swapped, causing sed to read from one
+file and write to another. Reproduces reliably in ~14 attempts.
+
+Fix: One-line change -- open the already-resolved path instead of
+re-traversing the symlink:
+
+--- a/sed/execute.c
++++ b/sed/execute.c
+@@ -562,7 +562,7 @@ open_next_file (const char *name, struct input *input)
+       if (follow_symlinks)
+         input->in_file_name = follow_symlink (name);
+
+-      if ( ! (input->fp = ck_fopen (name, read_mode, false)) )
++      if ( ! (input->fp = ck_fopen (input->in_file_name, read_mode, false)) )
+         {
+           const char *ptr = strerror (errno);
+           fprintf (stderr, _("%s: can't read %s: %s\n"), program_name,
+
+Proposed disclosure date: 2026-04-19. I plan to push the fix and
+release GNU sed 4.10 on that date. If someone would like an extra
+week, that's fine, too. Let me know.
+
+Credit: Micha?? Majchrowicz and Marcin Wyczechowski (AFINE Team).
+
+Jim Meyering
+GNU sed maintainer
+
+----- End forwarded message -----
