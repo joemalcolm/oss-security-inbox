@@ -1,4 +1,4 @@
-Received: (qmail 28547 invoked by uid 550); 4 May 2026 16:03:09 -0000
+Received: (qmail 19926 invoked by uid 550); 15 May 2026 19:31:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,129 +8,81 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 20444 invoked from network); 4 May 2026 13:33:19 -0000
-Message-ID: <68004db7-a93d-4790-b332-3403dc703d1c@gentoo.org>
-Date: Mon, 4 May 2026 09:33:05 -0400
+Received: (qmail 1812 invoked from network); 15 May 2026 11:00:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1778842826;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=CcsljG1KAvDxfYrX1H8JG0H7yzy6Je8QKw0X8c2YF18=;
+	b=ZDwYYITRQ6c9MVGjN8d0QBBHZ3ukfHLNe09Y3dL8fNbEGO1xMDjKAjrAIbR/nlhb3t3+gN
+	S/wO7YrHsDpwJl98jbsrNCNWOcAesc8+WvCrMIRAqjaIwfb33nSuo1PIBRV3FO47WXt1eK
+	0tUU2B1yo7WEyg7wV8psYkVjOeC7+qg/3ASCIDGz99xjISWFNNRIYD+K9wOa5gBwFObjRt
+	+k8CThaxRcTNHjA7og0Oe2MW0v2WvvboQsbT8KX8Fh2Qn5xCigf+zm6ItJodbHwCW+HiXs
+	TBARZCLYavxs/FJFZiak8tu2FYMfRYbfvvotf6pGPdT0Q0dytRPzyORgLbHkYw==
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: oss-security@lists.openwall.com
-References: <87mryiinrq.fsf@gmail.com>
- <20260504100844.w73zrvl732of7wqs@jwilk.net>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-X-Clacks-Overhead: GNU Terry Pratchett
-In-Reply-To: <20260504100844.w73zrvl732of7wqs@jwilk.net>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------wttRp9n5rvlbbXs1nXOmucSB"
-Subject: Re: [oss-security] uutils coreutils CVEs
+Date: Fri, 15 May 2026 08:00:26 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <b2d26d1ff711eeed1b43c8cd2a4ae838@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: dmFkZTGwd/oDXk6uPy0m3tX+NJUq7EgBEE7TkX2Siq3Y2WC7uE3nFa0ckTeQw7TwGk5DpSw5spUKmwhHxgNI334V8eLLa8K6j06Tl9mlcQqbSy/IYJcG5xlwT2arZXv3drlR+lofJ7AfYlnxKT2elLGJwxQ9iIfUEtQE7CwB7y09a40pXihcuoyyu10HaHk4L6KlHoG0Dyw0vzk34BWR+MEKnK104EY2bGcmPNmm0K1EN8UEIBU0kT4IWKON4kBXEAWTpii9zF4q2/JDBexPWG6RVQBKOLgMjhOAEgxS1B1PR5TxfTIAMSOhlHErmkQV9oJsG5y/E/PY2s8H3morxiRyaJ29oBlkbUVlxFqE7bsFmXKy9isF/WBryIJhKRfpsB9Kvt/qZC1D/bkYtNF2ze+ywMrwfu4126exwooCSaLO2B1Ej8NQhJOBdmr0TP5okj6m1H0OkbTD5vcd/5Kud3aEkWE/83mDGv2d2xwp+LdrkOlHMfgjdQt3WGMLWAFf6Jvz562HqbmCWUusD3ibzNwiArHXwJavWRCobRxI9uk2ioio1BGO9+47uW2uwE+7BuoWcYCQHO7lEam9CydlVSB37g1QoQPicQsk/XIxQzWHUwH+82uEqopQlEZYYrWkGiGiQB97EvJxdmPmEkc9wX/XTOxzUSp20so5B6RJFkV4FDSuAg
+Subject: [oss-security] CVE-2026-8454: Imager::File::GIF versions through 1.002 for Perl
+ allow a heap out of bounds (OOB) write on crafted multi-frame GIF files
 
---------------wttRp9n5rvlbbXs1nXOmucSB
-Content-Type: multipart/mixed; boundary="------------fyEd9R9VbtJXtmVXCJmAU0fh";
- protected-headers="v1"
-Message-ID: <68004db7-a93d-4790-b332-3403dc703d1c@gentoo.org>
-Date: Mon, 4 May 2026 09:33:05 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [oss-security] uutils coreutils CVEs
-To: oss-security@lists.openwall.com
-References: <87mryiinrq.fsf@gmail.com>
- <20260504100844.w73zrvl732of7wqs@jwilk.net>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-X-Clacks-Overhead: GNU Terry Pratchett
-In-Reply-To: <20260504100844.w73zrvl732of7wqs@jwilk.net>
+========================================================================
+CVE-2026-8454                                        CPAN Security Group
+========================================================================
 
---------------fyEd9R9VbtJXtmVXCJmAU0fh
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+         CVE ID:  CVE-2026-8454
+   Distribution:  Imager-File-GIF
+       Versions:  through 1.002
 
-On 5/4/26 6:08 AM, Jakub Wilk wrote:
-> * Collin Funk <collin.funk1@gmail.com>, 2026-05-01 18:49:
->> * CVE-2026-35352
->>
->> We can see that uutils 'mkfifo' creates the fifo with world readable
->> and writable permissions and then uses chmod() which introduces a
->> TOCTOU race that can be exploited by another user creating a symbolic
->> link in it's place:
->>
->> =C2=A0=C2=A0 $ mkfifo --version
->> =C2=A0=C2=A0 mkfifo (uutils coreutils) 0.8.0
->> =C2=A0=C2=A0 $ strace mkfifo -m 700 /tmp/fifo
->> =C2=A0=C2=A0 [...]
->> =C2=A0=C2=A0 umask(000)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D 002
->> =C2=A0=C2=A0 umask(002)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D 000
->> =C2=A0=C2=A0 mknodat(AT_FDCWD, "/tmp/fifo", S_IFIFO|0666) =3D 0
->> =C2=A0=C2=A0 chmod("/tmp/fifo", 0700)=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D 0
->=20
-> Creating the FIFO with default permission could allow other users to
-> open it before the chmod(..., 0700) call. This is indeed a
-> vulnerability, but unrelated to symlinks, and it's a different issue
-> than the one in the description of CVE-2026-35352:
->=20
->> A Time-of-Check to Time-of-Use (TOCTOU) race condition exists in the
->> mkfifo utility of uutils coreutils. The utility creates a FIFO and
->> then performs a path-based chmod to set permissions. A local attacker
->> with write access to the parent directory can swap the newly created
->> FIFO for a symbolic link between these two operations.
->=20
-> Note that this attack doesn't work in /tmp, because the sticky bit
-> prevents the attacker from deleting or renaming other users' files. The
-> victim would have to do something like "mkfifo /home/mallory/fifo". So,
-> uh, don't do that?
->=20
-> It's questionable if this is a vulnerability at all.
+       MetaCPAN:  https://metacpan.org/dist/Imager-File-GIF
+       VCS Repo:  https://github.com/tonycoz/imager
 
 
-"I don't think it's even a vulnerability if it could be prevented by
-defense in depth" isn't a great look. :(
+Imager::File::GIF versions through 1.002 for Perl allow a heap out of
+bounds (OOB) write on crafted multi-frame GIF files
+
+Description
+-----------
+Imager::File::GIF versions through 1.002 for Perl allow a heap out of
+bounds (OOB) write on crafted multi-frame GIF files.
+
+Imager::File::GIF's i_readgif_multi_low allocates a single per-row
+buffer GifRow sized for the GIF's global screen width 'SWidth' and
+reuses it across every image in the file.
+
+The page-match branch validates Image.Width + Image.Left > SWidth
+before each DGifGetLine write, but the parallel skip-image branch at
+imgif.c:790-805 calls DGifGetLine(GifFile, GifRow, Width) with no such
+check.
+
+Problem types
+-------------
+- CWE-787 Out-of-bounds Write
+
+Solutions
+---------
+Upgrade to Imager::File::GIF 1.003.
 
 
-But by all means, let's make it a vulnerability anyway (randomly selected):
-https://www.openwall.com/lists/oss-security/2011/02/23/1
+References
+----------
+https://metacpan.org/release/TONYC/Imager-File-GIF-1.003/source/Changes
+https://github.com/tonycoz/imager/commit/782e9c06cc75a0f7eed383f39522f51f44598b04.patch
 
-
-
-
---=20
-Eli Schwartz
-
---------------fyEd9R9VbtJXtmVXCJmAU0fh--
-
---------------wttRp9n5rvlbbXs1nXOmucSB
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCafigEQUDAAAAAAAKCRCEp9ErcA0vV5wv
-AP0eMlTu3OLC2mh/JYWcQwcmWRmi+er2uTEVw/qDu/W4BgD9EOBUSkH8omVoSRwcFTTRqcrRNSfZ
-8NDN8xvTAXJgxQs=
-=XtbE
------END PGP SIGNATURE-----
-
---------------wttRp9n5rvlbbXs1nXOmucSB--
+Timeline
+--------
+- 2026-05-12: Issue identified
+- 2026-05-13: Issue reported to maintainer
+- 2026-05-14: Maintainer acknowledged the report
+- 2026-05-15: Fixed version released
