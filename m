@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2108" "Wednesday" "28" "September" "2016" "14:54:09" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160928185409.5FF6C36E015@smtpvbsrv1.mitre.org>" "58" "[oss-security] Re: CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c" "^Cc:" nil nil "9" "2016092818:54:09" "[oss-security] Re: CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c" (number mark "U       cve-assign@m Sep 28   58/2108  " thread-indent "\"[oss-security] Re: CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c\"\n") "<1F2D4DA31CA62740BFF46830A0E6A4F706707654@EXMBX-TJ002.tencent.com>" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 24143 invoked by uid 550); 28 Sep 2016 18:54:22 -0000
+Received: (qmail 10236 invoked by uid 550); 15 May 2026 05:12:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,71 +6,104 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 24122 invoked from network); 28 Sep 2016 18:54:21 -0000
-In-Reply-To: <1F2D4DA31CA62740BFF46830A0E6A4F706707654@EXMBX-TJ002.tencent.com>
-Message-Id: <20160928185409.5FF6C36E015@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Wed, 28 Sep 2016 14:54:09 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE Request: libgd: Integer overflow in function gdImageWebpCtx of gd_webp.c
-To: winsonliu@tencent.com
+x-ms-reactions: disallow
+Received: (qmail 10212 invoked from network); 15 May 2026 05:12:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778821933; x=1779426733; darn=lists.openwall.com;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vF69Y5v/PGgYCmqLyhA4S5R7Zii1z80Y5UFwssp7pI0=;
+        b=sl4JJZMUUwjq4jBwIM6vNGgDNjLxWAa0xSg4Rt72E/xbEsUtaItOVdkg+44nf7JtI0
+         RWTfwE9opQgkTHTKxHU1kYgjXe/wPlCAp8dTprCL2NumHTHAnayyIJuaREkEsiEExBH4
+         OfE/v2jfYxF7Ks5MFJcTZyfJzDmPsiBphWVjSuptzA4sIy3YpaHLmuF7Mqir2lAVSW0c
+         5/GpF+9HpPOeizEyrPVpqO+dScKkg7FmHJXThOJ2ACM5icQYOPaJ7D3TVWAJHcU+M3Cx
+         BXZvkXvljiNBGjkVt9P+D5s203oRnhOfVz9ap8v+WMYUQKZ+ISns8o4KwHHAvyOhCMJq
+         vAmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778821933; x=1779426733;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vF69Y5v/PGgYCmqLyhA4S5R7Zii1z80Y5UFwssp7pI0=;
+        b=Rzw+onkqCc7jEf61HzmnQItjIbPRemwKpnJ7BGgc3prxScp5nbpAwhuqbGFBSPtC+h
+         9n5AMAD1CvKI8Zrsu0JgB9Cu2chFq+17YyeJGq1VWk4J759+NSPhjHIKuL3e/q7CFq6P
+         2oDTeibbyXISlV9UAZ+5a52910GJCy1dyjgvY6wKNgpNZqadLK9Sx81WVBGGCpkwjIi2
+         4vuASsKPvlHzsN2AFOCQHIp5hWizs4+7OgBoCAIE9BhscAPCGH6ELLlkyp4oW5+iXyn3
+         iV2LZygroQ6bmZWqOkHeY6XGFdSp1Mi0qbn/yCXIeKJ3VOM4utQd79nF2EJq5rQ1OIRB
+         53WQ==
+X-Gm-Message-State: AOJu0YwS2w6r63dA76jDm7FhWs3MfikHqRXP7M3KQJSTPjVbHBpKG4kh
+	9y0jGErae0O9UT2N73LChvhYOeXK1vadJEawtV8xJJbRW2Xd64yEq39UCAUQXsb8
+X-Gm-Gg: Acq92OGeuaUzI/yyeTSjEphNPa6T5BVBA5C8vpsbiibYkm+TBHDQiMTFNgrZagJCMkx
+	8R1TSyQykh6vmwrDYvY/X0pwSiZIjL+g3f4CFKLsEhI1PAQUEocOoLEkekeIHXAx3x9+ZMEQ138
+	grvz+K/8Qs7hsboKh9vhGOC61FllKTI94feB6lyYXUKCbl44A8uNctFzr4oYgaeWCtjUY2CgY95
+	TjFSr1jj5a6AU8+RMFdOODehOmJDuEDo47tbM6KP6JuXtHx1P4WaE0HRfH6tcm+dXc+t3ZhfICC
+	9jkSyYrPtrp1KCbX6YnUT9MZ9bkNZa9C3gHggxfgOlsn2dUo1ipDmpWyG/2tKlyC99866CULH2Y
+	fn3csZA3h68EiBsZRXmcG2ZYRjzp7zN0cs47tSJKz4WrvUDFz5VDk12/dRWj+FN2/oJwlss7zy6
+	WIBo8xuWR1ljmoag9Kg6EGl1rWCq4Gd+6JSVxJY4QuZdl9yxOw1hm1DarFqmQ=
+X-Received: by 2002:a05:600c:8597:b0:48f:d5d7:df89 with SMTP id 5b1f17b1804b1-48fe630a2b6mr18617915e9.25.1778821932917;
+        Thu, 14 May 2026 22:12:12 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Date: Fri, 15 May 2026 07:12:08 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <agarKP9wHQMGuV_D@eldamar.lan>
+References: <20260515022033.GA10889@localhost.localdomain>
+ <87cxyxe76j.fsf@gentoo.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87cxyxe76j.fsf@gentoo.org>
+Subject: Re: [oss-security] Logic bug in the Linux kernel's
+ __ptrace_may_access() function
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi
 
-> An integer overflow vulnerability was found in function gdImageWebpCtx
-> of file gd_webp.c in libgd. It could lead to heap buffer overflow
-> circumstance. Both PHP 7.0.10 and libgd 2.2.3 were affected
+On Fri, May 15, 2026 at 03:29:56AM +0100, Sam James wrote:
+> Qualys Security Advisory <qsa@qualys.com> writes:
 > 
-> PHP reported via https://bugs.php.net/bug.php?id=73003
-> PHP fixed via https://github.com/php/php-src/commit/c18263e0e0769faee96a5d0ee04b750c442783c6
-> libgd reported via https://github.com/libgd/libgd/issues/308
-> libgd fixed via https://github.com/libgd/libgd/commit/40bec0f38f50e8510f5bb71a82f516d46facde03
+> > Hi all,
+> >
+> > Today a vulnerability that we reported to security@kernel was fixed:
+> >
+> >   https://github.com/torvalds/linux/commit/31e62c2ebbfdc3fe3dbdf5e02c92a9dc67087a3a
+> >
+> > [...]
+> >
+> > Today we also contacted the linux-distros@openwall, but since exploits
+> > are already public we were told to send this to oss-security@openwall
+> > instead, hence this post. We are not publishing our advisory yet, to
+> > give distributions and users a chance to patch.
 > 
-> argb = (uint8_t *)gdMalloc(gdImageSX(im) * 4 * gdImageSY(im));  /* integer overflow!!! */
+> Thank you. I'm sorry you've had your moment somewhat spoiled.
 > 
-> There is no overflow check before calling the gdMalloc function.
+> I include some notes for readers.
 > 
-> POC
->     ini_set('memory_limit', -1);
->     $im = imagecreatetruecolor(0x8000, 0x8001);
->     imagewebp($im, 'php.webp');
->     imagedestroy($im);
+> --
 > 
-> AddressSanitizer: heap-buffer-overflow
-> WRITE of size 1
+> Please note that despite the commit title and contents, it is not
+> exclusive to ptrace, and ptrace restriction mechanisms will not help
+> here.
 > 
-> PATCH
-> if (overflow2(gdImageSX(im), 4)) {
->     return;
-> }
+> As for mitigations: I don't think there are any real ones.
 > 
-> if (overflow2(gdImageSX(im) * 4, gdImageSY(im))) {
->     return;
-> }
+> Some ideas:
+> * Block pidfd_getfd. I don't think it's actually used that heavily and
+>   there's often fallbacks for older kernels when it is.
+> 
+> * You could remove the world-executable bit from ssh-keysign
+>   but this is *not* the only binary affected, and this is a very weak
+>   mitigation indeed __only for the PoC__.
+> 
+> The patch from Linus applies cleanly down to 6.6 or so. For 6.1 (IIRC),
+> there was a trivial conflict (attached for convenience).
+> 
+> For 5.10, a prerequisite commit is handy:
+> 5bc78502322a5e4eef3f1b2a2813751dc6434143, then apply the 6.1 version.
 
-Use CVE-2016-7568.
+I'm not 100% certian, but setting restrictive kernel.yama.ptrace_scope
+might as well serve as temporary workaround. Can you confirm?
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJX7BFqAAoJEHb/MwWLVhi2kfoP/1owiTLiVQs33ewsVmLqdrmq
-L20K6eMWkt15djVUcpGtBvH4ebcbnXZdXUIsqKOuQoiwWMYWpC0FTCD9tOK3SKLI
-uKcaIcuPKgXfUM3KDgJww1tBZ8t+AKwjRf18A23KAFmJ63LO+QgrZT5nwmW0lff1
-QOZ/7F80hBQJa2rOqOCWRg0BWZvPJ5djKfgQ4+3pwEl++4CRoKP2ABsdqwL6SCNe
-kw7OvYITxfx9BGEGPh6/NCZoLvTVXEHZjHQVhWlobpGpO75DPC5eEyxCXEO3KBxK
-4mKQADERR1yIafLLtlkWYg2awsHg2JOahcjL2vK2/32OOG2gkXe6ihsgUWKWZp/V
-HcFBK6l9xo4R5eVm11sr0t9F0H/IYSfqOd7wijfDZbwNELqLi8gO0vWcvj2HNfLs
-KzosUgCtz74JVz3vAXdk5e83EJv/9DTXbC5kyA+yfIXaGjm97jSkrXsfktNsnQ4N
-5cSWbuxg9W/I5qGuXmhNhqE1EJVRWBkc/3DaCQoS6/XRV9PiUqg0EhZFAtHCcrOg
-xO55mA4m1ZjIHUaox4RBEeLIHpIeSNBywAsfFtOmCMTfupNTM1xWft4Nsg3be/p+
-4yKY3wr8YZ70fWopenDixR9OKMcUINTCFNB0HGPAsUhBuu4849yExTanXfAdaTa3
-EQl2ePo/sn4HttO+tXO2
-=3man
------END PGP SIGNATURE-----
+Regards,
+Salvatore
