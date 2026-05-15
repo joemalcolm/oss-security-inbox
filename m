@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5737" "Monday" "4" "July" "2016" "21:13:05" "+0200" "Gustavo Grieco" "gustavo.grieco@gmail.com" "<CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>" "129" "[oss-security] Browsing and attaching images considered harmful in Linux" "^Date:" nil nil "7" "2016070419:13:05" "[oss-security] Browsing and attaching images considered harmful in Linux" (number mark "        gustavo.grie Jul  4  129/5737  " thread-indent "\"[oss-security] Browsing and attaching images considered harmful in Linux\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 1914 invoked by uid 550); 4 Jul 2016 19:13:26 -0000
+Received: (qmail 10044 invoked by uid 550); 15 May 2026 19:35:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,165 +6,162 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 1856 invoked from network); 4 Jul 2016 19:13:18 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=fD/iEu2I6Qv/gTsTTqgWksnKZJtAAKjgQkNYSrSi628=;
-        b=nwohWL7hI/orD9X0M2d8xvwr2gV/LX9VMIqNbWaItJ1TV8R/8+u4EZEYbtuJ0Y/rVD
-         OhBK/lNTN4ASnehU9w9HpFGN/G6AG6F2yC/Jlc4P3gbEdO9BPu7GEQpeWC3Mh8Y8gbpH
-         JeC4YujZuhus4YkGr7MVIMAuxzVqSl4p3uSU4DHs1qeAXAjSfheNLcjMcZEz6Q35AxYF
-         Xnyg0ehUKpXrUYsVbv4f0m2KzlMYgcRS7K1Z+a74rnf7i1A5cK5P90NBu6XnnAS4SeuA
-         H9aSsRsAUxsgOUH9HllWgawidh870cicFCIJp+qQpeOiwy3bxcZwxLikk9P+TbKLEb0l
-         JL7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=fD/iEu2I6Qv/gTsTTqgWksnKZJtAAKjgQkNYSrSi628=;
-        b=jBVcoIOEkBiq7jBLx6kbPoe4Efs3wWky9yzOFkCCg/O49vy4ggH80dsgIlLAe39jT4
-         +pyvNz+TdKV3Pe170oEY1PlNNOGBqj6f1UpFa+hos687sRab0oLOUUp/d7tpPkwGiBqF
-         m48gjHkUSy5hQ6vBx31z6UW+4SBLZPNJQ4xzlKndFHqi7CVmVPT5WxSkCsTcn2h9oeRh
-         JRetkSZIIjG2H44FbNqscfZEABFWi2DCSpBaHI2sNsTNshKelPLSuJ6XfENvtT7jPVAa
-         xM1al4h4/iCnHLSmsvDWQT+CumabRlnl6wEgsvYNO1/be3kG3atzJvThoHBZsCozU7pB
-         hTGA==
-X-Gm-Message-State: ALyK8tJc0LlY8Z8hxzPWv+k93giIxm/MGEPBofgwK/Dm2oUp/QLkKFTHIGC2Pzy6i3n4JjoIrtbQPavuOJgshg==
-X-Received: by 10.107.137.95 with SMTP id l92mr10359425iod.177.1467659586018;
- Mon, 04 Jul 2016 12:13:06 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CACn5sdSFtHbu1d45rK4Hi8=Z+KirfOZ+g=gBT5LsCWcxgfnz-w@mail.gmail.com>
-Content-Type: multipart/mixed; boundary=001a113ecbfe47421c0536d42091
-Date: Mon, 4 Jul 2016 21:13:05 +0200
-From: Gustavo Grieco <gustavo.grieco@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Browsing and attaching images considered harmful in Linux
+x-ms-reactions: disallow
+Received: (qmail 28131 invoked from network); 15 May 2026 19:28:15 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1778873286; cv=none;
+        d=google.com; s=arc-20240605;
+        b=QWQUUDHvitq4m92HTOV4wZAl7d4SO6Gx2ijcx7o+JlnmEloNSepCUAh4oG+L7c7CYx
+         WBeHIUNJxSICyacfhhDpDVMwA2HHW6yqm9+nm49kDlZri5VI83d96OZve4nVhxd+iRMB
+         Wyb+/ZB6nJ+hetFSKkGMByXRtwq8K/fVOf0La2UYsILaI3AENe+28+60m18nQ4uHP2zI
+         uey1grdJIuvPwparfhTdKjNGEI98V9CeWZCZwOgbbW2dvFkceCe2C64PNrpczDT85kkI
+         rPEqJ/15RKuOpEYRqbAgM6+q/A4/4/PLIAFoi+JiqhiI9oq7BFgdYyBEqUV6j/MeYT70
+         6VhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=/StW6hE3b/fXneNvW/Glryiyy+MbeozXDANuPF+c6Bs=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=hVygQGF3zb7U2AeWs+v5AWfufwonwB8e2mu5U69pMB1Q+4bWeZY0Zy9+35xogkZGod
+         3cWGsEPLKLwHZ1WzWSm5/2W/BlaaxJ1OilSE/2blUIgMgIXaUtYBoFiALQUiT/kcU4PP
+         ZBg0sO84aUIWwvkkCcDViw5YA5Cdi0bi0LT32JsRUyEsSpkIdVAszlfd1m9o3P/Om0yd
+         g/b+XwuTkgPUUv08nzonJVseHMo6S10gOvnZqI/OkxuvfrYCZ1hDKMvHaeV1pgJInFtF
+         yxVaZOf7ZmiWCs4EbOKzApu4Hn3K0mQd8QEWOTQdK5Cn/hUOcn7XQU1znq3EkwH0WS7W
+         Tn8g==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778873286; x=1779478086; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/StW6hE3b/fXneNvW/Glryiyy+MbeozXDANuPF+c6Bs=;
+        b=P+VLmrBh19jyMFYSHoPB3xm/brUp9PPScWouqI7NPFdHaMJtSeCliYm341jGbpvas4
+         AjeueOAzzSCztc8xirqviRsgMaZ1a9kA/8/S+ivGTwWkIufacMgoqmI368/9UmnMuowB
+         JcooQPK+Qj7Bqe4Xuc1NbU0/50H/aTgMvsi0a9aM8OXm3aB17PBRVG3k61HgAJWYAOgo
+         m4XWcQOU4LBX4p5W1q/hTLDsJCUxndcUZXX1iih4khFJl1GdL3HOHiHiAsw7C7YreX8t
+         99kSLqWb/4j1WZ7YWhlIKwQgIxkdgn7JZT5rNfH8rMpDv+KWHxWyFCsyy11NUuApM6IA
+         YbpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778873286; x=1779478086;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/StW6hE3b/fXneNvW/Glryiyy+MbeozXDANuPF+c6Bs=;
+        b=pHrQ2OofsBiW5VQyUL2lC78Wgqj4UwtGd+1Kq9pWA/gzp0hP8Ad49Sd5ESIT4XBgCv
+         +HaP8VJUcv9qiQvxprt+iPOi+xqg28LyWEXN/82CXguyL6ZQGW/NgEHDIRvF75QWo1+M
+         5swmDwxJZo1SMYW7hCdexrXYAQpbBOHm8Do4HAEM3rg3JENH+642Zw5dSuhjh3V7UWev
+         GLw7bBMCV7RM1yIL3xfmpORftHxr6CujgsRkrQiW+pZN+St4jJFKs9b8n3nDWA87YoZO
+         XYhprYDBT6UoU3c3VRQbzeQSnOkKEwZtZMTXyJ6Vi1YVakvmMRVoPdMS39JX6kiVvXV+
+         UvQQ==
+X-Gm-Message-State: AOJu0YyvgIqmAWkiNPp1GeW1/2ztI4n1nRxKh1WTaC3UWjmIJJlUU78B
+	ww8q1313erE1kLPvUC3pki1IBdZw2p+FvZXydn8B/natKTrZq63B/N9JXj7vQwfeuKrPrJoMnl9
+	k2lIzgnT/a9I77sb/XO6RriqQ3oFGdvpTpFN/
+X-Gm-Gg: Acq92OHpnpOZAj/iWYCIVEm0+NFTRODOBzJ/u2Jga/u1ONK+6HqlP7Qg+i3QtmGZcIt
+	G6Q4wg0EuoqR07bH7Mvk8HrEG70rRYdrpoWasU6bEg33Q9B9mlcpFyZaH42eknMRIN6y8rHmxAm
+	oT6wo6IeL6O6WZrRkoXtwgnYm/OuVB3E7t6sohYjv3KUaS2IDHATax2vgbMzhIw7Z8gs7bVaYZ5
+	l3rrQ0yCn/SEbwkZVNyqbrO+rA5Yx6ujbgluTOUVmh7P/SXoaat2T5u+V6gmSpX2GGK/IHSuHUB
+	EGpFxWGVvJjs9nCoFHxP7j+dFT9CM8zYFj+VOHIPytzBVNtyBGBB9HwDvUvPFxSMKiVjVOqwdHZ
+	8CpV6SqWqXSwFnHUH/km6opQ=
+X-Received: by 2002:a05:6820:62a:b0:696:15bf:ca5f with SMTP id
+ 006d021491bc7-69c9430100cmr3495147eaf.19.1778873285759; Fri, 15 May 2026
+ 12:28:05 -0700 (PDT)
+MIME-Version: 1.0
+From: Cosmin Truta <ctruta@gmail.com>
+Date: Fri, 15 May 2026 22:27:54 +0300
+X-Gm-Features: AVHnY4KuzYbAQW0RTSjsXwEeD-cR2pWfINH6JwRaO3s5m5fFhFDYDw-ctqIswwI
+Message-ID: <CAAoVtZwu1t4kjdLnVcSJ5gjOmpb+DW+Q4_pWiLJ+ag4uevwjFA@mail.gmail.com>
 To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] libpng-apng: Chunk-smuggling vulnerability in push-mode APNG parser: CVE-2026-40930
 
---001a113ecbfe47421c0536d42091
-Content-Type: text/plain; charset=UTF-8
+Hello, everyone,
 
-Hi,
+This is an out-of-band notice. Unlike previous libpng announcements,
+this one doesn't coincide with a libpng release, and the disclosure
+cadence differs from the usual coordinated pattern:
 
-I would like to bring the attention of the oss-security list to the
-existence of many security issues in the gdk-pixbuf library and its
-dependencies causing a that attaching a corrupted image file in Linux
-has become a risky business. For instance,  there is a read
-out-of-bounds in librsvg2 (a dependency of gdk-pixbuf used to render
-svg images), which can be easily triggered if you try to attach a svg
-in Firefox. I tested it in Ubuntu 14.04 (x86_64) using the
-corresponding version of librsvg2 (2.40.2-1 with debug symbols) and
-Firefox. To reproduce:
+- The fix landed on the libpng18 development branch (commit
+  faf0692468) approximately one month before this announcement.
+  libpng 1.8.0 is in late beta with no tagged release yet, so
+  there is no upstream release version with which to align the
+  disclosure. Downstream consumers building directly from the
+  libpng18 branch have had the fix available since it landed.
+- The vulnerable code originates in the third-party libpng-apng
+  patch, which is not under upstream libpng control. The patch
+  is applied downstream by Firefox and Thunderbird, as well as
+  several Linux distributions (Gentoo and LFS/BLFS among others).
+  The libpng-apng maintainer, Daisuke Nishikawa, has since released
+  fixed revisions (libpng-1.6.57-apng.patch v2 and
+  libpng-1.6.58-apng.patch); downstream consumers should either
+  update to those (verifying that both upstream commits are
+  included), or backport the upstream commits themselves (see
+  "Related fix" below).
 
-1. Download and unpack boom.tar.gz somewhere.
-2. gdb --args /usr/lib/firefox/firefox
-3. Execute "run" and try to attach (ctrl+o) the svg file inside boom
-directory in Firefox.
+=== CVE-2026-40930 ===
 
-Result:
+Chunk smuggling in the push-mode APNG parser via unconsumed
+chunk body
 
-Program received signal SIGSEGV, Segmentation fault.
-0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
-(pattern=pattern@entry=0x7ffffffea110) at rsvg-paint-server.c:645
-645        rsvg-paint-server.c: No such file or directory.
-(gdb) bt
-#0  0x00007fffbb7a4c0d in rsvg_pattern_fix_fallback
-(pattern=pattern@entry=0x7ffffffea110) at rsvg-paint-server.c:645
-#1  0x00007fffbb7c0650 in _set_source_rsvg_pattern
-(ctx=0x7fffc1672b00, rsvg_pattern=0x7ffffffea110, opacity=<optimized
-out>, bbox=...)
-    at rsvg-cairo-draw.c:195
-#2  0x00007fffbb7c1e4d in rsvg_cairo_render_path (ctx=0x7fffc1672b00,
-path=<optimized out>) at rsvg-cairo-draw.c:526
-#3  0x00007fffbb7bea12 in rsvg_render_path
-(ctx=ctx@entry=0x7fffc1672b00, path=path@entry=0x7fffc4708640) at
-rsvg-base.c:1976
-#4  0x00007fffbb7b59c8 in _rsvg_node_rect_draw (self=0x7fffc45c6f50,
-ctx=0x7fffc1672b00, dominate=0) at rsvg-shapes.c:479
-#5  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc45c6f50,
-ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
-#6  0x00007fffbb7b6583 in _rsvg_node_draw_children
-(self=0x7fffc8058560, ctx=0x7fffc1672b00, dominate=0) at
-rsvg-structure.c:87
-#7  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc8058560,
-ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
-#8  0x00007fffbb7b6903 in rsvg_node_svg_draw (self=0x7fffc4915080,
-ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:323
-#9  0x00007fffbb7b6503 in rsvg_node_draw (self=0x7fffc4915080,
-ctx=0x7fffc1672b00, dominate=<optimized out>) at rsvg-structure.c:69
-#10 0x00007fffbb7c2ac3 in rsvg_handle_render_cairo_sub
-(handle=handle@entry=0x7fffc8cd3440, cr=cr@entry=0x7fffd7d58000,
-id=id@entry=0x0)
-    at rsvg-cairo-render.c:225
-#11 0x00007fffbb7c2ef4 in rsvg_handle_get_pixbuf_sub
-(handle=0x7fffc8cd3440, id=id@entry=0x0) at rsvg.c:90
-#12 0x00007fffbb7c2f77 in rsvg_handle_get_pixbuf (handle=<optimized
-out>) at rsvg.c:119
-#13 0x00007fffbb9cee46 in gdk_pixbuf__svg_image_stop_load
-(data=0x7fffc50e18e0, error=0x7ffffffea6b8) at io-svg.c:160
-#14 0x00007ffff35d31fb in gdk_pixbuf_loader_close
-(loader=loader@entry=0x7fffc4424ea0, error=error@entry=0x0) at
-gdk-pixbuf-loader.c:821
-#15 0x00007ffff35d0e2a in gdk_pixbuf_new_from_file_at_scale
-(filename=0x7fffc4577100
-"/home/g/Work/Code/ef/gdk-pixbuf/svg/overflow-real-reap.svg",
-    width=<optimized out>, height=<optimized out>,
-preserve_aspect_ratio=<optimized out>, error=0x0) at
-gdk-pixbuf-io.c:1372
-#16 0x00007fffeafc7d19 in UpdateFilePreviewWidget
-(file_chooser=0x7fffd9d53a30, preview_widget_voidptr=<optimized out>)
-    at /build/firefox-mh9_e1/firefox-46.0.1+build1/widget/gtk/nsFilePicker.cpp:115
-#17 0x00007ffff25273b8 in g_closure_invoke () from
-/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
-#18 0x00007ffff2538d3d in ?? () from
-/usr/lib/x86_64-linux-gnu/libgobject-2.0.so.0
-...
+Security advisory:
+https://github.com/pnggroup/libpng/security/advisories/GHSA-c4v6-gxrq-6g2x
 
-It is interesting to note that rcx looks controllable:
+Fix on libpng18:
+https://github.com/pnggroup/libpng/commit/faf06924688b62d7c1654b5ceddedbde66ffadb4
 
-(gdb) x/i $rip
-=> 0x7fffbb7a4c0d <rsvg_pattern_fix_fallback+333>:        testb  $0x4,0xe4(%rcx)
-(gdb) info registers
-...
-rcx            0xe5e5e5e5e5e5e5e5        -1880844493789993499
-...
+CVSS 3.1: 5.4 (Medium); CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:L
+CWE: CWE-436 (Interpretation Conflict)
+Affected (upstream): libpng 1.8.0 development branch (libpng18)
+Affected (downstream): libpng-1.6.49-apng.patch through
+  libpng-1.6.57-apng.patch (original v1) on SourceForge
+Not affected: upstream libpng 1.6.x releases (no APNG support)
+Fixed (upstream): libpng18 at commit faf0692468
+Fixed (downstream): libpng-1.6.57-apng.patch v2 and
+  libpng-1.6.58-apng.patch on SourceForge, released by the
+  libpng-apng maintainer
+Build-time mitigation: building libpng 1.8 with APNG disabled
+  (i.e., without PNG_APNG_SUPPORTED), or building libpng 1.6
+  without the libpng-apng patch, removes the vulnerable code.
+  No runtime workaround exists for push-mode applications.
 
-Fortunately, this issue is already solved in the last revision of
-librsvg2 (AFAIK, this issue has no CVE, so please MITRE assign one if
-suitable). Nevertheless, I reported such vulnerability to Mozilla more
-than a month ago hoping that they will disable the svg support in the
-open/attach widget. After some discussion, it was marked as WONTFIX.
-While i understand why, i still feel it can be productive to discuss
-this here.
+Three inter-frame chunk discard paths in the push-mode APNG parser
+clear the chunk-header flag without consuming the chunk body and
+CRC, allowing attacker-controlled bytes inside a discarded chunk
+to be reinterpreted as a fresh chunk header on the next call to
+png_process_data.
 
-(the same trick can be used to crash Chrome/Chromium, since the code
-to open/attach an image is almost the same, so this is not a Firefox
-specific issue)
+Impact depends on the application's CRC handling:
 
+- Default configuration: libpng calls png_error on the resulting
+  CRC mismatch or APNG sequence-number violation, and the image
+  fails to load. Impact is denial of service.
+- Relaxed configuration (png_set_crc_action with PNG_CRC_QUIET_USE
+  or PNG_CRC_WARN_USE): smuggled bytes reach the APNG sequence
+  counter and the zlib decompressor, and are decoded as frame
+  pixel data. No code execution: zlib output writes into a
+  pre-allocated row buffer. A crafted fake length exceeding the
+  carrier chunk body causes cascading desynchronization beyond
+  the carrier.
 
-Regards,
-Gustavo
+Sequential-mode reading (png_read_info / png_read_row /
+png_read_end) is not affected. Only push-mode (png_process_data)
+is vulnerable, and the Gecko-based browsers (for example) use it.
 
---001a113ecbfe47421c0536d42091
-Content-Type: application/x-gzip; name="boom.tar.gz"
-Content-Disposition: attachment; filename="boom.tar.gz"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_iq8ec04u0
+=== Related fix ===
 
-H4sIAFvpRVcAA+1V30/bMBDmmb/iZjppe0jjNElTVU2lDQSPm1rgPSRua+Em
-ke3Ssr9+F8dpk8LgBR4mOLXxz7v77ruzfVcUa7d4YHIhiq0jWSKqT9lXD8uT
-txJK6XAYALZeFNJ2a8THP3iDaOD5wyCgEVAviIb+CdA3Q/CCbJROJEJ5LdzX
-1utYYN/+JzLBRAPPYoKtJrDlmV7FxKP0K4EV48uVbkYPnG1/FruYUKAQjCj4
-ZHoKMPniOLERx9mPAeUtx2372Xh+e3XNlD5PFAM1RuwrrRG7iklv1kNQuEXj
-+gVTqeSl5kUOu2qTqgGX1Rdbt7TDfb/qPNE19oqSyUQXcm5mYbcWuTJ+RWNz
-tslZ1jeGKiNdBWOjTJQ6l1wzyRMw2mvRQtTB0N5bL3bCNlOaa8FM7irEgpFp
-b3Y+cc10zRRbKGtyUeTaWSQpw4Htr7l4jAnBdRaTm8sayX6fo2Ta6MJOcMkW
-Men33ZRz4taIntt7mLSoLYTJ0gJlOWaqg2B+u7Aziv9BKN6IWGMt/GWikQth
-jPw2/dwjUM/mNznXyOdGMTkv0fWv/Eaxdi13Svmokr3qR8DtOMrbjgakIiC/
-H68MCWcH/6j0nIL/vMKgiSvlMsXMpYggJJA+mkbGBB0tuBAxWUrkibj7Oq31
-pw2fXQvUmqC1DdoYkSw7hCVZqu38RopvDST/+ws02TQvbf66SePdpPlVcBPN
-dtoQIRnqKy2Le1zLixyzAdb9nUjSezLlCo/WGLy+Dz2sWVRsezNw64Ih1dlF
-rh/N14INotEBrB+OmphrV43jM7yIbbHiJQKpvUDqUsxkQtrkvObliNjGRx2O
-HToNl/vcGUaOyv3KMretLM/QRCGyDpmVK4BK1UnydFVgWtc8y/CEG3yjY3e0
-Hz4BVEPdrvAKIdOL2Y/L6yOWJy7e+NPTu+r9f+c3BtMQReE/33/69P2nYUBP
-IHxnXEY++Pv/KZ/yKR9X/gKBPFQyAA4AAA==
+A sibling defect in the same push-mode fdAT path was reported
+separately in GitHub issue pnggroup/libpng#854 and fixed on the
+libpng18 branch in commit 9ec49c2d56. It is distinct from
+CVE-2026-40930 and is not covered by the advisory above.
+Downstream consumers of libpng-apng should apply both commits to
+fully remediate the push-mode fdAT path. Those updating to the
+fixed libpng-apng revisions instead should verify that both commits
+are included; otherwise, 9ec49c2d56 must be backported separately.
 
---001a113ecbfe47421c0536d42091--
+Related fix on libpng18:
+https://github.com/pnggroup/libpng/commit/9ec49c2d56cec19107ddc458b648ce224c9697b3
+
+Credits:
+- Seung Min Shin (CVE-2026-40930 discovery)
+- Ryo Shimada (GitHub issue pnggroup/libpng#854)
+
+---
+Cosmin Truta
+libpng maintainer
