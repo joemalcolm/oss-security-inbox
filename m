@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1707" "Tuesday" "29" "December" "2015" "11:31:04" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151229163104.719956C06B8@smtpvmsrv1.mitre.org>" "43" "[oss-security] Re: Inspircd <2.0.19 DoS" nil nil nil "12" "2015122916:31:04" "[oss-security] Re: Inspircd <2.0.19 DoS" (number mark "U       cve-assign@m Dec 29   43/1707  " thread-indent "\"[oss-security] Re: Inspircd <2.0.19 DoS\"\n") "<1451395927.2773687.478399178.47F1803A@webmail.messagingengine.com>" ("<1451395927.2773687.478399178.47F1803A@webmail.messagingengine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26394 invoked by uid 550); 29 Dec 2015 16:31:54 -0000
+Received: (qmail 20426 invoked by uid 550); 15 May 2026 19:31:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,55 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26258 invoked from network); 29 Dec 2015 16:31:16 -0000
-From: cve-assign@mitre.org
-To: feld@feld.me
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <1451395927.2773687.478399178.47F1803A@webmail.messagingengine.com>
-Message-Id: <20151229163104.719956C06B8@smtpvmsrv1.mitre.org>
-Date: Tue, 29 Dec 2015 11:31:04 -0500 (EST)
-Subject: [oss-security] Re: Inspircd <2.0.19 DoS
+x-ms-reactions: disallow
+Received: (qmail 7954 invoked from network); 15 May 2026 11:15:00 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1778843690;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=y82dDwSAWC6S2ZmrZugyboBqs22TRwCte2ulHCUc+zc=;
+	b=BIdM7VMFJjFJEOp8mMBCdefWUIDqFFl/MwN59oAnLKDBuJRI75urevtwOoy11qE4pYkDWd
+	uumsFoPILxWHrjJgt/X1BIjgkV8+jZ9JbErzq+84QvzKzZVWbB9KPZJsu0gOZYpPigTuAI
+	kRx4r+W4g7VqJyi9JHIbUeQl2lA6lTO5sbEd2xYBQQX9dxHV0/+aMI6erEXM4vENEKcce/
+	V9P/dXXV924sO0XxOtHPT2XaOC7kRoYvLu9j8IuRUjT1lT7IkkvTsZi3ihLuVDAIPAFZfB
+	nacu5KZssT/2xU1ON4k+ojaYbDbEGmu0bfyzhOs5GYyDw9PtegWod4kD9u0haw==
+Message-ID: <f7c83c54-96ec-4ba5-8b9c-01a663dc5bdd@cpansec.org>
+Date: Fri, 15 May 2026 12:14:48 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTG3lcfgGXQ5mljF8mGDpUKSF4kOW4gwf0TVTXqeG0j3WKzFuHShikqspc1rz0VoEKtFTIhoKsBY3fJqzg9VNZ3bKt4/kAvO78CW50bArCIZbI442H3Ww7eAXs7Udt0DeYBqtw/ClaOVAEXEUe+av7vn7hzQG0v90YoT4ZU2ET3y9XiTi7yrDPKH7h03s9OaBvpqv2O7Yq0HP2tD50G3Rzfv5RYbrXWlYphe/RqqaWCDArRynEKxibM4cClQ7ILXxR+TF3aKx4i8PC9hgwpFxz3rj9jhGFXb9uCoggLedr5JflPc9XsVTJ1ITC1Cu1UAZASxd+d2VLMSJPMjQSbHhyDrXcvt7swwjmliuR7aISmMLCnncSTqNuVxE6cxRZlas1RyxtsVKMdDluc/sHUTynTLrQoMNkT5QnBxQxPyltAj7BjB5UYkfkx0alWVtHuq0mgJsSvcWnBpGwK0TqQ6co2gzjR8gA76xXGJ6nPUNQxgPtUOaS6LhFGDaqmB+PldzQVV96AFkx+dJD+727Wd+n/ZHmkJfFQIKYsyDcYCBVlPcKqgUcaNX33REOs3aoYPlnhM9mqxPMHxweRb8FgdOVdHVKTTnL/kjPOFZacs7oqgN3TQG9emEpbtoRVDofB9Yj9q65tZZ8V5KNHXOQZyJ2A0OweQ//iIb2UZvI/GHXuBgw
+Subject: [oss-security] CVE-2026-8503: Apache::Session::Generate::SHA256 versions before
+ 1.3.19 for Perl create insecure session ids
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+========================================================================
+CVE-2026-8503                                        CPAN Security Group
+========================================================================
 
-> Inspircd <2.0.19 has a DoS caused by PTR lookup of connecting users.
+         CVE ID:  CVE-2026-8503
+   Distribution:  Apache-Session-Browsable
+       Versions:  before 1.3.19
 
-> From their changelog: "...including a fix for a bug which allowed
-> malformed DNS records to cause netsplits on a network. Triggering this
-> issue is non-trivial and it may not occur in all circumstances, but all
-> users are advised to upgrade."
+       MetaCPAN: https://metacpan.org/dist/Apache-Session-Browsable
+       VCS Repo: https://github.com/LemonLDAPNG/Apache-Session-Browseable
 
-> http://www.inspircd.org/2015/04/16/v2019-released.html
-> https://github.com/inspircd/inspircd/commit/6058483d9fbc1b904d5ae7cfea47bfcde5c5b559
 
->> src/dns.cpp
+Apache::Session::Generate::SHA256 versions before 1.3.19 for Perl
+create insecure session ids
 
->> if (resultstr.find_first_not_of("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-") != std::string::npos)
+Description
+-----------
+Apache::Session::Generate::SHA256 versions before 1.3.19 for Perl
+create insecure session ids.
 
->> "Invalid char(s) in reply"
+Apache::Session::Generate::SHA256 generated session ids insecurely. The
+default session id generator returns a SHA-256 hash of the built-in
+rand() function, the epoch time, and the PID, that is hashed again.
+These are predictable, low-entropy sources. Predicable session ids
+could allow an attacker to gain access to systems.
 
-Use CVE-2015-8702.
+Note that version 1.3.19 has a fallback without warning to use insecure
+session generation method if the call to Crypt::URandom::urandom fails.
+However, this is unlikely as Crypt::URandom is a hardcoded requirement
+of the module.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+This issue is similar to CVE-2025-40931 for
+Apache::Session::Generate::MD5.
 
-iQIcBAEBCAAGBQJWgrTBAAoJEL54rhJi8gl5aIEP/2g9jqgkUoPvyEMPgZIITKYx
-tWXKCweTow3+G5fIkMMYiPZhwBqc5eGG6JS0fGOjFWb5+WLvtnTZh8I2xZrYJ4QF
-uOgbvky3WJ73WjmoPkEfv6VGIAjyRx3eVDvdZkng4vmnDciIM0DF/9JQxTMUuI/5
-MdegRN6O9frCcFBcBThK8F+cTSeOwG6dHRc9IQfYvIVYm8ZummOZz0dSS5b8Zd4y
-+/cUeVmlkZrAEBf3t9REzK1JjiYbmlMXSsuyHdYcYIAE57VJG335EAVTA91BgkBG
-GI5DZBJC8yvsR5rCnYy9USWJdvzWmhL9/Ij77ODzC4kwpI8tiU0VXW0FXA1KOdI1
-UWcWeSlhTKidJTpcPA/dcDyZ1g8CYZsjNdvl04Ma+SGYncMI/oUNFx1Mqixr1o1Z
-+npuV0JtTk1dyc+YXXVLptR8wpyiBe+t7Y+Vpw2Ul1YG/itz4tQXPa+/APmcxezy
-aAQGEfEBMUYIQ9vuJ0N+VJSqQ70w74QS6m1Da9QENjPO6OpAWDeNApMsybv/aWGT
-xgMr+np6EMAImvwCHJ5YMwUIj3d0G8ZKVjgPBOokauX8ueM5h6byeyUalptcYxtl
-fvpNjfIGxBtDxRullUEDYfXYpenhKnP8/aPcvp+MjBBz0Ml2LJI1+Yi8nxs1qlO/
-JWH+/E/bYvFwwqR8JnH0
-=GVyG
------END PGP SIGNATURE-----
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Upgrade to version 1.3.19 or later.
+
+
+References
+----------
+https://metacpan.org/release/GUIMARD/Apache-Session-Browseable-1.3.19/changes
+https://metacpan.org/release/GUIMARD/Apache-Session-Browseable-1.3.19/diff/GUIMARD/Apache-Session-Browseable-1.3.18#lib/Apache/Session/Generate/SHA256.pm
+https://github.com/LemonLDAPNG/Apache-Session-Browseable/commit/cc915cbbd266776eec3dd8bf4748b15fa827dbd0.patch
+https://www.cve.org/CVERecord?id=CVE-2025-40931
+https://www.cve.org/CVERecord?id=CVE-2025-40932
+
+Timeline
+--------
+- 2026-05-13: Issue identified by CPANSec
+- 2026-05-13: Issue reported to author
+- 2026-05-14: Version 1.3.19 released
+
+
+
