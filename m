@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2810" "Tuesday" "21" "June" "2016" "18:25:17" "-0400" "Jim Rollenhagen" "jim@jimrollenhagen.com" "<20160621222517.GE21113@jimrollenhagen.com>" "87" "[oss-security] Ironic node information including credentials exposed to unathenticated users" nil nil nil "6" "2016062122:25:17" "[oss-security] Ironic node information including credentials exposed to unathenticated users" (number mark "U       jim@jimrolle Jun 21   87/2810  " thread-indent "\"[oss-security] Ironic node information including credentials exposed to unathenticated users\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23816 invoked by uid 550); 21 Jun 2016 22:50:58 -0000
+Received: (qmail 3181 invoked by uid 550); 16 May 2026 18:17:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,109 +7,124 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3803 invoked from network); 21 Jun 2016 22:25:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jimrollenhagen.com;
-	s=default; t=1466547919;
-	bh=ZCFyf9qV5AUox8AfRKyRbgcDBIMxvY1VhDA2KuxRang=;
-	h=Date:From:To:Subject;
-	b=dUIQXKV2/m8nBou9Lu7+YPSouwATfwQ1j5OIa5xxCOYvfmeGjYcVzF35aUdQ19KJh
-	 rxyDIeP5ffTbfLqMhthwIwY7ppIZIxSO/sJbyU80y/HpQx3EcEPv+mACMJs69BNSrC
-	 0H8dGCPcmBF3lADMXaij7Cx3cG0x2Jb49h7siN5s=
-Date: Tue, 21 Jun 2016 18:25:17 -0400
-From: Jim Rollenhagen <jim@jimrollenhagen.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20160621222517.GE21113@jimrollenhagen.com>
+x-ms-reactions: disallow
+Received: (qmail 27818 invoked from network); 16 May 2026 17:30:43 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1778952632; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Kt4EDUkjHqAOuOUnFzPkLzF004ey1vPeAV8XN6JNh8XEYXjJfgkW8T9BJTn7gHs2oH
+         ma/sISGJmyqrEEoQz5+jo7vKbmKZ4lnFraTNSzPzNrv/pX3SWwlfNBI2NB11iOk7VUZi
+         Wh6KOaX7LGluiX6va87Z2aFklSGMdhGWvlZF7mduX/gf9g8lA9bcK4s3vdppIrTVkue7
+         qfLhWT7v4ZNhc1u08xx1C/3272dfD4ycvjxYAGcqmta4Pxv4JxZ8PS/nBH9VdUVeuBpc
+         zfKWixKU6vBMsmfPw2D3Qz3XahMXnGxNsVrOIxtjbqrCZ9MN6J58C3fkvAGlW8p9XFPC
+         DtVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Y73dbtLnasOkOsCbfHfoFXXWWoYdQ/DChdgZH8CytP0=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=VZ0P7AA6kFa7sIM2YjfA2na8yydBHs4NKsEXyh7EA+eD03lz5epPYejXffdC00SuZW
+         G7dTqQKh+4ZRVhkm8D/jmWxPwIRfEvMN1T0YtmwAk6kAJzgdKuskK3ubigyETL2gsRf3
+         V1BAia0tCPc5CCvvio3eFU/8b1De6CtpjQ69O5pXkgP/X6iFvr9o0ofQZQx7UyJTF7Fn
+         y7SLyE6tn0tvLO4BiuOvn7KKAcIRlTvgq3rWbdDwOcSgPJlk6rHYsYQbOSAL87NOm6/L
+         LOtZn7ZPMJGHnj93fDSHG5fj1C2TbtahsYCFAZVIX2ww8c2cmTi6z9wzuJ9S5jP7LI3s
+         KbvA==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778952632; x=1779557432; darn=lists.openwall.com;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y73dbtLnasOkOsCbfHfoFXXWWoYdQ/DChdgZH8CytP0=;
+        b=nnH0OH2O5496eb4+iKqmdZYx0uw1EKUEOWlGMHpa3R+ySMJLCN+5alxz/AJN7JPWRe
+         F5yJegnNmxcsoNTUrU+qZuyEy4ZxHfnV2O1ZNhbxS2xz/IS22aZWuyWU5uaPp7MfEz4W
+         b/BLeKUxxyyAA4hweC3wBPVIoGCcWvIwqJ3ZH5AtYJ9pEDSdVFDJShLCnfcMmZbgVmLS
+         HqLxGl4WAeF1ITNNszX9EAFlLbCGNvYd2tORgMOzVfC3xgu19eTG76j4Q/wrwTvYkUKs
+         6Wphc7h1XWtvOTEeCSf7W8va9d4wgFQdfLdzePyCRwLL9dmg+jlkUyv7FOXBTM8VsbQo
+         S5tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778952632; x=1779557432;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Y73dbtLnasOkOsCbfHfoFXXWWoYdQ/DChdgZH8CytP0=;
+        b=b4pnyHOOjmoxH3ANETuenbbjskIhFsm3p8yht8rxTlqlW0Doh6lZ52pc4mPeTNZNu5
+         9vcXqQ7fzI8mmcYBnLhmC4eT5GSS9vgUh1Cw01CnJClN7WGnx/4MaG0tiahiVXdTKUm6
+         7J8rcnPnu9disLIZwi7Sm8mFGHjhB+BhHBeRLDMOMxLufTMfR4kD2PQLIH+jkCq5gAR3
+         9xXB6Xs4CjEITNrMgee1GDcXM0vO85XrFUNcMbsyAM3eYGfdR5i9ITXeI+BrfhoTV1gR
+         HlIrqpUBtmG5Gi8zfKdH45M0dV2Z965mFAlRXfpQXk7p/NtwuZajYLQ5M0jcdx3bJHxO
+         1JUA==
+X-Gm-Message-State: AOJu0YzdH1zf5KcipnfvHoDqyW6FUUfVookkry5IR3/QeQ1UsaEbLfh2
+	AVA9WwU2naqxwzvI6CjtB+xcELj6Kir44uq5rJ0/+Mqb0Dd44MqdWEYPqJ5VppM4G19HRu1J6Px
+	TnMFhJtnzAQI0sKVpK3lsk/nXWDVgHty+hg==
+X-Gm-Gg: Acq92OHA9l1Hhm8XxIinUApEPldQ8XX8FeEtVrHjPOkh7sWdPk9WsV2T7t3rLQM7PvR
+	uBAAhbF6n/rniynrBSt+aVYETih/JCIeQbXhnBJAI966Qt3LkrUlwddYGZYfRcAdBOerNSzD5zA
+	UwL8WgbUQVxNRKzsq+ZiHVMzjidKTmT7cM/7LTpCW0rMpL2KPpfKaslsrx7ExGkVhiVQMOMxr4r
+	iqDMwNBoCvkSl/+jwrVtkMzjUI1wF9EBaV1ll3xhRSd4v5rxB0UXfIClq9NP+/vEFLlGooo0fnt
+	T0y6LAqunpamh+G66UbKFS0B6WNYdNNl6MEejT0nUyXq9KwMXYbaxcQQrWjo9UPqiVs=
+X-Received: by 2002:a05:6512:6c8:b0:5a8:72e2:dba8 with SMTP id
+ 2adb3069b0e04-5aa0e6191e4mr2573113e87.3.1778952632122; Sat, 16 May 2026
+ 10:30:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="zbGR4y+acU1DwHSi"
-Content-Disposition: inline
-Subject: [oss-security] Ironic node information including credentials exposed to
- unathenticated users
+References: <20260516150545.7570323b@hboeck.de>
+In-Reply-To: <20260516150545.7570323b@hboeck.de>
+From: Jeffrey Walton <noloader@gmail.com>
+Date: Sat, 16 May 2026 13:29:54 -0400
+X-Gm-Features: AVHnY4LDxH9P8nj66UQjY2RnSb-ECIKmUXZy69EGkfezmELxzSIJ14HQGEvhllQ
+Message-ID: <CAH8yC8kf1rCP7SGYpbRjSsLQ6qSYmZyPFF1QNzum8+o4_P2N9A@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Recent Kernel exploits, attack surface reduction,
+ example IPSEC
 
---zbGR4y+acU1DwHSi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On Sat, May 16, 2026 at 9:07=E2=80=AFAM Hanno B=C3=B6ck <hanno@hboeck.de> w=
+rote:
+>
+> Multiple of the recent kernel exploits have affected the "esp" Linux
+> Kernel module. ESP is, as far as I understand, part of IPSEC, and I
+> think it's fair to say that IPSEC is not widely used these days. I
+> think this raises some questions about attack surface. I want to note
+> that I use IPSEC as an example here, but it likely applies in very
+> similar ways to many features that are part of the Linux Kernel and are
+> not used in most common setups.
+>
+> For everyone who builds custom kernels and doesn't use IPSEC, it's
+> probably a good idea to disable all IPSEC-related config options, e.g.:
+> CONFIG_INET_ESP
+> CONFIG_INET6_ESP
+> CONFIG_INET_AH
+> CONFIG_INET6_AH
+>
+> I believe IPCOM is also rarely used separately from IPSEC, so consider
+> also disabling these:
+> CONFIG_INET_IPCOMP
+> CONFIG_INET6_IPCOMP
+>
+> However, there's a broader point here: I think it's common these
+> days that Linux distributions install most or all kernel modules by
+> default, and loading them happens automatically. Which, in many cases,
+> means people are potentially affected by security flaws in features
+> they never use.
+> "Attack surface reduction" is widely considered to be a good security
+> principle, and I wonder if we can do better here.
+>
+> To pick the example of IPSEC, i wonder if it wouldn't be better to
+> have, e.g., a separate "linux-modules-ipsec" package that isn't
+> installed by default. People who use and need IPSEC will likely know
+> that they need it, and can install it separately.
+>
+> I'm aware this doesn't come for free, and will add increased
+> complexity to kernel packaging. But think about it like this: If we had
+> that separation, three of the recent kernel local root exploits would've
+> been much less impactful, and wouldn't have affected most systems.
 
-=============================================================================
-Ironic node information including credentials exposed to unathenticated users
-=============================================================================
+Another option on x86 is to isolate drivers from the kernel, and make
+drivers Ring 1 or RIng 2.  Leave the kernel to Ring 0, and userland to
+Ring 3.  A compromised driver cannot get root, and remains isolated in
+the system.
 
-:Date: June 21, 2016
-:CVE: CVE-2016-4985
+It works on x86 because there are two supervisor bits on x86, not one
+like on the old DEC Alphas.
 
-
-Affects
-~~~~~~~
-- Ironic: >=2014.2, >=4.0.0 <=4.2.4, >=4.3.0 <=5.1.1
-
-
-Description
-~~~~~~~~~~~
-Devananda van der Veen (IBM) reported the following vulnerability in Ironic.
-
-A client with network access to the ironic-api service can bypass Keystone
-authentication and retrieve all information about any Node registered with
-Ironic, if they know (or are able to guess) the MAC address of a network card
-belonging to that Node, by sending a crafted POST request to the
-/v1/drivers/$DRIVER_NAME/vendor_passthru resource.
-
-The response will include the full Node details, including management
-passwords, even when /etc/ironic/policy.json is configured to hide passwords in
-API responses.
-
-This vulnerability has been verified in all currently supported branches
-(liberty, mitaka, master) and traced back to code introduced in commit
-3e568fbbbcc5748035c1448a0bdb26306470797c during the Juno development cycle.
-Therefore, it is likely that both juno and kilo braches (and their releases)
-are also affected.
-
-
-Patches
-~~~~~~~
-https://review.openstack.org/332195 (Newton)
-https://review.openstack.org/332196 (Mitaka)
-https://review.openstack.org/332197 (Liberty)
-
-
-Credits
-~~~~~~~
-- Devananda van der Veen from IBM (CVE-2016-4985)
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/ironic/+bug/1572796
-- http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=2016-4985
-
-Notes
-~~~~~
-- This fix is included in the upcoming 4.2.5 (Liberty), 5.1.2 (Mitaka), and
-  6.0.0 (Newton) releases of Ironic.
-
-
---
-Jim Rollenhagen
-OpenStack Ironic Project Team Lead
-
-
---zbGR4y+acU1DwHSi
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJXab7NAAoJELZqL5FCxsCcjtEP/RTM4as/TNxtCpoNyMwzopXk
-1kC4se/yX5styvefWw0WEGTqX1W2ploT2bBvYSCMcvrUH63yVyMcZpUK1yz6QENB
-MaB1VBx4n2SGYeQ351qBDFMCfD0e4+0RWQIYWrs/fXHa7fSkxeH8LBMtPvEYxhNv
-4/ytu6eYZ0UUlKQwt8cNt6rxPGCOiPdB+l3lsANiK2VoeLThlgtNp7LMnvuHmNR4
-dmAHiPYQuEvsppqC+NDf0n+wGegyMAnmXSk+2GtwCItPiV3JZK9ic43KwjrhuBOH
-mp6/1kGJpkAxVPyG1AnMeDCMFEEzK7wGqezdSFqCOwrxCYB+FPiam3T3tAh5gbRx
-xwnkoYcNngtK8qf+78ns8RscGL6n9GsnlC7pOBFbOMffTvUHh3H7KZLqgi2E/YR7
-Jd8uoI4cwtAr2uJWmHPedgWoorTtO7jobQ4kFuwp+GUzSFwms+fpHP4d0BpWuGhD
-47RLLnL5pljHGWlxxDrxHe8qk+LMng8MYwys1xJb5bdWMRbtkDCXckh5aY4cAwGz
-Z/1g70/Yz+Au4oNWukRw/dKF4G6I3EupWWpmfTHCh/n1pp1ZeAfHViIN23xOIJQS
-hbvxGcJ6qImsuQ2STjFOnZy1qdio4lAmXGZ8qUfOB0N/Layen31MMg7YBi6dYZ1B
-N9IRPmyUq6mb0nG1ci7R
-=XZCW
------END PGP SIGNATURE-----
-
---zbGR4y+acU1DwHSi--
+Jeff
