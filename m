@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1082" "Monday" "11" "January" "2021" "13:38:40" "+0100" "Jaroslav Tulach" "jaroslav.tulach@gmail.com" "<20923736.EfDdHjke4D@logout>" "38" "[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory" nil nil nil "1" "2021011112:38:40" "[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory" (number mark "U       jaroslav.tul Jan 11   38/1082  " thread-indent "\"[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23965 invoked by uid 550); 11 Jan 2021 12:47:38 -0000
+Received: (qmail 5567 invoked by uid 550); 16 May 2026 18:18:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,78 +7,86 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20382 invoked from network); 11 Jan 2021 12:38:54 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:reply-to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=GotQIIU7nGxjYctSDmJugWJMCeSiA6KNWZkv6WMsSDQ=;
-        b=XZuGk/6420vxG/UVTu/y3wnRgn9EnCA4teuhh2oNbp+oXUzgUXMPIJVDGl4HRpAUIm
-         ndppg4Difu7njBCzkt7fp40QK/iFZNCmxNMqVIaFTTxFWVf6yArpijpXg3lq/6xLB6tB
-         95XGdYAUGun5uK+CooJEmF+voptcWwasg0acJYmlEPAkimUfA5eVewFNWr0Fb3OR/3PQ
-         LDdiy3TfGg3kZ2TEvK5PhKDfE6H7sfTRfY+7J43aCBrbHwJTMUz1T7POKTVFce6zPV6t
-         j8PNz1DpybZxO2qv53ku1nT5LJIcUGnOBRO17FtJ5sFZAIJF8ZyqbkgzMdTideonllT/
-         p/YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=GotQIIU7nGxjYctSDmJugWJMCeSiA6KNWZkv6WMsSDQ=;
-        b=N0U3IeDSzFnDDEZL1/dP+n/q/tjvhmehR6f12l6fsYJxWjjyiZZjszlyY4Zq82e4hG
-         +kM6Q6wRv6TlRNoh3H4eAjQXzd49QexCJZtbKEaxqiZHE81VQ2idyjm1VvHesV3CFX7H
-         xlZF4jKNTtChOyk1ng91nKz8gmrD2/nfGUqHD/4T3ltYtcluKlwvg1duTo1G0KjgxByF
-         N2yKq1qEYkD5wqIqzPbKCJB3g6Sk2cvkMhvz0U3Z8aERFA8egDWphMHK5BSWI0GYcHF2
-         meRzualhw4ngcwPIL1k0WrMvUdbDTOmquOgjFTrngshQTBBHkGPhrVWlevcu1hGIZidc
-         yQYQ==
-X-Gm-Message-State: AOAM532XeMDWcWotyMpKX0u8ku+eUkuLea3EZc/db2tQDtADzSNbEQQQ
-	RtzebJV4pfiMykmdtW/xTkM=
-X-Google-Smtp-Source: ABdhPJxON2c2wZ+hL/i5rLVDn5BkmwpQipflJERU3o7fSiQo3DnWoyJ7PY971amdbnYy8aH4WDM/ag==
-X-Received: by 2002:a50:fe0e:: with SMTP id f14mr14303380edt.159.1610368722611;
-        Mon, 11 Jan 2021 04:38:42 -0800 (PST)
-From: Jaroslav Tulach <jaroslav.tulach@gmail.com>
-To: Apache NetBeans <dev@netbeans.apache.org>, Jonathan Leitschuh <jonathan.leitschuh@gmail.com>, Apache Security Team <security@apache.org>, oss-security@lists.openwall.com
-Date: Mon, 11 Jan 2021 13:38:40 +0100
-Message-ID: <20923736.EfDdHjke4D@logout>
+x-ms-reactions: disallow
+Received: (qmail 29966 invoked from network); 16 May 2026 13:39:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1778938735;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=lJRhUNkEgLrV7hKrEH1hxZ/t0i+62lcB0sMJvKNx1EU=;
+	b=exxBorty5OkAM5Jpm8RvJo+6z6un14FFpdEQPQNmIpVx4sqV31NX4ud6PRe/loqOozwi9U
+	kHdh40u1+WPOdftgdCAthAq1Le1NRYksHbhT0UV9VTrz9LpoV93OOs0ZHruxmUwaB0+jRs
+	okiQR4ovvuR4dPRo02lQ5vWhvzd/QMWXZnijQMT6joY0HA1H1OBpujmX8hPrzKJQWgb5U+
+	YB7H3EfUbEuzRjJjBrABzkFULgkI6eDx65q+prfiG68p8Xdtcq24jwkgIMMGvddY7VObEL
+	8UyXJWMxF6eZglusTWL+LR7uI+GKNmu/QWwXom/sAO0ae5fhz3G8WzomYzjcvw==
+Message-ID: <d8728694-98be-4f17-ab76-f02d3d311c7d@cpansec.org>
+Date: Sat, 16 May 2026 14:38:54 +0100
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="nextPart7199003.EvYhyI6sBW"
-Content-Transfer-Encoding: 7Bit
-Subject: [oss-security] [CVE-2020-17534] HTML/Java API 1.7: A race condition between deletion of the temporary file and creation of the temporary directory
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTE62fF6IqwBuHF7QQSZYgjTPoTWI8di6BBh0p5zyZrpGKw5EQXUMnxFs7v5AgaYI8hk/4Dzs+POTVciqU7kcPascS65aozjcVP8MYredrjMZKM4NS4O8dvQK8OTG0errZSyMwFrWZfBcrLdll6+dgbtyxlIeJ9oM2lUOo+YiAdGkbbtZCu2k6EoLrXnGYJSXHy5l8w0LZKMLUNXPMS7M2/C55DIw1x13YJSpkbTCSjpLIapjLlVQXrypMhbc/LDudS1wDsqSMTH+KzwYv19t3HYQxsAOt2q4GEIG8qfxf37/MWMcZaM5vh6nnF4P1cxrNUCG4IUR91uauvC/QKo1fp0lTUnV0/l1CnroekzzoRziq5qN7mx2iDfkiyRS8itJ+b4rdBGE0rTT1xVOlu1IEvtL+nHbUDuno3zzJVUHlaLtFvlKDp6+POsaDo9rwFLMIGSezmmeuSr7ys65nYNSwduZj5FSoZOYRj/ChP3GdE36Ci5lcSHNnRkCnu2/jIqt3HrOv61S60yF+FfLz9G07dGCo8oJ72P6DeAGvsqWdlAo20Bqbatzc+L2E/f+CrFgvey4fsq8+VymVm2slv1N6uDrpkOsWZCKE6Q8nqUmEIYErBzekMBrZpsWVqK5HmSvomIZ7eU9YWHCE+aXljOJZmMbEusoT6WeKwVkchIR4IiMQ
+Subject: [oss-security] CVE-2026-46719: Net::Statsd::Lite versions before 0.9.0 for Perl
+ allowed metric injections
 
---nextPart7199003.EvYhyI6sBW
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="iso-8859-1"
+========================================================================
+CVE-2026-46719                                       CPAN Security Group
+========================================================================
 
-CVE-ID------CVE-2020-17534
+         CVE ID:  CVE-2026-46719
+   Distribution:  Net-Statsd-Lite
+       Versions:  before 0.9.0
 
-Summary-------A race condition between the deletion of the temporary file and creation of 
-the temporary directory
-
-
-There exists a race condition between the deletion of the temporary file and the creation 
-of the temporary directory in `webkit` subproject of HTML/Java API version 1.7.  
+       MetaCPAN:  https://metacpan.org/dist/Net-Statsd-Lite
+       VCS Repo:  https://github.com/robrwo/Net-Statsd-Lite
 
 
-A similar vulnerability has recently been disclosed in other Java projects and the fix in 
-HTML/Java API version 1.7.1 follows theirs: To avoid local privilege escalation version 1.7.1 
-creates the temporary directory atomically without dealing with the temporary file: https://
-github.com/apache/netbeans-html4j/commit/
-fa70e507e5555e1adb4f6518479fc408a7abd0e6[1]
+Net::Statsd::Lite versions before 0.9.0 for Perl allowed metric
+injections
 
-
+Description
 -----------
+Net::Statsd::Lite versions before 0.9.0 for Perl allowed metric
+injections.
 
-- Avoid using webkit presenter 1.7
-- Update to HTML/Java API 1.7.1
+The metric names were not checked for newlines, colons or pipes.
+Metrics generated from untrusted sources could inject additional statsd
+metrics.
 
-Credit:-------The problem was identified by Jonathan Leitschuh
+Problem types
+-------------
+- CWE-93 Improper Neutralization of CRLF Sequences
+
+Workarounds
+-----------
+Apply the patch.
+
+Alternatively, validate that all metrics sent to the client based on
+untrusted data do not contain metric injections.
 
 
+Solutions
+---------
+Upgrade to Net::Statsd::Lite version 0.9.0 or later.
 
+
+References
+----------
+https://metacpan.org/release/RRWO/Net-Statsd-Lite-v0.9.0/changes
+https://github.com/robrwo/Net-Statsd-Lite/commit/e1a8ab866d75c2827982134e9cf7e51a7f771153.patch
+
+Timeline
 --------
-[1] https://github.com/apache/netbeans-html4j/commit/
-fa70e507e5555e1adb4f6518479fc408a7abd0e6
-
---nextPart7199003.EvYhyI6sBW--
+- 2026-05-14: Issue reported to CPANSec
+- 2026-05-15: Author notified
+- 2026-05-16: Fix released
 
 
 
