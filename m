@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2400" "Wednesday" "21" "June" "2017" "20:26:05" "-0400" "Mike O'Connor" "mjo@dojo.mi.org" "<20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>" "56" "Re: [oss-security] Qualys Security Advisory - The Stack Clash" "^Date:" nil nil "6" "2017062200:26:05" "[oss-security] Qualys Security Advisory - The Stack Clash" (number mark "        mjo@dojo.mi. Jun 21   56/2400  " thread-indent "\"Re: [oss-security] Qualys Security Advisory - The Stack Clash\"\n") "<20170621212742.GA28766@grsecurity.net>" ("<20170619152843.GC7769@localhost.localdomain>" "<14558692.afnJ5aRU9J@wanheda>" "<20170621122526.GA32701@grsecurity.net>" "<20170621135727.GA12852@openwall.com>" "<20170621212742.GA28766@grsecurity.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14158 invoked by uid 550); 22 Jun 2017 11:46:50 -0000
+Received: (qmail 31989 invoked by uid 550); 16 May 2026 18:17:37 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,81 +6,74 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7829 invoked from network); 22 Jun 2017 00:26:37 -0000
-X-PGP-Key-Fingerprint: 8F 85 89 E1 A2 FC EB D2  27 49 56 1E CC DF C9 C1
-X-Organization: noitazinagrO-X
-X-AS#: 26096
-Message-ID: <20170622002605.e4sfvdxi2hugl6o7@dojo.mi.org>
-References: <20170619152843.GC7769@localhost.localdomain>
- <14558692.afnJ5aRU9J@wanheda>
- <20170621122526.GA32701@grsecurity.net>
- <20170621135727.GA12852@openwall.com>
- <20170621212742.GA28766@grsecurity.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jxtsxw3qh7j7ngze"
-Content-Disposition: inline
-In-Reply-To: <20170621212742.GA28766@grsecurity.net>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.3 (angus.mystery.com [127.0.0.1]); Wed, 21 Jun 2017 20:26:23 -0400 (EDT)
-Date: Wed, 21 Jun 2017 20:26:05 -0400
-From: "Mike O'Connor" <mjo@dojo.mi.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Qualys Security Advisory - The Stack Clash
+x-ms-reactions: disallow
+Received: (qmail 30536 invoked from network); 16 May 2026 15:09:18 -0000
+Date: Sat, 16 May 2026 17:09:08 +0200
+From: "Bernhard R. Link" <brl+oss@mail.brlink.eu>
 To: oss-security@lists.openwall.com
-
---jxtsxw3qh7j7ngze
-Content-Type: text/plain; charset=us-ascii
+Message-ID: <agiIlGxE-XCWbpVp@client.brlink.eu>
+References: <20260516150545.7570323b@hboeck.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260516150545.7570323b@hboeck.de>
+Subject: Re: [oss-security] Recent Kernel exploits, attack surface reduction,
+ example IPSEC
 
-:Still, if OpenBSD was able to resolve the issues necessary after=20
-:notification without leaking full details to the public, shouldn't=20
-:this have been possible for the other projects without an embargo,=20
+* Hanno Böck <hanno@hboeck.de> [260516 15:07]:
+> However, there's a broader point here: I think it's common these
+> days that Linux distributions install most or all kernel modules by
+> default, and loading them happens automatically. Which, in many cases,
+> means people are potentially affected by security flaws in features
+> they never use.
+> "Attack surface reduction" is widely considered to be a good security
+> principle, and I wonder if we can do better here.
+>
+> To pick the example of IPSEC, i wonder if it wouldn't be better to
+> have, e.g., a separate "linux-modules-ipsec" package that isn't
+> installed by default. People who use and need IPSEC will likely know
+> that they need it, and can install it separately.
+>
+> I'm aware this doesn't come for free, and will add increased
+> complexity to kernel packaging. [...]
 
-Several open-source distros fixing the same flavor of issue in the
-same timeframe might've raised suspicions in a way that one distro
-alone wouldn't have.  Heck, I've tracked down embargoed security
-issues just from what multiple closed source vendors documented in
-their release notes.
+The packaging complexity would likely not be that much of a problem,
+the overhead in packaging metadata would add some more cost (also
+consider that deciding which packages to install easily gets into
+the 2^package number complexity). But the biggest disadvantage would
+be the missing granularity (you don't wont to make a package for
+every single module) and the hassle is something is missing
+(installing a missing module to have network again without network...).
 
-:My take on the embargoing process (outside of what's already mentioned
-:on https://grsecurity.net/an_ancient_kernel_hole_is_not_closed.php ):
-:I've always been concerned by the fact that smaller distros seem to=20
-:be barred from distros-list membership; it seems the arrangement=20
-:lends itself too much to enabling the marketing of the larger=20
-:companies and in fact perhaps even disincentivizing their investment=20
-:in security as the embargo process enables them to skirt much of the=20
-:public pain they'd otherwise have to experience (for in this=20
-:instance what was a completely avoidable problem).  I get the practical
-:reasons for the policy (increased leak risk, major distros often do
-:the actual fixing work, etc) but from a level of principle it's always
-:rubbed me the wrong way.
+To decrease the attack vector, restricting the second part would be
+much easier: restricting what can be auto-loaded. A module that you
+need root permissions to load is harmless for priviledge escalation,
+whether installed or not.
 
-In the past, I've proposed that the embargo mailing list archives
-themselves have an "embargo", after which they become public.  That
-way, there's after-the-fact transparency, and it gives the folks who
-care a good idea of what happened.  Is there anything sensitive at
-this point in, say, the March 2017 linux-distros archives??=20=20=20
+Security wise, supporting allow-lists instead of only deny-lists
+would make it easier for systems where you know beforehand what you
+want (I guess many server systems might end up in there). Of course
+you can just load everything and disable module loading, but then
+you'll need a restart whenever what you load needs to be changed.
 
--Mike
+But that would only work for tighly managed systems, nothing easily
+applicable to general systems. There you always have to find a
+balance between ease of use and security. Security is worthless if
+users cannot use it. (After all, the most secure system is switched
+off, filles with epoxy, encased in cement and resting on the ground
+of the sea).
 
---=20
- Michael J. O'Connor                                          mjo@dojo.mi.o=
-rg
- =3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=
-=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D--=3D=3D=
---=3D
-"Well done is better than well said."                           -Ben Frankl=
-in
+Where the perfect balance is depends a lot on the individual though.
+One easy way to do that is for example security levels to define
+different sets of defaults. Distributions could for example
+categorize kernel modules about how likely an average user of them
+would need each one and then allow to configure a module security
+level that limits how uncommon a module gets autoloaded without
+an admin allowlisting it.
 
---jxtsxw3qh7j7ngze
-Content-Type: application/pgp-signature; name="signature.asc"
+That would likely need a lot of tooling, though...
 
------BEGIN PGP SIGNATURE-----
 
-iQBVAwUBWUsOnZEu6kwgW799AQK+QgH7B1VlEx9fVTecuAILb/OOhux/juvMN2Td
-npG++cKDfWNQfmIljjk5x1S9EFeEhDazh+MyKFP12xNqmW62SoiYXg==
-=TCBL
------END PGP SIGNATURE-----
-
---jxtsxw3qh7j7ngze--
+	Bernhard R. Link
