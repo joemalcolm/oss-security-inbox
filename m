@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3150" "Thursday" "28" "February" "2019" "18:08:00" "+0000" "Simon McVittie" "smcv@debian.org" "<20190228180800.GA16103@espresso.pseudorandom.co.uk>" "64" "[oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery" "^Date:" nil nil "2" "2019022818:08:00" "[oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery" (number mark "U       smcv@debian. Feb 28   64/3150  " thread-indent "\"[oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3407 invoked by uid 550); 28 Feb 2019 18:08:16 -0000
+Received: (qmail 12100 invoked by uid 550); 17 May 2026 19:54:09 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,79 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3383 invoked from network); 28 Feb 2019 18:08:15 -0000
-Message-ID: <20190228180800.GA16103@espresso.pseudorandom.co.uk>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Date: Thu, 28 Feb 2019 18:08:00 +0000
-From: Simon McVittie <smcv@debian.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] ikiwiki: CVE-2019-9187: Server-side request forgery
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 17731 invoked from network); 17 May 2026 18:44:48 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779043479;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=AZ3946EqKg/1dioAKNX/Bcz0QhuKvHBOcKRfZZbS3o0=;
+	b=dV/bXSPSQcgK7pKnBs4Ep0lTuHceTBR7R3vs+8RSrqE8V1oNmyH0O3vYMVI+TCXHPmw15A
+	/cryTwOFGp4mThFXINYMK97THlz8seATD0Y23hdG74uM/WGxHZuKLB24AeQe9JPLQXlNEI
+	LwzZ6iluIK+R82F+XecnIULhqHG+y0xFq0KxvqMPjsgxS8IWyF5STotfcmw3LsOfYRRi/9
+	PQBd5uqkf24pw4U6e7bCRS9EgWS4CwW3fezRDKHztvNfa2rasUQnB2q+cjKdTMv2D9bO5I
+	TxVsKEpyBXkU9orQvqPg9LfmOPJGvk57hHRU6T/DZxUBF0BQsVnNzGKzR7D0Gg==
+MIME-Version: 1.0
+Date: Sun, 17 May 2026 15:44:39 -0300
+From: Timothy Legge <timlegge@cpansec.org>
+To: Cve Announce <cve-announce@security.metacpan.org>, Oss Security
+ <oss-security@lists.openwall.com>
+Message-ID: <755ef91e2e9d25d89cd37fc6879de83d@cpansec.org>
+X-Sender: timlegge@cpansec.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-GND-Sasl: timlegge@cpansec.org
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: dmFkZTGq9qquRuL5PzA5JX02jaxAFnw3WHPevyxZFDWlya317mUXOW8kV2zTDk9XjMqPpv+Sht2WjWJdUcTTh4m+ZU2gRelVedIvWOG2PDNyk5hnvVPVjP1kZxRudrWi41QhjOnYY+xqCsawdOIOXCNQPXgg/nK6UWt8ac/MZD+6Tcl6LTDQ8QyevaWSGLLk6X2Aq0Mmws7UpbQ4wInkfdclZ+HUzvz6qQ+QDMCuxT9romOh5ty9AAdDvZTu3nONIug/HEhoZldQ3ZsuXuZjHiRfC8rixrm2ivsn+rNAYscjZiPE62jDImbH8v7IOOfU/LJFsOEq/y3RKr0B5rbNYpb6f5GFhAQCRH4vpS/+VfRC8MNsWZlOC3wOmSur4xItrzr0SA+K4eBAH5e+pogN/l2YKp0O1XYmXt457ZgyE5LY8rBn1LC9ceGSanvEkZ0tPrCHDHeHOBUL3eJYFF04bLY09EuMwoYiYMw8CsaxRiC72NV/MyxsLrBaFBTfMy3fG0D8rVFh2g6C+54JQLpGgaZ0sNgIlZsd1bgK9tXma5GDpSdr+3mz0cKjoC0iulSTktzM0LWc3WGb4GZZW4zVXMZHGlAgb15S5Ud143VnPT4m1t5sK3NO+4HyrUBuaPMY4RhKo03VKIMNmdBd5180619w9mojPypZZWB66Qcbboi4QaM+ww
+Subject: [oss-security] CVE-2026-8507: Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl
+ have out of bound (OOB) write flaws
 
-Reference: https://ikiwiki.info/security/#cve-2019-9187
-Affected versions: >= 1.13
-Fixed versions: >= 3.20190228
-Fixed versions (3.20170111.x branch): >= 3.20170111.1
+========================================================================
+CVE-2026-8507                                        CPAN Security Group
+========================================================================
 
-ikiwiki is a static site generator with some dynamic features,
-used for wikis, blogs and other websites.
+         CVE ID:  CVE-2026-8507
+   Distribution:  Crypt-OpenSSL-PKCS12
+       Versions:  through 1.94
 
-The ikiwiki maintainers discovered that the aggregate plugin (a blog
-aggregator) did not try to use the LWPx::ParanoidAgent Perl module, unlike
-other parts of ikiwiki that request URIs. On sites where the aggregate
-plugin is enabled, authorized wiki editors could tell ikiwiki to fetch
-potentially undesired URIs even if LWPx::ParanoidAgent was installed:
+       MetaCPAN:  https://metacpan.org/dist/Crypt-OpenSSL-PKCS12
+       VCS Repo:  https://github.com/dsully/perl-crypt-openssl-pkcs12
 
-* local files via file: URIs
-* other URI schemes that might be misused by attackers, such as gopher:
-* hosts that resolve to loopback IP addresses (127.x.x.x)
-* hosts that resolve to RFC 1918 IP addresses (192.168.x.x etc.)
 
-This could be used by an attacker to publish information that should not have
-been accessible, cause denial of service by requesting "tarpit" URIs that are
-slow to respond, or cause undesired side-effects if local web servers implement
-"unsafe" GET requests (https://tools.ietf.org/html/rfc7231#section-4.2.1).
-(CVE-2019-9187)
+Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl have out of bound
+(OOB) write flaws
 
-Additionally, if the LWPx::ParanoidAgent module was not installed, the
-blogspam, openid and pinger plugins would fall back to the ordinary LWP
-module, which is susceptible to similar attacks. This is unlikely to be
-a practical problem for the blogspam plugin because the URL it requests
-is under the control of the wiki administrator, but the openid plugin
-can request URLs controlled by unauthenticated remote users, and the
-pinger plugin can request URLs controlled by authorized wiki editors.
+Description
+-----------
+Crypt::OpenSSL::PKCS12 versions through 1.94 for Perl have out of bound
+(OOB) write flaws.
 
-This is addressed in ikiwiki 3.20190228 as follows, with the same fixes
-backported to Debian 9 in version 3.20170111.1:
+When parsing a PKCS12 file, with a >= 1 GiB OCTET STRING (or BIT
+STRING) attribute on a SAFEBAG, via info() or info_as_hash(), a
+heap-OOB-WRITE would be triggered which could have Remote Code
+Execution (RCE) potential.
 
-* URI schemes other than http: and https: are not accepted, preventing
-  access to file:, gopher:, etc.
+Problem types
+-------------
+- CWE-787 Out-of-bounds Write
 
-* If a proxy is configured in the ikiwiki setup file, it is used for all
-  outgoing http: and https: requests. In this case the proxy is
-  responsible for blocking any requests that are undesired, including
-  loopback or RFC 1918 addresses.
+Workarounds
+-----------
+Do not parse untrusted PKCS12 files via info or info_as_hash.
 
-* If a proxy is not configured, and LWPx::ParanoidAgent is installed,
-  it will be used. This prevents loopback and RFC 1918 IP addresses, and
-  sets a timeout to avoid denial of service via "tarpit" URIs.
 
-* Otherwise, the ordinary LWP user-agent will be used. This allows requests
-  to loopback and RFC 1918 IP addresses, and has less robust timeout
-  behaviour. We are not treating this as a vulnerability: if this
-  behaviour is not acceptable for your site, please make sure to install
-  LWPx::ParanoidAgent or disable the affected plugins.
+Solutions
+---------
+Upgrade to 1.95 or later.
 
-If your distribution includes an older version of ikiwiki, please either
-update to a current version or backport the following commits:
 
-* e7b0d4a "useragent: Raise an exception if the LWP module can't be loaded"
-* 67543ce "useragent: Don't allow non-HTTP protocols to be used"
-* d283e4c "useragent: Automatically choose whether to use LWPx::ParanoidAgent"
-* 9a275b2 "doc: Document security issues involving LWP::UserAgent" (optional)
+References
+----------
+https://metacpan.org/release/JONASBN/Crypt-OpenSSL-PKCS12-1.95/view/Changes.md
+https://github.com/dsully/perl-crypt-openssl-pkcs12/issues/55
+https://github.com/dsully/perl-crypt-openssl-pkcs12/issues/56
+https://github.com/dsully/perl-crypt-openssl-pkcs12/commit/b9d0469c6d8f5b5c6c2a45a3d0647a532b749397.patch
 
-Regards,
-    smcv
+Timeline
+--------
+- 2026-05-13: Issue discovered
+- 2026-05-16: Contacted maintainer with the details
+- 2026-05-17: Issue disclosed in Github incident
+- 2026-05-17: Patched version released by maintainer
