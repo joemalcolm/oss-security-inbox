@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3094" "Friday" "8" "January" "2016" "14:55:17" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160108195517.AE8F26C00A6@smtpvmsrv1.mitre.org>" "75" "[oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" nil nil nil "1" "2016010819:55:17" "[oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer" (number mark "U       cve-assign@m Jan  8   75/3094  " thread-indent "\"[oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer\"\n") "<55BB16DD.2000206@redhat.com>" ("<55BB16DD.2000206@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30201 invoked by uid 550); 8 Jan 2016 19:55:30 -0000
+Received: (qmail 3289 invoked by uid 550); 17 May 2026 18:30:54 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,87 +7,89 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30180 invoked from network); 8 Jan 2016 19:55:29 -0000
-From: cve-assign@mitre.org
-To: huzaifas@redhat.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com, jmm@debian.org
-In-Reply-To: <55BB16DD.2000206@redhat.com>
-Message-Id: <20160108195517.AE8F26C00A6@smtpvmsrv1.mitre.org>
-Date: Fri,  8 Jan 2016 14:55:17 -0500 (EST)
-Subject: [oss-security] Re: CVE Request: freeradius: the EAP-PWD module performs insufficient validation on packets received from an EAP peer
+x-ms-reactions: disallow
+Received: (qmail 9833 invoked from network); 17 May 2026 17:55:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779040528;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=U38R5qRQCZRvsqxG/KvUQJbdGuu1GYMouv/tXL6Pzzw=;
+	b=Q4PitIKVQlCtDucGP8mRvGo87kikvOD5Nbw4KvTJmSulzKkKLXqnYUMbtu88NEyvC7911J
+	WTXJZnK6DXgOcTQPl0M0wONvUK1idtjvvdgVVXkLY79LdELrS/MJCYG/N1WWvViP+PrxiF
+	DxslnSzc4avooiemi6VtpDPyFq2QXsgBpUfIdVU8Oa3dlRDgTJGItMpb+QXGm70Ue/+Wpm
+	p8XXROpJ4ZXv3ZcZerlYjYl9zcVKl1fprakwnSMqQgyGAip/5uZ3aVjEgAgzV7DrS14JJk
+	xaCfCC9lb4vE4cjYq03CfBmC08EWOokwHqEu6mITi3yybVXqjGPirO4k1me4dA==
+Message-ID: <9fe97594-392c-49dd-83c9-2c5dfc629b5a@cpansec.org>
+Date: Sun, 17 May 2026 18:55:25 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTF0SSkf2Ic2Y9lkKBDkEd11nNUfzecryrBjtYeIe+4GhhZqeOZomnL/LyS2y1ji1RqbtrKe4FVFwnD0ndREoq7jKFp41ZfKA7rjPrB3bAGzWsWWv3GBYLeRuDPWJ22BCJWiOsBRL/jh0QgAPVj3bFiAHhCfvjXV3x+oKnEgA4IwcctRLnvf8Ta01a5ZDeNLJ7ruDnj4ghpf1LICQbQHQySIz0Sclqxm1dBj+zSO/qyoE5Y8QppbeuCWKN1Gtc0mBKHl4VwqiH6ykdDYf1ZxBE9vmYYINZYcO83Afu71JeHK0FC7TKm0hopYBwWSduFU4VJQitsM3N42wamQjxyXx5YuGZqtIO0pgVIViJYuLNGNkSUny0WzMz/vWKsvqRFrNQXdR70uKwdBv0NaiUatnYd6feJd7/w6Id5ZP7+7K38p4mz1YvWIrpUNkp2+mFn0XYF7mQxCW1dqA9W1/0ocHS87297WfBjsLdt9MjaO8wUC8E0L5/wAPHQtTkkQR9QctKGbKQdz3lC9vu99oy3PUyHTKZKZewDW0vHwI8smPs1t0bB0meIMFBb79BuiwBnll99sjnjHai7vVd7Yq8Jm8IyJ/SrzUd6u86ePwIeVhYMVary8mpbssB03pJGwpZwGJrWxIV4sU8+TBNL1hq5x6BfeKJMNIyIaRtoCx48t6fcXng
+X-GND-State: clean
+X-GND-Score: 0
+Subject: [oss-security] CVE-2026-46720: Net::Statsd::Tiny versions before 0.3.8 for Perl
+ allowed metric injections
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+========================================================================
+CVE-2026-46720                                       CPAN Security Group
+========================================================================
 
-> The FreeRADIUS project has reported a flaw that affects the EAP-PWD
-> module of the freeradius package versions 3.0 up to 3.0.8. This module
-> is not enabled by default, so administrators must have manually enabled
-> it for their servers to be vulnerable.
-> 
-> http://freeradius.org/security.html#eap-pwd-2015
+         CVE ID:  CVE-2026-46720
+   Distribution:  Net-Statsd-Tiny
+       Versions:  before 0.3.8
 
-We have revisited this and decided that it needs unique CVE IDs. As
-mentioned on that security.html page, "These issues were found by
-Jouni Malinen as part of investigating
-http://w1.fi/security/2015-4/" - this suggested a possibility that the
-CVE IDs listed in
-http://www.openwall.com/lists/oss-security/2015/05/31/6 would be
-applicable. However, FreeRADIUS apparently has an independent
-implementation of EAP-pwd. This led to a somewhat unusual situation in
-which most of the vulnerability findings were, at a high level, the
-same -- but resulted from a different set of mistakes within a
-different codebase. The applicable FreeRADIUS changes can be found in
-the "Commits on May 4, 2015" section of:
-
-  https://github.com/FreeRADIUS/freeradius-server/commits/v3.0.x/src/modules/rlm_eap/types/rlm_eap_pwd
-
-and are distinct from the changes in the http://w1.fi/security/2015-4/
-patches.
-
-We are associating the three CVE IDs below with the items on the
-security.html list, not with the specific FreeRADIUS commits.
-
-
->> The EAP-PWD packet length is not checked before the first byte is
->> dereferenced. A zero-length EAP-PWD packet will cause the module to
->> dereference a NULL pointer, and will cause the server to crash.
-
-Use CVE-2015-8762.
+       MetaCPAN:  https://metacpan.org/dist/Net-Statsd-Tiny
+       VCS Repo:  https://github.com/robrwo/Net-Statsd-Tiny
 
 
->> The commit message payload length is not validated before the packet
->> is decoded. This can result in a read overflow in the server.
->> 
->> The confirm message payload length is not validated before the packet
-> is decoded. This can result in a read overflow in the server.
+Net::Statsd::Tiny versions before 0.3.8 for Perl allowed metric
+injections
 
-Use CVE-2015-8763 for both of these issues.
+Description
+-----------
+Net::Statsd::Tiny versions before 0.3.8 for Perl allowed metric
+injections.
+
+The metric names and set values were not checked for newlines, colons
+or pipes. Metrics generated from untrusted sources could inject
+additional statsd metrics.
+
+Problem types
+-------------
+- CWE-93 Improper Neutralization of CRLF Sequences
+
+Workarounds
+-----------
+Apply the patch.
+
+Alternatively, validate that all metrics and setr values sent to the
+client based on untrusted data do not contain metric injections
+
+This is the same issue CVE-2026-46719 that affected Net::Statsd::Lite.
 
 
->> A strcpy() was used to pack a C string into an EAP-PWD packet. This
->> would result in an over-run of the destination buffer by one byte.
+Solutions
+---------
+Upgrade to Net::Statsd::Time version 0.3.8 or later.
 
-Use CVE-2015-8764.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+References
+----------
+https://metacpan.org/release/RRWO/Net-Statsd-Tiny-v0.3.8/changes
+https://github.com/robrwo/Net-Statsd-Tiny/commit/06f814f52fbcc0b2afddf7a2d6f8137fd3cede13.patch
+https://www.cve.org/CVERecord?id=CVE-2026-46719
 
-iQIcBAEBCAAGBQJWkBOHAAoJEL54rhJi8gl5Od0P/1Y8DafilHgNgmQP4D5DfdfB
-x9yuBDJt/rr8NnrbXsIjkuQMIB+UolyAcgEB4CDqiwh4SyYeZSbO1rj3zP0/1uS1
-TyjLGLLiKHc3B53vEK/m3tAZ1M5GEsp3rIH+McCsbip+WlDpkuKexJ8E0kBleWiH
-Mg5UslARv6b7yS5QIoH93MiiZSl+w0V0UtWIkEP1BfCskJhj9DvVd161hyRDcT7m
-ZG52NdBYzCUYP4BC58qEPYtGwM1+OMjaHa6MjkpzqvubMwtdzGK15zcljy/yvN6k
-oY7euhV55PbPsajuzHihBWWp0oejl5gBEiGX6fqCUS8BIoadaOFI9hKkWEBVKnav
-wrE7+f03C2GO/rs46jp1737qtNzIrBklyTblDItLDA1QDqpc5q/Sb9xlLycZ9o8H
-v++vSz3ZQILfi72T7BhhdMl5SQlfNuxdDw0BJBA6tC2+1thZWZBpIg/lXajHo9r9
-E3qszBo0cmh5MSAEdWOMGEInt9DvHymPTcXEtZYFQph54Xb1YS/YYpItX9w5e7e+
-nciRvLRFQwWzC0XJKv9klliStJygxW0g27StoMXncnDchRiIiBV4ypgPJITawi0L
-9LWMSpAhS2VYAAJQjchLaUHFAHgmXwsIKEJJ2k7iuUXF6Qytee3k2uRieRQ3Rvx0
-XhrlBiLeO/vhmZJ8trch
-=16O5
------END PGP SIGNATURE-----
+Timeline
+--------
+- 2026-05-14: Issue reported to CPANSec
+- 2026-05-15: Author notified
+- 2026-05-17: Fix released
+
+
+
