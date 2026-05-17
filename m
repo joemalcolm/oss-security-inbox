@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5186" "Friday" "21" "July" "2017" "05:45:25" "-0400" "Stiepan" "stie@itk.swiss" "<NT2ewSquUVWSMuwQD9mS66GINerAtE1IodPQcjwuABcw6_-xHNatY9qmcPa6ICmd3OB1Exrmg2gm3npm-JsFkvY3dylH7vsHdOdBUOwOCZw=@itk.swiss>" "90" "Re: [oss-security] CoreOS membership to linux-distros (updated)" "^Cc:" nil nil "7" "2017072109:45:25" "[oss-security] CoreOS membership to linux-distros (updated)" (number mark "        stie@itk.swi Jul 21   90/5186  " thread-indent "\"Re: [oss-security] CoreOS membership to linux-distros (updated)\"\n") "<1ED75849-154D-47B3-8D07-6E0797B1D277@apple.com>" ("<9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>" "<20170720041303.GA4266@gremlin.ru>" "<20170720104242.GA21676@kroah.com>" "<1ED75849-154D-47B3-8D07-6E0797B1D277@apple.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 14107 invoked by uid 550); 21 Jul 2017 10:54:14 -0000
+Received: (qmail 11543 invoked by uid 550); 17 May 2026 19:01:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,112 +6,128 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17419 invoked from network); 21 Jul 2017 09:45:46 -0000
-Authentication-Results: mail2.protonmail.ch; dkim=none
-Message-ID: <NT2ewSquUVWSMuwQD9mS66GINerAtE1IodPQcjwuABcw6_-xHNatY9qmcPa6ICmd3OB1Exrmg2gm3npm-JsFkvY3dylH7vsHdOdBUOwOCZw=@itk.swiss>
-In-Reply-To: <1ED75849-154D-47B3-8D07-6E0797B1D277@apple.com>
-References: <9479d640-2002-2462-9d81-2379d60d8f54@coreos.com>
- <20170720041303.GA4266@gremlin.ru>
- <20170720104242.GA21676@kroah.com>
- <1ED75849-154D-47B3-8D07-6E0797B1D277@apple.com>
-Feedback-ID: wnsnnc8Us3MVqt1IALGduDJl-d16B_hEkg50pF7qo11mpeysEHmUOGy-yvw8MEApAPX3TXcPDHQwu7hti-kzSw==:Ext:ProtonMail
-MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="b1_56c674120ba0098364166c6f2f20ad1f"
-Cc: Martin Decky <decky@d3s.mff.cuni.cz>
-Date: Fri, 21 Jul 2017 05:45:25 -0400
-From: Stiepan <stie@itk.swiss>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CoreOS membership to linux-distros (updated)
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 11498 invoked from network); 17 May 2026 19:01:07 -0000
+Date: Sun, 17 May 2026 21:00:55 +0200
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <agoQZ1+n+yF+JEMd@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Vimscript Code Injection in netrw NetrwBookHistSave()
+ via crafted directory name affects Vim < 9.2.495
 
---b1_56c674120ba0098364166c6f2f20ad1f
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Vimscript Code Injection in netrw NetrwBookHistSave() via crafted directory name affects Vim < 9.2.495
+======================================================================================================
+Date: 17.05.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Control of Generation of Code (CWE-94) /
+     Improper Neutralization of Special Elements in Output Used by a Downstream Component (CWE-74)
 
-QmFjayB0byBDb3JlT1MsIEkgdGhpbmsgdGhhdCB0aGUgcHJhY3RpY2FsIGFu
-c3dlciBpcyBodHRwczovL2NvcmVvcy5jb20vb3MvZG9jcy9sYXRlc3Qvc2Vs
-aW51eC5odG1sIC4KTm93IGlzIGl0IGdvb2QgLyBhY2NlcHRhYmxlIHRvIHJl
-bHkgb24gaXQgKG92ZXIgY2xhc3NpY2FsIFVuaXggcHJpdmlsZWdlcywgb3Ig
-YW5vdGhlciBNQUMpIGlzIGFjdHVhbGx5IGFuIGludGVyZXN0aW5nLCByZWxh
-dGl2ZWx5IHVuZXhwbG9yZWQgcmVzZWFyY2ggc3ViamVjdC4uLgpXaGF0IG1h
-a2VzIG5vIGRvdWJ0IGlzIHRoYXQgaXQgaXMgaW4gbGluZSB3aXRoIHRoZSB1
-c2UgbWFkZSBieSBHb29nbGUgb2YgTGludXgsIGluY2x1ZGluZyBpbiBBbmRy
-b2lkIGFuZCB0aGVyZWZvcmUsIHZlcnkgcHJvYmFibHkgbWFrZXMgc2Vuc2Ug
-Zm9yIEdvb2dsZS4KV2UgbGFjayBzb21lIGxpdGVyYXR1cmUgdG8gYmFjayB0
-aGlzIGNob2ljZSBmb3IgZ2VuZXJhbC1wdXJwb3NlIHVzZSBieSB0aGUgcHVi
-bGljIGF0IGxhcmdlLCBob3dldmVyLgpodHRwOi8vd3d3LmNzZS5wc3UuZWR1
-L350cmoxL2NzZTU0NC1zMTMvc2xpZGVzL2NzZTU0NC1zZWxpbnV4LnBkZiBh
-bmQgaHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9saWJyYXJ5
-L2wtc2VsaW51eC8gKiBwcm92aWRlIGdvb2Qgc3RhcnRpbmcgcG9pbnRzIGZv
-ciBzdWNoIHJlc2VhcmNoOyAocHVibGljKSByZXNlYXJjaCBzZWVtcyB0byBo
-YXZlIHN0b3BwZWQgc2luY2UgdGhlbiAoPSBtb3JlIG9yIGxlc3MgaW4gMjAw
-OSBhcHBhcmVudGx5KeKAoC4KKldpdGggcG9pbnRlcnMgdG8gc29tZSBhbHRl
-cm5hdGl2ZXMgaW4gTGludXggYW5kIG90aGVyIG9wZXJhdGluZyBzeXN0ZW1z
-LCBsaWtld2lzZSBtYW55IHJlZmVyZW5jZXMK4oCgVGhlIGZpcnN0IHByZXNl
-bnRhdGlvbiBjaXRlcyB3d3cuaXNvYy5vcmcvaXNvYy9jb25mZXJlbmNlcy9u
-ZHNzLzA5L3BkZi8xNi5wZGYsIHdoaWNoIHByb3ZpZGVzIGFuIGFuYWx5c2lz
-IG9mIE1BQyBtZWNoYW5pc21zJyAocmVtb3RlKSBhdHRhY2sgc3VyZmFjZS4K
-QSBtb3JlIHJlY2VudCwgQW5kcm9pZC1jZW50ZXJlZCBwcmVzZW50YXRpb24g
-KGh0dHA6Ly9rZXJuc2VjLm9yZy9maWxlcy9sc3MyMDE1L3ZhbmRlcnN0b2Vw
-LnBkZikgY2l0ZXMgV2lraXBlZGlhLCBzdGF0aW5nIHRoYXQgIlsuLi5dIHRo
-ZSBzZWN1cml0eSBvZiBhbiBTRUxpbnV4IHN5c3RlbSBkZXBlbmRzIHByaW1h
-cmlseSBvbiB0aGUgY29ycmVjdG5lc3Mgb2YgdGhlIGtlcm5lbCBhbmQgaXRz
-IHNlY3VyaXR5LXBvbGljeSBjb25maWd1cmF0aW9uIiwgZnVydGhlciBoaWdo
-bGlnaHRpbmcgdGhlIGxhY2sgb2YgaW4tZGVwdGggcmVzZWFyY2guCih0aGUg
-ZW1waGFzaXMgLyBib2xkIHR5cGVmYWNlIG9uIHRoZSBzZWNvbmQgcGFydCBv
-ZiB0aGUgc2VudGVuY2Ugd2FzIGxlZnQgYXMgaW4gdGhlIG9yaWdpbmFsIHF1
-b3RlKQpJIGd1ZXNzIHRoZSBxdWVzdGlvbiBub3cgaXMgLSBkbyB3ZSB0cnVz
-dCBXaWtpcGVkaWEgYXJ0aWNsZXMgb24gc3VjaCBtYXR0ZXJzPyAtIGFuZCBp
-ZiB3ZSBkbywgd2FzIHRoZSBjb3JyZWN0bmVzcyBpbiBxdWVzdGlvbiBhdHRh
-aW5lZCBpbiBDb3JlT1MncyBjYXNlPwpMaWtld2lzZSwgY291bGQgd2Ugc29t
-ZWhvdyBtZWFzdXJlIC8gcXVhbnRpZnkgYSBsZXZlbCBvZiB0aGlzIGNvcnJl
-Y3RuZXNzIHVzaW5nIGEgZm9ybWFsIG1ldGhvZD8gKGFuZCBpZiBzbywgd2hh
-dCBhYm91dCBnZW5lcmFsaXppbmcgaXQgdG8gb3RoZXIgT1MgKyB4QUMgcGFp
-cnMgc28gYXMgdG8gZXZhbHVhdGUgdGhlaXIgc3VpdGFiaWxpdHkgZm9yIHNw
-ZWNpZmljIHVzZSBjYXNlcywgdGFyZ2V0IGRlbW9ncmFwaGljcywgbGlrZXdp
-c2UgdGhyZWF0IG1vZGVscz8pClN0aWVwYW4KUC5TLjogRnVsbCBkaXNjbG9z
-dXJlIC0gSSBoYXZlIGFuIGludGVyZXN0IGluIGZpbmRpbmcgYSBzZWN1cmUs
-IHlldCBicm9hZGx5IGNvbXBhdGlibGUgZW5vdWdoIE9TLiBDQy1pbmcgTWFy
-dGluIERlY2t5LCB3aG8gd2FzIDFzdCB0byBwcm9wb3NlIGEgZm9ybWFsIGFw
-cHJvYWNoIHRvIGl0LgoKPiAtLS0tLS0tLSBPcmlnaW5hbCBNZXNzYWdlIC0t
-LS0tLS0tCj4gU3ViamVjdDogUmU6IFtvc3Mtc2VjdXJpdHldIENvcmVPUyBt
-ZW1iZXJzaGlwIHRvIGxpbnV4LWRpc3Ryb3MgKHVwZGF0ZWQpCj4gTG9jYWwg
-VGltZTogSnVseSAyMCwgMjAxNyA3OjA0IFBNCj4gVVRDIFRpbWU6IEp1bHkg
-MjAsIDIwMTcgNzowNCBQTQo+IEZyb206IGplc3NlX2hlcnR6QGFwcGxlLmNv
-bQo+IFRvOiBvc3Mtc2VjdXJpdHlAbGlzdHMub3BlbndhbGwuY29tCj4gQWRk
-aXRpb25hbGx5LCBEb2NrZXIgZG9lc24idCBtYWludGFpbiBhIGtlcm5lbCBk
-aXN0cmlidXRpb24sIHdoZXJlYXMgT3BlblZaIGRvZXMsIG1ha2luZyB0aGlz
-IHJlcXVlc3Qgc3RyYW5nZSB0byBzYXkgdGhlIGxlYXN0Lgo+IEkgYWxzbyB0
-aGluayBpdHMgZGlzaW5nZW51b3VzIHRvIGltcGx5IHRoZXJlInMgIm9uZSBw
-YXRjaCIgdGhhdCBkaXZpZGVzIGEgc2VjdXJlIGNvbnRhaW5lcml6YXRpb24g
-c3lzdGVtIGZyb20gYW5vdGhlci4gQ29udGFpbmVyL0tlcm5lbCBzZWN1cml0
-eSBpcy4uLiBxdWl0ZSBjb21wbGljYXRlZCB0byBzYXkgdGhlIGxlYXN0Lgo+
-PiBPbiBKdWwgMjAsIDIwMTcsIGF0IDY6NDIgQU0sIEdyZWcgS0ggPGdyZWdA
-a3JvYWguY29tPiB3cm90ZToKPj4KPj4gT24gVGh1LCBKdWwgMjAsIDIwMTcg
-YXQgMDc6MTM6MDNBTSArMDMwMCwgZ3JlbWxpbkBncmVtbGluLnJ1IHdyb3Rl
-Ogo+Pj4gT24gMjAxNy0wNy0xOCAxNDo1NjoyMyAtMDcwMCwgRXVhbiBLZW1w
-IHdyb3RlOgo+Pj4KPj4+PiBJPz8/dmUgbGlzdGVkIGVhY2ggY3JpdGVyaW9u
-IGFuZCB3aHkgSSB0aGluayB3ZSwgdGhlIENvbnRhaW5lcgo+Pj4+IExpbnV4
-IHRlYW0gYXQgQ29yZU9TLCBxdWFsaWZ5Lgo+Pj4+Cj4+Pj4KPj4+Pj4gMS4g
-QmUgYW4gYWN0aXZlbHkgbWFpbnRhaW5lZCBVbml4LWxpa2Ugb3BlcmF0aW5n
-IHN5c3RlbSBkaXN0cm8KPj4+Pj4gd2l0aCBzdWJzdGFudGlhbCB1c2Ugb2Yg
-T3BlbiBTb3VyY2UgY29tcG9uZW50cwo+Pj4+IEFsbCBjb21wb25lbnRzIG9m
-IHRoZSBkaXN0cm8gYXJlIG9wZW4gc291cmNlLCBhcyBhcmUgYWxsIHRoZQo+
-Pj4+IHRvb2xzIHVzZWQgdG8gYnVpbGQgaXQuCj4+Pgo+Pj4gUHJpb3IgdG8g
-YW55IGRlY2lzaW9uIHRvIGJlIG1hZGUsIEkiZCBhc2sgeW91IHRvIHNob3cg
-dGhlIGtlcm5lbAo+Pj4gcGF0Y2ggd2hpY2ggeW91IHVzZSB0byBhdm9pZCBl
-c2NhcGluZyBmcm9tIHRoZSBjb250YWluZXIgdG8gaG9zdAo+Pj4gc3lzdGVt
-IChEb2NrZXIgYWxsb3dzIHN1Y2ggZXNjYXBlLCBPcGVuVlogZG9lcyBub3Qp
-LiBDb3VsZCB5b3UsCj4+PiBwbGVhc2UsIHNob3cgaXQ/Cj4+Cj4+IEFsbCBv
-ZiBDb3JlT1MicyBrZXJuZWwgcGF0Y2hlcyBhcmUgcHVibGljLCBoZXJlInMg
-dGhlaXIgbGF0ZXN0IGJyYW5jaDoKPj4gaHR0cHM6Ly9naXRodWIuY29tL2Nv
-cmVvcy9saW51eC90cmVlL3Y0LjEyLjItY29yZW9zCj4+Cj4+IEJ1dCB3aGF0
-IGRvZXMgYSBzcGVjaWZpYyBrZXJuZWwgcGF0Y2ggaGF2ZSB0byBkbyB3aXRo
-IGxpbnV4LWRpc3RybyJzCj4+IG1lbWJlcnNoaXAgcmVxdWlyZW1lbnRzPwo+
-Pgo+PiBjb25mdXNlZCwKPj4KPj4gZ3JlZyBrLWgKClN0aWVwYW4gQXVyw6ls
-aWVuIEtvdmFjCgpJVCBLb3ZhYyArIGl0ayBBVnRvYnZTIFPDoHJsCkdlbmV2
-YSArIEp1c3N5LCBHZW5ldmEgQ0g=
+## Summary
 
---b1_56c674120ba0098364166c6f2f20ad1f--
+A Vimscript code injection vulnerability exists in `s:NetrwBookHistSave()`
+in the netrw plugin (`runtime/pack/dist/opt/netrw/autoload/netrw.vim`)
+when serializing browsed directory paths to the history file
+`~/.vim/.netrwhist`.  A directory name derived from the filesystem is
+interpolated into a single-quoted Vimscript string literal without
+escaping embedded single quotes, allowing a crafted directory name to
+break out of the string context and execute arbitrary Vimscript,
+including shell commands via `system()` and `:!`, the next time the
+history file is sourced.
 
+## Description
+
+netrw records every directory the user browses into a per-user history
+file at `~/.vim/.netrwhist`.  `s:NetrwBookHistSave()` writes each entry
+as a Vimscript assignment statement:
+
+    call setline(lastline,'let g:netrw_dirhist_'.cnt."='".g:netrw_dirhist_{cnt}."'")
+
+The directory path `g:netrw_dirhist_{cnt}` is inserted between two
+literal `'` characters without escaping any single quotes contained in
+the path, an embedded single quote therefore terminates the string
+early, after which the remainder of the path is parsed as additional
+Vimscript statement.  Vim statements may be chained with `|`, so a directory name
+of the form
+
+    x'|<injected Vimscript>|let y='z
+
+is serialized as three valid statements on a single line.
+
+The sibling bookmark serializer thirty lines below in the same function
+uses `string()` correctly, which is the canonical primitive for this
+purpose; only the history serializer was missing the escape.
+
+The history file is read back on every netrw initialization with:
+
+    exe "keepalt NetrwKeepj so ".savefile
+
+The `:source` invocation evaluates every statement in the file, so any
+injected Vimscript executes with the privileges of the user running
+Vim.  Calls such as `system()`, `:!`, or `writefile()` in the injected
+fragment yield arbitrary command execution.
+
+The directory name reaches `s:NetrwBookHistSave()` through the normal
+netrw browse flow: when the user navigates into a directory via netrw,
+the path is appended to the in-memory history list, which is flushed to
+disk by an autocmd on `VimLeave`.  The injection therefore arms on any
+netrw browse of a maliciously named directory and fires on any
+subsequent Vim invocation that opens a directory through netrw.
+
+The default configuration is affected: `g:netrw_dirhistmax` defaults to
+10, which enables the history mechanism.
+
+POSIX forbids `/` inside a single filename component, so the dirname
+payload cannot directly construct an absolute path; this constraint is
+bypassed via environment-variable expansion (e.g. `$HOME`) or relative
+paths evaluated at Vim's current working directory.
+
+## Impact
+
+The vulnerability allows arbitrary Vimscript execution, and by
+extension arbitrary shell command execution, with the privileges of the
+user running Vim.  Exploitation requires:
+
+- a Unix-like system on which a filename may contain a single quote,
+- a crafted directory present in a location the victim browses with
+  netrw (e.g. delivered via a cloned repository, extracted archive, or
+  shared filesystem), and
+- the victim to (1) browse the crafted directory once with netrw, then
+  (2) launch Vim on any directory at a later point so that
+  `.netrwhist` is sourced.
+
+The severity is rated Medium because exploitation requires a planted
+directory name with an unusual name and a deliberate "edit directory" command
+by the victim, although the resulting primitive is full
+command execution as the victim user.
+
+The injection persists in `.netrwhist` until the entry is rotated out of
+the history.
+
+## Acknowledgements
+
+The Vim project would like to thank Srinivas Piskala Ganesh Babu for
+reporting and analyzing the issue and suggesting a fix.
+
+## References
+
+The issue has been fixed as of Vim patch [v9.2.0495](https://github.com/vim/vim/releases/tag/v9.2.0495).
+
+- [Commit](https://github.com/vim/vim/commit/f08ab2f4d7d2947c8dd6c179ae08ee6146a2694b)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-crm5-rh6j-2c7c)
+
+
+Thanks,
+Chris
+-- 
+Wenn die Leute jemanden zu einer Dummheit verleiten wollen, dann sagen
+sie: Sei doch vernünftig!
+		-- Arthur Miller (Stern-Interview im März 2000)
