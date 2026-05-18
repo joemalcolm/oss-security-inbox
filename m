@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5679" "Friday" "6" "November" "2015" "12:07:30" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151106170730.77AFC36E0A0@smtpvbsrv1.mitre.org>" "121" "[oss-security] Re: Review+CVE request: multiple issues in redis EVAL command (lua sandbox)" "^Cc:" nil nil "11" "2015110617:07:30" "[oss-security] Re: Review+CVE request: multiple issues in redis EVAL command (lua sandbox)" (number mark "        cve-assign@m Nov  6  121/5679  " thread-indent "\"[oss-security] Re: Review+CVE request: multiple issues in redis EVAL command (lua sandbox)\"\n") "<4494606.3KQYZIffxk@chimera>" ("<4494606.3KQYZIffxk@chimera>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 11590 invoked by uid 550); 6 Nov 2015 17:07:44 -0000
+Received: (qmail 7865 invoked by uid 550); 18 May 2026 16:12:40 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,134 +6,96 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 11559 invoked from network); 6 Nov 2015 17:07:42 -0000
-In-Reply-To: <4494606.3KQYZIffxk@chimera>
-Message-Id: <20151106170730.77AFC36E0A0@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  6 Nov 2015 12:07:30 -0500 (EST)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: Review+CVE request: multiple issues in redis EVAL command (lua sandbox)
-To: lucab@debian.org
+x-ms-reactions: disallow
+Received: (qmail 27917 invoked from network); 18 May 2026 12:27:14 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1779107224; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gnnc772b9q51LxLpI+UqaC7SUvOF5v5QZFxGLq+i8MJaiH/NN4GYw+uphp6T6LNTNf
+         qGaHDnZ7MBA569H9r9kC5oPdt2r2SeE+rEPc26C5Pw4KU4D3C390u+RHziDZTVq5KMBk
+         cisw6QYDAl9I//bII2UOzin5w/bPBQMG5b9x56VU1vHZiP6+ZXTkZGTL5PY5XKpPBYRI
+         gAR7BifiSKiV4BPMfuX1R5KQ60eEOS+8Iq3oJ4wp34CbQLkP+sQIxxz3IotNFJOL6GFs
+         lVqHhoCYTzm+rndFAMjNVJ2jIE9JHoRoaZFb1xHWJuiKbDmttuDSHNi7SaxuSWolPmI3
+         Lpxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=UkJIIE6Z0BQSGlMv9AEtit+pd7NrkWvUOfbh5Z6MCOE=;
+        fh=9jsPTyo6edd9xvAeG+KFFrRrXMmgB/RdwUKOrvy9dcA=;
+        b=Ip1ZzuSg0DAxIdshL0XBe3e26WgiBJyByXb5CwvZw1RqlXf3z/J6cUzWqTRD9qD4nz
+         pq0t7Nn5lfhDYuEmdmFQJq7VYEuzNajV/VvnPBEZWIcWDX+pNzkP2Aqs91ww1b8SvmeT
+         DR0LIyDiNVCezsk70S6rntzM/s1CCKSOx7NoyqbatjuznhY3+gSKRDDRL9rrRuYeAkxx
+         mFkesOcGAD9qdYzuL8UqOcVd2aUPzBpE7b4F7szRRpcxGfpSnZ4LrP/wp7O2a9YX/XvJ
+         +L7DZNT0vo1IHyQdqbqnPvna4HqnJUKK6A0rtIJq52PxcZn/KbgvmpdmH5U2NSB2mPIr
+         ovaw==;
+        darn=lists.openwall.com
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779107224; x=1779712024; darn=lists.openwall.com;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UkJIIE6Z0BQSGlMv9AEtit+pd7NrkWvUOfbh5Z6MCOE=;
+        b=MDLJFmVYZszOb3VchkX2L5O/M4ER9XNibYS6JiuHSgO2xGStZGoaME2dCm7FfLUccg
+         GgjekJjUWgGYCYxfI37XTk0TVN6mVZQctF7iUOyJAn9xC+VOZdfayNKoyM1Pe+Mafsgq
+         u/RjLRPfKJCwH7L+zo92M9LN1T5SLblngJZgNM/9FBhvGCzN+QHqtf/mhZUVquN1xGL3
+         XAqK/Lz+YSHQtVLiGGif2AAWIrvbpg0pC0vvtWTSzO+OMwt5Gt5GR4qD1eQU6TVkf9k2
+         A70Po7j9MHNhwWO9PXNYJWhKVFhAdWSwvw/38tpOJoKQrZl69ZvLtlD34xBXiYpdSGvp
+         dhjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779107224; x=1779712024;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UkJIIE6Z0BQSGlMv9AEtit+pd7NrkWvUOfbh5Z6MCOE=;
+        b=EwJSUXFP7vx8FuZdBlG381syy4m0He+G5tcxHvG4gtPn/v4Xvw/TQbhvrlZf6QVDnO
+         L1LhAqkfrL/2rf7rHPpZBpHn1LV2alEzQtKE2bYXiJEQA0N7LdX1BeireLFmCVS5+lOI
+         hHMqbLLP7DzTdCOXAsEn6qTdIRKPalIHvqBKw0B53HoXYP863WBC4bR9gpYAzIw50xnb
+         paEplwVf6iZgsdRXZIhFzfqp4iQqD/eBadKS77N0DavcuJaGx8ajd8ajPWdbSDY/n3Yw
+         pZSuUf1FVq+EvtlPs9XowU3XCRoluIOaBM0iFCB6PKQfGwrHIQq92mxdoD1s8oz0Xu0T
+         U53g==
+X-Gm-Message-State: AOJu0YyWazYGSQxFVHyVm+OpUs89ypYBCCE9qfRYmOavwfwi9TKnhs3j
+	uO7MkbEDL/s5CtzIemJEhDcpWc7lksHZoRD8WBJlhNXG6n9uIgTWPQWAa+LludfOZkHcHK5OYFh
+	cq8H8o5Pn4VXj8uz6B3YT4174mSVNMTAkowOdPzLEJSQuYTc=
+X-Gm-Gg: Acq92OG3bO6rPByuTZQFcVOcWLJI4IjVgj+2OUjjOo+Nh/QtAChe+rokiWstaiMvTVa
+	wn8TyK9FCHcwH9F1UuuraC40B1kfhET11lk0vpoyCV8AzU/D5ou2hqH1eju4IhW6wWMysPMnOrr
+	SKBCXZGcu0HyJUFuT3fjnOuYi6feD8yqNB19n/RbxHKF+nd5lCCzO0nP3eY3keJeolWfFlFOep9
+	SiSFumBmS0o+6IPoTiccuolg5C73pvTxNMVZK63H19pDxuRjlWCq1pcd8t10o5+at3TIAhtWE3a
+	fsg6o6BWLNhIdcB+SLDnhAgP7mJqxFg8WbkJd51w+3XBOuOiJlM=
+X-Received: by 2002:a05:690e:419b:b0:65c:65aa:df7e with SMTP id
+ 956f58d0204a3-65e22752d64mr13631684d50.17.1779107223498; Mon, 18 May 2026
+ 05:27:03 -0700 (PDT)
+MIME-Version: 1.0
+From: Andrei Berestov <berestov0181@gmail.com>
+Date: Mon, 18 May 2026 16:26:52 +0400
+X-Gm-Features: AVHnY4IJ5SIGi5JGXNismQk_U2RhTSp1nmlL7I0Mbg1XTaykkop8KHOIAgYhAs8
+Message-ID: <CAKL5tx93jAFQKAWaYySyKdzZqaX=hxRn-aukedT8GKW=ZKgs4w@mail.gmail.com>
+In-Reply-To: <adf629c9-12e4-4c70-8ace-37e46e8198b4@rs-labs.com>
+To: oss-security@lists.openwall.com
+Content-Type: multipart/alternative; boundary="00000000000012f4e9065216aeb4"
+Subject: [oss-security] CVE-2026-31431 Copy Fail Linux LPE - new public exploit
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--00000000000012f4e9065216aeb4
+Content-Type: text/plain; charset="UTF-8"
 
-> https://github.com/antirez/redis/issues/2854
-> https://github.com/antirez/redis/issues/2853
-> https://github.com/antirez/redis/issues/2855
+Hello,
 
-As far as we can tell, 2854 and 2853 do not need to be categorized as
-vulnerability reports, but 2855 is a report of at least one
-vulnerability. See the initial CVE ID assignment below.
+Following up on the previous discussion about CVE-2026-31431 (Copy Fail).
 
+A new public repository with fully functional exploit code was published
+today (2026-05-18) on GitHub:
 
-> https://github.com/antirez/redis/issues/2854
+https://github.com/4xura/CVE-2026-31431-CopyFail
 
-> the whole "strict lua" in scriptingEnableGlobalsProtection() can be
-> bypassed with a simple setmetatable(_G, nil)
+The repository contains:
+- exploit.c, exploit.py, exploit.pl, exploit.asm (x86_64 NASM)
+- proof-of-concept: copyfail_poc.c, copyfail_poc.py
+- bpftrace diagnostic scripts for AF_ALG + splice path
 
-We are not currently planning to assign any CVE IDs for cases in which
-a security-relevant impact has a requirement of malicious lines of
-code in a script. For example, http://antirez.com/news/96 says 'The
-Redis security model is: "it's totally insecure to let untrusted
-clients access the system, please protect it from the outside world
-yourself".' More specifically,
-https://github.com/antirez/redis/issues/1725#issuecomment-42382547
-says 'the Redis documentation recognizes this flaw and says "Using Lua
-debugging functionality or other approaches like altering the meta
-table used to implement global protections in order to circumvent
-globals protection is not hard. However it is difficult to do it
-accidentally. If the user messes with the Lua global state, the
-consistency of AOF and replication is not guaranteed: don't do it."
-Redis is just trying to stop people from accidentally screwing
-themselves, not intentionally doing so.' Our feeling is that the
-sandboxing is not (yet) intended to define a security boundary with
-any practical value, and thus ability to defeat the sandboxing will
-not have a CVE ID at present.
+Attack vector: AF_ALG socket (Linux Crypto API) + splice() syscall,
+targeting filemap_splice and authencesn decrypt path.
 
+As noted by Willy Tarreau, all stable kernels were patched on April 30.
+Systems running unpatched kernels remain at risk.
 
-> https://github.com/antirez/redis/issues/2853
+Regards,
+Andrei Berestov
 
-> it is possible to de-synchronize redis dict and LUA global environment
-> via maliciously crafted scripts.
-
-> In fact, a simple PoC can be constructed with two identical EVAL
-> commands:
-
-> $ echo 'setfenv(0,{})' > /tmp/redis-crash.lua
-> $ redis-cli --eval /tmp/redis-crash.lua
-> (nil)
-> $ redis-cli --eval /tmp/redis-crash.lua
-> Error: Server closed the connection
-
-Similarly, we are not currently planning to assign any CVE IDs for
-cases in which a security-relevant impact has a requirement of lines
-of code that, although not inherently malicious, are crafted to
-trigger a bug.
-
-
-> https://github.com/antirez/redis/issues/2855
-
-We feel that this is an entirely different situation because the
-attack can realistically originate from someone who cannot control any
-aspect of the code, but can control data that happens to be used by
-the code. For example, suppose that a legitimate user has written a
-script that satisfies the above "not intentionally ... screwing
-themselves" principle, and the script has been tested (although not
-comprehensively) and seems to be reliable for an intended, normal type
-of functionality. The attacker's role is to insert the number
-2147483648 into a data set on which the script operates, and trigger a
-crash. We feel that this can have at least one CVE ID.
-
-Use CVE-2015-8080 for the "getnum ... integer wraparound ... thus
-returning a negative value" vulnerability.
-
-2855 also says "optsize() has no lower bound/negative check." If this
-is an independently exploitable problem, then it can have its own CVE
-ID. We think it's conceivable that that bounds check isn't necessarily
-required after getnum has been fixed, so we haven't yet assigned a
-unique CVE ID. In addition, 2855 also says "optsize() ... an implicit
-int -> size_t promotion, yielding a very large (unsigned) size value."
-Again, we think it's conceivable that that becomes largely irrelevant
-after getnum has been fixed, so we haven't yet assigned a unique CVE
-ID. Similarly, "further int/size_t confusion in the whole module"
-might be exploitable only with a problematic getnum, and there isn't
-any additional CVE ID for any aspect of that set of issues.
-
-Finally,
-https://www.reddit.com/r/redis/comments/3rby8c/a_few_things_about_redis_security/
-mentions "especially since the vulnerabilities you reported could
-crash the server just because Lua scripts that happened to be just
-bugged and not malicious." We don't see any reasonable way to use that
-statement as a basis for CVE assignments, i.e., the server is intended
-to be robust in the face of all script coding errors but not robust in
-the face of script coding manipulations. Even if the vendor wanted a
-CVE ID for each case where a script coding error caused a crash, we
-would be very reluctant to do that. Instead, as mentioned above, our
-preference is to have a CVE ID only in the case of an attack with
-crafted data, where that data realistically has a different origin
-than the code.
-
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCAAGBQJWPN2UAAoJEL54rhJi8gl5vG0P/RpQaMn4vLpl8tdlXc6VxsIO
-Qh2gZSrquTceb39tjIZZLrXQM9h6QR3fS/mqcJ/1qpECsilC1Yz+LGJEDK8VsJ+B
-fRr+FqCDWsAHiTLC0JNC/s2XEhB0GJocJNGVxS5PqqAqD1zO6RMmBdhuWzatJEXZ
-vbhe/O/OPIhu9vWnKRvPKqXJJt4OuhXywxZI5NiXwE97ZYvpVrmf5/iIvn1oEee1
-UqWOjWKRASNvgq7nxw/0wBqLx/Kq9hanSp29VyfXWMNZI08+aZ/HTPUHboRt1q3+
-nyVcOc2aHNgWi+nRImEqyIABAA9A/tGFX4GfICSKs0Ld0JujeufSuYVvOnTXg3dx
-AlvvwtToZsg+jMxWnbpKp4PmoXDTIFs4O6di5LtFPz+/a4QOVhKeGf3xbZzQ960w
-AfmS+pgLnTA8q7NRbiSQcbmx34nM6fHcRzWQx2DePxSvH2WtFMHsoUmKQpxb0bDV
-IJU974kJyccGXYS5oLK2qGsGb0v1LfvVS70MS6Vl9FO9w/+TgxH2M9jb3FmEJ/zA
-rTrLlLslM51YGtPHy0jnU05qv5V73fddQybWJxMze1azbNPP1x0u6JHF42Up/tE2
-VAWugdcf0GDE8anUCr4LpU4k1f8DJxgQCJWDr9qOFZTqZSkSWmqkkhoMmcQocW2e
-+BEkogZ/ljYuTBpCqW5E
-=KWRY
------END PGP SIGNATURE-----
+--00000000000012f4e9065216aeb4--
