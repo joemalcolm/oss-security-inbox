@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2616" "Thursday" "22" "March" "2018" "14:12:25" "+0100" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EJ_t5m92qzFtjBXffhc3spX-VtiBZJsKpHn78mnxORu9Q@mail.gmail.com>" "57" "Re: [oss-security] OpenSSL: bug in modular exponentiation" "^Date:" nil nil "3" "2018032213:12:25" "[oss-security] OpenSSL: bug in modular exponentiation" (number mark "        guidovranken Mar 22   57/2616  " thread-indent "\"Re: [oss-security] OpenSSL: bug in modular exponentiation\"\n") "<ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>" ("<CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>" "<ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 32446 invoked by uid 550); 22 Mar 2018 13:12:39 -0000
+Received: (qmail 32151 invoked by uid 550); 18 May 2026 06:42:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,99 +6,92 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32425 invoked from network); 22 Mar 2018 13:12:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=tz3UchffZyukpjcK0grEe1Uac9OkQ54+irNztG45nEE=;
-        b=hrE4Not8s5z8TcIEczGt5ShQs5mrxaguEY7dCDVXVFWQhqnY6XnvEZhYyMZSRM399J
-         Souc8rUCk+v75fNuixyW9IodHUKMqwvpwq994hcwsdBKWLAjYBwQJ71TcLQXUcgzKF44
-         78Fsoa0CoNxD6h5Zi0kxXN295F+luvr53NQDRBbKX9Yn9cRCcGXDAafIxJaDzgB3Ze+n
-         T98Yi2QwFfBiqlMBODiX8UfV7/ihr95oMiAdDC3RKMgXtGZnI6yDSoM+OQnoy6lWsNfK
-         sK0tmI+2WEf68ubv0iC7Iv41x3Kxgq0QnW7AappeRNvfP9tvpSSur81xMExsScgYeJYm
-         G54Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=tz3UchffZyukpjcK0grEe1Uac9OkQ54+irNztG45nEE=;
-        b=s1uHWMEgH3gDFtD6xD4T8heP92juE3U46ZFhfB9B3aTvOAfPPCbJHcEtHfwWznbr8w
-         TY1qVeTo6Q2ZCDc/ocecW31Rc5a7kZ8/02Qw6gSJDMZWpDgab0ZalSjqCNGNNOIOfeGY
-         y7DvvHMga2Cd8Gm/X19hrIJvnEkWT7yOu2G/2qc5UPeCRr53B5f7mshD4zKLHWJwVEdL
-         HFLloZ0erqtJv1wpgrI9WMmr8/M7ea8SW6X1PdWB+WTdjWVRK5a9gq2UfR+6RkOs0Vmx
-         AmBVgQPU16GpSjLo1n704cFUvwSNjh9j9bGhQrUKq3sYTuEjJc11u7Usk+yeDWV0WD7s
-         qiWg==
-X-Gm-Message-State: AElRT7Fsu/RGBzIX0/kkomzhw0fGwHJGtc+gN3Dr3UBQGYpbRT173cbm
-	AfO3jhBKnUjvGIrvBL3yOyK6I7WjbaF4qlOMbEbyAERa
-X-Google-Smtp-Source: AG47ELuhkB0xfS+se1jpZlJaFQhiPVAzDxWMyZ7K+TT4w6rGExclFiehmfJHiY2SIAvPIm/lMk2K3Tye86/D0Z3Qz18=
-X-Received: by 2002:a17:902:144:: with SMTP id 62-v6mr25454230plb.202.1521724346366;
- Thu, 22 Mar 2018 06:12:26 -0700 (PDT)
-MIME-Version: 1.0
-In-Reply-To: <ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>
-References: <CAO5O-E+iB2dy2BfQrLmCsNjXnuXjxAToPSETBfrJpe38TF7Dag@mail.gmail.com>
- <ae42a693-c165-33c6-8942-18f8911bcb24@johannes-bauer.com>
-Message-ID: <CAO5O-EJ_t5m92qzFtjBXffhc3spX-VtiBZJsKpHn78mnxORu9Q@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Thu, 22 Mar 2018 14:12:25 +0100
-From: Guido Vranken <guidovranken@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] OpenSSL: bug in modular exponentiation
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 28439 invoked from network); 18 May 2026 06:42:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779086513;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=fQfk7ruUIRkSqBvcvGlibgugMjy1BWTN01n63jJG8/s=;
+	b=dYowo6f3KYo1T68HsPEKHx3z54xfPjYVhneqP0ISjvRY06pqkHA2QWPRejA2Sa7bd438Xi
+	fI2vHY8mVgyOibls0Wv2t3oK9hceP+IuVbGNXnpLmSqDAWNwk2/1JWjmExthqOom1a/9Q1
+	n0CN5kcTSePUGCrWocPpxDBUA20x4f7wEqcpABXK1GS3gfzSwUY91EEv7cMCai9nypZKBB
+	HSL1JXT7lBYrxJ4GzhfWa/FvZ1+ER1JIkvDyigQfCd5b3wyCQ9UkJ/oywA/hY621FqtShO
+	9lDAW4rSFUaN9Yb+r2pvGEOCn/komQcXGeGb9MLCL9VKLAG7ky1d7R3PRqkfFA==
+Message-ID: <f1416217-3d7d-4d46-8a7b-a87a5c694516@cpansec.org>
+Date: Mon, 18 May 2026 07:41:51 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFJoDnZNE2xVHP1ap5CeuEQQN7emC7gDNKqdDMMWHOc8M9uCbk7TthqT2xv9jF5XWnhx6yYQ0Q/FHlnllRrfnzIVXprEFgOXdFDxswbFGq3jbhGXfoaNKzrlkHLDlX2WtJ9lWdA17V5QU3CEjLhwtZ5UCHGfjmQ8g2m4dJF7nJZRGSjoNpX4jncaTDFXg8edyPg0x1t2n5ut/44DGWTsAqph437NfeXkanOw5SGV2gA1ddLZpG8smO9jx0lcSKR4H9U5dqohOofO/vulKULb+r4aPDRAhl7QDyLFcmf9zwvvimUTr2WBhsUzKQjOipQrzqbRVCKE2mvnJF3qQBsWdqRKAezZP94T9zTSOb7hvI96G0bQomaa/vz3AQOyOwB+Brh/S/w05VGIHynClHd9lmv4FmlpXwGfg4XyD+FLXMYB3v0UWioonNjf+pslwrd14am6FX+xi1A9If6Ico8PyogbKCR1GUNtXvchlln9ijPHmAAdcNxKP41NXQzyZ8LBYumzdO+tsEftpfkXH8gQ+CiSby6n6A0jJk0Bkjy+WtsMDoHjahGNU1DQvyNJdxvWSu28hjWnLpKYohJyVVrSAhBdKabsJ2gg01AO7lI2Pv2Z8N9SlWaf34PvaprxCLKkP1CRkItwO3bcBlKKULfrJI0KF50RLKpUsrAg7W3rOhE8Q
+Subject: [oss-security] CVE-2026-8788: Net::Statsd::Lite versions through 0.10.0 for Perl
+ allowed metric injections
 
-> Interesting -- could you confirm that the effect of this bug is a
-> miscalculation? Or is it breaking the constant-time assertion?
+========================================================================
+CVE-2026-8788                                        CPAN Security Group
+========================================================================
 
-It is a miscalculation. Note that in the PoC, the 'A' and 'C' bignums
-are the same. So modular exponentiation A ** B MOD C is the same as A
-** B MOD A in this case, and this should always result in zero,
-because A ** B by definition results in a multiple of A, and A MOD A =
-0.
+         CVE ID:  CVE-2026-8788
+   Distribution:  Net-Statsd-Lite
+       Versions:  through 0.10.0
 
-I don't know if this bug makes any difference to execution time.
+       MetaCPAN:  https://metacpan.org/dist/Net-Statsd-Lite
+       VCS Repo:  https://github.com/robrwo/Net-Statsd-Lite
 
-> Do you have a pointer as to where this was discussed?
 
-It was found with Google oss-fuzz, which sends bug reports
-automatically to me and the OpenSSL team. The OpenSSL team later
-shared their thoughts with me via e-mail.
+Net::Statsd::Lite versions through 0.10.0 for Perl allowed metric
+injections
 
-> Do you consider it a security vulnerability?
+Description
+-----------
+Net::Statsd::Lite versions through 0.10.0 for Perl allowed metric
+injections.
 
-The OpenSSL team tends to assign severity according to the extent
-their SSL library is impacted. But OpenSSL is in very widespread use
-and the use of its bignum library is probably not even limited to
-cryptographic applications alone. I don't consider it a security
-vulnerability per se as I don't know of any approach towards
-exploitation, but as with every API whose operation is not concomitant
-with the expected behavior, it has the potential to give rise to
-corner cases in specific use cases.
+The values from the set_add method were not checked for newlines,
+colons or pipes. Metrics generated from untrusted sources could inject
+additional statsd metrics.
 
-Various cryptographic functions in OpenSSL like Diffie-Hellman use
-constant-time modular exponentiation, and with the recent bug in the
-same assembly code they said the following about this:
+Note that version 0.9.0 fixed a similar issue CVE-2026-46719 for metric
+names.
 
-"No EC algorithms are affected. Analysis suggests that attacks against
-RSA and DSA as a result of this defect would be very difficult to
-perform and are not believed likely. Attacks against DH1024 are
-considered just feasible, because most of the work necessary to deduce
-information about a private key may be performed offline. The amount
-of resources required for such an attack would be significant.
-However, for an attack on TLS to be meaningful, the server would have
-to share the DH1024 private key among multiple clients, which is no
-longer an option since CVE-2016-0701"
+Problem types
+-------------
+- CWE-93 Improper Neutralization of CRLF Sequences
 
-But this particular bug is not harmful, according to the team.
+Workarounds
+-----------
+In version 0.10.0, use the secure_set_add method which logs an HMAC
+digest of the value instead of the raw value.
 
-> Can you give advice to developers of how to mitigate this kind of issue?
+Validate that all values sent to the client based on untrusted data do
+not contain metric injections.
 
-Either don't use constant-time modular exponentiation or compile with
-assembly disabled (./config no-asm). There's probably also a way to
-specifically disable the offending assembly code, but I don't know how
-to do that off-hand.
 
-> Is it regarded a WONTFIX by OpenSSL or is it going to be fixed (just not
-> treated as security-criticial)? If so, do you know the fix version?
+Solutions
+---------
+Upgrade to Net::Statsd::Lite version 0.10.1 or later.
 
-They've told me that they want to fix it. But I don't know the ETA.
 
-Guido
+References
+----------
+https://metacpan.org/release/RRWO/Net-Statsd-Lite-v0.10.1/changes
+https://www.cve.org/CVERecord?id=CVE-2026-46719
+
+Timeline
+--------
+- 2026-05-14: Issue reported to CPANSec
+- 2026-05-15: Author notified
+- 2026-05-16: Fix released for CVE-2026-46719
+- 2026-05-17: CVE-2026-8788 identified by author
+- 2025-05-17: Fix released for CVE-2026-8788
+
+
