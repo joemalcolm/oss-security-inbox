@@ -1,4 +1,4 @@
-Received: (qmail 7562 invoked by uid 550); 20 Apr 2023 17:50:04 -0000
+Received: (qmail 25868 invoked by uid 550); 19 May 2026 18:12:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,95 +7,47 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1065 invoked from network); 20 Apr 2023 16:05:35 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=openssl.org; s=dkim-2020-2;
-	t=1682006724; h=from:from:reply-to:reply-to:subject:subject:date:date:
-	 message-id:message-id:to:to:cc:mime-version:mime-version:
-	 content-type:content-type; bh=KsEm8pPe4mdGvnS4SfenLhvijXVrwbxY6J561OkR+DA=;
-	b=hMZfeNwW8Rx4Hdf1zFERZDmc8RE75aqSHGOwSHsftTk7rqcyEvyz3h5ajuWOe+7GJJ1N/7
-	ZXP/Fo8ZOD5eGd2zRnJY7J3shyyeZ89lL6mwqSON/XR3li4X0qLsgI1wthR6J0V7gFZqty
-	ThY1Q/jvt5U7vinUQ+1L5wOOkGsSPeyKOQ3bweRSoIOkJxhhAXLhHDloLXetPkMJ92rOSv
-	59cqI1hBLuuschE9EZFLmOhQGAsHVTsGQZA4wrhGxpDY+nWM/UE0x1tMToZiywyjWx3wJg
-	iwL5DhOCIUb/gvJXeJaZTLT7XJFdRPmzSzQ2v/Ccq/XSZAOji3Gq9yD+/VARjg==
-Date: Thu, 20 Apr 2023 16:05:23 +0000
-From: Tomas Mraz <tomas@openssl.org>
+x-ms-reactions: disallow
+Received: (qmail 14260 invoked from network); 19 May 2026 18:09:21 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Vincent Beck <vincbeck@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <ZEFiwzjloB3ZkZ9r@openssl.org>
+Message-ID: <df29bdb1-da27-5f0d-fcd8-4d4db69b79e9@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 19 May 2026 18:08:11 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Subject: [oss-security] OpenSSL Security Advisory
+Subject: [oss-security] CVE-2026-42526: Apache Airflow Amazon provider: Prevent
+ unauthorized access to team-scoped secrets in AWS Secrets Manager and SSM
+ Parameter Store backends 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: low=20
 
-OpenSSL Security Advisory [20th April 2023]
-===========================================
+Affected versions:
 
-Input buffer over-read in AES-XTS implementation on 64 bit ARM (CVE-2023-1255)
-==============================================================================
+- Apache Airflow Amazon provider (apache-airflow-providers-amazon) before 9=
+.28.0
 
-Severity: Low
+Description:
 
-Issue summary: The AES-XTS cipher decryption implementation for 64 bit ARM
-platform contains a bug that could cause it to read past the input buffer,
-leading to a crash.
+In the AWS Secrets Manager and SSM Parameter Store secrets backends of `apa=
+che-airflow-providers-amazon` prior to 9.28.0, the team-scoping logic could=
+ resolve a `conn_id` containing a `/` (e.g. `"my_team/conn"`) to the same p=
+ath as another team's team-scoped secret when the caller had no team contex=
+t. A privileged caller without team context could therefore retrieve anothe=
+r team's secret by crafting a colliding `conn_id`. Fixed in 9.28.0 by switc=
+hing the team-scope separator to `--` and rejecting team-shaped `conn_id`s =
+when team context is absent. Affects the experimental multi-tenant teams fe=
+ature only. Users are recommended to upgrade to `apache-airflow-providers-a=
+mazon` 9.28.0, which fixes the issue.
 
-Impact summary: Applications that use the AES-XTS algorithm on the 64 bit ARM
-platform can crash in rare circumstances. The AES-XTS algorithm is usually
-used for disk encryption.
+Credit:
 
-The AES-XTS cipher decryption implementation for 64 bit ARM platform will read
-past the end of the ciphertext buffer if the ciphertext size is 4 mod 5, e.g.
-144 bytes or 1024 bytes. If the memory after the ciphertext buffer is
-unmapped, this will trigger a crash which results in a denial of service.
+Justin Pakzad (remediation developer)
 
-If an attacker can control the size and location of the ciphertext buffer
-being decrypted by an application using AES-XTS on 64 bit ARM, the
-application is affected. This is fairly unlikely making this issue
-a Low severity one.
+References:
 
-OpenSSL versions 3.0.0 to 3.0.8, and 3.1.0 are vulnerable to this issue,
-including the FIPS provider in those versions.
+https://github.com/apache/airflow/pull/65703
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-42526
 
-OpenSSL versions 1.1.1 and 1.0.2 are not affected by this issue.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit bc2f61ad (for 3.1) and
-commit 02ac9c94 (for 3.0) in the OpenSSL git repository.
-
-This issue was reported on 27th February 2023 by Anton Romanov (Amazon).
-The fix was developed by Nevine Ebeid (Amazon).
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20230420.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
-
-OpenSSL 1.1.1 will reach end-of-life on 2023-09-11. After that date security
-fixes for 1.1.1 will only be available to premium support customers.
------BEGIN PGP SIGNATURE-----
-
-iQJGBAEBCAAwFiEE3HAyZir4heL0fyQ/UnRmohynnm0FAmRBYoMSHHRvbWFzQG9w
-ZW5zc2wub3JnAAoJEFJ0ZqIcp55tRl4P/3pRFLUviJ+dgVd0DV25ViBRI2qEOF9O
-FrcpB2buCF6JA2MQBKFV4x6kMjgzjFkj3LyP9eqUCfw6VhRtR6cnVXgUNi+XX3OL
-x8fxMY6OmEy67Oq/w7FL7mth1Rz5trDJWhCoAoKvaBYOWzLhPQVqIXaJ7MY8HPGv
-qoLt2ODYbm0D44LCXiigTIO13HIF5MRRxex1C2+c2ZO7XV3pq0Sr4xcVyBAcneHW
-/dyYNeEsLBaa39QrFoz/h/C96pCHwc10DKRVFUC8q3o10Bs+D46sueoe666cLfeN
-pm2Y/AYaXKLCCFRT3IDJwXgBtcLt+PrZr3C3iyVrCWOcoHzfNS5BzTKOQMv/CSkW
-KEK7ezqOBWvvzeEcFeg6mUcILVRanUEKS+u4tZQ6JzJAck1CHjpcRQVNbxhayjzM
-dTASVeLzb4xrXVVMYLqKeVBACGcOo69oyssnORDg7/iBW/Gm5toUraS/8uKft51W
-NsBUV4A4eagE4VNwCT9mFH7uAXjQgWggivdA6PtaUf/S69wy5Dh1cWc+XWd3suj8
-QgPTU3H0E86BTbIAkBQUatWmMnFc1gxhUpEo+rcGZY00Zkrz42PoCP/pFDsszUt6
-JAlFPS7xQNYAgaUAnkyMTbkSDqFbm8nppAY6l6HpYEVywagoXtSPEgn+miSOJn6S
-7I/fm11VSkjm
-=SU46
------END PGP SIGNATURE-----
