@@ -1,4 +1,4 @@
-Received: (qmail 18035 invoked by uid 550); 14 Feb 2024 14:48:15 -0000
+Received: (qmail 1106 invoked by uid 550); 19 May 2026 21:40:16 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,85 +7,92 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1467 invoked from network); 14 Feb 2024 14:38:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1707921655;
-	bh=nUMrKzdCBjMrk/WjxoYPqTtsXrG9xbIf0saYYla3RJQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
-	b=UQamtnPQJCrUTcKhZX35hz6Kdr+eMv8t57Jfcgk4nzjWaWx0jc6pdEp5qbuiUvFzl
-	 1c7sGxN007iaa0d3PLJ97s00wjLaqtkmWElbj656ctqSzzzfT0xEYhyAy/A2r2eAiZ
-	 YowDzFA2UTefN+BxA9ZIdZMAGAIHzUN21X0ECOSFNNnrIRqRbcvCZWlTcYRMIT7FDu
-	 U3W4nzRsFjutjRBwFx01u6KvyWTRDaUHMfjfFBFHL2he11++vqhSRKhFsFlCcqEurD
-	 jTwGoJAQ2j7I0Uofdm3BaZ46fYLs1txNZk57q94wuBuUGFGIaPClmu5C9rVe7TCuyl
-	 iwdrhGsEC9zgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707921654; x=1708526454;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nUMrKzdCBjMrk/WjxoYPqTtsXrG9xbIf0saYYla3RJQ=;
-        b=bjwwoAfFvNVb0WdAiOlFXk+DXX+WuS4xX2QSmluW+2XCOdOdfubkYDuMG4BCE9NOxQ
-         jpPlx/PdOogsuBVmrD/uBtmsM5tF7Dv/BwYy8oyO9ZCoxaltm5AqbgHSr/zf0HBB37aZ
-         EVOatXmGk/62eFQ+EA6Q7s69cbvbLdyhpOKPIUKskVd6gubhWKnGft7tlKXWO0X0Pg6m
-         Wof5aoEo/TBwAdoo7ogWnfG1b8/dQe7oK4nRHdIKSv4PnSgHN6G7OTF577GcL67zHLFT
-         S+KQ4U99Y3enyREy6PRMTk1Oesf7x8aRdsaDPRmNRJmajJlOcbp+f27SJEQNvfCBN2NX
-         6+yg==
-X-Gm-Message-State: AOJu0YxHwC/Uyc30b+Rwqf1wUqjht79ugFoSYUzQKxDOTk5RXSoKjJBZ
-	ThdKeNywXJR7s7FIPjW+8EdeSwlHjCnCsT/MEkuKE2FmpyW1zONhKIp5AVb7Ip4MIkgDrrjuof7
-	HcjXqQ4LxCqx9uGtJ8B/DB6e6aMirjCrR03OZfv/AlC8A/ePudFBxl+FzwdKg9onbxNjhufTMlb
-	M2MFGZ+StPGEhmcAW3jEdrBOLeQghMPLdB7FgvK/IWdbukthVC6uOV0QzqxZ2utY8B4tM=
-X-Received: by 2002:a4a:7618:0:b0:59a:e669:a37c with SMTP id t24-20020a4a7618000000b0059ae669a37cmr3543094ooc.1.1707921654007;
-        Wed, 14 Feb 2024 06:40:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOha6ijSi5Hg5HtbwBiWrB4MRk7V/M4twUkxs4bhyyzl/6DK4BMbADZASl+CPF5F+0WdsHG+QzLWgxbVwYLoE=
-X-Received: by 2002:a4a:7618:0:b0:59a:e669:a37c with SMTP id
- t24-20020a4a7618000000b0059ae669a37cmr3543063ooc.1.1707921653638; Wed, 14 Feb
- 2024 06:40:53 -0800 (PST)
+x-ms-reactions: disallow
+Received: (qmail 19631 invoked from network); 19 May 2026 21:32:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779226317;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=QH9skFookOd4vZeqNaQRGb8PmstDma4CWsJbOEMtH20=;
+	b=ZQYYIcYCkjpMOVayeH05P8Rml7yTHvRkPabmcDz2gnDn+60AZpzeNGO83U92ZME4t5d+ft
+	6PV62z/c1fHM+b76sp2oFAYcOuCXIO+W6GrjoLAVbmpYTrPBSsVdhuoDHE/5tlDDa/9kyd
+	GSuDQB11kQ+Dn5+qf2COacBHlwZjPu1To9FxIdgvQt+gDhU8LbuIRwvVlC4wCpouNp3TqS
+	hhUb5Rcy3F/3RYC2Z3HkWBMUTp8Aakpm6MT9VRKfBqJ1/zKN3BxYU+S1Z048ovxpN/LryZ
+	NUc6YiDUydamDNT1BC/HBzq0R5HdsJKPSwZDJxY6Ohz79lyzgwSaTgwzJM3CEQ==
+Message-ID: <04f8498a-b9a8-4189-8c6f-9a4f3e386aa1@cpansec.org>
+Date: Tue, 19 May 2026 22:31:55 +0100
 MIME-Version: 1.0
-From: Mate Kukri <mate.kukri@canonical.com>
-Date: Wed, 14 Feb 2024 14:40:43 +0000
-Message-ID: <CAAfJHtpMWco6y_wRRzrgQfJZmwzsMG6P8D5FFWLMAOihuc2dZw@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: [oss-security] Secure Boot bypass in EDK2 based Virtual Machine firmware
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTGCoGqlETkA9/yxtdjj8O4c42Ro3ZcjYrtrnluTiw7Y8+IQOkUfGGLXoZ/9oNPtviwN2KWxzHNpHARWwVLClvV6SYYrn2JlVXJdhuQVHK7gOY+9Zb2zMYnDS8y0mca7cGXfNpItRJ7R5eH+D9mQist7+xdqUqUOYXfgkBcW6QSTt4HREEF1QEgO9t04bjYXrL/kq5fd8p5WTqHp9+qIpHs8/lrbVQqPKthqv6X2iBLjrJs/FAcbuBhw+hInlnDiFEj4mGgqVdkl4DOkj2eMVlc9qf039bxcufS9GzGg4Yd4fCJwOO3z9kJS4TWy4huCvJkCmIsFHuj245vhiE9U1UM5RfLatgeJFFL6vMf30FWQsPQqVABs1155v/3XKuX2qx3xfRROVpaVgrOKcDVlnRwehGDXuo4Pa5QvXoyk5Vks+0EOypMJEee0MeEsaPHfs8OTbQFgOPUhHZo3dgX+WMT5ctQfBGDzLHijnntZWV3vexRDP/gKh4kr1Wga+vg56YV3Ow9osGqvvLVj2w7FFiuuESVKcSw9d7vBi6KgHR7xgKCu1YmYdyU0y8pFafcj6r0AKSKjJNC1fISJqTTfVy7lWLgFsCZ1QFL/0MqlTwkKgOqzmvu4BA52Q27F54+Kgu0rVsXlGH6z21dA86S7jiH5zYfAl2ne4wWK6Sf0K2jibw
+X-GND-State: clean
+X-GND-Score: 0
+Subject: [oss-security] CVE-2026-5090: Template::Plugin::HTML versions through 3.102 for Perl
+ allows HTML and JavaScript to be injected
 
-Hello,
+========================================================================
+CVE-2026-5090                                        CPAN Security Group
+========================================================================
 
-We have identified a vulnerability resulting from an insecure default
-configuration of OVMF/AAVMF
-and similar firmware as used in Ubuntu's edk2 package, the firmware
-used by LXD, and potentially other similar software.
+         CVE ID:  CVE-2026-5090
+   Distribution:  Template-Toolkit
+       Versions:  through 3.102
 
-Said EDK2 based firmwares implement UEFI Secure Boot functionality but
-also contain a copy of the UEFI Shell,
-this gives an OS resident attacker (without physical access or
-pseudo-physical access) the ability to execute arbitrary
-code at system level, and thus the ability bypass UEFI Secure Boot.
+       MetaCPAN:  https://metacpan.org/dist/Template-Toolkit
+       VCS Repo:  https://github.com/abw/Template2
 
-While no proof of concept was developed, the above conclusion was
-drawn from a theoretical attack along the lines of:
-1. The UEFI Shell has built-in functionality for unattended scripting,
-and a command (`mm`) for writing directly to physical memory, PCI
-config space, etc.
-2. An OS resident attacker can manipulate the boot order to execute an
-arbitrary UEFI Shell script containing any Shell commands upon reboot.
-3. These commands can then write an arbitrary unsigned executable
-payload to physical memory, and take control of the instruction
-pointer by overwriting a return address or some other pointer
-resulting in unsigned code execution.
 
-We have developed a patch to disable the UEFI Shell
-when Secure Boot is active, and in future, we plan on removing the
-UEFI Shell from such firmware images.
+Template::Plugin::HTML versions through 3.102 for Perl allows HTML and
+JavaScript to be injected
 
-The Ubuntu edk2 and LXD issue are also known as CVE-2023-48733 and
-CVE-2023-49721.
+Description
+-----------
+Template::Plugin::HTML versions through 3.102 for Perl allows HTML and
+JavaScript to be injected.
 
-The issue is tracked on Launchpad as
-https://bugs.launchpad.net/ubuntu/+source/edk2/+bug/2040137 and
-https://bugs.launchpad.net/ubuntu/+source/lxd/+bug/2040139.
+The html_filter function did not escape single quotes. HTML attributes
+inside of single quotes could be have code injected.  For example, the
+variable "var" in
 
-The TianoCore project does not consider this a vulnerability in edk2
-as the configuration option to disable the UEFI Shell is available, and
-deciding this policy is up to downstream vendors and distributors.
+     <a id='ref' title='[% var | html %]'>
 
-Best regards,
-Mate Kukri
+would not be properly escaped. An attacker could insert some limited
+HTML and JavaScript, for example,
+
+     var = " ' onclick='while (true) { alert(1) }'"
+
+Note that arbitrary HTML and JavaScript would be difficult to inject,
+because angle brackets, ampersands and double-quotes would still be
+escaped.
+
+Problem types
+-------------
+- CWE-79 Improper Neutralization of Input During Web Page Generation
+
+Workarounds
+-----------
+Attribute values in templates that contain escaped HTML should use
+double quotes instead of single quotes.
+
+
+References
+----------
+https://github.com/abw/Template2/issues/327
+https://github.com/abw/Template2/pull/337/changes/11c78a7a771d4af505efeb754a0b8775689c2eae
+
+Timeline
+--------
+- 2024-12-01: Issue reported in GitHub.
+- 2026-02-21: Pull request submitted.
+- 2026-03-22: Pull request merged.
+- 2026-03-22: Issue reported to CPANSec.
+- 2026-03-28: CVE assigned.
+
+
+
