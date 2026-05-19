@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4171" "Tuesday" "28" "July" "2015" "23:52:53" "-0400" "Michael McNally" "mcnally@isc.org" "<55B84E15.4010402@isc.org>" "116" "[oss-security] [BIND] CVE-2015-5477: An error in handling TKEY queries can cause named to exit with a REQUIRE assertion failure" nil nil nil "7" "2015072903:52:53" "[oss-security] [BIND] CVE-2015-5477: An error in handling TKEY queries can cause named to exit with a REQUIRE assertion failure" (number mark "U       mcnally@isc. Jul 28  116/4171  " thread-indent "\"[oss-security] [BIND] CVE-2015-5477: An error in handling TKEY queries can cause named to exit with a REQUIRE assertion failure\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13514 invoked by uid 550); 29 Jul 2015 03:54:24 -0000
+Received: (qmail 6050 invoked by uid 550); 19 May 2026 02:45:19 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,132 +6,207 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12043 invoked from network); 29 Jul 2015 03:53:10 -0000
-Message-ID: <55B84E15.4010402@isc.org>
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Tue, 28 Jul 2015 23:52:53 -0400
-From: Michael McNally <mcnally@isc.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [BIND] CVE-2015-5477: An error in handling TKEY queries can cause
- named to exit with a REQUIRE assertion failure
+x-ms-reactions: disallow
+Received: (qmail 7933 invoked from network); 19 May 2026 02:01:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1779156080; bh=1uhKK02DmgqILHS6vBY93Jt5XFt8vTCOnRmK7pBACZs=;
+	h=Date:From:To:Cc:Subject:From;
+	b=SCYKQJO6l7kmwAdNvZ5DsSNo1RCZacP/U2ayoqlP3hGzGe5g8gygGx1A3me2Hdf8+
+	 7H5WE0yGA72GaiAnMJn70eI+tFvM5M/9ZZZH8kUFpmnNF6jEZenYuhWVx3L77cQQye
+	 UaTjFzytinvg1KN9zuJe8AZimu3TLf/TatCNbsSk=
+X-Riseup-User-ID: CA8374C012C82A4ABED75284098E331A03AEE97211E926744609C66BC3BCE11C
+Date: Mon, 18 May 2026 22:01:16 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
 To: oss-security@lists.openwall.com
+Cc: adrelanos@whonix.org
+Message-ID: <20260518220116.170677b2@riseup.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/nHzddNzDrAsvVw2l_tywX+.";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] On the issue of MIME handlers that execute arbitrary code (e.g.
+ Wine)
 
-A deliberately constructed packet can exploit an error in the
-handling of queries for TKEY records, permitting denial of service.
+--Sig_/nHzddNzDrAsvVw2l_tywX+.
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-CVE:                 CVE-2015-5477
-Document Version:    1.0
-Posting date:        28 July 2015
-Program Impacted:    BIND
-Versions affected:   9.1.0 -> 9.8.x, 9.9.0->9.9.7-P1, 9.10.0->9.10.2-P2
-Severity:            Critical
-Exploitable:         Remotely
+This is not really a vulnerability report for a specific program, there
+are at least five different programs involved here.
 
-Description:
+Tucked away in `man 1 xdg-mime` is the following advice:
 
-   An error in the handling of TKEY queries can be exploited by an
-   attacker for use as a denial-of-service vector, as a constructed
-   packet can use the defect to trigger a REQUIRE assertion failure,
-   causing BIND to exit.
+    Security Note: Never set a handler that will blindly execute code
+    or commands from the file being handled. Such behaviour will sooner
+    than later lead to unintended code execution i.e. through a curious
+    user trying to inspect a freshly downloaded file but running it by
+    accident.
 
-Impact:
+    Keeping opening and executing separate actions helps with people
+    protecting themselves from malware, the default handler is an
+    opener, not a runner.
 
-   Both recursive and authoritative servers are vulnerable to this
-   defect.  Additionally, exposure is not prevented by either ACLs
-   or configuration options limiting or denying service because the
-   exploitable code occurs early in the packet handling, before
-   checks enforcing those boundaries.
+tl;dr of the rest of this: Most open-source programs (whether on
+accident or on purpose) seem to heed this advice. Some of them don't.
+Those that don't are quite useful for escaping sandboxes.
 
-   All versions of BIND 9 from BIND 9.1.0 (inclusive) through BIND
-   9.9.7-P1 and BIND 9.10.2-P2 are vulnerable.
+First, a bit of background:
 
-   Operators should take steps to upgrade to a patched version as
-   soon as possible.
+People have to run arbitrary code (apps). Arbitrary code is scary, so
+there are a number of ways on Linux to keep that code from doing
+anything it "shouldn't" do (AppArmor confinement, Flatpak sandboxing,
+Snap sandboxing, Firejail, etc.). On the other hand, apps often have to
+talk to other apps in order to do their job right (for instance, a file
+manager needs to open your office suite when you double-click a
+document, and many apps may need to open your file manager to show
+what's in a folder). Sandboxing apps generally breaks them because it
+prevents them from talking to other apps. The way this has been worked
+around so far is to:
 
-CVSS Score:          7.8
+* Make apps do most/all of their non-internal IPC over D-Bus.
+* Standardize a bunch of system service interfaces so that applications
+  have established ways to do things like open documents and file
+  managers.
+* Allow the sandboxed apps access to D-Bus.
 
-CVSS Vector:         (AV:N/AC:L/Au:N/C:N/I:N/A:C)
+Of course, this completely undermines sandboxing since you can use
+D-Bus to do all sorts of fun things, like tell systemd to LD_PRELOAD a
+malicious library into any user service that is started or restarted.
+To fix *that*, there are mechanisms that restrict what sandboxed code
+can do with D-Bus, allowing them to call particular D-Bus methods but
+not others. xdg-dbus-proxy and AppArmor D-Bus mediation are two
+examples. For these mechanisms to work, whatever provides standard
+system services on D-Bus *must* do so in a way that doesn't allow
+arbitrary code exeuction. As you probably have already guessed, not all
+system service implementations meet this criteria.
 
-For more information on the Common Vulnerability Scoring System and
-to obtain your specific environmental score please visit:
-https://nvd.nist.gov/cvss.cfm?calculator&version=2&vector=(AV:N/AC:L/Au:N/C:N/I:N/A:C)
+There are two particular D-Bus interfaces I researched a few months
+ago, before writing this. One is
+org.freedesktop.FileManager1.ShowFolders [1], the other is
+org.freedesktop.portal.OpenURI.OpenFile [2]. With the help of a couple
+of file managers, xdg-desktop-portal-gtk, and Wine, I've been able to
+escape Flatpak sandboxing and AppArmor confinement using both of these
+interfaces.
 
+Of these two, org.freedesktop.portal.OpenURI.OpenFile is probably more
+problematic. This is because access to the OpenURI portal seems to be
+implicitly allowed by Flatpak. (I have not verified this by reading
+code, but I built a flatpak from source that was only given Wayland
+access, and it was somehow able to access this portal anyway.) The
+OpenFile call allows applications to open arbitrary files *outside* of
+the sandbox that called the method. (This is a relatively sensible
+thing to do; it's unreasonable to expect a browser flatpak to bundle a
+video player, so if you download a video and then try to open it, your
+browser needs to be able to tell your system "find a video player and
+open this with it." It's then up to the portal implementation to launch
+the player, either outside of any sandbox or in a different sandbox.)
+=46rom my experiments, xdg-desktop-portal-gtk seems to pop up an "Open
+With" dialog if you try to open a file and have two or more handlers
+for the same MIME type installed. If you don't have at least two
+handlers, the one handler you do have gets run without prompting.
 
-Workarounds:         None.
+If all applications followed the xdg-mime manpage's advice to never
+execute code when opening a file, this wouldn't be that big of a
+problem. This is where Wine comes in; it ships a desktop file that
+registers Wine as a MIME handler for 'application/x-ms-dos-executable',
+'application/x-msi', and 'application/x-bat'. [3] These handlers result
+in the command 'wine start /unix FILE-NAME' being run, which of course
+loads the executable code from the opened file into memory and starts
+running it. That means, if you are unlucky enough to have an
+unsandboxed copy of Wine as your only MIME handler for EXE files, any
+flatpak on your system can break out of the sandbox by writing an EXE
+file somewhere, then opening it with
+org.freedesktop.portal.OpenURI.OpenFile. This issue has been reported
+to Wine a short while ago [4]; I didn't report the issue privately
+since I couldn't find a security contact for Wine and was encouraged to
+make a public bug report when I asked for a security contact on IRC
+some time back. (I was also given an email where I could privately
+contact someone, but I no longer have it, and I was somewhat
+discouraged from using it when I initially asked.)=20
 
-Active exploits:     None known.
+org.freedesktop.FileManager1.ShowFolders is less of a problem, but also
+somewhat interesting. According to the specification, it "assumes that
+the specified URIs are folders; the file manager is supposed to show a
+window with the contents of each folder." What I think the spec meant
+to say is that the call only takes paths to folders as input, but
+unfortunately the wording is vague here. At least file manager
+(PCManFM-Qt) assumes that all of the arguments *are* folders without
+verifying this. It then passes these arguments through code that does
+the equivalent of running `xdg-open` on each argument, since if it's a
+folder, opening it with its default handler will open the file manager.
+Of course, there's nothing preventing me from passing a "folder" URI of
+file:///path/to/malware.exe, which will run the program. A very similar
+issue existed in KDE's Dolphin file manager, but that was a bug, not a
+design decision. The issue was assigned CVE-2026-41525 and is fixed in
+Dolphin >=3D 25.12.3. [5]
 
-Solution:
+Obviously, I think Wine should probably stop registering itself as an
+EXE file handler. Unfortunately, I was able to find another program
+with an unsafe handler registered just while writing this email (which
+I intend on reporting privately once I've sent this). So while it seems
+like these kind of handlers aren't super common, they aren't that hard
+to find if you dig around for a while.
 
-   Upgrade to the patched release most closely related to your
-   current version of BIND.  These can be downloaded from
-   http://www.isc.org/downloads.
+I couldn't quickly find a CWE that covered this particular issue except
+for CWE-441 (confused deputy problem). I don't know if this warrants a
+new CWE, and my CWE searching skills kind of stink, so maybe there is
+something for this already. In any event, if you maintain an app (or
+a package for an app) that interpretes or executes code, please check
+if it registers MIME handlers that blindly executes code, and remove
+those handlers if so. There are more ways for those handlers to go
+wrong than just users double-clicking the wrong thing.
 
-   +  BIND 9 version 9.9.7-P2
-   +  BIND 9 version 9.10.2-P3
+A couple tangential notes about what Kicksecure [6] (a
+security-hardened Debian derivative I contribute to) has been doing to
+mitigate this:
 
-Acknowledgements:
+* We currently ship a D-Bus "shim" that owns the
+  org.freedesktop.FileManager1 name on the D-Bus session bus. [7] [8]
+  This shim checks each directory URI to ensure it points at a real
+  directory, then pops up a window asking the user if they really want
+  to open directories with the default file manager, showing them the
+  path to each directory. This is technically vulnerable to TOCTOU
+  issues (an attacker could swap out a directory with an executable
+  file after it is displayed to the user), but since the directory
+  checks are done both before and after the user clicks "Open", it is
+  impossible (to my awareness) for the attacker to know when to swap
+  out the file. The shim also warns loudly if it detects that something
+  was swapped out before opening it. The chances of success at this
+  attack are small enough and the consequences of failure large enough
+  that an attacker likely won't find it useful.
+* We're working on a sandboxing system (really a glorified
+  systemd-nspawn frontend) that allows each sandbox to be
+  self-sufficient enough to not *need* access to the host's D-Bus
+  daemon. [9] That should prevent any possible way to leverage D-Bus as
+  a sandbox escape mechanism.
 
-   ISC would like to thank Jonathan Foote for discovering and
-   disclosing this vulnerability.
+--
+Aaron
 
-Document Revision History:
+[1] https://www.freedesktop.org/wiki/Specifications/file-manager-interface/
+[2] https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.p=
+ortal.OpenURI.html
+[3] https://gitlab.winehq.org/wine/wine/-/blob/master/loader/wine.desktop?r=
+ef_type=3Dheads
+[4] https://bugs.winehq.org/show_bug.cgi?id=3D59767
+[5] https://kde.org/info/security/advisory-20260427-2.txt
+[6] https://www.kicksecure.com/
+[7] https://github.com/Kicksecure/security-misc/blob/master/usr/src/securit=
+y-misc/fm-shim-backend.c%23security-misc-shared
+[8] https://github.com/Kicksecure/security-misc/blob/master/usr/lib/python3=
+/dist-packages/fm_shim_frontend/fm_shim_frontend.py%23security-misc-shared
+[9] https://github.com/ArrayBolt3/sandbox-manager-dist
 
-    1.0 Advance Notification - 21 July, 2015
-    2.0 Public Disclosure - 28 July, 2015
+--Sig_/nHzddNzDrAsvVw2l_tywX+.
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-Related Documents:
+-----BEGIN PGP SIGNATURE-----
 
-See our BIND9 Security Vulnerability Matrix at
-https://kb.isc.org/article/AA-00913 for a complete listing of
-Security Vulnerabilities and versions affected.
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCagvEbAAKCRA5rdye4jrr
+CL3AAP9FgYmaAuz2khgJxZKF8LPMdx4QHxqDvzNjYV2q4WXz9QEA/jJwCn1VEma5
+eBROCL8yq959zjQgfysgxaC/vVgTXAM=
+=ZMx8
+-----END PGP SIGNATURE-----
 
-If you'd like more information on ISC Subscription Support and
-Advance Security Notifications, please visit http://www.isc.org/services
-
-Do you still have questions?  Questions regarding this advisory
-should go to security-officer@isc.org.  To report a new issue,
-please encrypt your message using security-officer@isc.org's PGP
-key which can be found here:
-https://www.isc.org/downloads/software-support-policy/openpgp-key/.  If
-you are unable to use encrypted email, you may also report new
-issues at: https://www.isc.org/community/report-bug/.
-
-Note:
-
-   ISC patches only currently supported versions. When possible we
-   indicate EOL versions affected.  (For current information on which
-   versions are actively supported, please see
-http://www.isc.org/downloads/).
-
-ISC Security Vulnerability Disclosure Policy:
-
-   Details of our current security advisory policy and practice can
-   be found here:
-
-https://kb.isc.org/article/AA-00861/164/ISC-Software-Defect-and-Security-Vulnerability-Disclosure-Policy.html
-
-This Knowledge Base article https://kb.isc.org/article/AA-01272 is
-the complete and official security advisory document.
-
-Legal Disclaimer:
-
-   Internet Systems Consortium (ISC) is providing this notice on
-   an "AS IS" basis. No warranty or guarantee of any kind is expressed
-   in this notice and none should be implied. ISC expressly excludes
-   and disclaims any warranties regarding this notice or materials
-   referred to in this notice, including, without limitation, any
-   implied warranty of merchantability, fitness for a particular
-   purpose, absence of hidden defects, or of non-infringement. Your
-   use or reliance on this notice or materials referred to in this
-   notice is at your own risk. ISC may change this notice at any
-   time.  A stand-alone copy or paraphrase of the text of this
-   document that omits the document URL is an uncontrolled copy.
-   Uncontrolled copies may lack important information, be out of
-   date, or contain factual errors.
-
-(c) 2001-2015 Internet Systems Consortium
-
+--Sig_/nHzddNzDrAsvVw2l_tywX+.--
