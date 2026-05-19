@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["5244" "Thursday" "16" "September" "2021" "23:12:21" "-0700" "Oleksandr Tymoshenko" "ovt@google.com" nil "127" "[oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil "9" nil nil (number mark "U       ovt@google.c Sep 16  127/5244  " thread-indent "\"[oss-security] Containers-optimized OS (COS) membership in the linux-distros list\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] Containers-optimized OS (COS) membership in the linux-distros list" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 25752 invoked by uid 550); 17 Sep 2021 06:13:31 -0000
+Received: (qmail 32428 invoked by uid 550); 19 May 2026 21:25:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,168 +7,122 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 24477 invoked from network); 17 Sep 2021 06:12:44 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=H/o+lXAhP3OiOUZpBTF6CSPAqIz/zIKFLcPpN45IpeY=;
-        b=tjWpARX+T6FG49qQcPUOVeFhx5lj+K79WoUBtNhQ5EPXwnxqhJKGtuWXLWHrro/v0h
-         b1GA7jX/v+Q0EO6/Am+UMojhnb51oz+hYR5R4WJdcQsNYVEDMICOFLqYknsrI+b74sIK
-         AWhSo+iFvZO1swr5ddw4Ye4Po1g5gPbkki9DMRE47i5iHoWenfIznNbM/uxZocvyoeDt
-         OHbRphKXLuFWz0NgUmbaX+UxNFT4N393o3rokbeyGuASWfZc5P9nIyKIy9B0RX/QNQk+
-         Vf0EDeVl0Okb9XX3y2XqyDPMl0NGzAw5GV0NjRVUrGo8QcXHc3cS5RWoaBDPdugIgOGz
-         SqBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=H/o+lXAhP3OiOUZpBTF6CSPAqIz/zIKFLcPpN45IpeY=;
-        b=4XimkPD8ZOoLOO8bSHlJbUxhsKONs4cdL/mzrISOqOw6iOoHgOBdvE8p+rYyb4UNYM
-         fFI9+D7ZeYCxQJBaKqTF532YOZm1dUD90OEuwRr4h13C+AltJf1vx81npN2hjPM4ko7b
-         oHzzF7NWEUcH7m6oLPtWyFalFGuW+4k29MRjwMzhkENNz0lkXUdSQhUesP2G8lba1p0K
-         xCts3ePMa+efLF08I/Qwih4h38CLnf/J32OHPdUGgsVMIR3YpY4286SLwK4aF4+V6Ivx
-         Hs/yxUDYX7CueEQ6HHniDXEPgHiJ39FHD3SzKRX19aO6jz0EaJMQDVkssmyVGnAd8t7+
-         LNYw==
-X-Gm-Message-State: AOAM532E7/qPo+hNSCVenn5XVUBB2Xr9F4zOpZrCbW8E20TbEfIDqm99
-	TxbqZJ+8cPc61h11a0DeQfYOHlI0cmcbhfMoYBiZROwhsxW/dA==
-X-Google-Smtp-Source: ABdhPJyT+0SBZC+HEIhDz+lrRV+airUuZlqc509uk2J/mflFhOLNgKUJcY+j41T13eCVFbsEM8RtLS3Fl75Bn9LHinY=
-X-Received: by 2002:a92:cd4d:: with SMTP id v13mr6565949ilq.45.1631859152459;
- Thu, 16 Sep 2021 23:12:32 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 29906 invoked from network); 19 May 2026 19:59:21 -0000
+Message-ID: <ad67b17d-0686-4409-a5a0-aec72db16977@free.fr>
+Date: Tue, 19 May 2026 21:59:11 +0200
 MIME-Version: 1.0
-From: Oleksandr Tymoshenko <ovt@google.com>
-Date: Thu, 16 Sep 2021 23:12:21 -0700
-Message-ID: <CACGj0Cg_OgsYUAw8R6cbHr+ihPjfrKUJw0RjVewzuWYVi8tXpg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 To: oss-security@lists.openwall.com
-Cc: Kees Cook <keescook@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] Containers-optimized OS (COS) membership in the linux-distros list
+References: <20260518220116.170677b2@riseup.net>
+Content-Language: en-US
+From: Gabriel Corona <gabriel.corona@free.fr>
+In-Reply-To: <20260518220116.170677b2@riseup.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------ENij3JYlF6M77CzsmGrWyFWq"
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
 
-Hello,
+--------------ENij3JYlF6M77CzsmGrWyFWq
+Content-Type: multipart/mixed; boundary="------------esNHlRrjNDKoUBmgD1kkYCZH";
+ protected-headers="v1"
+From: Gabriel Corona <gabriel.corona@free.fr>
+To: oss-security@lists.openwall.com
+Message-ID: <ad67b17d-0686-4409-a5a0-aec72db16977@free.fr>
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
+References: <20260518220116.170677b2@riseup.net>
+In-Reply-To: <20260518220116.170677b2@riseup.net>
 
-I=E2=80=99d like to propose Container-Optimized OS (COS)  for membership in
-linux-distros. Text below addresses items listed in the =E2=80=9CMembership
-criteria=E2=80=9D section of
-https://oss-security.openwall.org/wiki/mailing-lists/distros
+--------------esNHlRrjNDKoUBmgD1kkYCZH
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> 1. Be an actively maintained Unix-like operating system distro with
-> substantial use of Open Source components
+SGksDQoNCj4gICAgICBTZWN1cml0eSBOb3RlOiBOZXZlciBzZXQgYSBoYW5kbGVyIHRoYXQgd2ls
+bCBibGluZGx5IGV4ZWN1dGUgY29kZQ0KPiAgICAgIG9yIGNvbW1hbmRzIGZyb20gdGhlIGZpbGUg
+YmVpbmcgaGFuZGxlZC4gU3VjaCBiZWhhdmlvdXIgd2lsbCBzb29uZXINCj4gICAgICB0aGFuIGxh
+dGVyIGxlYWQgdG8gdW5pbnRlbmRlZCBjb2RlIGV4ZWN1dGlvbiBpLmUuIHRocm91Z2ggYSBjdXJp
+b3VzDQo+ICAgICAgdXNlciB0cnlpbmcgdG8gaW5zcGVjdCBhIGZyZXNobHkgZG93bmxvYWRlZCBm
+aWxlIGJ1dCBydW5uaW5nIGl0IGJ5DQo+ICAgICAgYWNjaWRlbnQuDQo+IA0KPiAgICAgIEtlZXBp
+bmcgb3BlbmluZyBhbmQgZXhlY3V0aW5nIHNlcGFyYXRlIGFjdGlvbnMgaGVscHMgd2l0aCBwZW9w
+bGUNCj4gICAgICBwcm90ZWN0aW5nIHRoZW1zZWx2ZXMgZnJvbSBtYWx3YXJlLCB0aGUgZGVmYXVs
+dCBoYW5kbGVyIGlzIGFuDQo+ICAgICAgb3BlbmVyLCBub3QgYSBydW5uZXIuDQo+IA0KPiB0bDtk
+ciBvZiB0aGUgcmVzdCBvZiB0aGlzOiBNb3N0IG9wZW4tc291cmNlIHByb2dyYW1zICh3aGV0aGVy
+IG9uDQo+IGFjY2lkZW50IG9yIG9uIHB1cnBvc2UpIHNlZW0gdG8gaGVlZCB0aGlzIGFkdmljZS4g
+U29tZSBvZiB0aGVtIGRvbid0Lg0KPiBUaG9zZSB0aGF0IGRvbid0IGFyZSBxdWl0ZSB1c2VmdWwg
+Zm9yIGVzY2FwaW5nIHNhbmRib3hlcy4NClllcywgTUlNRSB0eXBlIHJlZ2lzdHJhdGlvbiAoYW5k
+IFVSSSByZWdpc3RyYXRpb25zKSBoYXMgYSBodWdlIHBvdGVudGlhbCANCmZvciB0cmlnZ2VyaW5n
+IG1hbGljaW91cyBwYXlsb2FkIChvZnRlbiBsZWFkaW5nIHRvIGFyYml0cmFyeSBjb2RlIA0KZXhl
+Y3V0aW9uKSwgdGhyb3VnaCB3ZWIsIFBERnMsIGVtYWlscywgZXRjLiBBbnkgbWVkaWEgdHlwZSBv
+ciBVUkkgc2NoZW1lIA0KcmVnaXN0cmF0aW9uIGlzIGEgcG90ZW50aWFsIGF0dGFjayBzdXJmYWNl
+Lg0KDQpJIGhhdmUgYmVlbiBzY3JhdGNoaW5nIHRoYXQgaXRjaCBmb3Igc29tZSB0aW1lIGFuZCBo
+ZXJlIGFyZSBzb21lIA0KY29tbWVudHMgYW5kIGZpbmRpbmdzLg0KDQpTb21lIGZpbmRpbmdzOg0K
+DQoqIEFyZ3VtZW50IGluamVjdGlvbiBpbiBzZW5zaWJsZS1icm93c2VyIChDVkUtMjAxNy0xNzUx
+MikgWzFdDQoqIEFyZ3VtZW50IGluamVjdGlvbiBpbiB4ZGctb3BlbiAoQ1ZFLTIwMTctMTgyNjYp
+IFsxXQ0KKiBTaGVsbCBjb21tYW5kIGluamVjdGlvbiBpbiBsaWx5cG9uZCAoQ1ZFLTIwMTctMTc1
+MjMsIENWRS0yMDE4LTEwOTkyKSBbMV0NCiogTUlNRSB0eXBlIHNwb29maW5nIGluIEZpcmVmb3gv
+VGh1bmRlcmJpcmQgWzJdDQoqIFRodW5hciBmb3J3YXJkcyB0byBvdGhlciBwcm9ncmFtcyB3aGVu
+IHBhc3NlZCBhIGZpbGUgdGhyb3VnaCBDTEkgDQooQ1ZFLTIwMjEtMzI1NjMpIFsyXQ0KKiBQQ01h
+bkZNIGZvcndhcmRzIHRvIG90aGVyIHByb2dyYW1zIHdoZW4gcGFzc2VkIGEgZmlsZSB0aHJvdWdo
+IENMSSANCihzdGlsbCB3b3JraW5nKSBbMl0NCiogUENNYW5GTS1RdCBmb3J3YXJkcyB0byBvdGhl
+ciBwcm9ncmFtcyB3aGVuIHBhc3NlZCBhIGZpbGUgdGhyb3VnaCBDTEkgDQooc3RpbGwgd29ya2lu
+ZykgWzJdDQoqIEFyYml0cmFyeSBmaWxlIHdyaXRlIGluIFN0ZWxsYXJpdW0gZmlsZSBhc3NvY2lh
+dGlvbiAoQ1ZFLTIwMjMtMjgzNzEpICBbM10NCiogU2hlbGwgY29tbWFuZCBhbmQgRW1hY3MgTGlz
+cCBpbmplY3Rpb24gaW4gZW1hY3NjbGllbnQtbWFpbC5kZXNrdG9wICggDQpDVkUtMjAyMy0yNzk4
+NSwgQ1ZFLTIwMjMtMjc5ODYpIFs0XQ0KKiBBcmJpdHJhcnkgY29kZSBleGVjdXRpb24gdGhyb3Vn
+aCBraXR0eS1vcGVuLmRlc2t0b3AgZmlsZSBhc3NvY2lhdGlvbiBbNV0NCg0KVGhpcyB0eXBlIG9m
+IGlzc3VlIGlzIG5vdCB1bmNvbW1vbi4NCg0KU29tZSB0aW1lcyBhIG1hbGljaW91cyBiZWhhdmlv
+ciBjYW4gYmUgYWNoaWV2ZWQgYnkgY2hhaW5pbmcgc2V2ZXJhbCANCnByb2dyYW1zOg0KDQoqIElu
+IEZyZWVkZXNrdG9wLCBVUkkgcmVnaXN0cmF0aW9uIGlzIGEgc3BlY2lhbCBNSU1FIHJlZ2lzdHJh
+dGlvbiANCih4LXNjaGVtZS1oYW5kbGVyL2ZvbyksIGlmIGEgcHJvZ3JhbSBBIGlzIHJlZ2lzdGVy
+ZWQgYXMgaGFuZGxlciBmb3IgDQp4LXNjaGVtZS1oYW5kbGVyL2dlbywgc29tZSBwcm9ncmFtIEIg
+bWlnaHQgZGVjaWRlIHRvIGNhbGwgcHJvZ3JhbSBBIHRvIA0KaGFuZGxlIGZpbGVzIHNlcnZlZCB3
+aXRoIHRoZSB4LXNjaGVtZS1oYW5kbGVyL2dlbyBNSU1FIHR5cGUgKGVnLiBvbiB0aGUgDQp3ZWIs
+IGluIGVtYWlscykuIFRoaXMgY291bGQgaGF2ZSB1bmV4cGVjdGVkIGNvbnNlcXVlbmNlcyBpZiB0
+aGlzIHByb2dyYW0gDQpjb3VsZCB0cmlnZ2VyIGFyYml0cmFyeSBjb2RlICBleGVjdXRpb24gd2hl
+biBjYWxsZWQgdGhyb3VnaCBhIGZpbGUgYnV0IA0Kbm90IHRocm91Z2ggYSBVUkkuDQoNCiogV2hl
+biBjYWxsZWQgd2l0aCBhIGZpbGUgYXMgYXJndW1lbnQsIHNvbWUgZmlsZSBicm93c2VycyB3aWxs
+IHRyeSB0byANCm9wZW4gdGhlIGZpbGUgdXNpbmcgYW5vdGhlciBwcm9ncmFtLiBJIGNsYWltIHRo
+YXQgdGhpcyBtaWdodCBiZSB1bnNhZmUgDQphbmQgbWlnaHQgYmUgZXhwbG9pdGVkIHRvIGhpZGUg
+bWFsaWNpb3VzIHBheWxvYWQgYmVoaW5kIGFuIGlubm9jdW91cyANCm1lZGlhIHR5cGUgYW5kIHBy
+b2dyYW0gKCJpdCBpcyBzYWZlIHRvIG9wZW4gdGhpcyBmaWxlIHdpdGggbXkgZmlsZSANCmJyb3dz
+ZXIiKS4NCg0KU29tZSBNSU1FIGFuZCBVUkkgcmVnaXN0cmF0aW9uIGFyZSBzb21ld2hhdCBjcnlw
+dGljLiBUaGUgc2VtYW50aWMgb2YgDQpjYWxsaW5nIHRoZSBhc3NvY2lhdGVkIHByb2dyYW0gZm9y
+IGEgZ2l2ZW4gZmlsZSB0eXBlIG9yIFVSSSBzY2hlbWUgaXMgDQpub3QgYWx3YXlzIGNsZWFybHkg
+ZG9jdW1lbnRlZCB3aGljaCBtYWtlcyBhc3Nlc3NtZW50IGRpZmZpY3VsdC4gRm9yIA0KZXhhbXBs
+ZSBDaHJvbWUgcmVnaXN0ZXIgImdvb2dsZS1jaHJvbWU6IiBVUklzLiBTdGVhbSByZWdpc3RlcnMg
+InN0ZWFtOiIgDQphbmQgInN0ZWFtbGluazoiLCBnaXRnIHJlZ2lzdGVycyAiZ2l0ZzoiDQoNClsx
+XSBodHRwczovL3d3dy5nYWJyaWVsLnVyZGhyLmZyLzIwMTgvMDUvMjgvYnJvd3Nlci1pbmplY3Rp
+b25zLw0KWzJdIGh0dHBzOi8vd3d3LmdhYnJpZWwudXJkaHIuZnIvMjAyMy8wMy8wNy9taW1lLXR5
+cGUtc3Bvb2ZpbmcvDQpbM10gDQpodHRwczovL3d3dy5nYWJyaWVsLnVyZGhyLmZyLzIwMjMvMDYv
+MDgvYXJiaXRyYXJ5LWZpbGUtd3JpdGUtaW4tc3RlbGxhcml1bS1maWxlLWFzc29jaWF0aW9uLw0K
+WzRdIA0KaHR0cHM6Ly93d3cuZ2FicmllbC51cmRoci5mci8yMDIzLzA2LzA4L2VtYWNzY2xpZW50
+LW1haWwtc2hlbGwtZWxpc3AtaW5qZWN0aW9ucy8NCls1XSANCmh0dHBzOi8vd3d3LmdhYnJpZWwu
+dXJkaHIuZnIvMjAyMy8wOS8yMy9jb2RlLWV4ZWN1dGlvbi10aHJvdWdoLWtpdHR5LW9wZW4vDQoN
+ClJlZ2FyZHMsDQoNCkdhYnJpZWwNCg0K
 
-Container-Optimized OS (COS) s a Chromium OS based
-server operating system. Google distributes COS as a pre-built cloud image,
-but also provides sources for users to customize and build their own
-specialized versions of the OS.
+--------------esNHlRrjNDKoUBmgD1kkYCZH--
 
-URL: https://cloud.google.com/container-optimized-os
+--------------ENij3JYlF6M77CzsmGrWyFWq
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-Source code:  https://cos.googlesource.com
-Build instructions:
-https://cloud.google.com/container-optimized-os/docs/how-to/building-from-o=
-pen-source
+-----BEGIN PGP SIGNATURE-----
 
-COS has a 6-month major release cadence and 3 LTS branches with their own
-3-month refresh cadence. Critical security vulnerabilities addressed in
-patch releases, independently from the release/refresh cycle.
+wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmoMwRAFAwAAAAAACgkQIWPS9KpGc+ie
+QBAAnXQ2RbJhxwk07Xs8kvm8CWInIgR30nMOkAup+caSu+YRVvOyHA2U673BTuVMc6eOsukrfKdN
+dKQAEb89E/CEZ3KOvOl7IFK7pVnEI9lEt+gANnKxE7kvSgU+SA9zjymnSfTFI8PRD4xri/+ZYVcM
+wvj3nhyaYeBWhhu329aFCZSYecdpmu/LUxzE+/ahqCoU96t68jayL16u2Nl/UplOyNoi5fh1Iwdz
+XxWDcVHNQ1C7DSHPfsw9JG3JXyMlZd9SvoIVrlJ0BaATgnDyfAG0Vw3ocngkrNh3CkgAHEMtHxSD
+82AOBf7qw37McVRxhCVApc4BLm9T8KfIGOx5KdZUkocacDuLJyYpDOFVljdTSyz/1QY+wfuqxi9u
+7oxV4mmRFapfb/mQPCELxnaNvk2VuI3k4Sa/gpCG0zNgFoBMR6gpF2NE+RBxcoDQvDZtZDuBdTZm
+1+oPqMW3/lw9TjFTCwvSoJTVbw4xKh1xVVZcTr11mAVIHmuSqS21JDG73fX1i2l8bAyp4VJu044p
+GO08eitwCBlVeO8n6vQKDKtKq9b3pNzJj0OsULCTXGnPa2i2w/CL8Qxy879tXHpl5QM0zArJawtM
+S8Z9hWRcQNV2pl+BTvPrn2DVNkxN16J+0wH8K9VcVA6hDq3DOEzE9Jz5IqGPd5auJVRFYci9JcSq
+io4=
+=u/If
+-----END PGP SIGNATURE-----
 
-Release notes: https://cloud.google.com/container-optimized-os/docs/release=
--notes
-
-> 2. Have a user base not limited to your own organization
-
-COS is available directly to external customers as a base VM image for the
-Google Compute Engine and indirectly as a base OS for managed services such
-as Google Kubernetes Engine (GKE), CloudSQL, Google Cloud Filestore.
-Overall usage of COS adds up to millions of cloud instances.
-
-> 3. Have a publicly verifiable track record, dating back at least 1 year a=
-nd
-> continuing to present day, of fixing security issues (including some that
-> had been handled on (linux-)distros, meaning that membership would have
-> been relevant to you) and releasing the fixes within 10 days (and
-> preferably much less than that) of the issues being made public (if it
-> takes you ages to fix an issue, your users wouldn't substantially benefit
-> from the additional time, often around 7 days and sometimes up to 14 days,
-> that list membership could give you)
-
-Some of the examples of COS reacting quickly (less than 7 days) to CVEs
-with high impact:
-
-CVE-2021-33909(Sequoia):
-https://cloud.google.com/container-optimized-os/docs/release-notes/m85#cos-=
-85-13310-1308-6
-
-CVE-2020-14308, CVE-2020-14311, CVE-2020-15705 (GRUB2):
-https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-=
-81-12871-1185-0
-
-CVE-2020-14386:
-https://cloud.google.com/container-optimized-os/docs/release-notes/m81#cos-=
-81-12871-1196-0
-
-Having access to embargoed CVEs would have helped us to plan and prepare
-for patch releases in a more proactive way.
-
-> 4. Not be (only) downstream or a rebuild of another distro (or else we ne=
-ed
-> convincing additional justification of how the list membership would enab=
-le
-> you to release fixes sooner, presumably not relying on the upstream distro
-> having released their fixes first?)
-
-Although COS is derived from Chromium OS we switched to maintaining our own
-kernel package that tracks more recent versions of the Linux kernel. We
-make an effort to keep it as close to the upstream kernel as possible. We
-also track releases of other open-source packages relevant for our use
-cases independently from Chromium OS or Gentoo.
-
-> 5. Be a participant and preferably an active contributor in relevant publ=
-ic
-> communities (most notably, if you're not watching for issues being made
-> public on oss-security, which are a superset of those that had been handl=
-ed
-> on (linux-)distros, then there's no valid reason for you to be on
-> (linux-)distros)
-
-We are actively monitoring multiple sources of information about
-vulnerabilities but haven=E2=80=99t contributed much directly because we di=
-dn't
-have anything to add to discussions.  We contributed to OSTIF Linux Kernel
-Vuln Reporting/Remediation Practices review, and also monitor the
-oss-security indirectly via ChromeOS.
-
-
-> 6. Accept the list policy:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-a=
-nd-instructions-for-members
-
-Please consider this note as acceptance of the list policy.
-
-> 7. Be able and willing to contribute back, preferably in specific ways
-> announced in advance (so that you're responsible for a specific area and =
-so
-> that we know what to expect from which member), and demonstrate actual
-> contributions once you've been a member for a while:
-> http://oss-security.openwall.org/wiki/mailing-lists/distros#contributing-=
-back
-
-Our team can perform administrative tasks that benefit the wider community
-and also can draw upon Google=E2=80=99s internal kernel expertise if requir=
-ed (on
-the need-to-know basis, maintaining confidentiality).
-
-> 8. Be able and willing to handle PGP-encrypted e-mail
-
-We=E2=80=99ll provide relevant GPG keys separately if our membership is acc=
-epted.
-
-> 9. Have someone already on the private list, or at least someone else who
-> has been active on oss-security for years but is not affiliated with your
-> distro nor your organization, vouch for at least one of the people
-> requesting membership on behalf of your distro (then that one vouched-for
-> person will be able to vouch for others on your team, in case you'd like
-> multiple people subscribed)
-
-Kees Cook (Cc-ed) can vouch for the proposed candidates.
-
-Thank you
+--------------ENij3JYlF6M77CzsmGrWyFWq--
