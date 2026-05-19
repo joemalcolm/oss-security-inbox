@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4630" "Monday" "14" "August" "2017" "09:52:51" "+0000" "=?gb2312?B?wazSu7q6?=" "lianyihan@360.cn" "<A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>" "79" "[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file." nil nil nil "8" "2017081409:52:51" "[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file." (number mark "U       lianyihan@36 Aug 14   79/4630  " thread-indent "\"[oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using dnxhd decoder to parsing a crafted mv file.\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 14327 invoked by uid 550); 14 Aug 2017 11:49:49 -0000
+Received: (qmail 14026 invoked by uid 550); 19 May 2026 16:19:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,101 +7,39 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16017 invoked from network); 14 Aug 2017 09:53:05 -0000
-From: =?gb2312?B?wazSu7q6?= <lianyihan@360.cn>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: [CVE-2017-9608] null-point-exception happened when ffmpeg
- using dnxhd decoder to parsing a crafted mv file.
-Thread-Index: AdMU4uNT11hmz+M5T5G9WO8oGfiavg==
-Date: Mon, 14 Aug 2017 09:52:51 +0000
-Message-ID: <A962A2D04FAB5C4499FEFD15B642FA0A33288BDA@EX02.corp.qihoo.net>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.18.213.15]
-Content-Type: multipart/alternative;
-	boundary="_000_A962A2D04FAB5C4499FEFD15B642FA0A33288BDAEX02corpqihoone_"
+x-ms-reactions: disallow
+Received: (qmail 1413 invoked from network); 19 May 2026 08:38:53 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Jacopo Cappellato <jacopoc@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <baaa9713-4cab-dc58-3c1b-2536f7d55b87@apache.org>
+Content-Transfer-Encoding: 7bit
+Date: Tue, 19 May 2026 08:32:06 +0000
 MIME-Version: 1.0
-Subject: [oss-security] [CVE-2017-9608] null-point-exception happened when ffmpeg using
- dnxhd decoder to parsing a crafted mv file.
+Subject: [oss-security] CVE-2026-31387: Apache OFBiz: Cookie Manipulation Allows
+ Authenticated JWT Forgery and Account Impersonation 
 
---_000_A962A2D04FAB5C4499FEFD15B642FA0A33288BDAEX02corpqihoone_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Severity: important 
 
-SGksDQoNCkmhr20gWWloYW4gTGlhbiwgYSBzZWN1cml0eSByZXNlYXJjaGVy
-IG9mIFFpaG9vIDM2MCBHZWFyVGVhbS4NCg0KSSBmb3VuZCBhIHZ1bG5lcmFi
-aWxpdHkgb2YgZmZtcGVnLTMuMy4yLg0KDQpGRm1wZWcgY291bGQgYmUgY3Jh
-c2hlZCB3aGVuIGl0IGlzIHBhcnNpbmcgYSBjcmFmdGVkIG1vdiBmaWxlLg0K
-DQo9PT09PT09PT09PT09PT09PT09PT09PT0gdGVzdCBjb21tYW5kID09PT09
-PT09PT09PT09PT09PT09PT09PT0NCmZmbXBlZyAtYzp2IGRueGhkIC1pIHBv
-Yy5tb3YgLXkgb3V0cHV0LnRzDQoNCj09PT09PT09PT09PT09PT09PT09PT09
-PSBjcmFzaCBpbmZvID09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KUHJv
-Z3JhbSByZWNlaXZlZCBzaWduYWwgU0lHU0VHViwgU2VnbWVudGF0aW9uIGZh
-dWx0Lg0KMHgwMDAwMDAwMDAwYjY3MmU3IGluIGZmX2NvbWJpbmVfZnJhbWUg
-KHBjPTB4MjJmNGJmMCwgbmV4dD0tMSwgYnVmPTB4N2ZmZmZmZmZkNWI4LCBi
-dWZfc2l6ZT0weDdmZmZmZmZmZDViNCkgYXQgbGliYXZjb2RlYy9wYXJzZXIu
-YzozMTENCg0KMzExICAgICAgICAgICAgIHBjLT5zdGF0ZSAgID0gcGMtPnN0
-YXRlICAgPDwgOCB8IHBjLT5idWZmZXJbcGMtPmxhc3RfaW5kZXggKyBuZXh0
-XTsNCk1pc3Npbmcgc2VwYXJhdGUgZGVidWdpbmZvcywgdXNlOiBkZWJ1Z2lu
-Zm8taW5zdGFsbCBnbGliYy0yLjE3LTEwNi5lbDdfMi40Lng4Nl82NCBsaWJY
-YXUtMS4wLjgtMi4xLmVsNy54ODZfNjQgbGlieGNiLTEuMTEtNC5lbDcueDg2
-XzY0IHh6LWxpYnMtNS4xLjItMTJhbHBoYS5lbDcueDg2XzY0DQoNCihnZGIp
-IGJ0DQojMCAgMHgwMDAwMDAwMDAwYjY3MmU3IGluIGZmX2NvbWJpbmVfZnJh
-bWUgKHBjPTB4MjJmNGJmMCwgbmV4dD0tMSwgYnVmPTB4N2ZmZmZmZmZkNWI4
-LCBidWZfc2l6ZT0weDdmZmZmZmZmZDViNCkgYXQgbGliYXZjb2RlYy9wYXJz
-ZXIuYzozMTENCg0KIzEgIDB4MDAwMDAwMDAwMDg4ZjNiNiBpbiBkbnhoZF9w
-YXJzZSAocz0weDIyZjRhODAsIGF2Y3R4PTB4MjJmNDVmMCwgcG91dGJ1Zj0w
-eDdmZmZmZmZmZDcyOCwgcG91dGJ1Zl9zaXplPTB4N2ZmZmZmZmZkNzMwLCBi
-dWY9MHgyMmY1ZjUwICIiLCBidWZfc2l6ZT0tMSkNCg0KICAgIGF0IGxpYmF2
-Y29kZWMvZG54aGRfcGFyc2VyLmM6MTM4DQojMiAgMHgwMDAwMDAwMDAwYjY2
-ZDhlIGluIGF2X3BhcnNlcl9wYXJzZTIgKHM9MHgyMmY0YTgwLCBhdmN0eD0w
-eDIyZjQ1ZjAsIHBvdXRidWY9MHg3ZmZmZmZmZmQ3MjgsIHBvdXRidWZfc2l6
-ZT0weDdmZmZmZmZmZDczMCwgYnVmPTB4MjJmNWY1MCAiIiwgYnVmX3NpemU9
-MTAyNCwNCg0KICAgIHB0cz0tOTIyMzM3MjAzNjg1NDc3NTgwOCwgZHRzPS05
-MjIzMzcyMDM2ODU0Nzc1ODA4LCBwb3M9MCkgYXQgbGliYXZjb2RlYy9wYXJz
-ZXIuYzoxODINCiMzICAweDAwMDAwMDAwMDA3Y2IzNWMgaW4gcGFyc2VfcGFj
-a2V0IChzPTB4MjJmMzMxMCwgcGt0PTB4N2ZmZmZmZmZkODAwLCBzdHJlYW1f
-aW5kZXg9MCkgYXQgbGliYXZmb3JtYXQvdXRpbHMuYzoxNDE1DQojNCAgMHgw
-MDAwMDAwMDAwN2NiZjVjIGluIHJlYWRfZnJhbWVfaW50ZXJuYWwgKHM9MHgy
-MmYzMzEwLCBwa3Q9MHg3ZmZmZmZmZmRiNTApIGF0IGxpYmF2Zm9ybWF0L3V0
-aWxzLmM6MTYxMA0KIzUgIDB4MDAwMDAwMDAwMDdkMmFlMCBpbiBhdmZvcm1h
-dF9maW5kX3N0cmVhbV9pbmZvIChpYz0weDIyZjMzMTAsIG9wdGlvbnM9MHgy
-MmYzY2YwKSBhdCBsaWJhdmZvcm1hdC91dGlscy5jOjM1NzQNCiM2ICAweDAw
-MDAwMDAwMDA0MGYzZDggaW4gb3Blbl9pbnB1dF9maWxlIChvPTB4N2ZmZmZm
-ZmZkZTcwLCBmaWxlbmFtZT0weDdmZmZmZmZmZTcyNSAibW92L2lucHV0Lm1v
-diIpIGF0IGZmbXBlZ19vcHQuYzoxMDEzDQoNCiM3ICAweDAwMDAwMDAwMDA0
-MTg2ZmYgaW4gb3Blbl9maWxlcyAobD0weDIyZjMwMjgsIGlub3V0PTB4MTNk
-ZDY5NyAiaW5wdXQiLCBvcGVuX2ZpbGU9MHg0MGVhOTQgPG9wZW5faW5wdXRf
-ZmlsZT4pIGF0IGZmbXBlZ19vcHQuYzozMjAzDQoNCiM4ICAweDAwMDAwMDAw
-MDA0MTg4NjAgaW4gZmZtcGVnX3BhcnNlX29wdGlvbnMgKGFyZ2M9NywgYXJn
-dj0weDdmZmZmZmZmZTQ3OCkgYXQgZmZtcGVnX29wdC5jOjMyNDMNCiM5ICAw
-eDAwMDAwMDAwMDA0MmQxOTMgaW4gbWFpbiAoYXJnYz03LCBhcmd2PTB4N2Zm
-ZmZmZmZlNDc4KSBhdCBmZm1wZWcuYzo0NzYwDQooZ2RiKSBwIHBjLT5idWZm
-ZXINCiQxID0gKHVpbnQ4X3QgKikgMHgwDQoNCldlIGNhbiBzZWUgdGhhdCB0
-aGUgdmFsdWUgb2YgcGMtPmJ1ZmZlciBpcyBOVUxMICEhIQ0KDQoNCkFuZCBJ
-IGhhdmUgc2VudCB0aGlzIFBPQyB0byBIWVBFUkxJTksgIm1haWx0bzpjdmUt
-cmVxdWVzdEBtaXRyZS5vcmciY3ZlLXJlcXVlc3RAbWl0cmUub3JnLiBUaGV5
-IGdpdmUgbWUgYSBDVkUgbnVtYmVyLiBVc2UgQ1ZFLTIwMTctOTYwOC4NCg0K
-QmVsb3cgaXMgaXRzIGVtYWlsOg0KLS0tLS3Tyrz+1K28/i0tLS0tDQq3orz+
-yMs6IGN2ZS1yZXF1ZXN0QG1pdHJlLm9yZzxtYWlsdG86Y3ZlLXJlcXVlc3RA
-bWl0cmUub3JnPiBbbWFpbHRvOmN2ZS1yZXF1ZXN0QG1pdHJlLm9yZ10NCrei
-y83KsbzkOiAyMDE3xOo21MIxNMjVIDEwOjUwDQrK1bz+yMs6IMGs0ru6ug0K
-s63LzTogY3ZlLXJlcXVlc3RAbWl0cmUub3JnPG1haWx0bzpjdmUtcmVxdWVz
-dEBtaXRyZS5vcmc+DQrW98ziOiBSZTogW3NjcjM0Njc5OF0gZmZtcGVnIC0g
-My4zLjINCg0KPiBbVnVsbmVyYWJpbGl0eVR5cGUgT3RoZXJdDQo+IG51bGwt
-cG9pbnQtZXhjZXB0aW9uDQo+DQo+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLQ0KPg0KPiBbQWZmZWN0ZWQgUHJvZHVjdCBD
-b2RlIEJhc2VdDQo+IGZmbXBlZyAtIDMuMy4yDQo+DQo+IC0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPg0KPiBbQXR0YWNr
-IFR5cGUgT3RoZXJdDQo+IExvY2FsIGFuZCByZW1vdGUNCj4NCj4gLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tDQo+DQo+IFtJ
-bXBhY3QgRGVuaWFsIG9mIFNlcnZpY2VdDQo+IHRydWUNCg0KVXNlIENWRS0y
-MDE3LTk2MDguDQoNCi0tDQpDVkUgQXNzaWdubWVudCBUZWFtDQpNL1MgTTMw
-MCwgMjAyIEJ1cmxpbmd0b24gUm9hZCwgQmVkZm9yZCwgTUEgMDE3MzAgVVNB
-IFsgQSBQR1Aga2V5IGlzIGF2YWlsYWJsZSBmb3IgZW5jcnlwdGVkIGNvbW11
-bmljYXRpb25zIGF0DQogIGh0dHA6Ly9jdmUubWl0cmUub3JnL2N2ZS9yZXF1
-ZXN0X2lkLmh0bWwgXQ0KDQoNCg0K
+Affected versions:
 
---_000_A962A2D04FAB5C4499FEFD15B642FA0A33288BDAEX02corpqihoone_--
+- Apache OFBiz before 24.09.06
+
+Description:
+
+Improper Authentication vulnerability in Apache OFBiz.
+
+This issue affects Apache OFBiz: before 24.09.06.
+
+Users are recommended to upgrade to version 24.09.06, which fixes the issue.
+
+Credit:
+
+Sho Odagiri of GMO Cybersecurity by Ierae, Inc. (reporter)
+
+References:
+
+https://ofbiz.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-31387
+
