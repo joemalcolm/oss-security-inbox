@@ -1,4 +1,4 @@
-Received: (qmail 5548 invoked by uid 550); 18 Jan 2025 20:02:30 -0000
+Received: (qmail 18177 invoked by uid 550); 19 May 2026 16:44:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,64 +8,73 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 5530 invoked from network); 18 Jan 2025 20:02:30 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737230542; x=1737835342; darn=lists.openwall.com;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a9nPmMQ8ct3IBdhlKUoLM+qDZ3JU2RPYn6okCI3Hbfw=;
-        b=drvyrR/joHyS9rdCl8HYReCmKZ43U5cEvkluu90Ua2R7l6o9KbNiurci6gh5yuIGyJ
-         T01ijuQY+a8CAOyfq6HRIYE5dJv1Cg6E/7ZxV1Kew8RH69cixpxHrhD4vNi5uy4ld82j
-         TS7F++ZmTKyH9NxnwBqXDreORxs4wUGGF5j6ACgPQzYwVgIWGIP+gxsVnAXtJQ7QQud0
-         5rNolyRZtlBkYrD8Lms1D6YXNwCPsJUXHhF94KMqJfOYnJVAjo61J4qWC4ZzlkX7AqcK
-         aW8+yhGyO24TrKtsxjLVr3+KRqWDTHCI8S2O6PKLB0v/uM5bYQjoR0H/DDaR4lparBSf
-         J4bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737230542; x=1737835342;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=a9nPmMQ8ct3IBdhlKUoLM+qDZ3JU2RPYn6okCI3Hbfw=;
-        b=Tr6uN/MfKnrEl6wzW73W0xc8Xt2O/WLEL47HJyGg68xKy0LWdPffiitDQ5/cxN6WYv
-         ZtQmIjEmCmdSLh7dBp948pvmvOjYWBAYgxK3yNsxMZtFtWnqr/aenbIYkY3Z08Mso9S0
-         gkAaTanHtiX/zpdQx3AfW7iNECv+e9bGMsGhdFjn9L6pAhLxxXQgVUw+rmSgWvuw9qvY
-         dALuPEnlxiw1fNvhk1Nbw0wD92eZaCHugg1hDCAJVBZzo2k2y8RstphwnA+a8RsNloMR
-         KZG34JqoWrcCxRAQpLe6g+YYAMAOq0YoRwedISpea5C3qrU7MyBPjD0VAwA0pUZg6gEo
-         djug==
-X-Gm-Message-State: AOJu0YxrC7alf5MODAArrz1zW/JZpeHuOsjWt6Xec+QNdpUCrRUQasFa
-	W8AbPdjXuKPmHTuGc51eMGQ3nCGukhRn/C0PL1GeRhWZiZfFcxLxvbqehPZG
-X-Gm-Gg: ASbGncuJw0/+70w9blCxF0K1jPSJtxLRJzanFj4cYzrkRcmaqSeXBTIvAAFYQ4kSR/t
-	7Afu5ollLfPFvSqtnjBXZJQxN5Fi+JqylS6OLa+86/hMU97eFHEQ7ZNKmRL0BKYgHdwPFQ06p6Y
-	ogcBt5gSOFfe7xpF+KIVECQmeGOulBRB4doUPALjYrDubjlH/bUPAZgGLVrNFNSHylu0c0UV8Ry
-	74kB2TtL+gBLt96IlorMZ91Wz0DYnackXHqgE9MYFbNThT+sa4l2cBzYiayJiiypjKetvzafWFn
-	pPHTw7uqrQHdDXoEr7xfADrXVYg=
-X-Google-Smtp-Source: AGHT+IFFI3of6RumNSiKBTnhXtFOC9utbMguYHwEIEpC9XpPpv2Ac6iu+6mDqg6uW/GB+jUFZzQUPw==
-X-Received: by 2002:a17:906:c154:b0:aa6:834b:d136 with SMTP id a640c23a62f3a-ab38b165f91mr738936866b.33.1737230541974;
-        Sat, 18 Jan 2025 12:02:21 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sat, 18 Jan 2025 21:02:20 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
+Received: (qmail 23879 invoked from network); 19 May 2026 16:24:53 -0000
+From: Sam James <sam@gentoo.org>
 To: oss-security@lists.openwall.com
-Message-ID: <Z4wIzDp5HFrLvOpK@eldamar.lan>
-References: <a1fe6b3c-a51b-01e4-a65a-2a416fdcc1e7@gmx.de>
+In-Reply-To: <87bjebjwkq.fsf@gentoo.org>
+Organization: Gentoo
+References: <87bjebjwkq.fsf@gentoo.org>
+User-Agent: mu4e 1.14.1; emacs 31.0.60
+Date: Tue, 19 May 2026 17:24:36 +0100
+Message-ID: <8733znjrjv.fsf@gentoo.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a1fe6b3c-a51b-01e4-a65a-2a416fdcc1e7@gmx.de>
-Subject: Re: [oss-security] git: 2 vulnerabilities fixed
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Subject: Re: [oss-security] PinTheft Linux LPE
 
-Hi,
+--=-=-=
+Content-Type: text/plain
 
-On Tue, Jan 14, 2025 at 07:02:40PM +0100, Johannes Schindelin wrote:
-> Team,
-> 
-> The Git project released new security bug-fix versions today, January
-> 14th, 2025: v2.48.1, v2.47.1, v2.46.3, v2.45.3, v2.44.3, v2.43.6, v2.42.4,
-> v2.41.3, and v2.40.4.
+Sam James <sam@gentoo.org> writes:
 
-Small heads-up here: I think in the above version listing it should be
-v2.47.2 instead. The other versions are correct.
+> v12-security have shared a new Linux LPE today, PinTheft [0].
+>
+> Quoting their abstract:
+>> PinTheft is a Linux local privilege escalation exploit for an RDS
+>> zerocopy double-free that can be turned into a page-cache overwrite
+>> through io_uring fixed buffers.
+>>
+>> PinTheft was discovered with V12 by Aaron Esau of the V12 security
+>> team. We duped on this bug with some other teams and a patch is
+>> available so we are releasing our PoC.
+>>
+>> The bug lived in the RDS zerocopy send
+>> path. rds_message_zcopy_from_user() pins user pages one at a time. If
+>> a later page faults, the error path drops the pages it already pinned,
+>> and later RDS message cleanup drops them again because the scatterlist
+>> entries and entry count remain live after the zcopy notifier is
+>> cleared. Each failed zerocopy send can steal one reference from the first page.
+>>
+>> The PoC uses io_uring to make that refcount bug useful. It registers
+>> an anonymous page as a fixed buffer, giving the page a FOLL_PIN bias
+>> of 1024 references. It then steals those references with failing RDS
+>> zerocopy sends, frees the page, reclaims it as page cache for a
+>> SUID-root binary, and uses the stale io_uring fixed-buffer page
+>> pointer to overwrite that page cache with a small ELF
+>> payload. Executing the SUID binary drops into a root shell.
+>>
+>> Sadly, the RDS kernel module this requires is only default on Arch
+>> Linux among the common distributions we tested.
 
-Regards,
-Salvatore
+While of course I can't know what distros they tested, this does
+seem to be on in at least Fedora too? https://oracle.github.io/kconfigs/
+seems to agree with that.
+
+> [...]
+
+sam
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEBBAEWCgCpFiEEJaa7iN2bdkxrVUHCc4QJ9SDfkZAFAmoMjsQbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwyXxSAAAAAAC4AKGlzc3Vlci1mcHJAbm90YXRpb25z
+Lm9wZW5wZ3AuZmlmdGhob3JzZW1hbi5uZXQyNUE2QkI4OEREOUI3NjRDNkI1NTQx
+QzI3Mzg0MDlGNTIwREY5MTkwDxxzYW1AZ2VudG9vLm9yZwAKCRBzhAn1IN+RkJiM
+AP0cuMZJUNouCt38ppGCNJTVJNedikEYkte2kOe4ehaxgAD/aXkD/Bd0bOOA7rOm
+tz+PQLAht3mlxXcjA+CrUbkslAU=
+=35be
+-----END PGP SIGNATURE-----
+--=-=-=--
