@@ -1,4 +1,4 @@
-Received: (qmail 31973 invoked by uid 550); 19 Jul 2023 14:40:54 -0000
+Received: (qmail 23829 invoked by uid 550); 19 May 2026 13:16:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,81 +7,49 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31933 invoked from network); 19 Jul 2023 14:40:53 -0000
-From: Damien Miller <djm@cvs.openbsd.org>
-Date: Wed, 19 Jul 2023 08:40:40 -0600 (MDT)
+x-ms-reactions: disallow
+Received: (qmail 23809 invoked from network); 19 May 2026 13:16:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
+	t=1779196561; bh=7GmywubT9gYkRHWj8R6Oyecg6/ibSJa2uRQ94EIR64Q=;
+	h=Date:From:To:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=aMr8LBFZT3eJ/ZBf6knf1uWgVg4ORaaj/dZD93iPZfJfdP3tbj45Vo6+FMmvbpSdS
+	 mUY2qgc9kif5ql14hIxCfj//YDq3evk47mLDnSsmeHBPreuDqS3JpZcLeraDxDKrnu
+	 uHDezcO014exwC6WdNUxzGP8Be1MuyEem6NBbB6dlJD+jqctkMLvmVTclV6i5KB/c2
+	 RtUIiX/bhwpncf1D6wIwdN0lzxwMxvudBzog7G5pHioDbF7Gn58o5UqwiolgZ+xopn
+	 AYryWgX3b4OMq6qGk50JIOeFt6uYyULIUwtGAae7x0PzpvFsQzC/vUVkxTsyg+MXQG
+	 gOOvtQDFV6ggw==
+Original-Subject: Re: [oss-security] Fixed: local root exploit in haveged, fixed in
+ 1.9.21, CVE-2026-41054
+Author: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
+Date: Tue, 19 May 2026 15:16:00 +0200
+From: Hanno =?UTF-8?B?QsO2Y2s=?= <hanno@hboeck.de>
 To: oss-security@lists.openwall.com
-Message-ID: <e9c022742fc07cee@cvs.openbsd.org>
-Subject: [oss-security] Announce: OpenSSH 9.3p2 released
+Message-ID: <20260519151600.3ded0958@hboeck.de>
+In-Reply-To: <agxXF1J53iSJIrP6@suse.de>
+References: <agxXF1J53iSJIrP6@suse.de>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [oss-security] Fixed: local root exploit in haveged, fixed in
+ 1.9.21, CVE-2026-41054
 
-OpenSSH 9.3p2 has just been released. It will be available from the
-mirrors listed at https://www.openssh.com/ shortly.
+On Tue, 19 May 2026 12:27:03 +0000
+Marcus Meissner <meissner@suse.de> wrote:
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+> If you are using haveged, todays release fixes a local root exploit.
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
+You can also fix this by uninstalling it.
 
-Changes since OpenSSH 9.3
-=========================
+There's no need to have an "entropy daemon"... It adds needless
+complexity and, as this issue shows, attack surface. There have been
+many improvements in the Linux kernel's RNG (Jason Donenfeld, also known
+as the Wireguard developer, did a lot of work on that) and I am quite
+confident that there are no problems with the RNG on any reasonably
+recent Linux kernel that an "entropy daemon" would help with.
 
-This release fixes a security bug.
-
-Security
-========
-
-Fix CVE-2023-38408 - a condition where specific libaries loaded via
-ssh-agent(1)'s PKCS#11 support could be abused to achieve remote
-code execution via a forwarded agent socket if the following
-conditions are met:
-
-* Exploitation requires the presence of specific libraries on
-  the victim system.
-* Remote exploitation requires that the agent was forwarded
-  to an attacker-controlled system.
-
-Exploitation can also be prevented by starting ssh-agent(1) with an
-empty PKCS#11/FIDO allowlist (ssh-agent -P '') or by configuring
-an allowlist that contains only specific provider libraries.
-
-This vulnerability was discovered and demonstrated to be exploitable
-by the Qualys Security Advisory team. 
- 
-In addition to removing the main precondition for exploitation,
-this release removes the ability for remote ssh-agent(1) clients
-to load PKCS#11 modules by default (see below).
-
-Potentially-incompatible changes
---------------------------------
-
- * ssh-agent(8): the agent will now refuse requests to load PKCS#11
-   modules issued by remote clients by default. A flag has been added
-   to restore the previous behaviour "-Oallow-remote-pkcs11".
-
-   Note that ssh-agent(8) depends on the SSH client to identify
-   requests that are remote. The OpenSSH >=8.9 ssh(1) client does
-   this, but forwarding access to an agent socket using other tools
-   may circumvent this restriction.
-
-Checksums:
-==========
-
-- SHA1 (openssh-9.3p2.tar.gz) = 219cf700c317f400bb20b001c0406056f7188ea4
-- SHA256 (openssh-9.3p2.tar.gz) = IA6+FH9ss/EB/QzfngJEKvfdyimN/9n0VoeOfMrGdug=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@openssh.com
-
-
+--=20
+Hanno B=C3=B6ck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
