@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["14375" "Tuesday" "23" "August" "2016" "20:40:27" "+0200" "Agostino Sarubbo" "ago@gentoo.org" "<1528713.C8CqGc87r5@arcadia>" "180" "[oss-security] Fuzzing jasper" "^Date:" nil nil "8" "2016082318:40:27" "[oss-security] Fuzzing jasper" (number mark "        ago@gentoo.o Aug 23  180/14375 " thread-indent "\"[oss-security] Fuzzing jasper\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 17455 invoked by uid 550); 23 Aug 2016 18:38:07 -0000
+Received: (qmail 24072 invoked by uid 550); 19 May 2026 10:03:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,195 +6,143 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17408 invoked from network); 23 Aug 2016 18:38:03 -0000
-Message-ID: <1528713.C8CqGc87r5@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.20; x86_64; ; )
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Date: Tue, 23 Aug 2016 20:40:27 +0200
-From: Agostino Sarubbo <ago@gentoo.org>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Fuzzing jasper
+x-ms-reactions: disallow
+Received: (qmail 24042 invoked from network); 19 May 2026 10:03:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=NyfYRbPDObpYww5H0xCd60lpbeNE3uoxVv7oK1Xu8mg=; b=WApqKy00Xy38Nzb96f2pqFnkYM
+	V2ykz8+MT3uC7a2pyS4CEwuCy6D0FUFo6z88cIIKAUgDIatqmaVVzYgM1FiGWSIk+DmfM8pEpOrEm
+	fRsfUh120xuKuhmhgac5JMfOSMRh2vI247n7N9Qt1C+6isz1+hk5CiW3pSp6M/bTVn32zh4iXqidC
+	x3K74tpBNZXWEc9ryjcWIMigbJ9TxN5ggtCO418ADhqpGuHBXLpjxlARS/EmOe2nakHxWXJkEz3bW
+	BWPa1JboqqMMA5m/g39Z3Ry7kUASl+NH0yaXYA5nzLt4dL1WMHLA2F/8n8cb1T8t/YMFVJdzRC9Ka
+	Ycwac0mw==;
+Date: Tue, 19 May 2026 11:03:12 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
+Message-ID: <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
+References: <20260518220116.170677b2@riseup.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260518220116.170677b2@riseup.net>
+X-Debian-User: smcv
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
 
-Hello all,
+On Mon, 18 May 2026 at 22:01:16 -0400, Aaron Rainbolt wrote:
+>Of these two, org.freedesktop.portal.OpenURI.OpenFile is probably more
+>problematic. This is because access to the OpenURI portal seems to be
+>implicitly allowed by Flatpak.
 
-I fuzzed jasper and it revealed some crashes, 
-we know that jasper has no more release(s) since a lot of time, so there are 
-some unfixed vulnerabilities.
-Based on what I said, I don't know if any of the following crashes have been 
-reported in the past.
+Expanding on what Flatpak intends to allow here:
 
-I know that Jasper clearly state about its capability on the BMP format, so if 
-you think that something is suitable for an identifier, please assign one.
-Thanks.
+The general design in Flatpak is that communicating with D-Bus peers 
+that own a name of the form org.freedesktop.portal.(anything) is always 
+allowed, and nearly everything else is not allowed by default. The idea 
+is that when services like xdg-desktop-portal own a 
+org.freedesktop.portal.* name, that's an opt-in to taking responsibility 
+for doing whatever mediation and prompting is necessary, whereas for 
+other arbitrary services (like for example org.freedesktop.PackageKit) 
+the assumption is that the service is not suitable for use by arbitrary 
+sandboxed apps unless explicitly allowed.
 
-NOTE: The command used in all cases was: imginfo $CRAFTED_IMAGE
+(There are a few other hard-coded exceptions for things like the special 
+org.freedesktop.DBus interface implemented by the message bus itself, 
+which is allowed or denied at a much finer granularity because it's so 
+fundamental to how D-Bus is used.)
 
+The org.freedesktop.portal.* special case is about the bus names that are 
+owned, not a specific interface/method. The fact that the method call is 
+org.freedesktop.portal.OpenURI.OpenFile is actually irrelevant to 
+whether Flatpak allows it, even though it happens to follow the same 
+naming convention as bus names; what matters is that it's implemented by 
+the xdg-desktop-portal process, and that process owns the bus name 
+org.freedesktop.portal.Desktop, so the parameters that Flatpak passes 
+to xdg-dbus-proxy result in communication being allowed.
 
-1)
-THE BMP FORMAT IS NOT FULLY SUPPORTED!
-THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.
-IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA
-TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.
-skipping unknown data in BMP file
-ASAN:DEADLYSIGNAL
-=================================================================
-==13574==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x000000527ec0 bp 0x7ffcf635ce10 sp 0x7ffcf635cae0 T0)
-    #0 0x527ebf in bmp_getdata /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5
-    #1 0x527ebf in bmp_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:190
-    #2 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16
-    #3 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16
-    #4 0x7f3f0ced761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #5 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)
+Other org.freedesktop.portal.* names can be seen in the NAME column in 
+systemd's `busctl --user`, for example. On a GNOME system, examples of 
+other portal services include org.freedesktop.portal.IBus and 
+org.freedesktop.portal.Tracker, which are narrower, more-restricted 
+versions of the ibus and localsearch (formerly Tracker) interfaces. The 
+authors of those services are responsible for making them safe.
 
-AddressSanitizer can not provide additional info.
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:383:5 in bmp_getdata
-==13574==ABORTING
+For xdg-desktop-portal specifically, I believe there is work being done 
+on an "entitlements" mechanism so that in future, some (all?) 
+xdg-desktop-portal interfaces will refuse to process requests from 
+sandboxed apps that do not have the appropriate "entitlement", similar 
+to the way Android permissions work - for example apps that don't have 
+the "screenshot" entitlement might not be allowed to take screenshots, 
+even with user consent. I don't know the finer details of that work, 
+though. It will presumably need a backward-compatibility mechanism where 
+older apps are assumed to have entitlements for most of the 
+functionality that was traditionally always available, otherwise that 
+would be a major functional regression.
 
+As far as I know, the entitlements mechanism is being done at the portal 
+level rather than the D-Bus level: the D-Bus message gets delivered to 
+the portal either way, but the portal chooses whether to take the 
+requested action (possibly after prompting the user) or reject the 
+request. This is analogous to the way modern D-Bus system bus services 
+are usually designed, with the D-Bus message delivered to the service 
+unconditionally, and the service deciding whether to obey or reject it 
+(normally by querying polkit).
 
-2)
-warning: trailing garbage in marker segment (2 bytes)                                                                                                                                          
-ASAN:DEADLYSIGNAL                                                                                                                                                                              
-=================================================================                                                                                                                              
-==13576==ERROR: AddressSanitizer: FPE on unknown address 0x00000056de64 (pc 
-0x00000056de64 bp 0x60200000ed32 sp 0x7ffc1b2ae000 T0)                                                             
-    #0 0x56de63 in jpc_dec_process_siz /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17                                                       
-    #1 0x57bf9f in jpc_dec_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:390:10                                                             
-    #2 0x57bf9f in jpc_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:254                                                                    
-    #3 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
-    #4 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
-    #5 0x7f9b0ef8161f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #6 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)                                                                                                                                           
-                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                              
-SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1195:17 in 
-jpc_dec_process_siz                                        
-==13576==ABORTING
+>If all applications followed the xdg-mime manpage's advice to never
+>execute code when opening a file, this wouldn't be that big of a
+>problem. This is where Wine comes in; it ships a desktop file that
+>registers Wine as a MIME handler for 'application/x-ms-dos-executable',
+>'application/x-msi', and 'application/x-bat'.
 
+Note that not all packaged versions of Wine do this: for example in 
+Debian, this MIME handler was disabled in 2013 in response to 
+<https://bugs.debian.org/327262>.
 
-3)
-warning: trailing garbage in marker segment (5 bytes)                                                                                                                                          
-ASAN:DEADLYSIGNAL                                                                                                                                                                              
-=================================================================                                                                                                                              
-==13578==ERROR: AddressSanitizer: FPE on unknown address 0x00000056dee4 (pc 
-0x00000056dee4 bp 0x60200000ed32 sp 0x7ffd7776d2e0 T0)                                                             
-    #0 0x56dee3 in jpc_dec_process_siz /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18                                                       
-    #1 0x57bf9f in jpc_dec_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:390:10                                                             
-    #2 0x57bf9f in jpc_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:254                                                                    
-    #3 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
-    #4 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
-    #5 0x7f18d9ef761f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #6 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)                                                                                                                                           
-                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                              
-SUMMARY: AddressSanitizer: FPE /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpc/jpc_dec.c:1197:18 in 
-jpc_dec_process_siz                                        
-==13578==ABORTING
+>Unfortunately, I was able to find another program
+>with an unsafe handler registered just while writing this email (which
+>I intend on reporting privately once I've sent this). So while it seems
+>like these kind of handlers aren't super common, they aren't that hard
+>to find if you dig around for a while.
 
+CVE-2023-26314 (<https://bugs.debian.org/972146>) in Debian's packaging 
+of the Mono runtime is another example that was already public with a 
+CVE ID issued. I believe that specific vulnerability was specific to 
+Debian (and Debian derivatives that inherited it, like Ubuntu), but the 
+general "shape" of the problem could affect any distro, and it was 
+discussed (briefly) in the thread starting at 
+<https://www.openwall.com/lists/oss-security/2023/01/05/1>.
 
-4)
-Corrupt JPEG data: 1 extraneous bytes before marker 0xc4                                                                                                                                       
-=================================================================                                                                                                                              
-==13591==ERROR: AddressSanitizer: attempting double-free on 0x619000003780 in 
-thread T0:                                                                                                       
-    #0 0x4c0710 in free /var/tmp/temp/portage/sys-devel/llvm-3.8.0-
-r2/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:38                                                
-    #1 0x51f8f8 in mem_close /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:1073:3                                                              
-    #2 0x511c97 in jas_stream_close /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:460:2                                                        
-    #3 0x4f528f in jas_image_cmpt_destroy /tmp/portage/media-
-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:350:3                                                   
-    #4 0x4f528f in jas_image_cmpt_create /tmp/portage/media-
-libs/jasper-1.900.1-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:340                                                      
-    #5 0x4fbf37 in jas_image_addcmpt /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:676:18                                                       
-    #6 0x62e9b5 in jpg_mkimage /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpg/jpg_dec.c:247:7                                                                 
-    #7 0x62e9b5 in jpg_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/jpg/jpg_dec.c:171                                                                    
-    #8 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
-    #9 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
-    #10 0x7f2f12fca61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #11 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)
+>* We're working on a sandboxing system (really a glorified
+>  systemd-nspawn frontend) that allows each sandbox to be
+>  self-sufficient enough to not *need* access to the host's D-Bus
+>  daemon. [9] That should prevent any possible way to leverage D-Bus as
+>  a sandbox escape mechanism.
 
-0x619000003780 is located 0 bytes inside of 1024-byte region 
-[0x619000003780,0x619000003b80)
-freed by thread T0 here:
-    #0 0x4c0d98 in realloc /var/tmp/temp/portage/sys-devel/llvm-3.8.0-
-r2/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:71
-    #1 0x51eeb2 in mem_resize /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:989:14
-    #2 0x51eeb2 in mem_write /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:1012
+This is definitely a trade-off: the more barriers a sandboxing system 
+puts up between host and sandbox, the safer it will be, but the less 
+well-integrated with the host system it will feel. At one extreme, each 
+app could be in its own VM (very safe, very poorly integrated unless 
+heroic efforts are undertaken to provide communication between them), 
+and at the other extreme, the apps could be effectively un-sandboxed 
+(very well integrated, but very much not safe if an app is compromised 
+or malicious).
 
-previously allocated by thread T0 here:
-    #0 0x4c0a18 in malloc /var/tmp/temp/portage/sys-devel/llvm-3.8.0-
-r2/work/llvm-3.8.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:52
-    #1 0x5111b9 in jas_stream_memopen /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_stream.c:215:15
+Each app/sandboxing framework needs to choose its own security posture, 
+which will determine the extent to which that framework is safe to use 
+with a potentially malicious or compromised app. 
+More-secure/less-integrated is not *necessarily* always better for the 
+overall security of the ecosystem: if an app framework is inconvenient 
+to use, the likely result is that most people will use completely 
+un-sandboxed apps instead, which could ironically lead to more security 
+exposure than if they had been using imperfectly-sandboxed apps.
 
-SUMMARY: AddressSanitizer: double-free /var/tmp/temp/portage/sys-
-devel/llvm-3.8.0-r2/work/llvm-3.8.0.src/projects/compiler-
-rt/lib/asan/asan_malloc_linux.cc:38 in free
-==13591==ABORTING
+Any container-based sandboxing mechanism, however well-designed, is also 
+going to be susceptible to whatever vulnerabilities are available at the 
+Linux syscall interface (which feels especially topical this month!), 
+although this can be mitigated by mechanisms like seccomp (as used in 
+Flatpak and systemd-nspawn) or AppArmor (as used in Snap).
 
-
-5)
-THE BMP FORMAT IS NOT FULLY SUPPORTED!                                                                                                                                                         
-THAT IS, THE JASPER SOFTWARE CANNOT DECODE ALL TYPES OF BMP DATA.                                                                                                                              
-IF YOU HAVE ANY PROBLEMS, PLEASE TRY CONVERTING YOUR IMAGE DATA                                                                                                                                
-TO THE PNM FORMAT, AND USING THIS FORMAT INSTEAD.                                                                                                                                              
-skipping unknown data in BMP file                                                                                                                                                              
-ASAN:DEADLYSIGNAL                                                                                                                                                                              
-=================================================================                                                                                                                              
-==13704==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 
-0x000000528253 bp 0x7ffc34880750 sp 0x7ffc34880420 T0)                                                            
-    #0 0x528252 in bmp_getdata /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5                                                                 
-    #1 0x528252 in bmp_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:190                                                                    
-    #2 0x4f79dd in jas_image_decode /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/base/jas_image.c:379:16                                                        
-    #3 0x4f1bda in main /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/appl/imginfo.c:179:16                                                                                
-    #4 0x7f58cf3a461f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289                                                                        
-    #5 0x4194c8 in _init (/usr/bin/imginfo+0x4194c8)                                                                                                                                           
-                                                                                                                                                                                               
-AddressSanitizer can not provide additional info.                                                                                                                                              
-SUMMARY: AddressSanitizer: SEGV /tmp/portage/media-libs/jasper-1.900.1-
-r9/work/jasper-1.900.1/src/libjasper/bmp/bmp_dec.c:385:5 in bmp_getdata                                                 
-==13704==ABORTING
-
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+     smcv
