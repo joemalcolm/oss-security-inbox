@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6177" "Saturday" "19" "November" "2016" "15:24:08" "+0100" "Agostino Sarubbo" "ago@gentoo.org" "<17230619.a7QXZHqGJY@arcadia>" "139" "[oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)" nil nil nil "11" "2016111914:24:08" "[oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)" (number mark "U       ago@gentoo.o Nov 19  139/6177  " thread-indent "\"[oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17944 invoked by uid 550); 19 Nov 2016 14:23:11 -0000
+Received: (qmail 1570 invoked by uid 550); 20 May 2026 09:52:06 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,154 +7,101 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17920 invoked from network); 19 Nov 2016 14:23:09 -0000
-From: Agostino Sarubbo <ago@gentoo.org>
+x-ms-reactions: disallow
+Received: (qmail 1543 invoked from network); 20 May 2026 09:52:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=iG2XuOq6zmHbi3ule8YGYCLcra2oCdg35KPjki59bPg=; b=vWf8Ctq0UvHlW5YZkyK1ulqU2i
+	auwnw0czt8Y+42kQ/G8uYzZ1XjtSkf/Cyj3rm8i1g24uZfvlWVBDYZ1CiYSfFVSBlM6HZbheyk0gA
+	dQVVSwzmERcqzH9zv5r80du0EachmlydEyZbiph8UQNHaxJMgjNAX+l0qteJClCqML8H3LW2N+aFz
+	GcW88CCWchFGao3LHMConLW/9YmnJ4zxjL7uez/1tBgD7sKfSWPBZPsOxz6DWfISqX2xH2HdHohQO
+	mCRwj1BIDuJPjLwn6EbchqTDV/TGpQkVBdeioVKbPD6d/vFBif9WDnQHdg18Lym63LJK59KTWuR4Y
+	CCJgucEQ==;
+Date: Wed, 20 May 2026 10:51:52 +0100
+From: Simon McVittie <smcv@debian.org>
 To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Date: Sat, 19 Nov 2016 15:24:08 +0100
-Message-ID: <17230619.a7QXZHqGJY@arcadia>
-User-Agent: KMail/4.14.10 (Linux/4.1.15-gentoo-r1; KDE/4.14.24; x86_64; ; )
+Cc: arraybolt3@riseup.net
+Message-ID: <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
+References: <20260518220116.170677b2@riseup.net>
+ <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
+ <20260519193042.3feb8374@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Subject: [oss-security] imagemagick: heap-based buffer overflow in IsPixelGray (pixel-accessor.h)
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260519193042.3feb8374@gmail.com>
+X-Debian-User: smcv
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
 
-If suitable for a CVE please assign one. Thanks.
+On Tue, 19 May 2026 at 19:30:42 -0400, Aaron Rainbolt wrote:
+>I wonder if it would be worth proposing a change to whatever system
+>component handles opening files (probably something in Glib, or
+>xdg-utils, haven't researched that deeply yet)
 
-Description:
-imagemagick is a software suite to create, edit, compose, or convert bitmap 
-images.
+It's a general-purpose specification that is designed to be implemented 
+by an unlimited number of packages, some of them desktop-specific:
 
-A fuzz on an updated version revealed another overflow.
+* GLib, and via that, gio(1), xdg-desktop-portal and flatpak-xdg-utils'
+   xdg-open(1) reimplementation
+* some Qt/KDE library (I'm less familiar with the KDE world, so I don't
+   know whether this is done in the Qt layer or somewhere in kdelibs)
+* xdg-utils' xdg-open(1) (the reference implementation of that name)
+* Debian's mailcap package, which translates fd.o MIME handlers into
+   traditional mailcap(5) handlers
+* web browsers like Firefox and Chromium might reimplement it? not sure
+* ...
 
-The complete ASan output:
+so any change to how the spec is to be implemented would have to be 
+fd.o consensus and spread across all of those.
 
-# identify $FILE
-=================================================================
-==696==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x611000009700 
-at pc 0x7f300036c9a3 bp 0x7fff6e225970 sp 0x7fff6e225968
-READ of size 4 at 0x611000009700 thread T0
-    #0 0x7f300036c9a2 in IsPixelGray /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/./MagickCore/pixel-
-accessor.h:507:30
-    #1 0x7f300036c9a2 in IdentifyImageGray /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:677
-    #2 0x7f300036f0dd in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:821:7
-    #3 0x7f300090c1da in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/identify.c:527:8
-    #4 0x7f2fff364075 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/identify.c:336:22
-    #5 0x7f2fff4afeca in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/mogrify.c:183:14
-    #6 0x50a339 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:145:10
-    #7 0x50a339 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:176
-    #8 0x7f2ffd99c61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
-    #9 0x419d28 in _init (/usr/bin/magick+0x419d28)
+(xdg-utils' implementation of xdg-open(1) sometimes calls helper 
+utilities from GNOME, KDE, XFCE, etc., like GLib's gio(1), or sometimes 
+implements a sufficiently large subset of the .desktop spec itself in 
+shell script, depending how and where it's invoked - this is not great 
+from a maintainability or predictability point of view, but it does mean 
+that it can continue to take into account desktop-environment-specific 
+behaviours that pre-date the de facto standardization of MIME type 
+handlers and the URI scheme pseudo-MIME-types like 
+x-scheme-handler/http.)
 
-0x611000009700 is located 0 bytes to the right of 192-byte region 
-[0x611000009640,0x611000009700)
-allocated by thread T0 here:
-    #0 0x4d3685 in posix_memalign /tmp/portage/sys-devel/llvm-3.9.0-
-r1/work/llvm-3.9.0.src/projects/compiler-rt/lib/asan/asan_malloc_linux.cc:130
-    #1 0x7f3000a466b0 in AcquireAlignedMemory /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/memory.c:258:7
-    #2 0x7f300043addf in AcquireCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:4636:33
-    #3 0x7f3000402030 in SetPixelCacheNexusPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:4748:14
-    #4 0x7f30003e7d2d in GetVirtualPixelsFromNexus /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache.c:2629:10
-    #5 0x7f3000444e53 in GetCacheViewVirtualPixels /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/cache-
-view.c:664:10
-    #6 0x7f300036b27c in IdentifyImageGray /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:672:7
-    #7 0x7f300036f0dd in IdentifyImageType /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/attribute.c:821:7
-    #8 0x7f300090c1da in IdentifyImage /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickCore/identify.c:527:8
-    #9 0x7f2fff364075 in IdentifyImageCommand /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/identify.c:336:22
-    #10 0x7f2fff4afeca in MagickCommandGenesis /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/MagickWand/mogrify.c:183:14
-    #11 0x50a339 in MagickMain /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:145:10
-    #12 0x50a339 in main /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/utilities/magick.c:176
-    #13 0x7f2ffd99c61f in __libc_start_main /var/tmp/portage/sys-
-libs/glibc-2.22-r4/work/glibc-2.22/csu/libc-start.c:289
+>so that handlers cannot
+>be registered for certain "dangerous" file types (i.e. ELF/PE/Mach-O
+>executables, scripts in various languages, etc.)? The only real
+>downside I can see to that is the inability to text editors to
+>register themselves as handlers for script MIME types, and in those
+>instances, the editor can register itself as the handler for another
+>applicable, more generic MIME type (i.e. text/plain), then change its
+>behavior based on the more detailed MIME type of the file after it
+>opens it.
 
-SUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/portage/media-
-gfx/imagemagick-7.0.3.6/work/ImageMagick-7.0.3-6/./MagickCore/pixel-
-accessor.h:507:30 in IsPixelGray
-Shadow bytes around the buggy address:
-  0x0c227fff9290: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff92a0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff92b0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff92c0: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c227fff92d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-=>0x0c227fff92e0:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-  0x0c227fff92f0: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
-  0x0c227fff9300: fd fd fd fd fd fd fd fd fa fa fa fa fa fa fa fa
-  0x0c227fff9310: fa fa fa fa fa fa fa fa 00 00 00 00 00 00 00 00
-  0x0c227fff9320: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x0c227fff9330: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-Shadow byte legend (one shadow byte represents 8 application bytes):
-  Addressable:           00
-  Partially addressable: 01 02 03 04 05 06 07 
-  Heap left redzone:       fa
-  Heap right redzone:      fb
-  Freed heap region:       fd
-  Stack left redzone:      f1
-  Stack mid redzone:       f2
-  Stack right redzone:     f3
-  Stack partial redzone:   f4
-  Stack after return:      f5
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==696==ABORTING
+I think the ability to double-click on a script (shell, Python, etc.) 
+and have it open in a programmers' text editor would probably be 
+considered to be a requirement by desktop environments, although 
+associating a text editor with text/plain partially covers that.
 
-Affected version:
-7.0.3.6
+If it's no longer possible to associate an action with a script MIME 
+type specifically, then that would make it impossible to configure 
+text/plain to open in a quick/simple Notepad-like editor like 
+gnome-text-editor or KWrite, while having text/x-python3 open in a more 
+complicated IDE like GNOME Builder or Emacs, or a Python-specific 
+environment like IDLE. That seems like an unwelcome loss of 
+functionality, and perhaps too much - I don't think it's common to 
+associate these script file-types with something that will immediately 
+run them?
 
-Fixed version:
-7.0.3.8 (not yet released)
+I'm not sure whether it still does, but GNOME's file-roller (primarily a 
+handler for zip, tar etc. archives) used to register a MIME handler for 
+PE DLLs and executables that would show the PE object's various sections 
+(data, executable code, resources) as pseudo-files that can be read and 
+extracted. I'm not sure whether that was ever practically useful or just 
+demo/"because we can" functionality, but in the past it has accidentally 
+mitigated the dangerous handlers discussed in this thread by being a 
+higher-priority handler for PE executables for GNOME users than the 
+dangerous one! Not allowing handlers for PE executables would have the 
+collateral damage of breaking its ability to have this file-type 
+association, which is relatively safe because it's treating the 
+executable as data in a specific format rather than executing anything.
 
-Commit fix:
-https://github.com/ImageMagick/ImageMagick/commit/ce98a7acbcfca7f0a178f4b1e7b957e419e0cc99
-
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-N/A
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00051-imagemagick-heapoverflow-IsPixelGray
-
-Timeline:
-2016-11-16: bug discovered and reported to upstream
-2016-11-17: upstream released a patch
-2016-11-19: blog post about the issue
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2016/11/19/imagemagick-heap-based-buffer-overflow-in-ispixelgray-pixel-accessor-h
-
--- 
-Agostino Sarubbo
-Gentoo Linux Developer
+     smcv
