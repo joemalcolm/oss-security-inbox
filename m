@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["471" "Monday" "26" "June" "2017" "23:31:44" "+0200" "Guido Vranken" "guidovranken@gmail.com" "<CAO5O-EJzHLMaKCHSnqzGeNMY_t8w9V=OwMF-a9QNcrAVqVo9wg@mail.gmail.com>" "11" "[oss-security] OpenVPN fuzzers released" "^Date:" nil nil "6" "2017062621:31:44" "[oss-security] OpenVPN fuzzers released" (number mark "        guidovranken Jun 26   11/471   " thread-indent "\"[oss-security] OpenVPN fuzzers released\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23880 invoked by uid 550); 26 Jun 2017 22:51:15 -0000
+Received: (qmail 8106 invoked by uid 550); 20 May 2026 20:44:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,48 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23856 invoked from network); 26 Jun 2017 21:31:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=b2TaauW4wK7wxoSYcaQAQtKZ4DORq1yUmqg9c81rQw4=;
-        b=GSgmxfbqqX/eNokx1h264y5+dA4ZtlnGoHFv2iKpGB3finRd3NVymgXrQwpB8C7XYY
-         pAHqZEh2OhSWIiWWXlVbslYSFhCAQssGYIlJ5P/7BRrrKQMfeJrCJgF9ey3K1dDTmZC9
-         ayX4iFcgl7IntEYtHrdC5xhXWVMKYObNZ6dPjDGtZy66MVFKCmxEgsZAaeBt+BVeqYQi
-         JOdrsJ42GiaAabnZZvAD/I1gOm0laxLx6stZn3mJI5hFJ4g37MEGP2+wsOFENdOkzfFz
-         dexQTlBwv1sN7TyNtoWs59ePsZyAnCue65qN7x6Q56aKfaTU47vAXuhfXdxP/kjmTlEe
-         6vbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=b2TaauW4wK7wxoSYcaQAQtKZ4DORq1yUmqg9c81rQw4=;
-        b=GW1i1z8W3DdHGr50OWFnAZe2W2ydvvcMdDPmwoYupw5vesgExA92XEiiHoNj7H+slX
-         O3nOO/ciwX2SAlveFN6oTti/hzjgeGeXevdRGoKPfwBm94r9VgTnbt3BvtKihR/aRs/G
-         /VX7peBnHK48FTrIPRG0jll1JdQqEf9LLqdjKSL4jFffsEDp8bPgy7bRbJVLDjgWP/6V
-         DNIWk/fLCQ9a/407cC4BS6k+wrEiyz7M3Hgh83wFAh/tFkO5JbjZzKe++k5XQcAHvJ3P
-         /BbLnOoME33UUk4zK/cPi4WsZ7oIYzFNtOWS8C2VVHaUswwe63Ok7S1mb1ge+NOC1vD2
-         eWhA==
-X-Gm-Message-State: AKS2vOwp0/duAukhy2cRXayxPO9MOAuQjTgyEhizU+6quTQD3xb5AiLr
-	vCoyM7qtMU7PCxwgf+gUEL62H5i1c4VA
-X-Received: by 10.159.32.133 with SMTP id 5mr1123642uaa.123.1498512704830;
- Mon, 26 Jun 2017 14:31:44 -0700 (PDT)
-MIME-Version: 1.0
-Message-ID: <CAO5O-EJzHLMaKCHSnqzGeNMY_t8w9V=OwMF-a9QNcrAVqVo9wg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Date: Mon, 26 Jun 2017 23:31:44 +0200
-From: Guido Vranken <guidovranken@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] OpenVPN fuzzers released
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 11824 invoked from network); 20 May 2026 20:27:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779308839;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Lu0P8srGSEcDx77OnqQjlRegVZuyeiYVbgqyjF4h+ng=;
+	b=fZuZ1Tcim2NMWxpanmvKfmfcl0jwtfOm8pN9Q32zHFFCTjP8MBX+Cjjpb6vf1c+1UUJJkp
+	mi0b77HzrQQ5ktDiaC5PQux1SXXczsBWF80E7FK6d8UFKkC4UHdfyIb5E123ld9U+LaE/g
+	ZTx/zMgmm3niLtpXi4rsrhxZ3+s+NlQi9qh3PZOiXTZFqtHby5HEUQO7HPK49lmT1gcPZp
+	d1uQ+mVSZGEiYYvYfKRX+FHJM2P8zQkoAX7CUAqq5b3bchJUKoZDWLgEuamn0D1segurDs
+	0ebJBgG4A0iU7OQgy+qujZKVQaGq7vVMQawhYgIb6DUn2qAoGkwt5h0eRsVwbQ==
+Message-ID: <a58262e5-1da1-464c-9ce4-80de1b916bee@cpansec.org>
+Date: Wed, 20 May 2026 21:27:19 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTEx7i6R+vG90GCvC0YalLtKxU8ktSESR+SyH9LWIb5BmEbyTG9tZVip87hfWDHTg910LyT5R7dljkUV1S+1HByFjNhtvDshkIZB0Y+Qbwef6bBya9CxIn75TdA4utFMmiS+v2ykg29lbPy1g8li0oEG+wCIRRP5rWyk/rEwqI6NDcrtew0UqN6smYvfoFHBzquwUZB5o/8iYqb5Li8tyFvMDlguM8UbqJ7fdXmB/EyTzUKicd/3bd6uijzluJfuFm/R/cETL8cuDJMxxIuwe69KA5xpkKg0/NmLKG+Of7fwP24Y0B4hmvRHyIGW9iFMLBaSre7WRYmTny02cEB8x/xYa7UKFq1Fdp372gEerHF7tTer/tKKXbkUv2bc8m22c9wc4B7RrIbGNiCKF4W/Vh9ROyNBC/S/N5XX6GwbdChLEp9wwpD0xzbwevhGcoaHGBeHpnRAF99mLjwJ1rx4OzMEAjac/Pysz/RiFf16n8frZcLXW7oeuf8cIquKmthuJjtIV3EtBqk98hGtcpIMVGAjpTeD8xkkZwhqOdyfu9JTp1qO5JBTFnbfT2V4N9PQ3tlXUD0D9TLWrYkZYIZ+JFNOWmUCXFWsncrDextKIdAJfeCYRcdJDoZ0qtw1V6zJUu5OaDM6npL3vyrPItaH0KuuLNCh6bX/E7PuyhtcaMLibA
+Subject: [oss-security] CVE-2026-47373: Crypt::SaltedHash versions through 0.09 for Perl is
+ susceptible to timing attacks
 
-I've published the fuzzers that I used to find the recent set of
-vulnerabilities in OpenVPN:
-https://github.com/guidovranken/openvpn/tree/fuzzing
+========================================================================
+CVE-2026-47373                                       CPAN Security Group
+========================================================================
 
-Not all of OpenVPN's code is covered by this set of fuzzers. It is
-entirely conceivable that more vulnerabilities exist, but more fuzzers
-have to be written in order to find them. The helper functions and IO
-abstractions I've written should simplify this effort. So here is your
-opportunity to find more juicy stuff.
+         CVE ID:  CVE-2026-47373
+   Distribution:  Crypt-SaltedHash
+       Versions:  through 0.09
 
-Guido
+       MetaCPAN:  https://metacpan.org/dist/Crypt-SaltedHash
+       VCS Repo:  https://github.com/robrwo/perl-Crypt-SaltedHash
+
+
+Crypt::SaltedHash versions through 0.09 for Perl is susceptible to
+timing attacks
+
+Description
+-----------
+Crypt::SaltedHash versions through 0.09 for Perl is susceptible to
+timing attacks.
+
+These versions use Perl's built-in eq comparison. Discrepencies in
+timing could be used to guess the underlying hash.
+
+Problem types
+-------------
+- CWE-208 Observable Timing Discrepancy
+
+Solutions
+---------
+Upgrade to version 0.10 or later.
+
+
+References
+----------
+https://metacpan.org/release/RRWO/Crypt-SaltedHash-0.10/changes
+https://github.com/robrwo/perl-Crypt-SaltedHash/commit/c07bfc5c23185b0667233d0f2e1252d81f1f027a.patch
+
+
+
