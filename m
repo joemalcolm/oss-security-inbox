@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6628" "Monday" "21" "November" "2016" "22:13:37" "+0100" "Solar Designer" "solar@openwall.com" "<20161121211337.GA26776@openwall.com>" "125" "Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence" "^Date:" nil nil "11" "2016112121:13:37" "[oss-security] WordPress (all versions): SPOF, RCE, and Negligence" (number mark "        solar@openwa Nov 21  125/6628  " thread-indent "\"Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence\"\n") "<CAKws9z2UE3koezOFsRzauDtsAC1aOm_kfkJYDc=P8wXJxRggRA@mail.gmail.com>" ("<CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com>" "<CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com>" "<CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com>" "<CAKws9z2UE3koezOFsRzauDtsAC1aOm_kfkJYDc=P8wXJxRggRA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3788 invoked by uid 550); 21 Nov 2016 21:15:24 -0000
+Received: (qmail 30175 invoked by uid 550); 20 May 2026 02:30:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,142 +6,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 3119 invoked from network); 21 Nov 2016 21:14:30 -0000
-Message-ID: <20161121211337.GA26776@openwall.com>
-References: <CAKws9z3H+VFO6kO-bEPMtyomuyyumx69+hzB7UUAxpg2o6dT8A@mail.gmail.com> <CABMkiz5wp5gA=7vV6QAkV4HWUooun3-CcxjqOYqxTLLdBxwwVQ@mail.gmail.com> <CANvqVdr4d8C_04Php5iP78eMfZOtat2a6LuCoqVXHojB1HE5yw@mail.gmail.com> <CAKws9z2UE3koezOFsRzauDtsAC1aOm_kfkJYDc=P8wXJxRggRA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAKws9z2UE3koezOFsRzauDtsAC1aOm_kfkJYDc=P8wXJxRggRA@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Mon, 21 Nov 2016 22:13:37 +0100
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] WordPress (all versions): SPOF, RCE, and Negligence
+x-ms-reactions: disallow
+Received: (qmail 30172 invoked from network); 20 May 2026 00:33:57 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1779237229; bh=F/hXU5JWxbEfNYgGHhkMN3cbDXTJ0Xi5KCR7SQiDVLE=;
+	h=Date:From:To:Subject:From;
+	b=TKqtscvKMPaWoZH1XyIZ54EsYOfg2+T7nHeYL9+2gr1K58kCZl+TeylOV4pUjHR7R
+	 khUzS5Ryu+ju2f+B6YygXBCiBTOxc+2fU6LN+VS8wF6knqPkddEawj+VhJ1fj0KQLh
+	 6GThuMtRbX/Kx3SdJydCHrfztxKN6FYqt+g/QkC0=
+X-Riseup-User-ID: FE614B2A7E023CDD1AA0F5246788FEAAED2A5FF9996B4D468281D26D611D128C
+Date: Tue, 19 May 2026 20:33:45 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
 To: oss-security@lists.openwall.com
+Message-ID: <20260519203345.01f21f23@riseup.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/taT7LpI=+1YikXULQa2y_/7";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] PCManFM-Qt allows arbitrary files to be opened via the
+ org.freedesktop.FileManager1.ShowFolders method
 
-Scott,
+--Sig_/taT7LpI=+1YikXULQa2y_/7
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-I'm normally not into rants, and am unlikely to continue beyond this
-reply (unless there's something I'll need to clarify), but I thought I'd
-share a different perspective:
+This issue was mentioned in the "On the issue of MIME handlers that
+execute arbitrary code" thread [1], and was brought up three years ago
+in a report about a vulnerability in Mono [2], but it looks like no one
+requested a CVE ID for it, so this is a targeted report so I have
+something self-contained to link to.
 
-On Mon, Nov 21, 2016 at 02:24:40PM -0500, Scott Arciszewski wrote:
-> On Mon, Nov 21, 2016 at 11:32 AM, Ben Tasker <ben@bentasker.co.uk> wrote:
-> > I assume you're talking about the PHP versions that Wordpress supports (as
-> > opposed to on their update server?).
-> 
-> Yes. Raise the minimum PHP version supported by WordPress and get
-> everyone onto non-EOL'd versions of PHP.
+PCManFM-Qt implements the standard org.freedesktop.FileManager1 D-Bus
+interface [3]. The interface specification states that the
+org.freedesktop.FileManager1.ShowFolders function "assumes that the
+specified URIs are folders; the file manager is supposed to show a
+window with the contents of each folder." I believe the spec meant to
+say that this method only takes URIs pointing to folders as arguments,
+but PCManFM-Qt interprets the word "assumes" literally and hands the
+URIs to a routine that does a MIME handler lookup and launch. If all of
+the specified URIs actually *do* point to directories, this will do
+what the user expects, but if any of the URIs point to files, those
+files will be opened. This can be used for a number of different
+malicious purposes; most notably, if the user is unlucky enough to have
+Wine installed using WineHQ's upstream packages, it allows escaping
+various sandboxing mechanisms (Flatpak, Snap, etc.) by dropping an EXE
+file on the disk and then pointing PCManFM-Qt to it. (This is because
+WineHQ's builds of Wine ship a MIME handler for EXE files. That handler
+runs EXE files blindly.)
 
-Or rather, get a lot of people to stop updating their WordPress
-installs.  WP already sort of did that (but not to the exact same
-group, although there's overlap) by making their update server meet
-modern TLS protocol/ciphersuite guidelines, which locked some older
-servers out of updates.  So much for security, and due to the pressure
-we, the security community, are putting on everyone on the web to
-upgrade ASAP because of oh so dangerous flaws in SSL/TLS protocols.
-Meanwhile, the reality is that SSL/TLS protocol flaws are irrelevant to
-almost all actual WP install compromises, whereas out-of-date plugins
-are relevant.  (OK, that's usually not core WP code anyway, and would
-probably be out-of-date on those installs anyway.  Not that it makes
-your point stronger, but it does make mine weaker.)
+A simple proof-of-concept exploit showing how to use this to escape the
+Firefox Flatpak if you have PCManFM-Qt and a WineHQ version of Wine
+installed:
 
-> Among other benefits, you can then move every
-> WordPress blog to use
-> password_hash() and password_verify() instead of their current
-> situation (i.e. 8192 rounds of
-> salted MD5 for password storage).
-> 
-> I'm not kidding.
-> https://paragonie.com/blog/2016/08/on-insecurity-popular-open-source-php-cms-platforms#wordpress-password-storage
+    winecfg # this will generate ~/.wine if needed, close the window
+            # after running this
+    # In a real-world situation, something in the sandbox would write
+    # this file, but for a proof-of-concept let's just drop the file
+    # into place from the host system
+    cp \
+      $HOME/.wine/drive_c/Program\ Files/Windows\ NT/Accessories/wordpad.ex=
+e \
+      $HOME/.var/app/org.mozilla.firefox/data/
+    chmod -x $HOME/.var/app/org.mozilla.firefox/data/wordpad.exe
+    flatpak run --command=3D/bin/bash org.mozilla.firefox
+    # next command is run inside the sandbox, which happens to have
+    # both bash and dbus-send available
+    dbus-send \
+      --print-reply \
+      --session \
+      --dest=3Dorg.freedesktop.FileManager1 \
+      /org/freedesktop/FileManager1 \
+      org.freedesktop.FileManager1.ShowFolders \
+      array:string:$HOME/.var/app/org.mozilla.firefox/data/wordpad.exe \
+      string:1234
 
-While moving to native PHP 5.5+ APIs would be very nice if affordable, I
-think it very well might not be affordable for WP yet.  If so, I think
-WP should in fact start using bcrypt hashes by default on systems that
-certainly have support (PHP 5.3.7+), but also support the existing
-phpass hashes that might already be in databases, as well as if WP
-happens to be installed on older PHP.  (This is what I had recommended
-from the start, but I understand it didn't work for them before.)
-This would break only downgrades from PHP 5.3.x+ to 5.2.x, which I hope
-is affordable for them to do by now.  The comment you link to where they
-discussed this very issue is from 4 years ago.  Hopefully, the decision
-can be different now: support those older systems, but not downgrades.
+This will result in a Wine Wordpad window opening, which you can then
+use to read and write files that the Firefox Flatpak shouldn't be able
+to access. There are other ways this could be used to an attacker's
+benefit as well; for instance, the Tor Project provides an application
+called "oniux" that runs applications in a network namespace, where all
+traffic is tunneled through Tor via Arti. [4] An application could
+circumvent the network namespace by dropping an HTML file on the disk
+that references an attacker-controlled network resource, and then
+opening that file in a non-torified web browser via PCManFM-Qt.
 
-Something I am not familiar with, though, is exactly how bad the PHP
-vulnerabilities fixed since 5.3.x are.  If they can be used to fully
-compromise WP installs despite of reasonable(?) defensive programming
-and workarounds, then there's not much choice but to insist on newer
-versions now.  It's just that from actual in the wild compromises this
-doesn't appear to be the case.
+This issue was reported privately to the LXQt developers on February 1,
+2026. Based upon upstream's reply, I do not believe they consider this
+to be a problem, since the behavior is arguably spec-compliant, and
+(quoting from the reply I got) "Checking whether a path is a file or
+directory can block I/O under special circumstances; so, it isn't an
+option in this case."
 
-A reason I am skeptical about most upgrades is that we're not replacing
-something broken with something non-broken.  We're replacing some known
-and some unknown issues with possibly even more of yet unknown issues.
-Sure, there are also clear moves in the right direction, such as bcrypt
-(which is mature and is in fact getting old) and better APIs and fixing
-of old bugs too, but there's also still a lot new that we'd likely find
-comparably ridiculous (as what we're replacing) if we took a closer look.
-For example, this was the case with the rushed move from CBC mode to RC4
-a few years ago only to (re-)discover that RC4 is broken a year later.
+--
+Aaron
 
-As far as I'm aware (and not being familiar with PHP, I might be wrong),
-PHP internals have not improved much if at all - only specific bugs have
-been addressed, and features and APIs added.
+[1] http://bugs.winehq.org/show_bug.cgi?id=3D59767
+[2] https://www.openwall.com/lists/oss-security/2023/01/05/1
+[3] https://www.freedesktop.org/wiki/Specifications/file-manager-interface/
+[4] https://arti.torproject.org/related/oniux/
 
-I am for progress, and I have often been on your side - trying to
-convince a maintainer to make some upgrade to what's becoming the new
-norm - but I think the real-world effects of forcing things upon people
-are trickier than what you might expect.  In the short term, WP
-requiring PHP 7+ or 5.6.x+ (the upstream supported versions) would be a
-problem, including for security (tricky to get newer libraries and
-languages onto older systems safely and keep them updated, as you point
-out below).  Whether it would be a win in the longer term is unclear.
+--Sig_/taT7LpI=+1YikXULQa2y_/7
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-I fully agree with you that updates must be signed.  That's a very real
-issue.  Now, this brings up the question on what a PHP app can/should
-use to verify signatures on updates.  Is this something you blogged on,
-too, with specific suggestions?
+-----BEGIN PGP SIGNATURE-----
 
-> There is a similar problem with Linux distributions shipping stale
-> versions of libsodium:
-> http://stackoverflow.com/questions/40684596/libsodium-for-php-is-not-working
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCag0BaQAKCRA5rdye4jrr
+CB8/AQDhtrDDdiqsiEVtKIC9GL6nwY3KKbv/clTgpLk1uMuVxgD9EELPDwhOTKx2
+0CWpk4f1bIBUsuGycxztJH96aGGe9w8=
+=PLR3
+-----END PGP SIGNATURE-----
 
-It's expected that many distros will have older versions of software.
-When dependency hell bites me, I usually mostly blame the software I am
-trying to build, and not the system providing older libraries.  I know I
-can replace the system, but I'm usually on the older one by choice.
-My usual preference is older base system (let someone else deal with
-some of the the new bugs, potential malicious code, etc. first), but
-recent few pieces of software that I actually need to be recent.
-
-In a way, this is unfortunate, but it's a reality that software meant to
-be widely used should avoid external dependencies on anything recent
-except for things most essential to its operation.
-
-> The only reliable workaround involves **installing gcc to production
-> then compiling libsodium from source**. And then uninstalling gcc
-> because you probably shouldn't have that installed in a production
-> environment. Naturally, a lot of people don't feel comfortable with
-> that.
-
-IMO, not wanting to have development tools in production is more of a
-custom and phobia than anything rational.  Can have PHP but afraid to
-have gcc?
-
-(With lots of containers, pre-installed development tools can add up to
-significant size.  But I think that wasn't your point.)
-
-The rational concerns here are that building libsodium from source might
-not be worth the time, and that the sysadmin building software in
-production may be a risk (more so than merely having development tools
-installed) - e.g., the person not verifying authenticity of downloads,
-build scripts creating files under /tmp unsafely, etc.
-
-In the example above with needing libsodium for Argon2, perhaps this
-wasn't worth the trouble for the person, who should have simply used
-bcrypt until versions of PHP with Argon2 (or whatever) built in become
-standard.  You might want to re-word your blog post to de-emphasize the
-importance for most/smaller sites of going with Argon2 at this time.
-
-Alexander
+--Sig_/taT7LpI=+1YikXULQa2y_/7--
