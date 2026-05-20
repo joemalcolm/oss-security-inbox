@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2768" "Thursday" "24" "October" "2019" "20:32:30" "+0200" "Solar Designer" "solar@openwall.com" "<20191024183230.GA4963@openwall.com>" "70" "[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE" "^Date:" nil nil "10" "2019102418:32:30" "[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE" (number mark "        solar@openwa Oct 24   70/2768  " thread-indent "\"[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 6139 invoked by uid 550); 24 Oct 2019 18:33:51 -0000
+Received: (qmail 11507 invoked by uid 550); 20 May 2026 15:07:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +6,71 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 6012 invoked from network); 24 Oct 2019 18:33:17 -0000
-Message-ID: <20191024183230.GA4963@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Date: Thu, 24 Oct 2019 20:32:30 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE-2019-11043: PHP: env_path_info underflow in fpm_main.c can lead to RCE
+x-ms-reactions: disallow
+Received: (qmail 15921 invoked from network); 20 May 2026 11:36:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1779276954;
+	bh=J9Umnrl4IVhey4TkDlybxNWv7l0jra2KxAxtCB73010=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=EY/E2jmniRIXxRPPSVZS+ncU4MWYYy+zEQx0Abq5Pnus4z6HFyOBLBLBjlEzImpjU
+	 G4nFFawXbk6l/5v5yK0AL++EgXFwgxVjNLDe5WxK5CWQE/k1Oewf6QI/pu2H4vWdtp
+	 7lFNG32whjwcjAdkacRVlTCuh/lRdslsk1sELB626FuYQOJdr2lG8rLwt67yciTy3K
+	 4B9frj8TVjowJecGHrwiVxDA2O4gqZn+Q80a8nrOi7c0Di9ogJXU54gHPpZqno2iB4
+	 Tmf3/oBfrEDxC2ZHk/wJEoIsKSF50ta1wd8Fy6gC+puJdPyFSybLi92nWHWZHZjZRS
+	 1boqQkYN4Fa0g==
+MIME-Version: 1.0
+Date: Wed, 20 May 2026 13:35:54 +0200
+From: gabriel.corona@free.fr
 To: oss-security@lists.openwall.com
+In-Reply-To: <20260519193042.3feb8374@gmail.com>
+References: <20260518220116.170677b2@riseup.net>
+ <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
+ <20260519193042.3feb8374@gmail.com>
+User-Agent: Webmail Free/1.6.14
+Message-ID: <d59c163cb176305c312601412b76b765@free.fr>
+X-Sender: gabriel.corona@free.fr
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
 
-Hi,
+> I wonder if it would be worth proposing a change to whatever system
+> component handles opening files (probably something in Glib, or
+> xdg-utils, haven't researched that deeply yet), so that handlers cannot
+> be registered for certain "dangerous" file types (i.e. ELF/PE/Mach-O
+> executables, scripts in various languages, etc.)? The only real
+> downside I can see to that is the inability to text editors to
+> register themselves as handlers for script MIME types, and in those
+> instances, the editor can register itself as the handler for another
+> applicable, more generic MIME type (i.e. text/plain), then change its
+> behavior based on the more detailed MIME type of the file after it
+> opens it.
 
-Although I had nothing to do with discovery nor handling of this issue,
-I was asked off-list to bring it to the attention of distros.  Since the
-issue is already public, I am simply posting in here.  (I'd appreciate
-it if people post stuff on their own instead of asking me, though.)
+Applications which actually want to associate file with arbitrary code 
+execution
+(or other potentially malicious actions), can register a wrapper :
 
-This bug was reported against PHP a month ago:
+Exec=wine-prompt %F
+# Alternatively: Exec=wine --prompt-user %F
 
-https://bugs.php.net/bug.php?id=78599
+This wrapper can warn of the security implications and ask for 
+confirmation,
+similar to how most file manager now ask for confirmation before 
+executing
+a native executable or a .desktop file.
 
-| Sec Bug #78599 	env_path_info underflow in fpm_main.c can lead to RCE
-| 
-| [2019-09-26 16:17 UTC] neex dot emil+phpeb at gmail dot com
-| 
-| Description:
-| ------------
-| The line 1140 in file sapi/fpm/fpm/fpm_main.c
-| (https://github.com/php/php-src/blob/master/sapi/fpm/fpm/fpm_main.c#L1140)
-| contains pointer arithmetics that assumes that env_path_info has a
-| prefix equal to the path to the php script. However, the code does not
-| check this assumption is satisfied. The absence of the check can lead to
-| an invalid pointer in the "path_info" variable.
-| 
-| Such conditions can be achieved in a pretty standard Nginx
-| configuration. If one has Nginx config like this:
-| 
-| ```
-|    location ~ [^/]\.php(/|$) {
-|         fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-|         fastcgi_param PATH_INFO       $fastcgi_path_info;
-|         fastcgi_pass   php:9000;
-|         ...
-|   }
-| }
-| ```
-| 
-| The regexp in `fastcgi_split_path_info` directive can be broken using
-| the newline character (in encoded form, %0a). Broken regexp leads to
-| empty PATH_INFO, which triggers the bug.
-| 
-| This issue leads to code execution. Later in the code, the value of
-| path_info[0] is set to zero
-| (https://github.com/php/php-src/blob/master/sapi/fpm/fpm/fpm_main.c#L1150);
-| then FCGI_PUTENV is called. Using a carefully chosen length of the URL
-| path and query string, an attacker can make path_info point precisely to
-| the first byte of _fcgi_data_seg structure. Putting zero into it moves
-| `char* pos` field backwards, and following FCGI_PUTENV overwrites some
-| data (including other fast cgi variables) with the script path. Using
-| this technique, I was able to create a fake PHP_VALUE fcgi variable and
-| then use a chain of carefully chosen config values to get code
-| execution.
-| 
-| I have a working exploit PoC, but I'm not sure how to share it using
-| this form. This security research is done by three people: me, @beched
-| and @d90pwn.
+The .desktop format could be extended with an additional entry such as:
 
-This is followed with steps to reproduce the bug on a PHP build "with
---enable-fpm and ASAN enabled."  There are many further comments,
-including suggestion to fix the issue in "the next security relevant
-releases" on October 24, which is today.
+#  bike-shed name:
+Unsafe-Exec=wine %F
 
-PHP 7.2.24 and 7.3.11 released today are documented to include the fix.
+A caller not implementing this extension, would ignore this line and 
+call the
+prompt wrapper.
 
-There are also exploits here:
+A caller implementing this extension, could ask for confirmation itself
+and then call the unsafe command.
 
-https://github.com/neex/phuip-fpizdam
-https://github.com/jas502n/CVE-2019-11043
-
-Alexander
+Gabriel
