@@ -1,4 +1,4 @@
-Received: (qmail 17943 invoked by uid 550); 16 Feb 2025 18:42:57 -0000
+Received: (qmail 16158 invoked by uid 550); 20 May 2026 13:56:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,78 +8,61 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 16346 invoked from network); 16 Feb 2025 18:22:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=reciperadar.com; s=google; t=1739730162; x=1740334962; darn=lists.openwall.com;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9gBFb84INxnWHp9FY2QZmq+guTw3RRrSPeZNxqDwAF8=;
-        b=S1Xo2n2zKEG8skNyWXqYrNcuEF+y0cj9vP+IUiWVEOD+9OG4DuSh8uDKKmCoMjK2SJ
-         /DC7f4W57Rt6iana/gg2n6/4kpSdCQmF2HslArPhwH4QKzBwEDBY2VgMUZeVMUPR4vCs
-         HPc/tHtEY70o9ps05k6oNl+yScTyj5MJFZYYupP2kESD6OYq3v2CA2RVG16Te7idxkpi
-         Z0LOQJgSLVUo7iKswNvpuMZs20Utu8ICHIP5QltNtoq7HT86WwkeGePcQdRMXw3exBWm
-         woxvwIqFVT1e4DQ8IYGLi1eSiS4hbGZITMDALH/ly/y1Z00KO7+xyDMRc2EeDXRHSLcp
-         yOrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739730162; x=1740334962;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9gBFb84INxnWHp9FY2QZmq+guTw3RRrSPeZNxqDwAF8=;
-        b=vxiIJK5aYFBRYiduYiSVFxjnrqD8sQh1iMeK5Fx8lPVixTFk9GXsj1MwJqG1RfUBPJ
-         yV3cxZy+yNAsT7appMeL7Tms8XAQdHwILx949D3C7UPgS9dIEPbYNQo5XpcRtNaapdYf
-         nQLRfXwuI/sAUKOEXtztARai/tctx86oE0bWGylDSiI8bVfMWzmbUhX8U7ezvrZH5vGq
-         uKOUp+XNPXdk+4RJ/p6nQpDAMxlNwfD2Ex+1pUo9v7/PcNEoPfXtf5VR1Zwx6wz/NyE7
-         9DM4JcH5+gW6gN8gsn7NxoA3RtwNkzzhRQecUUXrqNGG42QGRZGKl3GCuLhJ4d/Ehk1R
-         lKug==
-X-Gm-Message-State: AOJu0YwbCdS4YfDguyGvudIFG5Ul7++aAt4yN1W0J3/N2/1u/fnODXit
-	wmzJPMo4YYUaqf4f4soOmR0fzZpnwZConVLcdl+4u2ytQeqDrCvLqR9GUEgZldoVxB0NWhn6W/F
-	NTPEO34aoVQV1hi2pkBm/+OzMjs/L5DOpbaWBFE76iG9hcSJLB+s=
-X-Gm-Gg: ASbGnctIqk4ASHaAH76LVuE/rgKmGWcc3U37IlQdw2tSRUuoG/1kG7AJMYbfIUo6C2c
-	uCF75eb2c0IGwH/ACMPltTdNB5e6Lgx4y+DC1hbeSW+k7421nt5TRn3uxSCl9+8PoQxx1bWAG
-X-Google-Smtp-Source: AGHT+IElcRqbi3hcj5I/bkEZM7xReJVATdlId5u2btTJsaHZb5371gw+XqdadlLpLzxk8TE6LgAt60EIdnyeUnhQBkQ=
-X-Received: by 2002:a05:6902:1007:b0:e58:9c24:5bcb with SMTP id
- 3f1490d57ef6-e5dc90427f5mr3702980276.18.1739730162263; Sun, 16 Feb 2025
- 10:22:42 -0800 (PST)
-MIME-Version: 1.0
-References: <20250216161818.GA12372@openwall.com>
-In-Reply-To: <20250216161818.GA12372@openwall.com>
-From: James Addison <james@reciperadar.com>
-Date: Sun, 16 Feb 2025 18:22:30 +0000
-X-Gm-Features: AWEUYZmeqdJ7HjELiYvDAqtNP1etFItPqWp165APL1g3Wy-IcXMD1FZQg3a7uy8
-Message-ID: <CAF3AkiMDf-RTf0Z0z-fyc5Fi65no5yxSrc6JPvW_43wGRLK47w@mail.gmail.com>
+Received: (qmail 19622 invoked from network); 20 May 2026 13:01:41 -0000
+ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org 544E54E40B3
+Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
+ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1779282091; cv=none; b=I8ke5MyJBAfcpIrphG0BmCc93dyZltSVcq24eqmFnsPmCOFx5++5MOcUl7Swwm8Jew7MlBiEps+oUdIWXdLA1B2XX7E6T3p30NGRCgxvLS/xKNewLzt2Nb3a7K+jVYNsZjLVHHZ6sRFaTjG5DHLJtN1QNvBtVv0XDYONJy/+too=
+ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1779282091;
+	c=relaxed/relaxed; bh=+c2lCMcu0xe9XBH1j59UISAoCR4O9L8Q5msMhoi+bUk=;
+	h=DKIM-Signature:DKIM-Signature:Date:From:To:Subject:Message-ID:
+	 MIME-Version; b=lIVK/DOAhTPKkLwNxJXwj0I8Z9tAbENXATk7cDnmKqMY5H9tMSgYjh/g3lgavbhFPCugPHEb8sOhf8ysbrPZhMrH82pKe7R4uEdMnFIrqY3FLC1THQ4OaDoJx13DwFkuqoU1QhrMYvnIAUtT98MFgGdfH1CRaNdGUMY6v7CfpC0=
+ARC-Authentication-Results: i=1; mx.pao1.isc.org
+DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 544E54E40B3
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
+	t=1779282091; bh=JzgU7qNPcH+34kSnY00qbKJasNx9qPNzqOgBK0zZrvE=;
+	h=Date:From:To:Cc:Subject;
+	b=cKngWmFe2aPpd1AP0oWrjs6WUTkwQF5igXFH34ti/ojwJJPkxXNQ++jCB/myO0Jpt
+	 4K2Iw6fvd8ZMOa57QhS2cpc71M3gmTynqc5gRiWrpsKqZCyoPgYRR6q/A2a2g5gAdl
+	 RaTce6ZYmm7Fw2S0cH+RooawIZMVf0XqF5OVObDk=
+DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org 3B0CD2E60076
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
+	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1779282091;
+	bh=+c2lCMcu0xe9XBH1j59UISAoCR4O9L8Q5msMhoi+bUk=;
+	h=Date:From:To:Message-ID:MIME-Version;
+	b=jOJlJfA6eF5IToNSSm/UhrUL5KYD34CkuWhWrdxMX7NUVeVcxr2Jb06SXN74F0C5Y
+	 EEVPQd0NrynEDaHDVh9vGsJkQ/eHqNAfbXSa4Gf68POyHvb9l0Sdfs3z+rFJA9IP8J
+	 2GkvpR5salf8RZGMFcVq01OUEFp+d1GgHFO4DgmY=
+Date: Wed, 20 May 2026 15:01:25 +0200
+From: =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
 To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [oss-security] CVE-2025-1094: PostgreSQL: Quoting APIs miss
- neutralizing quoting syntax in text that fails encoding validation, enabling
- psql SQL injection
+Cc: security-officer@isc.org
+Message-ID: <ag2wpSF3iv7iKeRO@larwa.hq.kempniu.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Subject: [oss-security] ISC has disclosed six vulnerabilities in BIND 9 (CVE-2026-3039,
+ CVE-2026-3592, CVE-2026-3593, CVE-2026-5946, CVE-2026-5947, CVE-2026-5950)
 
-On Sun, Feb 16, 2025 at 4:22=E2=80=AFPM Solar Designer <solar@openwall.com>=
- wrote:
->
-> Hi,
->
-> As announced on February 13 in:
->
-> https://www.postgresql.org/about/news/postgresql-173-167-1511-1416-and-13=
-19-released-3015/
-> https://www.postgresql.org/message-id/173945575457.197393.617578684265523=
-0205%40wrigleys.postgresql.org
->
-> > The PostgreSQL Global Development Group has released an update to all s=
-upported
-> > versions of PostgreSQL, including 17.3, 16.7, 15.11, 14.16, and 13.19.
-> > This release fixes 1 security vulnerability and over 70 bugs reported o=
-ver the
-> > last several months.
-> > [ ... snip ... ]
+On 20 May 2026, Internet Systems Consortium disclosed six vulnerabilities affecting our BIND 9 software:
 
-For anyone considering upgrading: please note also that the fix for
-this vulnerability introduced a regression[1] that should be addressed
-by subsequent upcoming releases of PostgreSQL on Thursday 2025-02-20
-(a few days from now).
+- CVE-2026-3039:        BIND 9 server memory exhaustion during GSS-API TKEY negotiation https://kb.isc.org/docs/cve-2026-3039
+- CVE-2026-3592:        Amplification vulnerabilities via self-pointed glue records https://kb.isc.org/docs/cve-2026-3592
+- CVE-2026-3593:        Heap use-after-free vulnerability in BIND 9 DNS-over-HTTPS implementation https://kb.isc.org/docs/cve-2026-3593
+- CVE-2026-5946:        Invalid handling of CLASS != IN https://kb.isc.org/docs/cve-2026-5946
+- CVE-2026-5947:        SIG(0) validation during query flood may lead to undefined behavior https://kb.isc.org/docs/cve-2026-5947
+- CVE-2026-5950:        Unbounded resend loop in BIND 9 resolver https://kb.isc.org/docs/cve-2026-5950
 
-[1] - https://www.postgresql.org/message-id/272abbd9-d24c-49f1-8b61-8372190=
-6aa3b@postgresql.org
+New versions of BIND 9 are available:
+
+- https://downloads.isc.org/isc/bind9/9.18.49/
+- https://downloads.isc.org/isc/bind9/9.20.23/
+- https://downloads.isc.org/isc/bind9/9.21.22/
+
+For more information and other release formats, consult the ISC software download page: https://www.isc.org/download/
+
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+
+-- 
+Best regards,
+Michał Kępień
