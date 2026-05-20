@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3550" "Monday" "10" "January" "2022" "18:08:29" "+0000" "Qualys Security Advisory" "qsa@qualys.com" nil "83" "[oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil "1" nil nil (number mark "U       qsa@qualys.c Jan 10   83/3550  " thread-indent "\"[oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13695 invoked by uid 550); 10 Jan 2022 18:08:46 -0000
+Received: (qmail 22508 invoked by uid 550); 20 May 2026 17:52:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,200 +7,205 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 13669 invoked from network); 10 Jan 2022 18:08:45 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualys.com; h=from : to : subject :
- date : message-id : content-type : content-id : content-transfer-encoding
- : mime-version; s=qualyscom;
- bh=9FrS7vovfJ1Md2UG/WuX+XiMfLpMap9PS3gRI2AaR9Q=;
- b=JyOGP+s5il+II1jKwcg7ftpktaoNaZB4iNzox7v+uJKzdoXKbxoagYVqFT3cqMCKS2Da
- pVpdtwowD+QCuH+EyuufXGOYuGvvglG1GDbioEqRTAIGy4uG9I4sDfhgyo4fi7JOWG8o
- LFnCjFf4yJ7dlzmdUfu2HyMEj+KLKe4sPjXNGzNdXOOgNc5Gg25L38TPVEnaq6az0428
- HDvhYQPWRkfR/uovB36fwNNQRKUw6WGmk2cpbiX+6Ti/kyqlpWUBH7Lu5Hj2ZsnSbS+7
- TSmmgtkIN+h0eeLg+EXoVX51nf6MeYzXkodeC0mPUD1vm/xqw+KaGxy+pFOFHOT6d2CG kw== 
-Authentication-Results: ppops.net;
-	spf=pass smtp.mailfrom=qsa@qualys.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kJ0zKzTac23edn8rQmc6ykQF4Wgu8Ilb8h8aA3loy9P7bfpAPZ6pfJR+rr1O+gVmsUKspq1coc/cYPGGeRGD7cs6G1uL/CGbGDEkXBdlc2faFtiqGZnG4owKGXgtYWmKWmlcMY3XARnKV/U5P7AxTX6tgQHGLhkorCC4JFv0WKnQshrbxHq2zuKCfXupcWjraLifEPlaehujoV0LV7QONQFWskVTyd0uJdnfB1evD/eSWXhhznYfxWYe0dJw4GzNen0QyIvljX/UYCSnRoK8OjLLZRFW+WQV54IeuOYcdA0RAHeS8ft1XoCF5g9+4zJPSy50qYUFtlJfbBFH0Du7yA==
+x-ms-reactions: disallow
+Received: (qmail 22475 invoked from network); 20 May 2026 17:52:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+	content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=
+	corp-2025-04-25; bh=z29eMuvviESJq3wisWZMs+tWfxVgL56FLgaME7F1MK4=; b=
+	G+C2Sy/TD4BUcYbJe/c8Dx9iptzTJSMV1Nxu/+/bk6BgZwWl+2xiaQriVcntOeyC
+	fUYbI7AImOmCm5irq5lVN/szUwjsDl+AO1IdIG8wJ0byz1fRDvmiyJVDfmMp8tes
+	BQ3HFo/BeDqc+7E4YjTsB5cGAeXuv52R6BPXulQIkbq3ZKMl2klFxaalL8MYXWPX
+	zkK1VVe12m1WgQscNC9rEPB4MqKQ7P0JD4xpBfNVaBmS+YlsRsjyKPaWl2hgKKGz
+	qFAdYyHBeVoJ5YeQ1FddXJwN8Rx8u7eG1gzMiZl/Z5dV0ayibxs1TDE6JRauLhsY
+	ec9xLpsj/vPwMXxkcbANXA==
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jsxm9L75uWIz0pSDuYIXqegYoscyHQ1LNHFwfMwGZel+urzMxn+kIuxHNYiXPIsvR9F06fVJM82sjguNrt1uWY6prmzAp2ZI4zbLlGa3TKilsGkTOLMwx4lpYqUSrrPlOwdwwpCya1I67nvQNMWDjtR5+5DcH1mDhxsMm3PVvp99pgV3wGedla/NthL3rVerS2QxenxytTMjPtXzwJ8bJdPanW8cKKmuUEVMEGiUBwHNa7bl7+vuS1Mjw08j+bMqSktkFG/QDqnIxMzsKMMmJCerlBgzacPbDldzAq2jTuvW1iixUbp/TwVgbcKxbG+CqDFkXXVmJuUzbQS1SoRXOw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
+ s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9FrS7vovfJ1Md2UG/WuX+XiMfLpMap9PS3gRI2AaR9Q=;
- b=boPoPHoqxe8MNNbrM0w5yK4SRv4bjoTQ9pylVcV4QEOehnf8C/oDWj+EGkn4jRibblJ2uqRTEq5OONpfWiyWsZQ9xbqASl51wiPyKZkj8jUk3rHy2bPcistmBkC1aZPx7fjomNSa2cEKHif71w30f2TFRvwhDPnn1xs5XhFxE/OF6blgKhLkyjSs70jvxH8ezEG8mou0TAbeMJmhrgMM2oC3kG2Uh95vtzybYay351lfdQ+92FMo6r2H3NkRnZYui43lS10AeIOLp37YpdumNfwjTyc5iLCYGozOcqbSzxXO1YTJ4BZo4+XNz49tndJHQ2cCGoWXQMmOyLcP/Km7YA==
+ bh=z29eMuvviESJq3wisWZMs+tWfxVgL56FLgaME7F1MK4=;
+ b=YYLj5YTDAB7ZM3fo3dbK3eR2bWS914DXBqvundOBh6m4OlifQ4Gpzniq7S02ibL/4QYWKJzzuKZ18p0o1K8TQKSvYznU1ttMwlPx5fFpWi02VSTYKWqAq2QqVworjWksOVZckUWBgeDiJqDG3OVObThlpVRpgyCEGu5lijWois7o/4XQUZkPk14X2MYbHMeYprQddJY0duhQiHg2y/jpx9To2BBoUy3jsExoFYjDbKAXG36sBdVs+J5undHZXg4hpvss5xMLTL6jwxAkWJ3H0L9h8zXFuSmj9R/n4719WzQR6Vtk62oGmhpYE+h6EStEVMk5AKooLZE4ZWdI2lisRQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qualys.com; dmarc=pass action=none header.from=qualys.com;
- dkim=pass header.d=qualys.com; arc=none
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=qualys.onmicrosoft.com; s=selector1-qualys-onmicrosoft-com;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9FrS7vovfJ1Md2UG/WuX+XiMfLpMap9PS3gRI2AaR9Q=;
- b=Z3trKtHXfiYCTyc2FBPDcLMuCIn4Rg/oLwkwTjYM0FCmxRMQ/sw05Wbvk3HgVVicxKlHk+ldifW/krLoB3XX8L8R7a7djYARQHJ36TgWKhB7WN9nQLT0QwHYvJ8W9hnjNnRJrZ5AVDZKb7D8gOctIDFhMOlDPFMf1DJxIpSIXz1CPAOWjaIZy86L9mm71kdopAnqqQnkwPgHOjoahOQR5Spxr7z27K00XmgiNiif1qivliAOIXifTYJxm0hRUjtdayMqjFumT1NY+U3CNSK77+9M4FvrE4ZA7rp1bPxrEzUL6q8k2DLwazwn/6nEGgWIefLfBDg1+60dEEBJgWzAfw==
-From: Qualys Security Advisory <qsa@qualys.com>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Thread-Topic: CVE-2021-3997: Uncontrolled recursion in systemd's
- systemd-tmpfiles
-Thread-Index: AQHYBk0R9HndvFzFF0GjFvvt60ZKqQ==
-Date: Mon, 10 Jan 2022 18:08:29 +0000
-Message-ID: <20220110180746.GA3527@localhost.localdomain>
-Accept-Language: en-US
+ bh=z29eMuvviESJq3wisWZMs+tWfxVgL56FLgaME7F1MK4=;
+ b=GvuB3jFSTdQO+A80B/LsL5Jb5mVhKmed+2h6NSUNujWYXPcFsuIJTy9jODr/MfBwfgOGdHbZ6SSf8/Tr4QK2s+DV3EVlCMYXUPns0ELBVSsRaeeoywZPI2N28AWmQoeviCVX8QtRgkQK7an5BFs0A5isiaXmG4atO20t7QTIyi8=
+Message-ID: <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com>
+Date: Wed, 20 May 2026 10:52:37 -0700
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com
+References: <afDLFWVMK-r70PB0@yuggoth.org>
+From: Alan Coopersmith <alan.coopersmith@oracle.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: babb3eab-5c1f-43bc-c1f3-08d9d46434bc
-x-ms-traffictypediagnostic: BY5PR06MB6530:EE_
-x-microsoft-antispam-prvs: 
- <BY5PR06MB653026126328EBAFD246D671D5509@BY5PR06MB6530.namprd06.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:4502;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- JcHq5kAtq9kwcdsZJn6IlO7c9y2fP7eupJwz+dWu9Pso09tBrRllp/9K/iHIitH1KdyJg3IlWjB+3fzfRm/WUtUruzoVgiC1wYOK1trtblyl0+25GbH8+nBdX+fXT+jrawyCRQr+5MlTBEWJmv7jiI04COsJrEj9JOoTNrhMaLH96nQsnjNu42trRJ9iad8t3LbyoWHAQLl4HKKz2ny4N+qnxHS+DP0wsBKHybro1rJKWxwuc7HowdzbWhh1Neyb95/QVrdp7b3wcB0j/JIUkLOGL+EeFGRigRaHnzyBEixjNzDnN4T6ika5rEa2yAVmatJgLQWoefqjOSWJO5QErM4PQu3poYvdcaFCAyiaCSq5QvYMzZ3jbjpa8jhAAbgZU8JzHLhqpqp2mUDbQHaStUWsP7VTXfsVNXNEk+rPew4r8c+drWV8C7VOWV5qoYNaVadf/YsvWbJhZ5VTKM1MYoT8YsSRJMA5oEcZkmJXk+341dqu7z5RS1b5xCxXyMQo9wokKKx1Lk1SXkF4E46OBZ6qUFZR6jqZdkqf/kpH/7ZVA+mumsQsuhyQjrE5ZHIkLCalykg2OjeCqAW742MdUGLl9jMbCzfMWe28DHsBHb6vW0KGatIaZr7pdghoiGSMo79i0q6P2Yn9KJHVQQTl0T2GXQEoR41kLdygnfyXndns7H7jWjTSPycD0IBkNtc8flUJMGkfSdLp3pBn7WNSjDUXjxaqxA2EHiYBtYtrXBldIKMPZMl1rgAGailXJgQTrnpxV+JACB8l+j3FzOZ5sRvWaVZJX1+N8JMFE+9OeEg=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR06MB6910.namprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(1076003)(508600001)(2906002)(6506007)(5660300002)(83380400001)(71200400001)(316002)(6916009)(86362001)(66556008)(66476007)(66946007)(186003)(38070700005)(9686003)(76116006)(6512007)(33656002)(8936002)(122000001)(6486002)(66446008)(64756008)(8676002)(38100700002)(966005)(26005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?us-ascii?Q?4mBKxvkM+zDa9i1q0BX1iH1DEpYFrmogVnre2ZaNO+JUuf4Mxq0nyYhkT+l8?=
- =?us-ascii?Q?Oht+di90OLLfEcrCN45IN69474Py0Tb0HsrT4fxTDegeRUCSReHIVW+xrVfZ?=
- =?us-ascii?Q?8fpbh2aehpE5hgze+r0bS82lZynGKI1mISr5iTbO34n46cO1MDznuWJk24Z2?=
- =?us-ascii?Q?1X1mRrb6hycSAPzodev82TRD3DNjbtbdlHOQUm+xzWrR1b2fsriwgBfFRtfJ?=
- =?us-ascii?Q?fcGKaksMus4D74nF7v2EgTsrWUfGEUg/QN3o6GQsr2YX4Dw6mAfEPTB22dw6?=
- =?us-ascii?Q?c+fszBNWNsChN41yXN06k0fPb0Yu7JYImUvbLtzyJqswK1fCJqtGYJJ1CxUa?=
- =?us-ascii?Q?AyEwi2lDaPFNycqFV7jCzoCfGRetJGR2y8evTzorcJF+gQeVnRMr+LFanKum?=
- =?us-ascii?Q?suzErqxeHWssc/kj4hpjA1uu2n8FiHil7YIour+fMS2fMPJjqb5xc0j7/sia?=
- =?us-ascii?Q?Bk5yvejnh7R/MU9zbDXzK+G2r/HoFHfGAW0vNu04XnsE7MeG61rL615piG8a?=
- =?us-ascii?Q?SYE5rEFF1G7ZXRiVmYzImdEODk+2Xp3sNEpoB54XVX/rf6zejK89myX7peEo?=
- =?us-ascii?Q?y4LPppgDdFqLRUFHH1X3OiQkUlnWzp8oBaW51IEczR9QmER09CSz0f/plNIO?=
- =?us-ascii?Q?pOl44bYzh0//1yjGLp2Ez+i8389U25hVzoG964kbj7Bvs4elfbj3B9j1MbZk?=
- =?us-ascii?Q?ntTKgkiYUllzF0y259fzK/b3T1edIVPpDJNvv9yy4ZdvT4jg4u+l/lnTdR7C?=
- =?us-ascii?Q?52gcRLVDPsNXsmx2IGkGX7j0MmqVjyR0WLKv1BmyuUp2h2d6UAXi1zEPOLFm?=
- =?us-ascii?Q?M7XPjIY1o6tBXtq7zoopwFHubRQlqxx71HgQo2aPt4iiwEfnobasWCcqKbIg?=
- =?us-ascii?Q?fIMJ2+TXY2mvM+DLvow3yj2hj9uoR8D8wPcV14WQJymnKMZoHz/j2/tZ9AEJ?=
- =?us-ascii?Q?HrLTPQcRklBrGbOzYIlGFrqXGh9VVwoveeqNmbOlnUsS/r2njHAavLQ7CuC1?=
- =?us-ascii?Q?DJPQrqlugv3QvnfeED4gFkOonAAmdCOA0dqiqjaffGJDpgc+ECD/O0NEzTyF?=
- =?us-ascii?Q?CMIKXgbrWEhCjcc+/oyilOFFfYQ+Gf0fBptJLDDhdOdsfx0QlwSfd5FHFxsi?=
- =?us-ascii?Q?6tvZV3pFJe2IK5GkQNfogYxXg0+Uv9EH97fJEpgp4KK2BfhJy2wHPLsXEEjp?=
- =?us-ascii?Q?I6zxUmRWWkjbm9D1ROMTeWCZa7bsq5T8uqGNk2t67AQl+CjS4cCosvihuUAn?=
- =?us-ascii?Q?N/gFNrkSRhGCVx7WZZ+f/+6ZHj+65+sQ6XkLOk1Hm6z+/mLIppumK21iRNO2?=
- =?us-ascii?Q?9I0a4qFIfV+ccNzr7XOgKS8u7r/265qAuBJPTmRUUYHbEhhfruKqKaZdHTDd?=
- =?us-ascii?Q?WUOiImt9/70dTWx3GoK0pPOXVWZ/21NgucBnKQGuu+XJsaDeQXYXyoWjkFAO?=
- =?us-ascii?Q?N7ecFrl1X8IDONmpIwUTwvzs6JbEDPgagAA1SSjBfDLNaG5SmElXWHa5b84A?=
- =?us-ascii?Q?vtcZ9YYbSgopuVrdMUq8tyFS8NEqxK1fOLTZIUPk4N1sZQOu7VYiT3JxcNHg?=
- =?us-ascii?Q?01qCHQVh2HS8rSaDvAygdmY8hCgqN5QIZCAV3np3sxOucUnqnaSY8TD1fMTC?=
- =?us-ascii?Q?xUNyKMloo5qhxlWijJHwSn1NUz3lvGlunLPlG6yvHLcowhowUkvG4lq8GKI8?=
- =?us-ascii?Q?DLTxWwt6NuKI0FL4R33XespnR8k=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <A13C0EAF9F3F994ABE0AE6B30952641C@namprd06.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+Autocrypt: addr=alan.coopersmith@oracle.com; keydata=
+ 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
+ 5V9JclVH6u5Gug==
+In-Reply-To: <afDLFWVMK-r70PB0@yuggoth.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR03CA0271.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::6) To CH3PR10MB6739.namprd10.prod.outlook.com
+ (2603:10b6:610:147::6)
 MIME-Version: 1.0
-X-OriginatorOrg: qualys.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR10MB6739:EE_|SA2PR10MB4426:EE_
+X-MS-Office365-Filtering-Correlation-Id: 092971bf-486d-4084-d4a7-08deb6989595
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|366016|56012099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	u0Tjj4hNEHHujnvWOVtEkxxZwjO8nXA3xYNuICMwyb8FpN5HnOLM/n6wbb7KM6tq01HE+FVxyn9rh6d4nBoXDHDijlkbpXKwFBkEyHmSxp2Jis1harD8UUfJsYKgxXHpW3E60BSUr+8MI2mB9v7LfiLX5lrpERS5AYFreLmVmfgLu6vMxX/wmKhP09s+1UV/mSgHTDi6RbvUQ3srJm3aQioZ3kYdLXkVBfspJw3yRr53nwE/1mBTjqdtfLo2t49CagD7JB/jGQmkEtfgoHgTup7RuMh+fQSgGQovrp1xmmzZXIihu5VN6Zbhe8pEwf16LTYpO36IGFbmnfaL/cZzbKLAProX1hQ2ATQctOYLaB+s34Ff+5288Ol7Je/MLbs6T0Kix4KpNLqmHu3RWNvO+W9iwt9lGuWEI+CyYm5CaCNvW1ZveLa3hdY0mL8ufayLpeSlc1DOhVGMDzrAbkDr1X9ZogEgfqSU5heUbA5DAXSDQwH0Rho6w99Q6YRajpbI2iIl/wlriCWq9SWF0LiXMgEkdPc90u+Iutt9E2C7ETwflLkI/u5aSXxFrEoFQZlylRW/qyz4bocqUTkbvP1j2na6uH8ZpSF6g+HP1hGYqvDfe09rfcoa2z0xjstRwu7C+a/7k0j2xpiuG9+gw4dJNw==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR10MB6739.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cWRxWVlIL3YxRFd6SlpYOXpneUVZS3Rsc3M3NkJxNzJDR1p6YTJlSlZuMEdE?=
+ =?utf-8?B?Zm9VbzAzK0w1MC9waWZSakJybGh0QUVYV3hjK3gxUHZYSVZUMmNHSVhhb2ho?=
+ =?utf-8?B?eWp2ejFNOU8wVTZwbUs0SzhHWVA5VnBMcFJSUHhkT3hLcmlkMXVjVk02SHlz?=
+ =?utf-8?B?SC95YXp3UGNoQXc2M1p0aE82ZkttU1RkUTUxTlp3d1lPMTJQVVpzY2l2TFBv?=
+ =?utf-8?B?ZFJrNHFLaklLQktCYUtiOXVFU3VQTnZ5V1djblNUaGQrbWk0cmtnQlkycUIr?=
+ =?utf-8?B?NHJCK3haeTFlUS95OU8vNktMazIraDJpWVJSRzl6UndGVkh2MG0wdUdVL3Vz?=
+ =?utf-8?B?NGxERktobmtDaWU4a0Z2dkNvSStwb0FYdXhMdUNuTnpPU2lxZWhJTUQ4ZjA4?=
+ =?utf-8?B?NDJQQTA5VnJ1aHE5eEVVaGtjQjNibit4YjNqZndsTi9JTTZSZWtlUkZBUmNG?=
+ =?utf-8?B?N0hUMFVQYTlBbXB6K3lGbFNoYjJOVkR6bXBMQUNpL0dzUnh5V20zeGdMelRm?=
+ =?utf-8?B?UTU3TGVNVUpzdmk0ZUdMTDcwcWx1T0tQZEZzdzdPM0pyVGJJckdTL1g0d1JY?=
+ =?utf-8?B?S1drMXJ2N0JvRDcrTjZWdjl0cENBWlQwL3A2VFpQc0cyZm5sY1JNOC9ML3U5?=
+ =?utf-8?B?dDE5dm1SUitTVEQwQjZtTWVLZ25JbXcwN0xHNGIxNzFIaytUVEhrUWxpWlY2?=
+ =?utf-8?B?eW1GSDFLSEhKTU9Rc2NCV1VZV0pXSjJNMVZFSGNIMWFFVWplTEJ6K3lQUUti?=
+ =?utf-8?B?VTlmVWM3eFYyRnhyU21BYldYOTVwTnkzcDQ5RXBIZ1g2Slgrc1czTlVyYWlx?=
+ =?utf-8?B?M3F6Ynh0MkltQmd1anVLSEtqSVVsejQ4eUJweURJbzNUdlQzR2JFT1hUY2d5?=
+ =?utf-8?B?ZTA0UTJPV3ljQVEvMEdwVmpZSldVRm5MYmFLUHl5eEp1aFRZUmJsTy9pYlRZ?=
+ =?utf-8?B?cGs1czZPTHNQdEQvQ3lrdVlpQzhiVXFqR3g5RTVqelp3ZE94VGk0YS9NVHlo?=
+ =?utf-8?B?REFBSHRyVTZMbWhBTzRuS0hsYVFqKytRNEd2Z1h2QWg0dFc5YlRLVklhd3JK?=
+ =?utf-8?B?a2FoU2lIYXRNS3dUd3FCeGZVclBZajJ0aWROTmcwWjQrbGJJKzdqcEVpYUN1?=
+ =?utf-8?B?NHhXSStIZHBxUis5UWpvd1IwT295bHlKNUVOQnIzbk1pNXhaTmxWVGtrb08y?=
+ =?utf-8?B?T2R6NkRPSVJHNkxhN1pmYmhZWjNjTElPaGVsVzJ0UVdnT1BSQmpDdkZWUWph?=
+ =?utf-8?B?VjNiOXExajgwRk1tZklpVlNyd1k3K3JaTDJ6YWVkZzM4ckxLRk9IQk1QT2N1?=
+ =?utf-8?B?RnZJZUtWT0RudVk5NjdlVkRyNDdCTERPVW1JWHBwRHBNdkE3MXJxUHVjaW56?=
+ =?utf-8?B?YWFiTjZLK2pHTEhkZ1ExWmlpQTBkc2ZUQjA3cXJSR2V4ZzUyU3ZSUjFGQ1NY?=
+ =?utf-8?B?WitsQlFQRWJNaU0xeWtxcnhLR09EY1JTWnY2TzdEU2Z0bGpiT3VzMzdxKzhV?=
+ =?utf-8?B?QlB0S2swVFdzcTdjRDlOMEVTYWd6NnVaWUpuMzRiWUs1dTZlTkcySTQxeVMz?=
+ =?utf-8?B?UHJ0SFVJanozb1ZXajNCMjFYTzg2OHpGb0ZwUHQrK2xYSm02RWFYUFJCY2Fk?=
+ =?utf-8?B?bStmazVXK0JadElJNVFyWHJkYXAyNXhleGJQRzFjZ3RHUGoxYXQwU3MzWVQ3?=
+ =?utf-8?B?TXN3ckxsb25DdVBEYUxTR0s4ZGsyOUVVSldxM1hyY3RMTkU0YWxmeWhOZEkr?=
+ =?utf-8?B?ZmVOQUV2OEVkVG5IR0tPdWVGU3NZd1pmTnllWXBlTG9oVDVmeHBiYlRHZHJR?=
+ =?utf-8?B?MTlFTHR3Nk50RDZRNGM0RStVMmJRelJhcjU3N1Y4d0hPZHVIdmw4TkYyOWJx?=
+ =?utf-8?B?dVdETzQvUCs1NDRJZjZROFU4QTB3V2JQTk9WMFM0Z1NQSnRmR1BJQ0RXTWdV?=
+ =?utf-8?B?OHZKYzVsRWNoVkYrRERoWUxOTWFjVlRTODVrckg5WDFrZ2VUOG5icEZKaE1z?=
+ =?utf-8?B?d1dLVlI1YkZlc0pYd1pXNkM2M21tQVhwY0kxVUs5YU41amU0cTBCSEpMRzl5?=
+ =?utf-8?B?MjRmNjVsZnNWMVZBRHNKMmYxZHBValpwa1hEdEJhUVdQOW1mMUVuT3JvdUFD?=
+ =?utf-8?B?WFBBRmEweGRRelZNVkpsUlZ0UitiRVoyM3ROZlcraGpheE14d3YrZzVROWox?=
+ =?utf-8?B?eFE2WUFXNU90SlVwZEpXY3I3VjEvRUVuUVIxNWE5V1AvZlRrQ2dOY0I3R0ZP?=
+ =?utf-8?B?T095UGJ5TWZuMGl3WGJ0cFlxRi9jcUNvWW03Vi94ZmJWcXF2eUFTY3NjQ1BV?=
+ =?utf-8?B?NkdBNGIrQ2hiZHZ0ZVg1SDZQc085SytVTHoybklLdWh1SHdUR0NnS0FDMy9X?=
+ =?utf-8?Q?9alcdH93I4oEZhVk=3D?=
+X-Exchange-RoutingPolicyChecked:
+	lBsIiQ0qDUDRzoBUvGmWT42jbfAxQN8XDHvkyF7Yp+iDJTaz/oh/xmyNsu95HmFSjAXTK4M/zd2y9I9gEGgoY00iAhcPXlehmlJrr2En+Vb+47d7w5230viE96uwrZf90OhturgdfqYMk/C+IYxJ/v0qKTlCTZEn7A0s84xopkVSqtje1dYgYONkcNWn+a1bHnnRuvn+Tmf+ixG55XHvDBU9Nc8jmkwAYNaiSpO3QZTQUED4Pg5XA+S5Rp1P+5pn/3XCvk6SgyHzS/fk5NzsItoC3TPbVUoj405ZoMWSbXFeBFDw3KBl3StkNiDifnbZIymoLGojj+zl6aTJDg+fLQ==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	FF+pVw0A1NkLJHxbhoblfX4DtglzjMhSA/90ojEOg27Sflk2bnbkm5/QCQiN1VQHJ58D3BG4jktoKr9VKog97DVNWv/FwYNYZVNPfVYrm6RqL3YLoNxgfOStdbLfGqkBGpao2PJ65RI/lKQ171mftkznM1poEz4hK79qPSsGmo6iOTF5u9I8xKUXLVdNw9rjcEV6rUAvBuhPaq5EDhUKTBKI6vMQaT1Q0JAUEVvjfO2qs84vz1LOIM1Vi1+YV2g/GK2bvYjzg46WBLAz61GgpreI9UYNQIhxaWam+XXxvxIROPoOOKg7t4FqeF0k3A215AIH7WiiOquK2536RdsDcP/rXzZuh/gnrFUXiVin9d+Nc7U98cd7MGaZl13fUvv2oyqtEy/v9zG1EbcjDg2bcjh1B1dRUg6S/TH8l56AtUMmZDPeZIxvek1ug0VVCYu5cfhxlLig2gPK+lJkNodIhLn8ygMDHcYtEW64wK0Q3FanMgxLeZscYYGiLwZ9wxgKpvwG57JrhgjztWs2SjzyTqYx8Y2KwrlYUEXVCkDiYHKckhhczZoDS57ZsIuyytTViH4wY4+1aSfO2ciKN4gzzxnHtf0gKJ7MbKIIqDloBJk=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 092971bf-486d-4084-d4a7-08deb6989595
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR10MB6739.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR06MB6910.namprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: babb3eab-5c1f-43bc-c1f3-08d9d46434bc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jan 2022 18:08:29.4766
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2026 17:52:39.6617
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 81a9ef9a-9a98-4b00-886a-895a603bc029
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3zoHjSpFdivWVar8+ZISIfOJ4y0Ppj05eOhGv567hCtsLYelLUIH3w1LXH0iEv+Panmzdttr9uy/pubExAENAedfqq7KzCtitWRF/FNlynY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR06MB6530
-X-Proofpoint-GUID: GurqxlYZstvAmRAWow1hu2QIW7vLg6OB
-X-Proofpoint-ORIG-GUID: GurqxlYZstvAmRAWow1hu2QIW7vLg6OB
-X-Proofpoint-SPF-Result: pass
-X-Proofpoint-SPF-Record: v=spf1 include:_spf.qualys.com include:spf.protection.outlook.com
- include:spf-001ca501.pphosted.com include:stspg-customer.com
- include:_spf.salesforce.com include:mktomail.com
- include:emailus.freshservice.com a:sendgrid.avolio.tech ~all
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vxvDqbvAaRhnRGWWQLo+LZNG8VARtMCIkIDctpejZBRRNMclYqZaiBO9d+hCTIbxzEqH4PPcPkVEbJ8FPOY0m3FyxafGGpze97juV2rb+Tc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR10MB4426
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.11.62.513
- definitions=2022-01-10_07,2022-01-10_02,2021-12-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- mlxlogscore=769 mlxscore=0 phishscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 clxscore=1034 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2110150000 definitions=main-2201100124
-Subject: [oss-security] CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-20_03,2026-05-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 phishscore=0 spamscore=0 suspectscore=0 mlxlogscore=999
+ adultscore=0 lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2605130000 definitions=main-2605200174
+X-Authority-Analysis: v=2.4 cv=NdnWEWD4 c=1 sm=1 tr=0 ts=6a0df4ee b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=NGcC8JguVDcA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=7Gl3-_t3PgB9XO-mQDs3:22 a=D19gQVrFAAAA:8
+ a=VwQbUJbxAAAA:8 a=eI5uVRqxAAAA:8 a=yPCof4ZbAAAA:8 a=BuJBRcL3P6xBmdoRbEAA:9
+ a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10 a=W4TVW4IDbPiebHqcZpNg:22
+ a=PSDbVoDK6gDek-Yz-mDA:22 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
+ cc=ntf awl=host:12298
+X-Proofpoint-GUID: Mw8YIXv0TpJ1dx2XxfUHu0Suoq9wIGgs
+X-Proofpoint-ORIG-GUID: Mw8YIXv0TpJ1dx2XxfUHu0Suoq9wIGgs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTIwMDE3MyBTYWx0ZWRfXw9fw8DL/FR20
+ abRWdl+/cUej3eayzMyjhbYN6hErCdK+fUg+ifB031uUCQ4rBBtDBr4TXpUI/ixkub/usJH7L9L
+ +qMejCC0OovcF9N86owUuiLz5dXSTUQ3XQJRnsyi5R1zGHJqkvfc2ehMSUlbv7XsGAVru+JSCXO
+ PUCmvmM1IJvOUQ53P6HgmCPyBKBzd9NbAoXLOGFGISCse04XEeqITaYiS1pdYUX6xw3MHdbi4E6
+ fCGUnWbs/1KY4icpM+y4xXOvPbDXjzcI9Xw5Hh+W9Y0h7N/cgM3ohq5bHlPAy6nBxWnYn1CiYpv
+ RDo1EQt4+nWMHohGDDhq+arxiOOc5cEQHMi/v8k/6UC27b1/8HiNQXPLVhYl7Ra3C3FuGDCwXXK
+ 6Q9oaVf5AG4De6p3pvg5qQMNYf7PbRIrBiZjSt1df0iuVJTx0Lt271ijDYAXMJ+umUTl2qgSAR3
+ gG0sx+1E+ubJ5VpIV2hbRwYX2YZSpCH0w6zjMoX8=
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
 
-Hi all,
+On 4/28/26 07:58, Jeremy Stanley wrote:
+> I'm sorely tempted, both due to the increased volume and the risk of premature 
+> disclosure, to just assume that any vulnerability reported as a result of 
+> research using an LLM is trivially discoverable by others, and give up trying to 
+> pretend there's any point to working it under embargo. 
 
-We discovered a minor denial of service (an uncontrolled recursion) in
-systemd-tmpfiles, CVE-2021-3997; the Coordinated Release Date is today
-(January 10, 2022), and a patch is now available at (many thanks to
-Zbigniew Jedrzejewski-Szmek for working on this):
+Other maintainers under similar floods seem to agree:
 
-https://github.com/systemd/systemd/commit/55a89ea1b4088a6d84ba0bd3cd8e648bd=
-51f1ebf
+Linux kernel:
+  - https://lkml.org/lkml/2026/5/17/896
+  - https://docs.kernel.org/process/security-bugs.html
 
-Below is a short write-up (which is part of a longer advisory that is
-mostly unrelated to systemd and that we will publish at a later date):
+DNS servers (BIND, Unbound, PowerDNS):
+- https://indico.dns-oarc.net/event/56/contributions/1233/
+- https://indico.dns-oarc.net/event/56/contributions/1233/attachments/1180/2539/presentation.pdf
 
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-CVE-2021-3997: Uncontrolled recursion in systemd's systemd-tmpfiles
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-[...]
-
-We therefore looked into systemd-tmpfiles (which "creates, deletes, and
-cleans up volatile and temporary files and directories") and discovered
-a denial of service (an uncontrolled recursion): if we create thousands
-of nested directories in /tmp, then "systemd-tmpfiles --remove" (when
-executed as root at boot time) will call its rm_rf_children() function
-recursively (on each nested directory) and will exhaust its stack and
-crash. For example, on Ubuntu 21.04:
-
-------------------------------------------------------------------------
-$ cd /tmp
-$ perl -e 'use strict;
-for (my $i =3D 0; $i < (1<<15); $i++) {
-mkdir "A", 0700 or die;
-chdir "A" or die; }'
-------------------------------------------------------------------------
-
-Then, as root (warning: this command may delete important files and
-directories in /tmp; it is normally executed at boot time only):
-
-------------------------------------------------------------------------
-# systemd-tmpfiles --remove
-Segmentation fault (core dumped)
-------------------------------------------------------------------------
-
-We have not fully explored the implications of this vulnerability;
-however, we noticed that:
-
-- at boot time, systemd executes "systemd-tmpfiles --create --remove
-  --boot --exclude-prefix=3D/dev";
-
-- systemd-tmpfiles first enters the "remove" phase, and subsequently
-  enters the "create" phase;
-
-- but if systemd-tmpfiles crashes during the "remove" phase, then it
-  never enters the "create" phase;
-
-- and it fails to create the files and directories (specified in
-  /usr/lib/tmpfiles.d/*.conf) that it should create at boot time;
-
-- for example, on Ubuntu 21.04, systemd-tmpfiles fails to create the
-  directory /run/lock/subsys; but because /run/lock is world-writable,
-  attackers can create their own /run/lock/subsys; and because various
-  legacy packages and daemons write into /run/lock/subsys as root, the
-  attackers may create arbitrary files via symlinks in /run/lock/subsys.
-
-Last-minute note: it seems impossible to trigger this vulnerability in
-systemd-tmpfiles versions before commit e535840 ("tmpfiles: let's bump
-RLIMIT_NOFILE for tmpfiles") from February 2019.
-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-Thank you very much! We are at your disposal for questions, comments,
-and further discussions.
-
-With best regards,
-
---=20
-the Qualys Security Advisory team=
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@oracle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
