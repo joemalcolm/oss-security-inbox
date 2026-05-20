@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["707" "Tuesday" "26" "November" "2019" "08:53:20" "+0530" "Huzaifa Sidhpurwala" "huzaifas@redhat.com" nil "20" nil "^Date:" nil nil "11" nil nil (number mark "        huzaifas@red Nov 26   20/707   " thread-indent "\"[oss-security] grub2-set-bootflag utility causes grubenv corruption rendering the system un-bootable\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] grub2-set-bootflag utility causes grubenv corruption rendering the system un-bootable" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 25847 invoked by uid 550); 26 Nov 2019 03:23:39 -0000
+Received: (qmail 3503 invoked by uid 550); 20 May 2026 20:44:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,82 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 25829 invoked from network); 26 Nov 2019 03:23:38 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1574738607;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
-	bh=kQWFEkXaQNdb4qf18M+kdTsHEgsWIosGMlbv2PAwZCg=;
-	b=cAEx/pl+ace1uP3hCo6usFyY+BO+ZGP9RwQKXPsLh0p9XO68upmAMTguwDzDNaQudc170Y
-	+u/E9ZS/cruzCXX8DEZXkTC7CkW4wf8zmNsdZshLDn5WhmEA1tAHHOxP4JDFvsD2vvJdcn
-	vW4UEHTF19lhXS5k6hzk33yg1Hj0suo=
-Autocrypt: addr=huzaifas@redhat.com; keydata=
- mQGiBETun5sRBACOCWbRM5KLDngL46w371lRBMCCmBRpzQHXuxllk1dbku3GYQu5ApCYVvck
- 45GWqFAYqWVjXGjEOnATxg693FI3Mw8tv8E9JED1OMbyaI4bhUxP1H7Ia89BOEFHjHKR7VPY
- S9tSwvTr2AkjK1j+CrMcWmV2rL4KooRk/ykB/4joJwCgnoMEbrNCrnSIiZNGxS7Okxgknb8D
- /AxkMwysc39T68fp0AOAr4wNrwWzgBPqjyF0As5n9ewZie9Z+uqqGCnjn9XgMmMNkL1DsXXs
- 4dJXaFrAdlcArtWaiQX/d2nZaZj8kw9D7ADudBTA0YzAnVQGk4wf2zL9WT/YwYhV3Sb1TERa
- H6g4gg8b+KwsbmhJSrqsg06mWR3eA/9j86ollyU31Fq/qIjsbHR+tSManlv57wGiH9luburk
- bUSFgLo9t2h6bHZ4sTQyt6aJcxXzon2IuiTYVpDrnoAfYfvFvzSae0BPG7nP8moAL7X1nnW0
- xP8+ZATAqwds75yAQMpGRXuOntFl5ZL1xmzzeDS5aUfMg3gC9M0jIWK3zbQsSHV6YWlmYSBT
- LiBTaWRocHVyd2FsYSA8aHV6YWlmYXNAcmVkaGF0LmNvbT6IXgQTEQIAHgUCRO6fmwIbAwYL
- CQgHAwIDFQIDAxYCAQIeAQIXgAAKCRDMcNzy2lva5e+DAJ4hG6WLhJfmJ27UOKZLPRi3gVNx
- owCeP5f7Cp5aU4DXyK3X81poNLIW2i25AQ0ERO6fnRAEALle4LaG+djyt8slfQbwAPf06dgz
- bC6o1TcPg/ZRSE8TSE6d1fRkLSLJJZSW9gGpl5fphNYUSzarFKP4xLRol/fZCY4tupcAv+Vm
- jfzaLqdIiy+G6ei1UpQTP6uRHxLdtXmMmg6kWds0ZavEU2+y18HzAczCCPBQN30dd/1/5jUn
- AAMFBACOEdEjzZIQmK6ciB6TymIcD8nf6Jn0zz6+DjxrtdEnP7V/zyZgv/tD1GdneOBaGJTL
- FTqT5vNSsmMTtQ03tjg/e4+P1MX8YcbhObj186Js47moYoeWgfAGZlFd6mNl/aSITVSHsooF
- zVi9Xs6zKZNWsY2LcENMnE/xM7Qdpi5ChIhJBBgRAgAJBQJE7p+dAhsMAAoJEMxw3PLaW9rl
- XKEAnjySXTUlGFzWQ9BiLx5Fo91JziLYAJ4lQdBofA+Gf1Vewb/61ilmdq4Qqg==
-Message-ID: <3ed3a6cd-088e-c164-4b1e-53753d79960b@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
-MIME-Version: 1.0
-Content-Language: en-US
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-MC-Unique: S-G8NbSAPC6DH_Trh9_XPQ-1
-X-Mimecast-Spam-Score: 0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Date: Tue, 26 Nov 2019 08:53:20 +0530
-From: Huzaifa Sidhpurwala <huzaifas@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] grub2-set-bootflag utility causes grubenv corruption rendering the
- system un-bootable
+x-ms-reactions: disallow
+Received: (qmail 1079 invoked from network); 20 May 2026 19:18:53 -0000
+Message-ID: <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>
+Date: Wed, 20 May 2026 21:18:43 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Gabriel Corona <gabriel.corona@free.fr>
 To: oss-security@lists.openwall.com
+References: <20260518220116.170677b2@riseup.net>
+ <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
+ <20260519193042.3feb8374@gmail.com>
+ <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
+ <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
+Content-Language: fr, en-US
+In-Reply-To: <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------PaJkq7HwRbTbjhQtgRpiH9th"
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
 
-Hello All,
+--------------PaJkq7HwRbTbjhQtgRpiH9th
+Content-Type: multipart/mixed; boundary="------------8dQB5gaZtju2xme8wdyzm0Ug";
+ protected-headers="v1"
+From: Gabriel Corona <gabriel.corona@free.fr>
+To: oss-security@lists.openwall.com
+Message-ID: <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>
+Subject: Re: [oss-security] On the issue of MIME handlers that execute
+ arbitrary code (e.g. Wine)
+References: <20260518220116.170677b2@riseup.net>
+ <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
+ <20260519193042.3feb8374@gmail.com>
+ <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
+ <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
+In-Reply-To: <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
 
-Tavis Ormandy reported a flaw in grub2-set-bootflag utility of grub2.
+--------------8dQB5gaZtju2xme8wdyzm0Ug
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-grub-set-bootflag is a command line to set bootflags in GRUB's stored
-environment. This is a downstream utility which is shipped with Red Hat
-Enterprise Linux 8 and Fedora. A flaw was found in this application
-which would could allow a local attacker (someone having a local account
-on the system) to cause grub configuration files to be truncated.
-Whenever the machine was rebooted, grub would fail to read the
-configuration files and the system would be rendered unbootable.
+PiBTYW5kYm94ZXMgc2hvdWxkIG9ubHkgYWxsb3cgYWxsb3dsaXN0IG9mIGZpbGUgdHlwZXMgYW5k
+IG1ha2UgZXZlcnl0aGluZw0KPiBlbHNlIGZhbGwgYmFjayB0byBhIHNhZmUgZGVmYXVsdC4gIFRo
+aXMgY291bGQgYmUgYSBzaW1wbGUgdGV4dCBlZGl0b3INCj4gKG5vIElERSBzdXBwb3J0ISkgZm9y
+IHRleHQgZmlsZXMsIGFuZCBhIGhleCBlZGl0b3IgKG9yIGFuIGVycm9yKSBmb3INCj4gYmluYXJ5
+IGZpbGVzLg0KDQpUaGF0IHNvdW5kcyBleHRyZW1lbHkgaW5jb252ZW5pZW50LiBSdW5uaW5nIGFu
+IGVtYWlsIGNsaWVudCBpbiBhIA0Kc2FuZGJveD8gSXQgY2FuJ3Qgb3BlbiBhIFBERiBvciBhIEpQ
+RUcgKG9yIHdvcnNlLCB5b3UnbGwgZ2V0IGFuIA0KaGV4LWVkaXRvcikgLi4uDQoNCklmIHRoZSBz
+YW5kYm94ZWQgYXBwbGljYXRpb24gaXMgYmFkbHkgaW50ZWdyYXRlZCBhbmQgY2FuJ3Qgb3BlbiBm
+aWxlcyANCmFuZCBVUklzLCB0aGUgdXNlciAobWUgaW5jbHVkZWQpIHdpbGwgcHJlZmVyIHVzaW5n
+IHRoZSBub24tc2FuZGJveGVkIA0KdmVyc2lvbiBpbiBvcmRlciB0byBnZXQgdGhpbmdzIGRvbmUg
+KG9yIHdpbGwgcHJlZmVyIHVzaW5nIGEgbW9yZSANCnVzZXItZnJpZW5kbHkgT1MpLiBUaGlzIHdv
+dWxkIGRlZmVhdCB0aGUgcHVycG9zZSBvZiBoYXZpbmcgc2FuZGJveGVkIA0KYXBwbGljYXRpb25z
+Lg0KDQpHYWJyaWVsDQo=
 
-More details and patches available in:
-https://bugzilla.redhat.com/show_bug.cgi?id=1764925
+--------------8dQB5gaZtju2xme8wdyzm0Ug--
 
+--------------PaJkq7HwRbTbjhQtgRpiH9th
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
--- 
-Huzaifa Sidhpurwala / Red Hat Product Security
+wsF5BAABCAAjFiEEleStherPvjH3F2XUIWPS9KpGc+gFAmoOCRQFAwAAAAAACgkQIWPS9KpGc+jp
+kw//cGqtGGxfyCTkMPoLwMT+W/At02Ds7CO+fD3At1ZmVgwzpUbxE/VGfxh+g51Pl1JMdagWJyji
+wLvRMamE54x8JkikPuesfop2zbCsb6PEdhbZi74qlBgEVm1HxhGWiR4+PBFbLj73iw+haS/HMH0F
+Zf9GJjPxNLc/uyj+MlmzwqUjpcU9JkjDsIO7WmNac/8gMcWY2qOrtEr0k5nI0kx2bcyNkteZqiYy
+a7OCc9mAy5qZwaJCeBIcHxo4+0ihksD4kUbOYDKaRcMUocT59CkFPZRDeSkIjNj4GOeCZPbLaNqG
+7VWusPYKW73X27rsokCjuR8GHtCDSDKSsXOFqCEBM176P+oS1i2fm130UqCzctVv7Ok3Zg5kqvdf
+GjBIBw9vMABsjcktPpAHxTVmUZ6ktIiy+Ltoq2fvy9NNmJ7RI99LurXxJeBT7MX2qY0N5c1yZbdR
+bfdbtmXBLclgHBxjo2ILoqmxKkGth6CX8TZi/76KZ/LELk/VhJuLi9beGGzAQNG7a+IZeYkFjO4Y
+f9YCgXj1OdClShX0T2sfuS2viFtd1Ze1fgBaoSqfeX2Tbs9N9iwOgHzeFjEetInTbP6fXZZW22tf
+aFkM+Y0wA9dl99ml+DHj1fP0PdOP/IShYdw05Xm3x8Vhf5SDYmIwKW4PlVpFis+mRhPNHOW3YX6b
+SIs=
+=gtBG
+-----END PGP SIGNATURE-----
 
+--------------PaJkq7HwRbTbjhQtgRpiH9th--
