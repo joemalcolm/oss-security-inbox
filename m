@@ -1,4 +1,4 @@
-Received: (qmail 11631 invoked by uid 550); 13 Oct 2025 22:46:42 -0000
+Received: (qmail 32348 invoked by uid 550); 20 May 2026 10:44:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,67 +8,46 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 9350 invoked from network); 13 Oct 2025 19:45:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Type:MIME-Version:References:Subject:Cc:To:From:
-	Message-ID:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=qIlLW7Gca8JisnDHeWvPPFs7j21Au0wrJe9/UP8KxuI=; b=KKiiJ3F3HgppsF57ktWO0pXCGA
-	RMst+XuAK4zq1xR2jDl+ttEjHUO1kengR5e+bCQ9jW5JFDrOZTIoxdqw6+ZbGm1eA96ttJlWjVoGW
-	Pvk6FTuLfm+oRtb5qah7W+JObf3lLKxCyLir762NZGqAWwn5z1KSsYyPIfkNY6vx0X+fT4e7iWQH5
-	9YmJU52NYqpAzzUWarSKjo+lk36OasGxzG1h9jdbnGy0s3Zjc6wmv1G4kNOVZkzUck2nooqKB1pve
-	/7pg7vXiCPIhg09dULx9kaafEdE7ZE8RVfDB9ZWrAMVi16UCxfGj26uLVY3MmiLr6wsVYYqaLB681
-	E4984hsw==;
-Date: Mon, 13 Oct 2025 22:45:13 +0300
-Message-ID: <20251013224513.GG1422726@igalia.com>
-From: Adrian Perez de Castro <aperez@igalia.com>
-To: webkit-gtk@lists.webkit.org, webkit-wpe@lists.webkit.org
-Cc: security@webkit.org, oss-security@lists.openwall.com
-References:
+Received: (qmail 20292 invoked from network); 20 May 2026 10:41:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1779273683;
+	bh=4boj2m/7RoqbCLbBvARVZZ2UAjxtlQGMY5kEkL+cTGU=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=pXsS36JlNdr8Y2YE7Un0YXYF02vEU0x/l+OdL1q6puY5f7rQV3wVWB88QsOHRLaIi
+	 CENxJpzRU8USWY+5STfceSlUE87PiR0JdlnQ/JiiSSKbGHInfVlgatN3QihpubjnaB
+	 d1cWhxgiKrQaDxKY//8UsINXibtCzJBw1CSaOycFr130XVrY01Xc4puRIZe6rap5qN
+	 lM5xlhV7XMnhTSdRcsh0SitPKwtLLwDxRJkyJnS18lfjwlMLpKAgOE+HbKmO68f0TC
+	 5xcbcmiMMQwZ5vJ/glrWj68C3NND+WKcQS/Q+O+Kz3/BAFn037Ww8dvX0IJ8m3U/oh
+	 lzXj1L8p4lZbg==
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="8lJlc/WuDxLtgrVd"; micalg="pgp-sha256"; protocol="application/pgp-signature"
-Subject: [oss-security] WebKitGTK and WPE WebKit Security Advisory WSA-2025-0007
+Date: Wed, 20 May 2026 12:41:23 +0200
+From: gabriel.corona@free.fr
+To: oss-security@lists.openwall.com
+In-Reply-To: <20260519203345.01f21f23@riseup.net>
+References: <20260519203345.01f21f23@riseup.net>
+User-Agent: Webmail Free/1.6.14
+Message-ID: <d6b157bf500fefea7bafa7a0c0f00c6e@free.fr>
+X-Sender: gabriel.corona@free.fr
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] PCManFM-Qt allows arbitrary files to be opened via
+ the org.freedesktop.FileManager1.ShowFolders method
 
---8lJlc/WuDxLtgrVd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: base64
+> Checking whether a path is a file or
+> directory can block I/O under special circumstances; so, it isn't an
+> option in this case."
 
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tCldlYktpdEdUSyBhbmQgV1BFIFdlYktpdCBTZWN1cml0eSBBZHZpc29y
-eSAgICAgICAgICAgICAgICAgV1NBLTIwMjUtMDAwNwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCkRhdGUgcmVw
-b3J0ZWQgICAgICAgICAgIDogT2N0b2JlciAxMywgMjAyNQpBZHZpc29yeSBJRCAgICAgICAgICAg
-ICA6IFdTQS0yMDI1LTAwMDcKV2ViS2l0R1RLIEFkdmlzb3J5IFVSTCAgOiBodHRwczovL3dlYmtp
-dGd0ay5vcmcvc2VjdXJpdHkvV1NBLTIwMjUtMDAwNy5odG1sCldQRSBXZWJLaXQgQWR2aXNvcnkg
-VVJMIDogaHR0cHM6Ly93cGV3ZWJraXQub3JnL3NlY3VyaXR5L1dTQS0yMDI1LTAwMDcuaHRtbApD
-VkUgaWRlbnRpZmllcnMgICAgICAgICA6IENWRS0yMDI1LTQzMzQzLgoKU2V2ZXJhbCB2dWxuZXJh
-YmlsaXRpZXMgd2VyZSBkaXNjb3ZlcmVkIGluIFdlYktpdEdUSyBhbmQgV1BFIFdlYktpdC4KCkNW
-RS0yMDI1LTQzMzQzCiAgICBWZXJzaW9ucyBhZmZlY3RlZDogV2ViS2l0R1RLIGFuZCBXUEUgV2Vi
-S2l0IGJlZm9yZSAyLjUwLjEuCiAgICBDcmVkaXQgdG8gYW4gYW5vbnltb3VzIHJlc2VhcmNoZXIu
-CiAgICBJbXBhY3Q6IFByb2Nlc3NpbmcgbWFsaWNpb3VzbHkgY3JhZnRlZCB3ZWIgY29udGVudCBt
-YXkgbGVhZCB0byBhbgogICAgdW5leHBlY3RlZCBwcm9jZXNzIGNyYXNoLiBEZXNjcmlwdGlvbjog
-VGhlIGlzc3VlIHdhcyBhZGRyZXNzZWQgd2l0aAogICAgaW1wcm92ZWQgbWVtb3J5IGhhbmRsaW5n
-LgogICAgV2ViS2l0IEJ1Z3ppbGxhOiAyOTY0OTAKCldlIHJlY29tbWVuZCB1cGRhdGluZyB0byB0
-aGUgbGF0ZXN0IHN0YWJsZSB2ZXJzaW9ucyBvZiBXZWJLaXRHVEsgYW5kIFdQRQpXZWJLaXQuIEl0
-IGlzIHRoZSBiZXN0IHdheSB0byBlbnN1cmUgdGhhdCB5b3UgYXJlIHJ1bm5pbmcgc2FmZSB2ZXJz
-aW9ucwpvZiBXZWJLaXQuIFBsZWFzZSBjaGVjayBvdXIgd2Vic2l0ZXMgZm9yIGluZm9ybWF0aW9u
-IGFib3V0IHRoZSBsYXRlc3QKc3RhYmxlIHJlbGVhc2VzLgoKRnVydGhlciBpbmZvcm1hdGlvbiBh
-Ym91dCBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgc2VjdXJpdHkgYWR2aXNvcmllcwpjYW4gYmUg
-Zm91bmQgYXQ6IGh0dHBzOi8vd2Via2l0Z3RrLm9yZy9zZWN1cml0eS5odG1sIG9yCmh0dHBzOi8v
-d3Bld2Via2l0Lm9yZy9zZWN1cml0eS4KClRoZSBXZWJLaXRHVEsgYW5kIFdQRSBXZWJLaXQgdGVh
-bSwK
+I am not sure I am following that argument …
 
---8lJlc/WuDxLtgrVd
-Content-Type: application/pgp-signature; name="signature.asc"
+When I am calling "$file-manager $some-path", I should be expecting to 
+actually
+open up a file manager not something else which happens to actually 
+handle the file.
+The file manager should not try to delegate to another program at all.
 
------BEGIN PGP SIGNATURE-----
+If we want the "automagically call the correct program" functionality,
+we can use xdg-open / kde-open / dde-open / gnome-open / exo-open /
+org.freedesktop.portal.OpenURI.OpenFile.
 
-iF0EABEIAB0WIQRao7wzT9fjNp58d7KRxVnb5MkSOwUCaO1WyQAKCRCRxVnb5MkS
-O/ANAJ9g14gWwGBFA5rEgu310kbVljElcgCeJQU7f/dgSVKonhn7XpUyWa0tYMc=
-=K7tv
------END PGP SIGNATURE-----
-
---8lJlc/WuDxLtgrVd--
+Gabriel
