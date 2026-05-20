@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3874" "Wednesday" "3" "May" "2017" "01:36:03" "+0200" "Solar Designer" "solar@openwall.com" "<20170502233603.GA16882@openwall.com>" "83" "Re: [oss-security] terminal emulators' processing of escape sequences" "^Date:" nil nil "5" "2017050223:36:03" "[oss-security] terminal emulators' processing of escape sequences" (number mark "        solar@openwa May  3   83/3874  " thread-indent "\"Re: [oss-security] terminal emulators' processing of escape sequences\"\n") "<20170501164428.GA12322@openwall.com>" ("<20170501164428.GA12322@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 24223 invoked by uid 550); 2 May 2017 23:37:11 -0000
+Received: (qmail 26531 invoked by uid 550); 20 May 2026 09:17:52 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,100 +6,189 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23621 invoked from network); 2 May 2017 23:36:28 -0000
-Message-ID: <20170502233603.GA16882@openwall.com>
-References: <20170501164428.GA12322@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170501164428.GA12322@openwall.com>
-User-Agent: Mutt/1.4.2.3i
-Date: Wed, 3 May 2017 01:36:03 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] terminal emulators' processing of escape sequences
+x-ms-reactions: disallow
+Received: (qmail 5372 invoked from network); 20 May 2026 09:12:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nlnetlabs.nl;
+	s=MBO0001; t=1779268343;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	to:to:cc:mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
+	bh=WCVtTvZETl3UT9cJpprFOkSBhEkFGozkfpItQFPCUho=;
+	b=I3Job8slUsZXESXhvSI5oEkiAmdBTHi3eYce3Rn3l6F6UVUjvELaHEPnRIIyfnY2SZcTrx
+	FxVn32INe7Ors9hy1UKlq3Wg/LK7AgPY9k9Hff36GMDIz6P5kyMdFvcPbpKng3ivc+VC3r
+	H2eAWgDyz2k80C5ZUpFI//1vEj2RwmMbuBgf3bpappTqFA387pfhBJhRIWFBWuzVULC7iv
+	eS9sf0kwXRboaeSfq5OPlL/cANteQu84cpVx7DnrYqrZ0qwnjibcEVd2ejfDs29tRMIm02
+	QV4FJfSiG4JeS2msulRitf6LlekNLqPG9uhoTTVTf3IYHOovQhixPRFxUO4x/g==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of yorgos@nlnetlabs.nl designates 2001:67c:2050:b231:465::102 as permitted sender) smtp.mailfrom=yorgos@nlnetlabs.nl
+Message-ID: <8f54757e-7899-4f71-bd93-358b9ef1b24e@nlnetlabs.nl>
+Date: Wed, 20 May 2026 11:12:16 +0200
+MIME-Version: 1.0
+Content-Language: en-GB
+From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
+Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
+ 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
+ S/sVF2vr7MhLmA==
+To: oss-security@lists.openwall.com
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------lAKZMD5ipXWDzSO0SNNFbAEg"
+Subject: [oss-security] Unbound: 1.25.1 addresses multiple CVE items
+
+--------------lAKZMD5ipXWDzSO0SNNFbAEg
+Content-Type: multipart/mixed; boundary="------------ECXtw2uGEZ0L2nxBmAcBvyQs";
+ protected-headers="v1"
+Message-ID: <8f54757e-7899-4f71-bd93-358b9ef1b24e@nlnetlabs.nl>
+Date: Wed, 20 May 2026 11:12:16 +0200
+MIME-Version: 1.0
+Content-Language: en-GB
+From: Yorgos Thessalonikefs <yorgos@nlnetlabs.nl>
+Subject: Unbound: 1.25.1 addresses multiple CVE items
+Autocrypt: addr=yorgos@nlnetlabs.nl; keydata=
+ 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
+ S/sVF2vr7MhLmA==
 To: oss-security@lists.openwall.com
 
-On Mon, May 01, 2017 at 06:44:28PM +0200, Solar Designer wrote:
-> It is a well-known feature, previously discussed in here, that data
-> printed to a terminal (emulator) may control that terminal, including
-> making it effectively unusable until reset, and in some cases even
-> pasting characters as if they were typed by the user.  Also as discussed
-> what characters may be pasted varies by terminal - sometimes they can be
-> arbitrary (e.g., if the terminal supports macro recording and playback
-> via escape sequences) and sometimes not so (like a terminal reporting
-> back its status, usually not followed by a linefeed, so not yet
-> executing a shell command until further user assistance).  Here are some
-> relevant threads:
-> 
-> http://www.openwall.com/lists/oss-security/2015/08/11/8
-> http://www.openwall.com/lists/oss-security/2015/09/17/5
-> http://www.openwall.com/lists/oss-security/2016/11/04/12
-> 
-> (I link to messages that started these threads, not necessarily to most
-> informative messages in the threads.  So you might want to go through
-> the threads with the "thread-next" links.)
+--------------ECXtw2uGEZ0L2nxBmAcBvyQs
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Adding to the above older sub-topic of (mis)features rather than bugs,
-here's a particularly relevant one, quoting excerpts from:
+SGkgdGhlcmUsDQoNCihUaGUgb2ZmaWNpYWwgYW5ub3VuY2VtZW50IGNhbiBiZSBmb3VuZCBhdDoN
+Cmh0dHBzOi8vbmxuZXRsYWJzLm5sL25ld3MvMjAyNi9NYXkvMjAvdW5ib3VuZC0xLjI1LjEtcmVs
+ZWFzZWQvKQ0KDQpTZXZlcmFsIHZ1bG5lcmFiaWxpdGllcyB3ZXJlIGZvdW5kIGluIFVuYm91bmQu
+DQoNCldlIGFyZSByZWxlYXNpbmcgMS4yNS4xIGFzIGEgc2VjdXJpdHkgcmVsZWFzZSBvbiBNYXkg
+MjAgaW5jbHVkaW5nIHRoZSANCnJlbGV2YW50IGZpeGVzLg0KDQpUaGUgb3ZlcnZpZXcgb2YgdGhl
+IHZ1bG5lcmFiaWxpdGllcyB3aXRoIGEgYnJpZWYgZGVzY3JpcHRpb24gaXM6DQoNCkNWRS0yMDI2
+LTMzMjc4IC0gc2V2ZXJpdHk6IENSSVRJQ0FMDQpQb3NzaWJsZSByZW1vdGUgY29kZSBleGVjdXRp
+b24gZHVyaW5nIEROU1NFQyB2YWxpZGF0aW9uDQoNCkNWRS0yMDI2LTQyOTQ0IC0gc2V2ZXJpdHk6
+IEhJR0gNCkhlYXAgb3ZlcmZsb3cgYW5kIGNyYXNoIHdpdGggbXVsdGlwbGUgbnNpZCwgY29va2ll
+LCBwYWRkaW5nIEVETlMgb3B0aW9ucw0KDQpDVkUtMjAyNi00Mjk1OSAtIHNldmVyaXR5OiBISUdI
+DQpDcmFzaCBkdXJpbmcgRE5TU0VDIHZhbGlkYXRpb24gb2YgbWFsaWNpb3VzIGNvbnRlbnQNCg0K
+Q1ZFLTIwMjYtMzI3OTIgLSBzZXZlcml0eTogTUVESVVNDQpQYWNrZXQgb2YgZGVhdGggd2l0aCBE
+TlNDcnlwdCAoZmVhc2liaWxpdHkgdmVyeSBsb3cpDQoNCkNWRS0yMDI2LTQwNjIyIC0gc2V2ZXJp
+dHk6IE1FRElVTQ0KIkdob3N0IGRvbWFpbiBuYW1lIiB2YXJpYW50DQoNCkNWRS0yMDI2LTQxMjky
+IC0gc2V2ZXJpdHk6IE1FRElVTQ0KUGFyc2luZyBhIGxvbmcgbGlzdCBvZiBpbmNvbWluZyBFRE5T
+IG9wdGlvbnMgZGVncmFkZXMgcGVyZm9ybWFuY2UNCg0KQ1ZFLTIwMjYtNDI1MzQgLSBzZXZlcml0
+eTogTUVESVVNDQpKb3N0bGUgbG9naWMgYnlwYXNzIGRlZ3JhZGVzIHJlc29sdXRpb24gcGVyZm9y
+bWFuY2UNCg0KQ1ZFLTIwMjYtNDI5MjMgLSBzZXZlcml0eTogTUVESVVNDQpEZWdyYWRhdGlvbiBv
+ZiBzZXJ2aWNlIHdpdGggdW5ib3VuZGVkIE5TRUMzIGhhc2ggY2FsY3VsYXRpb25zDQoNCkNWRS0y
+MDI2LTQyOTYwIC0gc2V2ZXJpdHk6IE1FRElVTQ0KUG9zc2libGUgY2FjaGUgcG9pc29uaW5nIGF0
+dGFjayB3aGlsZSBmb2xsb3dpbmcgZGVsZWdhdGlvbg0KDQpDVkUtMjAyNi00NDM5MCAtIHNldmVy
+aXR5OiBNRURJVU0NClVuYm91bmRlZCBuYW1lIGNvbXByZXNzaW9uIGluIGNlcnRhaW4gY2FzZXMg
+Y2F1c2VzIGRlZ3JhZGF0aW9uIG9mIHNlcnZpY2UNCg0KQ1ZFLTIwMjYtNDQ2MDggLSBzZXZlcml0
+eTogTUVESVVNDQpVc2UgYWZ0ZXIgZnJlZSBhbmQgY3Jhc2ggaW4gUlBaIGNvZGUgKHNwZWNpYWwg
+cmVxdWlyZW1lbnRzIGFwcGx5KQ0KDQoNCk1vcmUgaW5mb3JtYXRpb24gYWJvdXQgdGhlIHZ1bG5l
+cmFiaWxpdGllcyBjYW4gYmUgZm91bmQgYXQ6DQpodHRwczovL25sbmV0bGFicy5ubC9wcm9qZWN0
+cy91bmJvdW5kL3NlY3VyaXR5LWFkdmlzb3JpZXMvDQoNCg0KQmVzdCByZWdhcmRzLA0KLS0gWW9y
+Z29zLCBvbiBiZWhhbGYgb2YgdGhlIFVuYm91bmQgdGVhbS4NCg0KDQoqKiBUaGlzIGVtYWlsIGlz
+IHNpZ25lZC4gS2V5cyBvZiB0aGUgTkxuZXQgTGFicyBwZW9wbGUgYXJlIHB1Ymxpc2hlZCBvbg0K
+aHR0cHM6Ly93d3cubmxuZXRsYWJzLm5sL3Blb3BsZS8gKioNCg==
 
-http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+--------------ECXtw2uGEZ0L2nxBmAcBvyQs--
 
-| Operating System Commands
-| 
-| OSC Ps ; Pt BEL
-| OSC Ps ; Pt ST
-[...]
-| 
-|             Ps = 5 2  -> Manipulate Selection Data.  These controls may
-|           be disabled using the allowWindowOps resource.  The parameter
-|           Pt is parsed as
-|                Pc; Pd
-|           The first, Pc, may contain zero or more characters from the
-|           set c  p  s  0  1  2  3  4  5  6  7 .  It is used to construct
-|           a list of selection parameters for clipboard, primary, select,
-|           or cut buffers 0 through 7 respectively, in the order given.
-|           If the parameter is empty, xterm uses s 0 , to specify the
-|           configurable primary/clipboard selection and cut buffer 0.
-|           The second parameter, Pd, gives the selection data.  Normally
-|           this is a string encoded in base64.  The data becomes the new
-|           selection, which is then available for pasting by other appli-
-|           cations.
-|           If the second parameter is a ? , xterm replies to the host
-|           with the selection data encoded using the same protocol.
-|           If the second parameter is neither a base64 string nor ? ,
-|           then the selection is cleared.
+--------------lAKZMD5ipXWDzSO0SNNFbAEg
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-The potential for use in attacks is mitigated by the fact that the reply
-triggered by setting the second parameter to ? is "encoded using the
-same protocol", so its string portion is in base64 and thus in its
-encoded form won't contain a linefeed.  However, altering X clipboard's
-content is nevertheless nasty and perhaps unexpected by a user.  If the
-user pastes the clipboard into a terminal, perhaps thinking there's
-still an intended command they had saved in there before, the replaced
-content's embedded linefeed(s) will be pasted as such, thereby
-immediately executing the attacker's command(s).
+-----BEGIN PGP SIGNATURE-----
 
-The feature is in fact present and working in xterm when allowWindowOps
-is enabled (even though the clipboard isn't specific to one "window"),
-and is non-working when it's disabled.  (I've just tested.)
+iQIzBAEBCgAdFiEElI60IyLF0At5NA9dz/M0TZCHpJAFAmoNevAACgkQz/M0TZCH
+pJAZ3RAAnD61roTzu3qb6VzTyCPFLSp4NQmqgqfUFNy+4gqYXojYv9/Ctke1UikS
+Ao3fOJciooGst5gumRQGQ8vt7/xhG6qFQ76WhnQxNdQY6jKcj2sjPJcRJ+JQNiVa
+J9uxauEk9tuqT91dyqCVW92MiqmzPtWdKZynS1Hc6HzW/SJjaqAyMAgXvTnKmjvo
+OpfdTK2C8gzKLYPBEfpqyKEtnLRzaT31VMJjztE5NBDdvaqGChW4mk9GQ3Edq+Qd
+yaEFwy9buZLSpS26I9ylEl4RZaWglzrRiViyBMJY6Cejj737ABmHrQhJCNmrJBWG
+yqZR7aeBOMA2Zad7H9OGwrAHH/4xYgqLErE0FvEuvwp/O8dxbOwG8TWMstQVFPbq
+ebb1I58fQLvlOc6L/ZKa50fL2qXm1gy6US90XPZtuD1Eu+AB4gi302A+tH5pMnIk
+6L1noDxWFfwCJk6Tyv/W+3Z7zQHBnYCXf+z2EhzEgW62SOwHlnn3vGuMGtUw7at9
+qnggiNTAWDY6fqCuxxtHiApMToZHz69zefIOhm3Z/BWUnm/Uy64mLfopbY8Gy/W/
+eSIkNzsPvIOC7HcRkbumrqd+Xvi00zRCIJzv0YO68EoyaNIz3NpRDbUibM5f+Euq
+v8fL/UuwVf/MMrx6ryMSvM6g8pzU9VANFluI8VIyn48Oh1QLtqI=
+=rqLt
+-----END PGP SIGNATURE-----
 
-[user@host ~]$ echo -e '\x1b]52;;dGVzdAo=\x1b\\'
-
-[user@host ~]$ echo -e '\x1b]52;;?\x1b\\'
-
-^[]52;s0;dGVzdAo=^[\[user@host ~]$ 52;s0;dGVzdAo=
-
-Per a quick search, it appears to also be present in mintty:
-
-https://github.com/mintty/mintty/issues/258
-
-and iTerm2:
-
-https://gist.github.com/saitoha/3326112
-https://github.com/gnachman/iTerm2/blob/37c293e2adbec0be49bdca93440665bb98e0d18d/sources/VT100XtermParser.m#L208
-https://github.com/gnachman/iTerm2/blob/d5c23f1f207ffd0723599be66fb7da6ccea59ce4/sources/VT100Terminal.m#L1679
-
-and perhaps elsewhere.
-
-Alexander
+--------------lAKZMD5ipXWDzSO0SNNFbAEg--
