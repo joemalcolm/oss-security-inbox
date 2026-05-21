@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3728" "Friday" "27" "January" "2017" "23:49:09" "+0100" "Kristian Fiskerstrand" "k_f@gentoo.org" "<d5fa87a7-b2b0-a8f5-35d6-61b82a1bb9da@gentoo.org>" "91" "[oss-security] Re: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example." nil nil nil "1" "2017012722:49:09" "[oss-security] Re: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example." (number mark "U       k_f@gentoo.o Jan 27   91/3728  " thread-indent "\"[oss-security] Re: Gentoo: order of installed packages may result in vary directories permissions, leading to crontab not requiring cron group membership as example.\"\n") "<8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>" ("<8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 23591 invoked by uid 550); 28 Jan 2017 12:14:29 -0000
+Received: (qmail 24452 invoked by uid 550); 21 May 2026 09:57:13 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,113 +7,60 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26255 invoked from network); 27 Jan 2017 22:49:31 -0000
-References: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
-To: KARBOWSKI Piotr <piotr.karbowski@gmail.com>,
- oss-security@lists.openwall.com
-Cc: security-audit@gentoo.org
-From: Kristian Fiskerstrand <k_f@gentoo.org>
-Message-ID: <d5fa87a7-b2b0-a8f5-35d6-61b82a1bb9da@gentoo.org>
-Date: Fri, 27 Jan 2017 23:49:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.6.0
+x-ms-reactions: disallow
+Received: (qmail 24413 invoked from network); 21 May 2026 09:57:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=jDjd2BdChqdSu0eYUFw4Ol5hx21xE3vX0qq6cOyqEd0=; b=SyfxhnoGYGBiDI1lfThflnasuf
+	pRBng5cHKdnNReZ0q1eujWkhAjYwOgEvwBPcDizlaKrDja5bxxuyUPYZG9hatawwkSzW/4xKeBl3E
+	72k9bszvuwbHl0aUmIeIrZTdmjwYMGJ1WoPlEFHDVME2ARei+lBEHJp0cvFSdqcyGKqiNpFXEN+mK
+	Kk8DdGoiSDn4e8XxswYFjks91M1gkm0vko7sKD3eg1QxkY8/QqlRZa4tJrSiyZJreELvmp7RLdHuu
+	+RGokf5Pucy6nYRXEdYVTJhZ8KtT85VuCT05ahl7u60wY634zIuTTNGuSNnZ/sWoYnB4LlDY/RQD0
+	fN55d8kA==;
+Date: Thu, 21 May 2026 10:57:02 +0100
+From: Simon McVittie <smcv@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ag7W7lM6oChmhYcT@definition.pseudorandom.co.uk>
+References: <20260515022033.GA10889@localhost.localdomain>
+ <20260520154548.GB1738@localhost.localdomain>
 MIME-Version: 1.0
-In-Reply-To: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="LNK6WmVSwjgnFQJrsmkhUTa02EfN3sJHQ"
-Subject: [oss-security] Re: Gentoo: order of installed packages may result in vary
- directories permissions, leading to crontab not requiring cron group
- membership as example.
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260520154548.GB1738@localhost.localdomain>
+X-Debian-User: smcv
+Subject: Re: [oss-security] Re: Logic bug in the Linux kernel's
+ __ptrace_may_access() function
 
---LNK6WmVSwjgnFQJrsmkhUTa02EfN3sJHQ
-Content-Type: multipart/mixed; boundary="auINaRNt7RIugEqQusf7a91oHMjOPxI6e"
-From: Kristian Fiskerstrand <k_f@gentoo.org>
-Reply-To: k_f@gentoo.org
-To: KARBOWSKI Piotr <piotr.karbowski@gmail.com>,
- oss-security@lists.openwall.com
-Cc: security-audit@gentoo.org
-Message-ID: <d5fa87a7-b2b0-a8f5-35d6-61b82a1bb9da@gentoo.org>
-Subject: Re: Gentoo: order of installed packages may result in vary
- directories permissions, leading to crontab not requiring cron group
- membership as example.
-References: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
-In-Reply-To: <8bd5339f-080c-310d-9a68-3f91f725b3f7@gmail.com>
+On Wed, 20 May 2026 at 15:46:05 +0000, Qualys Security Advisory wrote:
+>In the following proof of concept, we (attackers) log in to the target
+>computer as the user jane, remotely via sshd, while the real user jane
+>is physically sitting at the computer (tty1)
 
---auINaRNt7RIugEqQusf7a91oHMjOPxI6e
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Note that if you can do this on a typical desktop-class system, then any 
+security framework where jane is trusted has already failed, because you 
+can already arbitrarily overwrite jane's ~/.bashrc, 
+~/.config/(anything), ~/.ssh/authorized_keys and so on to get a 
+persistent compromise.
 
-On 01/27/2017 10:59 PM, KARBOWSKI Piotr wrote:
-> Hi,
->=20
+>even though we are not really an "allow_active" user
 
-Hi Piotr,
+You are: your ssh'd-in process is not on an active local console, but 
+the user whose account you have taken over *is* (concurrently) on an 
+active local console (and you are not being confined by a sandbox like 
+Flatpak, Snap or equivalent), and there is no effective security barrier 
+between jane-via-ssh and jane-on-the-console. The assumption generally 
+made by the Unix uid model is that user 'jane' is user 'jane', and if 
+one login session is compromised then they are all equally compromised.
 
-> The packages in Gentoo often utilizes Portage's functions like keepdir
-> to create a directories, with specified permissions. One of the examples
-> is 'cronbase', which the only purpose is to setup
-> /etc/cron.{hourly,daily,weekly,monthly} and /var/spool/cron.
->=20
-> The /var/spool/cron is meant to have root:cron 750, which makes the
-> crontab usable only for the users that are members of cron group.
->=20
-> As for the /etc/cron.{hourly,daily,weekly,monthly} they're meant to be
-> root:root 750.
->=20
-> If, for instance, a mlocate package will be installed before cronbase,
-> due to installing /etc/cron.daily/mlocate, the /etc/cron.daily will end
-> up with 755 permissions. After than when crontab package is installed,
-> due to usage of portage's keepdir function, the directory in temporary
-> directory will be installed as root:cron 750, but during the merge
-> process to rootfs no directory permissions will be merged, leaving the
-> /etc/cron.daily as 755.
->=20
-> On one system after installing set of packages, the /var/spool/cron
-> ended up being cron:root 755, which results in possibility for any local
-> user to actually create the crontabs (including system users like nginx,
-> mysql, and so on).
->=20
-> The way a (directory) ownership and permissions are handled in Gentoo
-> seems to be flawed, it's not clear to me whatever Portage should
-> provided a soluton to that, or the ebuilds authors should make sure to
-> always depends, in case of touching cronbase directories, on the
-> cronbase package, to ensure that it's installed prior to installing
-> them. Nonetheless I do believe this issue is worth CVE.
->=20
-> -- Piotr.
+Having sandboxed processes that run as user 'jane', but do not have all 
+of Jane's privileges, requires something beyond the uid model, for 
+example containers (like Flatpak) or non-trivial LSMs (like Snap). One 
+of the tasks of a sandboxing framework for privilege separation within a 
+user account is to prevent the sandboxed processes from having 
+unrestricted access to system facilities that follow the Unix uid model, 
+and that includes the home directory and the D-Bus session and system 
+buses.
 
-Tracking this in https://bugs.gentoo.org/show_bug.cgi?id=3D607430
-
-please keep in mind that this is already discussed in (at least)
-https://bugs.gentoo.org/show_bug.cgi?id=3D396153
-https://bugs.gentoo.org/show_bug.cgi?id=3D141619
-https://bugs.gentoo.org/show_bug.cgi?id=3D58611
-
-You might want to work with the portage team on a solution
---=20
-Kristian Fiskerstrand
-OpenPGP keyblock reachable at hkp://pool.sks-keyservers.net
-fpr:94CB AFDD 3034 5109 5618 35AA 0B7F 8B60 E3ED FAE3
-
-
---auINaRNt7RIugEqQusf7a91oHMjOPxI6e--
-
---LNK6WmVSwjgnFQJrsmkhUTa02EfN3sJHQ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEtOrRIMf4mkrqRycHJQt6/tY3nYUFAliLzmUACgkQJQt6/tY3
-nYUX8gf+PY5wsZZbxkp+QmSZjaip/drO9iIhqd2eQLERR0Ha+V/GC6z06yAYfG7f
-fSy4zVNYtDinTGX4pQRmxA9n6/1VzKdU6Jwf/TLJbzGQfqv2eRSpIlUvcQEC79FK
-glVknbbJFVYIDhTLfaM070blsWEVnoaKL77KZk0KaHlVC0qycpGutTqZ0PYy4Ytx
-5+ZHABzm2ehjsutm/QDezUQgtvvFzZkabs+zCc2kZ1/vtMRYISq6Z2HS9a1X+19U
-vcsrtvNUhrU0ttUKiySdMe9PVBe6KJKF+VTcBKggL5kyDf84cM1K974jyvbCwbD1
-7Kj8D021Msx0ecGmRAZyh3neU96gCA==
-=5Xhf
------END PGP SIGNATURE-----
-
---LNK6WmVSwjgnFQJrsmkhUTa02EfN3sJHQ--
+     smcv
