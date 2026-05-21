@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1940" "Monday" "29" "June" "2015" "23:11:08" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<559224EC.3080008@redhat.com>" "49" "[oss-security] Question about world readable config files and commented warnings" nil nil nil "6" "2015063005:11:08" "[oss-security] Question about world readable config files and commented warnings" (number mark "        kseifried@re Jun 29   49/1940  " thread-indent "\"[oss-security] Question about world readable config files and commented warnings\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 26380 invoked by uid 550); 30 Jun 2015 05:11:24 -0000
+Received: (qmail 32229 invoked by uid 550); 21 May 2026 23:38:11 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,67 +6,73 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26358 invoked from network); 30 Jun 2015 05:11:23 -0000
-Message-ID: <559224EC.3080008@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.7.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="dcRMWeG8QisGoURbUhc1F2Ba34eMCP0K8"
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
-Date: Mon, 29 Jun 2015 23:11:08 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Question about world readable config files and commented warnings
-To: Assign a CVE Identifier <cve-assign@mitre.org>,
-        oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 15745 invoked from network); 21 May 2026 21:08:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779397696;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Q/GAxyhocitMO5CfKQwI4UstLWA8jm5nipkFHm0c7rY=;
+	b=QNdlb7PC3BZ2qbx4V6IsuZlEwhbDRAQsItg81Fqq7czwr6Oc8am4de9x2UNSfdf1GfiDz6
+	M4QhcbJz4FtCVPmQgejvpgvFl8UJpfAn4WOybcy4nmE3IRAyhmdq5gGhL/uVyT03uqIGLd
+	H2ykOTg+JLicMnjr65MwlREcYEtX3MzoUA1sP1lUdQsEtxj4qqYJE4kN53FcuzHpFYF0XV
+	h/KUZGKGfKhHjh8tHHfH6n2sNLG3YxzQt9eZGTPDa/zuqjgsJNjkkvmsFavQcEpk+X2wNe
+	edQuodHLhK0xZ3AkMKPmpBAIESpd7vtcDZhBDNcFsjfmwfKRTZhiVkuJiMmzmA==
+Message-ID: <d0effbe5-53cf-4a02-a7e2-5a90ff875cc9@cpansec.org>
+Date: Thu, 21 May 2026 22:08:15 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFFBAVWcgt4TTifyUVD/GG686ydMH4Wf6Ye8CBFj4wQJs0N39yCfhgXS8p/0cE2noH6RSGjMBdzeMwVs8yaaaKIpmPD6Mm2H9+HTIJ+wWNBDpOQ0yr/pFhdQrCJsfGxCbD357eA/u/vm8qeUU4MnVrwnZF/jkHbsfB3hhWmm5WdL1PEwLeNUQSHV3Qt0PvDG4eLZY/V1NeXi9Y0V76jNTr/KuWsFgMcLWwzHyRDgt84sEKDdB0VkzN7ezBJkY5Fbwunb2Id/Bl6JzyNc0F7sJ6z9L75aJZsSYAh4hbHiLAw3nQcRiZmJEvyn+5aAJQnEJdfE8LfTPVsaUPPfAaQkbToVpeklRwl2j4/g5fxIK6G4FVFIjfoZZDDA71kQ0ZFLvS2Klay90swBqO953XNQEGm0XDFV69P/1AnLKQygo7VgiGIh2bojx8nGTWNzklFigcWbyeJ6YIJRbl0WeUF/63Y+XH34oCzzTEov2gV04/QcTvD6dCfg8sJ17Ctk72XqftkGRcnVvu/hqLskktgcwup7WCY+OAhlnbNvuXjTKBMcJaV4QI9hwby8NY80J4slUCUqYIqUY0h9etyctw4OAoL0xj+8hFsJrWd17Cgu/wDN0exwEXG6RSOcqt2O3sB8W7t2yR2/ZamE26+0U/RE0i3G+taXhubqB61xaB6HNyTtg
+Subject: [oss-security] CVE-2026-5091: Catalyst::Plugin::Authentication versions through
+ 0.10024 for Perl is susceptible to timing attacks
 
---dcRMWeG8QisGoURbUhc1F2Ba34eMCP0K8
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+========================================================================
+CVE-2026-5091                                        CPAN Security Group
+========================================================================
 
-So, if a config file is world readable by default, but the section where
-you might put a password says:
+         CVE ID:  CVE-2026-5091
+   Distribution:  Catalyst-Plugin-Authentication
+       Versions:  through 0.10024
 
-########
-# Database URI for the database that stores the package information. If it
-# contains a password, make sure to adjust the permissions of the config
-########
-
-Is that good enough, e.g. no CVE, or do we actually need to have proper
-permissions?
-
-I'm thinking we need proper permissions and not a note (especially with
-administration tools/etc that may parse/modify the file but not change
-the perms). Thoughts/comments/final decision from Mitre is welcome.
-
---=20
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+       MetaCPAN: https://metacpan.org/dist/Catalyst-Plugin-Authentication
+       VCS Repo: 
+https://github.com/perl-catalyst/Catalyst-Plugin-Authentication
 
 
---dcRMWeG8QisGoURbUhc1F2Ba34eMCP0K8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Catalyst::Plugin::Authentication versions through 0.10024 for Perl is
+susceptible to timing attacks
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
+Description
+-----------
+Catalyst::Plugin::Authentication versions through 0.10024 for Perl  is
+susceptible to timing attacks.
 
-iQIcBAEBAgAGBQJVkiTtAAoJEBYNRVNeJnmT9ccQAI5kKpZmG/1R87sc0A917Fhy
-OOiE+RH9DmLVokztMYesAqu1R2Kiufwdiz/KK0+1q6nGtyj4QQ1FxFnVJVz6yPE7
-7xOp3YdIIGhcaBbfGNpJlYhv2/iG3Z/cATO+XPpYDJjcqB4nbAA6iObgkViPpntx
-5+NRZPcMA7YSrMypZuk3x8G5J48SaNZh05Qx5QWY3RgJRdUYL0rQ+E3v7Q/lNKaN
-4WYeJu6o8qU0FnYWTHJIz2xXSXsvGW+Dyh8lBFHcNImNjyVRfdgsiHC5eDCdSv80
-tT5ysNqJVR86//0EelTRXDBfVDc1HMigXAqHBx7kY3LptSNyOZM8UlngKktRdykz
-LnwBmohvP7IzZQEBeERlAc5717VVSkGKHPRFWGNJV6FlkO2HQqYpnZ6B2sdc5JeD
-2XTh2KndhWHPl8znGA4PTSRwGYvlLhOBg3bYZSiGBNUt1RJBGs117lb4sffvlEYk
-EsRvVf1nbhUIRfdp5T96/kkd04cMXeA95CaW81n2WXlP1na5TVdPdtpZHyURKD8l
-iNCBGIQMRntP/NRMzS1AFhIF4cbi0uXla0X8InjcagPRZgmAljYEOXwOVz8m+FOu
-viqGHueC9C1HYdyyxtWgTf5m81B19rvhuHMWWzdgAdueDX8c2/VSVfEENPFTlT2B
-abot6u/NBEYLswbhApOW
-=mcsV
------END PGP SIGNATURE-----
+These versions use Perl's built-in eq comparison. Discrepencies in
+timing could be used to guess the underlying hash or password.
 
---dcRMWeG8QisGoURbUhc1F2Ba34eMCP0K8--
+Problem types
+-------------
+- CWE-208 Observable Timing Discrepancy
+
+Solutions
+---------
+Upgrade to version 0.10026 or later.
+
+
+References
+----------
+https://metacpan.org/release/ETHER/Catalyst-Plugin-Authentication-0.10_025/changes
+https://github.com/perl-catalyst/Catalyst-Plugin-Authentication/commit/b0515f492257438cf07082acf1e10d06e8088a5e.patch
+
+
+
