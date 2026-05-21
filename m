@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6721" "Wednesday" "4" "May" "2016" "12:42:25" "+0300" "Solar Designer" "solar@openwall.com" "<20160504094225.GA12893@openwall.com>" "150" "[oss-security] libonion 0.8 contains security fixes" "^Cc:" nil nil "5" "2016050409:42:25" "[oss-security] libonion 0.8 contains security fixes" (number mark "        solar@openwa May  4  150/6721  " thread-indent "\"[oss-security] libonion 0.8 contains security fixes\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 12286 invoked by uid 550); 4 May 2016 09:43:08 -0000
+Received: (qmail 30517 invoked by uid 550); 21 May 2026 20:25:14 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,168 +6,145 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 12197 invoked from network); 4 May 2016 09:43:00 -0000
-Message-ID: <20160504094225.GA12893@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Cc: David Moreno Montero <dmoreno@coralbits.com>,
-	Zachary Grafton <zachary.grafton@gmail.com>,
-	Remi Birot-Delrue <asgeir@free.fr>
-Date: Wed, 4 May 2016 12:42:25 +0300
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] libonion 0.8 contains security fixes
+x-ms-reactions: disallow
+Received: (qmail 22455 invoked from network); 21 May 2026 19:30:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sdaoden.eu;
+ s=citron; t=1779391821; x=1780058487; h=date:author:from:to:subject:
+  message-id:in-reply-to:references:mail-followup-to:openpgp:blahblahblah:
+  author:from:subject:date:to:cc:resent-author:resent-date:resent-from:
+  resent-sender:resent-to:resent-cc:resent-reply-to:resent-message-id:
+  in-reply-to:references:mime-version:content-type:
+  content-transfer-encoding:content-disposition:content-id:
+  content-description:message-id:mail-followup-to:openpgp:blahblahblah;
+ bh=3VAMuBlcNAvEG2Nwq8VYDlKBrrvTe8pKEVhHuCFGvyI=;
+ b=P45d/dQi+OHJiiahVhpvRhciqRjHW7S0nWk24b7egBDUZ4+sq4mnysIPIyP47HyK19lXZQfv
+  5ie7bfvpDWKBw6V7OeCh4U9ot2aOw16t3Mn3aGdqppLpQRSF6E2XwJ4AqdCTCCpTX7R/N6H49z
+  +U1ivyEfXJEp/drNfisk5rTCUoPmh+9nDGljIH6diai3szaUBTG1teGkTrjHFVG5cPeWkvHxb1
+  GjzRPMiQO3MCdGEbByciLEDJpjM25mL9iN4/DG1r0ub6qTL9+QL5llzax+d2NYvoAx/uZORGNX
+  AlyJCoFh4iZDXK5cM4/7d+Kr806nHNTbqG77y4ilMQeVCa3A==
+Date: Thu, 21 May 2026 21:30:19 +0200
+Author: Steffen Nurpmeso <steffen@sdaoden.eu>
+From: Steffen Nurpmeso <steffen@sdaoden.eu>
 To: oss-security@lists.openwall.com
+Message-ID: <20260521193019.4XguG2B_@steffen%sdaoden.eu>
+In-Reply-To: <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>
+References: <20260518220116.170677b2@riseup.net>
+ <agw1YBkrV6kcsdYr@definition.pseudorandom.co.uk>
+ <20260519193042.3feb8374@gmail.com>
+ <ag2EONSuspJdhYfd@definition.pseudorandom.co.uk>
+ <31c511c3-5e29-4d2d-bfd1-ad1e336f5541@gmail.com>
+ <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>
+Mail-Followup-To: oss-security@lists.openwall.com
+User-Agent: s-nail v14.10.0-alpha-32-g06ea4d6fbf
+OpenPGP: id=EE19E1C1F2F7054F8D3954D8308964B51883A0DD;
+ url=https://ftp.sdaoden.eu/steffen.asc; preference=signencrypt
+BlahBlahBlah: Any stupid boy can crush a beetle. But all the professors in
+ the world can make no bugs.
+Subject: Re: [oss-security] On the issue of MIME handlers that
+ execute arbitrary code (e.g. Wine)
 
-Hi,
+Gabriel Corona wrote in
+ <7758b7f4-a71a-48a6-b4a9-516700650a7e@free.fr>:
+ |> Sandboxes should only allow allowlist of file types and make everything
+ |> else fall back to a safe default.  This could be a simple text editor
+ |> (no IDE support!) for text files, and a hex editor (or an error) for
+ |> binary files.
+ |
+ |That sounds extremely inconvenient. Running an email client in a 
+ |sandbox? It can't open a PDF or a JPEG (or worse, you'll get an 
+ |hex-editor) ...
 
-onion is "C library to create simple HTTP servers and Web Applications."
+Actually, i think what is missing is some intermediate step.  This
+includes more control commands for RFC 1524 Mailcap files, which
+i am all for, and hope certain new things in the IETF (structured
+email, SML, to name it) do not loose it.  'Maybe even extend it.
 
-http://coralbits.com/libonion/
+For example, my MUA (but do not look) introduced certain new
+control commands (x-mailx-async, x-mailx-last-resort,
+x-mailx-ignore, too name some) , but none that fits here
+specifically -- however, mailcap (and other supported approaches
+of starting programs for data formats) are by default only used in
+"copiousoutput" mode, you need a special `mimeview' command to
+invoke other things.  Long story, this results in chains like
 
-Version 0.8 was released recently:
+  application/pdf;\
+          mupdf %s;\
+          test = [ -n "$DISPLAY" ] >/dev/null 2>&1;\
+          nametemplate = %s.pdf; x-mailx-ignore
+  application/pdf;\
+          infile=%s\;\
+                  trap "rm -f \"$infile\"" EXIT\;\
+                  trap "exit 75" INT QUIT TERM\;\
+                  mupdf "$infile";\
+          test = [ -n "$DISPLAY" ] >/dev/null 2>&1;\
+          nametemplate = %s.pdf; x-mailx-async; x-mailx-test-once
+  application/pdf;\
+          pdfinfo %s\; pdftotext -layout %s -;\
+          test = command -v pdfinfo >/dev/null 2>&1;\
+          copiousoutput; nametemplate=%s.pdf; x-mailx-test-once
 
-https://github.com/davidmoreno/onion/tree/onion-0-8
+or
 
-Changes in this version, as well as in the master branch, include some
-security fixes.
+  image/*;\
+          display %s;\
+          test = { [ -n "$DISPLAY" ] && command -v display\; } >/dev/null 2>&1;\
+          x-mailx-ignore
+  image/*;\
+          infile=%s\;\
+                  trap "rm -f \"$infile\"" EXIT\;\
+                  trap 'exit 75' INT QUIT TERM\;\
+                  display "$infile";\
+          test = { [ -n "$DISPLAY" ] && command -v display\; } >/dev/null 2>&1;\
+          x-mailx-async; x-mailx-test-once
+  image/*;\
+          identify %s;\
+          test = command -v identify >/dev/null 2>&1;\
+          copiousoutput; x-mailx-noquote; x-mailx-test-once
 
-In particular, when the library is built with Linux epoll support and is
-used in the pool of threads mode, as invoked with onion_new(O_POOL),
-there was a file descriptor and data race condition between handling of
-epoll events and timeout events.  The code is using EPOLLONESHOT to
-avoid epoll event vs. epoll event races, but it is detecting and
-handling timeouts manually, operating on the same file descriptors and
-shared data structures (connection slots) that epoll operates on.  It's
-only after I figured this out, with some help from David Moreno Montero
-(onion upstream), and came up with a workaround, based on Rich Felker's
-idea, that I found this had previously been observed and reported as a
-GitHub issue by MoZhonghua on July 30, 2015:
+and the second ones are used for `mimeview', the third it is when
+normally viewing emails.  (pdftotext not initially -- but i am
+lazy, .. like you say.)
 
-https://github.com/davidmoreno/onion/issues/116
+Short story: neither, i think, pdfinfo(1) nor pdftotext(1) (nor
+identify(1)) actually execute integrated *Script, at least.
+But it is still not truly nice.
 
-Apparently, the issue was easily unintentionally triggerable, without
-even a stress-test, with onion's default hard-coded epoll_wait()
-maxevents of 10.  I was using maxevents of 1 for unrelated reasons (and
-this has since become the default), which made the problem much harder
-to trigger: it took over 30 million HTTP requests at 10k requests/second
-for me to trigger the problem in my stress-testing of an onion-using
-application.  However, this very first crash I triggered, running the
-application under gdb, resulted in attempted execution of a portion of
-an HTTP request or response as code: the freed memory where a connection
-slot structure had been was reused in such a way that a data pointer
-appeared just where the handler function pointer had been.  On another
-occasion, with a later upstream revision with a partial workaround in
-place, I had it crash on attempting to make the handler function call
-over the pointer, which was directly replaced with data.  The latter
-condition was more likely exploitable on modern systems (where the
-malloc()'ed HTTP request and response data is non-executable, so need to
-use borrowed rather than injected code).
+Best would surely be some viewer who has a "stepped approach",
+showing only some infos first, asking for confirmation or the
+action to be applied, before displaying an image or whatever.
+And then going into some safe mode when truly going "in full" on
+the data as such.
+Of course implementing such a thing in that very way is an
+extensive effort, and not always doable.
 
-A mitigating factor is that unless a given application (or a wrapper)
-has respawn functionality, there's only one chance to try exploiting the
-bug.  Another mitigating factor is that epoll, especially with the
-specific features used by the code, only exists on modern Linux (so
-having this code run on a system with executable malloc()'ed data and
-without ASLR is unlikely).
+But maybe it is time -- instead of simply rewriting the same mess
+in Rust (gdk-pixbuf) -- to create "priviledge-separated" media
+viewers, where the image/data format specific stuff is in
+a completely separated "process", and only readily prepared data
+in a common type (X11 bitmap or what) is then send via IPC / made
+available in some shared mapping for some display/player.
+(It could be such things already exist, i live only in dwm / st
+/ tmux, and have only fewest graphical things beside that.)
 
-This issue is currently believed to be worked around for good with this
-pull request, included in 0.8:
+ |If the sandboxed application is badly integrated and can't open files 
+ |and URIs, the user (me included) will prefer using the non-sandboxed 
+ |version in order to get things done (or will prefer using a more 
+ |user-friendly OS). This would defeat the purpose of having sandboxed 
+ |applications.
 
-https://github.com/davidmoreno/onion/pull/167
+Over a decade ago an Irish forwarded a message from Trinity
+College Dublin; it is astounding "how rich" emails can get in real
+life.  One does not want to use the above approach (what was,
+actually, shown).  But priviledge-separated multimedia viewer,
+which maybe "goes in full" (video, audio .. play) only on explicit
+request, instead of simply linking/loading in more and more
+formats through shallow ad-hoc format converters that use format
+dedicated libraries, i think that is a problem.
 
-The important commits are:
-
-commit 4e111f30c1adf0ba0d5814a24f904dea35310a37
-Author: Solar Designer <solar@openwall.com>
-Date:   Sun Mar 27 19:16:04 2016 +0300
-
-    Complete the implementation of Rich Felker's idea (partially introduced
-    with commit c80c46d5ff842291f0cce3917e7b8340c43d4315) to shutdown()
-    rather than close() on timeout, so that the fd is held until after
-    another one-shot epoll event arrives.  This way, we don't close the fd
-    (thereby not freeing it for possible reuse just yet) and don't free the
-    slot asynchronously to a possible event for the same slot on another
-    thread.  When we do receive another event for the shutdown() fd, we
-    expect that no concurrent event is being processed for the same fd and
-    the same slot due to the one-shot property of the epoll instance.
-    In other words, we postpone the potential fd and slot memory reuse until
-    after we're out of the asynchronous timeout handling and into the
-    per-slot synchronous one-shot event handling.
-
-    Handle timeouts in busy servers more optimally: check for them once per
-    second (and per thread for now) rather than once per event.
-
-commit 0ba14e54ab2c8bee9de68b98db084220cccb2234
-Author: Solar Designer <solar@openwall.com>
-Date:   Sun Mar 27 19:31:52 2016 +0300
-
-    On the first call to onion_poller_slot_new(), pre-allocate memory for
-    all slots based on the maximum number of fd's allowed for the program
-    (the currently effective limit for RLIMIT_NOFILE, or 1000000 at most).
-    This assumes that the first call to onion_poller_slot_new() doesn't need
-    to be MT-safe (it is expected to be for a listening fd).
-
-    Rationale:
-    1. Reduced impact of premature slot memory reuse bugs (now accessing a
-    reused slot rather than arbitrarily reused memory) in case any are left
-    or are reintroduced later or a new kernel version doesn't fully enforce
-    the epoll one-shot property.
-    2. Performance improvement (one calloc()/free() less per connection).
-
-I've just assigned OVE-20160504-0004 to the onion pre-0.8 epoll event
-vs. timeout handling race conditions.
-
-There may still be issues with fd's getting closed on error by other
-parts of onion, which would trigger races in the poller again.  In that
-case, the additional change to memory allocation as described above
-should help reduce the impact.  Once identified, these issues would need
-their own fixes (and their own tracking IDs, if anyone cares).
-
-Another likely security issue fixed in 0.8 was found and fixed by
-Zachary Grafton:
-
-https://github.com/davidmoreno/onion/pull/161
-
-commit 2e54d367b804f8a803c700065b17edd70afdf615
-Author: Zachary Grafton <zachary.grafton@gmail.com>
-Date:   Tue Mar 15 08:57:28 2016 -0400
-
-    Fix issue with html quoting and a buffer overflow.
-
-    We were incorrectly calculating the size of the new string, &amp; is 5
-    characters and not 4. This creates a buffer overflow condition in
-    onion_html_quote.
-
-I've just assigned OVE-20160504-0005 to this issue.
-
-There's also, with unclear security relevance/impact, but potentially
-just as bad:
-
-commit c4f137f2d4c0b09657ae105ae6f133e9cec481a1
-Author: Remi Birot-Delrue <asgeir@free.fr>
-Date:   Sat Apr 16 18:20:04 2016 +0200
-
-    Fix bugs in onion_response_vprintf.
-
-    For input (format string + arguments) larger than 512 bytes:
-    - A null byte was written at the end of input;
-    - the variadic list was used a second time without initialization, causing segfaults.
-
-I've just assigned OVE-20160504-0006 to this issue.
-
-There are probably more.  Basically, if you're using onion, consider
-upgrading to 0.8 now.
-
-FWIW, my current opinion of onion is: friendly and helpful upstream,
-healthy community, but I wish code quality were much better.
-
-There's a good list of other embeddable HTTP server libraries at:
-
-https://www.gnu.org/software/libmicrohttpd/
-
-(scroll down to "Alternatives"), as well as indeed libmicrohttpd itself.
-
-Alexander
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
