@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2455" "Tuesday" "30" "June" "2015" "10:04:11" "-0400" "Daniel Micay" "danielmicay@gmail.com" "<5592A1DB.1000409@gmail.com>" "54" "Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)" nil nil nil "6" "2015063014:04:11" "[oss-security] Google Chrome Address Spoofing (Request For Comment)" (number mark "        danielmicay@ Jun 30   54/2455  " thread-indent "\"Re: [oss-security] Google Chrome Address Spoofing (Request For Comment)\"\n") "<55929F2D.3020802@redhat.com>" ("<55923253.8020902@deusen.co.uk>" "<55929D7F.3050805@gmail.com>" "<55929F2D.3020802@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 20456 invoked by uid 550); 30 Jun 2015 14:04:27 -0000
+Received: (qmail 18399 invoked by uid 550); 21 May 2026 16:11:05 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,89 +6,76 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 20436 invoked from network); 30 Jun 2015 14:04:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-type;
-        bh=oVBkxXT1aWxIm7I/D0GM+D4bigJtssHyvlUQVoukuDc=;
-        b=bQ2HZye5AshB1Hnpo4MpOUugFEkWARWHQyjbFad2D7xbRyooRB81eKxA5x8sMLzBuT
-         7RCFqevoY3QBeZswAvQbIkVQNdgcTKiBVoaj09jUUn5Ozy5hHtrEPfIEnqRTgbAEbSEN
-         c7PIncbzydRAUSSYBEcsWVJZp8gV/Q4ux+SOWXYuoDZl6we+a0sirj3aBjAXhYgdIKCH
-         LvaU7cOWUEspa+xVsSNcIbu9D5jBY3y1ESMZ8CElLa0EkGM6cs67ZaEcARS1N8GEUXwy
-         KaqbSovJGXqKOvy7PPxoz7rcwR1FMJ7LqGhioZaVKVOrzHlIu+6TdrXi0Qmr+WIxbVEe
-         N+ZQ==
-X-Received: by 10.107.130.101 with SMTP id e98mr30569129iod.38.1435673055711;
-        Tue, 30 Jun 2015 07:04:15 -0700 (PDT)
-References: <55923253.8020902@deusen.co.uk> <55929D7F.3050805@gmail.com>
- <55929F2D.3020802@redhat.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <5592A1DB.1000409@gmail.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.0.1
-MIME-Version: 1.0
-In-Reply-To: <55929F2D.3020802@redhat.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="2LepII9l1sV0EJ2TXECDtrgdXEJXhbWWD"
-Date: Tue, 30 Jun 2015 10:04:11 -0400
-From: Daniel Micay <danielmicay@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Google Chrome Address Spoofing (Request For
- Comment)
+x-ms-reactions: disallow
+Received: (qmail 22108 invoked from network); 21 May 2026 13:34:37 -0000
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp.gnome.org 48DDC109681ED
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gnome.org;
+	s=default; t=1779370467;
+	bh=BGqp1kSsQ7x+W8S+zSxtkwLPNRZ3OkCt+bnQJsAW+c8=;
+	h=Date:From:To:In-Reply-To:References:Subject:From;
+	b=zaQ4bkc2dyUpmRp0rtk1lnAmzW0r+2l+KEa0w08fO1ECQn3sFSmnPcSllf5BfvU/f
+	 og20f2jCOj4pSsk3zQMq4qQ/r+sTSLaCTSR20e3yDTJLF5zrmxLZkZP2SuMD/Llzfv
+	 kmmzmu4t2BdEh/NV8/JBq65SFT+t78RUlbWF+NXc=
+X-ME-Sender: <xms:4gkPaqAaAIyiERK95ApJv3LjPQTVqyA_Lp0XAe5LchoHMYSx9_cyTA>
+    <xme:4gkPavXpBdtnranfceyy4APJ6NQOCRJgCeXewoHp999Tv0ibx7Ypz5uZoKAJaodKE
+    xneBx4t_ydI_CPIll10ppLpNUgIEygZeXrePwjVGK2P2FWDqyGhv2I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgddugeejieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpefoggffhf
+    fvkfgjfhfutgesrgdtreerredttdenucfhrhhomhepfdfoihgthhgrvghlucevrghtrghn
+    iigrrhhofdcuoehmtggrthgrnhiirghrohesghhnohhmvgdrohhrgheqnecuggftrfgrth
+    htvghrnhepteehleehkeeuiefgkefhueejfeeukefgtdevgfeghffgvdelleegvdeitedv
+    ffeknecuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhnohhmvgdrohhrghenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmtggrthgrnhii
+    rghrohdomhgvshhmthhprghuthhhphgvrhhsohhnrghlihhthidqudekudehvdefiedtje
+    dqvdejuddufeejvddtqdhmtggrthgrnhiirghroheppehgnhhomhgvrdhorhhgsehinhhn
+    vghrfhhotghushdrgiihiidpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtoheplhgvihhghhduvdeflhhinhhugiesghhmrghilhdrtghomhdprhgt
+    phhtthhopehrrghvvghitheihedrshhunhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgphhoohesghhnohhmvgdrohhrghdprhgtphhtthhopegtlhgvmhgvnhhtrdhlvghfvggs
+    vhhrvgeslhhinhhugihmihhnthdrtghomhdprhgtphhtthhopehrvgguhhgrtheslhhinh
+    hugihnvghtiidruggvpdhrtghpthhtohepohhsshdqshgvtghurhhithihsehlihhsthhs
+    rdhophgvnhifrghllhdrtghomhdprhgtphhtthhopehvkhgrrhgvhhesrhgvughhrghtrd
+    gtohhm
+X-ME-Proxy: <xmx:4gkPai6EIbofjrQZTJSpKDcaqVjmnReMj2pqiu5BIPczmzZ8LVki0Q>
+    <xmx:4gkPaskJHqorfu4RR3FUfC-Z52cWevBZ7eVuixlM22vxorohR0KMQg>
+    <xmx:4gkPavqUlQYpRLb3cHtB3d_FETStxV2yDu1uz831YD7S0yQD0oFMTg>
+    <xmx:4gkPajtqTqahOrUGUvuHnWc01kz4zgr8fPKI076iuuyWTgL269KGOg>
+    <xmx:4gkPasGYEs_Qlp9i0Bwl7c1Y7dk9ccElUEM6ZGsMrj2i0rj9UC7yEDbq>
+Feedback-ID: ie14e4b7f:Fastmail
+X-Mailer: MessagingEngine.com Webmail Interface
+MIME-Version: 1.0
+X-ThreadId: AqotbcDSF7e7
+Date: Thu, 21 May 2026 08:34:05 -0500
+From: "Michael Catanzaro" <mcatanzaro@gnome.org>
 To: oss-security@lists.openwall.com
+Message-Id: <ce81312b-99e1-4305-a816-e74b2bd1ffd5@app.fastmail.com>
+In-Reply-To: <864598ef-e8a0-49ac-a750-1456d8c9be2b@app.fastmail.com>
+References: <864598ef-e8a0-49ac-a750-1456d8c9be2b@app.fastmail.com>
+Content-Type: multipart/alternative;
+ boundary=4f6bd41928ab569fce28cb9be2fc0a35001a7d60
+Subject: [oss-security] Re: Evince/Atril/Xreader command injection CVE-2026-46529
 
---2LepII9l1sV0EJ2TXECDtrgdXEJXhbWWD
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+--4f6bd41928ab569fce28cb9be2fc0a35001a7d60
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On 30/06/15 09:52 AM, Florian Weimer wrote:
-> On 06/30/2015 03:45 PM, Daniel Micay wrote:
->> It does display a window with the oracle.com address, but I don't
->> understand why you've got an ever increasing number of setTimeout events
->> built in here. It's also unclear what you mean about click-to-verify. Is
->> this bypassing a warning prompt by breaking it with a flood of requests?
->=20
-> I have not tried this, but here's some context:
->=20
-> Most browsers have issues where they do not update the URL bar when
-> content from a different is shown (i.e., the update happens to late), or
-> they show the new URL while still displaying old content (update too
-> late).  I've seen such discrepancies with Firefox, but I don't know if
-> it's still present in current versions.
->=20
-> If such bugs are present, freezing browsers while they are showing
-> inconsistent content (hence the DoS attempt) could lead the user to
-> attribute content to the incorrect site.
+Hello,
 
-Ah, that makes sense. It seems to depend on a race condition so it makes
-sense that it can't always be replicated. I've tried it a few times and
-it fails about as often as it works. I have a feeling that the proof of
-concept was the whole issue report and it just happened to fail for
-whoever tested it.
+The full reports for this vulnerability are available now:
 
+Atril: https://github.com/mate-desktop/atril/security/advisories/GHSA-vgv2-m826-8f6f
+Evince: https://gitlab.gnome.org/GNOME/evince/-/work_items/2153
 
---2LepII9l1sV0EJ2TXECDtrgdXEJXhbWWD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+They contain a script for building malicious polyglot PDFs that are simultaneously both valid PDF files and also valid ELF binaries. When the user opens the PDF in the PDF viewer and clicks on a malicious link embedded in the PDF, the PDF abuses the command injection vulnerability to load itself as a GTK module using the `--gtk-module` command line flag. It can then execute arbitrary code via its library constructor. That flag was removed in GTK 4, which is why the vulnerability is much less serious for Papers than it is for Evince, Atril, and Xreader.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
+The provided script requires that the attacker predict the absolute path that the malicious PDF file will be saved to, generally /home/username/Downloads/attacker_chosen_name.pdf. However, in a follow-up comment on the Atril advisory, the reporter says that it's possible to modify the script to avoid the requirement to predict the file path.
 
-iQIcBAEBCAAGBQJVkqHbAAoJEPnnEuWa9fIqPqkP/iuJgrcSLubts/mv6Am6fdZ4
-GlMC/CJJtGwzicTsHrLeToGagHPzrVRdj7g7gBnDLmBeFyT79TTXcf8OgR+L0zdl
-kWBHLswmCV6CdVFkI97GF9vQgoQwlWPQL4j7AwCHN4KEAAM4It4s7g3tZ1qvOb5y
-X6Z01+LB7dD+q1bLXJy55z94U1O6Q86+Ywwm6p+UfYDJ+SDu6/tB90x8GfYjyPRc
-q30u6GYnGgysGeS4T/gCyXrxE4QqqraMAHIeZVV1yIeo6/J07cwKNx6ZlXgP9W77
-MUJ+PDdIOz4A1Y3P9kJF82bjLaq0j1ohLt5NJpDHRJVMOcNpgeDpEtIzTP+/ieDM
-RPiLQCKVAEY9Les36oEii8gf2UHFR8op83TWJ3C5Dwkhl1coG3z1YK/fY9sEccTi
-tQT2X+4nj/rQfVMKauOYbOgt49uEw8AiF/yU/0/pKREOCWiuMVaVWI3XJEs1AFfN
-9LR0cySSiRhq/5FbkSpe0jbrETxSWJOLLjEPyJ00VLuTZzCBExvJ8c5EgMz+B0X4
-NQifoNEH9AP3VmY+5X4Gv16OeA0zQmPltdANXE5/iUqWtYnuGU45620n450Um8c6
-0k956Q7SXkLkCT6dYsi6vbdZszaYDW04USHEVpS/luNSb0z48q8All6dKo82gxY8
-/XnpQkdpgu+YZPL0XqMR
-=fqoi
------END PGP SIGNATURE-----
+My takeaway from this incident: AI tools are going to find a lot of vulnerabilities in the short term. A human inspecting this code should have been able to find the command injection vulnerability, but that requires time and effort, so nobody did. Running an AI and telling it to inspect the code is much easier. We're probably in for a rough time in the short term. But in the long term, we are going to be much more secure than we were before, so this is good.
 
---2LepII9l1sV0EJ2TXECDtrgdXEJXhbWWD--
+Also, the AI is able to take an investigation much farther than a human would be willing to, crafting a creative working exploit when a human would have almost certainly just stopped after finding the vulnerability. This is unusual and dangerous, but the silver lining is it helps us appreciate the severity of the issue. It's often hard to assess how bad a vulnerability is. If not for the weaponized exploit, I would have thought this bug was not very scary and treated it as not a big deal. But the AI was clever and found a way to make it extremely scary! I don't know how much prompting the human reporter had to do to get this result.
+
+Michael
+
+--4f6bd41928ab569fce28cb9be2fc0a35001a7d60--
