@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3357" "Thursday" "14" "January" "2016" "15:21:36" "+0100" "Jason A. Donenfeld" "Jason@zx2c4.com" "<CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>" "77" "[oss-security] CVE Request: CGit - Multiple vulnerabilities" "^Cc:" nil nil "1" "2016011414:21:36" "[oss-security] CVE Request: CGit - Multiple vulnerabilities" (number mark "        Jason@zx2c4. Jan 14   77/3357  " thread-indent "\"[oss-security] CVE Request: CGit - Multiple vulnerabilities\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 28161 invoked by uid 550); 14 Jan 2016 14:21:51 -0000
+Received: (qmail 24171 invoked by uid 550); 21 May 2026 16:09:01 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,105 +6,164 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 28139 invoked from network); 14 Jan 2016 14:21:50 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=mime-version
-	:date:message-id:subject:from:to:cc:content-type; s=mail; bh=i6C
-	yOudykl/+uj7fz1BHLWFukRA=; b=a0snEJeQhF7gGCzyc3jCB0KBe/GupS15uLP
-	R4+Kqg8w4pgYxqH2Q4JHH5Dza67KeBXJ04/wxv8k+aah699IuwtrDo3S97Z4DTeL
-	B/33KZiADuGYLX5VRhic+jG6kcRF23CAFPTwfhz4DSyQtENNne1APUO8b9YAQ3RX
-	K2qw0Ny/fP/2TZqNDP9BSLVQIJU3yrDm+hUaHKEX2VU16l+KfvdRIwS2C4H33yE/
-	Dmri67li5VhHamav5dIJmnbgPU9W7moamPOf70WoTMElKS+EesjhN19fcvN6hXMg
-	h0IAJCVFPk3cwyOV0yr0Um+wR2OKKI6FIsO36aEKw4ZsIG2I8Mw==
-X-Gm-Message-State: ALoCoQkSxOrmlRCHHoKEIY4jt8BCfJK8TWbXprsbg2jO9KRazGnR6zk0sWi49fQiL/a4jfXynIZZLp4ijcQWmt9iON+XdSr5ZQ==
-MIME-Version: 1.0
-X-Received: by 10.194.21.135 with SMTP id v7mr4308184wje.131.1452781296665;
- Thu, 14 Jan 2016 06:21:36 -0800 (PST)
-X-Gmail-Original-Message-ID: <CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>
-Message-ID: <CAHmME9qMafTAqWTgj6oRHmN9HZtJ8KrghR1U63H=r+jA7M3zyg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Cc: Daniel Chromek <chromek@eset.sk>, 
-	Krzysztof Katowicz-Kowalewski <krzysztof.kowalewski@eset.pl>, Erik Cabetas <erik@includesecurity.com>, 
-	Konstantin Ryabitsev <mricon@kernel.org>
-Date: Thu, 14 Jan 2016 15:21:36 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE Request: CGit - Multiple vulnerabilities
-To: "cgit@lists.zx2c4.com" <cgit@lists.zx2c4.com>, oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 2004 invoked from network); 21 May 2026 06:51:34 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1779346280; cv=none; 
+	d=zohomailcloud.ca; s=zohoarc; 
+	b=Ld17PKnGw3nbAmhJb8AlYSlwisuYsVqvzpoSakut7SwWWgS+Q+BOMbzO2sRYMH0T8Xe6vxzwohYGUBILHe2JQtJ54gVeMp3qXTYiL3lflcH6zou9wqMAQcINmygMLm5ii4nOmijlvewLZbYWE5l4N94WNzpafcp2NlcCe/eVqEw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomailcloud.ca; s=zohoarc; 
+	t=1779346280; h=Content-Type:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=FTT/LEJrz00u//PnI9xOyDotkuPLoiknj8g+9mNEhtQ=; 
+	b=mzH2e1E/FbPkpNuXGigDc75D+VYktobYX0Gbds/SVQweW3JHg1B0So1LQEb5yWl9uKKIZmlCiosMJqVsXic/CcRJ/u7KTSKEYLVPDGtJG85Hsh1NTNyTKcpzrOJRC01pttOuk2thi6NKbUIWP8uEJyeY2M9xYKj+w7hAoLY0Mgs=
+ARC-Authentication-Results: i=1; mx.zohomailcloud.ca;
+	dkim=pass  header.i=roiai.ca;
+	spf=pass  smtp.mailfrom=sales@roiai.ca;
+	dmarc=pass header.from=<sales@roiai.ca>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779346280;
+	s=zmail; d=roiai.ca; i=sales@roiai.ca;
+	h=Date:Date:From:From:To:To:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To:Cc;
+	bh=FTT/LEJrz00u//PnI9xOyDotkuPLoiknj8g+9mNEhtQ=;
+	b=bTb684ktabhWtAdS8uJCDpTQTbCP4W4ky5hoaV17o+p0VPFE/JUf+JEQ35Lfiv//
+	SMq7puNA256JiKNFGGn5ExVe5RpP048VorFM/L2qotEE7ZUbTBKq/Zp/Di6CIaf83HT
+	ACpKqecWiou733eQL5nC06rnKDsz8XJRko8BWRfQ=
+Date: Wed, 20 May 2026 23:51:18 -0700
+From: ROI AI <sales@roiai.ca>
+To: "oss-security" <oss-security@lists.openwall.com>
+Message-Id: <19e494d88f3.fa2e5b9128090.8772053311417055861@roiai.ca>
+In-Reply-To: <19e48ffc072.20eeee58126634.4537984379441699684@roiai.ca>
+References: <afDLFWVMK-r70PB0@yuggoth.org> <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com> <19e48ffc072.20eeee58126634.4537984379441699684@roiai.ca>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_191387_186356166.1779346278644"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
 
-Hi folks,
+------=_Part_191387_186356166.1779346278644
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Krzysztof Katowicz-Kowalewski from ESET, Erik Cabetas from Include
-Security, and myself (Jason Donenfeld) from Edge Security, have found
-a few vulnerabilities in CGit:
-
-
-1. Reflected Cross Site Scripting & Header Injection in Mimetype Query
-String [Katowicz-Kowalewski]
-
-The ui-blob handler accepted a mimetype as a query string and then
-echoed this string verbatim back. A malicious user could provide a
-string like:
-
-  http://git.zx2c4.com/cgit/blob/cgit.c?mimetype=text/html%0d%0a%0d%0a<script>xss</script>
-
-This has been fixed by removing support for the mimetype query string parameter:
-http://git.zx2c4.com/cgit/commit/?id=1c581a072651524f3b0d91f33e22a42c4166dd96
-And then restricting to only generic mimetypes:
-http://git.zx2c4.com/cgit/commit/?id=92996ac2a6fc4e944c3d723e12d5ab244a43508e
-And finally, just in case, setting the IE anti-sniffing header as well
-as a restrictive CSP header:
-http://git.zx2c4.com/cgit/commit/?id=9ca2566972db968df4479108b29bb92551138b57
-
-
-2. Stored Cross Site Scripting & Header Injection in Filename
-Parameter [Donenfeld]
-
-A user who has write access to the git repository could create
-filenames containing new lines that would result in that filename,
-including the newlines, being included in a header, resulting in
-header injection and eventually XSS.
-
-This has been fixed by properly escaping filenames in headers:
-http://git.zx2c4.com/cgit/commit/?id=513b3863d999f91b47d7e9f26710390db55f9463
-Additionally, while the redirect for the /about -> /about/ page does
-*not* appear to be vulnerable due to mitigating conditions, the
-following commit was made to similarly harden potential injections
-here:
-http://git.zx2c4.com/cgit/commit/?id=4291453ec30656c2f59645d8a74cf295ce0253a9
-
-3. Stored Cross Site Scripting in Git Repo Files [Katowicz-Kowalewski]
-
-A user who has write access to the git repository can add HTML pages
-and then serve them with an HTML mimetype. A user could therefore
-upload pages with malicious javascript executing in the same origin as
-the cgit web site. While this is ordinarily not a problem for
-single-use users - and indeed some users rather like being able to
-serve html from cgit - sites that allow potentially malicious third
-party users may not find this behavior desirable.
-
-This has been fixed by adding a configuration option,
-"enable-html-serving", which is by default off:
-http://git.zx2c4.com/cgit/commit/?id=aaba5f8b925f44f7d5ffb0a45fe349642d478513
-This flag sets anti-sniffing, CSP, and restricts mimetypes to
-non-"application/" (except for application/pdf and
-application/octet-stream) and non-"text/" (except for text/plain). If
-you have a better idea of what sort of white/black list to use for
-this, I am open to suggestions.
-
-4. Integer Overflow resulting in Buffer Overflow [Cabetas]
-
-ctx.env.content_length is an unsigned int, coming from the
-CONTENT_LENGTH environment variable, which is parsed by strtoul. The
-HTTP/1.1 spec says that "any Content-Length greater than or equal to
-zero is a valid value." By storing this unsigned int into an int, we
-potentially overflow it, resulting in the following bounding check
-failing, leading to a buffer overflow.
-
-This has been fixed by this commit:
-http://git.zx2c4.com/cgit/commit/?id=4458abf64172a62b92810c2293450106e6dfc763
+Also the entire nonsense about making the found issues public - this is abs=
+urd and just exacerbates the asymmetry problem.=C2=A0=20
 
 
-A new version containing these security fixes will be published shortly.
 
-Thanks,
-Jason
+By keeping the reports private, the OSS teams can deal with the issues more=
+ on their timeline.=C2=A0
+
+
+
+ By making them public, they add timeline pressure and enable attackers.=C2=
+=A0=C2=A0
+
+
+
+Why are you making it harder on yourself?=C2=A0 It is the opposite of what =
+you want to do.=C2=A0
+
+
+
+If it's giving CVE credit to people who've taken the time and tokens to rep=
+ort these issues that concerns you, than just bundle the issues in one CVE.=
+=C2=A0=C2=A0
+
+
+ROI AI
+
+
+
+
+
+
+
+
+From: ROI AI <sales@roiai.ca>
+To: "oss-security"<oss-security@lists.openwall.com>
+Date: Wed, 20 May 2026 22:26:21 -0700
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+
+
+
+People are shooting the messengers here.=C2=A0 =C2=A0The fact is - we are g=
+oing through a generational security event due to the advancement of LLMs.
+
+
+
+It is also both trivial and extremely effective to use Agentic analysis to =
+filter security reports.
+
+
+
+As for 'duplicates', people are claiming this when I have seen little evide=
+nce.=C2=A0 I reported a dozen or so to one major project and no one has yet=
+ claimed invalid or duplicate.=C2=A0=C2=A0
+
+
+
+Moreover, if 'duplicates' are found, then that is a good signal for priorit=
+ization.
+
+
+
+Let's stop talking about how the vulns are found and start fixing them with=
+ urgency.
+
+
+
+ROI AI
+
+
+
+
+
+
+
+
+From: Alan Coopersmith < mailto:alan.coopersmith@oracle.com >
+To: < mailto:oss-security@lists.openwall.com >
+Date: Wed, 20 May 2026 10:52:37 -0700
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+
+
+
+
+
+
+
+
+
+
+
+On 4/28/26 07:58, Jeremy Stanley wrote:=20
+> I'm sorely tempted, both due to the increased volume and the risk of prem=
+ature=20
+> disclosure, to just assume that any vulnerability reported as a result of=
+=20
+> research using an LLM is trivially discoverable by others, and give up tr=
+ying to=20
+> pretend there's any point to working it under embargo.=20
+=20
+Other maintainers under similar floods seem to agree:=20
+=20
+Linux kernel:=20
+ - https://lkml.org/lkml/2026/5/17/896=20=20
+ - https://docs.kernel.org/process/security-bugs.html=20=20
+=20
+DNS servers (BIND, Unbound, PowerDNS):=20
+- https://indico.dns-oarc.net/event/56/contributions/1233/=20=20
+- https://indico.dns-oarc.net/event/56/contributions/1233/attachments/1180/=
+2539/presentation.pdf=20=20
+=20
+--=20
+ -Alan Coopersmith- mailto:alan.coopersmith@oracle.com=20=20
+ Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Confidential communication. No warranties or commitments unless in a signed=
+ agreement. If received in error, notify sender and delete. Unauthorized us=
+e prohibited.
+
+
+
+
+------=_Part_191387_186356166.1779346278644--
