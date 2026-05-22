@@ -1,4 +1,4 @@
-Received: (qmail 17557 invoked by uid 550); 16 Aug 2023 16:42:01 -0000
+Received: (qmail 3526 invoked by uid 550); 22 May 2026 19:38:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,65 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 16308 invoked from network); 16 Aug 2023 16:41:43 -0000
-Date: Wed, 16 Aug 2023 18:41:34 +0200
-From: Solar Designer <solar@openwall.com>
-To: Andrew Cooper <andrew.cooper3@citrix.com>
-Cc: "Xen. org security team" <security@xen.org>,
-	oss-security@lists.openwall.com
-Message-ID: <20230816164134.GA8851@openwall.com>
-References: <E1qQWG3-0005s9-Ra@xenbits.xenproject.org> <20230808180009.GA20736@openwall.com> <240c8fa4-2872-0584-3cfd-7648ea4dc0eb@citrix.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <240c8fa4-2872-0584-3cfd-7648ea4dc0eb@citrix.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] Xen Security Advisory 433 v3 (CVE-2023-20593) - x86/AMD: Zenbleed
+x-ms-reactions: disallow
+Received: (qmail 26574 invoked from network); 22 May 2026 11:09:53 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1779448179; bh=Zv2XHGoOdmZd3JDbE/sORJeMUI6juI0Oqp2LF7WorfE=;
+	h=Reply-To:From:Date:Subject:To:From;
+	b=faYnBvOMyVEVCkG47E3L2/ikiy412SOUJjQZjnX21QSfQpJipqb2eCQvwl5TAH3Bf
+	 otHjJXhcqZQeV8P+1YjVeBXnDtnJSM+QpXvDcCYs89WvwmB4D9zCRubtpOIagIxtmj
+	 rUFy/AfDTB5A+E1Y/TFm0fsk+zhNtXCmnST6kWxsyEUikKLy7A3BV0zThFg0IKi8Xo
+	 sTc911Kdx9O6vBisShBMCyA9n9F89aZIS1CA7m5GI1NRXmUwfuhkbaRK6XbiFn2YRb
+	 qAP8aSbAq89BIdDORPcOTRQ7dZjVab+iCHe7m8Phyv7YTi0Uzd8hchubAGNXbK0FDU
+	 DjoM64LbFJv7A==
+X-Gm-Message-State: AOJu0Yy7GBtRNN6NnXin3ROWKeRI8YAvaSzfAta02cCNu5iBk+j/keia
+	gxclh7bnoThEisZAEW7AG8Xa60Gr6lJ8YiFlIysz4winam+16VHh5RBeQHkNdN/kk49y6zzovqH
+	WaHdLCLUHy72tb4Vk8wPhFnq0S9+5vL8=
+X-Received: by 2002:a17:903:1ac5:b0:2bd:6cab:860 with SMTP id
+ d9443c01a7336-2beb065459dmr34957725ad.28.1779448179110; Fri, 22 May 2026
+ 04:09:39 -0700 (PDT)
+MIME-Version: 1.0
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Fri, 22 May 2026 12:09:27 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGDCmKjktp_wBQV-aoyNtGDN+5XbXKU5KPHcJoBdo=t1Sg@mail.gmail.com>
+X-Gm-Features: AVHnY4IKS5hKf7EwlVon2J2KCcTGC8PHJlzdt6NtXrqqIdDFiBhATLA9QDzCrUM
+Message-ID: <CAB8XdGDCmKjktp_wBQV-aoyNtGDN+5XbXKU5KPHcJoBdo=t1Sg@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2026-44417: Apache CXF: Incomplete fix for CVE-2025-48913
+ (Untrusted JMS configuration can lead to RCE)
 
-On Tue, Aug 08, 2023 at 07:18:51PM +0100, Andrew Cooper wrote:
-> On 08/08/2023 7:00 pm, Solar Designer wrote:
-> > +	/*
-> > +	 * Microcode is the preferred mitigation, in terms of performance.
-> > +	 * However, without microcode, this chickenbit (specific to the Zen2
-> > +	 * uarch) disables Floating Point Mov-Elimination to mitigate the
-> > +	 * issue.
-> > +	 */
-> > +	val &= ~chickenbit;
-> > +	if (sig->rev < good_rev)
-> > +		val |= chickenbit;
-> >
-> > This leaves me wondering: why have this line at all?  I understand Xen
-> > wanting to enable the chicken bit on vulnerable CPUs, but why disable it
-> > on other AMD CPUs?  If someone or something had enabled the bit, that's
-> > probably intentional, and even if not it probably shouldn't be Xen's
-> > business to alter CPU behavior beyond what's necessary for Xen itself to
-> > work reliably and securely.
-> >
-> > Am I missing something?
-> 
-> There is an earlier exit in this function for any non-Zen2 system.
-> 
-> So here, we are strictly on Zen2 (all vulnerable), and either have good
-> microcode or not.
-> 
-> The microcode fix is far more performant than the chickenbit.
+Severity: moderate
 
-Sure, but that's orthogonal to my concern, which was about areas of
-responsibility and control (such as sysadmin vs. tools).
+Affected versions:
 
-Anyway, it was pointed out to me off-list that Linux kernel does the
-same thing, also explicitly disabling chickenbit when deemed safe:
+- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) 4.2.0 before 4.2.1
+- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) 4.0.0 before 4.1.6
+- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) before 3.6.11
 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=522b1d69219d8f083173819fde04f994aa051a98
+Description:
 
-+	if (!cpu_has_zenbleed_microcode()) {
-+		pr_notice_once("Zenbleed: please update your microcode for the most optimal fix\n");
-+		msr_set_bit(MSR_AMD64_DE_CFG, MSR_AMD64_DE_CFG_ZEN2_FP_BACKUP_FIX_BIT);
-+	} else {
-+		msr_clear_bit(MSR_AMD64_DE_CFG, MSR_AMD64_DE_CFG_ZEN2_FP_BACKUP_FIX_BIT);
-+	}
+The fix for CVE-2025-48913: Apache CXF: Untrusted JMS configuration
+can lead to RCE was not complete, meaning that another path in the
+code might lead to code execution capabilities, if untrusted users are
+allowed to configure JMS for Apache CXF.
+Users are recommended to upgrade to versions 4.2.1, 4.1.6 or 3.6.11,
+which fix this issue.
 
-So at least it's a consistent approach by these two projects, and a
-reason for Xen to be doing it this way.
+Credit:
 
-Alexander
+Github / twitter - https://github.com/exploitintel / @exploit_intel (finder)
+
+References:
+
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44417
