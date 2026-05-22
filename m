@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2790" "Thursday" "5" "May" "2016" "15:33:37" "+0300" "Alexander Cherepanov" "ch3root@openwall.com" "<572B3DA1.6030608@openwall.com>" "65" "Re: [oss-security] broken RSA keys" "^Date:" nil nil "5" "2016050512:33:37" "[oss-security] broken RSA keys" (number mark "        ch3root@open May  5   65/2790  " thread-indent "\"Re: [oss-security] broken RSA keys\"\n") "<20160505081757.GA23172@openwall.com>" ("<20160504124248.GA15148@openwall.com>" "<20160504172803.GA19393@openwall.com>" "<CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>" "<20160505081757.GA23172@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 27879 invoked by uid 550); 5 May 2016 12:33:49 -0000
+Received: (qmail 19944 invoked by uid 550); 22 May 2026 22:15:07 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,85 +6,113 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 27857 invoked from network); 5 May 2016 12:33:48 -0000
-References: <20160504124248.GA15148@openwall.com>
- <20160504172803.GA19393@openwall.com>
- <CAP9m6YeT=Vo1WQ4Jqn1QV-Cp6mBQ3EwWQ5p_=Rm4P3Na3aGcGw@mail.gmail.com>
- <20160505081757.GA23172@openwall.com>
-X-Enigmail-Draft-Status: N1110
-Message-ID: <572B3DA1.6030608@openwall.com>
-MIME-Version: 1.0
-In-Reply-To: <20160505081757.GA23172@openwall.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Date: Thu, 5 May 2016 15:33:37 +0300
-From: Alexander Cherepanov <ch3root@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] broken RSA keys
+x-ms-reactions: disallow
+Received: (qmail 19903 invoked from network); 22 May 2026 22:15:07 -0000
+Date: Sat, 23 May 2026 00:14:57 +0200
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
+Message-ID: <ahDVYasrm561zdna@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Multiple Memory Safety Issues in Vim Spell File
+ Parser affects Vim < 9.2.0513
 
-On 2016-05-05 11:17, Solar Designer wrote:
-> When a modulus is (mangled?) such that each of its 64-bit limbs consists
-> of two matching 32-bit limbs, it is necessarily a multiple of 2^32+1.
-> That's because it can be represented as:
->
-> N = {an an ... a1 a1 a0 a0} = (2^32+1) * {0 an ... 0 a1 0 a0}
->
-> where the {...} notation means concatenated 32-bit limbs (or base 2^32
-> digits, if you will).  From this, it follows that pairwise GCDs of such
-> moduli will also have 2^32+1 as a factor, and this is what ultimately
-> causes the 32-bit limb patterns in the GCDs.  As Alexander Cherepanov
-> correctly pointed out, even the seemingly slightly more complex 32-bit
-> limb patterns in the GCDs are merely indication of them being multiples
-> of 2^32+1.  There's probably nothing else to see here.
->
-> I made the mistake yesterday of looking at hex representations of the
-> posted shared factors without first looking at hex representations of
-> the moduli.  Now that I just did, I see that the example modulus I
-> posted does follow the pattern mentioned above, and which Stanislav
-> mentioned below.
+Multiple Memory Safety Issues in Vim Spell File Parser affects Vim < 9.2.0513
+=============================================================================
+Date: 22.05.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Out-of-bounds Read (CWE-125),
+     Use of Uninitialized Resource (CWE-908),
+     Uncontrolled Recursion (CWE-674)
 
-All modulus from Phuctor that are divisible by 2**32+1 indeed have the 
-form {an an ... a1 a1 a0 a0}. The following script would print moduli 
-that don't have this form but it prints nothing. The script:
+## Summary
+Three related memory-safety issues exist in the Vim spell file (`.spl`)
+parser in `src/spellfile.c`.  A crafted spell file can cause:
 
-perl -Mbigint -ln0e '
-   while (m{RSA Modulus .N.:.*?<td>(\d+)<.*?<td>(\d+)<}sg) { # extract 
-numbers
-     if ($1 % (2**32 + 1) == 0) {           # is modulus a multiple of 
-2**32 + 1
-       $m = ($1+0)->as_hex;                 # modulus as hex
-       $m =~ s/^0x//;                       # remove hex prefix
-       $m = '0' x (-length($m) % 8) . $m;   # pad up to multiple of 8 digits
-       if ($m !~ /^(([0-9a-f]{8})\2)+$/) {  # check
-         print $m
-       }
-     }
-   }
-' phuctored
+1. a heap out-of-bounds read in `read_tree_node()` via a `BY_INDEX`
+   shared tree node that references an uninitialized array position,
+2. a one-byte heap out-of-bounds read in `tree_count_words()` past the
+   end of the word-tree byte array, and
+3. a stack overflow in `read_tree_node()` through uncontrolled recursion
+   on a deep linear node chain.
 
-While at it, let's see which exponents we get after dividing by 2**32+1 
-(from those that are divisible):
+Because the `'spelllang'` option can be set from a modeline, a text
+file modeline can trigger spell file loading if a malicious `.spl` file
+has been planted on the runtimepath, which can happen when cloning a vim
+package.
 
-$ perl -Mbigint -ln0e 'while (m{RSA Modulus 
-.N.:.*?<td>(\d+)<.*?<td>(\d+)<}sg) { print $2 / (2**32 + 1) if $2 % 
-(2**32 + 1) == 0 }' phuctored | sort | uniq -c
-       2 17
-       7 41
-     143 65537
+## Description
 
->> 4) One parsimonious explanation for (1) given (2) and (3) is that the
->> 'mirrored' keys were generated by a malicious actor,
->
-> Makes sense, but why would they similarly mangle the exponent as well?
-> As Alexander Cherepanov wrote, if I understand him correctly, there's
-> 100% overlap between keys with such moduli and with such exponents.
+### 1. Uninitialized shared-node target in read_tree_node()
+In `spell_read_tree()` the byte array `bp` for a word tree was allocated
+with `alloc(len)` and not zero-initialized, while the companion index
+array used `lalloc_clear()`.  The tree parser validated `BY_INDEX`
+shared-node references only against `maxidx` (the allocated array
+size), not against positions that were actually written by
+`read_tree_node()`.  A crafted file can declare a `<nodecount>` larger
+than the tree it serializes and include a `BY_INDEX` reference into the
+unwritten tail, leaving `byts[N]` containing uninitialized heap data.
 
-That's right. My original one-liner ended with "grep -c '^0 0$'" which 
-counts cases where both remainders are 0. If you change it to "grep -c 
-'^0 '" it will count cases where modulus is divisible by 2**32+1. 
-Similarly, "grep -c ' 0$'" will count exponents. Results from all three 
-commands are the same (152).
+On `z=` (spell suggest) or `spellsuggest()`, the suggestion walk reads
+`byts[arridx]` as a sibling count and iterates that many slots,
+producing a further out-of-bounds heap read with an attacker-influenced
+length.
 
+### 2. Missing length guard in tree_count_words()
+`tree_count_words()` skipped runs of trailing NUL siblings with
+`while (byts[n + 1] == 0)` and had no length guard.  The structurally
+identical loop in `sug_filltree()` already carried
+`n + 1 < slang->sl_fbyts_len && ...` with the explicit comment
+"But don't go over the end."; that guard had not been propagated to
+`tree_count_words()`.  When called during `.sug` file loading on a
+tree whose final sibling is `BY_NOFLAGS`, the walk reads one byte past
+the end of the byts array.
+
+### 3. Uncontrolled recursion in read_tree_node()
+`read_tree_node()` recursed once per non-shared, non-end-of-word
+sibling without a depth limit.  A crafted `.spl` file containing a
+linear chain of nodes (siblingcount=1, non-NUL byte at each level)
+drives the recursion to a depth bounded only by the declared
+`<nodecount>` (a 4-byte field).  On default 8 MB stacks, approximately
+88,000 nested frames exhaust the stack and crash Vim with SIGSEGV.
+
+## Impact
+Issues 1 and 2 are out-of-bounds heap reads with attacker-influenced
+range; the practical outcome is a crash of the Vim process and a small
+window of uninitialized or adjacent heap data being consumed by the
+suggestion algorithm.  Issue 3 reliably crashes Vim through stack
+exhaustion.
+
+Exploitation requires a malicious `.spl` file to be present on the
+runtimepath and the victim to either:
+
+- explicitly enable spell checking with the matching language
+- open any text file containing a modeline that sets `'spelllang'` and
+  enables `'spell'`, while `'modeline'` is enabled.
+
+The severity is rated Medium because exploitation requires both a
+planted spell file and a separate triggering action by the victim, and
+the practical outcome is a crash rather than code execution.
+
+## Acknowledgements
+The Vim project would like to thank github user tacdm for reporting and
+analyzing the issues and suggesting fixes.
+
+## References
+The issues have been fixed as of Vim patch [v9.2.0513](https://github.com/vim/vim/releases/tag/v9.2.0513).
+- [Commit](https://github.com/vim/vim/commit/25e4e46c584840806b45da20ed)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-3h95-3962-mmvf)
+
+Thanks,
+Christian
 -- 
-Alexander Cherepanov
+Die Genies brechen die Bahnen, und die schönen Geister ebnen und
+verschönern sie.
+		-- Georg Christoph Lichtenberg
