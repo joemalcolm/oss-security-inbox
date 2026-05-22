@@ -1,4 +1,4 @@
-Received: (qmail 25649 invoked by uid 550); 16 Jan 2025 10:25:28 -0000
+Received: (qmail 9647 invoked by uid 550); 22 May 2026 19:38:46 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,143 +8,53 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 25616 invoked from network); 16 Jan 2025 10:25:28 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737023119; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U+BiqH/65WeMeYqi/WHWQ7t7P38R7tUpEnmrqDPz7wE=;
-	b=rdu8tqdC375a2pSnGebMxuz72EC/dFMQEJXKLZDOvv3O1aVj76Iputh9j1Trdd3u/Feqt3
-	3GLL2bZ1bcjcI0gLaYFkh/+zLn76ZBkhWQu5nPx4Db5xwR+ENyDjtQ98ipGrSfryPSCqcb
-	3X4Q/AyxuR1qRoCX94ezkXipKG7ROfE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737023119;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U+BiqH/65WeMeYqi/WHWQ7t7P38R7tUpEnmrqDPz7wE=;
-	b=lBNt169XDIO+yW5Z+OwHYDX9kHhWnF/SR4JnNT8V/3K6iMTF8KM+0OesBPRccSUB7GN5gI
-	mYZ3nDZg2x9kOjAg==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jBzb4pHa;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=o+jqeFer
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1737023118; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U+BiqH/65WeMeYqi/WHWQ7t7P38R7tUpEnmrqDPz7wE=;
-	b=jBzb4pHa4+/SO+aD3l8LIFDDRdh+ff9lE7LcHlvf0H0Ytu1jrC2Qty+zSzLT5Wz68D3JLa
-	vUBgDGmY6StGy2aaDD2BQjdCgkzgHKcIaJ5fYJ5+Va5kMSYArQ7KVshDQfMXr/gJ7i547c
-	VVKkWpG6stHnpm69ngTTaTQ7/AY/atk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1737023118;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U+BiqH/65WeMeYqi/WHWQ7t7P38R7tUpEnmrqDPz7wE=;
-	b=o+jqeFer3mG1aK4OsxR0vj9UnRkhJqqzs312pzez1z5ws7P5h1ofQa4l0YYwb4T5LNyi6I
-	CqlRklAiVhfoaLCA==
-Date: Thu, 16 Jan 2025 11:25:17 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: Jacob Bachmeyer <jcb62281@gmail.com>
-Cc: oss-security@lists.openwall.com
-Message-ID: <Z4jejSMgNUpzFI6T@kasco.suse.de>
-References: <Z4ekKFlPfkdWqeW2@kasco.suse.de>
- <5124504d-3d37-42ad-8bf7-fbbb7f8d0317@gmail.com>
+Received: (qmail 26509 invoked from network); 22 May 2026 11:13:13 -0000
+Authentication-Results: apache.org; auth=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apache.org; s=mail;
+	t=1779448357; bh=bpwXxmPhyUuQPrtW+OErDXjxNXZvHRdcPjrB5K//OW8=;
+	h=Reply-To:From:Date:Subject:To:From;
+	b=Oc3Di1/Xsz96ICDwmiDjpI0fQOg/rRadE7LzaoojsvUvhMRaAjxQG1CaRKzTzwRt3
+	 J4MR5tkd2oSAOTEC8RXGLMdE+k/xBtC0AlsgNMnYjrerhRx2jxYzgirm7uvU7zSAXg
+	 vD84Sd+7bY8taq+ZrlnI+/2GqmoVDx5RZRre0d/L330S0GZzQOy7uupjL2vZJZbrHO
+	 uLgL23x6Qul0j+QPBIz3YVedWis8EAK0YBkrvZmA9gwgYQrcYdqWdw/Pl6jQ3keZ4G
+	 Zw1duuxe+t0jrtaYdXpnbR5tnU84L7ZRIly1tyXnPeB1imv2SnwgHb3Iic1AblzLIf
+	 PcGUpjQSegHZA==
+X-Gm-Message-State: AOJu0YwkbUrezUHCqCmsOzKOB6XhKSqlt6LHnl2vYB5yLDVbkL8ySX64
+	+CGwEh09U3Jq5kqBUs1t43GIT4llMOVSRPLpiC6hEG/UCyVtsL3RPzQGc4lECBSWy2vlZhZWTjY
+	K/OczZCMEgbSZPHGbOL00mv6YGLr9DLI=
+X-Received: by 2002:a17:903:1aae:b0:2b9:5d1b:73da with SMTP id
+ d9443c01a7336-2beb0741079mr36999225ad.30.1779448355703; Fri, 22 May 2026
+ 04:12:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="epKNNDuE+yp4Mmmw"
-Content-Disposition: inline
-In-Reply-To: <5124504d-3d37-42ad-8bf7-fbbb7f8d0317@gmail.com>
-Subject: [oss-security] Re: pam-u2f: problematic PAM_IGNORE return values in
- pam_sm_authenticate() (CVE-2025-23013)
+From: Colm O hEigeartaigh <coheigea@apache.org>
+Date: Fri, 22 May 2026 12:12:22 +0100
+X-Gmail-Original-Message-ID: <CAB8XdGBg+YSEHyiuBM-vyogE7JHs87F3QGvfDf0Q8RWgn9Z8gA@mail.gmail.com>
+X-Gm-Features: AVHnY4IYxzAkQUjrG5Ty-aId41vjzYWlItwuFHE78iQd5U9Ly11FOmuMEnr-yIs
+Message-ID: <CAB8XdGBg+YSEHyiuBM-vyogE7JHs87F3QGvfDf0Q8RWgn9Z8gA@mail.gmail.com>
+To: oss-security@lists.openwall.com
+Content-Type: text/plain; charset="UTF-8"
+Subject: [oss-security] CVE-2026-44930: Apache CXF: LDAP Injection vulnerability in XKMS LDAP Repository
 
---epKNNDuE+yp4Mmmw
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 16 Jan 2025 11:25:17 +0100
-From: Matthias Gerstner <mgerstner@suse.de>
-To: Jacob Bachmeyer <jcb62281@gmail.com>
-Cc: oss-security@lists.openwall.com
-Subject: Re: pam-u2f: problematic PAM_IGNORE return values in
- pam_sm_authenticate() (CVE-2025-23013)
+Severity: important
 
-Hi Jacob,
+Affected versions:
 
-On Wed, Jan 15, 2025 at 11:58:00PM -0600, Jacob Bachmeyer wrote:
-> On 1/15/25 06:03, Matthias Gerstner wrote:
-> > There exist utility modules that don't
-> > actually authenticate but perform helper functions or enforce policy. An
-> > example is the pam_faillock [8] module, which can be added to the
-> > `auth` management group to record failed authentication attempts and
-> > lock the account for a certain time if too many failed attempts occur.
-> > This module will return `PAM_SUCCESS` when running in "preauth" mode and
-> > if the maximum number of failed attempts has not been reached yet. In
-> > such a case `PAM_SUCCESS` would become the overall authentication result
-> > when pam-u2f returns `PAM_IGNORE`.
->=20
-> This looks to me like a logic error in PAM.=A0 Why are utility modules=20
-> that do not actually perform authentication returning PAM_SUCCESS=20
-> (indicating successful authentication(!)) instead of PAM_IGNORE or some=20
-> other "neutral" code?
->=20
-> Is this a widespread misconfiguration?
+- Apache CXF (org.apache.cxf.services.xkms:cxf-services-xkms-x509-repo-ldap)
+4.2.0 before 4.2.1
+- Apache CXF (org.apache.cxf.services.xkms:cxf-services-xkms-x509-repo-ldap)
+4.0.0 before 4.1.6
+- Apache CXF (org.apache.cxf.services.xkms:cxf-services-xkms-x509-repo-ldap)
+before 3.6.11
 
-I suppose libpam has no way of differentiating the "importance" or
-purpose of the modules it runs. It could be argued that such utility
-modules that don't actually authenticate should indeed not return
-`PAM_SUCCESS`. From my experience PAM module implementations generally
-return `PAM_SUCCESS`, though, if they deem their task successfully
-completed. This makes sense from a single module's point of view,
-naturally.
+Description:
 
-I could not find anything conclusive about this topic in the PAM
-documentation and development guides. Actually not even about the exact
-behavior and purpose of PAM_IGNORE.
+An LDAP injection vulnerability in the LDAP Certificate repository of
+the XKMS server in Apache CXF may allow an attacker to retrieve
+arbitrary certificates from the repository.
+Users are recommended to upgrade to versions 4.2.1, 4.1.6 or 3.6.11,
+which fix this issue.
 
-For hardening purposes it could be a good idea to return something like
-PAM_IGNORE in utility modules that implement `pam_sm_authenticate()`.
-I'm not sure if I'm overlooking something here that might spoil the
-idea, however. This is a discussion that could be continued on a PAM
-development mailing list (but I couldn't find one after a quick search).
+References:
 
-> Is there a keyword that causes PAM to treat failure as failure but
-> ignore PAM_SUCCESS that should be used with those utility modules?
-
-It looks like there is no keyword that feels natural for this purpose.
-Technically it could be done using the extended PAM syntax in a way like
-this:
-
-    auth [success=3Dignore ignore=3Dignore default=3Dbad] pam_my_utility.so=
- [...]
-
-So it could be handled on configuration level, but it would complicate
-the often already pretty complex PAM stacks we see on Linux
-distributions.
-
-Cheers
-
-Matthias
-
---epKNNDuE+yp4Mmmw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAmeI3o0ACgkQFMQFyXGS
-NVOMPBAAvaUG51Mdze4I0IPmwGFIG5yF4NEmxCSVw7ROQXlO7V/9hmJbHhITXuQp
-44ROV1V69KayCQhKjS7fZptQZ9nSZ+uqnUQXRCDFAwksrMbrtR5QCPXzZCS2s+xD
-tDnI+mVFF3nr41621vxxnGkfZXyF3WyDB98zM7nyLw8ruQSOrsTSEz7KF3Vx/G8q
-rUhKgi5k+CcHOJVqYsP1BSwEb9yGfpQswnlhuadV795J5kXEXZu7/qt8xH/jYOI1
-iaFq7NNs0e7t4wsP32MQ+3L+VUcTgSiy4ae9XS/NCw8lH/NWuWVPgCImdPxrab7Q
-PWbHW88t0NF1QrD7FcKDq4P09SfK34CAa2K4fxmu/68NafGaSRQJqaDFGHNYYGQt
-YHOulzj8+v0JBcCpzjkk10TmGfQ5ciC7j3sxm7yc/AKgRYUVz8cULOZOqjQZ5ntQ
-vagS3jdtX/8ziAwiYSd2jvOdIzCdDYuxuva28WQfM3N9qG+/xz4wPElhSzpy3x6N
-qoC/hEA5IX0MCD289tIK3XIYcBTXHc1HGONl5UU5YXqrdQjPQR1S5x902JJkoVJC
-FuMUTuTpz9QDKcxWUr/OLsIWsVFz7o+oo5kyVHwEeS4GGH/K/yhWjdrwmJcpLUjv
-EE0dxj+3vRUEoV9IBfhcuikImvIk587ULWxnUGnukr+dm92rG2Q=
-=TMuv
------END PGP SIGNATURE-----
-
---epKNNDuE+yp4Mmmw--
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44930
