@@ -1,4 +1,4 @@
-Received: (qmail 32068 invoked by uid 550); 27 Jun 2024 15:31:25 -0000
+Received: (qmail 8031 invoked by uid 550); 23 May 2026 01:55:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,143 +7,204 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30127 invoked from network); 27 Jun 2024 15:31:07 -0000
-Date: Thu, 27 Jun 2024 17:31:02 +0200
-From: Solar Designer <solar@openwall.com>
-To: oss-security@lists.openwall.com
-Message-ID: <20240627153102.GA26917@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] CVE-2024-5535: OpenSSL: SSL_select_next_proto buffer overread
+x-ms-reactions: disallow
+Received: (qmail 7995 invoked from network); 23 May 2026 01:55:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779501315; x=1780106115; darn=lists.openwall.com;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Qv6px11FXjPqBFqZ3hnxwmHqy2DjdejKY0V4hRAFZU=;
+        b=LPFO4HrsAbgCYxIdh5c+XiEGT4NoNFkmMrAmHKSa3EfDZAre8QICXAMPthH7qWtmYG
+         7nXEsHluV3/nTT8cOmOtt4xzp5X1ns4TNTkvaTKr4ebpKZY7rMTAcvpqV7775IJuVrnf
+         K3a9ew6kIfTEPCRyRM8/Wg/ro70A7Js9CLlV8HmTqg2wGsbB5jjpuXhpHK9twXh+T7O8
+         KNoHRCFcJP10joMG7xpnv7Yb9q4IZS3vqUCvhPpaNLliXOTMmm8AanIgNxamo5qLtBkG
+         /A4X9dzgq1niPouP22ADtBjUrTT5OCzp2ZTFa0aH21sjmNsO+OeELRF2Ba0csxp1bzLS
+         m65A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779501315; x=1780106115;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Qv6px11FXjPqBFqZ3hnxwmHqy2DjdejKY0V4hRAFZU=;
+        b=WnKENmxs7K9JR09lrKYMyR/+A/uwYA/eMHpiBPO7XU338E4OoDTZd/+eCW1OZxqeP/
+         8ENEIsDELsw26RP4gjVO+lKjMvT+OLgsN/oQ6fv6+7YUd4714eLzSu4tjzFzIcCDFBA5
+         qAJIp74IgOaNBawuHfwyRIlydgzjVOUf2znnZHq98Tz79kIB64HvVvhDq7xjzwvtPtUd
+         qt/v+O42medaxvMw3J4KPoLJuIhcPpAU7ZeA2Fsv1++o0S2RnYCk/3igE1G44TH/qsxa
+         9GK44AR6PgMlbpgwkuLSPs/HGiJqX5NFaIU+PHoPK1/YRp56k3KoX9Dn+OTXHb+gWwu4
+         2dYw==
+X-Gm-Message-State: AOJu0YwFX5lecDRPaHTp1Sk4tqgO7g54e3WKvIi3r53Uh5M71MNsIJiR
+	13W6wdzkWWeKZkswr6RJwO2BszHQuNLRQI87ki1uoAJnpAilpqsf6MjAd0zqCcVwd7k=
+X-Gm-Gg: Acq92OG3E4pSPRRuJf1AHEczeWfyi1PnZTMr5gMptGPcv4r3++UDIlNGojjhUNogBmg
+	lEqhLmsN1rnEwmdndxCJACHkPEjr+0+VHyd4QCrURJdnW1U1ZcC235dHk4If1+zB1UK/Dwv7+9M
+	iEBdly25GQXNV0swqp1and+nNEOJIAAF0dJ37xyUksdPwC/zyp3TJTgxz1Y5EYcz4fvfmIRtcZn
+	GmFsvPZsH+tn1uUATbcWOl+V/1kr+a4pBbLdnJqnXxct9gnpgz9XvUdJXVQzGtDs//rkDshXMM1
+	+ZeQJTBPShgv8j7RlD2+DCI4I2coULM6lauGTJwtiTMlEA5IYTYvy9ZTTWZCewxyxvRpOfIX+uV
+	yG65f9OKF962kKhwx/cqTpAly4xSHgB4pzi5yGrR623+EVSxig7HUGvV1kYlCA1jnjPix6QS4lZ
+	LuXLK+x+X2T1BDnMYTmftu
+X-Received: by 2002:a05:6870:3807:b0:43a:e293:7eeb with SMTP id 586e51a60fabf-43b5afc4aa0mr3529370fac.37.1779501314769;
+        Fri, 22 May 2026 18:55:14 -0700 (PDT)
+Message-ID: <bab07bb5-aa3c-4a06-b8a7-c33efd179b41@gmail.com>
+Date: Fri, 22 May 2026 20:55:01 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com, ROI AI <sales@roiai.ca>
+References: <afDLFWVMK-r70PB0@yuggoth.org>
+ <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com>
+ <19e48ffc072.20eeee58126634.4537984379441699684@roiai.ca>
+ <19e494d88f3.fa2e5b9128090.8772053311417055861@roiai.ca>
+ <f63f5a7e-6485-4bdc-866d-ab294a22536d@gmail.com>
+ <19e4e2af936.4b7051cf156989.7683180300004644154@roiai.ca>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <19e4e2af936.4b7051cf156989.7683180300004644154@roiai.ca>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
 
------ Forwarded message from Matt Caswell <matt@openssl.org> -----
+On 5/22/26 00:31, ROI AI wrote:
+> I understand the costs, but simply hanging all the dirty laundry out is counter productive.   Working a change in public without going into sensitive details is reasonable, but pushing vuln reports to public is careless.
+>
+> [...]
 
-Date: Thu, 27 Jun 2024 10:24:27 +0000
-From: Matt Caswell <matt@openssl.org>
-To: openssl-project@openssl.org, openssl-users@openssl.org,
- openssl-announce@openssl.org
-Subject: OpenSSL Security Advisory
+In case you have forgotten, this discussion *started* with a maintainer 
+suspecting that LLM-detected vulnerabilities are likely to be found by 
+other LLM users, and Clemens Lang of the RHEL Crypto Team responded on 
+April 29:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+> As a further data point backing up this theory: We’re seeing duplicate reports of the same issue found by multiple independent groups that use LLMs, within the embargo period.
+In short, the argument here is that security issues found using public 
+LLMs should be assumed to *already* *be* *public* and worked 
+accordingly.  The above quote shows the prudence of this assumption, as 
+*multiple* LLM-using groups have reported the same issue while the 
+initial report was under embargo.
 
-OpenSSL Security Advisory [27th June 2024]
-==========================================
+All it takes is one blackhat using a similar LLM and you could have an 
+in-the-wild exploit.  If working under embargo has a time cost, then the 
+prudent solution is to refuse embargo for LLM-discovered issues and 
+complete a patch on the fast public path, because *you* *do* *not* 
+*know* who *else* may have used the same tool and *not* told you about 
+their results.
 
-SSL_select_next_proto buffer overread (CVE-2024-5535)
-=====================================================
 
-Severity: Low
+-- Jacob
 
-Issue summary: Calling the OpenSSL API function SSL_select_next_proto with an
-empty supported client protocols buffer may cause a crash or memory contents to
-be sent to the peer.
+>
+>
+> From: Jacob Bachmeyer <jcb62281@gmail.com>
+> To: <oss-security@lists.openwall.com>
+> Date: Thu, 21 May 2026 21:02:51 -0700
+> Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+>
+>
+>
+> On 5/21/26 01:51, ROI AI wrote:
+>> Also the entire nonsense about making the found issues public - this is absurd and just exacerbates the asymmetry problem.
+>>
+>> By keeping the reports private, the OSS teams can deal with the issues more on their timeline.
+>>
+>>    By making them public, they add timeline pressure and enable attackers.
+>>
+>> Why are you making it harder on yourself?  It is the opposite of what you want to do.
+>   
+> You apparently do not understand.  Most projects take keeping embargoed
+> security issues private rather seriously---and that *itself* has costs.
+>   
+> Further, the key issue here is the question of whether those costs have
+> any benefit when the issue was found using a tool to search for issues,
+> due to the risk of someone *else* using the same tool and finding the
+> same issue.  If that other person is another whitehat, you get a
+> duplicate report.  If that other person is a blackhat, you get an
+> in-the-wild exploit while you were carefully maintaining an embargo.
+>   
+>> [...]
+>>
+>>
+>> From: ROI AI < mailto:sales@roiai.ca >
+>> To: "oss-security"< mailto:oss-security@lists.openwall.com >
+>> Date: Wed, 20 May 2026 22:26:21 -0700
+>> Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+>>
+>>
+>>
+>> People are shooting the messengers here.   The fact is - we are going through a generational security event due to the advancement of LLMs.
+>   
+> Maybe... we are definitely going through a generational event with the
+> amount of "AI" slop that has buried maintainers of major packages.  Have
+> you forgotten already that curl had to cancel their bug bounty due to
+> excessive "AI" slop submissions?
+>   
+>> It is also both trivial and extremely effective to use Agentic analysis to filter security reports.
+>   
+> You advocate that maintainers blindly trust systems that are *known* to
+> be incapable of precise analysis.  I understand talking your own book,
+> but there are serious externalities here and I cannot let this go
+> unanswered.
+>   
+> What if that "Agentic analysis" incorrectly filters out a report of a
+> genuine issue?  Now the issue does not get fixed...
+>   
+> And just how effective is that analysis supposed to be at filtering out
+> "AI" hallucinations?  Remember that the *same* hallucination-prone model
+> might be doing the analysis as made the bogus report.  How, exactly, is
+> a model supposed to recognize its own hallucinations?
+>   
+>> As for 'duplicates', people are claiming this when I have seen little evidence.  I reported a dozen or so to one major project and no one has yet claimed invalid or duplicate.
+>   
+> The claim came directly from someone who *works* with those issues and
+> manages inserting them into a bug tracker.  I am inclined to trust their
+> experience over your hand-waving dismissal.
+>   
+> You might also want to realize that "AI"-generated submissions are now,
+> in many projects, sent straight to the bit bucket, especially if found
+> to be invalid.  You should not expect a response informing you that your
+> report is invalid, as most maintainers have likely stopped bothering to
+> send those.
+>   
+>> Moreover, if 'duplicates' are found, then that is a good signal for prioritization.
+>   
+> Maybe, if only in that duplicate reports indicate that a particular
+> issue may be "low-hanging fruit" and therefore already quasi-public.  In
+> other words, duplicate reports could be a signal to dump the embargo and
+> move faster to fix the issue.  (Remember that working under embargo has
+> costs?  *Those* *costs* *can* *extend* *the* *time* *to* *patch.*)
+>   
+>> Let's stop talking about how the vulns are found and start fixing them with urgency.
+>   
+> Know what?  This reads like "AI" slop... and now I look at the source
+> (< mailto:sales@roiai.ca >) and realize that I am probably debating a slop
+> machine tasked with promoting a product.  I will send this anyway, for
+> the benefit of my fellow humans who will read this discussion and who
+> might---just might---recognize your marketing efforts as the slop they are.
+>   
+>> ROI AI
+>>
+> -- Jacob
+>>
+>> From: Alan Coopersmith < mailto: mailto:alan.coopersmith@oracle.com  >
+>> To: < mailto: mailto:oss-security@lists.openwall.com  >
+>> Date: Wed, 20 May 2026 10:52:37 -0700
+>> Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
+>>
+>> On 4/28/26 07:58, Jeremy Stanley wrote:
+>>> I'm sorely tempted, both due to the increased volume and the risk of premature
+>>> disclosure, to just assume that any vulnerability reported as a result of
+>>> research using an LLM is trivially discoverable by others, and give up trying to
+>>> pretend there's any point to working it under embargo.
+>> Other maintainers under similar floods seem to agree:
+>>
+>> Linux kernel:
+>>    - https://lkml.org/lkml/2026/5/17/896
+>>    - https://docs.kernel.org/process/security-bugs.html
+>>
+>> DNS servers (BIND, Unbound, PowerDNS):
+>> - https://indico.dns-oarc.net/event/56/contributions/1233/
+>> - https://indico.dns-oarc.net/event/56/contributions/1233/attachments/1180/2539/presentation.pdf
+>>
+> Confidential communication. No warranties or commitments unless in a signed agreement. If received in error, notify sender and delete. Unauthorized use prohibited.
+>
+>
+>
+>
 
-Impact summary: A buffer overread can have a range of potential consequences
-such as unexpected application beahviour or a crash. In particular this issue
-could result in up to 255 bytes of arbitrary private data from memory being sent
-to the peer leading to a loss of confidentiality. However, only applications
-that directly call the SSL_select_next_proto function with a 0 length list of
-supported client protocols are affected by this issue. This would normally never
-be a valid scenario and is typically not under attacker control but may occur by
-accident in the case of a configuration or programming error in the calling
-application.
-
-The OpenSSL API function SSL_select_next_proto is typically used by TLS
-applications that support ALPN (Application Layer Protocol Negotiation) or NPN
-(Next Protocol Negotiation). NPN is older, was never standardised and
-is deprecated in favour of ALPN. We believe that ALPN is significantly more
-widely deployed than NPN. The SSL_select_next_proto function accepts a list of
-protocols from the server and a list of protocols from the client and returns
-the first protocol that appears in the server list that also appears in the
-client list. In the case of no overlap between the two lists it returns the
-first item in the client list. In either case it will signal whether an overlap
-between the two lists was found. In the case where SSL_select_next_proto is
-called with a zero length client list it fails to notice this condition and
-returns the memory immediately following the client list pointer (and reports
-that there was no overlap in the lists).
-
-This function is typically called from a server side application callback for
-ALPN or a client side application callback for NPN. In the case of ALPN the list
-of protocols supplied by the client is guaranteed by libssl to never be zero in
-length. The list of server protocols comes from the application and should never
-normally be expected to be of zero length. In this case if the
-SSL_select_next_proto function has been called as expected (with the list
-supplied by the client passed in the client/client_len parameters), then the
-application will not be vulnerable to this issue. If the application has
-accidentally been configured with a zero length server list, and has
-accidentally passed that zero length server list in the client/client_len
-parameters, and has additionally failed to correctly handle a "no overlap"
-response (which would normally result in a handshake failure in ALPN) then it
-will be vulnerable to this problem.
-
-In the case of NPN, the protocol permits the client to opportunistically select
-a protocol when there is no overlap. OpenSSL returns the first client protocol
-in the no overlap case in support of this. The list of client protocols comes
-from the application and should never normally be expected to be of zero length.
-However if the SSL_select_next_proto function is accidentally called with a
-client_len of 0 then an invalid memory pointer will be returned instead. If the
-application uses this output as the opportunistic protocol then the loss of
-confidentiality will occur.
-
-This issue has been assessed as Low severity because applications are most
-likely to be vulnerable if they are using NPN instead of ALPN - but NPN is not
-widely used. It also requires an application configuration or programming error.
-Finally, this issue would not typically be under attacker control making active
-exploitation unlikely.
-
-The FIPS modules in 3.3, 3.2, 3.1 and 3.0 are not affected by this issue.
-
-OpenSSL 3.3, 3.2, 3.1, 3.0, 1.1.1 and 1.0.2 are vulnerable to this issue.
-
-OpenSSL 3.3 users should upgrade to OpenSSL 3.3.2 once it is released.
-
-OpenSSL 3.2 users should upgrade to OpenSSL 3.2.3 once it is released.
-
-OpenSSL 3.1 users should upgrade to OpenSSL 3.1.7 once it is released.
-
-OpenSSL 3.0 users should upgrade to OpenSSL 3.0.15 once it is released.
-
-OpenSSL 1.1.1 users should upgrade to OpenSSL 1.1.1za once it is released
-(premium support customers only).
-
-OpenSSL 1.0.2 users should upgrade to OpenSSL 1.0.2zk once it is released
-(premium support customers only).
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next releases when they
-become available. The fix is also available in commit e86ac436f0 (for 3.3),
-commit 99fb785a5f (for 3.2), commit 4ada436a19 (for 3.1) and commit cf6f91f612
-(for 3.0) in the OpenSSL git repository. It is available to premium support
-customers in commit b78ec0824d (for 1.1.1) and commit 99472514130 for (1.0.2).
-
-This issue was reported on 2nd May 2024 by Joseph Birr-Pixton. Additional
-analysis was provided by David Benjamin (Google). The fix was developed by
-Matt Caswell.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://www.openssl.org/news/secadv/20240627.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://www.openssl.org/policies/secpolicy.html
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhlersmDwVrHlGQg52cTSbQ5gRJEFAmZ9PXcACgkQ2cTSbQ5g
-RJEIfQgAvZAwWKfgrrsYeS2MpgADl2oJXLiKWt02H6r6YqnFV1pyWcBnf2wY3ynC
-68lBa6cifxzr2j44+mpQtMOm+/imho7CFaolJjseB/fU5oCnSqRm5k78KR8FbrwI
-Plt+eajpSwL2NlkKeu48BqcR6JSdq5GzlnEQdD7mBtM67983hN9KJo+Z2AVWBmch
-WX9eWOEn2EX1cUb7L/3N0Q8gSMLskIGK5eM81wGvHkBtDDXp0DHxbLTMsxART8Ly
-0xFoUfbTTyLNfXHlORXtusBjmFrqU5D5WXVagCMOn2ODfUzwXjaC2ZVDlD9lsBUP
-cAREgXKTeGbcFXldAIXxzA2MVASkeg==
-=A6hJ
------END PGP SIGNATURE-----
-
------ End forwarded message -----
