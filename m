@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["743" "Thursday" "8" "September" "2016" "11:17:34" "+0800" "0xr0ot" "0xr0ot.sec@gmail.com" "<CAG0ev14nSoznVzbEEX82ECD4V1uoP2G3CD2fE3=9N9feQ=saiQ@mail.gmail.com>" "25" "[oss-security] CVE request - Samsumg Mobile Phone SVE-2016-6248: SystemUI Security issue" nil nil nil "9" "2016090803:17:34" "[oss-security] CVE request - Samsumg Mobile Phone SVE-2016-6248: SystemUI Security issue" (number mark "U       0xr0ot.sec@g Sep  8   25/743   " thread-indent "\"[oss-security] CVE request - Samsumg Mobile Phone SVE-2016-6248: SystemUI Security issue\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13785 invoked by uid 550); 8 Sep 2016 12:40:33 -0000
+Received: (qmail 32430 invoked by uid 550); 23 May 2026 04:39:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,61 +7,58 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 31799 invoked from network); 8 Sep 2016 03:17:47 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=He46fiEvWXQGTewPaWVVnPx9pkF/PHTz1lw2xRaj3k0=;
-        b=DQTdWqXk0qaNf/8bLNE76cpv6+BuU+zdzE44aL5b7fXu1SZ/Mg3pPzlk7VocK2AzaS
-         ZM27/V6UUfEBnralb+ZKg/Zyy4emC2L8Af/tuPT/NR9XSvBjtSI5QnDNTuYjo55Cb83d
-         H/+P4EaZ4qp+L0wRAAGU+HVjqgHR3py0vtXWtPw+Wounp4q+SX2QzRcP08dBkENDMclG
-         oa40u3zPZk77QJMYalTOOSGItrxWboM5iTob6uIyUdD5I9grWrgyF1+z8/70AbkzOw0e
-         YQcGh6YtjvTKBF27f9LjXpKCLlc4I9PymrsJvP0q9m5UEk4S2Unzh1PJCEAd4yO4LSig
-         soWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=He46fiEvWXQGTewPaWVVnPx9pkF/PHTz1lw2xRaj3k0=;
-        b=eesvkMBTSMpdOO7scdMoysvO/peTLNENVDx5Lzv4wRa/sLwgP4JHOIuzWN7OR84jki
-         6KkjqOy/i12dop5Ju1JFVDtgNE/mPHDiQkSU7jPaq7ocsCpST2PI0rwKw01rVKCofSns
-         wn3ewM+4pFZpMz7LhRJeMtaEerASLqSPYBUq984Utw5g6j9ZpejcHumMCP/7VnDRLREr
-         BMW3CfEGEaroZtD6jo1CeBu6QUoeJeTFe22w+8vCc4IyN+abbzNwUa68+sVKAOr0Bzjc
-         LOBGMxVQZT42aAXN+h3dq8avQHS2JREjVflWFzv69SCH3jdsy9DyDWiemE8ciY2XOj7c
-         B2eg==
-X-Gm-Message-State: AE9vXwN6zzFNradMurgZORnOP3ZWXYm3kPOCTOClLM1Z5vqW1pmfCw0WV73KoRHdWY/Tfw3HqitUmlkf1QMRYQ==
-X-Received: by 10.28.51.146 with SMTP id z140mr5206808wmz.9.1473304655473;
- Wed, 07 Sep 2016 20:17:35 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 23555 invoked from network); 23 May 2026 04:29:28 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Zhongxiang Wang <wangzx@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <08ab9b2f-39ff-4f80-d415-bf6bd32d86a7@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 23 May 2026 04:29:15 +0000
 MIME-Version: 1.0
-From: 0xr0ot <0xr0ot.sec@gmail.com>
-Date: Thu, 8 Sep 2016 11:17:34 +0800
-Message-ID: <CAG0ev14nSoznVzbEEX82ECD4V1uoP2G3CD2fE3=9N9feQ=saiQ@mail.gmail.com>
-To: cve-assign@mitre.org, oss-security@lists.openwall.com, 
-	fulldisclosure@seclists.org
-Content-Type: multipart/alternative; boundary=001a1147e0c4a2b3f5053bf67880
-Subject: [oss-security] CVE request - Samsumg Mobile Phone SVE-2016-6248: SystemUI Security issue
+Subject: [oss-security] CVE-2026-45249: Apache ECharts: XSS in Lines series tooltip
+ rendering 
 
---001a1147e0c4a2b3f5053bf67880
-Content-Type: text/plain; charset=UTF-8
+Severity: important=20
 
-Hi,
+Affected versions:
 
-Description of the potential vulnerability:
-SVE-2016-6248: SystemUI Security issue
-Severity: Medium
-Affected versions: L(5.0/5.1), M(6.0) devices with Exynos7420 chipset
-Reported on: June 7, 2016
-Disclosure status: Privately disclosed.
-The vulnerability exists due to a null pointer dereference on fimg2d driver.
-The patch verifies if the object is null before dereferencing it.
+- Apache ECharts (echarts) before 6.1.0
 
-Fix:
-http://security.samsungmobile.com/smrupdate.html#SMR-SEP-2016
-SVE-2016-6248: SystemUI Security issue
+Description:
 
-I report this to samsung, samsung reply to us if I want to get CVE request
-it by ourself.
+A cross-site scripting (XSS) vulnerability exists in Apache ECharts in the =
+Lines series tooltip rendering logic.
 
-Best regards,
-Zhaozhanpeng(0xr0ot) of Cheetah Mobile.
 
---001a1147e0c4a2b3f5053bf67880--
+
+
+This issue affects Apache ECharts: from before 6.1.0.
+
+In versions prior to 6.1.0, if both Lines series=C2=A0and tooltip are used,=
+ and no user-specified tooltip.formatter is provided, and series.data[i].na=
+me is specified, raw HTML string series.data[i].name can be=C2=A0rendered t=
+hrough innerHTML sink into tooltip content. Although tooltip is allowed to =
+accept user-provided raw HTML via a custom tooltip.formatter, the built-in =
+tooltip formatters conventionally perform HTML escaping automatically. This=
+ case breaks that convention and=C2=A0may unexpectedly lead to script execu=
+tion when tooltips are displayed.
+
+
+Users are recommended to upgrade to version 6.1.0 if using the Lines series=
+ in this way, which fixes the issue.
+
+Credit:
+
+Lakshmikanthan K (finder)
+
+References:
+
+https://github.com/apache/echarts/pull/21608
+https://echarts.apache.org/en/option.html#series-lines
+https://echarts.apache.org/handbook/en/best-practices/security/#passing_raw=
+_html_safely
+https://echarts.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2026-45249
+
