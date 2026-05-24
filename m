@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1445" "Thursday" "17" "November" "2016" "18:28:44" "-0500" "cve-assign@mitre.org" "cve-assign@mitre.org" "<df2fb53117de43a4b3a7884ff078adb4@imshyb02.MITRE.ORG>" "38" "[oss-security] Re: bash - popd controlled free" nil nil nil "11" "2016111723:28:44" "[oss-security] Re: bash - popd controlled free" (number mark "U       cve-assign@m Nov 17   38/1445  " thread-indent "\"[oss-security] Re: bash - popd controlled free\"\n") "<CAEr-gPFsVAB+5KrxRigmb=TkuSPxdGAW-GZ6cdQemxmJf2CFUA@mail.gmail.com>" ("<CAEr-gPFsVAB+5KrxRigmb=TkuSPxdGAW-GZ6cdQemxmJf2CFUA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 19843 invoked by uid 550); 17 Nov 2016 23:28:58 -0000
+Received: (qmail 11539 invoked by uid 550); 24 May 2026 17:18:45 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,53 +7,75 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 19793 invoked from network); 17 Nov 2016 23:28:56 -0000
-From: <cve-assign@mitre.org>
-To: <fernando@null-life.com>
-CC: <cve-assign@mitre.org>, <oss-security@lists.openwall.com>,
-	<chet.ramey@case.edu>
-In-Reply-To: <CAEr-gPFsVAB+5KrxRigmb=TkuSPxdGAW-GZ6cdQemxmJf2CFUA@mail.gmail.com>
-Message-ID: <df2fb53117de43a4b3a7884ff078adb4@imshyb02.MITRE.ORG>
-Date: Thu, 17 Nov 2016 18:28:44 -0500
+x-ms-reactions: disallow
+Received: (qmail 20234 invoked from network); 24 May 2026 17:08:17 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1779642488; bh=UpmmF/0+0+V6ZFuDI8SsBUehNeBwmzg0x+82nzqPpMw=;
+	h=Date:From:To:Subject:In-Reply-To:References:From;
+	b=mvnENLngNFRUr7BrXq94lvttf3O6wJzrHmUALGgPy2iheaGE7kethK7PuaOfwsq7H
+	 vOPaMJZM36QPYUSRTp1A7ZF7R5T7+jaj73UpY6Iql8znyqepNW4w74slcLdAH/lmCB
+	 PVdaF/w9vDej62vkkXMXtBPsGelq7Dflzkjgy4J8=
+X-Riseup-User-ID: C1FB97F5EC5F4CC6ECF0B27FE95C5BCD9EC5F8B84BCD683CD76C59E180BA12E8
+Date: Sun, 24 May 2026 13:08:05 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
+To: oss-security@lists.openwall.com
+Message-ID: <20260524130805.5ff3783d@riseup.net>
+In-Reply-To: <20260519203345.01f21f23@riseup.net>
+References: <20260519203345.01f21f23@riseup.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-Subject: [oss-security] Re: bash - popd controlled free
+Content-Type: multipart/signed; boundary="Sig_/YxUTbEfxMEz6Maef+MZEZD_";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] Re: PCManFM-Qt allows arbitrary files to be opened via the
+ org.freedesktop.FileManager1.ShowFolders method
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--Sig_/YxUTbEfxMEz6Maef+MZEZD_
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> popd can be tricked to free a user supplied address in the following way:
-> 
-> $ popd +-111111
+On Tue, 19 May 2026 20:33:45 -0400
+Aaron Rainbolt <arraybolt3@riseup.net> wrote:
 
-> Program received signal SIGSEGV, Segmentation fault.
-> 0x0827f93a in popd_builtin (list=<optimized out>) at ./pushd.def:384
-> 384          free (pushd_directory_list[i]);
+> This issue was mentioned in the "On the issue of MIME handlers that
+> execute arbitrary code" thread [1], and was brought up three years ago
+> in a report about a vulnerability in Mono [2], but it looks like no
+> one requested a CVE ID for it, so this is a targeted report so I have
+> something self-contained to link to.
+>=20
+> PCManFM-Qt implements the standard org.freedesktop.FileManager1 D-Bus
+> interface [3]. The interface specification states that the
+> org.freedesktop.FileManager1.ShowFolders function "assumes that the
+> specified URIs are folders; the file manager is supposed to show a
+> window with the contents of each folder." I believe the spec meant to
+> say that this method only takes URIs pointing to folders as arguments,
+> but PCManFM-Qt interprets the word "assumes" literally and hands the
+> URIs to a routine that does a MIME handler lookup and launch. If all
+> of the specified URIs actually *do* point to directories, this will do
+> what the user expects, but if any of the URIs point to files, those
+> files will be opened. This can be used for a number of different
+> malicious purposes; most notably, if the user is unlucky enough to
+> have Wine installed using WineHQ's upstream packages, it allows
+> escaping various sandboxing mechanisms (Flatpak, Snap, etc.) by
+> dropping an EXE file on the disk and then pointing PCManFM-Qt to it.
+> (This is because WineHQ's builds of Wine ship a MIME handler for EXE
+> files. That handler runs EXE files blindly.)
 
-> This could be used to bypass restricted shells (rsh) on some
-> environments to cause use-after-free.
+CVE-2026-48700 has been assigned to this issue. [1]
 
-Use CVE-2016-9401.
+--
+Aaron
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
+[1] https://www.cve.org/CVERecord?id=3DCVE-2026-48700
+
+--Sig_/YxUTbEfxMEz6Maef+MZEZD_
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJYLjy/AAoJEHb/MwWLVhi2P8QQAKfY3sVxQ/vVBeiKqG+c61Jb
-l+HoVjuWR+OOFjJ/ugbeaSE1dYFCoQzoVx+/b4nhP4sNiZExs+Odj/A2cGCr6oAj
-1p9do/oEm7pE/n3VAhpqoLxnOflWvk/AOSLcR5kv2IyZWQxq/htBxdzuzdN3cdoz
-4L98GPPCAnF8rhHrHiLRfkDCiC5HbzfPouL9LegUYjHAVwE6IvW+Ckoqx6fX6Diw
-iXahNo0Rw4TR1HgGcp46AiThY98g1K2EeaAaz+bVNmnvX3jc+VTNkd2BMDj+QKJf
-g39zYpP5BDsPhgvJHT65gqnbiWbHP6SnrANgxR7n8W/WKm+X7NAoPCfsYj1OQ3Wd
-Q7UULEYZneqBwXmVrSD4IORTdOLEW1yL7FSfa6lKYpe33R32MTgOCu4oJNLWBzGy
-KtpPioEahBbNX+QeyEH7wDPILWn/KitZR5WIn/wfas84Z8Tfdb1EEyIq6V6J4NA9
-7IXDnwBWTG6Ipu0+VsiL2uvUUTjgiUZAo97YKblYyZmkVMKKG4Cg3CheciPbgVf8
-2qpEsc4ROKjZ0Y+KWP7yI8IfUQxvtw/mAiVIJds7D092VeM/EIbXlqT2kWc1g7nA
-47f94cLsskul95GeCyqZTidMMfTF+pu3RIJS8npWYXoCeh5qfFArTjsNgk2SqIHA
-HrJRIk35K2RgXQ3g6jFT
-=zUdd
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCahMwdQAKCRA5rdye4jrr
+CCyZAP0bGRpIN5V/Y5/Kn80SSKqOafUSLVar3Wtv/yGJ1s1V9AD9EXfhQaC+a9KS
+2auuVtid6jUsbu/WvO4zZoDUGL3kpwg=
+=U+Wc
 -----END PGP SIGNATURE-----
+
+--Sig_/YxUTbEfxMEz6Maef+MZEZD_--
