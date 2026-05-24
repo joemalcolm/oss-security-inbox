@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6713" "Monday" "2" "July" "2018" "14:21:22" "+0200" "Matthias Gerstner" "mgerstner@suse.de" "<20180702122122.GD8324@f195.suse.de>" "180" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" "^Date:" nil nil "7" "2018070212:21:22" "[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()" (number mark "U       mgerstner@su Jul  2  180/6713  " thread-indent "\"[oss-security] accountsservice: insufficient path check in user_change_icon_file_authorized_cb()\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17428 invoked by uid 550); 2 Jul 2018 12:33:44 -0000
+Received: (qmail 20176 invoked by uid 550); 24 May 2026 16:43:20 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,198 +6,89 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32353 invoked from network); 2 Jul 2018 12:21:35 -0000
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Message-ID: <20180702122122.GD8324@f195.suse.de>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="C94crkcyjafcjHxo"
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
-Date: Mon, 2 Jul 2018 14:21:22 +0200
-From: Matthias Gerstner <mgerstner@suse.de>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] accountsservice: insufficient path check in
- user_change_icon_file_authorized_cb()
-To: oss-security@lists.openwall.com
+x-ms-reactions: disallow
+Received: (qmail 25913 invoked from network); 24 May 2026 11:58:39 -0000
+ARC-Seal: i=1; a=rsa-sha256; t=1779623908; cv=none; 
+	d=zohomailcloud.ca; s=zohoarc; 
+	b=puxd0NNC7HTmTo6eXsy8J5+yrWVL/aGgzSPIAPnBPEqbppfaMjIQKnzmDqXF292upEPXl3x/pX+GkywdWD6tpFR10qTNYY1UAPPbiZJ//N7J9m87eTj0fcHCFCM1On+Y82sbHT6jOQkFhYn++DSRJywtueb5dR7UlIiDkkp0X1Q=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomailcloud.ca; s=zohoarc; 
+	t=1779623908; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Cv6R+hYCtYD8/aS0grJ5qlJ4bhmAU62PIVWjCcGcgR4=; 
+	b=FPpxvDP0WlzTey9uWLHLHiDK6W//VK0TZW0PTN9QtN5p7GVpq3Mlr6OXvnIGn2CAT/UXnvjtEqgU4RIrZ4l7TsSsXWnvfGjgulQpYTZpKmAspdtVKIah8E03pELUDGrHI5gGSDwjp9x5LnjtI2H8XkGIMyw6dBilMQRucJhmq4A=
+ARC-Authentication-Results: i=1; mx.zohomailcloud.ca;
+	dkim=pass  header.i=roiai.ca;
+	spf=pass  smtp.mailfrom=sales@roiai.ca;
+	dmarc=pass header.from=<sales@roiai.ca>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1779623908;
+	s=zmail; d=roiai.ca; i=sales@roiai.ca;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To;
+	bh=Cv6R+hYCtYD8/aS0grJ5qlJ4bhmAU62PIVWjCcGcgR4=;
+	b=ne1QtuC63+cZsBsZG4TdGoEQxqabQ5BcG6OzJdvqG+lcU4n30ZALLDPYrc0OsgJG
+	Nk8aG/3EehKP9C2NBeVvdN5vn36tnDb14wweSsassFjDIDvktO+P13bimySusmTmp0p
+	tpEBBRke4Z/f9uURxE8Vxh289wziuih5GVod8/xY=
+Date: Sun, 24 May 2026 04:58:26 -0700
+From: ROI AI <sales@roiai.ca>
+To: "jcb62281" <jcb62281@gmail.com>
+Cc: "oss-security" <oss-security@lists.openwall.com>
+Message-Id: <19e59d9cddf.5c251df4215598.6259862364259739522@roiai.ca>
+In-Reply-To: <bab07bb5-aa3c-4a06-b8a7-c33efd179b41@gmail.com>
+References: <afDLFWVMK-r70PB0@yuggoth.org>
+ <ed61471e-5674-4ad6-9b4c-729027f1073f@oracle.com>
+ <19e48ffc072.20eeee58126634.4537984379441699684@roiai.ca>
+ <19e494d88f3.fa2e5b9128090.8772053311417055861@roiai.ca>
+ <f63f5a7e-6485-4bdc-866d-ab294a22536d@gmail.com>
+ <19e4e2af936.4b7051cf156989.7683180300004644154@roiai.ca> <bab07bb5-aa3c-4a06-b8a7-c33efd179b41@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_324000_415198543.1779623906783"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Subject: Re: [oss-security] Coordinated Disclosure in the LLM Age
 
---C94crkcyjafcjHxo
-Content-Type: multipart/mixed; boundary="zS7rBR6csb6tI2e1"
-Content-Disposition: inline
-
-
---zS7rBR6csb6tI2e1
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+------=_Part_324000_415198543.1779623906783
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hello,
-
-during a code review the following issue was uncovered in
-accountsservice <https://www.freedesktop.org/wiki/Software/AccountsService/=
->:
-
-I have found a weakness regarding the handling of the users' icon files.
-Regular users are by default allowed to change their own data as per
-polkit rule for action org.freedesktop.accounts.change-own-user-data.
-
-In function user_change_icon_file_authorized_cb() in src/user.c there is
-quite some effort for safely setting the icon file property. The logic
-wants to achieve the following:
-
-a) take over the provided path as is, if it points to a world-readable
-  file in /usr/share
-b) otherwise safely copy the file with user privileges into
-  /var/lib/AccountsService/icons, and use that path as the property
-  value
-
-The following if clause tries to determine whether a) is the case:
-
-        if ((mode & S_IROTH) =3D=3D 0 ||
-            (!g_str_has_prefix (filename, DATADIR) &&
-             !g_str_has_prefix (filename, ICONDIR))) {
-
-However, the prefix check is insufficient. Passing ../ components in the
-user supplied path can circumvent the check like this:
-
-$ touch /tmp/test
-$ dbus-send --system --print-reply --dest=3Dorg.freedesktop.Accounts \
-	/org/freedesktop/Accounts/User1000 \
-	org.freedesktop.Accounts.User.SetIconFile \
-	string:/usr/share/../../tmp/test
-$ rm /tmp/test
-$ ln -s /root/.bash_history /tmp/test
-
-Now the accountsservice stores /usr/share/../../tmp/test as icon file
-path, which actually points to /root/.bash_history. A third party
-application that trusts this property can potentially read from this
-location as root and try to interpret it as an image file. This is for
-example the case for Cinnamon desktop in the cinnamon-settings-users GUI
-application. Luckily in this example it does not simply copy the file,
-but tries to read it into an image object first. There may be other
-clients of accountsservice where this leads to more severe consequences.
-
-Suggested Fix:
-
-I think the easiest way to fix this is to normalize the user supplied
-filename e.g. using realpath(), before making the test above. A
-preliminary patch that takes this approach is found in the upstream bug
-referenced below and also attached to this mail.
-
-References:
-
-OpenSUSE bug: https://bugzilla.suse.com/show_bug.cgi?id=3D1099699
-Upstream bug: https://bugs.freedesktop.org/show_bug.cgi?id=3D107085
-
-Timeline:
-
-- 2018-06-28: I found the issue during a code review
-- 2018-06-28: I privately disclosed the issue to the upstream developers
-- 2018-07-02: The upstream developers agreed to publish the details
-
---=20
-Matthias Gerstner <matthias.gerstner@suse.de>
-Dipl.-Wirtsch.-Inf. (FH), Security Engineer
-https://www.suse.com/security
-Telefon: +49 911 740 53 290
-GPG Key ID: 0x14C405C971923553
-
-SUSE Linux GmbH
-GF: Felix Imend=F6rffer, Jane Smithard, Graham Norton
-HRB 21284 (AG Nuernberg)
-
---zS7rBR6csb6tI2e1
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="0001-user_change_icon_file_authorized_cb-fix-insufficient.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom 380f4cd7b80176549e91795808d875c1e6e58ccb Mon Sep 17 00:00:00 2001
-From: Matthias Gerstner <matthias.gerstner@suse.de>
-Date: Mon, 2 Jul 2018 12:06:58 +0200
-Subject: [PATCH] user_change_icon_file_authorized_cb: fix insufficient path
- prefix check
-
-The path prefix check can be circumvented by regular users by passing
-relativ path component like so:
-
-$ dbus-send --system --print-reply --dest=3Dorg.freedesktop.Accounts \
-	/org/freedesktop/Accounts/User1000 \
-	org.freedesktop.Accounts.User.SetIconFile \
-	string:/usr/share/../../tmp/test
-
-This results in a user controlled path to be stored in the
-accountsservice. Clients of accountsservice may trust this path. The
-existing code actually invests quite some efforts to ensure this by
-copying the file away with dropped privileges.
-
-To fix this situation this commit canonicalized the input path for the
-prefix comparison.
----
- src/user.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/src/user.c b/src/user.c
-index c8a2942..e1b9a6f 100644
---- a/src/user.c
-+++ b/src/user.c
-@@ -1306,6 +1306,7 @@ user_change_icon_file_authorized_cb (Daemon          =
-      *daemon,
-=20
- {
-         g_autofree gchar *filename =3D NULL;
-+        g_autofree gchar *canon_filename =3D NULL;
-         g_autoptr(GFile) file =3D NULL;
-         g_autoptr(GFileInfo) info =3D NULL;
-         guint32 mode;
-@@ -1355,9 +1356,19 @@ user_change_icon_file_authorized_cb (Daemon         =
-       *daemon,
-                 return;
-         }
-=20
-+        /* This will not resolve symlinks. But we only want to check for a
-+         * trusted prefix below, so this should be enough. The important b=
-it
-+         * is that no user controlled path is stored in the user data. If
-+         * canon_filename is not trusted then filename will be copied into=
- a
-+         * safe place and the path to the safe place will be stored in the
-+         * user data.
-+         */
-+        canon_filename =3D g_file_get_path(file);
-+
-         if ((mode & S_IROTH) =3D=3D 0 ||
--            (!g_str_has_prefix (filename, DATADIR) &&
--             !g_str_has_prefix (filename, ICONDIR))) {
-+            !canon_filename ||
-+            (!g_str_has_prefix (canon_filename, DATADIR) &&
-+             !g_str_has_prefix (canon_filename, ICONDIR))) {
-                 g_autofree gchar *dest_path =3D NULL;
-                 g_autoptr(GFile) dest =3D NULL;
-                 const gchar *argv[3];
---=20
-2.16.4
+> In case you have forgotten, this discussion *started* with a maintainer=20
+suspecting that LLM-detected vulnerabilities
 
 
---zS7rBR6csb6tI2e1--
+I replied to this thread because I reported a dozen issues to OpenStack, wh=
+ich the OP is a VMT lead for.=C2=A0 He has yet to claim any of the issues I=
+'ve reported are invalid or duplicate.=C2=A0I believe people are overclaimi=
+ng this.=C2=A0 I also believe duplicates, when found, are a good sign for p=
+rioritization.=C2=A0 =C2=A0=C2=A0
 
---C94crkcyjafcjHxo
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEE82oG1A8ab1eESZdjFMQFyXGSNVMFAls6GL0ACgkQFMQFyXGS
-NVM2BhAApvJA2PCAF7LJfA8k3+FoqsWEo94e/2y03HHlbSYT0GCgMkUs7SsQ0INN
-Ft1MseLWHEGYpVdRwrqAtiQq59Xwq+gVr6r2VO2BaK32xBKl/BGR9EjhvVrqInxm
-zJRB0PufEcnFHr6Ug7LIagSAkpXZcmJN/gzr/QfivxT2Ve3JZ1RddHn7ihCSUAjz
-F7AzzJ7l9lij2nxbYEnLdpGggG18iMe6vZJZNxQ17WWBahrkFERX6COQ9WQCAyNc
-yy2jnvPRYyr86EnbJFekTmjAY1jahvNnfOOudoqJ7T4/gIbgxrLRAiyxRxYxvYde
-MddKfLJcGFZRS9LZZ2ys3uS5UpSzoYJNc5Y7YI9HwQZ2VGsT3LQFS99Ix+Hu7OoU
-miCZ5eAgCfiplYLFqeyf12crqUPNcFjGDYV7w2v9XnryIKhFjTHObDO7osGBi/TL
-KCoVb7wbahPpnwiicvdft026Gh6ICTi22nV6XW3TGOCIraRaj4L+dH8Yv1Oe2V9Z
-IN///nus7WesYK5ueD20ifRZTR8WNIshk140nOmu6f7lj+UrdXyMj/yuD0aoKIzr
-n+dj+2VBgJLjrgCdUg9+041xdj8ElWaFB8TKfuQgPsHjfsveGYNTiW+3fTTyppHG
-1JUFr83MMYP3pLfvVJb+bYaMfOTRtZ4WREy1TjyWSDdkcsi4IrA=
-=FHL2
------END PGP SIGNATURE-----
+I was also disappointed to see a serious security bug I reported on OpenSta=
+ck pushed to public.=C2=A0 If I had know that would happen, I wouldn't have=
+ reported it.=C2=A0 I don't want to be a part of what I feel to be negligen=
+t and unprofessional activities.=C2=A0 My goal was not credit, but rather t=
+o improve the security of OpenStack as I wanted to see it as a solution to =
+sovereign cloud.=C2=A0 Pushing it to public undermined that.
 
---C94crkcyjafcjHxo--
+=C2=A0
+Using LLMs, I am farming careless engineers who reveal security sensitive i=
+nfo in bug reports, commit comments, and code reviews.=C2=A0 This 'public' =
+attitude is just making it much easier for me to do so.
+
+
+Security sensitive communication should remain in a restricted discussion a=
+rea and teams should be using LLMs to analyze it for further issues to clos=
+e.
+
+
+
+
+-- Jacob
+Confidential communication. No warranties or commitments unless in a signed=
+ agreement. If received in error, notify sender and delete. Unauthorized us=
+e prohibited.
+
+
+
+
+------=_Part_324000_415198543.1779623906783--
