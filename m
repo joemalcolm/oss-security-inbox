@@ -1,4 +1,4 @@
-Received: (qmail 7796 invoked by uid 550); 30 Mar 2024 16:25:32 -0000
+Received: (qmail 9749 invoked by uid 550); 25 May 2026 01:55:25 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,61 +7,74 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5739 invoked from network); 30 Mar 2024 16:25:12 -0000
-Date: Sat, 30 Mar 2024 17:24:59 +0100
-From: Solar Designer <solar@openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 17562 invoked from network); 25 May 2026 01:36:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
+	t=1779672984; bh=+DbtfEuoU8sjFNcR7LiKPwMGgCDCKst3JDAimgtgmnw=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=eIDSUD4kOaA+zIzu2wWkgq865nl6ZjWeNOUjN4DfWYyA9l79OqBY1OB4kViSRfew5
+	 /rwgKnWdvir9qwOcRovMPr27QHblphpdPRiaqqxw7HnCtteLyHsIDOJCFMQOAJ676E
+	 r/ZUJq94KtSnsJWFeV4+e4+iInkCchbXy1AW7rKg=
+X-Riseup-User-ID: 61CF8D5A2E9857489AE36F87333EDAC66FDA134D61E3387FE832EDB7E030ED7C
+Date: Sun, 24 May 2026 21:36:21 -0400
+From: Aaron Rainbolt <arraybolt3@riseup.net>
 To: oss-security@lists.openwall.com
-Message-ID: <20240330162459.GA10648@openwall.com>
-References: <uu7da3$87n$1@ciao.gmane.io> <20240329221938.dqit6xuh4es2v6gc@awork3.anarazel.de> <uu7g5q$8hl$1@ciao.gmane.io> <01322afdcf6b4dd7b81452dc5afed6b1@amazon.com> <6038e843-fc3f-4c51-a48c-feb283242b41@canonical.com> <uu7k2m$61a$1@ciao.gmane.io> <CAOp4FwT+kqoG1JRawFu6tkz0LUMgkT9RCVfh7vyaN3bbFkYx3Q@mail.gmail.com> <72a9dfe5-a88d-4711-bc90-cd9269124f08@schafweide.org> <87cyrbzw2z.fsf@daath.pimeys.fr> <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8nw_5rvGtemqZ3ojSaOCoLZnb+5q8m4NxTf5QTJ=5hoQg@mail.gmail.com>
-User-Agent: Mutt/1.4.2.3i
-Subject: Re: [oss-security] backdoor in upstream xz/liblzma leading to ssh server compromise
+Cc: adrelanos@whonix.org
+Message-ID: <20260524213621.18bd1dad@riseup.net>
+In-Reply-To: <20260518220116.170677b2@riseup.net>
+References: <20260518220116.170677b2@riseup.net>
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="Sig_/zlTzyTSWByGhWz6t_m2pBHU";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+Subject: [oss-security] Re: On the issue of MIME handlers that execute arbitrary code (e.g.
+ Wine)
 
-On Sat, Mar 30, 2024 at 11:32:54AM -0400, Jeffrey Walton wrote:
-> Lasse published a statement at <https://tukaani.org/xz-backdoor/>.
+--Sig_/zlTzyTSWByGhWz6t_m2pBHU
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Quoting here for archival, and ease and safety of access:
+On Mon, 18 May 2026 22:01:16 -0400
+Aaron Rainbolt <arraybolt3@riseup.net> wrote:
 
----
-XZ Utils backdoor
-Lasse Collin
+... snip ...
+=20
+> If all applications followed the xdg-mime manpage's advice to never
+> execute code when opening a file, this wouldn't be that big of a
+> problem. This is where Wine comes in; it ships a desktop file that
+> registers Wine as a MIME handler for
+> 'application/x-ms-dos-executable', 'application/x-msi', and
+> 'application/x-bat'. [3] These handlers result in the command 'wine
+> start /unix FILE-NAME' being run, which of course loads the
+> executable code from the opened file into memory and starts running
+> it. That means, if you are unlucky enough to have an unsandboxed copy
+> of Wine as your only MIME handler for EXE files, any flatpak on your
+> system can break out of the sandbox by writing an EXE file somewhere,
+> then opening it with org.freedesktop.portal.OpenURI.OpenFile. This
+> issue has been reported to Wine a short while ago [4]; I didn't
+> report the issue privately since I couldn't find a security contact
+> for Wine and was encouraged to make a public bug report when I asked
+> for a security contact on IRC some time back. (I was also given an
+> email where I could privately contact someone, but I no longer have
+> it, and I was somewhat discouraged from using it when I initially
+> asked.)=20
 
-This page is short for now but it will get updated as I learn more about the incident. Most likely it will be during the first week of April 2024.
+CVE-2026-48831 has been assigned for this. [1]
 
-The Git repositories of XZ projects are on git.tukaani.org.
+--
+Aaron
 
-xz.tukaani.org DNS name (CNAME) has been removed. The XZ projects currently don't have a home page. This will be fixed in a few days.
+[1] https://www.cve.org/CVERecord?id=3DCVE-2026-48831
 
-Facts
+--Sig_/zlTzyTSWByGhWz6t_m2pBHU
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
-- CVE-2024-3094
+-----BEGIN PGP SIGNATURE-----
 
-- XZ Utils 5.6.0 and 5.6.1 release tarballs contain a backdoor. These tarballs were created and signed by Jia Tan.
+iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCahOnlQAKCRA5rdye4jrr
+CPgvAP9vP/2tZ0xQIpnQi2FStlNOIAARLuaaq8OumvWatFobdAEA2/zAnLEWhO4f
+nHAiy8I8Q5aFMZq0CB0L7VlqL7ixgAI=
+=ai7D
+-----END PGP SIGNATURE-----
 
-- Tarballs created by Jia Tan were signed by him. Any tarballs signed by me were created by me.
-
-- GitHub accounts of both me (Larhzu) and Jia Tan are suspended.
-
-- xz.tukaani.org (DNS CNAME) was hosted on GitHub pages and thus is down too. It might be moved to back to the main tukaani.org domain in the near future.
-
-- Only I have had access to the main tukaani.org website, git.tukaani.org repositories, and related files. Jia Tan only had access to things hosted on GitHub, including xz.tukaani.org subdomain (and only that subdomain).
-
-Links
-
-- Details by Andres Freund
-https://www.openwall.com/lists/oss-security/2024/03/29/4
-
-- FAQ by thesamesam
-https://gist.github.com/thesamesam/223949d5a074ebc3dce9ee78baad9e27
-
-- Gentoo bug 928134
-https://bugs.gentoo.org/928134
-
-- Debian bug 1068024
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1068024
----
-
-Alexander
+--Sig_/zlTzyTSWByGhWz6t_m2pBHU--
