@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6939" "Thursday" "13" "December" "2018" "08:46:56" "+0100" "=?UTF-8?B?U2FsdmEgUGVpcsOz?=" "speirofr@gmail.com" "<CA+NXwpSmdPV4qO7VUiF+KpE-3=tq9+BzaR7LycyzdoS5YS6vhw@mail.gmail.com>" "164" "Re: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" "^Cc:" nil nil "12" "2018121307:46:56" "[oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)" (number mark "U       speirofr@gma Dec 13  164/6939  " thread-indent "\"Re: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by a response discrepancy information exposure (CWE-204)\"\n") "<20181212163242.GA12693@openwall.com>" ("<CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>" "<20181212163242.GA12693@openwall.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 7696 invoked by uid 550); 13 Dec 2018 09:15:27 -0000
+Received: (qmail 9400 invoked by uid 550); 26 May 2026 14:51:18 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,209 +6,50 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 26035 invoked from network); 13 Dec 2018 07:47:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4MtuV8vtFh3VDgPITHHoQ+ef4oPQYFsKvL9ILhnb0ms=;
-        b=a92roopDO9rMAsWkgTkfIBq0NpTFGWyDtjZnAsXjBzfPvoc0PUPqKPy2TJky9qT3VT
-         JT+lWe/9J6bEqaSlHV28Qelch9tbHFwwUyqABLzivbEvRp0U71dXzs2wUnEoAcCvIYEN
-         PgjZkJOUVyGGT8EL3Gq57a/XHtNlPQuzEJotWyDMYDGjfcfhjVioKvYcap2yr8JveL6g
-         awJhvGci0ZdiIOUSzXApJp4ctLo9b2WF7wkelrgKeBo46V5WYEzbDYKzjpAeSUb+cibP
-         kXz6TZvmjT6HjsaJ49DndmxJ+HrEe3tuA3BcdCw2mKXQVvklHiXE/D5RwvaOvOjZgeVU
-         YFIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4MtuV8vtFh3VDgPITHHoQ+ef4oPQYFsKvL9ILhnb0ms=;
-        b=T/iRsIjZwSLiqUwzDR8KyawOZmI10wyh9nSLf8sLKDlkjw9J3yENtcwrXD/sYgbwyL
-         HHY4Dnyo7XC9W7/4xchRYWX5JP53HjtbHaP2GFBkoB2NtK3rT7KDzFJiZd7wLxVGN3g4
-         MQfLdEHjlAtv2SXO6yD2WKf6MkITQpytKxFQFyjH6JZ7dJZrAroiRQ8ntmxlVJrZUC21
-         N6S1/caJAkGQsRXdlOqvG4pyr3Hd9vo/bg38ZDKGEQuAmgFVx9XQrQLKoiar9oKlGJ/A
-         o+oDxs6CII5zctLZhmc3liUyXcJlIAASvnCR0NHEbQGB9gI4rmZLmFzMPVhJnXWtDUuJ
-         WetQ==
-X-Gm-Message-State: AA+aEWZaqP9vkS0vXVfaLvdozDCZ0OF9IN95Zy05Y8Rb9lIcM42HNP5t
-	2PKmboXAJcYMLZwgUNv+1WH54rBpGHQSiZqAMbIkXedn
-X-Google-Smtp-Source: AFSGD/WM2Gxycb0z0B7vtIXzQwymDjhRrhRo5aGBNJb4mxT7VfeaV78P0QY9J9ir/kHb5tda+5zU76cPfl9bWUnCBCU=
-X-Received: by 2002:a0c:9311:: with SMTP id d17mr22158722qvd.54.1544687229136;
- Wed, 12 Dec 2018 23:47:09 -0800 (PST)
-MIME-Version: 1.0
-References: <CA+NXwpT9J40mJe_=h-R==qJBc=9PA+-80b8p4gdaJ=uy_JhMJg@mail.gmail.com>
- <20181212163242.GA12693@openwall.com>
-In-Reply-To: <20181212163242.GA12693@openwall.com>
-Message-ID: <CA+NXwpSmdPV4qO7VUiF+KpE-3=tq9+BzaR7LycyzdoS5YS6vhw@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000094f3a6057ce28550"
-Cc: oss-security@lists.openwall.com
-Date: Thu, 13 Dec 2018 08:46:56 +0100
-From: =?UTF-8?B?U2FsdmEgUGVpcsOz?= <speirofr@gmail.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] CVE Request: mini-httpd (<= v1.30) is affected by
- a response discrepancy information exposure (CWE-204)
-To: solar@openwall.com
+x-ms-reactions: disallow
+Received: (qmail 25906 invoked from network); 26 May 2026 14:31:43 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Gyula Fora <gyfora@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <c01405e0-12f6-3233-7708-9fef1bec8577@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 26 May 2026 14:29:39 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-40564: Apache Flink Kubernetes Operator: Server-Side
+ Request Forgery and local file access in Kubernetes Operator 
 
---00000000000094f3a6057ce28550
-Content-Type: text/plain; charset="UTF-8"
+Severity: moderate=20
 
-Hi there,
+Affected versions:
 
-Thanks for the pointers for further investigating,
+- Apache Flink Kubernetes Operator 1.3.0 before 1.15.0
 
-I was also curious about why crypt(3) was returning NULL,
-when I looked at the crypt(3) man-page I found that crypt()
-returns NULL on error, upon further checking I've observed that
-errno is being set to EINVAL (22) after the call to crypt(3).
+Description:
 
-So here is what I've done so far to reproduce this,
-initially, I omitted the steps to generate the htpasswd
-as I though they where not relevant, I'm adding them now for completeness:
+Files or Directories Accessible to External Parties, Server-Side Request Fo=
+rgery (SSRF) vulnerability in Apache Flink Kubernetes Operator.
 
-The htpasswd password for the "user" is generated by htpasswd from
-apache2-utils:amd64 (= 2.4.25-3+deb9u6) on Debian
+The FlinkSessionJob jarURI is currently not validated so that it points to =
+user-owned files or addresses.=C2=A0=C2=A0This lets a user with CR create p=
+ermissions read files from the operator pod's filesystem and pull content f=
+rom any backing store reachable through Flink's pluggable filesystem layer =
+and access them through the submitted Flink job. Furthermore for fetching f=
+rom http/https addresses=C2=A0there is currently no allowlist on the URI sc=
+heme, no host check, no IP-range restriction, and no protection against poi=
+nting the URI at internal or link-local addresses.This issue affects Apache=
+ Flink Kubernetes Operator: from 1.3.0 before 1.15.0.
 
-# Generate password "user" for "user"
-$ /usr/bin/htpasswd -c auth/.htpasswd user
-New password: <user>
-Re-type new password: <user>
-Adding password for user user
+Users are recommended to upgrade to version 1.15.0, which fixes the issue.
 
-$ cat  auth/.htpasswd
-user:$apr1$5.vGoLoA$OrxfML2lNUHvhMJrIC7lP.
+Credit:
 
-Then a request is made to mini-httpd:
+Andrea Cosentino (finder)
+Andrea Cosentino (remediation developer)
 
-$ curl http://user@127.0.0.1:8000/auth/
+References:
 
-This causes the mini-httpd to invoke crypt(3) with the following arguments
-cryptpass = crypt(key, salt), I've added printf's to mini_httpd.c to report
-the actual
-arguments being passed and the value returned by crypt():
+https://flink.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-40564
 
-$ mini_httpd -D -p 8000 -h 127.0.0.1 -l /dev/stderr
-key "" salt $apr1$Eh4Xgu3L$YIbNfgDcC1bRGBQWKMS.A1 cryptpass (null)
-errno 22 strerror Invalid argument
-
-Then mini_httpd.c receives a SIGSEGV when performing strcmp() on the NULL
-cryptpass at mini_httpd.c:2407. The cause of the NULL return value is that
-the salt given to crypt() is invalid as show by errno=EINVAL.  So crypt(3)
-is setting
-errno=EINVAL to report that the htpasswd file generated by apache2-utils is
-not
-valid for being used with mini_httpd.
-
-Best,
---
-salva
-
-On Wed, Dec 12, 2018 at 5:33 PM Solar Designer <solar@openwall.com> wrote:
-
-> On Wed, Dec 12, 2018 at 04:27:02PM +0100, Salva Peir?? wrote:
-> > The mini-httpd daemon (version <= v1.30) shipped in Debian/Ubuntu from
-> [1]
-> > is affected by a response discrepancy information exposure (CWE-204) that
-> > enables an attacker to remotely enumerate valid htpasswd usernames (RFC
-> > 7617).
-> >
-> > A more detailed advisory can be found at:
-> > https://speirofr.appspot.com/files/advisory/SPADV-2018-01.md
-> > https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=916190
->
-> The advisory SPADV-2018-01.md is in fact significantly more detailed
-> than what you posted, so I've attached it to this message for archival.
->
-> > Is there a CVE for this? If not, could one be assigned, please?
->
-> oss-security is no longer a place to request CVE IDs.  See:
->
->
-> https://oss-security.openwall.org/wiki/mailing-lists/oss-security#cve-requests
->
-> "Previously, one could request CVE IDs for issues in Open Source
-> software from oss-security.  This is no longer the case.  Instead,
-> please start by posting about the (to be made) public issue to
-> oss-security (without a CVE ID), request a CVE ID from MITRE directly,
-> and finally "reply" to your own posting when you also have the CVE ID to
-> add.  With the described approach you would only approach MITRE after
-> the issue is already public, but if you choose to do things differently
-> and contact MITRE about an issue that is not yet public, then please do
-> not disclose to them more than the absolute minimum needed for them to
-> assign a CVE ID."
->
-> You've already posted in here (great!) so all that's left is for you to
-> request a CVE ID from MITRE and to post that CVE ID here as a "reply".
->
-> However, I question the vulnerability finding or at least its
-> completeness, so you might want to hold off on requesting a CVE ID for
-> it.  Please see below:
->
-> > +++ b/mini_httpd.c
-> > @@ -2404,7 +2404,8 @@ auth_check( char* dirname )
-> >          /* Yes. */
-> >          (void) fclose( fp );
-> >          /* So is the password right? */
-> > -        if ( strcmp( crypt( authpass, cryp ), cryp ) == 0 )
-> > +        char *cryptpass = crypt( authpass, cryp );
-> > +        if ((cryptpass != NULL) && (strcmp(cryptpass, cryp ) == 0) )
->
-> While it's important to check the return from crypt(3) for non-NULL
-> before using the string(*), if this were the issue triggering the
-> vulnerability you describe that fix would be incomplete.
->
-> (*) A general issue that was discussed in here some years ago, with
-> opinions varying on whether crypt(3) should follow current POSIX and
-> return NULL or retain historical behavior of never returning NULL not to
-> upset programs written before the POSIX change.  In the end, many libc's
-> went with the NULL returns on error.  Programs need to be fixed to
-> support NULL returns from crypt(3) anyhow.
->
-> In the advisory, you wrote:
->
-> > When the basic authentication string "user:pass" is composed only of the
-> user
-> > part without the password part, ie. "user:", then the authpass at
-> > mini_httpd.c:2372 becomes the empty string "".
-> > When the empty string is passed to the crypt(3) this returns the NULL
-> string.
-> > The NULL string is later dereferenced by the strcmp(3) call at
-> mini_httpd.c:2407
-> > causing an invalid memory access that triggers the SIGSEGV, and kills
-> the forked process.
->
-> This isn't a complete explanation.  crypt(3) isn't supposed to return
-> NULL when authpass is the empty string "".  Empty string is a valid
-> password, and should result in a valid password hash string, as long as
-> the salt or setting string provided in the second argument to crypt(3)
-> is valid.
->
-> I can see how you'd trigger a NULL return from crypt(3) by having an
-> empty or otherwise invalid password hash string in the .htpasswd file.
-> So you'd be able to distinguish usernames corresponding to those lines
-> with invalid hashes from usernames corresponding to lines with valid
-> hashes.  A crash on an invalid .htpasswd line is indeed a robustness
-> bug, but I'm not sure it constitutes a vulnerability.
->
-> This is different from being able to distinguish existing vs.
-> non-existent usernames.  (Besides, when fixing an issue of the kind you
-> thought this one was, we should also remember that timing leaks will
-> remain either way.  I don't suggest to leave worse-than-timing leaks
-> intact, but rather not to provide wrong expectations and a false sense
-> of security once we do.  And a next step may be to reduce timing leaks
-> by performing dummy password hashing for non-existent usernames, again
-> being careful to point out that smaller timing leaks will remain.)
->
-> If the behavior is in fact exactly as you observed it, then maybe your
-> system's libc or libcrypt is vulnerable in that it's incapable of
-> processing an empty password.  I almost wonder if someone thought it'd
-> be OK to implement e.g. some security standardization compliance by
-> having crypt(3) fail to process an empty password and return NULL.  If
-> so, that would be an interesting case for us to discuss.
->
-> Please investigate this further.
->
-> Thanks,
->
-> Alexander
->
-
---00000000000094f3a6057ce28550--
