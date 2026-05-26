@@ -1,4 +1,4 @@
-Received: (qmail 17540 invoked by uid 550); 2 Nov 2022 17:27:01 -0000
+Received: (qmail 5772 invoked by uid 550); 26 May 2026 23:49:41 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,94 +7,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 17522 invoked from network); 2 Nov 2022 17:27:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KtuoGTS1rRA+9+x3b8fcMlpUn9OA7XQfAI9LAPHO/2A=;
-        b=aHJ+sdbHOvFTrJhhRg8UJ3Cft42mXyyMbapj8T8S72jPBEahcWkz+4reoR6OCghRZL
-         9YaSBtXGgpFml+6BBmIF/eEHB+G3LvpHyHohka1FWJYCtnn8vpXckL/qPh2KyQlob0H+
-         n94UGpEPwRjLlVaMbBapN4zpw+a6J4foxxtZCpNp9SvwL+hlLTI66jp+zDT0YmMlWaif
-         nOQB1HzOOw0C+AnWZ2l5Ey2pDWjNoOmUIllsAQjw0DD6LD6BrRgY+UylYmnr5ZpIkdlo
-         gXBNLcFw/CGgSeWzow0EtJoRE9fwm8pwRbcnvKuWRjuHYfJw+7tI1etZCOx+rN79rpLp
-         TkyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KtuoGTS1rRA+9+x3b8fcMlpUn9OA7XQfAI9LAPHO/2A=;
-        b=NlIwe9Ar7YO8nvZIKITI0V5xiAzLZ4rQ3eJkl/xHc7deuCaZbBI9HfuKqKnDk+LLCx
-         bXC6y1OiXV/OPGtGxKSbku56QIGzovpwNT3d9TtG6FEyzO9yPl4Te0mMBeawgH0Bdim+
-         vgm21Cpk5Kz6SmD8dGUZQdxeJkGdHRTYrHhAP4SKZDCtjgxR6rs9d9Tz/a/9CAxZocAM
-         CXfGPaqQ+1t0h9WhR5UwstIkQTqrIe1kCNeg72shDjZHONFf3FCb367PvkmawVtqLHOK
-         dhWqwmax0vcrrjblYP1dsEqNxFQNeO1LG2ZbgEEIC4kPLw2cAYsEGsw/jBPx2FDoR8EO
-         Wzww==
-X-Gm-Message-State: ACrzQf1PPEbFw0FcCmWr1ZW3zCmRT/4PnVCvFEtm43Kc+/4XfQRaCRPc
-	FQ54Wf84cdOZPLpykBz3QR2Fw9UjiJhlTPhBZp5OOfZv
-X-Google-Smtp-Source: AMsMyM4xVL2qVwHj6PMSibCipIRiN+vKs4zEiENKwnPeFtkkH9VEIuv40grZwn1c311NWyO0dNS1mofd5+9DogHVoFw=
-X-Received: by 2002:a05:6512:4002:b0:4a2:6243:8384 with SMTP id
- br2-20020a056512400200b004a262438384mr9369420lfb.29.1667410009097; Wed, 02
- Nov 2022 10:26:49 -0700 (PDT)
+x-ms-reactions: disallow
+Received: (qmail 11732 invoked from network); 26 May 2026 22:49:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779835786;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Ui/eFzjBUWBAWj8OePjVEB3FpqCTHW+nN2fFv5OwHTc=;
+	b=StEUdvQs7SY5fIxWlbzLd08xQaos5xSIDSTOLJ5StBYf3WLH5x5uSHttNX6kzwsvkoIj+c
+	p0zNci2nrNvHKaq2GXvz4eEzwgVnCtpGDIndgo0y5U5u7KKQWzQ0jSsrGyqypPgz0T4jc5
+	Zn4FF0zoarYFmZZ9Bd1IU1sFYpP0hjMoZOpSRCs+wCCS1UYpdeewsJDXK4GMo+KlE7Wx//
+	/fq/fUMU4r3yuS0LDU23c26oM6lkIssHYRKQHbzskPakXpuLbMdd6KMxmIiJNnAX9VVXg7
+	W4zrhuouWHS7YNBDdh3z7RW5FJ4IpdwUv2vuxe1yu2nn+uON4jze6zHjZT1K4Q==
+Message-ID: <3474d514-d316-49bc-adad-5d1ec4deb970@cpansec.org>
+Date: Tue, 26 May 2026 23:49:45 +0100
 MIME-Version: 1.0
-References: <20221101170833.GA10470@openwall.com> <Y2FhxvA/2e7xFUiF@itl-email>
- <alpine.BSF.2.21.9999.2211020631160.34372@aneurin.horsfall.org>
- <CAPWQ=1TzQ_e2yHZMXx6Tm4UJG3owZypShvm+VDoxEMcDSDxX+A@mail.gmail.com>
- <CAH8yC8mzcw-C257znYHH+qSyXoFVJWaAD=3dbvH3ZxymUtZU0A@mail.gmail.com>
- <tjtkiu$jeu$1@ciao.gmane.io> <CAFRnB2Wyc9uLMz8O-YLQ3JZ1-fUYWr+NpFecYyFYdA1YyB+sfA@mail.gmail.com>
- <tju633$t4h$1@ciao.gmane.io>
-In-Reply-To: <tju633$t4h$1@ciao.gmane.io>
-From: Alex Gaynor <alex.gaynor@gmail.com>
-Date: Wed, 2 Nov 2022 13:26:37 -0400
-Message-ID: <CAFRnB2X3U2K6e14XLpJo7X6bWbRD6mSGsfzmWzReJbQnDPvEhQ@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Content-Type: text/plain; charset="UTF-8"
-Subject: Re: [oss-security] Re: OpenSSL X.509 Email Address 4-byte Buffer
- Overflow (CVE-2022-3602), X.509 Email Address Variable Length Buffer Overflow (CVE-2022-3786)
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFIQy+D82bRigV1ywzSEFPBTZOjoPHfd2BZrBqyhhRsWhZ+XMYHF8UvK3HgEaIX7CFDNga2u/uGdyU3luPIBq+SnUk70ovWfbNrcvzakFZhNkQjPGWtp+7tx+c46q5iqseXj51aQK0/f8GFZf1qIsy8F45/aDOqj3tnYeMVc4kLynGnabi0WuNEUcm2OYiOJLCtKYZsdHbqNiujvuniP3rywx+NoIWfW91Fj0Z8/rTQpPnGxJJO+uftQb3Cm6IeC/f7bty9nCGM6RguK6ocHxy6gsrkKI6cOAC7k4cAo0+N6mcFwvgT3XgmPYThvDAJZZHQldLtCY+jbYfGM0EwQL8YENSiyGcs6rMYz+XG0JKbEnI+SDbt1V7lbY+tDy3AmB7cnL1fgfiZ0cTMeBMhUZRSNwsXqv9p1u9myRepUDu3bm7yJmck6sSDQAuGzykX9ts7HKc7sVVb/qf57L+ntzjzhPaa98+SY5s9FFCsAQsOocqk/HsMd+tGPBfawjhOLqaCYP2HoBhNq9GnOx99IXSYF5f7vkn5VSkohcLrN0N303fCHIG/aapC3pW6FatRu7ilklNXGKQQ7r9jxxYynqFKwTetedcF2DzSPmL/mEeDNOmPx8ypZWv+ly8aGKGS3vphseIeRgO+KTYxwHnF2JWpSlbFW7tRXG87hgNJeWEm9g
+Subject: [oss-security] CVE-2026-46740: Mojolicious::Plugin::Statsd versions through 0.04 for
+ Perl allowed metric injections
 
-The distinction I'd make is that Rust's behavior is guaranteed, while
-the factors in C leading to a buffer overflow being unexploitable are
-contingent. Users compiling without -fstack-protector-strong, precise
-allocation patterns or stack layout patterns, etc all impact whether a
-C buffer overflow is exploitable or not.
+========================================================================
+CVE-2026-46740                                       CPAN Security Group
+========================================================================
 
-It's telling that OpenSSL originally understood this to be a CRITICAL
-severity, but only after analysis and feedback from many other folks
-were they confident enough to lower it a HIGH severity -- in Rust one
-would know right off that bat that it was definitely a DoS at worst.
+         CVE ID:  CVE-2026-46740
+   Distribution:  Mojolicious-Plugin-Statsd
+       Versions:  through 0.04
 
-And of course, many buffer overflows never get the deep expert
-analysis required to establish if they're exploitable or not -- I
-don't need to tell you that the P0 blog is full of exploits of 1-byte
-buffer overflows that many people wrote off as "no way that can be
-exploited" :-)
-
-Alex
-
-On Wed, Nov 2, 2022 at 1:19 PM Tavis Ormandy <taviso@gmail.com> wrote:
->
-> On 2022-11-02, Alex Gaynor wrote:
-> > In Rust, assuming you wrote normal safe Rust[0], and you had code that
-> > overran a buffer on the stack, you'd get a panic() -- which is roughly
-> > an abort (there's even a mode where it literally is an abort. By
-> > default it unwinds and runs destructors and such). As a general rule,
-> > bounds check issues aren't caught at compile time (in contrast with
-> > temporal safety, which mostly is enforced at compile time.)
-> >
->
-> Got it - thanks! It seems like in the specific case of non-exploitable
-> overflows, rust wouldn't have made too much difference (abort() vs
-> panic())... although obviously that doesn't mean other issues wouldn't
-> have been mitigated.
->
-> Tavis.
->
-> --
->  _o)            $ lynx lock.cmpxchg8b.com
->  /\\  _o)  _o)  $ finger taviso@sdf.org
-> _\_V _( ) _( )  @taviso
->
+       MetaCPAN: https://metacpan.org/dist/Mojolicious-Plugin-Statsd
+       VCS Repo: https://github.com/robrwo/perl-Mojolicious-Plugin-Statsd
 
 
--- 
-All that is necessary for evil to succeed is for good people to do nothing.
+Mojolicious::Plugin::Statsd versions through 0.04 for Perl allowed
+metric injections
+
+Description
+-----------
+Mojolicious::Plugin::Statsd versions through 0.04 for Perl allowed
+metric injections.
+
+The metric names and set values were not checked for newlines, colons
+or pipes. Metrics generated from untrusted sources could inject
+additional statsd metrics.
+
+Version 0.06 changes the module from being a statsd client to using a
+separate statsd client. It defaults to using a version of
+Net::Statsd::Tiny that fixes a similar issue (CVE-2026-46720).
+
+Problem types
+-------------
+- CWE-93 Improper Neutralization of CRLF Sequences
+
+Solutions
+---------
+Upgrade to Mojolicious::Plugin::Statsd version 0.06 or later.
+
+
+References
+----------
+https://metacpan.org/release/RRWO/Mojolicious-Plugin-Statsd-0.06/changes
+https://github.com/robrwo/perl-Mojolicious-Plugin-Statsd/commit/f049156982a2c0b8050f173e24a04a29ddd64853.patch
+https://www.cve.org/CVERecord?id=CVE-2026-46720
+
+
+
