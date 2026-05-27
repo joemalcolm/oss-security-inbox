@@ -1,4 +1,4 @@
-Received: (qmail 28408 invoked by uid 550); 28 Dec 2022 19:47:39 -0000
+Received: (qmail 20252 invoked by uid 550); 27 May 2026 13:46:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,141 +7,166 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 14029 invoked from network); 28 Dec 2022 19:24:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hardenedbsd.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UQoSPV/1oOCa8cF4Ca8Amt2eQFnSyvUDA4BmxDEFR+w=;
-        b=kIAmp8g/mEVi078s384yPgoXQvrA3mRa1XYHXxSOJDxEkuRxmjWy6JnVDv+rSkC5Cy
-         0DUwDdB1bSP5DbelGgaMTIpaMKagza7eCPCU9Fa80nmpaCXBihPM9u+txr/UwhrVZBT1
-         1I/E+PJ3yvAzx5ZSFRqbRzEON7RweLfIqlQiTAq6buKurVxF9AzBpGxOJsscmpwIuarM
-         fDUk6ZomH64X4SrwgIW0kSHfY33Qwbj74mckd4TKZSBVZJ/nFuN0X+lJCWcxzYfqr/kF
-         RdSAWLkcKSk7QeplI2BpJ9cVewKW4q2voiiIntzUD4hgT64wvHc7bDC009VjTzIg2Oss
-         Pytw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UQoSPV/1oOCa8cF4Ca8Amt2eQFnSyvUDA4BmxDEFR+w=;
-        b=y/WobXlSsNszJlQewBBoNApuNUSehgRLEdsyDL0kw6NhMu5/yaPIyR2u+EWtCcKQxZ
-         nsI8XeCAvApkjNM67bUjZ9q3J2uDl24iXWdbi9e1V/smux7TtYxXxdUqSpa7LU7olTS0
-         QG3cgHSYy7L3B5BdYKcybXYLKoHA5ecGTs1BBIfQ2zlhGrLCjZ/uRa7q3eccCJCMis2e
-         birWj7f2N1guDwuUvrNeBfyv2xOXUu/ZWxmDFPpykWNu2bKAKVTYqqe+1johbuPBo1/x
-         27DV11eWmvEFLMCd+tChVVJn5xZpqwLaDw78O65HYJYV5/ZYZjrMc3i7+f/OI0VJoGqK
-         fqHQ==
-X-Gm-Message-State: AFqh2kqwi3ZFzd/SktQxV4Lwri+NB6OQLoFGCF8fbAVfGtg2M6KyK9kn
-	tcjz4rLYTs9StsivIFY+e/TVPl26Mgj88/IGEOaUSX4FaWIQn7vumoJrPnPUyRbbGBvXBL6rfIH
-	ImjHwS8bSE5EGYNVChcasjvXVgCwVxTdXa903Eurv0IvEzr7QNsfYP1F6A77Pplh67gT+Ll79qL
-	ddViEHtyJ3hSS0YKgeAQ==
-X-Google-Smtp-Source: AMrXdXum8fPc3sjwaK/zW/xv//enj22K0WAIsRX0JtKDbvNzJgE95zxm9bniqRvhIYwLpgGtgczLcA==
-X-Received: by 2002:a05:6102:52c:b0:3cb:bb2:7d37 with SMTP id m12-20020a056102052c00b003cb0bb27d37mr1614387vsa.33.1672255477254;
-        Wed, 28 Dec 2022 11:24:37 -0800 (PST)
-Date: Wed, 28 Dec 2022 14:24:36 -0500
-From: Shawn Webb <shawn.webb@hardenedbsd.org>
+x-ms-reactions: disallow
+Received: (qmail 20212 invoked from network); 27 May 2026 13:46:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=beckweb.net;
+	s=kas202605010123; t=1779889557;
+	bh=Lf1Hzc7hK1FEkP1fotL3O2kejzFQUrYeyd80oUmb3JE=;
+	h=From:Subject:Date:To:From;
+	b=E6MhaVT5H+of2gbMs20nISpzrmVNM26ah6URwzLQ64UmzY4hZM5UCHnDsE6PAq9hs
+	 xWc9aHhM73nYNwsQLW3B/nbLccUrRX83qQ3txz50XyBjETO6WIURM37MxxjaZcFR4s
+	 sPk7CwIQDAc90vOSq494J7ANWaFJoqpC6kxFiZ8BREQZ6fzhgmyZvYld8VGP3k6jKY
+	 Eay88fiGdJn9HsbS/y6mpOlgVHHbAUA43CrfIYCO7AAQiTvMWxHaMYfmpLqxCT29Pk
+	 ZgsXfcpmqYxlsju2jVKYAWsO9Qw3pdh4WAoxA651mzHdfvgYdSCws8J5NFk4ZZr335
+	 LDwtBneoqU7Tg==
+From: Daniel Beck <ml@beckweb.net>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.3\))
+Message-Id: <4929F803-BC44-4050-937B-91461A9C2E7A@beckweb.net>
+Date: Wed, 27 May 2026 15:45:47 +0200
 To: oss-security@lists.openwall.com
-Cc: Alejandro Colomar <alx.manpages@gmail.com>,
-	Michael Kerrisk <mtk.manpages@gmail.com>,
-	linux-kernel@vger.kernel.org, linux-man@vger.kernel.org
-Message-ID: <20221228192436.viuoyil2ntr4lxjo@mutt-hbsd>
-X-Operating-System: FreeBSD mutt-hbsd 14.0-CURRENT-HBSD FreeBSD
- 14.0-CURRENT-HBSD 
-X-PGP-Key: https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/blob/master/Shawn_Webb/03A4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
-References: <Y6SJDbKBk471KE4k@p183>
- <Y6TUJcr/IHrsTE0W@codewreck.org>
- <1a1963aa1036ba07@orthanc.ca>
- <20221228152458.6xyksrxunukjrtzx@mutt-hbsd>
- <Y6xzIR9P+a6uaaEx@itl-email>
- <20221228172517.l7h3m7wjfpxr3dzw@mutt-hbsd>
- <Y6yEv+6iYQQNaqi9@itl-email>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cqcy4xsopj5osl73"
-Content-Disposition: inline
-In-Reply-To: <Y6yEv+6iYQQNaqi9@itl-email>
-Subject: Re: [oss-security] [patch] proc.5: tell how to parse /proc/*/stat
- correctly
+X-Mailer: Apple Mail (2.3826.700.81.1.3)
+Subject: [oss-security] Multiple vulnerabilities in Jenkins plugins
 
---cqcy4xsopj5osl73
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jenkins is an open source automation server which enables developers around
+the world to reliably build, test, and deploy their software.
 
-On Wed, Dec 28, 2022 at 01:02:35PM -0500, Demi Marie Obenour wrote:
-> On Wed, Dec 28, 2022 at 12:25:17PM -0500, Shawn Webb wrote:
-> > On Wed, Dec 28, 2022 at 11:47:25AM -0500, Demi Marie Obenour wrote:
-> > > On Wed, Dec 28, 2022 at 10:24:58AM -0500, Shawn Webb wrote:
-> > > > On Tue, Dec 27, 2022 at 04:44:49PM -0800, Lyndon Nerenberg (VE7TFX/=
-VE6BBM) wrote:
-> > > > > Dominique Martinet writes:
-> > > > >=20
-> > > > > > But, really, I just don't see how this can practically be said =
-to be parsable...
-> > > > >=20
-> > > > > In its current form it never will be.  The solution is to place
-> > > > > this variable-length field last.  Then you can "cut -d ' ' -f 51-"
-> > > > > to get the command+args part (assuming I counted all those fields
-> > > > > correctly ...)
-> > > > >=20
-> > > > > Of course, this breaks backwards compatability.
-> > > >=20
-> > > > It would also break forwards compatibility in the case new fields
-> > > > needed to be added.
-> > > >=20
-> > > > The only solution would be a libxo-style feature wherein a
-> > > > machine-parseable format is exposed by virtue of a file extension.
-> > > >=20
-> > > > Examples:
-> > > >=20
-> > > > 1. /proc/pid/stats.json
-> > > > 2. /proc/pid/stats.xml
-> > > > 3. /proc/pid/stats.yaml_shouldnt_be_a_thing
-> > >=20
-> > > A binary format would be even better.  No risk of ambiguity.
-> >=20
-> > I think the argument I'm trying to make is to be flexible in
-> > implementation, allowing for future needs and wants--that is "future
-> > proofing".
->=20
-> Linux should not have an XML, JSON, or YAML serializer.  Linux already
-> does way too much; let=E2=80=99s not add one more thing to the list.
+The following releases contain fixes for security vulnerabilities:
 
-Somewhat agreed. I think formats like JSON provide a good balance
-between machine parseable and human readable.
+* Active Directory Plugin 2.41.1
+* AppSpider Plugin 1.0.18
+* Bitbucket OAuth Plugin 0.18
+* Credentials Binding Plugin 725.ve52b_2328a_fde
+* Email Extension Plugin 1933.1935.v276319e3cc47
+* GitHub Integration Plugin 0.7.4
+* Job Import Plugin 143.145.v48f9a_a_6ff384
+* LDAP Plugin 807.809.vd3a_4e5e4ec98
+* Multijob Plugin 669.v9d96a_d9c71b_0
+* Pipeline: Groovy Libraries Plugin 798.v5cc688825312
 
-As I described earlier, though, when it comes to concepts like procfs
-and sysfs, I have a bias towards abandoning them in favor of sysctl.
-If sysctl nodes were to be used, no new serialization formats would
-need to be implemented--and developers would also use a safter method
-of system and process inspection and manipulation.
+Additionally, we announce unresolved security issues in the following
+plugins:
 
---=20
-Shawn Webb
-Cofounder / Security Engineer
-HardenedBSD
+* buildgraph-view Plugin
 
-https://git.hardenedbsd.org/hardenedbsd/pubkeys/-/raw/master/Shawn_Webb/03A=
-4CBEBB82EA5A67D9F3853FF2E67A277F8E1FA.pub.asc
+Summaries of the vulnerabilities are below. More details, severity, and
+attribution can be found here:
+https://www.jenkins.io/security/advisory/2026-05-27/
 
---cqcy4xsopj5osl73
-Content-Type: application/pgp-signature; name="signature.asc"
+We provide advance notification for security updates on this mailing list:
+https://groups.google.com/d/forum/jenkinsci-advisories
 
------BEGIN PGP SIGNATURE-----
+If you discover security vulnerabilities in Jenkins, please report them as
+described here:
+https://www.jenkins.io/security/#reporting-vulnerabilities
 
-iQIzBAABCAAdFiEEA6TL67gupaZ9nzhT/y5nonf44foFAmOsl/MACgkQ/y5nonf4
-4fruEA//dlGqPyMLJmcW57PIEZ2w6Y/ctFuHGK1vfHncR7lDgTCgjQICFSqnVLt3
-PyESWAmZus4ZqneCmReoxzy6y/io4jyRWcEZEywcRk/n+asD5+5eEcL8yKdCXszF
-FLL9VGA1U4jUnQuUQgArkpjo7pNNScp34FjKRKD0RJKbpKDNGPcTz2ASMpM4vt7n
-9klfnjP7e7+XD9cuZaNQVK0nz2/BNObKGdikJR9cMv3SONkGTOlRZxOj+y2Rc86P
-QpSmfMC+PJxULFSfIW4bucmnzC2qQenTELgoEUEhG4IZNT3VYv1mDRKU9xlVeSvQ
-Pcm6JcFQxd759On8QW1aY4N9KGs6U7hH0elQkNxBctM3Nh9YowNxZGXuZGF9Kwu1
-Vyw9tDADZiMh0GqXgO9tSwc95kcVdeUgIzwBhF31YhSNv95CpDwdtQhvmt2qTXea
-Zec8Ys0hNcvd5xn8FLIk73m+yvNkTBEkyejo/cyQZFHW/gQmf5znozMht0qeYt/j
-9Na9M094IX1zLLy3dMlNZe1j7pzBsRJgbWBwWcmixkao2pJ7vLuocQjDJmrpet2Q
-wkkSKSRDw33S7fRZxKJClXeP1agiTxgpnC3Hi1mmmWVff900O6xTrMl6tds6c8CY
-EP6VZqmBqlNBAP2yGTGPFXLVm91UV5DvHZ1VdAfSZukqq6rCIU0=
-=jiq0
------END PGP SIGNATURE-----
+---
 
---cqcy4xsopj5osl73--
+SECURITY-3654 / CVE-2026-48916 (SSRF) & CVE-2026-48917 (deserialization)
+LDAP Plugin 807.v7d7de30930cf and earlier follows LDAP referrals from the
+configured LDAP server. These can forward to an RMI URL that causes Jenkins
+to deserialize attacker-controlled data, resulting in Remote Code Execution
+(RCE) on the Jenkins controller if deserialization "gadgets" are available
+on the classpath.
+
+This allows attackers able to control the configured LDAP server, or able
+to perform a machine-in-the-middle attack, to execute code on the Jenkins
+controller.
+
+
+SECURITY-3659 / CVE-2026-48918 (SSRF) & CVE-2026-48919 (deserialization)
+Active Directory Plugin 2.41 and earlier follows LDAP referrals from the
+configured Active Directory server by default. These can forward to an RMI
+URL that causes Jenkins to deserialize attacker-controlled data, resulting
+in Remote Code Execution (RCE) on the Jenkins controller if deserialization
+"gadgets" are available on the classpath.
+
+This allows attackers able to control the configured Active Directory
+server, or able to perform a machine-in-the-middle attack, to execute code
+on the Jenkins controller.
+
+
+SECURITY-3705 / CVE-2026-48920
+Email Extension Plugin 1933.v45cec755423f and earlier includes a feature
+that allows inlining images as `base64` in email content by setting the
+`data-inline` attribute. No restrictions are placed on the image URLs that
+can be inlined.
+
+This allows attackers able to control the email content to specify `file:`
+URLs for images to read arbitrary files from the Jenkins controller
+filesystem.
+
+
+SECURITY-3727 / CVE-2026-48921
+Pipeline: Groovy Libraries Plugin 797.v90ea_a_9b_e45a_0 and earlier does
+not prohibit symbolic links in shared libraries.
+
+This allows attackers able to control the content of a library used by a
+Pipeline job to read arbitrary files on the Jenkins controller filesystem.
+
+
+SECURITY-3790 / CVE-2026-48922
+Credentials Binding Plugin 720.v3f6decef43ea_ and earlier does not properly
+sanitize file names for file and zip file credentials.
+
+This allows attackers able to provide credentials to a job to write files
+to arbitrary locations on the node filesystem. If Jenkins is configured to
+allow a low-privileged user to configure file or zip file credentials used
+for a job running on the built-in node, this can lead to remote code
+execution.
+
+
+SECURITY-3671 / CVE-2026-48923
+AppSpider Plugin 1.0.17 and earlier does not perform a permission check in
+a method implementing form validation.
+
+This allows attackers with Overall/Read permission to connect to an
+attacker-specified URL.
+
+
+SECURITY-3761 / CVE-2026-48924
+Bitbucket OAuth Plugin 0.17 and earlier does not restrict the redirect URL
+after login.
+
+This allows attackers to perform phishing attacks by having users go to a
+Jenkins URL that will forward them to a different site after successful
+authentication.
+
+
+SECURITY-3776 / CVE-2026-48925
+GitHub Integration Plugin 0.7.3 and earlier does not require POST requests
+for an HTTP endpoint, resulting in a cross-site request forgery (CSRF)
+vulnerability.
+
+This vulnerability allows attackers to trigger a build for a pull request.
+
+
+SECURITY-3781 / CVE-2026-9674
+Multijob Plugin 662.vd2e0001f6b_b_d and earlier does not require POST
+requests for an HTTP endpoint, resulting in a cross-site request forgery
+(CSRF) vulnerability.
+
+This vulnerability allows attackers to resume failed Multijob builds.
+
+
+SECURITY-3783 / CVE-2026-48926
+Job Import Plugin 143.v044a_2e819b_27 and earlier does not perform a
+permission check in an HTTP endpoint.
+
+This allows attackers with Overall/Read permission to enumerate credentials
+IDs of credentials stored in Jenkins. Those can be used as part of an
+attack to capture the credentials using another vulnerability.
+
+
+SECURITY-3486 / CVE-2026-48927
+buildgraph-view Plugin 1.8 and earlier does not escape the build URL.
+
+This results in a stored cross-site scripting (XSS) vulnerability
+exploitable by attackers able to configure jobs or views.
+
+As of publication of this advisory, there is no fix.
+
+
+
