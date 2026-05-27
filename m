@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["783" "Tuesday" "7" "November" "2017" "17:51:27" "+0100" "Matthias Weckbecker" "matthias@weckbecker.name" "<20171107165127.GA1693@weckbecker.name>" "25" "[oss-security] Net::Ping::External command injections" "^Date:" nil nil "11" "2017110716:51:27" "[oss-security] Net::Ping::External command injections" (number mark "        matthias@wec Nov  7   25/783   " thread-indent "\"[oss-security] Net::Ping::External command injections\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 3344 invoked by uid 550); 7 Nov 2017 17:08:14 -0000
+Received: (qmail 18049 invoked by uid 550); 27 May 2026 16:29:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,39 +6,62 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 17625 invoked from network); 7 Nov 2017 16:51:56 -0000
-Message-ID: <20171107165127.GA1693@weckbecker.name>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.8.0 (2017-02-23)
-Date: Tue, 7 Nov 2017 17:51:27 +0100
-From: Matthias Weckbecker <matthias@weckbecker.name>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Net::Ping::External command injections
+x-ms-reactions: disallow
+Received: (qmail 19845 invoked from network); 27 May 2026 16:22:34 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Justin Bertram <jbertram@apache.org>
 To: oss-security@lists.openwall.com
+Message-ID: <8137c98b-dae6-18bb-8fdb-5d3d3b6d31de@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 27 May 2026 16:22:03 +0000
+MIME-Version: 1.0
+Subject: [oss-security] ARTEMIS-5996: CVE-2026-40914: Apache Artemis, Apache ActiveMQ
+ Artemis: Address routing-type can be updated by STOMP protocol user
+ without the createAddress permission 
 
-Hi,
+Severity: low=20
 
-Net::Ping::External [0] is prone to command injection vulnerabilities.
+Affected versions:
 
-The issues are roughly 10 (!) years old [1], but the code is still being
-shipped these days (e.g. in ubuntu artful and debian stretch [2]).
+- Apache Artemis (org.apache.artemis:artemis-stomp-protocol) 2.50.0 through=
+ 2.53.0
+- Apache ActiveMQ Artemis (org.apache.artemis:artemis-stomp-protocol) 2.0.0=
+ through 2.44.0
 
-I had contacted the author of the code a few days ago, but obviously did
-not get any reaction.
+Description:
 
-A patch is available here:
+A vulnerability exists in Apache Artemis whereby an application using the S=
+TOMP protocol with security credentials that grant either the consume or se=
+nd permission on an address can augment the routing-type supported by that =
+address even if said user doesn't have the createAddress permission for tha=
+t particular address. A user could successfully send a message to an addres=
+s or consume a message from a queue with a routing-type not supported by th=
+e corresponding address when that operation should actually be rejected on =
+the basis that the user doesn't have permission to change the routing-type =
+of the address. Even though the user was already granted permission to send=
+ and/or consume messages, they should not be able to augment the routing-ty=
+pe of the address without the createAddress permission.
 
-  http://matthias.sdfeu.org/devel/net-ping-external-cmd-injection.patch
 
-Maybe time to just patch it downstream? Or drop this pkg. altogether?
 
-Thanks,
-Matthias
+This issue affects Apache Artemis: from 2.50.0 through 2.53.0; Apache Activ=
+eMQ Artemis: from 2.0.0 through 2.44.0.
 
---
-[0] https://metacpan.org/pod/Net::Ping::External
-[1] https://rt.cpan.org/Public/Dist/Display.html?Name=Net-Ping-External
-    (id #33230)
-[2] https://packages.debian.org/stable/perl/libnet-ping-external-perl \
-    https://launchpad.net/ubuntu/+source/libnet-ping-external-perl
+Users are recommended to upgrade to version 2.54.0, which fixes the issue.
+
+This issue is being tracked as ARTEMIS-5996=20
+
+Credit:
+
+bugbunny.ai (tool)
+Isaac David <isaac@bugbunny.ai> (reporter)
+Arthur Gervais <arthur@bugbunny.ai> (reporter)
+
+References:
+
+https://artemis.apache.org
+https://www.cve.org/CVERecord?id=3DCVE-2026-40914
+https://issues.apache.org/jira/browse/ARTEMIS-5996
+
