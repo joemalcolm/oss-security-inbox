@@ -1,4 +1,4 @@
-Received: (qmail 30644 invoked by uid 550); 31 Mar 2026 16:35:57 -0000
+Received: (qmail 12064 invoked by uid 550); 27 May 2026 04:28:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,90 +8,86 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 18006 invoked from network); 31 Mar 2026 16:06:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
-	t=1774973156;
+Received: (qmail 21779 invoked from network); 27 May 2026 04:26:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
+	t=1779855991;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=RS5jgG76aVixanEJB2RR0t4zF1rsJ5rG3XqvzPIlZzg=;
-	b=D1S9c15+PCFt/jbaOsh+JWyM6dgdIPbqNelTf6emNd1r6guVoWJsxjBRAWyUUQhk4tStZE
-	g6kGRfTjuYuED4eUV7sH7Xsg4zW1WAMakXTt5hDHm9wtK6qyqZOo0AxWfPHqqExJxqLN1S
-	O1asR65VzmXufSHFeXFHtrWyq+oVqI1U9CReAgqA8dxOjugoYFAxhHJ2dQoo6mSPJ+E6pu
-	/e+HGycf8Idj8SyTiSGer/rxF2qA5iS7BUT2q0++jdgD6q15VwQGiWjnOJRBylpqH12f9C
-	xGkKIikHZ6GOw9XK5g6kHHpKHomorcMqhbQpMRgW9TullISbORn1ckuZLe9XPA==
-Message-ID: <44ff4c48-8fb5-40a4-bba9-1926bf78a7a1@cpansec.org>
-Date: Tue, 31 Mar 2026 17:05:54 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-GB, en-ZA
-References: <50ef104c-c055-4dd3-adb3-0100267b7240@cpansec.org>
-From: Robert Rothenberg <rrwo@cpansec.org>
-To: oss-security@lists.openwall.com
-In-Reply-To: <50ef104c-c055-4dd3-adb3-0100267b7240@cpansec.org>
-X-Forwarded-Message-Id: <50ef104c-c055-4dd3-adb3-0100267b7240@cpansec.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-Sasl: rrwo@cpansec.org
-X-GND-State: clean
-X-GND-Score: 0
-X-GND-Cause: dmFkZTGCjjqD1c4FQWdt+B0mefQfxEPchl6SJP+rphDK2fM9FxBzdQKzyX9BU5HdOX5T9OVPvaH51DzJxx3I5BstzIlPBsY9M+kuy9MZU4NAV8h+rlJNpA2idcIc1wDPnH5juh9jo6rv3CIj5HSqtXBc15uiraYeaJEHLH2ab1G7uYWpS2bUW7Fn8kZh8V2+ASy+BkO98hbTx8Tg8BsHFLC2+cT9S3Crz7osI8lcmf1PzM++ncdD54UQg9nuhJVrYJ3cBv+rd3KuTBat/1A+1JENRmMKIQT5r4jjSNNXdSYnYZQaL8QStihYNyP92N6lGWVXyj5weOiLo+shkDWZk9IxPFtpHXQMo4B9NKYWJepwW4WHriIsXEBeMmV/r1w2pjuU0K4A16xD6yJfmH8niSXFUVEx3VFWIvaCc0n5Txfm/wr9LwlqJo8ki/69q6ukWOk1wrafxK6prz52GEdUnX/cWP90xk2MqBtTYQVxRS+NBthpndOm9Bzrw/1Fe7u3+h3hE+iy77gBQx8Hld4NMB2GcRhG0hvKChvKo1EOIJsJGoz2htUfixPZoNLXJg9tUa6kC72hBpy46VJkQrOq1dQL0Yq2teBJIoa1e7xgWegdytH4cFNzW1XLL8qqvyi+/+TaFURTaW6mWPIovcW30l+bDNLkf9s4HuVTFKQ4+QUShF+DMA
-Subject: [oss-security] Fwd: CVE-2026-5087: PAGI::Middleware::Session::Store::Cookie versions
- through 0.001003 for Perl generates random bytes insecurely
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4mc7yLtwkMrhWsfPzNTC2td9vmxFzRCVN80jfsqP/fA=;
+	b=XD5dFo/gwKXQOOpfKYcgI/glR8hhif4ej/wVTqn7Ho79juv8jZoDLzzAfKD2VEsEiVKqn0
+	q1keWa3jn+9Q2mb4F/UVRkqnj+J2TlDMGPez37IhLcUKOkpp/BSNqQaSkCSQBiIZNv+WNb
+	lwF1b4UrtVADNylOyHtC80/3EkL9gnh2QA439tibzb33x1SKT32gtlBkhCU2eZVkiMUGBF
+	sKOgZboGzyo954lZMIN6+8gZmDDE09xw7ZjOs2u2RmD5GUC5y5sOVQZWeYyhcK+lLfUXnr
+	PI8AWdrEhAojnn5FOw9RCFO/EuN2G4m1c7gqkKE1gSrpYoxqGlzvo09j6pI2cg==
+From: Stig Palmquist <stig@stig.io>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Message-Id: <CCF0070B-80D4-4508-8434-B01BD6B67320@stig.io>
+Date: Wed, 27 May 2026 06:26:19 +0200
+To: cve-announce@security.metacpan.org,
+ oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2026-8450: HTTP::Daemon versions before 6.17 for Perl allow OS
+ command injection via send_file()
 
-========================================================================
-CVE-2026-5087                                        CPAN Security Group
-========================================================================
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+CVE-2026-8450                                        CPAN Security Group
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-         CVE ID:  CVE-2026-5087
-   Distribution:  PAGI-Middleware-Session-Store-Cookie
-       Versions:  through 0.001003
+        CVE ID:  CVE-2026-8450
+  Distribution:  HTTP-Daemon
+      Versions:  before 6.17
 
-       MetaCPAN: 
-https://metacpan.org/dist/PAGI-Middleware-Session-Store-Cookie
-       VCS Repo: 
-https://github.com/jjn1056/PAGI-Middleware-Session-Store-Cookie
+      MetaCPAN:  https://metacpan.org/dist/HTTP-Daemon
+      VCS Repo:  https://github.com/libwww-perl/HTTP-Daemon
 
 
-PAGI::Middleware::Session::Store::Cookie versions through 0.001003 for
-Perl generates random bytes insecurely
+HTTP::Daemon versions before 6.17 for Perl allow OS command injection
+via send_file()
 
 Description
 -----------
-PAGI::Middleware::Session::Store::Cookie versions through 0.001003 for
-Perl generates random bytes insecurely.
+HTTP::Daemon versions before 6.17 for Perl allow OS command injection
+via send_file().
 
-PAGI::Middleware::Session::Store::Cookie attempts to read bytes from
-the /dev/urandom device directly. If that fails (for example, on
-systems without the device, such as Windows), then it will emit a
-warning that recommends the user install Crypt::URandom, and then
-return a string of random bytes generated by the built-in rand
-function, which is unsuitable for cryptographic applications.
+send_file() opens its string argument with Perl's 2-arg open(). The
+2-arg form interprets magic prefixes: '| cmd' and 'cmd |' open a pipe
+to a subprocess, '> path' and '>> path' open the path for write or
+append.
 
-This modules does not use the Crypt::URandom module, and installing it
-will not fix the problem.
-
-The random bytes are used for generating an initialisation vector (IV)
-to encrypt the cookie.
-
-A predictable IV may make it easier for malicious users to decrypt and
-tamper with the session data that is stored in the cookie.
+Untrusted input passed to send_file() can run OS commands at the daemon
+process UID. The read-pipe form ('cmd |') also leaks subprocess stdout
+into the HTTP response body. The write-mode forms can create or
+truncate files at attacker chosen paths.
 
 Problem types
 -------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-- CWE-1204 Generation of Weak Initialization Vector (IV)
+- CWE-78 Improper Neutralization of Special Elements used in an OS
+  Command ('OS Command Injection')
+- CWE-73 External Control of File Name or Path
 
 Solutions
 ---------
-Upgrade to version 0.001004 or newer.
+Upgrade to HTTP-Daemon 6.17 or later.
 
 
 References
 ----------
-https://metacpan.org/release/JJNAPIORK/PAGI-Middleware-Session-Store-Cookie-0.001003/source/lib/PAGI/Middleware/Session/Store/Cookie.pm#L156-173
-https://metacpan.org/release/JJNAPIORK/PAGI-Middleware-Session-Store-Cookie-0.001004/changes
+https://github.com/libwww-perl/HTTP-Daemon/pull/89
+https://github.com/libwww-perl/HTTP-Daemon/commit/945d35141d94490f749640bd4=
+390acd6a2193995.patch
+https://metacpan.org/release/OALDERS/HTTP-Daemon-6.17/changes
+
+Timeline
+--------
+- 2026-05-12: Issue identified.
+- 2026-05-19: HTTP-Daemon 6.17 released.
 
 
 
