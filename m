@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3791" "Tuesday" "13" "September" "2016" "18:50:06" "+0200" "Solar Designer" "solar@openwall.com" "<20160913165006.GA9055@openwall.com>" "97" "Re: [oss-security] Heapoverflow in giflib5.1.4" "^Cc:" nil nil "9" "2016091316:50:06" "[oss-security] Heapoverflow in giflib5.1.4" (number mark "        solar@openwa Sep 13   97/3791  " thread-indent "\"Re: [oss-security] Heapoverflow in giflib5.1.4\"\n") "<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>" ("<a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 5462 invoked by uid 550); 13 Sep 2016 17:08:45 -0000
+Received: (qmail 13577 invoked by uid 550); 27 May 2026 04:21:57 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,115 +6,86 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18291 invoked from network); 13 Sep 2016 16:50:13 -0000
-Message-ID: <20160913165006.GA9055@openwall.com>
-References: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="gKMricLos+KVdGMg"
-Content-Disposition: inline
-In-Reply-To: <a3d8ebfe-9b67-997e-aaeb-5afe207ac97a@724safe.com>
-User-Agent: Mutt/1.4.2.3i
-Cc: oss-security@lists.openwall.com
-Date: Tue, 13 Sep 2016 18:50:06 +0200
-From: Solar Designer <solar@openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Heapoverflow in giflib5.1.4
-To: "vul @ 724safe" <vul@724safe.com>
+x-ms-reactions: disallow
+Received: (qmail 20417 invoked from network); 27 May 2026 02:27:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stig.io; s=MBO0001;
+	t=1779848866;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=uWFSctPseGxZiT/N5wG9V5XtdpMlLJdCRhtHZ0nDZME=;
+	b=HpzsUnc6dBCLpm3h0eUSnGOilZvSpHq2qPaauXb0SZSjLb9dqJlL3Niw6x3uzAj53loT9u
+	iCvp2YRuqZwW/nY/FPAoYzEkoHn0UsHv0bTJWuoAtkJQv31TLhfPeLxrRKu4FgIDEaK94m
+	pKviqccjBYE8w33yb0vfYTTfi/n8P6uueNXwksS1DqLZUnNG02Tag5DZiGMKS3kWmUDxwo
+	1pY3Mf0wgPNcf2MHGJ0MNQisN1mAKk7LKaEQy0nfhCBnXGSiGgB0Ch/ESb8cQURipbGgNa
+	5/gC929QSH9ezDUMLo5qI4ZjzN9X4bMe0pIyMxrOWe/MQMxKGyGJtShF2u8wpA==
+Authentication-Results: outgoing_mbo_mout;
+	dkim=none;
+	spf=pass (outgoing_mbo_mout: domain of stig@stig.io designates 2001:67c:2050:b231:465::1 as permitted sender) smtp.mailfrom=stig@stig.io
+From: Stig Palmquist <stig@stig.io>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+Message-Id: <528D729E-AF97-4D42-AB5B-330B47BAF258@stig.io>
+Date: Wed, 27 May 2026 04:27:33 +0200
+To: cve-announce@security.metacpan.org,
+ oss-security@lists.openwall.com
+Subject: [oss-security] CVE-2025-15649: IO::Uncompress::Unzip versions before 2.215 for Perl
+ propagate uncaught exception when parsing zip header with malformed DOS date
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+CVE-2025-15649                                       CPAN Security Group
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-On Tue, Sep 13, 2016 at 11:20:08PM +0800, vul @ 724safe wrote:
-> With Address Sanitizer there is aa heap overflow in giflib 5.1.4
-> More details are available at:
-> https://sourceforge.net/p/giflib/bugs/102/
+        CVE ID:  CVE-2025-15649
+  Distribution:  IO-Compress
+      Versions:  before 2.215
 
-When posting to oss-security, please include the actual detail right in
-your posting (up to 200 KB including MIME overhead, but of course try to
-keep it smaller than that if at all practical) - not only via external
-links.  I've attached the content of the above link now.  Luckily, this
-one PoC GIF file is tiny:
+      MetaCPAN:  https://metacpan.org/dist/IO-Compress
+      VCS Repo:  https://github.com/pmqs/IO-Compress
 
-$ base64 poc
-R0lGODdhKP9/AADZACwAHQAAKAAAAPngp5Lb5QAD4wAAAgAAOwAd
 
-Ideally, you would also investigate and patch issues found by ASan,
-rather than merely include its output, but I realize we can't actually
-expect anything specific from volunteers.  So whatever we've got.
+IO::Uncompress::Unzip versions before 2.215 for Perl propagate uncaught
+exception when parsing zip header with malformed DOS date
 
-Thanks,
+Description
+-----------
+IO::Uncompress::Unzip versions before 2.215 for Perl propagate uncaught
+exception when parsing zip header with malformed DOS date.
 
-Alexander
+_dosToUnixTime() decodes the local-file-header last-modification date
+field and calls Time::Local::timelocal() without an eval guard. A
+header whose date field decodes to an out-of-range month, day, or hour
+causes timelocal() to die.
 
---gKMricLos+KVdGMg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="giflib-102-Heap_overflow_in_gif2rgb.c.txt"
+The exception propagates out of IO::Uncompress::Unzip->new($file) where
+callers expect undef plus $UnzipError.
 
-#102 Heap overflow in gif2rgb.c
+Problem types
+-------------
+- CWE-248 Uncaught Exception
 
-   Milestone: v1.0_(example)
-   Status: open
-   Owner: nobody
-   Labels: heap overflow (1)
-   Priority: 7
-   Updated: 2 hours ago
-   Created: 2 hours ago
-   Creator: STARLAB
-   Private: No
+Solutions
+---------
+Upgrade to IO-Compress 2.215 or later.
 
-   Hello,
-   There is a Heap-overflow in giflib 5.1.4. The crash output with asan is as follows:
-   ./util/gif2rgb poc
-   =================================================================
-   ==8885==ERROR: AddressSanitizer: heap-buffer-overflow on address 0xf6200a3b at pc 0x80d317d bp 0xffce7d58 sp 0xffce7d50
-   READ of size 1 at 0xf6200a3b thread T0
-   #0 0x80d317c in DumpScreen2RGB /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:294
-   #1 0x80d1736 in GIF2RGB /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:474
-   #2 0x80cb9e2 in main /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:525
-   #3 0xf74b4af2 (/lib/i386-linux-gnu/libc.so.6+0x19af2)
-   #4 0x80ca7f4 in _start (/home/starlab/test-fuzzing/giflib-5.1.4/util/.libs/lt-gif2rgb+0x80ca7f4)
 
-   AddressSanitizer can not describe address in more detail (wild memory access suspected).
-   SUMMARY: AddressSanitizer: heap-buffer-overflow /home/starlab/test-fuzzing/giflib-5.1.4/util/gif2rgb.c:294 DumpScreen2RGB
-   Shadow bytes around the buggy address:
-   0x3ec400f0: fa fa 00 00 fa fa 00 04 fa fa 00 00 fa fa 03 fa
-   0x3ec40100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40120: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40130: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   =>0x3ec40140: fa fa fa fa fa fa fa[fa]fa fa fa fa fa fa fa fa
-   0x3ec40150: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40160: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40170: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   0x3ec40190: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
-   Shadow byte legend (one shadow byte represents 8 application bytes):
-   Addressable: 00
-   Partially addressable: 01 02 03 04 05 06 07
-   Heap left redzone: fa
-   Heap right redzone: fb
-   Freed heap region: fd
-   Stack left redzone: f1
-   Stack mid redzone: f2
-   Stack right redzone: f3
-   Stack partial redzone: f4
-   Stack after return: f5
-   Stack use after scope: f8
-   Global redzone: f9
-   Global init order: f6
-   Poisoned by user: f7
-   ASan internal: fe
-   ==8885==ABORTING
+References
+----------
+https://github.com/pmqs/IO-Compress/commit/fd28c1d2374eee9811f6d0c5bddc0957=
+abdf1da8.patch
+https://github.com/pmqs/IO-Compress/issues/65
+https://metacpan.org/release/PMQS/IO-Compress-2.215/changes
 
-   The poc is in the attachment
-   The vulnerability is found by F4B3CD@STARLAB
+Timeline
+--------
+- 2025-10-25: Issue reported.
+- 2026-01-30: Version 2.215 released.
 
---gKMricLos+KVdGMg
-Content-Type: application/octet-stream
-Content-Disposition: attachment; filename=poc
-Content-Transfer-Encoding: base64
 
-R0lGODdhKP9/AADZACwAHQAAKAAAAPngp5Lb5QAD4wAAAgAAOwAd
-
---gKMricLos+KVdGMg--
