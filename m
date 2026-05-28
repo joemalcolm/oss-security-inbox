@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1842" "Saturday" "28" "March" "2015" "01:44:52" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150328054452.571E472E218@smtpvbsrv1.mitre.org>" "55" "[oss-security] Re: CVE request: denial of service in Quassel" nil nil nil "3" "2015032805:44:52" "[oss-security] Re: CVE request: denial of service in Quassel" (number mark "        cve-assign@m Mar 28   55/1842  " thread-indent "\"[oss-security] Re: CVE request: denial of service in Quassel\"\n") "<5515B83C.6080506@reactos.org>" ("<5515B83C.6080506@reactos.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 7569 invoked by uid 550); 28 Mar 2015 05:45:05 -0000
+Received: (qmail 28358 invoked by uid 550); 28 May 2026 20:56:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,68 +6,84 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 7550 invoked from network); 28 Mar 2015 05:45:04 -0000
-In-Reply-To: <5515B83C.6080506@reactos.org>
-Message-Id: <20150328054452.571E472E218@smtpvbsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Sat, 28 Mar 2015 01:44:52 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: denial of service in Quassel
-To: pierre@reactos.org
+x-ms-reactions: disallow
+Received: (qmail 11965 invoked from network); 28 May 2026 11:39:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1779968386;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Z22Wwzp+CB+wNJvmQT6LvTnxjLK96WXMmQ/sR5zTmSE=;
+	b=LKKkPJUTIxH/xdCEfD9kYOO5ZuQDop6ofBKzDI2meS6cHUajmRY1icjdBxkaI6nV8TYMvX
+	VvBaP1vg+Jkf1Ns8Y3+DxFWyq1IUVp5VO7cizxJZpP1Trp2rkdNA4LDvbC5jyd7v1XkvnC
+	rvyCl/eqbPdaB1cerBqi4LjwvMsZp9BRS3uj7qvC/dzK+MJ4KD0IjPcpITQQrn1e5s+S48
+	jtcaGc1RY3uvsSR7fhFf1Zhabijf6IA0Wwh0V+pVplkUCPlPiAaCirsGq7E/5tHEeyfUn1
+	RpmI8guEixTOTN7yJzsSJRLokpEWmqc9jV8fYGggZ4jID1HRYkr+ar4GrqAbvA==
+Message-ID: <af71576b-1914-49ba-8579-b0823e296df8@cpansec.org>
+Date: Thu, 28 May 2026 12:39:44 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Score: 0
+X-GND-Cause: dmFkZTFPts7nsQnEd5Xtg4CIMotEswFVRKZpGN15LVZx/3R50Y1bRwcfXRDMUlZINKUnmAzNttfnMfGre/89BwSkAqbGMnIjOuhOgd4pQ1tBWdY2GJNBw502jmHfeBIFp5RvhIkyoCRlqWshXgfMI2awgKcXHyEh5k6FFHm4muVfdY3Dc7Qqs6LPwt0ZMrbTwPqypWwA0u/5FYMyiLrz47XAl7kTJOeXwz7qCWTY2OzVzL76kas8of7ghXXcGVmo2HGRapcx9vCoVGElAcpWkvoZWgdrlrtodZAn48r9PC0HSOaKW9xLD8+G8OgCUje46sAJBhlZQ7fw3pS9lJoFhCRr8CdMRBcpy9fSAwcwolEnev9OHuYE3nv6UNa+h40qUZtuGQeqRvBo2F8Wju5VEyTPwCEfPFdiOGlW7q5W1r4gCnIRjgp+oth0BJG15+4CUNNze9boi/0XaSDVGb3CEN5ccZONtgktfLIze956B/HGeuZlX7wK5EkjPU6qhT4JIhGIsHEqRnNQfgaM29G841d/WxzOeEmyhCh1BUcFnlSn26OQGfnZiKg6sOkDmBoHsL6Fx5OhKILkaxSLX1eTLwe5JM1fstiF4esBohXdIJkXq0pVJ8yq3oWQF/saw4XWIu6P2uFboGfO32w9gI7ngO8c7r/3HdyRHir0GWulAT0zs75hzw
+X-GND-State: clean
+Subject: [oss-security] CVE-2026-9658: Plack::Middleware::Security::Common versions before
+ 0.13.1 for Perl did not block header injections in request paths
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+========================================================================
+CVE-2026-9658                                        CPAN Security Group
+========================================================================
 
->> The second is
->> the core crash caused by sending an overlength CTCP query ("/me")
->> containing only multibyte characters. This bug was caused by the
->> old CTCP splitter using the byte index from lastParamOverrun() as
->> a character index for a QString.
+         CVE ID:  CVE-2026-9658
+   Distribution:  Plack-Middleware-Security-Simple
+       Versions:  before 0.13.1
 
-> This seems to be, very roughly, an issue of incorrectly determining a
-> data-structure length by using a wrong-sized data type for counting.
-> It happens to be about multibyte characters but that's of secondary
-> importance. This will almost certainly have a unique CVE ID ...
-
-Use CVE-2015-2778.
+       MetaCPAN: https://metacpan.org/dist/Plack-Middleware-Security-Simple
+       VCS Repo: https://github.com/robrwo/Plack-Middleware-Security-Simple
 
 
->> Unlike what it replaces, the new splitting code is not recursive
->> and cannot cause stack overflows.
+Plack::Middleware::Security::Common versions before 0.13.1 for Perl did
+not block header injections in request paths
 
->>> But, be it a crash or a hang, it would cause a denial of
->>> service for any client connected to core.
+Description
+-----------
+Plack::Middleware::Security::Common versions before 0.13.1 for Perl did
+not block header injections in request paths.
 
-Use CVE-2015-2779.
+The header injection rule was ineffective at blocking header injections
+in the request paths unless they were double-encoded, for example,
+
+   GET /path\r\nHTTP/1.1\r\nHost: secret.example.com
+
+Note that it is unclear whether request paths with CRLF followed by
+additional headers would be blocked by reverse proxies, or how they
+would be processed by Plack-based servers.
+
+Problem types
+-------------
+- CWE-790 Improper Filtering of Special Elements
+- CWE-113 Improper Neutralization of CRLF Sequences in HTTP Headers
+
+Workarounds
+-----------
+Use with the the the non_printable_chars rule to block header
+injections.
 
 
-> The first is garbage characters caused
-> by accidentally splitting the string in the middle of a multibyte
-> character.
-
-As suggested earlier, this has no CVE ID.
+Solutions
+---------
+Upgrade to 0.13.1 or later.
 
 
-> if it is unable
-> to split a string, it will give up gracefully and not crash the
-> core or cause a thread to run away.
+References
+----------
+https://metacpan.org/release/RRWO/Plack-Middleware-Security-Simple-v0.13.1/changes
 
-As suggested earlier, this has no CVE ID.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
 
-iQEcBAEBAgAGBQJVFj9MAAoJEKllVAevmvmshfkH/0fpuId3QRMrFZW+S6Of4+Lc
-jRGjVNJDUVnSkkIvAPFtSpRZv0Xwx/Tff255Nx4OByaNGpVv6ocrdggHKXhxQq4G
-AMD2qNpBuIx7esTqTA40w6B70GPQOZF35+nOzNP0tsK7SFI+cPmyfDY/sB2JCzP2
-fAmyCzX2JD1G9I7/5OyrhCYlV0RySzuMjdSC/LD0ikdEwkNP9V/IKm5HeufYvvyh
-BAQKItg1kRsKIVFMajTU2oXEqrPVTXsj/dNI6u6fpwOwidxv5jdBw0ggWFeAyb5W
-UYlRDPVBjMiMox5tLqC+2yC3vkykkBVlNgE1BBGQOmkBpgEQnzz8iQfJPSybw9w=
-=czV4
------END PGP SIGNATURE-----
