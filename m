@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["4283" "Friday" "10" "February" "2017" "20:10:47" "+0100" "Pierre Schweitzer" "pierre@reactos.org" "<8fd9649e-08a4-2141-0d1e-624d9b344f1b@reactos.org>" "111" "Re: [oss-security] MITRE is adding data intake to its CVE ID process" nil nil nil "2" "2017021019:10:47" "[oss-security] MITRE is adding data intake to its CVE ID process" (number mark "U       pierre@react Feb 10  111/4283  " thread-indent "\"Re: [oss-security] MITRE is adding data intake to its CVE ID process\"\n") "<DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>" ("<e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>" "<616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>" "<94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>" "<DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5134 invoked by uid 550); 10 Feb 2017 19:44:46 -0000
+Received: (qmail 24530 invoked by uid 550); 28 May 2026 04:09:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,136 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 1394 invoked from network); 10 Feb 2017 19:11:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=reactos.org; s=25047;
-	h=Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:Cc:References:To:Subject; bh=0tsyHxrmeqR0OcFZxuaPnCPMP2f/xZoTliLcZpDgh9s=;
-	b=h8gGAqIPmCuE+1PRIS3X3Mbt2qmkTKYm1itYo4ZlIk6n4Xwq9/r5Kl7huP2YBk/FqGzmL+c+ffjGG/K96ugm+NL/nM2Y5Ja5o0tocHLFTZR43AwhwGpXUx2dGCeU6626ruAGvFEfBIJqaeympn2asT+X0MKbDbcUxXADWCSs2+I=;
-To: oss-security@lists.openwall.com
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>
- <94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>
- <DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>
-Cc: cve-assign@mitre.org
-From: Pierre Schweitzer <pierre@reactos.org>
-Message-ID: <8fd9649e-08a4-2141-0d1e-624d9b344f1b@reactos.org>
-Date: Fri, 10 Feb 2017 20:10:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+x-ms-reactions: disallow
+Received: (qmail 24493 invoked from network); 28 May 2026 04:09:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1779941384; x=1780546184; darn=lists.openwall.com;
+        h=in-reply-to:from:content-language:references:to:subject:reply-to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H6OXqaRZZ0eL0s674L48woB/JaUqBf55QqjN6K0llTE=;
+        b=D/kjpOFEHtv3slK2Kg9VlXgWXJe1qFklqsP+BEZHKNxIHC6+aLPFUaAWAVoqLtDYwl
+         88jizjA3hxhfqsNUONiloF1EHJty1qJEOqbQbcpBL60SvesKmYjXuwxfn0ZCLe9Jj143
+         n8MvPWpfC0mSgK+2h3rNUVRwDo8LQQUTUX7XenEyZ5e0d3njEozjo17CVk2onk3im7qG
+         nXx69Rmk3h+Z8BJEbe+Gz7tZhYxp1kq16EWHeFallddt8/Uz/P+7rkKJs/3FzWd6be9W
+         mHzLUL2J0cbENnR4BjdOG7bKW5S5Pf8ValrSKzTCrU1CG7NPzy7Hep/HJxBdx0FzYc2z
+         7V0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1779941384; x=1780546184;
+        h=in-reply-to:from:content-language:references:to:subject:reply-to
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=H6OXqaRZZ0eL0s674L48woB/JaUqBf55QqjN6K0llTE=;
+        b=RnrttjAPs5tHZUe1qf1K0r9yE+ogKvAEWSVtNKzPA/TqyUh0E9d6wBPQqHnsOM2KIU
+         8szQtBH24RJTAiLbFhkMS1R+JhypE1g/fGMofvZDPE9OkIda0LGFZ3+xneQf66oAs49U
+         dXFgm+bI3UPOaK6v37812TuccYYLEMp5yx4QNLLIPn+jNYENTzAMqoDYOJ8kCOlTRpSE
+         0kSL71Ql6Aw2HNYFe7ZhlUw5ayqiSDS+pvP54jtLOxnsSI6HgeTPvReX2qDNlpzhUia6
+         lA4cg9PY/v4yCAOrxCUcieQWKMaFHjTDp3dvyTnzoGqInQC3JQU46qB7R0vTR85hobjn
+         M31A==
+X-Gm-Message-State: AOJu0YyXhSGDbSVpdFal8KGmUJ4y2MEvyLqCFEvcHOh9G3LA/xDac87s
+	JxVSiTZlbKkhvZvhic71uBwzUinhbBe5RPWf3nmAjoMOhe7l08NvuMNXO8HlVjTtxBI=
+X-Gm-Gg: Acq92OGQzPBX9R6oLhWRLon3uMe0JfN7xObgjW5MiIqLipbCtyLEZ1RuSY2etz+K45R
+	7L4gGKjHXd+rZkfvZ+uhWsZhWMkgwDtT/TfNR4RoLwPoLKWyk5u7H7Yu8Ry7y96fivqjD21t+bQ
+	QBmMPzmGuIVKO6gyqgNZNuj4NubRNkj9WyuRHUt4Tx5QdnDhZErnl0veBVuI5WrNDNA/2A/607R
+	OGyPSMFgsYzDJlP+kXhUEiJOOn3wTNzI3nFiWgyQ0A26X6lP01ozmAMoMAJuwBOsxFjjErerDHZ
+	zrNqh5m8Ir/9p6yNuXvEHkiowsMoAmL7LLz260+DnlHMX3vQeEA6RFI3exvCHqsE8QbBOQZfSXA
+	p7xQw78v8MnWV6bfKwh/JKvPmU0TwAThZKyENuNp2hb8qQDZbSwpIvygkXtBCJcI84SnqgZO3/4
+	x+QzyQn2MBeSvWihBVcXnLdevo/CqL+ZU=
+X-Received: by 2002:a05:6830:82cc:b0:7e3:bc8c:5ea with SMTP id 46e09a7af769-7e5fefd43dbmr17429295a34.26.1779941383808;
+        Wed, 27 May 2026 21:09:43 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------jwDlSZ4GXWoEdYvcBmUD3shZ"
+Message-ID: <7bdc8382-cb71-4fc4-ae59-14682e808050@gmail.com>
+Date: Wed, 27 May 2026 23:09:28 -0500
 MIME-Version: 1.0
-In-Reply-To: <DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="RW5jHWMRiS5xUlcDlRee84J9gKuM8ELCN"
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
+User-Agent: Mozilla Thunderbird
+To: oss-security@lists.openwall.com,
+ =?UTF-8?Q?Pr=C3=A9nom=3F_Ahmed?= <ahmedabdelmoumen05@gmail.com>,
+ netdev@vger.kernel.org, linux-kernel@vger.kernel.org, security@kernel.org
+References: <CAN+TWHTGkGZu4vdbkMY8F-EDe3m8ScBctW-fdtfcpGbj192SyA@mail.gmail.com>
+Content-Language: en-US
+From: Jacob Bachmeyer <jcb62281@gmail.com>
+In-Reply-To: <CAN+TWHTGkGZu4vdbkMY8F-EDe3m8ScBctW-fdtfcpGbj192SyA@mail.gmail.com>
+Subject: Re: [oss-security] Linux: DMA-after-unmap race in ZCRX via
+ netif_rxq_cleanup_unlease() ordering inversion (netkit + page_pool)
 
---RW5jHWMRiS5xUlcDlRee84J9gKuM8ELCN
-Content-Type: multipart/mixed; boundary="wT4DNR7gE0pLL8BfxeD6juoNciw08RPTW";
- protected-headers="v1"
-From: Pierre Schweitzer <pierre@reactos.org>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Message-ID: <8fd9649e-08a4-2141-0d1e-624d9b344f1b@reactos.org>
-Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID process
-References: <e159bb7e5d3a4352be4cc9c401b0e081@imshyb02.MITRE.ORG>
- <616FD56C-60C1-48B6-983B-08FBD515343D@lanl.gov>
- <94029e4d-6a6b-94d4-d62c-5aa922b1fb22@oracle.com>
- <DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>
-In-Reply-To: <DMO5TQmFAPfu4dFKu4KMcGi6kvI4kaQ7lW-aj2fp5bdVprZtr-S6uqEEJ-lB4fu6HSILDCDivxFhQDq-Mm2kQqlPBeu7qzDE2fpV6TiS0CU=@itk.swiss>
+--------------jwDlSZ4GXWoEdYvcBmUD3shZ
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---wT4DNR7gE0pLL8BfxeD6juoNciw08RPTW
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 5/27/26 17:53, Prénom? Ahmed wrote:
+>
+> Hello,
+>
+> I would like to report a source-proven teardown ordering bug in the 
+> Linux kernel that can lead to a DMA-after-unmap race condition 
+> involving ZCRX (io_uring zero-copy receive), page_pool, and netkit 
+> queue leasing.
+>
+> ***Reporter:** Ahmed Abdelmoemen **Discovery Date:** 2026-05-26 
+> **Kernel Version:** Linux 7.1.0-rc3*
+>
+> Executive Summary
+>
+> [...] I am happy to provide more details or assist with testing.
+>
+This report reads like the product of an "AI" system.  What "AI" 
+assisted you in preparing this report?
 
-Hi,
-
-I agree with John as well (regarding his suggestion).
-
-As a side remark, would it be possible to properly configure the
-webserver of https://cveform.mitre.org? In environements that perform
-strict TLS checking, it cannot work, due to missing certificates chain.
-
-Cheers,
-Pierre
-
-Le 10/02/2017 =C3=A0 19:09, Stiepan a =C3=A9crit :
-> Same concern here; I second your suggestion, John.
->=20
-> By the way, I have just tried the OVE ID alternative:
-> good idea, but perhaps one button is a bit too frugal.
-> What about adding at least the possibility of a title?
-> This would probably encourage people to use OVEs.
-> Of course, a catpcha might be needed in that event.
->=20
-> Stiepan
->=20
-> P.S.: While we're at it, let's use the two OVEs I have just wasted,
-> OVE-20170210-0001 (forward CVE web request+ID to oss-sec)
-> OVE-20170210-0002 (add a title option field to OVE web form),
-> for the two aforementioned issues!
->=20
->=20
-> -------- Original Message --------
-> Subject: Re: [oss-security] MITRE is adding data intake to its CVE ID pro=
-cess
-> Local Time: 10 February 2017 5:08 PM
-> UTC Time: 10 February 2017 16:09
-> From: john.haxby@oracle.com
-> To: oss-security@lists.openwall.com
->=20
-> On 10/02/17 15:40, Priedhorsky, Reid wrote:
->> To more efficiently assign and publish CVE IDs and to enable
->> automation and data sharing within CVE operations, MITRE is changing
->> the way it accepts CVE ID requests on the oss-security mailing list.
->> Starting today, please direct CVE ID requests to this web form
->> <https://cveform.mitre.org/>
->>
->> I=E2=80=99ve been using the CVE requests on oss-security to maintain a r=
-easonably comprehensive and timely list of vulnerabilities for specific pro=
-ducts. It=E2=80=99s not clear to me how to do this when CVE requests happen=
- offline in a web form.
->>
->> Has this use case been considered? Is there an alternate way to accompli=
-sh my goal?
->=20
-> I'm glad someone else mentioned this -- I've been wondering too.
->=20
-> What would be nice is if the web form forwarded the request and CVE-ID
-> (suitably formatted) to oss-security or a similar list.
->=20
-> jch
->=20
+[I am sending this to the lists to ensure that everyone will know that 
+this question has been asked, in an effort to avoid deluging the 
+reporter with this question.]
 
 
---=20
-Pierre Schweitzer <pierre at reactos.org>
-System & Network Administrator
-Senior Kernel Developer
-ReactOS Deutschland e.V.
+-- Jacob
 
 
---wT4DNR7gE0pLL8BfxeD6juoNciw08RPTW--
-
---RW5jHWMRiS5xUlcDlRee84J9gKuM8ELCN
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCAAGBQJYnhBBAAoJEHVFVWw9WFsLaqcQAK7fxM5T9BRMebtI+rzH0d5h
-SIqqc3QQUlIKXhFUbn7eGIlCBlZfBMdM+D/c52B7tOFpltZcNwGGuLXq4ONdE4SW
-Irond7ePjwz7EUPn09exvs2VjUAUw32smSShhdBiAtacb2ODNepU+E91qATbdfOi
-0EN6LZLCBN6OrwmknpOSCDwgZUcs45e/r6z07inuiwl6uwCwxoiyrxJXdbcafnWM
-h7FvCrVO2FvV3aMpb/VRyHTurZw1+Tp+YNSLx4P1Cmi/cGNIIaWYG5gPZACdaULZ
-OjR6pt8SqC/Wt9RhTagsMPP9UnZBcm3ap8cp58BkkpgSbpC2DiHf/G+DOm8oDu82
-IC7E7l8siT0BT1eZgXx2B1iNRBWTbkULvuL02EMAilflisjhC+QHCyl7voZCxQuf
-qM4gUMT9oNBbzJUGcTGWHgg3cdHsxIfBo1b+jBiiwBqE63dgTgvhpGfOmz2Kvpf2
-5yblceF5klsga6j+tg75jOrzvMDC795CDw35QCsxk8P7yqrqe9u/i37Ja/oyw7yg
-RhO6+fHMoYcgMgVRcnVLOaJKGdJgzHuiZPC5bycA5qYZe7NCm4/rQBosV/ibCDf7
-7amyB3Dhtb9CxR6vmDwhpPUh+/lAS3pnqt4jLDHI+mjH057OUy8Pm1PO1U0KcCyE
-yQDqwtZyEgO+hvHYiWz1
-=QisB
------END PGP SIGNATURE-----
-
---RW5jHWMRiS5xUlcDlRee84J9gKuM8ELCN--
+--------------jwDlSZ4GXWoEdYvcBmUD3shZ--
