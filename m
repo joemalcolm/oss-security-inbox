@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1007" "Tuesday" "11" "October" "2016" "22:22:48" "+0800" "Marco Grassi" "marco.gra@gmail.com" "<CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>" "45" "[oss-security] linux kernel do_blockdev_direct_IO invalid memory access" nil nil nil "10" "2016101114:22:48" "[oss-security] linux kernel do_blockdev_direct_IO invalid memory access" (number mark "U       marco.gra@gm Oct 11   45/1007  " thread-indent "\"[oss-security] linux kernel do_blockdev_direct_IO invalid memory access\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 30152 invoked by uid 550); 11 Oct 2016 14:23:03 -0000
+Received: (qmail 9421 invoked by uid 550); 29 May 2026 06:57:29 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,81 +7,137 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 30091 invoked from network); 11 Oct 2016 14:23:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=hlkHcWMTZrzgkdNpttK8dZppjRIlugR0q2qUZaLx3ZM=;
-        b=CKRqPJZazp7KionuzhzCRIhWqW4W5R8/fgEUgvgJWY+gIbnHrzrnKz4fZSxAyZ3tE5
-         mPLkPiGtpIdfw9UtomR9iTzqRKr3MUlWRH2qMwfi5IMR/3xdiZ0I3TWVYhG0dV/M61d4
-         lnyOFi+Yml5Xh61j7pdvjZv8AFsFtK9xIs5xxOGl7lxu7KexxIwDWKw9KPPrAObMZKkN
-         duFBLHJlsFdQHZMI2JGhfrJxdc/zuUqhg2c04pGUQL9kDPKSrpdEOxPjezSDks+FdPJo
-         KwbVz5c+td/ecdPLcrylbDFQiBF+u+pdjrhEvSXWY6ja8i+y2NMoPcCIwP7rkSDQ4h6T
-         mtEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=hlkHcWMTZrzgkdNpttK8dZppjRIlugR0q2qUZaLx3ZM=;
-        b=e2RnY5NTmbg+eCjpBK7PFrOTuH7QkGChfmAmigMGQB6WNsNbT0E8llw8KTHHX8BirY
-         J9+wogSDUjyFIvIqK1cA7BTMdGmbNUOng4dHsCCXVtedt+mJuIAQI+sSmcZ7Ky+ssL72
-         SsR3hqzrQycib4xiypl+evnIOTVD9a487UCi0X+E2haC2JIAPU3Qd8Mc05pvnjzSRMr9
-         iG6qoipF54G+S1SNRp2pWAeH92Rr27Kz8N8BTIclst/VFARZUh8Cd8l8jD8p5+Bd5i5+
-         6rix2jhpDyLvIYuhcP0suSxA9lYywOH84AOJQfmxkfVdoFhDFhh43PodiIeLFG25mrVn
-         ok0g==
-X-Gm-Message-State: AA6/9RnDj36K3My9LNYOY852nOFfy3679ZJkeC2YdxHgv+bzV8dYj4VmzIvb+i1kOfno8JCLIX6NOFxT3Xbc5A==
-X-Received: by 10.36.46.4 with SMTP id i4mr18130402ita.27.1476195768938; Tue,
- 11 Oct 2016 07:22:48 -0700 (PDT)
-MIME-Version: 1.0
-From: Marco Grassi <marco.gra@gmail.com>
-Date: Tue, 11 Oct 2016 22:22:48 +0800
-Message-ID: <CAFkTriL_sGQ=0ym3ALDXjWMYNJxKC3UH02Lx7v9Zj_CsX9NOiA@mail.gmail.com>
-To: oss-security@lists.openwall.com
-Cc: cve-assign@mitre.org
-Content-Type: multipart/alternative; boundary=001a114aa3746e078a053e979c77
-Subject: [oss-security] linux kernel do_blockdev_direct_IO invalid memory access
+x-ms-reactions: disallow
+Received: (qmail 9237 invoked from network); 29 May 2026 06:57:24 -0000
+Date: Fri, 29 May 2026 08:57:13 +0200
+From: Solar Designer <solar@openwall.com>
+To: =?utf-8?B?UHLDqW5vbT8=?= Ahmed <ahmedabdelmoumen05@gmail.com>
+Cc: oss-security@lists.openwall.com
+Message-ID: <20260529065713.GA12793@openwall.com>
+References: <CAN+TWHTGkGZu4vdbkMY8F-EDe3m8ScBctW-fdtfcpGbj192SyA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN+TWHTGkGZu4vdbkMY8F-EDe3m8ScBctW-fdtfcpGbj192SyA@mail.gmail.com>
+User-Agent: Mutt/1.4.2.3i
+Subject: Re: [oss-security] Linux: DMA-after-unmap race in ZCRX via netif_rxq_cleanup_unlease() ordering inversion (netkit + page_pool)
 
---001a114aa3746e078a053e979c77
-Content-Type: text/plain; charset=UTF-8
+Hi Ahmed,
 
-Hello,
+Your message was CC'ed to oss-security and Linux kernel lists.  Please
+don't ever do that, it is explicitly against our content guidelines:
 
-I posted this to ask feedback on security at kernel dot org, but I think my
-mail got bounced back. Not sure if from the mailing list or from some
-single recipient.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Anyway reposting here,
+"Please don't cross-post messages to oss-security and other mailing
+lists at once, especially not to high-volume lists such as LKML and
+netdev, as this tends to result in threads that wander partially or
+fully off-topic (e.g., Linux kernel coding style detail may end up being
+discussed in comments to a patch posted to LKML, but it would be
+off-topic for oss-security). If you feel that something needs to be
+posted to oss-security and to another list, please make separate
+postings. You may mention the other posting(s) in your oss-security
+posting, and even link to other lists' archives."
 
-the following program will cause a invalid memory access
+Luckily, this problem isn't happening in this case yet, but it may.
 
-BUG: KASAN: wild-memory-access on address 0005080000000000
+I've removed the CC's now, and ask anyone else replying to do the same.
 
-See this link for the full sanitizer report, stacktrace and trigger poc
+I actually think your report should have been sent to the subsystem
+maintainers and Linux kernel lists only.  Not to the kernel security
+team because you're making this public right away anyway, the issue
+doesn't appear to be severe, and they are flooded with reports already.
+Not to oss-security because the issue does not stand out from the
+hundreds of other kernel bugs/CVEs.
 
-https://gist.github.com/marcograss/40850adb3c599ac38e0beac31617d56b
+We do want to handle some Linux kernel issues specially, such as the
+recent series of page cache corruption bugs that were commonly exposed
+on distros and provably allowed for reliable local root exploits.  But
+with so many kernel issues, these are exceptions and not the rule.
 
-tested on current master, with KASAN.
+Another detail (actually pointed out to me off-list in response to your
+posting) is that if you only confirmed an issue against an -rc kernel,
+like you wrote here, then it may not be oss-security material unless it
+also applies to released kernel versions.  I don't see you mention the
+oldest affected kernel version (but I do suspect the issue existed for a
+few kernel releases).
 
-Marco
+On Wed, May 27, 2026 at 11:53:45PM +0100, Prénom? Ahmed wrote:
+> The bug is reachable with `CAP_NET_ADMIN` (common in container
+> environments) when using netkit with ZCRX.
 
----
+>    - *Potential:* NIC DMA write to physical address 0 (or stale mappings
+>    with lazy IOMMU) leading to memory corruption.
+>    - *Requirements:* CAP_NET_ADMIN + netkit queue leasing + ZCRX installed
+>    on the leased queue.
+>    - *Current Status:* No runtime PoC or crash reproduction yet. The race
+>    window exists in theory but its practical exploitability needs confirmation.
 
-#include <sys/syscall.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#define _GNU_SOURCE
-#include <fcntl.h>
-#include <sys/sendfile.h>
+The previous time a ZCRX issue was brought in here (also AI-generated
+and overstated):
 
-int main()
+https://www.openwall.com/lists/oss-security/2026/05/03/7
+
+Brad Spengler pointed out this:
+
+https://x.com/spendergrsec/status/2051323307564167621
+
+"the io_register_zcrx_ifq() case does a CAP_NET_ADMIN test against
+the init namespace, so wouldn't be reachable by unpriv userns"
+
+I don't see io_register_zcrx_ifq() in latest mainline, but there is:
+
+int io_register_zcrx(struct io_ring_ctx *ctx,
+                     struct io_uring_zcrx_ifq_reg __user *arg)
 {
-  int ret = 0;
-  int fd = open("./hurrdurr", O_APPEND|O_RDWR|0x40);
-  ret = fcntl(fd, 4, 0x44000, 0, 0, 0);
-  ret = fallocate(fd, 0, 0x21, 0xafa6);
-  off_t offset = 0;
-  ret = sendfile(fd, fd, &offset, 0x800);
-  return 0;
-}
+	struct io_uring_zcrx_area_reg area;
+	struct io_uring_zcrx_ifq_reg reg;
+	struct io_uring_region_desc rd;
+	struct io_zcrx_ifq *ifq;
+	int ret;
+	u32 id;
 
---001a114aa3746e078a053e979c77--
+	/*
+	 * 1. Interface queue allocation.
+	 * 2. It can observe data destined for sockets of other tasks.
+	 */
+	if (!capable(CAP_NET_ADMIN))
+		return -EPERM;
+
+Ahmed, does this apply to (non-)exposure of your finding?  That it is
+limited to tasks with CAP_NET_ADMIN on host (not in a container), which
+means the host root user and (it's a stretch) tasks that have or retain
+this capability without full root access (I'm not aware of any).  Pretty
+much not a security issue, then?
+
+> Proposed Fix[image: image.png]
+
+Patch as picture?  This could as well be a rickroll.
+
+> I am happy to provide more details or assist with testing.
+
+Ahmed offered this additional detail off-list with permission to post it:
+
+On Fri, May 29, 2026 at 02:21:19AM +0100, Prénom? Ahmed wrote:
+> Actually the bug is straightforward! DMA is unmapped while NAPI is still
+> running on another CPU. If NAPI touches a descriptor after the unmap, it
+> writes to address 0. Worst case that is physical memory corruption and a
+> local privilege escalation.
+> 
+> I traced the teardown path via ftrace/kprobes and confirmed the race window
+> opens. I did not win the race no because ut depends on hardware and time
+> but the ordering inversion is runtime-confirmed, not just a source-level
+> observation.
+> 
+> Jakub has already reviewed it and proposed a fix. Happy to answer any
+> technical questions.
+
+I'm not getting deep into this specific issue.  My role here is to
+ensure that on oss-security we get precisely what's worthy of being in
+here, and not arbitrary 1% of Linux kernel maybe-security-or-not bugs.
+I'd appreciate your assistance with that going forward.
+
+Thanks,
+
+Alexander
