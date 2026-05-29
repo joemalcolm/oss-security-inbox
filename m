@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3191" "Sunday" "6" "September" "2015" "12:58:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150906165812.888373AE033@smtpvbsrv1.mitre.org>" "83" "[oss-security] Re: Some Wordpress Plugin Stuff" nil nil nil "9" "2015090616:58:12" "[oss-security] Re: Some Wordpress Plugin Stuff" (number mark "U       cve-assign@m Sep  6   83/3191  " thread-indent "\"[oss-security] Re: Some Wordpress Plugin Stuff\"\n") "<CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>" ("<CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3891 invoked by uid 550); 6 Sep 2015 16:58:30 -0000
+Received: (qmail 32136 invoked by uid 550); 29 May 2026 14:39:08 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,95 +7,172 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3833 invoked from network); 6 Sep 2015 16:58:24 -0000
-From: cve-assign@mitre.org
-To: scott@arciszewski.me
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAPKwhwto-ZPi0o98NAF3F9FxRjiiwiwHCFYTKNSCQJrf8BRReQ@mail.gmail.com>
-Message-Id: <20150906165812.888373AE033@smtpvbsrv1.mitre.org>
-Date: Sun,  6 Sep 2015 12:58:12 -0400 (EDT)
-Subject: [oss-security] Re: Some Wordpress Plugin Stuff
+x-ms-reactions: disallow
+Received: (qmail 32115 invoked from network); 29 May 2026 14:39:08 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=nodmarc.schlittermann.de; s=2020-06-19; h=Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Content-Description:Content-ID:
+	Content-Transfer-Encoding:In-Reply-To:References:Resent-Cc:Resent-To;
+	bh=y11eNxGQOelDkh3vRfsU+d5xaXXczyA/127CL3dvN5E=; b=HQ59XFAvXAj8e4Q7Cp5srtYGmv
+	6TN7lWtvJZjBUSme5J/159kz6h2RqpHo0LFFJCdAQ3bLSO1GOzPbDbl6Pd5SgJGlrD14gdox7iXLU
+	As0okLKspY24aIf8LROIaPVQRxwN/wOAy2+sOJHHN4sPqThBKXUbMwZJyc2HYqpk7Eq7Y1O/xuswj
+	mk5mgE8f6Xk1HZCfSZM8Epwf/fLYLBzMn57w76Pg3wuI1se9ZVi1SFi+LlCrVk1RKGznjYil8wc9R
+	AUAcGvOsenmjPLKM/5wL6pIYBJp5xbWWjlNvqrNrG9zKlaCxDjoYAHsw4+jZaZZNkR0OWrMpBzMXN
+	jQrS/BKg==;
+Date: Fri, 29 May 2026 16:38:57 +0200
+From: Heiko Schlittermann <hs@nodmarc.schlittermann.de>
+To: oss-security@lists.openwall.com
+Cc: exim-announce@lists.exim.org, exim-users@lists.exim.org
+Message-ID: <fxbuuizw5bvmsoafd2rn7ntruzq2yhw7fw3ptvbabxaguozgyv@iwyrf7ed3kgq>
+Mail-Followup-To: oss-security@lists.openwall.com, 
+	exim-announce@lists.exim.org, exim-users@lists.exim.org
+Organization: schlittermann -- internet & unix support
+X-Face: =y#&-VlCH8uT|8#-#JE_^c<:+qPbYxFD`}8`m)xjyA$93tpwm-vKsa(V,0?906(2VIVNQbU
+ QzD%zhE+~-AA?\v-v.HY6]ebO4_$vY`l|||Q!EZT5*Xx/>Fj{8E_a.;;#<4S$>&T%n5()2Yt=R5FSC
+ y:Na&@T{Rf`kPq^'ffPFA%`mP~>%-LU$d*]]{-%>j={&MsMND.">]H)&#AoSI~(U8Jk;v*;,Pf+l85
+ X?H&`
+X-Telegram: @HeikoSchlittermann
+X-Threema: T5RPWMSS
+X-Signal: +49.172.7909055
+X-Phone: +49.172.7909055
+X-SMS: +49.172.7909055
+X-GPG-Fingerprint: E5CA 331D 44AB 8E4C 806F  DBEE 2610 1B62 F693 76CE
+X-GPG-Key-ID: F69376CE
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4ouo3nwmjaqjtwvw"
+Content-Disposition: inline
+Subject: [oss-security] CVE-2026-48840: Exim 4.99.4: PROXY-protocol uninitialised-stack
+ information disclosure
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+--4ouo3nwmjaqjtwvw
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: CVE-2026-48840: Exim 4.99.4: PROXY-protocol uninitialised-stack
+ information disclosure
+MIME-Version: 1.0
 
-> SecurityMoz Security Audit
-> 
-> https://wordpress.org/plugins/securemoz-security-audit/
-> 
-> file_get_contents() + explicitly HTTP (no TLS) -> unserialize()
+Dear Exim users,
 
-> http://plugins.svn.wordpress.org/securemoz-security-audit/trunk/class/__functions.php
-> 
-> unserialize(file_get_contents("http://api.tweetmeme.com/url_info.php?url=$url"));
+The Exim maintainers are releasing a security fix for CVE-2026-48840.
 
-Use CVE-2015-6828.
+Identifier:   EXIM-Security-2026-05-19.1 (CVE-2026-48840)
+Type:         pre-authentication information disclosure
+Component:    Exim
+Affects:      4.88 (2017) through the current 4.99.3 release
+Corrected in: Exim 4.99.4 (exim-4.99.4)
+Credit:       Warisjeet Singh (sin99xx)
+
+Vulnerability Details
+---------------------
+
+proxy_protocol() declares hdr as an uninitialised stack union.  For a
+PROXYv2 frame, the only length guard is an upper bound: the frame size
+must not exceed sizeof(hdr).  No lower bound is checked.
+
+A frame with address family 0x21 (TCPv6) and len=3D0 sets the read size
+to 16, causing the read loop to copy exactly 0 bytes into the union.
+The TCPv6 dispatch arm then unconditionally calls:
+
+  memmove(tmpaddr6.sin6_addr.s6_addr, hdr.v2.addr.ip6.src_addr, 16)
+
+copying 16 uninitialised stack bytes into tmpip6, which inet_ntop
+formats as an IPv6 address string.  That string is written to
+sender_host_address and emitted in the SMTP greeting banner:
+
+  250 hostname Hello probe [::68ef:38ad:ffff:0]
+
+The same defect affects family 0x11 (TCPv4) with len < 12 (4 leaked
+bytes instead of 16).
+
+The leaked bytes track ASLR entropy across daemon restarts and are
+confirmed to be live userspace VA pointers, making this an
+ASLR-defeat primitive usable as a chain component.
+
+Fix: add minimum-length checks per address family (12 bytes for
+TCPv4/0x11, 36 bytes for TCPv6/0x21) before the union is accessed.
+Frames that fail the check are rejected with proxyfail, consistent
+with all other malformed-frame handling in the function.
+
+Reported by Warisjeet Singh (sin99xx).  Tested on aarch64 Linux;
+architecture-independent (only leaked content varies).
 
 
-> WP Limit Login Attempts
-> 
-> https://wordpress.org/plugins/wp-limit-login-attempts/
-> 
-> Trivial SQL injection via HTTP headers.
-> 
-> $ip = getip();
-> 
-> SELECT ... WHERE `login_ip` =  '$ip'
-> 
-> function getip(){
-> 
-> $ip = $_SERVER['HTTP_CLIENT_IP'];
-> $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+Affected Configurations
+-----------------------
 
-Use CVE-2015-6829.
+Exim compiled with SUPPORT_PROXY (default in Debian, Ubuntu,
+RHEL/Fedora packages) and hosts_proxy set to a non-empty value.
+The attacker's source IP must match hosts_proxy, or the attacker
+must be able to reach the port that expects a PROXY header through
+a host already in hosts_proxy.
 
 
-> Also, Tor Blocker (link below) uses HTTP to grab the list of IP addresses
-> to block. It's telling and appropriate that the person who developed a
-> plugin to oppose a privacy technology would fail to use TLS.
-> 
-> https://wordpress.org/plugins/tor-exit-nodes-blocker/
-> 
-> (Surely no one would ever think to hack an upstream router and MitM the
-> connection to block the blog administrator from their own blog or allow Tor
-> nodes through!)
+Mitigations
+-----------
 
-We don't think that we can assign a CVE ID for this. The product
-relies on data at the http://pike.hqpeak.com/api/free.php URL; that
-data is not currently available at the
-https://pike.hqpeak.com/api/free.php URL or any other HTTPS URL that
-we know about. Apparently the risk in using HTTP is
-incorrect/incomplete data, not code execution. If MITM attacks occur,
-the product user could typically recover from them by deleting
-unwanted postings and by establishing their own administrative login
-from a different IP address. MITM attacks aren't likely to occur
-continuously. Given that the data is only available via HTTP (not
-HTTPS) and the product user wants the data, we're unable to reach a
-conclusion that the http://pike.hqpeak.com URL is necessarily a
-vulnerability without knowing the vendor's perspective. One possible
-example is that the vendor didn't want to support HTTPS in case the
-plugin became very popular and the pike.hqpeak.com server was unable
-to support all of the load of cryptography calculations.
+- Narrow hosts_proxy to the exact load-balancer IPs (not a CIDR superset).
+- Unset hosts_proxy entirely to disable PROXY-protocol parsing on the affec=
+ted listener.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
+Resolution
+----------
+
+Upgrade to Exim 4.99.4.  The fix is on branch exim-4.99+fixes,
+tag exim-4.99.4, signed by Heiko Schlittermann (HS12-RIPE) <hs@schlitterman=
+n.de>,
+key 0xDD98D92359DE9E3C2663F291697F0EDD68099F6F.
+
+Downloads
+---------
+
+  https://ftp.exim.org/pub/exim/exim4/
+  https://code.exim.org/exim/exim/releases
+
+Advisory
+--------
+
+  https://www.exim.org/static/doc/security/EXIM-Security-2026-05-19.1/
+
+Timeline
+--------
+
+  2026-05-19 12:35 UTC  Report received from Warisjeet Singh (sin99xx)
+  2026-05-19 13:26 UTC  Acknowledgement sent to reporter
+  2026-05-19 14:06 UTC  Root cause confirmed; fix drafted
+  2026-05-25 13:30 UTC  CVE request submitted to Mitre via cveform.mitre.org
+  2026-05-25 17:57 UTC  CVE-2026-48840 assigned by MITRE
+  2026-05-26 00:41 UTC  Advance notice (distro-pre.txt) sent to distros@vs.=
+openwall.org
+  2026-05-26 00:47 UTC  Advance notice sent to exim-maintainers@lists.exim.=
+org
+  2026-05-27 14:00 UTC  Fix branch and tag exim-4.99.4 pushed to exim-distr=
+os
+  2026-05-29 14:00 UTC  Public release
+
+--=20
+Heiko Schlittermann
+On behalf of the Exim Maintainers
+
+--4ouo3nwmjaqjtwvw
+Content-Type: application/pgp-signature; name="signature.asc"
+
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
 
-iQIcBAEBCAAGBQJV7G/jAAoJEL54rhJi8gl5zBgP/jrGs9pxHGh/KTnnOPKLPTNN
-5m6R05QzpqJKf4/Ztt2T8Ewe/FmHL9XrcWTsz5/VnidxlwdY5/vUGqCpomCYxVn0
-T7SU77+AildiPBZOdVrO3i+JRkQZo6k0I77HAmwP94WU9GDY0v2qS3yd2vnYzmtp
-KB7jrrBDxMNZ0HqytgtdiTToyta2PrLnQA+fzjf3Z71loQsZw/9w7+IBK9xSOE1o
-iZz4h3kocsW0ZijcT4UJ2rD31fLBSYZ8Rzcp39VtzrQkO5tiMCMjLONaeOLF6XuD
-9EFPzj4xh9xLa7KytS96+I0Lq0NHM3H8XrACkCYm5kzS9dollzSHUmrJqYWmcrt8
-6GCMquPp/52YUzWExNZcmNG/LCecMRfCVMRJaC3wVIb+CPduIdvpQB5n+WVBQf8b
-Kwq5sZbtbKWe1W8HMZgr3pRibh1yu+41mSgTsZi+L0uqzkpCdwnLfnLFr19CTdX/
-N+Ar0qjmfhz9p4uGfKHcuepy8/mq1JesgiLBbdoM9q3/wnZjJVIp5pqNbli9fqfi
-nwLqEzbNucSSqLxTEb4z51DZ/cNcfjcW9IcHwXCgCdNywQ5xwk41F+kW7hNF6PUM
-NlCuEgIEreWze/Kberp3PMGjF2OBsQQF4lRZe2xvKJQNfxmGWYrTpZxm3l9Crke0
-Tt2OUTb4jvb5AsWl1w3B
-=DjqZ
+iQIzBAABCgAdFiEE3ZjZI1nenjwmY/KRaX8O3WgJn28FAmoZpQAACgkQaX8O3WgJ
+n29BXRAAg6mvXCwDl9OeGz+WUiacRiv8CB7VjMi9kQAE1llFPsffI8xUKGOUe+q6
+A1ta1yMm9mi+LhffmbfONrjdJMACGhjREovdIoS+Hrl/OiTF20pb9UL8NLyT1a0P
+fROWUAYHKPE3qpE3wyJPQt6JHMOI9Vsc0d8tP3yU2NR+C61QS0VhxjgUy44AaWk/
+niNiepeWl81nztgRC+XP9WWvCBpWk7jFlDZJuTJ0rPlAX4bs7VO/B89uz0UVfDAn
+SJAbzqKh6QLW80BiTThdwxMABEApqUkuKr0/qBn8dmrW/es30aKjebXXuiJyZPP4
+CDW+328wnzUrmC6Lb1JdMdQcPT2GpqUhakEQCxC8czX4PtuZ3DFzoBmgt3xQLAnF
+gkETDOprp++2cSDLWYIA9CQ5XAYjq1tI5q5bniPhBsPGy0ypJFURtRNagJ4YSeJx
+aGE0DTuNBskjpc2NS8auwSSuC781abo8URqL5JEwhcRj/5o39FqPIIp2OIiEhgy1
+kjX8IB3mK+5XRM+aNfgm5K8jcZ/OkAB7ToSF5/Zm96tSWe5T1Sa7+zigcM53cDF5
+DjS0SJlSDUWahl8RHsW3MrQAaX/VKRvowrrftAyl5UzF3n13yFFJyeX8bE/bNT9e
+4mohuhV8Bf9hBi2o/Un9smAbeKkIZ9RaCC/Uo1yP03mjw748U6w=
+=Ett8
 -----END PGP SIGNATURE-----
+
+--4ouo3nwmjaqjtwvw--
