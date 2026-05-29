@@ -1,4 +1,4 @@
-Received: (qmail 20158 invoked by uid 550); 8 Apr 2026 00:25:36 -0000
+Received: (qmail 20074 invoked by uid 550); 29 May 2026 19:56:26 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,106 +8,108 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 26343 invoked from network); 8 Apr 2026 00:09:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=riseup.net; s=squak;
-	t=1775606951; bh=JamLv/iLFjgsdPOXQfBiApdAqEPw57aMDDvKy7KUaKM=;
-	h=Date:From:To:Cc:Subject:From;
-	b=SG9Y7ftTdEPZx406QsjAgU/K/3xtFCIfABmXIy4yIcl1s52XWXjaW0BBFKXP98gL9
-	 lrSI2znpXWBraDsJ+SDAvd//wpUp4K6lPVqdWRDEaOpDXT3mZqN9ub5mO7J8OhEgQJ
-	 oDVLkNwVIMd5bdYym7+OYxhVWqg67HxfWLr0KvUE=
-X-Riseup-User-ID: 6742F29A4E52E219CCA852BF51CAA7550D5BC643D17F6159801F50303CF955C2
-Date: Tue, 7 Apr 2026 20:09:06 -0400
-From: Aaron Rainbolt <arraybolt3@riseup.net>
+Received: (qmail 20003 invoked from network); 29 May 2026 19:56:26 -0000
+Date: Fri, 29 May 2026 21:56:16 +0200
+From: Christian Brabandt <cb@256bit.org>
 To: oss-security@lists.openwall.com
-Cc: adrelanos@whonix.org, arraybolt3@gmail.com
-Message-ID: <20260407200906.14b9bcc0@riseup.net>
+Message-ID: <ahnvYETeqM5TtaO2@256bit.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/H2euY6D9UhYLoyRvXfna2c4";
- protocol="application/pgp-signature"; micalg=pgp-sha512
-Subject: [oss-security] systemd-journald in systemd 259 does not escape characters in emerg
- messages that are wall'd to other user's terminals
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Arbitrary Code Execution via Python Omni-Completion
+ in Vim < 9.2.561
 
---Sig_/H2euY6D9UhYLoyRvXfna2c4
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+Arbitrary Code Execution via Python Omni-Completion in Vim < 9.2.561
+====================================================================
+Date: 29.05.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Control of Generation of Code (CWE-94),
+     Inclusion of Functionality from Untrusted Control Sphere (CWE-829)
 
-Going over this semi-briefly:
-=20=20
-* systemd-journald is configured with the `ForwardToWall=3Dyes` and
-  `MaxWallLevel=3Demerg` settings by default in Ubuntu 26.04 pre-release
-  images and Arch Linux. (I think this is because these are enabled by
-  default in systemd upstream but haven't tried to verify this.) In my
-  testing, this will result in systemd-journald copying emerg-level
-  log messages to all logged-in TTYs and at least some root-owned PTYs
-  (if any exist).
-* Any user on the system can write an emerg-level log message using
-  `logger -p emerg 'msg...'`.
-* Potentially dangerous character sequences in log messages (like ANSI
-  escape sequences) are not sanitized by systemd-journald before it
-  prints those messages to other user's terminals.
-* Therefore, one can use systemd-journald to write malicious things to
-  other people's terminals, which can be used to exploit terminal
-  emulator vulnerabilities. There have been vulnerabilities in
-  terminal emulators like XTerm in the past that would allow this to
-  be used to execute arbitrary code as root if someone is unlucky
-  enough to have a PTY to a root shell open in a vulnerable terminal
-  when an attacker writes their malicious log message.
+## Summary
+The Python omni-completion script in `python3complete.vim` for Vim with the
+`+python3` interpreter enabled (and the legacy `pythoncomplete.vim` for builds
+with the `+python` interpreter) executes the `import` and `from` statements
+found in the current buffer through Python's import machinery.  Because the
+buffer's working directory is on `sys.path`, opening a hostile `.py` file
+with a sibling Python package and invoking omni-completion runs that
+package's top-level code as the editing user.
 
-An easy proof-of-concept for this (assuming your system has `sudo`
-configured to allocate a new PTY) is:
+## Description
+`runtime/ftplugin/python.vim` installs `omnifunc=python3complete#Complete`
+on every Python buffer when Vim has `+python3` (or `+python`).
+When the user invokes omni-completion with `CTRL-X CTRL-O` in insert mode, the
+completer parses the buffer with an embedded Python tokenizer, regenerates a
+Python source string from the parsed scope, and passes it to `exec(src,
+self.compldict)` to populate the completion dictionary.
 
-1. Open two terminal windows as a non-root user.
-2. In one terminal window, open a root shell by running `sudo -i`.
-3. In the other terminal window, run
-   `logger -p 'emerg' $'\033[31mHello!\033[0m'` as a non-root user.
+The regenerated source re-emits every top-level `import X` and
+`from X import Y` statement that the parser harvested from the buffer.
+Additionally, the completer extends `sys.path` with `['.', '..']` so
+that sibling modules in the buffer's working directory are importable.
+The combined effect: invoking omni-completion on a `.py` file runs
+Python's import machinery on attacker-supplied module names with the
+attacker's working directory on the search path.
 
-You will see a wall message printed in the terminal emulator window
-that you ran `sudo -i` in, with the word 'Hello' written in red.
+A crafted `.py` file containing `import evil_pkg` and a sibling
+`evil_pkg/__init__.py` in the same directory will execute the
+`__init__.py` code when the victim opens the file and presses
+`CTRL-X CTRL-O`.
 
-A more involved proof-of-concept that demonstrates how this can be
-used to escalate privileges is:
+## Impact
+Arbitrary local code execution as the user running Vim, with the user's
+full credential set (SSH keys, cloud credentials, etc.), file-system
+access, and network egress.  Realistic delivery vectors include:
 
-1. Compile a version of XTerm that is vulnerable to CVE-2022-45063.
-   (XTerm patch #369 worked for me last time I tried this.)
-2. Open two instances of XTerm at once as a non-root user.
-3. In one XTerm window, open a root shell by running `sudo -i`.
-4. In the other XTerm window, as a non-root user, run
-   `pwned=3D$'\e]50;i$(cp /etc/shadow /home/user/shadow && chown user:user =
-/home/user/shadow)\a\e]50;?\a\n'`
-   (replacing 'user' with your non-root user's username where
-   appropriate).
-5. In the same non-root XTerm window, run
-   `logger -p 'emerg' "$pwned"`. You should now have a copy of the
-   system's shadow password file in your home directory, readable by
-   your non-root user.
+- reviewing a third-party Python contribution by checking out a fork
+  branch and opening any `.py` file in it,
+- auditing an extracted source tarball, malware sample, or repository
+  whose layout the attacker controls,
+- opening a `.py` file from any downloaded archive where the extracted
+  layout places a hostile package next to the file being inspected.
 
-Affected users can mitigate this by setting `ForwardToWall=3Dno` in
-systemd-journald's configuration (`/etc/systemd/journald.conf`), or by
-adding `systemd.journald.forward_to_wall=3Dno` to their kernel command
-line.
+Exploitation requires:
 
-I discovered this while doing work for the Kicksecure and Whonix
-projects. This bug was reported privately to upstream on December 23,
-2025. As per Kicksecure's Vulnerability Disclosure Policy [1], we're
-disclosing it publicly on April 7, 2026, 90 days + a 14-day grace
-period later. An upstream bug report can be seen at [2].
+- Vim built with `+python3` (or `+python3/dyn` with a working Python 3
+  runtime)
+- Filetype plugins enabled (`filetype plugin on`, the default in
+  `runtime/defaults.vim` and most distribution `vimrc`s).
+- The victim opens the hostile `.py` file from the attacker-controlled
+  working directory and invokes omni-completion.
 
---
-Aaron
+The severity is rated Medium because the user must manually invoke omni-
+completion after opening the file; the bug does not fire on file-open alone.
 
-[1] https://www.kicksecure.com/wiki/Vulnerability_Disclosure_Policy
-[2] https://github.com/systemd/systemd/issues/41549
+## Mitigation
+As of Vim patch v9.2.0561 the omni-completer no longer executes
+`import` or `from` statements harvested from the buffer by default.
+Users who require completion of imported module members (for example
+`os.<C-X><C-O>` offering `getcwd`, `path`, etc.) can opt back in with: >
 
---Sig_/H2euY6D9UhYLoyRvXfna2c4
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+    let g:pythoncomplete_allow_import = 1
 
------BEGIN PGP SIGNATURE-----
+Setting this variable re-enables the import-execution behavior and
+should only be used when editing code from trusted sources.  When the
+variable is unset or `0`, in-buffer symbols (classes, functions,
+variables defined in the file) still complete normally; only completion
+of names that would require executing imports is unavailable.
 
-iHUEARYKAB0WIQS8QsiCjFi4DcDBX+Q5rdye4jrrCAUCadWcogAKCRA5rdye4jrr
-CEMvAQC3fdNMpN+sRbT2XMoBW3+/iMhqmfLXwxbSePQK/zglbAD/SDm+dqNUxJA3
-772ciE+MfGjtG3akoqeBGRKj2jk8QA0=
-=Zc3z
------END PGP SIGNATURE-----
+## Acknowledgements
+The Vim project would like to thank github user tonghuaroot for
+reporting, analyzing the issue, providing a proof of concept
+and suggesting a fix.
 
---Sig_/H2euY6D9UhYLoyRvXfna2c4--
+## References
+The issue has been fixed as of Vim patch [v9.2.0561](https://github.com/vim/vim/releases/tag/v9.2.0561).
+- [Commit](https://github.com/vim/vim/commit/4b850457e12e1a678dd209f2868154f7553cbf8d)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-52mc-rq6p-rc7c)
+
+
+Best,
+Christian
+-- 
+There's so much to say but your eyes keep interrupting me.
