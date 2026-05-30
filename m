@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3033" "Monday" "12" "October" "2015" "12:16:12" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>" "62" "[oss-security] Re: CVE Request: Plone CSRF" nil nil nil "10" "2015101216:16:12" "[oss-security] Re: CVE Request: Plone CSRF" (number mark "U       cve-assign@m Oct 12   62/3033  " thread-indent "\"[oss-security] Re: CVE Request: Plone CSRF\"\n") "<CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>" ("<CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 15767 invoked by uid 550); 12 Oct 2015 16:16:25 -0000
+Received: (qmail 20405 invoked by uid 550); 30 May 2026 17:01:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,74 +7,80 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 15745 invoked from network); 12 Oct 2015 16:16:24 -0000
-From: cve-assign@mitre.org
-To: nathan.van.gheem@plone.org
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAL8hw9GrJsZk5uVN2aY9EdBo2uahxLbQFG8j_5=ArC8Z+cGfKA@mail.gmail.com>
-Message-Id: <20151012161612.5FE516C04EF@smtpvmsrv1.mitre.org>
-Date: Mon, 12 Oct 2015 12:16:12 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request: Plone CSRF
+x-ms-reactions: disallow
+Received: (qmail 8087 invoked from network); 30 May 2026 15:36:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1780155386;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=x2SdaueIhoz07dwTprfQmPwyhtrpY7Qi1L151pg8wmg=;
+	b=oFZUw/YEPWy6yZR/bWK8ZkO6XaRSoByFHpu8LYFDCxcWmYpJUcK3yUFLNMp5qX04hn/g1G
+	+G2TDz3TX3jzu3Id+ov4DgYk1SgPOc7xM+MXu5n6wYwM3VdM+RuJTAWexeqM03sPii2ML3
+	+TfwQASHe8dAHokNZrKRyGbXF5M4f5gADnLSO+MQJxD/T2TUvjeatPsPRTV1yePrHI00hx
+	I4jqW+UsmwMQTVgo3WH6zOMxtsj1jUcOsZIwESUYr9wkbHhb8X2SX6nraJw4uNfwuHNePB
+	9bfHCegrUlRJhDoJZp8w4BIHopv6fmCWpEU5J8wOXpfXNairQBtKdNqTRY2MSw==
+Message-ID: <f2d5af94-77ff-4a00-b1cb-471ca7cb3b12@cpansec.org>
+Date: Sat, 30 May 2026 16:36:25 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB, en-ZA
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTFdxQajDD9r2ryMTLJQiEnmbNTpwgFPguU1XaQ9nZRr3JZ6arncSd3IYBzefcdG7XSSXgS1FGLuiXmNeRAk18WmEPmAPy8m4Y48DrBRYOHQIEosZY4CC3x9DXxST6+dUd/xtlUj1dHSawJUeDke0SS+UX35u6OVMZlCuhaS9xojNltFimyj21QMCQHM4kcKQhA0Wd/TCMgh2PDDoVR38n1DrwyfBB7IHZnE5XpAKUdmeapNukBBEWyc/cj4By+rVh4NJZlupa0m9vYB988blsFtQRvpQz3ieme8uwSBe97/sQNaTWL1TF2JYTxlviTtSAmpqkOwAlrH3gnLyn7AG57hl2xiUaMXvPqMuVNynP/jcM/9uwQV0qn91JgZOMyOPqU3ZB3gzNVQfkILfuy7OO2nfI18N4+Qzp9u59xQfGMT0o9wrDOGL0Vj+A/pAf7H7xNpqxwMwawGShNDnIo8+wzKgD1za7tZM31O/T6UGbXXyEzGrBXO0V6zwlDbzLudh/BWsd9nItHLKDB3JAziBDK4xNVgfD3Yzrw2PeAXZ71RsFxGiBZA1h0pT2+yRBIhwCZQSKq3TD1W6+nxhXDy1YVqAEFhnT25UhYDRu2myGJW6kqOMEz07tMum9WB6Pio6eCFMVmKS01QwsQ372TQ0sCYdzHd5fm5JDzEVwvKpTxw2A
+X-GND-State: clean
+X-GND-Score: 0
+Subject: [oss-security] CVE-2026-8594: Text::LineFold versions through 2019.001 for Perl
+ duplicate the output based on the number of special break characters
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+========================================================================
+CVE-2026-8594                                        CPAN Security Group
+========================================================================
 
-> Can a CVE be assigned to this issue, please?
-> 
->    https://plone.org/security/20151006/multiple-csrf-vulnerabilities-in-zope
->    https://plone.org/products/plone/security/advisories/security-vulnerability-20151006-csrf
-> 
-> Plone is built on the Zope2 application framework. In the Zope2 application
-> framework, there are multiple CSRF vulnerabilities. The latest version of
-> Plone has automatic CSRF protection integrated at the database layer. This
-> patch basically backports the latest automatically CSRF infrastructure to
-> Plone 4.x.
+         CVE ID:  CVE-2026-8594
+   Distribution:  Unicode-LineBreak
+       Versions:  through 2019.001
 
-The vulnerability information can be covered in CVE; however, we do
-not really understand why it is being presented in this way.
+       MetaCPAN:  https://metacpan.org/dist/Unicode-LineBreak
+       VCS Repo: https://github.com/hatukanezumi/Unicode-LineBreak/
 
-https://github.com/plone/plone4.csrffixes says "there are a lot of
-CSRF problem with the ZMI that Zope2 will never be able to fix." It
-seems that, normally, if one or more persons had discovered CSRF
-problems in Zope2, then they could have CVE IDs for their discoveries.
-Why is this a "never be able to fix" situation? Is there, more or
-less, a requirement that Zope2 allow arbitrary requests from clients
-that have never previously read the content of any web page, because
-of the variety of ways that Zope2 is used? In that situation, the
-request behavior of Zope2 would not necessarily be considered a Zope2
-vulnerability.
 
-Also, a separate issue is that the CVE request is specifically about
-backporting. It seems that, at some time in the past, the possibility
-of CSRF attacks against default Plone sites was identified and this
-motivated the development of auto CSRF protection in Plone 5.
-Normally, an assignment of a CVE ID or IDs would be associated with
-the original discovery, not a later backporting of fixes. Are these
-equivalent in this case: for example, were all of the CSRF attack
-possibilities against default Plone sites discovered by Plone
-Foundation contributors, and security-vulnerability-20151006-csrf is
-the first general public announcement that these CSRF issues existed
-at all?
+Text::LineFold versions through 2019.001 for Perl duplicate the output
+based on the number of special break characters
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Description
+-----------
+Text::LineFold versions through 2019.001 for Perl duplicate the output
+based on the number of special break characters.
 
-iQIcBAEBCAAGBQJWG9wmAAoJEL54rhJi8gl5n6oQAKXuzwqb4bmBs4K5NhpJ4NtI
-d37u737MsJSGLLtXGlrupC2XDwq/LuSN80SmOQVYnPn4EU4SU+17bvwjOP30LECD
-DJMt7m10LuGjamyrbFGfALzXh0iPkZHoUN289c+oQZN9P8pdVlVfZlVrgZP2KPQk
-3MbELeGrh0NogA2+yRFAdufKQovo4cnyQuHsxqpV/7Mv+YJwlFInhJVcrI35F5TF
-R3sDKoIkjMXicPRA9+9dZYnTeNmypGVhuBUhG6UwW+Ob4dlR6fAyMH6NV+977r+5
-9DnDsyHQ+6axYqNT/+4kY1tXHi9dXvhSoV71OGtcMODknD7RyiVdF1DpuJl7PP7Y
-u+TaqrN7A7x5kalSCspLYsYlvciyIXURJv32ZANVeT/67mEqnWky7ZnoUrssPqzf
-FIgqAM1MUPD9KT+P9zDoiG0oFfVKpu9EqLlo372pyw+nVn/2U0fPdGzKro+kOZGQ
-CU+wxdFX2xwZTAsP1JXzHBoHEY0Q/i+GSAlqHvNuILlLgdypPS9YxiCNc0pVmsBE
-2HRxNoZAWBhiAD/B/nEFjNyvi6yGzz35QNhaYGeMQpVrlDh65BNt3wT+pkCxB/tr
-W7ZbRsu4DBxt/yyVy9FqOdw0eIqo2beplKxVWHjbAIKapQjCyJ0VXD887CBw7AlC
-uVpQbre4M9bmYXVg95Bz
-=tvlJ
------END PGP SIGNATURE-----
+Text::LineFold splits the input string by specific line break
+characters (such as VT, FF and others) into segments, but applies the
+break function to the entire string, not just the segment.
+
+A side effect of this is that the full input can be duplicated for each
+segment.  Besides being incorrect, this can lead to unexpected resource
+consumption and possible denial of service.
+
+Note that Text::LineFold is part of the Unicode-LineBreak distribution,
+which may have a higher version number than the module.
+
+Problem types
+-------------
+- CWE-405 Asymmetric Resource Consumption (Amplification)
+- CWE-407 Inefficient Algorithmic Complexity
+
+Workarounds
+-----------
+Apply the patch.
+
+
+References
+----------
+https://metacpan.org/release/NEZUMI/Unicode-LineBreak-2019.001/source/lib/Text/LineFold.pm#L407-415
+https://security.metacpan.org/patches/U/Unicode-LineBreak/2019.001/CVE-2026-8594-r1.patch
+
+
+
