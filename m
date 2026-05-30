@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1557" "Tuesday" "8" "January" "2019" "16:26:27" "+0100" "Greg KH" "gregkh@linuxfoundation.org" "<20190108152627.GA19359@kroah.com>" "40" "[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability." nil nil nil "1" "2019010815:26:27" "[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability." (number mark "U       gregkh@linux Jan  8   40/1557  " thread-indent "\"[oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability.\"\n") "<CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>" ("<CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 17999 invoked by uid 550); 8 Jan 2019 15:59:57 -0000
+Received: (qmail 12252 invoked by uid 550); 30 May 2026 12:13:53 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,64 +7,66 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 20208 invoked from network); 8 Jan 2019 15:26:41 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1546961189;
-	bh=Danb1e06BURhsCCPYvyyyajwKZEAT6MrwpFFoldZYxw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=nQkZExXHxWwv2cysEHEXBrEoLY//9eaQ9TRrzPed/UtVFR1GsTw9tEL0q4nsWbpcJ
-	 X0v4GBFxsfKLwPyjxIT5Ud0UzcUwNsJqGwvioqH2lItNjVd2eKLitQCzi3nIynSP+j
-	 Y055IDncySjJj9oJrSD974doC2ensj3Mc6tVwXg4=
-Date: Tue, 8 Jan 2019 16:26:27 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Entropy Moe <3ntr0py1337@gmail.com>
-Cc: security@kernel.org, oss-security@lists.openwall.com
-Message-ID: <20190108152627.GA19359@kroah.com>
-References: <CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 25791 invoked from network); 30 May 2026 08:32:12 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Thomas Wolf <twolf@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <e16ac0e5-7504-4d3e-65dc-2d57a62cae86@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sat, 30 May 2026 08:31:07 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALzBtjJ7Vh8qatDWaf1oHf+=fGQUphm7WM2e0fZXe+8rQ=Sxxg@mail.gmail.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
-Subject: [oss-security] Re: Linux Kernel 4.20(21) deadlock vulnerability.
+Subject: [oss-security] CVE-2026-48827: Apache MINA SSHD: Path traversal in
+ org.apache.sshd:sshd-git 
 
-On Tue, Jan 08, 2019 at 07:08:14PM +0400, Entropy Moe wrote:
-> Hello,
-> I wanted to let you know that there seem to be a deadlock vulnerability on
-> the linux kernel 4.20.
-> I am attaching the result report from syzkaller which also got the c code
-> for replication.
-> 
-> thank you,
+Severity: moderate=20
 
-> Syzkaller hit 'possible deadlock in console_unlock' bug.
-> 
-> RBP: 00000000006cb018 R08: 0000000000000001 R09: 0000000000000031
-> R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000004
-> R13: ffffffffffffffff R14: 0000000000000000 R15: 0000000000000000
-> 
-> ======================================================
-> WARNING: possible circular locking dependency detected
-> 4.20.0-rc7+ #8 Not tainted
-> ------------------------------------------------------
-> syz-executor579/2028 is trying to acquire lock:
-> 00000000e478796d (console_owner){-.-.}, at: log_next kernel/printk/printk.c:489 [inline]
-> 00000000e478796d (console_owner){-.-.}, at: console_unlock+0x33d/0xd30 kernel/printk/printk.c:2401
-> 
-> but task is already holding lock:
-> 0000000030388923 (&(&port->lock)->rlock){-.-.}, at: pty_write+0xcd/0x1d0 drivers/tty/pty.c:120
-> 
-> which lock already depends on the new lock.
+Affected versions:
+
+- Apache MINA SSHD (org.apache.sshd:sshd-git) 2.0.0 through 2.17.1
+- Apache MINA SSHD (org.apache.sshd:sshd-git) 3.0.0-M1 through 3.0.0-M3
+
+Description:
+
+Path traversal vulnerability in Apache MINA SSHD bundle sshd-git. Lack of p=
+ath validation in git-upload-pack, git-receive-pack, and other git operatio=
+ns allows users authenticated over SSH access to git repositories outside t=
+he configured git server root directory.
 
 
-Are you sure this is a real problem?  Can you deadlock this when
-running?
 
-Also, try 5.0-rc1, a number of tty core changes went in there to try to
-resolve these types of issues.  They have not been backported to 4.20.y
-yet as they need to get more testing.  If you could run your same test
-suite on that kernel, it would be great to find out your results.
 
-thanks,
+Applications are affected if they use org.apache.sshd:sshd-git. Application=
+s not using sshd-git are not affected.
 
-greg k-h
+
+
+
+Users are advised to upgrade affected applications to Apche MINA SSHD 2.18.=
+0, which fixes the issue.
+
+
+
+
+The issue also is present in the pre-release milestones 3.0.0-M1 to 3.0.0-M=
+3 for a new upcoming new major version 3.0.0. Again, applications are affec=
+ted only if they use sshd-git. Upgrade affected applications to 3.0.0-M4.
+
+
+
+
+We would like to point out that a professional git server should not rely s=
+olely on file system layout and permissions, but should implement additiona=
+l security controls to govern access to git repositories and operations all=
+owed on particular git repositories.
+
+Credit:
+
+j0hndo (dohyun4466@gmail.com) (finder)
+
+References:
+
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-48827
+
