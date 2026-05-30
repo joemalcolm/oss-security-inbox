@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["3815" "Monday" "1" "May" "2017" "11:29:58" "+0000" "Agostino Sarubbo" "ago@gentoo.org" "<189251.155450137-sendEmail@localhost>" "94" "[oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)" nil nil nil "5" "2017050111:29:58" "[oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)" (number mark "U       ago@gentoo.o May  1   94/3815  " thread-indent "\"[oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26012 invoked by uid 550); 1 May 2017 11:30:21 -0000
+Received: (qmail 3460 invoked by uid 550); 30 May 2026 16:48:56 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,106 +7,88 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 25911 invoked from network); 1 May 2017 11:30:20 -0000
-Message-ID: <189251.155450137-sendEmail@localhost>
-From: "Agostino Sarubbo" <ago@gentoo.org>
-To: "oss-security@lists.openwall.com" <oss-security@lists.openwall.com>
-Date: Mon, 1 May 2017 11:29:58 +0000
+x-ms-reactions: disallow
+Received: (qmail 3424 invoked from network); 30 May 2026 16:48:56 -0000
+Date: Sat, 30 May 2026 18:48:45 +0200
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ahsU7bRbPbLYQpwF@256bit.org>
 MIME-Version: 1.0
-Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-319114.30654964"
-Subject: [oss-security] libsndfile: global buffer overflow in i2les_array (pcm.c)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Out-of-bounds Read in Terminal Screen Snapshot in Vim
+ < 9.2.565
 
-------MIME delimiter for sendEmail-319114.30654964
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Out-of-bounds Read in Terminal Screen Snapshot in Vim < 9.2.565
+================================================================
+Date: 30.05.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Out-of-bounds Read (CWE-125)
 
-Description:
-libsndfile is a C library for reading and writing files containing sampled sound.
+## Summary
+The `update_snapshot()` function in `src/terminal.c` copies the visible
+terminal screen into the scrollback buffer when a snapshot is taken.  For
+each screen cell it walks the cell's `chars[]` array with no upper bound,
+stopping only when it encounters a NUL terminator.  When a cell legitimately
+fills all `VTERM_MAX_CHARS_PER_CELL` (6) slots — a base character plus five
+combining marks — the bundled libvterm returns the array without a
+terminating NUL, so the loop reads past the fixed six-element array and
+appends the out-of-bounds values to a buffer reserved for only six
+characters.  A program whose output is rendered inside a `:terminal` window
+can trigger this with a short byte sequence and no Vim scripting, leading to
+a crash.
 
-The complete ASan output of the issue:
+## Description
+`update_snapshot()` is invoked whenever the terminal's visible screen is
+snapshotted into the scrollback buffer, for example when the user enters
+Terminal-Normal mode with `CTRL-W N`, or when the terminal job exits.  For
+each cell it retrieves the cell with `vterm_screen_get_cell()` and emits its
+characters with:
 
-# sndfile-convert $FILE out.wav
-==27948==ERROR: AddressSanitizer: global-buffer-overflow on address 0x0000013cd13c at pc 0x7f59caaaaace bp 0x7ffcab360cf0 sp 0x7ffcab360ce8 
-READ of size 4 at 0x0000013cd13c thread T0   
-    #0 0x7f59caaaaacd in i2les_array /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:670:15  
-    #1 0x7f59caaaaacd in pcm_write_i2les /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:1696
-    #2 0x7f59ca7bf831 in sf_writef_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/sndfile.c:2342:10
-    #3 0x514b70 in sfe_copy_data_int /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:88:3 
-    #4 0x5138d1 in main /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/sndfile-convert.c:340:3    
-    #5 0x7f59c974178f in __libc_start_main /tmp/portage/sys-libs/glibc-2.23-r3/work/glibc-2.23/csu/../csu/libc-start.c:289   
-    #6 0x419e18 in _init (/usr/bin/sndfile-convert+0x419e18)
+    for (i = 0; (c = cell.chars[i]) > 0 || i == 0; ++i)
+        ga.ga_len += utf_char2bytes(c == NUL ? ' ' : c,
+             (char_u *)ga.ga_data + ga.ga_len);
 
-0x0000013cd13c is located 4092 bytes to the right of global variable 'data' defined in '/tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/programs/common.c:80:14' 
-(0x13c8140) of size 16384  
-SUMMARY: AddressSanitizer: global-buffer-overflow /tmp/portage/media-libs/libsndfile-1.0.28/work/libsndfile-1.0.28/src/pcm.c:670:15 in i2les_array    
-Shadow bytes around the buggy address:  
-  0x0000802719d0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0000802719e0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x0000802719f0: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271a00: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-  0x000080271a10: f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9 f9
-=>0x000080271a20: f9 f9 f9 f9 f9 f9 f9[f9]00 00 00 00 00 00 00 00
-  0x000080271a30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-  0x000080271a70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-Shadow byte legend (one shadow byte represents 8 application bytes):  
-  Addressable: 00   
-  Partially addressable: 01 02 03 04 05 06 07
-  Heap left redzone:       fa 
-  Freed heap region:       fd 
-  Stack left redzone:      f1 
-  Stack mid redzone:       f2 
-  Stack right redzone:     f3 
-  Stack after return:      f5 
-  Stack use after scope:   f8
-  Global redzone:          f9
-  Global init order:       f6
-  Poisoned by user:        f7
-  Container overflow:      fc
-  Array cookie:            ac
-  Intra object redzone:    bb
-  ASan internal:           fe
-  Left alloca redzone:     ca
-  Right alloca redzone:    cb
-==27948==ABORTING
+The loop has no `i < VTERM_MAX_CHARS_PER_CELL` guard and relies on the array
+being NUL-terminated.  The bundled libvterm fills `cell.chars[]` with up to
+`VTERM_MAX_CHARS_PER_CELL` entries and only writes a terminator when fewer
+than that many characters are present.  A cell holding a base glyph plus five
+combining marks therefore fills all six slots and is returned unterminated,
+so the loop reads `cell.chars[6]` and beyond — past the end of the array —
+and appends each out-of-bounds value to the snapshot buffer, which was grown
+for only `VTERM_MAX_CHARS_PER_CELL` characters.
 
-Affected version:
-1.0.28
+## Impact
+A program running inside a `:terminal` window normally controls only its own
+output and cannot affect the parent Vim process's memory.  By emitting a
+single cell that fills all six character slots, such a program causes Vim to
+read past a fixed-size array and append attacker-influenced, out-of-bounds
+values to a buffer sized for only six characters.  The reliably reproduced
+outcome is an out-of-bounds read leading to a crash (denial of service) of
+the editor.
 
-Fixed version:
-N/A
+## Mitigation
+The issue is fixed as of Vim patch v9.2.0565, which bounds the loop in
+`update_snapshot()` with `i < VTERM_MAX_CHARS_PER_CELL`, mirroring the
+existing bound in `handle_pushline()`.
 
-Commit fix:
-https://github.com/erikd/libsndfile/commit/fd0484aba8e51d16af1e3a880f9b8b857b385eb3
+## Acknowledgements
+The Vim project would like to thank github user andrejtomci for reporting and
+analyzing the issue and suggesting a fix.
 
-Credit:
-This bug was discovered by Agostino Sarubbo of Gentoo.
-
-CVE:
-CVE-2017-8365
-
-Reproducer:
-https://github.com/asarubbo/poc/blob/master/00263-libsndfile-globaloverflow-i2les_array
-
-Timeline:
-2017-04-11: bug discovered and reported to upstream
-2017-04-12: upstream released a patch
-2017-04-29: blog post about the issue
-2017-04-30: CVE assigned
-
-Note:
-This bug was found with American Fuzzy Lop.
-
-Permalink:
-https://blogs.gentoo.org/ago/2017/04/29/libsndfile-global-buffer-overflow-in-i2les_array-pcm-c/
-
---
-Agostino Sarubbo
-Gentoo Linux Developer
+## References
+The issue has been fixed as of Vim patch [v9.2.565](https://github.com/vim/vim/releases/tag/v9.2.0565).
+- [Commit](https://github.com/vim/vim/commit/63680c6d3d52477817b49cd1a66e7aabe8a7aa19)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-47gw-8gc3-mgcm)
 
 
-------MIME delimiter for sendEmail-319114.30654964--
-
+Thanks,
+Chris
+-- 
+Je mehr man getrunken, desto mehr lobt man den Wirt und sein Bier.
+		-- Jean Paul
