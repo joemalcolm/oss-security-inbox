@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1850" "Friday" "23" "October" "2015" "10:39:50" "-0600" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>" "53" "Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP" nil nil nil "10" "2015102316:39:50" "[oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP" (number mark "        kseifried@re Oct 23   53/1850  " thread-indent "\"Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP\"\n") "<20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>" ("<874mhidqhp.fsf@redhat.com>" "<20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 15763 invoked by uid 550); 23 Oct 2015 16:40:03 -0000
+Received: (qmail 5130 invoked by uid 550); 31 May 2026 19:25:15 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,95 +6,115 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 15730 invoked from network); 23 Oct 2015 16:40:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat_com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=MBuo7IHPnBFZ+hxiHKnmFR8tawBQu6kUIsyfc2QzaJE=;
-        b=eQsokMeG/7kA3UYbmfwMdtis3rTianWhP97I4h4gIhIAFQc1w+5dE4dCXuc3T9Wpz0
-         Ue1obqWcSvLwuGZEkQeQJS6nWPjV8pP5bctu0UYx3GWsFCDaULAL7XjVXmwWiJHpyiFl
-         KD9lWOCP5aE63v4Lk5cBv2KCaLhwMby5T3BeIKwVBYgr9VwfQaZ7EcubzwuPtfnQv44m
-         L7rSAwNxuh71HPLPyIgdO+IuDKH2/g4bj0w+K5/rL8RB/n1oyrxNTEfFN03MWB3yBFSQ
-         lC33uRu1rsPUzASOTCH39quAAJgtCfbKqK5xMlOtQqJy4CmaApczsUK54dqU4nS283t/
-         rWSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=MBuo7IHPnBFZ+hxiHKnmFR8tawBQu6kUIsyfc2QzaJE=;
-        b=gIKMzxPcUziIFYZyuW3iCHc+1RvORIgbO1GRd/P+SM4AsvVRWYimz+rzeHIzyAKF0+
-         vIZMihOdk5Ei/ujURJHSaBG+MXB8PLiTXBEEdEmv95sfFoIoCVZDPOT90NCx03/tN/TO
-         IdjD6nYft+67Srvz00anxLj27xTFKWgB06QiAY48ko40N6WhHYxcugVOEK7GDEewfebN
-         QxAZX/KTArfjBv+yx/dIZDewFjvSq6yEISYxC7azzAYtmF8bbw7omsbdA2LvhSA8uFr8
-         B4JlEGltjW5Q9kVla2db2Dm1AolZ/Z/H5kGscYsnET9k7hMqxCXRCQU2jzkatA8KjpHt
-         Yz/g==
-X-Gm-Message-State: ALoCoQn/i1NE96JSBT/+f2UTuM3J+GZFBmlRgz2miGNtj42I4RD9KI9GOzftntvQzFkoU1AOXJVT
-MIME-Version: 1.0
-X-Received: by 10.13.206.7 with SMTP id q7mr17943464ywd.47.1445618390798; Fri,
- 23 Oct 2015 09:39:50 -0700 (PDT)
-In-Reply-To: <20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>
-References: <874mhidqhp.fsf@redhat.com>
-	<20151023160608.06B6D52E093@smtpvbsrv1.mitre.org>
-Message-ID: <CANO=Ty1DejyNjY5SHGSpbADx+Ece9B6+N837HqTkzecJaABKvQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a114da68aaa50610522c84238
-Cc: Martin Prpic <mprpic@redhat.com>, CVE ID Requests <cve-assign@mitre.org>
-Date: Fri, 23 Oct 2015 10:39:50 -0600
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Re: Duplicate CVE: CVE-2015-7703 in NTP
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 4082 invoked from network); 31 May 2026 19:25:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=fabiankeil.de;
+	s=blafasel; t=1780255506;
+	bh=3x0AADnpQwblV6WfxM3pD1HjUwJwkmzntWyp6ocsF3U=;
+	h=Date:From:To:Subject:In-Reply-To:References;
+	b=zToExGC9w/dEDPr/Au9SNLYIbpI3eIekHUVX9MNGrObZl8cmsNO/zfbZNT9KNFR7A
+	 b2Uc0OruWiQlA5oJbeR9OQyPPnxzOoRkPgTsydp9LuBf6le3Z48ZHe3XBfVN382GBw
+	 K6Lo1QoSrToRB29LzZbJhGljtKQNAXP71w2ByHYkjxIhb3upTsuSmyNpiSGdaNJZOD
+	 vlBNn7VNyF2yZiSNnGDQ0S73chhis2mRvyAurNGLi+LXWsm1GwXe67I456UgeWS781
+	 PkP8kqH/rJjFjZyLN0Ha/ilDeVYJFmSa+A0rvZcscKdBeSjS15j88MPC8lcanS0X1c
+	 lsshRkAWma3SQ==
+Date: Sun, 31 May 2026 21:13:11 +0200
+From: Fabian Keil <freebsd-listen@fabiankeil.de>
+To: oss-security@lists.openwall.com
+Message-ID: <20260531211311.5479a4d8.freebsd-listen@fabiankeil.de>
+In-Reply-To: <20260518100248.52b532c1.freebsd-listen@fabiankeil.de>
+References: <20201129165312.64bd840f@fabiankeil.de>
+ <20201223175828.48163487@fabiankeil.de>
+ <CALDM2HcJCXfMBybnqKiAVQq44DMhhgb0m81wG+WFBtesbr-1QQ@mail.gmail.com>
+ <20210131131329.56c9be0d@fabiankeil.de>
+ <20260518100248.52b532c1.freebsd-listen@fabiankeil.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Subject: Re: [oss-security] CVE request experience
 
---001a114da68aaa50610522c84238
-Content-Type: text/plain; charset=UTF-8
+Fabian Keil <freebsd-listen@fabiankeil.de> wrote on 2026-05-18 at 10:02:48:
 
-On Fri, Oct 23, 2015 at 10:06 AM, <cve-assign@mitre.org> wrote:
+> Fabian Keil <freebsd-listen@fabiankeil.de> wrote on 2021-01-31 at 13:13:29:
+> 
+> > Nick Tait <ntait@redhat.com> wrote on 2020-12-23:
+> > 
+> > > That is a rather poor experience Fabian, sorry! Took a look at that
+> > > incident number and no encrypted message appears on our end. I believe
+> > > you did actually send a message but not sure what went wrong. While I
+> > > can't directly help, did request the appropriate people follow up with
+> > > you.
+> > 
+> > Thanks a lot for your help, Nick.
+> > 
+> > I was contacted by someone from Red Hat Product Security
+> > on 2020-12-24 and received a CVE.
+> > 
+> > I replied and requested CVEs for the other issues fixed in
+> > Privoxy 3.0.29 but did not receive a reply yet. I just
+> > forwarded the request to <secalert@redhat.com>.
+> 
+> Privoxy 4.2.0, which is supposed to be released around 2026-05-30,
+> will contain fixes for two security issues that are currently
+> tracked as OVE-20260515-0001 and OVE-20260515-0002.
 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
->
-> > It seems that NTP upstream has also requested a CVE (and had one
-> > assigned) for this issue:
-> >
-> > Bug 2902 : CVE-2015-7703 configuration directives "pidfile" and
-> "driftfile" should only be allowed locally. (RedHat)
-> > [
-> http://support.ntp.org/bin/view/Main/SecurityNotice#October_2015_NTP_Security_Vulner
-> ]
-> >
-> > However, Red Hat assigned CVE-2015-5196 to this issue when it was first
-> > discovered:
-> >
-> > https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2015-5196
-> >
-> > Can CVE-2015-7703 please be rejected?
->
-> Actually, we have rejected CVE-2015-5196 and are keeping CVE-2015-7703.
->
-> This is a case where we have a long-standing published policy (see the
-> http://cve.mitre.org/cve/editorial_policies/duplicates.html page) and
-> our implementation of step 1 chose CVE-2015-7703.
->
-> We will update our internal documentation for CVE assignments to
-> further emphasize the possibility that a CVE ID may have already been
-> assigned outside of MITRE, to try to avoid this type of unfortunate
-> situation in the future.
->
->
-> I'm going to also ensure we communicate our CVE's to upstreams, I could
-swear we did in this case but I can't find a specific artifact (e.g. sent
-email) of doing so from myself (but quite often I just assign the CVE and
-other people are handling the issue so that wouldn't be to abnormal) so I'm
-going to go on the assumption we failed to do so properly and update our
-process as well to ensure we do.
+The patches have been pushed to git today ([1], [2]).
 
+The official Privoxy 4.2.0 release will probably happen tomorrow.
 
+Quoting relevant parts of the preliminary announcement at [3] which
+I'll have to modify before the release as the reporter responded today:
 
--- 
+| Privoxy 4.2.0 fixes a couple of bugs including two reported security
+| issues and brings a couple of general improvements including support
+| for elliptic-curve keys.
+|
+| Unfortunately the reporter of the alleged security issues did not
+| answer questions about the report that was based on an unofficial git
+| mirror which was apparently two years behind. CVEs have been requested
+| but haven't been assigned in time for the release.
+|
+| - Security fixes:
+|   - Parse the chunk-size with a dedicated function and reject "unreasonably"
+|     large values to prevent silent truncation by sscanf(), integer overflows
+|     and misinterpretation of the content later on. Heap buffer overflows on
+|     platforms with 32-bit pointers were alleged as well.
+|     Commit 5b3bb22b77. OVE-20260515-0002. Reported by @TristanInSec.
+|   - ssl_send_certificate_error(): Store the generated message on the heap
+|     instead of the stack to prevent an alleged segmentation fault if there
+|     are enough certificates in the chain to exceed the stack size.
+|     While at it, replace another variable-length array that was probably
+|     unproblematic with a heap-based buffer as well.
+|     Commit 4963aa4f08. OVE-20260515-0001. Reported by @TristanInSec.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+While it wouldn't have helped here, I've also added two paragraphs
+to the "Reporting security problems" section [4] in the Privoxy
+documentation that request that use of "AI" is disclosed by reporters
+and that reporters should be prepared to respond to questions about
+their reports ...
 
---001a114da68aaa50610522c84238--
+> I tried to get two CVEs from Redhat yesterday by sending an encrypted
+> mail to the address above, which is still listed at [0], but so far only
+> received what looks like an automated response which claims that I
+> need an "Atlassian" account to "finish" the request.
+> 
+> For various reasons I don't want an "Atlassian" or any other account ...
+
+I've sent a follow-up message to request a non-automated response
+on 2026-05-26 and received another obviously-automated response a
+bit later from "Atlassian <noreply+[...]@id.atlassian.com>".
+
+This seems to contradict [0] which claims:
+| Only members of Red Hat Product Security, a restricted and carefully
+| chosen group of Red Hat employees, will have access to material sent
+| to the secalert@redhat.com address. No outside users can subscribe to
+| this list.
+
+Fabian
+
+[0]: <https://access.redhat.com/security/team/contact/>
+[1]: <https://www.privoxy.org/gitweb/?p=privoxy.git;a=commitdiff;h=4963aa4f08a378d0ea8a89433a95c3948a14bb9e>
+[2]: <https://www.privoxy.org/gitweb/?p=privoxy.git;a=commitdiff;h=5b3bb22b771c93adddf1726ec904c9378d584a66>
+[3]: <https://www.privoxy.org/gitweb/?p=privoxy.git;a=blob_plain;f=doc/webserver/announce.txt;hb=c93c69df8ff0b22e6d0a1bc02d7ce170e850cf02>
+[4]: <https://www.privoxy.org/gitweb/?p=privoxy.git;a=commitdiff;h=84a1158f288df545ee45ed9326ccf984a360d4c7>
