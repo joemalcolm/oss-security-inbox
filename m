@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2211" "Friday" "1" "April" "2016" "14:00:20" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160401180020.A22A86C402D@smtpvmsrv1.mitre.org>" "44" "[oss-security] Re: ext4 data corruption due to punch hole races" "^Cc:" nil nil "4" "2016040118:00:20" "[oss-security] Re: ext4 data corruption due to punch hole races" (number mark "        cve-assign@m Apr  1   44/2211  " thread-indent "\"[oss-security] Re: ext4 data corruption due to punch hole races\"\n") "<20160331151128.GK26612@suse.de>" ("<20160331151128.GK26612@suse.de>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 23680 invoked by uid 550); 1 Apr 2016 18:00:40 -0000
+Received: (qmail 30650 invoked by uid 550); 31 May 2026 12:35:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,57 +6,53 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 23627 invoked from network); 1 Apr 2016 18:00:33 -0000
-In-Reply-To: <20160331151128.GK26612@suse.de>
-Message-Id: <20160401180020.A22A86C402D@smtpvmsrv1.mitre.org>
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-Date: Fri,  1 Apr 2016 14:00:20 -0400 (EDT)
-From: cve-assign@mitre.org
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: ext4 data corruption due to punch hole races
-To: jsegitz@suse.com
+x-ms-reactions: disallow
+Received: (qmail 9710 invoked from network); 31 May 2026 11:59:00 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <7ab76f82-430d-88e2-5c0c-7d7bce41e967@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 31 May 2026 11:58:44 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-42358: Apache Airflow: Variable masker depth-limit bypass
+ returns cleartext nested secrets 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: low=20
 
-> issues in the Linux kernel with security implications
+Affected versions:
 
-> When punching holes into a file races with the page fault of the same
-> area, it is possible that freed blocks remain referenced from page cache
-> pages mapped to process' address space. Thus modification of these blocks
-> can corrupt data someone else is now storing in those blocks (which
-> obviously has security implications if you can trick filesystem into
-> storing some important file in those blocks).
+- Apache Airflow (apache-airflow) before 3.2.2
 
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=ea3d7209ca01da209cda6f0dea8be9cc4b7a933b
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=17048e8a083fec7ad841d88ef0812707fbc7e39f
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=32ebffd3bbb4162da5ff88f9a35dd32d0a28ea70
-> http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=011278485ecc3cd2a3954b5d4c73101d919bf1fa
-> https://bugzilla.suse.com/show_bug.cgi?id=972174
+Description:
 
-We feel that these can be covered by one ID: use CVE-2015-8839. Also,
-it seems that 17048e8a083fec7ad841d88ef0812707fbc7e39f is not really a
-vulnerability fix on its own.
+A bug in Apache Airflow's Variable response masker caused nested-key redact=
+ion (triggered by secret-suffixed key names like `password`, `token`, `secr=
+et`, `api_key`) to be bypassed when the JSON value's nesting depth exceeded=
+ the shared secrets masker's recursion limit: the masker returned the origi=
+nal nested item before checking the sensitive key name. An authenticated UI=
+/API user with Variable read permission could harvest plaintext secret valu=
+es stored under sensitive keys nested deep enough to exceed the masker's de=
+pth cap. Affects deployments that store sensitive values inside deeply-nest=
+ed JSON Variables. This is a residual gap in the fix for CVE-2026-32690 (wh=
+ich covered shallower nesting via `max_depth=3D1`); the depth-limit boundar=
+y itself was not raised, so the same key-name bypass pattern reappears beyo=
+nd the recursion cap. Users who already upgraded for CVE-2026-32690 should =
+additionally upgrade to `apache-airflow` 3.2.2 or later to cover the deep-n=
+esting path.
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Credit:
 
-iQIcBAEBCAAGBQJW/rawAAoJEL54rhJi8gl5+PsQAMi/qwF/Xrfi23k+CxQToLnI
-XL3CyhTTVGv/Y/K5L4UvhDDm+R6+OAzx87Hd3dtD9OWW8lksrG1AlH/kxehf/KY2
-K2M0shbmayzs/on98JR6pNWEfOHpPdFCloTp7QLuEfHj84OeS8Vlu+x9Ohe7qQA9
-nNkxMNfMT3QuCnw2rSSyi1hzlaWMyJokCNcV2YpKyJwu8xRd86DCd4QjYh1baOYT
-qja2wjHELmAMb0FNorWYLITwJIOS/gCWxxEdY1gHWyof4Je6mj5Qre6IQku5XcQ7
-smkOA0+kwIgAv9IF7znkwTu4LR5pS7Y/XRXMd4sVIq3ULoBEbHz/6EPUnZ3s5qKW
-O7KYktRsDdOvjYb4U4y9dXCO4Hf/AAuWN0AYI9c6XFIGRFvZkRZSgTv7qp2wBZNb
-kodD0QS8mtcWA9s9g9f0bFl/AioaQSjqH3o1dxXj+4+WMYzu46vGhf6Dux1KoIeM
-tibrt1zPuW0f/eDPyTVDufXEA7eOzRdc4JsODerL8qpnk89H+tYqbFGi/c5Y7ynQ
-1YxW1rKFXF0fxBryCSWiDSVSip6cQB4vC8QGa0qMn+Ht4wlg21WoT26E/CHu8Sou
-etu6yZndZdLKTNZcIpku0Ye4KCmMr2h6gK7z2feyCfOyTdukkO/DS2aLrSkZLfd+
-OCqmLLHyRkBvQjqIMvuR
-=bqmP
------END PGP SIGNATURE-----
+Vincent55 (confirmed in original report sign-off) (finder)
+Aymane MAZGUITI =E2=80=93 unclej4ck (finder)
+Ilyase Dehy =E2=80=93 Albert (finder)
+Jarek Potiuk (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/65912
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-42358
+
