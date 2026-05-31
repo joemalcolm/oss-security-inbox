@@ -1,4 +1,4 @@
-Received: (qmail 6100 invoked by uid 550); 21 Jul 2023 01:05:06 -0000
+Received: (qmail 16103 invoked by uid 550); 31 May 2026 11:44:59 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,67 +7,56 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 6069 invoked from network); 21 Jul 2023 01:05:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689901494; x=1690506294;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PzQBdZ2bvxDoVH9tj9DUl3Wgj/aQclKtgu3giGEoxc0=;
-        b=Zpl/wB9uERpxc4xvejsHXi3aRXhI0Kczr9Apv7c2Basp6pG5I5K+HbCnc4FuLYUzP7
-         j12n3II4ZgW7XMq85xL1FRolNmRw+rHJqvz2ZgKCnTKkCoryMi3Q+bOjxdjJa1sxLsOH
-         s7hMijceGJqYrM1kQB/HhO0FH7LDdwALW+CMmF8e27ZpLnQMVK0oqYDEQfJtxBVMxkVB
-         jR6/NiRwF1c7ie921qsGMv79CNu+GgnI6yWuKqNJDV81oLPlD57hTmPnwx5KcTwjyLup
-         IKzIf3D90PYTpNrfP7uw+a/4ZrsX429aUV3IpGmC13c/MTKmb2+RZFZx5eKD0/jYd0bx
-         NQ1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689901494; x=1690506294;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PzQBdZ2bvxDoVH9tj9DUl3Wgj/aQclKtgu3giGEoxc0=;
-        b=R0iM5GPDAA7XTAGhi9JgJQCbosy/cVQl7x6X2+N2DrCvxODsFGiV7jwVUETPm0wl1g
-         QwGW7ld52Dkcjy/tbrvkwD2X4rfhU1SugY6akaTbO6v4asFFnv1y/u3smz3jV3j5ZEPg
-         Dfyy41Sgl9UME0PK+XGunipz0+aXTMW75/zr6H6m1UR+Xx7ce+Z5otEpN8pKdpO2dtt4
-         sE0yVoyqltZCoh3UrCOPpFibz9kVB0z3/cRkhTJcHAfqfiTrfIxYX7AQ95v6Yaryop99
-         0+dKsidI48siQTOs9fbuYcnmt9/Q3+KOAW1VWGg3mSFN5up+FnWQQRf3IrSR3Jy1fD+p
-         MY+A==
-X-Gm-Message-State: ABy/qLZz25GRZezUp0RUDoxE1QlVXomuLFcumtFi4ebRoinW6n6g1xMr
-	iL6KmpgFHSuPmXdQj8UDhTfG8gDrOB8jEw==
-X-Google-Smtp-Source: APBJJlFnFH0NRzYv3QgjeUYw972Blmr9IZi0wTVQZcyqYlXzDy6k0LLWF/RO9iK/VViZwGfYpow6Vw==
-X-Received: by 2002:a05:6e02:156c:b0:346:b5d:c0ee with SMTP id k12-20020a056e02156c00b003460b5dc0eemr751502ilu.0.1689901493900;
-        Thu, 20 Jul 2023 18:04:53 -0700 (PDT)
-Message-ID: <633ff42d-052a-df7b-dc34-6264e9d4eb77@gmail.com>
-Date: Fri, 21 Jul 2023 11:04:49 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+x-ms-reactions: disallow
+Received: (qmail 1809 invoked from network); 31 May 2026 11:42:54 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
-References: <e9c022742fc07cee@cvs.openbsd.org> <ZLk1hSUEt00caovk@itl-email>
- <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
-Content-Language: en-US
-From: Matthew Fernandez <matthew.fernandez@gmail.com>
-In-Reply-To: <1c005469-a540-5cd1-642e-5aebc35dd17b@geeklan.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: Re: [oss-security] Announce: OpenSSH 9.3p2 released
+Message-ID: <b4b3b6b6-88fe-4ab8-b70b-ac9c3702892f@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 31 May 2026 11:42:43 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-49267: Apache Airflow: No certificate validation on SMTP
+ STARTTLS connections 
 
+Severity: low=20
 
+Affected versions:
 
-On 7/20/23 23:41, Sevan Janiyan wrote:
-> On 20/07/2023 14:24, Demi Marie Obenour wrote:
->> Should there be a system-wide configuration file containing a list of 
->> known-good PKCS#11 libraries? ssh-agent having to guess if something 
->> is a PKCS#11 library is less than awesome.
-> 
-> There's a compile time setting for paths from which you are able to load 
-> libraries from.
+- Apache Airflow (apache-airflow) 2.0.0 before 3.2.2
 
-I don’t think this helps much though, right? The Qualys research that 
-motivated this found an exploit chain using only libs present in 
-/usr/lib in a default Ubuntu install. If you want to lock down loading 
-to a specific non-/usr/lib path that you have control over, this 
-suggests you know and are in control of the PKCS#11 providers you’re 
-going to support. In which case, why not avoid dynamic loading to begin 
-with? I guess the allowlist and new defaults are the answer to this 
-conundrum though.
+Description:
+
+Apache Airflow's EmailOperator and the underlying `airflow.utils.email` hel=
+pers established SMTP STARTTLS connections without verifying the remote cer=
+tificate when the deployment used `[email] smtp_starttls=3DTrue` without `[=
+email] smtp_ssl`. An attacker positioned between the worker and the configu=
+red SMTP server (network MITM =E2=80=94 typical hostile-network attack-surf=
+ace for environments where the SMTP relay sits outside the worker's trust b=
+oundary) could present a self-signed certificate, have the worker complete =
+the STARTTLS handshake silently, and capture the SMTP AUTH credentials and =
+message contents the worker forwarded.
+
+This CVE covers the **core apache-airflow side** of the same root cause alr=
+eady covered for the SMTP provider by `CVE-2026-41016` (published 2026-04-2=
+7, covering `apache-airflow-providers-smtp`). Users who already applied the=
+ SMTP-provider fix from CVE-2026-41016 should additionally upgrade `apache-=
+airflow` to 3.2.2 or later to cover the core-side path through `airflow.uti=
+ls.email`. Affects deployments configured with `smtp_starttls=3DTrue` and `=
+smtp_ssl=3DFalse` where the SMTP relay is reachable across a less-trusted n=
+etwork segment than the worker.
+
+Users are advised to upgrade to `apache-airflow` 3.2.2 or later.
+
+Credit:
+
+Francis Bergin (@francisbergin) (finder)
+Jarek Potiuk (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/65346
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-49267
+
