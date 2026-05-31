@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1305" "Sunday" "21" "June" "2015" "09:45:29" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20150621134529.CE2D66FC120@smtpvmsrv1.mitre.org>" "37" "[oss-security] Re: CVE Request - CSRF vulnerability in the Google Analyticator Wordpress Plugin v6.4.9.3 before rev @1183563" nil nil nil "6" "2015062113:45:29" "[oss-security] Re: CVE Request - CSRF vulnerability in the Google Analyticator Wordpress Plugin v6.4.9.3 before rev @1183563" (number mark "U       cve-assign@m Jun 21   37/1305  " thread-indent "\"[oss-security] Re: CVE Request - CSRF vulnerability in the Google Analyticator Wordpress Plugin v6.4.9.3 before rev @1183563\"\n") "<CAARZ5vptvkC26BtnjbJhBdnfGBir+gZT+dyXX8T=N1DBD21=Dg@mail.gmail.com>" ("<CAARZ5vptvkC26BtnjbJhBdnfGBir+gZT+dyXX8T=N1DBD21=Dg@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26129 invoked by uid 550); 21 Jun 2015 13:45:42 -0000
+Received: (qmail 24569 invoked by uid 550); 31 May 2026 17:02:36 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,49 +7,69 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26111 invoked from network); 21 Jun 2015 13:45:41 -0000
-From: cve-assign@mitre.org
-To: venkatesh.nitin@gmail.com
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <CAARZ5vptvkC26BtnjbJhBdnfGBir+gZT+dyXX8T=N1DBD21=Dg@mail.gmail.com>
-Message-Id: <20150621134529.CE2D66FC120@smtpvmsrv1.mitre.org>
-Date: Sun, 21 Jun 2015 09:45:29 -0400 (EDT)
-Subject: [oss-security] Re: CVE Request - CSRF vulnerability in the Google Analyticator Wordpress Plugin v6.4.9.3 before rev @1183563
+x-ms-reactions: disallow
+Received: (qmail 3689 invoked from network); 31 May 2026 16:18:53 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: "Christopher L. Shannon" <cshannon@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <f9ee015b-2b16-4ec0-e653-dcc4aa6ed12f@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 31 May 2026 16:17:17 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-45505: Apache ActiveMQ Broker, Apache ActiveMQ All,
+ Apache ActiveMQ: Jolokia `addNetworkConnector` Discovery Wrapper Bypass 
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Severity: important=20
 
-> http://seclists.org/fulldisclosure/2015/Jun/57
-> https://wordpress.org/support/topic/discovered-security-vulnerabilities-1
+Affected versions:
 
-> /wp-admin/options-general.php?page=google-analyticator.php&pageaction=ga_clear_cache
-> 
-> /wp-admin/options-general.php?page=ga_reset
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.7
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before=
+ 6.2.6
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.7
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.6
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.7
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.6
 
-> https://plugins.trac.wordpress.org/changeset/1183563
+Description:
 
-Apparently the corresponding change was:
+Improper Input Validation, Improper Control of Generation of Code ('Code In=
+jection') vulnerability in Apache ActiveMQ Broker, Apache ActiveMQ All, Apa=
+che ActiveMQ.
 
-  if (strstr($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST']))
 
-not a token-based solution.
+Non-parenthesized discovery wrappers such as `masterslave:vm://...,...`
+and `static:vm://...` incorrectly pass validation allowing bypass of fix in=
+=C2=A0CVE-2026-34197.=C2=A0
 
-Use CVE-2015-4697 for the issue addressed by changeset/1183563. (It is
-possible that other CVE IDs may be needed for this plugin later.)
+Original description from=C2=A0CVE-2026-34197.
 
-- -- 
-CVE assignment team, MITRE CVE Numbering Authority
-M/S M300
-202 Burlington Road, Bedford, MA 01730 USA
-[ PGP key available through http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.14 (SunOS)
+Apache ActiveMQ exposes the Jolokia JMX-HTTP bridge at /api/jolokia/ on the=
+ web console. The default Jolokia access policy permits exec operations on =
+all ActiveMQ MBeans (org.apache.activemq:*), including BrokerService.addNet=
+workConnector(String) and BrokerService.addConnector(String).=C2=A0An authe=
+nticated attacker can invoke these operations with a crafted discovery UR t=
+hat triggers the VM transport's brokerConfig parameter to load a remote Spr=
+ing XML application context using ResourceXmlApplicationContext. Because Sp=
+ring's ResourceXmlApplicationContext instantiates all singleton beans befor=
+e the BrokerService validates the configuration, arbitrary code execution o=
+ccurs on the broker's JVM through bean factory methods such as Runtime.exec=
+().=20
+This issue affects Apache ActiveMQ Broker: before 5.19.7, from 6.0.0 before=
+ 6.2.6; Apache ActiveMQ All: before 5.19.7, from 6.0.0 before 6.2.6; Apache=
+ ActiveMQ: before 5.19.7, from 6.0.0 before 6.2.6.
 
-iQEcBAEBAgAGBQJVhr+PAAoJEKllVAevmvmsWccIAIhQ9sMks4zSRzjHqza9lXj+
-v2fSRT4WJaHpx4QVzpKYuxSbMXjqjDdqZrT0N1ZGjcdOUz9EpNoZJCLdgudgoQVE
-mKuPemEaWObEsQHh06D1OXwss/tDLWclFc5OFNdL+PwSrJcXRbeu3OyVmVJi6AKi
-Wik7Ir8HuntCavqBNQAKNu+o7QhrbulscBNNNoOMkQ4h5Qwy+zuDhBYEpjQ19DuE
-K2hZKRxNwsPnN0w3ws5lab5KLVGnNCRXA/pWZNXsbbj6/XJedux9KvFO+mmg02YP
-yr56v97KraIc17rLob9cvRgoT6ucxyJffCpT0LrghhLxkuNKT75SIaSC4Uim0ZE=
-=0j3s
------END PGP SIGNATURE-----
+Users are recommended to upgrade to version 5.19.7 or 6.2.6, which fixes th=
+e issue.
+
+Credit:
+
+lokerxx (finder)
+
+References:
+
+https://nvd.nist.gov/vuln/detail/CVE-2026-34197
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-45505
+
