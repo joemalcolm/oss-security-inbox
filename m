@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1422" "Wednesday" "25" "November" "2015" "20:14:56" "-0700" "Kurt Seifried" "kseifried@redhat.com" "<CANO=Ty33EZoiT=Gr7Qe7RuUUAAa5NacFRcLZWNgadVAX9VEEmA@mail.gmail.com>" "39" "[oss-security] Re: CVE request: DoS in ONOS when handling jumbo ethernet frames" "^Cc:" nil nil "11" "2015112603:14:56" "[oss-security] Re: CVE request: DoS in ONOS when handling jumbo ethernet frames" (number mark "        kseifried@re Nov 25   39/1422  " thread-indent "\"[oss-security] Re: CVE request: DoS in ONOS when handling jumbo ethernet frames\"\n") "<CAO33bZWXgXStp2aQfk8OB3J3U-O0TMpEAHCDXYdspAtGt+egQA@mail.gmail.com>" ("<CAO33bZWXgXStp2aQfk8OB3J3U-O0TMpEAHCDXYdspAtGt+egQA@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 18115 invoked by uid 550); 26 Nov 2015 03:15:09 -0000
+Received: (qmail 11977 invoked by uid 550); 31 May 2026 12:36:17 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,69 +6,54 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 18097 invoked from network); 26 Nov 2015 03:15:08 -0000
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=QBkfs1TQ/u0r9w4Z8HjzJSScWe1Xm6CZ5slfhcp3w8M=;
-        b=GrCRoG5IE3Ffh4KzW8BDGYEGkelVUvu3iWCAY4YaH7MfaVJyKQc4FLu/j5fa2pZM4g
-         iLWVCyT87nRwLb9jRgpq/pyFbrUJpLdzWSM38gJzGqttYjr2Rj82mMovG/g0KBwD4Gzv
-         ZwuBgG7hGVQsqKpdR+0znB3gKMARfAbYC1KzJPTFlwkexAohN2iEtepSPSUuayH2IMIE
-         U1/K80YatqAF+btHoRRmOH6668JL6Z+O8sKL59CsGttcfDaxhv9sZrjmlyHtlDi56Trh
-         VDYLyDcXf6/tydINpj6HWntMqcF26/bOweekRDNqwJM52EmF+MKDwFBpPfC498qWXCQ8
-         Pyrw==
-X-Gm-Message-State: ALoCoQnCxtIrKNI/ZFwfgh8q0Arp0UsnQxMb18jSVfKkHD2YeJLqSnkgSsmeH7Nv+yy6v5KjkDnD
-MIME-Version: 1.0
-X-Received: by 10.129.77.67 with SMTP id a64mr39227865ywb.47.1448507696622;
- Wed, 25 Nov 2015 19:14:56 -0800 (PST)
-In-Reply-To: <CAO33bZWXgXStp2aQfk8OB3J3U-O0TMpEAHCDXYdspAtGt+egQA@mail.gmail.com>
-References: <CAO33bZWXgXStp2aQfk8OB3J3U-O0TMpEAHCDXYdspAtGt+egQA@mail.gmail.com>
-Message-ID: <CANO=Ty33EZoiT=Gr7Qe7RuUUAAa5NacFRcLZWNgadVAX9VEEmA@mail.gmail.com>
-Content-Type: multipart/alternative; boundary=001a1140c36cb66c2d052568faeb
-Cc: oss-security <oss-security@lists.openwall.com>, CVE ID Requests <cve-assign@mitre.org>
-Date: Wed, 25 Nov 2015 20:14:56 -0700
-From: Kurt Seifried <kseifried@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Re: CVE request: DoS in ONOS when handling jumbo ethernet frames
-To: David Jorm <david.jorm@gmail.com>
+x-ms-reactions: disallow
+Received: (qmail 13957 invoked from network); 31 May 2026 12:18:47 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <1e33ee0f-401a-97d9-5fd8-d93ea0998ec7@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 31 May 2026 12:18:33 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-49298: Apache Airflow: JWT Token Exposure in
+ KubernetesExecutor Command-Line Arguments 
 
---001a1140c36cb66c2d052568faeb
-Content-Type: text/plain; charset=UTF-8
+Severity: Moderate=20
 
-On Tue, Nov 24, 2015 at 10:19 AM, David Jorm <david.jorm@gmail.com> wrote:
+Affected versions:
 
-> It was found that ONOS would throw exceptions when handling jumbo ethernet
-> frames. The exceptions were not caught and handled, so a remote
-> unauthenticated attacker could use this flaw to perform a denial-of-service
-> attack against an ONOS system.
->
-> To exploit this issue, the attacker must be able to send a jumbo ethernet
-> frame to a switch controlled by ONOS. Only the connection between the
-> controller and the switch generating the packet-in message of the malicious
-> packet will be affected (disconnected). More details are available here:
->
-> https://jira.onosproject.org/browse/ONOS-3349
->
-> An advisory is now live with no CVE ID:
->
-> https://wiki.onosproject.org/display/ONOS/Security+advisories
->
-> Please assign a CVE ID to this issue. A request was sent to MITRE
-> directly 9 days ago with no answer. We need a CVE ID within the next 24
-> hours.
->
-> Thanks
-> David Jorm on behalf of the ONOS security response team
->
+- Apache Airflow (apache-airflow) before 3.2.2
 
-Adding Mitre to CC to make sure we don't end up with a duplicate.
+Description:
 
-Please use CVE-2015-7516 for this issue. Happy Thanksgiving all!
+A bug in Apache Airflow's KubernetesExecutor caused JWT tokens used by work=
+er pods to authenticate against the Execution API to be passed to the worke=
+r container as command-line arguments visible in the pod spec. An authentic=
+ated UI/API user with Kubernetes read-only access to the cluster (e.g. `pod=
+s/get` in the Airflow namespace) could harvest the JWT from `kubectl descri=
+be pod` output and then call state-mutating Execution API endpoints =E2=80=
+=94 triggering Dag runs, clearing runs, reading or writing Variables / Conn=
+ections / XComs =E2=80=94 as if they were a running task. Affects deploymen=
+ts using the `KubernetesExecutor`. Users are advised to upgrade to `apache-=
+airflow` 3.2.2 or later. This is the airflow-core half of the same vulnerab=
+ility addressed by [CVE-2026-27173](https://www.cve.org/CVERecord?id=3DCVE-=
+2026-27173), which shipped the apache-airflow-providers-cncf-kubernetes sid=
+e of the fix. Deployments that already upgraded `apache-airflow-providers-c=
+ncf-kubernetes` to 10.17.0 or later per the CVE-2026-27173 advisory should =
+additionally upgrade `apache-airflow` to 3.2.2 or later to close the core-s=
+ide surface =E2=80=94 the two fixes are complementary, not duplicates.
 
---
-Kurt Seifried -- Red Hat -- Product Security -- Cloud
-PGP A90B F995 7350 148F 66BF 7554 160D 4553 5E26 7993
-Red Hat Product Security contact: secalert@redhat.com
+Credit:
 
---001a1140c36cb66c2d052568faeb--
+Nikolai Dvoinishnikov (nikdvy@gmail.com) (finder)
+Anton Kuznetsov (piratusxp@gmail.com) (finder)
+Anish Giri (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/60108
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-49298
+
