@@ -1,4 +1,4 @@
-Received: (qmail 1672 invoked by uid 550); 5 Mar 2026 09:28:05 -0000
+Received: (qmail 20241 invoked by uid 550); 31 May 2026 17:02:23 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,98 +8,53 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 16133 invoked from network); 5 Mar 2026 09:02:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1772701344; x=1772787744; bh=+yEsJgRcGq/67lct2dnpxW61ORFMhJETepY
-	QoN0g0IE=; b=qnBMCmH5GyB1Yck9lzkkwzvRfjXnoqAhmo+2135BE06WjxRLBxx
-	e1T8K39e75gIRdIB9B+zUYAjTPd8Xv5sRPnQukc91jETpq/DnlA0gZtOe176li10
-	hGOSVyXZxWvZ3HBJj9Fe4vwhBOFArmvVX7B81Ek7a8F8ef2e6jWSwGaoxjFuzuAJ
-	vWfsW0DFQauDP3ZGK7NYuH/1KUYTkFqBRQnTQGQQPddT0cj+l9p7rwAz6TwikLGJ
-	4Pamo44SoJ3PgXyhrrKyWMwfYRa6E4OQnsObmwcGMgjJhJUDUxieElQ1ZUmDEyS9
-	guglUafmrt3t2EODVhhrKodOpZt39liUicQ==
-X-ME-Sender: <xms:oEapabGiUrq0oabdjJrsosDWU623p0S_fH-9C34w2GT1ZYZv1vRqLQ>
-    <xme:oEapaeXqGeU2jBoSbAjaZ1ljhUsdN4F5z6eX4_2SmeUZx8kl1vszKm-qpNu9TXBh6
-    JrUESGn5f4Ux2VVnrPGeQuVVAy0F42aNSCh0DJGA7AXeY_jnRQisA>
-X-ME-Received: <xmr:oEapaay3dyovsaBtzkbhX4h0llmDLQChj7ma69q08QWFhTXCtLIvMVzgWfFJHOWfFs4EIr55SK2Mr6Qzd7KEqIzwP07VBL8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvieehleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucenucfjughrpefkffggfgfvhffutgfgsehtkeertddtvd
-    ejnecuhfhrohhmpeftohgsvghrthcutfhothhhvghnsggvrhhguceorhhrfihosegtphgr
-    nhdrohhrgheqnecuggftrfgrthhtvghrnhepveehjeeiieffffetleeuleekhfduieffge
-    ehvdfftdegvdekiefhieehhfffueeunecuffhomhgrihhnpehmvghtrggtphgrnhdrohhr
-    ghdpghhithhhuhgsrdgtohhmpdhmugehrdhpmhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehrrhifohestghprghnrdhorhhgpdhnsggprhgt
-    phhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehoshhsqdhsvggtuh
-    hrihhthieslhhishhtshdrohhpvghnfigrlhhlrdgtohhmpdhrtghpthhtoheprghlvgig
-    tghhohhrnhihsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:oEapaUMFaEbgUABfUFhTEtPAot5ftiDgLNj30Y5qQoggY1md0n5xVw>
-    <xmx:oEapaT7tjkwo5OAZ6mv_UMWj_fwBt5Oc69c5UF0KJ3TKQ_5-uMHELA>
-    <xmx:oEapadOiwBjxoHAWPjrP9SUr3mQZSxf-pP0e7vtWk5Gc1kRj-x4_mA>
-    <xmx:oEapaZmYZ4zyaJt4tlvfmlEyuXyA_5R1iUZOONiRtU8Bu9PP2miTXQ>
-    <xmx:oEapacRmE-iEs_FlKckkzUAWb2d3jYsOmzUj782E1dQqBnuWWN-qjA>
-    <xmx:oEapabQdIx1TOLj7Zj1eISqiXZCqnMZc7dO2StaLOpzX4KWrUwVJN4gH0dkA>
-Feedback-ID: ia0f04183:Fastmail
-Message-ID: <450f03da-626a-48c3-9fac-575427db40f9@cpan.org>
-Date: Thu, 5 Mar 2026 09:02:22 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
+Received: (qmail 28291 invoked from network); 31 May 2026 16:16:47 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: "Christopher L. Shannon" <cshannon@apache.org>
 To: oss-security@lists.openwall.com
-From: Robert Rothenberg <rrwo@cpan.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] CVE-2025-40931: Apache::Session::Generate::MD5 versions through 1.94
- for Perl create insecure session id
+Message-ID: <649a1584-47fc-e53e-6c1e-43dc4be29652@apache.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 31 May 2026 16:16:35 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-42253: Apache ActiveMQ, Apache ActiveMQ Web: HTTP
+ Response Header Injection via JMS Message Properties 
 
-========================================================================
-CVE-2025-40931                                       CPAN Security Group
-========================================================================
+Severity: important=20
 
-         CVE ID:  CVE-2025-40931
-   Distribution:  Apache-Session
-       Versions:  through 1.94
+Affected versions:
 
-       MetaCPAN:  https://metacpan.org/dist/Apache-Session
-       VCS Repo:  https://github.com/chorny/Apache-Session
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.7
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.6
+- Apache ActiveMQ Web (org.apache.activemq:activemq-web) before 5.19.7
+- Apache ActiveMQ Web (org.apache.activemq:activemq-web) 6.0.0 before 6.2.6
 
+Description:
 
-Apache::Session::Generate::MD5 versions through 1.94 for Perl create
-insecure session id
+Improper Neutralization of Input During Web Page Generation ('Cross-site Sc=
+ripting') vulnerability in Apache ActiveMQ, Apache ActiveMQ Web.
 
-Description
------------
-Apache::Session::Generate::MD5 versions through 1.94 for Perl create
-insecure session id.
+The MessageServlet in the ActiveMQ web console API copies every JMS message
+property into an HTTP response header without any validation. This can allo=
+w overwriting and injecting security headers by setting them on JMS message=
+s that are returned by the servlet.
 
-Apache::Session::Generate::MD5 generates session ids insecurely. The
-default session id generator returns a MD5 hash seeded with the
-built-in rand() function, the epoch time, and the PID. The PID will
-come from a small set of numbers, and the epoch time may be guessed, if
-it is not leaked from the HTTP Date header. The built-in rand function
-is unsuitable for cryptographic usage. Predicable session ids could
-allow an attacker to gain access to systems.
+This issue affects Apache ActiveMQ: before 5.19.7, from 6.0.0 before 6.2.6;=
+ Apache ActiveMQ Web: before 5.19.7, from 6.0.0 before 6.2.6.
 
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+Users are recommended to upgrade to version 5.19.7 or 6.2.6, which fixes th=
+e issue.=C2=A0The MessageServlet has now been deprecated and disabled by de=
+fault.
 
-Solutions
----------
-Consider alternate solutions like
-https://metacpan.org/pod/Apache::Session::Generate::Random
+Credit:
 
+Vishal Shukla (finder)
+pyn3rd (finder)
+uname (finder)
+4ra1n (finder)
 
-References
-----------
-https://metacpan.org/dist/Apache-Session/source/lib/Apache/Session/Generate/MD5.pm#L27
-https://security.metacpan.org/docs/guides/random-data-for-security.html
+References:
 
-Credits
--------
-Robert Rothenberg, finder
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-42253
 
