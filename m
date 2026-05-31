@@ -1,4 +1,4 @@
-Received: (qmail 23975 invoked by uid 550); 14 Mar 2023 08:51:17 -0000
+Received: (qmail 13444 invoked by uid 550); 31 May 2026 11:44:44 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,60 +7,43 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 23940 invoked from network); 14 Mar 2023 08:51:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hboeck.de; s=key1;
-	t=1678783864; bh=kF7BhVILLKN2jXNqbK9G1T/8Ra0WTU9rxQQl040dawE=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Transfer-Encoding;
-	b=mS8tmU5s9orULAjTnUJbGmOS+yoacLuuMecBxH01GS2cCFaRirWlrYpk5BwMyvQJS
-	 XK4Bt3ljBLQkhUQKacgHnUOUBkR6o0noHSc9xacu0CYQvWUfiSzmd2lydBKAgEEuvq
-	 AegfsN/Y/VvY1rIJk9kGxtz4qUOEpNf1fUdv9Fv/UoBZVg28CuVXtyOc04aQ4pH4DQ
-	 /LCPJ2ibVJkQpW122qIGM0GYuYVvJgw0RefjEsy/NycMuTdrfSqptdLF74YUT8JnDs
-	 B9MIJrJf8SOa7AO3s8KTSBRjlb59rHd2cUrYfvRkaXYhdqg/uAMtFISzeckXA+NkMJ
-	 OdLEjwwMUgdKA==
-Original-Subject: TTY pushback vulnerabilities / TIOCSTI
-Author: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
-Date: Tue, 14 Mar 2023 09:51:03 +0100
-From: Hanno =?iso-8859-1?q?B=F6ck?= <hanno@hboeck.de>
+x-ms-reactions: disallow
+Received: (qmail 24456 invoked from network); 31 May 2026 11:40:48 -0000
+Authentication-Results: apache.org; auth=none
+Content-Type: text/plain; charset=utf-8
+From: Rahul Vats <rahulvats@apache.org>
 To: oss-security@lists.openwall.com
-Message-ID: <20230314095103.1ed76cc0.hanno@hboeck.de>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.37; x86_64-pc-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <f13c068c-e19a-68e3-25f7-d2c89ac775e2@apache.org>
 Content-Transfer-Encoding: quoted-printable
-Subject: [oss-security] TTY pushback vulnerabilities / TIOCSTI
+Date: Sun, 31 May 2026 11:40:24 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-41014: Apache Airflow: per-DAG RBAC bypass on
+ /ui/partitioned_dag_runs endpoints 
 
-Hi,
+Severity: low=20
 
-This blogpost highlights TTY Pushback vulnerabilities enabled via the
-TIOCSTI kernel functionality available in the Linux kernel:
-https://www.errno.fr/TTYPushback.html
+Affected versions:
 
-This has been discussed here previously:
-https://www.openwall.com/lists/oss-security/2017/06/03/9
+- Apache Airflow (apache-airflow) 3.2.0 before 3.2.2
 
-Though I think there are some noteworthy updates. In the 2017 post
-solar designer mentioned that the Linux kernel developers have multiple
-times rejected changes in the kernel. However this has now changed:
-Starting with Kernel 6.2 it is possible to disable TIOCSTI
-(unset CONFIG_LEGACY_TIOCSTI). It also appears that very few (or no?)
-applications practically use TIOCSTI.
+Description:
 
-This seems to be the only real mitigation for this issue. It appears
-su has a parameter, and in sudo one can configure the creation of a new
-pty in the sudoers file. I don't consider these as satisfying fixes, as
-they are optinal, and thus rely on the expectation that users are aware
-of this risk and manually use these mitigations. That does not seem
-realistic to me.
+The partitioned_dag_runs endpoints in the Airflow UI enforced only asset-le=
+vel access control, not per-Dag authorization. An authenticated UI/API user=
+ with global Asset:read permission could enumerate partition run state, sch=
+edule configuration, and asset wiring for Dags they were not authorized to =
+read. Affects deployments that rely on per-Dag read scoping while granting =
+users broader Asset access. Users are advised to upgrade to `apache-airflow=
+` 3.2.2 or later.
 
-This also affects such a large number of tools, not just
-su/sudo-like tools, but also sandboxing tools. E.g. bubblewrap [1] is
-affected by this by default.
+Credit:
 
-Thus I strongly recommend that people disable this in the kernel.
+Yalguun Tumenkhuu (fg0x0) (finder)
+Jarek Potiuk (remediation developer)
 
-[1] https://github.com/containers/bubblewrap/issues/555
+References:
 
---=20
-Hanno B=C3=B6ck
-https://hboeck.de/
+https://github.com/apache/airflow/pull/65344
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-41014
+
