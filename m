@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1901" "Wednesday" "9" "November" "2016" "13:28:53" "+0000" "Dominic Cleal" "dominic@cleal.org" "<e83aa49b-8c7d-e662-55bd-8f5a415e38b8@cleal.org>" "62" "[oss-security] CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step" nil nil nil "11" "2016110913:28:53" "[oss-security] CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step" (number mark "U       dominic@clea Nov  9   62/1901  " thread-indent "\"[oss-security] CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28449 invoked by uid 550); 9 Nov 2016 13:29:06 -0000
+Received: (qmail 26103 invoked by uid 550); 31 May 2026 17:02:39 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,79 +7,50 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 28425 invoked from network); 9 Nov 2016 13:29:05 -0000
-From: Dominic Cleal <dominic@cleal.org>
-To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-Message-ID: <e83aa49b-8c7d-e662-55bd-8f5a415e38b8@cleal.org>
-Date: Wed, 9 Nov 2016 13:28:53 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.4.0
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="sGJggEB7f6cpCqbKjPBbGvhvl5NNXxvni"
-Subject: [oss-security] CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step
-
---sGJggEB7f6cpCqbKjPBbGvhvl5NNXxvni
-Content-Type: multipart/mixed; boundary="JhOObrgQCo1DpRXudcEW3VgxusXat0Lox";
- protected-headers="v1"
-From: Dominic Cleal <dominic@cleal.org>
-To: oss-security@lists.openwall.com
-Cc: foreman-security@googlegroups.com
-Message-ID: <e83aa49b-8c7d-e662-55bd-8f5a415e38b8@cleal.org>
-Subject: CVE-2016-8634: Foreman stored XSS in orgs/locations wizard step
-
---JhOObrgQCo1DpRXudcEW3VgxusXat0Lox
+x-ms-reactions: disallow
+Received: (qmail 13393 invoked from network); 31 May 2026 16:20:55 -0000
+Authentication-Results: apache.org; auth=none
 Content-Type: text/plain; charset=utf-8
+From: "Christopher L. Shannon" <cshannon@apache.org>
+To: oss-security@lists.openwall.com
+Message-ID: <d4968eca-7663-ec99-a26d-458e8c5a9e1a@apache.org>
 Content-Transfer-Encoding: quoted-printable
+Date: Sun, 31 May 2026 16:17:37 +0000
+MIME-Version: 1.0
+Subject: [oss-security] CVE-2026-46605: Apache ActiveMQ Broker, Apache ActiveMQ All,
+ Apache ActiveMQ: Incomplete authorization during destination removal 
 
-CVE-2016-8634: Foreman organization/location wizard may run stored XSS
-in name
+Severity: moderate=20
 
-When creating an organization or location in Foreman, if the name
-contains HTML then the second step of the wizard will render the HTML.
-This occurs in the alert box on the page.
+Affected versions:
 
-This may permit a stored XSS attack if an organization/location with
-HTML in the name is created, then a user is linked directly to this URL.
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.7
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before=
+ 6.2.6
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.7
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.6
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.7
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.6
 
-Mitigation: restrict permissions to organization and location creation,
-don't follow untrusted links to Foreman.
+Description:
 
-This issue was reported by Sanket Jagtap.
+Incomplete authorization by Apache ActiveMQ server before versions v6.2.6 a=
+nd v5.19.7 allows authenticated connections to remove existing destinations=
+ with proper permissions.
 
-Affects Foreman 1.1 and higher
-Fix due to be released in Foreman 1.14.0
+This issue affects Apache ActiveMQ Broker: before 5.19.7, from 6.0.0 before=
+ 6.2.6; Apache ActiveMQ All: before 5.19.7, from 6.0.0 before 6.2.6; Apache=
+ ActiveMQ: before 5.19.7, from 6.0.0 before 6.2.6.
 
-Patch:
-https://github.com/theforeman/foreman/commit/5a573456b5ecb3ba0d24e057722704=
-f9afeda8f7
+Users are recommended to upgrade to version v6.2.6 or v5.19.7, which fixes =
+the issue.
 
-More information:
-https://theforeman.org/security.html#2016-8634
-http://projects.theforeman.org/issues/17195
-https://theforeman.org
+Credit:
 
---=20
-Dominic Cleal
-dominic@cleal.org
+Leon Johnson (github: lokerxx) (finder)
 
+References:
 
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=3DCVE-2026-46605
 
---JhOObrgQCo1DpRXudcEW3VgxusXat0Lox--
-
---sGJggEB7f6cpCqbKjPBbGvhvl5NNXxvni
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iFkEARECABkFAlgjJJUSHGRvbWluaWNAY2xlYWwub3JnAAoJEHx9Mm8sK3LMnckA
-oMsRyten/8o44CE91FkQW49N4bIdAJ9YIb3TItwPgF+YB6qbbwmW13KhGw==
-=ILjF
------END PGP SIGNATURE-----
-
---sGJggEB7f6cpCqbKjPBbGvhvl5NNXxvni--
