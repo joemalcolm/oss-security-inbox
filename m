@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["8262" "Monday" "24" "April" "2017" "10:21:15" "+0200" "Andrej Nemec" "anemec@redhat.com" "<3763aa60-8c4e-b6a0-f9e8-2c7a120989a1@redhat.com>" "202" "Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )" nil nil nil "4" "2017042408:21:15" "[oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )" (number mark "U       anemec@redha Apr 24  202/8262  " thread-indent "\"Re: [oss-security] CVE Request: podofo: stack overflow in PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )\"\n") "<CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>" ("<CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 22470 invoked by uid 550); 24 Apr 2017 08:21:32 -0000
+Received: (qmail 30003 invoked by uid 550); 1 Jun 2026 22:07:22 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,227 +7,171 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 22449 invoked from network); 24 Apr 2017 08:21:31 -0000
-DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 13DA4C059743
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
-Authentication-Results: ext-mx08.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=anemec@redhat.com
-DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 13DA4C059743
-To: oss-security@lists.openwall.com
-References: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-From: Andrej Nemec <anemec@redhat.com>
-Message-ID: <3763aa60-8c4e-b6a0-f9e8-2c7a120989a1@redhat.com>
-Date: Mon, 24 Apr 2017 10:21:15 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+x-ms-reactions: disallow
+Received: (qmail 21958 invoked from network); 1 Jun 2026 21:17:13 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
+	s=s31663417; t=1780348624; x=1780953424; i=shvedov@gmx.com;
+	bh=fSlwu9MhWF/PviGYlg8N4FZVHcNUZyMU5oHregARpQ0=;
+	h=X-UI-Sender-Class:MIME-Version:Message-ID:From:To:Subject:
+	 Content-Type:Date:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=aViZBdUClUbW55xyFbdn1ICLGgq7KQ5EpjXB2z/Ax5m1bS4BUr8qcACvDT812XKN
+	 /IAd6PZhLlYCgb45b2VYoR63OIvlbOvzPUUFVMle9tNQ8Z2yGj9NV0f4Aduket6yM
+	 KujRoMpUyLvP7biYvMR0C1Nba4mF3/rsEC8AShasUA6qO1cbW3LBCk1YD9JSa6Bcd
+	 iW/mPcQA0oExLIA3GAy9+oCwhtTspIfHBRpzQfvwz9FAbu2UlW7TPqSrvsBCZ9A6V
+	 FIK7byLAs9IAsG/ZZoSMCa68jWCysyzy2sHRRBX6T7MM5QJFoRIiglEVpzdDZda7g
+	 teyjHVIYIZjCqIT9rQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 MIME-Version: 1.0
-In-Reply-To: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature";
- boundary="Ep5E6VqegvC5MUPX5JhXm7rUmrPcJCToK"
-X-Scanned-By: MIMEDefang 2.79 on 10.5.11.12
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.32]); Mon, 24 Apr 2017 08:21:19 +0000 (UTC)
-Subject: Re: [oss-security] CVE Request: podofo: stack overflow in
- PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
-
---Ep5E6VqegvC5MUPX5JhXm7rUmrPcJCToK
-Content-Type: multipart/mixed; boundary="4SFNj1OLXLbQAiDQcuJ6MrSoCPPnUUiSj";
- protected-headers="v1"
-From: Andrej Nemec <anemec@redhat.com>
+Message-ID: <trinity-a59c8e18-a159-4078-8428-c09bec142c2d-1780348624451@3c-app-mailcom-bs08>
+From: "Alexander A. Shvedov" <shvedov@gmx.com>
 To: oss-security@lists.openwall.com
-Message-ID: <3763aa60-8c4e-b6a0-f9e8-2c7a120989a1@redhat.com>
-Subject: Re: [oss-security] CVE Request: podofo: stack overflow in
- PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
-References: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-In-Reply-To: <CAHHvYcpseXiQc73gQqrb3Eumt05=8Chd9Nfv1qooVkMxON-RtQ@mail.gmail.com>
-
---4SFNj1OLXLbQAiDQcuJ6MrSoCPPnUUiSj
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 1 Jun 2026 23:17:04 +0200
+Importance: normal
+Sensitivity: Normal
 Content-Transfer-Encoding: quoted-printable
+X-Priority: 3
+X-Provags-ID: V03:K1:YB6VHAz0JzxARh2xxU2VuuA2fyGzzNjPpLifA69LdEZa3Hzq20H+pFIm6Msb/O1tylBKY
+ Vo/QRumpgcLBeBIeWe1SlF4WnO7NhcldkCqO/0I4aOiewjY/oUePJntNMGzlvzVZ2657j7pXRCx9
+ eJXC3Podtqrexjm8vHV2rnpsHZqZw2JM7HS8ARPGkTIRco+Id2CYR01Dklb6efuE/wE2JHhFOhZc
+ RisC4KAI1ZVsdgOxFxnD9CzBgRCsnwPd4djbbaFuIQ9W9/V5LUlhOwnph0Iw5uAwHQJFsYJEMQLm
+ uk=
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:pJw9xOFa4Fc=;zYe6q41CeucJ2JXsqtkw3DM9z6Y
+ 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
+ 6I+cXVl0=
+Subject: [oss-security] CVE-2025-60483: NULL Pointer Dereference in GPAC/MP4Box via
+ gf_ac4_pres_b_4_back_channels_present on crafted AC-4 stream
 
-Hello Xiaobo,
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (see References)
+CVE:       CVE-2025-60483
+CWE:       CWE-476 (NULL Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-Unfortunately, CVE assignments are not done through this list anymore.
-You need to visit [1] and request a CVE by filing out the form. Could
-you please look at it and let the list know about the assigned CVE?
+Description:
+  The gf_ac4_pres_b_4_back_channels_present function in media_tools/av_pars=
+ers.c
+  accesses presentation substream group data using an index derived from th=
+e AC-4
+  stream. When a crafted AC-4 file specifies an invalid substream group ind=
+ex
+  (e.g., group 4 that does not exist for presentation 0), the parser reaches
+  line 15703 without first validating the index against the available group=
+ count.
 
-Thanks!
+  The invalid index causes a dereference of pres->substream_groups at a 72-=
+byte
+  offset from a NULL or uninitialized base pointer (READ at address 0x00000=
+0000048),
+  terminating the process with SIGSEGV. No evidence of arbitrary code execu=
+tion
+  was observed; the impact is limited to Denial of Service.
 
-Best Regards,
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-[1] https://cveform.mitre.org/
+Reproduction:
+  -Build-opts: `--static-build --static-bin --static-modules --enable-debug=
+ --extra-cflags=3D"-g -O0"` ;
+  -Command: ./MP4Box -dash 100 49_gf_ac4_pres_b_4_back_channels_present_med=
+ia_tools_av_parsers_c_15703
 
---=20
-Andrej Nemec, Red Hat Product Security
-3701 3214 E472 A9C3 EFBE 8A63 8904 44A1 D57B 6DDA
+Asan-log:
+=3D=3D56315=3D=3DERROR: AddressSanitizer: SEGV on unknown address 0x0000000=
+00048 (pc 0x7f3ff4b7f8d1 bp 0x0a100000018e sp 0x7ffcf2d7c730 T0)
+=3D=3D56315=3D=3DThe signal is caused by a READ memory access.
+    #0 0x7f3ff4b7f8d1 in gf_ac4_pres_b_4_back_channels_present media_tools/=
+av_parsers.c:15703
+    #1 0x7f3ff4b7f8d1 in gf_ac4_raw_frame media_tools/av_parsers.c:15999
+    #2 0x7f3ff4b7f8d1 in gf_ac4_parser_bs media_tools/av_parsers.c:16141
 
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/49/49_gf_ac4_p=
+res_b_4_back_channels_present_media_tools_av_parsers_c_15703
 
-On 04/22/2017 05:02 AM, Xiaobo Xiang wrote:
-> Hi,
->
-> There is a infinite recursion in
-> PoDoFo::PdfParser::ReadDocumentStructure(PdfParser.cpp )
-> In the ReadDocumentStructure function, it calls ReadXRefContents several
-> time, for exmple in the end of ReadDocumentStructure:.
->     try {
->         ReadXRefContents( m_nXRefOffset );
->     } catch( PdfError & e ) {
->         e.AddToCallstack( __FILE__, __LINE__, "Unable to load xref
-> entries." );
->         throw e;
->     }
->
-> The ReadXRefContents and ReadXRefStreamContents will call each other if it
-> meet some conditions. Just as below.
->
-> void PdfParser::ReadXRefStreamContents( pdf_long lOffset, bool
-> bReadOnlyTrailer )
-> {
->     m_device.Device()->Seek( lOffset );
->     //....
->     if(xrefObject.HasPrevious())
->     {
->         try {
->             m_nIncrementalUpdates++;
->
->             // PDFs that have been through multiple PDF tools may have a
-> mix of xref tables (ISO 32000-1 7.5.4)
->             // and XRefStm streams (ISO 32000-1 7.5.8.1) and in the Prev
-> chain,
->             // so call ReadXRefContents (which deals with both) instead of
-> ReadXRefStreamContents
->             ReadXRefContents( xrefObject.GetPreviousOffset(),
-> bReadOnlyTrailer );
->         } catch(PdfError &e) {
->             //....
->         }
->     }
-> }
->
-> void PdfParser::ReadXRefContents( pdf_long lOffset, bool bPositionAtEnd )
-> {
->     pdf_int64 nFirstObject =3D 0;
->     pdf_int64 nNumObjects  =3D 0;
->
->     if( !this->IsNextToken( "xref" ) )
->     {
-> //      if( m_ePdfVersion < ePdfVersion_1_5 )
-> //        Ulrich Arnold 19.10.2009, found linearized 1.3-pdf's with
-> trailer-info in xref-stream
->         if( m_ePdfVersion < ePdfVersion_1_3 )
->         {
->             PODOFO_RAISE_ERROR( ePdfError_NoXRef );
->         }
->         else
->         {
->             ReadXRefStreamContents( lOffset, bPositionAtEnd );
->             return;
->         }
->     }
->
-> The crash log is just as follows:
->
-> ./podofofuzzer: Running 1 inputs 1 time(s) each.
-> Running: crash-5aac275479284034b46368c836564266b0ed3694
-> ASAN:DEADLYSIGNAL
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> =3D=3D30073=3D=3DERROR: AddressSanitizer: stack-overflow on address 0x7ff=
-c70e74f18
-> (pc 0x0000004e6119 bp 0x7ffc70e75790 sp 0x7ffc70e74f20 T0)
->     #0 0x4e6118  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x4e6118)
->     #1 0x8a75c1  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x8a75c1)
->     #2 0x4e6efc  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x4e6efc)
->     #3 0x7fdbbe094277  (/usr/lib/x86_64-linux-gnu/libstdc++.so.6+0x121277)
->     #4 0x61085e  (/home/name/FUZZ-WORKSPACE/podofofuzzer+0x61085e)
->
-> when debugging with gdb and checking the stack backtrace, it showed the
-> program runs out of the stack as below :
->
-> #6884 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-> (this=3D0x617000000080, lOffset=3D5923, bReadOnlyTrailer=3Dfalse)
->     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-> #6885 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-> (this=3D0x617000000080, lOffset=3D5923, bPositionAtEnd=3Dfalse) at
-> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-> #6886 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-> (this=3D0x617000000080, lOffset=3D5923, bReadOnlyTrailer=3Dfalse)
->     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-> #6887 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-> (this=3D0x617000000080, lOffset=3D5923, bPositionAtEnd=3Dfalse) at
-> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-> #6888 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-> (this=3D0x617000000080, lOffset=3D5923, bReadOnlyTrailer=3Dfalse)
->     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-> #6889 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-> (this=3D0x617000000080, lOffset=3D5923, bPositionAtEnd=3Dfalse) at
-> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-> #6890 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-> (this=3D0x617000000080, lOffset=3D5923, bReadOnlyTrailer=3Dfalse)
->     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-> #6891 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-> (this=3D0x617000000080, lOffset=3D5923, bPositionAtEnd=3Dfalse) at
-> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-> #6892 0x000000000063a434 in PoDoFo::PdfParser::ReadXRefStreamContents
-> (this=3D0x617000000080, lOffset=3D116, bReadOnlyTrailer=3Dfalse)
->     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:875
-> #6893 0x000000000063438c in PoDoFo::PdfParser::ReadXRefContents
-> (this=3D0x617000000080, lOffset=3D116, bPositionAtEnd=3Dfalse) at
-> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:682
-> #6894 0x00000000006303bf in PoDoFo::PdfParser::ReadDocumentStructure
-> (this=3D0x617000000080) at /home/name/podofo-0.9.5/src/base/PdfParser.cpp=
-:337
-> #6895 0x000000000062e252 in PoDoFo::PdfParser::ParseFile
-> (this=3D0x617000000080, rDevice=3D..., bLoadOnDemand=3Dtrue) at
-> /home/name/podofo-0.9.5/src/base/PdfParser.cpp:220
-> #6896 0x000000000062ce49 in PoDoFo::PdfParser::ParseFile
-> (this=3D0x617000000080, pszFilename=3D0x8ca380 <.str> "tempinput.pdf",
-> bLoadOnDemand=3Dtrue)
->     at /home/name/podofo-0.9.5/src/base/PdfParser.cpp:164
-> #6897 0x00000000005cdc65 in PoDoFo::PdfMemDocument::Load
-> (this=3D0x7fffffffbfe0, pszFilename=3D0x8ca380 <.str> "tempinput.pdf",
-> bForUpdate=3Dfalse)
->     at /home/name/podofo-0.9.5/src/doc/PdfMemDocument.cpp:256
-> #6898 0x00000000005cd682 in PoDoFo::PdfMemDocument::PdfMemDocument
-> (this=3D0x7fffffffbfe0, pszFilename=3D0x8ca380 <.str> "tempinput.pdf",
-> bForUpdate=3Dfalse)
->     at /home/name/podofo-0.9.5/src/doc/PdfMemDocument.cpp:102
->
-> Thus,causing denial of service.
-> =E2=80=8B
->  crash-5aac275479284034b46368c836564266b0ed3694
-> <https://drive.google.com/file/d/0B_D2GM9VAVyvanRadmhWd1RKM0U/view?usp=3D=
-drive_web>
-> =E2=80=8B
->
-> Best Regards,=E2=80=8B=E2=80=8B
-> Xiang Xiaobo
->
+References:
+  https://github.com/gpac/gpac/issues/3302
+  https://nvd.nist.gov/vuln/detail/CVE-2025-60483
+  https://www.cve.org/CVERecord?id=3DCVE-2025-60483
 
-
---4SFNj1OLXLbQAiDQcuJ6MrSoCPPnUUiSj--
-
---Ep5E6VqegvC5MUPX5JhXm7rUmrPcJCToK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-
-iQIcBAEBCgAGBQJY/bV7AAoJEIkERKHVe23aTQ8P/i74/kQqxnRKijIZ4e1vOIs6
-7Kkedwil1kXqnRre7wwpmNgU0xX+Qfm0C2Mxw+1KpuPeipr+F/jrNbhx0484GcjW
-xQZyd8BFB1hqWpClzNDxf3fbQHo/buAOh0M4zgVQ+a2RH7b48XocKibk+6BU7Umn
-J2B0om0k2xcP2e/3Dc4xVunxUh3QPmtQJgEpvR+Btm0fSoVKA6ixJh4Q+8p0d6i4
-m+sSIpZL5bvhnxFJcIc6wMPnbrUdk3ROoirDVDBgVi/8z6qpswKN29JJvwH0LN8B
-1Dr9nDgfVsoXZho/mt9erBM84X2LRp+NLRS0/bRlGRe/CmYilDTyKBm4hiyaHeMb
-NgfL9y43hxpcSDB77DhkSeMXyJdB2irRlKUmpUTsQgJT9PKjdnPa8D+XzpqTMuOR
-fci4l50VUwr9SpeXwZKhMqtZ2pkpDvrB8qeTgnx5eNyMu4nOby14oCBAOSaWpjsW
-dc2rT+WODzXEcmXIHmvbB5n91lbkC7TEepG4gsXxWx2pC7W+ZBXSy8v+pnoDNvow
-7E7k3E7PmQ3YdsF+8meGJlfhugn7ThQGHhFZ1wLCxwz+GVE/mCVMEA9FNI5FVCQ0
-lqxt0q0cSs4F9EPxuC+lh85L/BMPKvP9x8Fn19CNK5Z3VfNJNWp1Ow42LQULLK8r
-zC/iiKr51BQxjg2Iiq/d
-=qoJR
------END PGP SIGNATURE-----
-
---Ep5E6VqegvC5MUPX5JhXm7rUmrPcJCToK--
+=C2=A0
+---
+Best regards,
+Alexander A. Shvedov
+https://github.com/sigdevel
