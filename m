@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["2239" "Thursday" "4" "August" "2016" "01:02:41" "-0400" "cve-assign@mitre.org" "cve-assign@mitre.org" "<20160804050241.66A89ABC600@smtpvmsrv1.mitre.org>" "60" "[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" nil nil nil "8" "2016080405:02:41" "[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node" (number mark "U       cve-assign@m Aug  4   60/2239  " thread-indent "\"[oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node\"\n") "<5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>" ("<5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 3115 invoked by uid 550); 4 Aug 2016 05:02:53 -0000
+Received: (qmail 1653 invoked by uid 550); 2 Jun 2026 20:41:42 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,72 +7,57 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 3091 invoked from network); 4 Aug 2016 05:02:53 -0000
-From: cve-assign@mitre.org
-To: zhangkaixiang@360.cn
-Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-In-Reply-To: <5EDB84F4B23F5B4DB6500A89258280E0BD067A@EX02.corp.qihoo.net>
-Message-Id: <20160804050241.66A89ABC600@smtpvmsrv1.mitre.org>
-Date: Thu,  4 Aug 2016 01:02:41 -0400 (EDT)
-Subject: [oss-security] Re: cve request: docker swarmkit Dos occurs by repeatly joining and quitting swam cluster as a node
+x-ms-reactions: disallow
+Received: (qmail 1624 invoked from network); 2 Jun 2026 20:41:42 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1780432893; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=adKZAd0WHlRUaMpkOBmXGqdwvf10/y+AyB7tH3bS1Mo=;
+	b=FKpiRFxP9btP7sAg+JRTJzba3dmH0rQvFyat1ZakGx5oBq3G2ve+EHioVGnFNm+65Uot7t
+	4rfhBobThGAt5vDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1780432893; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=adKZAd0WHlRUaMpkOBmXGqdwvf10/y+AyB7tH3bS1Mo=;
+	b=Ppwosbh2qGjc7xhkF7Aw3aoPcKRB65JXT9+sVMH9y6AQhlAnNEJDCLT9VQWJbMPJH5qYW+
+	cQjH2w+r4+CCHdunhuK+ytZmFrXrhoF8KgfzSPjqWK1HxwbEoEUz78rlUqDZk+aHjSpWfl
+	vLaEv9NEMrsHJlo9wU9t70xSDtoyl2BZag6Kjm/HWDzBZyoWiA2POPPZwIJ7i04S6eH7ly
+	74k3dfOkaxPEUDUnrg2daZNoq0I4W6YiU8x9ZkWwyPICc1mCOoslhH/mI59jWHrk29B9M4
+	SAV8vF5ws+w4sIuoQdcBZwM/W1U8dvzdU+8VcdSGpkeqpNz/chWDzDMDy1Pb2A==
+Date: Tue, 2 Jun 2026 21:41:33 +0100
+From: Stuart Henderson <stu@spacehopper.org>
+To: oss-security@lists.openwall.com
+Message-ID: <ah8__bTk_qGYMjrQ@symphytum.spacehopper.org>
+References: <CA+W5nyiFPweL5LDEKpUSJAo8NhKQz53o=d=9HBdHipQ7d0N3Mw@mail.gmail.com>
+ <ah62-ZU9c_cEa8f0@symphytum.spacehopper.org>
+ <C9D46D56-8664-45BF-991A-D5226C84B79C@lightwave.net.ru>
+ <ah8ScoDc8O4mG-_H@symphytum.spacehopper.org>
+ <41F35F72-E66D-49B8-BE03-CBBE71275CD0@lightwave.net.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <41F35F72-E66D-49B8-BE03-CBBE71275CD0@lightwave.net.ru>
+Subject: Re: [oss-security] BIRD/BIRD2: stack buffer overflow in BGP AS_PATH
+ mask matching, CVE pending
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+On 2026/06/02 21:14, Dan Yefihmov wrote:
+> On June 2, 2026 8:27:14 PM GMT+03:00, Stuart Henderson <stu@spacehopper.org> wrote:
+> >Yes, I did. That doesn't rule out things like "don't plan to fix because
+> >it's no longer an issue".
+> >
+> Didn't you think that in that case it's considerably more reasonable to explicitly write: "It's already fixed, and the fix will be in the next release scheduled at ..." instead of "We don't CURRENTLY plan to fix it"?
 
-> I found a vulnerability in docker of the latest version which could
-> cause a Denial of Service, it results in a machine could not join the
-> swarm cluster after another node's repeatedly joining and quitting the
-> swarm for many times (taking my testing as example, it should need at
-> least one thousand times). Moreover, the docker debugging info
-> indicates the Dispatcher is stopped and ca server may exited
-> sometimes.
-> 
-> Login machine A1 and join the swarm ,and then quitted the swarm.
-> 
-> Login machine A2, repeatedly join and quit the swarm for 1000 times.
-> 
-> After finishing that, Login machine A1 again and attempt to join the swarm, it failed.
-> 
-> Error response from daemon: Timeout was reached before node was
-> joined. Attempt to join the cluster will continue in the background.
-> Use "docker info" command to see the current swarm status of your
-> node.
-> 
-> level=error
-> msg="failed to remove node"
-> 
-> level=error
-> msg="session failed"
-> error="rpc error: ... context canceled"
-> 
-> level=debug
-> msg="heartbeat expiration"
-> 
-> level=error
-> msg="failed deregistering node after heartbeat expiration"
-> error="... dispatcher is stopped"
+I'm not sure if you're aware of the sheer number of reports that
+widely-used projects are receiving recently.
 
-Use CVE-2016-6595.
+From the talk I linked to, for BIRD from the start of 2026 up to 19 May,
+that was *70*. The ones I've seen (not for BIRD) they're often extremely
+verbose, and they're often plain wrong (the talk suggests ~ 9% of the
+reports for BIRD were valid).
 
-- -- 
-CVE Assignment Team
-M/S M300, 202 Burlington Road, Bedford, MA 01730 USA
-[ A PGP key is available for encrypted communications at
-  http://cve.mitre.org/cve/request_id.html ]
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+At this point I think it is fairly reasonable for small development
+teams to not spend all that much time researching a lower-effort
+report. If it's valid there will likely be a handful of duplicate
+reports coming along soon afterwards anyway, and hopefully one of
+those may have done more triage before sending out.
 
-iQIcBAEBCAAGBQJXossBAAoJEHb/MwWLVhi2FJ8QALlp1bYssp66abNelRpjiQXl
-ylHYSBTYhSMIpguerzlQv88l+O13uLfLtsC/fHPqb9+/cDG1icNHIjKuussr4HeQ
-hy3DRSn0D+63XXXHjRG5hvpBP3Sf8irAz3lnwaEHj01hlILsAbAV0CuTP2+lBz3X
-QtIojkBnHUUz/glGCT8VMavS85MakRwM7CV2upLJZptHaOiQlR8pa06FOBCBzWjJ
-TsxdIFgnlEWomN0Lsf+IKD5uc6n+kmZzmyBNR9hHDCkTNJLRgMEvqVmK1nqVgQPS
-jzvdrZSKF+BxQfPmONgrvSfQpSlEbJ4GFTYN0qeHqpt8SRJLJ0Uuy1ukzd+j6S8G
-oTuA1fAJsZFwsku40usqv3lbeBGWMmxj4ORKNXZkqUZLOVwXN+p6xbDDC8Qm/p/O
-EEF124dGsxSvlcoAGpOqjAHkzB+vrCBsi0kMlsPTb6zKRZSX7ql9jaG6riFJ4H0E
-nKooj0RQRZGo2V1Z1NQDc4dMQtQ4HrRHKpDKp5snMdafbwR2DxAD2Kh862JYo2Pp
-3kmaQ/4X4oq3BFy9zwsAV3PZvBZJjerlk2MLxPktaQNSqKduriG9z9DxhPraQWaP
-kzml/+CylX7EEkV0hm+AZjt1+CMfxHAUQkvvRxi0NyhGLjqfIURI17CesCVNTYOS
-ww56x94Z2M9fplQcqRQK
-=Wgqx
------END PGP SIGNATURE-----
