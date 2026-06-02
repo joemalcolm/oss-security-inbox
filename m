@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1463" "Monday" "23" "November" "2015" "21:11:31" "-0500" "Josh Bressers" "bressers@redhat.com" "<538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>" "35" "Re: [oss-security] Instruction encoding which prevents execution of a suffix" "^Date:" nil nil "11" "2015112402:11:31" "[oss-security] Instruction encoding which prevents execution of a suffix" (number mark "        bressers@red Nov 23   35/1463  " thread-indent "\"Re: [oss-security] Instruction encoding which prevents execution of a suffix\"\n") "<564EF9B1.4050908@redhat.com>" ("<564EF9B1.4050908@redhat.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 22087 invoked by uid 550); 24 Nov 2015 02:11:45 -0000
+Received: (qmail 5883 invoked by uid 550); 2 Jun 2026 17:27:24 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,56 +6,72 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 22060 invoked from network); 24 Nov 2015 02:11:43 -0000
-Message-ID: <538567108.21747548.1448331091442.JavaMail.zimbra@redhat.com>
-In-Reply-To: <564EF9B1.4050908@redhat.com>
-References: <564EF9B1.4050908@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.5.30.88]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - FF41 (Linux)/8.0.6_GA_5922)
-Thread-Topic: Instruction encoding which prevents execution of a suffix
-Thread-Index: lRrGGZdeSf33eHlJeiGcO8O4gBbPrQ==
-Date: Mon, 23 Nov 2015 21:11:31 -0500 (EST)
-From: Josh Bressers <bressers@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: Re: [oss-security] Instruction encoding which prevents execution of
- a suffix
+x-ms-reactions: disallow
+Received: (qmail 5855 invoked from network); 2 Jun 2026 17:27:24 -0000
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3e; t=1780421235; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XA4LrgbxcKUp2lRQY5ZD40+//5j+KjKVHFF75j+1yaM=;
+	b=HHu1p4O6DMruDbCynskflbrI/0gL4lQMm+dIHCX3F/qZDsvy01bxgidNJ6LDEeh+wDvV0c
+	PB+prpFDydOcvQDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacehopper.org;
+	s=s3; t=1780421235; h=from:from:subject:subject:date:date:message-id:message-id:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XA4LrgbxcKUp2lRQY5ZD40+//5j+KjKVHFF75j+1yaM=;
+	b=Y1ozL0/blZN7YshS4iEWoRHRfts0hxl9/uAxg+fdAIH3B2Ag2olA+OLiT+wsCpHA05TcZn
+	v/IL4oA/Ab288K+KoclsZlpKhq62JJbNkAQKIZ4/vf6PvLQQeBEPpUgl7bLfwkOluFWrMK
+	Z1guKroeIsxF/4Sd6Wh3N7C+M4Abh0Uh23K/As6XkrZJAqc2nOrNyXjl1omlo1LJk/apWn
+	l58fOJWVIlBwNixeHjaJnD5vjySPxJ/e/ndrBXdcHewrqVC3sK3MdahqjoMgAVRLCcNvKT
+	ZrBlptsDyNrhjzGJe+1l01qHTcQcFPQbcNSE2RD6S1FDRQXxcmfQDQ3RE2HN5w==
+Date: Tue, 2 Jun 2026 18:27:14 +0100
+From: Stuart Henderson <stu@spacehopper.org>
 To: oss-security@lists.openwall.com
+Message-ID: <ah8ScoDc8O4mG-_H@symphytum.spacehopper.org>
+References: <CA+W5nyiFPweL5LDEKpUSJAo8NhKQz53o=d=9HBdHipQ7d0N3Mw@mail.gmail.com>
+ <ah62-ZU9c_cEa8f0@symphytum.spacehopper.org>
+ <C9D46D56-8664-45BF-991A-D5226C84B79C@lightwave.net.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <C9D46D56-8664-45BF-991A-D5226C84B79C@lightwave.net.ru>
+Subject: Re: [oss-security] BIRD/BIRD2: stack buffer overflow in BGP AS_PATH
+ mask matching, CVE pending
 
------ Original Message -----
-> Suppose you have some critical kernel operation you want to protect
-> against execution if some preconditions are not met.  Therefore, you
-> check the precondition, and abort if it is not met.  But this does not
-> really work because if attackers have control over the program counter,
-> they can just enter the function after the checks.
->=20
-> What generic transformations exist (on x86_64) to make sure that an
-> attacker cannot jump over the checks and execute only a suffix of the
-> function?  I know of one approach=E2=80=94move the check into the kernel,=
- before
-> the critical operation=E2=80=94but this is not always desirable for
-> architectural reasons.
->=20
-> I'd also prefer solutions which do not require changing *all* indirect
-> jumps in the process image, and something that does not involve dynamic
-> code generation (JIT).
->=20
+On 2026/06/02 15:37, Dan Yefihmov wrote:
+> On June 2, 2026 1:56:57 PM GMT+03:00, Stuart Henderson <stu@spacehopper.org> wrote:
+> >On 2026/06/02 10:07, Bakabaka_9 wrote:
+> >> Tested affected:
+> >> 
+> >> - BIRD 2.16.2
+> >> 
+> >> Possibly affected:
+> >> 
+> >> - Other BIRD 2.x versions using the same AS_PATH mask matching
+> >>   implementation.
+> >> 
+> >> Not affected:
+> >> 
+> >> - Unknown.
+> >> 
+> >> Fixed version
+> >> =============
+> >> 
+> >> No fixed version is available at the time of this disclosure.
+> >
+> >If you've only tried one version from April 2025, how can you can say
+> >with certainty that it's not been fixed since then?
+> >
+> Did you really read the report carefully? It's explicitly written there that on May 24 the maintainers clearly written they don't currently plan to fix it!
 
-I'm certainly not an expert here, but I know enough to be dangerous.
+Yes, I did. That doesn't rule out things like "don't plan to fix because
+it's no longer an issue". (I'm not saying whether it is or not - I
+haven't checked - but it seems odd that someone going to the trouble of
+reporting the problem and requesting a CVE* wouldn't check whether it's
+still valid in a current version).
 
-If an attacker has full control (and in this case that should be the
-assumption), there's nothing you can do short of some sort of processor
-magic that doesn't exist today (that I'm aware of).
 
-What if you did the checks inside the kernel operation. Some sort of
-pre-shared secret of sorts to ensure the caller isn't new code.
 
-Of course this would require a kernel patch that I imagine wouldn't be a
-welcome change. Sometimes it's worth talking through problems like this
-with silly ideas though.
-
---=20
-    JB
+* https://ripe92.ripe.net/programme/meeting-plan/sessions/76/T7NMB8/
+has a fun alternative definition for "CVE"
 
