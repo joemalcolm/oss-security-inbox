@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["470" "Sunday" "14" "February" "2016" "16:31:52" "+0100" "Salvatore Bonaccorso" "carnil@debian.org" "<20160214153152.GA27269@eldamar.local>" "16" "[oss-security] CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor" nil nil nil "2" "2016021415:31:52" "[oss-security] CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor" (number mark "U       carnil@debia Feb 14   16/470   " thread-indent "\"[oss-security] CVE Request: Linux: ALSA: usb-audio: double-free triggered by invalid USB descriptor\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 26576 invoked by uid 550); 14 Feb 2016 15:32:07 -0000
+Received: (qmail 18167 invoked by uid 550); 3 Jun 2026 18:55:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,58 +7,82 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26558 invoked from network); 14 Feb 2016 15:32:06 -0000
+x-ms-reactions: disallow
+Received: (qmail 5748 invoked from network); 3 Jun 2026 17:49:34 -0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        bh=2Fsu5wcHT6O2w6gzI0wCTjRAi/tPUU60EQE0zphu48I=;
-        b=KVgrWZS6AYMhRjXj1GnIOhUgMKb2CNPA+MsUPlr7abde/14VA98qMT3mnaugd4NII9
-         nivJ6o0/gGqbChOCAeF6/1usCsZoxkhvvVR4r2OpvgiZnqDzYrMQunbvHanqWC956w7W
-         2hSSPuuULHKBOdTQUBgMYR8hA6lM48PefhEDKkPiNIn0X5A6mJHO1FdTcpqcM+sROvvh
-         CrxRT72Sa4MSR79IjjH9gQakeNqhB7PYPxsnlD0EGzLNoDdx7fSfWnni/DF8j5LUsgaT
-         56ST3i/vq/6YMUSfwhcaGcCfznbv2ud+2BeaMOFeRnJ7Ztu5rgT1Iahimtau0bXCPsHP
-         9Xvg==
+        d=redcoat-dev.20251104.gappssmtp.com; s=20251104; t=1780508965; x=1781113765; darn=lists.openwall.com;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8/T9HFBLw/YpWEeEgkCq2I08y1b/oIORlN6Wuy8KpdE=;
+        b=j0F+s/dMmScB6CRc0RHRzYwJdcb68SlYOcGQF/zedCtdCXxGHORy1UmXtUj7xyKS17
+         Rb3xgVE+95nqBfLK2YjQp+jq2i1HPpobt6ChGRcCe2xy5FDlcW/KUSSPIBPrFKiRb7gF
+         IgnYHhmZinLl/0WangivbvGGSM6IrdNffLQB9ixmRlMv0CP7KR8zac2bcqCLHmtbgm89
+         7Lwm1c5m2P1qngZYa3bDvdV/J8pMcLVGTE++SZtgGHtYLhEvDQpCEKU8a0rxTB5QJpE3
+         oKEn5RJ1EnlZchLS2yIXlVgivV5DkknnWMehgfhp5qjftlknXCqzD7VPSruvyP8FnOnS
+         MQzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-type:content-disposition:user-agent;
-        bh=2Fsu5wcHT6O2w6gzI0wCTjRAi/tPUU60EQE0zphu48I=;
-        b=J9WESBfTxjOiRv/xEcGXUllpSTgPrJ+P5E6uKLFYD9Qydr1OszgMbddxysWlMuY0C5
-         ujjGouzM8jCJ/Tuei9bAz0nc7NbqpW4oPc6XpTRD++shjHX0S4B5qWUh0bQiNzYYY/fC
-         zCSwt/4uGxBmjunBw+TgL69arEaVYxkOdPpVlaAmDXvYYw1eX05pMrTt4IYBcB1nKHt+
-         Kn1BbhNHMAin23yZFj5Nt0T9kM0iX5b95t1WPD+VLv+FZN8GswPoZqfC2XMAfxT65pJt
-         GAVytJc76En9PncYLLhJyy/KB14YEnTEo9f3IPMbpNv8hAkm32CtIv3UHot38MRbMBoI
-         08XQ==
-X-Gm-Message-State: AG10YORqB4OJhTylaTqPd5mP7B42VyvHARw7MpFX6v1XMtfXVAg+0Bto5epRl09QIAQEXQ==
-X-Received: by 10.28.176.200 with SMTP id z191mr8194218wme.91.1455463915407;
-        Sun, 14 Feb 2016 07:31:55 -0800 (PST)
-Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
-Date: Sun, 14 Feb 2016 16:31:52 +0100
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: OSS Security Mailinglist <oss-security@lists.openwall.com>
-Cc: Ben Hutchings <benh@debian.org>
-Message-ID: <20160214153152.GA27269@eldamar.local>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
-Subject: [oss-security] CVE Request: Linux: ALSA: usb-audio: double-free triggered by
- invalid USB descriptor
+        d=1e100.net; s=20251104; t=1780508965; x=1781113765;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8/T9HFBLw/YpWEeEgkCq2I08y1b/oIORlN6Wuy8KpdE=;
+        b=ngl0+PjWBO4hzQBtjTq1R1x5tMPbnuxDkbTb/pNoZjB7x5BC6/pN1yZwPG9CqPq3bA
+         8hWrjLgB5iV/lOEa6GJukvE76bCnchUqvF7qeHLyFGIrS7J4H3Zhh5/BxzfL5GJ/5YYF
+         oiqmADK1Upl95jK824ssWJm1RzdSYkc/DxMKvMHqPXP+6Ayl+3tKrsDzMmN/LMTayRko
+         tNItZwdVtqpmLeuTdrJotyHoFKrcvlGTkESCT2ZVxBs8tzNPOnGmpu7xdRZPzuuLssk9
+         fvyJStXSSgbUAx1o5k/zLlzakygP9T3GFUIzbXRFi1sFxM5c1Vv+wI9bCxyCXLLiaB4c
+         K4Sg==
+X-Gm-Message-State: AOJu0YzXTtAu3l0vOmb8QSlGI+vbZ4HsUpW8kqIbgAbhMvBafJ75fg5W
+	4tmqDb0bVu4/MnBSB15ZiLsu3iIkTgBnSHuCXV9fCKjDI/QxXOUPmhgT0FMjOTvgn17bneEK84G
+	+DGi5
+X-Gm-Gg: Acq92OEqsesKiuwu6rJT1YC7X9eMF9VzwlMVMvWh7IVDcfQAkSuz1KnQK14pEswiv2U
+	l8JLxYpuq1n3cFIlXmpeQG3UF22PFbuMEAz3uO2Cfvmjv9ZThykqnHDJoRPoJi3a5XU9RJhWwfS
+	SJy+o9hSs+4Z0aT1m+NWxwau5IU03kk6lZ8amKVZJDCFc+UuhsywX0T3VQk2rHq0tkKrFrCNuNN
+	h1sCx/xKSZEoTfb2/Gva+j7JfexSDOOFQgA0wWBT273hkVjl1gSHgdlQBiBThiH+NEdE9XWrhdD
+	RedlagWJ/j61UXpInBX/nj/RHr/oYbN9T9hvz4WFUAwQPnAxOoQQ6eGgOACzQqIb01WuWOoPjRd
+	vfmdTK9+x+jEhG9g2LXJNU5xOlOQKEGVSsdB5no7F6zlvh0KwyB9H2FPfRxS91H3G+Eg95q8o02
+	1UWTR7A87MaSpQhQnOrvXePUkfPBAx/0ufm6XKRVYqpXdrClF0lXqXlI9i5l3jxciZx5jirXrxW
+	A==
+X-Received: by 2002:a05:600c:4e52:b0:490:ae52:499c with SMTP id 5b1f17b1804b1-490b5ed4620mr78103945e9.21.1780508964513;
+        Wed, 03 Jun 2026 10:49:24 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 03 Jun 2026 18:49:23 +0100
+Message-Id: <DIZLR1S1UFXC.1CL0O1X3GAEZ9@redcoat.dev>
+From: "Emily Shepherd" <emily@redcoat.dev>
+To: <oss-security@lists.openwall.com>, <jcb62281@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <CAJv4Csu5=C04SfEWEWe7QuUTTYbwRieTxCXQ4chO3tPXDvGxHw@mail.gmail.com> <dba33ac5-e1de-47d1-ac39-05fc42dfa3f4@gmail.com> <CAJv4CssaPRCG40QqABsMj89riidUxAO35LVns_X=Df-+qfThpQ@mail.gmail.com>
+In-Reply-To: <CAJv4CssaPRCG40QqABsMj89riidUxAO35LVns_X=Df-+qfThpQ@mail.gmail.com>
+Subject: Re: [oss-security] Linux kernel TLS ULP use-after-free in
+ tls_sk_proto_close()
 
-Hi
+On Wed Jun 3, 2026 at 10:16 AM BST, Oleg Sevostyanov wrote:
+> Thank you for the comments.
+>
+> You are right about the reproducer. I mistakenly included it despite sayi=
+ng
+> that I was not including it. I apologize for the inconsistency.
 
-There is a double-free flaw in the ALSA USB MIDI driver:
+This reads like AI. Given the original mistake in publicly submitting=20
+a PoC when you intended not to, I have to ask: is a human properly=20
+checking the contents of the emails you are sending?
 
-> The 'umidi' object will be free'd on the error path by snd_usbmidi_free()
-> when tearing down the rawmidi interface. So we shouldn't try to free it
-> in snd_usbmidi_create() after having registered the rawmidi interface.
+> I also agree that taking lock_sock(sk) earlier in tls_sk_proto_close()=20
+> looks
+> like the natural mitigation direction, given that the function takes it
+> unconditionally anyway. I will bring this point to the kernel/networking
+> maintainers when discussing a fix.
 
-This was fixed in https://git.kernel.org/linus/07d86ca93db7e5cdf4743564d98292042ec21af7
+Can you clarify if this has been raised on the appropriate kernel=20
+mailing lists? I do not see it in your timeline:
 
-https://lkml.org/lkml/2016/2/13/11
+On Tues Jun 2, 2026 at 20:59 AM BST, Oleg Sevostyanov wrote:
+> Timeline:
+> 2026-05-16: Reported to linux-distros
+> 2026-05-30: Latest agreed public disclosure date
+> 2026-06-02: Public disclosure to oss-security
 
-Could you assign a CVE for this issue?
-
-Regards,
-Salvatore
+Emily
