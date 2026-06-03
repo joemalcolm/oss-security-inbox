@@ -1,4 +1,4 @@
-Received: (qmail 21902 invoked by uid 550); 19 Feb 2026 01:15:03 -0000
+Received: (qmail 3196 invoked by uid 550); 3 Jun 2026 16:51:55 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,168 +8,305 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 20076 invoked from network); 19 Feb 2026 01:14:49 -0000
-Date: Thu, 19 Feb 2026 02:14:38 +0100
-From: Solar Designer <solar@openwall.com>
+Received: (qmail 11698 invoked from network); 3 Jun 2026 16:30:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780504233; x=1781109033; darn=lists.openwall.com;
+        h=autocrypt:subject:to:content-language:from:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=09E2zwQ2GRC5HcE91Atbxi3Wf9WHivzGjPjzlzCNZz8=;
+        b=mWnJHJ7G6ZW139nOg0JvTLSwqFfB96EaOidwgR7WZCc7r8QsrxI8Y2ESqBqjtHxgHC
+         L80N+CNAAGje63MGo0zIsnXe+aRY4LffSKy4FeTchSlgFjN5NsKia1jFwa3sbKklegEl
+         UnempK3T9+4vhyWbvN9EyBwk6+QsC4iQGSxFogy2+8SGaRBL401y9lLDJrTEe71UcS3Z
+         zz18hSNn6k3X3AeXH1YoI2HPLEc9uxILL8Q4PuCqt+94z+i/VKl6sr3C75r/PKuU4vVO
+         nThFm2EbZxaGTWiKid1A633BxokTczjPGzdxxQPkibTimEHS0pC6uap+eRc9kAZa6rCW
+         FGWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780504233; x=1781109033;
+        h=autocrypt:subject:to:content-language:from:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=09E2zwQ2GRC5HcE91Atbxi3Wf9WHivzGjPjzlzCNZz8=;
+        b=CtL23fYotlnlKbPBghJBILAmT2/r0/5mDw/2J77P9AiX7TQexBz2xRc0k6dD4n6c0/
+         yltQ4OlpKTQs2A2YreFfj2sg6GK9A1Etbo5WUeJ/H1yQ7ipzUWBXAX2VOPLx/78Sb1bC
+         Vw1PIXrj4oUVirnjmKxQKGMyUGW8Zlk0YmQLRqTbtm795wz1MMOVxgGV3bIVjO6YE9RT
+         aMPshpJSMKarkPuxLqpa74tbiaa0aGnhwQBKoEIxUZOargtLpw53R1VsedIHPKdfzsbI
+         EDsnpIdcI9ngHmJohjtnbmKaWgo+UCkxjDcDeilmm/IUVtJ3X7f2AeDiI38wiA3DZEMs
+         nZLg==
+X-Gm-Message-State: AOJu0Yz3nroh0bEJGYm7XTmZHDS9X8CiSGbMHuqhcSjEZdT/d3xLE6Fh
+	XvH69ey9+V4kVi9tF5aBdtrn2622/pHzejVYxjBH93FG181i9+2YwMJVmvSqRg==
+X-Gm-Gg: Acq92OF28kbttG/Y5izTWmWW5GT0qRgH6vK8KkIQxLTCyGI3t0Dyyb8MfCr9v6S+UCB
+	b6Jts2ZQCNy5ZnzE2HtHTtjxPx+kPjqyQ/6g9ovpI3MBEuV4GmYOT5/xWF0q5248bc51IavzuSi
+	E/sKuL1v+N/ve9g/VlbphCpFKsK9IXg0X2JWpwIgdeSZSD2jRkqazpKolTh3ngasRID01bB6KUl
+	eEBjrSEWn45jqKmH0Eq12e2Xh+j/iL4q4BNz84RFwkqRmpRRk1SbLfSW+ZSUWINFCTWESfVxvRT
+	8VG4BozplS8KLoh7jw1YKUuQ1Bl7AoRwpXHVRLstox5nU6+kAJYx7tInq1UQFq+tvzKXcrTQ8w+
+	nJeCKa+Ykq4OFRAk68Crz809R3V3QwWh+4FcfcVDKJiNV6BZDdkYAtIpeudvwFoaJnW02cEftR4
+	pces1V70014OV+9SryzIFg5gTzyeadF6kKksSmCfWdqGBBbKmwBtuSTW9rD3ONtIjbZNPxuyZ7v
+	yRotYxL4cHr0d3n1UH1
+X-Received: by 2002:a05:6a21:4d17:b0:3b1:a9ce:507e with SMTP id adf61e73a8af0-3b49763b321mr4387327637.32.1780504233206;
+        Wed, 03 Jun 2026 09:30:33 -0700 (PDT)
+Message-ID: <7b4285aa-f28b-4dc8-9d70-d34eeb19977e@gmail.com>
+Date: Wed, 3 Jun 2026 09:30:31 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Content-Language: en-US
 To: oss-security@lists.openwall.com
-Cc: Raul Vega <raul.vega.dv@gmail.com>
-Message-ID: <20260219011438.GA17271@openwall.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
-Subject: [oss-security] MIT/Heimdal Kerberos credentials cache type FILE risks
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtqV1s3x8C7
+ GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8eBByL3sNRR3RHovA
+ VpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSbSptiPPOkncn/i10uGAIHN884
+ Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtDxDG6wKf8VcFg538a8deJsPUNONrdOYwj
+ H4xAYao5yrktALQC2zEbHLmNZnFRHJ6zGs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW
+ 0L6QwKh0n2grWs264dD5bV/rPIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7d
+ iXOa+YvWehaE4ItoNd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI
+ 4R2iRSSgHuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ
+ dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q5J/H6xHV
+ hANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQABzStHb3V0aGFtIFBh
+ Y2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGzBBMBCABdFiEEwo5Vl+U+phfa
+ PpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFudTIsMi41KzEuMTIsMCwzAhsDBQkDwmcA
+ BQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvi
+ oUeyBJp1GnGN1lcXNQYIFOB+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3
+ AJOQGE1YMTToxdxiOCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2
+ FWSSGd7KrY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6
+ U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF97dBu2FR
+ 8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4pl6EeSGz0Xp6LXD6Y
+ uwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdglMNGFnf++euaQBqfQT9W6mQqF
+ GQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8vrnSGUFfW31PGJ/SVV3nJtWoygToacNz
+ wUUwT3Y8VWFcfypC9hI856BDlvOlb7X0JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi
+ 4M423ThAByjERzYoGPmb/mJFtcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTI
+ L2w6TppylLJTi1jIyNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uE
+ LMCV+Sy8Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk
+ 6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15lezk3HOnJ
+ axKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcyhpxihTZFyKhGkKSu
+ 2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5jDKWamnlrjbxllI77c9+fvp2l
+ kt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77gfIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdc
+ na7eyw+zTXrl6Grjj6P0olrBCzvwvFex3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ0
+ 3EVS+IxOlaExiF/wIm7S7VgHZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5k
+ NwAoB0+izqOD9Cy/syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lv
+ Le6Yn3avy8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR
+ AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu
+ dTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPEjSFIH4HYoEsBE2wB
+ iJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ/4iGlBvdYn7rwB1Yb2/LIO5P
+ csc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WM
+ BR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKY
+ BLHyNNATkl97VdAUgaFE28Q4Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBL
+ d7HqyjXY7tG7pPnP4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqme
+ jykliW+T6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI
+ 81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNAWNzZu3qe
+ BJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPcnV7MQp38mYdfj9T1
+ t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe+qGYa3LmV2soXmdh0GFZ5KFj
+ VYvdtAgTRIrQIz/K
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------zgNh2oX2l04fN7JmOPy8e8ia"
+Subject: [oss-security] [OSSA-2026-020] OpenStack Mistral: Mistral policy enforcement bypass
+ allows unauthorized public resource creation and arbitrary code execution
+ (CVE-2026-41283)
 
-Hi,
+--------------zgNh2oX2l04fN7JmOPy8e8ia
+Content-Type: multipart/mixed; boundary="------------dofULv8UqBteIBB5SGC912fx";
+ protected-headers="v1"; hp="clear"
+Message-ID: <7b4285aa-f28b-4dc8-9d70-d34eeb19977e@gmail.com>
+Date: Wed, 3 Jun 2026 09:30:31 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+Subject: [OSSA-2026-020] OpenStack Mistral: Mistral policy enforcement bypass
+ allows unauthorized public resource creation and arbitrary code execution
+ (CVE-2026-41283)
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtqV1s3x8C7
+ GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8eBByL3sNRR3RHovA
+ VpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSbSptiPPOkncn/i10uGAIHN884
+ Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtDxDG6wKf8VcFg538a8deJsPUNONrdOYwj
+ H4xAYao5yrktALQC2zEbHLmNZnFRHJ6zGs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW
+ 0L6QwKh0n2grWs264dD5bV/rPIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7d
+ iXOa+YvWehaE4ItoNd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI
+ 4R2iRSSgHuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ
+ dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q5J/H6xHV
+ hANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQABzStHb3V0aGFtIFBh
+ Y2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGzBBMBCABdFiEEwo5Vl+U+phfa
+ PpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFudTIsMi41KzEuMTIsMCwzAhsDBQkDwmcA
+ BQsJCAcCAiICBhUKCQgLAgQWAgMBAh4HAheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvi
+ oUeyBJp1GnGN1lcXNQYIFOB+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3
+ AJOQGE1YMTToxdxiOCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2
+ FWSSGd7KrY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6
+ U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF97dBu2FR
+ 8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4pl6EeSGz0Xp6LXD6Y
+ uwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdglMNGFnf++euaQBqfQT9W6mQqF
+ GQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8vrnSGUFfW31PGJ/SVV3nJtWoygToacNz
+ wUUwT3Y8VWFcfypC9hI856BDlvOlb7X0JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi
+ 4M423ThAByjERzYoGPmb/mJFtcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTI
+ L2w6TppylLJTi1jIyNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uE
+ LMCV+Sy8Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk
+ 6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15lezk3HOnJ
+ axKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcyhpxihTZFyKhGkKSu
+ 2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5jDKWamnlrjbxllI77c9+fvp2l
+ kt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77gfIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdc
+ na7eyw+zTXrl6Grjj6P0olrBCzvwvFex3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ0
+ 3EVS+IxOlaExiF/wIm7S7VgHZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5k
+ NwAoB0+izqOD9Cy/syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lv
+ Le6Yn3avy8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR
+ AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu
+ dTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPEjSFIH4HYoEsBE2wB
+ iJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ/4iGlBvdYn7rwB1Yb2/LIO5P
+ csc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WM
+ BR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKY
+ BLHyNNATkl97VdAUgaFE28Q4Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBL
+ d7HqyjXY7tG7pPnP4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqme
+ jykliW+T6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI
+ 81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNAWNzZu3qe
+ BJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPcnV7MQp38mYdfj9T1
+ t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe+qGYa3LmV2soXmdh0GFZ5KFj
+ VYvdtAgTRIrQIz/K
 
-Raul Vega, CC'ed here, sent the below AI-generated message to
-linux-distros on Feb 5, without disclosing the use of AI, yet correctly
-set the public disclosure date to "2026-02-18 (14-day embargo per
-linux-distros policy)" (or maybe the AI assistant did).  Unfortunately,
-there was no further correspondence (in particular, I got no reply to my
-reply, also included below), and Raul failed to bring this to
-oss-security on time on his own, so I am now doing it for him.  And yes,
-I consider this borderline abuse of the list, which is why my tone.
+--------------dofULv8UqBteIBB5SGC912fx
+Content-Type: multipart/mixed; boundary="------------XCC0ooc92pbNve2cDYjhdaP2"
 
-My summary of Raul AI's message is that Kerberos default_ccache_name
-FILE is relatively unsafe compared to certain other possible kinds of
-credentials cache supported via this setting, especially with respect to
-local file inclusion vulnerabilities in other software such as web apps
-running under the same user account.  The message suggests to use
-KEYRING or KCM instead of FILE.
+--------------XCC0ooc92pbNve2cDYjhdaP2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-https://web.mit.edu/kerberos/krb5-1.22/doc/basic/ccache_def.html says
-FILE is the default.  So it may be a case of unsafe default.  Can the
-default reasonably be changed?  "KCM caches work by contacting a daemon
-process", so will require this daemon to be running, and "KEYRING is
-Linux-specific, and uses the kernel keyring support".  So maybe Linux
-packages can use KEYRING by default?
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT0NCk9TU0EtMjAyNi0wMjA6IE1pc3RyYWwgcG9saWN5IGVuZm9yY2VtZW50IGJ5cGFz
+cyBhbGxvd3MgdW5hdXRob3JpemVkIA0KcHVibGljIHJlc291cmNlIGNyZWF0aW9uIGFuZCBhcmJp
+dHJhcnkgY29kZSBleGVjdXRpb24NCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQoNCjpEYXRlOiBKdW5lIDAzLCAyMDI2DQo6
+Q1ZFOiBDVkUtMjAyNi00MTI4Mw0KDQoNCkFmZmVjdHMNCn5+fn5+fn4NCi0gTWlzdHJhbDogPj0y
+MC4wLjAgPDIwLjEuMSwgPT0yMS4wLjAsID09MjIuMC4wDQoNCg0KRGVzY3JpcHRpb24NCn5+fn5+
+fn5+fn5+DQpFZHVhcmRvIEdvbnphbGV6IEd1dGllcnJleiBhbmQgQXJuYXVkIE1vcmluIChPVkhj
+bG91ZCkgcmVwb3J0ZWQgdGhhdCANCnNldmVyYWwgTWlzdHJhbCBBUEkgZW5kcG9pbnRzIGRvIG5v
+dCBlbmZvcmNlIGFjY2VzcyBwb2xpY2llcywgYWxsb3dpbmcgDQphbnkgYXV0aGVudGljYXRlZCB1
+c2VyIHRvIGNyZWF0ZSBwdWJsaWMgcmVzb3VyY2VzIGFuZCB1cGxvYWQgYXJiaXRyYXJ5IA0KY29k
+ZSB0aGF0IGV4ZWN1dGVzIG9uIE1pc3RyYWwgZXhlY3V0b3Igd29ya2Vycy4gQW4gYXR0YWNrZXIg
+Y291bGQgDQpleHRyYWN0IHNlbnNpdGl2ZSBkYXRhIGluY2x1ZGluZyBzZXJ2aWNlIGNyZWRlbnRp
+YWxzIGZyb20gdGhlIHdvcmtlci4gDQpEZXBsb3ltZW50cyBleHBvc2luZyB0aGUgTWlzdHJhbCBB
+UEkgYXJlIGFmZmVjdGVkLg0KDQoNCg0KUGF0Y2hlcw0Kfn5+fn5+fg0KLSBodHRwczovL3Jldmll
+dy5vcGVuZGV2Lm9yZy85OTE0MTYgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3Bl
+bmRldi5vcmcvOTkxNDE3ICgyMDI1LjEvZXBveHkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYu
+b3JnLzk5MTQxOCAoMjAyNS4xL2Vwb3h5KQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85
+OTE0MTkgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkxNDIw
+ICgyMDI1LjEvZXBveHkpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MTQyMSAoMjAy
+NS4xL2Vwb3h5KQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTE0MjIgKDIwMjUuMS9l
+cG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkxNDIzICgyMDI1LjEvZXBveHkp
+DQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MTQwOCAoMjAyNS4yL2ZsYW1pbmdvKQ0K
+LSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTE0MDkgKDIwMjUuMi9mbGFtaW5nbykNCi0g
+aHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkxNDEwICgyMDI1LjIvZmxhbWluZ28pDQotIGh0
+dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MTQxMSAoMjAyNS4yL2ZsYW1pbmdvKQ0KLSBodHRw
+czovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTE0MTIgKDIwMjUuMi9mbGFtaW5nbykNCi0gaHR0cHM6
+Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkxNDEzICgyMDI1LjIvZmxhbWluZ28pDQotIGh0dHBzOi8v
+cmV2aWV3Lm9wZW5kZXYub3JnLzk5MTQxNCAoMjAyNS4yL2ZsYW1pbmdvKQ0KLSBodHRwczovL3Jl
+dmlldy5vcGVuZGV2Lm9yZy85OTE0MTUgKDIwMjUuMi9mbGFtaW5nbykNCi0gaHR0cHM6Ly9yZXZp
+ZXcub3BlbmRldi5vcmcvOTkxNDAwICgyMDI2LjEvZ2F6cGFjaG8pDQotIGh0dHBzOi8vcmV2aWV3
+Lm9wZW5kZXYub3JnLzk5MTQwMSAoMjAyNi4xL2dhenBhY2hvKQ0KLSBodHRwczovL3Jldmlldy5v
+cGVuZGV2Lm9yZy85OTE0MDIgKDIwMjYuMS9nYXpwYWNobykNCi0gaHR0cHM6Ly9yZXZpZXcub3Bl
+bmRldi5vcmcvOTkxNDAzICgyMDI2LjEvZ2F6cGFjaG8pDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5k
+ZXYub3JnLzk5MTQwNCAoMjAyNi4xL2dhenBhY2hvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2
+Lm9yZy85OTE0MDUgKDIwMjYuMS9nYXpwYWNobykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5v
+cmcvOTkxNDA2ICgyMDI2LjEvZ2F6cGFjaG8pDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3Jn
+Lzk5MTQwNyAoMjAyNi4xL2dhenBhY2hvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85
+OTEzOTIgKDIwMjYuMi9oaWJpc2N1cykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkx
+MzkzICgyMDI2LjIvaGliaXNjdXMpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MTM5
+NCAoMjAyNi4yL2hpYmlzY3VzKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTEzOTUg
+KDIwMjYuMi9oaWJpc2N1cykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkxMzk2ICgy
+MDI2LjIvaGliaXNjdXMpDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MTM5NyAoMjAy
+Ni4yL2hpYmlzY3VzKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTEzOTggKDIwMjYu
+Mi9oaWJpc2N1cykNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkxMzk5ICgyMDI2LjIv
+aGliaXNjdXMpDQoNCg0KQ3JlZGl0cw0Kfn5+fn5+fg0KLSBFZHVhcmRvIEdvbnphbGV6IEd1dGll
+cnJleiBmcm9tIEluZGVwZW5kZW50IChDVkUtMjAyNi00MTI4MykNCi0gQXJuYXVkIE1vcmluIGZy
+b20gT1ZIY2xvdWQgKENWRS0yMDI2LTQxMjgzKQ0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+fn4N
+Ci0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1Z3MvMjE0NzE3OA0KLSBodHRwOi8vY3ZlLm1pdHJl
+Lm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjYtNDEyODMNCg0KLS0NCkdvdXRo
+YW0gUGFjaGEgUmF2aQ0KT3BlblN0YWNrIFZ1bG5lcmFiaWxpdHkgTWFuYWdlbWVudCBUZWFtDQpo
+dHRwczovL3NlY3VyaXR5Lm9wZW5zdGFjay5vcmcvdm10Lmh0bWwNCg==
 
-In Heimdal, this setting is called default_cc_name, apparently with
-default_ccache_name added as an alias for MIT compatibility a few years
-ago.  I couldn't quickly find what the default for it is.
+--------------XCC0ooc92pbNve2cDYjhdaP2
+Content-Type: application/pgp-keys; name="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-BTW, if this actually required pre-publication discussion, I'd have
-insisted on bringing it from linux-distros to the full distros list,
-since Kerberos is not Linux-specific (and predates Linux).
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtq=0A=
+V1s3x8C7GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8=0A=
+eBByL3sNRR3RHovAVpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSb=0A=
+SptiPPOkncn/i10uGAIHN884Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtD=0A=
+xDG6wKf8VcFg538a8deJsPUNONrdOYwjH4xAYao5yrktALQC2zEbHLmNZnFRHJ6z=0A=
+Gs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW0L6QwKh0n2grWs264dD5bV/r=0A=
+PIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7diXOa+YvWehaE4Ito=0A=
+Nd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI4R2iRSSg=0A=
+HuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ=0A=
+dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q=0A=
+5J/H6xHVhANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQAB=0A=
+zStHb3V0aGFtIFBhY2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGz=0A=
+BBMBCABdFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu=0A=
+dTIsMi41KzEuMTIsMCwzAhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H=0A=
+AheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvioUeyBJp1GnGN1lcXNQYIFOB+=0A=
+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3AJOQGE1YMTToxdxi=0A=
+OCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2FWSSGd7K=0A=
+rY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6=0A=
+U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF=0A=
+97dBu2FR8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4p=0A=
+l6EeSGz0Xp6LXD6YuwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdgl=0A=
+MNGFnf++euaQBqfQT9W6mQqFGQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8=0A=
+vrnSGUFfW31PGJ/SVV3nJtWoygToacNzwUUwT3Y8VWFcfypC9hI856BDlvOlb7X0=0A=
+JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi4M423ThAByjERzYoGPmb/mJF=0A=
+tcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTIL2w6TppylLJTi1jI=0A=
+yNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uELMCV+Sy8=0A=
+Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk=0A=
+6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15l=0A=
+ezk3HOnJaxKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcy=0A=
+hpxihTZFyKhGkKSu2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5j=0A=
+DKWamnlrjbxllI77c9+fvp2lkt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77g=0A=
+fIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdcna7eyw+zTXrl6Grjj6P0olrBCzvwvFex=0A=
+3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ03EVS+IxOlaExiF/wIm7S7VgH=0A=
+ZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5kNwAoB0+izqOD9Cy/=0A=
+syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lvLe6Yn3av=0A=
+y8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR=0A=
+AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAA=0A=
+BAAObWFudTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPE=0A=
+jSFIH4HYoEsBE2wBiJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ=0A=
+/4iGlBvdYn7rwB1Yb2/LIO5Pcsc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV=0A=
+7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WMBR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/=0A=
+H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKYBLHyNNATkl97VdAUgaFE28Q4=0A=
+Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBLd7HqyjXY7tG7pPnP=0A=
+4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqmejykliW+T=0A=
+6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI=0A=
+81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNA=0A=
+WNzZu3qeBJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPc=0A=
+nV7MQp38mYdfj9T1t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe=0A=
++qGYa3LmV2soXmdh0GFZ5KFjVYvdtAgTRIrQIz/K=0A=
+=3Drf4K=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
 
-I'd appreciate follow-ups by those familiar with Kerberos (I'm not)
-and/or its packaging.
+--------------XCC0ooc92pbNve2cDYjhdaP2--
 
-Alexander
+--------------dofULv8UqBteIBB5SGC912fx--
 
-On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
-> [vs] ADV-2026-005: Kerberos Credential Cache Lifecycle Failure and Bearer Token Theft
-> Vulnerability Type: Semantic Design Flaw / Credential Dumping
-> 
-> Affected Components: MIT/Heimdal Kerberos, Linux Core Dump Handlers, /tmp Defaults
-> 
-> Researcher: Raul Vega del Valle
-> 
-> CVSS 3.1 Base: 7.8 (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H)
-> 
-> CVSS 3.1 Chain: 10.0 (Critical) (When chained with RCE/LFI)
-> 
-> Public Disclosure Date: 2026-02-18 (14-day embargo per linux-distros policy)
-> 
-> Executive Summary: The Semantic Gap
-> The core of this vulnerability is a semantic failure in object lifecycle management. While the Kerberos protocol is syntactically secure, current Linux implementations fail to semantically bound the identity token (bearer ticket) to the process lifetime.
-> 
-> By weaponizing the "Crash and Trash" scenario, an attacker can transform a transient authentication secret into a persistent forensic artifact. This allows an unprivileged local attacker???or a remote attacker via an RCE/LFI chain???to bypass Kerberos protocol guarantees and achieve complete network-wide identity theft.
-> 
-> Technical Analysis
-> 1. File-System Persistence Vector
-> Most Linux distributions default to the FILE: ccache type, storing tickets in /tmp/krb5cc_*.
-> 
-> The Design Flaw: These tickets are bearer tokens. Possession of the file is equivalent to possession of the identity.
-> 
-> Exploitation: An LFI (Local File Inclusion) vulnerability in a web application can be used to "pull the trash" from /tmp, granting the attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
-> 
-> 2. Memory Lifecycle Failure (Crash and Trash)
-> When an application handling Kerberos authentication crashes, the system generates a core dump (if enabled).
-> 
-> The Semantic Gap: The credential remains in the heap or stack during the crash. Because many distributions do not restrict access to core dumps or leave them in unencrypted storage, these secrets become "trash" that is readily harvestable via standard string extraction.
-> 
-> Impact: This bridges the gap from a simple application crash (Availability) to a full authentication bypass (Confidentiality/Integrity).
-> 
-> The Grand Chain: The Case for CVSS 10.0
-> While the individual components may be rated "High," the Semantic Addressing of this flaw creates a critical chain:
-> 
-> Entry (RCE/LFI): Attacker gains limited execution or read access via a library flaw (e.g., Axios SSRF or Undici CRLF).
-> 
-> Pivot (ADV-2026-005): Attacker provokes a crash or reads /tmp to dump the Kerberos ccache.
-> 
-> Escalation: The stolen ticket is replayed from the attacker's machine to access internal high-value targets (LDAP, S3 via IMDSv2, etc.).
-> 
-> Result: Total identity takeover across the infrastructure without triggering traditional "credential theft" alerts.
-> 
-> Actionable Remediations for Distributions
-> Distributions are requested to evaluate the following systemic changes to their default configurations:
-> 
-> Restrict core_pattern: Ensure core dumps are directed to a secure, root-only directory by default.
-> 
-> Default to KEYRING:: Shift the default default_ccache_name in /etc/krb5.conf from FILE to KEYRING or KCM (Kerberos Credential Manager) to keep tickets in unswappable, process-bound kernel memory.
-> 
-> Enforce fs.suid_dumpable: Harden kernel parameters to prevent unprivileged dumping of sensitive processes.
-> 
-> Researcher: Raul Vega del Valle
-> 
-> PGP Fingerprint: [Your Fingerprint]
+--------------zgNh2oX2l04fN7JmOPy8e8ia
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
-On Fri, Feb 06, 2026 at 10:06:18AM +0100, Solar Designer wrote:
-> Hello Raul,
-> 
-> When you bring this to oss-security, please start by disclosing your use
-> of AI to generate your message.  Yes, there's a reason why I am so
-> confident, and I find it borderline abuse when you send AI-generated
-> messages without such disclosure.  This is not the norm, at least not yet.
-> 
-> On Thu, Feb 05, 2026 at 10:24:03AM +0100, Raul Vega wrote:
-> > Public Disclosure Date: 2026-02-18 (14-day embargo per linux-distros policy)
-> 
-> This is up to you, but personally and as linux-distros list admin I do
-> not see the value in having this information under embargo.  You could
-> as well post this to oss-security right away.  Just let us know of your
-> decision on this.
-> 
-> What you describe reads like publicly known behavior of the software in
-> question.  The novelty, if any, may be in combining those pieces into an
-> attack, yet this sounds like public discussion material to me.
-> 
-> > Technical Analysis
-> > 1. File-System Persistence Vector
-> > Most Linux distributions default to the FILE: ccache type, storing tickets in /tmp/krb5cc_*.
-> 
-> What are the owners and permissions of those files?
-> 
-> > Exploitation: An LFI (Local File Inclusion) vulnerability in a web application can be used to "pull the trash" from /tmp, granting the attacker a valid TGT (Ticket Granting Ticket) with a ~10-hour TTL.
-> 
-> Would a web application have permissions to read the /tmp/krb5cc_* files?
-> 
-> > Because many distributions do not restrict access to core dumps
-> 
-> Which ones, for example?  And what do you mean by "do not restrict"?
-> 
-> > Actionable Remediations for Distributions
-> > Distributions are requested to evaluate the following systemic changes to their default configurations:
-> > 
-> > Restrict core_pattern: Ensure core dumps are directed to a secure, root-only directory by default.
-> 
-> This is typical already.  However, you can commonly access your own
-> coredumps.  Same with your own /tmp files.
-> 
-> So are you talking about potential restrictions within the same user
-> account, so that sensitive information processed and available to the
-> user previously does not remain available to the user for too long?
-> 
-> How exactly does fs.suid_dumpable come into play, then?  In other words,
-> do your suggested attacks involve processes that are "dumpable" or/and
-> those that are not?  Which ones?  Please be very specific.
-> 
-> I suggest that you clarify the above things in the public revision of
-> your advisory.  As it is, it reads like a mix of sensible content with
-> everything else an LLM "thought" is relevant, plus the sensationalism.
-> 
-> Thanks,
-> 
-> Alexander
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmogVqcFAwAAAAAACgkQBjja07gsOYjB
+hw/+LbTi0uxt4CLu+6I39HfkToDH3KOMgOIVg4ujHFxWyosrPOgpDz0qc5j6lQAHNy1Vh9d/OPla
+1P4vhnhDVwCl8jv786uY/DkDakTZzorQKVJh70+VwwU6P2O9wCPgyPw0mo/nDvm3fYpy5NRI7pYV
+QnWOsahFzhFgtqHAQwy2JzzCvcsRgZMF03dRNDQe+qNsr35Mr33HvUpMVQLySdwZLFLfjPqgfqM4
+JddR0acWh149N1wbxByJgqpCOhPgBihJpRvJoew8VT/d4hjFTmor07NV0dvxn7V3JF16EYERZs3X
+Zk0Lc9p81hICURiE0/k/+/6DiAzy1zvgSCLT44FOlsblivaqdAS+GCzzvXxqcVxJjxiZn/TGtel9
+Thgw2V98HXYtnNORtK3siXjMs4twLaMnufZF98JZjBEoXvFIqUKOoLk7O3+N1MN4Q6gSqivV1Z6D
+xZt8IOPbJeD2TusSMCwyZPhbQKMDAd9A5CQomheRx9P/ftbOGTpLtWouNNGTOMphJTR2cq8HC4jj
+PYckUK+/a0OIYIpE81Z5Um5mx7Ev36gMNgmfM8xdFuUGs7R7VTSjTcnVlpjsQOEY0snO/eF9BhWE
+niaFcbibwr37oe/ShPgJ5eNpf6bl/MDdyeV/OA7NlZXA0qN9FzT8yhd93XEfx01tnrTQAj4p7z0X
+vSU=
+=1V7j
+-----END PGP SIGNATURE-----
+
+--------------zgNh2oX2l04fN7JmOPy8e8ia--
