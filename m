@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1682" "Tuesday" "28" "August" "2018" "08:27:50" "+0000" "=?gb2312?B?emhyemhhbmco?==?gb2312?B?1cU=?==?gb2312?B?uunuoyk=?=" "zhrzhang@tencent.com" "<FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799@EXMBX-TJ008.tencent.com>" "31" "[oss-security] Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down" "^Date:" nil nil "8" "2018082808:27:50" "[oss-security] Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down" (number mark "U       zhrzhang@ten Aug 28   31/1682  " thread-indent "\"[oss-security] Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 13728 invoked by uid 550); 28 Aug 2018 08:48:53 -0000
+Received: (qmail 23821 invoked by uid 550); 4 Jun 2026 22:53:34 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,52 +6,81 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 32092 invoked from network); 28 Aug 2018 08:28:25 -0000
-Thread-Topic: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down
-Thread-Index: AdQ+p2JbXpOTKNh+TqCMPiAo9yZDtg==
-Message-ID: <FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799@EXMBX-TJ008.tencent.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-originating-ip: [10.72.13.52]
-Content-Type: multipart/alternative;
-	boundary="_000_FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799EXMBXTJ008tence_"
-MIME-Version: 1.0
-Date: Tue, 28 Aug 2018 08:27:50 +0000
-From: =?gb2312?B?emhyemhhbmco1cW66e6jKQ==?= <zhrzhang@tencent.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] Linux kernel: FS_IOC_FSSETXATTR will lead to EXT4-fs shut down
-To: oss-security <oss-security@lists.openwall.com>
+x-ms-reactions: disallow
+Received: (qmail 3345 invoked from network); 4 Jun 2026 21:18:02 -0000
+Date: Thu, 4 Jun 2026 23:17:51 +0200
+From: Christian Brabandt <cb@256bit.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aiHrf7gTq2gMr2Wy@256bit.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: cb@256bit.org
+X-SA-Exim-Scanned: No (on 256bit.org); SAEximRunCond expanded to false
+Subject: [oss-security] [vim-security] Arbitrary Code Execution via Python Omni-Completion
+ in Vim < 9.2.597
 
---_000_FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799EXMBXTJ008tence_
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Arbitrary Code Execution via Python Omni-Completion in Vim < 9.2.597
+====================================================================
 
-SGVsbG+jug0KICAgICAgICB3aGVuIEkgZnV6eqOsSSBmb3VuZCB0aGUga2Vy
-bmVsIHdpbGwgYWx3YXlzIG5vIG91dHB1dCBmcm9tIG1hY2hpbmUsIGFuZCBl
-cnJvciBGU19JT0NfRlNTRVRYQVRUUiBjb250cmlidXRlIHRvIHRoaXMuDQoN
-CiAgICAgICAgdGhlIHN5emxvZyBpcyBhcyBiZWxvdzoNCg0KcjAgPSBjcmVh
-dCgmKDB4N2YwMDAwMDAwMTQwKT0nLi9maWxlMFx4MDAnLCAweDApDQppb2N0
-bCRGU19JT0NfRlNTRVRYQVRUUihyMCwgMHg4MDA0NTg3ZCwgJigweDdmMDAw
-MDAwMDA4MCk9ezB4MCwgMHgwLCAweDAsIDB4OH0pDQoNCiAgICAgICAgdGhl
-IHBvYyB3aWxsIHNob3cgbGlrZSB0aGlzOg0KDQojZGVmaW5lIF9HTlVfU09V
-UkNFDQoNCiNpbmNsdWRlIDxlbmRpYW4uaD4NCiNpbmNsdWRlIDxzdGRpbnQu
-aD4NCiNpbmNsdWRlIDxzdGRpby5oPg0KI2luY2x1ZGUgPHN0ZGxpYi5oPg0K
-I2luY2x1ZGUgPHN0cmluZy5oPg0KI2luY2x1ZGUgPHN5cy9zeXNjYWxsLmg+
-DQojaW5jbHVkZSA8c3lzL3R5cGVzLmg+DQojaW5jbHVkZSA8dW5pc3RkLmg+
-DQoNCnVpbnQ2NF90IHJbMV0gPSB7MHhmZmZmZmZmZmZmZmZmZmZmfTsNCg0K
-aW50IG1haW4odm9pZCkNCnsNCnN5c2NhbGwoX19OUl9tbWFwLCAweDIwMDAw
-MDAwLCAweDEwMDAwMDAsIDMsIDB4MzIsIC0xLCAwKTsNCmxvbmcgcmVzID0g
-MDsNCm1lbWNweSgodm9pZCopMHgyMDAwMDE0MCwgIi4vZmlsZTAiLCA4KTsN
-CnJlcyA9IHN5c2NhbGwoX19OUl9jcmVhdCwgMHgyMDAwMDE0MCwgMCk7DQpp
-ZiAocmVzICE9IC0xKQ0KclswXSA9IHJlczsNCioodWludDMyX3QqKTB4MjAw
-MDAwODAgPSAwOw0KKih1aW50MzJfdCopMHgyMDAwMDA4NCA9IDA7DQoqKHVp
-bnQzMl90KikweDIwMDAwMDg4ID0gMDsNCioodWludDMyX3QqKTB4MjAwMDAw
-OGMgPSA4Ow0KKih1aW50MzJfdCopMHgyMDAwMDA5MCA9IDA7DQoqKHVpbnQ2
-NF90KikweDIwMDAwMDk4ID0gMDsNCnN5c2NhbGwoX19OUl9pb2N0bCwgclsw
-XSwgMHg4MDA0NTg3ZCwgMHgyMDAwMDA4MCk7DQpyZXR1cm4gMDsNCn0NCl9f
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fDQp6aHJ6aGFuZyjVxbrp
-7qMpDQo=
+Date: 2026-06-04
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Control of Generation of Code (CWE-94)
 
---_000_FDE8244F9EEE7E4F8308F32BD3BEDF01BF9E4799EXMBXTJ008tence_--
+## Summary
+
+Vim's Python omni-completion executes reconstructed function and class
+definitions from the current buffer with `exec()` as part of populating
+the completion dictionary. Python evaluates function default values,
+parameter annotations, and class base expressions at definition time,
+so a hostile buffer can execute attacker-controlled Python expressions
+during omni-completion. The existing `g:pythoncomplete_allow_import`
+mitigation (GHSA-52mc-rq6p-rc7c) does not cover this path, because the
+attacker-controlled code is not a harvested `import`/`from` statement.
+
+## Description
+
+In `runtime/autoload/python3complete.vim` (and the legacy
+`pythoncomplete.vim`), the omni-completion entry point calls
+`exec(src, self.compldict)` on source reconstructed from the parsed
+buffer. The reconstructed source includes function definitions whose
+parameter lists are joined verbatim from tokens harvested by the
+internal `_parenparse()` helper, which preserves default expressions
+and annotations as written in the buffer. The same applies to class
+base lists. When `exec()` runs the reconstructed `def` and `class`
+statements, Python evaluates those expressions.
+
+## Impact
+
+An attacker who can convince a user to open or edit a hostile Python
+buffer and trigger Python omni-completion (CTRL-X CTRL-O, or a plugin
+that invokes the completion function) can execute Python code in the
+user's Vim process. The code runs with the user's privileges.
+
+Vim built without `+python3` and `+python` is not affected. Triggering
+omni-completion in the hostile buffer is required; opening the file
+alone is not sufficient.
+
+## Acknowledgements
+
+The Vim project would like to thank github user DavidCarliez for
+reporting and analyzing the issue.
+
+## References
+
+The issue has been fixed as of Vim patch [v9.2.597](https://github.com/vim/vim/releases/tag/v9.2.0597).
+- [Commit](https://github.com/vim/vim/commit/c8c63673bc4253212820626aeeb75999d9a539d2)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-65p9-mwwx-7468)
+- [Github Security Advisory GHSA-52mc-rq6p-rc7c](https://github.com/vim/vim/security/advisories/GHSA-52mc-rq6p-rc7c)
+  (prior mitigation for the same surface)
+
+
+
+Thanks,
+Christian
+-- 
+Erfolg ist die Kunst, Fehler zu machen, die kein anderer bemerkt.
+		-- Martin Jente
