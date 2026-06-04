@@ -1,4 +1,4 @@
-Received: (qmail 16158 invoked by uid 550); 20 May 2026 13:56:59 -0000
+Received: (qmail 20076 invoked by uid 550); 4 Jun 2026 14:33:43 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -8,61 +8,130 @@ List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
 x-ms-reactions: disallow
-Received: (qmail 19622 invoked from network); 20 May 2026 13:01:41 -0000
-ARC-Filter: OpenARC Filter v1.0.0 mx.pao1.isc.org 544E54E40B3
-Authentication-Results: mx.pao1.isc.org; arc=none smtp.remote-ip=149.20.2.90
-ARC-Seal: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1779282091; cv=none; b=I8ke5MyJBAfcpIrphG0BmCc93dyZltSVcq24eqmFnsPmCOFx5++5MOcUl7Swwm8Jew7MlBiEps+oUdIWXdLA1B2XX7E6T3p30NGRCgxvLS/xKNewLzt2Nb3a7K+jVYNsZjLVHHZ6sRFaTjG5DHLJtN1QNvBtVv0XDYONJy/+too=
-ARC-Message-Signature: i=1; a=rsa-sha256; d=isc.org; s=ostpay; t=1779282091;
-	c=relaxed/relaxed; bh=+c2lCMcu0xe9XBH1j59UISAoCR4O9L8Q5msMhoi+bUk=;
-	h=DKIM-Signature:DKIM-Signature:Date:From:To:Subject:Message-ID:
-	 MIME-Version; b=lIVK/DOAhTPKkLwNxJXwj0I8Z9tAbENXATk7cDnmKqMY5H9tMSgYjh/g3lgavbhFPCugPHEb8sOhf8ysbrPZhMrH82pKe7R4uEdMnFIrqY3FLC1THQ4OaDoJx13DwFkuqoU1QhrMYvnIAUtT98MFgGdfH1CRaNdGUMY6v7CfpC0=
-ARC-Authentication-Results: i=1; mx.pao1.isc.org
-DKIM-Filter: OpenDKIM Filter v2.10.3 mx.pao1.isc.org 544E54E40B3
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=isc.org; s=ostpay;
-	t=1779282091; bh=JzgU7qNPcH+34kSnY00qbKJasNx9qPNzqOgBK0zZrvE=;
-	h=Date:From:To:Cc:Subject;
-	b=cKngWmFe2aPpd1AP0oWrjs6WUTkwQF5igXFH34ti/ojwJJPkxXNQ++jCB/myO0Jpt
-	 4K2Iw6fvd8ZMOa57QhS2cpc71M3gmTynqc5gRiWrpsKqZCyoPgYRR6q/A2a2g5gAdl
-	 RaTce6ZYmm7Fw2S0cH+RooawIZMVf0XqF5OVObDk=
-DKIM-Filter: OpenDKIM Filter v2.10.3 zimbra10.isc.org 3B0CD2E60076
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=isc.org;
-	s=05DFB016-56A2-11EB-AEC0-15368D323330; t=1779282091;
-	bh=+c2lCMcu0xe9XBH1j59UISAoCR4O9L8Q5msMhoi+bUk=;
-	h=Date:From:To:Message-ID:MIME-Version;
-	b=jOJlJfA6eF5IToNSSm/UhrUL5KYD34CkuWhWrdxMX7NUVeVcxr2Jb06SXN74F0C5Y
-	 EEVPQd0NrynEDaHDVh9vGsJkQ/eHqNAfbXSa4Gf68POyHvb9l0Sdfs3z+rFJA9IP8J
-	 2GkvpR5salf8RZGMFcVq01OUEFp+d1GgHFO4DgmY=
-Date: Wed, 20 May 2026 15:01:25 +0200
-From: =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Received: (qmail 7520 invoked from network); 4 Jun 2026 10:12:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=who-t.net; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1780567942; x=1780654342; bh=yL9JdWlZPLMNlb5GJMluDvLy0zQfTnIH
+	15gzlxRPiuA=; b=u/naCwnWMH+kmcGr689Ni7x8VavQfWxXBSPMWR/YY1WwY4m+
+	ftK1q6vvfby6wGYS2Uvexf6RyXFIVWgzDLne1JDbgQAp86zrBH4jzeEO/l+0cBAH
+	lHb1Ll5HZrw5NcwL+zgK1Qs1TkZdLVs8y4CVLNRqg+OSFMQX7TlbqWI0Rs0N0Hl5
+	z87AtaNPXcjCfgNgNLIULVPk91FS+ZbFqFSWBHzeqTlzM7lu+q8btBeJC3dE8BDr
+	4/hSObvEVzpBvQ8afSXbIMP+y9lGJgDrB3AC83AXY5oz8RyLazM/1WDLXR92TsNA
+	ImbXQvgqrSDWcHB76J5HSpc9NKXR1C0GOPeZ6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1780567942; x=
+	1780654342; bh=yL9JdWlZPLMNlb5GJMluDvLy0zQfTnIH15gzlxRPiuA=; b=W
+	LUqTKDExLIK+aQMg2/PlqrAbBe44MBsahryO1JwYQuPYoVI+pdIlqpfT1B5ZEKxC
+	hgn6r9Iae9slkwcU/9Z43+r/O9O13jWnrjs8rNo9X45o1lSV1NdirJioocuk1qsr
+	SxVZnhzQ+XcaZ6EnhOr9gVEbs8s+2hi7sXRU1K35l3UjGwnjYwaLhrf3gquAi2gP
+	rTWGPVaSHUZyzgZVwXr9DtavJyHdVl8xMnZha33fQkiNmqwDD1zEV1doPRdaYwnw
+	W7a4P1O9kd2cTNPzQpZ/mC8Ev8yhAMpH1D+5D9OcKA/IJfWu9nXfolD/AyKe2Ebj
+	8/mBZ8cIQI9Ee8yoSgg7Q==
+X-ME-Sender: <xms:hU8hahsAbgyv31JBa9hvMrrKHkS30IxXmGt22Yuzes9imDOeF42-nA>
+    <xme:hU8hahZickiurgHiZ9NfUCiyD44aCYnS5gUwIX8vnTD_ZiCenkC_mCnPqezpjfHeG
+    ioG7FEwP0KAOQ-fi_bivn5Aq1OXLwPAZPEJYI-6DV-pIIGK4ooGObzh>
+X-ME-Received: <xmr:hU8haqbyPZkGpFlIiq7muVi3oYlLr9D1XJk3o-q8Rl7nMsy4rZA8Ae_dgXPA2mPg0zk1fmB6bD1G6dO8yBbzql277LwDtVtR0qmV>
+X-ME-Proxy-Cause: dmFkZTGRazVuKbhocPvDqQvI373/hxVdDVeELL3V1YCBMVNMONpEyNrGSfLdTOs2lPipqs
+    Iup2s6ZAvuDYNT5cMQyPlWNsIPnr/nAdC5NkZGZm1fzwrFgj9YqdcVsDSvwdzR+artNkWs
+    t4e205Ze7090NfgPBwrERo8Pp5QwSQUvLT3Owijnhf7hma+oI4UOR5TC+v7xw+yhnuHwHZ
+    v6mq/TKa/AeSvOUenkkjwJO7Sn4lyCY7PAIQX9A2hw8P+IPPcCwvQvJCgboKa038HOPQFm
+    g5jhZqs2YpehtUDvIBFiSOmG+mjG26EUNLrRJLDBRYrNff3cQ0xX0YOQ+Hehx4Kx9ErXCG
+    V7dN3xPzkdn3BEKYY7Wu29akbT+OsH8HpCX1N9Lmk0esQbVeBnrwIXGy9jyJx4IAYCP2TJ
+    xeYI72sakt3fI4+IBiGY0Bl4qxCBy8m43KVr6u28wqfKXNNUg3ONCNwMBCnSF6RGYykV21
+    3WKk8PkmK7E2G7zVE5Z3Rx4WkAODQBgU772w5TKRTTDwuxp2d1+1665V+QM+KC7a91K2ie
+    BttxUtOQgdjuFXXJNevb8YMAO34oo76Mlsoi1ymRP8Uu7NhWTEjJV3DiwCiLFZ32ClhZVR
+    Ss7aRHjKxYe/vZ9o1hXptSu53Z63uggHiUMCvJeRVcBDnm5wC7u+iKaohYrg
+X-ME-Proxy: <xmx:hU8hatX13vSnZSmDH8ujJcb-hoV4E_G7IA136-u3t9LEtvU3o_iq5g>
+    <xmx:hU8hah3_TItr09AKPWe5Zgy4jgRCabijWoJiWKJ7OiqOnGnqA7a_UA>
+    <xmx:hU8hakaaY5MPQv5tDNvURgx-4PMZzzcrHJ-eiHEtELuO5S4Xaqf0xQ>
+    <xmx:hU8hakqdijm0NAa2G7vTADXX7R_1wXCIBjwdxXfQ9RJy8aCbpCNOrg>
+    <xmx:hk8haim9r_LstYh6AxaGZdMwBG2f7xlZGtnBUlb8ikQFRyrT3snZrMwr>
+Feedback-ID: i7ce144cd:Fastmail
+Date: Thu, 4 Jun 2026 20:12:15 +1000
+From: Peter Hutterer <peter.hutterer@who-t.net>
 To: oss-security@lists.openwall.com
-Cc: security-officer@isc.org
-Message-ID: <ag2wpSF3iv7iKeRO@larwa.hq.kempniu.pl>
+Message-ID: <aiFPPUkZ63aDOdzD@quokka>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="77wog6nuulspj5qz"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Subject: [oss-security] ISC has disclosed six vulnerabilities in BIND 9 (CVE-2026-3039,
- CVE-2026-3592, CVE-2026-3593, CVE-2026-5946, CVE-2026-5947, CVE-2026-5950)
+Subject: [oss-security] libinput: libinput-device-group unescaped phys output can inject udev properties
 
-On 20 May 2026, Internet Systems Consortium disclosed six vulnerabilities affecting our BIND 9 software:
+--77wog6nuulspj5qz
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: FW: libinput Security Advisory: security issue in libinput
+MIME-Version: 1.0
 
-- CVE-2026-3039:        BIND 9 server memory exhaustion during GSS-API TKEY negotiation https://kb.isc.org/docs/cve-2026-3039
-- CVE-2026-3592:        Amplification vulnerabilities via self-pointed glue records https://kb.isc.org/docs/cve-2026-3592
-- CVE-2026-3593:        Heap use-after-free vulnerability in BIND 9 DNS-over-HTTPS implementation https://kb.isc.org/docs/cve-2026-3593
-- CVE-2026-5946:        Invalid handling of CLASS != IN https://kb.isc.org/docs/cve-2026-5946
-- CVE-2026-5947:        SIG(0) validation during query flood may lead to undefined behavior https://kb.isc.org/docs/cve-2026-5947
-- CVE-2026-5950:        Unbounded resend loop in BIND 9 resolver https://kb.isc.org/docs/cve-2026-5950
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+libinput Security Advisory: June 4, 2026
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 
-New versions of BIND 9 are available:
+An issue has been found in libinput:
 
-- https://downloads.isc.org/isc/bind9/9.18.49/
-- https://downloads.isc.org/isc/bind9/9.20.23/
-- https://downloads.isc.org/isc/bind9/9.21.22/
+1) libinput-device-group unescaped phys output can inject udev properties
+   leading to arbitrary root code execution
 
-For more information and other release formats, consult the ISC software download page: https://www.isc.org/download/
+libinput uses a udev helper called libinput-device-group. This helper uses a
+device's phys sysattr as one element of a udev property value which is prin=
+ted
+as a KEY=3DVALUE pair and imported as ENV by udev.
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+A malicious uinput or uhid device that sets a phys sysattr containing \n ca=
+used
+the output to be interpreted as two separate KEY=3DVALUE pairs by udev. Thi=
+s could
+cause arbitrary execution as root (e.g. by setting the REMOVE_CMD property).
 
--- 
-Best regards,
-Michał Kępień
+A CVE has been requested for this issue but did not get assigned in time for
+this disclosure.
+
+Upstream issue: https://gitlab.freedesktop.org/libinput/libinput/-/work_ite=
+ms/1296
+Upstream fix: https://gitlab.freedesktop.org/libinput/libinput/-/commit/76f=
+0d8a7f57e2868882864b4611281f12f704b55
+Versions affected: libinput <=3D 1.31.2 and <=3D 1.30.3
+Fixed versions: libinput 1.31.3, 1.30.4
+
+Affected distributions/compositors:
+-----------------------------------
+
+Affected are libinput versions 1.31.2 and 1.30.3 and all earlier versions.
+
+To exploit this vulnerability an attacker needs to create a malicious uinpu=
+t or
+uhid device.=20
+
+uinput is typically restricted to root but may be tagged with uaccess by cu=
+stom
+udev rules. On Fedora, the following packages ship such a rule: steam-devic=
+es,
+antimicrox and kdeconnectd. If any of these packages are *installed*, uinput
+devices can be created by the user logged into a seat.
+
+uhid is typically restricted to root. I am not aware of packages shipping
+udev rules that provide uaccess to /dev/uhid.
+
+Acknowledgements
+----------------
+
+Many thanks to Csome for reporting this issue.
+
+--77wog6nuulspj5qz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQQ8LEPZRH1ZOO9FUeviO35wtGfwvwUCaiFPewAKCRDiO35wtGfw
+v24NAJ9rYbC2FIrY6LR9ZFFifPpVmktVVgCdFJaGsNr3gR01W/6ccDdeYDy6FWA=
+=1spG
+-----END PGP SIGNATURE-----
+
+--77wog6nuulspj5qz--
