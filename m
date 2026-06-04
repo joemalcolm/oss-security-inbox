@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["458" "Friday" "31" "July" "2015" "14:47:51" "+0200" "Adam Maris" "amaris@redhat.com" "<55BB6E77.1070007@redhat.com>" "16" "[oss-security] CVE for crypto_get_random() from libsrtp" nil nil nil "7" "2015073112:47:51" "[oss-security] CVE for crypto_get_random() from libsrtp" (number mark "        amaris@redha Jul 31   16/458   " thread-indent "\"[oss-security] CVE for crypto_get_random() from libsrtp\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0001
-X-Mozilla-Status2: 00000000
-Received: (qmail 13366 invoked by uid 550); 31 Jul 2015 12:48:06 -0000
+Received: (qmail 14165 invoked by uid 550); 4 Jun 2026 15:59:10 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -11,33 +6,285 @@ List-Help: <mailto:oss-security-help@lists.openwall.com>
 List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
-Received: (qmail 13336 invoked from network); 31 Jul 2015 12:48:05 -0000
-Message-ID: <55BB6E77.1070007@redhat.com>
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:38.0) Gecko/20100101
- Thunderbird/38.1.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
-Date: Fri, 31 Jul 2015 14:47:51 +0200
-From: Adam Maris <amaris@redhat.com>
 Reply-To: oss-security@lists.openwall.com
-Subject: [oss-security] CVE for crypto_get_random() from libsrtp
+x-ms-reactions: disallow
+Received: (qmail 13568 invoked from network); 4 Jun 2026 15:00:38 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1780585229; x=1781190029; darn=lists.openwall.com;
+        h=autocrypt:subject:to:content-language:from:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=3hQ9ZBVrR8g2Baj9gdkfc+Fyy09I4+908dIxIAW28No=;
+        b=iXtMp/kwlaODy6ciu0CP4EjE6UMV4PkvFodWliqwob2m6U1iZ6aj54TZ1JSdQ9Rwpd
+         oAKvtuxteKJCdk14iixR3wia9AFgp1aZRcJ6HTDdyBmWdN26Rd6p2eSeW74GxajlhUFE
+         G2K9JPUEEJXCkhF5wVqrrEZi+AxO+/Y1mXpoRJAs1lz3/BmPjnjtQddsPeFlM2l7sdrl
+         rBtUwp+RN55O0cbto1gMjNm+g8CdS3mSbu8PAtxpzwmRIYE53LrV/Ztpz7bzbLbkW6dY
+         tTxv2HuMhlB96BhWFctuBrwvIYJsGLqyRc16hcxS/EvK8/3P2V1DnHrII1cQcR4azvcP
+         abAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1780585229; x=1781190029;
+        h=autocrypt:subject:to:content-language:from:user-agent:mime-version
+         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3hQ9ZBVrR8g2Baj9gdkfc+Fyy09I4+908dIxIAW28No=;
+        b=nRd5Dc5WlYteoyikvHzjjAAcI8rCe/L6KUemPiXDmvIGO23q9eHmLgXuTuwGwr65Ar
+         WtidB3FUDsjrJKDHEVOWK6cSL4SsUXlLo52tuB9dJV7qpnuWUax2XjXqFhBwTJJzEWCm
+         vFuv9PVizsiwfGAzRfphpTQzg0oeBCpYwRFl0c3g/fxXZX8KserA1ENVohpkgftaR08w
+         ngCj5nVw5Fm1vM9TfcDoOgJmB7z1DqN1rk54vGoIMBLbBHtX19v2eToFoy7ZXsvn9nik
+         3uvhYqnTQ2q1cseG9xO29fuMTxrMqd/Im31w+v9Ih8m9FjhbPdCaHXrNGwD4Y8YjsQUZ
+         RmXg==
+X-Gm-Message-State: AOJu0Yw7STpIoEdWkoRP9nGBa2BOvEtqGT079TGHlvMXsVPVu4aGRVGv
+	vqmUi/Yd3EVfjW15yXxIYmpjkGyWGOT/S4DlaavqC7y+9F+cfTBcoFPGMDQYrw==
+X-Gm-Gg: Acq92OHiYw5/YSsvc/Vza6zTl4ADSvRZerdqsdSuKb1pgVJebpZVuozIqdU0C9ZCsR5
+	vTYWhDUha4A4q8syYAry/asPR3NpoYvCpqbIHwN1gwlAgtlbvsDqddcn16UQuagSLDrXtaxujoF
+	tzj6Eh3USQLJx5JAncdMIBsAKqYw/ORiGctW1NhCYTypOYhvAglqIgPcBkaS+eqAonx9FJiqaGi
+	ABFCBYDwH5K4aDfZ6oVDnvpkkKyODkirTmmLfvuG5griKEZ4JlKxhLTg251BifcOUy2IiRwulQV
+	e4vLY5bsd7bDa19SKW+qhsY4+wyDtOvktmtGaLCS4vPgncNg+E5XSSiJhewhhwVBTTg+7JZ/7BE
+	Jh+dypakl8hzAQT6Eg/HeO1T+lcRDjqPgCYIwdunUlRNkfNUYsskP7Zz+kkV+QQBhS8pWKJ+Nrt
+	gUiC762L5oISfDg68v/3gGK5VNzec4IgVoqhUc2vlJlqLOezJLovGJjAh/uPgtmhFNiE/EV4z3h
+	rdrjN3WdLTpzo7ufliA7EonE9pGozk=
+X-Received: by 2002:a05:6a21:3995:b0:39f:1f92:28e with SMTP id adf61e73a8af0-3b4977e3416mr9107046637.27.1780585228499;
+        Thu, 04 Jun 2026 08:00:28 -0700 (PDT)
+Message-ID: <b1dbd135-2db1-43fb-9c3f-df36c0ebb8c2@gmail.com>
+Date: Thu, 4 Jun 2026 08:00:25 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Content-Language: en-US
 To: oss-security@lists.openwall.com
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ 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
+ VYvdtAgTRIrQIz/K
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------V0AYNiLQ6tPhH61SEkXJgC0M"
+Subject: [oss-security] [OSSA-2026-021] OpenStack Neutron: Neutron port RBAC policy bypass
+ allows project managers to set trusted device owners on shared networks
+ (CVE-2026-pending)
 
-Hello,
+--------------V0AYNiLQ6tPhH61SEkXJgC0M
+Content-Type: multipart/mixed; boundary="------------gCNP9F1wh65T0m2zr1dg15wo";
+ protected-headers="v1"; hp="clear"
+Message-ID: <b1dbd135-2db1-43fb-9c3f-df36c0ebb8c2@gmail.com>
+Date: Thu, 4 Jun 2026 08:00:25 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Content-Language: en-US
+To: oss-security@lists.openwall.com
+Subject: [OSSA-2026-021] OpenStack Neutron: Neutron port RBAC policy bypass
+ allows project managers to set trusted device owners on shared networks
+ (CVE-2026-pending)
+Autocrypt: addr=gouthampravi@gmail.com; keydata=
+ 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
+ VYvdtAgTRIrQIz/K
 
-I've got question whether this bug 
-(https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=793971) is 
-CVE-worthy? Could it be classified as CWE-330: Use of Insufficiently 
-Random Values?
+--------------gCNP9F1wh65T0m2zr1dg15wo
+Content-Type: multipart/mixed; boundary="------------6iKH0vQ91kmwPRt6elaf6tEB"
 
-According to the SRTP documentation 
-(http://srtp.sourcearchive.com/documentation/1.4.2.dfsg/group__SRTP_g1d4c228c6a58096dfab3cefbabd66f17.html), 
-it provides 80 bits of random data, which is quite a borderline.
+--------------6iKH0vQ91kmwPRt6elaf6tEB
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Thanks.
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PQ0KT1NTQS0yMDI2LTAyMTogTmV1dHJvbiBwb3J0IFJCQUMgcG9saWN5IGJ5cGFzcyBhbGxv
+d3MgcHJvamVjdCBtYW5hZ2VycyANCnRvIHNldCB0cnVzdGVkIGRldmljZSBvd25lcnMgb24gc2hh
+cmVkIG5ldHdvcmtzDQo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09DQoNCjpEYXRlOiBKdW5lIDA0LCAyMDI2DQo6Q1ZFOiBDVkUtMjAy
+Ni1wZW5kaW5nDQoNCg0KQWZmZWN0cw0Kfn5+fn5+fg0KLSBOZXV0cm9uOiA+PTI1LjAuMCA8MjUu
+Mi40LCA+PTI2LjAuMCA8MjYuMC40LCA+PTI3LjAuMCA8MjcuMC4zLCA9PTI4LjAuMA0KDQoNCkRl
+c2NyaXB0aW9uDQp+fn5+fn5+fn5+fg0KVGltIFNoZXBoYXJkIGZyb20gcm9pYWkuY2EgcmVwb3J0
+ZWQgYSBwb2xpY3kgZW5mb3JjZW1lbnQgYnlwYXNzIGluIA0KTmV1dHJvbidzIGRlZmF1bHQgcG9y
+dCBSQkFDIHJ1bGVzLiBBIHByb2plY3QgbWFuYWdlciBjYW4gY3JlYXRlIG9yIA0KdXBkYXRlIGEg
+cG9ydCBvbiBhIHNoYXJlZCBuZXR3b3JrIG93bmVkIGJ5IGFub3RoZXIgcHJvamVjdCBhbmQgc2V0
+IA0KYGBkZXZpY2Vfb3duZXJgYCB0byBhIHRydXN0ZWQgbmV0d29yay1zZXJ2aWNlIHZhbHVlIHN1
+Y2ggYXMgDQpgYG5ldHdvcms6ZGhjcGBgLiBEZXBlbmRpbmcgb24gYmFja2VuZCBhbmQgZGVwbG95
+bWVudCwgdGhpcyBjYW4gYnlwYXNzIA0KYW50aS1zcG9vZmluZyBhbmQgc2VjdXJpdHkgZ3JvdXAg
+cHJvdGVjdGlvbnMuIFRoaXMgaXMgYSByZWdyZXNzaW9uIG9mIA0KQ1ZFLTIwMTUtNTI0MCAoT1NT
+QS0yMDE1LTAxOCkgaW50cm9kdWNlZCBieSB0aGUgbWFuYWdlciByb2xlIHN1cHBvcnQgDQpjaGFu
+Z2UuIERlcGxveW1lbnRzIHJ1bm5pbmcgTmV1dHJvbiAyNS4wLjAgb3IgbGF0ZXIgYXJlIGFmZmVj
+dGVkLg0KDQoNCg0KUGF0Y2hlcw0Kfn5+fn5+fg0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9y
+Zy85OTE1MjMgKDIwMjUuMS9lcG94eSkNCi0gaHR0cHM6Ly9yZXZpZXcub3BlbmRldi5vcmcvOTkw
+MzU2ICgyMDI1LjIvZmxhbWluZ28pDQotIGh0dHBzOi8vcmV2aWV3Lm9wZW5kZXYub3JnLzk5MDM1
+MyAoMjAyNi4xL2dhenBhY2hvKQ0KLSBodHRwczovL3Jldmlldy5vcGVuZGV2Lm9yZy85OTAyNzMg
+KDIwMjYuMi9oaWJpc2N1cykNCg0KDQpDcmVkaXRzDQp+fn5+fn5+DQotIFRpbSBTaGVwaGFyZCBm
+cm9tIHJvaWFpLmNhIChDVkUtMjAyNi1wZW5kaW5nKQ0KDQoNClJlZmVyZW5jZXMNCn5+fn5+fn5+
+fn4NCi0gaHR0cHM6Ly9sYXVuY2hwYWQubmV0L2J1Z3MvMjE1MjExNQ0KLSBodHRwOi8vY3ZlLm1p
+dHJlLm9yZy9jZ2ktYmluL2N2ZW5hbWUuY2dpP25hbWU9Q1ZFLTIwMjYtcGVuZGluZw0KDQoNCk5v
+dGVzDQp+fn5+fg0KLSBBIENWRSByZXF1ZXN0IGhhcyBiZWVuIGZpbGVkIHdpdGggTUlUUkUgKENB
+Ti0yMDI2LTIwMzA3MDIpLg0KLSBUaGlzIGlzIGEgcmVncmVzc2lvbiBvZiBDVkUtMjAxNS01MjQw
+IChPU1NBLTIwMTUtMDE4KS4NCg0KLS0NCkdvdXRoYW0gUGFjaGEgUmF2aQ0KT3BlblN0YWNrIFZ1
+bG5lcmFiaWxpdHkgTWFuYWdlbWVudCBUZWFtDQpodHRwczovL3NlY3VyaXR5Lm9wZW5zdGFjay5v
+cmcvdm10Lmh0bWwNCg==
 
--- 
-Adam Maris / Red Hat Product Security
+--------------6iKH0vQ91kmwPRt6elaf6tEB
+Content-Type: application/pgp-keys; name="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x0638DAD3B82C3988.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
+-----BEGIN PGP PUBLIC KEY BLOCK-----=0A=
+=0A=
+xsFNBGm7HhsBEAC4jWG7snWqax8fazd7QVADjLRxhNKOAyVrBqBffI5CuSuafwtq=0A=
+V1s3x8C7GzNjklTuCXcX7iZAU7g5y0fZtT6lp1l3l1xUtKPcBF0DCd5JH/HP/MH8=0A=
+eBByL3sNRR3RHovAVpUhxT0RGcltm5wbnwE37dcrIRbVl66xbcyaUnHokUhdShSb=0A=
+SptiPPOkncn/i10uGAIHN884Bt/zZkUpak9PMTFNXThDYU+79csw6roxH/AV6mtD=0A=
+xDG6wKf8VcFg538a8deJsPUNONrdOYwjH4xAYao5yrktALQC2zEbHLmNZnFRHJ6z=0A=
+Gs7zOGN6kLV6ueqfzkkWjPGXkcCeIL4mX3K9mRaW0L6QwKh0n2grWs264dD5bV/r=0A=
+PIxhRDHNfp5rMBRPb3rStEqDkqZ8MMuCETZQUwQYa9vccj7diXOa+YvWehaE4Ito=0A=
+Nd6+PD9I6mB0VwVDpdxmwgEqR+wG30OTaPSfyq4GQ3z/A783Wyx9vuSI4R2iRSSg=0A=
+HuyiaFnRZMIOu5ib0dTuY+/MBmMxSpcU+tre+DedXmCNksLfD9HsHyJMx/OGTWYQ=0A=
+dYmavnRtBN+dzwku9SrisCMfAOuDvTvri4csxTRfomNYhUWODGqWum/sV253lh5q=0A=
+5J/H6xHVhANTQ3vVU1EYGBJszPxx+aTlFye9oo1/06Lv+U3nYdNDMzaYNwARAQAB=0A=
+zStHb3V0aGFtIFBhY2hhIFJhdmkgPGdvdXRoYW1wcmF2aUBnbWFpbC5jb20+wsGz=0A=
+BBMBCABdFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAABAAObWFu=0A=
+dTIsMi41KzEuMTIsMCwzAhsDBQkDwmcABQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H=0A=
+AheAAAoJEAY42tO4LDmIhTwQAKt30GA/0UnV9uvioUeyBJp1GnGN1lcXNQYIFOB+=0A=
+TbjMthdYScRTHY28l/gKSuvTtV+DuTvrOS0UPZ7HC72SijE3AJOQGE1YMTToxdxi=0A=
+OCv++R/3Sth4zogHPVlJPn4mIry/8OX7cchxnwuPGtdrH2H31IxSIeW2FWSSGd7K=0A=
+rY/IncJOQeN4wOXpEi+gbNGGrnyEJj3J0pz+8Fx2MugdMGP7zmLMN8UEIY7XBGx6=0A=
+U96ri35iCMsosdiuUylUXTDufJf+VvA66gGNy063KM8mzkdJHTVzdcJjFTS4FemF=0A=
+97dBu2FR8sgsiiaFiNVs1KfHKcs2J2M+rVQQokpYARq7ayDLPPhVHV4bXk1kuS4p=0A=
+l6EeSGz0Xp6LXD6YuwcG87vUDD6IJDQY2YqRedYkaOF0hvwuIihDMwWBtuRLNdgl=0A=
+MNGFnf++euaQBqfQT9W6mQqFGQ+hkLsTPo/nYjfVIcYRdGZEY+iydM3HaVr8UbB8=0A=
+vrnSGUFfW31PGJ/SVV3nJtWoygToacNzwUUwT3Y8VWFcfypC9hI856BDlvOlb7X0=0A=
+JBagdmgJqCWMAkKPPQNsS5xRcHTxnd8b63UrC4Vi4M423ThAByjERzYoGPmb/mJF=0A=
+tcZrGwTArUfwNKFEvDLt7gcZNIvuPWeTVWHgr4Suko3EkRTIL2w6TppylLJTi1jI=0A=
+yNMtzsFNBGm7HhsBEACw4nqhta7zFWEt/UpPEYkenWpbT2nVDtuKn1uELMCV+Sy8=0A=
+Jdcec9VKQm6q4y9xqkLuMT5y1x213dpPJVHegks8TJaFf3yaA+++QtqHP2biEaqk=0A=
+6HSpa5DIoGt95Uc58FVKiNQZ3w8bbna3Vrzy920WcBydKY6U2wemJf9hSdM4l15l=0A=
+ezk3HOnJaxKt+hTuaISUlEhZDQ3UtwdlKAWjcYkzkObVhZugZS8tWCpWsRq4eHcy=0A=
+hpxihTZFyKhGkKSu2W2Q+AgFr7TRvdW2/oIjaPSy7DeqH88STz3Nvzg9ztnqzQ5j=0A=
+DKWamnlrjbxllI77c9+fvp2lkt/9hQtQ0SP6amEoYxfckJ0Q2AVTb4ixk8/Xv77g=0A=
+fIDJQ4HoTyPF2CXVpV2V8RPFKhwwZcdcna7eyw+zTXrl6Grjj6P0olrBCzvwvFex=0A=
+3c2rqhWzZKZnIqH4QHDV4GPGO1BPsnHRe0j+ZhZ03EVS+IxOlaExiF/wIm7S7VgH=0A=
+ZjTBs3V9L+szy2gO73ms+yh7n1PrXw+nI38f3xqGyZCfCX5kNwAoB0+izqOD9Cy/=0A=
+syviXgwbtbmu35NIbmOk9yMPvHVO6o6JQlq9moNaXEn7N4abFWHKP4lvLe6Yn3av=0A=
+y8+byR8bZplYQbBTrEtjGanO9nNannlyFnEDvUoQQ3PozyyztzerC5z6uPSSIQAR=0A=
+AQABwsGYBBgBCABCFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmm7HhsbFIAAAAAA=0A=
+BAAObWFudTIsMi41KzEuMTIsMCwzAhsMBQkDwmcAAAoJEAY42tO4LDmIXqkP+gPE=0A=
+jSFIH4HYoEsBE2wBiJlS5bBMsmElFCYyRM1S4az/RS3FX8r2a+J58UuUeANs4wiZ=0A=
+/4iGlBvdYn7rwB1Yb2/LIO5Pcsc9UvWKv2fEbpIbc7GMvb8+egFfkn7pHSbOqHxV=0A=
+7Z+JRoXToxcIqmlZi43mz7hVdR0ei8WMBR5nKVE6Ixt47QHilQ5kLMCqVmNojFz/=0A=
+H6t5uhjs3X6oalsB5/AoeL0jH62Dd1NWq1vBaqKYBLHyNNATkl97VdAUgaFE28Q4=0A=
+Nx+as9AGY5sr6yBoHD+QjZwnNydR6uRCY7qD+mqQv9KbHhBLd7HqyjXY7tG7pPnP=0A=
+4XeNkiUUDwIv2sYUSEhN89R5kk1YDKQ14N2/43l7JGCvnll64iomqqmejykliW+T=0A=
+6HhpKYNTH9ldYpjGmcYo4y093DnEA8nCXwpa3HO17ZQ7nxlg00Y3Oo4WpSGwAlpI=0A=
+81y4shJtQGwrnHaqqfH4/obXwb3SOLsFCPF9fZxtXmlO1VOA5JaM8y6DIqBewPNA=0A=
+WNzZu3qeBJd716WXp1ivUjvFRLcCMU6GxOMTv7dz1GP3d/xG9/Lb/mBK78Lu6fPc=0A=
+nV7MQp38mYdfj9T1t0pu/GTDpG0AYRl124U8onEwl3KJzst8AO8G0kKyWdXR0cRe=0A=
++qGYa3LmV2soXmdh0GFZ5KFjVYvdtAgTRIrQIz/K=0A=
+=3Drf4K=0A=
+-----END PGP PUBLIC KEY BLOCK-----=0A=
+
+--------------6iKH0vQ91kmwPRt6elaf6tEB--
+
+--------------gCNP9F1wh65T0m2zr1dg15wo--
+
+--------------V0AYNiLQ6tPhH61SEkXJgC0M
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEEwo5Vl+U+phfaPpN5Bjja07gsOYgFAmohkwkFAwAAAAAACgkQBjja07gsOYhn
+MA/6AxdsaT/569WFTLKuWRbVbEEeuBqjKmynODsMboslUkoNsm7QmrBKHopuS8xivZQnccyc9pkV
+aI5CXYWXt3Lfg6FIVs3AJkrG0UGupmK9uSS0kUKDMkPgzJyYCQn/wh53Nv9eMxnDpHPVSkJrD6i2
+Ip/jzMitm92gCMrisHOe8qaKqfk7lln85NDyERYxChz8+VWUB33aQ3Uwgyix2Wm1YF047bZDgG+5
+51DXTHDW/hYAHLOIUxZ7LDOF1Ipmf+k3ay/0ooj5lYumi7V+UM0L7M5RR2F0QoFjVlWu4z1Tnl7j
+qMbSn6H0DQHVE8cDLCpMvI4g9fDoi2FmoK9e9zrINQY3TM1cJrEIA8pUUsGaJWHO/HNttxei/1vj
+ax7q6qgbqeop98JCRTpNVLsfQNHLbqZYwoLAQoLrpdPzFKgw4gBMX8IZcvAAPYR29djAmKiRKd4t
+g6NBQhbEQFOfTDAj/Os0NtCp5PpwlJDtujZ7wmuzaBT5OhkYrIQd8Ewm+pRlMx3ObxtFXIfTBLJc
+a07hQgUWVHR7BGsvQTgESaDhbb4GdXlLK/Cl3PI8zGD68gTktwWXfudWx3Q8+6bmCJ42Ak2gCP2H
+oNmZNtzltcDg67ZKYQcNVsGiyagXjt1pTBsaB8ZxMxE10ld5TdCOZkrigc2c0UBB9rJ1fBcXcNPT
+rRw=
+=m8fm
+-----END PGP SIGNATURE-----
+
+--------------V0AYNiLQ6tPhH61SEkXJgC0M--
