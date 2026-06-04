@@ -1,4 +1,4 @@
-Received: (qmail 5269 invoked by uid 550); 11 May 2024 12:16:05 -0000
+Received: (qmail 5322 invoked by uid 550); 4 Jun 2026 16:29:31 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -7,60 +7,84 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5236 invoked from network); 11 May 2024 12:16:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=QStxTdJzuoMcSrtZXHp29SmBdWS8oFUKnP6BvkM1wlE=; b=QATzeivQnX3O04I6HnCQaayW7Q
-	qZgnCF/MgErmshWQNFg+aOln6ZvaNYDF3NW6Tp5c8OD3quUU16Y8YoRHMrZbOoKmkxbwEv7sc525y
-	4B1Ea/ysDH54NVOI1k1FFwryNZUFjouyrXhb7BqNOWYxH2Wz86Jukex9Uh46AgDeNaZy2cIOzT2Qe
-	rMSsWgLAdUjZlz8VaS0llbFT74AIkyyjLoAvZ65Hwo5HP+HiWUjc4xa8AgVlrRqo4O5CVaa2vXaSX
-	pLl5Kk9huR+ZgSv68McvIWtFHnsNlZCx1WieY4IxPrkRYRTViCGTMGh5tduzn+lapi3qf8j21U+6F
-	qsFObvQg==;
-Date: Sat, 11 May 2024 13:15:53 +0100
-From: Simon McVittie <smcv@debian.org>
-To: oss-security@lists.openwall.com
-Message-ID: <Zj9hebgV970FCi_6@remnant.pseudorandom.co.uk>
-References: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
+x-ms-reactions: disallow
+Received: (qmail 26459 invoked from network); 4 Jun 2026 16:10:54 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1780589445;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=3dl4f2G+OFW4A2b9YSPvrYc+JPq1IWC8bZzMfdXrg/E=;
+	b=eVr6Ysush1yDUbDi2oN8YBTPms19SjO5ePfFRs3naRUm4e0X0WWd50Or+3leZwTXuwfiQO
+	BJ+rJd0Nq5r2Tq4V5uFam7NyMigXgaovCZVAZeJIJRGkXjzo0p9PhUDCBEBX/n7ZG7SQWB
+	0TayxiRMqmniscgCvra4ObZdN2w1j3beYSXjkfGs1Qvl1baryK01u0HG9CodDoB0LRVpK5
+	cCG/Hi1i/wjNgXp10dlf6CMh2unrYjqDkN+gw7tUAv0paTWl/83C0BTHvEOB+C6Kvh3GsR
+	ux493yc0vvWBEReMevnHyKFuwPJQKaikqo9niSAm/Sa83X2pgPjKPsE7YuCq9A==
+Message-ID: <bc840dc9-fef9-4459-afca-3b5551ca30f2@cpansec.org>
+Date: Thu, 4 Jun 2026 17:10:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BYAPR03MB4903AF4B05EDB627E47C9370EBE72@BYAPR03MB4903.namprd03.prod.outlook.com>
-X-Debian-User: smcv
-Subject: [oss-security] Re: lsof "can't stat() fuse.${name} filesystem /run/user/1000/${dir}"
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTEntoKqB+TLcXY6eGEyW5lnG+ZS0p9tn+0KZBxSjQM+yIDi+SjDvD3LCozDifpJw8TdqQb+WvS/ViLiCQXNLB9zvKQ28E+vI8Vk199yvK9YIVHUOJeU0XmPXixJS4Szsopcbk7yO7rWi6CFTPjA3ay65b4ichhVmA/FE82ouj1d0bj3dmM2BpKTiAQC5/mLk8+qG3aO0SyJrKKAJ+0XQ3V4CsGzPYzZ9HksoVPEK16xehwZTf+ogCyvxSy9xSh8YmlfRnfPDwL8dCRjJUmboeEaOJNEamQYf31Cj7WT0QEogrzGe3XOcu/+4apWpvG+Xg2gNeYdcoAN/rHd1V4+1KAutjVHWhicsBuswOiJECKTZVOxRnPaSWaXMUx0A8Dqo7xU8qnC7KF4U6Jh1N67dGOVaL+W7nuiUUWPQBjNYTXkA50xDJR9RtAjaMlh6aXzUujTCGXMqmqJYO/7Jnc0KlX/FNEnFyA5hOdGwTUJrLwr4gYT/biO/DQSJrSpgvmLJpJepwYJPujS7XPhiwBP1ZscOCs3Kzu7qZWvX4b9AvPJpLIMCPgBvX8jMX+lliZDkwetwyMqJxoeLB1SiVDQMhaGxB+eScvANUUi0NlodDTrdQ5qbOtoYJ+3IzpI/63084tI0dVkjLdQDZ0iCiiGjd4O52kybrhv1ie1Thh6L12fsQ
+Subject: [oss-security] CVE-2026-49941: Net::CIDR::Set versions through 0.20 for Perl did not
+ validate IP addresses
 
-On Fri, 10 May 2024 at 13:19:35 +0000, Corey Lopez wrote:
-> Also, I ran the lsof command, which helped me discover 
-> the type of file systems that were being used. This prompted me to use apt purge 
-> to remove Gnome Virtual File System from my laptop. 
-> 
-> # lsof /dev/loop*
-> 
-> I received this in response:
-> 
-> can't stat() fuse.gvfsd-fuse file system /run/user/1000/gvfs
-> can't stat() fuse.portal file system /run/user/1000/doc
 
-This is not evidence of a compromise, and is also nothing to do with
-/dev/loop* specifically. You would see the same thing on a system that
-is operating correctly, or when issuing other lsof commands as root that
-do not involve /dev/loop*.
+========================================================================
+CVE-2026-49941                                       CPAN Security Group
+========================================================================
 
-These are FUSE filesystems running as uid 1000, which by default are
-not accessible *by root* - which might seem strange at first glance,
-but is an intentional security mechanism to protect root from being
-attacked by uid 1000 (see mount.fuse3(8) for details).
+         CVE ID:  CVE-2026-49941
+   Distribution:  Net-CIDR-Set
+       Versions:  through 0.20
 
-fuse.gvfsd-fuse is gvfs (not to be confused with gnomevfs, which is a
-much older implementation of the same general concept) making various
-remote and virtual filesystems such as SMB and WebDAV available to
-non-GLib-based applications as a FUSE filesystem.
+       MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Set
+       VCS Repo:  https://github.com/robrwo/perl-Net-CIDR-Set
 
-fuse.portal is xdg-documents-portal, part of xdg-desktop-portal, and
-is used to share a subset of documents between the host system and
-sandboxed apps such as Flatpak and Snap under user control, without
-needing to extend a higher level of trust to those apps by sharing
-entire directories.
 
-    smcv
+Net::CIDR::Set versions through 0.20 for Perl did not validate IP
+addresses
+
+Description
+-----------
+Net::CIDR::Set versions through 0.20 for Perl did not validate IP
+addresses.
+
+The add method called the _encode method to parse addresses. If the
+addresses did not look like netmasks or network ranges, then they were
+assumed to single IP addresses and passed back to itself as a 32-bit or
+128-bit netmask.
+
+If the argument was not a well-formed IP address, then this would lead
+to indefinite recursion.
+
+An attacker could use this to cause a denial of service.
+
+Problem types
+-------------
+- CWE-1287 Improper Validation of Specified Type of Input
+- CWE-674 Uncontrolled Recursion
+
+Solutions
+---------
+Upgrade to version 0.21 of later.
+
+
+References
+----------
+https://metacpan.org/release/RRWO/Net-CIDR-Set-0.21/changes
+
+Timeline
+--------
+- 2026-05-13: Issue reported to CPANSec
+- 2026-06-02: Net::CIDR::Set version 0.21 released with fix
+
+
+
