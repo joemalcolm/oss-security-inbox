@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["832" "Wednesday" "9" "November" "2016" "20:41:09" "-0600" "Bob Friesenhahn" "bfriesen@simple.dallas.tx.us" "<alpine.GSO.2.20.1611092039190.23214@freddy.simplesystems.org>" "29" "Re: [oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array" nil nil nil "11" "2016111002:41:09" "[oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array" (number mark "U       bfriesen@sim Nov  9   29/832   " thread-indent "\"Re: [oss-security] Re: CVE Request: libtiff: heap buffer overflow/read outside of array\"\n") "<20161110015757.20558.28D1CED1@matica.foolinux.mooo.com>" ("<CANMVOuwRRcEG2Vs0DTck_kbUjiNBQwGD6G24kj5mb0wGDUEGgw@mail.gmail.com>" "<20161110015757.20558.28D1CED1@matica.foolinux.mooo.com>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 9308 invoked by uid 550); 10 Nov 2016 02:41:22 -0000
+Received: (qmail 3499 invoked by uid 550); 4 Jun 2026 16:29:27 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,47 +7,77 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 9284 invoked from network); 10 Nov 2016 02:41:21 -0000
-Date: Wed, 9 Nov 2016 20:41:09 -0600 (CST)
-From: Bob Friesenhahn <bfriesen@simple.dallas.tx.us>
-X-X-Sender: bfriesen@freddy.simplesystems.org
-To: oss-security@lists.openwall.com
-In-Reply-To: <20161110015757.20558.28D1CED1@matica.foolinux.mooo.com>
-Message-ID: <alpine.GSO.2.20.1611092039190.23214@freddy.simplesystems.org>
-References: <CANMVOuwRRcEG2Vs0DTck_kbUjiNBQwGD6G24kj5mb0wGDUEGgw@mail.gmail.com> <20161110015757.20558.28D1CED1@matica.foolinux.mooo.com>
-User-Agent: Alpine 2.20 (GSO 67 2015-01-07)
+x-ms-reactions: disallow
+Received: (qmail 10234 invoked from network); 4 Jun 2026 16:09:36 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1780589366;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ysdQk2C4mppkYxzsiDHm3jt1m97tiWTJzWZtW4+sWpk=;
+	b=Vji/jKRpOlljqLXfFX8HH/B03trvIwkeunCCd3wb7xTD+P9gEuyhswpRZE59YjfqZmUsGH
+	lsvhUUNvB/tshTug5mZKqBJiRwjjw+3B++QnS9hskDzLXn6dA6aMXjgtSiyAOWuEuotR3N
+	tkMqg0bqpiGSGoAsAi3cETR2TLgziXV4Q6am/hIS4RJZr91rqLkwZxya18IAwEEgWNpgh+
+	DBktBxR3ycOZZ22RBDqN0Z/nKn5jDlpVXwBW+EExxfjXFMg8jz27xddCaQv+iZsUziZnkw
+	LWfqk9tCLV0UiRAmIU2+dLYvqVT1RPBbwsNzPmWPSNLSrQT08Wapnz+eovJQ4w==
+Message-ID: <de5d8e03-86d3-48d7-a8c3-d26107f2c51f@cpansec.org>
+Date: Thu, 4 Jun 2026 17:09:26 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (smtp.simplesystems.org [65.66.246.90]); Wed, 09 Nov 2016 20:41:09 -0600 (CST)
-Subject: Re: [oss-security] Re: CVE Request: libtiff: heap buffer overflow/read
- outside of array
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-Cause: dmFkZTEM/K11n17wMWdAA5heYlMVLKC/r2V+bV2p9ljjNp9D3+zTRgdHocaEOraBaSCPXDdVcaRluhGHDl6nf56BrPiwgOXwEXdmJnbO3TXv2hXnN3yaa/ML9aH2AUuRtgGsBB3sb27Xi9zEYuT/Mb9c7DKY3ggy6nLQkAas/XH0WwTWxVAyw0mU3SP1vGVrzcUTtJhQXqyfNM8Y3NWUh9vvj1COxZvdzj9pOpeyWqd3qALptQ8JkWIi/HoI9s/MBiyvYlwISEVbYHgoVQW5Rr+6YPVzIEUiXRARNeIFEc0WlGr5R3zYwHnpELxAlaFUiyVOUeN9uUg3X7EZmrx2uvCY1WMhbcDAoi8rWb/wwWNo2IiuVNzDuyLqY66RuleyQ4/JVoAsUcpIetdb3YMrHNNt7GHIkh5UM6bZQgGPCqcQmKhk+OtkwDDuR4td5t+hotQVDvARQrxhYq4m1x1MP4iSq/xdX1hvLwKspN4Pcw7HYFSh2LJwROCP1nOg0Mh9KNxAj2o9aAOWk4O4nfDGjx9/0XSrkehL9r2sQvqHKqD/h8TUT8GQjWwUcBuf1sGifPkjlvtVXKimhk2u8l4AHVgrGSltgB72kETK25FtC82SE5+k9NpJqYezecoTbkpICJ24t+GOVjp2Hkv48ktwbV6v6+sldmYwQxlEed9g56HmKy6WIw
+X-GND-State: clean
+X-GND-Score: -6
+Subject: [oss-security] CVE-2026-49940: Net::CIDR::Set versions through 0.20 for Perl accept
+ non-ASCII IP addresses and netmasks
 
-On Wed, 9 Nov 2016, Ian Zimmerman wrote:
+========================================================================
+CVE-2026-49940                                       CPAN Security Group
+========================================================================
 
-> On 2016-11-09 17:32, Brian 'geeknik' Carpenter wrote:
->
->> http://bugzilla.maptools.org/show_bug.cgi?id=2587
->> Fixed per
->>>> 2016-11-10 Even Rouault <even.rouault at spatialys.com>
->
-> I tried to check out the sources to patch this for myself, following the
-> recipe from the webpage:
+         CVE ID:  CVE-2026-49940
+   Distribution:  Net-CIDR-Set
+       Versions:  through 0.20
 
-At the moment, "the web page" should be one of:
+       MetaCPAN:  https://metacpan.org/dist/Net-CIDR-Set
+       VCS Repo:  https://github.com/robrwo/perl-Net-CIDR-Set
 
-  	http://www.simplesystems.org/libtiff/
-  	http://libtiff.maptools.org/
 
-And this is the description of how to obtain files from CVS:
+Net::CIDR::Set versions through 0.20 for Perl accept non-ASCII IP
+addresses and netmasks
 
-export CVSROOT=:pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot
-cvs login
-(use empty password)
-cvs checkout libtiff
-to get the stable libtiff code
+Description
+-----------
+Net::CIDR::Set versions through 0.20 for Perl accept non-ASCII IP
+addresses and netmasks.
 
-Bob
--- 
-Bob Friesenhahn
-bfriesen@simple.dallas.tx.us, http://www.simplesystems.org/users/bfriesen/
-GraphicsMagick Maintainer,    http://www.GraphicsMagick.org/
+Unicode digits such as the Arabic-Indic One (U+0661) were accepted but
+not properly parsed as numbers.  This could allow network masks to
+accept larger networks.
+
+Problem types
+-------------
+- CWE-1289 Improper Validation of Unsafe Equivalence in Input
+
+Solutions
+---------
+Upgrade to version 0.21.
+
+
+References
+----------
+https://metacpan.org/release/RRWO/Net-CIDR-Set-0.21/changes
+https://nvd.nist.gov/vuln/detail/CVE-2025-40911
+
+Timeline
+--------
+- 2026-05-13: Issue reported to CPANSec
+- 2026-06-02: Net::CIDR::Set version 0.21 released with fix
+
+
+
