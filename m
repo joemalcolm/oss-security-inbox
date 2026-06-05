@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["882" "Thursday" "15" "February" "2018" "14:09:50" "-0800" "Rohini Palaniswamy" "rohini@apache.org" "<CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>" "31" "[oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability" nil nil nil "2" "2018021522:09:50" "[oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability" (number mark "U       rohini@apach Feb 15   31/882   " thread-indent "\"[oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability\"\n") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 28429 invoked by uid 550); 15 Feb 2018 22:13:33 -0000
+Received: (qmail 30626 invoked by uid 550); 6 Jun 2026 01:33:33 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,50 +7,78 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 26453 invoked from network); 15 Feb 2018 22:10:47 -0000
-X-Gm-Message-State: APf1xPDbsQPTFrVVQNl9uyzOvKaBGePHc7q4gRycEi9HB/ndSVJjKsR3
-	WBzHNlCflqPLRc/iC+VVr3oYMJ7TvffCbRBXWPA=
-X-Google-Smtp-Source: AH8x226Rzxe3uvkJIQCdIbnveYDRc+W4nwoRl736BwiNuW+TVx5nNuiYBIIqz4Ubue8DxoX9YMaQo6KoMO9nurH4c2E=
-X-Received: by 10.200.63.60 with SMTP id c57mr6953649qtk.286.1518732631345;
- Thu, 15 Feb 2018 14:10:31 -0800 (PST)
+x-ms-reactions: disallow
+Received: (qmail 12240 invoked from network); 5 Jun 2026 20:23:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:Reply-To:Cc:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=UQxhbNPJxDmP+b6VqoFygaJKgFQZu/wBKtNPdNZczQY=; b=YRj1S2MQNp5NThanUcyVOL/CjT
+	FrhefcY2HLVM7Ps508d37B7/OT7QRa4XObZqWDjiwDwbhT3wi8EHiXgbJmVRiOsK+H02MipOtOYzL
+	APnCPt6vSgVT+RNtIbluQwGg5W8Jc8StVI3is0tX/MHVxI+6d1vF3FR1kcFN02saWmfApQHUyIoz6
+	/xqU80c2OMVFV4S9jRuBDx+KH6peznjWjNA3pO4VukKljLxKBFgKQyhMp1nQoPAIAHImx+JX1O4AB
+	5Ipmta56FvXpETEfnqU/JdruQW5MriwcTQFd2haGlWtA9EiUWW5J4MWPxvsc/Ep4+cJrO7diQauGg
+	iItlpfHA==;
+Date: Fri, 5 Jun 2026 22:23:15 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: oss-security@lists.openwall.com
+Message-ID: <aiMwM97lKIHwSYYK@eldamar.lan>
+References: <aiFPPUkZ63aDOdzD@quokka>
+ <aiIDm-A8A1xnH1j8@quokka>
 MIME-Version: 1.0
-From: Rohini Palaniswamy <rohini@apache.org>
-Date: Thu, 15 Feb 2018 14:09:50 -0800
-X-Gmail-Original-Message-ID: <CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>
-Message-ID: <CABBupGWtC2vN-JzXWeuDaN-_bP6yzRJhK+DAfr=gSGLZJGbFCQ@mail.gmail.com>
-To: dev@oozie.apache.org, user@oozie.apache.org, announce@apache.org, 
-	security@apache.org, oss-security@lists.openwall.com
-Content-Type: multipart/alternative; boundary="001a114f20920011730565477fe5"
-Subject: [oss-security] [CVE-2017-15712] Apache Oozie Server vulnerability
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aiIDm-A8A1xnH1j8@quokka>
+X-Debian-User: carnil
+Subject: Re: [oss-security] libinput: libinput-device-group unescaped phys
+ output can inject udev properties
 
---001a114f20920011730565477fe5
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Apache Oozie is a workflow scheduler system to manage Apache Hadoop jobs.
+On Fri, Jun 05, 2026 at 09:01:56AM +1000, Peter Hutterer wrote:
+> On Thu, Jun 04, 2026 at 08:12:22PM +1000, Peter Hutterer wrote:
+> > =========================================
+> > libinput Security Advisory: June 4, 2026
+> > =========================================
+> > 
+> > An issue has been found in libinput:
+> > 
+> > 1) libinput-device-group unescaped phys output can inject udev properties
+> >    leading to arbitrary root code execution
+> > 
+> > libinput uses a udev helper called libinput-device-group. This helper uses a
+> > device's phys sysattr as one element of a udev property value which is printed
+> > as a KEY=VALUE pair and imported as ENV by udev.
+> > 
+> > A malicious uinput or uhid device that sets a phys sysattr containing \n caused
+> > the output to be interpreted as two separate KEY=VALUE pairs by udev. This could
+> > cause arbitrary execution as root (e.g. by setting the REMOVE_CMD property).
+> > 
+> > A CVE has been requested for this issue but did not get assigned in time for
+> > this disclosure.
+> > 
+> > Upstream issue: https://gitlab.freedesktop.org/libinput/libinput/-/work_items/1296
+> > Upstream fix: https://gitlab.freedesktop.org/libinput/libinput/-/commit/76f0d8a7f57e2868882864b4611281f12f704b55
+> > Versions affected: libinput <= 1.31.2 and <= 1.30.3
+> > Fixed versions: libinput 1.31.3, 1.30.4
+> 
+> This issue has now been assigned CVE-2026-50265
 
-Severity: Severe
+FTR, this is bit odd since before that assignment MITRE seems to have
+already assigned CVE-2026-50292:
+https://www.cve.org/CVERecord?id=CVE-2026-50292
 
-Vendor:
-The Apache Software Foundation
+And it had the references:
+https://gitlab.freedesktop.org/libinput/libinput/-/work_items/1296
+https://gitlab.freedesktop.org/libinput/libinput/-/commit/76f0d8a7f57e2868882864b4611281f12f704b55
+https://www.openwall.com/lists/oss-security/2026/06/04/5
 
-Versions Affected:
-Oozie 3.1.3-incubating to Oozie 4.3.0
-Oozie 5.0.0-beta1
+So that is clashing with the assignment from Red Hat as
+CVE-2026-50265:
+https://www.cve.org/CVERecord?id=CVE-2026-50265
 
-Description:
-Vulnerability allows a user of Oozie to expose private files on the Oozie
-server process.  The malicious user can construct a workflow XML file
-containing XML directives and configuration that reference sensitive files
-on the Oozie server host.
+I asked Red Hat CNA if they can reject the later assigned one, but not
+sure which should be kept now. 
 
-Mitigation:
-Users should upgrade to Apache Oozie 4.3.1 release from
-http://oozie.apache.org/ .
-Users should use 5.0.0-beta1 release only for testing purposes and wait for
-the 5.0.0 GA which will have the fix.
-
-Credit:
-The issues were discovered by Daryn Sharp and Jason Lowe of Oath (formerly
-Yahoo! Inc).
-
---001a114f20920011730565477fe5--
+Regards,
+Salvatore
