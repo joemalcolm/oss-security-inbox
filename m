@@ -1,9 +1,4 @@
-X-VM-v5-Data: ([nil t nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	["1654" "Thursday" "13" "October" "2016" "09:33:21" "-0400" "CAI Qian" "caiqian@redhat.com" "<562698334.718761.1476365601025.JavaMail.zimbra@redhat.com>" "40" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" nil nil nil "10" "2016101313:33:21" "[oss-security] Re: cve request: systemd-machined: information exposure for docker containers" (number mark "U       caiqian@redh Oct 13   40/1654  " thread-indent "\"[oss-security] Re: cve request: systemd-machined: information exposure for docker containers\"\n") "<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>" ("<20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>") nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil]
-	nil)
-X-Mozilla-Status: 0000
-X-Mozilla-Status2: 00000000
-Received: (qmail 5718 invoked by uid 550); 13 Oct 2016 13:33:34 -0000
+Received: (qmail 1349 invoked by uid 550); 6 Jun 2026 02:57:21 -0000
 Mailing-List: contact oss-security-help@lists.openwall.com; run by ezmlm
 Precedence: bulk
 List-Post: <mailto:oss-security@lists.openwall.com>
@@ -12,60 +7,79 @@ List-Unsubscribe: <mailto:oss-security-unsubscribe@lists.openwall.com>
 List-Subscribe: <mailto:oss-security-subscribe@lists.openwall.com>
 List-ID: <oss-security.lists.openwall.com>
 Reply-To: oss-security@lists.openwall.com
-Received: (qmail 5700 invoked from network); 13 Oct 2016 13:33:33 -0000
-Date: Thu, 13 Oct 2016 09:33:21 -0400 (EDT)
-From: CAI Qian <caiqian@redhat.com>
-To: oss-security@lists.openwall.com
-Message-ID: <562698334.718761.1476365601025.JavaMail.zimbra@redhat.com>
-In-Reply-To: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
-References: <20160726192413.2CD1A72E006@smtpvbsrv1.mitre.org>
+x-ms-reactions: disallow
+Received: (qmail 5657 invoked from network); 5 Jun 2026 14:34:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cpansec.org; s=gm1;
+	t=1780670043;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=KSaCMVVvpvWo8zNeg5gFYbuKi+4cgqHypLYGGQI6aZg=;
+	b=hyM4YJiglT5t2sgLb+4XmmTHpEP8ob0heHO915vHuh4etUXnbYdQD1mzQJ9A2CUpQcL0uG
+	sEyXED6l9LlBNFG6EQC7O1qww9nN7BVSuy/k94OcgVM2jQzTgVusEt1IOMYhCXYf+BaTGH
+	F2v/4s2dwpEcV+6kbEezD/Tq31nJrbmw3VtY5fjsuqRcvqu/MWd0B0+ow/E5K8z/SCZK0p
+	L03FpI6qPueYsaDLs8FcW0RzHXdqEV+uft3UwqQFQtCzoY4h17+A4Exlyo/TgeHUS9cUoT
+	oD+5FU/PqJnREQ14D2Xw7F1hFsTRpGVVj+N0odkRY7BQMZ5T1WQTKnxzioNunw==
+Message-ID: <d6e2f20d-5a3e-416b-b625-90ebf5904fe1@cpansec.org>
+Date: Fri, 5 Jun 2026 15:34:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.18.41.13]
-X-Mailer: Zimbra 8.0.6_GA_5922 (ZimbraWebClient - GC45 (Linux)/8.0.6_GA_5922)
-Thread-Topic: cve request: systemd-machined: information exposure for docker containers
-Thread-Index: IdVf/9wGFzfQWHbifGEJn+/zALFzxw==
-Subject: [oss-security] Re: cve request: systemd-machined: information exposure for docker
- containers
+User-Agent: Mozilla Thunderbird
+From: Robert Rothenberg <rrwo@cpansec.org>
+Content-Language: en-GB
+To: cve-announce@security.metacpan.org, oss-security@lists.openwall.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-GND-Sasl: rrwo@cpansec.org
+X-GND-State: clean
+X-GND-Score: 0
+X-GND-Cause: dmFkZTG1F2+RLke85L5b53ENwDDAd3shMtJgdh1KnVWIwNru2DU4HCu1z5huhd0E05NsOt9TYKkPjLFKkGkjQ7UItP0lqr+Cpk7+PCTMailK9RacFuKZ8XmH6u5bL2pVsLorORTqXDW9caqSgFqH1yqFgNwLW1mWjR3GZn9hZC0ATqRRS14RFT+yllJ0ReuPl17V8o7O2wrDju5HSiGbwGkj69WZiah0Kxplnli6w1ez/YbB2TiO47xlgHyR/rcI89iB/uimpVgfREF/L4SlrREx9Y+A4EnPMTjkn4AwNVA+kqvRHv+erN7HqsOzTHm6K+QcLcXymAjZd/JucNiIlgab8r32bVZ/gKjk6A7FzLN6mELr0Ja42tel8jXtpKLrXqyQcr3mZ7qAa+VuHE2TdyxqRAtgFXkgJ+yyTqgP5SsR+iqmZApKr2ZaW1VKbKCsT30MrIgm4zZwIqe7LoUofHMp1157QdH8J/IIuSlGbeY0CVI0TAXInFC6o8SaZOVVZozlEM87vOhfTAn5TdkrOH+hYyst7gFktjkQz50rgXVDYjpgHu7SCsSlDuMK9uBqnbTC2sm2FyxbuKpXgEZxo81K5PzvpDXo/mOjozNvX3euK6+B7DyQFJPKitEpHi/gJa9N/zlx4ePJHoAhFiMGotZ1IWhR/a4ubm3M9SqofELXRrwPXA
+Subject: [oss-security] CVE-2026-10879: DBI versions before 1.648 for Perl have a heap
+ overflow when preparsing SQL statements with more than 9 binders
+
+========================================================================
+CVE-2026-10879                                       CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-10879
+   Distribution:  DBI
+       Versions:  before 1.648
+
+       MetaCPAN:  https://metacpan.org/dist/DBI
+       VCS Repo:  https://github.com/perl5-dbi/dbi
+
+
+DBI versions before 1.648 for Perl have a heap overflow when preparsing
+SQL statements with more than 9 binders
+
+Description
+-----------
+DBI versions before 1.648 for Perl have a heap overflow when preparsing
+SQL statements with more than 9 binders.
+
+The preparse method expands SQL placeholder characters to numbered
+binders of the form :pN, but only allocates three characters per binder
+in the buffer.    Placeholders 10-99 require four characters, 100-999
+require five characters, et cetera.
+
+Problem types
+-------------
+- CWE-787 (Out-of-bounds Write)
+
+Solutions
+---------
+Upgrade to DBI 1.648 or later.
+
+
+References
+----------
+https://metacpan.org/release/HMBRAND/DBI-1.648/changes
+https://github.com/perl5-dbi/dbi/commit/af79036c07aa9a457971c0f4136e37c85dc20978.patch
+
+Timeline
+--------
+- 2026-04-25: Issue reported to CPANSec.
+- 2026-05-28: Commit fixed the issue in DBI.
+- 2026-06-04: DBI 1.648 released.
 
 
 
------ Original Message -----
-> From: cve-assign@mitre.org
-> To: caiqian@redhat.com
-> Cc: cve-assign@mitre.org, oss-security@lists.openwall.com
-> Sent: Tuesday, July 26, 2016 3:24:13 PM
-> Subject: Re: cve request: systemd-machined: information exposure for docker containers
-> 
-> -----BEGIN PGP SIGNED MESSAGE-----
-> Hash: SHA256
-> 
-> > Once docker containers register themselves to systemd-machined
-> > by oci-register-machine. Any unprivileged user could run
-> > machinectl to list every single containers running in the host
-> > even if the containers do not belong to this user (including containers
-> > belong to the root user), and access sensitive information associated
-> > with any individual container including its internal IP address, OS
-> > version, running processes, and file path for its rootfs.
-> > 
-> > $ machinectl status cc8d10c7b9892b75843d200d54d34a3a
-> > cc8d10c7b9892b75843d200d54d34a3a(63633864313063376239383932623735)
-> >            Since: Mon 2016-07-25 17:55:36 UTC; 34s ago
-> >           Leader: 43494 (sleep)
-> >          Service: docker; class container
-> >             Root:
-> >             /var/mnt/overlay/overlay/0429684e3da515ae4f11b8514c7b20f759613
-> >          Address: 172.17.0.2
-> >                   fe80::42:acff:fe11:2
-> >               OS: Red Hat Enterprise Linux Server 7.2 (Maipo)
-> >             Unit:
-> >             docker-cc8d10c7b9892b75843d200d54d34a3a9435fe0f65527c254ebfd2d
-> >                   43494 sleep 3000
-> 
-> Use CVE-2016-6349.
-It turns out this CVE is against oci-register-machine NOT systemd. The fix is here,
-
-https://github.com/projectatomic/oci-register-machine/pull/22
-
-   CAI Qian
