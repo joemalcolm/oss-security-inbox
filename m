@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/2
-Message-ID: <f7e04c7b-c860-57cd-0adf-db3c469bec40@apache.org>
-Date: Mon, 13 Jul 2026 02:17:45 +0000
-From: Yu Qi <yuqi4733@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/11
+Message-ID: <c67b96c7-404b-7f60-9058-47ac7c02e549@apache.org>
+Date: Mon, 08 Jun 2026 12:50:49 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49876: Apache Gravitino: Authenticated SSRF in Gravitino JobManager allows server-side HTTP requests to internal network and cloud metadata endpoints via unvalidated job template URIs 
+Subject: CVE-2026-44119: Apache HTTP Server: escalation of privilege through expressions in .htaccess in multiple modules 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Gravitino (org.apache.gravitino:gravitino-core) 1.0.0 through 1.2.1
+- Apache HTTP Server 2.4.0 through 2.4.67
 
 Description:
 
-Authenticated SSRF in Gravitino JobManager allows server-side HTTP requests to internal network and cloud metadata endpoints via unvalidated job template URIs. A vulnerability in Apache Gravitino.
+Improper Privilege Management vulnerability in Apache HTTP Server 2.4.67 and earlier allows local .htaccess authors to read files with the privileges of the httpd user.
 
-This issue affects Apache Gravitino: from 1.0.0 through 1.2.1.
+This issue affects Apache HTTP Server: from through 2.4.67.
 
-Users are recommended to upgrade to version 1.3.0, which fixes the issue.
+Users are recommended to upgrade to version 2.4.68, which fixes the issue.
+
+Credit:
+
+Lucian Nitescu (finder)
+as3617 (@real_as3617) at ENKI Whitehat (finder)
+Zhang San (finder)
+Martin Petrák (finder)
+joaovicdev (finder)
+Rooting | Lucas Torres (finder)
+R4mbb of KRsecurity (finder)
+gggggggga@...omi ShadowBlade Security Lab (finder)
+NikKrian of H3C Security Center(h3c.com) (finder)
+lokerxx (finder)
 
 References:
 
-https://gravitino.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-49876
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44119
+
+Timeline:
+
+2026-05-05: reported
+2026-06-05: fixed in 2.4.x by r1935017
+2026-06-08: 2.4.68 released
 
