@@ -1,34 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/11
-Message-ID: <e28cb6eb-fb13-3841-3088-9032930b611f@apache.org>
-Date: Mon, 29 Jun 2026 18:35:33 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/15
+Message-ID: <4e805602-85cf-a283-ed08-c6fd9118c342@apache.org>
+Date: Mon, 08 Jun 2026 12:51:46 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50750: Apache ActiveMQ Broker, Apache ActiveMQ, Apache ActiveMQ All: Pre-authentication OpenWire DoS following fix for CVE-2026-49270 
+Subject: CVE-2026-48913: Apache HTTP Server: mod_http2 memory corruption when file handles exhausted 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low 
 
 Affected versions:
 
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 5.19.7 before 5.19.8
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.2.6 before 6.2.7
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 5.19.7 before 5.19.8
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.2.6 before 6.2.7
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 5.19.7 before 5.19.8
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.2.6 before 6.2.7
+- Apache HTTP Server 2.4.55 through 2.4.67
 
 Description:
 
-Denial of Service via Out of Memory vulnerability in Apache ActiveMQ Broker, Apache ActiveMQ, Apache ActiveMQ All.
+Use After Free vulnerability in Apache HTTP Server module mod_http2 when file handles are already exhausted.
 
-Following the fix for  CVE-2026-49270 an unauthenticated attacker can now cause broker OOM by sending an repeated BrokerInfo commands without sending a ConnectionInfo, until the broker will crash with OOM.
-This issue affects Apache ActiveMQ Broker: from 5.19.7 before 5.19.8, from 6.2.6 before 6.2.7; Apache ActiveMQ: from 5.19.7 before 5.19.8, from 6.2.6 before 6.2.7; Apache ActiveMQ All: from 5.19.7 before 5.19.8, from 6.2.6 before 6.2.7.
+This issue affects Apache HTTP Server: from 2.4.55 through 2.4.67.
 
-Users are recommended to upgrade to version 6.2.7, which fixes the issue.
+Credit:
+
+Sam Lovejoy, IBM X-Force Offensive Research (XOR) (finder)
 
 References:
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50750
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-48913
+
+Timeline:
+
+2026-05-22: reported
+2026-06-03: fixed in 2.4.x by r1934882
+2026-06-08: 2.4.68 released
 
