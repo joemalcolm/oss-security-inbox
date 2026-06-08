@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/3
-Message-ID: <b7a8b5a8-0a47-7e3b-eafd-79130fd2a96e@apache.org>
-Date: Mon, 31 Aug 2026 06:44:13 +0000
-From: Emond Papegaaij <papegaaij@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/14
+Message-ID: <99be4a95-5ea9-167a-21c5-56ef7fe3ca20@apache.org>
+Date: Mon, 08 Jun 2026 12:51:36 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76983: Apache Wicket: XSS in AutoLabelTextResolver via FormComponent.setLabel 
+Subject: CVE-2026-44631: Apache HTTP Server: Heap Underflow in `ap_regname` via Signed Char Overflow 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: low 
 
 Affected versions:
 
-- Apache Wicket (org.apache.wicket:wicket-core) 8.0.0 through 8.18.0
-- Apache Wicket (org.apache.wicket:wicket-core) 9.0.0 through 9.23.0
-- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
+- Apache HTTP Server 2.4.0 through 2.4.67
 
 Description:
 
-Improper neutralization of input during web page generation in Apache Wicket.
+Buffer Underwrite vulnerability in Apache HTTP Server on crafted regular expressions in the configuration.
 
-The <wicket:label> tag is provided by org.apache.wicket.markup.html.form.AutoLabelTextResolver, which is registered by default in every WebApplication. The resolver writes the label it finds into the markup as it is, and reads no escaping setting at all, so markup in a label is rendered as markup.
+This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.
 
-When the label comes from the labelled component's label model, set through FormComponent#setLabel(IModel), it is written to the markup unescaped. An application is affected where the label of a form component holds data an attacker can influence. Wicket cannot determine where a model value comes from, so whether it reaches the page from a request or from storage is a property of the application.
-
-There is no workaround. Unlike every other rendering path in Wicket, the resolver never consulted the escape-model-strings setting, so an application had no way to ask for the label to be escaped.
-
-The body of a <wicket:label> tag is markup by design and is not affected; it remains the supported way to place markup in a label.
-
-This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases from 1.5.0 onwards are also affected. Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
+Users are recommended to upgrade to version 2.4.68, which fixes the issue.
 
 Credit:
 
-Ho1aAs (finder)
+Zhenpeng (Leo) Lin at depthfirst (finder)
+Bartlomiej Dmitruk (finder)
 
 References:
 
-https://wicket.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76983
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44631
+
+Timeline:
+
+2026-04-27: reported
+2026-06-05: fixed in 2.4.x by r1935015
+2026-06-08: 2.4.68 released
 
