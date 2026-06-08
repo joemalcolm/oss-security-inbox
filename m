@@ -1,42 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/23
-Message-ID: <107e44a4-6ed7-6638-af97-a206d701ac93@apache.org>
-Date: Mon, 14 Sep 2026 08:47:17 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/12
+Message-ID: <b53ce165-438a-e2d0-c523-fbb2fecd70fa@apache.org>
+Date: Mon, 08 Jun 2026 12:51:02 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-87779: Apache Syncope: AES Secret Key disclosure via log output 
+Subject: CVE-2026-44185: Apache HTTP Server: Stack Buffer Over-Read in mod_ssl OCSP `send_request` 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0.15 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0.3 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.1.0-M0 through 4.1.2
+- Apache HTTP Server 2.4.0 through 2.4.67
 
 Description:
 
-Insertion of sensitive information into log file vulnerability in Apache Syncope.
+Buffer Over-read vulnerability in Apache HTTP Server via outbound OCSP requests to an attacker controlled OCSP server
 
+This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.
 
-
-When AES key of non-standard length (not 16/24/32 bytes) is configured, Syncope will pad the provided value with random characters. The resulting key value is logged.
-
-
-
-This issue affects Apache Syncope: from 3.0.15 through 3.0.16, from 4.0.3 through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+Users are recommended to upgrade to version 2.4.68, which fixes the issue.
 
 Credit:
 
-CyberLeo (finder)
+Zhenpeng (Leo) Lin at depthfirst (finder)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-87779
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44185
+
+Timeline:
+
+2026-04-27: reported
+2026-06-03: fixed in 2.4.x by r1934919
+2026-06-08: 2.4.68 released
 
