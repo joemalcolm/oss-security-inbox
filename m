@@ -1,80 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/16
-Message-ID: <am0jFV0UVdd1v2PB@yuggoth.org>
-Date: Fri, 31 Jul 2026 22:35:07 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/10
+Message-ID: <0ef2c601-406b-2c68-16c7-5e558b7e0c8a@apache.org>
+Date: Mon, 08 Jun 2026 12:50:42 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Some Changes to GNOME Security Tracking
+Subject: CVE-2026-43951: Apache HTTP Server: OOB Read in `merge_response_headers` can cause crash 
 Content-Type: text/plain; charset=utf-8
 
-On 2026-07-31 13:51:21 -0700 (-0700), Russ Allbery wrote:
-[...]
-> One solution that anyone in open source software communities has heard 
-> about for decades now is to turn open source software maintenance into a 
-> job with a paycheck. Then it doesn't necessarily have to be fun; there are 
-> other compensations instead, just as there are with all the other things 
-> we do for a paycheck that we wouldn't do voluntarily. Some larger 
-> projects, and even some small projects that invested effort into money 
-> raising, have made this transition and the people working on those 
-> projects are at least partly doing so for a paycheck.
-[...]
+Severity: moderate 
 
-Conversely, for a lot of the projects I'm involved with, a majority 
-of contributors are paid by their employers for their involvement. 
-The challenge becomes: they often only have time to work on features 
-or fixes important to their employer's product/device and not on the 
-commons (keeping documentation updated, tests working, defect 
-reports tracked, evolving ecosystem packaging standards met, new 
-backward-incompatibilities in dependencies dealt with, and so on). 
-If convincing companies to pay people to work upstream is hard, 
-convincing them to pay people to work on the most important boring 
-bits is nigh impossible.
+Affected versions:
 
-What's become clear to me over the years is that corporate 
-contribution in collaborative open source communities isn't all that 
-different from volunteer hobbyist involvement, everybody's still 
-scratching their own itches it's just that the employed contributors 
-are scratching the itch of some company rather than a personal one.
+- Apache HTTP Server 2.4.0 through 2.4.67
 
-Even with money, the tragedy of the commons remains tragic, or 
-perhaps becomes even more so. Each company involved has little 
-incentive to help with the commons if they think there's a chance 
-that avoiding doing so will cause another company (perhaps even a 
-competitor) to do it instead and assume the related expense.
+Description:
 
-> I think open source software is coming face to face with a 
-> motivation crisis that has been building for a long time. The 
-> large projects with funding ecosystems and heavy corporate 
-> involvement will be fine; they have already largely switched from 
-> volunteer motivations to paid employment motivations, and can 
-> complete that switch.
-[...]
+Out-of-bounds Read vulnerability in Apache HTTP Server with mod_headers and mod_mime and multiple response languages.
 
-And yet even they are mostly falling into the "can't someone else do 
-it?" trap. At least in my communities, maintenance of the commons 
-ends up being shouldered by a vanishing few whose employers are 
-gracious enough to pay them to work on whatever those individuals 
-think is actually important to get done, rather than only on 
-directly marketable product features or support for a specific 
-vendor's hardware.
+This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.
 
-Vulnerability management is part of that under-resourced commons, 
-but a part which requires deep understanding of the software and how 
-it's used, as well as the nuances of navigating the whole of the 
-developer community. It isn't a task that a company can just throw 
-warm bodies at and certainly not something that outside consultants 
-are going to have much success with, even if they have a general 
-understanding of software security and coordinated disclosure norms.
+Credit:
 
-Now we seem to be able to get some companies to care about security 
-in the free/libre open source software on which their businesses 
-rely (whether through a newfound sense of self-preservation or 
-because their lawyers tell them complying with recent regulations is 
-important). The problem I'm facing is that we need a good way to 
-explain to them that helping with the whole of the understaffed 
-commons in these projects frees up existing maintainers to focus on 
-making the software more secure.
--- 
-Jeremy Stanley
+Zhenpeng (Leo) Lin at depthfirst (finder)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-43951
+
+Timeline:
+
+2026-04-27: reported
+2026-06-05: fixed in 2.4.x by r1935006
+2026-06-08: 2.4.68 released
+
