@@ -1,65 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/01/6
-Message-ID: <ed3c725b-8321-4a51-8ada-03532573b44f@oracle.com>
-Date: Fri, 31 Jul 2026 19:33:16 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/13
+Message-ID: <c4e0faa3-61c5-0eb7-3806-08689cb2db33@apache.org>
+Date: Mon, 08 Jun 2026 12:51:13 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Rails CVE-2026-66066: Possible arbitrary file read and remote code execution in Active Storage variant processing
+Subject: CVE-2026-44186: Apache HTTP Server: Loop in `proxy_ftp_handler` in mod_proxy_ftp 
 Content-Type: text/plain; charset=utf-8
 
-On 7/29/2026 3:46 PM, Alan Coopersmith wrote:
-> https://github.com/rails/rails/security/advisories/GHSA-xr9x-r78c-5hrm
-> advises:
->> Possible arbitrary file read and remote code execution in Active Storage
->>  variant processing
->>
->> Critical
->>
->> byroot published GHSA-xr9x-r78c-5hrm 29 July 2026
->>
-[...]
->> Disclosure
->> ----------
->>
->> Technical details of the attack chain are intentionally omitted from this
->> advisory. They would add nothing to an administrator's decision to 
->> upgrade,
->> while making it substantially easier to attack applications that have 
->> not yet
->> done so.
->>
->> Details will be disclosed no later than 2026-08-28, via the Rails 
->> Security
->> Announcements forum:
->> https://discuss.rubyonrails.org/c/security-announcements/9
+Severity: moderate 
 
-That further disclosure has happened now, announced at:
-https://discuss.rubyonrails.org/t/cve-2026-66066-attack-details-and-tools-to-perform-a-forensic-investigation/91441
+Affected versions:
 
-> We originally intended to publish these details no later than
-> 2026-08-28, but several researchers quickly reverse-engineered the
-> attack and have already published proofs-of-concept. As a result, we are
-> disclosing details about the attack now, along with some tools to help
-> assess whether an application was vulnerable and to help examine the
-> forensic evidence for signs of secret exfiltration.
-> 
-> We have published all of this in a git repository,
-> <https://github.com/rails/rails-forensics-CVE-2026-66066>, 
-> which contains:
-> 
->  * reference/the-attack.md explains how the attack works, step by step,
->    from the incoming request to the file being read.
->  * reference/the-investigation.md explains what evidence the attack
->    leaves behind in your database and your object store, and what that
->    evidence does and does not prove.
->  * The kr2s-was-i-vulnerable agent skill works out whether your
->    application was ever vulnerable, and if it was, over what period of
->    time.
->  * The kr2s-was-i-exploited agent skill searches your Active Storage
->    data for the crafted files, and works out what was read if it finds
->    any.
+- Apache HTTP Server 2.4.0 through 2.4.67
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Description:
+
+Loop with Unreachable Exit Condition ('Infinite Loop') vulnerability in the mod_proxy_ftp module in Apache HTTP Server with an attacker controlled backend FTP server.
+
+This issue affects undefined: from 2.4.0 through 2.4.67.
+
+Users are recommended to upgrade to version 2.4.68, which fixes the issue.
+
+Credit:
+
+Zhenpeng (Leo) Lin at depthfirst (finder)
+
+References:
+
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44186
+
+Timeline:
+
+2026-04-27: reported
+2026-06-05: fixed in 2.4.x by r1935004
+2026-06-08: 2.4.68 released
 
