@@ -1,37 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/22
-Message-ID: <20260913150713.GA17387@openwall.com>
-Date: Sun, 13 Sep 2026 17:07:13 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/2
+Message-ID: <87f30e0e-5096-d923-aa6f-625e916cf530@apache.org>
+Date: Tue, 09 Jun 2026 05:14:10 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: AI slops from Eve
+Subject: CVE-2026-34905: Apache Answer: Unlisted Questions Accessible via Direct API Access 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Sep 13, 2026 at 10:33:41AM +0200, Jeroen Roovers wrote:
-> On Thu, 10 Sep 2026 03:35:42 +0200 Solar Designer <solar@...nwall.com> wrote:
-> 
-> > These messages lack a Date header, but they arrived to the list server
-> > on September 9 starting 6am UTC and until 11am UTC.
-> 
-> Could this be from the same or a similar source as a message from 15 May
-> 2026[1], also without Date header, with the subject "[oss-security]
-> Security Advisory: Multiple Vulnerabilities in llama.cpp GGUF Format
-> Parsers"?
-> 
-> 
-> Kind regards,
->      jer
-> 
-> 
-> 
-> [1] Received: (qmail 20439 invoked by uid 550); 15 May 2026 19:33:58
-> -0000
+Severity: moderate 
 
-It could be, but I see little similarity other than missing Date header
-and the use of an LLM.
+Affected versions:
 
-These could be fun to investigate, but luckily we don't currently have a
-major problem with any particular sender or software or model they use,
-so there's no need.
+- Apache Answer through 2.0.0
 
-Alexander
+Description:
+
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Answer.
+
+This issue affects Apache Answer: through 2.0.0.
+
+The unlisted question feature did not enforce access restrictions on direct API endpoints, allowing authenticated users to discover and access unlisted questions, their answers, comments, and revision history.
+Users are recommended to upgrade to version 2.0.1, which fixes the issue.
+
+Credit:
+
+Hamed Kohi (reporter)
+
+References:
+
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-34905
+
