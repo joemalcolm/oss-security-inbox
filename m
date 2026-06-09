@@ -1,38 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/5
-Message-ID: <b4acad23-c60f-352f-77a4-86875ea6071b@apache.org>
-Date: Mon, 31 Aug 2026 06:43:54 +0000
-From: Emond Papegaaij <papegaaij@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76985: Apache Wicket: XSS in Palette via getAdditionalAttributes 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/10
+Message-ID: <336dcfa1-286b-4151-8552-bcd0f3784a0f@cpansec.org>
+Date: Tue, 9 Jun 2026 08:41:40 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2009-10007: Catalyst::Plugin::Authentication versions before 0.10_027 for Perl is susceptible to session fixation attacks
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
 
-Affected versions:
+========================================================================
+CVE-2009-10007                                       CPAN Security Group
+========================================================================
 
-- Apache Wicket (org.apache.wicket:wicket-extensions) 8.0.0 through 8.18.0
-- Apache Wicket (org.apache.wicket:wicket-extensions) 9.0.0 through 9.23.0
-- Apache Wicket (org.apache.wicket:wicket-extensions) 10.0.0 through 10.10.0
+         CVE ID:  CVE-2009-10007
+   Distribution:  Catalyst-Plugin-Authentication
+       Versions:  before 0.10_027
 
-Description:
+       MetaCPAN: https://metacpan.org/dist/Catalyst-Plugin-Authentication
+       VCS Repo: 
+https://github.com/perl-catalyst/Catalyst-Plugin-Authentication
 
-Improper neutralization of input during web page generation in Apache Wicket.
 
-org.apache.wicket.extensions.markup.html.form.palette.component.AbstractOptions, which renders the two option lists of a Palette, escapes the id and the display value of each option according to the escape-model-strings setting, and wrote the attribute names and values returned by getAdditionalAttributes into the <option> tag as they came.
+Catalyst::Plugin::Authentication versions before 0.10_027 for Perl is
+susceptible to session fixation attacks
 
-An application is affected where it overrides Palette.getAdditionalAttributesForChoices, Palette.getAdditionalAttributesForSelection or AbstractOptions.getAdditionalAttributes and returns a value holding data an attacker can influence. These methods return null by default, so an application that does not override them is not affected.
+Description
+-----------
+Catalyst::Plugin::Authentication versions before 0.10_027 for Perl is
+susceptible to session fixation attacks.
 
-As a workaround, escape the values in the override.
+Catalyst::Plugin::Authentication does not automatically change the
+session id after authentication. An attacker that obtains a session id
+cookie can use this to impersonate the victim.
 
-This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases from 1.4.0 onwards are also affected. Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
+Problem types
+-------------
+- CWE-384 Session Fixation
 
-Credit:
+Workarounds
+-----------
+Users of Catalyst::Plugin::Session or Catalyst::Plugin::Starch should
+call the change_session_id method after authentication.
 
-Emond Papegaaij (finder)
+Users of Plack::Middleware::Session should set the change_id flag after
+logging in.
 
-References:
+Users may also apply the linked patch.
 
-https://wicket.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76985
+
+Solutions
+---------
+Users should upgrade to version 0.10_027 or later.
+
+
+References
+----------
+https://metacpan.org/release/ETHER/Catalyst-Plugin-Authentication-0.10_027/changes
+https://github.com/perl-catalyst/Catalyst-Plugin-Authentication/commit/b1385ea87a2491b64f33169222af19982d0acce3.patch
+https://metacpan.org/pod/Catalyst::Plugin::Session#change_session_id
+https://metacpan.org/pod/Plack::Middleware::Session#change_id
+
+Timeline
+--------
+- 2009-07-08: Catalyst::Plugin::Session version 0.25 released with the
+   change_session_id method to protect against session fixation attacks,
+   along with documentation how to use that with
+   Catalyst::Plugin::Authentication
+- 2026-06-07: Catalyst::Plugin::Authentication version 0.10_027
+   released with change to avoid session fixation attacks
+
+
 
