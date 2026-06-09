@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/17
-Message-ID: <2885d36c-be57-431e-a1f7-70bc3d66d549@brondsema.net>
-Date: Wed, 12 Aug 2026 12:27:44 -0400
-From: Dave Brondsema <dave@...ndsema.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/3
+Message-ID: <fb25a14c-da51-eae7-d577-ec9d1b5c675e@apache.org>
+Date: Tue, 09 Jun 2026 05:14:38 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-73238: Apache Allura: XSS in code display
+Subject: CVE-2026-34033: Apache Answer: HTML Content Injection in Email 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+Severity: important 
 
 Affected versions:
 
-- Apache Allura before 1.19.1
+- Apache Answer through 2.0.0
 
 Description:
 
-XSS vulnerability in code display in Apache Allura.
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS) vulnerability in Apache Answer.
 
-This issue affects Apache Allura: before 1.19.1.
+This issue affects Apache Answer: through 2.0.0.
 
-Users are recommended to upgrade to version 1.19.1, which fixes the issue.
+User-supplied content was included in notification emails without proper escaping, allowing authenticated users to inject arbitrary HTML into emails sent to other users.
+Users are recommended to upgrade to version 2.0.1, which fixes the issue.
+
+Credit:
+
+Reimar Fritz (reporter)
 
 References:
 
-https://allura.apache.org/posts/2026-allura-1.19.1.html
-https://allura.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-73238
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-34033
 
