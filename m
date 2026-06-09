@@ -1,211 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/25/9
-Message-ID: <99a03fbb-ebbb-47bb-8ba2-dc65f5674030@gmail.com>
-Date: Tue, 25 Aug 2026 15:28:54 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/5
+Message-ID: <54fc3b36-4e95-10c8-26e3-37f57dfcb600@apache.org>
+Date: Tue, 09 Jun 2026 05:15:39 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2026-037] OpenStack Keystone: Inconsistent scope enforcement for delegated tokens (CVE-2026-80182, CVE-2026-80184)
+Subject: CVE-2026-33582: Apache Answer: Uploading specially crafted TIFF files causes an Out-of-Memory error 
 Content-Type: text/plain; charset=utf-8
 
-==============================================================================
-OSSA-2026-037: Inconsistent scope enforcement for delegated tokens in 
-Keystone
-==============================================================================
+Severity: important 
 
-:Date: August 25, 2026
-:CVE: CVE-2026-80182,
-       CVE-2026-80184
+Affected versions:
 
+- Apache Answer through 2.0.0
 
-Affects
-~~~~~~~
-- Keystone: >=13.0.0 <27.0.3, >=28.0.0 <28.0.3, >=29.0.0 <29.0.3
+Description:
 
+Unrestricted Upload of File with Dangerous Type vulnerability in Apache Answer.
 
-Description
-~~~~~~~~~~~
-Grzegorz Grasza (Red Hat) reported that OpenStack Keystone did not
-consistently block delegated tokens from creating new long-lived
-credentials or authorizing new delegations. Tim Shephard (roiai.ca)
-separately reported that delegated tokens could be submitted to the
-token-method authentication path to escape their project scope.
+This issue affects Apache Answer: through 2.0.0.
 
-A token scoped through an OAuth1 access token, an application
-credential, or a trust could create new long-lived credentials or
-authorize new delegations that persist independently of, and outlive,
-the credential used to obtain them. Separately, tokens obtained
-through any of these delegation mechanisms could be submitted to the
-token-method authentication path for reauthentication. When an
-application credential token was presented with no explicit scope,
-Keystone would issue a new token scoped to the credential owner's
-default project rather than the project for which the credential was
-issued, escaping the intended project boundary.
+A crafted TIFF image could trigger excessive memory allocation during image decoding, allowing an authenticated user to cause the server process to crash.
+Users are recommended to upgrade to version 2.0.1, which fixes the issue.
 
-All Keystone deployments that permit delegated authentication through
-OAuth1 access tokens, application credentials, or trusts are affected.
+Credit:
 
+Andy Gill, ZephrSec Ltd (reporter)
 
+References:
 
-Errata
-~~~~~~
-CVE-2026-80182 and CVE-2026-80184 have been assigned for these 
-vulnerabilities.
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-33582
 
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/1002307 (2025.1/epoxy)
-- https://review.opendev.org/1002308 (2025.1/epoxy)
-- https://review.opendev.org/1002305 (2025.2/flamingo)
-- https://review.opendev.org/1002306 (2025.2/flamingo)
-- https://review.opendev.org/1002303 (2026.1/gazpacho)
-- https://review.opendev.org/1002304 (2026.1/gazpacho)
-- https://review.opendev.org/1002301 (2026.2/hibiscus (development))
-- https://review.opendev.org/1002302 (2026.2/hibiscus (development))
-
-
-Credits
-~~~~~~~
-- Grzegorz Grasza from Red Hat (CVE-2026-80182)
-- Tim Shephard from roiai.ca (CVE-2026-80184)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2153453
-- https://launchpad.net/bugs/2158538
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80182
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-80184
-
-
-Notes
-~~~~~
-- The two patch sets are interdependent and must be applied together.
-   The token reauthentication guard introduced by the second patch
-   depends on the delegation classification logic and the new ``[auth]
-   additional_primary_auth_methods`` configuration option introduced by
-   the first. Packaging or applying a subset is not supported.
-- After upgrading, Keystone treats any authentication method not built
-   in to Keystone as a delegated credential and rejects it from guarded
-   operations (managing trusts, application credentials, and OAuth1
-   access tokens, and token reauthentication). Deployments running a
-   custom or third-party authentication plugin must add it to ``[auth]
-   additional_primary_auth_methods`` or those authentication flows will
-   fail.
-- This advisory does not address a related weakness in EC2 credential
-   (``ec2credential``) handling, which is being tracked and fixed in
-   public and will be covered by a separate OpenStack Security Note
-   (OSSN).
-- A related fix to the Keystone Tempest plugin test suite was proposed
-   at https://review.opendev.org/1002296
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2026-08-25 - Errata 1
-- 2026-08-25 - Original Version
-
---
-Goutham Pacha Ravi
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
-
-On 8/25/26 10:06 AM, Goutham Pacha Ravi wrote:
-> ==============================================================================
-> OSSA-2026-037: Inconsistent scope enforcement for delegated tokens in 
-> Keystone
-> ==============================================================================
-> 
-> :Date: August 25, 2026
-> :CVE: CVE-2026-pending,
->        CVE-2026-pending
-> 
-> 
-> Affects
-> ~~~~~~~
-> - Keystone: >=13.0.0 <27.0.3, >=28.0.0 <28.0.3, >=29.0.0 <29.0.3
-> 
-> 
-> Description
-> ~~~~~~~~~~~
-> Grzegorz Grasza (Red Hat) reported that OpenStack Keystone did not
-> consistently block delegated tokens from creating new long-lived
-> credentials or authorizing new delegations. Tim Shephard (roiai.ca)
-> separately reported that delegated tokens could be submitted to the
-> token-method authentication path to escape their project scope.
-> 
-> A token scoped through an OAuth1 access token, an application
-> credential, or a trust could create new long-lived credentials or
-> authorize new delegations that persist independently of, and outlive,
-> the credential used to obtain them. Separately, tokens obtained
-> through any of these delegation mechanisms could be submitted to the
-> token-method authentication path for reauthentication. When an
-> application credential token was presented with no explicit scope,
-> Keystone would issue a new token scoped to the credential owner's
-> default project rather than the project for which the credential was
-> issued, escaping the intended project boundary.
-> 
-> All Keystone deployments that permit delegated authentication through
-> OAuth1 access tokens, application credentials, or trusts are affected.
-> 
-> 
-> Patches
-> ~~~~~~~
-> - https://review.opendev.org/1002307 (2025.1/epoxy)
-> - https://review.opendev.org/1002308 (2025.1/epoxy)
-> - https://review.opendev.org/1002305 (2025.2/flamingo)
-> - https://review.opendev.org/1002306 (2025.2/flamingo)
-> - https://review.opendev.org/1002303 (2026.1/gazpacho)
-> - https://review.opendev.org/1002304 (2026.1/gazpacho)
-> - https://review.opendev.org/1002301 (2026.2/hibiscus (development))
-> - https://review.opendev.org/1002302 (2026.2/hibiscus (development))
-> 
-> 
-> Credits
-> ~~~~~~~
-> - Grzegorz Grasza from Red Hat
-> - Tim Shephard from roiai.ca
-> 
-> 
-> References
-> ~~~~~~~~~~
-> - https://launchpad.net/bugs/2153453
-> - https://launchpad.net/bugs/2158538
-> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
-> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
-> 
-> 
-> Notes
-> ~~~~~
-> - Two CVEs have been requested from MITRE for these vulnerabilities and
->    are pending assignment.
-> - The two patch sets are interdependent and must be applied together.
->    The token reauthentication guard introduced by the second patch
->    depends on the delegation classification logic and the new ``[auth]
->    additional_primary_auth_methods`` configuration option introduced by
->    the first. Packaging or applying a subset is not supported.
-> - After upgrading, Keystone treats any authentication method not built
->    in to Keystone as a delegated credential and rejects it from guarded
->    operations (managing trusts, application credentials, and OAuth1
->    access tokens, and token reauthentication). Deployments running a
->    custom or third-party authentication plugin must add it to ``[auth]
->    additional_primary_auth_methods`` or those authentication flows will
->    fail.
-> - This advisory does not address a related weakness in EC2 credential
->    (``ec2credential``) handling, which is being tracked and fixed in
->    public and will be covered by a separate OpenStack Security Note
->    (OSSN).
-> - A related fix to the Keystone Tempest plugin test suite was proposed
->    at https://review.opendev.org/1002296
-> 
-> -- 
-> Goutham Pacha Ravi
-> OpenStack Vulnerability Management Team
-> https://security.openstack.org/vmt.html
-
-
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
