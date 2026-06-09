@@ -1,29 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/8
-Message-ID: <656961d0-50cf-8693-fd88-7d7fdd76b53a@apache.org>
-Date: Sun, 09 Aug 2026 04:30:17 +0000
-From: Velmurugan Periasamy <vel@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/7
+Message-ID: <80f64502-5d75-f453-a275-a1ad17a7fbc7@apache.org>
+Date: Tue, 09 Jun 2026 05:16:37 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-55814: Apache Ranger: Download APIs expose plugin data without authentication 
+Subject: CVE-2026-25688: Apache Answer: XSS in AI Answer Rendering 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: critical 
 
 Affected versions:
 
-- Apache Ranger through 2.8.0
+- Apache Answer through 2.0.0
 
 Description:
 
-Missing Authentication in Apache Ranger Download APIs on versions <= 2.8.0.
-Users are recommended to upgrade to version [FIXED_VERSION], which fixes this issue.
+Improper Neutralization of Alternate XSS Syntax vulnerability in Apache Answer.
+
+This issue affects Apache Answer: through 2.0.0.
+
+AI-generated response content was rendered in the browser without proper sanitization, allowing malicious scripts to be executed when the content was viewed.
+Users are recommended to upgrade to version 2.0.1, which fixes the issue.
 
 Credit:
 
-Andrew Rukin (Arenadata) (finder)
+Sho Odagiri (reporter)
 
 References:
 
-https://ranger.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-55814
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-25688
 
