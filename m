@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/11
-Message-ID: <aj1JdafbLcKkL1My@pjcj.com>
-Date: Thu, 25 Jun 2026 18:26:54 +0200
-From: Paul Johnson <paul@...j.net>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-12844: List::SomeUtils::XS versions before 0.59 for Perl have a heap buffer overflow in the pairwise function
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/8
+Message-ID: <d3ec642c-4549-b380-fc88-4c222bb4a916@apache.org>
+Date: Tue, 09 Jun 2026 07:37:45 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-49818: Apache Airflow Samba provider: Path traversal in GCSToSambaOperator via GCS object names 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-12844                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-        CVE ID:  CVE-2026-12844
-  Distribution:  List-SomeUtils-XS
-      Versions:  before 0.59
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/List-SomeUtils-XS
-      VCS Repo:  https://github.com/houseabsolute/List-SomeUtils-XS
+- Apache Airflow Samba provider (apache-airflow-providers-samba) before 4.12.6
 
+Description:
 
-List::SomeUtils::XS versions before 0.59 for Perl have a heap buffer
-overflow in the pairwise function
+The Apache Airflow Samba provider's `GCSToSambaOperator` joined GCS object names to the SMB destination path without a containment check, so an object named with `../` segments resolved a write path outside the configured `destination_path`. An attacker able to write objects into the source GCS bucket — typically an external data producer distinct from the trusted DAG author — could write files to arbitrary locations on the Samba target when the operator ran. Upgrade apache-airflow-providers-samba to 4.12.6 or later, which validates the resolved destination stays within `destination_path`.
 
-Description
------------
-List::SomeUtils::XS versions before 0.59 for Perl have a heap buffer
-overflow in the pairwise function.
+Credit:
 
-pairwise() collects the values returned by the block into a heap buffer
-sized to the longer input array, then grows the buffer before each copy
-with a single quadrupling (alloc <<= 2) instead of a loop. A block call
-that returns more than four times the current allocation in one
-invocation outgrows that one quadrupling, and the copy writes past the
-end of the buffer.
+secuholic (finder)
+Jarek Potiuk (remediation developer)
 
-Any caller of pairwise() whose block returns, for a single pair, more
-than four times the longer input array's length writes past the buffer
-and corrupts the heap.
+References:
 
-Problem types
--------------
-- CWE-787 Out-of-bounds Write
-- CWE-122 Heap-based Buffer Overflow
+https://github.com/apache/airflow/pull/67857
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49818
 
-Solutions
----------
-Upgrade to List::SomeUtils::XS 0.59 or later.
-
-
-References
-----------
-https://github.com/houseabsolute/List-SomeUtils-XS/commit/22549f78669b780d6aa338a2d2e49a3dedfffaa6.patch
-https://metacpan.org/release/DROLSKY/List-SomeUtils-XS-0.59/changes
-
--- 
-Paul Johnson - paul@...j.net
