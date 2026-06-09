@@ -1,44 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/7
-Message-ID: <644e2e36-ff30-4dff-a77c-305980eecca8@oracle.com>
-Date: Wed, 29 Jul 2026 12:08:23 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/1
+Message-ID: <50634ab6-292f-4821-9254-108dea918cef@hauke-m.de>
+Date: Tue, 9 Jun 2026 22:32:10 +0200
+From: Hauke Mehrtens <hauke@...ke-m.de>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [CVE-2026-13346] pip absolute path traversal during download from malicious package indexes
+Cc: David Bauer <mail@...id-bauer.net>
+Subject: How to request CVE numbers?
 Content-Type: text/plain; charset=utf-8
 
-https://www.cve.org/CVERecord?id=CVE-2026-13346 currently shows
-all pip versions before 26.2 as affected by this CVE.
+Hi,
 
+How to get a CVE number as a community driven open source project 
+(OpenWrt)? We do not have a security department or a big company backing us.
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-13346] pip absolute path 
-traversal during download from malicious package indexes
-Date: 	Wed, 29 Jul 2026 18:35:14 +0000
-From: 	Seth Larson <seth@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
+Multiple security problems were reported to OpenWrt in the last few 
+months. We want to assign CVE numbers to these problems, but have 
+problems requesting numbers.
 
-There is a  MEDIUM severity vulnerability affecting pip.
+We contacted mitre in the past, but did not got a response within 2 
+weeks. Using github security advisories worked fine 2 months ago, we got 
+a CVE number in some days. Currently this does not work any more, we are 
+already waiting for 1 week.
 
-pip would incorrectly handle doubly-encoded package URLs from indexes 
-allowing for files to be installed to arbitrary locations on disk even 
-when installing wheels.
+How to get a CVE number?
 
-This vulnerability requires downloading or installing a package from a 
-malicious package index to succeed, malicious packages alone are not 
-able to exploit this vulnerability. Note that this vulnerability only 
-materially impacts users running `pip download` with the `--only-binary` 
-option as installing source distributions from an untrusted index is 
-already an unsafe operation that executes code during install time.
+We (OpenWrt) are a community driven open source project and got multiple 
+reports from individuals and organizations like OpenAI.
 
-Please see the linked CVE ID for the latest information on affected 
-versions:
+We requested multiple CVE Numbers on github for this project: 
+https://github.com/openwrt/odhcpd
 
-* https://www.cve.org/CVERecord?id=CVE-2026-13346
-* https://github.com/pypa/pip/pull/14110
-
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
-
+Hauke
