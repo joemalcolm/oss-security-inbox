@@ -1,51 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/14/14
-Message-ID: <b8275403-563a-4059-9c8c-d561c41d3462@cpansec.org>
-Date: Tue, 14 Jul 2026 16:39:05 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-60081: DBI::ProfileData versions before 1.651 for Perl do not limit the path index
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/6
+Message-ID: <97907fb9-3649-a637-1e93-258f2c185881@apache.org>
+Date: Tue, 09 Jun 2026 05:16:09 +0000
+From: Enxin Xie <linkinstar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-25699: Apache Answer: Authorization Bypass in Timeline API 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
 
-========================================================================
-CVE-2026-60081                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-60081
-   Distribution:  DBI
-       Versions:  before 1.651
+- Apache Answer through 2.0.0
 
-       MetaCPAN:  https://metacpan.org/dist/DBI
-       VCS Repo:  https://github.com/perl5-dbi/dbi
+Description:
 
+Exposure of Private Personal Information to an Unauthorized Actor vulnerability in Apache Answer.
 
-DBI::ProfileData versions before 1.651 for Perl do not limit the path
-index
+This issue affects Apache Answer: through 2.0.0.
 
-Description
------------
-DBI::ProfileData versions before 1.651 for Perl do not limit the path
-index.
+Timeline-related APIs lacked proper authorization checks, allowing regular authenticated users to access deleted, private, or unapproved content and its revision history.
+Users are recommended to upgrade to version 2.0.1, which fixes the issue.
 
-The path index column of profile dump files is used to allocate an
-array of data for the parser. An unbounded value allows an attacker to
-specify a large index and consume available memory.
+Credit:
 
-Problem types
--------------
-- CWE-770 Allocation of Resources Without Limits or Throttling
+Sho Odagiri (reporter)
 
-Solutions
----------
-Upgrade to version 1.651 or later.
+References:
 
-
-References
-----------
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-ww49-w4mv-jrr4
-https://metacpan.org/release/HMBRAND/DBI-1.651/changes
-https://github.com/perl5-dbi/dbi/commit/6764e755e83ee1ebb1b40760e5b53eb50960bd7a.patch
-
-
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-25699
 
