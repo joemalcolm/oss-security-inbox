@@ -1,56 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/10
-Message-ID: <d9b0c799-c41c-7f2a-63e4-35881ff08857@apache.org>
-Date: Sun, 13 Sep 2026 05:46:02 +0000
-From: Richard Zowalla <rzo1@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82430: Apache Storm Worker Launcher: Local Privilege Escalation to Root via Container Command Files Chowned to the Tenant 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/22
+Message-ID: <83c304a6-d07b-4cca-8750-012cf3e8cdf6@hauke-m.de>
+Date: Thu, 11 Jun 2026 01:27:40 +0200
+From: Hauke Mehrtens <hauke@...ke-m.de>
+To: oss-security@...ts.openwall.com, Lucas Holt <luke@...lishgames.com>
+Subject: Re: How to request CVE numbers?
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+On 6/10/26 16:14, Lucas Holt wrote:
+> On 6/10/26 8:52 AM, Christian Brabandt wrote:
+>> Agree, but they seemed to be swamped by CVE requests for the last couple
+>> of months. I have been waiting for up to 3 weeks on the final CVE
+>> assignment.
+>>
+> I've also had delays getting them, but  consider all the AI related 
+> reports.  We submitted 13 requests for mport package manager recently.
+> 
+> 
+> Lucas Holt
+> Luke@...lishGames.com
+> ________________________________________________________
+> MidnightBSD.org (Free OS)
+> JustJournal.com (Free blogging)
+> 
+Thank you all for the help.
 
-Affected versions:
+We requested CVE numbers on github about 1 week ago here:
+https://github.com/openwrt/odhcpd/security/advisories/
 
-- Apache Storm Worker Launcher (org.apache.storm:storm-core) 3.0.0 before 3.1.0
+We will probably patch the vulnerabilities and also publish them before 
+we have CVE numbers assigned and just update the advisory later.
 
-Description:
-
-Description
-
-When launching a Docker or OCI worker, the setuid-root `worker-launcher` first changes ownership of the
-entire worker directory to the untrusted topology user, and only afterwards reads and acts on the command
-file that the supervisor wrote into that same directory. The file is opened without `O_NOFOLLOW` and without
-re-verifying its owner, so between the ownership change and the read the tenant can replace its contents.
-
-For the Docker path the parsed command is executed with real uid 0, and the command sanitiser is not a
-privilege boundary: it admits `-v` with an arbitrary source, `--device`, `--cap-add`, `--security-opt`,
-`--user` and `--net`, and copies positional arguments through verbatim. A rewritten file therefore yields an
-attacker-authored, root-equivalent container invocation with the host filesystem available.
-
-For the OCI path the same rewrite window applies, and mount validation is structural only, with no
-source or destination allow-list, so arbitrary host paths can be bind-mounted read-write into the
-container. The `username` field of the command file is likewise attacker-settable and is checked only
-against non-root and minimum-uid rules, permitting execution as another tenant's uid.
-
-Mitigation
-
-Upgrade to 3.1.0, where the command file is validated before the ownership change and re-verified on open,
-and where mount sources and destinations are constrained by configuration.
-
-Users who cannot upgrade immediately should disable Docker and OCI worker isolation, or restrict topology
-submission on affected supervisors to trusted principals. Note that the launcher must be rebuilt and
-reinstalled after upgrading.
-
-Credit
-
-The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
-
-Credit:
-
-The ASF using Claude Agents (finder)
-
-References:
-
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82430
-
+Hauke
