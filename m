@@ -1,33 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/13
-Message-ID: <40e79614-12ce-f034-8af3-ac4b2c2db3b1@apache.org>
-Date: Wed, 05 Aug 2026 14:27:08 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/14
+Message-ID: <fb950152-73f4-4535-a408-79224b281afe@h.wer.ee>
+Date: Wed, 10 Jun 2026 09:55:24 -0700
+From: h <h@...er.ee>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-60023: Apache Answer: Unauthorized disclosure of deleted or pending answer content 
+Subject: Re: Fwd: Node.js security updates for all active release lines, June 2026
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On 6/10/26 7:53 AM, Rafael Gonzaga wrote:
+> 
+> 
+> ---------- Mensagem encaminhada ---------
+> De: Rafael Gonzaga <work@...aelgss.dev>
+> Data: quarta-feira, 10 de junho de 2026 às 11:53:26 UTC-3
+> Assunto: Node.js security updates for all active release lines, June 2026
+> Para: nodejs-sec <nodejs-sec@...glegroups.com>
+> 
+> 
+> The Node.js project will release new versions of all supported release
+> lines on or shortly after June 17th, 2026
+> 
+> For more information, see:
+> https://nodejs.org/en/blog/vulnerability/june-2026-security-releases
+> <https://nodejs.org/en/blog/vulnerability/march-2026-security-releases>
+> 
+The HTML version of the email has the June security releases link 
+actually link to the March security releases version, which may cause 
+some confusion.
 
-Affected versions:
-
-- Apache Answer through 2.0.1
-
-Description:
-
-Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Answer.
-
-This issue affects Apache Answer: through 2.0.1.
-
-Deleted or pending answers could be retrieved by unauthorized users through the single-answer read path when the parent question remained visible, exposing answer content that should not have been accessible.
-Users are recommended to upgrade to version 2.0.2, which fixes the issue.
-
-Credit:
-
-yangxi (reporter)
-
-References:
-
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-60023
-
+- h
