@@ -1,44 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/12
-Message-ID: <20260708224129.6145033b@plasteblaster>
-Date: Wed, 8 Jul 2026 22:41:29 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: <oss-security@...ts.openwall.com>
-Subject: Linux: GhostLock / CVE-2026-43499 / stack-UAF and LPE in kernels 2.6.39 till 7.1
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/18
+Message-ID: <ca0b6615-8567-4c76-bb2d-ca6436d2eb72@cpansec.org>
+Date: Wed, 10 Jun 2026 19:35:09 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-50638: Metrics::Any::Adapter::DogStatsd versions before 0.04 for Perl does not protect against metric injections
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
 
-as I did not see it mentioned on this list yet, there seems to be yet
-another serioys LPE or at least DoS for the Linux kernel, dubbed
-GhostLock and assigned CVE-2026-43499:
+========================================================================
+CVE-2026-50638                                       CPAN Security Group
+========================================================================
 
-	https://nebusec.ai/research/ionstack-part-2/
+         CVE ID:  CVE-2026-50638
+   Distribution:  Metrics-Any-Adapter-Statsd
+       Versions:  before 0.04
 
-As I'd have hoped to get an alert via this list, I figured a notice is
-in order. Or do we give up to keep track of the stream of serious Linux
-kernel flaws? :-/
-
-I at least achieved system crash / hang using the poc.c linked from the
-above website on a current Ubuntu system with 7.0.0-14 LTS kernel,
-while Debian 13 with 6.12.95+deb13-amd64 or vanilla 6.6.144 is not
-vulnerable, as probably are many other kernels not too far from
-kernel.org LTS or mainline. The relevant fix is
-
-	3bfdc63936dd (“rtmutex: Use waiter::task instead of current in remove_waiter()”)
-
-which was committed on 2026-04-21. There is no module to block for this
-one, or some other configuration as mitigation. The kernel needs to be
-updated.
-
-If you're not stuck on a commercial distro that hasn't updated its
-kernel in the past months, you're probably safe …
+       MetaCPAN: https://metacpan.org/dist/Metrics-Any-Adapter-Statsd
 
 
-Alrighty then,
+Metrics::Any::Adapter::DogStatsd versions before 0.04 for Perl does not
+protect against metric injections
 
-Thomas
+Description
+-----------
+Metrics::Any::Adapter::DogStatsd versions before 0.04 for Perl does not
+protect against metric injections.
 
--- 
-Dr. Thomas Orgis
-HPC @ Universität Hamburg
+The statsd protocol (and extensions such as dogstatsd) allow mutiple
+metrics,separated by newlines, to be sent per packet.
+
+Metrics::Any::Adapter::DogStatsd which extends
+Metrics::Any::Adapter::Statsd, which has a similar vulnerability.
+
+In addition, the _tags function does not check tags for newlines or
+statsd control characters. The tags can be used for metric injections.
+
+Problem types
+-------------
+- CWE-93 Improper Neutralization of CRLF Sequences
+
+Solutions
+---------
+Upgrade to v0.04 or later.
+
+
+References
+----------
+https://metacpan.org/release/PEVANS/Metrics-Any-Adapter-Statsd-0.04/changes
+https://www.cve.org/CVERecord?id=CVE-2026-50637
+https://www.cve.org/CVERecord?id=CVE-2026-9270
+
+
+
