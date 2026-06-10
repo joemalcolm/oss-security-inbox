@@ -1,40 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/6
-Message-ID: <70781351-1d7f-f526-7968-1cff8fd3bc31@apache.org>
-Date: Mon, 20 Jul 2026 09:20:15 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/9
+Message-ID: <4f3997f3e03dbb65de4884a6c27110833560ffec.camel@sambull.org>
+Date: Wed, 10 Jun 2026 15:43:09 +0100
+From: Sam Bull <9m199i@...bull.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-53405: Apache Syncope: Remote Code Execution via Flowable BPMN Groovy ScriptTask 
+Subject: Re: How to request CVE numbers?
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+They did say they already requested CVEs that way.
 
-Affected versions:
+I just asked some Github staff about the current situation, and apparently May was the
+highest volume month ever. So, there's a backlog they're trying to work through and catch
+up.
 
-- Apache Syncope (org.apache.syncope.ext.flowable:syncope-ext-flowable-bpmn) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.ext.flowable:syncope-ext-flowable-bpmn) 4.0.0-M0 through 4.0.6
-- Apache Syncope (org.apache.syncope.ext.flowable:syncope-ext-flowable-bpmn) 4.1.0-M0 through 4.1.1
+Someone also pointed me to this guide if you wanted to become a CNA yourself:
+https://sethmlarson.dev/security-developer-in-residence-weekly-report-17#becoming-a-cve-numbering-authority-as-an-open-source-project
 
-Description:
+Hopefully the Github team will catch up soon and get back to their usual timeliness.
 
-Improper Isolation or Compartmentalization vulnerability in Apache Syncope.
+- Sam
 
-An administrator with adequate entitlements can import arbitrary BPMN process definitions via the REST API and then start the process. When a BPMN process containing a Groovy scriptTask is imported and started, the Groovy script is executed directly on the server, with no sandbox.
+On Wed, 2026-06-10 at 11:27 +0000, Marcus Meissner wrote:
+> Hi,
+> 
+> I concur, if you use github, its easiest workflow wise to use the Github
+> Security Advisories and their CVE allocation ability.
+> 
+> Ciao, Marcus
+> On Wed, Jun 10, 2026 at 05:36:03PM +0800, swing sze wrote:
+> > HI,
+> > 
+> > https://github.com/openwrt/odhcpd/security
+> > 
+> > Are you using the GitHub Security Advisor feature to submit CVEs?
+> > 
+> > 
+> > Hauke Mehrtens <hauke@...ke-m.de> 于2026年6月10日周三 16:59写道：
+> > 
+> > > Hi,
+> > > 
+> > > How to get a CVE number as a community driven open source project
+> > > (OpenWrt)? We do not have a security department or a big company backing
+> > > us.
+> > > 
+> > > Multiple security problems were reported to OpenWrt in the last few
+> > > months. We want to assign CVE numbers to these problems, but have
+> > > problems requesting numbers.
+> > > 
+> > > We contacted mitre in the past, but did not got a response within 2
+> > > weeks. Using github security advisories worked fine 2 months ago, we got
+> > > a CVE number in some days. Currently this does not work any more, we are
+> > > already waiting for 1 week.
+> > > 
+> > > How to get a CVE number?
+> > > 
+> > > We (OpenWrt) are a community driven open source project and got multiple
+> > > reports from individuals and organizations like OpenAI.
+> > > 
+> > > We requested multiple CVE Numbers on github for this project:
+> > > https://github.com/openwrt/odhcpd
+> > > 
+> > > Hauke
+> > > 
+> 
 
 
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.6, from 4.1.0-M0 through 4.1.1.
-
-
-
-
-Users are recommended to upgrade to version 4.0.7 / 4.1.2, which fix this issue by wrapping Flowable's Groovy scriptTasks with security sandbox.
-
-Credit:
-
-follycat, Y0n3er (finder)
-
-References:
-
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-53405
-
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
