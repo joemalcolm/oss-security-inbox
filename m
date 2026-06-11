@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/8
-Message-ID: <9c9dc417-b37f-4808-9771-13f82033d28f@oracle.com>
-Date: Fri, 11 Sep 2026 12:18:22 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/6
+Message-ID: <bc74b42b-44da-0e3f-e528-df6de7e3c164@apache.org>
+Date: Thu, 11 Jun 2026 16:55:00 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CPython: [CVE-2026-87910] tarfile hardlink fallback ignores custom extraction filter rejection via None
+Subject: CVE-2026-50629: Apache CXF: OAuth2: Log Injection via Unsanitized Client Identifier 
 Content-Type: text/plain; charset=utf-8
 
+Severity: low 
 
+Affected versions:
 
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.2.0 before 4.2.2
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) before 4.1.7
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-87910] tarfile hardlink fallback ignores 
-custom extraction filter rejection via None
-Date: 	Fri, 11 Sep 2026 14:24:10 +0200
-From: 	Petr Viktorin via Security-announce <security-announce@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
-CC: 	Petr Viktorin <encukou@...il.com>
+Description:
 
-There is a MEDIUM severity vulnerability affecting CPython.
+The 'clientId' parameter from incoming HTTP requests is directly concatenated into OAuth2 server log warning messages without sanitizing control characters. This allows an attacker to inject arbitrary content, including fake log entries, into the server's log files. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
 
-When tarfile extracts a link on a system that doesn't support links, it
-falls back to extracting a member from the archive. In this case, the
-filter function is run twice: once for the extracted member, and once
-with name set to the location of the link.
-For one of the calls, the return value was ignored. Instead, the member
-should be skipped if either call returns None.
+Credit:
 
-Please see the linked CVE ID for the latest information on affected
-versions:
+Guanping Zhang reported this vulnerability. (finder)
 
-* https://www.cve.org/CVERecord?id=CVE-2026-87910
-* https://github.com/python/cpython/pull/157266
+References:
 
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
-
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-50629
 
