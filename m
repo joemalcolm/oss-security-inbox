@@ -1,54 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/13
-Message-ID: <eceb3663-10b0-7495-c9ff-d7dd2d870b2a@apache.org>
-Date: Sun, 13 Sep 2026 05:46:22 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/10
+Message-ID: <6949155b-de76-3de3-e380-d994d20b5a61@apache.org>
+Date: Thu, 11 Jun 2026 17:03:54 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82433: Apache Storm Nimbus, Apache Storm UI: Disclosure of Unredacted Daemon Configuration via Nimbus and the UI 
+Subject: CVE-2026-50633: Apache CXF: JNDI Injection vulnerability in DispatchMDBMessageListenerImpl 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
-- Apache Storm UI (org.apache.storm:storm-webapp) 3.0.0 before 3.1.0
+- Apache CXF (org.apache.cxf:cxf-integration-jca) 4.2.0 before 4.2.2
+- Apache CXF (org.apache.cxf:cxf-integration-jca) before 4.1.7
 
 Description:
 
-Description
-
-`getNimbusConf` returned the complete daemon configuration without redaction after only a user-level
-authorization check. Where the cluster is configured with them, that response includes
-`storm.zookeeper.auth.payload` and the keystore and truststore passwords for the Thrift, Netty and
-ZooKeeper TLS configuration. The project masks passwords elsewhere before display, so the omission here is
-inconsistent rather than intended.
-
-The UI endpoint `/api/v1/cluster/configuration` compounded this. It carried no `@...hNimbusOp` annotation,
-and the authorization filter treated a missing annotation as "no gate required" and returned immediately, so
-the endpoint applied no per-user check at all and proxied the request under the UI daemon's own principal.
-Any user able to pass `ui.filter` therefore received the full configuration, including principals that
-Nimbus itself would have refused. 
-
-Mitigation
-
-Upgrade to 3.1.0, where credential-bearing values are masked before the configuration is served and where
-every UI API endpoint must declare its authorization explicitly.
-
-Users who cannot upgrade immediately should place the UI behind an authenticating reverse proxy that
-restricts `/api/v1/cluster/configuration`, and should rotate the ZooKeeper authentication payload and any
-TLS keystore or truststore passwords that were reachable through it.
-
-Credit
-
-The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
+A JNDI Injection vulnerability has been discovered in Apache CXF's JCA integration module, which can allow for code execution, if an attacker is able to manipulate the JCA deployment descriptor (ra.xml) or runtime activation parameters. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
 
 Credit:
 
-The ASF using Claude Agents (finder)
+Venkatraman Kumar (r3dw0lfsec), Securin (finder)
 
 References:
 
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82433
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-50633
 
