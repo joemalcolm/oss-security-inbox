@@ -1,29 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/3
-Message-ID: <6575cd42-8752-012f-0390-433943d6dad5@apache.org>
-Date: Thu, 30 Jul 2026 01:38:51 +0000
-From: Jongyoul Lee <jongyoul@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/7
+Message-ID: <c91c9777-7841-6156-b046-f737a8e0c730@apache.org>
+Date: Thu, 11 Jun 2026 16:56:27 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44616: Apache Zeppelin: LDAP injection in ActiveDirectoryGroupRealm filter construction 
+Subject: CVE-2026-50630: Apache CXF: OAuth2: HTTP Response Splitting via WWW-Authenticate Realm Injection 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: low 
 
 Affected versions:
 
-- Apache Zeppelin 0.6.0 before 0.12.1
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.2.0 before 4.2.2
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) before 4.1.7
 
 Description:
 
-LDAP injection vulnerability in Apache Zeppelin. ActiveDirectoryGroupRealm constructed LDAP search filters without escaping user-controlled input, allowing an authenticated attacker to inject LDAP filter syntax through the user-search endpoint and potentially expose directory information. The role-lookup path was also affected after successful LDAP authentication. This issue affects Apache Zeppelin versions 0.6.0 through 0.12.0. Users are recommended to upgrade to version 0.12.1, which fixes this issue.
+A CRLF injection vulnerability exists in the OAuth2 AuthorizationUtils class. When constructing the WWW-Authenticate response header, the 'realm' parameter is concatenated without sanitizing Carriage Return (CR) and Line Feed (LF) characters. If an attacker can control the realm value, they can inject arbitrary HTTP headers or split the HTTP response entirely. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
 
 Credit:
 
-Andrea Cosentino from Apache Software Foundation (finder)
+Guanping Zhang reported this vulnerability. (finder)
 
 References:
 
-https://github.com/apache/zeppelin/pull/5226
-https://zeppelin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44616
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-50630
 
