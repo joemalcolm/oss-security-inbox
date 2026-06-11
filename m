@@ -1,41 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/6
-Message-ID: <ac363608-ecbe-4a1f-a175-bedf2c930862@powerdns.com>
-Date: Thu, 25 Jun 2026 11:23:02 +0200
-From: Miod Vallat <miod.vallat@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/5
+Message-ID: <9ef99518-e11a-b585-1179-ceeae6c6309e@apache.org>
+Date: Thu, 11 Jun 2026 16:54:11 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisory 2026-07: Insufficient input validation of internal web server
+Subject: CVE-2026-50628: Apache CXF: OAuth2: Inverted IP Binding Check Defeats Security Control 
 Content-Type: text/plain; charset=utf-8
 
-Today, we are releasing three new versions of the PowerDNS
-Authoritative Server. These 4.9.16, 5.0.6 and 5.1.2 versions provide
-fixes for the following PowerDNS Security Advisory:
-   * [1]PowerDNS Security Advisory 2026-07: Insufficient input
-     validation of internal web server
+Severity: important 
 
-Please make sure to read the [2]Upgrade Notes before upgrading.
+Affected versions:
 
-The tarballs ([3]4.9.16, [4]5.0.6), [5]5.1.2) and their signatures
-([6]4.9.16, [7]5.0.6), [8]5.1.2) are available at
-[9]downloads.powerdns.com. Packages for various distributions are
-available from [10]repo.powerdns.com.
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.2.0 before 4.2.2
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) before 4.1.7
 
-Please send us all feedback and issues you might have via the
-[11]mailing list, or in case of a bug, via [12]GitHub.
+Description:
 
-References
+A logic error in OAuthRequestFilter rejects legitimate requests originating from the bound IP address, while blindly allowing requests from any other IP address. Enabling this
 
-1. 
-https://doc.powerdns.com/authoritative/security-advisories/powerdns-advisory-2026-07.html
-2. https://doc.powerdns.com/authoritative/upgrading.html
-3. https://downloads.powerdns.com/releases/pdns-4.9.16.tar.bz2
-4. https://downloads.powerdns.com/releases/pdns-5.0.6.tar.bz2
-5. https://downloads.powerdns.com/releases/pdns-5.1.2.tar.bz2
-6. https://downloads.powerdns.com/releases/pdns-4.9.16.tar.bz2.sig
-7. https://downloads.powerdns.com/releases/pdns-5.0.6.tar.bz2.sig
-8. https://downloads.powerdns.com/releases/pdns-5.1.2.tar.bz2.sig
-9. https://downloads.powerdns.com/releases/
-10. https://repo.powerdns.com/
-11. https://mailman.powerdns.com/mailman/listinfo/pdns-users
-12. https://github.com/PowerDNS/pdns/issues/new/choose
+security feature inadvertently creates an inverse security check. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
+
+Credit:
+
+Guanping Zhang reported this vulnerability (finder)
+
+References:
+
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-50628
 
