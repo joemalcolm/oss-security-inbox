@@ -1,66 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/1
-Message-ID: <7289d5e7-0712-4a95-a3da-aed9fca4c307@cpansec.org>
-Date: Tue, 23 Jun 2026 08:05:41 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-9733: Mojolicious::Plugin::Web::Auth::OAuth2 versions through 0.17 for Perl have an insecure default state parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/12
+Message-ID: <f34a839b-8f70-aaf9-c7ab-85e2b4c16e56@apache.org>
+Date: Thu, 11 Jun 2026 17:08:25 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-50645: Apache CXF: No restriction on attachment headers per message 
 Content-Type: text/plain; charset=utf-8
 
+Severity: low 
 
-========================================================================
-CVE-2026-9733                                        CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-9733
-   Distribution:  Mojolicious-Plugin-Web-Auth
-       Versions:  through 0.17
+- Apache CXF (org.apache.cxf:cxf-core) 4.2.0 before 4.2.2
+- Apache CXF (org.apache.cxf:cxf-core) before 4.1.7
 
-       MetaCPAN: https://metacpan.org/dist/Mojolicious-Plugin-Web-Auth
-       VCS Repo: https://github.com/hayajo/Mojolicious-Plugin-Web-Auth
+Description:
 
+There is no restriction on the amount of attachment headers that a message can contain when being deserialized by Apache CXF, which can lead to uncontrolled resource consumption or a denial of service attack. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fix this issue by imposing a maximum default of 500 attachments per message.
 
-Mojolicious::Plugin::Web::Auth::OAuth2 versions through 0.17 for Perl
-have an insecure default state parameter
+References:
 
-Description
------------
-Mojolicious::Plugin::Web::Auth::OAuth2 versions through 0.17 for Perl
-have an insecure default state parameter.
-
-When no state generator is specified in the constructor, the module
-defaults to using a SHA-1 hash of predictable and low-entropy sources,
-including the epoch time (which is leaked via the HTTP Date header) and
-a call to Perl's built-in rand function.
-
-A predictable state allows an attacker to hijack another user's session
-through cross site request forgery (CSRF).
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Workarounds
------------
-Users should specify a state_generator function in the plugin
-configuration that uses a secure CSPRNG such as Crypt::PRNG or (for
-Mojolicious 9.46 or later) the Mojo::Util::random_bytes function. For
-example,
-
-   plugin 'Web::Auth',
-     module => 'OAuth2',
-     ...
-     state_generator => sub {
-       unpack("H*", Mojo::Util::random_bytes(20))
-     };
-
-
-References
-----------
-https://metacpan.org/release/HAYAJO/Mojolicious-Plugin-Web-Auth-0.17/source/lib/Mojolicious/Plugin/Web/Auth/OAuth2.pm#L129-131
-https://datatracker.ietf.org/doc/html/rfc6749#section-10.12
-https://security.metacpan.org/patches/M/Mojolicious-Plugin-Web-Auth/0.17/CVE-2026-9733-r2.patch
-
-
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-50645
 
