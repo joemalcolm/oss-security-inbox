@@ -1,28 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/31
-Message-ID: <970d116c-8396-203e-062c-271d60579573@apache.org>
-Date: Tue, 04 Aug 2026 18:49:34 +0000
-From: "Timothy A. Bish" <tabish@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-67592: Apache Qpid ProtonJ2: Unable to govern the maximum number of transfer frames per incoming delivery 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/12/4
+Message-ID: <70d8130a-2ef3-49a3-943b-7d34e91b829c@cpansec.org>
+Date: Fri, 12 Jun 2026 15:43:21 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-9638: Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure random values for salts
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+========================================================================
+CVE-2026-9638                                        CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-9638
+   Distribution:  Crypt-PBKDF2
+       Versions:  before 0.261630
 
-- Apache Qpid ProtonJ2 (org.apache.qpid:protonj2) through 1.1.0
+       MetaCPAN:  https://metacpan.org/dist/Crypt-PBKDF2
+       VCS Repo:  https://github.com/arodland/Crypt-PBKDF2
 
-Description:
 
-It was not possible to govern the maximum number of transfer frames per incoming delivery, enabling an authenticated attacker to cause excessive resource usage and potential denial of service.
+Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure
+random values for salts
 
-This issue affects Apache Qpid ProtonJ2: through 1.1.0.
+Description
+-----------
+Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure
+random values for salts.
 
-Users are recommended to upgrade to version 1.2.0, which fixes the issue
+These versions use the built-in rand function, which is predictable and
+unsuitable for cryptography.
 
-References:
+Problem types
+-------------
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+   (PRNG)
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-67592
+Solutions
+---------
+Upgrade to version 0.261630 or later.
+
+
+References
+----------
+https://metacpan.org/dist/Crypt-PBKDF2/source/lib/Crypt/PBKDF2.pm#L86-93
+https://metacpan.org/release/ARODLAND/Crypt-PBKDF2-0.261630/changes
+
+
 
