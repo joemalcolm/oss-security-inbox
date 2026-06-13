@@ -1,56 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/10
-Message-ID: <cf8d729f-b6b2-4559-a815-138bd55e6e36@cpansec.org>
-Date: Mon, 15 Jun 2026 22:12:33 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-12087: Socket versions before 2.041 for Perl have an out-of-bounds heap read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/16
+Message-ID: <trinity-e5e6d3b2-24f0-481e-9448-af74bfd6b964-1781383035845@trinity-msg-rest-gmx-gmx-live-6759fbb69b-bvklt>
+Date: Sat, 13 Jun 2026 20:37:15 +0000
+From: shvedov@....com
+To: oss-security@...ts.openwall.com
+Subject: CVE-2025-55657: NULL Pointer Dereference in GPAC/MP4Box via gf_odf_vvc_cfg_write_bs on crafted MP4 file with unsupported vvc16 box
 Content-Type: text/plain; charset=utf-8
 
 
-========================================================================
-CVE-2026-12087                                       CPAN Security Group
-========================================================================
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (ff8249a407685d00ceb5f4d2a798b9cad195140e)
+CVE:       CVE-2025-55657
+CWE:       CWE-476 (NULL Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-         CVE ID:  CVE-2026-12087
-   Distribution:  Socket
-       Versions:  before 2.041
+Description:
+  When MP4Box imports a crafted MP4 file containing an unsupported
+  vvc16 sample description box inside stsd, the VVC configuration
+  write path can receive a NULL configuration pointer.
+  gf_odf_vvc_cfg_write_bs() in odf/descriptors.c does not validate
+  that this pointer to the VVC configuration NAL unit data is non-NULL
+  before dereferencing it.
 
-       MetaCPAN:  https://metacpan.org/dist/Socket
+  AddressSanitizer reports a SEGV caused by a READ memory access at
+  address 0x000000000000 (the zero page) at odf/descriptors.c:1267,
+  reached via gf_odf_vvc_cfg_write() / isor_reader_check_config()
+  while MP4Box checks the track configuration of the crafted file.
 
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-Socket versions before 2.041 for Perl have an out-of-bounds heap read
+Reproduction:
+  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
+  -Command: ./MP4Box -add 6_poc.mp4 -new ./test -split-size 500
 
-Description
------------
-Socket versions before 2.041 for Perl have an out-of-bounds heap read.
+Asan-log:
+==1913270==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f04ff48fdda bp 0x511000011fc0 sp 0x7ffe2aad65b0 T0)
+==1913270==The signal is caused by a READ memory access.
+    #0 0x7f04ff48fdda in gf_odf_vvc_cfg_write_bs odf/descriptors.c:1267
+    #1 0x7f04ff49094b in gf_odf_vvc_cfg_write odf/descriptors.c:1284
+    #2 0x7f04ffd3a75d in isor_reader_check_config filters/isoffin_read_ch.c:1114
 
-In Socket.xs, pack_ip_mreq_source() checks the length of its source
-argument before the argument is read, so the check tests the byte
-length carried over from the preceding multiaddr argument instead. Both
-addresses occupy a 4-byte field, so a valid multiaddr lets a source of
-any length pass the check, and the source is then copied into the
-4-byte imr_sourceaddr field with a fixed-size copy. A source shorter
-than 4 bytes is not rejected, and the copy reads up to 3 bytes past the
-end of its buffer.
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/6/6_poc.mp4
 
-Calling pack_ip_mreq_source() with a source value shorter than 4 bytes
-copies adjacent heap memory into the returned packed structure.
-
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
-- CWE-805 Buffer Access with Incorrect Length Value
-
-Solutions
----------
-Upgrade to version 2.041 or later.
-
-
-References
-----------
-https://metacpan.org/release/PEVANS/Socket-2.041/changes
-https://github.com/Perl/perl5/commit/de19a0b0ad1900fef976c5c1400bd8f11ec6c6cb.patch
+References:
+  https://github.com/gpac/gpac/issues/3157
+  https://www.cve.org/CVERecord?id=CVE-2025-55657
+  https://infosec.exchange/@sigdevel/116710754169365223
 
 
+——
+Best regards, Alexander A. Shvedov
+https://github.com/sigdevel
 
