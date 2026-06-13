@@ -1,34 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/3
-Message-ID: <87jyplxzbq.fsf@gentoo.org>
-Date: Thu, 20 Aug 2026 04:09:29 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/14
+Message-ID: <trinity-c536381f-adab-4fa9-b3f4-09bc40d0337d-1781382848370@trinity-msg-rest-gmx-gmx-live-6759fbb69b-cnx86>
+Date: Sat, 13 Jun 2026 20:34:08 +0000
+From: shvedov@....com
 To: oss-security@...ts.openwall.com
-Subject: GNU Emacs vulnerability upon opening arbitrary file
+Subject: CVE-2025-55663: NULL Pointer Dereference in GPAC/MP4Box via Track_SetStreamDescriptor on crafted MP4 with unknown svcC box in av01
 Content-Type: text/plain; charset=utf-8
 
-Eshel Yaron has shared an arbitrary code execution bug in GNU Emacs
-exploitable upon opening an file. It affects >= Emacs 28.1.
 
-The reporter has a writeup at
-https://eshelyaron.com/posts/2026-08-06-emacs-arbitrary-code-execution-returns.html.
-It's from the same reporter as CVE-2024-53920 [0].
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (15a4ac2dff38cdbb8b43e7c84fb1595ee80d81ac)
+CVE:       CVE-2025-55663
+CWE:       CWE-476 (NULL Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-Thread on emacs-devel:
-* https://lists.gnu.org/archive/html/emacs-devel/2026-07/msg00453.html
-* https://lists.gnu.org/archive/html/emacs-devel/2026-08/msg00000.html
+Description:
+  When MP4Box imports a crafted MP4 file containing an unknown svcC
+  box inside an av01 parent box, the unsupported-box handling path
+  can leave the relevant sample entry pointer uninitialized or invalid.
+  Track_SetStreamDescriptor() in isomedia/track.c later dereferences
+  this pointer without validating it, while updating the stream
+  description during bitrate update.
 
-There's a workaround patch available for Emacs 31
-(https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-31&id=8466eb44991707d128110bdc549fad14c8e1d61e)
-while on master it apparently had a bigger rework
-(https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=c1337758a6c00e22e2a685e0556068fd73fa9a54).
+  AddressSanitizer reports a SEGV caused by a READ memory access at
+  isomedia/track.c:1677 (address 0x001e3fff8005), reached via
+  gf_isom_change_mpeg4_description() / gf_media_update_bitrate_ex()
+  while MP4Box imports the crafted track.
 
-In Gentoo, we backported the fix [1] down to 28.2.
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-[0] https://www.openwall.com/lists/oss-security/2025/02/26/2
-[1] https://bugs.gentoo.org/980616
+Reproduction:
+  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
+  -Command: ./MP4Box -add 8_poc.mp4 -new /dev/null -ab 1024
 
-thanks,
-sam
+Asan-log:
+==2133828==ERROR: AddressSanitizer: SEGV on unknown address 0x001e3fff8005 (pc 0x55662b3210b5 bp 0x7fffca0b82e0 sp 0x7fffca0b81e0 T0)
+==2133828==The signal is caused by a READ memory access.
+    #0 0x55662b3210b5 in Track_SetStreamDescriptor isomedia/track.c:1677
+    #1 0x55662b23e7d5 in gf_isom_change_mpeg4_description isomedia/isom_write.c:1759
+    #2 0x55662b457f86 in gf_media_update_bitrate_ex media_tools/media_import.c:100
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/8/8_poc.mp4
+
+References:
+  https://github.com/gpac/gpac/issues/3143
+  https://www.cve.org/CVERecord?id=CVE-2025-55663
+  https://infosec.exchange/@sigdevel/116733899601128471
+
+
+——
+Best regards, Alexander A. Shvedov
+https://github.com/sigdevel
+
