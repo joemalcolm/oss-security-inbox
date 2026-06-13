@@ -1,177 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/20
-Message-ID: <6f908944-a951-4d08-a388-92aff21eee86@gmail.com>
-Date: Thu, 20 Aug 2026 14:38:11 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/17
+Message-ID: <trinity-d3595afa-cacb-4108-8244-bbe85a8b2537-1781383150017@trinity-msg-rest-gmx-gmx-live-6759fbb69b-5d7pf>
+Date: Sat, 13 Jun 2026 20:39:10 +0000
+From: shvedov@....com
 To: oss-security@...ts.openwall.com
-Subject: [OSSN-0108] Multiple authentication vulnerabilities in Ceph affecting OpenStack
+Subject: CVE-2025-55659: NULL Pointer Dereference in GPAC/MP4Box via ctts_box_write on crafted MP4 file with negative timestamps
 Content-Type: text/plain; charset=utf-8
 
-OSSN-0108: Multiple authentication vulnerabilities in Ceph
----
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (ff8249a407685d00ceb5f4d2a798b9cad195140e)
+CVE:       CVE-2025-55659
+CWE:       CWE-476 (NULL Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-### Summary ###
+Description:
+  When MP4Box splits/remuxes a crafted, truncated MP4 file, invalid
+  negative-timestamp handling during range estimation can leave the
+  composition-time-to-sample entries pointer in an invalid or NULL
+  state. ctts_box_write() in isomedia/box_code_base.c does not check
+  this pointer before dereferencing it while writing the ctts box
+  during final muxing.
 
-The latest Ceph releases of Ceph 20.2.4 and Ceph 19.2.6 patch four CVEs
-across several components (CVE-2025-30156, CVE-2026-39944, CVE-2026-50152
-and CVE-2026-54330). All OpenStack services using CephX keyrings are 
-affected.
-Ceph servers should be upgraded and their CephX keyrings should be rotated.
-The CephX keyrings used by OpenStack should be rotated only after Ceph 
-client
-software on every OpenStack server is upgraded and then virtual machines 
-need
-to be restarted or live migrated in order to load the new keyring.
+  AddressSanitizer reports a SEGV caused by a READ memory access at
+  address 0x000000000000 (the zero page) at isomedia/box_code_base.c:464,
+  reached via the box-writing chain (gf_isom_box_write_listing /
+  gf_isom_box_write) while MP4Box closes the output file.
 
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-### Affected Services / Software ###
+Reproduction:
+  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
+  -Command: ./MP4Box -add 5_poc.mp4 -new ./test -split-size 500
 
-- Ceph: all versions prior to v20.2.4 or v19.2.6
-- OpenStack services with CephX keyrings: Nova, Cinder, Glance, Manila
-- Ceph RADOS Gateway (RGW), when used as an Object Store (Swift/S3)
-   backend
+Asan-log:
+==1926241==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7faf284d6c18 bp 0x511000015bc0 sp 0x7fff5c0b2210 T0)
+==1926241==The signal is caused by a READ memory access.
+    #0 0x7faf284d6c18 in ctts_box_write isomedia/box_code_base.c:464
+    #1 0x7faf28565469 in gf_isom_box_write_listing isomedia/box_funcs.c:2154
+    #2 0x7faf28565469 in gf_isom_box_write isomedia/box_funcs.c:2204
 
-### Discussion ###
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/5/5_poc.mp4
 
-Any OpenStack service with a CephX keyring (Nova, Cinder, Glance,
-Manila) is at risk. Data-at-rest encryption is not affected by
-CVE-2025-30156 but is affected by CVE-2026-50152. Both are fixed
-by the update in addition to CVE-2026-39944 and CVE-2026-54330.
-
-For an OpenStack cloud using RBD, RGW or NFS, this can be considered
-an internal vulnerability, potentially enabling an insider to escalate
-privilege. For example, a Nova _guest_ using Cinder RBD does not have
-access to the CephX key or Ceph's storage network; the Nova _host_ has
-access to them but only an insider should have access to the Nova
-_host_. However, if an OpenStack tenant is using Manila with native
-CephFS (not with NFS-Ganesha), then those tenants could exploit these CVEs.
-
-The hardcoded initialization vector means identical plaintexts produce
-identical ciphertexts. The missing HMAC allows CBC bit-flipping. An
-attacker who compromises any CephX entity (or obtains its shared
-secret from network traffic) can tamper with a ticket's permissions
-without detection and forge credentials for privileged services.
-
-The fix modifies Ceph to use AES256-CTS-HMAC-SHA384-192 (RFC 8009),
-a new CephX key type named aes256k. Both Ceph server and client
-packages must be upgraded to use it. If `krbd` (in place of
-`librbd`) or CephFS kernel mounts (in place of `ceph-fuse` or
-NFS-Ganesha) are used, the client also requires Linux kernel 7.0 or
-later. Upgrading the servers and rotating their keys to aes256k
-resolves the vulnerabilities; clients that have not yet been upgraded
-continue to authenticate with their existing aes keys in the
-meantime.
-
-### Recommended Actions ###
-
-- Upgrade Ceph to a patched release and update Ceph clients on
-   OpenStack.
-- Re-create every CephX credential with the new aes256k cipher.
-- Every OpenStack Nova guest must be live migrated (or restarted) to
-   pick up the new CephX key.
-
-#### OpenStack Service Keyrings (Nova, Cinder, Glance) ####
-
-To use RBD with Nova, Cinder or Glance, these services should be
-configured with a Ceph user that uses a CephX key to authenticate
-to the Ceph cluster. This OSSN will refer to a single `client.openstack`
-key for simplicity but configurations with multiple keys are possible.
-Before rotating or replacing this key:
-
-- The Ceph cluster should be using the new cipher for its internals.
-   For example, the Ceph Monitor, OSD, RGW, MDS and other services
-   should already have rotated their CephX keys so they use the new
-   cipher.
-
-- The Ceph cluster should allow connections from both the old and
-   new cipher as confirmed by the following command.
-
-~~~
-# ceph mon dump | grep allowed_ciphers
-auth_allowed_ciphers aes, aes256k
-#
-~~~
-
-There are two strategies:
-
-1. Rotate: Use `ceph auth rotate` to rotate `client.openstack`.
-2. Replace: Create a new CephX key (e.g. `client.openstack2`),
-    which uses the new cipher, and switch clients to use the new
-    key.
-
-If you are concerned about the time required to migrate Nova guests
-(so they start using the new key), then use the replacement strategy.
-
-There is no immediate downtime when the credential is rotated but
-there is limited time to switch to the new credential. The client
-will continue to function until it tries to reauthenticate with
-the Ceph Monitors to get new tickets. During that time you can
-rotate and then restart clients incrementally. Knowing exactly
-how long you have to rotate the key for all clients can be
-difficult to predict given the distributed nature of Ceph but
-we believe it to be a matter of hours, not days.
-
-Rather than be bound by the above, you can have complete control
-of when the old credential is no longer valid by having two valid
-credentials and rotating them on your own schedule and then disabling
-support for the old credential's cipher.
-
-The new CephX key must be distributed to every OpenStack node which
-connects to Ceph and be imported into libvirt prior migrating Nova
-guests to have them pick up the new key.
-
-#### Manila with Native CephFS ####
-
-With Manila, users create CephX keys for native CephFS share access.
-These keys are exposed to tenant VMs. To rotate, for each share:
-
-1. Grant new share access (new CephX key with aes256k)
-2. Remount the share using the new credentials
-3. Revoke the old share access
-
-All shares for a tenant must be covered. Partial rotation leaves
-the old CephX user and key valid for any shares not yet rotated.
-
-#### Manila with NFS-Ganesha ####
-
-The main NFS-Ganesha CephX key can be rotated and the service redeployed.
-Per-export CephX keys (created automatically per share) do not have
-a rotation mechanism yet. To rotate these, delete and recreate access
-rules for each share. This requires unmount/remount and is disruptive.
-
-These per-export keys are internal to the Ceph cluster and not
-exposed to tenants. Operators can defer their rotation until Ceph
-provides a rotation mechanism if the risk is tolerable.
-
-#### Enforcing the New Cipher ####
-
-After all CephX keys have been rotated, enforce the new cipher:
-~~~
-ceph mon set auth_allowed_ciphers aes256k
-~~~
-
-### Credits ###
-
-- Erin Shepherd, e43.eu
-- David Mohren, Clyso
-- Mark Nelson, Clyso
+References:
+  https://github.com/gpac/gpac/issues/3156
+  https://www.cve.org/CVERecord?id=CVE-2025-55659
+  https://infosec.exchange/@sigdevel/116710743410087676
 
 
-### Contacts / References ###
+——
+Best regards, Alexander A. Shvedov
+https://github.com/sigdevel
 
-Authors:
-- John Fulton, Red Hat
-- Goutham Pacha Ravi, Red Hat
-- Sage McTaggart, IBM
-
-This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0108
-Original LaunchPad Bug: None
-Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
-OpenStack Security : https://security.openstack.org/
-Ceph Advisory: 
-https://ceph.io/en/news/blog/2026/v20-2-4-v19-2-6-combo-released/
-CVE: CVE-2025-30156, CVE-2026-39944, CVE-2026-50152, CVE-2026-54330
-
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
