@@ -1,37 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/12
-Message-ID: <9cf07317-b4d5-8797-17eb-25260bb2af64@apache.org>
-Date: Fri, 24 Jul 2026 11:08:10 +0000
-From: Szymon Janc <janc@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-45812: Apache NimBLE: OOB Read via sizeof(pointer) in Legacy Advertising Report Handler 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/22
+Message-ID: <20260613223241.GA19024@openwall.com>
+Date: Sun, 14 Jun 2026 00:32:41 +0200
+From: Solar Designer <solar@...nwall.com>
+To: "David A. Wheeler" <dwheeler@...eeler.com>
+Cc: oss-security@...ts.openwall.com, shvedov@....com
+Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Hi David,
 
-Affected versions:
+On Mon, Jun 08, 2026 at 07:46:07PM -0400, David A. Wheeler wrote:
+> All: I propose that we create a *separate* mailing list, say
+> "oss-security-vulnerability-reports", for run-of-the-mill vulnerability reports
+> about open source software (OSS). Run-of-the-mill reports would then go there
+> and *not* to this mailing list "oss-security". This would leave *this* oss-security" mailing list
+> for general discussions about the topic of OSS security, including discussions about
+> specific publicly known vulnerabilities that are especially noteworthy in some way.
+> Tools that want the full flood could monitor "oss-security-vulnerability-reports".
+> 
+> Here's my rationale.
+> 
+> In short: There are so many OSS projects that it's *already*
+> dubious to have a single mailing list for OSS vulnerability reports.
+> However, I believe the coming AI vulnpocalypse will make it completely absurd.
+> If we don't do this, I think the human participants will need to unsubscribe
+> from this list sooner or later, and that would be sad.
 
-- Apache NimBLE through 1.9.0
+Thank you for bringing this up.
 
-Description:
+I do indeed see the problem, but I don't like the proposal.  Also, for
+now the increased volume on this list hasn't exceeded its historical
+pre-AI peak: we had 485 messages in October 2014, but 455 in May 2026.
+I'm not seeing a mass exodus of subscribers either.  There's greater
+churn - more people are leaving, but at the same time more are joining.
 
-Incorrect Calculation of Buffer Size vulnerability in Apache NimBLE when processing Legacy Advertising Report HCI event.
+Just by saying to no longer send run-of-the-mill vulnerability reports
+in here, we won't instantly achieve that.  Sure the moderators can stop
+and re-route them, but that's not an easy job.  It's tricky to draw the
+line between run-of-the-mill and noteworthy.
 
-When a single HCI advertising report event bundles multiple reports, NimBLE miscalculated the offset to the next report. This can cause the host to read past the end of the buffer and deliver a GAP event with bogus data to the application.
+Rather than tell people to send something to the other list, I ask this:
 
-Severity is low: NimBLE's own controller never batches multiple reports into one event, so this only matters when NimBLE's host is paired with a third-party controller that does.
+Whenever practical, please group related vulnerability disclosures into
+fewer messages (like security advisories) and use helpful Subject lines.
+Include the project name in a fixed place near the beginning of Subject,
+and make the Subject specific to the one disclosure rather than generic
+shared between multiple disclosures.
 
-This issue affects Apache NimBLE: through 1.9.0.
+Example problems:
 
-Users are recommended to upgrade to version 1.10.0, which fixes the issue.
+We got 25 messages on GPAC/MP4Box vulnerabilities in June so far.  The
+Subject lines for them have GPAC/MP4Box in various places after the
+vulnerability type, whereas someone getting through this would first
+care what project is affected (is it even relevant to them) and would
+likely want messages grouped by project - if they have to be separate
+messages.  Ideally, it would be just 2 messages - one on June 1st
+disclosing 6 issues, and one today disclosing 19 issues.
 
-Credit:
+Conversely, some projects do group related issues, but then what goes
+into the Subject?  We just had another "OpenSSL Security Advisory" a few
+days ago.  It's the same generic Subject line every time.  I think it'd
+be preferable to include some identifying information in there, at least
+"OpenSSL Security Advisory [9th June 2026]" as the first line says.
+Many other projects get this right, e.g. with Subject lines containing
+fixed release version numbers or identifying numbers for advisories or
+lists of CVEs.
 
-VulnCheck (reporter)
+> This is *NOT* a dig at Eric Covener (Apache).
+> In fact, I want to praise Eric Covener (Apache) for his effort
 
-References:
+Indeed.
 
-https://github.com/apache/mynewt-nimble/commit/605c7585408bc3674818eeb7b6f478a8aefe9746
-https://mynewt.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-45812
+I greatly appreciate that Apache projects post their CVE disclosures in
+here, but it does sometimes result in a lot of messages for the same
+project on the same day.  Also sometimes individual CVEs are missed -
+like for the previous (not the latest) Apache httpd set of CVEs, I spent
+some time to ensure all were eventually brought in here, as initially
+some were not.  If some CVE disclosures are similarly missed for a less
+popular Apache project, this would remain unnoticed (maybe already was).
 
+I understand it took time and effort to get the current system working
+well, but maybe it's time for someone at Apache to start looking into
+updating the system to group CVE disclosures by project and release.
+
+Ditto for Perl CPAN.
+
+Alexander
