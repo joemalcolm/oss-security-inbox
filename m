@@ -1,51 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/7
-Message-ID: <CAOSyNaXF67y7yYpOd25qFtO6+tPbZMs-DbMWbAfD9cToLj5pkA@mail.gmail.com>
-Date: Tue, 16 Jun 2026 18:58:38 +0300
-From: 3v <ventic@...fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/18
+Message-ID: <trinity-56a908b3-1c8f-44cd-94fd-e7ae93ca23c0-1781383293733@trinity-msg-rest-gmx-gmx-live-6759fbb69b-5d8w4>
+Date: Sat, 13 Jun 2026 20:41:33 +0000
+From: shvedov@....com
 To: oss-security@...ts.openwall.com
-Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+Subject: CVE-2025-55651: NULL Pointer Dereference in GPAC/MP4Box via gf_isom_get_user_data_count on truncated MP4 input
 Content-Type: text/plain; charset=utf-8
 
->From a lurker's perspective, the current mix has been completely fine
-and I find some value in seeing what threads remain in discussion for
-longer, even if I'm mainly on the list to keep an eye on new
-vulnerabilities. Marking as read and ignoring specific threads is
-simple enough.
 
--WV
----
-3v.fi
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (46be5f928660530d5332cd2f1d177208737558ef)
+CVE:       CVE-2025-55651
+CWE:       CWE-476 (NULL Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
+Description:
+  When MP4Box imports a truncated or malformed MP4 file, the isomedia
+  channel-setup path can pass a NULL UUID pointer into
+  gf_isom_get_user_data_count() in isomedia/isom_read.c. The function
+  does not check the pointer for NULL before using it in a comparison
+  against stored user-data UUIDs.
 
-On Tue, Jun 16, 2026 at 5:45 PM Prentice Bisbal <prentice@...r.edu> wrote:
->
->
-> On 6/15/26 1:56 PM, Alan Coopersmith wrote:
-> > On 6/8/26 16:46, David A. Wheeler wrote:
-> >> All: I propose that we create a *separate* mailing list, say
-> >> "oss-security-vulnerability-reports", for run-of-the-mill
-> >> vulnerability reports
-> >> about open source software (OSS). Run-of-the-mill reports would then
-> >> go there
-> >> and *not* to this mailing list "oss-security". This would leave
-> >> *this* oss-security" mailing list
-> >> for general discussions about the topic of OSS security, including
-> >> discussions about
-> >> specific publicly known vulnerabilities that are especially
-> >> noteworthy in some way.
-> >> Tools that want the full flood could monitor
-> >> "oss-security-vulnerability-reports".
-> >
-> > If it comes to the point we have to split the lists, I think it would
-> > be easier
-> > to create a oss-security-discuss for the discussions than to get
-> > dozens of
-> > projects to update their security advisory release process to send their
-> > advisories to a new list, or to rely on the projects to determine
-> > which are
-> > newsworthy enough to go to the main list vs. your proposed new
-> > ...-vulnerability-reports list.
->
-> I second this.
->
+  AddressSanitizer reports a SEGV caused by a READ memory access at
+  address 0x000000000000 (the zero page) at isomedia/isom_read.c:2754,
+  reached via isor_setup_channel() while MP4Box declares tracks from
+  the crafted file.
+
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
+
+Reproduction:
+  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
+  -Command: ./MP4Box -add 4_poc.mp4 -new /dev/null -split-size 5000000
+
+Asan-log:
+==37461==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f113ed946fc bp 0x7f113be5fd00 sp 0x7ffef7913440 T0)
+==37461==The signal is caused by a READ memory access.
+    #0 0x7f113ed946fc in gf_isom_get_user_data_count isomedia/isom_read.c:2754
+    #1 0x7f113f6ff701 in isor_setup_channel filters/isoffin_load.c:731
+    #2 0x7f113f70c220 in isor_declare_track filters/isoffin_load.c:1180
+
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/4/4_poc.mp4
+
+References:
+  https://github.com/gpac/gpac/issues/3155
+  https://www.cve.org/CVERecord?id=CVE-2025-55651
+  https://infosec.exchange/@sigdevel/116710512103919834
+
+——
+Best regards, Alexander A. Shvedov
+https://github.com/sigdevel
+
