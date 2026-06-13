@@ -1,59 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/03/5
-Message-ID: <CAFkuMLNEUnndkDv0MM15WL7xZaXBjFUDSVXyTVK3rf4hB3YK2A@mail.gmail.com>
-Date: Fri, 3 Jul 2026 11:10:35 -0400
-From: Julian Andres Klode <julian.klode@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/15
+Message-ID: <trinity-016bc3af-6ee4-4411-b255-ce9b3121a903-1781382939953@trinity-msg-rest-gmx-gmx-live-6759fbb69b-qnrq2>
+Date: Sat, 13 Jun 2026 20:35:40 +0000
+From: shvedov@....com
 To: oss-security@...ts.openwall.com
-Subject: pandemic of incomplete error handling in the OpenSSL ecosystem
+Subject: CVE-2025-55660: Stack-based Buffer Overflow in GPAC/MP4Box via gf_opus_read_length on crafted MP4 file with malformed Opus packet
 Content-Type: text/plain; charset=utf-8
 
-Hi folks,
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (ff8249a407685d00ceb5f4d2a798b9cad195140e)
+CVE:       CVE-2025-55660
+CWE:       CWE-121 (Stack-based Buffer Overflow)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-apologies, Friday is not the best time for this, but
-unfortunately this is public and wide spread, so I felt
-the need to cast as wide a net as possible.
+Description:
+  When MP4Box dumps a crafted MP4 file containing a malformed,
+  non-self-delimited Opus packet (e.g. an invalid odd packet length),
+  gf_opus_read_length() in media_tools/av_parsers.c does not
+  sufficiently validate the Opus packet size before writing the
+  computed length back into the packet header structure.
 
-# case 1: nuking errors before calling operations
+  AddressSanitizer reports a stack-buffer-overflow at
+  media_tools/av_parsers.c:11140, a WRITE of size 2 overflowing the
+  pckh stack object (offset 568) allocated in
+  gf_inspect_dump_opus_internal(), reached via
+  gf_opus_parse_packet_header() while MP4Box dumps the crafted Opus
+  track.
 
-This comes from the discussion in
-https://github.com/openssl/openssl/issues/31624 and the original
-bug in APT, that suggested we call ERR_clear_error() to clear
-the OpenSSL error queue before performing TLS because there
-was a stale MD5 error in the queue and the queue should be
-empty.
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-Unfortunately this appears to be a widespread pattern: People
-failed to handle an error somewhere, than wrap any SSL_ calls
-in ERR_clear_error() because it's failing there.
+Reproduction:
+  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
+  -Command: ./MP4Box -add 7_poc.mp4 -dxml -out /dev/null
 
-Obviously this is hiding a lot of real errors. The solution
-for having failed to check an error in the right place can't
-be to just nuke all the errors at an unrelated place.
+Asan-log:
+==24222==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7efe3c106638 at pc 0x7efe3ef07226 bp 0x7fff9e395ff0 sp 0x7fff9e395fe8
+WRITE of size 2 at 0x7efe3c106638 thread T0
+    #0 0x7efe3ef07225 in gf_opus_read_length media_tools/av_parsers.c:11140
+    #1 0x7efe3ef6e128 in gf_opus_parse_packet_header media_tools/av_parsers.c:11411
+    #2 0x7efe3f6ce40f in gf_inspect_dump_opus_internal filters/inspect.c:1830
 
-# case 2: incomplete error checking (top of queue only)
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/7/7_poc.mp4
 
-Case 2 was observed while inspecting a bunch of results
-for ERR_clear_error() on codesearch.debian.net. The pattern
-is:
+References:
+  https://github.com/gpac/gpac/issues/3161
+  https://www.cve.org/CVERecord?id=CVE-2025-55660
+  https://infosec.exchange/@sigdevel/116733892068649310
 
-1. Perform an operation that fails
-2. Call ERR_get_error() and inspect it
-3. Call ERR_clear_error()
 
-This causes unrelated errors in the queue to be discarded.
+——
+Best regards, Alexander A. Shvedov
+https://github.com/sigdevel
 
-# impact
-
-This impacts significant portions of the ecosystem. The concrete
-impact on individual applications is unknown at this point, further
-investigation is warranted. It can range from critical - errors
-that really should not have been missed where discarded - to
-benign.
-
-I strongly encourage everyone to go on a wild auditing trail.
-
--- 
-debian developer - deb.li/jak | jak-linux.org - free software dev
-ubuntu core developer                              i speak de, en
-
-Download attachment "signature.asc" of type "application/pgp-signature" (833 bytes)
