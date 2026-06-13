@@ -1,44 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/20
-Message-ID: <4e4d6d4c-9660-be96-9f24-1c137cf7cb92@apache.org>
-Date: Sun, 13 Sep 2026 05:49:05 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/8
+Message-ID: <trinity-a1a21f3e-59d2-4dea-bf0d-f9043ac9f8a6-1781382043942@trinity-msg-rest-gmx-gmx-live-6759fbb69b-j7mdg>
+Date: Sat, 13 Jun 2026 20:20:43 +0000
+From: shvedov@....com
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-84179: Apache Storm Nimbus, Apache Storm UI: Disclosure of Unredacted Merged Daemon Configuration via the Topology Page 
+Subject: CVE-2025-55642: Divide by Zero in GPAC/MP4Box via avidmx_process on crafted AVI input with zero declared frames
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
-
-Affected versions:
-
-- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
-- Apache Storm UI (org.apache.storm:storm-webapp) 3.0.0 before 3.1.0
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (f87b30611380e4dcd03cd4dd9ac553c0ec336826)
+CVE:       CVE-2025-55642
+CWE:       CWE-369 (Divide by Zero)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
 Description:
+  When MP4Box processes a crafted AVI-like media file with invalid
+  frame-count metadata (e.g. a 0/256 frame declaration), avidmx_process()
+  in filters/dmx_avi.c does not sufficiently validate the frame count
+  before using it as a divisor during bitrate computation.
 
-Description
+  When the Dasher computes the bitrate from the bitstream because no
+  bitrate property was assigned to the PID, the division by the invalid
+  frame count triggers an uncaught floating-point exception, reported by
+  AddressSanitizer as an FPE at filters/dmx_avi.c:639, reached via
+  gf_dasher_process() while MP4Box runs a DASH segmentation on the
+  crafted file.
 
-  getTopologyPageInfo merged the Nimbus daemon configuration with the topology's own configuration and returned the result without redaction in the topology_conf field of TopologyPageInfo. The Storm UI copied that value verbatim into the configuration field of GET /api/v1/topology/{id} and of the corresponding metrics endpoint.
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-  Where the cluster is configured with them, the merged map includes storm.zookeeper.auth.payload, which Storm's own documentation directs operators to keep in storm-cluster-auth.yaml under permissions that deny access from workers, together with the keystore and truststore passwords for the Thrift, Netty and ZooKeeper TLS configuration, and any plugin key whose name denotes a secret.
+Reproduction:
+  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
+  -Command: ./MP4Box -dash 1000 14_poc.mp4 -out /dev/null
 
-  getTopologyPageInfo is a topology read-only operation. Under SimpleACLAuthorizer a principal listed in topology.readonly.users or topology.readonly.groups could therefore read daemon credentials that the dedicated cluster configuration API, getNimbusConf, redacts and that is gated on nimbus.users instead. The sibling operations that exist to serve configuration were masked; the topology page, which merges in strictly more daemon state, was not.
+Asan-log:
+==1999695==ERROR: AddressSanitizer: FPE on unknown address 0x7f6e21811a6e (pc 0x7f6e21811a6e bp 0x51900001ff40 sp 0x7ffccf990130 T0)
+    #0 0x7f6e21811a6e in avidmx_process filters/dmx_avi.c:639
+    #1 0x7f6e2170e0a1 in gf_filter_process_task filter_core/filter.c:3179
+    #2 0x7f6e216e2375 in gf_fs_thread_proc filter_core/filter_session.c:2174
 
-  Mitigation
-
-  Upgrade to 3.1.0, where credential-bearing values are masked before any configuration is served over the Nimbus API.
-
-  Users who cannot upgrade immediately should remove any principal that is not trusted with cluster credentials from topology.readonly.users, topology.readonly.groups, topology.users and topology.groups, and should rotate the ZooKeeper authentication payload and any TLS keystore or truststore passwords that were reachable through the topology page.
-
-  Credit
-Wanxin Yin (yaklang.io) reported this issue to the Apache Security Team.
-
-Credit:
-
-Wanxin Yin (yaklang.io) (finder)
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/14/14_poc.mp4
 
 References:
+  https://github.com/gpac/gpac/issues/3196
+  https://www.cve.org/CVERecord?id=CVE-2025-55642
+  https://infosec.exchange/@sigdevel/116736787186993437
 
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-84179
+
+——
+Best regards, Alexander A. Shvedov
+https://github.com/sigdevel
 
