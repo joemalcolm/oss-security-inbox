@@ -1,35 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/6
-Message-ID: <79c11a20-86f9-5a8d-711e-48257ff5a83e@apache.org>
-Date: Tue, 15 Sep 2026 17:22:17 +0000
-From: Andor Molnar <andor@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-84439: Apache ZooKeeper: Audit log injection via unsanitized output from multiple sources 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/4
+Message-ID: <ai8NBqZeD-zb3wnf@pjcj.com>
+Date: Sun, 14 Jun 2026 22:24:10 +0200
+From: Paul Johnson <paul@...j.net>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-11526: GD versions before 2.86 for Perl allow OS command injection and file overwrite via a 2-arg open() of filename arguments in _make_filehandle
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+========================================================================
+CVE-2026-11526                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-11526
+  Distribution:  GD
+      Versions:  before 2.86
 
-- Apache ZooKeeper (org.apache.zookeeper:zookeeper) 3.9.0 through 3.9.5
-- Apache ZooKeeper (org.apache.zookeeper:zookeeper) 3.8.0 through 3.8.6
+      MetaCPAN:  https://metacpan.org/dist/GD
+      VCS Repo:  https://github.com/lstein/Perl-GD
 
-Description:
 
-When audit logging is enabled (zookeeper.audit.enable=true), an unauthenticated attacker can inject arbitrary fields into Apache ZooKeeper's audit log by sending a digest authentication request with tab characters (\t) embedded in the username. Because the audit log uses tab-separated key=value format, the injected tabs are parsed as legitimate field separators, allowing the attacker to spoof audit results (e.g., injecting result=success), forge operation types, and corrupt forensic evidence.
+GD versions before 2.86 for Perl allow OS command injection and file
+overwrite via a 2-arg open() of filename arguments in _make_filehandle
 
-A log injection vulnerability in Apache ZooKeeper allows a client that can call setACL to inject forged key-value fields into zookeeper_audit.log. When audit logging is enabled, the server serializes attacker-controlled digest ACL ids into the acl= audit field without escaping tab characters. Because audit events are emitted as tab-separated key=value records, a crafted ACL id can make one successful setAcl event appear to contain forged fields such as operation=delete and znode=/forged. This undermines the integrity of downstream audit parsing, alerting, and incident response.
+Description
+-----------
+GD versions before 2.86 for Perl allow OS command injection and file
+overwrite via a 2-arg open() of filename arguments in _make_filehandle.
 
-This issue affects Apache ZooKeeper: from 3.9.0 through 3.9.5, from 3.8.0 through 3.8.6.
+GD::Image::_make_filehandle opens a filename argument with Perl's 2-arg
+open(), so a filename that begins or ends with a pipe ("| cmd", "cmd
+|") or begins with a redirect ("> path", ">> path") is run as a command
+or redirect rather than opened as a file. _make_filehandle is the
+single open path behind every filename-accepting constructor (new,
+newFromPng, newFromJpeg, and the rest); the in-memory *Data variants do
+not open a path and are unaffected.
 
-Users are recommended to upgrade to version 3.9.6 or 3.8.7, which fixes the issue.
+Any caller that forwards untrusted input to one of these constructors
+as a pathname can run an arbitrary command or truncate a file under the
+process UID.
 
-Credit:
+Problem types
+-------------
+- CWE-78 Improper Neutralization of Special Elements used in an OS
+  Command ('OS Command Injection')
+- CWE-73 External Control of File Name or Path
 
-Youlong Chen Institute of Computing Technology <chenyoulong20g@....ac.cn> (reporter)
+Workarounds
+-----------
+For deployments that cannot upgrade to 2.86, do not pass untrusted
+input as a pathname to GD::Image constructors. Callers can open the
+file themselves and pass the resulting filehandle, which bypasses the
+affected string path.
 
-References:
 
-https://zookeeper.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-84439
+Solutions
+---------
+Upgrade to GD 2.86 or later, which opens filename arguments with a
+3-arg read open so the filename is never interpreted as a command or
+redirect.
 
+
+References
+----------
+https://github.com/lstein/Perl-GD/commit/67b163713c6c78dfeb693da0978ae934e5cd8210.patch
+https://metacpan.org/release/RURBAN/GD-2.86/changes
+
+-- 
+Paul Johnson - paul@...j.net
