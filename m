@@ -1,28 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/16
-Message-ID: <0e885715-2b58-e79f-689e-de4cf68090c1@apache.org>
-Date: Tue, 04 Aug 2026 18:14:24 +0000
-From: Daniil Kirilyuk <dakirily@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68074: Apache Qpid Broker-J: Unbounded symbol value caching can lead to pre-authentication resource exhaustion 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/2
+Message-ID:  <SY4PR01MB6332E573E9457FC8FB277529EEE72@SY4PR01MB6332.ausprd01.prod.outlook.com>
+Date: Sun, 14 Jun 2026 09:20:04 +0000
+From: Peter Gutmann <pgut001@...auckland.ac.nz>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "jcb62281@...il.com" <jcb62281@...il.com>
+Subject: Re: CVE-2026-9641: Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default algorithm and number of iterations
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Jacob Bachmeyer <jcb62281@...il.com> writes:
 
-Affected versions:
+>Does the shorter output length (128 bits for MD5; 160 bits for SHA-1) cause
+>problems?  Has the general advance of computing power caught up to HMAC-MD5
+>and HMAC-SHA1, or do they remain secure? (Similar to how DES remains unbroken
+>in the cryptanalytic sense, but its 56-bit keyspace is now vulnerable to
+>brute force.)
 
-- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol) through 10.0.1
+Anything above around 2^110 is computationally infeasible for the indefinite
+future (for reference, the entire global Bitcoin hash rate is 2^94 per year).
 
-Description:
-
-A pre-authentication attacker could leverage unbounded symbol value caching to cause resource exhaustion leading to denial of service.
-
-This issue affects Apache Qpid Broker-J: through 10.0.1.
-
-Users are recommended to upgrade to version 10.1.0, which fixes the issue.
-
-References:
-
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68074
-
+Peter.
