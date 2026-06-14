@@ -1,65 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/1
-Message-ID: <amASeYjj8RXx9Glx@netmeister.org>
-Date: Tue, 21 Jul 2026 20:44:41 -0400
-From: Jan Schaumann <jschauma@...meister.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: 432 Linux kernel CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/1
+Message-ID: <08b67b0c-f042-4ace-820c-02fc8ecb2329@gmail.com>
+Date: Sun, 14 Jun 2026 01:13:16 -0500
+From: Jacob Bachmeyer <jcb62281@...il.com>
+To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
+Subject: Re: CVE-2026-9641: Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default algorithm and number of iterations
 Content-Type: text/plain; charset=utf-8
 
-Steffen Nurpmeso <steffen@...oden.eu> wrote:
-> I wonder a bit what your desire is.
+On 6/12/26 20:37, Peter Gutmann wrote:
+> Robert Rothenberg <rrwo@...nsec.org> writes:
+>
+>> Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default algorithm
+>> and number of iterations.
+>>
+>> The default algorithm is HMAC-SHA1, which should only be used for legacy
+>> systems.
+> Minor nit, there's actually nothing wrong with HMAC-SHA1 since the HMAC
+> construct prevents all of the attacks on SHA1.  Even the rather broken MD5 is
+> still fine if used in an HMAC construct.
 
-I'm looking to take the temperature on how people are
-responding to a significant influx of reported CVE
-fixes.  I believe it ought to change how organizations
-handle linux kernel security updates.
-
-I currently see the following possible approaches:
-
-1) I don't care: I always run the latest kernel
-everywhere and update at least once per
-$toleranceTimeWindow across all systems I manage.
-
-2) I do care: I review every single CVE and decide
-which changes I need to address / backport in my
-environment.
-
-3) I update selectively whenever a single
-vulnerability makes big enough waves that somebody
-bothers me.  This usually happens in panic mode.
+Does the shorter output length (128 bits for MD5; 160 bits for SHA-1) 
+cause problems?  Has the general advance of computing power caught up to 
+HMAC-MD5 and HMAC-SHA1, or do they remain secure? (Similar to how DES 
+remains unbroken in the cryptanalytic sense, but its 56-bit keyspace is 
+now vulnerable to brute force.)
 
 
-(1) is great, but I haven't seen that be a realistic
-option in large environments.
+-- Jacob
 
-(2) hasn't been a scalable approach for a while, and
-perhaps the recent volume changes are leading to
-people to stop deceiving themselves.
-
-(3) is what I see most people do.  It kind of "worked"
-if you got a small number of events per year, not per
-week.
-
-
-I can see the arguments for "every kernel bug is a
-potential security vulnerability" and that thus
-assigning CVE IDs here is meaningless.
-
-But I'd like to understand how others are handling
-linux kernel vulnerabilities.
-
-> Well, i saw the last perl thing which i liked.
-
-> Fwiw i like the cURL reports, they are really meaningful and give
-> pointers i can follow.
-
-Right, so for these two cases, it sounds like you want
-to have the ability to individually review and assess
-vulnerabilities.
-
->  Of course if there would be hundreds...
-
-Ay, there's the rub.
-
--Jan
