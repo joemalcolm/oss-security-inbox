@@ -1,28 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/6
-Message-ID: <356fc2ca-fe7c-49cf-9a4a-5ff3f7c8b722@oracle.com>
-Date: Mon, 15 Jun 2026 10:56:48 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/2
+Message-ID: <ai_5vXcSQ3XmMC3S@symphytum.spacehopper.org>
+Date: Mon, 15 Jun 2026 14:10:21 +0100
+From: Stuart Henderson <stu@...cehopper.org>
+To: oss-security@...ts.openwall.com
 Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
 Content-Type: text/plain; charset=utf-8
 
-On 6/8/26 16:46, David A. Wheeler wrote:
-> All: I propose that we create a *separate* mailing list, say
-> "oss-security-vulnerability-reports", for run-of-the-mill vulnerability reports
-> about open source software (OSS). Run-of-the-mill reports would then go there
-> and *not* to this mailing list "oss-security". This would leave *this* oss-security" mailing list
-> for general discussions about the topic of OSS security, including discussions about
-> specific publicly known vulnerabilities that are especially noteworthy in some way.
-> Tools that want the full flood could monitor "oss-security-vulnerability-reports".
+On 2026/06/14 00:32, Solar Designer wrote:
+> Whenever practical, please group related vulnerability disclosures into
+> fewer messages (like security advisories) and use helpful Subject lines.
+> Include the project name in a fixed place near the beginning of Subject,
+> and make the Subject specific to the one disclosure rather than generic
+> shared between multiple disclosures.
 
-If it comes to the point we have to split the lists, I think it would be easier
-to create a oss-security-discuss for the discussions than to get dozens of
-projects to update their security advisory release process to send their
-advisories to a new list, or to rely on the projects to determine which are
-newsworthy enough to go to the main list vs. your proposed new
-...-vulnerability-reports list.
+btw, mutt users who filter mail into folders (so they already know from
+the context that the message is from oss-security) might like this to
+strip the list tag from Subject lines, freeing up a few more columns in
+the index:
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+subjectrx '\[oss-security\] ?' '%L%R'
+
+if used in a folder hook, you need extra escaping
+
+folder-hook . unsubjectrx '*'
+folder-hook =oss-security subjectrx '\\[oss-security\\]\ ?' '%L%R'
+
+> I greatly appreciate that Apache projects post their CVE disclosures in
+> here, but it does sometimes result in a lot of messages for the same
+> project on the same day.  Also sometimes individual CVEs are missed -
+> like for the previous (not the latest) Apache httpd set of CVEs, I spent
+> some time to ensure all were eventually brought in here, as initially
+> some were not.  If some CVE disclosures are similarly missed for a less
+> popular Apache project, this would remain unnoticed (maybe already was).
+
+The Apache ones were what pushed me into discovering 'subjectrx'; before
+that I only had 2 characters left for the project name, e.g.
+"[oss-security] CVE-xxxx-yyyyy: Apache Ai".
+
+> I understand it took time and effort to get the current system working
+> well, but maybe it's time for someone at Apache to start looking into
+> updating the system to group CVE disclosures by project and release.
+> 
+> Ditto for Perl CPAN.
+
+It would be appreciated.
+
