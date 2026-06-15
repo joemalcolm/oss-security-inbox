@@ -1,88 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/21/1
-Message-ID: <ajhEv1EqUpBII8WK@256bit.org>
-Date: Sun, 21 Jun 2026 22:08:31 +0200
-From: Christian Brabandt <cb@...bit.org>
-To: oss-security@...ts.openwall.com
-Subject: [vim-security] Out-of-bounds Write in SOFO Soundfolding in Vim < 9.2.0698
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/4
+Message-ID: <44658def09168960c639e316d2391ecd@cpansec.org>
+Date: Mon, 15 Jun 2026 15:00:59 +0200
+From: Timothy Legge <timlegge@...nsec.org>
+To: CVE Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
+Subject: CVE-2026-12205: Crypt::DSA versions before 1.21 for Perl reused the nonce across signatures, leading to private-key recovery
 Content-Type: text/plain; charset=utf-8
 
-Out-of-bounds Write in SOFO Soundfolding in Vim < 9.2.0698
-==========================================================
-Date: 21.06.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Out-of-bounds Write (CWE-787)
+========================================================================
+CVE-2026-12205                                       CPAN Security Group
+========================================================================
 
-## Summary
-The single-byte branch of `spell_soundfold_sofo()` in `src/spell.c` translates
-a word through a spell file's SOFO (sound-folding) byte map into a caller-owned
-result buffer.  Its copy loop advances the output index `ri` with no upper
-bound and terminates only on the input NUL, writing one byte per input byte
-into the `MAXWLEN`-element stack buffer the caller provides.  A word longer
-than `MAXWLEN`, passed to `soundfold()` (or reached via sound-based spell
-suggestion) while a SOFO-based spell language is active, therefore writes past
-the end of that buffer.  This is a stack out-of-bounds write that corrupts the
-call frame and crashes the editor.
+         CVE ID:  CVE-2026-12205
+   Distribution:  Crypt-DSA
+       Versions:  before 1.21
 
-## Description
-`spell_soundfold_sofo()` has two branches.  The multibyte branch (taken under
-multibyte encodings) bounds its output with `if (ri + MB_MAXBYTES > MAXWLEN)
-break;`.  The single-byte branch, taken for 8-bit encodings such as `latin1`,
-has no equivalent guard:
-
-```C
-    else
-    {
-        // The sl_sal_first[] table contains the translation.
-        for (s = inword; (c = *s) != NUL; ++s)      // bound: input NUL only
-        {
-            if (VIM_ISWHITE(c))
-                c = ' ';
-            else
-                c = slang->sl_sal_first[c];
-            if (c != NUL && (ri == 0 || res[ri - 1] != c))
-                res[ri++] = c;                      // no ri < MAXWLEN guard
-        }
-    }
-    res[ri] = NUL;                                  // trailing OOB write too
-```
-
-The destination `res` is an array of size `[MAXWLEN]`. `f_soundfold()` passes
-the user-supplied string straight to `eval_soundfold()` without length-bounding
-it, so once the active language carries a SOFO map (`sl_sal_first`), any input
-longer than 253 bytes runs `ri` past the end of the buffer.  The two sibling
-walkers do bound their output (`spell_soundfold_sal()` truncates its input with
-`vim_strncpy(.., MAXWLEN - 1)` and guards `reslen < MAXWLEN`;
-`spell_soundfold_wsal()` guards `reslen < MAXWLEN`); the single-byte SOFO
-branch was the remaining unguarded walker of this class.
-
-## Impact
-This issue is driven by the length of the word handed to the
-spell_soundfold_sofo() function, not by the contents of the spell file. any
-loaded spell language with a SOFO sound-folding table is enough.  Exploitation
-is constrained, however.  The vulnerable single-byte branch is only reached
-under a non-multibyte 8-bit encoding (e.g. `set encoding=latin1`); under the
-default UTF-8 encoding the multibyte branch, which is already bounded, is taken
-instead.  Spell checking must be enabled with such a SOFO-based language, and
-`soundfold()`  must be invoked on an over-long word - for instance a script or
-plugin that calls `soundfold()` on untrusted input.  When those conditions hold
-the out-of-bounds write corrupts the `eval_soundfold()` stack frame and the
-process aborts.
-
-## Acknowledgements
-The Vim project would like to thank Cipher / Causal Security
-(https://causalsecurity.com/) for reporting and analyzing the issue and
-suggesting a fix.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.0698](https://github.com/vim/vim/releases/tag/v9.2.0698).
-- [Commit](https://github.com/vim/vim/commit/497f931f85339d175d7f69588dd249e8ccfed41b)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-q8mh-6qm3-25g4)
+       MetaCPAN:  https://metacpan.org/dist/Crypt-DSA
+       VCS Repo:  https://github.com/perl-Crypt-OpenPGP/Crypt-DSA
 
 
-Thanks,
-Christian
--- 
-Wer viel spricht hat weniger Zeit zum Denken.
-		-- Indisches Sprichwort
+Crypt::DSA versions before 1.21 for Perl reused the nonce across
+signatures, leading to private-key recovery
+
+Description
+-----------
+Crypt::DSA versions before 1.21 for Perl reused the nonce across
+signatures, leading to private-key recovery.
+
+Crypt::DSA::sign caches the per-signature nonce material in the Key
+object without ever clearing it.
+
+The first sign() on a Key object picks a nonce, and every later sign()
+on that same object reuses it, producing an identical "r".
+
+Keys used to sign more than once with an affected version should be
+considered compromised.
+
+Problem types
+-------------
+- CWE-323 Reusing a Nonce, Key Pair in Encryption
+
+Solutions
+---------
+Upgrade to version 1.21
+
+Revoke any keys that may have been compromised.
+
+Crypt::DSA was deprecated in version 1.20. You should migrate to
+another solution.
+
+
+References
+----------
+https://metacpan.org/release/TIMLEGGE/Crypt-DSA-1.20/source/lib/Crypt/DSA.pm#L47
+https://metacpan.org/release/TIMLEGGE/Crypt-DSA-1.21/changes
+
+Timeline
+--------
+- 2026-05-16: Maintainer contacted
+- 2026-06-13: Maintainer and CPANSec contacted
+- 2026-06-14: Fixed version released
+
+Credits
+-------
+Richard Kettlewell, finder
