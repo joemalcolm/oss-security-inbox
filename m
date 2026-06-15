@@ -1,57 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/9
-Message-ID: <2576629d-93b2-4068-8099-63727021bfd7@nlnetlabs.nl>
-Date: Thu, 25 Jun 2026 12:20:30 +0200
-From: Willem Toorop <willem@...etlabs.nl>
-To: oss-security@...ts.openwall.com
-Subject: Several vulnerabilities were found in NLnet Labs NSD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/10
+Message-ID: <cf8d729f-b6b2-4559-a815-138bd55e6e36@cpansec.org>
+Date: Mon, 15 Jun 2026 22:12:33 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-12087: Socket versions before 2.041 for Perl have an out-of-bounds heap read
 Content-Type: text/plain; charset=utf-8
 
-Several vulnerabilities were found in NLnet Labs NSD.
-We have released version 4.14.3 as a security release today,Thursday 25 
-June, with the fixes to these issues.
 
-The overview of the vulnerabilities with a brief description is:
+========================================================================
+CVE-2026-12087                                       CPAN Security Group
+========================================================================
 
-CVE-2026-12244 - severity: HIGH
-Heap overflow and crash with crafted SVCB RR
+         CVE ID:  CVE-2026-12087
+   Distribution:  Socket
+       Versions:  before 2.041
 
-CVE-2026-12245 - severity: HIGH
-Denial of DNS over TLS service by any DoT client
-
-CVE-2026-12246 - severity: HIGH
-Out of bounds stack write with crafted APL RR
-
-CVE-2026-12490 - severity: HIGH
-Bypass of client certificate verification with transfer over TLS
-
-You can find detailed information on each vulnerability attached to this 
-email along with their respective patches.
-
-For ease of deployment we also provide a combined patch including all of 
-them (patch_combined-4.14.3.diff).
-
-The patches are tested to apply/work on 4.14.2
+       MetaCPAN:  https://metacpan.org/dist/Socket
 
 
-Best regards,
--- Willem, on behalf of the NSD team.
-Content of type "text/html" skipped
+Socket versions before 2.041 for Perl have an out-of-bounds heap read
 
-View attachment "CVE-2026-12244.txt" of type "text/plain" (1477 bytes)
+Description
+-----------
+Socket versions before 2.041 for Perl have an out-of-bounds heap read.
 
-View attachment "patch_CVE-2026-12244.diff" of type "text/x-patch" (405 bytes)
+In Socket.xs, pack_ip_mreq_source() checks the length of its source
+argument before the argument is read, so the check tests the byte
+length carried over from the preceding multiaddr argument instead. Both
+addresses occupy a 4-byte field, so a valid multiaddr lets a source of
+any length pass the check, and the source is then copied into the
+4-byte imr_sourceaddr field with a fixed-size copy. A source shorter
+than 4 bytes is not rejected, and the copy reads up to 3 bytes past the
+end of its buffer.
 
-View attachment "CVE-2026-12245.txt" of type "text/plain" (1499 bytes)
+Calling pack_ip_mreq_source() with a source value shorter than 4 bytes
+copies adjacent heap memory into the returned packed structure.
 
-View attachment "patch_CVE-2026-12245.diff" of type "text/x-patch" (647 bytes)
+Problem types
+-------------
+- CWE-125 Out-of-bounds Read
+- CWE-805 Buffer Access with Incorrect Length Value
 
-View attachment "CVE-2026-12246.txt" of type "text/plain" (1442 bytes)
+Solutions
+---------
+Upgrade to version 2.041 or later.
 
-View attachment "patch_CVE-2026-12246.diff" of type "text/x-patch" (1162 bytes)
 
-View attachment "CVE-2026-12490.txt" of type "text/plain" (1476 bytes)
+References
+----------
+https://metacpan.org/release/PEVANS/Socket-2.041/changes
+https://github.com/Perl/perl5/commit/de19a0b0ad1900fef976c5c1400bd8f11ec6c6cb.patch
 
-View attachment "patch_CVE-2026-12490.diff" of type "text/x-patch" (4200 bytes)
 
-View attachment "patch_combined-4.14.3.diff" of type "text/x-patch" (6275 bytes)
+
