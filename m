@@ -1,73 +1,115 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/10
-Message-ID: <336dcfa1-286b-4151-8552-bcd0f3784a0f@cpansec.org>
-Date: Tue, 9 Jun 2026 08:41:40 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2009-10007: Catalyst::Plugin::Authentication versions before 0.10_027 for Perl is susceptible to session fixation attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/11
+Message-ID: <69961bd7-bd21-4ede-b000-cdba3333515f@jvf.cc>
+Date: Tue, 16 Jun 2026 13:49:14 -0700
+From: Jay Faulkner <jay@....cc>
+To: oss-security@...ts.openwall.com
+Subject: [OSSN-0100] Ironic: Command Injection in IPA (CVE-2026-43003)
 Content-Type: text/plain; charset=utf-8
 
+Command Injection in IPA via chroot Execution of Tenant-Controlled binaries
+---
 
-========================================================================
-CVE-2009-10007                                       CPAN Security Group
-========================================================================
+### Summary ###
+Tuomo Tanskanen (Ericsson Software Technology) and Dmitry Tantsur (Red Hat)
+from the Metal3.io Security Team reported a vulnerability in Ironic Python
+Agent (IPA) when deploying a partition image that lacks boot artifacts.
+A malicious partition image can include crafted grub-install
+binary or other arbitrary binaries in the chroot path which IPA executes on
+the provisioning network host. This affects all partition images that
+require Ironic to manage the bootloader installation (BIOS-booted nodes
+without boot artifacts).
 
-         CVE ID:  CVE-2009-10007
-   Distribution:  Catalyst-Plugin-Authentication
-       Versions:  before 0.10_027
+The practical impact is limited; the attacker needs the ability to supply a
+partition image for bare-metal deployment and at the point of exploitation,
+IPA holds only an outdated agent_token and a heavily redacted node object.
 
-       MetaCPAN: https://metacpan.org/dist/Catalyst-Plugin-Authentication
-       VCS Repo: 
-https://github.com/perl-catalyst/Catalyst-Plugin-Authentication
+Whole disk images are not affected and partition images that include their
+own EFI boot artifacts at /boot and /efi are also not affected as Ironic
+copies them without executing grub-install.
+
+### Affected Services / Software ###
+- ironic: <29.0.6, >=30.0.0 <32.0.2, >=33.0.0 <35.0.2, >=36.0.0 <37.0.0
+- ironic-python-agent: <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 <11.5.1
+
+### Discussion ###
+As it is not feasible to secure execution of a bootloader install binary
+due to technical limitations, the Ironic team has chosen to make this 
+feature
+optional and disabled by default in the current development version.
+
+Backported versions of this change do not enable this restriction by default
+to avoid breaking existing installations.
+
+The vulnerable code path has existed for the entirety of the history of 
+Ironic
+Python Agent, however, there are safeguards in place to prevent 
+escalation of
+privileges from the provisioning network. Additionally, prior to Ironic
+17.0.0, only cloud administrators could supply images for deployment, 
+limiting
+the impact of this issue.
+
+### Recommended Actions ###
+Apply the provided Ironic and Ironic-Python-Agent patches.
+
+Evaluate your use cases; flip ``CONF.agent.enable_bios_bootloader_install``
+to ``False`` on Ironic conductors once confirming you are not using any
+partition images relying on a bootloader installation.
+
+#### Patches ####
+The following reviews contain the fix for this issue:
+
+##### Ironic #####
+2026.2/hibiscus (development): 
+https://review.opendev.org/c/openstack/ironic/+/990724
+2026.1/gazpacho: https://review.opendev.org/c/openstack/ironic/+/991179
+2025.2/flamingo: https://review.opendev.org/c/openstack/ironic/+/993685
+2025.1/epoxy: https://review.opendev.org/c/openstack/ironic/+/993684
+2024.1/caracal (unmaintained): 
+https://review.opendev.org/c/openstack/ironic/+/993686
+2023.1/antelope (unmaintained): 
+https://review.opendev.org/c/openstack/ironic/+/993687
+bugfix/33.0: https://review.opendev.org/c/openstack/ironic/+/993682
+bugfix/34.0: https://review.opendev.org/c/openstack/ironic/+/993683
+bugfix/37.0: Ironic 37.0.0 is not vulnerable.
+
+##### Ironic Python Agent #####
+2026.2/hibiscus (development): 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/987391
+2026.1/gazpacho: 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993016
+2025.2/flamingo: 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993020
+2025.1/epoxy: 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993024
+2024.1/caracal (unmaintained): 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993025
+2023.1/antelope (unmaintained): 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993026
+bugfix/11.3: 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993464
+bugfix/11.4: 
+https://review.opendev.org/c/openstack/ironic-python-agent/+/993463
+bugfix/11.6: IPA 11.6.0 is not vulnerable.
+
+### Credits ###
+Dmitry Tantsur, Red Hat
+Tuomo Tanskanen, Ericsson Software Technology
+Metal3.io Security Team
+
+### Contacts / References ###
+Authors:
+- Jay Faulkner, G-Research Open Source Software (GR-OSS)
+
+This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0100
+Original Launchpad bug: 
+https://bugs.launchpad.net/ironic-python-agent/+bug/2148310
+Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
+OpenStack Security : https://security.openstack.org/
+CVE: CVE-2026-43003
 
 
-Catalyst::Plugin::Authentication versions before 0.10_027 for Perl is
-susceptible to session fixation attacks
+Download attachment "OpenPGP_0x6B75D939B424C6D4.asc" of type "application/pgp-keys" (6373 bytes)
 
-Description
------------
-Catalyst::Plugin::Authentication versions before 0.10_027 for Perl is
-susceptible to session fixation attacks.
-
-Catalyst::Plugin::Authentication does not automatically change the
-session id after authentication. An attacker that obtains a session id
-cookie can use this to impersonate the victim.
-
-Problem types
--------------
-- CWE-384 Session Fixation
-
-Workarounds
------------
-Users of Catalyst::Plugin::Session or Catalyst::Plugin::Starch should
-call the change_session_id method after authentication.
-
-Users of Plack::Middleware::Session should set the change_id flag after
-logging in.
-
-Users may also apply the linked patch.
-
-
-Solutions
----------
-Users should upgrade to version 0.10_027 or later.
-
-
-References
-----------
-https://metacpan.org/release/ETHER/Catalyst-Plugin-Authentication-0.10_027/changes
-https://github.com/perl-catalyst/Catalyst-Plugin-Authentication/commit/b1385ea87a2491b64f33169222af19982d0acce3.patch
-https://metacpan.org/pod/Catalyst::Plugin::Session#change_session_id
-https://metacpan.org/pod/Plack::Middleware::Session#change_id
-
-Timeline
---------
-- 2009-07-08: Catalyst::Plugin::Session version 0.25 released with the
-   change_session_id method to protect against session fixation attacks,
-   along with documentation how to use that with
-   Catalyst::Plugin::Authentication
-- 2026-06-07: Catalyst::Plugin::Authentication version 0.10_027
-   released with change to avoid session fixation attacks
-
-
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
