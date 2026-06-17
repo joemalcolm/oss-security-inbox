@@ -1,74 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/17
-Message-ID: <7ff8bf6b-a00a-4eb3-b321-a6b8b1980956@cpansec.org>
-Date: Wed, 22 Jul 2026 21:32:10 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-13089: OIDC::Lite versions through 0.12.1 for Perl allow ID Token signature verification bypass via a token-controlled algorithm allowlist in verify
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/17/6
+Message-ID: <33f23173-2fce-df45-1525-b50518b25bef@apache.org>
+Date: Wed, 17 Jun 2026 01:36:15 +0000
+From: Wenjun Ruan <wenjun@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-49050: Apache DolphinScheduler: General user can mint admin access tokens via /access-tokens 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-========================================================================
-CVE-2026-13089                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-13089
-   Distribution:  OIDC-Lite
-       Versions:  through 0.12.1
+- Apache DolphinScheduler (org.apache.dolphinscheduler:dolphinscheduler-api) before 3.4.2
 
-       MetaCPAN:  https://metacpan.org/dist/OIDC-Lite
-       VCS Repo:  https://github.com/ritou/p5-oidc-lite
+Description:
 
+General user can mint admin access tokens via /access-tokens
 
-OIDC::Lite versions through 0.12.1 for Perl allow ID Token signature
-verification bypass via a token-controlled algorithm allowlist in
-verify
+This issue affects Apache DolphinScheduler: before 3.4.2.
 
-Description
------------
-OIDC::Lite versions through 0.12.1 for Perl allow ID Token signature
-verification bypass via a token-controlled algorithm allowlist in
-verify.
+Users are recommended to upgrade to version 3.4.2, which fixes the issue.
 
-When the caller does not pin an algorithm,
-OIDC::Lite::Model::IDToken::verify sets
-$self->alg($self->header->{alg}) from the token's own header and then
-calls decode_jwt(token, key, 1, [$self->alg]), handing JSON::WebToken
-an accepted-algorithm allowlist taken from the untrusted token. A token
-with alg=none yields ['none'], so decode_jwt returns the claims with no
-signature check, and a token with alg=HS256 is verified with the RP's
-RSA public key as the HMAC secret (RS to HS confusion).
+Credit:
 
-The ID Token is the OpenID Connect authentication assertion delivered
-to the Relying Party. Any caller that verifies an ID Token through the
-unpinned load(token)->verify path, or load(token, key) with only the
-key pinned, accepts a forged token carrying attacker-chosen claims such
-as sub and is authenticated as any user. Passing an explicit algorithm
-so $self->alg is already set bypasses the header-derived allowlist and
-is not affected.
+George Chen(https://github.com/geo-chen) (finder)
 
-Note that the latest version uploaded to CPAN is 0.10. Later versions
-are available in the git repository.
+References:
 
-Problem types
--------------
-- CWE-347 Improper Verification of Cryptographic Signature
-
-Workarounds
------------
-Apply the patch.
-
-Otherwise, pin the expected signature algorithm at the call site, for
-example OIDC::Lite::Model::IDToken->load($token, $key, $alg) with an
-explicit non-none $alg, so verify uses the pinned algorithm instead of
-the value in the token header.
-
-
-References
-----------
-https://datatracker.ietf.org/doc/html/rfc8725#section-3.1
-https://github.com/ritou/p5-oidc-lite/pull/31
-https://security.metacpan.org/patches/O/OIDC-Lite/0.10/CVE-2026-13089-r1.patch
-
-
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-49050
 
