@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/3
-Message-ID: <9517bd26-3585-96e2-5d12-d46b6f0b3500@apache.org>
-Date: Tue, 08 Sep 2026 10:36:37 +0000
-From: Sebastian Nagel <snagel@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/17/1
+Message-ID: <CA+WUWo8Z15E+QkHcPqmk82Y5J+4d33wVCUrVSSLMkLJBo2CizQ@mail.gmail.com>
+Date: Tue, 16 Jun 2026 17:13:49 -0700
+From: Ryo utomo <utomoryo395@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-41869: Apache Nutch: Unauthenticated forced shutdown and job interruption in Nutch Server (Nutch REST API) 
+Subject: [CVE-2026-36849] libtiff: Denial of Service via large SamplesPerPixel tag
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hi,
 
-Affected versions:
+I would like to disclose CVE-2026-36849, a denial of service vulnerability
+in libtiff.
 
-- Apache Nutch 1.10 through 1.22
+== Summary ==
 
-Description:
+An issue in libtiff v4.7.1 allows an attacker to cause a denial of service
+via a crafted TIFF file containing a large SamplesPerPixel tag value.
 
-Missing Authorization, Improper Resource Shutdown and Job Interruption vulnerability in Apache Nutch Server  (Nutch REST API).
+== Affected Versions ==
 
+libtiff v4.7.1 and prior
 
+== Patch ==
 
-This issue affects Apache Nutch: from 1.10 through 1.22.
+https://gitlab.com/gitlab-org/build/omnibus-mirror/libtiff/-/commit/eedba405d3695b52faae65994c5904f228eca0bf
 
+== References ==
 
+- CVE: CVE-2026-36849
+- Issue: https://gitlab.com/libtiff/libtiff/-/work_items/781
 
-Users are recommended to upgrade to version 1.23, which removes the Nutch Server.
-If an upgrade is not possible, user must restrict access to instances running the Nutch Service to trusted users only.
-Please, also visit the  Apache Nutch security advisories https://nutch.apache.org/documentation/security/ .
-
-This issue is being tracked as NUTCH-3165 
-
-Credit:
-
-The Apache Nutch Project Management Committee would like to thank Th1nk for reporting this issue. (reporter)
-
-References:
-
-https://nutch.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-41869
-https://issues.apache.org/jira/browse/NUTCH-3165
+Regards,
+Satriyo Utomo
+(aleens-lab)
 
