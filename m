@@ -1,45 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/22/2
-Message-ID: <ajjXlJdgT2VQfCh6@eldamar.lan>
-Date: Mon, 22 Jun 2026 08:35:00 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: Squid CVE-2026-47729 and CVE-2026-50012
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/17/9
+Message-Id: <3EDDDBE4-215E-48A5-B18A-073ABE1C7E47@dwheeler.com>
+Date: Wed, 17 Jun 2026 10:11:43 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>, oss-security@...ts.openwall.com
+Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
 Content-Type: text/plain; charset=utf-8
 
-Hi Amos,
 
-On Mon, Jun 15, 2026 at 11:26:10PM +1200, Amos Jeffries wrote:
-> On 12/06/2026 20:21, Amos Jeffries wrote:
-> > Hi all,
-> > 
-> > Squid 7.6 release contains fixes for and releases the embargo on
-> > CVE-2026-47729 and CVE-2026-50012.
-> > 
+
+> On Jun 15, 2026, at 1:56 PM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
 > 
-> Apologies, this first one (CVE-2026-47729) embargo is over, but the fix will
-> actually be in Squid 7.7.
+> On 6/8/26 16:46, David A. Wheeler wrote:
+>> All: I propose that we create a *separate* mailing list...
 > 
-> > 
-> > CVE-2026-47729
-> > 
-> > Due to a Improper Validation of Syntactic Correctness of Input
-> > bug, Squid is vulnerable to a Out-of-bounds Read
-> > attack against the FTP gateway.
-> > 
-> > This problem allows a trusted client to perform an Out-of-Bounds
-> > Read from random unrelated transactions when accessing a
-> > misbehaving FTP server through Squid's gateway feature.
-> > 
-> > <https://github.com/squid-cache/squid/
-> > commit/865a131c7d557e68c965043d98c2eccae26deef8.patch>
+> If it comes to the point we have to split the lists, I think it would be easier
+> to create a oss-security-discuss for the discussions than to get dozens of
+> projects to update their security advisory release process to send their
+> advisories to a new list
 
-I'm slightly confused about this. The referenced fix is in 7.6. Can
-you point us to the correct fix in 7.7 for CVE-2026-47729?
+That sounds good to me. "Have to" will be in the eye of the beholder.
+It appears we have about ~400-500 messages/month. I hope people will be
+willing to create a new list if we reach 5x or 10x as many per month.
 
-At least
-https://github.com/squid-cache/squid/commit/865a131c7d557e68c965043d98c2eccae26deef8
-matches as well the followup from Alan.
+Frankly, I'd love to see the split anyway. Those who want to see both could
+subscribe to both.
 
-Regards,
-Salvatore
+--- David A. Wheeler
+
