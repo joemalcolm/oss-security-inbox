@@ -1,26 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/14
-Message-ID: <9eb44b90-212c-fa14-7d88-7683c85c4e0c@apache.org>
-Date: Thu, 06 Aug 2026 09:59:13 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-54225: Apache CXF: Denial of Service attack via large attachments 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/6
+Message-ID: <0642a5c4-b890-46a6-bed1-8e0ee95e5bfc@cpansec.org>
+Date: Thu, 18 Jun 2026 18:54:16 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-9692: Mojolicious::Sessions::Storable versions through 0.05 for Perl generate session ids insecurely
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
 
-Affected versions:
+========================================================================
+CVE-2026-9692                                        CPAN Security Group
+========================================================================
 
-- Apache CXF (org.apache.cxf:cxf-core) 4.2.0 before 4.2.3
-- Apache CXF (org.apache.cxf:cxf-core) 4.0.0 before 4.1.8
-- Apache CXF (org.apache.cxf:cxf-core) before 3.6.12
+         CVE ID:  CVE-2026-9692
+   Distribution:  Mojolicious-Plugin-SessionStore
+       Versions:  through 0.05
 
-Description:
+       MetaCPAN: https://metacpan.org/dist/Mojolicious-Plugin-SessionStore
+       VCS Repo: https://github.com/hayajo/Mojolicious-Plugin-SessionStore
 
-Apache CXF allows to control the maximum attachment size via the "attachment-max-size". Prior to Apache CXF 4.2.3 and 4.1.8 and 3.6.12, there was no default placed on this size, meaning that a denial of service attack is possible if the user doesn't explicitly set the limit. Users should update to Apache CXF 4.2.3 or 4.1.8 or 3.6.12 which fixes this problem by imposing a default attachment size limit of 50mb.
 
-References:
+Mojolicious::Sessions::Storable versions through 0.05 for Perl generate
+session ids insecurely
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-54225
+Description
+-----------
+Mojolicious::Sessions::Storable versions through 0.05 for Perl generate
+session ids insecurely.
+
+The default session id generator returns a SHA-1 hash seeded with the
+built-in rand function, the epoch time, the heap address of an
+anonymous hash, and the PID.
+
+These are predictable or low-entropy sources that are unsuitable for
+security purposes.
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Apply the patch, which requires an upgrade to Mojolicious 9.46 or
+later.
+
+
+References
+----------
+https://security.metacpan.org/patches/M/Mojolicious-Plugin-SessionStore/0.05/CVE-2026-9692-r1.patch
+https://metacpan.org/release/HAYAJO/Mojolicious-Plugin-SessionStore-0.05/source/lib/Mojolicious/Sessions/Storable.pm#L11-15
+https://www.cve.org/CVERecord?id=CVE-2025-40923
+https://security.metacpan.org/docs/guides/random-data-for-security.html
+
+
 
