@@ -1,34 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/46
-Message-ID: <440e1a86-61be-5ce7-60a8-5a6dfde571b6@apache.org>
-Date: Fri, 24 Jul 2026 21:44:01 +0000
-From: Jens Geyer <jensg@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/2
+Message-ID: <CAApg2=Tc3N=pU6hO=1PnUuN_fbkTK1Ay6TwZmtShs8qoHi=NwA@mail.gmail.com>
+Date: Thu, 18 Jun 2026 12:55:05 +0200
+From: Marta Rybczynska <rybczynska@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66053: Apache Thrift: Python TSSLSocket Hostname Matcher Import 
+Cc: Lucas Holt <luke@...lishgames.com>
+Subject: Re: How to request CVE numbers?
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+On Thu, 11 Jun 2026, 01:41 Hauke Mehrtens, <hauke@...ke-m.de> wrote:
 
-Affected versions:
+> On 6/10/26 16:14, Lucas Holt wrote:
+> > On 6/10/26 8:52 AM, Christian Brabandt wrote:
+> >> Agree, but they seemed to be swamped by CVE requests for the last couple
+> >> of months. I have been waiting for up to 3 weeks on the final CVE
+> >> assignment.
+> >>
+> > I've also had delays getting them, but  consider all the AI related
+> > reports.  We submitted 13 requests for mport package manager recently.
+> >
+> >
+> > Lucas Holt
+> > Luke@...lishGames.com
+> > ________________________________________________________
+> > MidnightBSD.org (Free OS)
+> > JustJournal.com (Free blogging)
+> >
+> Thank you all for the help.
+>
+> We requested CVE numbers on github about 1 week ago here:
+> https://github.com/openwrt/odhcpd/security/advisories/
+>
+> We will probably patch the vulnerabilities and also publish them before
+> we have CVE numbers assigned and just update the advisory later.
+>
 
-- Apache Thrift (thrift) before 0.24.0
+Hello Hauke,
+I'm operating a CNA (Ygreky) that can assign to projects that do not have
+any other. Contact vulns@...eky.com if interested. No fees or any
+conditions for open source.
 
-Description:
+Kind regards,
+Marta
 
-Improper Validation of Certificate with Host Mismatch vulnerability in Apache Thrift Python bindings.
-
-This issue affects Apache Thrift: before 0.24.0.
-
-Users are recommended to upgrade to version 0.24.0, which fixes the issue.
-
-This replaces CVE-2026-41603
-
-Credit:
-
-Yu Bao – yubao@...pal.com, who works for paypal.com (finder)
-
-References:
-
-https://thrift.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66053
+>
 
