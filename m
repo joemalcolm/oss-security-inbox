@@ -1,61 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/02/5
-Message-ID: <b14f010a-285f-490a-8e4b-b72bc2f21504@oracle.com>
-Date: Wed, 2 Sep 2026 12:12:32 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/1
+Message-ID: <CALFbBidcDAReEdmiDoG4-ORaoag-ENh1oDLnT=Ebq53bbN8oEw@mail.gmail.com>
+Date: Thu, 18 Jun 2026 11:28:51 +0530
+From: Pavitra Jha <jhapavitra98@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Vulnerabilities in golang.org/x/crypto
+Subject: [CVE-2026-43495] Linux kernel: slab out-of-bounds read in MediaTek t7xx WWAN driver
 Content-Type: text/plain; charset=utf-8
 
+Hi,
 
+I'm reporting a slab out-of-bounds read in the MediaTek t7xx WWAN driver,
+assigned CVE-2026-43495 (CVSS 8.8 HIGH).
 
+## Affected Code
 
--------- Forwarded Message --------
-Subject: 	[security] Vulnerabilities in golang.org/x/crypto
-Date: 	Wed, 2 Sep 2026 11:46:32 -0700 (PDT)
-From: 	Neal Patel <neal@...ang.org>
-To: 	golang-announce <golang-announce@...glegroups.com>
+drivers/net/wwan/t7xx/t7xx_port_ctrl_msg.c
+t7xx_port_enum_msg_handler()
 
-Howdy gophers,
+Affected range: v5.18-rc1 through current mainline (April 2026)
+Config: CONFIG_MTK_T7XX + CONFIG_WWAN
 
-We have tagged version v0.56.0 of golang.org/x/crypto
-<https://pkg.go.dev/golang.org/x/crypto> in
-order to address the following security issues:
+## Bug Description
 
-          ssh: prevent DoS on deadlocked established channel
+The driver parses a modem-supplied CTL_ID_PORT_ENUM control message by
+casting skb->data directly to struct port_msg* and extracting port_count
+from the info field:
 
-          Previously, after a channel has been established, a
-          malicious peer could send crafted messages that would
-          deadlock the entire connection.
+    port_count = FIELD_GET(PORT_MSG_PRT_CNT, le32_to_cpu(port_msg->info));
+    // PORT_MSG_PRT_CNT = GENMASK(15, 0) -> max value 65535
 
-          Now, we handle all RFC 4254 channel messages; global
-          requests are handled explicitly. Then, treat all other
-          messages as a protocol error and tear the connection
-          down instead of buffering and blocking.
+    for (i = 0; i < port_count; i++) {
+        u32 port_info = le32_to_cpu(port_msg->data[i]); /* OOB read */
+        ...
+    }
 
-          Thanks to Will Mortensen for reporting this issue.
-          This is CVE-2026-56855 and Go issue <https://go.dev/issue/81317>.
+struct port_msg has a 12-byte fixed base followed by a flexible array
+member data[]. No validation is performed to ensure the actual buffer
+length covers the space implied by port_count. A malformed payload with
+port_count=65535 over a 12-byte allocation causes the loop to read up to
+~262 KB past the allocation boundary.
 
+The existing integrity checks (version, head_pattern, tail_pattern) are
+entirely bypassable because all three values are attacker-controlled fields
+in the DMA payload.
 
-          ssh: prevent DoS on deadlocked undecided channel
+Additionally, the out-of-bounds u32 read from data[i] is passed as ch_id
+into t7xx_port_proxy_chl_enable_disable(), routing arbitrary slab memory
+contents into driver control flow.
 
-          Previously, a channel registered in the mux's chanList is
-          not usable until it is established. A malicious peer was
-          able flood the channel's incomingRequests, deadlocking the
-          entire connection.
+## Attack Vector
 
-          Now, we add an atomic established state, set when a channel
-          becomes usable. Until such a time, handlePacket drops every
-          packet other than the open confirmation/failure, without
-          blocking and without tearing down the connection.
+Requires control of the baseband modem processor (e.g., via OTA base
+station exploit or hardware attack). The t7xx family is used in Intel 5G
+Solution 5000 series cellular modules found in corporate laptops, making
+this a relevant cross-boundary pivot primitive.
 
-          Thanks to Will Mortensen for reporting this issue.
-          This is CVE-2026-78662 and Go issue <https://go.dev/issue/81316>.
+## KASAN Output
 
+    BUG: KASAN: slab-out-of-bounds in t7xx_port_enum_msg_handler+0x1ae/0x1c0
+    Read of size 4 at addr ffff888008654d8c by task insmod/59
 
-Cheers,
-Go Security Team
+    The buggy address is located 0 bytes to the right of
+    allocated 12-byte region [ffff888008654d80, ffff888008654d8c)
 
--- 
-You received this message because you are subscribed to the Google Groups "golang-announce" group.
-To view this discussion visit https://groups.google.com/d/msgid/golang-announce/ba9b2628-b882-4ce5-85d6-bcbc6dbccdcan%40googlegroups.com
+## Fix
+
+Pass msg_len through to t7xx_port_enum_msg_handler() and validate using
+struct_size():
+
+    if (msg_len < struct_size(port_msg, data, port_count))
+        return -EINVAL;
+
+Patches merged across stable branches. Full patch history:
+https://lore.kernel.org/all/?q=Pavitra+Jha
+
+## Writeup
+
+https://pavitrajha.github.io/blog/t7xx-oob-writeup.html
+
+## References
+
+https://www.cve.org/CVERecord?id=CVE-2026-43495
+
+Regards,
+Pavitra Jha
+jhapavitra98@...il.com
+pavitrajha.github.io
+
