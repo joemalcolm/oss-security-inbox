@@ -1,38 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/13
-Message-ID: <e940fcf4-fb94-2ff5-3755-be38e67e2ccf@apache.org>
-Date: Thu, 20 Aug 2026 14:21:22 +0000
-From: Charles Zhang <dockerzhang@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-63039: Apache InLong: SQL Injection via Unvalidated MyBatis Dollar-Sign Interpolation in AuditAlertRuleService 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/4
+Message-Id: <4ca13bf9-513e-4642-8913-a4b1e2104c46n@googlegroups.com>
+Date: Thu, 18 Jun 2026 06:34:01 -0700 (PDT)
+From: Rafael Gonzaga <work@...aelgss.dev>
+To: <oss-security@...ts.openwall.com>
+Subject: Fwd: Node.js security updates for all active release lines, June 2026
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
-
-Affected versions:
-
-- Apache InLong 2.0.0 before 2.4.0
-
-Description:
-
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache InLong. This allows an attacker to inject the string value into
-the SQL statement, enabling SQL injection.
 
 
-This issue affects Apache InLong: from 2.0.0 before 2.4.0.
+---------- Mensagem encaminhada ---------
+De: Rafael Gonzaga <work@...aelgss.dev>
+Data: quinta-feira, 18 de junho de 2026 às 10:33:52 UTC-3
+Assunto: Re: Node.js security updates for all active release lines, June 
+2026
+Para: nodejs-sec <nodejs-sec@...glegroups.com>
 
 
+The planned security releases are now available. You can read more about 
+the details at 
+https://nodejs.org/en/blog/vulnerability/june-2026-security-releases
 
-Users are advised to upgrade to Apache InLong's  2.4.0 or cherry-pick [1] to solve it.
+Em quarta-feira, 10 de junho de 2026 às 11:53:26 UTC-3, Rafael Gonzaga 
+escreveu:
 
-[1]  https://github.com/apache/inlong/pull/12080 .
+The Node.js project will release new versions of all supported release 
+lines on or shortly after June 17th, 2026
 
-Credit:
+For more information, see: 
+https://nodejs.org/en/blog/vulnerability/june-2026-security-releases 
+<https://nodejs.org/en/blog/vulnerability/march-2026-security-releases>
 
-Andrea Cosentino (finder)
 
-References:
-
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-63039
-
+Content of type "text/html" skipped
