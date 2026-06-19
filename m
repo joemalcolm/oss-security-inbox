@@ -1,61 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/15
-Message-ID: <fa0f4133-0afe-48e9-846a-db74ac7ff731@cpansec.org>
-Date: Tue, 8 Sep 2026 21:11:00 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-19872: HTML::FormHandler versions before 0.410000 for Perl allow cross-site scripting via a submitted value rendered unescaped in an error message
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/19/1
+Message-ID: <76607838-6f70-4c6a-8fa8-3f9b3d2e5bd8@oracle.com>
+Date: Thu, 18 Jun 2026 17:37:44 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Amos Jeffries <squid3@...enet.co.nz>
+Subject: Re: Squid CVE-2026-47729 and CVE-2026-50012
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-19872                                       CPAN Security Group
-========================================================================
+On 6/15/26 04:26, Amos Jeffries wrote:
+> On 12/06/2026 20:21, Amos Jeffries wrote:
+>> Hi all,
+>>
+>> Squid 7.6 release contains fixes for and releases the embargo on 
+>> CVE-2026-47729 and CVE-2026-50012.
+>>
+> 
+> Apologies, this first one (CVE-2026-47729) embargo is over, but the fix will 
+> actually be in Squid 7.7.
 
-         CVE ID:  CVE-2026-19872
-   Distribution:  HTML-FormHandler
-       Versions:  before 0.410000
+A blog was posted about it today:
+https://blog.calif.io/p/squidbleed-cve-2026-47729
 
-       MetaCPAN:  https://metacpan.org/dist/HTML-FormHandler
-       VCS Repo:  https://github.com/gshank/html-formhandler
+It says the root cause was a misunderstanding of what the C standard requires:
+> strchr(w_space, '\0') returns non-NULL per C11 §7.24.5.2 (terminating NUL
+> is part of the string). 
 
-
-HTML::FormHandler versions before 0.410000 for Perl allow cross-site
-scripting via a submitted value rendered unescaped in an error message
-
-Description
------------
-HTML::FormHandler versions before 0.410000 for Perl allow cross-site
-scripting via a submitted value rendered unescaped in an error message.
-
-The wrappers and renderers that emit a form's errors interpolate the
-error string straight into HTML with no escaping. Two of the library's
-own messages, no_match and not_allowed, splice the submitted value into
-that string, and a failing type constraint puts the rejected value into
-the message it builds, which _apply_actions hands to add_error.
-
-A field declared with a check regexp, a check list or a type constraint
-reaches those messages, with no custom validator and no non-default
-configuration. Errors rendered through an application's own escaping
-template layer rather than the library's rendering roles are not
-affected.
-
-A request over the network that submits markup to such a field gets it
-back live inside the error span, running script in the victim's origin.
-Re-rendering a rejected value later gives the stored variant.
-
-Problem types
--------------
-- CWE-79 Improper Neutralization of Input During Web Page Generation
-   ('Cross-site Scripting')
-
-Solutions
----------
-Upgrade to HTML-FormHandler 0.410000 or later.
-
-References
-----------
-https://github.com/gshank/html-formhandler/commit/2574fdb4561f5c32d44cfbfbb3188345d49eb5a2.patch
-https://metacpan.org/release/ABRAXXA/HTML-FormHandler-0.410000/changes
-
-
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
