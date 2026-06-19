@@ -1,41 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/7
-Message-ID: <6ed32f89-b8ad-387b-6156-d56f7ca03abd@apache.org>
-Date: Mon, 20 Jul 2026 09:20:25 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/19/11
+Message-ID: <1a2071b8-f51e-40db-1849-403cd6841efe@apache.org>
+Date: Fri, 19 Jun 2026 06:57:13 +0000
+From: Abhishek Choudhary <shreemaanabhishek@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-53421: Apache Syncope: Remote Code Execution via Scripted Connector 
+Subject: CVE-2026-48895: Apache APISIX: Cas-auth Host header influence on CAS service URL 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: 
 
 Affected versions:
 
-- Apache Syncope 3.0.0-M0 through 3.0.16
-- Apache Syncope 4.0.0-M0 through 4.0.6
-- Apache Syncope 4.1.0-M0 through 4.1.1
+- Apache APISIX 3.0.0 through 3.16.0
 
 Description:
 
-Improper Isolation or Compartmentalization vulnerability in Apache Syncope.
+URL Redirection to Untrusted Site ('Open Redirect') vulnerability in Apache APISIX.
 
+The attacker could manipulate some client headers to perform an open-redirect, to potentially expose the session token.
 
+This issue affects Apache APISIX: from 3.0.0 through 3.16.0.
 
-An administrator with adequate entitlements can achieve remote code execution through the connector subsystem by relying on scripted connectors' (REST and SQL) capability to run Groovy scripts.
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.6, from 4.1.0-M0 through 4.1.1.
-
-
-
-
-Users are recommended to upgrade to version 4.0.7 / 4.1.2, which fix this issue by hardening the Groovy security sandbox.
+Users are recommended to upgrade to version 3.17.0, which fixes the issue.
 
 Credit:
 
-follycat, Y0n3er (finder)
+lokerxxx (reporter)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-53421
+https://apisix.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-48895
 
