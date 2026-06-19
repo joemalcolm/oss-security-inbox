@@ -1,31 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/5
-Message-ID: <752c6e12-50ff-d95c-d3bb-35d471ab631e@apache.org>
-Date: Thu, 13 Aug 2026 08:52:34 +0000
-From: Oleg Kalnichevski <olegk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/19/14
+Message-ID: <83e46b1c-e4cc-a3cd-11cd-795d2a371b85@apache.org>
+Date: Fri, 19 Jun 2026 06:56:59 +0000
+From: Abhishek Choudhary <shreemaanabhishek@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-64607: Apache HttpComponents Client: Connection Leak on Content-Encoding Decode Error Leads to Pool Exhaustion DoS 
+Subject: CVE-2026-49871: Apache APISIX: cas-auth login CSRF / session injection issue 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: 
 
 Affected versions:
 
-- Apache HttpComponents Client (org.apache.httpcomponents.client5:httpclient5) 5.0-alpha through 5.6.2
+- Apache APISIX 3.0.0 through 3.16.0
 
 Description:
 
-HttpClient based on the classic i/o model fails to correctly release the underlying connection back to the connection manager if it encounters an invalid or unsupported `Content-Encoding` header value in the response message. Please note this defect does not affect HttpClient based on the async i/o model.
+Cross-Site Request Forgery (CSRF) vulnerability in the cas-auth plugin under default configurations.
 
-This issue affects Apache HttpComponents Client: from 5.0-alpha1 through 5.6.2.
+This defect allows a remote attacker that manages to send a victim to a webpage controlled by them can cause the victim's browser to become authenticated as a different identity.
+
+Actions the victim takes upstream are then attributed to attackers identity.
+
+
+This issue affects Apache APISIX: from 3.0.0 through 3.16.0.
+
+Users are recommended to upgrade to version 3.17.0, which fixes the issue.
 
 Credit:
 
-Yu Bao from PayPal Cyber Security Team (finder)
+lokerxxx (reporter)
 
 References:
 
-https://lists.apache.org/thread/qqfzo3fqcdk4l5496vz95ppvl4ty511q
-https://hc.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-64607
+https://apisix.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-49871
 
