@@ -1,28 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/25
-Message-ID: <103e52cb-f592-5e81-c816-84c8a9fd2b48@apache.org>
-Date: Tue, 04 Aug 2026 18:45:07 +0000
-From: "Timothy A. Bish" <tabish@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/20/5
+Message-ID: <45ce36dc-e372-0a21-c67b-cf005aec9dfc@apache.org>
+Date: Sat, 20 Jun 2026 16:52:30 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-67554: Apache Qpid Proton Dotnet: Unbounded disposition range handling can lead to denial of service 
+Subject: CVE-2026-44913: Apache NiFi: Improper Escaping of Table Names in CaptureChangeMySQL 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: 
 
 Affected versions:
 
-- Apache Qpid Proton Dotnet (org.apache.qpid) through 1.0.0
+- Apache NiFi (org.apache.nifi:nifi-cdc-mysql-processors) 1.2.0 through 2.9.0
 
 Description:
 
-An authenticated attacker can craft a disposition frame with large or illegal ranges causing excessive CPU usage due to naive range handling, leading to denial of service.
+Improper escaping of database table names in the CaptureChangeMySQL Processor included with Apache NiFi 1.2.0 through 2.9.0 allows for injecting SQL commands using crafted naming. Manual quoted boundaries added in Apache NiFi 1.8.0 narrowed the scope of potential injection options, but did not cover additional strategies. Apache NiFi installations that do not use the CaptureChangeMySQL Processor are not subject to this vulnerability. Upgrading to Apache NiFi 2.10.0 is the recommended mitigation, which incorporates more robust identifier escaping.
 
-This issue affects Apache Qpid Proton-Dotnet: through 1.0.0.
+This issue is being tracked as NIFI-15905 
 
-Users are recommended to upgrade to version 1.1.0, which fixes the issue.
+Credit:
+
+Roberto Suggi Liverani from NATO Cyber Security Centre (NCSC) (finder)
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-67554
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44913
+https://issues.apache.org/jira/browse/NIFI-15905
+
+Timeline:
+
+2026-04-27: reported
 
