@@ -1,64 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/8
-Message-Id: <D580057E-AE2D-424C-BFD4-B235AE098A7B@stig.io>
-Date: Wed, 8 Jul 2026 15:58:50 +0100
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-49146: App::Ack versions before 3.10.0 for Perl allow memory exhaustion via an unbounded context value in a project .ackrc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/21/2
+Message-ID: <ajhExzTp27d6WG88@256bit.org>
+Date: Sun, 21 Jun 2026 22:08:39 +0200
+From: Christian Brabandt <cb@...bit.org>
+To: oss-security@...ts.openwall.com
+Subject: [vim-security] Arbitrary Code Execution via Python Omni-Completion Docstrings in Vim < 9.2.0699
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-49146                                       CPAN Security Group
-========================================================================
+Arbitrary Code Execution via Python Omni-Completion Docstrings in Vim < 9.2.0699
+================================================================================
+Date: 2026-06-21
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Control of Generation of Code (CWE-94)
 
-        CVE ID:  CVE-2026-49146
-  Distribution:  ack
-      Versions:  before 3.10.0
+## Summary
+Vim's Python omni-completion executes reconstructed function and class
+definitions from the current buffer with `exec()` as part of populating the
+completion dictionary. When reconstructing that source, each scope's docstring
+is inserted verbatim between triple quotes with no escaping, so a hostile
+buffer can break out of the triple-quoted literal and execute attacker-
+controlled Python during omni-completion. This is the same class of issue as
+GHSA-65p9-mwwx-7468 (patch 9.2.0597), whose fix sanitised parameter
+defaults/annotations and class base lists but left the docstring path
+untouched.
 
-      MetaCPAN:  https://metacpan.org/dist/ack
-      VCS Repo:  https://github.com/beyondgrep/ack3
+## Description
+In `runtime/autoload/python3complete.vim` (and the legacy
+`pythoncomplete.vim`), the `get_code()` methods build the source later passed
+to `exec()` and emit each docstring as `'"""' + self.docstr + '"""'`.
+`self.docstr` comes straight from buffer content, and the `doc()` helper only
+strips leading and trailing quote and whitespace characters, so a `"""`
+embedded in the middle of a docstring survives. A class-body docstring written
+as a single-quoted source string keeps the embedded `"""` as one string token
+through `doc()`, then breaks out of the generated triple-quoted literal: the
+reconstructed `class` body becomes string concatenation around an attacker
+expression, which Python evaluates at class-definition time when `exec()` runs.
 
+## Impact
+An attacker who can convince a user to open or edit a hostile Python
+buffer and trigger Python omni-completion (CTRL-X CTRL-O, or a plugin
+that invokes the completion function) can execute Python code in the
+user's Vim process. The code runs with the user's privileges.
 
-App::Ack versions before 3.10.0 for Perl allow memory exhaustion via an
-unbounded context value in a project .ackrc
+Vim built without `+python3` and `+python` is not affected. Triggering
+omni-completion in the hostile buffer is required; opening the file
+alone is not sufficient.
 
-Description
------------
-App::Ack versions before 3.10.0 for Perl allow memory exhaustion via an
-unbounded context value in a project .ackrc.
+## Acknowledgements
+The Vim project would like to thank Chenyuan Mi for reporting and analyzing the
+issue and suggesting a fix.
 
-ack searches up the directory hierarchy from the current directory for
-a project .ackrc and loads its options. The -B and -C context options
-accepted any positive integer, and ack sized the before-context buffer
-to that value, so a project .ackrc setting --before-context=100000000
-made ack allocate a buffer of 100 million elements.
-
-A project .ackrc committed to an untrusted repository can abort ack
-with an out-of-memory condition.
-
-Problem types
--------------
-- CWE-770 Allocation of Resources Without Limits or Throttling
-
-Solutions
----------
-Upgrade to ack 3.10.0 or later.
-
-
-References
-----------
-https://github.com/beyondgrep/ack3/commit/45ff5fe77dbd96f7332f31943102291f878f30b8.patch
-https://metacpan.org/release/PETDANCE/ack-v3.10.0/source/Changes
-
-Timeline
---------
-- 2026-06-07: Version 3.10.0 released with fix.
-
-Credits
--------
-Michał Majchrowicz (AFINE), finder
-Marcin Wyczechowski (AFINE), finder
+## References
+The issue has been fixed as of Vim patch [v9.2.0699](https://github.com/vim/vim/releases/tag/v9.2.0699).
+- [Commit](https://github.com/vim/vim/commit/cce141c42740f122dd8486ae04e21c2a81016ba8)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-ppj8-wqjf-6fp3)
+- [Github Security Advisory GHSA-65p9-mwwx-7468](https://github.com/vim/vim/security/advisories/GHSA-65p9-mwwx-7468) (prior fix for the same surface)
 
 
-
-
+Thanks,
+Christian
+-- 
+Flaschen mit einem schwergängigen Schraubverschluß lassen sich
+leichter öffnen, wenn man sie vorsichtig mit einem Hammer zerschlägt.
