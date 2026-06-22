@@ -1,61 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/28/2
-Message-ID: <8e0643ac-b114-48f9-a979-d5e5bd9a4081@nlnetlabs.nl>
-Date: Fri, 28 Aug 2026 12:12:25 +0200
-From: Willem Toorop <willem@...etlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/22/3
+Message-ID: <66cce82d-8342-4934-82a2-fa2f9e4d65f6@canonical.com>
+Date: Mon, 22 Jun 2026 18:21:02 +0530
+From: Sudhakar Verma <sudhakar.verma@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: NSD 4.15.1 security release
+Subject: CVE-2026-6653: libxml2: use after free in xmlParseInternalSubset (>=2.9.11, <2.11.0)
 Content-Type: text/plain; charset=utf-8
 
-Several vulnerabilities were found in NSD.
-We released 4.15.1 as a security release on Wednesday 26 August 
-including the relevant fixes.
+Severity: Medium
 
-The overview of the vulnerabilities with a brief description is:
+Affected versions:
 
-CVE-2026-18664 - severity: HIGH
-Wrong interpretation of ACL ranges
+- upstream versions - 2.9.11 to 2.11.0
 
-CVE-2026-18916 - severity: MEDIUM
-Remote TCP DoS by throttling the TCP receive window
+Description:
 
-CVE-2026-19401 - severity: HIGH
-Remote UDP DoS by sending multiple DNS Cookie options
+libxml2 had a use after free in xmlParseInternalSubset due to improper 
+entity resolution handling. A remote attacker could possibly use this 
+issue to crash or possibly run arbitrary programs.
 
-CVE-2026-19538 - severity: HIGH
-Bypass of BLOCKED ACL items on proxy protocol port over TCP or TLS
+The latest upstream is already patched and this only applies to a set of 
+older versions. This likely also applies if upstream patch for 
+CVE-2021-3541 was cherry picked.
 
-You can find detailed information on each vulnerability attached to this 
-email along with their respective patches.
+Credit:
 
-For ease of deployment we also provide a combined patch including all of 
-them (patch_combined-4.15.1.diff).
+Geoffrey Humphreys (reporter)
 
-The patches are tested to apply/work on 4.15.0.
+References:
+https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/2141260
+https://gitlab.gnome.org/GNOME/libxml2/-/work_items/1058
 
 
-Best regards,
--- Willem, on behalf of the NSD team.
+The linked launchpad issue has PoC and reproduction instructions if needed.
+
+Timeline:
+2026-02-09 : reported to Canonical's Ubuntu Security Team
+2026-02-17 : reported to upstream
+2026-06-08 : PoC and details send to distros list
+2026-06-22 : public disclosure
 
 
-View attachment "CVE-2026-18664.txt" of type "text/plain" (1482 bytes)
-
-View attachment "patch_CVE-2026-18664.diff" of type "text/x-patch" (880 bytes)
-
-View attachment "CVE-2026-18916.txt" of type "text/plain" (1067 bytes)
-
-View attachment "patch_CVE-2026-18916.diff" of type "text/x-patch" (962 bytes)
-
-View attachment "CVE-2026-19401.txt" of type "text/plain" (1227 bytes)
-
-View attachment "patch_CVE-2026-19401.diff" of type "text/x-patch" (2044 bytes)
-
-View attachment "CVE-2026-19538.txt" of type "text/plain" (1254 bytes)
-
-View attachment "patch_CVE-2026-19538.diff" of type "text/x-patch" (452 bytes)
-
-View attachment "patch_combined-4.15.1.diff" of type "text/x-patch" (4286 bytes)
-
-Download attachment "OpenPGP_0xE5F8F8212F77A498.asc" of type "application/pgp-keys" (6255 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
