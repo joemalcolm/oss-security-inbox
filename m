@@ -1,34 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/8
-Message-ID: <amDNLxJhBEV2lB7z@larwa.hq.kempniu.pl>
-Date: Wed, 22 Jul 2026 16:01:19 +0200
-From: Michał Kępień <michal@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/9
+Message-ID: <153f5c39-7ccf-419c-8182-bf157f3820b1@vanrees.org>
+Date: Tue, 23 Jun 2026 21:08:28 +0200
+From: Maurits van Rees <maurits@...rees.org>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed nine vulnerabilities in BIND 9 (CVE-2026-10723, CVE-2026-10822, CVE-2026-11331, CVE-2026-11605, CVE-2026-11622, CVE-2026-11721, CVE-2026-12617, CVE-2026-13204, CVE-2026-13321)
+Subject: Plone: various security fixes 20260623
 Content-Type: text/plain; charset=utf-8
 
-On 22 July 2026, Internet Systems Consortium disclosed nine vulnerabilities affecting our BIND 9 software:
+On behalf of the Plone/Zope Security Team I announce several 
+vulnerability fixes.
 
-- CVE-2026-10723:       Incorrect acceptance of NSEC3 records https://kb.isc.org/docs/cve-2026-10723
-- CVE-2026-10822:       Key Record using PRIVATEDNS algorithm may lead to unexpected exit https://kb.isc.org/docs/cve-2026-10822
-- CVE-2026-11331:       Potential wildcard CNAME RPZ policy bypass https://kb.isc.org/docs/cve-2026-11331
-- CVE-2026-11605:       Unnecessary validation of DNSSEC signed records https://kb.isc.org/docs/cve-2026-11605
-- CVE-2026-11622:       Potential memory usage beyond configured limits https://kb.isc.org/docs/cve-2026-11622
-- CVE-2026-11721:       Cache poisoning possible with label count discrepancy, RRSIG, and wildcards https://kb.isc.org/docs/cve-2026-11721
-- CVE-2026-12617:       Record ordering based unexpected exit with CNAME or DNAME https://kb.isc.org/docs/cve-2026-12617
-- CVE-2026-13204:       Unexpected exit in certain situations with NSEC and NSEC3 both present https://kb.isc.org/docs/cve-2026-13204
-- CVE-2026-13321:       DNSSEC Validation Bypass via Out-of-Zone NSEC Next Field https://kb.isc.org/docs/cve-2026-13321
+Remote Code Execution via TALES Injection:
+CVE requested
+https://github.com/plone/plone.app.portlets/security/advisories/GHSA-rr49-f9g6-c9r5
+severity 9.9 critical
 
-New versions of BIND 9 are available:
+Denial of service via iCalendar import:
+CVE-2026-55247
+https://github.com/plone/plone.app.event/security/advisories/GHSA-r82h-mqw3-fc56
+severity 9.1 critical
 
-- https://downloads.isc.org/isc/bind9/9.20.26/
-- https://downloads.isc.org/isc/bind9/9.21.24/
+Denial of service via RSS feed portlet:
+CVE-2026-55248
+https://github.com/plone/plone.app.portlets/security/advisories/GHSA-x5g3-w747-2h8q
+severity 9.1 critical
 
-For more information and other release formats, consult the ISC software download page: https://www.isc.org/download/
+Denial of Service due to excessive title/description/filename length
+CVE requested
+severity 6.5 moderate. This has fixes in two packages, so two advisories:
+https://github.com/plone/plone.app.dexterity/security/advisories/GHSA-5426-92w4-wvhv
+https://github.com/plone/plone.app.contenttypes/security/advisories/GHSA-8pcw-h6w9-h46g
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+Those were announced today (June 23, 2026).
 
--- 
-Best regards,
-Michał Kępień
+Two more were announced the past week:
+
+Denial of Service in icalendar:
+CVE-2026-55099
+https://github.com/collective/icalendar/security/advisories/GHSA-cv84-9p8j-fj68
+severity 7.5 high
+
+Sandbox escape in RestrictedPython
+CVE-2026-55830
+https://github.com/zopefoundation/RestrictedPython/security/advisories/GHSA-ffg3-p8fm-mjx2
+severity 8.3 high
+
+And one more was announced on June 5:
+
+Stored XSS by spoofing mime type
+CVE-2026-54503
+severity 4.3 moderate. This has fixes in two packages, so two advisories:
+https://github.com/plone/plone.app.textfield/security/advisories/GHSA-4r4f-gg25-rmg5
+https://github.com/plone/plone.restapi/security/advisories/GHSA-8rqh-vxpr-x77p
+
+See the individual advisories for details.
+
+For an overview of which package versions you should update to per 
+supported Plone version (6.0, 6.1, 6.2), see these two posts:
+
+https://community.plone.org/t/security-vulnerability-announcement-plone-app-textfield-and-plone-restapi/23050
+https://community.plone.org/t/plone-security-fixes-20260623/23085
+
+Full releases of Plone 6.1.5 and 6.2.1 are expected this week, and they 
+will contain the fixed versions.
+
+Thanks,
+
+Maurits van Rees
+Plone/Zope Security Team
+
+
