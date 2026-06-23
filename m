@@ -1,57 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/6
-Message-ID: <2026072819-legume-create-ce31@gregkh>
-Date: Tue, 28 Jul 2026 09:47:16 +0200
-From: Greg KH <greg@...ah.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: KVM: Merge branch 'kvm-chainsaw' into HEAD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/1
+Message-ID: <7289d5e7-0712-4a95-a3da-aed9fca4c307@cpansec.org>
+Date: Tue, 23 Jun 2026 08:05:41 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-9733: Mojolicious::Plugin::Web::Auth::OAuth2 versions through 0.17 for Perl have an insecure default state parameter
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 28, 2026 at 02:57:25AM -0400, Reid Sutherland wrote:
-> On 2026-07-27 3:47 p.m., Sam James wrote:
-> > Reid Sutherland <reid@...rddimension.net> writes:
-> > 
-> > > On 2026-07-27 12:25 p.m., Solar Designer wrote:
-> > > > On Mon, Jul 27, 2026 at 09:46:12AM -0400, Reid Sutherland wrote:
-> > > > > For your information.
-> > > > > 
-> > > > > https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=a204badd8432f93b7e862e7dac6db0fe3d65f370
-> > > > Thanks, but can you please explain why exactly you think this is
-> > > > noteworthy for oss-security?
-> > > > 
-> > > > I see there's a recent Phoronix story:
-> > > > 
-> > > > https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3
-> > > > 
-> > > > and the patch series had been tracked and archived by LWN.
-> > > > 
-> > > > This is definitely noteworthy for KVM project development, but even
-> > > > seeing all those other resources, I do not see why bring this in here?
-> > > 
-> > > Core changes to virtualization should receive examination. Changing
-> > > data structures around because they're too big.. it's concerning,
-> > > following that patch is tricky because of its size. Would feel better
-> > > about it if changes like this were passed through a reliable LLM, but
-> > > even that requires relevant experience.  And naming it chainsaw, what
-> > > purpose does that serve?  I have very little trust.
-> > Paolo has been a maintainer for a long time and in FOSS even longer than
-> > that. Big refactoring can introduce bugs but I've no reason to doubt him
-> > and I don't really see why this change is any different from any other
-> > refactoring.
-> 
-> 
-> The refactor doesn't seem necessary, the original data structure appears to
-> be fine, now we have surface risk for something that doesn't solve a bug or
-> implement a feature.
-> 
-> I don't care what someone's street cred is, it's their result.
 
-If you have objections to patches that are submitted to the Linux
-kernel, please go review them on the respective mailing list and provide
-feedback there with specifics.
+========================================================================
+CVE-2026-9733                                        CPAN Security Group
+========================================================================
 
-Commenting on a random mailing list like this will not change anything.
+         CVE ID:  CVE-2026-9733
+   Distribution:  Mojolicious-Plugin-Web-Auth
+       Versions:  through 0.17
 
-thanks,
+       MetaCPAN: https://metacpan.org/dist/Mojolicious-Plugin-Web-Auth
+       VCS Repo: https://github.com/hayajo/Mojolicious-Plugin-Web-Auth
 
-greg k-h
+
+Mojolicious::Plugin::Web::Auth::OAuth2 versions through 0.17 for Perl
+have an insecure default state parameter
+
+Description
+-----------
+Mojolicious::Plugin::Web::Auth::OAuth2 versions through 0.17 for Perl
+have an insecure default state parameter.
+
+When no state generator is specified in the constructor, the module
+defaults to using a SHA-1 hash of predictable and low-entropy sources,
+including the epoch time (which is leaked via the HTTP Date header) and
+a call to Perl's built-in rand function.
+
+A predictable state allows an attacker to hijack another user's session
+through cross site request forgery (CSRF).
+
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+
+Workarounds
+-----------
+Users should specify a state_generator function in the plugin
+configuration that uses a secure CSPRNG such as Crypt::PRNG or (for
+Mojolicious 9.46 or later) the Mojo::Util::random_bytes function. For
+example,
+
+   plugin 'Web::Auth',
+     module => 'OAuth2',
+     ...
+     state_generator => sub {
+       unpack("H*", Mojo::Util::random_bytes(20))
+     };
+
+
+References
+----------
+https://metacpan.org/release/HAYAJO/Mojolicious-Plugin-Web-Auth-0.17/source/lib/Mojolicious/Plugin/Web/Auth/OAuth2.pm#L129-131
+https://datatracker.ietf.org/doc/html/rfc6749#section-10.12
+https://security.metacpan.org/patches/M/Mojolicious-Plugin-Web-Auth/0.17/CVE-2026-9733-r2.patch
+
+
+
