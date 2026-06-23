@@ -1,43 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/23/6
-Message-ID: <c415be0d-df29-bc84-a358-fadf9ba562a7@apache.org>
-Date: Thu, 23 Apr 2026 17:04:42 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/5
+Message-ID: <7ee7a344-89a1-4935-8fa4-b38a836b4a7d@gmail.com>
+Date: Tue, 23 Jun 2026 08:29:34 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-41044: Apache ActiveMQ, Apache ActiveMQ Broker, Apache ActiveMQ All: Authenticated user can perform RCE via DestinationView MBean exposed by Jolokia 
+Subject: [OSSA-2026-024] OpenStack Swift: Swift proxy-server SSRF via header injection (CVE-2026-50221)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+OpenStack Security Advisory: OSSA-2026-024
+CVE: CVE-2026-50221
 
-Affected versions:
+Title: Swift proxy-server SSRF via header injection
 
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.6
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.5
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.6
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.2.5
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.6
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.5
+Affects: Swift >=2.0.0 <2.35.3, >=2.36.0 <2.36.2, >=2.37.0 <2.37.2
 
 Description:
+Tim Shephard from roiai.ca reported a server-side request forgery
+(SSRF) vulnerability in Swift's proxy-server. An authenticated
+user can cause Swift object servers to issue outbound HTTP requests
+to attacker-specified hosts, potentially exposing internal
+infrastructure details. All deployments running Swift 2.0.0 or
+later are affected.
 
-Improper Input Validation, Improper Control of Generation of Code ('Code Injection') vulnerability in Apache ActiveMQ, Apache ActiveMQ Broker, Apache ActiveMQ All.
+Patches:
+   2026.2/hibiscus (development): https://review.opendev.org/994449
+   2026.1/gazpacho:               https://review.opendev.org/994450
+   2025.2/flamingo:               https://review.opendev.org/994451
+   2025.1/epoxy:                  https://review.opendev.org/994452
 
-An authenticated attacker can use the admin web console page to construct a malicious broker name that bypasses name validation to include an xbean binding that can be later used by a VM transport to load a remote Spring XML application.
-The attacker can then use the DestinationView mbean to send a message to trigger a VM transport creation that will reference this malicious broker name which can lead to loading the malicious Spring XML context file.
-
-
-Because Spring's ResourceXmlApplicationContext instantiates all singleton beans before the BrokerService validates the configuration, arbitrary code execution occurs on the broker's JVM through bean factory methods such as Runtime.exec().
-
-This issue affects Apache ActiveMQ: before 5.19.6, from 6.0.0 before 6.2.5; Apache ActiveMQ Broker: before 5.19.6, from 6.0.0 before 6.2.5; Apache ActiveMQ All: before 5.19.6, from 6.0.0 before 6.2.5.
-
-Users are recommended to upgrade to version 6.2.5 or 5.19.6, which fixes the issue.
-
-Credit:
-
-jsjcw (finder)
+Credits:
+   Tim Shephard from roiai.ca (CVE-2026-50221)
 
 References:
+   https://security.openstack.org/ossa/OSSA-2026-024.html
+   https://launchpad.net/bugs/2150261
+   http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-50221
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-41044
+Regards,
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
 
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
