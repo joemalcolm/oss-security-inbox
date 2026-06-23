@@ -1,34 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/11
-Message-ID: <a6154434-40f6-346b-cfbf-3105d18adb0e@apache.org>
-Date: Fri, 24 Jul 2026 11:07:58 +0000
-From: Szymon Janc <janc@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/6
+Message-ID: <1889c8ad-70d3-44dd-9914-53fbbd17fffc@oracle.com>
+Date: Tue, 23 Jun 2026 09:32:32 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-45811: Apache NimBLE: Buffer overflow in socket HCI transport 
+Subject: [CVE-2026-11940] Cpython: tarfile extraction filter bypass allows escaping the destination directory
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
 
-Affected versions:
 
-- Apache NimBLE through 1.9.0
 
-Description:
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-11940] tarfile extraction filter bypass 
+allows escaping the destination directory
+Date: 	Tue, 23 Jun 2026 16:55:19 +0100
+From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
+CC: 	Stan Ulbrych <stanulbrych@...il.com>
 
-Buffer Copy without Checking Size of Input ('Classic Buffer Overflow') vulnerability in Apache NimBLE.
-The HCI socket transport did not check whether a received HCI event would fit the configured event pool before copying it, allowing a buffer overflow. Severity is low: exploitation requires either a misconfigured pool size or a malicious/compromised controller on the other end of the HCI socket link, not over-the-air Bluetooth access.
 
-This issue affects Apache NimBLE: through 1.9.0.
 
-Users are recommended to upgrade to version 1.10.0, which fixes the issue.
+There is a HIGH severity vulnerability affecting CPython.
 
-Credit:
+tarfile.extractall() with the 'data' or 'tar' filter could be bypassed by a 
+crafted archive where a hardlink references a symlink stored at a deeper name 
+than the hardlink itself.  The extraction fallback validated the symlink at it's 
+archived location but recreated it at the hardlink's shallower
+path, letting a relative target the filter judged contained escape the 
+destination directory.  This allowed a malicious tar archive to create a symlink 
+pointing outside the destination, enabling out-of-destination file reads or 
+writes. This was an incomplete fix of CVE-2025-4330.
 
-Yicheng Yang, Secsys Lab, Fudan University (reporter)
+Please see the linked CVE ID for the latest information on affected versions:
 
-References:
+* https://www.cve.org/CVERecord?id=CVE-2026-11940
+* https://github.com/python/cpython/pull/151559
 
-https://github.com/apache/mynewt-nimble/commit/dcc4e4f026109eecd507de9479bb5019306a4a41
-https://mynewt.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-45811
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
 
