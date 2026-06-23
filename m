@@ -1,29 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/12
-Message-ID: <a3e0f313-d81f-242b-1a3c-168c6f00de96@apache.org>
-Date: Wed, 12 Aug 2026 13:49:21 +0000
-From: Rahul Vats <rahulvats@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/10
+Message-ID: <CAF3AkiO-wQNc=ibGB0hGXbea+fCejZqzOAmxE+yX6y67hyBbDA@mail.gmail.com>
+Date: Tue, 23 Jun 2026 20:24:25 +0000
+From: James Addison <james@...iperadar.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68968: Apache Airflow: Authorization bypass in the Backfill API through conflicting interpretations of the backfill id 
+Subject: libssh2: CVE-2026-55200 (critical), CVE-2025-15661 (high), CVE-2026-55199 (high)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hello list,
 
-Affected versions:
+With credit to the NHS Digital Cyber security team for publishing[1] a
+notice about CVE-2026-55200 that alerted me to these:
 
-- Apache Airflow (apache-airflow) before 3.3.1
+Three vulnerabilities in libssh2 - a popular client library for the
+Unix secure shell protocol (aka SSH) - have been published as CVEs:
 
-Description:
+- High severity, 8.3 rating: CVE-2025-15661
+- High severity, 8.2 rating: CVE-2026-55199
+- Critical severity, 9.2 rating: CVE-2026-55200
 
-Apache Airflow's Backfill API authorized a request against a Dag id supplied by the caller whenever the `backfill_id` path segment failed to parse. The authorization dependency parsed it with `int()` while the route handler parsed it as pydantic's `NonNegativeInt`, which accepts values `int()` rejects (`1.0` coerces to `1`); FastAPI resolves dependencies before endpoint validation, so the two acted on different Dags. An authenticated user holding edit permission on any single Dag could therefore read, pause and cancel backfills belonging to any other Dag, including moving another Dag's queued runs to `failed`. No non-default configuration is required and backfill ids are sequential, so finding a target is trivial. Users are advised to upgrade to apache-airflow 3.3.1 or later, which parses the backfill id with the same type the routes declare.
+The vulnerabilities affect versions up-to-and-including v1.11.1 of the
+libssh2 library.
 
-Credit:
+Patches/commits fixing each of the vulnerabilities are available and
+have been merged into the libssh2 mainline development source control
+branch.
 
-Jarek Potiuk (remediation developer)
+A release containing these fixes is under preparation.
 
-References:
+For reference:
 
-https://github.com/apache/airflow/pull/70889
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68968
+The commit IDs of the fixes for each of the vulnerabilities,
+respectively, as found in the GitHub libssh2/libssh2.git repository,
+are:
 
+- 2dae3024897e1898d389835151f4e9606227721d
+- 17626857d20b3c9a1addfa45979dadcee1cd84a4
+- 97acf3dfda80c91c3a8c9f2372546301d4a1a7a8
+
+Regards,
+James
+
+[1] - https://digital.nhs.uk/cyber-alerts/2026/cc-4799
+
+--
+OpenCulinary C.I.C. is a Community Interest Company, number SC647817,
+registered in Scotland, United Kingdom and with registered company
+address The Melting Pot, 15 Calton Road, Edinburgh, Scotland, EH8 8DL.
