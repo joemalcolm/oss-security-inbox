@@ -1,36 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/15
-Message-ID: <62bad9a9-f0f0-aee3-cd40-218076a217c0@apache.org>
-Date: Mon, 14 Sep 2026 08:30:24 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/24/8
+Message-ID: <0cbb15d5-611c-4dac-98ca-6f6096524041@apache.org>
+Date: Wed, 24 Jun 2026 18:26:51 +0000
+From: Lenny Primak <lprimak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-77147: Apache Syncope: Groovy Sandbox escape for empty CommandArgs 
+Subject: CVE-2026-56130: Apache Shiro: Remember-me cookie isn't checked for expiry on the server 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.1.0-M0 through 4.1.2
+- Apache Shiro (org.apache.shiro:shiro-web) 1.2.4 through 2.99.99
+- Apache Shiro (org.apache.shiro:shiro-web) 3.0.0-alpha-0 through 3.0.0-alpha-1
 
 Description:
 
-Improper Control of Generation of Code ('Code Injection') vulnerability in Apache Syncope.
+"Remember me" cookie age is not verified on the server. This potentially allows an attacker to intercept a valid cookie and reuse it indefinitely, even after the configured expiration time has passed.
+This issue affects all Apache Shiro versions from 1.2.4 through 2.x, and 3.0.0-alpha-1, only when RememberMe functionality is enabled.
 
-An administrator with adequate entitlements for Implementations can create a malicious Groovy Command class containing untrusted code in their CommandArgs static implementation, bypassing the Groovy security sandbox.
 
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+Upgrade to version 3.0.0 or later, which fixes the issue.
 
 Credit:
 
-n0mi1k (finder)
+Richard Bradley (finder)
+Lenny Primak <lenny@...wlogix.com> (remediation developer)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-77147
+https://shiro.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-56130
 
