@@ -1,45 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/20
-Message-ID: <ff9fe46a-09ab-43a2-ab6a-d3b432399e20@apache.org>
-Date: Mon, 29 Jun 2026 21:37:17 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/24/7
+Message-ID: <2a1da851-0d14-2b07-4b3d-5ec74ee03cce@apache.org>
+Date: Wed, 24 Jun 2026 18:26:22 +0000
+From: Lenny Primak <lprimak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50229: Apache Tomcat: XSS in number guess example
+Subject: CVE-2026-56091: Apache Shiro: Authentication bypass in Guice-Web integration 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: 
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.22
-- Apache Tomcat 10.1.0-M1 through 10.1.55
-- Apache Tomcat 9.0.0.M1 through 9.0.118
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 7.0.109
-- Apache Tomcat before 7.0.0 unknown
+- Apache Shiro (org.apache.shiro:shiro-guice) through 2.99.99
+- Apache Shiro (org.apache.shiro:shiro-guice) 3.0.0-alpha-0 through 3.0.0-alpha-1
 
 Description:
 
-Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic 
-XSS) vulnerability in the number guess example for Apache Tomcat.
+When using Apache Shiro with the shiro-guice module in a web servlet context, a specially crafted HTTP request may cause an authentication bypass.
+This vulnerability is similar to  https://www.cve.org/CVERecord?id=CVE-2020-1957 https://www.cve.org/CVERecord , except that it affects the `shiro-guice` module instead of the `shiro-spring` module.
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.22, from 
-10.1.0-M1 through 10.1.55, from 9.0.0.M1 through 9.0.118, from 8.5.0 
-through 8.5.100, from 7.0.0 through 7.0.109. Other versions that have 
-reached end of support may also be affected.
+This issue affects all Apache Shiro versions through 2.x, and 3.0.0-alpha-1 only when using `shiro-guice` module in a web servlet context.
 
-Users are recommended to upgrade to version 11.0.23, 10.1.56 or 9.0.119, 
-which fix the issue.
+Upgrade to version 3.0.0 or later, which fixes the issue.
 
 Credit:
 
-Erichen, Institute of Computing Technology, Chinese Academy of Sciences 
-(finder)
-Yashar Shahinzadeh (finder)
-Amirmohammad Safari (finder)
+LocalHost <localhost.detect@...il.com> (finder)
+Lenny Primak <lenny@...wlogix.com> (remediation developer)
 
 References:
 
-https://lists.apache.org/thread/wlt2no8bw45zl1w8byop4zfqphldf5j0
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50229
+https://shiro.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-56091
+
