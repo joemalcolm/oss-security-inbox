@@ -1,55 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/18
-Message-ID: <ca0b6615-8567-4c76-bb2d-ca6436d2eb72@cpansec.org>
-Date: Wed, 10 Jun 2026 19:35:09 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-50638: Metrics::Any::Adapter::DogStatsd versions before 0.04 for Perl does not protect against metric injections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/1
+Message-ID: <668d4d5b-ff26-a3b0-4ce8-714e3cef54bc@apache.org>
+Date: Thu, 25 Jun 2026 02:19:05 +0000
+From: Hulk Lin <hulk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-41566: Apache Kvrocks: Improper permission for the APPLYBATCH command 
 Content-Type: text/plain; charset=utf-8
 
+Severity: 
 
-========================================================================
-CVE-2026-50638                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-50638
-   Distribution:  Metrics-Any-Adapter-Statsd
-       Versions:  before 0.04
+- Apache Kvrocks 2.8.0 through 2.15.0
 
-       MetaCPAN: https://metacpan.org/dist/Metrics-Any-Adapter-Statsd
+Description:
 
+Improper Handling of Insufficient Permissions or Privileges vulnerability in Apache Kvrocks.
 
-Metrics::Any::Adapter::DogStatsd versions before 0.04 for Perl does not
-protect against metric injections
+This issue affects Apache Kvrocks: 2.8.0.
 
-Description
------------
-Metrics::Any::Adapter::DogStatsd versions before 0.04 for Perl does not
-protect against metric injections.
+Users are recommended to upgrade to version 2.16.0, which fixes the issue.
 
-The statsd protocol (and extensions such as dogstatsd) allow mutiple
-metrics,separated by newlines, to be sent per packet.
+Credit:
 
-Metrics::Any::Adapter::DogStatsd which extends
-Metrics::Any::Adapter::Statsd, which has a similar vulnerability.
+Qing Xu (reporter)
 
-In addition, the _tags function does not check tags for newlines or
-statsd control characters. The tags can be used for metric injections.
+References:
 
-Problem types
--------------
-- CWE-93 Improper Neutralization of CRLF Sequences
-
-Solutions
----------
-Upgrade to v0.04 or later.
-
-
-References
-----------
-https://metacpan.org/release/PEVANS/Metrics-Any-Adapter-Statsd-0.04/changes
-https://www.cve.org/CVERecord?id=CVE-2026-50637
-https://www.cve.org/CVERecord?id=CVE-2026-9270
-
-
+https://kvrocks.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-41566
 
