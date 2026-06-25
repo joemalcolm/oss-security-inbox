@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/10/1
-Message-ID: <331c70f4-e449-ddc2-637b-94bfe5e0c934@apache.org>
-Date: Mon, 10 Aug 2026 06:47:22 +0000
-From: Haonan Hou <haonan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/2
+Message-ID: <3ffb8284-bb38-ebb0-1981-a953aee05547@apache.org>
+Date: Thu, 25 Jun 2026 02:20:08 +0000
+From: Hulk Lin <hulk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44630: Apache IoTDB: RPC service denial of service via unchecked Thrift string length 
+Subject: CVE-2026-45188: Apache Kvrocks: Replication Fullsync Path Traversal via Unvalidated Filename Handling 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: 
 
 Affected versions:
 
-- Apache IoTDB before 1.3.8
-- Apache IoTDB 2.0.0 before 2.0.10
+- Apache Kvrocks (apache/kvrocks) 1.0.0 through 2.15.0
 
 Description:
 
-Improper validation of length fields in the Apache IoTDB RPC service may allow a remote unauthenticated attacker to cause a denial of service. By sending a crafted malformed Thrift frame, an attacker can cause IoTDB to allocate an excessive amount of memory and crash with an OutOfMemoryError.
+Relative Path Traversal vulnerability in Apache Kvrocks.
 
+This issue affects Apache Kvrocks: from 1.0.0 through 2.15.0.
 
-This issue affects Apache IoTDB: before 1.3.8, from 2.0.0 before 2.0.9.
+Users are recommended to upgrade to version 2.16.0, which fixes the issue.
 
-Users are recommended to upgrade to version 2.0.10, which fixes the issue.
+Credit:
+
+@Brubbish of VARAS@IIE (reporter)
 
 References:
 
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-44630
+https://kvrocks.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-45188
 
