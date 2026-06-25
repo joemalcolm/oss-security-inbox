@@ -1,37 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/25
-Message-ID: <1f3a6917-b1e0-4646-a21f-6034d338b868@apache.org>
-Date: Sun, 05 Jul 2026 11:49:45 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/10
+Message-ID: <63605bc9-306b-4d61-9409-1f76f7b9d516@pipping.org>
+Date: Thu, 25 Jun 2026 18:23:01 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49365: Apache Camel: Camel-Netty-HTTP: The muteException consumer option defaulted to false, so a processing error returned the full Java stack trace in the HTTP response body, disclosing sensitive internal information to unauthenticated clients 
+Subject: libexpat 2.8.2 fixes 14 vulnerabilities (integer overflow, out-of-bounds write, ..)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hello oss-security,
 
-Affected versions:
 
-- Apache Camel (org.apache.camel:camel-netty-http) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-netty-http) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-netty-http) 4.19.0 before 4.21.0
+just a quick note that libexpat 2.8.2 (or "Expat 2.8.2") released
+today is fixing 13 vulnerabilities of three classes:
 
-Description:
+  - 1x out-of-bounds write
+  - 3x missing control flow integrity checks
+  - 9x integer overflow
 
-Generation of Error Message Containing Sensitive Information vulnerability in Apache Camel Netty HTTP component.
+The related section of the change log says this:
 
-The camel-netty-http HTTP server consumer exposes a muteException option that controls what is returned to the client when a route processing error occurs. This option defaulted to false because the backing field was an uninitialised primitive boolean (Java's default of false), whereas the other Camel HTTP server components (camel-http / camel-jetty / camel-servlet and camel-platform-http) default it to true. With muteException=false, when a request triggers an exception during route processing the consumer writes the full Throwable stack trace into the HTTP response body as text/plain (via DefaultNettyHttpBinding) instead of returning an empty body. Any unauthenticated client that can reach the endpoint and cause a processing error - for example by sending a malformed request body, an invalid parameter, or otherwise triggering a route-internal failure - therefore receives a complete Java stack trace. Such a stack trace can disclose sensitive internal information, including credentials embedded in exception messages, internal host names and IP addresses, filesystem paths, dependency and version details, database and class names, and the application's internal structure, which an attacker can use to plan further attacks.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+       #1246  CVE-2026-50219 -- Disallow calls to functions
+                `XML_GetBuffer`, `XML_Parse`, `XML_ParseBuffer`,
+                `XML_ParserFree`, `XML_ParserReset` to guard e.g.
+                Expat bindings from memory corruption;
+                this CPython issue is related:
+                https://github.com/python/cpython/issues/146169
+       #1267  CVE-2026-56131 -- Protect XML_ResumeParser from being
+                                called from a handler, plugging a hole in
+                                the fix to CVE-2026-50219
+       #1272  CVE-2026-56132 -- Fix out-of-bound scaffolding index store
+                                in `doProlog`
+#1229 #1232  CVE-2026-56403 -- Integer overflow in `storeAtts`
+       #1249  CVE-2026-56404 -- Integer overflow in `addBinding`
+       #1251  CVE-2026-56405 -- Integer overflow in `getAttributeId`
+       #1255  CVE-2026-56406 -- Integer overflow in `XML_ParseBuffer`
+       #1262  CVE-2026-56407 -- Integer overflow in `textLen` handling
+        #565  CVE-2026-56408 -- Integer overflow in `copyString`
+                (commit 16e2efd867ea8567ffa012210b52ef5918e20817)
+       #1259  CVE-2026-56409 -- xmlwf: Integer overflow in output path
+                                       join
+       #1252  CVE-2026-56410 -- xmlwf: Integer overflow in
+                `resolveSystemId`
+       #1263  CVE-2026-56411 -- xmlwf: Integer overflow in notation list
+                allocation
+       #1278  CVE-2026-56412 -- Guard XML_TOK_DATA_CHARS handler calls in
+                `doCdataSection`, plugging a hole in the fix to
+                CVE-2026-50219
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, set muteException=true explicitly on the camel-netty-http consumer (for example netty-http: http://0.0.0.0:8080/api?muteException=true , or globally via the camel.component.netty-http.configuration.mute-exception=true property), so that processing errors no longer return the stack trace to the client.
+Some key links are:
 
-Credit:
+- The blog post about it
+   https://blog.hartwork.org/posts/expat-2-8-2-released/
 
-Yu Bao from PayPal (finder)
-Andrea Cosentino (remediation developer)
+- The change log of release 2.8.2
+   https://github.com/libexpat/libexpat/blob/R_2_8_2/expat/Changes
 
-References:
+- The related pull requests
+  
+https://github.com/libexpat/libexpat/pulls?q=is%3Apr+label%3Asecurity+milestone%3A2.8.2+is%3Aclosed
 
-https://camel.apache.org/security/CVE-2026-49365.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49365
+Best
 
+
+
+Sebastian
