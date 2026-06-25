@@ -1,37 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/16
-Message-ID: <ac5f5b63-1097-6439-017d-6e939f9a4a64@apache.org>
-Date: Sun, 05 Jul 2026 11:55:57 +0000
-From: Andrea Cosentino <acosentino@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46726: Apache Camel: Camel-Vertx-Websocket: The inbound consumer maps externally-supplied WebSocket query and path parameters into the Exchange without a HeaderFilterStrategy, allowing injection of Camel control headers - enabling server-side request forgery and disclosure of 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/7
+Message-ID: <1513665631.8123.1782393533302@appsuite.open-xchange.com>
+Date: Thu, 25 Jun 2026 15:18:53 +0200 (CEST)
+From: Otto Moerbeek <otto.moerbeek@...erdns.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: PowerDNS Security Advisory 2026-08 for PowerDNS Recursor: Multiple issues
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+   Today we have released PowerDNS Recursor 5.2.11, 5.3.8 and 5.4.3.
 
-Affected versions:
+   These releases provide fixes for PowerDNS Security Advisory
 
-- Apache Camel (org.apache.camel:camel-vertx-websocket) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-vertx-websocket) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-vertx-websocket) 4.19.0 before 4.21.0
+     * 2026-08 for PowerDNS Recursor: Multiple issues
 
-Description:
+   There are several CVEs associated with this advisory, the first with
+   severity High (but only applicable to specific configurations), the
+   rest of severity Medium.
+     __________________________________________________________________
 
-Improper Input Validation, Exposure of Sensitive Information to an Unauthorized Actor, Server-Side Request Forgery (SSRF) vulnerability in Apache Camel in Vertx Websocket component.
+     * CVE-2026-33612: ZoneToCache can poison the cache
+     * CVE-2026-40012: Information about ECS zero scoped answers might
+       leak to clients that use a specific ECS
+     * CVE-2026-42005: Unbounded resource consumption in internal
+       webserver
+     * CVE-2026-42390: ZONEMD validation can be bypassed
+     * CVE-2026-42389: Reject more queries with invalid header values
+     * CVE-2026-42388: Missing input validation for catalog zones
+     * CVE-2026-42387: Insufficient input validation in ZoneToCache
+     * CVE-2026-52690: Spoofed answers can mark an authoritative non-EDNS
+       capable
 
-The camel-vertx-websocket consumer mapped inbound WebSocket query and path parameters into the Camel Exchange header map without applying any HeaderFilterStrategy (VertxWebsocketConsumer.populateExchangeHeaders()). Because nothing blocked the Camel header namespace, a client connecting to the WebSocket endpoint could set Camel-internal control headers - including CamelHttpUri (Exchange.HTTP_URI) - simply by supplying them as query parameters. In a route where the WebSocket consumer feeds a downstream HTTP producer, the injected CamelHttpUri redirects the server-side HTTP request to an attacker-chosen destination (server-side request forgery - for example to an internal service or a cloud metadata endpoint). In addition, the HTTP producer resolves Camel property placeholders on the resulting (attacker-controlled) URI, so placeholders embedded in the injected value - such as an environment-variable reference, an application property, or a vault reference - are resolved to their real values and sent to the attacker, disclosing environment variables, application properties and vault secrets. When the WebSocket endpoint is exposed without authentication, this is reachable by an unauthenticated remote attacker.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+   Please refer to the changelogs  ([1]5.2.11, [2]5.3.8 and [3]5.4.3) and
+   the full [4]security advisory for additional details.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. The fix makes the affected consumers apply a HeaderFilterStrategy that filters the Camel header namespace case-insensitively on inbound mapping, so externally-supplied Camel* / camel* headers are no longer copied into the Exchange. For deployments that cannot upgrade immediately, strip the Camel control headers from the inbound message before they reach any downstream producer (for example removeHeaders('Camel*') and removeHeaders('camel*') at the start of the route), require authentication on the WebSocket endpoint, and avoid bridging an untrusted consumer directly into an HTTP producer whose target URI can be driven from message headers.
+   Please send us all feedback and issues you might have via
+   the [5]mailing list, or in case of a bug, via [6]GitHub.
 
-Credit:
+   The tarballs ([7]5.2.11, [8]5.3.8, [9]5.4.3) (with signature files
+   [10]5.2.11, [11]5.3.8, [12]5.4.3) are available from our
+   download [13]server and packages for several distributions are
+   available from our [14]repository.
 
-Kamalpreet Singh (finder)
-Andrea Cosentino (remediation developer)
+   Recently we made changes to our Open Source End of Life policy. Older
+   release trains are now supported for one year after the following major
+   release. Consult the EOL [15]policy for more details.
 
-References:
+   We are grateful to the PowerDNS community for the reporting of bugs,
+   issues, feature requests, and especially to the submitters of fixes and
+   implementations of features.
 
-https://camel.apache.org/security/CVE-2026-46726.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-46726
+References
 
+   1. https://doc.powerdns.com/recursor/changelog/5.2.html#change-5.2.11
+   2. https://doc.powerdns.com/recursor/changelog/5.3.html#change-5.3.8
+   3. https://doc.powerdns.com/recursor/changelog/5.4.html#change-5.4.3
+   4. https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2026-08.html
+   5. https://mailman.powerdns.com/mailman/listinfo/pdns-users
+   6. https://github.com/PowerDNS/pdns/issues/new/choose
+   7. https://downloads.powerdns.com/releases/pdns-recursor-5.2.11.tar.bz2
+   8. https://downloads.powerdns.com/releases/pdns-recursor-5.3.8.tar.xz
+   9. https://downloads.powerdns.com/releases/pdns-recursor-5.4.3.tar.xz
+  10. https://downloads.powerdns.com/releases/pdns-recursor-5.2.11.tar.bz2.sig
+  11. https://downloads.powerdns.com/releases/pdns-recursor-5.3.8.tar.xz.sig
+  12. https://downloads.powerdns.com/releases/pdns-recursor-5.4.3.tar.xz.sig
+  13. https://downloads.powerdns.com/releases/
+  14. https://repo.powerdns.com/
+  15. https://docs.powerdns.com/recursor/appendices/EOL.html
+Download attachment "signature.asc" of type "application/pgp-signature" (486 bytes)
