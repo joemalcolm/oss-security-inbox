@@ -1,57 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/23/5
-Message-ID: <222967a7-b085-4036-a854-7388ffd12d12@cpansec.org>
-Date: Sun, 23 Aug 2026 20:55:20 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-78183: DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in quote_float
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/27/2
+Message-ID: <trinity-c0618e08-4e60-467a-9693-dcc02ad83492-1782504453450@trinity-msg-rest-gmx-gmx-live-7bdfdcd756-mmr84>
+Date: Fri, 26 Jun 2026 20:07:33 +0000
+From: "Alexander A. Shvedov" <shvedov@....fr>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2025-60466: Expired Pointer Dereference in GPAC/MP4Box via gf_filter_pid_get_packet on crafted MPEG-2 TS file
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-78183                                       CPAN Security Group
-========================================================================
 
-         CVE ID:  CVE-2026-78183
-   Distribution:  DBD-Pg
-       Versions:  3.21.0
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (see References)
+CVE:       CVE-2025-60466
+CWE:       CWE-825 (Expired Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-       MetaCPAN:  https://metacpan.org/dist/DBD-Pg
-       VCS Repo:  https://github.com/bucardo/dbdpg
+Description:
+  The gf_filter_pid_get_packet() function in GPAC's filter session core
+  (filter_core/filter_pid.c:6827) retrieves the next available packet from
+  a filter PID for processing by downstream filters such as the inspect
+  filter. When MP4Box inspects a crafted MPEG-2 TS file with corrupted PMT
+  descriptors and abnormal PCR discontinuities that drive the pipeline
+  through PID deletion and re-enqueue paths, gf_filter_pid_del() frees the
+  336-byte PID instance at filter_core/filter_pid.c:5933.
 
+  The inspect filter subsequently calls gf_filter_pid_get_packet() on the
+  invalidated PID without checking whether the PID object has been released,
+  performing a READ of 8 bytes at address 0x513000002dc0 (start of the freed
+  allocation) and crashing the process (Denial of Service).
 
-DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in
-quote_float
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-Description
------------
-DBD::Pg version 3.21.0 for Perl has a heap out-of-bounds write in
-quote_float.
+Reproduction:
+  -Build-opts: --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0" ;
+  -Command: ./MP4Box -info 35_gf_filter_pid_get_packet_filter_core_filter_pid_c_6827
 
-quote_float() allocates the length of the string + 1, which is the size
-of the bare numeric symbol plus NULL.  But for special literals NaN,
-Inf, +Inf, -Inf, Infinity, +Infinity, -Infinity it emits the literal
-surrounded by quotes plus NULL, which is length + 3 bytes. Every
-recognised literal (case-insensitive) overflows by 2 bytes, a single
-quote and a NULL.
+Asan-log:
+==1994506==ERROR: AddressSanitizer: heap-use-after-free on address 0x513000002dc0 at pc 0x7fdaa268b8b7 bp 0x7fff42a43b80 sp 0x7fff42a43b78
+READ of size 8 at 0x513000002dc0 thread T0
+    #0 0x7fdaa268b8b6 in gf_filter_pid_get_packet filter_core/filter_pid.c:6827
+    #1 0x7fdaa2906374 in inspect_process filters/inspect.c:5218
+    #2 0x7fdaa26ef401 in gf_filter_process_task filter_core/filter.c:3180
 
-This can be reached by the $dbh->quote method, for example
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/35/35_gf_filter_pid_get_packet_filter_core_filter_pid_c_6827
 
-     $dbh->quote( "Infinity", DBI::SQL_NUMERIC ).
+References:
+  https://github.com/gpac/gpac/issues/3284
+  https://www.cve.org/CVERecord?id=CVE-2025-60466
+  https://infosec.exchange/@sigdevel/116780402249845037
 
-This regression was introduced in 3.21.0 by the quote.c rewrite.
-
-Problem types
--------------
-- CWE-787 Out-of-bounds Write
-
-Solutions
----------
-Upgrade to version 3.21.1 or later.
-
-References
-----------
-https://github.com/bucardo/dbdpg/security/advisories/GHSA-785p-fw3v-r822
-https://metacpan.org/release/TURNSTEP/DBD-Pg-3.21.1/source/Changes
-https://github.com/bucardo/dbdpg/commit/6d6f47ed2403cda55c82b1bad56e388ba7390065.patch
-https://github.com/bucardo/dbdpg/commit/adacf1de872326a465e13f9e4281a674ebcd227e
-
+——
+Best regards, Alexander A. Shvedov
+@sigdevel
