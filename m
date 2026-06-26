@@ -1,58 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/15
-Message-ID: <trinity-016bc3af-6ee4-4411-b255-ce9b3121a903-1781382939953@trinity-msg-rest-gmx-gmx-live-6759fbb69b-qnrq2>
-Date: Sat, 13 Jun 2026 20:35:40 +0000
-From: shvedov@....com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/27/5
+Message-ID: <trinity-4182490a-8046-4e07-9a4e-165f101e8ae7-1782504744560@trinity-msg-rest-gmx-gmx-live-7bdfdcd756-8x2qd>
+Date: Fri, 26 Jun 2026 20:12:24 +0000
+From: "Alexander A. Shvedov" <shvedov@....fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-55660: Stack-based Buffer Overflow in GPAC/MP4Box via gf_opus_read_length on crafted MP4 file with malformed Opus packet
+Subject: CVE-2025-60474: Heap-based Buffer Overflow in GPAC/MP4Box via gf_media_import on crafted MPEG-2 TS file
 Content-Type: text/plain; charset=utf-8
 
 Product:   GPAC (MP4Box)
-Affected:  gpac/gpac prior to fix commit (ff8249a407685d00ceb5f4d2a798b9cad195140e)
-CVE:       CVE-2025-55660
-CWE:       CWE-121 (Stack-based Buffer Overflow)
+Affected:  gpac/gpac prior to fix commit (see References)
+CVE:       CVE-2025-60474
+CWE:       CWE-122 (Heap-based Buffer Overflow)
 CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
 Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
 Description:
-  When MP4Box dumps a crafted MP4 file containing a malformed,
-  non-self-delimited Opus packet (e.g. an invalid odd packet length),
-  gf_opus_read_length() in media_tools/av_parsers.c does not
-  sufficiently validate the Opus packet size before writing the
-  computed length back into the packet header structure.
+  The gf_media_import() function in GPAC's media import layer
+  (media_tools/media_import.c:1297) imports media tracks from input files
+  into the filter processing pipeline. When MP4Box inspects a crafted
+  MPEG-2 TS file, the function stores a property value that was produced
+  by strdup(""), allocating a 1-byte heap buffer containing only the NUL
+  terminator at address 0x502000003110.
 
-  AddressSanitizer reports a stack-buffer-overflow at
-  media_tools/av_parsers.c:11140, a WRITE of size 2 overflowing the
-  pckh stack object (offset 568) allocated in
-  gf_inspect_dump_opus_internal(), reached via
-  gf_opus_parse_packet_header() while MP4Box dumps the crafted Opus
-  track.
+  The function subsequently reads 1 byte at offset [1] of this buffer
+  (past its only valid index [0]) at address 0x502000003111, triggering
+  a heap-buffer-overflow read and crashing the process (Denial of Service).
 
   Crash is reproducible on the current master branch at the time of
   discovery. No authentication or special privileges required beyond
   ability to provide a crafted file.
 
 Reproduction:
-  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
-  -Command: ./MP4Box -add 7_poc.mp4 -dxml -out /dev/null
+  -Build-opts: --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0" ;
+  -Command: ./MP4Box -info 38_gf_media_import_media_tools_media_import_c_1297
 
 Asan-log:
-==24222==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7efe3c106638 at pc 0x7efe3ef07226 bp 0x7fff9e395ff0 sp 0x7fff9e395fe8
-WRITE of size 2 at 0x7efe3c106638 thread T0
-    #0 0x7efe3ef07225 in gf_opus_read_length media_tools/av_parsers.c:11140
-    #1 0x7efe3ef6e128 in gf_opus_parse_packet_header media_tools/av_parsers.c:11411
-    #2 0x7efe3f6ce40f in gf_inspect_dump_opus_internal filters/inspect.c:1830
+==2016054==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x502000003111 at pc 0x7f11ecdaca1e bp 0x7fffd1145a00 sp 0x7fffd11459f8
+READ of size 1 at 0x502000003111 thread T0
+    #0 0x7f11ecdaca1d in gf_media_import media_tools/media_import.c:1297
+    #1 0x558a953c08e3 in convert_file_info /media/user/8b16fbb8-17fc-4a2a-99f7-d4da627d0251/gpac_asan/applications/mp4box/fileimport.c:131
+    #2 0x558a953914b7 in mp4box_main /media/user/8b16fbb8-17fc-4a2a-99f7-d4da627d0251/gpac_asan/applications/mp4box/mp4box.c:6520
 
 PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/7/7_poc.mp4
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/38/38_gf_media_import_media_tools_media_import_c_1297
 
 References:
-  https://github.com/gpac/gpac/issues/3161
-  https://www.cve.org/CVERecord?id=CVE-2025-55660
-  https://infosec.exchange/@sigdevel/116733892068649310
+  https://github.com/gpac/gpac/issues/3287
+  https://www.cve.org/CVERecord?id=CVE-2025-60474
+  https://infosec.exchange/@sigdevel/116780566799952592
 
 
 ——
 Best regards, Alexander A. Shvedov
-https://github.com/sigdevel
-
+@sigdevel
