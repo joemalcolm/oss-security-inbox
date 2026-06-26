@@ -1,58 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/8
-Message-ID: <7eb3b13a-570c-4825-b327-b0cc68f55288@cpansec.org>
-Date: Fri, 17 Jul 2026 13:51:07 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/26/5
+Message-ID: <98d7f9bf-e29c-426b-a401-028eb4b215fa@cpansec.org>
+Date: Fri, 26 Jun 2026 09:08:59 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-13410: Dancer::Plugin::Auth::Google versions through 0.07 for Perl have TLS verification disabled
+Subject: CVE-2026-11625: Bytes::Random::Secure versions through 0.29 for Perl share internal state across forked processes
 Content-Type: text/plain; charset=utf-8
 
 
 ========================================================================
-CVE-2026-13410                                       CPAN Security Group
+CVE-2026-11625                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-13410
-   Distribution:  Dancer-Plugin-Auth-Google
-       Versions:  through 0.07
+         CVE ID:  CVE-2026-11625
+   Distribution:  Bytes-Random-Secure
+       Versions:  through 0.29
 
-       MetaCPAN: https://metacpan.org/dist/Dancer-Plugin-Auth-Google
-       VCS Repo:  https://github.com/garu/Dancer-Plugin-Auth-Google
+       MetaCPAN:  https://metacpan.org/dist/Bytes-Random-Secure
+       VCS Repo:  https://github.com/daoswald/Bytes-Random-Secure
 
 
-Dancer::Plugin::Auth::Google versions through 0.07 for Perl have TLS
-verification disabled
+Bytes::Random::Secure versions through 0.29 for Perl share internal
+state across forked processes
 
 Description
 -----------
-Dancer::Plugin::Auth::Google versions through 0.07 for Perl have TLS
-verification disabled.
+Bytes::Random::Secure versions through 0.29 for Perl share internal
+state across forked processes.
 
-The default user agent is initialised with SSL_verify_mode explicitly
-disabled.
+When an object is initialised before forking, or when the functional
+interface is used, then the internal state for the PRNG is shared
+across processes and identical random streams will be produced.
 
-An attacker with network man-in-the-middle (MITM) capability between
-the Dancer application and googleapis.com can intercept the OAuth2
-token exchange and userinfo fetch, return a forged access_token and
-user profile, and be logged in to the Dancer application as any Google
-user.
+Secrets generated in multiprocess applications are predictable across
+processes.
 
 Problem types
 -------------
-- CWE-295 Improper Certificate Validation
+- CWE-335 Incorrect Usage of Seeds in Pseudo-Random Number Generator
+   (PRNG)
 
 Workarounds
 -----------
-There is no caller-side override.
-
 Apply the patch.
+
+Otherwise, only use the object-oriented interface and ensure that the
+object is only instantiated in a child process after forking.
+
+Alternatively, use a different module such as Crypt::PRNG,
+Crypt::SysRandom or Crypt::URandom.
 
 
 References
 ----------
-https://github.com/garu/Dancer-Plugin-Auth-Google/pull/5
-https://security.metacpan.org/patches/D/Dancer-Plugin-Auth-Google/0.07/CVE-2026-13410-r1.patch
-https://metacpan.org/pod/Furl#HTTPS-requests-claims-warnings!
+https://github.com/daoswald/Bytes-Random-Secure/issues/3
+https://github.com/daoswald/Bytes-Random-Secure/pull/4
+https://security.metacpan.org/patches/B/Bytes-Random-Secure/0.29/CVE-2026-11625-r1.patch
+https://www.cve.org/CVERecord?id=CVE-2026-41564
+
+Timeline
+--------
+- 2026-06-24: Issue publicly reported on GitHub
 
 
 
