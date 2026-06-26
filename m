@@ -1,43 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/13
-Message-ID: <0844c102-def2-a994-7fdf-1283e16baf64@apache.org>
-Date: Mon, 14 Sep 2026 08:28:39 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/26/1
+Message-ID: <140c26a3-a80a-6040-df34-2217dad28515@apache.org>
+Date: Fri, 26 Jun 2026 05:18:07 +0000
+From: Shahar Epstein <shahar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-75030: Apache Syncope: Incomplete authorization checks for Group members deprovisioning 
+Subject: CVE-2026-49486: Apache Airflow FTP provider: FTP Provider does not protect FTPS data channel (missing PROT_P) 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core.idrepo:syncope-core-idrepo-logic) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core.idrepo:syncope-core-idrepo-logic) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core.idrepo:syncope-core-idrepo-logic) 4.1.0-M0 through 4.1.2
+- Apache Airflow FTP provider (apache-airflow-providers-ftp) before 3.15.1
 
 Description:
 
-Missing Authorization vulnerability in Apache Syncope.
-
-
-
-An administrator with task execution entitlements might be able to mass (de)provision group members, regardless of their group-related administration capabilities.
-
-
-
-
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+The Apache Airflow FTP provider's `FTPSHook.get_conn()` created an `ftplib.FTP_TLS` connection but never called `prot_p()`, so although the control channel was TLS-protected the data channel was transmitted in cleartext. Any deployment using `FTPSHook` or `FTPSFileTransmitOperator` to move files over FTPS exposed file contents and credentials-in-transit to a network attacker able to observe the data connection. Upgrade apache-airflow-providers-ftp to `3.15.1` or later, which issues `PROT P` to encrypt the data channel.
 
 Credit:
 
-n0mi1k (finder)
+Andrew Rukin (Arenadata) (finder)
+Shubham Raj (remediation developer)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-75030
+https://github.com/apache/airflow/pull/67946
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49486
 
