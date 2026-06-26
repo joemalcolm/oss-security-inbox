@@ -1,57 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/7
-Message-ID: <trinity-c159d684-29f6-43a1-965d-79c880b0855e-1781381962699@trinity-msg-rest-gmx-gmx-live-6759fbb69b-mxzlh>
-Date: Sat, 13 Jun 2026 20:19:22 +0000
-From: shvedov@....com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/26/4
+Message-ID: <trinity-7e8b81f6-2398-4093-a84a-d9cfea327331-1782453730983@trinity-msg-rest-gmx-gmx-live-7bdfdcd756-rsstd>
+Date: Fri, 26 Jun 2026 06:02:11 +0000
+From: "Alexander A. Shvedov" <shvedov@....fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-55647: Integer Overflow in GPAC/MP4Box via mp4_mux_cenc_insert_pssh on crafted MP4 with oversized PSSH metadata
+Subject: CVE-2025-60464: NULL Pointer Dereference in GPAC/MP4Box via gf_sei_load_from_state_internal on crafted MPEG-2 TS file
 Content-Type: text/plain; charset=utf-8
 
-
 Product:   GPAC (MP4Box)
-Affected:  gpac/gpac prior to fix commit (e95f3064d846e4606276fff111e0f97df1576a04)
-CVE:       CVE-2025-55647
-CWE:       CWE-190 (Integer Overflow or Wraparound)
+Affected:  gpac/gpac prior to fix commit 62714f27c64a3d1eb7e880f9eed2d38673cb43ce
+CVE:       CVE-2025-60464
+CWE:       CWE-476 (NULL Pointer Dereference)
 CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
 Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
 Description:
-  When MP4Box processes a crafted MP4 file containing malformed
-  Protection System Specific Header (PSSH) metadata, mp4_mux_cenc_insert_pssh()
-  in filters/mux_isom.c does not sufficiently validate PSSH-related size
-  fields such as kid_count/dataSize before using them in a buffer size
-  calculation.
+  The gf_sei_load_from_state_internal() function in GPAC's SEI loader
+  (filters/sei_load.c:225) processes Supplemental Enhancement Information
+  payloads embedded in HEVC and VVC bitstreams transported over MPEG-2 TS.
+  When MP4Box inspects a crafted TS file containing HEVC/VVC streams with
+  malformed NAL units and corrupted PMT descriptors, the NALU demuxer
+  naludmx_configure_pid() frees the codec state buffer at
+  filters/reframe_nalu.c:370 during PID reconfiguration.
 
-  An attacker-controlled value overflows the size computation, causing
-  realloc() to be called with an enormous size. AddressSanitizer reports
-  an out-of-memory condition at filters/mux_isom.c:4326, where realloc()
-  attempts to allocate 0xe40000100 bytes, reached via mp4_mux_start_fragment()
-  while MP4Box runs DASH segmentation on the crafted file.
+  The function subsequently reads 1 byte from the freed 529,176-byte codec
+  state region at address 0x7f7518dceb04 (529,156 bytes inside the freed
+  allocation) without validating whether the buffer has been released,
+  resulting in a heap-use-after-free and process crash (Denial of Service).
 
   Crash is reproducible on the current master branch at the time of
   discovery. No authentication or special privileges required beyond
   ability to provide a crafted file.
 
 Reproduction:
-  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
-  -Command: ./MP4Box -dash 10000 ./15_poc.mp4
+  -Build-opts: --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0" ;
+  -Command: ./MP4Box -info 32_filters_sei_load_c_225_in_gf_sei_load_from_state_internal
 
 Asan-log:
-==3757041==ERROR: AddressSanitizer: out of memory: allocator is trying to allocate 0xe40000100 bytes
-    #0 0x7f635aaf3b78 in realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:85
-    #1 0x55f879e99c00 in mp4_mux_cenc_insert_pssh filters/mux_isom.c:4326
-    #2 0x55f879ed3601 in mp4_mux_start_fragment filters/mux_isom.c:6396
+==33468==ERROR: AddressSanitizer: heap-use-after-free on address 0x7f7518dceb04 at pc 0x7f751b19dbf5 bp 0x7ffc77f69500 sp 0x7ffc77f694f8
+READ of size 1 at 0x7f7518dceb04 thread T0
+    #0 0x7f751b19dbf4 in gf_sei_load_from_state_internal filters/sei_load.c:225
+    #1 0x7f751b19dbf4 in gf_sei_load_from_state filters/sei_load.c:265
+    #2 0x7f751b0ffd02 in naludmx_finalize_au_flags filters/reframe_nalu.c:2360
 
 PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/15/15_poc.mp4
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/32/32_filters_sei_load_c_225_in_gf_sei_load_from_state_internal
 
 References:
-  https://github.com/gpac/gpac/issues/3235
-  https://www.cve.org/CVERecord?id=CVE-2025-55647
-  https://infosec.exchange/@sigdevel/116736795058798433
+  https://github.com/gpac/gpac/issues/3278
+  https://www.cve.org/CVERecord?id=CVE-2025-60464
+  https://infosec.exchange/@sigdevel/116778370895014131
 
 
 ——
 Best regards, Alexander A. Shvedov
-https://github.com/sigdevel
-
+@sigdevel
