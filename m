@@ -1,52 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/6
-Message-ID: <f2dfa9d6-357b-46cf-9483-105bbba828b1@apache.org>
-Date: Tue, 25 Aug 2026 22:56:06 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/20
+Message-ID: <ff9fe46a-09ab-43a2-ab6a-d3b432399e20@apache.org>
+Date: Mon, 29 Jun 2026 21:37:17 +0100
 From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66422: Apache Tomcat: Servlet role references can bypass declarative role constraints
+Subject: CVE-2026-50229: Apache Tomcat: XSS in number guess example
 Content-Type: text/plain; charset=utf-8
 
 Severity: low
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.24
-- Apache Tomcat 10.1.0-M1 through 10.1.57
-- Apache Tomcat 9.0.25 through 9.0.120
-- Apache Tomcat 8.5.46 through 8.5.100
-- Apache Tomcat 7.0.97 through 7.0.109
-- Apache Tomcat before 7.0.97 unaffected
+- Apache Tomcat 11.0.0-M1 through 11.0.22
+- Apache Tomcat 10.1.0-M1 through 10.1.55
+- Apache Tomcat 9.0.0.M1 through 9.0.118
+- Apache Tomcat 8.5.0 through 8.5.100
+- Apache Tomcat 7.0.0 through 7.0.109
+- Apache Tomcat before 7.0.0 unknown
 
 Description:
 
-Improper Authorization vulnerability in Apache Tomcat cause by 
-security-role-ref definitions being incorrectly used as role aliases 
-within the Realm in additional to the correct usage with 
-Request.isUserInRole().
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic 
+XSS) vulnerability in the number guess example for Apache Tomcat.
 
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.22, from 
+10.1.0-M1 through 10.1.55, from 9.0.0.M1 through 9.0.118, from 8.5.0 
+through 8.5.100, from 7.0.0 through 7.0.109. Other versions that have 
+reached end of support may also be affected.
 
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
-10.1.0-M1 through 10.1.57, from 9.0.25 through 9.0.120.
-
-
-
-The following versions were EOL at the time the CVE was created but are
-known to be affected: from 8.5.46 through 8.5.100, from 7.0.97 through 
-7.0.109. Other unsupported versions may also be affected.
-
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, 
+Users are recommended to upgrade to version 11.0.23, 10.1.56 or 9.0.119, 
 which fix the issue.
 
 Credit:
 
-4ra1n, pyn3rd and unam4 (finder)
+Erichen, Institute of Computing Technology, Chinese Academy of Sciences 
+(finder)
+Yashar Shahinzadeh (finder)
+Amirmohammad Safari (finder)
 
 References:
 
-https://lists.apache.org/thread/j5plylz1b2vhqvbkqn7k58nygxhcpk73
+https://lists.apache.org/thread/wlt2no8bw45zl1w8byop4zfqphldf5j0
 https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66422
+https://www.cve.org/CVERecord?id=CVE-2026-50229
