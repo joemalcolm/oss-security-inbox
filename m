@@ -1,73 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/07/2
-Message-ID: <1e7caa35-92c5-4cc4-848e-6e5e12df7103@cpansec.org>
-Date: Mon, 7 Sep 2026 19:40:48 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-16028: Protocol::HTTP2 versions before 1.14 for Perl allow memory exhaustion via closed streams that stream_state never removes from the connection stream table
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/12
+Message-ID: <47c38891-1d72-d871-33ec-4e71d6d59723@apache.org>
+Date: Mon, 29 Jun 2026 18:41:44 +0000
+From: "Christopher L. Shannon" <cshannon@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-52760: Apache ActiveMQ, Apache ActiveMQ Web Console: Stored XSS via Unescaped values in ActiveMQ Web Console 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-16028                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-         CVE ID:  CVE-2026-16028
-   Distribution:  Protocol-HTTP2
-       Versions:  before 1.14
+Affected versions:
 
-       MetaCPAN:  https://metacpan.org/dist/Protocol-HTTP2
-       VCS Repo:  https://github.com/vlet/p5-Protocol-HTTP2
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
+- Apache ActiveMQ Web Console (org.apache.activemq:apache-web-console) before 5.19.8
+- Apache ActiveMQ Web Console (org.apache.activemq:apache-web-console) 6.0.0 before 6.2.7
 
+Description:
 
-Protocol::HTTP2 versions before 1.14 for Perl allow memory exhaustion
-via closed streams that stream_state never removes from the connection
-stream table
+Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Apache ActiveMQ, Apache ActiveMQ Web Console.
 
-Description
------------
-Protocol::HTTP2 versions before 1.14 for Perl allow memory exhaustion
-via closed streams that stream_state never removes from the connection
-stream table.
+The browse page in the web console renders a message Id directly without sanitization. This allows an authenticated producer to send a message with a JMS message ID that has been crafted to contain HTML/JavaScript such that when an administrator browses the queue in the Web Console, the payload executes in their browser.
+This issue affects Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ Web Console: before 5.19.8, from 6.0.0 before 6.2.7.
 
-When a stream reaches the CLOSED state, stream_state returns the
-concurrency slot and clears most of the stream's keys, but the entry
-itself stays in the connection stream table and nothing in the
-distribution removes it. Stream identifiers increase monotonically, so
-a peer can open and close streams on one connection indefinitely, each
-close leaving a residual entry that is retained for the life of the
-connection.
+Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
 
-SETTINGS_MAX_CONCURRENT_STREAMS does not bound this. That setting caps
-how many streams are live at once and is enforced, while the growth is
-made of streams the cap has already released, so it accumulates with
-concurrency never exceeding one. The client keeps the same table and
-grows the same way against a hostile server.
+Credit:
 
-Measured against a server built on this module, roughly 920 bytes are
-retained per closed stream for about 19 bytes on the wire, so 100,000
-sequential streams on one connection grow server resident memory by
-about 88 MiB. The streams are ordinary requests that the application
-accepts and completes.
+Biswajeet Ray (finder)
 
-Problem types
--------------
-- CWE-401 Missing Release of Memory after Effective Lifetime
+References:
 
-Workarounds
------------
-For deployments that are not able to upgrade to Protocol-HTTP2 1.14,
-close each connection after a fixed number of requests, which discards
-its stream table.
-
-Solutions
----------
-Upgrade to Protocol-HTTP2 1.14 or later.
-
-References
-----------
-https://metacpan.org/release/CRUX/Protocol-HTTP2-1.13/source/lib/Protocol/HTTP2/Stream.pm#L113-126
-https://github.com/vlet/p5-Protocol-HTTP2/commit/27a488a34d74fd16f123e5e6186d4f677faa246f.patch
-https://metacpan.org/release/CRUX/Protocol-HTTP2-1.14/changes
-
-
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-52760
 
