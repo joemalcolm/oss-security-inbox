@@ -1,73 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/05/4
-Message-ID: <apvIObgXJAgH2trx@eldamar.lan>
-Date: Sat, 5 Sep 2026 09:43:53 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/9
+Message-ID: <45a08d16-434e-0f1e-9fc6-c391262eacf3@apache.org>
+Date: Mon, 29 Jun 2026 18:29:26 +0000
+From: "Christopher L. Shannon" <cshannon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities fixed in libxml2-2.15.4
+Subject: CVE-2026-49877: Apache ActiveMQ: Authenticated web users retain admin access by default in the Web Console 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important 
 
-On Fri, Sep 04, 2026 at 06:35:56PM +0100, Sam James wrote:
-> From libxml2-2.15.4:
-> 
-> +v2.15.4: Sep 01 2026
-> +
-> +### Security
-> +
-> +- xmlregexp: Prevent out-of-bounds read in NXT macro
-> +- fix: add missing overflow checks in dict.c, uri.c, and valid.c
-> +- xmlregexp: Calc string length after null checking
-> +- xpointer: Check overflow in xmlXPtrEvalXPtrPart
-> +- xmlIO: Check for int overflow before calling writecallback
-> +- fix(xinclude): propagate parseFlags in xmlXIncludeProcess and xmlXIncludeProcessTree
-> +
-> + [...]
-> 
-> I possess no further details.
+Affected versions:
 
-FTR, some CVEs got assigned for issues fixed in 2.15.4: 
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
 
-https://www.cve.org/CVERecord?id=CVE-2026-86137:
-| In libxml2 before 2.15.4, xmlFAParsePosCharGroup has an out-of-bounds
-| read, aka an out-of-bounds read in the NXT macro in xmlregexp.
+Description:
 
-https://www.cve.org/CVERecord?id=CVE-2026-86138
-| In libxml2 before 2.15.4, xmlDictAddQString in dict.c has an integer
-| overflow and resultant heap-based buffer overflow.
+Improper Authorization vulnerability in Apache ActiveMQ.
 
-https://www.cve.org/CVERecord?id=CVE-2026-86139
-| In libxml2 before 2.15.4, xmlURIEscapeStr in uri.c has an integer
-| overflow.
+An authenticated low-privilege Web Console user by default can access /admin/* paths in the Web Console. The default Jetty settings incorrectly did not limit those paths to only admins.
+This issue affects Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7.
 
-https://www.cve.org/CVERecord?id=CVE-2026-86140
-| In libxml2 before 2.15.4, xmlSnprintfElements in valid.c has a strcat
-| stack-based buffer overflow.
+Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
 
-https://www.cve.org/CVERecord?id=CVE-2026-86141
-| xmlregexp in libxml2 before 2.15.4 has a NULL pointer dereference in
-| xmlRegNewParserCtxt after a strdup failure, i.e., it does not
-| calculate a string length after NULL checking.
+Credit:
 
-https://www.cve.org/CVERecord?id=CVE-2026-86142
-| In libxml2 before 2.15.4, there is a heap-based buffer overflow in
-| xmlXPtrEvalXPtrPart because of xmlXPtrEval xpointer length saturation.
+Leon Johnson (github: lokerxx) (finder)
 
-https://www.cve.org/CVERecord?id=CVE-2026-86143
-| In xmlIO in libxml2 before 2.15.4, an inconsistency in
-| xmlOutputWriteCallback and xmlBufUse causes negative lengths to reach
-| write callbacks, aka a lack of a check for integer overflow before
-| calling writecallback. This has security relevance for many types of
-| uses of that length value within a callback.
+References:
 
-https://www.cve.org/CVERecord?id=CVE-2026-86144
-| In xinclude in libxml2 before 2.15.4, xmlXIncludeProcess and
-| xmlXIncludeProcessTree do not propagate parseFlags. This has security
-| relevance for, for example, the XML_PARSE_NONET flag, if (without it)
-| a custom resource loader accesses the internet and triggers XML
-| external entity injection, SSRF, or a denial of service (e.g., for an
-| attacker-controlled internet resource that is intentionally slow).
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49877
 
-Regards,
-Salvatore
