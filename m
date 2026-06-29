@@ -1,33 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/19/7
-Message-ID: <4d85ce46-de20-7290-b21c-ac37b912756e@apache.org>
-Date: Fri, 19 Jun 2026 06:55:47 +0000
-From: Abhishek Choudhary <shreemaanabhishek@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/22
+Message-ID: <7a9877a0-3b9d-467c-b7ff-efc7546da367@apache.org>
+Date: Mon, 29 Jun 2026 21:41:35 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44087: Apache APISIX: Openid-connect plugin Identity Header Spoofing 
+Subject: CVE-2026-53434: Apache Tomcat: Invalid CRL configuration doesn't trigger failure for FFM Connector
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: low
 
 Affected versions:
 
-- Apache APISIX 2.3 through 3.16.0
+- Apache Tomcat 11.0.0-M1 through 11.0.22
+- Apache Tomcat 10.1.0-M7 through 10.1.55
+- Apache Tomcat 9.0.83 through 9.0.118
+- Apache Tomcat through 9.0.82 unaffected
 
 Description:
 
-Insufficient Verification of Data Authenticity vulnerability in Apache APISIX.
+Detection of Error Condition Without Action vulnerability in Apache 
+Tomcat when configuring CRLs for a FFM based connector.
 
-The openid-connect plugin under default configuration has an attack surface that allows the attacker to spoof identity headers allowing the attacker to get unauthorized access the protected resources.
-This issue affects Apache APISIX: from 2.3 through 3.16.0.
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.22, from 
+10.1.0-M7 through 10.1.55, from 9.0.83 through 9.0.118.
 
-Users are recommended to upgrade to version 3.16.1, which fixes the issue.
-
-Credit:
-
-Qi Deng (finder)
+Users are recommended to upgrade to version 11.0.23, 10.1.56 or 9.0.119, 
+which fixes the issue.
 
 References:
 
-https://apisix.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-44087
-
+https://lists.apache.org/thread/x510lbq0sfrd1qyo7q3r1mpllgpdcosk
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-53434
