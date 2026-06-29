@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/4
-Message-ID: <98c14965-67ce-b04b-327e-5145adeec9a1@apache.org>
-Date: Wed, 09 Sep 2026 20:25:17 +0000
-From: Clebert Suconic <clebertsuconic@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/7
+Message-ID: <0f76ef6e-978b-faeb-8a63-c5580960b14f@apache.org>
+Date: Mon, 29 Jun 2026 18:29:09 +0000
+From: "Christopher L. Shannon" <cshannon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-57822: Apache Artemis, Apache ActiveMQ Artemis: Message-based management parameter deserialization may lead to denial of service 
+Subject: CVE-2026-49432: Apache ActiveMQ, Apache ActiveMQ All, Apache ActiveMQ Stomp: STOMP negative content-length enables denial of service 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
 
 Affected versions:
 
-- Apache Artemis (org.apache.artemis:artemis-core-client) 2.50.0 through 2.56.0
-- Apache ActiveMQ Artemis (org.apache.activemq:artemis-core-client) 1.3.0 through 2.44.0
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.8
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.7
+- Apache ActiveMQ Stomp (org.apache.activemq:activemq-stomp) before 5.19.8
+- Apache ActiveMQ Stomp (org.apache.activemq:activemq-stomp) 6.0.0 before 6.2.7
 
 Description:
 
-When the broker is processing message-based management requests, sent by an authenticated messaging client that is authorized with MANAGE permission to perform management-via-messaging, the parameter processing can trigger Java deserialization of certain method parameters that the broker will not utilise. The permitted types allow to craft a payload causing excessive computation and pinning the processing thread, leading to denial of service.
+Improper Input Validation vulnerability in Apache ActiveMQ, Apache ActiveMQ All, Apache ActiveMQ Stomp.
+
+A remote unauthenticated peer that can reach an exposed STOMP connector can trigger denial-of-service behavior by sending a negative content-length. For the NIO STOMP transport, an attacker can keep streaming body bytes and grow the per-connection command buffer beyond configured limits to cause OOM. For the blocking STOMP protocol, an error will instead force abnormal transport exception handling for the affected connection and closure.
+This issue affects Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ All: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ Stomp: before 5.19.8, from 6.0.0 before 6.2.7.
 
 
 
 
-This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.3.0 through 2.44.0.
-
-
-
-Users are recommended to upgrade to version 2.57.0, which fixes the issue.
+Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
 
 Credit:
 
-Clebert Suconic (finder)
-Mike Read (reporter)
+Youngjoon Kim (finder)
 
 References:
 
-https://artemis.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-57822
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49432
 
