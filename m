@@ -1,34 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/03/5
-Message-ID: <ef451264-566e-4749-89f9-a7220ef63486@brondsema.net>
-Date: Thu, 3 Sep 2026 13:35:10 -0400
-From: Dave Brondsema <dave@...ndsema.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/14
+Message-ID: <30fa1feb-53be-bcbc-73bf-ca305ee8d9ce@apache.org>
+Date: Mon, 29 Jun 2026 18:44:11 +0000
+From: "Christopher L. Shannon" <cshannon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-80190: Apache Allura: Stored XSS via code repositories
+Subject: CVE-2026-53917: Apache ActiveMQ, Apache ActiveMQ All, Apache ActiveMQ Client, Apache ActiveMQ Broker: Unbounded memory allocation in OpenWire property unmarshalling 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: important 
 
 Affected versions:
 
-- Apache Allura through 1.20.0
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.8
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.7
+- Apache ActiveMQ Client (org.apache.activemq:activemq-client) before 5.19.8
+- Apache ActiveMQ Client (org.apache.activemq:activemq-client) 6.0.0 before 6.2.7
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.8
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.2.7
 
 Description:
 
-Apache Allura: stored XSS via SVN code repositories.  Git repositories are not 
-known to be affected.  The vulnerability is likely mitigated via default CSP 
-headers.
+Memory Allocation with Excessive Size Value vulnerability in Apache ActiveMQ, Apache ActiveMQ All, Apache ActiveMQ Client, Apache ActiveMQ Broker.
 
-This issue affects Apache Allura: through 1.20.0.
+An authenticated user can cause a broker DoS by sending a crafted OpenWire Message with a large encoded size value for the map. OpenWire message property maps are unmarshaled without size validation which can trigger OOM and crash the broker.
+This issue affects Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ All: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ Client: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ Broker: before 5.19.8, from 6.0.0 before 6.2.7.
 
-Users are recommended to upgrade to version 1.21.0, which fixes the issue.
+Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
 
 Credit:
 
-n0mi1k (reporter)
+tonghuaroot (finder)
 
 References:
 
-https://allura.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-80190
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-53917
 
