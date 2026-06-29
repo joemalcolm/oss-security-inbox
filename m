@@ -1,37 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/30/2
-Message-ID: <5d2a12e2-5631-09ba-7a78-a815c0e203f3@apache.org>
-Date: Sun, 30 Aug 2026 20:02:27 +0000
-From: Lenny Primak <lprimak@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/24
+Message-ID: <fb4c00b6-2c0c-43a5-af72-b66f7d1d42f3@apache.org>
+Date: Mon, 29 Jun 2026 21:45:03 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-58301: Apache Shiro: Server-side POST request may be steered to an alternate host 
+Subject: CVE-2026-55955: Apache Tomcat: EncryptInterceptor not protected against replay attacks
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: low
 
 Affected versions:
 
-- Apache Shiro (org.apache.shiro:shiro-jakata-ee) 2.0.0-alpha-0 through 3.0.0
+- Apache Tomcat 11.0.0-M1 through 11.0.22
+- Apache Tomcat 10.1.0-M1 through 10.1.55
+- Apache Tomcat 9.0.13 through 9.0.118
+- Apache Tomcat 8.5.38 through 8.5.100
+- Apache Tomcat 7.0.100 through 7.0.109
 
 Description:
 
-When Apache Shiro is used with the Jakarta EE integration module, a low-privileged user can craft an HTTP request that causes the server to initiate a connection to an attacker-controlled URL and transmit attacker-controlled data. This vulnerability affects Apache Shiro versions 2.x through 3.0.0 only in deployments that use the Jakarta EE integration module.
+Improper Authentication vulnerability in Apache Tomcat allowed a replay 
+attack against the EncryptionInterceptor in the cluster component.
 
-Mitigation: Upgrade to version 3.0.1 or later, which fixes the issue. +
-Alternatively, you can set the `org.apache.shiro.form-resubmit-host` (String) and `org.apache.shiro.form-resubmit-port` (Integer) system properties to restrict the host and port that Shiro will connect to when resubmitting a form.
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.22, from 
+10.1.0-M1 through 10.1.55, from 9.0.13 through 9.0.18, from 8.5.38 
+through 8.5.100, from 7.0.100 through 7.0.109.
 
-Credit:
-
-liyi.zhou@...ney.edu.au (Liyi), https://lzhou1110.github.io/ (finder)
-ziyue0530@...il.com (Ziyue), https://zyy0530.github.io/ (finder)
-cshe0476@....sydney.edu.au (Strick), https://str1ckl4nd.github.io/ (finder)
-chng0012@....sydney.edu.au (Maurice), http://maurice.busystar.org/ (finder)
-cyu210608@...il.com (Chenchen), https://7thparkk.github.io/ (finder)
-Lenny Primak <lenny@...wlogix.com> (remediation developer)
-Andrea Cosentino (remediation reviewer)
+Users are recommended to upgrade to version 11.0.23, 10.1.56, 9.0.119, 
+which fixes the issue.
 
 References:
 
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-58301
-
+https://lists.apache.org/thread/g4p5sf45p3f9r011pwqs9r54yd64s106
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-55955
