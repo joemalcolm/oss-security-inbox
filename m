@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/10
-Message-ID: <a8bc95a4-b80a-c8eb-dfae-b2820bec2499@apache.org>
-Date: Wed, 05 Aug 2026 14:26:04 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/30/2
+Message-ID: <f99998f5-84a5-012b-bb52-6ae0688cea34@apache.org>
+Date: Tue, 30 Jun 2026 11:19:42 +0000
+From: Jerry Shao <jshao@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-48911: Apache Answer: Unauthenticated OAuth Email-Binding Account Takeover via Existing User Confirmation Flow 
+Subject: CVE-2025-53648: Apache Gravitino: SQL misconfiguration can access or truncate files 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: low 
 
 Affected versions:
 
-- Apache Answer through 2.0.1
+- Apache Gravitino (org.apache.gravitino:catalog-jdbc-common) 0.5.0 before 1.0.0
 
 Description:
 
-Insufficient Verification of Data Authenticity vulnerability in Apache Answer.
-
-This issue affects Apache Answer: through 2.0.1.
-
-A missing authorization check in the external-login email binding flow allows unauthenticated attackers to take over arbitrary user accounts by tricking victims into clicking a crafted confirmation link.
-Users are recommended to upgrade to version 2.0.2, which fixes the issue.
+SQL misconfiguration in the Gravitino UI, in versions 1.0.0 and below, can allow a malicious user to read or truncate files.
+Users are recommended to upgrade to version 1.0.0, which fixes this issue.
 
 Credit:
 
-tonghuaroot (reporter)
-yangxi (reporter)
+A1kaid@...eatBook VulTeam (reporter)
+Le1a@...eatBook VulTeam (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-48911
+https://gravitino.apache.org
+https://www.cve.org/CVERecord?id=CVE-2025-53648
 
