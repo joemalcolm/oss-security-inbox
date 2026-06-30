@@ -1,33 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/07/5
-Message-ID: <7a8e7538-0bf5-d29c-1e0e-b67a4af3d0c9@apache.org>
-Date: Fri, 07 Aug 2026 07:30:13 +0000
-From: Chaokun Yang <chaokunyang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/30/1
+Message-ID: <CAK3hNHbaYo2ra4mjwXwA2QeLQOk6UbTus28nnp7h5Wcrv7rOrA@mail.gmail.com>
+Date: Mon, 29 Jun 2026 19:50:51 -0700
+From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-71560: Apache Fory: Out-of-bounds heap read in C++ struct deserializer tagged-int fast-path 
+Subject: hostapd: OOB write in Wi-Fi 7 MLD association parsing (pre-auth DoS)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+A Wi-Fi 7 / IEEE 802.11be MLD parsing issue in hostapd AP mode has
+been fixed upstream:
 
-Affected versions:
+https://w1.fi/security/2026-1/missing-ml-parsing-validation.txt
 
-- Apache Fory 0.14.0 before 1.5.0
+Issue:
+  Missing link ID validation in hostapd_process_ml_assoc_req()
+  (src/ap/ieee802_11_eht.c). link_id is masked with 0x000f
+  (values 0-15), but links[] only has valid entries 0..14
+  (MAX_NUM_MLD_LINKS=15). A crafted Per-STA Profile with
+  link_id=15 can write past the end of links[] during association
+  processing.
 
-Description:
+  This is reachable before the 4-way handshake; no credentials are
+  required. An attacker within radio range can trigger it with a
+  crafted association request.
 
-Out-of-bounds Read vulnerability in Apache Fory C++ deserialization.
+Affected:
+  hostapd v2.11 and newer repository snapshots before v2.12, built
+  with CONFIG_IEEE80211BE and running Wi-Fi 7 / MLD AP configuration.
 
-This issue affects Apache Fory C++ versions from 0.14.0 before 1.5.0 when deserializing structs containing tagged integer fields. A crafted input payload may trigger an out-of-bounds heap read in the tagged integer fast-path deserializer, potentially causing information disclosure or denial of service.
+Impact:
+  hostapd process termination / denial of service, and small memory
+  corruption, per the upstream advisory.
 
+Fix:
+  https://git.w1.fi/cgit/hostap/commit/?id=46dd5a4ffc9bcf44cf8fc45120b3e1e5ec922187
 
-Users are recommended to upgrade to Apache Fory 1.5.0, which fixes this issue. Applications that do not use Apache Fory C++ or do not use tagged integer fields are not affected.
+  Additional related fixes are listed in the upstream advisory.
+
+Mitigation:
+  Update to hostapd v2.12 or newer once available, or apply the
+  upstream fixes and rebuild.
+
+CVE status:
+  CVE assignment requested from MITRE under CAN-2026-2032030
 
 Credit:
+  The upstream advisory credits Sebastián Alba Vives, with independent
+  discovery and report by Abhinav Agarwal.
 
-Zhixi "Jace Sun", independent security researcher (reporter)
+Timeline:
+  2026-05-14  reported to upstream
+  2026-06-05  upstream published security advisory
 
-References:
-
-https://fory.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-71560
-
+--
+Abhinav Agarwal
