@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/23/4
-Message-ID: <a6b8de32-16fa-49af-b167-b711a2bb9e99@cpansec.org>
-Date: Sun, 23 Aug 2026 20:19:04 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-19565: Apache::AppSamurai::Util versions through 1.01 for Perl generate predictable session authentication keys from the clock and process id in CreateSessionAuthKey
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/4
+Message-ID: <c4e49725-716f-3b8e-37d0-4a8908d997b4@apache.org>
+Date: Wed, 01 Jul 2026 13:12:32 +0000
+From: Oleg Kalnichevski <olegk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-54399: Apache HttpComponents Core: Unbounded HTTP Header/Line Length in Default Configuration 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-19565                                       CPAN Security Group
-========================================================================
+Severity: important 
 
-         CVE ID:  CVE-2026-19565
-   Distribution:  Apache-AppSamurai
-       Versions:  through 1.01
+Affected versions:
 
-       MetaCPAN:  https://metacpan.org/dist/Apache-AppSamurai
+- Apache HttpComponents Core (org.apache.httpcomponents.core5:httpcore5) 5.5-beta1
+- Apache HttpComponents Core (org.apache.httpcomponents.core5:httpcore5) 5.4.2
 
+Description:
 
-Apache::AppSamurai::Util versions through 1.01 for Perl generate
-predictable session authentication keys from the clock and process id
-in CreateSessionAuthKey
+Uncontrolled Resource Consumption vulnerability in the HTTP/1.1 message parser in Apache HttpComponents Core (5.4.2 and earlier, 5.5-beta1 and earlier) allows an remote attacker to cause a denial of service through memory exhaustion by sending messages with excessive number of headers / excessive header length
 
-Description
------------
-Apache::AppSamurai::Util versions through 1.01 for Perl generate
-predictable session authentication keys from the clock and process id
-in CreateSessionAuthKey.
+Credit:
 
-CreateSessionAuthKey runs five rounds of SHA-256, each over a fresh
-Time::HiRes reading formatted to six decimal places, the running
-digest, and the process id. CreateSession calls it with an empty key
-source on every login, and the optional Keysource directive is the only
-route to the other branch. The result is 64 hex characters. The
-microsecond field of the first reading takes one of a million values,
-the later readings follow it within microseconds, and the process id is
-drawn from a small range.
+Henry Huang <zhuang3@...pal.com> (finder)
 
-The key is returned to the browser as the session cookie, and is
-combined with the configured server key to compute the session id and
-to encrypt the stored session data. An attacker who knows the second in
-which a session was created and the process id of the worker that
-created it can enumerate candidate keys and recover the victim's
-cookie, bypassing authentication for the protected resources. Each
-candidate has to be tried against the server, which validates the
-cookie with a key the attacker does not hold.
+References:
 
-Problem types
--------------
-- CWE-341 Predictable from Observable State
-
-Impacts
--------
-- CAPEC-59 Session Credential Falsification through Prediction
-- CAPEC-115 Authentication Bypass
-
-Workarounds
------------
-Apache::AppSamurai has not been released since 2008.
-
-Users should migrate to an alternative solution.
-
-References
-----------
-https://metacpan.org/release/PAULDOOM/Apache-AppSamurai-1.01/source/lib/Apache/AppSamurai/Util.pm#L106-135
-https://metacpan.org/release/PAULDOOM/Apache-AppSamurai-1.01/source/lib/Apache/AppSamurai.pm#L1446-1533
-
-
+https://hc.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-54399
 
