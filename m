@@ -1,38 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/21
-Message-ID: <5bc8764c-bf9a-41da-8b2d-2cc67e6b84d1@apache.org>
-Date: Mon, 29 Jun 2026 21:40:19 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/1
+Message-ID: <CAK3hNHaAUyNCsbKNP0FhQdOMXP3P4jrQMwxAWHo2FWvzSpNjKQ@mail.gmail.com>
+Date: Tue, 30 Jun 2026 22:09:04 -0700
+From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-53404: Apache Tomcat: Bad ornext processing in RewriteValve
+Subject: OFFIS DCMTK: 5 CISA-coordinated DICOM vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+CISA has published an advisory for five vulnerabilities in OFFIS DCMTK
+(DICOM Toolkit), affecting DCMTK <= 3.7.0:
 
-Affected versions:
+  https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-181-01
 
-- Apache Tomcat 11.0.0-M1 through 11.0.22
-- Apache Tomcat 10.1.0-M1 through 10.1.55
-- Apache Tomcat 9.0.0.M1 through 9.0.118
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat before 8.0.0 unaffected
+Fix status:
 
-Description:
+  The fixes are in upstream DCMTK master but not any release as of today
+  https://github.com/DCMTK/dcmtk/releases/tag/latest
 
-Always-Incorrect Control Flow Implementation vulnerability in Apache 
-Tomcat's rewrite valve meant that if the first condition in an OR chain 
-matched, subsequent non-OR conditions were skipped.
+Vulnerabilities and fixes:
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.22, from 
-10.1.0-M1 through 10.1.55, from 9.0.0.M1 through 9.0.118, from 8.5.0 
-through 8.5.100. Other versions that have reached end of support may 
-also be affected.
+1. CVE-2026-50003 - bit-preserving C-GET path traversal - CVSS v3.1:
+9.8 Critical
+   Fix: eca9a03dd
 
-Users are recommended to upgrade to version 11.0.23, 10.1.56 or 9.0.119, 
-which fix the issue.
+   A victim DCMTK C-GET client connects to a malicious or
+   compromised DICOM server while using bit-preserving storage mode
+   (getscu --bit-preserving / DCMSCU_STORAGE_BIT_PRESERVING). During the
+   C-GET response, the server supplies an affected SOP Instance UID containing
+   path separators or an absolute path. DcmSCU::handleCGETSession() used that
+   value to build the output path without the filename sanitization used by the
+   normal disk-storage path. The result is file creation/truncation outside
+   the selected output directory, limited to paths writable by the client
+   process and to directories that already exist.
 
-References:
+2. CVE-2026-50254 - Extended Negotiation memory leak - CVSS v3.1: 7.5 High
+   Fix: 23f181f7a
 
-https://lists.apache.org/thread/rdhpghgfskrdmw9hqzjgjrtw538smpmz
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-53404
+   An unauthenticated client repeatedly opens a DICOM association
+   and sends an A-ASSOCIATE-RQ containing many Extended Negotiation items
+   followed by a malformed/truncated Extended Negotiation item. The parser
+   error path frees the list container but not the allocated negotiation items.
+   In storescp default single-process mode, repeated connections cause RSS
+   growth until the process is killed or stops accepting DICOM connections.
+
+3. CVE-2026-35505 - connection error-path memory leaks - CVSS v3.1: 7.5 High
+   Fix: 2312891a8
+
+   An unauthenticated client sends an A-ASSOCIATE-RQ where
+   presentation-context structures are parsed and allocated, then a later
+   presentation context triggers a translation failure, for example by
+   containing no transfer syntaxes. The server returns before freeing the
+   parsed PDU graph. Repeating this request leaks memory in single-process
+   services. There is also an analogous SCU-side error path when a long-running
+   DCMTK client parses a malformed A-ASSOCIATE-AC from a rogue server.
+
+4. CVE-2026-52868 - Called AE Title path traversal in wlmscpfs - CVSS
+v3.1: 8.2 High
+   Fix: e3878daf8
+
+   An unauthenticated client connects to wlmscpfs with a Called
+   AE Title containing a short traversal sequence. wlmscpfs used the Called AE
+   Title to construct worklist storage and lockfile paths without a containment
+   check. If the resolved directory exists, has the expected lockfile, and
+   contains matching .wl worklist files, a normal C-FIND query can return
+   records outside the intended per-AE storage area. This is not arbitrary OS
+   file read; disclosure is limited to reachable worklist records within the
+   16-byte AE Title naming constraint. With non-default --request-file-path
+   logging and AE Title/Patient ID placeholders, the same unsanitized values
+   could also produce a constrained write outside the request-file directory.
+
+5. CVE-2026-44628 - VR-spoofing type confusion in wlmscpfs - CVSS v3.1: 7.5 High
+   Fixes: f4e007468 and 694a0a06a
+
+   An unauthenticated client negotiates Explicit VR and sends a
+   C-FIND request containing a dictionary sequence tag encoded on the wire with
+   a non-sequence VR. DCMTK constructs a non-sequence object, but wlmscpfs later
+   casts the result to DcmSequenceOfItems without checking the actual type. If
+   the query reaches a valid worklist directory with an expected lockfile and a
+   matching record, the wrong-type use crashes the process. In single-process
+   mode this stops the service; in default fork mode the child crashes and the
+   parent continues serving.
+
+Potential exposure includes patient worklist metadata in affected wlmscpfs
+deployments, file write outside an intended C-GET output directory, and
+availability loss for DICOM worklist/storage services through crash or OOM.
+
+Coordination timeline:
+
+  2026-05-11  Reported to OFFIS DCMTK maintainers
+  2026-05-12  First fix committed upstream
+  2026-05-14  CERT/CC case opened as VU#470252
+  2026-05-29  Remaining fixes committed upstream
+  2026-06-30  CISA advisory published as ICSMA-26-181-01
+
+Mitigation notes:
+
+  * Apply the upstream fixes or the rolling latest snapshot when possible.
+  * Keep DICOM services on trusted networks only.
+  * For DoS exposure, prefer multi-process/fork mode where available.
+  * Avoid getscu --bit-preserving / DCMSCU_STORAGE_BIT_PRESERVING with
+    untrusted C-GET servers until patched.
+
+Additional background:
+
+  https://www.healthcareinfosecurity.com/dicom-toolkit-bugs-raise-medical-imaging-security-risks-a-32114
+
+Credit:
+
+  Reported by Abhinav Agarwal.
