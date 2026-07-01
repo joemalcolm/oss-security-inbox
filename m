@@ -1,22 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/21
-Message-ID: <b48cc3f4-79f4-416c-8bc7-c38ebd41d881@foolishgames.com>
-Date: Wed, 10 Jun 2026 18:22:55 -0400
-From: Lucas Holt <luke@...lishgames.com>
-To: oss-security@...ts.openwall.com, bumsrakete <bumsrakede@...ton.me>
-Subject: Re: CVE-2026-45257: FreeBSD kTLS-RX in-place AES-GCM decrypt over sendfile(2) EXTPG mbufs to page-cache write / local root
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/2
+Message-ID: <CAK3hNHZ2DfYt+yROnk4MQw3v=UVJswxcMNehQ35f57jCVTXyQw@mail.gmail.com>
+Date: Tue, 30 Jun 2026 22:13:35 -0700
+From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: hostapd: OOB write in Wi-Fi 7 MLD association parsing (pre-auth DoS)
 Content-Type: text/plain; charset=utf-8
 
-On 6/10/26 15:19, bumsrakete wrote:
+MITRE assigned CVE-2026-58374 with a CVSS score of 6.5
+CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
 
-> ## Affected versions
+-- Abhinav
+
+On Mon, Jun 29, 2026 at 7:50 PM Abhinav Agarwal
+<abhinavagarwal1996@...il.com> wrote:
 >
-> Vulnerable (verified or by inspection):
->    - FreeBSD 13.0, 13.1, 13.2, 13.3, 13.4
->    - FreeBSD 14.0, 14.1, 14.2
->    - FreeBSD 15.0-RELEASE (verified on 15.0-RELEASE-p5/amd64)
-
-This would also impact MidnightBSD 4.0+
-
-Lucas
-
+> A Wi-Fi 7 / IEEE 802.11be MLD parsing issue in hostapd AP mode has
+> been fixed upstream:
+>
+> https://w1.fi/security/2026-1/missing-ml-parsing-validation.txt
+>
+> Issue:
+>   Missing link ID validation in hostapd_process_ml_assoc_req()
+>   (src/ap/ieee802_11_eht.c). link_id is masked with 0x000f
+>   (values 0-15), but links[] only has valid entries 0..14
+>   (MAX_NUM_MLD_LINKS=15). A crafted Per-STA Profile with
+>   link_id=15 can write past the end of links[] during association
+>   processing.
+>
+>   This is reachable before the 4-way handshake; no credentials are
+>   required. An attacker within radio range can trigger it with a
+>   crafted association request.
+>
+> Affected:
+>   hostapd v2.11 and newer repository snapshots before v2.12, built
+>   with CONFIG_IEEE80211BE and running Wi-Fi 7 / MLD AP configuration.
+>
+> Impact:
+>   hostapd process termination / denial of service, and small memory
+>   corruption, per the upstream advisory.
+>
+> Fix:
+>   https://git.w1.fi/cgit/hostap/commit/?id=46dd5a4ffc9bcf44cf8fc45120b3e1e5ec922187
+>
+>   Additional related fixes are listed in the upstream advisory.
+>
+> Mitigation:
+>   Update to hostapd v2.12 or newer once available, or apply the
+>   upstream fixes and rebuild.
+>
+> CVE status:
+>   CVE assignment requested from MITRE under CAN-2026-2032030
+>
+> Credit:
+>   The upstream advisory credits Sebastián Alba Vives, with independent
+>   discovery and report by Abhinav Agarwal.
+>
+> Timeline:
+>   2026-05-14  reported to upstream
+>   2026-06-05  upstream published security advisory
+>
+> --
+> Abhinav Agarwal
