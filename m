@@ -1,42 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/14
-Message-ID: <e8ba31b5-1fc9-da28-bc2d-e5389f594eba@apache.org>
-Date: Mon, 14 Sep 2026 08:29:30 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-77051: Apache Syncope: SQL injection via unsanitized entityKey and opEvent in Audit Events search 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/11
+Message-ID: <akV9V0rGX7uxq04M@mertle>
+Date: Wed, 1 Jul 2026 16:49:27 -0400
+From: Michael Orlitzky <michael@...itzky.com>
+To: OSS Security <oss-security@...ts.openwall.com>
+Subject: Re: check_icmp (Monitoring Plugins): host-count overflow leads to heap buffer overflow in setuid-root binary
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On 2026-07-01 15:36:00, Holger Weiß wrote:
+> We released Monitoring Plugins 3.0.1, which fixes a security issue in 
+> the check_icmp plugin.
+>
+> ...
+>
+> A local user can trigger a heap buffer overflow in check_icmp by 
+> supplying more than 65535 target hosts, which overflows an internal 
+> counter. This happens before check_icmp drops its privileges, so the 
+> corruption occurs while still running as root on setuid-root 
+> installations.
 
-Affected versions:
+If anyone was wondering, nagios-plugins has the same problem.
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 4.1.0-M0 through 4.1.2
-
-Description:
-
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Syncope.
-
-
-
-
-
-An administrator with adequate entitlements can achieve execution of arbitrary SQL via stacked queries, leveraging unsanitized entityKey and opEvent parameters.
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
-
-Credit:
-
-n0mi1k (finder)
-Ho1aAs (finder)
-
-References:
-
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-77051
-
+Fix: https://github.com/nagios-plugins/nagios-plugins/pull/833
