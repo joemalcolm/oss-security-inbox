@@ -1,33 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/17/5
-Message-ID: <677e355d-ea95-5368-6252-f13e30b74915@apache.org>
-Date: Wed, 17 Jun 2026 01:36:01 +0000
-From: Wenjun Ruan <wenjun@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-47340: Apache DolphinScheduler: An incorrect authorization vulnerability allows authenticated users to access alert instances associated with alert groups they do not have permission to access. 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/6
+Message-ID: <64388b74-6a36-4273-a8de-e404a7445985@cpansec.org>
+Date: Wed, 1 Jul 2026 07:47:12 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-56016: CGI::Session::ID::md5 versions before 4.49 for Perl generate predictable session ids from low-entropy sources
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
 
-Affected versions:
+========================================================================
+CVE-2026-56016                                       CPAN Security Group
+========================================================================
 
-- Apache DolphinScheduler (org.apache.dolphinscheduler:dolphinscheduler-api) before 3.4.2
+         CVE ID:  CVE-2026-56016
+   Distribution:  CGI-Session
+       Versions:  before 4.49
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/CGI-Session
+       VCS Repo:  http://github.com/cromedome/cgi-session
 
-Allow authenticated users to access alert instances associated with alert groups they do not have permission to access. in Apache DolphinScheduler.
 
-This issue affects Apache DolphinScheduler: before 3.4.2.
+CGI::Session::ID::md5 versions before 4.49 for Perl generate
+predictable session ids from low-entropy sources
 
-Users are recommended to upgrade to version 3.4.2, which fixes the issue.
+Description
+-----------
+CGI::Session::ID::md5 versions before 4.49 for Perl generate
+predictable session ids from low-entropy sources.
 
-Credit:
+The generate_id method builds the session id from a MD5 digest of the
+process id, the epoch time, and the built-in rand() function. All three
+are predictable, low-entropy sources: the PID is drawn from a small
+range, the epoch time can be guessed or read from the HTTP Date header,
+and Perl's rand() is unsuitable for security purposes because it is
+predictable and reversible.
 
-thesecguy45@...il.com (finder)
-udolemi (S2W) (finder)
+An attacker who predicts a session id can impersonate the corresponding
+session and bypass authentication.
 
-References:
+Problem types
+-------------
+- CWE-340 Generation of Predictable Numbers or Identifiers
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
 
-https://dolphinscheduler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-47340
+Solutions
+---------
+Upgrade to CGI::Session 4.49 or later, which generates session ids from
+Crypt::SysRandom.
+
+
+References
+----------
+https://metacpan.org/release/MARKSTOS/CGI-Session-4.49/changes
+https://metacpan.org/release/MARKSTOS/CGI-Session-4.49/source/lib/CGI/Session/ID/md5.pm
+
+Timeline
+--------
+- 2026-06-30: Version 4.49 released with fix.
+
+
 
