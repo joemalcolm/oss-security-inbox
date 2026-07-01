@@ -1,41 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/3
-Message-ID: <b5443c21-9bf9-4d36-8f2e-e5ad039bffe6@apache.org>
-Date: Tue, 25 Aug 2026 22:50:28 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/10
+Message-ID: <CABxgSav3DhSkLLs3OVQY9f9jtKJuu1p6eF8Ur=qCEdsTjwzuXg@mail.gmail.com>
+Date: Thu, 2 Jul 2026 03:00:00 +0800
+From: pro Err0r <yijiahuang8980@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65637: Apache Tomcat: HTTP/2 no-authority bypass of strict SNI validation - CVE-2026-32990 fix incomplete
+Subject: CVE-2026-54161: NUT upsmon: remote OS command injection via ups.alarm in NOTIFYCMD - fixed in PR #3499 (affects 2.8.3–2.8.5)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hello,
 
-Affected versions:
+A remote OS command injection (CWE-78) in Network UPS Tools (NUT) upsmon,
+affecting 2.8.3, 2.8.4 and 2.8.5 (and pre-fix git master). Not affected:
+2.8.2 and earlier.
 
-- Apache Tomcat 11.0.20 through 11.0.24
-- Apache Tomcat 10.1.53 through 10.1.57
-- Apache Tomcat 9.0.115 through 9.0.120
+CVE-2026-54161
+  Advisory:
+https://github.com/networkupstools/nut/security/advisories/GHSA-mjgp-j4gm-6qg5
+  Fix:      https://github.com/networkupstools/nut/pull/3499
 
-Description:
+## Detail
+When a monitored UPS reports ALARM and the operator has NOTIFYCMD set with
+"NOTIFYFLAG ALARM ...EXEC" (a common configuration), upsmon builds a
+notification command by interpolating the server-supplied ups.alarm string
+into a shell command and running it via system(), roughly:
 
-Improper Input Validation vulnerability in Apache Tomcat due to 
-incomplete fix for CVE-2026-32990.
+    snprintf(exec, sizeof(exec), "%s \"%s\"", notifycmd, notice);
+    system(exec);   /* notice carries the attacker-controlled ups.alarm
+text */
 
+Because the string reaches a shell, a malicious or compromised upsd, a
+man-in-the-middle on
+the plaintext 3493/tcp connection, or a rogue UPS device that can set
+ups.alarm can inject
+shell metacharacters and run arbitrary commands as the upsmon user -- the
+unprivileged
+nut/ups service account on POSIX (upsmon forks and drops privileges before
+notifying); on
+Windows there is no such fork. The same construction was present in
+notify(), async_notify()
+and wall().
 
+## Fix
+PR #3499 stops using system()/a shell and executes the command with an argv
+array
+(execvp() on POSIX, _spawnvp() on Windows), so the alarm text is passed as
+a literal
+argument rather than interpreted by a shell. Distributions shipping
+2.8.3-2.8.5 should
+backport it.
 
-This issue affects Apache Tomcat: from 11.0.20 through 11.0.24, from 
-10.1.53 through 10.1.57, from 9.0.115 through 9.0.120.
+-- ja-errorpro (reporter)
 
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, 
-which fix the issue.
-
-Credit:
-
-Parag Ambildhuke (https://github.com/paragxa) (finder)
-
-References:
-
-https://lists.apache.org/thread/djog953z1ohsyt25bdvhfzbmsy22vgcj
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65637
