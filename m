@@ -1,76 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/02/1
-Message-ID: <d9fc8ea14ba834a82b8d1d4d39f90a5a@cpansec.org>
-Date: Tue, 01 Sep 2026 20:23:38 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-81928: Net::DNS versions before 1.57 for Perl allow memory exhaustion via unbounded recursion in sig_data when re-encoding a message with a misplaced TSIG record
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/7
+Message-ID: <bd7e36ee-b1ac-43f2-8315-be85f0c85bf2@cpansec.org>
+Date: Wed, 1 Jul 2026 15:40:44 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2025-15646: HTML::Gumbo versions before 0.19 for Perl disclose heap memory via type confusion
 Content-Type: text/plain; charset=utf-8
 
+
 ========================================================================
-CVE-2026-81928                                       CPAN Security Group
+CVE-2025-15646                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-81928
-   Distribution:  Net-DNS
-       Versions:  before 1.57
+         CVE ID:  CVE-2025-15646
+   Distribution:  HTML-Gumbo
+       Versions:  before 0.19
 
-       MetaCPAN:  https://metacpan.org/dist/Net-DNS
-       VCS Repo:  https://www.net-dns.org/svn/net-dns/
+       MetaCPAN:  https://metacpan.org/dist/HTML-Gumbo
+       VCS Repo:  https://github.com/bestpractical/HTML-Gumbo
 
 
-Net::DNS versions before 1.57 for Perl allow memory exhaustion via
-unbounded recursion in sig_data when re-encoding a message with a
-misplaced TSIG record
+HTML::Gumbo versions before 0.19 for Perl disclose heap memory via type
+confusion
 
 Description
 -----------
-Net::DNS versions before 1.57 for Perl allow memory exhaustion via
-unbounded recursion in sig_data when re-encoding a message with a
-misplaced TSIG record.
+HTML::Gumbo versions before 0.19 for Perl disclose heap memory via type
+confusion.
 
-sig_data signs a message by re-encoding it, and removes TSIG records
-only from the additional section. A TSIG decoded into the answer or
-authority section survives that step and is signed again, so encoding
-re-enters sig_data with no termination condition. Decoding does not
-reject such a message: a TSIG that is not the last record on the wire
-raises "misplaced or corrupt TSIG", but the error is caught, reported
-as a warning, and the record is left in the packet. RFC 8945 section
-5.2 requires the message to be dropped.
+Support for the <template> element was added to libgumbo 0.10.0 in
+2015, but the walk_tree function in lib/HTML/Gumbo.xs was not updated
+to support it. The element was treated as a text-node, where strlen()
+over-reads the heap block that the pointer addresses.
 
-The recursion is reached only when the decoded TSIG carries an empty
-MAC, since a MAC recovered from the wire short-circuits the signing
-step. It is reached only from code that re-encodes a message it
-decoded, such as a forwarder or a proxy. A decoded message that is
-never re-encoded is unaffected. Message direction does not matter: a
-query reaches the same path as a response.
-
-Each cycle re-encodes the whole message, so fewer than 100 bytes on the
-wire exhaust available memory and terminate the process.
+Any caller that runs parse() with the default format => 'string', or
+with format => 'tree', on input containing a <template> element
+serializes the over-read bytes into the returned result, disclosing
+bounded heap contents. format => 'callback' reaches a croak on the
+unhandled node type and is unaffected.
 
 Problem types
 -------------
-- CWE-674 Uncontrolled Recursion
-
-Workarounds
------------
-For deployments that are not able to upgrade to Net-DNS 1.57, reject a
-decoded message before re-encoding it if a TSIG record appears anywhere
-but the final position of the additional section.
+- CWE-843 Access of Resource Using Incompatible Type (Type Confusion)
+- CWE-125 Out-of-bounds Read
 
 Solutions
 ---------
-Upgrade to Net-DNS 1.57 or later.
+Upgrade to HTML-Gumbo 0.19 or later, which adds GUMBO_NODE_TEMPLATE to
+the container node types handled by walk_tree.
+
 
 References
 ----------
-https://metacpan.org/release/NLNETLABS/Net-DNS-1.56/source/lib/Net/DNS/RR/TSIG.pm#L245-262
-https://metacpan.org/release/NLNETLABS/Net-DNS-1.56/source/lib/Net/DNS/RR/TSIG.pm#L62-73
-https://datatracker.ietf.org/doc/html/rfc8945#section-5.2
-https://rt.cpan.org/Ticket/Display.html?id=181125
-https://metacpan.org/release/NLNETLABS/Net-DNS-1.57/changes
+https://github.com/bestpractical/HTML-Gumbo/commit/15c0598909d4a64f47ef0a1abc5051f4e113c186.patch
+https://metacpan.org/release/BPS/HTML-Gumbo-0.19/changes
+https://bugs.debian.org/1104789
+
+Timeline
+--------
+- 2015-04-30: Gumbo 0.10.0 released with support for the <template>
+   element.
+- 2025-05-06: Reported to the Debian bug tracker (#1104789).
+- 2025-05-17: Fix committed upstream.
+- 2026-05-21: Version 0.19 released with fix.
 
 Credits
 -------
-Naseeb Dangi and Xiang Li from AOSP Lab @ Nankai University, reporter
+Vincent Lefevre, finder
+Niko Tyni, remediation developer
+
 
