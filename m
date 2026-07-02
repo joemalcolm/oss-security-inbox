@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/26
-Message-ID: <04580e82-f491-7092-a72c-e2bbc4420ada@apache.org>
-Date: Tue, 04 Aug 2026 18:45:33 +0000
-From: "Timothy A. Bish" <tabish@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/03/1
+Message-ID: <d356cd8e-75f9-2a92-a42b-cc7385d13c05@apache.org>
+Date: Thu, 02 Jul 2026 23:00:31 +0000
+From: Paul Irwin <paulirwin@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-67555: Apache Qpid Proton Dotnet: Unable to govern the maximum number of transfer frames per incoming delivery 
+Subject: CVE-2026-47896: Apache Lucene.Net: Unauthenticated arbitrary file read on the Lucene.Net.Replicator replication server 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: 
 
 Affected versions:
 
-- Apache Qpid Proton Dotnet (org.apache.qpid) through 1.0.0
+- Apache Lucene.Net (Lucene.Net.Replicator) 4.8.0-beta00005 before 4.8.0-beta00018
 
 Description:
 
-It was not possible to govern the maximum number of transfer frames per incoming delivery, enabling an authenticated attacker to cause excessive resource usage and potential denial of service
+Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Apache Lucene.Net (Lucene.Net.Replicator library).
 
-This issue affects Apache Qpid Proton-Dotnet: through 1.0.0.
+This issue affects Apache Lucene.Net.Replicator: from 4.8.0-beta00005 through 4.8.0-beta00017.
 
-Users are recommended to upgrade to version 1.1.0, which fixes the issue.
+Users are recommended to upgrade to version 4.8.0-beta00018, which fixes the issue.
+
+Credit:
+
+Daniel Cervera (reporter)
+Paul Irwin (coordinator)
+Shad Storhaug (remediation reviewer)
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-67555
+https://lucenenet.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-47896
 
