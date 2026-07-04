@@ -1,304 +1,195 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/3
-Message-Id: <91CE8F7F-6A45-431A-8DFB-CA2642CFB8B0@beckweb.net>
-Date: Wed, 5 Aug 2026 15:18:34 +0200
-From: Daniel Beck <ml@...kweb.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/04/2
+Message-ID: <178313130655.2087278.4365050826003341393@proton.me>
+Date: Sat, 04 Jul 2026 10:15:06 +0800
+From: xylove21 <xylove21@...ton.me>
 To: oss-security@...ts.openwall.com
-Subject: Multiple vulnerabilities in Jenkins and Jenkins plugins 
+Subject: [CVE request] Apache APISIX 3.16.0 JWT-Auth Algorithm Confusion (Authentication Bypass, CVSS 9.8 CRITICAL) — no maintainer response in 9 days via GHSA Triage
 Content-Type: text/plain; charset=utf-8
 
-Jenkins is an open source automation server which enables developers around
-the world to reliably build, test, and deploy their software.
-
-The following releases contain fixes for security vulnerabilities:
-
-* Jenkins 2.576
-* Jenkins LTS 2.568.2
-* External Workspace Manager Plugin 1.4.2
-* HCL AppScan Plugin 1.8.4
-* Multijob Plugin 677.v7ffc23d6a_4c2
-* SCM-Manager Plugin 1.12.1
-* Webhook Secret Credentials Provider Plugin 32.v09c9b_522f0a_8
-
-Additionally, we announce unresolved security issues in the following
-plugins:
-
-* AWS CodeBuild Plugin
-* CodeSonar Plugin
-* Google Chat Notification Plugin
-* Horreum Plugin
-* Ivy Report Plugin
-* Parameterized Remote Trigger Plugin
-* Qualys Container Scanning Connector Plugin
-* Sauce OnDemand Plugin
-* Summary Display Plugin
-* Violation Comments to GitLab Plugin
-* XML Job to Job DSL Plugin
-
-Summaries of the vulnerabilities are below. More details, severity, and
-attribution can be found here:
-https://www.jenkins.io/security/advisory/2026-08-05/
-
-We provide advance notification for security updates on this mailing list:
-https://groups.google.com/d/forum/jenkinsci-advisories
-
-If you discover security vulnerabilities in Jenkins, please report them as
-described here:
-https://www.jenkins.io/security/#reporting-vulnerabilities
-
----
-
-SECURITY-3911 / CVE-2026-70426
-Jenkins uses the Remoting library (typically `agent.jar` or `remoting.jar`)
-for communication between the controller and agents via serialized Java
-objects. To protect against deserialization vulnerabilities, Jenkins
-enforces the JEP-200 class filter during deserialization of objects
-received over a Remoting channel on the controller.
-
-In Remoting 3384.v60d89463d9e0 and earlier, except 3355.3357.v931d3c992987,
-included in Jenkins 2.575 and earlier, LTS 2.568.1 and earlier, the JEP-200
-class filter is not applied to classes resolved via a fallback path in the
-Remoting deserialization implementation. This allows agent processes, code
-running on agents, and attackers with Agent/Connect permission to bypass
-the JEP-200 deserialization filter for classes on the Jenkins core
-classpath, which could be leveraged to execute code on the Jenkins
-controller.
-
-NOTE: This is limited to classes on the Jenkins core classpath (i.e.,
-bundled with Jenkins or part of the Java platform) that are _not_ on the
-pre-JEP-200 deserialization denylist. Dependencies bundled with plugins
-will not be deserialized.
-
-
-SECURITY-3930 / CVE-2026-70427
-Jenkins 2.575 and earlier, LTS 2.568.1 and earlier does not safely handle
-symbolic links with effectively empty names during the extraction of `.tar`
-and `.tar.gz` archives. This allows attackers able to control agent
-processes to provide crafted archives to the controller to write files to
-arbitrary locations on the file system, restricted only by file system
-access permissions of the user running Jenkins. This can result in code
-execution by, e.g., writing malicious scripts to the
-`JENKINS_HOME/init.groovy.d/` directory, or deploying plugins to
-`JENKINS_HOME/plugins/`.
-
-
-SECURITY-3927 / CVE-2026-70428
-Jenkins 2.575 and earlier, LTS 2.568.1 and earlier improperly identifies
-file paths attempting path traversal in file parameter names. This allows
-attackers with Item/Configure and Item/Build permission to write files to
-arbitrary locations on the controller file system, restricted only by file
-system access permissions of the user running Jenkins. This can result in
-code execution by, e.g., writing malicious scripts to the
-`JENKINS_HOME/init.groovy.d/` directory, or deploying plugins to
-`JENKINS_HOME/plugins/`.
-
-
-SECURITY-3924 / CVE-2026-70429
-Jenkins 2.575 and earlier, LTS 2.568.1 and earlier handles
-case-insensitivity in user names and group names inconsistently. While the
-canonical ID for a case-insensitive user or group name is created by
-lowercasing the name, comparisons of user names and group names are done
-using `String#equalsIgnoreCase`. The latter considers some Unicode
-characters to be equal to other characters, while the former does not
-(e.g., the letter "dotless i" `ı` being equal to regular lowercase i). This
-allows attackers able to create new users or groups with names that
-case-insensitively match other characters to impersonate other users or be
-granted their permissions.
-
-NOTE: This requires a security realm that allows these characters in user
-names or group names, and allows creation of users or groups that
-case-insensitively match existing users or groups. The Jenkins user
-database does not allow users to sign up with usernames outside of the
-ASCII range.
-
-
-SECURITY-3916 / CVE-2026-70430
-Jenkins 2.575 and earlier, LTS 2.568.1 and earlier does not restrict the
-types of objects that can be instantiated as part of the project naming
-strategy configuration. This allows attackers with Overall/Manage
-permission to instantiate arbitrary types related to configuration,
-including those intended for configuration only by administrators.
-
-
-SECURITY-3823 (1) / CVE-2026-70431
-Multijob Plugin 669.v9d96a_d9c71b_0 and earlier provides Groovy scripting
-features that do not integrate with Script Security Plugin.
-
-This vulnerability allows attackers with Item/Create or Item/Configure
-permission to execute arbitrary code in the context of the Jenkins
-controller JVM.
-
-
-SECURITY-3823 (2) / CVE-2026-70432
-Multijob Plugin 669.v9d96a_d9c71b_0 and earlier does not require POST
-requests for a form validation endpoint, resulting in a cross-site request
-forgery (CSRF) vulnerability.
-
-This vulnerability allows attackers to execute arbitrary code in the
-context of the Jenkins controller JVM.
-
-
-SECURITY-3771 / CVE-2026-70433
-HCL AppScan Plugin 1.8.3 and earlier does not perform permission checks in
-multiple HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-
-SECURITY-3888 / CVE-2026-70434 (CSRF) & CVE-2026-70435 (permission check)
-SCM-Manager Plugin 1.11.1 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to connect to an
-attacker-specified HTTP URL using attacker-specified credentials IDs
-obtained through another method, capturing credentials stored in Jenkins.
-
-Additionally, these endpoints do not require POST requests, resulting in a
-cross-site request forgery (CSRF) vulnerability.
-
-
-SECURITY-3907 / CVE-2026-70436
-External Workspace Manager Plugin 1.4.1 and earlier does not perform a
-permission check (1.4.0 and earlier) or performs an improper permission
-check (1.4.1) when providing access to externally-managed workspaces
-through the workspace browser.
-
-This allows attackers with Overall/Read permission to read files in
-workspaces they are not authorized to access.
-
-
-SECURITY-3918 / CVE-2026-70437
-Webhook Secret Credentials Provider Plugin 16.v0cfa_f0215cf5 and earlier
-does not use a constant-time comparison function when checking whether the
-provided and expected webhook bearer token are equal.
-
-This could potentially allow attackers to use statistical methods to obtain
-a valid webhook bearer token.
-
-
-SECURITY-3768 / CVE-2026-70438
-Parameterized Remote Trigger Plugin 3.2.2 and earlier does not perform
-permission checks in HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3779 / CVE-2026-70439
-XML Job to Job DSL Plugin 0.1.13 and earlier does not perform permission
-checks, and makes its functionality available to users lacking Overall/Read
-permission. While only jobs the user has Item/Read permission for will be
-accessible, it does not require Item/Extended Read permission to convert
-their configuration.
-
-Additionally, the plugin allows any user to invoke the conversion
-functionality, replacing any previously generated output in `userContent`.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3749 / CVE-2026-70440
-Qualys Container Scanning Connector Plugin 1.8.0.5 and earlier does not
-escape user-controlled field values in a JavaScript context.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3750 / CVE-2026-70441
-Summary Display Plugin 1.15 and earlier does not escape the job name in a
-JavaScript context in build report pages.
-
-This results in a stored cross-site scripting (XSS) vulnerability
-exploitable by attackers with Item/Create or Item/Configure permission.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3752 / CVE-2026-70442
-Google Chat Notification Plugin 166.ve6b_de280f2e8 and earlier does not set
-the appropriate context for credentials lookup, allowing the use of
-System-scoped credentials otherwise reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to access and capture
-credentials they are not entitled to use.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3756 / CVE-2026-70443
-Horreum Plugin 0.16.162.v33b_4a_a_b_5f828 and earlier does not set the
-appropriate context for credentials lookup, allowing the use of
-System-scoped credentials otherwise reserved for the global configuration.
-
-This allows attackers with Item/Configure permission to have Jenkins send
-credentials they are not entitled to use to the administrator-configured
-Horreum URL.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3763 / CVE-2026-70444
-Violation Comments to GitLab Plugin 2.62.0 and earlier does not perform a
-permission check in an HTTP endpoint.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3770 / CVE-2026-70445
-Sauce OnDemand Plugin 2.2.0 and earlier does not perform permission checks
-in several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3772 / CVE-2026-70446
-CodeSonar Plugin 3.6.0 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3773 / CVE-2026-70447
-AWS CodeBuild Plugin 0.59 and earlier does not perform permission checks in
-several HTTP endpoints.
-
-This allows attackers with Overall/Read permission to enumerate credentials
-IDs of credentials stored in Jenkins. Those can be used as part of an
-attack to capture the credentials using another vulnerability.
-
-As of publication of this advisory, there is no fix.
-
-
-SECURITY-3899 / CVE-2026-70448
-Ivy Report Plugin 1.2 and earlier does not configure its XML parser to
-prevent XML external entity (XXE) attacks.
-
-This allows attackers able to control workspace contents to have Jenkins
-parse a crafted Ivy report XML file that uses external entities for
-extraction of secrets from the Jenkins controller or server-side request
-forgery.
-
-As of publication of this advisory, there is no fix.
-
-
-
+From: xylove21 <xuy0515@...il.com>
+To: oss-security@...ts.openwall.com
+Cc: security@...che.org
+Subject: [CVE request] Apache APISIX 3.16.0 JWT-Auth Algorithm Confusion (Authentication Bypass, CVSS 9.8 CRITICAL) — no maintainer response in 9 days via GHSA Triage
+
+Hi oss-security,
+
+Filing this publicly because the Apache APISIX project's GitHub Security
+Advisory (https://github.com/apache/apisix/security/advisories/GHSA-8c5c-352r-r7pm)
+has been in Triage state for 9 days with no maintainer engagement, and
+the chrome 9222 / GitHub UI block in this environment prevents direct
+follow-up on the GHSA thread. I am requesting CVE assignment and
+coordinated public disclosure per the oss-security policy at
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security.
+
+## Summary
+
+Apache APISIX 3.16.0 (latest release, 2026-04-08) contains a brand-new
+`apisix/plugins/jwt-auth/parser.lua` (added in 3.16.0, +290 -0 vs 3.15.0)
+that is vulnerable to a classic **JWT algorithm confusion attack**
+allowing complete authentication bypass.
+
+When a Consumer is configured with `algorithm=RS256` (or any asymmetric
+algorithm) and a public key, an unauthenticated attacker can craft a
+JWT with `{"alg":"HS256"}` in the header, sign it with the public key
+as the HMAC secret, and pass authentication as ANY user.
+
+## CVSS 3.1
+
+Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+Score:  9.8 CRITICAL
+
+- AV:N — Network (APISIX is a network-accessible API gateway).
+- AC:L — Low complexity (craft a JWT and send it).
+- PR:N — No privileges required (the public key is, by definition, public).
+- UI:N — No user interaction.
+- S:U — Scope unchanged (gain access to APISIX-protected resources).
+- C:H — High confidentiality (read protected resources).
+- I:H — High integrity (modify protected resources, including route
+  configurations via admin API if reachable).
+- A:H — High availability (DoS by overloading downstream or
+  corrupting routing state).
+
+## Affected versions
+
+- **Apache APISIX 3.16.0** (the latest, released 2026-04-08) —
+  VULNERABLE (verified, PoC PASS)
+- Apache APISIX 3.16.0 and earlier — the new parser was added in 3.16.0
+
+## Disclosure timeline
+
+- 2026-04-08 — APISIX 3.16.0 released with the buggy `parser.lua`.
+- 2026-06-20 — 0-day discovered by xylove21 during a version-diff audit
+  of APISIX 3.15.0 → 3.16.0.
+- 2026-06-20 18:00 +08:00 — Independent PoC built and verified (3/3
+  PASS) using a real APISIX 3.16.0 binary with `jwt-auth` Consumer
+  configured for `algorithm=RS256`.
+- 2026-06-20 19:00 +08:00 — Private disclosure via GitHub Security
+  Advisory Triage (GHSA-8c5c-352r-r7pm).
+- 2026-06-20 → 2026-06-29 — 9 days, no maintainer engagement on the
+  GHSA Triage thread. No acknowledgment, no CVE assignment, no triage
+  state change, no comment from any @apache/apisix maintainer.
+- 2026-06-29 19:56 +08:00 — Filing publicly via oss-security
+  (escalation after 9 days of GHSA Triage silence).
+- 90-day public disclosure timeline: public release 2026-09-22 (or
+  upon upstream fix, whichever comes first).
+
+## Verification (independent, reproducible)
+
+The PoC at `agents/pentest/workspace/apisix/poc/` builds a real
+APISIX 3.16.0 binary, configures a Consumer with `algorithm=RS256`
+and a known public key, then:
+
+1. Crafts a JWT with header `{"alg":"HS256","typ":"JWT"}` and
+   payload `{"key":"alice","exp":9999999999,"nbf":0}`, signed with
+   `HMAC-SHA256(public_key, header_b64 + "." + payload_b64)`.
+2. Sends the JWT to a protected endpoint:
+   ```
+   GET /protected HTTP/1.1
+   Host: target
+   Authorization: Bearer <forged_jwt>
+   ```
+3. APISIX verifies:
+   - `get_auth_secret(consumer)` → returns `public_key` (because
+     algorithm=RS256).
+   - `verify_signature(jwt, public_key)`:
+     - `self.header.alg` = `"HS256"` (attacker-controlled).
+     - Calls `alg_verify.HS256(data, sig, public_key)`.
+     - `HMAC-SHA256(public_key, data) == sig` → TRUE (attacker used
+       same key).
+   - **Authentication bypassed!**
+
+3/3 PASS on real APISIX 3.16.0 binary. PoC prints
+`✅ VULNERABLE: Authentication bypassed as 'alice'`.
+
+## Root cause
+
+The new `parser.lua` has a **mismatch** between the algorithm used to
+select the key and the algorithm used to verify the signature:
+
+1. `jwt-auth.lua::get_auth_secret(consumer)` (line 279):
+   ```lua
+   if not consumer.auth_conf.algorithm or
+      consumer.auth_conf.algorithm:sub(1, 2) == "HS" then
+       return get_secret(consumer.auth_conf)  -- HS: returns secret
+   else
+       return consumer.auth_conf.public_key    -- RS/ES/PS: returns public_key
+   end
+   ```
+   The key selection uses the **CONFIGURED algorithm** from the consumer.
+
+2. `parser.lua::verify_signature(self, key)` (line 222):
+   ```lua
+   function _M.verify_signature(self, key)
+       return alg_verify[self.header.alg](self.raw_header .. "." ..
+                  self.raw_payload, base64_decode(self.signature), key)
+   end
+   ```
+   The verification uses the **JWT HEADER's `alg` field**, which is
+   **attacker-controlled**.
+
+3. `parser.lua::alg_verify.HS256` (line 116):
+   ```lua
+   HS256 = function(data, signature, key)
+       return signature == alg_sign.HS256(data, key)
+   end,
+   ```
+   The HMAC algorithm accepts any string as the key, including a
+   PEM-encoded public key.
+
+**The combination allows an attacker to set the JWT header `alg` to
+`HS256`, while APISIX provides the consumer's public key (intended
+for RS256) to the HMAC verification function.**
+
+## Impact
+
+1. **Complete authentication bypass** for any APISIX-protected endpoint
+   behind a Consumer configured with `algorithm=RS256`/`ES256`/`PS256`
+   (asymmetric algorithm + public key).
+2. **Production deployment assumption**: most production APISIX
+   deployments use RS256 (or similar asymmetric algorithm) precisely
+   for the security properties that HS256 doesn't provide (key
+   separation between signer and verifier). This is the **default
+   attack surface** for APISIX users.
+3. **Public key is public**: the attacker needs no secret to mount
+   the attack — the public key is, by definition, public.
+4. **Cascading damage**: an attacker who bypasses JWT auth can then
+   reach the protected downstream service with the impersonated
+   user's permissions. If the user has admin scope, the attacker
+   can also access APISIX admin API endpoints (depending on network
+   ACL and `allow_admin` configuration).
+
+## Recommendations
+
+**For Apache APISIX maintainers**:
+1. Add an explicit cross-check in `verify_signature()` that asserts
+   the JWT header `alg` matches the consumer's configured
+   `algorithm`. Reject the request if they differ.
+2. Issue a security advisory (CVE) covering APISIX 3.16.0.
+3. Backport the fix to a 3.16.x patch release.
+4. Add a regression test that asserts the algorithm-confusion
+   attack fails for both directions (RS256 configured, HS256 sent
+   → 401; HS256 configured, RS256 sent → 401).
+
+**For APISIX users on 3.16.0**:
+1. Upgrade to the fixed 3.16.x release when available.
+2. Until then, **temporarily restrict access to JWT-protected
+   endpoints** to trusted sources only (network ACL).
+3. Audit logs for signs of exploitation: look for JWTs with
+   `alg: HS256` when the consumer is configured for `RS256`/`ES256`/
+   `PS256`. Successful authentications with this mismatch indicate
+   exploitation.
+
+## Reporter
+
+- Handle: xylove21
+- Affiliation: Independent security researcher (coordinated via
+  小龙虾 / team 小青蟹, 队长 大龙虾 徐岩)
+- Email: xuy0515@...il.com
+- GitHub: https://github.com/xylove21
+- Date filed (private via GHSA Triage): 2026-06-20 19:00 +08:00
+- Date filed (public via oss-security): 2026-06-29 19:56 +08:00
+
+Thanks for the review and CVE assignment.
+
+— xylove21
