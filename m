@@ -1,29 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/1
-Message-ID: <1bbd2f7b-0452-0eee-fc3a-7164cb76478c@apache.org>
-Date: Thu, 30 Jul 2026 01:32:14 +0000
-From: Jongyoul Lee <jongyoul@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/04/8
+Message-ID: <14b44ff8-48f3-c78c-6cc1-6eadc142732f@apache.org>
+Date: Sat, 04 Jul 2026 05:07:49 +0000
+From: Shahar Epstein <shahar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44613: Apache Zeppelin: Cross-site request forgery in REST and WebSocket request handling 
+Subject: CVE-2026-49297: Apache Airflow Google provider: Path traversal via GCS object names → local/SFTP filesystem (GCSToSFTPOperator + GCSTimeSpanFileTransformOperator) 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Zeppelin 0.6.0 before 0.12.1
+- Apache Airflow Google provider (apache-airflow-providers-google) before 22.2.1
 
 Description:
 
-Cross-Site Request Forgery (CSRF) vulnerability in Apache Zeppelin. The default CORS configuration allowed cross-origin state-changing requests and accepted text/plain request bodies, allowing an attacker who lures an authenticated user to a malicious site to perform actions on the user's behalf through REST and WebSocket endpoints. This issue affects Apache Zeppelin versions 0.6.0 through 0.12.0. Users are recommended to upgrade to version 0.12.1, which fixes this issue.
+Apache Airflow's Google provider operators `GCSToSFTPOperator` and `GCSTimeSpanFileTransformOperator` joined GCS object names returned by the bucket listing API directly to a destination filesystem path without normalisation or containment check. A user with write access to the source GCS bucket (typically a different trust principal than the DAG author — partner uploads, ingest-only service accounts, public-data buckets) could create an object whose name contains `..` segments and cause the DAG run to write the downloaded blob outside the configured destination (the SFTP `destination_path` for `GCSToSFTPOperator`; the worker-local temp directory for `GCSTimeSpanFileTransformOperator`), enabling overwrite of arbitrary files on the SFTP server or the worker host. Affects deployments that ingest from buckets writable by less-trusted principals. Users are advised to upgrade to `apache-airflow-providers-google` 22.2.1 or later.
 
 Credit:
 
-Reza (HazardLab Ninja) and Nir Zadok (finder)
+anonymous (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/zeppelin/pull/5229
-https://zeppelin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44613
+https://github.com/apache/airflow/pull/67667
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49297
 
