@@ -1,58 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/14
-Message-ID: <trinity-c536381f-adab-4fa9-b3f4-09bc40d0337d-1781382848370@trinity-msg-rest-gmx-gmx-live-6759fbb69b-cnx86>
-Date: Sat, 13 Jun 2026 20:34:08 +0000
-From: shvedov@....com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/3
+Message-ID: <a1efac6c-5e7c-1e1e-78aa-047228b4712a@apache.org>
+Date: Sun, 05 Jul 2026 12:06:28 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-55663: NULL Pointer Dereference in GPAC/MP4Box via Track_SetStreamDescriptor on crafted MP4 with unknown svcC box in av01
+Subject: CVE-2026-40859: Apache Camel: Camel-Vertx-Http: Unsafe Java deserialization of HTTP response bodies via a raw ObjectInputStream when transferException is enabled 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-Product:   GPAC (MP4Box)
-Affected:  gpac/gpac prior to fix commit (15a4ac2dff38cdbb8b43e7c84fb1595ee80d81ac)
-CVE:       CVE-2025-55663
-CWE:       CWE-476 (NULL Pointer Dereference)
-CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
-Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
+Affected versions:
+
+- Apache Camel (org.apache.camel:camel-vertx-http) 4.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-vertx-http) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-vertx-http) 4.19.0 before 4.20.0
 
 Description:
-  When MP4Box imports a crafted MP4 file containing an unknown svcC
-  box inside an av01 parent box, the unsupported-box handling path
-  can leave the relevant sample entry pointer uninitialized or invalid.
-  Track_SetStreamDescriptor() in isomedia/track.c later dereferences
-  this pointer without validating it, while updating the stream
-  description during bitrate update.
 
-  AddressSanitizer reports a SEGV caused by a READ memory access at
-  isomedia/track.c:1677 (address 0x001e3fff8005), reached via
-  gf_isom_change_mpeg4_description() / gf_media_update_bitrate_ex()
-  while MP4Box imports the crafted track.
+Deserialization of Untrusted Data vulnerability in Apache Camel.
 
-  Crash is reproducible on the current master branch at the time of
-  discovery. No authentication or special privileges required beyond
-  ability to provide a crafted file.
+The camel-vertx-http component deserializes HTTP response bodies carrying the Content-Type application/x-java-serialized-object using a raw java.io.ObjectInputStream, without applying any ObjectInputFilter (VertxHttpHelper.deserializeJavaObjectFromStream) This deserialization path is reached only when the producer endpoint is configured with transferException=true (or the component-level allowJavaSerializedObject=true) and throwExceptionOnFailure is left at its default value of true; in that case a backend HTTP response with a 5xx status and the application/x-java-serialized-object content type has its body deserialized with no class restrictions. An attacker who controls the backend the Camel producer talks to - through a man-in-the-middle position on an unencrypted (plain HTTP) connection, or by compromising the backend service - can return a crafted serialized Java object and, if a suitable gadget chain is present on the classpath, achieve remote code execution on the Camel application host. The path is not reachable in the default configuration, where transferException is false.
+This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.20.0.
 
-Reproduction:
-  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
-  -Command: ./MP4Box -add 8_poc.mp4 -new /dev/null -ab 1024
+Users are recommended to upgrade to version 4.20.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, the deserialization performed by both helper utilities is constrained by a default ObjectInputFilter (allow-list java.**;javax.**;org.apache.camel.**;!*), which can be customised through the new deserializationFilter endpoint option or the JVM-wide -Djdk.serialFilter system property. For deployments that cannot upgrade immediately: do not enable transferException=true (or allowJavaSerializedObject=true) on producers that talk to untrusted or network-reachable backends; ensure producer connections use TLS (https) so that a response cannot be substituted by a man-in-the-middle; and, where the option is required, set an explicit -Djdk.serialFilter allow-list (for example java.**;org.apache.camel.**;!*) to constrain deserialization.
 
-Asan-log:
-==2133828==ERROR: AddressSanitizer: SEGV on unknown address 0x001e3fff8005 (pc 0x55662b3210b5 bp 0x7fffca0b82e0 sp 0x7fffca0b81e0 T0)
-==2133828==The signal is caused by a READ memory access.
-    #0 0x55662b3210b5 in Track_SetStreamDescriptor isomedia/track.c:1677
-    #1 0x55662b23e7d5 in gf_isom_change_mpeg4_description isomedia/isom_write.c:1759
-    #2 0x55662b457f86 in gf_media_update_bitrate_ex media_tools/media_import.c:100
+Credit:
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/8/8_poc.mp4
+Venkatraman Kumar from Securin (finder)
 
 References:
-  https://github.com/gpac/gpac/issues/3143
-  https://www.cve.org/CVERecord?id=CVE-2025-55663
-  https://infosec.exchange/@sigdevel/116733899601128471
 
-
-——
-Best regards, Alexander A. Shvedov
-https://github.com/sigdevel
+https://camel.apache.org/security/CVE-2026-40859.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40859
 
