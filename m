@@ -1,78 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/15
-Message-ID: <CAPC5pGQxmCywhxd0RkWvahFf5-QKdMLn6xGa9f1AF6dTrxRCNw@mail.gmail.com>
-Date: Wed, 10 Jun 2026 20:05:35 +0200
-From: Thomas GERBET <thomas@...bet.me>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/5
+Message-ID: <4b84a898-1af0-6977-a2a1-1bdff95dfcd3@apache.org>
+Date: Sun, 05 Jul 2026 12:04:33 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Local privilege escalation in Lix and Nix
+Subject: CVE-2026-43865: Apache Camel: Camel-Hazelcast: Unsafe Java deserialization in default-configured managed Hazelcast instances enables remote code execution 
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone,
+Severity: moderate 
 
-The Lix issue has been assigned CVE-2026-44028
-(CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N).
-The Lix team has published a detailed blog post about it here for
-those of you wanting extra details:
-https://lix.systems/blog/2026-05-05-lix-unsigned-integer-overflow/
+Affected versions:
 
-We are currently having some troubles getting this CVE split from the
-Nix issue GHSA-vh5x-56v6-4368 and updated accordingly.
-While both vulnerabilities could lead to similar compromises and were
-discovered around the same time, they do not share the same root
-cause.
+- Apache Camel (org.apache.camel:camel-hazelcast) 4.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-hazelcast) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-hazelcast) 4.19.0 before 4.21.0
 
+Description:
 
-The other Nix vulnerability, GHSA-gr92-w2r5-qw5p, has been assigned
-CVE-2026-44029.
+Deserialization of Untrusted Data vulnerability in Apache Camel Hazelcast component.
 
-Le lun. 4 mai 2026 à 23:06, Thomas GERBET <thomas@...bet.me> a écrit :
->
-> ## Summary
->
-> Nix and Lix daemon implementations are affected by buffer overflows vulnerabilities that allow a local attacker to gain arbitrary
-> code execution as the daemon user (root in multi-user installations).
->
-> The vulnerabilities are identified as:
-> - Nix: GHSA-vh5x-56v6-4368, CVE ID pending attribution.
-> - Lix: CVE ID pending attribution.
->
-> This is a coordinated disclosure between the Nix and Lix projects.
->
-> Guix is *NOT* affected by this vulnerability.
->
-> ## Am I affected?
->
-> To exploit this issue, a local attacker needs access to talk to the Nix daemon. All systems that allow connections to their daemons are affected.
-> Only users that are allowed to connect to the daemon (via `allowed-users` and `trusted-users`) can reliably trigger the issue. Substituters can
-> in theory trigger the issue but cannot make enough attempts to mount attacks in practice.
->
-> Additionally, this vulnerability requires ASLR weakening techniques to lead to a compromise.
->
-> ## Fixes
->
-> The vulnerabilities are fixed in the following versions:
->
-> - Nix:
->   - Affected versions: ≥ 2.24.4
->   - Fixed versions: 2.34.7, 2.33.6, 2.32.8, 2.31.5, 2.30.5, 2.29.4, 2.28.7
->
-> Nix security release also includes patches that address an unrelated path traversal vulnerability GHSA-gr92-w2r5-qw5p (CVE ID pending attribution).
->
-> - Lix:
->   - Affected versions: ≥ 2.93.0
->   - Fixed versions: 2.93.4, 2.94.2, 2.95.2
->
-> ## Acknowledgement
->
-> - We would like to thank @edef with the help of Sander (@sandydoo) for reporting the issues and working with the development teams to suggest and confirm the fixes.
-> - Thanks to eldritch horrors (@pennae) and Raito Bezarius (@RaitoBezarius) on the Lix side for the mitigation.
-> - Thanks to @xokdvium on the Nix side for the mitigation.
-> - Thanks to @hexa and @tgerbet on the NixOS security team for coordinating this.
->
-> ## References
->
-> * https://discourse.nixos.org/t/security-advisory-local-privilege-escalation-in-lix-and-nix/77407
-> * Nix issues:
->   - https://github.com/NixOS/nix/security/advisories/GHSA-vh5x-56v6-4368
->   - https://github.com/NixOS/nix/security/advisories/GHSA-gr92-w2r5-qw5p
-> * Lix in-depth review blog post: not yet published
+The camel-hazelcast component creates and manages Hazelcast instances using a default configuration that applies no Java deserialization filter. When Camel builds the Hazelcast Config itself - that is, when no user-supplied HazelcastInstance, hazelcastConfigUri, or referenced Config bean is provided - neither Hazelcast's JavaSerializationFilterConfig nor a Camel-side ObjectInputFilter is configured, so objects received over the Hazelcast cluster protocol are deserialized inside Hazelcast's own serialization layer (ObjectInputStream.readObject) before Camel ever processes them. An attacker who can join or otherwise reach the Hazelcast cluster can publish a crafted serialized Java object that is then deserialized on every Camel node, resulting in remote code execution. The exposure is present by default and requires no opt-in endpoint configuration: any route using a hazelcast consumer (hazelcast-topic, hazelcast-queue, hazelcast-seda, hazelcast-map, hazelcast-multimap, hazelcast-replicatedmap, hazelcast-list, hazelcast-set), as well as the HazelcastAggregationRepository and HazelcastIdempotentRepository, is affected whenever the managed instance is created from Camel's default configuration.
+This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. The fix makes Camel apply a default Hazelcast JavaSerializationFilterConfig (whitelisting the java., javax. and org.apache.camel. class-name prefixes and blacklisting java.net.) to instances it creates from its own default configuration, while leaving any user-supplied Config or HazelcastInstance untouched. For deployments that cannot upgrade immediately, configure a deserialization filter on the Hazelcast instance (Hazelcast JavaSerializationFilterConfig, or the JVM-wide system property -Djdk.serialFilter=!java.net.**;java.**;javax.**;org.apache.camel.**;!*) and enable Hazelcast cluster authentication and TLS to restrict who can reach the cluster.
+
+Credit:
+
+gaorenyusi (finder)
+
+References:
+
+https://camel.apache.org/security/CVE-2026-43865.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-43865
+
