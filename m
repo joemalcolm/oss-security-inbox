@@ -1,36 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/1
-Message-ID: <f2ed47a5-7eb2-76c7-197c-08e9c0ee8637@apache.org>
-Date: Mon, 31 Aug 2026 06:45:03 +0000
-From: Emond Papegaaij <papegaaij@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/24
+Message-ID: <93bd977e-9e1e-a7c3-96f2-6f07bc813bf6@apache.org>
+Date: Sun, 05 Jul 2026 11:50:23 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-75802: Apache Wicket: XSS in AjaxEditableLabel and its subclasses via IChoiceRenderer and defaultNullLabel 
+Subject: CVE-2026-49099: Apache Camel: Camel-Salesforce: Non-Camel-prefixed Exchange header constants (sObjectQuery, sObjectSearch, apexUrl, ...) bypass the HTTP header filter, allowing an HTTP client to inject SOQL/SOSL queries, override the target SObject, and redirect Apex REST calls using t 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Wicket (org.apache.wicket:wicket-extensions) 8.0.0 through 8.18.0
-- Apache Wicket (org.apache.wicket:wicket-extensions) 9.0.0 through 9.23.0
-- Apache Wicket (org.apache.wicket:wicket-extensions) 10.0.0 through 10.10.0
+- Apache Camel (org.apache.camel:camel-salesforce) 4.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-salesforce) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-salesforce) 4.19.0 before 4.21.0
 
 Description:
 
-AjaxEditableChoiceLabel in wicket-extensions, when constructed with a non-null IChoiceRenderer, writes the display value obtained from that renderer into the label's markup without applying the HTML escaping Wicket performs by default for component model values. An attacker who can influence the choice or model data rendered by such a label can inject HTML or script that executes in the browser of any user who views the page. The same value is correctly escaped when the component's dropdown editor renders it as an option, so only the label rendering is affected.
+Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'), Authorization Bypass Through User-Controlled Key vulnerability in Apache Camel Salesforce Component.
 
-AjaxEditableLabel, AjaxEditableChoiceLabel and AjaxEditableMultiLineLabel write the value returned by the protected defaultNullLabel() method into the label's markup the same way when the component's model is empty, while the model value they show otherwise is escaped. The default implementation returns a constant, so an application is affected where it overrides that method and returns a value an attacker can influence.
+The camel-salesforce producer resolves its operation parameters - the SOQL query, the SOSL search, the target SObject name and id, the Apex REST URL and method, and the Apex query parameters - from Exchange message headers, reading the header in preference to the value configured on the endpoint (AbstractSalesforceProcessor.getParameter() reads the header first and uses the endpoint configuration only as a fallback). The control-header constants in SalesforceEndpointConfig (for example SOBJECT_QUERY = sObjectQuery, SOBJECT_SEARCH = sObjectSearch, SOBJECT_NAME = sObjectName, SOBJECT_ID = sObjectId, APEX_URL = apexUrl, APEX_METHOD = apexMethod, and the apexQueryParam. prefix) used plain, non-Camel-prefixed values. Because these names do not start with the Camel / camel prefix, HttpHeaderFilterStrategy - which blocks only the Camel header namespace on the HTTP boundary - let them pass from an inbound HTTP request straight into the Exchange. In a route that bridges an HTTP consumer (for example platform-http) into a salesforce: producer, any HTTP client could therefore set these headers and override what the route intended - supplying its own SOQL query or SOSL search to read data from any SObject the connected Salesforce user can access, overriding the target SObject name and id for CRUD operations, or redirecting an Apex REST call to a different endpoint and HTTP method (including destructive methods) with injected query parameters. All such operations run with the full permissions of the Salesforce connected (integration) user, which is typically broad. No credentials are required from the attacker when the bridging consumer is unauthenticated.
+This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-Neither value could be escaped by configuration, because escapeModelStrings had no effect on any of the three components: it is read by the label they render with rather than by the component itself, and nothing carried the setting across.
-
-This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases are also affected; the display value from the renderer since 6.22.0 and the null label since 1.4.0. Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, routes that set Salesforce operation parameters via the raw header names must use the CamelSalesforce* names (for example CamelSalesforceSObjectQuery and CamelSalesforceApexUrl) instead of the old sObject* / apex* values; the endpoint-option spelling is unchanged. For deployments that cannot upgrade immediately, strip the Salesforce control headers from any untrusted ingress before the salesforce: producer (for example removeHeaders('sObject*') and removeHeaders('apex*') at the start of the route), and set the query, SObject and Apex parameters from a trusted source.
 
 Credit:
 
-Ho1aAs (finder)
+Yu Bao from PayPal (finder)
+Andrea Cosentino (remediation developer)
 
 References:
 
-https://wicket.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-75802
+https://camel.apache.org/security/CVE-2026-49099.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49099
 
