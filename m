@@ -1,65 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/2
-Message-Id: <54A879D5-4133-4624-9BED-CFA185BE0AA0@stig.io>
-Date: Mon, 6 Jul 2026 03:38:50 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-14803: Mojo::JSON versions before 9.47 for Perl allow memory exhaustion via unbounded recursion in the pure-Perl decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/29
+Message-ID: <a44e7a57-9e31-8342-4e94-6c39cf6a2cf0@apache.org>
+Date: Sun, 05 Jul 2026 11:46:42 +0000
+From: Andrea Cosentino <acosentino@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-56139: Apache Camel: Camel-Undertow: The muteException consumer option defaulted to false, so a processing error returned the full Java stack trace in the HTTP response body, disclosing sensitive internal information to unauthenticated clients - and the option was not honoured 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-14803                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-        CVE ID:  CVE-2026-14803
-  Distribution:  Mojolicious
-      Versions:  before 9.47
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/Mojolicious
-      VCS Repo:  https://github.com/mojolicious/mojo
+- Apache Camel (org.apache.camel:camel-undertow) 4.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-undertow) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-undertow) 4.19.0 before 4.21.0
 
+Description:
 
-Mojo::JSON versions before 9.47 for Perl allow memory exhaustion via
-unbounded recursion in the pure-Perl decoder
+Generation of Error Message Containing Sensitive Information vulnerability in Apache Camel Undertow Component.
 
-Description
------------
-Mojo::JSON versions before 9.47 for Perl allow memory exhaustion via
-unbounded recursion in the pure-Perl decoder.
+The camel-undertow HTTP server consumer exposes a muteException option that controls what is returned to the client when a route processing error occurs. This option defaulted to false, whereas the other Camel HTTP server components (camel-http / camel-jetty / camel-servlet and camel-platform-http) default it to true. With muteException=false, when a request triggers an exception during route processing the consumer writes the full Throwable stack trace into the HTTP response body as text/plain instead of returning an empty body. Any unauthenticated client that can reach the endpoint and cause a processing error - for example by sending a malformed request body, an invalid parameter, or otherwise triggering a route-internal failure - therefore receives a complete Java stack trace. Such a stack trace can disclose sensitive internal information, including credentials embedded in exception messages, internal host names and IP addresses, filesystem paths, dependency and version details, database and class names, and the application's internal structure, which an attacker can use to plan further attacks. In addition, for Rest DSL consumers the muteException option was not honoured at all: the RestUndertowHttpBinding was created with a hard-coded false, so the stack trace was returned even when muteException=true had been configured.
+This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-The pure-Perl decode path (`_decode_value` dispatching to
-`_decode_array` and `_decode_object`) recurses with no depth limit, so
-a small deeply nested JSON document can consume excessive memory.
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, set muteException=true explicitly on the camel-undertow consumer (for example undertow: http://0.0.0.0:8080/api?muteException=true , or globally via the camel.component.undertow.mute-exception=true property), so that processing errors no longer return the stack trace to the client; note that on affected releases this workaround does not cover Rest DSL consumers, whose binding ignores the option until the fix is applied.
 
-This path is the default when Cpanel::JSON::XS is not installed or
-`MOJO_NO_JSON_XS=1` is set; the Cpanel::JSON::XS fast path is not
-affected.
+Credit:
 
-Any caller that decodes an untrusted JSON body, for example
-`Mojo::Message::json` reached through `$c->req->json`, can exhaust
-process memory and cause denial of service.
+Yu Bao from PayPal (finder)
+Andrea Cosentino (remediation developer)
 
-Problem types
--------------
-- CWE-674 Uncontrolled Recursion
+References:
 
-Workarounds
------------
-Where upgrading is not possible, install Cpanel::JSON::XS in the
-include path and leave `MOJO_NO_JSON_XS` unset.
-
-
-Solutions
----------
-Upgrade to Mojolicious 9.47 or later.
-
-
-References
-----------
-https://github.com/mojolicious/mojo/commit/cc38b0554275c4d84f6b8b49bcbbc1bec2068fe1.patch
-https://metacpan.org/release/SRI/Mojolicious-9.47/changes
-
-Timeline
---------
-- 2026-07-05: Version 9.47 released with fix.
+https://camel.apache.org/security/CVE-2026-56139.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-56139
 
