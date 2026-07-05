@@ -1,61 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/12
-Message-Id: <26D09784-6FF0-4690-81CC-9F9DE92E8903@stig.io>
-Date: Sun, 9 Aug 2026 19:51:48 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-15534: Perl versions through 5.45.1 have out-of-bounds heap reads and writes during regular expression matching via an undersized superlinear cache in S_regmatch
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/6
+Message-ID: <f71b4dbc-224c-7a71-93ee-2524b64bacd0@apache.org>
+Date: Sun, 05 Jul 2026 12:03:15 +0000
+From: Andrea Cosentino <acosentino@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-46453: Apache Camel: Camel-Elasticsearch-Rest-Client: Exchange header constants without the Camel prefix bypass inbound HTTP header filtering, allowing untrusted clients to override the Elasticsearch query and operation 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-15534                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-        CVE ID:  CVE-2026-15534
-  Distribution:  perl
-      Versions:  through 5.45.1
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/perl
-      VCS Repo:  https://github.com/Perl/perl5
+- Apache Camel (org.apache.camel:camel-elasticsearch-rest-client) 4.3.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-elasticsearch-rest-client) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-elasticsearch-rest-client) 4.19.0 before 4.21.0
 
+Description:
 
-Perl versions through 5.45.1 have out-of-bounds heap reads and writes
-during regular expression matching via an undersized superlinear cache
-in S_regmatch
+Improper Input Validation, Authorization Bypass Through User-Controlled Key vulnerability in Apache Camel ElasticSearch Rest Client.
 
-Description
------------
-Perl versions through 5.45.1 have out-of-bounds heap reads and writes
-during regular expression matching via an undersized superlinear cache
-in S_regmatch.
+The camel-elasticsearch-rest-client component reads several Exchange headers to control its behaviour - SEARCH_QUERY (an advanced query body), OPERATION (which Elasticsearch operation to run), INDEX_NAME, INDEX_SETTINGS and ID. The string values of these header constants, defined in ElasticSearchRestClientConstant, are plain unprefixed names ('SEARCH_QUERY', 'OPERATION', 'INDEX_NAME', 'INDEX_SETTINGS', 'ID') rather than the 'Camel'-prefixed names used by every other Camel component (for example CamelSqlQuery, CamelMongoDbCriteria, CamelCqlQuery). Camel's inbound HTTP header filter, HttpHeaderFilterStrategy, blocks only header names that begin with 'Camel' or 'camel'. Because the Elasticsearch header names do not carry that prefix, they pass through the inbound filter unchanged. When a Camel route exposes an HTTP entry point (for example platform-http) in front of an elasticsearch-rest-client producer, an untrusted HTTP client can set these headers directly on its request and override the query and operation that the route author configured: reading every document in the index (SEARCH_QUERY with a match_all query), deleting documents (OPERATION set to Delete together with ID), or exfiltrating selected fields. No credentials are required and the producer reads the headers unconditionally.
+This issue affects Apache Camel: from 4.3.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-The regex engine's superlinear cache holds one bit per subject position
-for each participating WHILEM node, so the bit count is the subject
-length plus one times the number of nodes. Nothing checks that product
-for positive overflow of the signed 32-bit count: a 286331153 byte
-subject matched against a pattern with 15 participating nodes stores
-the count as 14, leaving a two byte cache. The cache is then indexed
-from the real match position and node number, so reads go past the end
-of the allocation, and on failure CACHEsayNO sets a bit past it.
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. The fix renames the camel-elasticsearch-rest-client Exchange header constant string values (ID, SEARCH_QUERY, INDEX_SETTINGS, INDEX_NAME, OPERATION) to carry the Camel prefix (CamelElasticsearchId, CamelElasticsearchSearchQuery, CamelElasticsearchIndexSettings, CamelElasticsearchIndexName, CamelElasticsearchOperation) so that they are blocked by the inbound HttpHeaderFilterStrategy; the Java field names are unchanged. For deployments that cannot upgrade immediately, strip the affected headers from untrusted inbound messages before they reach the producer (for example removeHeader('SEARCH_QUERY'), removeHeader('OPERATION'), removeHeader('INDEX_NAME'), removeHeader('INDEX_SETTINGS') and removeHeader('ID') in front of the elasticsearch-rest-client endpoint), or apply a custom HeaderFilterStrategy that blocks these names.
 
-A caller that matches an attacker controlled subject of this size
-against a pattern of this shape can crash the process or corrupt heap
-memory.
+Credit:
 
-Problem types
--------------
-- CWE-190 Integer Overflow or Wraparound
-- CWE-125 Out-of-bounds Read
-- CWE-787 Out-of-bounds Write
+Yu Bao from Paypal (finder)
 
-Solutions
----------
-Upgrade to a future Perl release, or apply the upstream patches.
+References:
 
-
-References
-----------
-https://github.com/Perl/perl5/commit/568e6fd238867bb9e99fa3f47cba3169009239e0.patch
-https://github.com/Perl/perl5/commit/54cf3d44cbbedd17d774e9a37921963e8fd5d0cb.patch
-
+https://camel.apache.org/security/CVE-2026-46453.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-46453
 
