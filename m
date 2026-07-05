@@ -1,86 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/9
-Message-ID: <antQEgkyczwi7wJY@definition.pseudorandom.co.uk>
-Date: Tue, 11 Aug 2026 17:38:42 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/21
+Message-ID: <8f937f3e-a825-ede0-1089-c25a034f06ba@apache.org>
+Date: Sun, 05 Jul 2026 11:52:21 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Flatpak 1.18.1 fixes multiple vulnerabilities
+Subject: CVE-2026-49086: Apache Camel: Camel-Dapr: The Dapr Pub/Sub consumer copied the inbound CloudEvent's pub/sub-name and topic into producer-direction routing headers, allowing an actor who can publish to the subscribed topic to redirect the re-published message to an arbitrary Dapr Pub/Su 
 Content-Type: text/plain; charset=utf-8
 
-Today's Flatpak 1.18.1 release fixes multiple vulnerabilities. The 
-Flatpak team have requested CVE IDs for all of these vulnerabilities 
-from Github, but no CVE IDs are available yet: instead, please 
-cross-reference these vulnerabilities by their GHSA- IDs for now. The 
-advisories will be updated with CVE IDs when they become available.
+Severity: moderate 
 
-* Fix sandbox escape with full host filesystem read/write access via symlink
-   attack on app data directories
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-8688-9x26-hhxj,
-   thanks to Ee Yang)
+Affected versions:
 
-* Fix local root privilege escalation via revokefs symlink path traversal and
-   commit tampering 
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-qrwq-7qwx-q9rp,
-   thanks to Ee Yang)
+- Apache Camel (org.apache.camel:camel-dapr) 4.12.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-dapr) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-dapr) 4.19.0 before 4.21.0
 
-* Fix arbitrary root write via symlink and path traversal in extra-data
-   extraction
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-fqx6-vh4p-42cg,
-   thanks to AISLE in cooperation with Red Hat)
+Description:
 
-* Fix arbitrary root write via path traversal in `flatpak build-init`
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-8qxj-x646-phcm,
-   thanks to Sebastian Wick)
+Improper Input Validation, Unintended Proxy or Intermediary ('Confused Deputy') vulnerability in Apache Camel DAPR component.
 
-* Fix arbitrary host file read via hardlink path traversal in OCI archive
-   extraction
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-9rww-v4mm-x4jg,
-   thanks to Sebastian Wick)
+The camel-dapr Dapr Pub/Sub consumer (DaprPubSubConsumer) copied two fields from each inbound CloudEvent - its Pub/Sub component name and its topic - into the CamelDaprPubSubName and CamelDaprTopic Exchange headers. These two headers are producer-direction routing headers: when the route republishes through a Dapr producer, DaprConfigurationOptionsProxy reads them back and prefers them over the destination configured on the endpoint. As a result, in a route that consumes from one Dapr Pub/Sub topic and republishes to another (for example from('dapr-pubsub:p:t').to('dapr-pubsub:p:other')), an actor able to publish a message to the subscribed topic could set the CloudEvent's pub/sub-name and topic to values of their choosing and cause the re-published message to be delivered to an arbitrary Dapr Pub/Sub component and topic instead of the configured destination - redirecting or exfiltrating the message and bypassing the route's intended routing and any topic-level access controls in the underlying broker. Exploitation requires the ability to publish to the topic the route subscribes to; no other authentication or user interaction is needed.
+This issue affects Apache Camel: from 4.12.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-* Fix path traversal via unvalidated architecture parameter in DeployAppstream
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-v2gw-v9h5-9q4x,
-   thanks to Yehia Ali Mohamed Ezzat)
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, remove the CamelDaprPubSubName and CamelDaprTopic headers from the Exchange between the Dapr consumer and any Dapr producer in the route (for example removeHeaders('CamelDaprPubSubName', 'CamelDaprTopic')), and restrict who can publish to the subscribed Dapr Pub/Sub topic so that only trusted producers can send to it.
 
-* Fix buffer overflow in OCI delta stream path names on 32-bit systems
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-jr92-2v97-wgvc,
-   thanks to Sebastian Wick)
+Credit:
 
-* Fix fixed-filename writes to arbitrary locations via symlink attack on .ld.so
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-99wv-m8rp-g58x,
-   thanks to Sebastian Wick)
+Leon Zlobecki (finder)
+Andrea Cosentino (remediation developer)
 
-* Fix extension metadata path traversal allowing host filesystem probing and
-   unintended mount locations
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-w69g-9x8j-7p8f,
-   thanks to Sebastian Wick)
+References:
 
-* Fix anti-downgrade bypass allowing unprivileged users to downgrade system
-   apps
-   (https://github.com/flatpak/flatpak/security/advisories/GHSA-q4gr-vc25-57m5,
-   thanks to BreachX Zero Day Labs)
+https://camel.apache.org/security/CVE-2026-49086.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49086
 
-All older Flatpak versions are believed to be vulnerable to all of 
-these, except for GHSA-9rww-v4mm-x4jg which does not affect version 
-1.16.x or older.
-
-If possible please upgrade to the latest stable release, 1.18.1. For 
-users of development prereleases, the 1.19.0 prerelease also fixes the 
-same vulnerabilities.
-
-Older LTS operating system distributions might prefer to backport fixes 
-to an older stable-branch. The 1.16.x branch is no longer supported by 
-upstream and is unlikely to receive new formal releases, but backports 
-of the applicable vulnerability fixes are included in the upstream git 
-repository in the flatpak-1.16.x branch, 
-https://github.com/flatpak/flatpak/commits/flatpak-1.16.x/ (for example 
-those changes should appear in a Debian 13 security update soon).
-
-Known errata for these releases:
-
-* A new unit test related to GHSA-v2gw-v9h5-9q4x causes build-time test
-   failures when building with very old versions of Meson, such as the
-   version in Ubuntu 22.04. Older LTS distributions can apply
-   https://github.com/flatpak/flatpak/pull/6768 as a workaround.
-
--- 
-Simon McVittie, Collabora Ltd. / Debian
