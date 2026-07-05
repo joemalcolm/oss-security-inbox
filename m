@@ -1,33 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/17
-Message-ID: <CAMufup7XQaHdpJbpsnx=noKA+VFus8Z_nV7p9LVbhmENUXGMBQ@mail.gmail.com>
-Date: Thu, 30 Jul 2026 14:14:47 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com,  Miguel Regala <miguel@...ala.im>
-Subject: CVE-2026-28814: Apache JSPWiki: Arbitrary Wiki Markup rendering due to lack of authentication
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/17
+Message-ID: <85630932-f7bf-220d-68fd-79e0eb582c1a@apache.org>
+Date: Sun, 05 Jul 2026 11:55:06 +0000
+From: Andrea Cosentino <acosentino@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-48203: Apache Camel: Camel-Solr: The SolrParam. and SolrField. Exchange header prefixes used non-Camel-prefixed names that bypass the HTTP header filter, allowing an HTTP client to inject Solr query parameters (server-side request forgery) and document fields 
 Content-Type: text/plain; charset=utf-8
 
-Severity
-Critical
+Severity: moderate 
 
-Vendor
-The Apache Software Foundation
+Affected versions:
 
-Versions Affected
-Apache JSPWiki up to 2.12.3
+- Apache Camel (org.apache.camel:camel-solr) 4.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-solr) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-solr) 4.19.0 before 4.21.0
 
-Description
-Arbitrary Wiki Markup rendering due to lack of authentication in
-Apache JSPWiki allows attacker to obtain sensitive data stored in
-JSPWiki variables.
+Description:
 
-Mitigation
-Apache JSPWiki users should upgrade to 2.12.4 or later.
+Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'), Improper Input Validation, Server-Side Request Forgery (SSRF) vulnerability in Apache Camel Solr component.
 
-Credit
-The issue was discovered by Miguel Regala (Fisher) - Hadrian.io
+The camel-solr producer copies Exchange message headers whose names begin with the SolrParam. prefix into the parameters of the Solr request, and headers whose names begin with the SolrField. prefix into the fields of the indexed Solr document. The prefix constants (SolrConstants.HEADER_PARAM_PREFIX / HEADER_FIELD_PREFIX) were the plain strings SolrParam. / SolrField.. Because these names do not start with the Camel / camel prefix, HttpHeaderFilterStrategy - which blocks only the Camel header namespace on the HTTP boundary - let them pass from an inbound HTTP request straight into the Exchange. In a route that bridges an HTTP consumer (for example platform-http) into a solr: producer, any HTTP client could therefore set SolrParam.* headers to inject arbitrary Solr request parameters - including shards or stream.url, which cause the Solr server to issue server-side requests to an attacker-chosen URL (server-side request forgery, for example to an internal service or a cloud metadata endpoint), or qt to reach administrative request handlers - and set SolrField.* headers to inject arbitrary fields into indexed documents. No credentials are required when the bridging consumer is unauthenticated.
+This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, routes that set Solr parameters or fields via the raw header prefixes must use CamelSolrParam. / CamelSolrField. instead of SolrParam. / SolrField.. For deployments that cannot upgrade immediately, strip the SolrParam.* and SolrField.* headers from any untrusted ingress before the solr: producer, and set the required Solr parameters and fields from a trusted source in the route.
 
-References
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2026-28814
-https://www.cve.org/CVERecord?id=CVE-2026-28814
+Credit:
+
+Yu Bao from Paypal (finder)
+Andrea Cosentino (remediation developer)
+
+References:
+
+http://camel.apache.org/security/CVE-2026-48203.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-48203
+
