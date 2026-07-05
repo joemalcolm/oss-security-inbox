@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/4
-Message-ID: <8bab9e61-e6f5-be2b-8e1f-6639975adc96@apache.org>
-Date: Thu, 11 Jun 2026 16:52:00 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/23
+Message-ID: <293a3197-4d4c-2d62-4312-615db1f80863@apache.org>
+Date: Sun, 05 Jul 2026 11:51:02 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50627: Apache CXF: OAuth2: Missing JWT Audience and Issuer Validation in Access Token Validator 
+Subject: CVE-2026-49098: Apache Camel: Camel-Kafka: The kafka.OVERRIDE_TOPIC (and other kafka.*) Exchange header constants used non-Camel-prefixed names that bypass the upstream HTTP header filter, allowing an HTTP client to redirect Kafka messages to an arbitrary topic 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.2.0 before 4.2.2
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) before 4.1.7
+- Apache Camel (org.apache.camel:camel-kafka) 4.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-kafka) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-kafka) 4.19.0 before 4.21.0
 
 Description:
 
-The JwtAccessTokenValidator class in Apache CXF fails to validate the 'aud' (Audience) claims of incoming JWT access tokens. This allows a JWT issued for one Resource Server to be successfully replayed against a completely different Resource Server, leading to Token Confusion/Routing attacks. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
+Improper Input Validation, Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection') vulnerability in Apache Camel Kafka Component.
+
+The camel-kafka producer can override its configured target topic at runtime from the kafka.OVERRIDE_TOPIC Exchange header: KafkaProducer.evaluateTopic() returns the header value in preference to the topic configured on the endpoint. The control-header constants in KafkaConstants (for example OVERRIDE_TOPIC = kafka.OVERRIDE_TOPIC, OVERRIDE_TIMESTAMP = kafka.OVERRIDE_TIMESTAMP, PARTITION_KEY = kafka.PARTITION_KEY) used plain, non-Camel-prefixed values. camel-kafka's own KafkaHeaderFilterStrategy does filter the kafka.* namespace, but only on the Kafka-to-Exchange serialization boundary (reading Kafka record headers into the Exchange, and writing Exchange headers into a Kafka record); it does not apply to headers that arrive from an upstream consumer in a multi-component route. The upstream HTTP consumer uses HttpHeaderFilterStrategy, which blocks only the Camel / camel namespace, so a kafka.* header passes through unfiltered. As a result, in a route that bridges an HTTP consumer (for example platform-http) into a kafka: producer, any HTTP client could set the kafka.OVERRIDE_TOPIC header and cause the message to be published to an arbitrary Kafka topic instead of the configured one - redirecting it to a sensitive internal topic, or injecting attacker-crafted messages into a topic consumed by a critical downstream service. The related kafka.OVERRIDE_TIMESTAMP and kafka.PARTITION_KEY headers could likewise be injected to backdate messages or target specific partitions. No credentials are required when the bridging consumer is unauthenticated.
+This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, routes that set or read Kafka headers via the raw header names must use the CamelKafka* names (for example CamelKafkaOverrideTopic and CamelKafkaTopic) instead of the old kafka.* values. For deployments that cannot upgrade immediately, strip the kafka.* headers from any untrusted ingress before the kafka: producer (for example removeHeaders('kafka.*') at the start of the route), and set the target topic from a trusted source.
 
 Credit:
 
-Guanping Zhang reported this vulnerability. (finder)
+Yu Bao from PayPal (finder)
+Andrea Cosentino (remediation developer)
 
 References:
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50627
+https://camel.apache.org/security/CVE-2026-49098.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49098
 
