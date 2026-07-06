@@ -1,36 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/13
-Message-ID: <e93028d6-c1bd-a4b4-d4c5-f0730ec8d498@apache.org>
-Date: Sun, 05 Jul 2026 11:57:59 +0000
-From: Andrea Cosentino <acosentino@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46590: Apache Camel: Camel-PQC: The HashiCorp Vault and AWS Secrets Manager key-lifecycle managers deserialize persisted key metadata with java.io.ObjectInputStream and no ObjectInputFilter (incomplete remediation of CVE-2026-40048) 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/4
+Message-Id: <2094351C-3BAE-41DF-8E5B-5608D1D64938@stig.io>
+Date: Mon, 6 Jul 2026 14:07:01 +0200
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13708: Imager::File::JPEG versions before 1.003 for Perl leak heap memory when reading a JPEG with repeated APP13 markers in i_readjpeg_wiol
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-13708                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-13708
+  Distribution:  Imager-File-JPEG
+      Versions:  before 1.003
 
-- Apache Camel (org.apache.camel:camel-pqc) 4.18.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-pqc) 4.19.0 before 4.21.0
+      MetaCPAN:  https://metacpan.org/dist/Imager-File-JPEG
+      VCS Repo:  https://github.com/tonycoz/imager
 
-Description:
 
-Deserialization of Untrusted Data vulnerability in Apache Camel PQC component.
+Imager::File::JPEG versions before 1.003 for Perl leak heap memory when
+reading a JPEG with repeated APP13 markers in i_readjpeg_wiol
 
-The camel-pqc component persists post-quantum key metadata (KeyMetadata) through pluggable KeyLifecycleManager implementations. HashicorpVaultKeyLifecycleManager and AwsSecretsManagerKeyLifecycleManager read that metadata back from the configured secret backend by deserializing a Base64-wrapped value with a raw java.io.ObjectInputStream.readObject() and no ObjectInputFilter or class allow-list; the cast to KeyMetadata happens only after readObject() returns, so any readObject() side effects in a crafted object run before the type check. The same unfiltered legacy-migration read also remained in FileBasedKeyLifecycleManager (for the stored KeyPair and KeyMetadata). A principal who can write to the operator-controlled backend that holds these values - the HashiCorp Vault KV path, or the AWS Secrets Manager secret (requiring a Vault token or secretsmanager:PutSecretValue) - could store a crafted serialized object that is deserialized during normal key-lifecycle operations, potentially leading to code execution in the context of the application that manages the keys. This is an incomplete-remediation follow-on to CVE-2026-40048 (CAMEL-23200), which changed FileBasedKeyLifecycleManager to store metadata as JSON / PKCS#8 / X.509 but did not add an ObjectInputFilter, did not cover the Vault and AWS sibling managers, and left FileBasedKeyLifecycleManager's own legacy-migration deserialization unfiltered.
-This issue affects Apache Camel: from 4.18.0 before 4.18.3, from 4.19.0 before 4.21.0.
+Description
+-----------
+Imager::File::JPEG versions before 1.003 for Perl leak heap memory when
+reading a JPEG with repeated APP13 markers in i_readjpeg_wiol.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.18.x LTS releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, restrict write access to the key backend so that only the application's own identity can write the camel-pqc secrets (least-privilege HashiCorp Vault policies and secretsmanager:PutSecretValue IAM), and keep the PQC key material in a backend separate from any data that less-trusted principals can write.
+i_readjpeg_wiol walks the marker list libjpeg returns and, for each
+APP13 marker, allocates a new buffer with *iptc_itext = mymalloc(...)
+and overwrites the previous pointer without freeing it. Only the final
+payload is later turned into a Perl scalar and freed, so a JPEG with N
+such markers leaks the first N-1 payloads on every read.
 
-Credit:
+In a long-lived process, such as an upload or thumbnailing service,
+repeated reads accumulate these leaks and exhaust available memory, a
+denial of service.
 
-Yu Bao from Paypal (finder)
-Andrea Cosentino (remediation developer)
+The same handler ships bundled in the Imager distribution, where
+versions before 1.032 are affected and the fix ships in 1.032.
 
-References:
+Problem types
+-------------
+- CWE-401 Missing Release of Memory after Effective Lifetime
 
-https://camel.apache.org/security/CVE-2026-46590.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-46590
+Solutions
+---------
+Upgrade to Imager::File::JPEG 1.003 or later, or to Imager 1.032 or
+later if the bundled copy is in use.
+
+
+References
+----------
+https://github.com/tonycoz/imager/commit/9f1c485ca3ee15dc261549e11afb356866552c3a.patch
+https://metacpan.org/release/TONYC/Imager-File-JPEG-1.003/source/Changes
+
+Timeline
+--------
+- 2026-07-01: Version 1.003 released with fix.
+
 
