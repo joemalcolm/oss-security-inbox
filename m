@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/28
-Message-ID: <21f07070-0697-46fb-3c9d-572f160c7a56@apache.org>
-Date: Sun, 05 Jul 2026 11:47:33 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/15
+Message-ID: <7ba32f4d-458c-e61d-2759-d306ad574f33@apache.org>
+Date: Mon, 06 Jul 2026 09:23:54 +0000
+From: Federico Mariani <fmariani@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-55994: Apache Camel: Camel-Iggy: The inbound consumer maps externally-supplied Iggy message user-headers into the Exchange without a HeaderFilterStrategy, allowing injection of Camel control headers - enabling server-side request forgery and disclosure of secrets when bridged 
+Subject: CVE-2026-46587: Apache Camel: Couchbase: Non-Camel-prefixed Exchange headers bypass HeaderFilterStrategy allowing operation override from untrusted input 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-iggy) 4.17.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-iggy) 4.19.0 before 4.21.0
+- Apache Camel through 4.14.7
+- Apache Camel 4.15.0 through 4.18.2
+- Apache Camel 4.19.0 through 4.20.0
 
 Description:
 
-Improper Input Validation, Exposure of Sensitive Information to an Unauthorized Actor, Server-Side Request Forgery (SSRF) vulnerability in Apache Camel in Iggy component.
+Improper Input Validation vulnerability in Apache Camel.
 
-The camel-iggy consumer mapped the user-headers of inbound Iggy messages into the Camel Exchange header map without applying any HeaderFilterStrategy (IggyFetchRecords copied the message user-headers straight into the Exchange). Because nothing blocked the Camel header namespace, an actor able to publish to the consumed Iggy stream/topic could set Camel-internal control headers - including CamelHttpUri (Exchange.HTTP_URI) - simply by supplying them as message user-headers. In a route where the Iggy consumer feeds a downstream HTTP producer, the injected CamelHttpUri redirects the server-side HTTP request to an attacker-chosen destination (server-side request forgery - for example to an internal service or a cloud metadata endpoint). In addition, the HTTP producer resolves Camel property placeholders on the resulting (attacker-controlled) URI, so placeholders embedded in the injected value - such as an environment-variable reference, an application property, or a vault reference - are resolved to their real values and sent to the attacker, disclosing environment variables, application properties and vault secrets.
-This issue affects Apache Camel: from 4.17.0 before 4.18.3, from 4.19.0 before 4.21.0.
+This issue affects Apache Camel: through 4.14.7, from 4.15.0 through 4.18.2, from 4.19.0 through 4.20.0.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. The fix adds a dedicated IggyHeaderFilterStrategy (and a headerFilterStrategy endpoint option) that filters the Camel header namespace case-insensitively on inbound mapping, so externally-supplied Camel* / camel* headers are no longer copied into the Exchange. For deployments that cannot upgrade immediately, strip the Camel control headers from the inbound message before they reach any downstream producer (for example removeHeaders('Camel*') and removeHeaders('camel*') at the start of the route), restrict who can publish to the consumed Iggy stream/topic, and avoid bridging an untrusted consumer directly into an HTTP producer whose target URI can be driven from message headers.
+Users are recommended to upgrade to version 4.14.8, 4.18.3, 4.21.0, which fixes the issue.
 
 Credit:
 
-Kamalpreet Singh (finder)
-Andrea Cosentino (remediation reviewer)
+Yu Bao - yubao@...pal.com, who works for paypal.com. (reporter)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-55994.html
+https://camel.apache.org/security/CVE-2026-46587.html
 https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-55994
+https://www.cve.org/CVERecord?id=CVE-2026-46587
 
