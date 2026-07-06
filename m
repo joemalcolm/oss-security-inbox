@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/4
-Message-ID: <d6d86736-c7c4-8bfb-4511-ba66a391c54d@apache.org>
-Date: Mon, 14 Sep 2026 08:21:44 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/13
+Message-ID: <6930b57d-3321-1909-900b-ef6defbb7d8a@apache.org>
+Date: Mon, 06 Jul 2026 07:24:09 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-73178: Apache Syncope: JWT Access Token takeover 
+Subject: CVE-2026-43866: Apache Camel: Camel JMS - CVE-2026-40860 fix bypass via DefaultExchangeHolder 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.1.0-M0 through 4.1.2
+- Apache Camel (org.apache.camel:camel-jms) 3.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-jms) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-jms) 4.19.0 before 4.21.0
+- Apache Camel (org.apache.camel:camel-sjms) 3.0.0 before 4.14.8
+- Apache Camel (org.apache.camel:camel-sjms) 4.15.0 before 4.18.3
+- Apache Camel (org.apache.camel:camel-sjms) 4.19.0 before 4.21.0
 
 Description:
 
-Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Syncope.
+Deserialization of Untrusted Data vulnerability in Apache Camel, Apache Camel JMS component.
 
-An administrator with adequate entitlements can get access via REST to the list of existing Access Tokens, including their signed JWT body.
-These values can be then used to perform further REST requests, impersonating users with higher administration entitlements.
+JmsBinding.extractBodyFromJms() in camel-jms - and the equivalent JmsBinding in camel-sjms - deserializes the payload of an incoming JMS ObjectMessage via jakarta.jms.ObjectMessage.getObject() whenever the mapJmsMessage option is enabled (the default) and Camel acts as a JMS consumer. The CVE-2026-40860 hardening added a post-deserialization class check that rejects classes outside the default allow-list java.**;javax.**;org.apache.camel.**;!*. However org.apache.camel.support.DefaultExchangeHolder itself lives in the allow-listed org.apache.camel.** namespace, so an ObjectMessage whose top-level object is a DefaultExchangeHolder passes the check. The receiving side then calls DefaultExchangeHolder.unmarshal() on it without requiring the transferExchange option to be enabled - an asymmetric trust boundary, since the sending side gates ObjectMessage and transferExchange handling but the receiving side did not - writing every non-null field of the holder into the Exchange: the message body, the IN and OUT headers, the exchange properties, the variables, the exchange id and the exception. An attacker who can publish an ObjectMessage to a queue or topic consumed by an affected Camel application can therefore inject arbitrary Exchange state using only universally-trusted java.lang and java.util types, with no deserialization gadget chain required, to manipulate routing and headers, exchange properties and error handling. The same handling applies to camel-sjms and camel-sjms2, and to the JMS-family components built on JmsComponent and JmsBinding: camel-amqp, camel-activemq and camel-activemq6. This is a bypass of the CVE-2026-40860 fix rather than a flaw in it.
+This issue affects Apache Camel: from 3.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0; Apache Camel: from 3.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-
-
-
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, JMS ObjectMessage handling is disabled by default in camel-jms, camel-sjms and the JMS-family components (a new objectMessageEnabled option defaults to false at the component and endpoint level), so an incoming ObjectMessage - including a DefaultExchangeHolder payload - is no longer deserialized unless the option is explicitly enabled; only set objectMessageEnabled=true when the consumed JMS destination is fed exclusively by trusted producers. For deployments that cannot upgrade immediately, restrict publish access to the queues and topics consumed by Camel to trusted producers via JMS broker authorization, and do not expose JMS consumers that map ObjectMessage bodies to untrusted networks; a JMS-provider deserialization allow-list does not mitigate this specific bypass because the crafted payload uses only universally-trusted classes.
 
 Credit:
 
-n0mi1k (finder)
+gaorenyusi (finder)
+Andrea Cosentino (remediation developer)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-73178
+https://camel.apache.org/security/CVE-2026-43866.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-43866
 
