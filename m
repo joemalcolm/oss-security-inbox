@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/16
-Message-ID: <009ebb4b-9d57-ed74-443a-14811e21f650@apache.org>
-Date: Mon, 08 Jun 2026 12:51:55 +0000
-From: Eric Covener <covener@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/10
+Message-ID: <02401887-9429-79b8-3d8d-0ebe680bf855@apache.org>
+Date: Mon, 06 Jul 2026 07:04:02 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49975: Apache HTTP Server: mod_http2 denial of service 
+Subject: CVE-2026-24012: Apache IoTDB: Denial of Service via Resource Exhaustion in Aggregation Query 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache HTTP Server 2.4.17 through 2.4.67
+- Apache IoTDB 1.3.3 before 2.0.8
 
 Description:
 
-Memory Allocation with Excessive Size Value vulnerability in Apache HTTP Server's mod_http leads to denial of service via malicious HTTP requests.
+Uncontrolled Resource Consumption vulnerability in Apache IoTDB. 
 
-This issue affects Apache HTTP Server: from 2.4.17 through 2.4.67.
+Some interface fails to impose reasonable
+limits on the time span and aggregation interval of the query. An attacker
+can construct a request with extreme parameters (e.g., a very large time
+range combined with a minimal interval). This forces the DataNode to build
+an enormous result set in memory, which exhausts the Java heap and causes
+the DataNode process to crash.
+
+This issue affects Apache IoTDB: from 1.3.3 before 2.0.8.
+
+Users are recommended to upgrade to version 2.0.8, which fixes the issue.
 
 Credit:
 
-Quang Luong of Calif.IO in collaboration with OpenAI Codex (finder)
+Yan Nan (Detecon Security Lab) (finder)
 
 References:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49975
-
-Timeline:
-
-2026-05-26: reported
-2026-05-27: fixed upstream in mod_h2 https://github.com/icing/mod_h2/commit/35c6e405390ed361189a82acd96675401ea5947c
-2026-06-02: fixed in 2.4.x by r1934882
-2026-06-08: 2.4.68 released
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-24012
 
