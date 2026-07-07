@@ -1,28 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/35
-Message-ID: <0f6fd8b8-abfe-4d71-7a79-434a3aa03cff@apache.org>
-Date: Fri, 24 Jul 2026 21:42:19 +0000
-From: Jens Geyer <jensg@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/07/3
+Message-ID: <56a8f073-57a7-a8cc-3c2b-0c596939da39@apache.org>
+Date: Tue, 07 Jul 2026 08:29:32 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-48144: Apache Thrift: c_glib TLS Client Missing Hostname Verification 
+Subject: CVE-2026-48891: Apache Airflow: /ui/dependencies scheduling graph leaks unreadable Dag identifiers via trigger/sensor dep.source/dep.target 
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: low 
 
 Affected versions:
 
-- Apache Thrift (glibc language bindings) before 0.24.0
+- Apache Airflow (apache-airflow) before 3.3.0
 
 Description:
 
-Improper Validation of Certificate with Host Mismatch vulnerability in Apache Thrift c_glib bindings.
+A bug in Apache Airflow's `/ui/dependencies` scheduling graph endpoint applied the caller's readable-Dag filter to the top-level serialized Dag key but still emitted referenced Dag IDs through the `dep.source` and `dep.target` fields of trigger / sensor dependency entries. An authenticated UI user with read permission on some Dags could enumerate the identifiers of other Dags they were not authorized to read by inspecting the dependency graph for trigger / sensor references. Affects deployments that rely on per-Dag read scoping to keep Dag identifiers private across teams. This is a residual gap in the fix for CVE-2026-28563, which filtered the top-level Dag key but did not propagate the filter into the trigger / sensor dep-source / dep-target fields. Users who already upgraded for CVE-2026-28563 should additionally upgrade to `apache-airflow` 3.3.0 or later to cover the residual trigger / sensor dependency leak.
 
-This issue affects Apache Thrift: before 0.24.0.
+Credit:
 
-Users are recommended to upgrade to version 0.24.0, which fixes the issue.
+Mitchell Benjamin / Revamp Studio (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://thrift.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-48144
+https://github.com/apache/airflow/pull/67627
+https://www.cve.org/CVERecord?id=CVE-2026-28563
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-48891
 
