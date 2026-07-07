@@ -1,90 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/31
-Message-ID: <amO/luVbEUw+cBMw@256bit.org>
-Date: Fri, 24 Jul 2026 21:40:06 +0200
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/07/4
+Message-ID: <f4ac6989-8200-3cee-606c-c535052574c4@apache.org>
+Date: Tue, 07 Jul 2026 08:31:23 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [vim-security] Arbitrary Command Execution via the Vimball Record File in Vim < 9.2.0847
+Subject: CVE-2026-48892: Apache Airflow: Config API leaks per-key secrets backend kwargs - masker bypass on synthetic options 
 Content-Type: text/plain; charset=utf-8
 
-Arbitrary Command Execution via the Vimball Record File in Vim < 9.2.0847
-=========================================================================
+Severity: moderate 
 
-Date: 24.07.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Control of Generation of Code (CWE-94),
-     Inclusion of Functionality from Untrusted Control Sphere (CWE-829)
+Affected versions:
 
-## Summary
+- Apache Airflow (apache-airflow) before 3.3.0
 
-The vimball plugin records the files it extracts in a plain text file named
-`.VimballRecord`, so that they can be removed again later.  Each line of that
-file holds the commands to undo one installation, and they were executed
-without being checked.  The plugin refused to extract members whose name
-could inject into that file, but it did not refuse a member that *is* the
-record file.  A crafted vimball can therefore write chosen commands into the
-record, which are then executed the next time any vimball operation consults
-it.
+Description:
 
-## Description
+The Config API in Apache Airflow surfaced per-key secrets-backend overrides (environment variables like `AIRFLOW__SECRETS__BACKEND_KWARG__SECRET_ID` and `AIRFLOW__WORKERS__SECRETS_BACKEND_KWARG__SECRET_ID`) as synthetic config options whose option names were not in `sensitive_config_values`, so the masker did not redact them. An authenticated UI/API user with Config read permission could retrieve plaintext secrets-backend credentials (Vault `role_id` / `secret_id`, etc.) from the Config API output. Affects deployments that configure secrets backends via per-key environment overrides. Users are advised to upgrade to `apache-airflow` 3.3.0 or later.
 
-`runtime/autoload/vimball.vim` writes one line per installed vimball into
-`.VimballRecord` in the directory used for vimball installations, listing the
-commands that delete the files that were extracted.  When a vimball is
-installed or removed, `vimball#RmVimball()` searches that file for the line
-belonging to the archive, strips the archive name from the front of it and
-runs the remainder:
+Credit:
 
-    sil! keepalt keepjumps exe exestring
+Omkhar Arasaratnam (@omkhar) (finder)
+Jarek Potiuk (remediation developer)
 
-The name of each member of an archive was already checked, and names that
-contain a bar, a quote or a closing parenthesis were rejected, precisely so
-that a file name could not inject commands into the record.  That check does
-not apply to a member whose name is `.VimballRecord` itself: extracting it
-overwrites the record with content taken straight from the archive, and the
-content of a member is not examined at all.
+References:
 
-The commands placed there are run later, when a vimball with the matching
-name is installed or removed, and not while the crafted archive is being
-extracted.
+https://github.com/apache/airflow/pull/67622
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-48892
 
-The issue has been addressed by refusing to extract a member named
-`.VimballRecord`, and by executing only entries of the expected form, namely
-a single call that deletes one file or directory.  Anything else in the
-record is reported and skipped.
-
-## Impact
-
-Execution of arbitrary Ex commands, and through commands such as `:!`
-arbitrary operating-system commands, in the context of the user running Vim.
-
-Exploitation requires the victim to install a vimball from a source
-controlled by the attacker, either by sourcing it or through the getscript
-plugin, which downloads and sources vimballs automatically.  Installing a
-vimball already runs the commands contained in it, so the attacker does not
-gain the ability to run commands as such.  What the issue adds is that the
-archive itself can appear harmless while leaving commands behind that run at
-a later time, during an unrelated vimball installation or removal, and that
-continue to do so after the archive that placed them has been removed.
-
-The severity is rated Medium because installing a vimball from an untrusted
-source already permits commands from that vimball to run, so the issue
-extends the reach of such an installation rather than creating it.
-
-## Acknowledgements
-
-The Vim project would like to thank tdjackey for reporting the issue.
-
-## References
-
-The issue has been fixed as of Vim patch [v9.2.0847](https://github.com/vim/vim/releases/tag/v9.2.0847).
-
-- [Commit](https://github.com/vim/vim/commit/581a2f3ac9c6f96a26324f6b2c8c11415fd0d452)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-r22p-fhw4-84p2)
-
-Best,
-Chris
--- 
-Man sagt nicht 'Nichts!', man sagt dafür 'Jenseits' oder 'Gott'.
-		-- Friedrich Wilhelm Nietzsche
