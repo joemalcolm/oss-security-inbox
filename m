@@ -1,66 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/4
-Message-ID: <44658def09168960c639e316d2391ecd@cpansec.org>
-Date: Mon, 15 Jun 2026 15:00:59 +0200
-From: Timothy Legge <timlegge@...nsec.org>
-To: CVE Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-12205: Crypt::DSA versions before 1.21 for Perl reused the nonce across signatures, leading to private-key recovery
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/6
+Message-ID: <984c78a6-4618-4682-a4f2-6127a240afb0@cpansec.org>
+Date: Wed, 8 Jul 2026 13:31:37 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-14454: Imager versions before 1.033 for Perl treat unsigned EXIF IFD entry counts as signed
 Content-Type: text/plain; charset=utf-8
 
+
 ========================================================================
-CVE-2026-12205                                       CPAN Security Group
+CVE-2026-14454                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-12205
-   Distribution:  Crypt-DSA
-       Versions:  before 1.21
+         CVE ID:  CVE-2026-14454
+   Distribution:  Imager
+       Versions:  before 1.033
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-DSA
-       VCS Repo:  https://github.com/perl-Crypt-OpenPGP/Crypt-DSA
+       MetaCPAN:  https://metacpan.org/dist/Imager
+       VCS Repo:  https://github.com/tonycoz/imager
 
 
-Crypt::DSA versions before 1.21 for Perl reused the nonce across
-signatures, leading to private-key recovery
+Imager versions before 1.033 for Perl treat unsigned EXIF IFD entry
+counts as signed
 
 Description
 -----------
-Crypt::DSA versions before 1.21 for Perl reused the nonce across
-signatures, leading to private-key recovery.
+Imager versions before 1.033 for Perl treat unsigned EXIF IFD entry
+counts as signed.
 
-Crypt::DSA::sign caches the per-signature nonce material in the Key
-object without ever clearing it.
+Imager mishandled large EXIF IFD entry count values, treating them as
+negative numbers.  This could lead to an attempt to allocate a block
+nearly the size of the address space, which fails and kills the
+process.
 
-The first sign() on a Key object picks a nonce, and every later sign()
-on that same object reuses it, producing an identical "r".
-
-Keys used to sign more than once with an affected version should be
-considered compromised.
+An attacker could craft an image with EXIF data that terminates a
+worker process.
 
 Problem types
 -------------
-- CWE-323 Reusing a Nonce, Key Pair in Encryption
+- CWE-196 Unsigned to Signed Conversion Error
+- CWE-789 Memory Allocation with Excessive Size Value
 
 Solutions
 ---------
-Upgrade to version 1.21
-
-Revoke any keys that may have been compromised.
-
-Crypt::DSA was deprecated in version 1.20. You should migrate to
-another solution.
+Upgrade to version 1.033 or later.
 
 
 References
 ----------
-https://metacpan.org/release/TIMLEGGE/Crypt-DSA-1.20/source/lib/Crypt/DSA.pm#L47
-https://metacpan.org/release/TIMLEGGE/Crypt-DSA-1.21/changes
+https://metacpan.org/release/TONYC/Imager-1.033/changes
+https://github.com/tonycoz/imager/commit/06f01a5d0fd591259aeba589370d6888384a6b6d.patch
 
-Timeline
---------
-- 2026-05-16: Maintainer contacted
-- 2026-06-13: Maintainer and CPANSec contacted
-- 2026-06-14: Fixed version released
 
-Credits
--------
-Richard Kettlewell, finder
+
