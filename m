@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/19/3
-Message-ID: <517e44be-1ae8-46af-b0f1-f07ea04a1053@cpansec.org>
-Date: Wed, 19 Aug 2026 08:24:06 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-75589: Net::OAuth versions before 0.33 for Perl check HMAC-SHA1, HMAC-SHA256 and PLAINTEXT signatures with a non-constant-time comparison in verify
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/11
+Message-ID: <7ed5e33c-2a5b-2d1c-aed7-7751eea53799@apache.org>
+Date: Wed, 08 Jul 2026 17:30:14 +0000
+From: Junkai Xue <jxue@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-57111: Apache Helix REST: Permissive CORS Configuration in REST API Allows Unrestricted Cross-Origin 
 Content-Type: text/plain; charset=utf-8
 
+Severity: low 
 
-========================================================================
-CVE-2026-75589                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-75589
-   Distribution:  Net-OAuth
-       Versions:  before 0.33
+- Apache Helix REST (org.apache.helix:helix-rest) through 2.0.0
 
-       MetaCPAN:  https://metacpan.org/dist/Net-OAuth
-       VCS Repo:  https://github.com/vurtdev/Net-OAuth
+Description:
 
+Permissive Cross-Origin Resource Sharing (CORS) in the REST API (helix-rest, org.apache.helix.rest.server.filters.CORSFilter) in Apache Helix through 2.0.0 on all platforms allows a remote attacker controlling a web page visited by an authorized user to read responses from and issue cross-origin requests to administrative REST endpoints via a cross-origin request from an arbitrary origin, since the filter unconditionally returns Access-Control-Allow-Origin: * together with Access-Control-Allow-Credentials: true and reflects arbitrary Access-Control-Request-Method / Access-Control-Request-Headers values in preflight responses. Users are recommended to upgrade to version 2.0.1, which fixes this issue.
 
-Net::OAuth versions before 0.33 for Perl check HMAC-SHA1, HMAC-SHA256
-and PLAINTEXT signatures with a non-constant-time comparison in verify
+Credit:
 
-Description
------------
-Net::OAuth versions before 0.33 for Perl check HMAC-SHA1, HMAC-SHA256
-and PLAINTEXT signatures with a non-constant-time comparison in verify.
+Aastha Aggarwal (reporter)
 
-Each of the three compares the signature carried in the message against
-the locally computed one with the eq operator, which returns as soon as
-the two strings differ. The time taken to reject a signature varies
-with the length of the matching prefix. RSA-SHA1 is not affected, as it
-verifies through the RSA key object rather than by comparing strings.
+References:
 
-A client that can submit messages and time the replies may recover a
-valid signature one byte at a time rather than searching the whole
-signature space. Under PLAINTEXT the value compared against is the
-signature key itself, so the search recovers consumer_secret and
-token_secret.
-
-Problem types
--------------
-- CWE-208 Observable Timing Discrepancy
-
-Solutions
----------
-Upgrade to Net-OAuth 0.33 or later.
-
-References
-----------
-https://github.com/vurtdev/Net-OAuth/security/advisories/GHSA-g8xr-69p3-gw56
-https://github.com/vurtdev/Net-OAuth/commit/a1a16b58add85668ef4fcda642a486ceed098eba.patch
-https://metacpan.org/release/RRWO/Net-OAuth-0.33/changes
-
-
+https://helix.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-57111
 
