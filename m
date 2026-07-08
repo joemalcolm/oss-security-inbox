@@ -1,62 +1,263 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/02/6
-Message-ID: <0480dd57-43cc-4fc0-aeff-77fe98df9d8b@gmail.com>
-Date: Sun, 2 Aug 2026 17:13:15 -0400
-From: Demi Marie Obenour <demiobenour@...il.com>
-To: oss-security@...ts.openwall.com, Alan Coopersmith <alan.coopersmith@...cle.com>
-Subject: Re: Some Changes to GNOME Security Tracking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/13
+Message-ID: <ak6_Ets-y-MbPK2m@netmeister.org>
+Date: Wed, 8 Jul 2026 17:20:18 -0400
+From: Jan Schaumann <jschauma@...meister.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-46242 ("Bad Epoll") local privilege escalation on Linux, including Android
 Content-Type: text/plain; charset=utf-8
 
-On 7/30/26 17:41, Alan Coopersmith wrote:
-> https://blogs.gnome.org/mcatanzaro/2026/07/20/some-changes-to-gnome-security-tracking/
-> announces some changes to the GNOME project's security bug handling:
-> 
-> 1) The disclosure deadline is cut from 90 days to 30 days, as most
->     GNOME maintainers that fix bugs during the embargo do so within
->     the first 30 days.  This is effective for new bugs reported starting
->     August 1.
-> 
-> 2) The GNOME security team will no longer forward vulnerability reports
->     to projects that ban AI-generated content, since most reports they
->     get these days have at least some AI-generated content.
-> 
-> 3) Michael Catanzaro will be stepping down in November, after 6 years
->     of handling this work for GNOME.  He's looking for someone to step
->     up to replace him.
-General comment on security fixes in open source projects:
+Hey,
 
-I think the motivation for projects like Akrites is simple.  Companies
-need vulnerabilities fixed fast enough that attackers do not exploit
-them first.  To that end, they want a contract that guarantees that
-vulnerabilities will be fixed in a certain amount of time.  Even if
-one offered to pay open source maintainers a significant amount of
-money for such a contract, there is no guarantee they would accept.
-One needs a team of a certain minimum size to guarantee someone will
-be available while still giving everyone enough time off.
+Similar to the "GhostLock" vulnerability Thomas Orgis
+just shared, there appears to be another LPE named
+"Bad Epoll" and tracked as CVE-2026-46242.
 
-Also, the volume of security fixes may swamp upstream review capacity,
-even if the maintainers *are* paid.  It might be necessary to maintain
-downstream forks until upstream is able to catch up.  However,
-that's very discouraging to upstreams.  It might be possible to
-persuade upstreams to give security professionals commit access,
-but that would require an extensive process to both build trust and
-verify that the professionals have been vetted.
+https://github.com/J-jaeyoung/bad-epoll
 
-That said, I think the solution is systemic fixes, as explained by
-Alex Gaynor in [1].  Unfortunately, for lots of C and C++ code, the
-systemic fix is a complete rewrite in a safe language, or at least
-using a safe language for new code.  That's a huge amount of work,
-and it is work that existing maintainers may have no interest in.
+That repository's README follows:
 
-I would not be surprised if a significant fraction of existing programs
-and libraries are relegated to environments where either the input
-is trusted, or there is a sufficiently strong sandbox that even an
-arbitrary code execution exploit is not a serious risk.
+---
+Bad Epoll (CVE-2026-46242) is a race-condition
+use-after-free in the Linux kernel's epoll subsystem.
+This bug lets an unprivileged process become root, not
+only on Linux desktops and servers but also on Android
+devices.
 
-[1]: https://alexgaynor.net/2026/jul/15/you-cant-bugfix-your-way-out-of-the-vulnpocalypse/
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
+Bad Epoll was reported and exploited by [Jaeyoung
+Chung](https://j-jaeyoung.github.io/) as a 0-day
+submission to Google
+[kernelCTF](https://google.github.io/security-research/kernelctf/rules.html),
+which rewards a Linux kernel exploit with $71,337+.
 
+Note
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+Anthropic's AI,
+[Mythos](https://red.anthropic.com/2026/mythos-preview/),
+found another [race
+bug](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=07712db80857d5d09ae08f3df85a708ecfc3b61f)
+in the same epoll code but missed Bad Epoll.
+
+Why it is serious
+
+    A rare bug that can root Android. Most Linux
+privilege-escalation bugs cannot root Android at all.
+[Copy Fail](https://copy.fail/) and its variants, for
+example, need modules that Android never loads. Out of
+the roughly 130 vulnerabilities exploited on Google's
+kernelCTF, only about ten are candidates for rooting
+Android. Bad Epoll is one of them.
+
+	Bad Epoll can also be triggered from inside
+Chrome's renderer sandbox, which blocks almost every
+other kernel bug. A renderer exploit could therefore
+chain with Bad Epoll to achieve kernel code
+execution, the same impact Project Zero demonstrated
+in "[From Chrome renderer code exec to kernel with
+MSG_OOB](https://projectzero.google/2025/08/from-chrome-renderer-code-exec-to-kernel.html)".
+
+    No kill-switch. Copy Fail and its variants can be
+neutralized by unloading their vulnerable modules, but
+epoll has no such option. It is a core kernel feature
+that the operating system, network services, and
+browsers all rely on. The only way to fix it is to
+apply the patch.
+
+    Tiny race window, but the attack is 99% reliable.
+The bug's race window is only about six instructions
+wide, and a normal attempt almost never hits it. The
+exploit widens that window and runs a retry loop
+that never crashes the kernel. The result is a 99%
+reliable exploit, as the [attack
+overview](https://github.com/J-jaeyoung/bad-epoll#how-the-attack-works)
+below describes.
+
+The bug Mythos missed
+
+A single
+[commit](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58c9b016e128)
+in 2023 introduced two separate race conditions into
+the epoll code, only about 2,500 lines in all. Both
+turned out to be critical bugs that can lead to
+privilege escalation.
+
+The first was found by Anthropic's
+[Mythos](https://red.anthropic.com/2026/mythos-preview/)
+and reported as
+[CVE-2026-43074](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=07712db80857d5d09ae08f3df85a708ecfc3b61f).
+That result is impressive on its own, because kernel
+race bugs are known to be hard to find. It showed a
+frontier AI model's ability to find race bugs. An
+independent researcher later submitted a [1-day
+exploit](https://github.com/2045castor/security-research/blob/submit_final/pocs/linux/kernelctf/CVE-2026-43074_lts/docs/exploit.md)
+for it to kernelCTF.
+
+The other race is Bad Epoll, which Mythos missed.
+Given that Mythos found the first bug in this small
+epoll code path, it likely examined the same area with
+meaningful depth. We cannot know exactly why it missed
+Bad Epoll, but two factors likely made it hard to
+find.
+
+    The race window is tiny. It is only about six
+instructions wide, so the exact thread interleaving is
+hard to imagine even when looking at the vulnerable
+code.
+
+    There was little runtime evidence. After
+CVE-2026-43074 is fixed, Bad Epoll's use-after-free
+usually does not trigger KASAN, the kernel's main
+memory-error detector. Without that signal, Mythos may
+not have had enough confidence to report it as a real
+bug.
+
+Bad Epoll was hard to fix, too. The maintainers' first
+patch did not fully fix the issue, and a correct patch
+landed only two months after the bug was first
+reported. That is a long time for a kernel that
+usually handles security issues with urgency.
+
+Overall, Bad Epoll shows how difficult race conditions
+are at every stage. They are hard to find even for a
+frontier model, hard to fix correctly, and, as the
+next section shows, hard to exploit reliably. It also
+suggests a vulnerability research direction that
+remains worth exploring in the presence of frontier AI
+models: uncovering real security impact behind narrow
+timing conditions and weak evidence.
+How the attack works
+
+Here is a high-level overview of the attack, for the
+curious.
+
+ep_waiter watches ep_target: the epoll structures
+behind the bug
+
+Two linked epoll objects. Closing both at once
+triggers the race.
+
+Two of epoll's close paths run at the same time and
+collide. One frees an object while the other is still
+writing into it, and that is the use-after-free (UAF).
+
+The close-vs-close race window and how the exploit
+drives it through a timer interrupt
+
+The race window, and how the exploit drives it.
+
+The exploit uses four epoll objects grouped into two
+pairs. One pair triggers the race, while the other
+becomes the victim. From there, the exploit turns the
+8-byte UAF write into a UAF on a file object, and uses
+a cross-cache attack to fully control the file's
+contents.
+
+Arbitrary kernel read: a dangling struct file backed
+by a pipe leaks kernel addresses through
+/proc/self/fdinfo
+
+Turning the bug into an arbitrary kernel memory read
+through /proc/self/fdinfo.
+
+With that control, the exploit gains an arbitrary read
+of kernel memory through /proc/self/fdinfo. Finally,
+it hijacks control flow and executes a ROP chain to
+gain a root shell.
+
+More details are available in the full exploit
+[writeup](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/docs/exploit.md)
+and
+[code](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/exploit/lts-6.12.67/exploit.cpp).
+
+Mitigation
+
+Because epoll cannot be disabled, Bad Epoll has no
+simple workaround. The only remedy is to apply the
+patch.
+
+    Apply upstream commit
+[a6dc643c6931](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a6dc643c69311677c574a0f17a3f4d66a5f3744b),
+or your distribution's backport once it becomes
+available.
+
+Affected versions
+
+Bad Epoll was introduced by
+[58c9b016e128](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58c9b016e12855286370dfb704c08498edbc857a)
+([2023-04-08](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58c9b016e12855286370dfb704c08498edbc857a))
+and fixed by
+[a6dc643c6931](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a6dc643c69311677c574a0f17a3f4d66a5f3744b)
+([2026-04-24](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a6dc643c69311677c574a0f17a3f4d66a5f3744b)).
+
+Many Linux distributions may be affected if they use
+kernels based on v6.4 or newer and have not yet
+backported the fix. Check your distribution's kernel
+security updates for a backport of the fix commit
+above. Older v6.1-based kernels are not affected
+because the bug was introduced in v6.4.
+
+The current exploit is written for the following
+Google kernelCTF targets.
+
+    lts-6.12.67 (LTS), 99% reliable
+    cos-121-18867.294.100 (COS), 98% reliable
+
+The Android exploit is still in progress.
+
+    Pixel 10 (kernel v6.6+): the current PoC triggers
+the UAF and a full root exploit is in progress. We
+will release the Android exploit and writeup once they
+are complete.
+    Pixel 8 and other v6.1-based devices: not
+affected, since the bug was introduced in v6.4.
+
+Timeline
+Date 	Event
+2023-04-08 	The bug was introduced into epoll
+(commit 58c9b016e128).
+2026-02-17 	We reported the bug to
+security@...nel.org.
+2026-02-17 	Maintainers proposed a patch
+prototype, but it was not a correct fix and the
+discussion then stalled.
+2026-04-02 	The fix for the bug Mythos found
+(CVE-2026-43074) landed in mainline.
+2026-04-22 	We re-reported the remaining issue.
+2026-04-24 	The fix for this bug landed in
+mainline (commit a6dc643c6931).
+
+FAQ
+Why is it called "Bad Epoll"?
+
+The name follows the "Bad" series of Android-rooting
+kernel bugs, whose earlier entries include [Bad
+Binder](https://projectzero.google/2019/11/bad-binder-android-in-wild-exploit.html),
+[Bad
+IO_uring](https://github.com/Markakd/bad_io_uring),
+and [Bad Spin](https://github.com/0xkol/badspin). Bad
+Epoll is the epoll counterpart.
+
+Where can I find the technical details?
+
+This page is the short version. You can find the full
+root-cause analysis, exploit writeup, and exploit code
+in the following links.
+
+    [Root-cause writeup](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/docs/vulnerability.md)
+    [Exploit writeup](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/docs/exploit.md}
+    [Exploit code](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/exploit/lts-6.12.67/exploit.cpp)
+
+Credits
+
+Bad Epoll was reported and exploited by [Jaeyoung
+Chung](https://j-jaeyoung.github.io/).
+
+Huge thanks to our research group, [CompSec
+Lab](https://compsec.snu.ac.kr/), and especially to
+[Eulgyu Kim](https://eulgyukim.github.io/), [Woohyuk
+Choi](https://cw00h.github.io/), [Dae R.
+Jeong](https://daeryong.me/) and my advisor
+[Byoungyoung Lee](https://lifeasageek.github.io/), for
+their guidance and support.
+
+---
