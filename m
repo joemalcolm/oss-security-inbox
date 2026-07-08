@@ -1,39 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/17
-Message-ID: <bbc299d8-d61d-4f03-98a7-544fd0096f27@oracle.com>
-Date: Mon, 8 Jun 2026 15:06:19 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: [CVE-2026-9669] CPython: bz2.BZ2Decompressor reuse after error can cause a stack buffer overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/7
+Message-Id: <A2980B4A-82BC-407B-ACF3-AB557F6703B1@stig.io>
+Date: Wed, 8 Jul 2026 15:57:34 +0100
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-49145: App::Ack versions through 3.10.0 for Perl read arbitrary files via --files-from in a project .ackrc
 Content-Type: text/plain; charset=utf-8
 
-The CVE record currently lists versions "affected from 0 before 3.16.0"
+========================================================================
+CVE-2026-49145                                       CPAN Security Group
+========================================================================
+
+        CVE ID:  CVE-2026-49145
+  Distribution:  ack
+      Versions:  through 3.10.0
+
+      MetaCPAN:  https://metacpan.org/dist/ack
+      VCS Repo:  https://github.com/beyondgrep/ack3
 
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-9669] bz2.BZ2Decompressor reuse after error can cause a stack buffer overflow
-Date: 	Mon, 8 Jun 2026 13:07:31 -0700
-From: 	Emma Smith <emma@...atyping.dev>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
+App::Ack versions through 3.10.0 for Perl read arbitrary files via
+--files-from in a project .ackrc
+
+Description
+-----------
+App::Ack versions through 3.10.0 for Perl read arbitrary files via
+--files-from in a project .ackrc.
+
+ack searches up the directory hierarchy from the current directory for
+a project .ackrc and loads its options. The project-source option
+blocklist in App::Ack::ConfigLoader does not include --files-from, so a
+project .ackrc can set it to a path whose listed files ack then reads
+and searches. Version 3.10.0 added --follow to the blocklist;
+--files-from remains accepted.
+
+A project .ackrc committed to an untrusted repository can make ack read
+files outside the project and print their matching lines.
+
+Problem types
+-------------
+- CWE-73 External Control of File Name or Path
+- CWE-426 Untrusted Search Path
+
+Workarounds
+-----------
+Run ack with --noenv, or avoid running ack in a directory tree that
+contains an untrusted .ackrc.
 
 
+Solutions
+---------
+Upgrade to a future ack release.
 
-There is a HIGH severity vulnerability affecting CPython.
 
-bz2.BZ2Decompressor objects could be reused after a decompression error.
-If an application caught the resulting OSError and retried with the same decompressor,
-crafted input could cause the decompressor to resume from an invalid internal state
-and perform out-of-bounds writes to a stack buffer. This could crash the process
-when processing untrusted data.
+References
+----------
+https://metacpan.org/release/PETDANCE/ack-v3.10.0/source/Changes
 
-Please see the linked CVE ID for the latest information on affected versions:
+Timeline
+--------
+- 2026-06-07: Version 3.10.0 released with partial fix for the --follow
+  option.
 
-*https://www.cve.org/CVERecord?id=CVE-2026-9669
-*https://github.com/python/cpython/pull/150600
+Credits
+-------
+Michał Majchrowicz (AFINE), finder
+Marcin Wyczechowski (AFINE), finder
 
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
+
 
 
