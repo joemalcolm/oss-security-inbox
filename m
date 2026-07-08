@@ -1,55 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/14
-Message-ID: <8a64bad9-c692-51d2-31c0-45e2a5aa73d3@apache.org>
-Date: Sun, 13 Sep 2026 05:46:30 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/3
+Message-ID: <4a8403ac-1b1b-4ca3-8a04-649e37f57084@jvf.cc>
+Date: Wed, 8 Jul 2026 07:48:28 -0700
+From: Jay Faulkner <jay@....cc>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82434: Apache Storm Nimbus, Apache Storm Client: Disclosure of the Topology ZooKeeper Credential to Read-Only Users and to Logs 
+Subject: [OSSA-2026-025] Ironic: RBAC Bypass in IPMI Raw Command Execution (CVE-2026-54423)
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+========================================================
+OSSA-2026-025: RBAC Bypass in IPMI Raw Command Execution
+========================================================
 
-Affected versions:
+:Date: July 08, 2026
+:CVE: CVE-2026-54423
 
-- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
-- Apache Storm Client (org.apache.storm:storm-client) 3.0.0 before 3.1.0
 
-Description:
+Affects
+~~~~~~~
+- Ironic: >=22.1.0 <29.0.6, >=30.0.0 <32.0.2, >=33.0.0 <35.0.2, >=36.0.0 
+<37.0.1
+
 
 Description
+~~~~~~~~~~~
+Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software 
+Technology) of the Metal3.io Security Team descovered a vulnerability 
+around IPMI management_interface. A malicious user with access to deploy 
+a node directly via Ironic can specify the IPMI `send_raw` deployment 
+step with a malicious payload and send commands to that nodes' BMC.
+IPMI `send_raw` capability is exposed multiple ways, including via our 
+VendorPassthru interfaces (restricted to system admin) and other step 
+based flows such as cleaning or servicing. This also means any malicious 
+user with the ability to initate manual cleaning and servicing flows 
+with arbitrary steps can also execute this vulnerability.
+Operators can fix this issue by applying the provided patches which 
+apply a blocklist forbidding use of the IPMI send_raw functionality in 
+certain provisioning methods. Clouds currently using IPMI send_raw 
+functionality should carefully review the behavior changes in the 
+provided patches to ensure their workflows are not broken.
 
-When ZooKeeper authentication is configured, Storm deliberately retains
-`storm.zookeeper.topology.auth.payload` in the topology configuration, because workers need it. Nimbus then
-served that configuration verbatim to any caller holding read-only topology permissions, so a user whose
-only grant was the ability to view a topology received its ZooKeeper credential.
 
-That credential is not read-only. The cluster state implementation uses write-capable ACLs for worker
-heartbeats, backpressure and error state, so a recipient can forge or remove that state for the topology
-concerned. It is not a write credential on assignments.
 
-The same advisory covers the submission client, which logged the generated payload at INFO on every
-submission that generated one, and the SASL handlers, which logged it at DEBUG. The credential therefore
-also reached any log aggregation or support bundle collected from the cluster.
+Patches
+~~~~~~~
+- https://review.opendev.org/c/openstack/ironic/+/996477 (2025.1/epoxy)
+- https://review.opendev.org/c/openstack/ironic/+/992732 (2025.1/epoxy)
+- https://review.opendev.org/c/openstack/ironic/+/996475 (2025.2/flamingo)
+- https://review.opendev.org/c/openstack/ironic/+/992719 (2025.2/flamingo)
+- https://review.opendev.org/c/openstack/ironic/+/996466 (2026.1/gazpacho)
+- https://review.opendev.org/c/openstack/ironic/+/992516 (2026.1/gazpacho)
+- https://review.opendev.org/c/openstack/ironic/+/996461 
+(2026.2/hibiscus (development))
+- https://review.opendev.org/c/openstack/ironic/+/989017 
+(2026.2/hibiscus (development))
+- https://review.opendev.org/c/openstack/ironic/+/996473 (Bugfix/33.0)
+- https://review.opendev.org/c/openstack/ironic/+/992718 (Bugfix/33.0)
+- https://review.opendev.org/c/openstack/ironic/+/996470 (Bugfix/34.0)
+- https://review.opendev.org/c/openstack/ironic/+/992717 (Bugfix/34.0)
+- https://review.opendev.org/c/openstack/ironic/+/996463 (Bugfix/37.0)
+- The prerequisite patch was merged before bugfix/37.0 was tagged. 
+(Bugfix/37.0)
 
-Mitigation
 
-Upgrade to 3.1.0, where the payload is removed from the configuration served to read-only callers and is no
-longer written to logs.
+Credits
+~~~~~~~
+- Dmitry Tantsur from Red Hat
+- Tuomo Tanskanen from Ericcson Software Technology
 
-Users who cannot upgrade immediately should rotate `storm.zookeeper.topology.auth.payload` for existing
-topologies, review retained logs and support bundles for the value, and restrict read-only topology
-permissions to trusted principals.
 
-Credit
+References
+~~~~~~~~~~
+- https://bugs.launchpad.net/ironic/+bug/2150458
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54423
 
-The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
 
-Credit:
+Notes
+~~~~~
+- Ironic bugfix branch patches will be available in git for interested
+   operators. We will not perform an additional release from these
+   branches.
 
-The ASF using Claude Agents (finder)
 
-References:
-
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82434
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
