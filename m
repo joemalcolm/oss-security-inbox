@@ -1,56 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/19
-Message-Id: <1CFE6D39-898F-49E9-8036-B6D5801316D5@stig.io>
-Date: Mon, 29 Jun 2026 22:44:41 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/9
+Message-Id: <08ED9A58-8DEB-4DB3-9912-703497E2AB80@stig.io>
+Date: Wed, 8 Jul 2026 16:00:32 +0100
 From: Stig Palmquist <stig@...g.io>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-13758: CryptX versions before 0.088_001 for Perl compare AEAD authentication tags in non-constant time in the streaming decrypt_done path
+Subject: CVE-2026-49147: App::Ack versions through 3.10.0 for Perl print unsanitised terminal escape sequences from filenames in several output modes
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-13758                                       CPAN Security Group
+CVE-2026-49147                                       CPAN Security Group
 ========================================================================
 
-        CVE ID:  CVE-2026-13758
-  Distribution:  CryptX
-      Versions:  before 0.088_001
+        CVE ID:  CVE-2026-49147
+  Distribution:  ack
+      Versions:  through 3.10.0
 
-      MetaCPAN:  https://metacpan.org/dist/CryptX
-      VCS Repo:  https://github.com/DCIT/perl-CryptX
+      MetaCPAN:  https://metacpan.org/dist/ack
+      VCS Repo:  https://github.com/beyondgrep/ack3
 
 
-CryptX versions before 0.088_001 for Perl compare AEAD authentication
-tags in non-constant time in the streaming decrypt_done path
+App::Ack versions through 3.10.0 for Perl print unsanitised terminal
+escape sequences from filenames in several output modes
 
 Description
 -----------
-CryptX versions before 0.088_001 for Perl compare AEAD authentication
-tags in non-constant time in the streaming decrypt_done path.
+App::Ack versions through 3.10.0 for Perl print unsanitised terminal
+escape sequences from filenames in several output modes.
 
-The decrypt_done($tag) form compares it against the computed tag with
-memNE (memcmp() != 0), which short-circuits on the first differing
-byte, so its run time depends on the number of matching leading bytes.
-This affects all five AEAD modes: GCM, CCM, ChaCha20Poly1305, EAX and
-OCB. The one-shot *_decrypt_verify helpers are unaffected; they verify
-the tag inside libtomcrypt with a constant-time comparison.
+When ack prints a filename whose basename contains terminal control
+bytes such as ANSI escape sequences, those bytes reach the terminal
+unchanged. Version 3.10.0 added a _safe_filename helper that sanitises
+the filenames printed by -f, -g, the colored match heading, and
+per-match lines, but the --show-types, -l/-L, and -c paths still emit
+the raw filename.
 
-The timing difference is a tag-verification oracle. An attacker who can
-submit many candidate tags for the same nonce, ciphertext and
-associated data while measuring the timing precisely enough may recover
-the expected tag byte by byte and forge a message that verifies.
+A file whose name embeds cursor-movement or color escapes can overwrite
+or recolor earlier terminal output, or be passed unchanged to a
+downstream consumer.
 
 Problem types
 -------------
-- CWE-208 Observable Timing Discrepancy
+- CWE-150 Improper Neutralization of Escape, Meta, or Control Sequences
+
+Workarounds
+-----------
+Pipe ack output through a filter that strips terminal control
+characters when running ack over untrusted filenames.
+
 
 Solutions
 ---------
-Upgrade to CryptX 0.088_001 or later.
+Upgrade to a future ack release.
 
 
 References
 ----------
-https://github.com/DCIT/perl-CryptX/commit/7e56347d420aaf43b2ee1586f4a230492ccf1642.patch
-https://metacpan.org/release/MIK/CryptX-0.088_001/changes
+https://metacpan.org/release/PETDANCE/ack-v3.10.0/source/Changes
+
+Timeline
+--------
+- 2026-06-07: Version 3.10.0 released with partial fix for most output
+  paths.
+
+Credits
+-------
+Michał Majchrowicz (AFINE), finder
+Marcin Wyczechowski (AFINE), finder
 
 
