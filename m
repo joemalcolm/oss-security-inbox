@@ -1,166 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/09/5
-Message-ID: <87v78e8ids.fsf@gentoo.org>
-Date: Wed, 09 Sep 2026 18:05:51 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/09/1
+Message-ID: <20260709040200.GA30802@openwall.com>
+Date: Thu, 9 Jul 2026 06:02:00 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Cc: Lasse Collin <lasse.collin@...aani.org>
-Subject: Fwd: XZ Utils 5.8.4 and a security fix
+Cc: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+Subject: Re: Linux: GhostLock / CVE-2026-43499 / stack-UAF and LPE in kernels 2.6.39 till 7.1
 Content-Type: text/plain; charset=utf-8
 
--------------------- Start of forwarded message --------------------
-Date: Wed, 9 Sep 2026 19:53:10 +0300
-From: Lasse Collin <lasse.collin@...aani.org>
-To: xz-devel@...aani.org
-Subject: XZ Utils 5.8.4 and a security fix
+On Wed, Jul 08, 2026 at 10:41:29PM +0200, Dr. Thomas Orgis wrote:
+> as I did not see it mentioned on this list yet, there seems to be yet
+> another serioys LPE or at least DoS for the Linux kernel, dubbed
+> GhostLock and assigned CVE-2026-43499:
+> 
+> 	https://nebusec.ai/research/ionstack-part-2/
 
-XZ Utils 5.8.4 is available at <https://tukaani.org/xz/#_stable>.
+Right, and since futex is core functionality there's no good mitigation.
 
-In XZ Utils 5.8.3 and older, an invalid memory write can occur if a
-decoder is reinitialized after allocation failure. For details, see the
-security advisory:
+Other recent futex bugs CVE-2026-23415, CVE-2026-31554, CVE-2026-52973
+have same CVSS 7.8 per kernel CNA as GhostLock CVE-2026-43499.  I don't
+know if they're actually just as bad or hopefully not, but they may be.
+At least one of them had a little bit of publicity back in April via:
 
-    https://tukaani.org/xz/invalid-write-after-reinit.html
+https://mtlynch.io/claude-code-found-linux-vulnerability/
 
-This and a few other fixes have also been committed to the old stable
-branches (v5.2, v5.4, and v5.6) in the xz Git repository. Those fixes
-are marked below. No new 5.2.x, 5.4.x, or 5.6.x releases will be made.
+It's number 3 out of 5 bugs listed in one of the sections of that post:
 
-5.8.4 (2026-09-09)
+ 3. futex: Require sys_futex_requeue() to have identical flags
 
-    * liblzma:
+which became CVE-2026-31554.
 
-        - lzma_alone_decoder(), lzma_lzip_decoder(),
-          lzma_auto_decoder(), and lzma_microlzma_decoder(): Fix an
-          invalid memory access after memory allocation has failed and
-          the application reinitializes the existing decoder to decode
-          a different file. This bug could at least result in a crash.
-          This is tracked as GHSA-5qpq-xqfv-j9pg. CVE number is pending.
-          (Also in v5.2, v5.4, and v5.6.)
+Out of these 3 other CVEs, Red Hat currently recognizes Integrity impact
+only for CVE-2026-52973.  The other two maybe actually don't have such
+impact, or maybe are currently underestimated.  Also, per upstream vulns
+repo they're kernel 6.7+ to 6.17+ (varies by CVE), yet are recognized as
+affecting RHEL 7+ or 9+ (varies by CVE), suggesting the underlying bugs
+may have been backported.
 
-        - lzma_stream_buffer_decode(): Fix wrong error code and,
-          in debug builds, assertion failure. LZMA_BUF_ERROR could
-          be returned with truncated inputs while LZMA_DATA_ERROR
-          is the correct one in this function.
-          (Also in v5.2, v5.4, and v5.6.)
+> As I'd have hoped to get an alert via this list, I figured a notice is
+> in order.
 
-        - Fix a performance issue in the typical use case of
-          lzma_index_cat(). Internally liblzma calls it from
-          lzma_file_info_decoder(), so that was affected too. The
-          problem occurred if the input .xz file was created by
-          concatenating a large number of .xz files. A crafted file
-          could make "xz --list" very slow or effectively hang.
-          Normal decompression doesn't use these functions and
-          thus wasn't affected.
-          (Also in v5.2, v5.4, and v5.6.)
+Yes, thank you!
 
-        - Fix a theoretical integer overflow in lzma_index_cat().
-          (Also in v5.2, v5.4, and v5.6.)
+> Or do we give up to keep track of the stream of serious Linux
+> kernel flaws? :-/
 
-        - Fix bogus memory usage report in lzma_index_decoder() when
-          the .xz Index is obviously invalid. A huge bogus value could
-          cause an integer overflow in lzma_file_info_decoder()'s
-          memory usage reporting due to a missing overflow check,
-          making lzma_memused() report an incorrect tiny value. This
-          bug didn't affect the memory usage limiter in these two
-          decoders; only the reporting via lzma_memused() was affected.
-          (Also in v5.2, v5.4, and v5.6.)
+That depends on what "serious" means.  In practice, proof or at least
+expectation of exploitability matters.  Otherwise it'd be way too many.
 
-        - Fix a too low memory usage report in lzma_index_decoder()
-          if lzma_memused() is called after a part of the Index has
-          already been decoded. The typical use case is to call
-          lzma_memused() immediately after LZMA_MEMLIMIT_ERROR,
-          which did work correctly.
-
-        - Fix copying of check type in lzma_index_dup(). Calling
-          lzma_index_checks() on the duplicated lzma_index returned
-          return garbage a result. lzma_index_dup() is rarely used;
-          liblzma doesn't use it internally and xz itself doesn't use
-          it either.
-          (Also in v5.2, v5.4, and v5.6.)
-
-        - lzma_file_info_decoder() and lzma_index_decoder(): Reject
-          an obviously-invalid Number of Records field earlier.
-          (Partially also in v5.2, v5.4, and v5.6.)
-
-        - Fix a missing synchronization in the threaded .xz decoder. It
-          could make lzma_get_progress() return incorrect progress info.
-          (Also in v5.4 and v5.6.)
-
-        - Detect certain kinds of corrupt inputs slightly earlier in
-          the LZMA2 decoder.
-
-        - ARM64 and LoongArch: Don't use aligned reads on unaligned
-          buffers. This makes the code work on strict-align processors
-          and fixes a sanitizer error in other cases. (Since 5.7.1alpha)
-
-    * xz:
-
-        - Fix a use-after-free when showing an error message if --files
-          or --files0 was specified in the environment variables XZ_OPT
-          or XZ_DEFAULTS.
-          (Also in v5.2, v5.4, and v5.6.)
-
-        - Fix a use-after-free bug when --verbose is used and
-          standard error isn't a terminal. (Since 5.7.1alpha)
-
-        - Make it an error if the totals in "xz --list" exceed the range
-          of 64-bit integers.
-          (Also in v5.2, v5.4, and v5.6.)
-
-    * xz and xzdec on Linux:
-
-        - Add support for Landlock ABI version 9.
-
-        - Use fallback macros for Landlock ABI version 2, 3, and 5
-          (but not 4) if <linux/landlock.h> is older than ABI version 5.
-          This makes the binary slightly more protected if it is run on
-          a kernel that supports newer ABIs than <linux/landlock.h>.
-
-    * Scripts:
-
-        - xzgrep: Fix handling of the ' char at the end of a command
-          line option. For example, the following tricked xzgrep to
-          run "id": xzgrep "-e'" "-e;id;'" somefile
-          (Also in v5.2, v5.4, and v5.6.)
-
-        - xzdiff: Use the C locale (LC_ALL=C) with "sed" and "expr"
-          to ensure safe behavior with invalid multibyte sequences.
-          An equivalent improvement was made in xzgrep in 5.2.6
-          (2022-08-12), but it was forgotten from xzdiff.
-          (Also in v5.2, v5.4, and v5.6.)
-
-    * Tests:
-
-        - Improve a few tests and fuzz targets.
-
-        - Add new test files:
-            * bad-0-index-1.xz (32 bytes)
-            * bad-1-index-huge-uncomp.xz (72 bytes)
-
-    * Man pages:
-
-        - Improve the rendering with OpenBSD's mandoc(1).
-
-        - Reduce indentation of the tables to avoid overlong lines
-          in translated versions of the xz man page.
-
-    * Translations:
-
-        - In translated man pages, workaround an issue with non-ASCII
-          characters in tables.
-
-        - Fix syntax errors in a few man page translations.
-
-        - Update Arabic and German man page translations.
-
-        - Update Brazilian Portuguese, Croatian, Dutch, German, Italian,
-          Korean, Polish, Portuguese, Romanian, and Ukrainian message
-          translations.
-
--- 
-Lasse Collin
-
--------------------- End of forwarded message --------------------
-
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+Alexander
