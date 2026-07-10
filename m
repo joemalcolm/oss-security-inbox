@@ -1,39 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/5
-Message-ID: <CA+v+6sHAEKPnkign1BLuFpz-7D=MeWb51FrwQtVyA48DnfgAiQ@mail.gmail.com>
-Date: Wed, 22 Apr 2026 08:47:31 +0200
-From: Arturo Bernal <abernal@...che.org>
-To: Apache Security Team <security@...che.org>, oss-security@...ts.openwall.com,  HttpComponents Project <dev@...apache.org>,  HttpClient User Discussion <httpclient-users@...apache.org>, xx@....ee
-Subject: [SECURITY] CVE-2026-40542: Apache HttpClient 5.6 SCRAM-SHA-256 mutual authentication bypass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/10/4
+Message-ID: <905cde28-c6bf-d936-850d-5eded3812c9d@apache.org>
+Date: Fri, 10 Jul 2026 06:30:56 +0000
+From: Haonan Hou <haonan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-40007: Apache IoTDB: Unauthenticated unbounded recursion in IoTDB AirGap receiver's E-language prefix parser causes per-connection StackOverflowError 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: moderate 
 
 Affected versions:
 
-   - Apache HttpClient 5.6
+- Apache IoTDB 1.0.0 before 2.0.10
 
 Description:
-A missing critical step in authentication in Apache HttpClient 5.6 may
-allow an attacker to cause the client to accept SCRAM-SHA-256
-authentication without proper mutual authentication verification.
+
+Uncontrolled Recursion, Uncontrolled Resource Consumption vulnerability in Apache IoTDB.
+When pipe_air_gap_receiver_enabled=true, the IoTDB AirGap receiver's
+readLength method calls itself recursively each time it recognises the
+E-language prefix in socket data, with no depth limit. An unauthenticated
+attacker can send a stream of repeated E-language prefixes that drives the
+recursion arbitrarily deep, exhausting the receiver thread's JVM stack and
+raising StackOverflowError.
 
 
-Users are recommended to upgrade to Apache HttpClient 5.6.1. which corrects
-this issue.
+This issue affects Apache IoTDB: from 1.0.0 before 2.0.10.
+
+Users are recommended to upgrade to version 2.0.10, which fixes the issue.
 
 Credit:
-This issue was reported by Rasmus Moorats.
 
+bugbunny.ai (finder)
 
 References:
-https://hc.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-40542
 
-https://github.com/apache/httpcomponents-client/commit/726eac2323d370435d8afca1e0540aa099927f18
-
-
-
-
-Arturo
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-40007
 
