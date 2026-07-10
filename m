@@ -1,53 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/10
-Message-ID: <CABxgSav3DhSkLLs3OVQY9f9jtKJuu1p6eF8Ur=qCEdsTjwzuXg@mail.gmail.com>
-Date: Thu, 2 Jul 2026 03:00:00 +0800
-From: pro Err0r <yijiahuang8980@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/11/1
+Message-ID: <37d297e9-3777-042d-c9e4-e24c92e32ad5@apache.org>
+Date: Fri, 10 Jul 2026 21:14:08 +0000
+From: Piotr Karwasz <pkarwasz@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-54161: NUT upsmon: remote OS command injection via ups.alarm in NOTIFYCMD - fixed in PR #3499 (affects 2.8.3–2.8.5)
+Subject: CVE-2026-49844: Apache Log4j API: Improper serialization of non-finite floating-point values in MapMessage.asJson() 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: moderate 
 
-A remote OS command injection (CWE-78) in Network UPS Tools (NUT) upsmon,
-affecting 2.8.3, 2.8.4 and 2.8.5 (and pre-fix git master). Not affected:
-2.8.2 and earlier.
+Affected versions:
 
-CVE-2026-54161
-  Advisory:
-https://github.com/networkupstools/nut/security/advisories/GHSA-mjgp-j4gm-6qg5
-  Fix:      https://github.com/networkupstools/nut/pull/3499
+- Apache Log4j API (org.apache.logging.log4j:log4j-api) 2.13.1 before 2.25.5
+- Apache Log4j API (org.apache.logging.log4j:log4j-api) 2.26.0 before 2.26.1
+- Apache Log4j API (org.apache.logging.log4j:log4j-api) 3.0.0-alpha1 through 3.0.0-beta2
 
-## Detail
-When a monitored UPS reports ALARM and the operator has NOTIFYCMD set with
-"NOTIFYFLAG ALARM ...EXEC" (a common configuration), upsmon builds a
-notification command by interpolating the server-supplied ups.alarm string
-into a shell command and running it via system(), roughly:
+Description:
 
-    snprintf(exec, sizeof(exec), "%s \"%s\"", notifycmd, notice);
-    system(exec);   /* notice carries the attacker-controlled ups.alarm
-text */
+Improper encoding of non-finite floating-point values during MapMessage JSON serialization in Apache Log4j API produces output that is not valid JSON. This issue affects Apache Log4j API versions 2.13.1 through 2.25.4 and version 2.26.0.
 
-Because the string reaches a shell, a malicious or compromised upsd, a
-man-in-the-middle on
-the plaintext 3493/tcp connection, or a rogue UPS device that can set
-ups.alarm can inject
-shell metacharacters and run arbitrary commands as the upsmon user -- the
-unprivileged
-nut/ups service account on POSIX (upsmon forks and drops privileges before
-notifying); on
-Windows there is no such fork. The same construction was present in
-notify(), async_notify()
-and wall().
+The fix for CVE-2026-34481 did not cover all code paths: when a MapMessage contains a non-finite IEEE 754 value (NaN, Infinity, or -Infinity), MapMessage.asJson() emits the corresponding bare token. RFC 8259 does not permit these tokens, so a conformant parser rejects the resulting document.
 
-## Fix
-PR #3499 stops using system()/a shell and executes the command with an argv
-array
-(execvp() on POSIX, _spawnvp() on Windows), so the alarm text is passed as
-a literal
-argument rather than interpreted by a shell. Distributions shipping
-2.8.3-2.8.5 should
-backport it.
+The defect is reachable only when both of the following conditions hold:
 
--- ja-errorpro (reporter)
+  *  The application uses the  message resolver https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#event-template-resolver-message  of JsonTemplateLayout or any other layout that relies on MapMessage.asJson() or MapMessage.getFormattedMessage(new String[]{"JSON"}).
+  *  The application logs a MapMessage that contains an attacker-controlled floating-point value.
+
+
+An attacker who can supply a non-finite value can cause the affected layout to emit malformed JSON, which may corrupt the enclosing log record or disrupt downstream log ingestion and parsing.
+
+Users are advised to upgrade to Apache Log4j API 2.25.5 or 2.26.1, both of which emit RFC 8259-compliant JSON for non-finite values.
+
+Credit:
+
+Himanshu Anand (finder)
+
+References:
+
+https://logging.apache.org/log4j/2.x/manual/json-template-layout.html#event-template-resolver-message
+https://github.com/apache/logging-log4j2/pull/4163
+https://logging.apache.org/cyclonedx/vdr.xml
+https://logging.apache.org/security.html#CVE-2026-49844
+https://logging.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49844
 
