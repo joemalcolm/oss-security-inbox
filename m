@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/1
-Message-ID: <507454a1-f73a-4c33-a1f1-841d25ad9e1c@pipping.org>
-Date: Sun, 26 Apr 2026 18:17:36 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/10/3
+Message-ID: <a26e9247-7912-aafe-5a90-a410ac2cac39@apache.org>
+Date: Fri, 10 Jul 2026 06:30:08 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: libexpat 2.8.0 fixes CVE-2026-41080 (insufficient entropy)
+Subject: CVE-2026-40006: Apache IoTDB: Unauthenticated heap-exhaustion DoS via unbounded allocation in IoTDB AirGap pipe receiver 
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Severity: important 
+
+Affected versions:
+
+- Apache IoTDB 1.0.0 before 2.0.10
+
+Description:
+
+Memory Allocation with Excessive Size Value, Allocation of Resources Without Limits or Throttling, Missing Authentication for Critical Function vulnerability in Apache IoTDB.
+When pipe_air_gap_receiver_enabled=true, the IoTDB AirGap pipe receiver
+accepts raw TCP connections on port 9780 with no authentication. The
+readLength method reads an attacker-controlled 32-bit integer from the
+socket and readData passes it directly to new byte[length] with no
+upper-bound check. An unauthenticated attacker can cause the JVM to attempt
+an allocation of up to 2,147,483,647 bytes per connection, exhausting heap
+memory and crashing or severely degrading the DataNode process.
 
 
-just a quick note that libexpat 2.8.0 (or "Expat 2.8.0") released
-two days ago is fixing CVE-2026-41080.
+This issue affects Apache IoTDB: from 1.0.0 before 2.0.10.
 
-Some key links are:
+Users are recommended to upgrade to version 2.0.10, which fixes the issue.
 
-- The blog post about it
-   https://blog.hartwork.org/posts/expat-2-8-0-released/
+Credit:
 
-- The change log of release 2.8.0
-   https://github.com/libexpat/libexpat/blob/R_2_8_0/expat/Changes
+bugbunny.ai (finder)
 
-- The fixing pull request
-   https://github.com/libexpat/libexpat/pull/1183
+References:
 
-- The official CVE metadata
-   https://nvd.nist.gov/vuln/detail/CVE-2026-41080
-
-Best
-
-
-
-Sebastian
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-40006
 
