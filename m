@@ -1,44 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/13
-Message-ID: <d1557b70-2e10-6cb9-b376-7e1854b981f2@apache.org>
-Date: Mon, 24 Aug 2026 14:08:32 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/10/5
+Message-ID: <804824c6-e758-67e5-a0b9-96c0110dc76a@apache.org>
+Date: Fri, 10 Jul 2026 06:31:54 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-71300: Apache Camel: Camel-Atmosphere-Websocket: WebSocket dispatch header injection 
+Subject: CVE-2026-40008: Apache IoTDB: Arbitrary Class Instantiation via Pipe Transfer RPC 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-atmosphere-websocket) 4.0.0 before 4.14.9
-- Apache Camel (org.apache.camel:camel-atmosphere-websocket) 4.15.0 before 4.18.4
-- Apache Camel (org.apache.camel:camel-atmosphere-websocket) 4.19.0 before 4.22.0
+- Apache IoTDB 1.0.0 before 2.0.10
 
 Description:
 
-Improper input validation vulnerability in Apache Camel Atmosphere Websocket component.
+Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in Apache IoTDB.
+The pipe processor reads a fully
+qualified Java class name and
+instantiates it using Class.forName().newInstance() without any
+validation or allowlisting.
 
 
+This issue affects Apache IoTDB: from 1.0.0 before 2.0.10.
 
-This issue affects Apache Camel: from 4.0.0 before 4.14.9, from 4.15.0 before 4.18.4, from 4.19.0 before 4.22.0.
-
-
-
-The camel-atmosphere-websocket producer selects which connected WebSocket peers a message is delivered to through Exchange headers, and the string values of those headers sat outside the Camel namespace: websocket.connectionKey and websocket.connectionKey.list, along with websocket.sendToAll, websocket.eventType and websocket.errorType. WebsocketEndpoint extends ServletEndpoint and so inherits HttpHeaderFilterStrategy, which filters only the Camel and camel prefixes; the dotted names therefore fell outside the filtered namespace and were admitted in both directions by every HTTP-family consumer. In a route bridging an HTTP consumer into an atmosphere-websocket producer, an external sender could supply the list header and take over the producer's dispatch decision. WebsocketProducer.process tests the list header before the single-key header, so an injected value discarded the recipient the route had selected: a notification intended for one connected client could be suppressed, or delivered instead to a different client whose connection key the sender knows. The header need not be a query parameter and need not be supplied as a list literally - Camel's HTTP binding promotes a repeated header name, and a bracketed value, to a List when mapping onto the Exchange - so an ordinary inbound HTTP header is sufficient to reach the list-valued branch. This is distinct from CVE-2026-55993, which concerns the consumer-side query-parameter path in the same component. The behaviour dates back to the introduction of these constants, first released in 2.17.0, and was unchanged until this fix.
-
-
-
-Users are recommended to upgrade to version 4.22.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.9. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.4. For deployments that cannot upgrade immediately, strip the dispatch headers at the trust boundary before the producer, for example with removeHeaders(“websocket.*”) placed between the HTTP consumer and the atmosphere-websocket producer. Note that the fix renames the header string values into the Camel namespace, which is a breaking change for routes that set them by literal string: routes referencing the WebsocketConstants fields symbolically are unaffected, and the change is documented in the upgrade guides. As defence in depth, do not bridge an untrusted HTTP consumer directly into a WebSocket producer whose dispatch is header-driven without stripping the dispatch namespace first.
+Users are recommended to upgrade to version 2.0.10, which fixes the issue.
 
 Credit:
 
-Barak Srour from Apiiro (finder)
-Andrea Cosentino (remediation developer)
+Andrea Cosentino (finder)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-71300.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-71300
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-40008
 
