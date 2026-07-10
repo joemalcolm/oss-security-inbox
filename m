@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/7
-Message-ID: <41a8fff9-9180-477e-b872-e22f86684603@oracle.com>
-Date: Tue, 4 Aug 2026 10:23:23 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
-Subject: Re: Bouncy Castle 1.85 release fixes 32 CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/10/2
+Message-ID: <4dc6fa8a-67ab-8934-1bf8-f4f514dc84ac@apache.org>
+Date: Fri, 10 Jul 2026 06:29:24 +0000
+From: Haonan Hou <haonan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-40005: Apache IoTDB: Path Traversal in Pipe File Transfer Receiver 
 Content-Type: text/plain; charset=utf-8
 
-On 8/3/2026 7:37 PM, Peter Gutmann wrote:
-> Alan Coopersmith <alan.coopersmith@...cle.com> writes:
-> 
->> It also says the release contains fixes for the following CVEs:
-> 
-> Given the quantity and sweeping scope of those, was this the result of some
-> new tool used for code analysis?  I'm assuming AI, it sounds like there'd be
-> an interesting backstory to how all of this was turned up.
-I didn't see anything in the announcements from the Bouncy Castle folks
-about that.
+Severity: important 
 
-They do have more info about the CVE's in their wiki, such as:
-https://github.com/bcgit/bc-java/wiki/CVE%E2%80%902026%E2%80%908763
-but I don't see any reference there to how they were found/reported.
+Affected versions:
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+- Apache IoTDB 1.0.0 before 2.0.10
+
+Description:
+
+Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Apache IoTDB.
+An attacker can write arbitrary files anywhere the IoTDB process has write permissions with unsafe API.
+
+
+This issue affects Apache IoTDB: from 1.0.0 before 2.0.10.
+
+Users are recommended to upgrade to version 2.0.10, which fixes the issue.
+
+Credit:
+
+Andrea Cosentino (finder)
+
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-40005
 
