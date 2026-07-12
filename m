@@ -1,90 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/27/1
-Message-ID: <CAKUNu1eJF5GZpfdB_BiCqzBnCbK5fDhGEG2e5QtJXWbsTxH9sQ@mail.gmail.com>
-Date: Wed, 26 Aug 2026 18:19:44 -0700
-From: Syed <anasmohiddinsyed@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Reporter attribution is absent from GitHub's machine-readable vulnerability records, and from the NVD entirely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/12/2
+Message-ID: <20260712165336.GA13021@openwall.com>
+Date: Sun, 12 Jul 2026 18:53:36 +0200
+From: Solar Designer <solar@...nwall.com>
+To: gregdurys.security@...ton.me
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Skillable SCORM launch: userId parameter not validated against session token allows allocation bypass and cross-user DoS
 Content-Type: text/plain; charset=utf-8
 
-This is a measurement, not a vulnerability report.
+Hi,
 
-The CVE v5 format defines a `credits` container naming who found or
-reported an
-issue, with typed roles. The OSV schema defines an equivalent field. GitHub
-collects credit from reporters, requires them to accept it before display,
-shows
-it on the advisory page, and serves it through its advisories REST API. It
-emits
-it into neither standardized format.
+I'm sorry I let this message through (as a moderator).  It shouldn't be
+in here since it's about a hosted service and lacks open source focus.
+We generally don't let this sort of disclosures through to oss-security,
+and upon a closer look I see no reason to have made an exception this
+time.  Well, let this serve as an example of what kind of off-topic
+messages are occasionally being sent in here.  I'd normally redirect the
+sender to post to the full-disclosure list instead.
 
-Measured 26 August 2026, public APIs only:
+On Sun, Jul 12, 2026 at 10:13:27AM +0000, gregdurys.security@...ton.me wrote:
+> Skillable (formerly Learn on Demand Systems) is a hosted lab-
+> provisioning service
 
-238 GitHub-assigned CVE records whose linked advisory publicly credits a
-party
-0 carry `credits`
-those same 238 records carry `metrics` and `problemTypes`
-both optional in the CVE schema, exactly as `credits` is
+> CVE-2026-56877 was assigned by MITRE.
 
-302 GitHub OSV export files for those same advisories
-0 carry `credits`, which the OSV schema does define
+> References
+> ----------
+> [1] Advisory writeup:
+> https://payloadforge.io/beyond-crto-skillable/
 
-4,889 published CVE records, census of a two-week window, no sampling
-2,294 carry `credits` (46.9%)
-GitHub 0/570, Microsoft 0/438, Linux 0/416, MITRE 0/86
-VulnCheck 434/473, WPScan 342/342, VulDB 290/291
-Red Hat 82/143, Apache 60/96
+It's interesting this got assigned a CVE at all even though it's not in
+released software.  The writeup above explains:
 
-43 credit-bearing records traced into NVD API 2.0
-all 43 present, 0 retained credits, 14 with vulnStatus "Analyzed"
-the NVD API 2.0 schema defines no credits field
+> A 2022 CVE Program article explained that cloud service CVEs provide the
+> clearest value where “the vulnerability requires customer or peer
+> action to resolve,” contrasting that with cases where the provider
+> silently fixes and customers have nothing to do. This is the opposite:
+> the vendor won’t fix, so the customer must migrate.
 
-The gap was reported in January 2023, github/advisory-database#1580. GitHub
-replied in March 2023 that "displaying credit information in the JSON files
-would have made this epic 2-3x as much work, so we cut that part for now,"
-and
-said it would be prioritized in a future quarter. The issue is still open.
+and links to:
 
-The advisory named in that original 2023 report, GHSA-c653-6hhg-9x92, still
-returns a credit in the REST API today (user hacdias, type analyst). Its OSV
-file has no credits key. Its record CVE-2023-22460 has no credits container,
-while carrying metrics and problemTypes.
+https://medium.com/@cve_program/dispelling-the-myth-cve-id-assignment-and-record-publication-for-vulnerabilities-affecting-cloud-6d1937a34f1c
 
-For contrast, the Erlang Ecosystem Foundation emits full typed credits on
-18 of
-18 records in the same pool, using cvelib, the free CLI for CVE Services
-maintained by Red Hat Product Security. The format imposes no barrier.
+which says:
 
-Two things follow that are actionable rather than rhetorical. CNAs already
-holding structured credit data can emit it with no format change; this is
-what
-#1580 asked for. And the NVD schema carrying the field would be an additive
-change, without which credits that diligent CNAs do emit are dropped at the
-second hop regardless of anything upstream.
+> CVE Program Blog
+> Sep 13, 2022
+> 
+> There exists a myth that the CVE® Program does not assign CVE IDs and
+> publish CVE Records for vulnerabilities affecting cloud services. This
+> myth has propagated on social media, repeated over and over again by
+> those who really believe it. In fact, the CVE Program has and does
+> assign CVE IDs and publish CVE Records for vulnerabilities affecting
+> cloud services.
+> 
+> The CVE Rules are publicly available. Rule 7.4.4 states:
+> 
+>     7.4.4 CNAs MAY assign a CVE ID to a vulnerability if:
+> 
+>     1. The product or service is owned by the CVE Numbering Authority (CNA)
+> 
+>     2. The product or service is not customer controlled, and
+> 
+>     3. The vulnerability requires customer or peer action to resolve
+> 
+> The CVE Board is responsible for the strategic direction, governance,
+> operational structure, policies, and rules of the CVE Program. Both the
+> CVE Board’s and the CVE Program’s goal is to ensure that users
+> can take action to protect themselves against vulnerabilities. When a
+> vulnerability does not require customer action, issuing a CVE generates
+> a high volume of unactionable noise for users instead of a high-fidelity
+> signal that they can act upon. At the request of participating cloud
+> service providers (CSPs), the Board changed the CVE Program rules over
+> two years ago, to enable CVE ID assignment and record publication for
+> vulnerabilities affecting cloud services.
 
-What I am not claiming: I cannot show intent, and I did not measure GitHub's
-integration cost. Severity and weakness are ordinary steps in GitHub's
-advisory
-flow while its docs introduce credit with the word "optionally," so an
-exporter
-mapping only always-populated fields would produce the same pattern. What
-the
-data does establish is that the omission is not explained by a thin export,
-that
-it spans both machine-readable surfaces, and that it is unchanged three
-years
-and seven months after being identified and costed.
-
-Scripts, identifier lists and verbatim API responses, CC0:
-
-https://www.google.com/url?q=https://doi.org/10.5281/zenodo.22119153&source=gmail&ust=1787879984616000&sa=E
-swh:1:dir:e6945752ec3131c20fe7dd297bb4e29a2d98264c
-https://www.google.com/url?q=https://github.com/SyedAnas01/cve-credits-attribution&source=gmail&ust=1787879984616000&sa=E
-
-The package includes cve-credit-check, which reports whether a given CVE
-identifier carries attribution in its CVE record, its OSV export and its NVD
-copy. Corrections welcome; the raw responses are there to check me against.
-
-Anas Mohiuddin Syed
-ORCID 0009-0005-3736-6430
-
+Alexander
