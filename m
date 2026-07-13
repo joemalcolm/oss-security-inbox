@@ -1,47 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/1
-Message-ID: <8518a778-4999-4dc1-b720-c2acd892dd34@apache.org>
-Date: Tue, 25 Aug 2026 22:46:35 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/4
+Message-ID: <eeeaae98-f8bf-db89-e68b-1bab4527e81a@apache.org>
+Date: Mon, 13 Jul 2026 14:18:49 +0000
+From: Vincent Beck <vincbeck@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65182: Apache Tomcat: Bypass longest prefix security constraint
+Subject: CVE-2026-59245: Apache Airflow FAB provider: FAB auth manager: a DAG named "DAGs" hijacks the global all-DAGs permission (access_control privilege escalation via resource_name() collision) 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: moderate 
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.24
-- Apache Tomcat 10.1.0-M1 through 10.1.57
-- Apache Tomcat 9.0.0.M1 through 9.0.120
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 7.0.109
-- Apache Tomcat before 7.0.0 unknown
+- Apache Airflow FAB provider (apache-airflow-providers-fab) before 3.7.2
 
 Description:
 
-Improper Access Control, Incorrect Authorization vulnerability in Apache 
-Tomcat leads to security constraint bypass if a constraint for a longer 
-path is specified before a more restrictive constraint for a shorter 
-sub-path.
-
-
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
-10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120, from 8.5.0 
-through 8.5.100, from 7.0.0 through 7.0.109.
-
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58, 9.0.121, 
-which fixes the issue.
+In the Apache Airflow FAB auth manager, a DAG whose `dag_id` is `DAGs` collided with the global all-DAGs permission resource name produced by `resource_name()`, so a user granted per-DAG `access_control` on that one DAG was silently granted the global all-DAGs permission (privilege escalation). The escalation triggers when a DAG named `DAGs` exists and a lower-privileged user is given per-DAG access to it, granting that user read/edit access to every DAG. Users are advised to upgrade to `apache-airflow-providers-fab` 3.7.2 or later, which disambiguates the resource-name collision.
 
 Credit:
 
-4ra1n, pyn3rd and unam4 (finder)
+Tran Hieu (h1tr3xnull) (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://lists.apache.org/thread/joosxvzc9b49ttj8lj0jw9mqt0ml767m
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65182
+https://github.com/apache/airflow/pull/69106
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-59245
+
