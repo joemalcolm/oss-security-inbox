@@ -1,36 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/5
-Message-ID: <4b84a898-1af0-6977-a2a1-1bdff95dfcd3@apache.org>
-Date: Sun, 05 Jul 2026 12:04:33 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/3
+Message-ID: <12869722-1c2d-8c2f-fdfe-3fb31fb40c81@apache.org>
+Date: Mon, 13 Jul 2026 14:17:24 +0000
+From: Vincent Beck <vincbeck@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-43865: Apache Camel: Camel-Hazelcast: Unsafe Java deserialization in default-configured managed Hazelcast instances enables remote code execution 
+Subject: CVE-2026-58065: Apache Airflow Git provider: Git provider hook defaults to StrictHostKeyChecking=no, disabling SSH host-key verification 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-hazelcast) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-hazelcast) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-hazelcast) 4.19.0 before 4.21.0
+- Apache Airflow Git provider (apache-airflow-providers-git) before 0.4.1
 
 Description:
 
-Deserialization of Untrusted Data vulnerability in Apache Camel Hazelcast component.
-
-The camel-hazelcast component creates and manages Hazelcast instances using a default configuration that applies no Java deserialization filter. When Camel builds the Hazelcast Config itself - that is, when no user-supplied HazelcastInstance, hazelcastConfigUri, or referenced Config bean is provided - neither Hazelcast's JavaSerializationFilterConfig nor a Camel-side ObjectInputFilter is configured, so objects received over the Hazelcast cluster protocol are deserialized inside Hazelcast's own serialization layer (ObjectInputStream.readObject) before Camel ever processes them. An attacker who can join or otherwise reach the Hazelcast cluster can publish a crafted serialized Java object that is then deserialized on every Camel node, resulting in remote code execution. The exposure is present by default and requires no opt-in endpoint configuration: any route using a hazelcast consumer (hazelcast-topic, hazelcast-queue, hazelcast-seda, hazelcast-map, hazelcast-multimap, hazelcast-replicatedmap, hazelcast-list, hazelcast-set), as well as the HazelcastAggregationRepository and HazelcastIdempotentRepository, is affected whenever the managed instance is created from Camel's default configuration.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
-
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. The fix makes Camel apply a default Hazelcast JavaSerializationFilterConfig (whitelisting the java., javax. and org.apache.camel. class-name prefixes and blacklisting java.net.) to instances it creates from its own default configuration, while leaving any user-supplied Config or HazelcastInstance untouched. For deployments that cannot upgrade immediately, configure a deserialization filter on the Hazelcast instance (Hazelcast JavaSerializationFilterConfig, or the JVM-wide system property -Djdk.serialFilter=!java.net.**;java.**;javax.**;org.apache.camel.**;!*) and enable Hazelcast cluster authentication and TLS to restrict who can reach the cluster.
+The Apache Airflow Git provider runs its git-over-SSH operations with `StrictHostKeyChecking=no` by default, disabling SSH host-key verification. An attacker who can intercept the network path between an Airflow worker and the Git server can impersonate the server (man-in-the-middle), capturing the SSH deploy key or injecting malicious repository content. Deployments that use the Git DAG bundle or Git provider to clone over SSH with a deploy key are affected. The fix changes the default to verify host keys; upgrade to apache-airflow-providers-git `0.4.1` or later and configure a `known_hosts` file.
 
 Credit:
 
-gaorenyusi (finder)
+Siyang Wu (independent researcher) (finder)
+Ephraim Anierobi (remediation developer)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-43865.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-43865
+https://github.com/apache/airflow/pull/69103
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-58065
 
