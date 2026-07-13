@@ -1,37 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/14
-Message-ID: <d39991aa-014b-ccdd-9f59-f9de120a7c1e@apache.org>
-Date: Sun, 05 Jul 2026 11:57:11 +0000
-From: Andrea Cosentino <acosentino@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46591: Apache Camel: Camel-Neo4j: JSON property names from the CamelNeo4jMatchProperties header are interpolated into the Cypher WHERE clause without validation, allowing Cypher injection (incomplete remediation of CVE-2025-66169) 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/7
+Message-Id: <844A4E81-311A-48E1-9D04-B635CD81E7AE@stig.io>
+Date: Mon, 13 Jul 2026 17:51:10 +0200
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-57433: Storable versions before 3.41 for Perl have a signed integer overflow when deserializing a crafted SX_HOOK record
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-57433                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-57433
+  Distribution:  Storable
+      Versions:  before 3.41
 
-- Apache Camel (org.apache.camel:camel-neo4j) 4.10.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-neo4j) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-neo4j) 4.19.0 before 4.21.0
+      MetaCPAN:  https://metacpan.org/dist/Storable
+      VCS Repo:  https://github.com/Perl/perl5
 
-Description:
 
-Improper Neutralization of Special Elements in Data Query Logic vulnerability in Apache Camel Neo4J component.
+Storable versions before 3.41 for Perl have a signed integer overflow
+when deserializing a crafted SX_HOOK record
 
-The camel-neo4j producer builds the Cypher WHERE clause for its match/retrieve and delete operations from the CamelNeo4jMatchProperties map. CVE-2025-66169 addressed Cypher injection through the property values by binding them as query parameters ($paramN), but the property names (the JSON keys of that map) were still concatenated into the query string verbatim in Neo4jProducer.retrieveNodes() and deleteNode(). A property name containing Cypher syntax therefore alters the structure of the executed query. Where a route maps untrusted input into the CamelNeo4jMatchProperties map - for example by passing a request body as the match map, or from a consumer that does not filter inbound Camel* headers - an attacker who controls the JSON key names can inject arbitrary Cypher and read, modify or delete any node or relationship in the Neo4j database. The CamelNeo4jMatchProperties header is itself Camel-prefixed and is filtered by the HTTP header-filter strategy, so a plain HTTP client cannot set it directly; the issue is reachable through routes that deliberately or inadvertently carry untrusted data into that header.
-This issue affects Apache Camel: from 4.10.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+Description
+-----------
+Storable versions before 3.41 for Perl have a signed integer overflow
+when deserializing a crafted SX_HOOK record.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, do not populate the CamelNeo4jMatchProperties map from untrusted input: validate or allow-list the property names (for example against ^[A-Za-z_][A-Za-z0-9_]*$) before the Neo4j producer, and ensure that any consumer feeding such a route filters inbound Camel* / camel* headers so the match header cannot be supplied by an external sender.
+retrieve_hook_common reads a signed 32-bit item count from an SX_HOOK
+record and calls av_extend with that count plus one. A count of I32_MAX
+wraps the addition to a negative value.
 
-Credit:
+A crafted blob passed to thaw or retrieve triggers the overflow;
+av_extend receives the negative count and dies with a panic,
+terminating the deserialization.
 
-Yu Bao from Paypal (finder)
-Andrea Cosentino (remediation developer)
+Problem types
+-------------
+- CWE-190 Integer Overflow or Wraparound
 
-References:
+Solutions
+---------
+Upgrade to Storable 3.41 or later.
 
-https://camel.apache.org/security/CVE-2026-46591.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-46591
+
+References
+----------
+https://github.com/Perl/perl5/commit/e4f681784bcdeaa91ff02a2fa4cdcae5c46779d7.patch
+
 
