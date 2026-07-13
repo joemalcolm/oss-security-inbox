@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/27
-Message-ID: <ecc52e71-0798-438d-8c43-91de641b3780@oracle.com>
-Date: Thu, 30 Jul 2026 14:41:15 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Some Changes to GNOME Security Tracking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/6
+Message-Id: <4707DBC6-795C-4A34-92C3-01733583170F@stig.io>
+Date: Mon, 13 Jul 2026 17:45:47 +0200
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-57432: Perl versions through 5.43.10 have an integer overflow in S_measure_struct leading to an out-of-bounds heap read in pack and unpack
 Content-Type: text/plain; charset=utf-8
 
-https://blogs.gnome.org/mcatanzaro/2026/07/20/some-changes-to-gnome-security-tracking/
-announces some changes to the GNOME project's security bug handling:
+========================================================================
+CVE-2026-57432                                       CPAN Security Group
+========================================================================
 
-1) The disclosure deadline is cut from 90 days to 30 days, as most
-    GNOME maintainers that fix bugs during the embargo do so within
-    the first 30 days.  This is effective for new bugs reported starting
-    August 1.
+        CVE ID:  CVE-2026-57432
+  Distribution:  perl
+      Versions:  through 5.43.10
 
-2) The GNOME security team will no longer forward vulnerability reports
-    to projects that ban AI-generated content, since most reports they
-    get these days have at least some AI-generated content.
+      MetaCPAN:  https://metacpan.org/dist/perl
+      VCS Repo:  https://github.com/Perl/perl5
 
-3) Michael Catanzaro will be stepping down in November, after 6 years
-    of handling this work for GNOME.  He's looking for someone to step
-    up to replace him.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Perl versions through 5.43.10 have an integer overflow in
+S_measure_struct leading to an out-of-bounds heap read in pack and
+unpack
+
+Description
+-----------
+Perl versions through 5.43.10 have an integer overflow in
+S_measure_struct leading to an out-of-bounds heap read in pack and
+unpack.
+
+S_measure_struct adds each item's size times its repeat count to a
+running total with no overflow check, so a large repeat count in a pack
+or unpack template wraps the signed SSize_t total negative. The @, X,
+and x position codes then guard their moves with a signed length
+comparison that passes when the length is negative, advancing the
+buffer pointer out of bounds.
+
+A template derived from untrusted input can read heap memory past the
+buffer and return it to the caller.
+
+Problem types
+-------------
+- CWE-190 Integer Overflow or Wraparound
+- CWE-125 Out-of-bounds Read
+
+Solutions
+---------
+Apply the upstream patches. The fix is included in the Perl 5.43.11
+development release.
+
+
+References
+----------
+https://github.com/Perl/perl5/commit/5f7eb6bbbe0510964e3fb1d6bb691e5445913e55.patch
+https://github.com/Perl/perl5/commit/40754edc72dd3e513d758153c0e2f0215897740e.patch
+
 
