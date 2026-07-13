@@ -1,28 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/9
-Message-ID: <5af25190-5423-2e94-a093-89b0467932a0@apache.org>
-Date: Tue, 04 Aug 2026 17:49:39 +0000
-From: Robbie Gemmell <robbie@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/1
+Message-ID: <d9afdb5b-f3a2-4e93-4c27-3257e9c1a632@apache.org>
+Date: Mon, 13 Jul 2026 02:08:15 +0000
+From: Jerry Shao <jshao@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66273: Apache Qpid Proton-J: Type size/count handling can lead to excessive allocation pre-authentication 
+Subject: CVE-2026-41041: Apache Gravitino: URL path injection via unencoded user-supplied identifiers in MCP REST client f-string URL construction, enabling path traversal to unintended API endpoints. 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low 
 
 Affected versions:
 
-- Apache Qpid Proton-J (org.apache.qpid:proton-j) through 0.34.1
+- Apache Gravitino 1.0.0 before 1.2.1
 
 Description:
 
-A pre-authentication attacker could leverage type size/count handling to cause excessive allocation leading to potential denial of service.
+URL path injection via unencoded user-supplied identifiers vulnerability in Apache Gravitino.
 
-This issue affects Apache Qpid Proton-J: through 0.34.1.
+This issue affects Apache Gravitino: from 1.0.0 before 1.2.1.
 
-Users are recommended to upgrade to version 0.35.0, which fixes the issue.
+Users are recommended to upgrade to version 1.2.1, which fixes the issue.
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66273
+https://gravitino.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-41041
 
