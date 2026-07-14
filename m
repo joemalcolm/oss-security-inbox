@@ -1,57 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/5
-Message-Id: <E4CFC743-A21C-448F-8141-5E9FF5E1F22B@stig.io>
-Date: Mon, 13 Jul 2026 17:43:01 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-13221: Perl versions through 5.43.9 produce silently incorrect regular expression matches when an alternation of more than 65535 fixed string branches is compiled into a trie in Perl_study_chunk
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/14/1
+Message-ID: <20260714000328.GE858880@qaa.vinc17.org>
+Date: Tue, 14 Jul 2026 02:03:28 +0200
+From: Vincent Lefevre <vincent@...c17.net>
+To: oss-security@...ts.openwall.com
+Cc: security@...ian.org
+Subject: Re: new af_alg exploit in the wild?
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-13221                                       CPAN Security Group
-========================================================================
+On 2026-07-14 01:19:18 +0200, Bernd Zeimetz wrote:
+> Hi oss-sec,
+> 
+> few hours ago we had a webhost running Debian kernel 6.12.90+deb13.1-amd64
+> being compromised using a root exploit.
+> Unfortunately not with many useful traces left, the only obvious
+> happening was loading the af_alg module (not used by other modules).
+> 
+> I know that af_alg is marked as deprecated for 7.2, but is there any
+> known exploit or issue that affects kernels of current distribution?
+> 
+> We've blacklisted the module everywhere now.
 
-        CVE ID:  CVE-2026-13221
-  Distribution:  perl
-      Versions:  through 5.43.9
+https://copy.fail/ suggests to blacklist algif_aead.
+Or is this another vulnerability?
 
-      MetaCPAN:  https://metacpan.org/dist/perl
-      VCS Repo:  https://github.com/Perl/perl5
-
-
-Perl versions through 5.43.9 produce silently incorrect regular
-expression matches when an alternation of more than 65535 fixed string
-branches is compiled into a trie in Perl_study_chunk
-
-Description
------------
-Perl versions through 5.43.9 produce silently incorrect regular
-expression matches when an alternation of more than 65535 fixed string
-branches is compiled into a trie in Perl_study_chunk.
-
-When such branches are combined into a trie, the delta between the
-first branch and the shared tail is stored in a 16-bit field. A branch
-count above 65535 overflows the field, and the trie's match decision
-table is truncated with no warning or error.
-
-A pattern of this shape produces false positive matches (matching
-strings it should not) and false negative matches (failing to match
-strings it should). When such a pattern gates an access or filtering
-decision, the result is wrong.
-
-Problem types
--------------
-- CWE-190 Integer Overflow or Wraparound
-
-Solutions
----------
-Apply the upstream patch. The fix is included in the Perl 5.43.10
-development release.
-
-
-References
-----------
-https://github.com/Perl/perl5/commit/03f74bbbd3a68350d926ee93d56ee4808c28c4c7.patch
-https://github.com/Perl/perl5/issues/23388
-
-
+-- 
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
