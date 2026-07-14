@@ -1,38 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/11
-Message-ID: <f877c396-5beb-5a08-501e-67e7e80042c4@apache.org>
-Date: Mon, 06 Jul 2026 07:07:31 +0000
-From: Haonan Hou <haonan@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-24013: Apache IoTDB: Authentication Bypass via Forged SessionID in Thrift RPC 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/14/13
+Message-ID: <11e8c352-5318-4566-ada9-8a82d8428529@cpansec.org>
+Date: Tue, 14 Jul 2026 16:36:34 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-60082: DBI versions before 1.651 for Perl do not enforce statement handle consistency with the row
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
 
-Affected versions:
+========================================================================
+CVE-2026-60082                                       CPAN Security Group
+========================================================================
 
-- Apache IoTDB 1.3.3 before 2.0.8
+         CVE ID:  CVE-2026-60082
+   Distribution:  DBI
+       Versions:  before 1.651
 
-Description:
-
-Authentication Bypass by Spoofing vulnerability in Apache IoTDB.
-Certain Thrift RPC query handlers lack strict validation of the sessionId
-parameter. An attacker can construct requests with a forged sessionId and,
-without performing openSession authentication, receive valid query results.
-This allows authentication bypass and unauthorized reading of time-series
-data.
+       MetaCPAN:  https://metacpan.org/dist/DBI
+       VCS Repo:  https://github.com/perl5-dbi/dbi
 
 
-This issue affects Apache IoTDB: from 1.3.3 before 2.0.8.
+DBI versions before 1.651 for Perl do not enforce statement handle
+consistency with the row
 
-Users are recommended to upgrade to version 2.0.8, which fixes the issue.
+Description
+-----------
+DBI versions before 1.651 for Perl do not enforce statement handle
+consistency with the row.
 
-Credit:
+When the statement handle had no fields but the source row was
+non-empty, the internal row-buffer helper would read from a negative
+array index.
 
-Yan Nan (Detecon Security Lab) (finder)
+This could be triggered by a caller supplying inconsistent metadata and
+rows to the prepare method.
 
-References:
+Problem types
+-------------
+- CWE-125 Out-of-bounds Read
 
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-24013
+Solutions
+---------
+Upgrade to version 1.651 or later.
+
+
+References
+----------
+https://github.com/perl5-dbi/dbi/security/advisories/GHSA-rwhc-hhmv-cjvg
+https://metacpan.org/release/HMBRAND/DBI-1.651/changes
+https://github.com/perl5-dbi/dbi/commit/397868704291bbf0989b97e2c0661189890653e2.patch
+
+
 
