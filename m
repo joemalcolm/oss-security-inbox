@@ -1,34 +1,117 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/13
-Message-ID: <311fe3a5-ef71-32ed-a994-3963bd69552e@apache.org>
-Date: Tue, 08 Sep 2026 16:32:20 +0000
-From: Niko Oliveira <onikolas@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-75156: Apache Airflow FAB provider: FAB Azure AD OAuth: id_token issuer/audience not validated — cross-tenant authentication bypass 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/14/12
+Message-Id: <E1wjbt4-001ipR-2I@xenbits.xenproject.org>
+Date: Tue, 14 Jul 2026 12:05:22 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 498 v2 (CVE-2026-42491) - XAPI: Missing TLS verification in some SDKs
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+            Xen Security Advisory CVE-2026-42491 / XSA-498
+                               version 2
 
-- Apache Airflow FAB provider (apache-airflow-providers-fab) 3.7.3 before 3.8.1
+              XAPI: Missing TLS verification in some SDKs
 
-Description:
+UPDATES IN VERSION 2
+====================
 
-Apache Airflow FAB provider versions 3.7.3 through 3.8.0 do not validate the issuer or audience of Azure AD `id_token`s during OAuth login. Deployments are affected only when the FAB auth manager is configured with Azure AD as an OAuth provider. Because the signing keys are fetched from Microsoft's **multi-tenant** JWKS endpoint, an `id_token` minted in *any* Azure tenant — including one the attacker creates — passes signature verification, and the username and role assignments are then read from that attacker-controlled token. Anyone able to register an Azure tenant can therefore authenticate to the Airflow UI with no prior access to the deployment.
+Public release.
 
-The fix for **CVE-2026-59243** was incomplete, and this advisory closes the remaining gap: that fix made the provider verify the `id_token` signature, but did not add issuer or audience checks. Operators who already applied the CVE-2026-59243 fix are **still affected and must upgrade again** — 3.7.3 is the release that shipped that fix, so every version containing it falls inside this affected range. Upgrade to apache-airflow-providers-fab `3.8.1` or later.
+ISSUE DESCRIPTION
+=================
 
-Credit:
+XAPI provides SDKs; bindings for the API in various programming
+languages.  These are artefacts from a build of XAPI, intended for
+integration into 3rd party products.
 
-Roberto Nunes (finder)
-NEO AI Engineer (@neo-ai-engineer, ProjectDiscovery) (tool)
-Jarek Potiuk (remediation developer)
+In all SDKs, there is a main RPC connection to the XAPI host.  TLS for
+this connection is verified properly, or delegated to the 3rd party
+logic, in all language bindings.
 
-References:
+There are also certain HTTP handlers which open a separate connection to
+the XAPI host.  For two of the language bindings only (C# and
+Powershell), TLS verification is improperly implemented on these
+connections.
 
-https://github.com/apache/airflow/pull/71735
-https://www.cve.org/CVERecord?id=CVE-2026-59243
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-75156
+IMPACT
+======
 
+A malicious actor able to perform a Man-in-the-Middle attack on the
+network communication between a program using one of the affected SDKs
+and a host running XAPI may be able to intercept the communication and:
+
+ * Steal a session token, allowing for hijack of the administrative
+   session, or
+ * Read or tamper with exported/imported disk images, host backups, RRD
+   (performance) data and patches/updates in transit.
+
+VULNERABLE SYSTEMS
+==================
+
+This issues has been present in the XAPI C# and Powershell SDKs since
+TLS support was added.
+
+MITIGATION
+==========
+
+There are no known mitigations.
+
+CREDITS
+=======
+
+This issue was discovered by the Veeam Team.
+
+RESOLUTION
+==========
+
+Applying the attached patch to XAPI master will generate fixed SDKs.
+3rd party programs using vulnerable SDKs must be rebuilt against the
+fixed SDKs.
+
+xsa498.patch           XAPI master
+
+$ sha256sum xsa498*
+f2db9e16561edc59b920e0ed95cce3a19147abc6eb2b8500bd73b87dc285d4ba  xsa498.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpWJfMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgYEH/jqpKmvSl2oVn5v8Wdk3KZfOxW67ejyA5NpUyW1i
+MOwFQyA7gCrxwDaHN62u0aabs4kJNErOzeuVPCtElIyQN+bpB/5lR6nxnxQaQM8K
+Ddhtg6rFQfP121+XGYjtbUOr5fvDkLu290XExow5XWKNmk3P1B3HKImPtkmzGpN6
+z9FceAqzGX9N7eCPw3waMGsy50/n8L9cLvkyjPHpfb5beTq0AVQFJVD38P8humk0
+xY9r+Iq0aGCxyyEZkHJsDaQfuKo3OYGPVoEEB5YiXPS+1P72lRrwkSFL+qJqAPLn
+pDAqAGx1wRYvM6zITDnqbwnBYQ7je3UNZlMVEJj2dHWDOLs=
+=3Knk
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa498.patch" of type "application/octet-stream" (44706 bytes)
