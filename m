@@ -1,42 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/3
-Message-ID: <50e3238d-3970-4870-8378-1a8bf7fd191a@beuc.net>
-Date: Thu, 18 Jun 2026 15:11:47 +0200
-From: Sylvain Beucler <beuc@...c.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/15/6
+Message-ID: <51f9d7f3-b4b6-401b-8ae3-98e42e2ba171@tuxera.com>
+Date: Wed, 15 Jul 2026 21:29:10 +0300
+From: Rostislav <rostislav@...era.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+Subject: Multiple vulnerabilities in ntfs-3g
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Hello oss-security,
 
-On 14/06/2026 00:32, Solar Designer wrote:
-> On Mon, Jun 08, 2026 at 07:46:07PM -0400, David A. Wheeler wrote:
-> I greatly appreciate that Apache projects post their CVE disclosures in
-> here, but it does sometimes result in a lot of messages for the same
-> project on the same day.  Also sometimes individual CVEs are missed -
-> like for the previous (not the latest) Apache httpd set of CVEs, I spent
-> some time to ensure all were eventually brought in here, as initially
-> some were not.  If some CVE disclosures are similarly missed for a less
-> popular Apache project, this would remain unnoticed (maybe already was).
-> 
-> I understand it took time and effort to get the current system working
-> well, but maybe it's time for someone at Apache to start looking into
-> updating the system to group CVE disclosures by project and release.
-> 
-> Ditto for Perl CPAN.
+Multiple vulnerabilities have been discovered in ntfs-3g. A new version 
+2026.7.7 is now available at https://github.com/tuxera/ntfs-3g
 
-I skim through the oss-security posts as part of CVE triaging for Debian 
-Long Term Support.
+The following vulnerabilities have been fixed:
+- (ntfscat) Fix heap memory corruption when processing a corrupt or 
+maliciously crafted filesystem. (CVE-2026-42616)
+- Fix heap memory corruption when copying index data from root to an 
+index block in a corrupt or maliciously crafted filesystem. (CVE-2026-42617)
+- Fix single-byte heap buffer overflow when decompressing maliciously 
+crafted compressed file data. (CVE-2026-42618)
+- Fix heap buffer overflow when copying the tail data of an index block 
+to a freshly allocated block. (CVE-2026-46569)
+- Fix out-of-bounds read when processing symlink reparse data in a 
+corrupt or maliciously crafted filesystem. (CVE-2026-46571)
+- Fix heap memory corruption for maliciously crafted or corrupt index 
+data descending to an out-of-bounds tree depth. (CVE-2026-46570)
+- Fix heap buffer overflow for maliciously crafted or corrupt index data 
+during a node split. (CVE-2026-46572)
+- Fix heap buffer overflow when building inherited ACL data. 
+(CVE-2026-56135)
+- Fix out of bounds access when clearing an index root in maliciously 
+crafted or corrupt index data. (CVE-2026-56136)
 
-I'd rather see projects group their notifications by release (which is 
-when we usually have to act in the distros), as Alexander suggested, 
-instead of sending them individually / automatically.
-For example, I don't need 10 notifications for a single project release 
-that we don't even package at Debian.
+Direct link to download version 2026.7.7:
+https://tuxera.com/opensource/ntfs-3g_ntfsprogs-2026.7.7.tgz
 
-This way, I believe there would be no need for a separate discussion 
-list. With a separate list, it may also be confusing the receive only 
-reactions to (part of) the CVE announcement, without the initial CVE.
+Patches that can be applied on top of version 2026.2.25:
+https://download.tuxera.com/opensource/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/ntfs-3g_2026.2.25_cve_2026-04_patches.tar.gz
 
-Cheers!
-Sylvain
+Patches that can be applied on top of version 2022.10.3:
+https://download.tuxera.com/opensource/e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855/ntfs-3g_2022.10.3_cve_2026-04_patches.tar.gz
+
+SHA256 checksums:
+d67b769025d32860549d35c2147e45024d172f81c540d750390ce3602c059dab 
+ntfs-3g-2026.7.7.tar.gz
+769a955e66330bdb13c60e0712d6183700ca7592f37b9a3648e22fb57c15bbbe 
+ntfs-3g_2026.2.25_cve_2026-04_patches.tar.gz
+ad33d9ed056d865e4bd618f00dbed57d9b61c5f37321fc18b75935ae88cfa821 
+ntfs-3g_2022.10.3_cve_2026-04_patches.tar.gz
+
+We would like to thank Nozomi Networks for reporting the vulnerabilities 
+and coordinating disclosure with us.
