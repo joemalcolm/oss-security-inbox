@@ -1,39 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/27
-Message-ID: <17526b71-d43a-4fa6-b465-3a6517242ff4@oracle.com>
-Date: Mon, 14 Sep 2026 10:56:45 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/15/1
+Message-ID: <65e58b83-3244-a135-d9c2-e7e470fea900@apache.org>
+Date: Wed, 15 Jul 2026 05:15:06 +0000
+From: Terence Monteiro <terencemo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Cpython: [CVE-2026-82049] tarfile extraction filters allow file modification and content disclosure via hard link to symlink
+Subject: CVE-2026-35152: Apache Fineract: SQL injection in runreports endpoint 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
 
+Affected versions:
 
+- Apache Fineract through 1.14.0
+- Apache Fineract 1.15.0 unaffected
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-82049] tarfile extraction filters allow 
-file modification and content disclosure via hard link to symlink
-Date: 	Mon, 14 Sep 2026 17:59:38 +0100
-From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
-CC: 	Stan Ulbrych <stanulbrych@...il.com>
+Description:
 
-There is a HIGH severity vulnerability affecting CPython.
+A SQL Injection vulnerability exists in Apache Fineract's Report Execution API (runreports endpoint) in versions up to and including 1.14.0. Report parameter values are incorporated into the generated SQL query without sufficient validation, allowing an authenticated user with permission to run reports to inject arbitrary SQL via crafted parameter values. This can be leveraged to perform unauthorized access to data beyond what the report was designed to expose. Users are recommended to upgrade to a version containing the fix.
 
-In CPython 3.13 and earlier, the tarfile module's data and tar extraction 
-filters are vulnerable to crafted archives containing a hard link to a symbolic 
-link. Such archives may cause extraction to modify the permissions or 
-modification time of a file outside the destination directory, or expose the 
-contents of that file within the extracted tree.
+Credit:
 
-Please see the linked CVE ID for the latest information on affected versions:
+JD Security Shenyi Team (finder)
+Geo Chen (reporter)
+Quac Tran (reporter)
+Terence Monteiro (@terencemo) (remediation developer)
+Ádám Sághy (@adamsaghy) (remediation reviewer)
+Aleksandar Vidakovic (@vidakovic) (remediation reviewer)
 
-* https://www.cve.org/CVERecord?id=CVE-2026-82049
-* https://github.com/python/cpython/pull/157192
+References:
 
--- 
-Stan Ulbrych  (https://stan.ulbrych.org <https://stan.ulbrych.org>)
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
+https://github.com/apache/fineract/pull/5980
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-35152
+
