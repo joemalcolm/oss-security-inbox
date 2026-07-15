@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/33
-Message-ID: <8348ba12-be42-5a59-acc9-7ff08fbb4fb7@apache.org>
-Date: Fri, 24 Jul 2026 21:42:03 +0000
-From: Jens Geyer <jensg@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/15/3
+Message-ID: <b403909c-c673-06a7-d887-85bd4878de13@apache.org>
+Date: Wed, 15 Jul 2026 05:21:11 +0000
+From: Terence Monteiro <terencemo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-43871: Apache Thrift: TCompactProtocol varint byte-count limit 
+Subject: CVE-2026-57821: Apache Fineract: Office list: SQL Injection via Subquery in orderBy 
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: important 
 
 Affected versions:
 
-- Apache Thrift (thrift) before 0.24.0
-- Apache Thrift (github.com/apache/thrift) before 0.24.0
-- Apache Thrift (apache/thrift) before 0.24.0
-- Apache Thrift (org.apache.thrift:libthrift) before 0.24.0
+- Apache Fineract through 1.14.0
+- Apache Fineract 1.15.0 unaffected
 
 Description:
 
-Loop with Unreachable Exit Condition ('Infinite Loop') vulnerability in Apache Thrift Python, Go, PHP and Java bindings.This issue affects Apache Thrift: before 0.24.0.
-
-Users are recommended to upgrade to version 0.24.0, which fixes the issue.
+A SQL Injection vulnerability exists in Apache Fineract's Office Search API (GET /api/v1/offices) in versions up to and including 1.14.0. The orderBy request parameter is concatenated into a SQL query without sufficient validation, allowing an authenticated user with permission to view offices to inject arbitrary SQL via a crafted orderBy value. This is a bypass of the ColumnValidator fix introduced for CVE-2024-32838, which does not detect bare subqueries in the ORDER BY position. This can be leveraged to perform time-based blind SQL injection for data exfiltration. Because the injected query blocks the database connection for its full duration, concurrent exploitation can exhaust the application's database connection pool, resulting in denial of service for other users. Users are recommended to upgrade to a version containing the fix.
 
 Credit:
 
-Yu Bao - yubao@...pal.com, who works for paypal.com (finder)
+Venkatraman Kumar (@r3dw0lfsec) at Securin (finder)
+Terence Monteiro (@terencemo) (remediation developer)
+Ádám Sághy (@adamsaghy) (remediation reviewer)
 
 References:
 
-https://thrift.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-43871
+https://github.com/apache/fineract/pull/6048
+https://fineract.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-57821
 
