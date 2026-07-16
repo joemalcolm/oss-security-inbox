@@ -1,75 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/14
-Message-ID: <085c96a4-dda8-4e85-ad48-9f264115585b@jvf.cc>
-Date: Mon, 3 Aug 2026 13:51:53 -0700
-From: Jay Faulkner <jay@....cc>
-To: oss-security@...ts.openwall.com
-Subject: OSSN-0104: Ironic-Python-Agent may fallback to mDNS unexpectedly
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/16/1
+Message-ID: <d7b80d99-7d9c-4506-a55a-95472f13b258@cpansec.org>
+Date: Thu, 16 Jul 2026 17:16:51 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-57074: XML::Bare versions through 0.53 for Perl have an unbounded character lookahead
 Content-Type: text/plain; charset=utf-8
 
-Ironic-Python-Agent may fallback to mDNS unexpectedly
 
-### Summary ###
-Ironic-Python-Agent (IPA) has had support for several releases for
-configuring your agent via multicast DNS (mDNS). This feature's
-design is such that, in some extremely rare cases, a booted IPA
-could be reconfigured or directed to a different Ironic API service.
+========================================================================
+CVE-2026-57074                                       CPAN Security Group
+========================================================================
 
+         CVE ID:  CVE-2026-57074
+   Distribution:  XML-Bare
+       Versions:  through 0.53
 
-### Affected Services / Software ###
-- ironic-python-agent: >=3.7.0 <11.6.2
-
-
-### Discussion ###
-When IPA is booted, the first thing it does is look for a valid
-URL to check into the Ironic API or an Ironic Inspection service.
-The mDNS fallback would, in situations where IPA had no API url
-configured, use mDNS lookups to configure IPA, including the endpoint
-of the Ironic API service. This is typically only used in rare cases
-for bootstrapping clusters with minimal infrastructure using virtual
-media or physical USB thumb drives.
-
-Ironic's default configuration always sends a valid API url. The
-current development branch has been updated to always require an
-explicit opt-in to mDNS fallback, either by setting ``ipa-api-url``
-to ``mdns``, or by setting ``ipa-use-mdns`` to ``True`` on the
-command line.
+       MetaCPAN:  https://metacpan.org/dist/XML-Bare
+       VCS Repo:  https://github.com/nanoscopic/perl-XML-Bare
 
 
-### Recommended Actions ###
-* Ensure all IPA boots are managed by Ironic; do not boot any
-   IPA ramdisks without proper configuration. This is the default
-   behavior but may be different in environments with unique
-   networking or DHCP configurations.
-* Operators utilizing the mDNS discovery features should, before
-   upgrading to 2026.2, ensure they are explicitly enabling mDNS
-   fallback in their virtual media images.
+XML::Bare versions through 0.53 for Perl have an unbounded character
+lookahead
 
-#### Patches ####
-The following patches are backwards incompatible and were not merged
-into stable branches. Operators are welcome to backport them manually
-if they feel it improves their security standing and they do not
-use mDNS fallback.
+Description
+-----------
+XML::Bare versions through 0.53 for Perl have an unbounded character
+lookahead.
 
-2026.2/hibiscus (development):
-- https://review.opendev.org/997637
-- https://review.opendev.org/997638
-- https://review.opendev.org/999337
+The parserc_parse function attempts to check for multicharacter strings
+such as "<![CDATA" or element terminators such as ">" without checking
+that the offsets are within the buffer.
 
-### Credits ###
-- Dmitry Tantsur, Red Hat (Metal3.io Security Team)
-- Tuomo Tanskanen, Ericsson Software Technology (Metal3.io Security Team)
+Truncated strings such as "<a/" can trigger an out-of-bounds read.
 
-### Contacts / References ###
-Authors:
-- Jay Faulkner, G-Research OSS
+Problem types
+-------------
+- CWE-125 Out-of-bounds Read
 
-This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0104
-Original Launchpad bug: 
-https://bugs.launchpad.net/ironic-python-agent/+bug/2160054
-Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
-OpenStack Security : https://security.openstack.org/
-CVE: none
+Workarounds
+-----------
+Apply the patch.
 
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+References
+----------
+https://github.com/nanoscopic/perl-XML-Bare/pull/1
+https://security.metacpan.org/patches/X/XML-Bare/0.53/CVE-2026-57074-r1.patch
+
+
