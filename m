@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/4
-Message-ID: <c4e49725-716f-3b8e-37d0-4a8908d997b4@apache.org>
-Date: Wed, 01 Jul 2026 13:12:32 +0000
-From: Oleg Kalnichevski <olegk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-54399: Apache HttpComponents Core: Unbounded HTTP Header/Line Length in Default Configuration 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/3
+Message-ID: <allVZM9ibZQHlI_4@pjcj.com>
+Date: Fri, 17 Jul 2026 00:05:18 +0200
+From: Paul Johnson <paul@...j.net>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-57076: YAML::Syck versions before 1.47 for Perl allow a heap use-after-free via an anchor name reused as an anchors-table key in syck_hdlr_add_anchor
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+========================================================================
+CVE-2026-57076                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-57076
+  Distribution:  YAML-Syck
+      Versions:  before 1.47
 
-- Apache HttpComponents Core (org.apache.httpcomponents.core5:httpcore5) 5.5-beta1
-- Apache HttpComponents Core (org.apache.httpcomponents.core5:httpcore5) 5.4.2
+      MetaCPAN:  https://metacpan.org/dist/YAML-Syck
+      VCS Repo:  https://github.com/toddr/YAML-Syck
 
-Description:
 
-Uncontrolled Resource Consumption vulnerability in the HTTP/1.1 message parser in Apache HttpComponents Core (5.4.2 and earlier, 5.5-beta1 and earlier) allows an remote attacker to cause a denial of service through memory exhaustion by sending messages with excessive number of headers / excessive header length
+YAML::Syck versions before 1.47 for Perl allow a heap use-after-free
+via an anchor name reused as an anchors-table key in
+syck_hdlr_add_anchor
 
-Credit:
+Description
+-----------
+YAML::Syck versions before 1.47 for Perl allow a heap use-after-free
+via an anchor name reused as an anchors-table key in
+syck_hdlr_add_anchor.
 
-Henry Huang <zhuang3@...pal.com> (finder)
+In the bundled libsyck an anchor name allocated by syck_strndup is
+stored both as node->anchor, freed when the node is freed, and as the
+key in the parser's anchors table. Freeing the node frees the shared
+key, and a later anchor redefinition makes st_delete compare against
+the freed key, so st_strcmp reads freed heap memory. Anchors are a
+standard YAML feature and need no special flags, so this is reached on
+the default Load path.
 
-References:
+Any caller that runs Load or LoadFile on an untrusted document that
+redefines an anchor reaches the read of freed memory.
 
-https://hc.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-54399
+Problem types
+-------------
+- CWE-416 Use After Free
 
+Solutions
+---------
+Upgrade to YAML-Syck 1.47 or later.
+
+
+References
+----------
+https://metacpan.org/release/TODDR/YAML-Syck-1.47/changes
+https://github.com/toddr/YAML-Syck/commit/44c90a109ec3215ee7ce747bd11209835e123d8b.patch
+
+-- 
+Paul Johnson - paul@...j.net
