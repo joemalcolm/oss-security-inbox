@@ -1,31 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/3
-Message-ID: <450ddad4-fedd-7a27-7470-7c4f649446a3@apache.org>
-Date: Tue, 16 Jun 2026 12:15:31 +0000
-From: Jarek Potiuk <potiuk@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50203: Apache Airflow SFTP provider: Path traversal in SFTPHook.retrieve_directory allows local file write outside the destination directory via malicious server-supplied directory-entry names 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/1
+Message-ID: <allT7g0CZsR1l0Xj@pjcj.com>
+Date: Fri, 17 Jul 2026 00:02:15 +0200
+From: Paul Johnson <paul@...j.net>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13713: YAML::Syck versions before 1.47 for Perl allow a use-after-free and double-free via an anchor node freed while still on the parser value stack
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-13713                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-13713
+  Distribution:  YAML-Syck
+      Versions:  before 1.47
 
-- Apache Airflow SFTP provider (apache-airflow-providers-sftp) before 5.8.1
+      MetaCPAN:  https://metacpan.org/dist/YAML-Syck
+      VCS Repo:  https://github.com/toddr/YAML-Syck
 
-Description:
 
-A path traversal in the SFTP provider (`SFTPHook.retrieve_directory` / `SFTPOperator(operation=get)`) let a malicious or compromised remote SFTP server write files outside the configured local destination directory via crafted directory-entry names. No Airflow account is required — the attack surface is any deployment downloading directories from an untrusted SFTP server. Upgrade `apache-airflow-providers-sftp` to 5.8.1 or later.
+YAML::Syck versions before 1.47 for Perl allow a use-after-free and
+double-free via an anchor node freed while still on the parser value
+stack
 
-Credit:
+Description
+-----------
+YAML::Syck versions before 1.47 for Perl allow a use-after-free and
+double-free via an anchor node freed while still on the parser value
+stack.
 
-secuholic (finder)
-Venkatraman Kumar (r3dw0lfsec), Securin (finder)
-Jarek Potiuk (remediation developer)
+In the bundled libsyck, when an anchor name is redefined or removed,
+syck_hdlr_add_anchor and syck_hdlr_remove_anchor free the node stored
+under that name with syck_free_node. That node can still be live on the
+parser's value stack, so syck_hdlr_add_node reaches it again and frees
+it a second time. On a normal build the 48-byte node chunk is freed
+twice and the interpreter aborts. Anchors need no special flags, so
+this is reached on the default Load path, and a 7-byte document that
+redefines an anchor triggers it.
 
-References:
+Any caller that runs Load or LoadFile on an untrusted document that
+redefines an anchor mid-parse crashes the interpreter, a denial of
+service.
 
-https://github.com/apache/airflow/pull/67985
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50203
+Problem types
+-------------
+- CWE-416 Use After Free
+- CWE-415 Double Free
 
+Solutions
+---------
+Upgrade to YAML-Syck 1.47 or later.
+
+
+References
+----------
+https://metacpan.org/release/TODDR/YAML-Syck-1.47/changes
+https://github.com/toddr/YAML-Syck/commit/44c90a109ec3215ee7ce747bd11209835e123d8b.patch
+
+-- 
+Paul Johnson - paul@...j.net
