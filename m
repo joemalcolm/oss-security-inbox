@@ -1,50 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/1
-Message-ID: <b7eiu6dsm5t7qbhcabv742vxhr5tgjkxa6sb2cljs5yzui6ly6@zdb3mj3ldyxj>
-Date: Tue, 21 Jul 2026 16:22:14 +0200
-From: Eduardo Barretto <eduardo.barretto@...onical.com>
-To: oss-security@...ts.openwall.com
-Cc: qsa@...lys.com
-Subject: LPE in snapd and other vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/16/2
+Message-ID: <fda07eb9-1952-4557-b1c0-0dca1ad1a2c5@cpansec.org>
+Date: Thu, 16 Jul 2026 17:17:35 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13401: XML::Bare versions through 0.53 for Perl will hang in an infinite loop when parsing malformed attributes
 Content-Type: text/plain; charset=utf-8
 
-Hi everyone,
 
-Qualys discovered another Local Privilege Escalation (LPE) in snapd snap-confine,
-via Capabilities misconfiguration. Qualys will send an email on top of this one
-with their report, but in the meantime, for this vulnerability we assigned
-CVE-2026-8933, with CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H 7.8 HIGH
+========================================================================
+CVE-2026-13401                                       CPAN Security Group
+========================================================================
 
-The upstream version of snapd containing the fix will be 2.76.1.
+         CVE ID:  CVE-2026-13401
+   Distribution:  XML-Bare
+       Versions:  through 0.53
 
-Also in this version we are fixing/disclosing other two vulnerabilities
-- CVE-2024-5300
-  AppArmor Base Profile Misconfiguration in snapd Permits Confined Snaps
-  Unauthorized Access to Hashed Passwords via systemd-userdbd
-  CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N 5.6 MEDIUM
-  Credits: James Henstridge
+       MetaCPAN:  https://metacpan.org/dist/XML-Bare
+       VCS Repo:  https://github.com/nanoscopic/perl-XML-Bare
 
-- CVE-2026-15226
-  snapd snap-confine Sandbox Confinement Bypass via Omission of setuid
-  Restriction in Seccomp Templates
-  CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N 8.4 HIGH
-  Credits: Zygmunt Krynicki
 
-In Ubuntu those fixes will land in:
+XML::Bare versions through 0.53 for Perl will hang in an infinite loop
+when parsing malformed attributes
 
-Xenial (16.04): snapd - 2.61.4ubuntu0.16.04.1+esm4
-Bionic (18.04): snapd - 2.61.4ubuntu0.18.04.1+esm4
-Focal (20.04): snapd - 2.67.1+20.04ubuntu1~esm3
-Jammy (22.04): snapd - 2.76+ubuntu22.04.1
-Noble (24.04): snapd - 2.76+ubuntu24.04.1
-Resolute (26.04): snapd - 2.76+ubuntu26.04.3
+Description
+-----------
+XML::Bare versions through 0.53 for Perl will hang in an infinite loop
+when parsing malformed attributes.
 
-And we will soon be publishing an advisory:
-https://ubuntu.com/security/notices/USN-8579-1
+The parserc_parse function never advances the attribute-parse state
+cursor on certain malformed attribute forms, looping forever.
 
-We want to thanks again Qualys, Zygmunt and James for their work and patience!
+Nameless attributes such as "<a ='c'>" or unbalanced quotes "<a
+b='''''''c'>" can trigger this condition.
 
-Thanks,
-Eduardo
+Problem types
+-------------
+- CWE-835 Loop with Unreachable Exit Condition ('Infinite Loop')
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+Workarounds
+-----------
+Apply the patch.
+
+
+References
+----------
+https://github.com/nanoscopic/perl-XML-Bare/pull/2
+https://security.metacpan.org/patches/X/XML-Bare/0.53/CVE-2026-13401-r1.patch
+
+
+
