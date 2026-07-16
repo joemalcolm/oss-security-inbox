@@ -1,28 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/30
-Message-ID: <3759be44-9ee8-55b3-304c-23554ff66201@apache.org>
-Date: Tue, 04 Aug 2026 18:49:14 +0000
-From: "Timothy A. Bish" <tabish@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-67591: Apache Qpid ProtonJ2: Incoming session flow control window can be exceeded 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/16/3
+Message-ID: <d4278f25-8ecd-4c9e-859c-d8d2989c85a1@cpansec.org>
+Date: Thu, 16 Jul 2026 17:18:16 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-57073: HTML::Bare versions through 0.04 for Perl have an unbounded character lookahead
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
 
-Affected versions:
+========================================================================
+CVE-2026-57073                                       CPAN Security Group
+========================================================================
 
-- Apache Qpid ProtonJ2 (org.apache.qpid:protonj2) through 1.1.0
+         CVE ID:  CVE-2026-57073
+   Distribution:  HTML-Bare
+       Versions:  through 0.04
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/HTML-Bare
+       VCS Repo:  https://github.com/nanoscopic/perl-HTML-Bare
 
-An authenticated attacker could exceed the session flow control incoming window potentially leading to denial of service.
 
-This issue affects Apache Qpid ProtonJ2: through 1.1.0.
+HTML::Bare versions through 0.04 for Perl have an unbounded character
+lookahead
 
-Users are recommended to upgrade to version 1.2.0, which fixes the issue.
+Description
+-----------
+HTML::Bare versions through 0.04 for Perl have an unbounded character
+lookahead.
 
-References:
+The parserc_parse function attempts to check for multicharacter strings
+such as "<![CDATA" or element terminators such as ">" without checking
+that the offsets are within the buffer.
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-67591
+Truncated strings such as "<a/" can trigger an out-of-bounds read.
+
+Note that the latest version available on CPAN is version 0.02. Newer
+versions are available on the git repository.
+
+Problem types
+-------------
+- CWE-125 Out-of-bounds Read
+
+Workarounds
+-----------
+Apply the patch to version 0.02 (from CPAN) or version 0.04 (from the
+git repository).
+
+
+References
+----------
+https://github.com/nanoscopic/perl-HTML-Bare/pull/2
+https://security.metacpan.org/patches/H/HTML-Bare/0.02/CVE-2026-57073-r1.patch
+https://security.metacpan.org/patches/H/HTML-Bare/0.04/CVE-2026-57073-r2.patch
+
+
 
