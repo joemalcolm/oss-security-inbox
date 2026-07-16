@@ -1,36 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/4
-Message-ID: <7783bab0-773f-c9eb-d3c0-3adc87ca06f4@apache.org>
-Date: Sun, 26 Apr 2026 18:06:52 +0000
-From: Andrea Cosentino <acosentino@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-33454: Apache Camel: Inbound Header Filter Missing in MailHeaderFilterStrategy Allows Remote Code Execution via MIME Header Injection (CVE-2025-30177 Variant) 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/4
+Message-ID: <allVtdyGFI5A4mVX@pjcj.com>
+Date: Fri, 17 Jul 2026 00:06:38 +0200
+From: Paul Johnson <paul@...j.net>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-57077: YAML::Syck versions before 1.47 for Perl allow an out-of-bounds read via an unbounded newline scan in newline_len
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+========================================================================
+CVE-2026-57077                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-57077
+  Distribution:  YAML-Syck
+      Versions:  before 1.47
 
-- Apache Camel (org.apache.camel:camel-mail) 3.0.0 before 4.14.6
-- Apache Camel (org.apache.camel:camel-mail) 4.15.0 before 4.18.1
+      MetaCPAN:  https://metacpan.org/dist/YAML-Syck
+      VCS Repo:  https://github.com/toddr/YAML-Syck
 
-Description:
 
-The Camel-Mail component is vulnerable to Camel message header injection. The custom header filter strategy used by the component (MailHeaderFilterStrategy) only filters the 'out' direction via setOutFilterStartsWith, while it does not configure the 'in' direction via setInFilterStartsWith. As a result, when a Camel application consumes mail through camel-mail (for example via from(\"imap://...\") or from(\"pop3://...\")) the inbound filter check is skipped and Camel-prefixed MIME headers are mapped unfiltered into the Exchange. An attacker who can deliver an email to a mailbox monitored by such a consumer can inject Camel-specific headers that, for some Camel components downstream of the mail consumer (such as camel-bean, camel-exec, or camel-sql), can alter the behaviour of the route. This is the same pattern that was previously addressed in camel-undertow (CVE-2025-30177) and the broader incoming-header filter (CVE-2025-27636 and CVE-2025-29891).
+YAML::Syck versions before 1.47 for Perl allow an out-of-bounds read
+via an unbounded newline scan in newline_len
 
-This issue affects Apache Camel: from 3.0.0 before 4.14.6, from 4.15.0 before 4.18.1.
+Description
+-----------
+YAML::Syck versions before 1.47 for Perl allow an out-of-bounds read
+via an unbounded newline scan in newline_len.
 
-Users are recommended to upgrade to version 4.19.0, which fixes the issue. If users are on the 4.18.x LTS releases stream, then they are suggested to upgrade to 4.18.1. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.6.
+In the bundled libsyck newline_len and is_newline dereference the scan
+pointer, and the following byte for a "\r\n" pair, with no
+NUL-terminator or bounds check. During block-scalar lexing at a
+document boundary the scan runs one byte past the heap lexer buffer.
+This is an incomplete fix of CVE-2025-11683, on a lexer path the
+earlier fix did not cover.
 
-This issue is being tracked as CAMEL-23222 
+Any caller that runs Load or LoadFile on an untrusted document with a
+block scalar at a document boundary reaches the over-read.
 
-Credit:
+Problem types
+-------------
+- CWE-125 Out-of-bounds Read
 
-Hyunwoo Kim (@v4bel) (finder)
+Solutions
+---------
+Upgrade to YAML-Syck 1.47 or later.
 
-References:
 
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-33454
-https://issues.apache.org/jira/browse/CAMEL-23222
+References
+----------
+https://metacpan.org/release/TODDR/YAML-Syck-1.47/changes
+https://github.com/toddr/YAML-Syck/commit/44c90a109ec3215ee7ce747bd11209835e123d8b.patch
+https://www.cve.org/CVERecord?id=CVE-2025-11683
 
+-- 
+Paul Johnson - paul@...j.net
