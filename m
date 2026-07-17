@@ -1,33 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/14
-Message-ID: <69109fda-7689-2fc8-1b4b-71cd5f7f9929@apache.org>
-Date: Wed, 05 Aug 2026 14:27:26 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/6
+Message-ID: <8361f13c-4592-5643-8ce8-0e57268df7da@apache.org>
+Date: Fri, 17 Jul 2026 06:03:41 +0000
+From: Christopher Tubbs <ctubbsii@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-60053: Apache Answer: Residual Administrative API Key Access After Role or Account Revocation 
+Subject: CVE-2026-62764: Apache Accumulo: A user can trigger a graceful shutdown of services without the relevant system permissions 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Answer through 2.0.1
+- Apache Accumulo (org.apache.accumulo:accumulo-server-base) 2.1.4 through 2.1.5
 
 Description:
 
-Insufficient Session Expiration vulnerability in Apache Answer.
+Improper Handling of Insufficient Privileges vulnerability in Apache Accumulo.
+An authenticated, but low-privileged user without system permissions may
+issue a remote command to gracefully shutdown system components
+(compaction-coordinator, compactor, gc, manager, monitor, tserver, or sserver),
+leading to a denial of service.
 
-This issue affects Apache Answer: through 2.0.1.
+This issue affects Apache Accumulo 2.1.4 and 2.1.5.
 
-Administrative API keys remained usable after the owning administrator was demoted or the account was marked inactive, suspended, or deleted, allowing continued access until the keys were explicitly removed.
-Users are recommended to upgrade to version 2.0.2, which fixes the issue.
+Users are recommended to upgrade to version 2.1.6, which fixes the issue.
 
 Credit:
 
-yangxi (reporter)
+Fabian Fleischer (reporter)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-60053
+https://github.com/apache/accumulo/issues/6478
+https://accumulo.apache.org/release/accumulo-2.1.6/
+https://accumulo.apache.org/downloads/
+https://accumulo.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-62764
 
