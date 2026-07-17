@@ -1,29 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/9
-Message-ID: <677aac64-04e0-90d2-1ed5-03303c80b222@apache.org>
-Date: Thu, 11 Jun 2026 17:02:27 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50632: Apache CXF: JNDI Injection Vulnerability in JMSConfigFactory 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/8
+Message-ID: <7eb3b13a-570c-4825-b327-b0cc68f55288@cpansec.org>
+Date: Fri, 17 Jul 2026 13:51:07 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13410: Dancer::Plugin::Auth::Google versions through 0.07 for Perl have TLS verification disabled
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
 
-Affected versions:
+========================================================================
+CVE-2026-13410                                       CPAN Security Group
+========================================================================
 
-- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) 4.2.0 before 4.2.2
-- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) before 4.1.7
+         CVE ID:  CVE-2026-13410
+   Distribution:  Dancer-Plugin-Auth-Google
+       Versions:  through 0.07
 
-Description:
+       MetaCPAN: https://metacpan.org/dist/Dancer-Plugin-Auth-Google
+       VCS Repo:  https://github.com/garu/Dancer-Plugin-Auth-Google
 
-A further incomplete fix for a previous advisory CVE-2026-44417 (Untrusted JMS configuration can lead to RCE) for Apache CXF has been identified, which can allow code execution capabilities, if untrusted users are allowed to configure JMS for Apache CXF. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
 
-Credit:
+Dancer::Plugin::Auth::Google versions through 0.07 for Perl have TLS
+verification disabled
 
-Venkatraman Kumar (r3dw0lfsec), Securin (finder)
+Description
+-----------
+Dancer::Plugin::Auth::Google versions through 0.07 for Perl have TLS
+verification disabled.
 
-References:
+The default user agent is initialised with SSL_verify_mode explicitly
+disabled.
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50632
+An attacker with network man-in-the-middle (MITM) capability between
+the Dancer application and googleapis.com can intercept the OAuth2
+token exchange and userinfo fetch, return a forged access_token and
+user profile, and be logged in to the Dancer application as any Google
+user.
+
+Problem types
+-------------
+- CWE-295 Improper Certificate Validation
+
+Workarounds
+-----------
+There is no caller-side override.
+
+Apply the patch.
+
+
+References
+----------
+https://github.com/garu/Dancer-Plugin-Auth-Google/pull/5
+https://security.metacpan.org/patches/D/Dancer-Plugin-Auth-Google/0.07/CVE-2026-13410-r1.patch
+https://metacpan.org/pod/Furl#HTTPS-requests-claims-warnings!
+
+
 
