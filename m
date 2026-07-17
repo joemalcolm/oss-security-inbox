@@ -1,61 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/8
-Message-ID: <aej+xp8kzTsXycYF@256bit.org>
-Date: Wed, 22 Apr 2026 19:00:54 +0200
-From: Christian Brabandt <cb@...bit.org>
-To: oss-security@...ts.openwall.com
-Subject: [vim-security] OS Command Injection in netrw affects Vim < 9.2.0383
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/10
+Message-ID: <44427891-49fe-41d5-a763-12be8867cee9@cpansec.org>
+Date: Fri, 17 Jul 2026 16:21:11 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-14741: HTTP::Date versions before 6.08 for Perl allow CPU exhaustion via polynomial regex backtracking in parse_date
 Content-Type: text/plain; charset=utf-8
 
-OS Command Injection in netrw affects Vim < 9.2.0383
-=====================================================
-Date: 21.04.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') (CWE-78)
 
-## Summary
-An OS command injection vulnerability exists in the `netrw` standard
-plugin bundled with Vim. By inducing a user to open a crafted URL (e.g.,
-using the `sftp://` or `file://` protocol handlers), an attacker can
-execute arbitrary shell commands with the privileges of the Vim process.
+========================================================================
+CVE-2026-14741                                       CPAN Security Group
+========================================================================
 
-## Description
-When Netrw processes remote or local URLs such as `sftp://host/path` or
-`file://host/path`, it may create temporary files to store transferred
-content. The temporary file name is derived in part from the original
-file name, including its suffix.
+         CVE ID:  CVE-2026-14741
+   Distribution:  HTTP-Date
+       Versions:  before 6.08
 
-The vulnerability exists because the suffix extraction logic in
-`s:GetTempfile()` previously allowed arbitrary characters after the `.` 
-in a filename. This permitted shell metacharacters (e.g., `;`, `|`, `&`) 
-to be embedded in the suffix and propagated into the generated temporary 
-file name.
-
-Since this temporary file name was passed to external commands (such as
-`sftp` or configured file handlers) without proper escaping, attackers 
-could inject arbitrary shell commands. 
-
-## Impact
-The vulnerability allows for arbitrary shell command execution in the 
-context of the Vim process. Exploitation requires the user to open a 
-specially crafted URL, and the injected payload is typically visible in 
-the filename, making stealthy exploitation less likely. Therefore, the 
-severity is rated medium.
-
-## Acknowledgements
-The Vim project would like to thank Joshua Rogers of [AISLE Research 
-Team](https://aisle.com/) for reporting the issue.
-
-## References
-The issue has been fixed as of Vim patch [v9.2.0383](https://github.com/vim/vim/releases/tag/v9.2.0383).
-- [Commit](https://github.com/vim/vim/commit/405e2fb6d54d5653523809e2853d99d1c000a5fc)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-85ch-p2qr-m5gx)
+       MetaCPAN:  https://metacpan.org/dist/HTTP-Date
+       VCS Repo:  https://github.com/libwww-perl/HTTP-Date
 
 
-Best,
-Christian
--- 
-Majestät ist das Vermögen, ohne Rücksicht auf Belohnung oder
-Bestrafung recht oder unrecht zu handeln.
-		-- Goethe, Maximen und Reflektionen, Nr. 730
+HTTP::Date versions before 6.08 for Perl allow CPU exhaustion via
+polynomial regex backtracking in parse_date
+
+Description
+-----------
+HTTP::Date versions before 6.08 for Perl allow CPU exhaustion via
+polynomial regex backtracking in parse_date.
+
+parse_date() matches the date string against a chain of alternative
+regexes, and str2time() delegates to it. Several of these patterns
+place unbounded quantifiers next to each other before a trailing `\s*$`
+anchor. A valid date prefix followed by a long interior run of digits,
+letters, or whitespace and a single trailing byte that defeats the
+final match forces the engine to repartition the run, giving polynomial
+(about quadratic) backtracking. A header value of a few tens of
+kilobytes runs for tens of seconds of CPU.
+
+HTTP::Date parses timestamps such as HTTP `Date`, `Expires`, and
+`Last-Modified` headers, which commonly originate from untrusted
+sources. Any caller that passes an untrusted date header to str2time()
+or parse_date() can be driven to consume unbounded CPU, a denial of
+service.
+
+Problem types
+-------------
+- CWE-1333 Inefficient Regular Expression Complexity
+
+Solutions
+---------
+Upgrade to HTTP::Date 6.08 or later, which rejects input longer than 64
+characters before the date-parsing regexes run.
+
+
+References
+----------
+https://github.com/libwww-perl/HTTP-Date/commit/78c20952cdfbf11e03cf1199ad70f13298a84c5c.patch
+https://github.com/libwww-perl/HTTP-Date/pull/33
+https://metacpan.org/release/OALDERS/HTTP-Date-6.08/changes
+
+Timeline
+--------
+- 2026-07-09: Version 6.08 released with the fix.
+
+
+
