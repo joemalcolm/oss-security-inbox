@@ -1,60 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/18
-Message-ID: <262440af-c81c-434f-9497-c9f6e7156f2f@cpansec.org>
-Date: Thu, 20 Aug 2026 19:16:25 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/9
+Message-ID: <baf2c050-7ce1-4111-9873-e3711ec1393a@cpansec.org>
+Date: Fri, 17 Jul 2026 13:54:54 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-15743: Catalyst::Plugin::Static::Simple versions through 0.38 for Perl mark responses as publicly cacheable
+Subject: CVE-2026-13082: GD::SecurityImage versions through 1.75 for Perl use rand to generate secrets
 Content-Type: text/plain; charset=utf-8
 
 
 ========================================================================
-CVE-2026-15743                                       CPAN Security Group
+CVE-2026-13082                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-15743
-   Distribution:  Catalyst-Plugin-Static-Simple
-       Versions:  through 0.38
+         CVE ID:  CVE-2026-13082
+   Distribution:  GD-SecurityImage
+       Versions:  through 1.75
 
-       MetaCPAN: https://metacpan.org/dist/Catalyst-Plugin-Static-Simple
-       VCS Repo: 
-https://github.com/perl-catalyst/Catalyst-Plugin-Static-Simple
+       MetaCPAN:  https://metacpan.org/dist/GD-SecurityImage
+       VCS Repo:  https://github.com/burak/CPAN-GD-SecurityImage
 
 
-Catalyst::Plugin::Static::Simple versions through 0.38 for Perl mark
-responses as publicly cacheable
+GD::SecurityImage versions through 1.75 for Perl use rand to generate
+secrets
 
 Description
 -----------
-Catalyst::Plugin::Static::Simple versions through 0.38 for Perl mark
-responses as publicly cacheable.
+GD::SecurityImage versions through 1.75 for Perl use rand to generate
+secrets.
 
-The _serve_static method always sets the Cache-Control header to
-"public", with no means of overriding it.  This advises proxies that
-the content may be stored in a shared cache, and may be reused in
-responses to requests from other users. (This includes requests with an
-Authorization header.)
+The random method creates the challenge text used for the CAPTCHA by
+sampling characters from an array using Perl's built-in rand function,
+and generates a (by default) six-character string.
 
-Configuring the expires time to "0" to disable caching, as documented,
-is ignored.
+The built-in rand function is unsuitable for security applications
+because it is predictable and reversible.
 
 Problem types
 -------------
-- CWE-524 Use of Cache Containing Sensitive Information
+- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+- CWE-804 Guessable CAPTCHA
 
 Workarounds
 -----------
-Apply the patch, and configure the default Cache-Control as needed.
+GD::SecurityImage has not been updated since 2018, the module is
+flagged as ADOPTME on CPAN, and the git repository is archived as
+read-only, which prevents issues and pull requests from being created.
 
-For deployments that cannot apply the patch, a method modifier of
-_serve_static in the Catalyst class can be used to override the
-Cache-Control or Expires headers as needed.
+Users are advised to find an alternative solution.
+
+For users who are unable to migrate to an alternative, install
+Crypt::URandom::MonkeyPatch (which will override the built-in rand with
+a wrapper around Crypt::URandom) and apply the patch.
+
 
 References
 ----------
-https://github.com/perl-catalyst/Catalyst-Plugin-Static-Simple/pull/3
-https://security.metacpan.org/patches/C/Catalyst-Plugin-Static-Simple/0.38/CVE-2026-15743-r1.patch
-https://datatracker.ietf.org/doc/html/rfc9111
+https://www.cve.org/CVERecord?id=CVE-2025-40916
+https://security.metacpan.org/patches/G/GD-SecurityImage/1.75/CVE-2026-13082-r1.patch
 
+Timeline
+--------
+- 2018-12-24: Version 1.75 released.
+- 2026-03-10: The git repository was archived.
 
 
