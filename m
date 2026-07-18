@@ -1,77 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/09/4
-Message-ID: <CADsFsETQ_eC5L3feKu43nyx1qKoMwdCDq7a3DS2TTz=TnQ4_tg@mail.gmail.com>
-Date: Wed, 9 Sep 2026 03:02:21 -0400
-From: "Mr. Gatto" <drew.morana@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/18/2
+Message-ID: <956b765e-dad3-4b71-9b83-fbd8da3bfca4@free.fr>
+Date: Sat, 18 Jul 2026 21:05:53 +0200
+From: Gabriel Corona <gabriel.corona@...e.fr>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-37171: SuperTokens Core cross-tenant session isolation bypass (6.0.0-11.4.0)
+Subject: User prompt injection (CSRF) of the llama-server's Web UI (llama.cpp)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi,
 
-This is a disclosure for CVE-2026-37171, a cross-tenant authorization flaw
-in
-SuperTokens Core, the self-hosted authentication server by SuperTokens Inc.
+The Web UI of llama-server accepts a query parameter (?q=...) as an 
+initial user message in a new conversation and auto-submits this message 
+(CSRF). An attacker can trigger an arbitrary initial message through a 
+malicious link. If tool execution is enabled, this can be used for 
+arbitrary code execution, data exfiltration, etc.
 
-Affected: SuperTokens Core (supertokens-core) versions 6.0.0 through 11.4.0.
-CWE: CWE-863 (Incorrect Authorization).
-CVE: CVE-2026-37171 (published; NVD and GitHub Advisory
-GHSA-j7vw-hh5c-2w6x).
+By default, the user is asked to allow each tool execution. The user can 
+choose to allow execution only once or to always use execution without 
+confirmation.
 
-Summary
--------
-SuperTokens Core lacks tenant separation in session operations. The Core
-derives
-the tenant identifier from the access token's "tId" claim and trusts it
-without
-comparing it to the tenant specified in the HTTP request path. As a result,
-an
-authenticated party operating in one tenant can verify, read, regenerate,
-and
-otherwise act on sessions, data, and endpoints belonging to another tenant.
+Depending on which tools are enabled, the impact can be:
 
-Impact
-------
-In a multi-tenant deployment, a party with a valid session in one tenant can
-reach another tenant's sessions and data. This is a cross-tenant
-confidentiality
-and integrity breach within a single SuperTokens Core deployment.
+* arbitrary shell command execution;
+* data exfiltration;
+* etc.
 
-Example
--------
-A request such as:
+The following solution can be used to mitigate this:
 
-POST /<tenantB>/recipe/session/verify
+* disable the Web UI (--no-webui);
+* do not enabled tools (through --tools);
+* do not allow tool execution without confirmation (user configuration);
+* sandbox.
 
-carrying an access token whose "tId" claim is tenantA is served in tenantA's
-context rather than being rejected for the tenantB path. The Core reads the
-tenant from the token, not the path.
+Non-working mitigations:
 
-Mitigation
-----------
-- Treat the SuperTokens Core service as sensitive infrastructure. Keep it
-off
-any untrusted network; the Core admin interface trusts its callers, and by
-default binds to localhost.
-- Set api_keys on the Core so the admin interface is not reachable without
-a key.
-- Upgrade to a fixed release once the vendor ships one. No fixed version is
-named
-in the current CVE record; operators running 6.0.0-11.4.0 should apply the
-network and api_keys mitigations now.
+* using authentication (API keys) does not help if the API key is
+   configured for the target user.
 
-Details / advisory
-------------------
-Full advisory:
-https://www.google.com/url?q=https://whitenbaker.com/supertokens-core-multitenant-advisory&source=gmail&ust=1789023669402000&sa=E
-NVD:
-https://www.google.com/url?q=https://nvd.nist.gov/vuln/detail/CVE-2026-37171&source=gmail&ust=1789023669402000&sa=E
-GitHub Advisory:
-https://www.google.com/url?q=https://github.com/advisories/GHSA-j7vw-hh5c-2w6x&source=gmail&ust=1789023669402000&sa=E
+This has been reported as a public issue (#25790 [1]) as requested in 
+the project's security instructions.
 
-Discoverer: Drew Morana (@dmorana), Whitenbaker.
+Tested on b1003.
+
+[1] https://github.com/ggml-org/llama.cpp/issues/25790
+[2] https://www.varonis.com/blog/reprompt
 
 Regards,
-Drew Morana
-Whitenbaker
 
+Gabriel Corona
+
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
