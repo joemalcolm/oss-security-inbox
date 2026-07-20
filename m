@@ -1,28 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/21
-Message-ID: <20260913103341.142b8061@del.fritz.box>
-Date: Sun, 13 Sep 2026 10:33:41 +0200
-From: Jeroen Roovers <jer@...all.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/8
+Message-ID: <afd925e4-6c6f-f26a-e6c5-4502dabd6ec9@apache.org>
+Date: Mon, 20 Jul 2026 09:20:38 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: AI slops from Eve
+Subject: CVE-2026-57308: Apache Syncope: SQL injection vulnerability in Audit Events search 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 10 Sep 2026 03:35:42 +0200
-Solar Designer <solar@...nwall.com> wrote:
+Severity: important 
 
-> These messages lack a Date header, but they arrived to the list server
-> on September 9 starting 6am UTC and until 11am UTC.
+Affected versions:
 
-Could this be from the same or a similar source as a message from 15 May
-2026[1], also without Date header, with the subject "[oss-security]
-Security Advisory: Multiple Vulnerabilities in llama.cpp GGUF Format
-Parsers"?
+- Apache Syncope 3.0.0-M0 through 3.0.16
+- Apache Syncope 4.0.0-M0 through 4.0.6
+- Apache Syncope 4.1.0-M0 through 4.1.1
+
+Description:
+
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Syncope.
+
+An administrator with adequate entitlements can achieve execution of arbitrary SQL via stacked queries, leveraging unsanitized sort parameters.
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.6, from 4.1.0-M0 through 4.1.1.
 
 
-Kind regards,
-     jer
+Users are recommended to upgrade to version 4.0.7 / 4.1.2, which fix this issue.
 
+Credit:
 
+Lennart Hostettler (finder)
 
-[1] Received: (qmail 20439 invoked by uid 550); 15 May 2026 19:33:58
--0000
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-57308
+
