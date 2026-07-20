@@ -1,75 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/3
-Message-ID: <ff1ae084-d277-4145-bbaa-c13fcbe1afac@cpansec.org>
-Date: Thu, 13 Aug 2026 00:18:02 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/13
+Message-ID: <5d5d51df-b111-447a-8f68-c6ac948fee4f@cpansec.org>
+Date: Mon, 20 Jul 2026 18:56:09 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-17431: PDF::WebKit versions through 1.2 for Perl allow OS command injection via a 2-arg open() of the output path in to_pdf and of stylesheet paths in _style_tag_for
+Subject: CVE-2026-64194: Net::DNS versions through 1.55 for Perl allow Denial of Service via deep DNS compression pointer chains
 Content-Type: text/plain; charset=utf-8
 
 
 ========================================================================
-CVE-2026-17431                                       CPAN Security Group
+CVE-2026-64194                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-17431
-   Distribution:  PDF-WebKit
-       Versions:  through 1.2
+         CVE ID:  CVE-2026-64194
+   Distribution:  Net-DNS
+       Versions:  through 1.55
 
-       MetaCPAN:  https://metacpan.org/dist/PDF-WebKit
-       VCS Repo:  https://github.com/kingpong/perl-PDF-WebKit
+       MetaCPAN:  https://metacpan.org/dist/Net-DNS
+       VCS Repo:  https://www.net-dns.org/svn/net-dns/
 
 
-PDF::WebKit versions through 1.2 for Perl allow OS command injection
-via a 2-arg open() of the output path in to_pdf and of stylesheet paths
-in _style_tag_for
+Net::DNS versions through 1.55 for Perl allow Denial of Service via
+deep DNS compression pointer chains
 
 Description
 -----------
-PDF::WebKit versions through 1.2 for Perl allow OS command injection
-via a 2-arg open() of the output path in to_pdf and of stylesheet paths
-in _style_tag_for.
+Net::DNS versions through 1.55 for Perl allow Denial of Service via
+deep DNS compression pointer chains.
 
-to_pdf reads the generated PDF back from its path argument, and
-_style_tag_for reads each entry of the stylesheets list, by assigning
-the path to a local @ARGV and reading it with the diamond operator,
-which opens each @ARGV element with Perl's 2-arg open(). A value that
-begins or ends with a pipe ("| cmd", "cmd |") is run as a command
-rather than opened as a file, and one that begins with a redirect (">
-path", ">> path") opens that path for write or append. to_file forwards
-its path argument to to_pdf and reaches the same read.
+Net::DNS::DomainName::decode follows RFC 1035 compression pointers by
+recursing into itself with no depth limit. It is possible to construct
+a name which saturates the call stack (at least with larger TCP
+responses), leading to a potential Denial of Service.
 
-Any caller that forwards untrusted input as the output path or as a
-stylesheets entry can run a command under the process UID; with the
-"cmd |" form the command's output is returned in place of the PDF, and
-with the "> path" form the named file is truncated. Stylesheets may
-only be added to an HTML source, so a URL or file source exposes the
-output path alone.
+The guard `$link < $offset` prevents forward and circular chains, but
+still allows arbitrarily long backward chains. The per-offset cache
+(`$cache`) is populated at the start of each call and short-circuits
+only re-traverses of the same offset - the initial descent through a
+fresh chain still recurses at full depth.
+
+A crafted packet can chain two-byte compression pointers so that each
+one points two bytes earlier than the previous, producing a chain
+length of `offset / 2`. For the 14-bit pointer field (max offset 16383)
+this gives up to ~8191 recursive frames. For a TCP DNS message the
+limit is the 16-bit length field (~32767 frames). Perl's default C
+stack handles only a few thousand frames; beyond that the process
+receives SIGSEGV or similar, which is a denial-of-service for any
+application parsing untrusted DNS data.
+
+The vulnerability is triggered by `Net::DNS::Packet->new(\$wire)` i.e.
+any point where the library decodes a DNS message from the network.
 
 Problem types
 -------------
-- CWE-78 Improper Neutralization of Special Elements used in an OS
-   Command ('OS Command Injection')
-- CWE-73 External Control of File Name or Path
+- CWE-674 Uncontrolled Recursion
 
-Workarounds
------------
-No fixed release is available. Apply the patch, which reads both paths
-with a 3-arg open so the value is never interpreted as a command or
-redirect.
-
-Otherwise, do not pass untrusted input as the output path to to_pdf or
-to_file, or as an entry in the stylesheets list.
-
-Note that the wkhtmltopdf project is no longer being developed, and
-users of this package should migrate to alternative solutions.
+Solutions
+---------
+Upgrade to version 1.56 or later.
 
 
 References
 ----------
-https://github.com/kingpong/perl-PDF-WebKit/issues/8
-https://security.metacpan.org/patches/P/PDF-WebKit/1.2/CVE-2026-17431-r1.patch
-https://wkhtmltopdf.org/status.html
+https://www.net-dns.org/blog/#release-candidate-for-netdns-1.56
+https://rt.cpan.org/Ticket/Display.html?id=179946
+https://metacpan.org/release/NLNETLABS/Net-DNS-1.55_01/changes
+
+Timeline
+--------
+- 2026-07-10: Issue reported publicly via RT.
+- 2026-07-10: Version 1.55_01 (release candidate for version 1.56)
+   published on CPAN.
+- 2026-07-18: Version 1.56 published on CPAN.
+
+Credits
+-------
+Steffen Ullrich, reporter
 
 
 
