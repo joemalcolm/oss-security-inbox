@@ -1,36 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/8
-Message-ID: <5bc7e7f7-525b-a1e7-5a3a-406bdb76c94a@apache.org>
-Date: Sun, 05 Jul 2026 12:02:08 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/15
+Message-ID: <adace63e-a27a-a6a3-95e9-34122459b60d@apache.org>
+Date: Mon, 20 Jul 2026 20:19:10 +0000
+From: Thomas Wolf <twolf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46455: Apache Camel: Camel-Keycloak: The access-token validity window is not verified because the IS_ACTIVE check is missing from the TokenVerifier, allowing expired tokens to be accepted 
+Subject: CVE-2026-56452: Apache MINA SSHD: Path traversal in SCP file reception 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-keycloak) 4.18.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-keycloak) 4.19.0 before 4.21.0
+- Apache MINA SSHD (org.apache.sshd:sshd-scp) through 2.18.0
+- Apache MINA SSHD (org.apache.sshd:sshd-scp) 3.0.0-M1 through 3.0.0-M4
 
 Description:
 
-Insufficient Session Expiration vulnerability in Apache Camel Keycloak Component.
+Path traversal in the sshd-scp component of Apache MINA SSHD. Apache MINA SSHD is a Java library for client-side and server-side SSH.
 
-The camel-keycloak security helper KeycloakSecurityHelper.parseAndVerifyAccessToken builds a Keycloak TokenVerifier using withChecks(...) with only the subject-exists check and the realm-URL (issuer) check. Keycloak's TokenVerifier.withChecks(...) appends to an initially empty check list - the upstream default checks are installed only when withDefaultChecks() is called - so the built-in IS_ACTIVE predicate, which validates the token's exp (expiration) and nbf (not-before) claims, is never applied. As a result the helper verifies the token signature, subject and issuer but does not enforce the token's validity window: an access token that is expired, or not yet valid, is accepted as valid. Routes that rely on this helper to authenticate inbound requests therefore accept access tokens that are outside their intended lifetime.
-This issue affects Apache Camel: from 4.18.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. The fix makes KeycloakSecurityHelper.parseAndVerifyAccessToken include the TokenVerifier.IS_ACTIVE check so that expired or not-yet-valid access tokens are rejected, aligning the helper with Keycloak's default check set. For deployments that cannot upgrade immediately, enforce token expiration outside the helper - for example validate the access token's exp/nbf claims in the route before trusting it, keep Keycloak access-token lifetimes short, and ensure any upstream gateway or resource server also validates the token validity window.
+
+
+The implementation of receiving files or directories via SCP did not validate filenames in SCP "C" or "D" commands. A malicious sender could send filenames containing paths, resulting in files to be written in attacker-controlled places.
+
+
+
+
+The issue affects only
+
+  *  applications that use no longer supported Apache MINA SSHD versions < 2.0.0 and use the SCP functions to receive files,
+  *  or applications using sshd-scp in Apache MINA SSHD >= 2.0.0 to receive files.
+
+
+
+
+Applications using Apache MINA SSHD >= 2.0.0 not using sshd-scp are not affected.
+
+
+
+
+The issue is fixed in Apache MINA 2.19.0 and 3.0.0-M5. Affected applications are advised to upgrade to these versions.
 
 Credit:
 
-Yu Bao from Paypal (finder)
-Andrea Cosentino from Apache Software Foundation (finder)
+Unbbal (finder)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-46455.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-46455
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-56452
 
