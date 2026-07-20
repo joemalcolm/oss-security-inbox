@@ -1,66 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/26/5
-Message-ID: <98d7f9bf-e29c-426b-a401-028eb4b215fa@cpansec.org>
-Date: Fri, 26 Jun 2026 09:08:59 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-11625: Bytes::Random::Secure versions through 0.29 for Perl share internal state across forked processes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/17
+Message-ID: <c4a212b1-4bac-0b0a-3e75-5ad8739011a4@apache.org>
+Date: Mon, 20 Jul 2026 20:19:33 +0000
+From: Thomas Wolf <twolf@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-56624: Apache MINA SSHD: SSH certificate options lack validations 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-========================================================================
-CVE-2026-11625                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-11625
-   Distribution:  Bytes-Random-Secure
-       Versions:  through 0.29
+- Apache MINA SSHD (org.apache.sshd:sshd-core) 2.0.0 through 2.18.0
+- Apache MINA SSHD (org.apache.sshd:sshd-core) 3.0.0-M1 through 3.0.0-M4
 
-       MetaCPAN:  https://metacpan.org/dist/Bytes-Random-Secure
-       VCS Repo:  https://github.com/daoswald/Bytes-Random-Secure
+Description:
 
-
-Bytes::Random::Secure versions through 0.29 for Perl share internal
-state across forked processes
-
-Description
------------
-Bytes::Random::Secure versions through 0.29 for Perl share internal
-state across forked processes.
-
-When an object is initialised before forking, or when the functional
-interface is used, then the internal state for the PRNG is shared
-across processes and identical random streams will be produced.
-
-Secrets generated in multiprocess applications are predictable across
-processes.
-
-Problem types
--------------
-- CWE-335 Incorrect Usage of Seeds in Pseudo-Random Number Generator
-   (PRNG)
-
-Workarounds
------------
-Apply the patch.
-
-Otherwise, only use the object-oriented interface and ensure that the
-object is only instantiated in a child process after forking.
-
-Alternatively, use a different module such as Crypt::PRNG,
-Crypt::SysRandom or Crypt::URandom.
+Improper certificate validation in Apache MINA SSHD (server-side). Apache MINA SSHD is a Java library for client-side and server-side SSH.
 
 
-References
-----------
-https://github.com/daoswald/Bytes-Random-Secure/issues/3
-https://github.com/daoswald/Bytes-Random-Secure/pull/4
-https://security.metacpan.org/patches/B/Bytes-Random-Secure/0.29/CVE-2026-11625-r1.patch
-https://www.cve.org/CVERecord?id=CVE-2026-41564
-
-Timeline
---------
-- 2026-06-24: Issue publicly reported on GitHub
 
 
+Server-side OpenSSH user certificate validation during user authentication in an Apache MINA SSHD server did not check for the unsupported force-command or verify-required options that could be embedded in the certificate, nor did it validate these options. As a result it was possible that a user could authenticate with such a certificate that included a force-command option but still was able to execute other commands. What other command exactly would be available to the user depends on the implementation of the server.
+
+
+
+
+This issue is fixed in Apache MINA SSHD 2.19.0 and 3.0.0-M5. Applications are advised to upgrade to these versions.
+
+
+
+
+The fix rejects OpenSSH user certificates that include these options, since Apache MINA SSHD implements neither force-command nor sk-*-cert-v01@...nssh.com user certificates (which are the only ones for which verify-required would make sense).
+
+Credit:
+
+Mitchell Benjamin (finder)
+
+References:
+
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-56624
 
