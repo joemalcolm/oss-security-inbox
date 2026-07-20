@@ -1,55 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/05/3
-Message-ID: <apvE4ugnjS0YiqgK@eldamar.lan>
-Date: Sat, 5 Sep 2026 09:29:38 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/18
+Message-ID: <5d698b02-5bce-2adb-52c9-2f1f0bc385a2@apache.org>
+Date: Mon, 20 Jul 2026 20:19:51 +0000
+From: Thomas Wolf <twolf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: pcre2 version 10.48 released with security fixes
+Subject: CVE-2026-58624: Apache MINA SSHD: Remote execution of JGit commands can write files on the server 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: low 
 
-On Fri, Sep 04, 2026 at 04:25:51PM -0700, Alan Coopersmith wrote:
-> https://github.com/PCRE2Project/pcre2/blob/pcre2-10.48/NEWS reports:
-> > Version 10.48 31-August-2026
-> > ----------------------------
-> > 
-> > This is a regular release, incorporating security fixes along with small
-> > improvements and fixes to library behaviour.
-> > 
-> > Only changes to behaviour, changes to the API, and other significant changes
-> > are described here. Please see the ChangeLog and Git log for further details.
-> > 
-> > As well as the tarball and Git tag for this release, there are detailed
-> > instructions for backporting security and correctness fixes, for the last
-> > five years of releases.
-> > 
-> > * (Git change) Renamed the default development branch from master to main.
-> > 
-> > * (Maintenance change) Added a five-year support lifecycle policy and
-> > publication of backport patches for security and high-severity fixes in older
-> > releases.
-> > 
-> > * (Security fix for very specific API usage, GHSA-2p8c-ff85-vh9x) If
-> > pcre2_jit_compile() is called with options for some match modes, and then
-> > pcre2_match() is used to perform a match for a different match mode, an
-> > out-of-bounds read can occur if the match is attempted against invalid UTF input.
-> > 
-> > * (Security fix for pattern conversion, GHSA-q8g2-wprr-34m9) If pcre2_convert()
-> > is called on untrusted input on platforms with 32-bit size_t, an out-of-bounds
-> > heap write can occur.
-> > 
-> > * (Security fix, GHSA-3r4p-g7gg-ppmf) Fixed an out-of-bounds write in DFA
-> > matching when using a heap limit; also fixed possible integer overflows which
-> > could cause under-allocation of the workspace.
-[...]
-> None seem to have CVE id's assigned at this time.
+Affected versions:
 
-This one got CVE-2026-86145, but so far not the others I think.
+- Apache MINA SSHD (org.apache.sshd:sshd-git) 2.0.0 through 2.18.0
+- Apache MINA SSHD (org.apache.sshd:sshd-git) 3.0.0-M1 through 3.0.0-M4
 
-For tracking downstream fixes defintively it would be more helpful to
-have a CVE identifier assigned sooner, but right now as we know many
-of the CNAs in scope for products have huge backlogs.
+Description:
 
-Regards,
-Salvatore
+Improper input validation in sshd-git in Apache MINA SSHD. Apache MINA SSHD is a Java library for client-side and server-side SSH.
+
+
+
+
+Component org.apache.sshd:sshd-git provides though its GitPgmCommandFactory a way to configure an Apache MINA SSHD server such that SSH clients can remotely execute git commands via the JGit library on git repositories stored on the server.
+
+
+
+
+This GitPgmCommandFactory allowed a user authenticated via SSH to run any JGit command available, including commands that could write files at arbitrary places such as git archive with the --output option.
+
+
+
+
+Affected are SSH servers implemented with Apache MINA SSHD and using the GitPgmCommandFactory. If the GitPgmCommandFactory is not configured on the server, the server is not affected.
+
+
+
+
+It is recommended to upgrade affected servers to Apache MINA SSHD 2.19.0 or 3.0.0-M5, which fix this issue.
+
+
+
+
+The issue is fixed by restricting the available commands to a small whitelist of uncritical commands (such as git log). git archive is also allowed, but its --output argument is ignored and the archive is always sent through the SSH channel to the client.
+
+Credit:
+
+Unbbal (finder)
+
+References:
+
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-58624
+
