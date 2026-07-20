@@ -1,54 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/12
-Message-ID: <eaa7afe9-2de4-66cd-3801-c4495a7ea23f@apache.org>
-Date: Mon, 24 Aug 2026 14:08:07 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/11
+Message-ID: <4e000529-b33a-a779-ab72-9c6a4a7e1deb@apache.org>
+Date: Mon, 20 Jul 2026 09:21:14 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66908: Apache Camel: Camel-platform-http-main: when JWT authentication was configured with a keystore but no issuer or audience, the iss and aud claims were never validated, so any unexpired token signed by a trusted key was accepted 
+Subject: CVE-2026-63071: Apache Syncope: RCE via Groovy Sandbox bypass 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-platform-http-main) 4.8.0 before 4.22.0
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0.0-M0 through 4.0.6
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.1.0-M0 through 4.1.1
 
 Description:
 
-Improper Authentication vulnerability in Apache Camel Platform HTTP Main component.
+Improper Isolation or Compartmentalization vulnerability in Apache Syncope.
 
+An administrator with adequate entitlements for Implementations can create a malicious Groovy class containing untrusted code bypassing the Groovy security sandbox.
 
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 through 4.0.6, from 4.1.0-M0 through 4.1.1.
 
-This issue affects Apache Camel: from 4.8.0 before 4.22.0.
-
-
-
-The camel-main embedded HTTP server can protect its endpoints with JWT authentication, configured through authenticationEnabled together with the JWT keystore properties. JWTAuthenticationConfigurer.buildJwtOptions returned null when neither jwtIssuer nor jwtAudience was configured, and the caller then skipped the JWTAuthOptions.setJWTOptions call entirely, so the Vert.x JWTAuth instance was built from the keystore alone. The result was that inbound tokens were checked only for signature and expiry: the iss and aud claims were not validated at all. Nothing signalled this - the server started normally and reported no warning - so a deployment configured the documented way silently enforced less than the operator believed it had enabled, and the component documentation itself presented signature and expiry checking as the default with issuer and audience as an optional extra. Both the application server and the management server were affected, because the omission was in each of the two configureAuthentication paths. Any unexpired token signed by any key the configured keystore trusts was therefore accepted, regardless of which issuer minted it or which audience it was intended for. How far that reaches depends on the trust set of the keystore: where the signing key belongs to a shared or multi-tenant identity provider, a token legitimately issued for an entirely different audience is accepted, while a keystore holding a dedicated signer narrows it to reuse of tokens minted for other services within the same trust domain. The jwtIssuer and jwtAudience options did not exist before 4.21.0, so on earlier releases there was no supported way to have these claims enforced at all.
-
-
-
-Users are recommended to upgrade to version 4.22.0, which fixes the issue. >From 4.22.0 the server refuses to start when a JWT keystore is configured but neither jwtIssuer nor jwtAudience is set, naming the properties involved, and a deployment that genuinely wants signature and expiry validation only must say so explicitly with the new jwtAllowMissingIssuerAndAudience option, which defaults to false. This behaviour is fixed only on 4.22.0. The 4.14.9 and 4.18.4 releases do not change the default: they add the jwtIssuer and jwtAudience options so that operators on those maintenance lines can enforce the claims by configuration, and an installation that upgrades to 4.14.9 or 4.18.4 without also setting at least one of those two properties is still accepting any unexpired token signed by a trusted key. Users on 4.14.x or 4.18.x should therefore upgrade to 4.14.9 or 4.18.4 and then set jwtIssuer, jwtAudience, or both. Releases from 4.8.0 up to and including 4.21.x offer no way to enforce these claims and should be moved to a version that does. Independently of version, restrict the JWT keystore to the smallest possible trust set - ideally a signer dedicated to this service rather than a shared identity-provider key - and where a gateway already validates issuer and audience in front of the server, ensure it cannot be bypassed.
-
-
-
-Notes:
-
-
-
-The JIRA ticket:  https://issues.apache.org/jira/browse/CAMEL-24281  refers to the various commits that resolved the issue, and has more details.
-
-
-
-The fail-closed guard could not be backported. The jwtIssuer and jwtAudience options were themselves only introduced in 4.21.0 by CAMEL-23525, so on camel-4.18.x and camel-4.14.x there was nothing an operator could set to satisfy the requirement and the guard would have broken every JWT deployment on those branches with no remedy available.
+Users are recommended to upgrade to version 4.0.7 / 4.1.2, which fix this issue by tightening the Groovy security sandbox.
 
 Credit:
 
-n0mi1k (finder)
-Andrea Cosentino (remediation developer)
+elin kai (finder)
+无聊 (finder)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-66908.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66908
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-63071
 
