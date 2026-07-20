@@ -1,73 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/10/13
-Message-ID: <20260410151433.GA15774@oevtugenva.nrevsny.pk>
-Date: Fri, 10 Apr 2026 11:14:52 -0400
-From: Rich Felker <dalias@...c.org>
-To: musl@...ts.openwall.com, oss-security@...ts.openwall.com
-Subject: CVE-2026-40200: musl libc: stack corruption in qsort with sufficiently large inputs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/12
+Message-ID: <7aa40a59-3e34-4f4c-b4c8-03966b181fbb@cpansec.org>
+Date: Mon, 20 Jul 2026 18:56:51 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-64193: Net::DNS versions through 1.55 for Perl allow remote execution injection via EDNS EXTENDED ERROR
 Content-Type: text/plain; charset=utf-8
 
-Overview:
 
-musl libc's implementation of the qsort function may write past the
-end of a stack-based buffer when the number of elements to be sorted
-exceeds a certain threshold beyond 7 million elements on 32-bit
-systems. On 64-bit systems, the threshold is large enough not to
-practical, exceeding 34 trillion.
+========================================================================
+CVE-2026-64193                                       CPAN Security Group
+========================================================================
 
+         CVE ID:  CVE-2026-64193
+   Distribution:  Net-DNS
+       Versions:  through 1.55
 
-
-Impact:
-
-Not yet determined. At least a crash and possibly code execution on
-32-bit systems. 64-bit systems without at least terrabyte-scale
-virtual memory available are not affected.
+       MetaCPAN:  https://metacpan.org/dist/Net-DNS
+       VCS Repo:  https://www.net-dns.org/svn/net-dns/
 
 
+Net::DNS versions through 1.55 for Perl allow remote execution
+injection via EDNS EXTENDED ERROR
 
-Details:
+Description
+-----------
+Net::DNS versions through 1.55 for Perl allow remote execution
+injection via EDNS EXTENDED ERROR.
 
-The malfunction occurs when the Leonardo heap structure used by the
-smoothsort algorithm has a subtree whose size is the Leonardo number
-with index equal to the number of bits in the system word size.
+Net::DNS::RR::OPT::EXTENDED_ERROR::_decompose parses the EXTRA-TEXT
+field of an EDNS EXTENDED-ERROR option (RFC 8914) by tokenising the raw
+bytes and passing the result to Perl's eval. There is some escaping
+done for $ and @, but not for backticks. This can be exploited for
+command execution if $pkt->edns->option('EXTENDED-ERROR') is called in
+array context, for example with a payload of {0:`"<command>"`} in
+EXTRA-TEXT.
 
-Generating this condition depends on the size of the input array and
-the preexisting order relationships between the elements according to
-the comparison function. It has not been determined whether an
-attacker could arrange to obtain control over the flow of execution
-through a particular crafting of the input array. However, given that
-there are indirect calls to a comparison function in the code path,
-the risk is high, possibly even with stack protector enabled.
+Problem types
+-------------
+- CWE-95 Improper Neutralization of Directives in Dynamically Evaluated
+   Code ('Eval Injection')
 
-The root cause is a logic errors in the double-word "count trailing
-zeros" and double-word bitshift primitives used here. A first set bit
-at the boundary between the low and high word was wrongly counted as
-bit 0 rather than bit 32 or 64, and a shift by exactly the number of
-bits in a word invoked undefined behavior, possibly corrupting the
-bitset.
-
-
-
-Affected versions:
-
-The vulnerable code has been present since version 0.7.10.
-
-All subsequent versions up through 1.2.6 are affected.
+Solutions
+---------
+Upgrade to version 1.56 or later.
 
 
+References
+----------
+https://www.net-dns.org/blog/#release-candidate-for-netdns-1.56
+https://rt.cpan.org/Ticket/Display.html?id=179945
+https://metacpan.org/release/NLNETLABS/Net-DNS-1.55_01/changes
 
-Mitigation:
+Timeline
+--------
+- 2026-07-10: Issue reported publicly via RT.
+- 2026-07-10: Version 1.55_01 (release candidate for version 1.56)
+   published on CPAN.
+- 2026-07-18: Version 1.56 published on CPAN.
 
-All users should apply the patch included/attached below, or upgrade
-to 1.2.7 once it becomes available.
+Credits
+-------
+Steffen Ullrich, reporter
 
 
 
-Credits:
-
-This bug was first reported by Hankins on the public musl libc mailing
-list, but without any indication that it might be a vulnerability.
-Subsequent analysis determined that it is. A previously-overlooked
-aspect of UB in the bit shifting was discovered by Luca Kellermann.
-
-View attachment "CVE-2026-40200.diff" of type "text/plain" (5594 bytes)
