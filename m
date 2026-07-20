@@ -1,97 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/22/4
-Message-ID: <178739945444.2148913.12394368547364455432@notcve.org>
-Date: Sat, 22 Aug 2026 13:50:54 +0200
-From: advisories@...cve.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/9
+Message-ID: <dab12e6b-49ed-0bd0-3875-43d9dd8bec79@apache.org>
+Date: Mon, 20 Jul 2026 09:20:56 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [NotCVE-2026-0013] CHIRP Kenwood ITM Driver Eval Injection Allows Arbitrary Code Execution via Crafted Radio File
+Subject: CVE-2026-62183: Apache Syncope: User self-service privilege escalation 
 Content-Type: text/plain; charset=utf-8
 
-----------------------------------------------------------------------------
-NotCVE Advisory — NotCVE-2026-0013
-----------------------------------------------------------------------------
+Severity: important 
 
-[-] Summary:
-Eval injection in the Kenwood ITM file format driver of CHIRP, an
-open-source application for programming amateur radios, allows an attacker
-who can persuade a user to open a crafted radio file to execute arbitrary
-Python code with the privileges of that user. The affected path is reached
-through the ordinary File -> Open flow in a stock installation; no dialog or
-confirmation precedes execution. CVSS:3.1 7.8
-(AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H).
+Affected versions:
 
-[-] Affected:
-CHIRP, chirp-next builds up to and including chirp-next-20260814.
-Fixed in source at commit 39178db (2026-08-17); the researcher reports build
-chirp-next-20260821 ships the fix.
+- Apache Syncope (org.apache.syncope.core:syncope-core-workflow-java) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-workflow-java) 4.0.0-M0 through 4.0.6
+- Apache Syncope (org.apache.syncope.core:syncope-core-workflow-java) 4.1.0-M0 through 4.1.1
 
-[-] Technical Description:
-ITMRadio._clean_tmode() in chirp/drivers/kenwood_itm.py read two CSV fields
-from the file being opened and passed each one directly to Python's built-in
-eval() (lines 66-67):
+Description:
 
-  TXSIG, whose evaluated result was assigned to mem.rtone
-  RXSIG, whose evaluated result was assigned to mem.ctone
+Improper Privilege Management vulnerability in Apache Syncope.
 
-Both values are attacker-controlled strings retrieved verbatim from a row of
-the opened file via generic_csv.get_datum_by_header(). The driver expected a
-numeric CTCSS tone, but no type check, allowlist, or parsing step
-constrained the input, so any Python expression placed in either field was
-evaluated at file-load time. The commit message for the fix records the
-assumption plainly: the squelch fields "were assumed to only be a float".
+When:
 
-ITMRadio is decorated with @directory.register and declares VENDOR =
-"Kenwood", MODEL = "ITM" and FILE_EXTENSION = "itm". The driver ships in the
-stock distribution; no non-standard setting, plugin, or developer mode is
-required.
+* the all-Java user workflow adapter is configured, or
+* the Flowable user workflow adapter is configured, bearing a BPMN definition not requiring admin approval for user self registration of self update requests
 
-The .itm extension is not offered by the Open dialog's default filter, so
-that variant requires the victim to switch the filter to "All Files". The
-researcher's second proof of concept carries the same CSV payload in a .img
-file with a trailing CHIRP metadata blob naming vendor "Kenwood" and model
-"ITM"; directory.get_radio_by_image() selects a driver by comparing that
-embedded metadata against registered classes, which is consistent with a
-.img file routing to this driver under the default filter.
+the following scenario could happen.
+A REST API call can allow the user to grant themselves one or more of defined Roles, thus gaining their Entitlements and becoming in fact an administrator; the actual Entitlements gained depend on the Roles that are effectively defined on the specific Syncope deployment.
 
-The code runs in the CHIRP process with the victim user's privileges, before
-any channel data is displayed. No elevation is involved; the impact is
-bounded by what that user can reach.
 
-The fix removes both eval() calls and replaces them with
-kenwood_tone.parse_qtdqt() feeding chirp_common.split_tone_decode().
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.6, from 4.1.0-M0 through 4.1.1.
 
-Weaknesses:
-CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code
-        ('Eval Injection')
-CAPEC-35: Leverage Executable Code in Non-Executable Files
-CAPEC-242: Code Injection
+Users are recommended to upgrade to version 4.0.7 / 4.1.2, which fix this issue.
 
-Proof-of-concept files for both delivery variants are published in the
-researcher's repository (see References).
+Credit:
 
-[-] Timeline:
-[17/08/2026] - Reported to the CHIRP maintainer; fixed the same day
-               (39178db).
-[21/08/2026] - Build chirp-next-20260821 reported to ship the fix.
-[21/08/2026] - No CVE assigned; NotCVE ID reserved instead.
-[22/08/2026] - Published as NotCVE-2026-0013.
+Nic Jones (finder)
+elin kai (finder)
 
-[-] Credit:
-Discovered by Christopher Duram
-(https://www.linkedin.com/in/christopherduram/).
+References:
 
-[-] Full Details and Updates:
-https://notcve.org/notcve/NotCVE-2026-0013
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-62183
 
-[-] References:
-https://github.com/cduram/CHIRP-CodeExecution_via_Malicious_ImageFile
-https://github.com/kk7ds/chirp/commit/39178dbfc4fece083ab9ed20286d6ae3a91a718e
-https://github.com/kk7ds/chirp/blob/39178dbfc4fece083ab9ed20286d6ae3a91a718e~1/chirp/drivers/kenwood_itm.py
-https://github.com/kk7ds/chirp/blob/master/chirp/drivers/kenwood_itm.py
-https://github.com/kk7ds/chirp/blob/master/chirp/directory.py
-
-[-] About NotCVE:
-NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
-vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
-Request a NotCVE: https://notcve.org/form/ · Contributors:
-https://notcve.org/hall/
