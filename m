@@ -1,49 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/12/4
-Message-ID: <70d8130a-2ef3-49a3-943b-7d34e91b829c@cpansec.org>
-Date: Fri, 12 Jun 2026 15:43:21 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/9
+Message-ID: <3f6272ea-a2ca-41e7-b30c-bee6fcec3643@cpansec.org>
+Date: Tue, 21 Jul 2026 20:43:20 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-9638: Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure random values for salts
+To: oss-security@...ts.openwall.com
+Subject: Multiple vulnerabilities fixed in various Data::*::Shared modules for Perl
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-9638                                        CPAN Security Group
-========================================================================
+Summary: There are 23 vulnerabilities. See 
+https://lists.security.metacpan.org/cve-announce/dates/2026/07/ for details.
 
-         CVE ID:  CVE-2026-9638
-   Distribution:  Crypt-PBKDF2
-       Versions:  before 0.261630
+Subject: CVE-2026-59139: Data::ReqRep::Shared versions before 0.05 for 
+Perl allow an out-of-bounds read via an unvalidated arena offset and 
+length in reqrep_recv_locked
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-PBKDF2
-       VCS Repo:  https://github.com/arodland/Crypt-PBKDF2
+Subject: CVE-2026-59140: Data::SortedSet::Shared versions before 0.03 
+for Perl allow an out-of-bounds read via unvalidated node indices in the 
+rank and min/max query paths
 
+Subject: CVE-2026-59141: Data::RadixTree::Shared versions before 0.02 
+for Perl allow an out-of-bounds read via unvalidated node and arena 
+indices in rdx_find_locked
 
-Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure
-random values for salts
+Subject: CVE-2026-59142: Data::HashMap::Shared versions before 0.14 for 
+Perl allow an out-of-bounds read via an unvalidated arena offset and 
+length in shm_str_copy
 
-Description
------------
-Crypt::PBKDF2 versions before 0.261630 for Perl generate insecure
-random values for salts.
+Subject: CVE-2026-59143: Data::RoaringBitmap::Shared versions before 
+0.02 for Perl allow an out-of-bounds read via an unvalidated container 
+offset and cardinality in rb_contains_locked
 
-These versions use the built-in rand function, which is predictable and
-unsuitable for cryptography.
+Subject: CVE-2026-59144: Data::RingBuffer::Shared versions before 0.04 
+for Perl allow a stack buffer overflow via an unvalidated elem_size in 
+ring_read_seq
 
-Problem types
--------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-   (PRNG)
+Subject: CVE-2026-59145: Data::Intern::Shared versions before 0.02 for 
+Perl allow an out-of-bounds read via unvalidated slot, reverse and arena 
+indices in si_idx_find
 
-Solutions
----------
-Upgrade to version 0.261630 or later.
+Subject: CVE-2026-59146: Data::SpatialHash::Shared versions before 0.02 
+for Perl allow out-of-bounds reads and writes via unvalidated bucket, 
+link and free-list indices in sph_walk_cell and sph_alloc_slot
 
+Subject: CVE-2026-59147: Data::DisjointSet::Shared versions before 0.02 
+for Perl allow out-of-bounds reads and writes via an unvalidated parent 
+index in dsu_find
 
-References
-----------
-https://metacpan.org/dist/Crypt-PBKDF2/source/lib/Crypt/PBKDF2.pm#L86-93
-https://metacpan.org/release/ARODLAND/Crypt-PBKDF2-0.261630/changes
+Subject: CVE-2026-64613: Data::Buffer::Shared versions before 0.05 for 
+Perl create a world-readable mmap backing file and open it without 
+O_NOFOLLOW
 
+Subject: CVE-2026-64614: Data::Deque::Shared versions before 0.06 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
 
+Subject: CVE-2026-64615: Data::Graph::Shared versions before 0.04 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-64616: Data::NDArray::Shared versions before 0.02 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-64617: Data::PubSub::Shared versions before 0.07 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65061: Data::ReqRep::Shared versions before 0.05 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65062: Data::SortedSet::Shared versions before 0.03 
+for Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65063: Data::RadixTree::Shared versions before 0.02 
+for Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65064: Data::HashMap::Shared versions before 0.14 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65065: Data::RoaringBitmap::Shared versions before 
+0.02 for Perl create a world-readable mmap backing file and open it 
+without O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65066: Data::RingBuffer::Shared versions before 0.04 
+for Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65067: Data::Intern::Shared versions before 0.02 for 
+Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65068: Data::SpatialHash::Shared versions before 0.02 
+for Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
+
+Subject: CVE-2026-65069: Data::DisjointSet::Shared versions before 0.02 
+for Perl create a world-readable mmap backing file and open it without 
+O_EXCL or O_NOFOLLOW
 
