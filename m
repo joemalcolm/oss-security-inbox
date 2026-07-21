@@ -1,38 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/15
-Message-ID: <acbc07d2-4713-71f0-367e-947b00eb5c60@apache.org>
-Date: Thu, 10 Sep 2026 06:42:27 +0000
-From: Pasquale Congiusti <pcongiusti@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/4
+Message-ID: <bd6df701-ed3c-3619-ad4b-f941485877c8@apache.org>
+Date: Tue, 21 Jul 2026 09:58:09 +0000
+From: Chaokun Yang <chaokunyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-80352: Apache Camel K: Camel K Master trait serviceAccountName YAML injection lets CR author apply arbitrary objects 
+Subject: CVE-2026-64606: Apache Fory: Class-registration bypass through an auto-admitted SerializedLambda capturing interface 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: important 
 
 Affected versions:
 
-- Apache Camel K (apache/camel-k) 2.0.0 before 2.9.3
-- Apache Camel K (apache/camel-k) 2.10.1 before 2.10.2
+- Apache Fory (org.apache.fory:fory-core) 0.5.0 before 1.4.0
 
 Description:
 
-Improper Control of Generation of Code ('Code Injection') vulnerability in Apache Camel K.
+Deserialization of untrusted data vulnerability that may allow class-registration checks to be bypassed during Java lambda deserialization. Only lambda capture class is affected
 
 
+This issue affects Apache Fory: from before 1.4.0.
 
-A YAML injection vulnerability in custom resource configuration allows an authorized CR author to inject arbitrary Kubernetes objects, potentially enabling unauthorized resource creation with the privileges of the operator.
+Users are recommended to upgrade to version 1.4.0, which fixes the issue.
 
+Credit:
 
-
-This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2.
-
-
-
-Users are recommended to upgrade to version 2.9.3, 2.10.2 or 2.11.0, which fixes the issue.
+Charles Vosburgh (reporter)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-80352.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-80352
+https://fory.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-64606
 
