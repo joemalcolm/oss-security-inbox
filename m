@@ -1,57 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/13/17
-Message-ID: <trinity-d3595afa-cacb-4108-8244-bbe85a8b2537-1781383150017@trinity-msg-rest-gmx-gmx-live-6759fbb69b-5d7pf>
-Date: Sat, 13 Jun 2026 20:39:10 +0000
-From: shvedov@....com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/1
+Message-ID: <b7eiu6dsm5t7qbhcabv742vxhr5tgjkxa6sb2cljs5yzui6ly6@zdb3mj3ldyxj>
+Date: Tue, 21 Jul 2026 16:22:14 +0200
+From: Eduardo Barretto <eduardo.barretto@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-55659: NULL Pointer Dereference in GPAC/MP4Box via ctts_box_write on crafted MP4 file with negative timestamps
+Cc: qsa@...lys.com
+Subject: LPE in snapd and other vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  gpac/gpac prior to fix commit (ff8249a407685d00ceb5f4d2a798b9cad195140e)
-CVE:       CVE-2025-55659
-CWE:       CWE-476 (NULL Pointer Dereference)
-CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
-Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
+Hi everyone,
 
-Description:
-  When MP4Box splits/remuxes a crafted, truncated MP4 file, invalid
-  negative-timestamp handling during range estimation can leave the
-  composition-time-to-sample entries pointer in an invalid or NULL
-  state. ctts_box_write() in isomedia/box_code_base.c does not check
-  this pointer before dereferencing it while writing the ctts box
-  during final muxing.
+Qualys discovered another Local Privilege Escalation (LPE) in snapd snap-confine,
+via Capabilities misconfiguration. Qualys will send an email on top of this one
+with their report, but in the meantime, for this vulnerability we assigned
+CVE-2026-8933, with CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H 7.8 HIGH
 
-  AddressSanitizer reports a SEGV caused by a READ memory access at
-  address 0x000000000000 (the zero page) at isomedia/box_code_base.c:464,
-  reached via the box-writing chain (gf_isom_box_write_listing /
-  gf_isom_box_write) while MP4Box closes the output file.
+The upstream version of snapd containing the fix will be 2.76.1.
 
-  Crash is reproducible on the current master branch at the time of
-  discovery. No authentication or special privileges required beyond
-  ability to provide a crafted file.
+Also in this version we are fixing/disclosing other two vulnerabilities
+- CVE-2024-5300
+  AppArmor Base Profile Misconfiguration in snapd Permits Confined Snaps
+  Unauthorized Access to Hashed Passwords via systemd-userdbd
+  CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:N 5.6 MEDIUM
+  Credits: James Henstridge
 
-Reproduction:
-  -Build-opts: CC="gcc -fsanitize=address -g" CXX="g++ -fsanitize=address -g" ;
-  -Command: ./MP4Box -add 5_poc.mp4 -new ./test -split-size 500
+- CVE-2026-15226
+  snapd snap-confine Sandbox Confinement Bypass via Omission of setuid
+  Restriction in Seccomp Templates
+  CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N 8.4 HIGH
+  Credits: Zygmunt Krynicki
 
-Asan-log:
-==1926241==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7faf284d6c18 bp 0x511000015bc0 sp 0x7fff5c0b2210 T0)
-==1926241==The signal is caused by a READ memory access.
-    #0 0x7faf284d6c18 in ctts_box_write isomedia/box_code_base.c:464
-    #1 0x7faf28565469 in gf_isom_box_write_listing isomedia/box_funcs.c:2154
-    #2 0x7faf28565469 in gf_isom_box_write isomedia/box_funcs.c:2204
+In Ubuntu those fixes will land in:
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/5/5_poc.mp4
+Xenial (16.04): snapd - 2.61.4ubuntu0.16.04.1+esm4
+Bionic (18.04): snapd - 2.61.4ubuntu0.18.04.1+esm4
+Focal (20.04): snapd - 2.67.1+20.04ubuntu1~esm3
+Jammy (22.04): snapd - 2.76+ubuntu22.04.1
+Noble (24.04): snapd - 2.76+ubuntu24.04.1
+Resolute (26.04): snapd - 2.76+ubuntu26.04.3
 
-References:
-  https://github.com/gpac/gpac/issues/3156
-  https://www.cve.org/CVERecord?id=CVE-2025-55659
-  https://infosec.exchange/@sigdevel/116710743410087676
+And we will soon be publishing an advisory:
+https://ubuntu.com/security/notices/USN-8579-1
 
+We want to thanks again Qualys, Zygmunt and James for their work and patience!
 
-——
-Best regards, Alexander A. Shvedov
-https://github.com/sigdevel
+Thanks,
+Eduardo
 
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
