@@ -1,21 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/2
-Message-ID:  <SY4PR01MB6332E573E9457FC8FB277529EEE72@SY4PR01MB6332.ausprd01.prod.outlook.com>
-Date: Sun, 14 Jun 2026 09:20:04 +0000
-From: Peter Gutmann <pgut001@...auckland.ac.nz>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "jcb62281@...il.com" <jcb62281@...il.com>
-Subject: Re: CVE-2026-9641: Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default algorithm and number of iterations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/5
+Message-ID: <b3591a6d-e79e-fcc2-f419-4c2ccb434c9f@apache.org>
+Date: Tue, 21 Jul 2026 09:19:51 +0000
+From: Chaokun Yang <chaokunyang@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-64608: Apache Fory: Heap type confusion and out-of-bounds read/write in C++ compatible-mode field-skip paths 
 Content-Type: text/plain; charset=utf-8
 
-Jacob Bachmeyer <jcb62281@...il.com> writes:
+Severity: important 
 
->Does the shorter output length (128 bits for MD5; 160 bits for SHA-1) cause
->problems?  Has the general advance of computing power caught up to HMAC-MD5
->and HMAC-SHA1, or do they remain secure? (Similar to how DES remains unbroken
->in the cryptanalytic sense, but its 56-bit keyspace is now vulnerable to
->brute force.)
+Affected versions:
 
-Anything above around 2^110 is computationally infeasible for the indefinite
-future (for reference, the entire global Bitcoin hash rate is 2^94 per year).
+- Apache Fory 0.14.0 before 1.4.0
 
-Peter.
+Description:
+
+Heap type confusion and out-of-bounds read/write in the Apache Fory C++ implementation. When deserializing data in compatible mode, the field-skip paths do not correctly validate the declared field types against the actual data, so input with an inconsistent schema can cause type confusion and out-of-bounds memory access. Only the C++ implementation is affected; other language implementations of Apache Fory are not.
+
+This issue affects Apache Fory C++: from 0.14.0 before 1.4.0.
+
+Users are recommended to upgrade to version 1.4.0, which fixes the issue.
+
+Credit:
+
+Nguyen Van Hiep (@hypnguyen1209) from MBBank (reporter)
+
+References:
+
+https://fory.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-64608
+
