@@ -1,55 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/5
-Message-ID: <2289ded7-b97e-46c3-b34f-bc1effd90088@apache.org>
-Date: Tue, 25 Aug 2026 22:53:59 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/6
+Message-ID: <6a751ebe-2c50-386f-769c-a8c4bae65f30@apache.org>
+Date: Tue, 21 Jul 2026 09:19:08 +0000
+From: Chaokun Yang <chaokunyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65927: Apache Tomcat: RewriteValve [N] restarts at the second rule and may bypass access control
+Subject: CVE-2026-64609: Apache Fory: Out-of-Bounds Read via sun.misc.Unsafe in zero-copy java deserialization 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Severity: moderate 
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.24
-- Apache Tomcat 10.1.0-M1 through 10.1.57
-- Apache Tomcat 9.0.0.M1 through 9.0.120
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 7.0.109 unaffected
-- Apache Tomcat before 7.0.0 unaffected
+- Apache Fory (org.apache.fory:fory-core) 0.11.0 before 1.4.0
+- Apache Fory (org.apache.fury:fury-core) 0.5.0 before 0.11.0
 
 Description:
 
-Off-by-one Error vulnerability in Apache Tomcat impacting the [N] flag 
-on the rewrite valves causes rewrite processing to restart at the second 
-rule rather than the first rule.
+Out-of-bounds read via sun.misc.Unsafe in Apache Fory. When out-of-band zero-copy deserialization is used, readAlignedVarUint() can read beyond the bounds of the underlying buffer. Out-of-band zero-copy deserialization is an opt-in feature; applications that do not use it are not affected.
 
+This issue affects Apache Fory (formerly Apache Fury): from 0.5.0 before 1.4.0. Versions before 0.11.0 were published under the Maven coordinates org.apache.fury:fury-core.
 
-
-
-
-
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
-10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120.
-
-
-
-The following versions were EOL at the time the CVE was created but are
-known to be affected: from 8.5.0 through 8.5.100. Other unsupported 
-versions may also be affected.
-
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121 
-which fix the issue.
+Users are recommended to upgrade to version 1.4.0, which fixes the issue.
 
 Credit:
 
-4ra1n, pyn3rd and unam4 (finder)
+Feng Ning from Innora Security Research (reporter)
 
 References:
 
-https://lists.apache.org/thread/st1dx1zyn5y7ny2s0sscmh6lrv3worr4
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65927
+https://fory.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-64609
+
