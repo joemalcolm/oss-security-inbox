@@ -1,34 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/5
-Message-ID: <6b5372b9-0c61-c386-e6c5-7187946ba39d@apache.org>
-Date: Sun, 26 Apr 2026 18:07:43 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/8
+Message-ID: <al_Adqw5WhhLWX_9@netmeister.org>
+Date: Tue, 21 Jul 2026 14:54:46 -0400
+From: Jan Schaumann <jschauma@...meister.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-40022: Apache Camel: Camel-Platform-HTTP-Main: Authentication Bypass on Non-Root Context Paths in camel main runtime 
+Subject: 432 Linux kernel CVEs
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hello,
 
-Affected versions:
+As observed on social media[1], the Linux kernel
+published 432 CVEs between 2026-07-19T09:09 and
+2026-07-20T16:27 (in addition to the >40 other CVEs
+already published this month alone):
 
-- Apache Camel (org.apache.camel:camel-platform-http-main) 4.14.1 before 4.14.6
-- Apache Camel (org.apache.camel:camel-platform-http-main) 4.18.0 before 4.18.2
+https://lore.kernel.org/linux-cve-announce/
 
-Description:
+I understand the position that CVEs were always a
+flawed way to track or prioritize security changes,
+and "but it's the only thing we have" isn't a great
+argument in favor.
 
-When authentication is enabled on the Apache Camel embedded HTTP server or embedded management server (camel-platform-http-main) and a non-root context path such as /api or /admin is configured via camel.server.path or camel.management.path, the BasicAuthenticationConfigurer and JWTAuthenticationConfigurer classes derive the authentication path from properties.getPath() when camel.server.authenticationPath / camel.management.authenticationPath is not explicitly set. Combined with the Vert.x sub-router mounting model - the sub-router is mounted at _path_* and the authentication handler is registered inside the sub-router at the resolved path - this causes the authentication handler to match only the exact configured context path, not its subpaths. Unauthenticated requests to subpaths such as /api/_route_ or /admin/observe/info therefore reach protected business routes and management endpoints without being challenged for credentials. The /observe/info endpoint can disclose runtime metadata such as the user, working directory, home directory, process ID, JVM and operating system information.
+But this onslaught really shows it's not feasible to
+attempt to prioritize individual kernel changes.
 
-This issue affects Apache Camel: from 4.14.1 before 4.14.6, from 4.18.0 before 4.18.2.
+You might attempt to process this large set of changes
+by pointing an LLM at the intake and asking it to
+prioritize them for your environment based on the
+additional context you may be able to feed it with,
+but if it spits out a dozen today and another 25 the
+next, you haven't won much.
 
-Users are recommended to upgrade to version 4.20.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, they are suggested to upgrade to 4.14.6. If users are on the 4.18.x LTS releases stream, they are suggested to upgrade to 4.18.2.
+Alternatively, you might shrug and wait to see which
+of these will get a logo and catchy name in the next
+few weeks and then try to focus on those.
 
-Credit:
+Another approach might be to sit back, have a nice cup
+of zen, and just always pull all updates and then
+update your entire fleet of systems on a weekly basis,
+which, yes, I sure would like to be able to do, but
+reality keeps getting in my way.
 
-Jihang Yu (finder)
+I'm not sure what to do here going forward.
 
-References:
+-Jan
 
-https://camel.apache.org/security/CVE-2026-40022.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-40022
-
+[1] https://mstdn.social/@nixCraft@mastodon.social/116953574783239363
