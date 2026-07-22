@@ -1,30 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/04/8
-Message-ID: <14b44ff8-48f3-c78c-6cc1-6eadc142732f@apache.org>
-Date: Sat, 04 Jul 2026 05:07:49 +0000
-From: Shahar Epstein <shahar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/3
+Message-ID: <amB3yhMB9bqNw4YV@donburi.himad.notcom.org>
+Date: Wed, 22 Jul 2026 11:12:56 +0300
+From: Valtteri Vuorikoski <vuori@...com.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49297: Apache Airflow Google provider: Path traversal via GCS object names → local/SFTP filesystem (GCSToSFTPOperator + GCSTimeSpanFileTransformOperator) 
+Subject: CVE-2026-54432+more: Roundcube XSS/SSRF/etc prior to 1.6.17/1.7.2
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Roundcube, a webmail frontend, released versions 1.6.17 and 1.7.2 on Jul 5 that
+address numerous XSS and other vulnerabilities. From the release announcement at
+<https://roundcube.net/news/2026/07/05/security-updates-1.6.17-and-1.7.2>:
 
-Affected versions:
+    * Fix an infinite loop in TNEF (winmail.dat) decoder (#10193), reported by
+    stafra.
+    
+    * Fix various vulnerabilities in the password plugin using session-injected
+    username, reported by Glendaenri and peppersghost.
+    
+    * Fix stored XSS via unescaped attachment MIME type on the
+    attachment-validation warning page [CVE-2026-54432], reported by Bohdan
+    Kurinnoy, Samsung R&D Institute Ukraine (SRUKR).
+    
+    * Fix SSRF bypass via specific local address URLs - two new cases, reported
+    by Leenear.
+    
+    * Fix zero-click stored XSS in plain-text rendering [CVE-2026-54433],
+    reported by Bohdan Kurinnoy, Samsung R&D Institute Ukraine (SRUKR).
+    
+    * Fix DoS via crafted compressed-RTF size in the TNEF (winmail.dat) file,
+    reported by h0rk1p.
 
-- Apache Airflow Google provider (apache-airflow-providers-google) before 22.2.1
+In a positive development, the announcement now includes some though not all CVE
+identifiers; numbers in square brackets are in the original text. Interested
+parties may consult for example
+<https://security-tracker.debian.org/tracker/source-package/roundcube> for the
+rest.
 
-Description:
+Also final reminder that support for the 1.5 LTS release has ended and it
+presumably is vulnerable to at least some of the above, as well as to things
+that got fixed in the 1.6.16/1.7.1 security roundup.
 
-Apache Airflow's Google provider operators `GCSToSFTPOperator` and `GCSTimeSpanFileTransformOperator` joined GCS object names returned by the bucket listing API directly to a destination filesystem path without normalisation or containment check. A user with write access to the source GCS bucket (typically a different trust principal than the DAG author — partner uploads, ingest-only service accounts, public-data buckets) could create an object whose name contains `..` segments and cause the DAG run to write the downloaded blob outside the configured destination (the SFTP `destination_path` for `GCSToSFTPOperator`; the worker-local temp directory for `GCSTimeSpanFileTransformOperator`), enabling overwrite of arbitrary files on the SFTP server or the worker host. Affects deployments that ingest from buckets writable by less-trusted principals. Users are advised to upgrade to `apache-airflow-providers-google` 22.2.1 or later.
-
-Credit:
-
-anonymous (finder)
-Jarek Potiuk (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/67667
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49297
-
+ -Valtteri
+ 
