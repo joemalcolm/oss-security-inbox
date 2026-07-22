@@ -1,46 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/23/4
-Message-ID: <b29ba633-d112-d91b-23a9-52b6db9867ab@apache.org>
-Date: Thu, 23 Apr 2026 17:02:52 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-40466: Apache ActiveMQ Broker, Apache ActiveMQ All, Apache ActiveMQ: Possible bypass of CVE-2026-34197 via HTTP discovery second-stage URI 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/17
+Message-ID: <7ff8bf6b-a00a-4eb3-b321-a6b8b1980956@cpansec.org>
+Date: Wed, 22 Jul 2026 21:32:10 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13089: OIDC::Lite versions through 0.12.1 for Perl allow ID Token signature verification bypass via a token-controlled algorithm allowlist in verify
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
 
-Affected versions:
+========================================================================
+CVE-2026-13089                                       CPAN Security Group
+========================================================================
 
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.6
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.2.5
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.6
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.5
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.6
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.5
+         CVE ID:  CVE-2026-13089
+   Distribution:  OIDC-Lite
+       Versions:  through 0.12.1
 
-Description:
-
-Improper Input Validation, Improper Control of Generation of Code ('Code Injection') vulnerability in Apache ActiveMQ Broker, Apache ActiveMQ All, Apache ActiveMQ.
+       MetaCPAN:  https://metacpan.org/dist/OIDC-Lite
+       VCS Repo:  https://github.com/ritou/p5-oidc-lite
 
 
+OIDC::Lite versions through 0.12.1 for Perl allow ID Token signature
+verification bypass via a token-controlled algorithm allowlist in
+verify
 
-An authenticated attacker may bypass the fix in CVE-2026-34197 by adding a connector using an HTTP Discovery transport via BrokerView.addNetworkConnector or BrokerView.addConnector through Jolokia if the activemq-http module is on the classpath.
-A malicious HTTP endpoint can return a VM transport through the HTTP URI which will bypass the validation added in CVE-2026-34197. The attacker can then use the VM transport's brokerConfig parameter to load a remote Spring XML application context using ResourceXmlApplicationContext.
-Because Spring's ResourceXmlApplicationContext instantiates all singleton beans before the BrokerService validates the configuration, arbitrary code execution occurs on the broker's JVM through bean factory methods such as Runtime.exec().
+Description
+-----------
+OIDC::Lite versions through 0.12.1 for Perl allow ID Token signature
+verification bypass via a token-controlled algorithm allowlist in
+verify.
+
+When the caller does not pin an algorithm,
+OIDC::Lite::Model::IDToken::verify sets
+$self->alg($self->header->{alg}) from the token's own header and then
+calls decode_jwt(token, key, 1, [$self->alg]), handing JSON::WebToken
+an accepted-algorithm allowlist taken from the untrusted token. A token
+with alg=none yields ['none'], so decode_jwt returns the claims with no
+signature check, and a token with alg=HS256 is verified with the RP's
+RSA public key as the HMAC secret (RS to HS confusion).
+
+The ID Token is the OpenID Connect authentication assertion delivered
+to the Relying Party. Any caller that verifies an ID Token through the
+unpinned load(token)->verify path, or load(token, key) with only the
+key pinned, accepts a forged token carrying attacker-chosen claims such
+as sub and is authenticated as any user. Passing an explicit algorithm
+so $self->alg is already set bypasses the header-derived allowlist and
+is not affected.
+
+Note that the latest version uploaded to CPAN is 0.10. Later versions
+are available in the git repository.
+
+Problem types
+-------------
+- CWE-347 Improper Verification of Cryptographic Signature
+
+Workarounds
+-----------
+Apply the patch.
+
+Otherwise, pin the expected signature algorithm at the call site, for
+example OIDC::Lite::Model::IDToken->load($token, $key, $alg) with an
+explicit non-none $alg, so verify uses the pinned algorithm instead of
+the value in the token header.
 
 
-This issue affects Apache ActiveMQ Broker: before 5.19.6, from 6.0.0 before 6.2.5; Apache ActiveMQ All: before 5.19.6, from 6.0.0 before 6.2.5; Apache ActiveMQ: before 5.19.6, from 6.0.0 before 6.2.5.
+References
+----------
+https://datatracker.ietf.org/doc/html/rfc8725#section-3.1
+https://github.com/ritou/p5-oidc-lite/pull/31
+https://security.metacpan.org/patches/O/OIDC-Lite/0.10/CVE-2026-13089-r1.patch
 
-Users are recommended to upgrade to version 5.19.6 or 6.2.5, which fixes the issue.
 
-Credit:
-
-Fatih Ersinadim (finder)
-gggggggga (finder)
-
-References:
-
-https://activemq.apache.org/security-advisories.data/CVE-2026-34197-announcement.txt
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-40466
 
