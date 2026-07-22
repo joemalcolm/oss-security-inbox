@@ -1,49 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/4
-Message-ID: <e0f7836e-eba5-45f5-b6d2-014444530ff6@gmail.com>
-Date: Tue, 21 Apr 2026 21:25:17 -0400
-From: Demi Marie Obenour <demiobenour@...il.com>
-To: oss-security@...ts.openwall.com, Michael Orlitzky <michael@...itzky.com>
-Cc: Morten Linderud <morten@...derud.pw>
-Subject: Re: Go 1.26.2 and Go 1.25.9 are released with 10 security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/15
+Message-ID: <20260722192024.GA10777@openwall.com>
+Date: Wed, 22 Jul 2026 21:20:24 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Wongi Lee <qw3rtyp0@...il.com>
+Cc: oss-security@...ts.openwall.com, Jungwoo Lee <jwlee2217@...il.com>, Sultan Alsawaf <sultan@...neltoast.com>
+Subject: Re: CVE-2026-53362, CVE-2026-53366: OOB write in UDP MSG_SPLICE_PAGES fragment-boundary handling in Linux kernel
 Content-Type: text/plain; charset=utf-8
 
-On 4/21/26 07:36, Michael Orlitzky wrote:
-> On 2026-04-20 13:10:13, Demi Marie Obenour wrote:
->>
->> I wonder if build infra needs to be updated to support automated
->> rebuilds when a reverse dependency is updated.  My understanding is
->> that FreeBSD ports, Nix, and OBS already support this.
+Hello Wongi and all,
+
+On Tue, Jul 21, 2026 at 01:39:19AM +0900, Wongi Lee wrote:
+> We are disclosing a heap out-of-bounds write in the Linux kernel UDP
+> corking path, reachable by a local unprivileged user when a corked
+> datagram crosses a fragment boundary while MSG_SPLICE_PAGES is set
+> (e.g. splice() from a pipe into a UDP socket under UDP_CORK). It
+> produces a controlled 15-byte OOB write into skb_shared_info and is
+> exploitable for LPE.
 > 
-> On its own this isn't sufficient because many packages pin their
-> dependencies to specific versions or git commits. This causes a
-> cascade of problems:
+>   CVE-2026-53362  IPv6 (CONFIG_IPV6=y), UDPv6 path
+>   CVE-2026-53366  IPv4, same root cause on the UDP path
 > 
->  * Most dependencies can't be packaged separately, because eventually
->    two applications will require two different versions of the same
->    library, not to mention the labor involved.
+> Impact
+> ------
+> LPE. The IPv6 variant needs CONFIG_IPV6=y. IPv4 needs USERNS.
+> Affected from v6.1.
 
-I believe Fedora manages to package multiple versions of Rust libraries
-without any problems.  They don't ship them to users, though.
+Thank you for handling this disclosure so well, including a heads-up to
+distros.  I see you also have a blog post with even more detail:
 
->  * You can try to loosen the dependency constraints yourself, but with
->    everyone else bundling, no one cares about API/ABI stability and
->    breakage is likely.
-> 
->  * OTOH with dependencies left bundled and pinned to specific
->    versions, rebuilding does nothing except change mtimes.
+https://blog.qwerty.or.kr/en/posts/cdf3008a-c1a4-4eca-a373-aa3a2bcf1489/
 
-At least Rust libraries generally *do* care about API stability.
-You're correct that nobody cares about ABI stability, but cascading
-rebuilds are exactly what that is meant to avoid.  'cargo install'
-doesn't use the lockfile by default, so problems with newer but
-semver-compatible dependency versions are likely to be caught.
+and you've published your IPv6 exploit:
 
-I don't know if the Go ecosystem has the same problem.  I know Maven
-does have that problem.
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
-Download attachment "OpenPGP_0xB288B55FFF9C22C1.asc" of type "application/pgp-keys" (7141 bytes)
+https://github.com/qwerty-po/security-research/tree/cve-2026-53362
+https://github.com/google/security-research/pull/410
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+There was also a third-party IPv6 exploit published earlier:
+
+https://github.com/sgkdev/ipv6_frag_escape
+
+> Credit
+> ------
+> Found by @physicube and @qwerty (Wongi Lee). Thanks to Sultan Alsawaf
+> (CIQ) for confirming that the IPv4 variant is exploitable.
+
+Although both fixes were made roughly at the same time quite a while
+ago, it was a more recent finding that the IPv4 variant is also an
+exploitable vulnerability, and very recent assignment of the second CVE.
+So distros doing their own backports could want to check they got both
+fixes.  I checked that RHEL 10 did.
+
+Alexander
