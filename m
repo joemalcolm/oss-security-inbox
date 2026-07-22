@@ -1,35 +1,129 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/5
-Message-ID: <823ab636-192e-1ca6-b87d-fdd124f7ed06@apache.org>
-Date: Tue, 15 Sep 2026 17:22:25 +0000
-From: Andor Molnar <andor@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/9
+Message-ID: <a826b81d-96af-40d5-bc19-16f006ae23b8@exim.org>
+Date: Wed, 22 Jul 2026 15:01:24 +0100
+From: Jeremy Harris <jgh@...m.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-79993: Apache ZooKeeper: Missing ACL check on deleteContainer opcode allows unauthorized deletion of any empty persistent/container znode 
+Cc: exim-announce@...ts.exim.org, exim users <exim-users@...ts.exim.org>
+Subject: security release for Exim
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Dear Exim users,
 
-Affected versions:
+The Exim maintainers are releasing a security fix for two security issues.
 
-- Apache ZooKeeper (org.apache.zookeeper:zookeeper) 3.9.0 through 3.9.5
-- Apache ZooKeeper (org.apache.zookeeper:zookeeper) 3.8.0 through 3.8.6
 
-Description:
+----
 
-The `deleteContainer` opcode (0x14/20) is processed without verifying the caller's ACL permissions, allowing any authenticated client to delete specific znodes in the data tree regardless of the ACL restrictions on the znode or its parent. This opcode is considered internal-only and the official client doesn't have API for it, but a client that can open a plain TCP session on the ZooKeeper client port (2181 by default) - with NO authentication and NO ACL permissions - can delete any empty persistent znode (including regular persistent nodes, container nodes, and TTL nodes) by issuing the raw protocol OpCode deleteContainer (20). The deleteContainer request path completely skips both the session check and the DELETE ACL check that are enforced by the regular delete (OpCode 2) path. This is an authorization bypass / ACL enforcement bug.
+Identifier:        EXIM-Security-2026-06-22.1 (GCVE-25-2026-07-45-1)
+Type:              Directory traversal, local
+Component:         Exim
+Affects:           4.88 (2017) through the current 4.99.4 release
+Corrected in:      Exim 4.99.5 (exim-4.99.5)
+Credit:            The unnamed and uncredited authors whose works
+                         were ingested as the training corpus
 
-This issue affects Apache ZooKeeper: from 3.9.0 through 3.9.5, from 3.8.0 through 3.8.6.
+Vulnerability Details
+---------------------
 
-Users are recommended to upgrade to version 3.9.6 or 3.8.7, which fixes the issue.
+Using command-line arguments intended for transferring queue-name through an Exim execution chain,
+files outside the spool area can be accessed.  This can be used for a privilege escalation.
 
-Credit:
 
-K <sec-reports@...look.com> (reporter)
-z f <tinkerzf@...il.com> (reporter)
-布豪 <1958304602@...com> (finder)
+Affected Configurations
+-----------------------
 
-References:
+All Exim installations; attacker with command-line access.
 
-https://zookeeper.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-79993
 
+Mitigations
+-----------
+
+None.
+
+Resolution
+----------
+
+Upgrade to Exim 4.99.5.  The fix is on branch exim-4.99+fixes,
+tag exim-4.99.5, signed by Jeremy Harris <jgh146exb@...mail.org>,
+key A986F3A6BD6377D8730958DEBCE58C8CE41F32DF.
+
+Downloads
+---------
+
+   https://ftp.exim.org/pub/exim/exim4/
+   https://code.exim.org/exim/exim/releases
+
+Advisory
+--------
+
+   https://www.exim.org/static/doc/security/EXIM-Security-2026-06-22.1/
+
+
+----
+
+Identifier:        EXIM-Security-2026-06-22.3 (GCVE-25-2026-07-45-3)
+Type:              Command execution with alternate privilege
+Component:         Exim
+Affects:           4.82 (2013) through the current 4.99.4 release
+Corrected in:      Exim 4.99.5 (exim-4.99.5)
+Credit:            The unnamed and uncredited authors whose works
+                         were ingested as the training corpus
+
+Vulnerability Details
+---------------------
+
+A local user having a .forward file can use a string-expansion there. With certain Exim configurations
+this can be used as a privilege escalation.
+
+
+Affected Configurations
+-----------------------
+
+An Exim configuration with
+
+- a redirect router implementing .forward facilities for local users
+- a pipe transport accessible by that router
+- the pipe transport having the "force_command" option set
+- the pipe transport configured to run as a privileged user
+
+Mitigations
+-----------
+
+Do not set "force_command" on pipe transports.
+
+Resolution
+----------
+
+Upgrade to Exim 4.99.5.  The fix is on branch exim-4.99+fixes,
+tag exim-4.99.5, signed by Jeremy Harris <jgh146exb@...mail.org>,
+key A986F3A6BD6377D8730958DEBCE58C8CE41F32DF.
+
+Downloads
+---------
+
+   https://ftp.exim.org/pub/exim/exim4/
+   https://code.exim.org/exim/exim/releases
+
+Advisory
+--------
+
+   https://www.exim.org/static/doc/security/EXIM-Security-2026-06-22.3/
+
+
+----
+
+
+Timeline
+--------
+
+   2026-06-22 20:11 UTC Report received
+   2026-06-23 11:57 UTC Fix drafted
+   2026-07-12 12:00 UTC GCVEs assigned by [GNA](https://gcve.eu/gna/25/)
+   2026-07-13 19:25 UTC Advance notice sent to distros@...openwall.org
+   2026-07-15 11:05 UTC Fix branch and tag exim-4.99.5 pushed to exim-distros
+   2025-07-22 14:00 UTC Public release
+   
+-- 
+Jeremy Harris
+On behalf of the Exim Maintainers
