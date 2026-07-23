@@ -1,42 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/26
-Message-ID: <09d318c8-a48b-4fbc-b448-a024f011f655@apache.org>
-Date: Mon, 29 Jun 2026 21:47:43 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/23/4
+Message-ID: <5ed2091d-fb89-42ff-876f-0b4ebd680718@gmail.com>
+Date: Thu, 23 Jul 2026 07:59:29 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-55957: Apache Tomcat: Authentication bypass with JNDIRealm and GSSAPI authenticated bind
+Subject: [OSSA-2026-028] OpenStack Ironic Python Agent: Credential extraction via malicious container (CVE-2026-54422)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+=====================================================================================
+OSSA-2026-028: Credential extraction from Ironic Python Agent via 
+malicious container
+=====================================================================================
 
-Affected versions:
+:Date: July 23, 2026
+:CVE: CVE-2026-54422
 
-- Apache Tomcat 11.0.0-M1 through 11.0.4
-- Apache Tomcat 10.1.0-M1 through 10.1.36
-- Apache Tomcat 9.0.0.M1 through 9.0.100
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 7.0.109
-- Apache Tomcat before 7.0.0 unknown
 
-Description:
+Affects
+~~~~~~~
+- Ironic-python-agent: >=10.2.0 <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 <11.5.1
 
-Missing Critical Step in Authentication vulnerability in Apache Tomcat 
-when the JNDIRealm was configured to authenticate binds using GSSAPI 
-allowed attackers to authenticate without provided the correct password.
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.4, from 
-10.1.0-M1 through 10.1.36, from 9.0.0.M1 through 9.0.100, from 8.5.0 
-through 8.5.100, from 7.0.0 through 7.0.109.
+Description
+~~~~~~~~~~~
+Yuliang Xiao reported a vulnerability in Ironic Python Agent's bootc
+container deployment support. A malicious container can extract the
+secrets used to fetch from the OCI registry on deployment.
 
-Users are recommended to upgrade to version 11.0.5, 10.1.37 or 9.0.101, 
-which fixes the issue.
+Operators can fix this issue by applying the provided patches or completely
+disabling the bootc deploy_interface on their Ironic conductors.
 
-Credit:
+Any Ironic user with the ability to deploy arbitrary containers from the
+bootc deploy_interface can exploit this.
 
-Ilan Toyter (finder)
 
-References:
+Patches
+~~~~~~~
+- https://review.opendev.org/998479 (2026.2/hibiscus (development))
+- https://review.opendev.org/998481 (2026.1/gazpacho)
+- https://review.opendev.org/998484 (2025.2/flamingo)
+- https://review.opendev.org/998485 (2025.1/epoxy)
+- https://review.opendev.org/998480 (bugfix/11.6)
+- https://review.opendev.org/998493 (bugfix/11.4)
+- https://review.opendev.org/998494 (bugfix/11.3)
 
-https://lists.apache.org/thread/7fk339o5jvd4mcgsf0chbrn4o525ccjh
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-55957
+
+Credits
+~~~~~~~
+- Yuliang Xiao
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2155826
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54422
+
+
+Notes
+~~~~~
+- Ironic Python Agent bugfix branch patches will be available in git for
+   interested operators. We will not perform an additional release from
+   these branches.
+
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+--- END BODY ---
+
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
