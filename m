@@ -1,129 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/9
-Message-ID: <a826b81d-96af-40d5-bc19-16f006ae23b8@exim.org>
-Date: Wed, 22 Jul 2026 15:01:24 +0100
-From: Jeremy Harris <jgh@...m.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/23/8
+Message-ID: <e8f3fcda-2da1-4f2e-b63e-c53060f99e38@oracle.com>
+Date: Thu, 23 Jul 2026 15:19:45 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Cc: exim-announce@...ts.exim.org, exim users <exim-users@...ts.exim.org>
-Subject: security release for Exim
+Subject: CVE-2026-16277 & CVE-2026-16461: buffer overflows in rpcinfo
 Content-Type: text/plain; charset=utf-8
 
-Dear Exim users,
+https://bugzilla.redhat.com/show_bug.cgi?id=2462085 [CVE-2026-16277] &
+https://bugzilla.redhat.com/show_bug.cgi?id=2502719 [CVE-2026-16461]
+disclose a pair of related buffer overflows in the rpcinfo command from
+ONC RPC (aka Sun NFS) when parsing & printing the information returned
+from a remote rpcbind server.
 
-The Exim maintainers are releasing a security fix for two security issues.
+CVE-2026-16277 covers an overflow when using the -l option:
+> In `rpcbaddrlist()`, used by `rpcinfo -l`, reply fields from  
+> `RPCBPROC_GETADDRLIST` are written into `char buf[128]` without length  
+> checks:
+> ```c
+> char buf[128];
+> sprintf (buf, "%s/%s/%s ",
+> re->r_nc_protofmly, re->r_nc_proto,
+> re->r_nc_semantics == NC_TPI_CLTS ? "clts" :
+> re->r_nc_semantics == NC_TPI_COTS ? "cots" : "cots_ord");
+> ```
+> `re->r_nc_protofmly` and `re->r_nc_proto` come from the remote reply. A  
+> malicious or compromised rpcbind host can therefore provide strings long  
+> enough to overflow `buf`.
 
+CVE-2026-16461 covers another overflow when using the -s option:
+> In `rpcbdump()` short mode, used by `rpcinfo -s`, version values from the  
+> reply are appended into `char buf[256]` without tracking remaining space:
+> ```c
+> char buf[256];
+> char *p = buf;
+> for (vl = rs->vlist; vl; vl = vl->next) {
+> sprintf (p, "%d", vl->vers);
+> p = p + strlen (p);
+> if (vl->next)
+> sprintf (p++, ",");
+> }
+> ```
+> A hostile reply that supplies enough distinct versions for a single program  
+> can overflow this buffer. Based on the available evidence, roughly 24  
+> maximum-width decimal version values plus commas are sufficient to exceed  
+> 256 bytes. The currently supported conclusion is client-side stack memory  
+> corruption leading to a crash; more severe outcomes are not established by  
+> the available data.
 
-----
+The bug reports note they were generated with AI analysis.  Red Hat credits
+Aisle Research for reporting both issues, and Michalis Vasileiadis (GitHub:
+vmihalis) for reporting CVE-2026-16277 in their advisories at:
+https://access.redhat.com/security/cve/cve-2026-16277
+https://access.redhat.com/security/cve/cve-2026-16461
 
-Identifier:        EXIM-Security-2026-06-22.1 (GCVE-25-2026-07-45-1)
-Type:              Directory traversal, local
-Component:         Exim
-Affects:           4.88 (2017) through the current 4.99.4 release
-Corrected in:      Exim 4.99.5 (exim-4.99.5)
-Credit:            The unnamed and uncredited authors whose works
-                         were ingested as the training corpus
+A fix for CVE-2026-16277 for Linux NFS is published at:
+https://git.linux-nfs.org/?p=steved/rpcbind.git;a=commitdiff;h=bb9bb7286a4c345442946dc2ce3c9e7f67e96d4d
+Unfortunately, that server seems overloaded and I haven't found if it has
+a fix for CVE-2026-16461 or not yet.
 
-Vulnerability Details
----------------------
+NetBSD appears to have fixed both in 2011:
+https://github.com/NetBSD/src/commit/e95e36baeccc24159378f422fd3dffb97979b415
 
-Using command-line arguments intended for transferring queue-name through an Exim execution chain,
-files outside the spool area can be accessed.  This can be used for a privilege escalation.
+OpenBSD's rpcinfo does not support the affected options (it uses -s
+for a different function, and has no -l option).
 
+Fixes for both for OpenSolaris-based distros were integrated in 2010:
+https://github.com/illumos/illumos-gate/commit/791dfaa708ef5838f55bf4e97e7c960beb186419
 
-Affected Configurations
------------------------
-
-All Exim installations; attacker with command-line access.
-
-
-Mitigations
------------
-
-None.
-
-Resolution
-----------
-
-Upgrade to Exim 4.99.5.  The fix is on branch exim-4.99+fixes,
-tag exim-4.99.5, signed by Jeremy Harris <jgh146exb@...mail.org>,
-key A986F3A6BD6377D8730958DEBCE58C8CE41F32DF.
-
-Downloads
----------
-
-   https://ftp.exim.org/pub/exim/exim4/
-   https://code.exim.org/exim/exim/releases
-
-Advisory
---------
-
-   https://www.exim.org/static/doc/security/EXIM-Security-2026-06-22.1/
-
-
-----
-
-Identifier:        EXIM-Security-2026-06-22.3 (GCVE-25-2026-07-45-3)
-Type:              Command execution with alternate privilege
-Component:         Exim
-Affects:           4.82 (2013) through the current 4.99.4 release
-Corrected in:      Exim 4.99.5 (exim-4.99.5)
-Credit:            The unnamed and uncredited authors whose works
-                         were ingested as the training corpus
-
-Vulnerability Details
----------------------
-
-A local user having a .forward file can use a string-expansion there. With certain Exim configurations
-this can be used as a privilege escalation.
-
-
-Affected Configurations
------------------------
-
-An Exim configuration with
-
-- a redirect router implementing .forward facilities for local users
-- a pipe transport accessible by that router
-- the pipe transport having the "force_command" option set
-- the pipe transport configured to run as a privileged user
-
-Mitigations
------------
-
-Do not set "force_command" on pipe transports.
-
-Resolution
-----------
-
-Upgrade to Exim 4.99.5.  The fix is on branch exim-4.99+fixes,
-tag exim-4.99.5, signed by Jeremy Harris <jgh146exb@...mail.org>,
-key A986F3A6BD6377D8730958DEBCE58C8CE41F32DF.
-
-Downloads
----------
-
-   https://ftp.exim.org/pub/exim/exim4/
-   https://code.exim.org/exim/exim/releases
-
-Advisory
---------
-
-   https://www.exim.org/static/doc/security/EXIM-Security-2026-06-22.3/
-
-
-----
-
-
-Timeline
---------
-
-   2026-06-22 20:11 UTC Report received
-   2026-06-23 11:57 UTC Fix drafted
-   2026-07-12 12:00 UTC GCVEs assigned by [GNA](https://gcve.eu/gna/25/)
-   2026-07-13 19:25 UTC Advance notice sent to distros@...openwall.org
-   2026-07-15 11:05 UTC Fix branch and tag exim-4.99.5 pushed to exim-distros
-   2025-07-22 14:00 UTC Public release
-   
 -- 
-Jeremy Harris
-On behalf of the Exim Maintainers
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+
