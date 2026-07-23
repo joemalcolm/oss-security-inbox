@@ -1,89 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/1
-Message-ID: <CALFbBidcDAReEdmiDoG4-ORaoag-ENh1oDLnT=Ebq53bbN8oEw@mail.gmail.com>
-Date: Thu, 18 Jun 2026 11:28:51 +0530
-From: Pavitra Jha <jhapavitra98@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/23/1
+Message-ID: <20260723082004.24796276@hboeck.de>
+Date: Thu, 23 Jul 2026 08:20:04 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2026-43495] Linux kernel: slab out-of-bounds read in MediaTek t7xx WWAN driver
+Subject: Serendipity blog software security fixes in 2.6.1 (Username takeover, XSS, ...)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-I'm reporting a slab out-of-bounds read in the MediaTek t7xx WWAN driver,
-assigned CVE-2026-43495 (CVSS 8.8 HIGH).
+From the release notes of Serendipity 2.6.1, a PHP-based open source
+blog system:
 
-## Affected Code
+"It has been a while that we had to publish a security release. But this
+is one. After the 2.6.0 release, multiple security reports were
+submitted via Github's system. Not all of them were valid according to
+our criteria, but some turned out to be legitimate reports. These
+security reports will be released soon, but boil down to:
 
-drivers/net/wwan/t7xx/t7xx_port_ctrl_msg.c
-t7xx_port_enum_msg_handler()
+ * A critical bug in the username logic, allowing existing usernames to
+   be duplicated and to capture the rights of existing accounts
+   (@DevVaibhav07)
+ * A XSS injection vector on the search page, the search term was not
+   properly (or rather, twice) escaped (@hutsbotnet)
+ * An outdated blacklist for downloads into the media library, making
+   network resources available that ought to be blocked. (@riodrwn)
+ * An open redirect in exit.php when the trackexit plugin was installed
+   and the blog used for URL redirects via an option in the plugin
+   (@DevVaibhav07) 
+[...]"
 
-Affected range: v5.18-rc1 through current mainline (April 2026)
-Config: CONFIG_MTK_T7XX + CONFIG_WWAN
+Source:
+https://github.com/s9y/Serendipity/releases/tag/2.6.1
 
-## Bug Description
-
-The driver parses a modem-supplied CTL_ID_PORT_ENUM control message by
-casting skb->data directly to struct port_msg* and extracting port_count
-from the info field:
-
-    port_count = FIELD_GET(PORT_MSG_PRT_CNT, le32_to_cpu(port_msg->info));
-    // PORT_MSG_PRT_CNT = GENMASK(15, 0) -> max value 65535
-
-    for (i = 0; i < port_count; i++) {
-        u32 port_info = le32_to_cpu(port_msg->data[i]); /* OOB read */
-        ...
-    }
-
-struct port_msg has a 12-byte fixed base followed by a flexible array
-member data[]. No validation is performed to ensure the actual buffer
-length covers the space implied by port_count. A malformed payload with
-port_count=65535 over a 12-byte allocation causes the loop to read up to
-~262 KB past the allocation boundary.
-
-The existing integrity checks (version, head_pattern, tail_pattern) are
-entirely bypassable because all three values are attacker-controlled fields
-in the DMA payload.
-
-Additionally, the out-of-bounds u32 read from data[i] is passed as ch_id
-into t7xx_port_proxy_chl_enable_disable(), routing arbitrary slab memory
-contents into driver control flow.
-
-## Attack Vector
-
-Requires control of the baseband modem processor (e.g., via OTA base
-station exploit or hardware attack). The t7xx family is used in Intel 5G
-Solution 5000 series cellular modules found in corporate laptops, making
-this a relevant cross-boundary pivot primitive.
-
-## KASAN Output
-
-    BUG: KASAN: slab-out-of-bounds in t7xx_port_enum_msg_handler+0x1ae/0x1c0
-    Read of size 4 at addr ffff888008654d8c by task insmod/59
-
-    The buggy address is located 0 bytes to the right of
-    allocated 12-byte region [ffff888008654d80, ffff888008654d8c)
-
-## Fix
-
-Pass msg_len through to t7xx_port_enum_msg_handler() and validate using
-struct_size():
-
-    if (msg_len < struct_size(port_msg, data, port_count))
-        return -EINVAL;
-
-Patches merged across stable branches. Full patch history:
-https://lore.kernel.org/all/?q=Pavitra+Jha
-
-## Writeup
-
-https://pavitrajha.github.io/blog/t7xx-oob-writeup.html
-
-## References
-
-https://www.cve.org/CVERecord?id=CVE-2026-43495
-
-Regards,
-Pavitra Jha
-jhapavitra98@...il.com
-pavitrajha.github.io
-
+-- 
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
