@@ -1,52 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/15
-Message-ID: <adace63e-a27a-a6a3-95e9-34122459b60d@apache.org>
-Date: Mon, 20 Jul 2026 20:19:10 +0000
-From: Thomas Wolf <twolf@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/23/5
+Message-ID: <33d9d71d-ee9d-4c1a-a2d3-464be1b0ac29@gmail.com>
+Date: Thu, 23 Jul 2026 07:59:37 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-56452: Apache MINA SSHD: Path traversal in SCP file reception 
+Subject: [OSSA-2026-027] OpenStack Ironic Python Agent: Command execution via unsanitized config (CVE-2026-pending)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+=======================================================
+OSSA-2026-027: Command execution via unsanitized config
+=======================================================
 
-Affected versions:
-
-- Apache MINA SSHD (org.apache.sshd:sshd-scp) through 2.18.0
-- Apache MINA SSHD (org.apache.sshd:sshd-scp) 3.0.0-M1 through 3.0.0-M4
-
-Description:
-
-Path traversal in the sshd-scp component of Apache MINA SSHD. Apache MINA SSHD is a Java library for client-side and server-side SSH.
+:Date: July 23, 2026
+:CVE: CVE-2026-pending
 
 
+Affects
+~~~~~~~
+- Ironic-python-agent: >=6.0.0 <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 
+<11.5.1, ==11.6.0
 
 
-The implementation of receiving files or directories via SCP did not validate filenames in SCP "C" or "D" commands. A malicious sender could send filenames containing paths, resulting in files to be written in attacker-controlled places.
+Description
+~~~~~~~~~~~
+Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
+from the Metal3.io Security Team reported a vulnerability in
+Ironic-Python-Agent's (IPAs) time syncing code.
+
+The value of the ntp_server configuration option is inserted into a shell
+command without sanitization. This command is run as root very early in the
+IPA startup flow, allowing an attacker to run arbitrary commands as root.
+
+This value can be set in three ways; directly in an operator-created 
+ramdisk,
+set via kernel command line using Ironic, or passing the parameters via mDNS
+responder for mDNS enabled installation. For the most common, and highest
+security risk case, this means a Manager role associated with the 
+project set
+as ``node.owner`` may be able to trigger this vulnerability.
 
 
+Patches
+~~~~~~~
+- https://review.opendev.org/998486 (2026.2/hibiscus (development))
+- https://review.opendev.org/998488 (2026.1/gazpacho)
+- https://review.opendev.org/998489 (2025.2/flamingo)
+- https://review.opendev.org/998490 (2025.1/epoxy)
+- https://review.opendev.org/998491 (2024.1/caracal (unmaintained))
+- https://review.opendev.org/998492 (2023.1/antelope (unmaintained))
+- https://review.opendev.org/998487 (bugfix/11.6)
+- https://review.opendev.org/998482 (bugfix/11.4)
+- https://review.opendev.org/998483 (bugfix/11.3)
 
 
-The issue affects only
-
-  *  applications that use no longer supported Apache MINA SSHD versions < 2.0.0 and use the SCP functions to receive files,
-  *  or applications using sshd-scp in Apache MINA SSHD >= 2.0.0 to receive files.
-
-
+Credits
+~~~~~~~
+- Dmitry Tantsur from Red Hat
+- Tuomo Tanskanen from Ericsson Software Technology
 
 
-Applications using Apache MINA SSHD >= 2.0.0 not using sshd-scp are not affected.
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2160050
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
 
 
+Notes
+~~~~~
+- A CVE assignment is pending from MITRE. This advisory will be updated
+   when the CVE is assigned.
+- Branches 2024.1/caracal and 2023.1/antelope are unmaintained and
+   patches are provided as a courtesy.
+- Bugfix branches will receive patches in git but will not receive an
+   updated release.
+- While root access to a node running an Ironic workflow has security
+   implications for that specific node, there is no known method for
+   turning node ramdisk shell access into a full compromise of the Ironic
+   service.
 
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
 
-The issue is fixed in Apache MINA 2.19.0 and 3.0.0-M5. Affected applications are advised to upgrade to these versions.
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
 
-Credit:
-
-Unbbal (finder)
-
-References:
-
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-56452
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
