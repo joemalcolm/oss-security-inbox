@@ -1,33 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/6
-Message-ID: <e08eb00f-b26d-baa9-0688-40938fc6f846@apache.org>
-Date: Thu, 30 Jul 2026 09:16:47 +0000
-From: Daniel Gaspar <dpgaspar@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-23981: Apache Superset: Improper Authorization in Chart Update allowing Dashboard Modification 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/4
+Message-ID: <f15c3b64-d526-42d3-a3db-3aad8eff075f@cpansec.org>
+Date: Fri, 24 Jul 2026 10:16:01 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-16634: TOML::XS versions before 0.06 for Perl bundle an unsupported and vulnerable version of tomlc99
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
 
-Affected versions:
+========================================================================
+CVE-2026-16634                                       CPAN Security Group
+========================================================================
 
-- Apache Superset 0.0.0 before 6.0.0
+         CVE ID:  CVE-2026-16634
+   Distribution:  TOML-XS
+       Versions:  before 0.06
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/TOML-XS
+       VCS Repo:  https://github.com/FGasper/p5-TOML-XS
 
-An Improper Authorization vulnerability exists in Apache Superset allowing an authenticated user with permissions to update charts to modify dashboards they do not own. When updating a chart's properties via the REST API, a user can provide a list of dashboard IDs (dashboards) to associate the chart with. The validation logic in the UpdateChartCommand failed to verify that the user had write permissions for the target dashboards specified in the request body. 
 
-This issue affects Apache Superset: before 6.0.0.
+TOML::XS versions before 0.06 for Perl bundle an unsupported and
+vulnerable version of tomlc99
 
-Users are recommended to upgrade to version 6.0.0, which fixes the issue.
+Description
+-----------
+TOML::XS versions before 0.06 for Perl bundle an unsupported and
+vulnerable version of tomlc99.
 
-Credit:
+The tomlc99 library is no longer maintained, and has an uncontrolled
+recursion vulnerability publicly reported in the issue tracker.
 
-Đỗ Thành Đạt (reporter)
-Daniel Gaspar (remediation developer)
+Any caller that passes untrusted TOML to from_toml risks a stack
+overflow from a deeply-nested document.
 
-References:
+TOML::XS version 0.06 or later uses the successor tomlc17 library.
 
-https://superset.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-23981
+Problem types
+-------------
+- CWE-1104 Use of Unmaintained Third Party Components
+- CWE-1395 Dependency on Vulnerable Third-Party Component
+
+Workarounds
+-----------
+Only parse trusted TOML files.
+
+
+Solutions
+---------
+Upgrade to TOML::XS version 0.06 or later.
+
+
+References
+----------
+https://metacpan.org/release/FELIPE/TOML-XS-0.06/changes
+https://raw.githubusercontent.com/cktan/tomlc99/29076dfd095bbbbd50a3c1b2760d29f4b83e74ac/README.md
+https://github.com/cktan/tomlc99/issues/97
+https://github.com/cktan/tomlc17
+https://toml.io/en/v1.0.0
+
+Timeline
+--------
+- 2021-08-12: Version 0.05 released.
+- 2025-05-02: The README for tomlc99 was updated to say that it was
+   obsolete.
+- 2026-03-07: Vulnerability posted to tomlc99 issue tracker.
+- 2026-07-24: Version 0.06 released.
+
+
 
