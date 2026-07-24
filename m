@@ -1,70 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/9
-Message-Id: <08ED9A58-8DEB-4DB3-9912-703497E2AB80@stig.io>
-Date: Wed, 8 Jul 2026 16:00:32 +0100
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-49147: App::Ack versions through 3.10.0 for Perl print unsanitised terminal escape sequences from filenames in several output modes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/8
+Message-ID: <89c27e3c-f459-52c9-8e42-3498df5ea197@apache.org>
+Date: Fri, 24 Jul 2026 10:51:10 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-66142: Apache Neethi: Uncontrolled recursion in policy processing 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-49147                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-        CVE ID:  CVE-2026-49147
-  Distribution:  ack
-      Versions:  through 3.10.0
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/ack
-      VCS Repo:  https://github.com/beyondgrep/ack3
+- Apache Neethi (org.apache.neethi:neethi) before 3.2.3
 
+Description:
 
-App::Ack versions through 3.10.0 for Perl print unsanitised terminal
-escape sequences from filenames in several output modes
+Apache Neethi is vulnerable to uncontrolled recursion when parsing policies that lack policy Ids or with deeply nested structures, which may lead to a denial of service attack when parsing policies due to runtime memory exhaustion. Users are recommended to upgrade to version 3.2.3, which fixes this issue.
 
-Description
------------
-App::Ack versions through 3.10.0 for Perl print unsanitised terminal
-escape sequences from filenames in several output modes.
+Credit:
 
-When ack prints a filename whose basename contains terminal control
-bytes such as ANSI escape sequences, those bytes reach the terminal
-unchanged. Version 3.10.0 added a _safe_filename helper that sanitises
-the filenames printed by -f, -g, the colored match heading, and
-per-match lines, but the --show-types, -l/-L, and -c paths still emit
-the raw filename.
+Reported by LTSHFWJT (finder)
 
-A file whose name embeds cursor-movement or color escapes can overwrite
-or recolor earlier terminal output, or be passed unchanged to a
-downstream consumer.
+References:
 
-Problem types
--------------
-- CWE-150 Improper Neutralization of Escape, Meta, or Control Sequences
-
-Workarounds
------------
-Pipe ack output through a filter that strips terminal control
-characters when running ack over untrusted filenames.
-
-
-Solutions
----------
-Upgrade to a future ack release.
-
-
-References
-----------
-https://metacpan.org/release/PETDANCE/ack-v3.10.0/source/Changes
-
-Timeline
---------
-- 2026-06-07: Version 3.10.0 released with partial fix for most output
-  paths.
-
-Credits
--------
-Michał Majchrowicz (AFINE), finder
-Marcin Wyczechowski (AFINE), finder
-
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-66142
 
