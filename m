@@ -1,114 +1,161 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/27/7
-Message-ID: <CAJNb=ZpHznOizp=ffbk5TUKPj68hLuVAXJn+Jsf76=AkohjK2Q@mail.gmail.com>
-Date: Sat, 27 Jun 2026 01:02:31 -0700
-From: Akshat Sinha <akshat.snh@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/3
+Message-ID: <CAK3hNHYMmmg65=aO8EiTjR2sQdQ8Th4Osn9-D7n=5izGXQXN0w@mail.gmail.com>
+Date: Thu, 23 Jul 2026 22:08:30 -0700
+From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: n8n: SSRF remains exploitable in default configuration (incomplete fix, no CVE)
+Subject: libIEC61850: four MMS/GOOSE memory-safety vulnerabilities, including lab RCE
 Content-Type: text/plain; charset=utf-8
 
-n8n: authenticated SSRF in GET /rest/workflows/from-url;
-affected: <=2.19.x unconditionally, and 2.20.0+
-when N8N_SSRF_PROTECTION_ENABLED is
-unset (default false); verified on 2.27.4 (stable, source review) and
-2.28.2 (pre-release, live test); CWE-918; CVE: none;
-fix was independent prior vendor work, not credited here.
+Hello,
 
-GET /rest/workflows/from-url accepts a user-controlled url parameter and
-makes a server-side HTTP request to it. Any authenticated user with
-project-scoped workflow:create permission can use this to reach
-loopback, link-local, and RFC1918 addresses. If the target returns JSON
-shaped like an n8n workflow ({"nodes":..., "connections":...}), the body
-is reflected to the caller.
+libIEC61850 (MZ Automation), the widely used open-source IEC 61850 stack
+for electric-substation MMS and GOOSE, contains four memory-safety
+vulnerabilities in its MMS and GOOSE handling: CVE-2026-49035,
+CVE-2026-50039, CVE-2026-50032, and CVE-2026-50103. All are fixed in
+v1.6.2. In the tested default configurations, the triggering requests or
+frames require no application credentials. The issues cause denial of
+service under the deployment conditions described below; CVE-2026-49035
+additionally produced command execution in a deliberately unhardened
+laboratory build.
 
-The relevant code path is
-packages/cli/src/workflows/workflows.controller.ts, where
-fetchWorkflowFromUrl() now uses:
+Affected range: v1.0.0 through v1.6.1. I reproduced all four
+issues against commit a1396111, the v1.6.1 tip used for testing.
+Coordinated through CISA (advisory ICSA-26-204-06).
 
-    private async fetchWorkflowFromUrl(url: string) {
-      const client = this.outboundHttp.requests({
-        ssrf: this.ssrfConfig.enabled ? this.ssrfProtectionService
-                                      : 'disabled',
-      });
-      ...
-    }
+The MMS PoCs require no application credentials against the tested
+default server configuration; the GOOSE issue is triggered by a single
+crafted Layer-2 frame. Applications may separately configure
+authentication, TLS, access-control callbacks, or network restrictions.
 
-The gate is this.ssrfConfig.enabled. In
-packages/@.../config/src/configs/ssrf-protection.config.ts (verified on
-tag n8n@...8.2):
+Remediation: upgrade to v1.6.2, or backport the four referenced fixes.
+Deployments that cannot update should restrict MMS reachability, disable
+or restrict unnecessary MMS file services, and reject untrusted GOOSE
+traffic at the network boundary where operationally possible.
 
-    @Env('N8N_SSRF_PROTECTION_ENABLED')
-    enabled: boolean = false;
+CWE ids and CVSS v3.1 scores/vectors below are the published CISA
+advisory values.
 
-So 2.20.0 added SSRF protection for this path, but behind an opt-in flag
-that defaults to false. Default installs therefore remain exploitable.
-Current stable 2.27.4 is affected by source review. The current
-pre-release 2.28.2 is affected by live test. 2.28.2 is not a stable
-release.
+  CVE             Component          Class           CWE   CVSS 3.1
+  --------------  -----------------  --------------  ----  --------
+  CVE-2026-49035  MMS file service   Heap overflow   122   8.1
+  CVE-2026-50039  MMS value cache    Stack overflow  121   7.5
+  CVE-2026-50032  MMS write service  NULL deref      476   7.5
+  CVE-2026-50103  GOOSE subscriber   Invalid struct  228   6.5
 
-When N8N_SSRF_PROTECTION_ENABLED=true, the request is routed through
-SsrfProtectionService, which checks resolved IPs before the request, at
-connect time via custom lookup, and across redirects. With the flag
-unset, the request is made with ssrf: 'disabled'.
 
-Minimal PoC (executed 2026-06-26 local time against n8nio/n8n:2.28.2;
-listener timestamps below are UTC):
+CVE-2026-49035 -- MMS FileRead heap overflow -> RCE (lab)
+  mms_file_service.c / mms_association_service.c
 
-    docker run -d -p 5678:5678 \
-      -e N8N_SECURE_COOKIE=false \
-      n8nio/n8n:2.28.2
+  The server accepts a client-supplied maxPduSize during MMS Initiate
+  with no lower bound. maxFileChunkSize = maxPduSize - 20 underflows to
+  a near-maximal uint32_t when maxPduSize < 20 -- an
+  integer-underflow root cause (CWE-191) underlying the heap overflow --
+  bypassing the chunk-size guard, so a FileRead response copies an
+  entire staged file into a fixed 65,100-byte heap buffer. In the
+  default build profile ObtainFile is compiled in alongside the MMS file
+  service, allowing a sufficiently large file to be staged remotely when
+  the application has not disabled or restricted that functionality; the
+  file is then read back to trigger the overflow. With the file service
+  reachable and a sufficiently large file available or staged through
+  ObtainFile, the overflow reliably crashes the server.
 
-    curl -s -G -b cookies.txt \
-      'http://localhost:5678/rest/workflows/from-url' \
-      --data-urlencode "projectId=$PROJECT_ID" \
-      --data-urlencode 'url=http://172.17.0.1:8888/'
+  In a deliberately unhardened lab build (AArch64, non-PIE, ASLR off,
+  writable GOT) I reproduced the full chain -- a free@GOT overwrite
+  reaching system(), end-to-end command execution -- verified by an
+  strace execve capture and a nonce-stamped proof file. In the tested
+  environment, enabling PIE and ASLR would require an additional
+  address-disclosure or equivalent exploit primitive; I did not
+  demonstrate such a primitive.
 
-Default install result:
+Fix status: v1.6.2, commit db35acf6.
+CVSS 3.1: 8.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)
 
-    {"data":{"nodes":[],"connections":{},"secret":"SSRF_CONFIRMED_2282"}}
-    --> HTTP 200
 
-Listener log on the internal host:
+CVE-2026-50039 -- MMS value-cache stack buffer overflow
+  mms_value_cache.c
 
-    2026-06-27T04:20:15Z VICTIM-HIT path=/ UA=n8n from=172.17.0.2
+  MmsValueCache_lookupValue copies the looked-up item identifier into a
+  fixed char itemIdCopy[65] with an unbounded copy
+  (StringUtils_copyStringToBuffer, no destination size). An
+  unauthenticated ReadRequest overflows the stack buffer when the server
+  model exposes an object whose item identifier exceeds 64 bytes (ASAN:
+  stack WRITE of size 87 on an 86-char path; a canary build aborts via
+  __stack_chk_fail). Deployment-conditional on such a model; the copy is
+  unsafe regardless.
 
-A loopback target such as http://127.0.0.1:5678/rest/settings also
-causes the server-side request to be issued; the response is HTTP 400
-only because that body is not workflow-shaped.
+Fix status: v1.6.2, commit a0bd0aaa
+CVSS 3.1: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-With N8N_SSRF_PROTECTION_ENABLED=true, the same request returns:
 
-    {"code":0,"message":"The request was blocked because it resolves
-    to a restricted IP address"}
-    --> HTTP 400
+CVE-2026-50032 -- MMS Write NULL-pointer dereference
+  mms_write_service.c
 
-and no new listener hit is recorded.
+  A WriteRequest naming an existing Named Variable List with an empty
+  listOfData (A0 00, accepted by the decoder) sets the data array to
+  NULL, which the write loop dereferences. This path iterates on the
+  server-side member count without checking the client's listOfData
+  count; the sibling listOfVariable path has that guard, this one does
+  not. Unauthenticated single-request crash against the tested default
+  (no access control).
 
-Vendor handling / timeline:
+Fix status: v1.6.2, commit bd338f23.
+CVSS 3.1: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
 
-    2026-04-27  n8n opened PR #29178 under ticket CAT-2890
-    2026-04-29  I reported the same issue independently
-    2026-04-29  PR #29178 merged
-    2026-05-05  n8n 2.20.0 released with the protection gated by flag
-    2026-05-20  vendor declined the report
-    2026-06-26  live PoC re-run against 2.28.2 (local date)
 
-PR #29178 predates my report. I do not claim credit for that fix. The
-point of this post is narrower: the shipped protection is off by
-default, so the default configuration remains exploitable on current
-releases. No CVE or GHSA has been issued.
+CVE-2026-50103 -- GOOSE parser supplies NULL dataset element to callback
+  goose_receiver.c
 
-Mitigation:
+  The two-pass TLV parser (parseAllDataUnknownValue) allocates a dataset
+  slot in pass 1 but leaves it NULL in pass 2 when a recognized type
+  carries an invalid length: 0x87/Float (valid 5, 9), 0x8c/BinaryTime
+  (valid 4, 6), 0x91/UTCTime (valid 8). The NULL element reaches the
+  subscriber callback; a callback that reads it with ordinary MmsValue
+  accessors -- the pattern in the library's own examples and the PoC --
+  calls MmsValue_getType(NULL) and crashes. One malformed Layer-2 GOOSE
+  frame, delivered on the local segment, is enough.
 
-    set N8N_SSRF_PROTECTION_ENABLED=true
+  The same function backs the optional beta R-GOOSE (UDP) path, disabled
+  by default (CONFIG_IEC61850_R_GOOSE 0); identified by source review,
+  not tested.
 
-This causes the import endpoint to use the SSRF checks. Network egress
-filtering is also advisable.
+Fix status: v1.6.2, commit 62f22887.
+CVSS 3.1: 6.5 (CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+
+
+Affected:
+  libIEC61850 v1.0.0 through v1.6.1 (all four). Fixed in v1.6.2.
+
+
+Note:
+  Beyond these four, v1.6.2 also ships several other security-related
+  fixes (see the release notes and CHANGELOG); those do not appear to
+  carry separate CVE assignments.
+
+
+Timeline:
+  2026-05-07   Reported four issues to the maintainer.
+  2026-05-08   All four fixed on the public v1.6_develop branch.
+  2026-06-09   CVEs reserved.
+  2026-07-03   Notified CISA and the vendor of intent to publish PoC
+               code after the CISA advisory is published.
+  2026-07-23   v1.6.2 released; CISA advisory ICSA-26-204-06 published;
+               writeup and PoC published; this disclosure.
+
+
+PoCs (per-CVE crash harnesses + the Dockerized end-to-end RCE, with
+ASAN/GDB logs, pcaps, patch diffs, and negative controls) and the full
+write-up -- root cause, exploit chain, and timeline -- are linked below.
+
 
 References:
-- PR #29178: https://github.com/n8n-io/n8n/pull/29178
-- Public write-up:
-https://github.com/akshatgit/public-disclosure/blob/main/advisories/2026-06-26-n8n-ssrf-workflows-from-url.md
+  Write-up:  https://abhinavagarwal07.github.io/posts/libiec61850-mms-goose-cves?src=oss
+  PoC code:  https://github.com/abhinavagarwal07/libiec-security-poc
+  CISA Advisory:  https://www.cisa.gov/news-events/ics-advisories/icsa-26-204-06
+  Vendor Release:
+https://github.com/mz-automation/libiec61850/releases/tag/v1.6.2
 
-Reporter: Akshat Sinha
 
+Reported and coordinated by Abhinav Agarwal.
+
+-- Abhinav Agarwal
