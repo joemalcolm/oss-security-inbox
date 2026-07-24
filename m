@@ -1,55 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/7
-Message-ID: <428ff71d-ee61-40d5-a651-a39cc81bb19c@gmail.com>
-Date: Tue, 11 Aug 2026 08:39:05 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/46
+Message-ID: <440e1a86-61be-5ce7-60a8-5a6dfde571b6@apache.org>
+Date: Fri, 24 Jul 2026 21:44:01 +0000
+From: Jens Geyer <jensg@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSN-0105] OpenStack Glance legacy Tasks import bypasses image import URI filtering
+Subject: CVE-2026-66053: Apache Thrift: Python TSSLSocket Hostname Matcher Import 
 Content-Type: text/plain; charset=utf-8
 
-OSSN-0105: OpenStack Glance legacy Tasks import bypasses image import 
-URI filtering
----
+Severity: 
 
-### Summary ###
-The deprecated Glance /v2/tasks API accepts type=import tasks that
-bypass import_filtering_opts, allowing an admin to fetch internal
-URLs from the Glance service network (SSRF). The tasks API has been
-admin-only since Xena and deprecated for several releases.
+Affected versions:
 
-### Affected Services / Software ###
-- glance: >=30.0.0 <30.3.0, >=31.0.0 <31.1.1, ==32.0.0
+- Apache Thrift (thrift) before 0.24.0
 
-### Discussion ###
-The legacy tasks import path uses a permissive URI validator that
-only checks for http:// or https:// prefixes, bypassing the host
-and port restrictions enforced by the modern web-download import.
+Description:
 
-### Recommended Actions ###
-Disable the legacy tasks API via policy if you are not using it.
-Otherwise, upgrade Glance to a version containing the fix.
+Improper Validation of Certificate with Host Mismatch vulnerability in Apache Thrift Python bindings.
 
-#### Patches ####
-The following reviews contain the fix for this issue:
+This issue affects Apache Thrift: before 0.24.0.
 
-2026.2/hibiscus (development): https://review.opendev.org/993588
-2026.1/gazpacho: https://review.opendev.org/994466
-2025.2/flamingo: https://review.opendev.org/994592
-2025.1/epoxy: https://review.opendev.org/1000061
+Users are recommended to upgrade to version 0.24.0, which fixes the issue.
 
-### Credits ###
-Tim Shephard, roiai.ca
+This replaces CVE-2026-41603
 
-### Contacts / References ###
-Authors:
-- Goutham Pacha Ravi, Red Hat
+Credit:
 
-This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0105
-Original Launchpad bug: https://bugs.launchpad.net/glance/+bug/2152110
-Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
-OpenStack Security : https://security.openstack.org/
-CVE: none
+Yu Bao – yubao@...pal.com, who works for paypal.com (finder)
 
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+References:
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+https://thrift.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-66053
+
