@@ -1,60 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/12/3
-Message-ID: <1d0f101f-2d7e-42ee-9244-141781127d6f@cpansec.org>
-Date: Fri, 12 Jun 2026 14:23:48 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2017-20240: Crypt::PBKDF2 versions before 0.261630 for Perl are vulnerable to timing attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/40
+Message-ID: <950878cc-9965-b455-62f3-d13706fa9491@apache.org>
+Date: Fri, 24 Jul 2026 21:43:14 +0000
+From: Jens Geyer <jensg@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-55969: Apache Thrift: integer overflow in TProtocol::checkReadBytesAvailable() 
 Content-Type: text/plain; charset=utf-8
 
+Severity: 
 
-========================================================================
-CVE-2017-20240                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2017-20240
-   Distribution:  Crypt-PBKDF2
-       Versions:  before 0.261630
+- Apache Thrift (thrift) before 0.24.0
+- Apache Thrift (c_glib language bindings) before 0.24.0
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-PBKDF2
-       VCS Repo:  https://github.com/arodland/Crypt-PBKDF2
+Description:
 
+Integer Overflow or Wraparound vulnerability in Apache Thrift C++ and c_glib bindings.
 
-Crypt::PBKDF2 versions before 0.261630 for Perl are vulnerable to
-timing attacks
+This issue affects Apache Thrift: before 0.24.0.
 
-Description
------------
-Crypt::PBKDF2 versions before 0.261630 for Perl are vulnerable to
-timing attacks.
+Users are recommended to upgrade to version 0.24.0, which fixes the issue.
 
-These versions use Perl's built-in eq comparison. Discrepancies in
-timing could be used to guess the underlying derived-key.
+Credit:
 
-Problem types
--------------
-- CWE-208 Observable Timing Discrepancy
+Ghaith Abdulreda (finder)
+Javid Khan (finder)
 
-Workarounds
------------
-Apply the patch from the referenced pull request.
+References:
 
-
-Solutions
----------
-Upgrade to version 0.261630 or later.
-
-
-References
-----------
-https://github.com/arodland/Crypt-PBKDF2/pull/6
-https://metacpan.org/release/ARODLAND/Crypt-PBKDF2-0.161520/source/lib/Crypt/PBKDF2.pm#L123-148
-https://metacpan.org/release/ARODLAND/Crypt-PBKDF2-0.261630/changes
-
-Timeline
---------
-- 2017-12-11: Issue reported as pull request
-- 2026-06-11: Version 0.261630 released with a fix
-
-
+https://thrift.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-55969
 
