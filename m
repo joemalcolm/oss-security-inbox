@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/14/7
-Message-ID: <e4206ec5-fb81-48be-b959-22db32c285a3@apache.org>
-Date: Tue, 14 Jul 2026 09:14:50 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/13
+Message-ID: <234dbbdb-798a-7243-c0ee-01c5fd2c4963@apache.org>
+Date: Fri, 24 Jul 2026 11:08:16 +0000
+From: Szymon Janc <janc@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-59083: Apache Tomcat: Incorrect URL decoding in RewriteValve may allow security control bypass
+Subject: CVE-2026-45813: Apache NimBLE: Incorrect data validation in BASS add/modify source operation 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: important 
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M1 through 11.0.23
-- Apache Tomcat 10.1.0-M1 through 10.1.56
-- Apache Tomcat 9.0.0.M1 through 9.0.119
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat before 8.0.0 unaffected
+- Apache NimBLE through 1.9.0
 
 Description:
 
-Improper Handling of URL Encoding (Hex Encoding) vulnerability in Apache 
-Tomcat's rewrite valve allowed security constraint bypass for some 
-configurations.
+Out-of-bounds Write, Integer Underflow (Wrap or Wraparound) vulnerability in Apache NimBLE BASS service.
+Improper validation when parsing BASS service  "Add Source" and "Modify Source" operation PDU could results in stack buffer overflow or arbitrary out-of-bound read.
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.23, from 
-10.1.0-M1 through 10.1.56, from 9.0.0.M1 through 9.0.119, from 8.5.0 
-through 8.5.100. Other versions that have reached end of support may 
-also be affected.
 
-Users are recommended to upgrade to version 11.0.24, 10.1.57 or 9.0.120, 
-which fix the issue.
+This can be triggered by nearby devices over Bluetooth connection, however pairing is required prior to accessing BASS service, which depending on device configuration may or may not require user action.
+
+This issue affects Apache NimBLE: through 1.9.0.
+
+Users are recommended to upgrade to version 1.10.0, which fixes the issue.
+
+Credit:
+
+VulnCheck (reporter)
+侯朋朋 <pengpeng@...as.ac.cn> (reporter)
 
 References:
 
-https://lists.apache.org/thread/3g63zos2gkjo5vgnrk8kxmosv47w6wbq
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-59083
+https://github.com/apache/mynewt-nimble/pull/2232
+https://mynewt.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-45813
+
