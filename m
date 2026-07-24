@@ -1,49 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/9
-Message-ID: <ca9e1874-a6a3-40a2-9231-fede32a905b6@apache.org>
-Date: Tue, 25 Aug 2026 23:01:11 +0100
-From: Mark Thomas <markt@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68763: Apache Tomcat: DoS via allocation leak in HTTP/2 backlog tracking when a stream is reset
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/24
+Message-ID: <3601cec6-c3c9-467e-8aab-433f33423ae4@cpansec.org>
+Date: Fri, 24 Jul 2026 16:02:59 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-58586: Image::WebP versions through 0.2 for Perl bundle a vulnerable version of libwebp
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
 
-Affected versions:
+========================================================================
+CVE-2026-58586                                       CPAN Security Group
+========================================================================
 
-- Apache Tomcat 11.0.0-M1 through 11.0.24
-- Apache Tomcat 10.1.0-M1 through 10.1.57
-- Apache Tomcat 9.0.39 through 9.0.120
-- Apache Tomcat 8.5.59 through 8.5.100
-- Apache Tomcat through 7.0.109 unaffected
+         CVE ID:  CVE-2026-58586
+   Distribution:  Image-WebP
+       Versions:  through 0.2
 
-Description:
-
-Uncontrolled Resource Consumption vulnerability in Apache Tomcat via an 
-allocation leak in the HTTP/2 backlog tracking when a stream is reset
+       MetaCPAN:  https://metacpan.org/dist/Image-WebP
 
 
+Image::WebP versions through 0.2 for Perl bundle a vulnerable version
+of libwebp
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
-10.1.0-M1 through 10.1.57, from 9.0.39 through 9.0.120.
+Description
+-----------
+Image::WebP versions through 0.2 for Perl bundle a vulnerable version
+of libwebp.
+
+Image::WebP does not link to the system libwebp. Instead, it uses a
+bundled copy of libwebp 0.3.0 (released 2013-03-20). That version has
+multiple known vulnerabilities, including CVE-2023-4863.
+
+Any caller that decodes an untrusted WebP image reaches the bundled
+decoder. Because the library is compiled into the module, upgrading the
+system libwebp does not remediate this.
+
+Problem types
+-------------
+- CWE-1395 Dependency on Vulnerable Third-Party Component
+
+Solutions
+---------
+Image::WebP has not been updated since 2013. Migrate to a different
+solution, such as Imager with Imager::File::WEBP.
 
 
+References
+----------
+https://metacpan.org/release/ZAPAD/Image-WebP-0.2/source/webp-src/NEWS
+https://www.cve.org/CVERecord?id=CVE-2023-4863
 
-The following versions were EOL at the time the CVE was created but are
-known to be affected: from 8.5.59 through 8.5.100. Other unsupported 
-versions may also be affected.
-
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, 
-which fix the issue.
-
-Credit:
-
-Zhen Kong (finder)
-
-References:
-
-https://lists.apache.org/thread/tv51ty39ppv41v04hdtkp9dp7tg02nzl
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68763
