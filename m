@@ -1,48 +1,178 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/3
-Message-ID: <ee7ce65b-3aaf-b1bc-5be3-969f918b62e1@apache.org>
-Date: Sun, 26 Apr 2026 18:06:00 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/26
+Message-ID: <5634d9bb-f1be-4307-8298-f58d15cbf2dd@gmail.com>
+Date: Fri, 24 Jul 2026 10:27:00 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-33453: Apache Camel: CoAP URI Query Parameter to Exchange Header Injection in camel-coap Allows Single-Packet Pre-Auth Remote Code Execution 
+Subject: Re: [OSSA-2026-027] OpenStack Ironic Python Agent: Command execution via unsanitized config (CVE-2026-66138)
 Content-Type: text/plain; charset=utf-8
 
-Severity: High 
+=======================================================
+OSSA-2026-027: Command execution via unsanitized config
+=======================================================
 
-Affected versions:
+:Date: July 23, 2026
+:CVE: CVE-2026-66138
 
-- Apache Camel (org.apache.camel:camel-coap) 4.14.0 through 4.14.5
-- Apache Camel (org.apache.camel:camel-coap) 4.18.0 before 4.18.1
-- Apache Camel (org.apache.camel:camel-coap) 4.19.0
 
-Description:
+Affects
+~~~~~~~
+- Ironic-python-agent: >=6.0.0 <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 
+<11.5.1, ==11.6.0
 
-Improperly Controlled Modification of Dynamically-Determined Object Attributes vulnerability in Apache Camel Camel-Coap component.
 
-Apache Camel's camel-coap component is vulnerable to Camel message header injection, leading to remote code execution when routes forward CoAP requests to header-sensitive producers (e.g. camel-exec)
+Description
+~~~~~~~~~~~
+Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
+from the Metal3.io Security Team reported a vulnerability in
+Ironic-Python-Agent's (IPAs) time syncing code.
 
-The camel-coap component maps incoming CoAP request URI query parameters directly into Camel Exchange In message headers without applying any HeaderFilterStrategy.    
-Specifically, CamelCoapResource.handleRequest() iterates over OptionSet.getUriQuery() and calls camelExchange.getIn().setHeader(...) for every query parameter. CoAPEndpoint extends DefaultEndpoint rather than DefaultHeaderFilterStrategyEndpoint, and CoAPComponent does not implement HeaderFilterStrategyComponent; the component contains no references to HeaderFilterStrategy at all.
+The value of the ntp_server configuration option is inserted into a shell
+command without sanitization. This command is run as root very early in the
+IPA startup flow, allowing an attacker to run arbitrary commands as root.
 
-As a result, an unauthenticated attacker who can send a single CoAP UDP packet to a Camel route consuming from coap:// can inject arbitrary Camel internal headers (those prefixed with Camel*) into the Exchange. When the route delivers the message to a header-sensitive producer such as camel-exec, camel-sql, camel-bean, camel-file, or template components (camel-freemarker, camel-velocity), the injected headers can alter the producer's behavior. In the case of camel-exec, the CamelExecCommandExecutable and CamelExecCommandArgs headers override the executable and arguments configured on the endpoint, resulting in arbitrary OS command execution under the privileges of the Camel process.
+This value can be set in three ways; directly in an operator-created 
+ramdisk,
+set via kernel command line using Ironic, or passing the parameters via mDNS
+responder for mDNS enabled installation. For the most common, and highest
+security risk case, this means a Manager role associated with the 
+project set
+as ``node.owner`` may be able to trigger this vulnerability.
 
-The producer's output is written back to the Exchange body and returned in the CoAP response payload by CamelCoapResource, giving the attacker an interactive RCE channel without any need for out-of-band exfiltration.
-                                                                                                                                                                         
-Exploitation prerequisites are minimal: a single unauthenticated UDP datagram to the CoAP port (default 5683). CoAP (RFC 7252) has no built-in authentication, and DTLS is optional and disabled by default. Because the protocol is UDP-based, HTTP-layer WAF/IDS controls do not apply.
-This issue affects Apache Camel: from 4.14.0 through 4.14.5, from 4.18.0 before 4.18.1, 4.19.0.
 
-Users are recommended to upgrade to version 4.18.1 or 4.19.0, fixing the issue.
 
-This issue is being tracked as CAMEL-23222 
+Errata
+~~~~~~
+CVE-2026-66138 has been assigned for this vulnerability.
 
-Credit:
 
-Hyunwoo Kim (@v4bel) (finder)
 
-References:
+Patches
+~~~~~~~
+- https://review.opendev.org/998492 (2023.1/antelope (unmaintained))
+- https://review.opendev.org/998491 (2024.1/caracal (unmaintained))
+- https://review.opendev.org/998490 (2025.1/epoxy)
+- https://review.opendev.org/998489 (2025.2/flamingo)
+- https://review.opendev.org/998488 (2026.1/gazpacho)
+- https://review.opendev.org/998486 (2026.2/hibiscus (development))
+- https://review.opendev.org/998483 (Bugfix/11.3)
+- https://review.opendev.org/998482 (Bugfix/11.4)
+- https://review.opendev.org/998487 (Bugfix/11.6)
 
-https://camel.apache.org/security/CVE-2026-33453.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-33453
-https://issues.apache.org/jira/browse/CAMEL-23222
 
+Credits
+~~~~~~~
+- Dmitry Tantsur from Red Hat
+- Tuomo Tanskanen from Ericsson Software Technology
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2160050
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-66138
+
+
+Notes
+~~~~~
+- Branches 2024.1/caracal and 2023.1/antelope are unmaintained and
+   patches are provided as a courtesy.
+- Bugfix branches will receive patches in git but will not receive an
+   updated release.
+- While root access to a node running an Ironic workflow has security
+   implications for that specific node, there is no known method for
+   turning node ramdisk shell access into a full compromise of the Ironic
+   service.
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2026-07-24 - Errata 1
+- 2026-07-23 - Original Version
+
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+On 7/23/26 7:59 AM, Goutham Pacha Ravi wrote:
+> =======================================================
+> OSSA-2026-027: Command execution via unsanitized config
+> =======================================================
+> 
+> :Date: July 23, 2026
+> :CVE: CVE-2026-pending
+> 
+> 
+> Affects
+> ~~~~~~~
+> - Ironic-python-agent: >=6.0.0 <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 
+> <11.5.1, ==11.6.0
+> 
+> 
+> Description
+> ~~~~~~~~~~~
+> Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
+> from the Metal3.io Security Team reported a vulnerability in
+> Ironic-Python-Agent's (IPAs) time syncing code.
+> 
+> The value of the ntp_server configuration option is inserted into a shell
+> command without sanitization. This command is run as root very early in the
+> IPA startup flow, allowing an attacker to run arbitrary commands as root.
+> 
+> This value can be set in three ways; directly in an operator-created 
+> ramdisk,
+> set via kernel command line using Ironic, or passing the parameters via 
+> mDNS
+> responder for mDNS enabled installation. For the most common, and highest
+> security risk case, this means a Manager role associated with the 
+> project set
+> as ``node.owner`` may be able to trigger this vulnerability.
+> 
+> 
+> Patches
+> ~~~~~~~
+> - https://review.opendev.org/998486 (2026.2/hibiscus (development))
+> - https://review.opendev.org/998488 (2026.1/gazpacho)
+> - https://review.opendev.org/998489 (2025.2/flamingo)
+> - https://review.opendev.org/998490 (2025.1/epoxy)
+> - https://review.opendev.org/998491 (2024.1/caracal (unmaintained))
+> - https://review.opendev.org/998492 (2023.1/antelope (unmaintained))
+> - https://review.opendev.org/998487 (bugfix/11.6)
+> - https://review.opendev.org/998482 (bugfix/11.4)
+> - https://review.opendev.org/998483 (bugfix/11.3)
+> 
+> 
+> Credits
+> ~~~~~~~
+> - Dmitry Tantsur from Red Hat
+> - Tuomo Tanskanen from Ericsson Software Technology
+> 
+> 
+> References
+> ~~~~~~~~~~
+> - https://launchpad.net/bugs/2160050
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+> 
+> 
+> Notes
+> ~~~~~
+> - A CVE assignment is pending from MITRE. This advisory will be updated
+>    when the CVE is assigned.
+> - Branches 2024.1/caracal and 2023.1/antelope are unmaintained and
+>    patches are provided as a courtesy.
+> - Bugfix branches will receive patches in git but will not receive an
+>    updated release.
+> - While root access to a node running an Ironic workflow has security
+>    implications for that specific node, there is no known method for
+>    turning node ramdisk shell access into a full compromise of the Ironic
+>    service.
+> 
+> -- 
+> Goutham Pacha Ravi
+> OpenStack Vulnerability Management Team
+> https://security.openstack.org/vmt.html
+
+
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
