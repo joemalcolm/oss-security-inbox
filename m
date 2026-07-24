@@ -1,33 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/4
-Message-ID: <2026082431-onscreen-edge-01b1@gregkh>
-Date: Mon, 24 Aug 2026 10:57:45 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/7
+Message-ID: <d221babf-3ef0-579d-162e-bd8aab744dc3@apache.org>
+Date: Fri, 24 Jul 2026 07:10:22 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: Guest-to-Host DoS via TAP
+Subject: CVE-2026-63317: Apache OpenNLP: Arbitrary Class Instantiation in GeneratorFactory via Feature Descriptor XML 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Aug 12, 2026 at 10:01:50AM -0700, Dongli Zhang wrote:
-> Hi,
-> 
-> This report describes a Denial of Service (DoS) vulnerability where a guest VM
-> using the virtio-net driver can intentionally trigger a host panic when the
-> host uses a tap device, such as macvtap, as the vhost-net backend.
-> 
-> VM (virtio-net) -- Host (vhost-net) -- Host (macvtap)
-> 
-> This is only one example scenario. Other tap device users may also be able to
-> send malformed packets that cause the tap driver to panic.
-> 
-> This vulnerability is related to CVE-2022-50073. The fix for that CVE addressed
-> the tap_get_user() path, but missed the tap_get_user_xdp() path.
-> 
-> The fix has already been merged into the mainline tree in the commit below.
-> 
-> net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3874892dd27d5387aa9a06f58d9060f18f351d24
-> 
-> So far, no CVE has been assigned by the Linux kernel CNA.
+Severity: moderate 
 
-To follow up with this, it has been assigned CVE-2026-74684
+Affected versions:
+
+- Apache OpenNLP (org.apache.opennlp:opennlp-tools) 3.0.0-M1 before 3.0.0-M4
+- Apache OpenNLP (org.apache.opennlp:opennlp-tools) before 2.5.11
+
+Description:
+
+Arbitrary Class Instantiation via XML Feature Generator Descriptor and Format Name in Apache OpenNLP
+
+Versions Affected: 
+
+- before 2.5.10
+- before 3.0.0-M5
+
+Description: 
+
+Three code paths in Apache OpenNLP load a class by its fully-qualified name via Class.forName() and invoke its no-arg constructor without any prior validation of the class name or its type. 
+
+The affected paths are: 
+
+(1) GeneratorFactory, which reads the class attribute of generator elements in an XML feature generator descriptor; such descriptors are embedded as artifacts in model archives (e.g. TokenNameFinder and POSTagger models) and are parsed during model loading, so an attacker who can supply a crafted model archive controls the class name directly. 
+
+(2) StreamFactoryRegistry.getFactory(Class, String), which falls back to interpreting an unregistered format name as the fully-qualified class name of an ObjectStreamFactory; this is exploitable in applications that pass untrusted format names (e.g. exposing the -format parameter of the command-line tooling to external input). 
+
+(3) StringInterners, which instantiates the interner implementation named by the opennlp.interner.class system property; this value is normally deployer-controlled, so it is hardened as defense in depth rather than being independently attacker-reachable.
+
+Exploitation requires a class with attacker-useful side effects in its static initializer or no-arg constructor (JNDI lookup, outbound network I/O, filesystem access) to be present on the classpath, so this is not drop-in remote code execution. T
+
+Mitigation: 
+
+Upgrade to a fixed release. 
+
+The fix routes all three paths through ExtensionLoader.instantiateExtension(...), which consults a package-prefix allowlist before Class.forName() is invoked, so a disallowed class is never loaded, initialized, or constructed. 
+Classes under the opennlp. prefix remain permitted by default. Deployments that load models referencing feature generator factories, object stream factories, or string interners outside opennlp.* must opt those packages in, either programmatically via ExtensionLoader.registerAllowedPackage(String) before the first model load, or by setting the OPENNLP_EXT_ALLOWED_PACKAGES system property to a comma-separated list of allowed package prefixes. 
+
+Users who cannot upgrade immediately should ensure all model files and format names are sourced from trusted origins and should audit their classpath for classes with side-effecting static initializers or constructors.
+
+This issue is being tracked as OPENNLP-1890 
+
+Credit:
+
+Subramanian S (finder)
+
+References:
+
+https://opennlp.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-63317
+https://issues.apache.org/jira/browse/OPENNLP-1890
 
