@@ -1,71 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/27/2
-Message-ID: <CA+8g5KFgyr-pvZfNzVEGrpR4ci8F8cz_tgn0v-EQWFbs2HAoNQ@mail.gmail.com>
-Date: Wed, 26 Aug 2026 20:39:11 -0700
-From: Jim Meyering <jim@...ering.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/23
+Message-ID: <1ddd2cd4-f619-2bbf-84a3-3880239e2cdb@apache.org>
+Date: Fri, 24 Jul 2026 14:49:09 +0000
+From: Duo Zhang <zhangduo@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Paul Eggert <eggert@...ucla.edu>
-Subject: Re: CVE-2026-41992 gzip 1.14 out-of-bounds memory buffer access
+Subject: CVE-2026-49326: Apache HBase: Missing scanner instance owner check in thrift delegation service 
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Aug 24, 2026 at 6:32 PM Solar Designer <solar@...nwall.com> wrote:
+Severity: important 
 
-> Hi,
->
-> Paul kindly brought this issue to linux-distros on July 25, but we
-> failed to handle it correctly, in two ways: we should have moved the
-> thread to the full distros list because gzip is not Linux-specific, and
-> we should have kept track of the proposed public disclosure date of
-> August 1st, when Paul's oss-security posting should have been made.
->
-> But better late than never, and now that I've published statistics for
-> July to the wiki I'm confident there are no more leftovers like this.
->
-> As to the actual issue:
->
-> On Sat, Aug 22, 2026 at 10:46:15PM -0700, Paul Eggert wrote:
-> > CVSS Base Score: medium
-> >
-> > Affected versions: gzip 1.14 and earlier
-> >
-> > Description: Out-of-bounds memory buffer access that can be triggered if
-> a
-> > single gzip -d instance decompresses specially crafted LZW data followed
-> by
-> > specially crafted LZH data.
-> >
-> > Users are recommended to apply the following patch, or to install gzip
-> 1.15
-> > whenever it comes out:
-> >
-> > --- gzip-1.14/unlzh.c 2024-08-09 15:06:03.000000000 -0700
-> > +++ gzip-1.14-CVE-2026-41992/unlzh.c  2026-08-22 22:26:05.384251837 -0700
-> > @@ -307,6 +307,12 @@
-> >  static void
-> >  huf_decode_start ()
-> >  {
-> > +    /* Needed in case LEFT and RIGHT are reused from a previous
-> > +       LZW decompression.  It may be overkill to clear all of both
-> > +       arrays, but nobody has had time to analyze this carefully.  */
-> > +    memzero (left, (2 * NC - 1) * sizeof *left);
-> > +    memzero (right, (2 * NC - 1) * sizeof *right);
-> > +
-> >      init_getbits();  blocksize = 0;
-> >  }
-> >
-> >
-> > Credits: Thanks to Michał Majchrowicz and to Elias Hasas for reporting
-> the
-> > problem and supplying fixes.
->
-> My current unconfirmed understanding is that triggering this requires
-> running gzip on two files in one invocation, not on one file (or stream)
-> with both kinds of data in it, and that the impact is an out-of-bounds
-> read likely leading to a crash.  Paul, is all of this correct?
->
-> Is a reproducer publicly available?  Perhaps two files and gzip command
-> line that would use them.
+Affected versions:
 
+- Apache HBase (org.apache.hbase:hbase-thrift) through 2.5.14
+- Apache HBase (org.apache.hbase:hbase-thrift) 2.6-alpha through 2.6.5
+- Apache HBase (org.apache.hbase:hbase-thrift) 3-alpha through 3.0.0-beta-1
 
-I am adding a test to exercise that. Will push it within a day or two.
+Description:
+
+Missing Authorization vulnerability in Apache HBase thrift and rest delegation service.
+
+A scan operation in thrift/rest service has 3 steps, open, fetch(possible multiple times), close.
+The open step will return an id which will be passed back to server for identifying the scanner instances stored at server side.
+We missed the owner check in fetch and close steps which means a user can fetch rows from the scanner which is opened by other users, and close scanners which belongs to other users.
+
+This issue affects Apache HBase:from 3.0.0-alpha-1 through 3.0.0-beta-1, from 2.6.0 through 2.6.5, from 2.5.0 through 2.5.14, through 2.4.*.
+
+Users are recommended to upgrade to version 3.0.0-beta-2, 2.6.6 and 2.5.15, which fixes the issue.
+
+This issue is being tracked as HBASE-30183 
+
+Credit:
+
+Andrew Rukin (Arenadata) <a.rukin@...nadata.io> (reporter)
+
+References:
+
+https://hbase.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-49326
+https://issues.apache.org/jira/browse/HBASE-30183
 
