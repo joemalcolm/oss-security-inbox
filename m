@@ -1,57 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/6
-Message-ID: <0642a5c4-b890-46a6-bed1-8e0ee95e5bfc@cpansec.org>
-Date: Thu, 18 Jun 2026 18:54:16 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-9692: Mojolicious::Sessions::Storable versions through 0.05 for Perl generate session ids insecurely
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/44
+Message-ID: <ca54db17-0e59-8f1e-e032-1668a46b43d4@apache.org>
+Date: Fri, 24 Jul 2026 21:43:47 +0000
+From: Jens Geyer <jensg@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-58389: Apache Thrift: Rust binary protocol non-strict path missing string size limit 
 Content-Type: text/plain; charset=utf-8
 
+Severity: 
 
-========================================================================
-CVE-2026-9692                                        CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-9692
-   Distribution:  Mojolicious-Plugin-SessionStore
-       Versions:  through 0.05
+- Apache Thrift (thrift) before 0.24.0
 
-       MetaCPAN: https://metacpan.org/dist/Mojolicious-Plugin-SessionStore
-       VCS Repo: https://github.com/hayajo/Mojolicious-Plugin-SessionStore
+Description:
 
+Allocation of Resources Without Limits or Throttling vulnerability in Apache Thrift Rust bindings.
 
-Mojolicious::Sessions::Storable versions through 0.05 for Perl generate
-session ids insecurely
+This issue affects Apache Thrift: before 0.24.0.
 
-Description
------------
-Mojolicious::Sessions::Storable versions through 0.05 for Perl generate
-session ids insecurely.
+Users are recommended to upgrade to version 0.24.0, which fixes the issue.
 
-The default session id generator returns a SHA-1 hash seeded with the
-built-in rand function, the epoch time, the heap address of an
-anonymous hash, and the PID.
+Credit:
 
-These are predictable or low-entropy sources that are unsuitable for
-security purposes.
+Javid Khan <dxbjavid@...il.com> (finder)
 
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
+References:
 
-Workarounds
------------
-Apply the patch, which requires an upgrade to Mojolicious 9.46 or
-later.
-
-
-References
-----------
-https://security.metacpan.org/patches/M/Mojolicious-Plugin-SessionStore/0.05/CVE-2026-9692-r1.patch
-https://metacpan.org/release/HAYAJO/Mojolicious-Plugin-SessionStore-0.05/source/lib/Mojolicious/Sessions/Storable.pm#L11-15
-https://www.cve.org/CVERecord?id=CVE-2025-40923
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-
-
+https://thrift.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-58389
 
