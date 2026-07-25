@@ -1,36 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/17
-Message-ID: <f7e79d8f-e33d-5693-1672-bfc5266b6d2c@apache.org>
-Date: Mon, 14 Sep 2026 08:41:05 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-77883: Apache Syncope: Information disclosure via one-hop JEXL navigation past the JexlContextBuilder name denylist 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/25/5
+Message-ID: <a090f4da-5876-4d45-9c66-2718d32e0263@gmail.com>
+Date: Sat, 25 Jul 2026 00:19:05 -0400
+From: Demi Marie Obenour <demiobenour@...il.com>
+To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
+Subject: Re: 432 Linux kernel CVEs
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On 7/23/26 06:00, Peter Gutmann wrote:
+> David A. Wheeler <dwheeler@...eeler.com> writes:
+> 
+>> Obviously not everyone agrees with this policy, but please note that there
+>> *are* arguments for it.
+> 
+> Just to clarify, I'm not disagreeing with it either.  Given for example Daniel
+> Stenberg's comments on them, one being "CVE-2020-19909 is everything that is
+> wrong with CVEs",
+> https://daniel.haxx.se/blog/2023/08/26/cve-2020-19909-is-everything-that-is-wrong-with-cves/,
+> I can see arguments both for and against.  So I borrowed the term "malicious
+> compliance" from Risky Biz with a certain amount of glee rather than as a
+> criticism.
+> 
+>> There is a VERY VERY SIMPLE way to not have this problem: be ready to update
+>> your kernel.
+> 
+> Alternatively, don't build a product that relies on updates every two weeks in
+> order to remain secure.  That's not pontificating, it's pointing out that
+> something that turns your ceiling fan on and off doesn't need to run Linux
+> when a minimal RTOS, or just an event loop on bare metal, will do the same
+> thing.> >> If it is *vitally* important that your kernel *never* need to updated *ever*,
+>> then a traditional kernel like Linux, *BSD, MacOS, iOS, or Windows is NOT
+>> what you're looking for. What you need is a formally-proved kernel.
+> 
+> That's the textbook answer.  The practical answer is "what you need is a
+> minimal RTOS".  It doesn't need any formal proof, it just needs to be basic
+> enough that there's nothing there to attack.  Not being able to get a shell on
+> something because there isn't one is probably the single biggest win you can
+> have in device security.
 
-Affected versions:
+The problem is that that thing wants to talk to the outside world, as
+otherwise one would just use a mechanical switch.  That means a complex
+protocol stack.  Nowhere near as complex as Linux, but still complex.
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-api) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-api) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-api) 4.1.0-M0 through 4.1.2
+Of course, part of the problem is that people insist on making
+everything wireless, or at least networked.  The simplest form of
+security is "nobody untrusted can physically connect."
 
-Description:
+Unfortunately, this runs into two nasty real-world problems: money
+and aesthetics.  In-the-wall cabling is very expensive to install.
+Over-the-wall cabling is much cheaper, but many if not most humans find
+it unacceptably ugly.  Security nerds and highly regulated industries
+might willing to accept these tradeoffs.  Most people won't be.
 
-Exposure of sensitive information through data queries vulnerability in Apache Syncope.
+What might be a solution to this problem?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
 
-An administrator with adequate entitlements for Derived Schemas can create a malicious JEXL expression which allows any administrator with sufficient entitlements for User read to access LinkedAccount's (if present) or Manager's (if defined) sensitive information, possibly including hashed credentials.
 
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
-
-Credit:
-
-n0mi1k (finder)
-
-References:
-
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-77883
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
