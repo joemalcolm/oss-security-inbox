@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/18
-Message-ID: <ef6c7a93-b72f-1a39-e786-ac2a662ccbea@apache.org>
-Date: Thu, 06 Aug 2026 10:17:10 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66909: Apache CXF: Unsafe deserialization of inbound JMS ObjectMessage 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/27/3
+Message-ID: <20260727162531.GA2120@openwall.com>
+Date: Mon, 27 Jul 2026 18:25:31 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Reid Sutherland <reid@...rddimension.net>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel: KVM: Merge branch 'kvm-chainsaw' into HEAD
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+On Mon, Jul 27, 2026 at 09:46:12AM -0400, Reid Sutherland wrote:
+> For your information.
+> 
+> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=a204badd8432f93b7e862e7dac6db0fe3d65f370
 
-Affected versions:
+Thanks, but can you please explain why exactly you think this is
+noteworthy for oss-security?
 
-- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) 4.2.0 before 4.2.3
-- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) 4.0.0 before 4.1.8
-- Apache CXF (org.apache.cxf:cxf-rt-transports-jms) before 3.6.12
+I see there's a recent Phoronix story:
 
-Description:
+https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3
 
-Apache CXF's JMS transport deserializes the body of any inbound JMS ObjectMessage using native Java deserialization, with no type restrictions in place. Any attacker able to place a message on the service's JMS destination can submit a malicious serialized object, leading to denial of service or, if a suitable gadget class is on the classpath, remote code execution. The fix disables ObjectMessage deserialization by default, with a configuration switch to re-enable it if needed. Users are recommended to upgrade to versions 4.2.3 or 4.1.8 or 3.6.12, which fix this issue.
+and the patch series had been tracked and archived by LWN.
 
-Credit:
+This is definitely noteworthy for KVM project development, but even
+seeing all those other resources, I do not see why bring this in here?
 
-Reported by n0mi1k (finder)
+In general, posting a link without explanation is inappropriate here.
 
-References:
-
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66909
-
+Alexander
