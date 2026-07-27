@@ -1,35 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/10
-Message-ID: <7dfeb462-3cc8-6c87-8b25-4a0bf2b34902@apache.org>
-Date: Thu, 06 Aug 2026 14:05:55 +0000
-From: Eric Covener <covener@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/1
+Message-ID: <87wlugjjun.fsf@gentoo.org>
+Date: Mon, 27 Jul 2026 20:47:12 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-34191: Apache Portable Runtime Utility: SQL Injection in apr_dbd_oracle 
+Subject: Re: Linux kernel: KVM: Merge branch 'kvm-chainsaw' into HEAD
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Reid Sutherland <reid@...rddimension.net> writes:
 
-Affected versions:
+> On 2026-07-27 12:25 p.m., Solar Designer wrote:
+>> On Mon, Jul 27, 2026 at 09:46:12AM -0400, Reid Sutherland wrote:
+>>> For your information.
+>>>
+>>> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=a204badd8432f93b7e862e7dac6db0fe3d65f370
+>> Thanks, but can you please explain why exactly you think this is
+>> noteworthy for oss-security?
+>>
+>> I see there's a recent Phoronix story:
+>>
+>> https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3
+>>
+>> and the patch series had been tracked and archived by LWN.
+>>
+>> This is definitely noteworthy for KVM project development, but even
+>> seeing all those other resources, I do not see why bring this in here?
+>
+>
+> Core changes to virtualization should receive examination. Changing
+> data structures around because they're too big.. it's concerning,
+> following that patch is tricky because of its size. Would feel better
+> about it if changes like this were passed through a reliable LLM, but
+> even that requires relevant experience.  And naming it chainsaw, what
+> purpose does that serve?  I have very little trust.
 
-- Apache Portable Runtime Utility 1.6.0 through 1.6.3
+Paolo has been a maintainer for a long time and in FOSS even longer than
+that. Big refactoring can introduce bugs but I've no reason to doubt him
+and I don't really see why this change is any different from any other
+refactoring.
 
-Description:
+>
+>
+>> In general, posting a link without explanation is inappropriate here.
+>
+>
+> The 16+ year local root vulnerabilities in the kernel is enough of a
+> bruising to be extra cautious.
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Portable Runtime Utility via apr_dbd_oracle provider.
+This could be used to post all sorts of large kernel changes here,
+though, and I don't think we want to do that.
 
-This issue affects Apache Portable Runtime Utility: from 1.6.0 through 1.6.3
+Now, with regard to what you said above: I don't particularly want to
+encourage people to just put things into an LLM and see what they say,
+but if you were to ask an LLM, find it had something useful to say (and
+you're qualified to assess that), then sharing it here might be
+appropriate depending on context.
 
-Credit:
+thanks,
+sam
 
-Elhanan Haenel (finder)
-
-References:
-
-https://apr.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-34191
-
-Timeline:
-
-2026-03-24: reported
-2026-08-06: fixed in 1.6.x by r1936817
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
