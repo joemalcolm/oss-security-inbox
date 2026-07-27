@@ -1,53 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/07/15
-Message-ID: <20260707222856.GA22800@openwall.com>
-Date: Wed, 8 Jul 2026 00:28:56 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/2
+Message-ID: <caf4f410-0d32-6925-37e9-a7c83035bf32@apache.org>
+Date: Mon, 27 Jul 2026 17:58:08 +0000
+From: Robert Lazarski <robertlazarski@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: Feroz Salam <feroz.salam@...valent.com>, security@...ium.io
-Subject: Re: [CVE request] Cilium ClusterNetworkPolicy matchExpressions Values silently dropped — 0-day in v1.20.0-pre releases, no maintainer response in 9 days via GHSA Triage
+Subject: CVE-2026-66713: Apache Axis2/Java: deserialization of untrusted Data 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 07, 2026 at 01:15:04PM -0700, Joe Stringer wrote:
-> I suspect we may have been the initial target for this activity; we
-> received a test email to security@...ium.io prior to this email.
+Severity: low 
 
-We also got one just prior to the 4 reports on July 4.  I didn't let it
-through (as a moderator), but it was:
+Affected versions:
 
-> Subject: [Test] 2026-07-04
-> From: xylove21 <xylove21@...ton.me>
-> To: oss-security@...ts.openwall.com
-> Date: Sat, 04 Jul 2026 10:12:46 +0800
-> 
-> Test 2026-07-04. Target: oss-security@...ts.openwall.com. No disclosure.
+- Apache Axis2/Java through 2.0.0
 
-Looks like just the way the tool works.  I don't know what the purpose
-of this test was, given it was sent from a non-existent address and
-further messages were sent regardless of it not being accepted.  Maybe
-the tool was misconfigured.
+Description:
 
-On Tue, Jul 07, 2026 at 01:15:04PM -0700, Joe Stringer wrote:
-> The feature discussed in the disclosure is an alpha feature that we've
-> been developing this cycle. We identified and fixed the reported issue
-> as part of development activities, so it will not be part of a stable
-> release. The report from xylove21 accurately identified the commit and
-> PR that introduced the bug, as well as the commit that fixed the bug
-> and corresponding PR.
-> 
-> If you asked a model to read git logs to identify changes with
-> security impact, it would probably point to the fix commit referenced
-> in the original message. The combination of "fix" and "network policy"
-> in a commit title is likely sufficient signal. Evidently the claw was
-> also directed to identify which commit may have introduced the issue.
-> I would guess the motivation was to identify known issues which may
-> not have had a public disclosure, and attempt to file a CVE for the
-> issue to claim some credit. Given these versions are not recommended
-> for production and the feature is alpha, we do not see a motivation to
-> file a CVE.
+Deserialization of Untrusted Data (CWE-502) in the Tribes-based clustering component
 
-Oh, so in your case it was search for recently fixed issues.  I wonder
-if that's also the case for the 4 other reports against other projects.
-I could not quickly confirm this now.
+  in Apache Software Foundation Apache Axis2/Java through 2.0.0 on Apache Tomcat
 
-Alexander
+  (only when Tribes clustering is enabled, which is off by default) allows an
+
+  unauthenticated remote attacker with network access to the clustering port to
+
+  execute arbitrary code via a crafted serialized Java object delivered to the cluster
+
+  channel and deserialized in
+
+  org.apache.axis2.clustering.tribes.Axis2ChannelListener#messageReceived. Users are
+
+  recommended to upgrade to version 2.0.1, which fixes this issue by removing the
+
+  clustering feature entirely.
+
+Credit:
+
+liuhuajin of Huawei (finder)
+
+References:
+
+https://github.com/apache/axis-axis2-java-core/commit/e6f53b230bddcb40577c84ff290ba51e7265fa15
+https://axis.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-66713
+
