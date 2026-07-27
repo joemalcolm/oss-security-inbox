@@ -1,126 +1,81 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/8
-Message-Id: <E1x3uVJ-00GkHd-0R@xenbits.xenproject.org>
-Date: Tue, 08 Sep 2026 12:00:45 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 511 v3 (CVE-2026-79603) - Unconditionally do TLB flushing ahead of page scrubbing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/4
+Message-ID: <178518040700.283108.15873086541500054121@notcve.org>
+Date: Mon, 27 Jul 2026 21:26:47 +0200
+From: advisories@...cve.org
+To: oss-security@...ts.openwall.com
+Subject: [NotCVE-2026-0010] Barrier 2.4.0 for Windows Unauthenticated IPC Command Execution Allows Local Privilege Escalation to SYSTEM
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+----------------------------------------------------------------------------
+NotCVE Advisory — NotCVE-2026-0010
+----------------------------------------------------------------------------
 
-            Xen Security Advisory CVE-2026-79603 / XSA-511
-                               version 3
+[-] Summary:
+Barrier 2.4.0 for Windows contains a local privilege escalation vulnerability
+in the IPC command interface exposed by the barrierd.exe service on
+127.0.0.1:24801. The IPC server accepts local TCP clients and processes a
+command line together with a one-byte elevation flag without authenticating the
+connecting process or verifying that it is authorised to request elevated
+process creation. A low-privileged local attacker can therefore execute
+arbitrary commands as NT AUTHORITY\SYSTEM, resulting in complete compromise of
+the affected host. CVSS:3.1 7.8 (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).
 
-        Unconditionally do TLB flushing ahead of page scrubbing
+[-] Affected:
+Barrier (Debauchee), version 2.4.0 for Windows.
+Earlier affected versions have not been established. Barrier is no longer
+maintained and no patched release has been verified.
 
-UPDATES IN VERSION 3
-====================
+[-] Technical Description:
+The Barrier daemon (barrierd.exe) exposes an IPC server on the loopback
+interface at TCP port 24801. A client sends an IHEL client hello identifying
+itself as a supported IPC client type, followed by a kIpcCommand (ICMD) message
+containing a command line and a one-byte elevation flag.
 
-Public release.
+The reviewed IPC acceptance and command-processing paths do not authenticate
+the connecting process, verify its Windows identity, or authorise it to request
+elevated process creation.
 
-ISSUE DESCRIPTION
-=================
+When the elevation flag is enabled, DaemonApp::handleIpcMessage() forwards the
+supplied command and elevation value to MSWindowsWatchdog. The watchdog locates
+winlogon.exe in the relevant Windows session, duplicates its privileged token,
+and supplies the attacker-controlled command line to CreateProcessAsUser. The
+command therefore executes as NT AUTHORITY\SYSTEM.
 
-x86 PV guests can free memory pages while still keeping a stale TLB entry
-pointing to them.  A TLB flush is only issued by Xen (if needed) when the
-page is re-used.  Since it's possible for the page to be scrubbed ahead of
-the TLB flush, there's a window where a PV guest can modify an already
-scrubbed page.
+Barrier additionally stores the last IPC-supplied values in the system settings
+as Command and Elevate. These values are loaded again when the daemon starts
+and passed back to the watchdog, so an attacker-supplied elevated command can
+execute again after service restarts or system reboots until the stored command
+is cleared.
 
-IMPACT
-======
+Weaknesses: CWE-306 (Missing Authentication for Critical Function), CWE-862
+(Missing Authorization). Pattern: CAPEC-69 (Target Programs with Elevated
+Privileges).
 
-Deployments using `xsm=silo scrub-domheap` with the aim of not allowing the
-exchange of information amongst guests are not effective in the presence of
-PV guests.
+A proof of concept is published in the researcher's repository (see References).
 
-VULNERABLE SYSTEMS
-==================
+[-] Timeline:
+[25/07/2026] - NotCVE ID requested.
+[27/07/2026] - NotCVE ID reserved.
+[27/07/2026] - Published as NotCVE-2026-0010.
 
-All Xen versions from 4.13 onwards are vulnerable.  Xen versions 4.12 and
-earlier are not vulnerable as they lack the `scrub-domheap` command line
-option.
+[-] Credit:
+Discovered by Christopher Duram
+(https://www.linkedin.com/in/christopherduram/).
 
-Only x86 PV guests can exploit the vulnerability.
+[-] References:
+https://notcve.org/notcve/NotCVE-2026-0010
+https://github.com/cduram/NotCVE-2026-0010
+https://github.com/cduram/NotCVE-2026-0010/blob/main/Debauchee_Barrier_Privesc.py
+https://github.com/debauchee/barrier/releases/tag/v2.4.0
+https://github.com/debauchee/barrier/blob/master/src/lib/ipc/Ipc.h
+https://github.com/debauchee/barrier/blob/master/src/lib/ipc/IpcServer.cpp
+https://github.com/debauchee/barrier/blob/master/src/lib/ipc/IpcClientProxy.cpp
+https://github.com/debauchee/barrier/blob/master/src/lib/barrier/win32/DaemonApp.cpp
+https://github.com/debauchee/barrier/blob/master/src/lib/platform/MSWindowsWatchdog.cpp
 
-MITIGATION
-==========
-
-There is no known mitigation.
-
-CREDITS
-=======
-
-This issue was discovered by Roger Pau Monné of AMD.
-
-RESOLUTION
-==========
-
-Applying the appropriate attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa511.patch           xen-unstable - Xen 4.22.x
-xsa511-4.21.patch      Xen 4.21.x
-xsa511-4.20.patch      Xen 4.20.x
-xsa511-4.19.patch      Xen 4.19.x
-xsa511-4.18.patch      Xen 4.18.x - Xen 4.17.x
-
-$ sha256sum xsa511*
-ba3731960983ef88836f96655f917abb25447eab69fda1d9cf7f4e8203138403  xsa511.patch
-c05a2d9fb391739a9ed39aa9247be264eb039bdac74f2db3b51e20199e6234cd  xsa511-4.18.patch
-9653110b3e82ea5c28185d436b22231f39d6e875712a7c9c6882d8cb1bd0d406  xsa511-4.19.patch
-0a475b8622d867210346612c5f97a9c3b7b638de2704d51fbd86317b6b11a840  xsa511-4.20.patch
-61aa358aef962a1e4dda3dd45cac7436e395362e9b5f9314ad3c60d39231cb97  xsa511-4.21.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmqf98YMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZf6EH/3BoQ+95hSDLUYJzmWNdjdqwYpyrWe1RaMcXWfuM
-DuvbkEd6SIrtkhEmO8ZHSiBm2g5v9/SyXrm0L4NZ2+LcZWbOAx0PK9D3DOjpIZk2
-LpQJg75GPWLkBZ62vgZlCzcXa0opVNSrmnJvYimoHvdplMpFQOhd7Ve3988XCx1G
-Mb7tKeQ7IdgAW0P/gMTGpunGL9dF58N2d8H5qbp5695tneszzW1UtAVB+4BxlEuh
-WenQ1hJVtEWznRTYvaEJ7v6CYBoY7TmeYkpZviGhTj8cuTWguMNrKuSitPkRNJ+P
-OLIQ/pz3E6PGhJxXWw8BpjkDzHf9ETACu1g+sa+18z6/+1o=
-=/FMW
------END PGP SIGNATURE-----
-
-Download attachment "xsa511.patch" of type "application/octet-stream" (7746 bytes)
-
-Download attachment "xsa511-4.18.patch" of type "application/octet-stream" (6527 bytes)
-
-Download attachment "xsa511-4.19.patch" of type "application/octet-stream" (6377 bytes)
-
-Download attachment "xsa511-4.20.patch" of type "application/octet-stream" (7748 bytes)
-
-Download attachment "xsa511-4.21.patch" of type "application/octet-stream" (7754 bytes)
+[-] About NotCVE:
+NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
+vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
+Request a NotCVE: https://notcve.org/form/ · Contributors:
+https://notcve.org/hall/
