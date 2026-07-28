@@ -1,161 +1,134 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/3
-Message-ID: <CAK3hNHYMmmg65=aO8EiTjR2sQdQ8Th4Osn9-D7n=5izGXQXN0w@mail.gmail.com>
-Date: Thu, 23 Jul 2026 22:08:30 -0700
-From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: libIEC61850: four MMS/GOOSE memory-safety vulnerabilities, including lab RCE
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/18
+Message-Id: <E1wogYb-003Dnj-1I@xenbits.xenproject.org>
+Date: Tue, 28 Jul 2026 12:05:13 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 502 v3 (CVE-2026-62429) - vNUMA domain cleanup may race other operations
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-libIEC61850 (MZ Automation), the widely used open-source IEC 61850 stack
-for electric-substation MMS and GOOSE, contains four memory-safety
-vulnerabilities in its MMS and GOOSE handling: CVE-2026-49035,
-CVE-2026-50039, CVE-2026-50032, and CVE-2026-50103. All are fixed in
-v1.6.2. In the tested default configurations, the triggering requests or
-frames require no application credentials. The issues cause denial of
-service under the deployment conditions described below; CVE-2026-49035
-additionally produced command execution in a deliberately unhardened
-laboratory build.
+            Xen Security Advisory CVE-2026-62429 / XSA-502
+                               version 3
 
-Affected range: v1.0.0 through v1.6.1. I reproduced all four
-issues against commit a1396111, the v1.6.1 tip used for testing.
-Coordinated through CISA (advisory ICSA-26-204-06).
+            vNUMA domain cleanup may race other operations
 
-The MMS PoCs require no application credentials against the tested
-default server configuration; the GOOSE issue is triggered by a single
-crafted Layer-2 frame. Applications may separately configure
-authentication, TLS, access-control callbacks, or network restrictions.
+UPDATES IN VERSION 3
+====================
 
-Remediation: upgrade to v1.6.2, or backport the four referenced fixes.
-Deployments that cannot update should restrict MMS reachability, disable
-or restrict unnecessary MMS file services, and reject untrusted GOOSE
-traffic at the network boundary where operationally possible.
+Public release.
 
-CWE ids and CVSS v3.1 scores/vectors below are the published CISA
-advisory values.
+ISSUE DESCRIPTION
+=================
 
-  CVE             Component          Class           CWE   CVSS 3.1
-  --------------  -----------------  --------------  ----  --------
-  CVE-2026-49035  MMS file service   Heap overflow   122   8.1
-  CVE-2026-50039  MMS value cache    Stack overflow  121   7.5
-  CVE-2026-50032  MMS write service  NULL deref      476   7.5
-  CVE-2026-50103  GOOSE subscriber   Invalid struct  228   6.5
+Accessing the vNUMA configuration data of a guest is still possible when
+domain destruction has already started.  The cleaning up of that
+configuration information is not synchronized with its retrieval by a
+device model controlling the guest.
 
+IMPACT
+======
 
-CVE-2026-49035 -- MMS FileRead heap overflow -> RCE (lab)
-  mms_file_service.c / mms_association_service.c
+While Denial of Service (DoS) affecting the entire host and information
+leaks and are the prevailing effect, a device model stub domain or a
+de-privileged device model running in the control domain may also be
+able to elevate its privileges to that of the host.
 
-  The server accepts a client-supplied maxPduSize during MMS Initiate
-  with no lower bound. maxFileChunkSize = maxPduSize - 20 underflows to
-  a near-maximal uint32_t when maxPduSize < 20 -- an
-  integer-underflow root cause (CWE-191) underlying the heap overflow --
-  bypassing the chunk-size guard, so a FileRead response copies an
-  entire staged file into a fixed 65,100-byte heap buffer. In the
-  default build profile ObtainFile is compiled in alongside the MMS file
-  service, allowing a sufficiently large file to be staged remotely when
-  the application has not disabled or restricted that functionality; the
-  file is then read back to trigger the overflow. With the file service
-  reachable and a sufficiently large file available or staged through
-  ObtainFile, the overflow reliably crashes the server.
+VULNERABLE SYSTEMS
+==================
 
-  In a deliberately unhardened lab build (AArch64, non-PIE, ASLR off,
-  writable GOT) I reproduced the full chain -- a free@GOT overwrite
-  reaching system(), end-to-end command execution -- verified by an
-  strace execve capture and a nonce-stamped proof file. In the tested
-  environment, enabling PIE and ASLR would require an additional
-  address-disclosure or equivalent exploit primitive; I did not
-  demonstrate such a primitive.
+All Xen versions from 4.5 onwards are vulnerable.  Xen versions 4.4 and
+earlier are not vulnerable.
 
-Fix status: v1.6.2, commit db35acf6.
-CVSS 3.1: 8.1 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H)
+Only entities controlling guests (on x86: HVM guests) can leverage the
+vulnerability.  These are device models running in either a stub domain or
+de-privileged in Dom0.
 
+Only guests which have vNUMA enabled allow their controlling entities to
+leverage the vulnerability.
 
-CVE-2026-50039 -- MMS value-cache stack buffer overflow
-  mms_value_cache.c
+MITIGATION
+==========
 
-  MmsValueCache_lookupValue copies the looked-up item identifier into a
-  fixed char itemIdCopy[65] with an unbounded copy
-  (StringUtils_copyStringToBuffer, no destination size). An
-  unauthenticated ReadRequest overflows the stack buffer when the server
-  model exposes an object whose item identifier exceeds 64 bytes (ASAN:
-  stack WRITE of size 87 on an 86-char path; a canary build aborts via
-  __stack_chk_fail). Deployment-conditional on such a model; the copy is
-  unsafe regardless.
+On x86, running only PV or PVH guests will avoid the vulnerability.
 
-Fix status: v1.6.2, commit a0bd0aaa
-CVSS 3.1: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+Not enabling vNUMA for HVM guests will also avoid the vulnerability.
 
+CREDITS
+=======
 
-CVE-2026-50032 -- MMS Write NULL-pointer dereference
-  mms_write_service.c
+This issue was discovered by Teddy Astie of Vates.
 
-  A WriteRequest naming an existing Named Variable List with an empty
-  listOfData (A0 00, accepted by the decoder) sets the data array to
-  NULL, which the write loop dereferences. This path iterates on the
-  server-side member count without checking the client's listOfData
-  count; the sibling listOfVariable path has that guard, this one does
-  not. Unauthenticated single-request crash against the tested default
-  (no access control).
+RESOLUTION
+==========
 
-Fix status: v1.6.2, commit bd338f23.
-CVSS 3.1: 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+Applying the appropriate attached patch resolves this issue.
 
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-CVE-2026-50103 -- GOOSE parser supplies NULL dataset element to callback
-  goose_receiver.c
+xsa502.patch           xen-unstable - Xen 4.22.0
+xsa502-4.21.patch      Xen 4.21.x - Xen 4.19.x
+xsa502-4.18.patch      Xen 4.18.x - Xen 4.17.x
 
-  The two-pass TLV parser (parseAllDataUnknownValue) allocates a dataset
-  slot in pass 1 but leaves it NULL in pass 2 when a recognized type
-  carries an invalid length: 0x87/Float (valid 5, 9), 0x8c/BinaryTime
-  (valid 4, 6), 0x91/UTCTime (valid 8). The NULL element reaches the
-  subscriber callback; a callback that reads it with ordinary MmsValue
-  accessors -- the pattern in the library's own examples and the PoC --
-  calls MmsValue_getType(NULL) and crashes. One malformed Layer-2 GOOSE
-  frame, delivered on the local segment, is enough.
+$ sha256sum xsa502*
+e6150a6c468906a1bbcd4b9fca1f28cf3dc2c4617d6aab7c48507dbac003df82  xsa502.patch
+f780c280539aedb3eeb4f5a43f3d2f4bc5a112ca1a2d7ad6a95eb2fbdc5f5cc8  xsa502-4.18.patch
+a0b2b6f543a566e997a9f38bbd718cc81e8de8e7b442ff47e92260f70e66f647  xsa502-4.21.patch
+$
 
-  The same function backs the optional beta R-GOOSE (UDP) path, disabled
-  by default (CONFIG_IEC61850_R_GOOSE 0); identified by source review,
-  not tested.
+DEPLOYMENT DURING EMBARGO
+=========================
 
-Fix status: v1.6.2, commit 62f22887.
-CVSS 3.1: 6.5 (CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+Deployment of the patches described above (or others which are
+substantially similar) is permitted during the embargo, even on public-
+facing systems with untrusted guest users and administrators.
 
+HOWEVER, deployment of the mitigation is NOT permitted (except where
+all the affected systems and VMs are administered and used only by
+organisations which are members of the Xen Project Security Issues
+Predisclosure List).  Specifically, deployment on public cloud systems
+is NOT permitted.
 
-Affected:
-  libIEC61850 v1.0.0 through v1.6.1 (all four). Fixed in v1.6.2.
+This is because no longer exposing vNUMA is a guest visible configuration
+change, which may lead to re-discovery of the issue.
 
+Deployment of this mitigation is permitted only AFTER the embargo ends.
 
-Note:
-  Beyond these four, v1.6.2 also ships several other security-related
-  fixes (see the release notes and CHANGELOG); those do not appear to
-  carry separate CVE assignments.
+AND: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
 
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
-Timeline:
-  2026-05-07   Reported four issues to the maintainer.
-  2026-05-08   All four fixed on the public v1.6_develop branch.
-  2026-06-09   CVEs reserved.
-  2026-07-03   Notified CISA and the vendor of intent to publish PoC
-               code after the CISA advisory is published.
-  2026-07-23   v1.6.2 released; CISA advisory ICSA-26-204-06 published;
-               writeup and PoC published; this disclosure.
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-PoCs (per-CVE crash harnesses + the Dockerized end-to-end RCE, with
-ASAN/GDB logs, pcaps, patch diffs, and negative controls) and the full
-write-up -- root cause, exploit chain, and timeline -- are linked below.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomrQMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ58sH/2CogHDnmyLVcaB68ySxCnCZI5qNt0VonyH4n3s0
+Ef4H74nwh3osLXrvkcnXvbrH4hqDKI3MtydScfHc5dpa1rQHXO8utHxZtGUU+CSv
+A1nSYD42pu96V5xvTXO+xK5sCZoBREgUNS2TGCE02dkwXdngsCWnAPFn1BQi7wsG
+LJWuzurlSRSc28PPuIEaKJM+eiyG88ep5fADrLycVPvltqd6bktEE1Xa82h5iSYd
+9K7KTEDT9Kc0HZEg4x0h2OBwVqGdKF+8FHDNCEtpiwtE2Ao6OycTVzGNX7f+fq4/
+CeQjI8I94j/r1zVPtuGBHNVkUdgrCIe36156RC7f1LFy0JM=
+=7hf1
+-----END PGP SIGNATURE-----
 
+Download attachment "xsa502.patch" of type "application/octet-stream" (3869 bytes)
 
-References:
-  Write-up:  https://abhinavagarwal07.github.io/posts/libiec61850-mms-goose-cves?src=oss
-  PoC code:  https://github.com/abhinavagarwal07/libiec-security-poc
-  CISA Advisory:  https://www.cisa.gov/news-events/ics-advisories/icsa-26-204-06
-  Vendor Release:
-https://github.com/mz-automation/libiec61850/releases/tag/v1.6.2
+Download attachment "xsa502-4.18.patch" of type "application/octet-stream" (3877 bytes)
 
-
-Reported and coordinated by Abhinav Agarwal.
-
--- Abhinav Agarwal
+Download attachment "xsa502-4.21.patch" of type "application/octet-stream" (3878 bytes)
