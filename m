@@ -1,39 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/6
-Message-ID: <8361f13c-4592-5643-8ce8-0e57268df7da@apache.org>
-Date: Fri, 17 Jul 2026 06:03:41 +0000
-From: Christopher Tubbs <ctubbsii@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/25
+Message-ID: <d7f4fc56-f35b-4fef-9ae1-d53f2d8dc33a@apache.org>
+Date: Tue, 28 Jul 2026 15:29:52 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-62764: Apache Accumulo: A user can trigger a graceful shutdown of services without the relevant system permissions 
+Subject: CVE-2026-66299: Apache Tomcat: DoS via WebSocket chat example
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: low
 
 Affected versions:
 
-- Apache Accumulo (org.apache.accumulo:accumulo-server-base) 2.1.4 through 2.1.5
+- Apache Tomcat 11.0.0-M20 through 11.0.24
+- Apache Tomcat 10.1.24 through 10.1.57
+- Apache Tomcat 9.0.89 through 9.0.120
+- Apache Tomcat through 8.5.100 unaffected
 
 Description:
 
-Improper Handling of Insufficient Privileges vulnerability in Apache Accumulo.
-An authenticated, but low-privileged user without system permissions may
-issue a remote command to gracefully shutdown system components
-(compaction-coordinator, compactor, gc, manager, monitor, tserver, or sserver),
-leading to a denial of service.
+Uncontrolled Resource Consumption vulnerability in Apache Tomcat's 
+WebSocket chat example.
 
-This issue affects Apache Accumulo 2.1.4 and 2.1.5.
+This issue affects Apache Tomcat: from 11.0.0-M20 through 11.0.24, from 
+10.1.24 through 10.1.57, from 9.0.89 through 9.0.120. Users who have 
+followed the security guidance to remove the examples web application 
+are not affected by this issue.
 
-Users are recommended to upgrade to version 2.1.6, which fixes the issue.
+Users are recommended to remove the examples web application or to 
+upgrade to version 11.0.25, 10.1.58 or 9.0.121 (when released), which 
+fix the issue.
 
 Credit:
 
-Fabian Fleischer (reporter)
+4ra1n, pyn3rd and unam4 (finder)
 
 References:
 
-https://github.com/apache/accumulo/issues/6478
-https://accumulo.apache.org/release/accumulo-2.1.6/
-https://accumulo.apache.org/downloads/
-https://accumulo.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-62764
-
+https://lists.apache.org/thread/8owczcc1o8qw1rxmg9gvfk4w2jnh4l5k
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-66299
