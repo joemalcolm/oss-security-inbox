@@ -1,81 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/14
-Message-ID: <58451fac-21c6-44c3-9df9-0059d5ac961e@jvf.cc>
-Date: Thu, 13 Aug 2026 13:42:03 -0700
-From: Jay Faulkner <jay@....cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/9
+Message-ID: <871pcnjue9.fsf@gentoo.org>
+Date: Tue, 28 Jul 2026 11:11:42 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: [OSSN-0107] Ironic-Python-Agent: Container HardwareManager Security Model Misimplemented
+Subject: Re: Linux kernel: KVM: Merge branch 'kvm-chainsaw' into HEAD
 Content-Type: text/plain; charset=utf-8
 
-Ironic Python Agent Container HardwareManager Security Misimplemented
----
+Reid Sutherland <reid@...rddimension.net> writes:
 
-### Summary ###
-Ironic Python Agent's ContainerHardwareManager plugin, shipped in
-2025.2, was merged with a misimplemented security model.
+> On 2026-07-27 3:47 p.m., Sam James wrote:
+>> Reid Sutherland <reid@...rddimension.net> writes:
+>>
+>>> On 2026-07-27 12:25 p.m., Solar Designer wrote:
+>>>> On Mon, Jul 27, 2026 at 09:46:12AM -0400, Reid Sutherland wrote:
+>>>>> For your information.
+>>>>>
+>>>>> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=a204badd8432f93b7e862e7dac6db0fe3d65f370
+>>>> Thanks, but can you please explain why exactly you think this is
+>>>> noteworthy for oss-security?
+>>>>
+>>>> I see there's a recent Phoronix story:
+>>>>
+>>>> https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3
+>>>>
+>>>> and the patch series had been tracked and archived by LWN.
+>>>>
+>>>> This is definitely noteworthy for KVM project development, but even
+>>>> seeing all those other resources, I do not see why bring this in here?
+>>>
+>>> Core changes to virtualization should receive examination. Changing
+>>> data structures around because they're too big.. it's concerning,
+>>> following that patch is tricky because of its size. Would feel better
+>>> about it if changes like this were passed through a reliable LLM, but
+>>> even that requires relevant experience.  And naming it chainsaw, what
+>>> purpose does that serve?  I have very little trust.
+>> Paolo has been a maintainer for a long time and in FOSS even longer than
+>> that. Big refactoring can introduce bugs but I've no reason to doubt him
+>> and I don't really see why this change is any different from any other
+>> refactoring.
+>
+>
+> The refactor doesn't seem necessary, the original data structure
+> appears to be fine, now we have surface risk for something that
+> doesn't solve a bug or implement a feature.
+>
+> I don't care what someone's street cred is, it's their result.
+>
+>>>
+>>>> In general, posting a link without explanation is inappropriate here.
+>>>
+>>> The 16+ year local root vulnerabilities in the kernel is enough of a
+>>> bruising to be extra cautious.
+>> This could be used to post all sorts of large kernel changes here,
+>> though, and I don't think we want to do that.
+>>
+>> Now, with regard to what you said above: I don't particularly want to
+>> encourage people to just put things into an LLM and see what they say,
+>> but if you were to ask an LLM, find it had something useful to say (and
+>> you're qualified to assess that), then sharing it here might be
+>> appropriate depending on context.
+>
+>
+> Again, steering an LLM to properly search for bugs in C is for the
+> experienced.  If you have a problem with LLMs, you're fighting the
+> calculator.  It's very clear that LLMs are finding bugs that have gone
+> undiscovered for almost two decades.
 
-Ironic developers have pushed an updated version of this feature,
-including patches for Ironic and Ironic Python Agent, with properly
-implemented security controls. These patches will not be universally
-backported as they are not backwards-compatible.
+I think speculation to this degree is offtopic for the list.
 
-### Affected Services / Software ###
-- ironic-python-agent: >=11.0.0, <12.0.1
-
-### Discussion ###
-The Ironic Python Agent uses plugins called HardwareManagers (HWMs)
-to expose new in-band steps for Ironic cleaning, servicing,
-or deployment.
-
-In the 2025.2 release, a Container HWM was added, giving operators
-who added a container runner (such as ``podman`` or ``docker``) to
-their ramdisk the option to download and execute containers as
-Ironic steps.
-
-This initial implementation had several security flaws and was
-implemented in such a way that we could not backport fixes without
-breaking existing deployments. These issues included ignoring
-the value of the ``[container]/allow_arbitrary_containers`` safety
-mechanism.
-
-### Recommended Actions ###
-* Operators who are using OpenStack-supplied ramdisks are not
-   vulnerable. These images, for the impacted releases, do not come
-   with ``podman`` or ``docker`` installed, disabling the feature.
-   You are secure without taking any action and will upgrade into
-   the fixed version in OpenStack 2026.2 or later.
-
-* Operators who are using ramdisks with ``docker`` or ``podman``
-   installed, for example, via the ``ironic-python-agent-podman``
-   element in ``ironic-python-agent-builder`` but are not interested
-   in the Container HWM should add ``deploy.container_clean_step``
-   and ``deploy.generic_container_step`` to
-   ``[api]/disallow_service_steps``, ``[api]/disallow_clean_steps``,
-   and ``[api]/disallow_deploy_steps``. This will disable the insecure
-   code. Patches to add the ``disallow_*_steps`` options are available
-   in OSSA-2026-025.
-
-* Operators currently using the Container HWM or who wish to use
-   it should backport the patches from
-   https://review.opendev.org/q/hashtag:%22container-hwm-patches%22
-   to the branch they are currently using. Then, evaluate your use
-   case against the updated documentation
-https://docs.openstack.org/ironic/latest/admin/container-based-steps.html
-   to ensure the changes were not breaking for any existing deployment.
-
-### Credits ###
-- Tuomo Tanskanen, Ericsson Software Technology (Metal3.io Security Team)
-- Riccardo Pittau, Red Hat (Metal3.io Security Team)
-
-### Contacts / References ###
-Authors:
-- Jay Faulkner, G-Research OSS
-
-This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0107
-Original Launchpad bug: https://bugs.launchpad.net/ironic/+bug/2160143
-Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
-OpenStack Security : https://security.openstack.org/
-CVE: none
-
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
