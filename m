@@ -1,48 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/5
-Message-ID: <df7cb6f8-c393-4ae0-864f-36239ca22759@pipping.org>
-Date: Tue, 11 Aug 2026 16:11:09 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: libexpat 2.8.3 fixes CVE-2026-72522 (denial of service)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/22
+Message-Id: <E1wogYp-003Dy5-0f@xenbits.xenproject.org>
+Date: Tue, 28 Jul 2026 12:05:27 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 506 v2 (CVE-2026-62433) - correct buffer checks for DM_OP hypercalls
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
+            Xen Security Advisory CVE-2026-62433 / XSA-506
+                               version 2
 
-just a quick note that libexpat 2.8.3 (or "Expat 2.8.3") released
-yesterday is fixing CVE-2026-72522:
+              correct buffer checks for DM_OP hypercalls
 
-   Fix an out-of-bounds read and the resulting infinite loop caused by
-   treating low surrogates (Unicode) the same as high surrogates in
-   functions *_toUtf16.
-   Needs Expat compiled with 16bit character support (e.g. with Firefox
-   and/or on Windows) to be affected.
-   Upstream CVSS 3.1 vector:
-   AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (CVSS score: 7.5)
-   (Note the "AV:N" for network/remote, the "AV:L" in NVD by Mitre is
-   mistaken.)
-   Original bug report from Mozilla at:
-   https://bugzilla.mozilla.org/show_bug.cgi?id=2053153
+UPDATES IN VERSION 2
+====================
 
-Some key links are:
+Public release.
 
-- The blog post about it
-   https://blog.hartwork.org/posts/expat-2-8-3-released/
+ISSUE DESCRIPTION
+=================
 
-- The change log of release 2.8.3
-   https://github.com/libexpat/libexpat/blob/R_2_8_3/expat/Changes
+Parts of the DM_OP handling code assumes the caller has provided the
+required number of buffers for the given operation without any checking
+being done.  As a result, certain operations might access stack
+rubble as structures are possibly uninitialized.
 
-- The fixing pull request
-   https://github.com/libexpat/libexpat/pull/1296
+IMPACT
+======
 
-- The NVD CVE metadata
-   https://nvd.nist.gov/vuln/detail/CVE-2026-72522
-   (with mistaken CVSS vector, see above)
+A device model of a HVM guest can gain insight on the contents of the
+Xen stack, thus possibly leaking data from other guests contexts.
 
-Best
+VULNERABLE SYSTEMS
+==================
 
+All Xen versions from 4.10 onwards are vulnerable.  Xen versions 4.9 and
+earlier are not vulnerable.
 
+Only entities controlling HVM guests can leverage the vulnerability.
+These are device models running in either a stub domain or de-privileged
+in Dom0.
 
-Sebastian
+MITIGATION
+==========
 
+Running only PV or PVH guests will avoid the vulnerability.
+
+(Switching from a device model stub domain or a de-privileged device
+model to a fully privileged Dom0 device model does NOT mitigate this
+vulnerability.  Rather, it simply recategorises the vulnerability to
+hostile management code, regarding it "as designed"; thus it merely
+reclassifies these issues as "not a bug".  The security of a Xen system
+using stub domains is still better than with a qemu-dm running as a Dom0
+process.  Users and vendors of stub qemu dm systems should not change
+their configuration to use a Dom0 QEMU process.)
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa506.patch           xen-unstable - Xen 4.17.x
+
+$ sha256sum xsa506*
+7fa79f0421eafa420f7af791ad35a96a769c945260d81419052611771347b411  xsa506.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomrwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZNF4H/0c6JMsivAWWDIQ920Bwh7EEOKhMv3nGIrBqrN8/
+TGKJNNoNQinhoQv9fnqwsHaiC8e49PNUJqTpEN8/o/b0obnl4Tw2JyUXFY1bZyaz
+XNS85rkrUc0+Ue/Ka2464mmQ826TJXfaXG9CZYlC5cO/JtzX65ecMW4H7ju2tdnt
+c9xK+I5kIQPwUwy3HUMrKFvWi+JIvpCzhuHYDH2iJDecmk42pOmnKtS54q6YO15n
+c4xdn7aNyeECKQw4qUcjKC7zKRgrqFu5J3BlvXauZOkJCL50PK+OpWK6QV+fRNGy
+N7dnY5w+1BMVrHywZI5iy8WqZtJoi6TOO1Gl0WcB07/vvJk=
+=APkr
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa506.patch" of type "application/octet-stream" (2424 bytes)
