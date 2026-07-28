@@ -1,46 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/02/2
-Message-ID: <nr1op7o6-2556-3933-7281-o5p49r53691q@unkk.fr>
-Date: Wed, 2 Sep 2026 08:22:10 +0200 (CEST)
-From: Daniel Stenberg <daniel@...x.se>
-To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
-Subject: [SECURITY ADVISORIES] curl 8.22.0
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/13
+Message-Id: <E1wogYG-003Dcb-0p@xenbits.xenproject.org>
+Date: Tue, 28 Jul 2026 12:04:52 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 496 v2 (CVE-2026-42492) - vIRQ event channel binding may break Xenstore
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-In association with curl 8.22.0 we announce these ten security advisories 
-addressing separate security vulneraiblities in curl, libcurl and wcurl.
+            Xen Security Advisory CVE-2026-42492 / XSA-496
+                               version 2
 
-We recommend you study the details in our write-ups. We try hard to explain 
-them in detail and include all sufficient details.
+             vIRQ event channel binding may break Xenstore
 
-All new curl/libcurl are listed here: https://curl.se/docs/vuln-8.21.0.html
+UPDATES IN VERSION 2
+====================
 
-CVE-2026-13608: OpenLDAP SASL authentication bypass
+Public release.
 
-CVE-2026-18924: HTTP/2 server push UAF
+ISSUE DESCRIPTION
+=================
 
-CVE-2026-19931: Negotiate ambient user conn reuse
+Xenstore, to have an up-to-date picture of the entire system, wants to
+know of domains appearing and disappearing.  To make this more robust, a
+new XEN_DOMCTL_get_domain_state was introduced.  The management of the
+bitmap underlying that operation is tied into the binding of the
+VIRQ_DOM_EXC virtual IRQ.  Unfortunately an error path there would tear
+down the bitmap even in cases when it wasn't set up.  Unprivileged domains
+can trigger that error path.
 
-CVE-2026-80229: OpenSSL provider use-after-free
+IMPACT
+======
 
-CVE-2026-80230: OpenSSL pinning bypass
+An unprivileged domain can affect the operation of Xenstore, potentially
+leading to a Denial of Service (DoS) affecting the entire host.  A
+hypervisor crash with similar host wide effect also is possible, albeit
+unlikely.
 
-CVE-2026-80231: native CA store conn reuse
+VULNERABLE SYSTEMS
+==================
 
-CVE-2026-80255: secure cookie attribute bypass with tab
+Xen 4.21 and onwards are vulnerable.  Xen 4.20 and older are not
+vulnerable.
 
-CVE-2026-82208: wolfSSL CA-cache hit overrides callback
+MITIGATION
+==========
 
-CVE-2026-82209: domain-scoped PSL domain cookie
+There is no known mitigation.
 
-CVE-2026-80256: wcurl backslash bypass
+CREDITS
+=======
 
-The wcurl problem is documented here:
+This issue was discovered by Grygorii Strashko of EPAM.
 
-   https://curl.se/docs/CVE-2026-80256.html
+RESOLUTION
+==========
 
--- 
+Applying the attached patch resolves this issue.
 
-  / daniel.haxx.se || https://rock-solid.curl.dev
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa496.patch           xen-unstable - Xen 4.21.x
+
+$ sha256sum xsa496*
+80a0a807dd9d7ae793b462d78da2bd9d4f84eb5062f3e60622d12edde9c2a27c  xsa496.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomqwMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZc8IIALEzvp6RymbSYDSTBqNl4k+mRBOfMTdwOGKA9lNm
+zYl9rFlGcTTR2HogU9Vplm0gQmcrksFndwXMzjkOqLlRnbDs6JsSIpuQaWi6jm7f
+Fj0QLAMXLxLLMAPvC8j9kLJjJrlv7X1VeYolsHBSq3lCoqb5YgZaqMIDuOXgO9+7
+//cSTRbaEnm4UBrV/WxUX1pd6RHOBbioJjyLwy4QZyfoTfXtVrw6bv5IHsq8GyD6
+QYRFnh9fZ+33p7LDoU5jUlDO+TnJZeUlbWGqMTsxdGx8l93662nNGDIYrxJr+/8g
+6CmXyObBkiI3qXRT7sSt1/FzdnoDIQTPtIyv4xuIi4GMT+0=
+=V0J6
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa496.patch" of type "application/octet-stream" (1330 bytes)
