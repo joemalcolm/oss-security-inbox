@@ -1,35 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/20/5
-Message-ID: <45ce36dc-e372-0a21-c67b-cf005aec9dfc@apache.org>
-Date: Sat, 20 Jun 2026 16:52:30 +0000
-From: David Handermann <exceptionfactory@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44913: Apache NiFi: Improper Escaping of Table Names in CaptureChangeMySQL 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/24
+Message-Id: <E1wogYw-003E18-0s@xenbits.xenproject.org>
+Date: Tue, 28 Jul 2026 12:05:34 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 508 v2 - pygrub is only supported in de-privileged mode
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+                    Xen Security Advisory XSA-508
+                              version 2
 
-- Apache NiFi (org.apache.nifi:nifi-cdc-mysql-processors) 1.2.0 through 2.9.0
+            pygrub is only supported in de-privileged mode
 
-Description:
+UPDATES IN VERSION 2
+====================
 
-Improper escaping of database table names in the CaptureChangeMySQL Processor included with Apache NiFi 1.2.0 through 2.9.0 allows for injecting SQL commands using crafted naming. Manual quoted boundaries added in Apache NiFi 1.8.0 narrowed the scope of potential injection options, but did not cover additional strategies. Apache NiFi installations that do not use the CaptureChangeMySQL Processor are not subject to this vulnerability. Upgrading to Apache NiFi 2.10.0 is the recommended mitigation, which incorporates more robust identifier escaping.
+Public release.
 
-This issue is being tracked as NIFI-15905 
+ISSUE DESCRIPTION
+=================
 
-Credit:
+XSA-443 and XSA-497 addressed specific issues in specific file system
+drivers (libfsimage) used by pygrub.  Further issues were reported, and
+yet more are to be expected. XSA-443 introduced a means to run pygrub
+de-privileged.  Only this mode of operation is security supported from
+now on.
 
-Roberto Suggi Liverani from NATO Cyber Security Centre (NCSC) (finder)
+IMPACT
+======
 
-References:
+A guest using pygrub can escalate its privilege to that of the domain
+construction tools (i.e., normally, to control of the host).
 
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44913
-https://issues.apache.org/jira/browse/NIFI-15905
+VULNERABLE SYSTEMS
+==================
 
-Timeline:
+All Xen versions from at least 3.2 onwards are affected.  Older versions
+have not been inspected.
 
-2026-04-27: reported
+MITIGATION
+==========
 
+XSA-443 added a mechanism to run pygrub de-privileged.  Using this mode
+will mitigate the vulnerability.
+
+Ensuring that guests do not use the pygrub bootloader will avoid this
+vulnerability.
+
+For cases where the PV guest is known to be 64bit, and uses grub2 as a
+bootloader, pvgrub is a suitable alternative to pygrub.
+
+Running only HVM or PVH guests will avoid the vulnerability.
+
+RESOLUTION
+==========
+
+Applying the attached patch documents this issue.  Patches for XSA-443
+added additional functionality to pygrub and libxl in order to run pygrub
+in a restricted environment using a specific UID.  Check xl.cfg man page
+for information on the bootloader_restrict option.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa508.patch           xen-unstable - Xen 4.17.x
+
+$ sha256sum xsa508*
+f1e4b6490228b7fac61fd968229f98a3dfb782d56c6729d3fe01bc34c77fbd5c  xsa508.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomsAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZLhoH/38QGcVs3Xc3KuskdvBx57IV/vW9XjNlVYSngmdm
+lKzXTZhjrecrPZvwBbhuqOBXkaFQSL17+lLVK3xRAzv2dd5hn2PqXkMj06JSwcrh
+haXN/JWUDwQtmJuLfGNkQ9P1W27oMXZ3pBGhv1SsEfD0mNiyC7ZZKizU291usZbF
+6JMUGNUmQ1Dyom2CiylmJGmrNrHzKdfNqURc+DoSOctpS9vbT0U0xLtKYvbVr3cj
+7DuITo1/gS/3pxiUw/7E5uR7zPusBGISP1ir5rBqTkgoMf2tJkt7tfygqJtrqnkU
+BaUt0ZCo7NBKg71o0AESZIdO3Ddg2QD6xrymtI0BVqa0n1E=
+=9mkq
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa508.patch" of type "application/octet-stream" (881 bytes)
