@@ -1,146 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/03/1
-Message-ID: <1d41266d-4a41-46c1-91f7-0c91e7a80d0c@gmail.com>
-Date: Thu, 3 Sep 2026 18:57:53 +0800
-From: Lin Jiapeng <ljp1205831794@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-80530: Linux XFS EXCHANGE_RANGE reflink flag clearing leading to local privilege escalation
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/21
+Message-Id: <E1wogYl-003Dvz-2L@xenbits.xenproject.org>
+Date: Tue, 28 Jul 2026 12:05:23 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 505 v2 (CVE-2026-62432) - evtchn: Race between FIFO expand and reset
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-We are publishing details of XFSTango (CVE-2026-80530), a local
-privilege escalation vulnerability in the Linux kernel's XFS
-filesystem, caused by an inconsistent reflink-flag clearing path in
-XFS_IOC_EXCHANGE_RANGE.
+            Xen Security Advisory CVE-2026-62432 / XSA-505
+                               version 2
 
-Impact:
---------
-- An unprivileged local user can, without requiring any elevated
-   privilege, arbitrarily overwrite the on-disk contents of any
-   readable file (e.g. /etc/passwd, root-owned setuid binaries),
-   leading to local privilege escalation to root.
+              evtchn: Race between FIFO expand and reset
 
-Bug:
---------
-A flaw was found in the Linux kernel's XFS filesystem. When performing
-file range exchanges with the XFS_EXCHMAPS_INO1_WRITTEN flag set, the
-reflink flag can be prematurely cleared from an inode that still
-manages shared written data. This can lead to data corruption between
-files that share data through the reflink mechanism, as subsequent
-writes may bypass Copy-on-Write (CoW) protection.
+UPDATES IN VERSION 2
+====================
 
-CVSS assessment
----------------
-CVSS v3.1 Base Score: 7.1 (High)
-Vector: CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N
-Calculator:
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N 
+Typo correction in description.
 
+Public release.
 
-The trigger is deterministic and requires only local access with low
-privileges and no user interaction; successful exploitation yields
-root on affected systems.
+ISSUE DESCRIPTION
+=================
 
-Fix
----
-The flag-exchange decision underlying the flaw was introduced by
-upstream commit 966ceafc7a43 ("xfs: create deferred log items for file
-mapping exchanges"), first present in v6.10.
+The EVTCHNOP_expand_array hypercall checks for whether FIFO event
+channels are enabled, but without holding the correct lock.  It can race
+with EVTCHNOP_reset, resulting in dereferencing a NULL pointer.
 
-Fixed upstream by commit b2d5a81dae385333f9734910277fbf94c78bd17f:
-https://git.kernel.org/linus/b2d5a81dae385333f9734910277fbf94c78bd17f
+IMPACT
+======
 
-Exploit chain outline
----------------------
-The completed chain:
+A malicious HVM guest (x86 HVM or PVH, and ARM) can crash Xen leading to
+a denial of service.
 
-     ATTACKER (uid=1000)               KERNEL (XFS)
-             |                              |
-   FICLONE /etc/passwd -> mydir/copy        |   copy == passwd on disk:
-             |----------------------------->|   shared block, both
-             |                              |   flagged REFLINK
-             |                              |
-   ftruncate(sparse, same size)             |
-             |                              |
-   EXCHANGE_RANGE(sparse<->copy,            |
-       FILE1_WRITTEN lie)                   |
-             |----------------------------->| 0 blocks exchanged, yet
-             |                              | post-op clears copy's
-             |                              | REFLINK flag (no recheck)
-             |                              |
-   pwrite(copy, uid=0 line) + fsync         |
-             |----------------------------->| CoW gate lost -> write
-             |                              | IN PLACE on shared block:
-             |                              | /etc/passwd DISK bytes
-             |                              | now carry the uid=0 line
-             |                              |
-   posix_fadvise(passwd, DONTNEED)          |
-             |----------------------------->| stale page cache dropped
-             |                              |
-       su - r00t                            |
-             |----------------------------->| PAM reads DISK (passwd)
-             |                              | -> authenticates uid=0
-             |                              | account from tampered
-             |                              | file -> attacker is root
-         uid=0(root)
+A malicious x86 PV guest can most likely crash Xen leading to a denial
+of service, but memory corruption or privilege escalation cannot be
+ruled out.
 
-In short: an unprivileged attacker clones a readable target (e.g.
-/etc/passwd) with FICLONE so both files share written extents, creates
-a fully sparse file1 of the same size, and lies with the
-FILE1_WRITTEN flag on an EXCHANGE_RANGE request. Every mapping pair is
-skipped, so no blocks actually move, yet the scheduled post-operation
-cleanup clears file2's reflink flag without re-scanning for shared
-extents. Writes to file2 then bypass CoW and land directly on the
-physical blocks shared with the victim, silently rewriting the target
-file on disk; after the stale page cache is dropped with
-posix_fadvise, su or execve reads the tampered contents and grants
-root.
+VULNERABLE SYSTEMS
+==================
 
-Tested distros
---------------
-The following distributions were tested and confirmed vulnerable :
+All Xen versions from 4.5 onwards are vulnerable.  Xen versions 4.4 and
+earlier are not vulnerable.
 
-- RHEL 10 / Rocky Linux 10 (with the exchange feature enabled)
-- Ubuntu 25.04+ (with the exchange feature enabled)
-- SLES 16.1 (with the exchange feature enabled)
-- Debian 13 (with the exchange feature enabled)
-- Amazon Linux 2023 (with the exchange feature enabled)
-- Oracle Linux 10 / UEK8 (with the exchange feature enabled)
-- CloudLinux 10 (with the exchange feature enabled)
+MITIGATION
+==========
 
-Am I affected?
---------------
-Kernels v6.10 and later without the fix, on XFS filesystems that have
-reflink enabled (default since xfsprogs 5.1) and the exchange_range
-incompat feature bit (0x40) enabled. exchange_range is an experimental
-feature, off by default, and must be enabled explicitly.
+There are no mitigations.
 
-Mitigation
-----------
-1. Apply the upstream patch or update the system into the fixed
-    kernel.
-2. If patching is not available, back up the partition data and
-    recreate the filesystem without the exchange feature
-    (i.e. "mkfs.xfs" without "-i exchange=1"), then restore the data.
+RESOLUTION
+==========
 
-Kernels before v6.10 do not contain the vulnerable code path.
+Applying the attached patch resolves this issue.
 
-References
-----------
-PoC:
-https://github.com/corvusaisec/security-research/tree/main/pocs/linux/cve-2026-80530 
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa505.patch           xen-unstable - Xen 4.17
+
+$ sha256sum xsa505*
+80619fdbb547dea191439ef1c9539fa0991e8f6c449b3970a086f3287fb9ce6e  xsa505.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
 
 
-CVE record:
-https://www.cve.org/CVERecord?id=CVE-2026-80530
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
 
-Fix commit:
-https://git.kernel.org/linus/b2d5a81dae385333f9734910277fbf94c78bd17f
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
 
-Corvus AI assisted with source analysis, reproduction, exploit
-development, and cross-platform validation.
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomrsMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZ5H8IAMKtDfTsBJaoOosFHEU0Gyv96fP98D89URo21RrD
+V+Lpd9CTatYuTnz53gztlUa7s2/ARYl488bNURwPTdTjSEdJBbFQKrEyAZsryTyh
+hiIJF7AhQf8LsY3qk2xuJ+/tKc720WK/zsUGVRz6Jhf9W90g5wBhIM1RAhfy7H2t
+Zn74wXDi4dsMLQg6VivzRq+y+XJfZKR6qoKztiDHk0DBobmJzQFF2cfkiiWDRW9l
+NuvLxKjsPyS4K+Jcm9k65RzmWfDprxmL/63VDAt0W8dSAe+u1zyDh/aT+OFK5R1g
+c6CwdjquY4hhSYhwix4TW18LRlY0NA/pqn3FmhLQl3XZmfU=
+=z4Qy
+-----END PGP SIGNATURE-----
 
-Regards,
-Lin Jiapeng
-TencentOS Security Team (Wukong Code Security Team)
+Download attachment "xsa505.patch" of type "application/octet-stream" (1359 bytes)
