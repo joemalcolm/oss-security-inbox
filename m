@@ -1,141 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/14/3
-Message-ID: <CAGFbY1cXEPYfLMY=XeWJ2VBMB5jvVxaSE+NDh9NUERh8RZSc4A@mail.gmail.com>
-Date: Fri, 14 Aug 2026 17:01:00 +0200
-From: Souiri Anas <anassouiri07@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: croc: Arbitrary File Deletion via received filename, chainable to RCE (fixed in 11.0.3)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/8
+Message-ID: <JeKYa3muoEE9EUBg1EwJMHE_odto2hRa9SUktOm9_m5xARbJ71RxhqUFQ_Ia4IdGPd2anbylA47wWLlPe_mwirEHyxMQt8_0FkeCFidAa2w=@pm.me>
+Date: Tue, 28 Jul 2026 09:59:08 +0000
+From: manizada <manizada@...me>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: OVSwrap (CVE-2026-64531): Linux kernel/OVS local root vulnerability
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi folks,
 
-This reports an arbitrary file deletion vulnerability in croc, the
-end-to-end encrypted file transfer tool [1], which can be chained to
-remote code execution on the receiving host. The issue is fixed in
-croc 11.0.3 [5].
+Emailing here now that the embargo agreed upon with linux-distros@ has
+expired.
 
+Flagging a local root vulnerability in the Linux kernel's Open vSwitch
+datapath (originally reported to security@...nel.org and OVS maintainers on
+Jun 19). The fix is now public and has shipped in the relevant stable
+trees:
 
-Affected / fixed
-================
+3f1f75536668 ("net: openvswitch: reject oversized nested action attrs")
 
-Product:  croc (github.com/schollz/croc, Go) [1]
-Affected: >= 10.0.13, <= 11.0.2
-Fixed in: 11.0.3 (commit c0d51f0 [4], PR #1232 [3])
-Type:     CWE-73 (External Control of File Name or Path),
-              CWE-22 (Path Traversal), chainable to CWE-94 (code execution)
-CVSS 3.1: AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H (8.1, High)
+The first fixed upstream stable releases are 5.15.212, 6.1.178, 6.6.145,
+6.12.97, 6.18.40, and 7.1.5.
 
+Impact: Unprivileged user -> root code exec on affected systems where:
+- OVS kernel datapath and conntrack/FTP-helper support are present, and
+- unprivileged user/network namespaces are enabled, or the attacker
+otherwise has CAP_NET_ADMIN over an attacker-controlled network
+namespace.
 
-Description
-===========
+This affects many distros in stock config via unprivileged user namespaces.
+AppArmor/SELinux do not block the exploit once the attacker has the
+required CAP_NET_ADMIN. Note that the nature of the bug makes it reachable
+from a container with an appropriate CAP_NET_ADMIN, but I have not
+validated the container escape possibility.
 
-croc keeps an internal list of temporary files to delete on exit. The
-list is a fixed, relative filename, "croc-marked-files.txt", resolved
-against the current working directory. On exit, RemoveMarkedFiles()
-(src/utils/utils.go) reads that file and calls os.Remove() on every
-line, with no validation and no confinement to the working directory.
-Absolute paths and "../" traversal are therefore honored.
+Bug:
+Open vSwitch validates a userspace action list, then rewrites some
+actions into a larger internal sw_flow_actions stream. The generated
+actions are stored as Netlink attributes, whose nla_len field is only 16
+bits wide.
 
-RemoveMarkedFiles() runs both on normal completion (main.go:45) and on
-SIGINT/Ctrl-C (main.go:51) after a receive.
+A March 2025 change removed the old 32 KiB cap on the total generated
+action stream, allowing the total stream to validly exceed 64 KiB, but
+exposing a pre-existing missing check on individual nested attributes.
 
-The receiver writes incoming top-level files into the current working
-directory by default (FolderRemote = "./"), and the basename
-"croc-marked-files.txt" passes utils.ValidFileName (it is an ordinary
-basename with no separators). As a result, a malicious sender who
-sends a file *named* croc-marked-files.txt, whose *contents* are a
-newline-separated list of victim paths, causes those paths to be
-deleted on the receiver when croc exits. The deleted paths are taken
-verbatim from attacker-controlled file content. Full details and
-proof-of-concept are available in the write-up [2].
+An attacker can submit a valid action -- e.g., a CLONE -- containing
+hundreds of small conntrack actions. The kernel expands them until the
+generated CLONE exceeds 65,535 bytes, then stores that length in the
+16-bit nla_len, causing it to wrap to a small value. Later dump/free
+consumers trust the wrapped length and resume parsing from inside the
+generated conntrack data.
 
+Conntrack labels and timeout names are attacker-controlled, so fake
+OUTPUT and SET actions can be planted exactly where parsing resumes. The
+PoC turns those fake actions into a kernel pointer leak, a kernel-memory
+read, and a targeted decrement primitive, then corrupts a host process's
+credentials and writes a sudoers rule for root code execution.
 
-Proof of concept
-================
+Affected distros:
+Below is a summary of the tested distros. The full table, including cases
+where available vendor kernels are unaffected or stock policy blocks
+exploitation, is in the attachment (and in an easier-to-read format in
+the writeup linked below).
 
-On UNIX the code phrase is passed via CROC_SECRET.
+Stock-default exploitable distros
+(an affected regular-track kernel is installed + OVS/conntrack support
+is present + unprivileged namespaces are permitted by default):
 
-Sender crafts and sends the payload:
+- AlmaLinux 9.7 Workstation/Azure cloud, 9.8, 10.1 Workstation/Azure
+cloud, and 10.2 x86-64/x86-64-v2
+- Alpine Linux 3.22.4/3.23.4/3.24.1 Cloud and
+3.22.5/3.23.5/3.24.1 LTS/virt
+- Amazon Linux 2023 KVM (6.1/6.12/6.18 kernel tracks)
+- Arch Linux monthly (linux/linux-lts/linux-zen)
+- CentOS Stream 9 Cinnamon/GNOME/KDE/MATE/XFCE and 10 GNOME/KDE
+- Debian 12/13
+- Fedora 40 Workstation/Server after an ordinary same-track update
+(the stock ISO kernel is unaffected)
+- Fedora 41 Workstation/Server after an ordinary same-track update
+(the stock ISO kernel is unaffected)
+- Fedora 42/43/44 Workstation/Server
+- Gentoo amd64 cloud image and stable gentoo-kernel-bin
+6.1/6.6/6.12/6.18 branches
+- Kali Linux 2026.1
+- Linux Mint 22.3 Cinnamon
+- NixOS 24.11/25.05/25.11/26.05
+- openSUSE Tumbleweed GNOME/KDE
+- Pop!_OS 22.04 Intel/24.04 Generic
+- Rocky Linux 9/10 KDE/Workstation/Workstation Lite
+- Ubuntu 22.04 Desktop minimal/full and Server
+- Ubuntu 24.04 Desktop minimal/full and Server
 
-ATTACKER (sender):
-''''
-  mkdir -p /tmp/attacker && cd /tmp/attacker
-  printf 'secret.txt\n../victim-sibling.txt\n/tmp/absolute-target.txt\n'
- > croc-marked-files.txt
-  croc send croc-marked-files.txt
-''''
+Exploitable after the listed non-default change, with no other default
+config changes:
+- Arch Linux monthly linux-hardened
+(set kernel.unprivileged_userns_clone=1, disabling the hardening)
+- Linux Mint 21.3 Cinnamon
+(install the optional linux-generic-hwe-22.04 kernel track)
+- Oracle Linux 8/9/10 KVM
+(install and load the missing OVS/conntrack module packages)
+- Ubuntu 26.04 Desktop minimal/full, Server, and
+generic/AWS/Azure/GCP/GKE/Oracle cloud kernel tracks
+(set kernel.apparmor_restrict_unprivileged_userns=0)
 
-VICTIM ( receiver) :
-Receiver receives into a directory containing valuable files:
-''''
-  mkdir -p /tmp/victim && cd /tmp/victim
-  echo A > secret.txt
-  echo B > /tmp/victim-sibling.txt
-  echo C > /tmp/absolute-target.txt
-  CROC_SECRET=<SECRET> croc --yes
-''''
+Immediate-term mitigations (aside from backporting the kernel fix):
+- Unloading the openvswitch module and blocking it from loading if OVS is
+not required (assuming it is not built into the kernel)
+- Disabling unprivileged user namespaces (though this does not block the
+potential container-escape path described above)
+- Using the emergency BPF mitigation included with the PoC if OVS and
+unprivileged namespaces must remain available.
 
-On completion (or on Ctrl-C after the file arrives), the CWD-relative,
-the "../" and the absolute-path targets are all deleted.
+The issue is tracked under CVE-2026-64531.
 
-Impact and escalation to RCE
-============================
+Full writeup:
+https://heyitsas.im/posts/ovswrap
 
-A peer you are *receiving from* can delete arbitrary files and empty
-directories owned by the receiving user (dotfiles, documents, project files).
-With --yes this happens silently. This exceeds the expected
-"receive a file into this folder" trust boundary.
+PoC for validation; BPF mitigation:
+https://github.com/manizada/OVSwrap
 
-The same primitive (sender controls basename, including dotfiles, and
-content of files written into the receive directory) escalates to code
-execution when the receiver runs croc from their home directory:
+Thanks,-Asim Manizada
+Content of type "text/html" skipped
 
-  1. Transfer 1 sends croc-marked-files.txt whose contents list the
-     receiver's existing shell init file (e.g. ~/.bashrc). On exit,
-     RemoveMarkedFiles() deletes it.
-
-  2. Transfer 2 sends a file named .bashrc. Because the original was
-     deleted, the overwrite prompt does not fire.
-
-  3. The attacker's ~/.bashrc runs as the victim on the next shell or
-     login (for a server, on the next SSH login).
-
-Note: received writes are confined to the working-directory subtree,
-so the receiver must run croc from $HOME for its .bashrc to be
-replaced; the *delete* primitive is not confined and accepts absolute
-and "../" paths. With --yes both transfers are accepted silently;
-otherwise the filenames appear in the accept prompt. The full chain,
-with screenshots, is documented in the write-up [2].
-
-
-Timeline
-========
-
-  2026-08-10: Reported to the maintainer via a GitHub Security
-              Advisory and by email.
-  2026-08-10: Fix merged the same day in PR #1232 [3]. No security
-              advisory was published, no security note was added to
-              the commit, and no CVE was assigned.
-
-References
-==========
-
-  [1] croc repository:
-      https://github.com/schollz/croc
-  [2] Write-up and proof-of-concept:
-      https://gist.github.com/elohim666/4de37dea18cd453e414de0d451ca14a5
-  [3] Fix (PR #1232):
-      https://github.com/schollz/croc/pull/1232
-  [4] Fix commit:
-      https://github.com/schollz/croc/commit/c0d51f095e3bf91c94208c4db8101c4e60219b03
-  [5] Fixed release (11.0.3):
-      https://github.com/schollz/croc/releases/tag/v11.0.3
-
-
-Credit
-======
-
-Discovered and reported by Anas Souiri (GitHub: elohim666).
-
-Regards,
-Anas Souiri
+View attachment "ovswrap-distro-tables.txt" of type "text/plain" (3793 bytes)
