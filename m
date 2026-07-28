@@ -1,44 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/3
-Message-ID: <amB3yhMB9bqNw4YV@donburi.himad.notcom.org>
-Date: Wed, 22 Jul 2026 11:12:56 +0300
-From: Valtteri Vuorikoski <vuori@...com.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/6
+Message-ID: <2026072819-legume-create-ce31@gregkh>
+Date: Tue, 28 Jul 2026 09:47:16 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-54432+more: Roundcube XSS/SSRF/etc prior to 1.6.17/1.7.2
+Subject: Re: Linux kernel: KVM: Merge branch 'kvm-chainsaw' into HEAD
 Content-Type: text/plain; charset=utf-8
 
-Roundcube, a webmail frontend, released versions 1.6.17 and 1.7.2 on Jul 5 that
-address numerous XSS and other vulnerabilities. From the release announcement at
-<https://roundcube.net/news/2026/07/05/security-updates-1.6.17-and-1.7.2>:
+On Tue, Jul 28, 2026 at 02:57:25AM -0400, Reid Sutherland wrote:
+> On 2026-07-27 3:47 p.m., Sam James wrote:
+> > Reid Sutherland <reid@...rddimension.net> writes:
+> > 
+> > > On 2026-07-27 12:25 p.m., Solar Designer wrote:
+> > > > On Mon, Jul 27, 2026 at 09:46:12AM -0400, Reid Sutherland wrote:
+> > > > > For your information.
+> > > > > 
+> > > > > https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=a204badd8432f93b7e862e7dac6db0fe3d65f370
+> > > > Thanks, but can you please explain why exactly you think this is
+> > > > noteworthy for oss-security?
+> > > > 
+> > > > I see there's a recent Phoronix story:
+> > > > 
+> > > > https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3
+> > > > 
+> > > > and the patch series had been tracked and archived by LWN.
+> > > > 
+> > > > This is definitely noteworthy for KVM project development, but even
+> > > > seeing all those other resources, I do not see why bring this in here?
+> > > 
+> > > Core changes to virtualization should receive examination. Changing
+> > > data structures around because they're too big.. it's concerning,
+> > > following that patch is tricky because of its size. Would feel better
+> > > about it if changes like this were passed through a reliable LLM, but
+> > > even that requires relevant experience.  And naming it chainsaw, what
+> > > purpose does that serve?  I have very little trust.
+> > Paolo has been a maintainer for a long time and in FOSS even longer than
+> > that. Big refactoring can introduce bugs but I've no reason to doubt him
+> > and I don't really see why this change is any different from any other
+> > refactoring.
+> 
+> 
+> The refactor doesn't seem necessary, the original data structure appears to
+> be fine, now we have surface risk for something that doesn't solve a bug or
+> implement a feature.
+> 
+> I don't care what someone's street cred is, it's their result.
 
-    * Fix an infinite loop in TNEF (winmail.dat) decoder (#10193), reported by
-    stafra.
-    
-    * Fix various vulnerabilities in the password plugin using session-injected
-    username, reported by Glendaenri and peppersghost.
-    
-    * Fix stored XSS via unescaped attachment MIME type on the
-    attachment-validation warning page [CVE-2026-54432], reported by Bohdan
-    Kurinnoy, Samsung R&D Institute Ukraine (SRUKR).
-    
-    * Fix SSRF bypass via specific local address URLs - two new cases, reported
-    by Leenear.
-    
-    * Fix zero-click stored XSS in plain-text rendering [CVE-2026-54433],
-    reported by Bohdan Kurinnoy, Samsung R&D Institute Ukraine (SRUKR).
-    
-    * Fix DoS via crafted compressed-RTF size in the TNEF (winmail.dat) file,
-    reported by h0rk1p.
+If you have objections to patches that are submitted to the Linux
+kernel, please go review them on the respective mailing list and provide
+feedback there with specifics.
 
-In a positive development, the announcement now includes some though not all CVE
-identifiers; numbers in square brackets are in the original text. Interested
-parties may consult for example
-<https://security-tracker.debian.org/tracker/source-package/roundcube> for the
-rest.
+Commenting on a random mailing list like this will not change anything.
 
-Also final reminder that support for the 1.5 LTS release has ended and it
-presumably is vulnerable to at least some of the above, as well as to things
-that got fixed in the 1.6.16/1.7.1 security roundup.
+thanks,
 
- -Valtteri
- 
+greg k-h
