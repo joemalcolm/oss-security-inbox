@@ -1,32 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/16
-Message-ID: <CAMufup4V7eVRGezMLOZeU+2+jrYEzg1f2Bp_CTO+BQzpt4CSEA@mail.gmail.com>
-Date: Thu, 30 Jul 2026 14:14:38 +0200
-From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
-To: dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-28813: Apache JSPWiki: JSON hijacking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/10
+Message-ID: <4054a859-f333-4bc9-80af-45a6d382877e@oracle.com>
+Date: Wed, 29 Jul 2026 16:41:40 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Fwd: Node.js security updates for all active release lines, June 2026
 Content-Type: text/plain; charset=utf-8
 
-Severity
-Moderate
+On 7/29/2026 8:59 AM, Rafael Gonzaga wrote:
+> The planned security releases are now available. You can read more about 
+> the details at https://nodejs.org/en/blog/vulnerability/june-2026- 
+> security-releases
 
-Vendor
-The Apache Software Foundation
+Presumably you meant instead to point to today's releases at:
+https://nodejs.org/en/blog/vulnerability/july-2026-security-releases
 
-Versions Affected
-Apache JSPWiki up to 2.12.3
+-- 
+	-Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-Description
-Apache JSPWiki is vulnerable to JSON Hijacking, which leads to csrf
-vulnerabilities.
-
-Mitigation
-Apache JSPWiki users should upgrade to 2.12.4 or later.
-
-Credit
-The issue was discovered by Janne Jalkannen from Apache JSPWiki
-
-
-References
-https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2026-28813
-https://www.cve.org/CVERecord?id=CVE-2026-28813
