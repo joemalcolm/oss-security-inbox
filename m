@@ -1,77 +1,93 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/2
-Message-ID: <0101019fefdbbba1-1d91664b-706e-4b7d-a916-1e80ab4bd791-000000@us-west-2.amazonses.com>
-Date: Tue, 11 Aug 2026 08:06:22 +0000
-From: Thibault Guittet <jira@...hat.atlassian.net>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: PSIRTSUPT-20460 [security] critical vulnerabilities patched in svxlink (RCE)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/4
+Message-ID: <178533301997.716302.10681697634251953771@notcve.org>
+Date: Wed, 29 Jul 2026 15:50:19 +0200
+From: advisories@...cve.org
+To: oss-security@...ts.openwall.com
+Subject: [NotCVE-2026-0011] Nmap 7.99 and Earlier nselib/packet.lua Zero-Length TCP Option Infinite Loop Allows Remote Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-—-—-—-—
+----------------------------------------------------------------------------
+NotCVE Advisory — NotCVE-2026-0011
+----------------------------------------------------------------------------
 
-Reply above this line.
+[-] Summary:
+Nmap 7.99 and earlier contain a loop with an unreachable exit condition in
+the Packet:parse_options() method of nselib/packet.lua. A remote host that
+is the target of a scan can exhaust the memory of the scanning Nmap process
+and terminate it by replying with a packet that carries a zero-length header
+option. No authentication and no access to the scanning machine are
+required: the attacker only needs to be scanned.
+CVSS:3.1 6.5 (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H).
 
+[-] Affected:
+Nmap, versions 7.99 and earlier (nselib/packet.lua).
+Fixed in commit 7ef4ee0 (2026-06-11). That fix sits above the topmost
+release header in the CHANGELOG (Nmap 7.99 [2026-03-26]), so as of this
+writing it is present only in the development tree and no released version
+carrying it has been verified.
 
+[-] Technical Description:
+Packet:parse_options(offset, length) walks the option area with a cursor,
+opt_ptr, reading an option type t and, for any type other than 0 (End of
+Option List) or 1 (No-Operation), a length byte l taken from
+self:u8(offset + opt_ptr + 1). The cursor is then advanced by
+opt_ptr = opt_ptr + l.
 
-Thibault Guittet commented:
+Before commit 7ef4ee0 the parser accepted l == 0 without validation, so the
+cursor never advanced and the "while opt_ptr < length" condition never
+became false. Because the loop body allocated a fresh table with
+options[op] = {} and incremented op on every pass, the non-terminating loop
+also grew a table without bound, and the Lua interpreter embedded in Nmap
+consumed memory until the process died. The options[op] = {} assignment was
+positioned before the length was validated, which is why the loop allocated
+rather than merely spinning.
 
-Hello Mark,
+The method is reached from tcp_parse(), where the option area length derives
+from the TCP data offset field of the received packet. A remote peer
+therefore controls both the length of the option area and its contents.
+nselib/packet.lua is the packet-dissection library used by NSE scripts that
+capture and parse raw packets, so exploitation requires the operator to run
+a scan that loads such a script against a host the attacker controls.
 
-Thank you for reporting the security vulnerabilities in svxlink.
+Nothing is persisted and the effect ends with the process, but the attacker
+can repeat it on every subsequent scan, so the host remains effectively
+unscannable by any script using this library.
 
-We have reviewed the advisories published at [1]https://github.com/sm0svx/svxlink/security/advisories and assigned CVE identifiers to all 14 reported issues via the Fedora CNA. Bugzilla trackers have been opened for the Fedora community maintainer to update the svxlink package to 26.05.1.
+Commit 7ef4ee0 ("Stop parsing on a zero-length packet option") adds an
+"if l==0 then break end" guard before any allocation and moves the
+options[op] = {} initialisation to after that check. The CHANGELOG entry
+reads "[NSE][GH#3368] Fixed an out-of-memory issue in packet.lua when
+parsing a zero-length TCP header option."
 
-svxlink is not shipped in any Red Hat Enterprise product (RHEL, OpenShift, Ansible Automation Platform, etc.). It is available only in Fedora as a community-maintained package.
+The step-by-step attack path, the reachability analysis of the IP options
+code path and the full write-up are published at the advisory URL below.
 
-Below is the mapping between CVE IDs and the upstream GitHub Security Advisories:
+Weaknesses:
+CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')
+CWE-400: Uncontrolled Resource Consumption
+CWE-770: Allocation of Resources Without Limits or Throttling
+CAPEC-130: Excessive Allocation
 
-CVE	Advisory	Title
-	----------	-------
-CVE-2026-73141	[2]GHSA-xmcv-mjpv-x46q	Audio decoders: stack VLA exhaustion
-CVE-2026-73142	[3]GHSA-5xr9-fmm8-7p8x	remotetrx NetUplink: connection object leak DoS
-CVE-2026-73143	[4]GHSA-38fq-mrrg-8rmr	RtlTcp: malformed greeting causes daemon exit
-CVE-2026-73144	[5]GHSA-qccg-7pw6-787v	FRN module: unbounded memory growth
-CVE-2026-73145	[6]GHSA-58ph-q79f-7x9x	HTTP server: unbounded request accumulation
-CVE-2026-73146	[7]GHSA-r2gm-p682-3mpm	svxreflector: use-after-free via reentrant client deletion
-CVE-2026-73147	[8]GHSA-pc2g-2p95-4cr5	TCL command injection in reflector client
-CVE-2026-73148	[9]GHSA-6wgq-wg3w-jgvx	svxreflector: use-after-free write via dangling JSON reference
-CVE-2026-73149	[10]GHSA-mh75-5pr3-qv2p	NetRx: out-of-bounds read via unvalidated MsgAudio length
-CVE-2026-73150	[11]GHSA-4f8x-49pf-3x5v	Buffer overflow in APRS message construction
-CVE-2026-73151	[12]GHSA-x5r8-rq62-q9cj	remotetrx: unvalidated audio length + exposed transceiver control
-CVE-2026-73152	[13]GHSA-4g8q-rgxf-fmgf	EchoLink proxy: integer truncation in message length
-CVE-2026-73153	[14]GHSA-624p-cp8x-6hp6	EchoLink RTCP/SDES: out-of-bounds read
-CVE-2026-73154	[15]GHSA-5g48-xjmf-7p4q	StationData::setData stack overflow
+[-] Timeline:
+[28/07/2026] - NotCVE ID reserved.
+[28/07/2026] - Published as NotCVE-2026-0011.
 
-We appreciate your diligence in reporting these issues.
+[-] Credit:
+Discovered by Maxim Suhanov (@errno_fail).
 
-Regards,
-Red Hat Product Security
-----------------------------------------------------------------------------------------
-[1] https://github.com/sm0svx/svxlink/security/advisories
-[2] https://github.com/sm0svx/svxlink/security/advisories/GHSA-xmcv-mjpv-x46q
-[3] https://github.com/sm0svx/svxlink/security/advisories/GHSA-5xr9-fmm8-7p8x
-[4] https://github.com/sm0svx/svxlink/security/advisories/GHSA-38fq-mrrg-8rmr
-[5] https://github.com/sm0svx/svxlink/security/advisories/GHSA-qccg-7pw6-787v
-[6] https://github.com/sm0svx/svxlink/security/advisories/GHSA-58ph-q79f-7x9x
-[7] https://github.com/sm0svx/svxlink/security/advisories/GHSA-r2gm-p682-3mpm
-[8] https://github.com/sm0svx/svxlink/security/advisories/GHSA-pc2g-2p95-4cr5
-[9] https://github.com/sm0svx/svxlink/security/advisories/GHSA-6wgq-wg3w-jgvx
-[10] https://github.com/sm0svx/svxlink/security/advisories/GHSA-mh75-5pr3-qv2p
-[11] https://github.com/sm0svx/svxlink/security/advisories/GHSA-4f8x-49pf-3x5v
-[12] https://github.com/sm0svx/svxlink/security/advisories/GHSA-x5r8-rq62-q9cj
-[13] https://github.com/sm0svx/svxlink/security/advisories/GHSA-4g8q-rgxf-fmgf
-[14] https://github.com/sm0svx/svxlink/security/advisories/GHSA-624p-cp8x-6hp6
-[15] https://github.com/sm0svx/svxlink/security/advisories/GHSA-5g48-xjmf-7p4q
+[-] Full Details and Updates:
+https://notcve.org/notcve/NotCVE-2026-0011
 
+[-] References:
+https://github.com/nmap/nmap/issues/3368
+https://github.com/nmap/nmap/commit/7ef4ee030a0023fe22616387a000032e1a678b6a
+https://github.com/nmap/nmap/pull/3373
+https://raw.githubusercontent.com/nmap/nmap/master/nselib/packet.lua
+https://raw.githubusercontent.com/nmap/nmap/master/CHANGELOG
 
-
-View request: https://redhat.atlassian.net/servicedesk/customer/portal/68/PSIRTSUPT-20460?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0Z3QiOiJhbm9ueW1vdXMtbGluayIsInFzaCI6IjU3YmM3YTY1MmIxNTAwMTBiMDAxYWE5YTg0OWU0M2ViODBhMWYyNzE5ZGRkODg2NjRjZDI5ZTc4NTEwYTVjZDIiLCJpc3MiOiJzZXJ2aWNlZGVzay1qd3QtdG9rZW4taXNzdWVyIiwiY29udGV4dCI6eyJ1c2VyIjoiMTc3MTcyIiwiaXNzdWUiOiJQU0lSVFNVUFQtMjA0NjAifSwiZXhwIjoxNzg4ODU0NzgxLCJpYXQiOjE3ODY0MzU1ODF9.PBZsqwL4r0VNJ_8KuwVAfRNL5v6hk3x9QpT5m_rrsT8&sda_source=notification-email
-
-Turn off this request's notifications: https://redhat.atlassian.net/servicedesk/customer/portal/68/PSIRTSUPT-20460/unsubscribe?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0Z3QiOiJhbm9ueW1vdXMtbGluayIsInFzaCI6ImRmNWJlNWI3NjhjZTc5OTgyZTg3ZjA1OGM2MmUyNTU3MTk2NTU5OTZjZmU2ODFhN2MzMzM1ZTFkZWMwNzNjMDIiLCJpc3MiOiJzZXJ2aWNlZGVzay1qd3QtdG9rZW4taXNzdWVyIiwiY29udGV4dCI6eyJ1c2VyIjoicW06N2FiOTU3YjEtYzJjNi00ODU0LTgzNjktZmVhYTZiOWMzNDQyOjBlNDcxODYyLTUyYTEtNGUzMS05ZWJlLWRjYjU4ZmYwMzFhNCIsImlzc3VlIjoiUFNJUlRTVVBULTIwNDYwIn0sImV4cCI6MTc4ODg1NDc4MSwiaWF0IjoxNzg2NDM1NTgxfQ.HAqFkQtT-5pIh_JtcQkl8fwwYHNB2kVDCvBnX7urmF8
-
-This is shared with Mark Rose, svxlink-maintainers@...oraproject.org, security@...ntu.com, oss-security@...ts.openwall.com, hamradio@...ebsd.org, tomjbe@...too.org, security@...e.de, and 5 other people
-
-------------------------------
-Powered by Jira Service Management
-https://www.atlassian.com/software/jira/service-desk/powered-by?utm_medium=jira-in-product&utm_source=jira_service_desk_email_footer&utm_content=redhat
-
+[-] About NotCVE:
+NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
+vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
+Request a NotCVE: https://notcve.org/form/ · Contributors:
+https://notcve.org/hall/
