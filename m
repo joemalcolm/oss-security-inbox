@@ -1,63 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/23/2
-Message-ID: <27264c762d756b40586804897e674906@cpansec.org>
-Date: Sun, 23 Aug 2026 15:21:11 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-75922: Reverse::Proxy versions before 0.04 for Perl allow HTTP request smuggling via a percent-decoded PATH_INFO written unencoded to the upstream request line
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/5
+Message-ID: <8d650cd9-2bc1-485f-bc9c-cf93567c2c3c@gmail.com>
+Date: Wed, 29 Jul 2026 08:02:33 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSA-2026-032] OpenStack Neutron: Subnetpool onboarding cross-project subnet mutation (CVE-2026-55707)
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-75922                                       CPAN Security Group
-========================================================================
+==================================================================
+OSSA-2026-032: Subnetpool onboarding cross-project subnet mutation
+==================================================================
 
-         CVE ID:  CVE-2026-75922
-   Distribution:  Reverse-Proxy
-       Versions:  before 0.04
-
-       MetaCPAN:  https://metacpan.org/dist/Reverse-Proxy
+:Date: July 29, 2026
+:CVE: CVE-2026-55707
 
 
-Reverse::Proxy versions before 0.04 for Perl allow HTTP request
-smuggling via a percent-decoded PATH_INFO written unencoded to the
-upstream request line
+Affects
+~~~~~~~
+- Neutron: >=14.0.0 <26.0.6, >=27.0.0 <27.0.4, >=28.0.0 <28.0.2
+
 
 Description
------------
-Reverse::Proxy versions before 0.04 for Perl allow HTTP request
-smuggling via a percent-decoded PATH_INFO written unencoded to the
-upstream request line.
+~~~~~~~~~~~
+Tim Shephard from roiai.ca reported a vulnerability in Neutron's 
+subnetpool onboarding API. A project member can onboard subnets from 
+another project's shared network into their own subnetpool, mutating the 
+victim's persistent subnet state and altering L3 routing, NAT, and 
+address-scope behavior for victim routers. Only deployments with shared 
+or RBAC-shared networks and the subnetpool onboarding extension enabled 
+are affected.
 
-PSGI hands PATH_INFO to an application percent-decoded, so a %XX
-sequence in the client URL has become a raw byte by the time the proxy
-sees it. The proxy appends that byte string to the upstream base URL,
-and for an Upgrade tunnel writes it into a request line it serializes
-itself, re-encoding nothing in either path. The HTTP client that sends
-the resulting URL does not validate the target either. A path
-containing %0d%0a therefore arrives at the upstream as a CRLF that ends
-the request line, and a decoded space, '?' or '#' truncates it the same
-way.
 
-Everything the client writes after the CRLF is read by the upstream as
-a second request. On the buffered path it arrives on a keep-alive
-connection the proxy pools and reuses for other clients. Its method,
-path and headers are all chosen by the client, and the upstream
-attributes it to the proxy, so it reaches upstream paths that the
-proxy's own routing does not expose.
 
-Problem types
--------------
-- CWE-444 Inconsistent Interpretation of HTTP Requests
-- CWE-93 Improper Neutralization of CRLF Sequences
+Patches
+~~~~~~~
+- https://review.opendev.org/999134 (2025.1/epoxy)
+- https://review.opendev.org/999133 (2025.2/flamingo)
+- https://review.opendev.org/999132 (2026.1/gazpacho)
+- https://review.opendev.org/999131 (2026.2/hibiscus (development))
 
-Solutions
----------
-Upgrade to Reverse-Proxy 0.04 or later.
+
+Credits
+~~~~~~~
+- Tim Shephard from roiai.ca
+
 
 References
-----------
-https://metacpan.org/release/LNATION/Reverse-Proxy-0.03/source/Proxy.xs#L386-399
-https://metacpan.org/release/LNATION/Reverse-Proxy-0.03/source/Proxy.xs#L654-666
-https://metacpan.org/release/LNATION/Reverse-Proxy-0.04/source/Proxy.xs#L400-426
-https://metacpan.org/release/LNATION/Reverse-Proxy-0.04/changes
+~~~~~~~~~~
+- https://launchpad.net/bugs/2152113
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-55707
 
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+--- END BODY ---
+
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
