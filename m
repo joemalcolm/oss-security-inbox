@@ -1,50 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/19/1
-Message-ID: <CAA1XrhMqUXWTn1NTZafvS4NnisqMJPom0VMiSGVBLyu7OaGQvw@mail.gmail.com>
-Date: Wed, 19 Aug 2026 00:09:20 +0200
-From: Tristan <TristanInSec@...il.com>
-To: Collin Funk <collin.funk1@...il.com>
-Cc: oss-security@...ts.openwall.com, Simon Josefsson <simon@...efsson.org>
-Subject: Re: GNU Inetutils talkd buffer overflow with long DNS names.
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/8
+Message-ID: <dzp2vbih7jcsxjmcnxnefgi435b7re4kwxvxmvlxrmkra2p5br@vv5ckstkijym>
+Date: Wed, 29 Jul 2026 13:04:15 -0700
+From: Pawan Gupta <pawan.kumar.gupta@...ux.intel.com>
+To: oss-security@...ts.openwall.com
+Subject: Backports available - cBPF JIT spray hardening
 Content-Type: text/plain; charset=utf-8
 
-Hi Collin,
+Hi All,
 
-Thank you very much for the smooth and professional collaboration on this
-issue, and glad to see CVE-2026-19720 assigned.
+This is an inform distro maintainers about recently upstreamed hardening
+against speculative execution attacks using BPF JIT spraying.
 
-Best regards,
+The backports are available here:
 
-Tristan Madani
-*// Talence Security*
+  6.1  - https://lore.kernel.org/all/20260727-cbpf-jit-spray-hardening-6-1-y-v1-0-eb80dcf1eb6e@linux.intel.com
+  6.6  - https://lore.kernel.org/all/20260717-cbpf-jit-spray-hardening-6-6-y-v1-0-e04f1b2893de@linux.intel.com
+  6.12 - https://lore.kernel.org/all/20260715-cbpf-jit-spray-hardening-6-12-y-v1-0-d8585a9aed80@linux.intel.com
+  6.18 - https://lore.kernel.org/all/20260713-cbpf-jit-spray-hardening-6-18-y-v1-0-755f60c55705@linux.intel.com
+  7.1  - https://lore.kernel.org/all/20260709-cbpf-jit-spray-hardening-7-1-y-v1-0-5ac5a2d6797f@linux.intel.com
 
+6.1 backport is queued. Others are part of LTS kernels.
 
-Le sam. 15 août 2026 à 05:16, Collin Funk <collin.funk1@...il.com> a écrit :
+5.15 and older do not support pack allocator for BPF on which the hardening
+is based on. So the series is not directly applicable to 5.15 and older,
+and may need custom hardening patches.
 
-> Collin Funk <collin.funk1@...il.com> writes:
->
-> > ## Timeline
-> >
-> >     2026-07-02: Report sent to inetutils-security@....org
-> >     2026-07-02: I (Collin Funk) acknowledged the report and asked a few
-> >                 questions regarding the issue.
-> >     2026-07-04: Tristan answered those questions.
-> >     2026-07-06: I reproduced the issue updated Tristan with a planned
-> >                 timeline for the fix and CVE assignment.
-> >     2026-07-08: Tristan agreed to the timeline and offered to review the
-> >                 patch.
-> >     2026-07-11: I wrote the patch and sent it to Tristan.
-> >     2026-07-15: Tristan confirmed the patch worked as expected.
-> >     2026-07-16: Private mail to distros mailing list along with the
-> patch.
-> >     2026-07-24: I wrote this report and sent it to oss-security.
-> >
-> > Note that I also requested a CVE when emailing distros, but haven't
-> > heard back. I'll probably reach out privately to a CNA in a bit, and
-> > will update here once one is assigned.
->
-> Red Hat assigned CVE-2026-19720 to this issue yesterday, 2028-08-13.
->
-> Collin
->
+Please let me know if there are any questions.
 
+Thanks,
+Pawan
