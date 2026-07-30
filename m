@@ -1,60 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/12/3
-Message-ID: <788cca6a-ac2a-491e-9050-c02227126330@dwheeler.com>
-Date: Sat, 12 Sep 2026 14:11:32 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/3
+Message-ID: <6575cd42-8752-012f-0390-433943d6dad5@apache.org>
+Date: Thu, 30 Jul 2026 01:38:51 +0000
+From: Jongyoul Lee <jongyoul@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: AI slops from Eve
+Subject: CVE-2026-44616: Apache Zeppelin: LDAP injection in ActiveDirectoryGroupRealm filter construction 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-On 9/11/26 06:13, Martin Hecht wrote:
-> Our society strongly depends on connected IT systems comprising our 
-> infrastructure nowadays. Now, these powerful algorithms are able to 
-> find tons of vulnerabilities in software, and they are acting on the 
-> same public internet to which many critical systems are connected.
->
-> I'm concerned if we (the humanity) manage to close all those 
-> vulnerabilities before these algorithms take over essential parts of 
-> our infrastructure, or if we find ways to really contain the 
-> algorithms reliably (which seems to be close to impossible, given the 
-> fact that there are also bad actors around). Sorry for being slightly 
-> off-topic, but I believe protecting critical IT systems as good as we 
-> can will soon become more important than ever before.
+Affected versions:
 
-I agree that protecting critical IT systems is important. But I think 
-that's *always* been important. We should be protecting *all* IT 
-systems, too. Way too many have thought "I won't get attacked" and then 
-get successfully attacked.
+- Apache Zeppelin 0.6.0 before 0.12.1
 
-Over the next few years AI-enabled attacks will be painful for many. AI 
-makes attacks much cheaper, so attacks will greatly proliferate. 
-However, AI also makes finding & fixing the vulnerabilities cheaper. 
-Defenders will *NOT* be able to claim "I won't be attacked" (they 
-already are), so they'll need to seriously find & fix vulnerabilitie. 
-It's true that current AI systems aren't good at fixing *complex* 
-vulnerabilities (1Password found a success rate of only 26.0%), but most 
-vulnerabilities aren't complex, and humans can step in to fix complex 
-vulnerabilities once they are *known* about.
+Description:
 
-Beyond these next few years, I think we're going to see systems become 
-*dramatically* more secure. But it's going to be a rocky few years 
-getting there.
+LDAP injection vulnerability in Apache Zeppelin. ActiveDirectoryGroupRealm constructed LDAP search filters without escaping user-controlled input, allowing an authenticated attacker to inject LDAP filter syntax through the user-search endpoint and potentially expose directory information. The role-lookup path was also affected after successful LDAP authentication. This issue affects Apache Zeppelin versions 0.6.0 through 0.12.0. Users are recommended to upgrade to version 0.12.1, which fixes this issue.
 
-The "rocky time" can easily be prepared for, though. I encourage 
-everyone to do the following, assisted by AI:
+Credit:
 
-1. Find & fix vulnerabilities.
+Andrea Cosentino from Apache Software Foundation (finder)
 
-2. Speed component update response. I argue this further here: 
-https://www.linkedin.com/pulse/accelerate-deployment-vulnerability-tsunami-david-a-wheeler-eapge/
+References:
 
-3. Harden systems so even break-ins will be less effective.
-
-I'd encourage others to do the same. The "vulnpocalypse" is starting. 
-Like many storms, if you're ready, it will be far less damaging. I look 
-forward to the end-state: WAY more secure software.
-
---- David A. Wheeler
-
+https://github.com/apache/zeppelin/pull/5226
+https://zeppelin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-44616
 
