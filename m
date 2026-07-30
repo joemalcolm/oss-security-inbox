@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/16/1
-Message-ID: <d7b80d99-7d9c-4506-a55a-95472f13b258@cpansec.org>
-Date: Thu, 16 Jul 2026 17:16:51 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-57074: XML::Bare versions through 0.53 for Perl have an unbounded character lookahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/7
+Message-ID: <23356991-8e9b-4aa2-9dfc-6fab6d910b9a@apache.org>
+Date: Thu, 30 Jul 2026 09:21:53 +0000
+From: Daniel Gaspar <dpgaspar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-23985: Apache Superset: Regular Expression Denial of Service (ReDoS) in SQL Parser 
 Content-Type: text/plain; charset=utf-8
 
+Severity: 
 
-========================================================================
-CVE-2026-57074                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-57074
-   Distribution:  XML-Bare
-       Versions:  through 0.53
+- Apache Superset before 6.0.0
 
-       MetaCPAN:  https://metacpan.org/dist/XML-Bare
-       VCS Repo:  https://github.com/nanoscopic/perl-XML-Bare
+Description:
 
+A Regular Expression Denial of Service (ReDoS) vulnerability exists in Apache Superset versions 1.5.0 through 5.0.0. The vulnerability is located in the sql_parse.py component, specifically within the SQL_REGEX used for parsing SQL statements in the sqlparse library integration.
+The affected regular expression contains overlapping disjunctions that share a common outer quantifier. An authenticated attacker can exploit this by sending a maliciously crafted input string (specifically a long sequence of backslashes or similar characters) to endpoints that process SQL queries
 
-XML::Bare versions through 0.53 for Perl have an unbounded character
-lookahead
+This issue affects Apache Superset: before 6.0.0.
 
-Description
------------
-XML::Bare versions through 0.53 for Perl have an unbounded character
-lookahead.
+Users are recommended to upgrade to version 6.0.0, which fixes the issue. 
 
-The parserc_parse function attempts to check for multicharacter strings
-such as "<![CDATA" or element terminators such as ">" without checking
-that the offsets are within the buffer.
+Workarounds:
+● WAF Rules: Implement Web Application Firewall (WAF) rules to detect and block
+requests containing excessively long sequences of backslashes or suspicious repeated
+patterns in the queries.extras.where parameter.
+● Rate Limiting: Ensure strict rate limiting is applied to the /api/v1/chart/data endpoint to
+reduce the impact of potential attacks.
 
-Truncated strings such as "<a/" can trigger an out-of-bounds read.
+Credit:
 
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
+Trung Đức Lê (reporter)
+Beto de Almeida (remediation developer)
 
-Workarounds
------------
-Apply the patch.
+References:
 
-
-References
-----------
-https://github.com/nanoscopic/perl-XML-Bare/pull/1
-https://security.metacpan.org/patches/X/XML-Bare/0.53/CVE-2026-57074-r1.patch
-
+https://superset.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-23985
 
