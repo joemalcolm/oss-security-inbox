@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/5
-Message-ID: <54fc3b36-4e95-10c8-26e3-37f57dfcb600@apache.org>
-Date: Tue, 09 Jun 2026 05:15:39 +0000
-From: Enxin Xie <linkinstar@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-33582: Apache Answer: Uploading specially crafted TIFF files causes an Out-of-Memory error 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/16
+Message-ID: <CAMufup4V7eVRGezMLOZeU+2+jrYEzg1f2Bp_CTO+BQzpt4CSEA@mail.gmail.com>
+Date: Thu, 30 Jul 2026 14:14:38 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-28813: Apache JSPWiki: JSON hijacking
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity
+Moderate
 
-Affected versions:
+Vendor
+The Apache Software Foundation
 
-- Apache Answer through 2.0.0
+Versions Affected
+Apache JSPWiki up to 2.12.3
 
-Description:
+Description
+Apache JSPWiki is vulnerable to JSON Hijacking, which leads to csrf
+vulnerabilities.
 
-Unrestricted Upload of File with Dangerous Type vulnerability in Apache Answer.
+Mitigation
+Apache JSPWiki users should upgrade to 2.12.4 or later.
 
-This issue affects Apache Answer: through 2.0.0.
+Credit
+The issue was discovered by Janne Jalkannen from Apache JSPWiki
 
-A crafted TIFF image could trigger excessive memory allocation during image decoding, allowing an authenticated user to cause the server process to crash.
-Users are recommended to upgrade to version 2.0.1, which fixes the issue.
 
-Credit:
-
-Andy Gill, ZephrSec Ltd (reporter)
-
-References:
-
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-33582
-
+References
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2026-28813
+https://www.cve.org/CVERecord?id=CVE-2026-28813
