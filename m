@@ -1,110 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/1
-Message-ID: <CAK3hNHaAUyNCsbKNP0FhQdOMXP3P4jrQMwxAWHo2FWvzSpNjKQ@mail.gmail.com>
-Date: Tue, 30 Jun 2026 22:09:04 -0700
-From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: OFFIS DCMTK: 5 CISA-coordinated DICOM vulnerabilities
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/9
+Message-ID: <6mqqzqzujeduybqeojfh7tmblksmqjksocri5ayeudze6l4fqm@ijx64jfxrwbt>
+Date: Wed, 29 Jul 2026 18:31:11 -0700
+From: Pawan Gupta <pawan.kumar.gupta@...ux.intel.com>
+To: Jose R Rodriguez <jose.r.r@...ztli.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Backports available - cBPF JIT spray hardening
 Content-Type: text/plain; charset=utf-8
 
-CISA has published an advisory for five vulnerabilities in OFFIS DCMTK
-(DICOM Toolkit), affecting DCMTK <= 3.7.0:
+On Wed, Jul 29, 2026 at 05:15:46PM -0700, Jose R Rodriguez wrote:
+> On 2026-07-29 13:04, Pawan Gupta wrote:
+> > Hi All,
+> > 
+> > This is an inform distro maintainers about recently upstreamed hardening
+> > against speculative execution attacks using BPF JIT spraying.
+> > 
+> > The backports are available here:
+> > 
+> >   6.1  - https://lore.kernel.org/all/20260727-cbpf-jit-spray-hardening-6-1-y-v1-0-eb80dcf1eb6e@linux.intel.com
+> >   6.6  - https://lore.kernel.org/all/20260717-cbpf-jit-spray-hardening-6-6-y-v1-0-e04f1b2893de@linux.intel.com
+> >   6.12 - https://lore.kernel.org/all/20260715-cbpf-jit-spray-hardening-6-12-y-v1-0-d8585a9aed80@linux.intel.com
+> >   6.18 - https://lore.kernel.org/all/20260713-cbpf-jit-spray-hardening-6-18-y-v1-0-755f60c55705@linux.intel.com
+> >   7.1  - https://lore.kernel.org/all/20260709-cbpf-jit-spray-hardening-7-1-y-v1-0-5ac5a2d6797f@linux.intel.com
+> > 
+> > 6.1 backport is queued. Others are part of LTS kernels.
+> > 
+> > 5.15 and older do not support pack allocator for BPF on which the
+> > hardening
+> > is based on. So the series is not directly applicable to 5.15 and older,
+> > and may need custom hardening patches.
+> 
+> Any patches out there for kernel 5.17.15? Thanks in advance!
 
-  https://www.cisa.gov/news-events/ics-medical-advisories/icsma-26-181-01
+Pack allocator was first introduced in 5.18 by commit:
 
-Fix status:
+  57631054fae6 ("bpf: Introduce bpf_prog_pack allocator")
 
-  The fixes are in upstream DCMTK master but not any release as of today
-  https://github.com/DCMTK/dcmtk/releases/tag/latest
+This means that 5.17 is in the same boat as 5.15, it does not support BPF
+pack allocator, and these hardening patches dont apply.
 
-Vulnerabilities and fixes:
+Pack allocator makes the JIT spraying attacks easier, but this doesn't mean
+that kernels withouth it are immune to such attacks. This needs a fresh
+assessment and possibly a different hardening approach.
 
-1. CVE-2026-50003 - bit-preserving C-GET path traversal - CVSS v3.1:
-9.8 Critical
-   Fix: eca9a03dd
+BTW, I am confused by the choice of distro kernel 5.17 which is not an LTS
+kernel.
 
-   A victim DCMTK C-GET client connects to a malicious or
-   compromised DICOM server while using bit-preserving storage mode
-   (getscu --bit-preserving / DCMSCU_STORAGE_BIT_PRESERVING). During the
-   C-GET response, the server supplies an affected SOP Instance UID containing
-   path separators or an absolute path. DcmSCU::handleCGETSession() used that
-   value to build the output path without the filename sanitization used by the
-   normal disk-storage path. The result is file creation/truncation outside
-   the selected output directory, limited to paths writable by the client
-   process and to directories that already exist.
-
-2. CVE-2026-50254 - Extended Negotiation memory leak - CVSS v3.1: 7.5 High
-   Fix: 23f181f7a
-
-   An unauthenticated client repeatedly opens a DICOM association
-   and sends an A-ASSOCIATE-RQ containing many Extended Negotiation items
-   followed by a malformed/truncated Extended Negotiation item. The parser
-   error path frees the list container but not the allocated negotiation items.
-   In storescp default single-process mode, repeated connections cause RSS
-   growth until the process is killed or stops accepting DICOM connections.
-
-3. CVE-2026-35505 - connection error-path memory leaks - CVSS v3.1: 7.5 High
-   Fix: 2312891a8
-
-   An unauthenticated client sends an A-ASSOCIATE-RQ where
-   presentation-context structures are parsed and allocated, then a later
-   presentation context triggers a translation failure, for example by
-   containing no transfer syntaxes. The server returns before freeing the
-   parsed PDU graph. Repeating this request leaks memory in single-process
-   services. There is also an analogous SCU-side error path when a long-running
-   DCMTK client parses a malformed A-ASSOCIATE-AC from a rogue server.
-
-4. CVE-2026-52868 - Called AE Title path traversal in wlmscpfs - CVSS
-v3.1: 8.2 High
-   Fix: e3878daf8
-
-   An unauthenticated client connects to wlmscpfs with a Called
-   AE Title containing a short traversal sequence. wlmscpfs used the Called AE
-   Title to construct worklist storage and lockfile paths without a containment
-   check. If the resolved directory exists, has the expected lockfile, and
-   contains matching .wl worklist files, a normal C-FIND query can return
-   records outside the intended per-AE storage area. This is not arbitrary OS
-   file read; disclosure is limited to reachable worklist records within the
-   16-byte AE Title naming constraint. With non-default --request-file-path
-   logging and AE Title/Patient ID placeholders, the same unsanitized values
-   could also produce a constrained write outside the request-file directory.
-
-5. CVE-2026-44628 - VR-spoofing type confusion in wlmscpfs - CVSS v3.1: 7.5 High
-   Fixes: f4e007468 and 694a0a06a
-
-   An unauthenticated client negotiates Explicit VR and sends a
-   C-FIND request containing a dictionary sequence tag encoded on the wire with
-   a non-sequence VR. DCMTK constructs a non-sequence object, but wlmscpfs later
-   casts the result to DcmSequenceOfItems without checking the actual type. If
-   the query reaches a valid worklist directory with an expected lockfile and a
-   matching record, the wrong-type use crashes the process. In single-process
-   mode this stops the service; in default fork mode the child crashes and the
-   parent continues serving.
-
-Potential exposure includes patient worklist metadata in affected wlmscpfs
-deployments, file write outside an intended C-GET output directory, and
-availability loss for DICOM worklist/storage services through crash or OOM.
-
-Coordination timeline:
-
-  2026-05-11  Reported to OFFIS DCMTK maintainers
-  2026-05-12  First fix committed upstream
-  2026-05-14  CERT/CC case opened as VU#470252
-  2026-05-29  Remaining fixes committed upstream
-  2026-06-30  CISA advisory published as ICSMA-26-181-01
-
-Mitigation notes:
-
-  * Apply the upstream fixes or the rolling latest snapshot when possible.
-  * Keep DICOM services on trusted networks only.
-  * For DoS exposure, prefer multi-process/fork mode where available.
-  * Avoid getscu --bit-preserving / DCMSCU_STORAGE_BIT_PRESERVING with
-    untrusted C-GET servers until patched.
-
-Additional background:
-
-  https://www.healthcareinfosecurity.com/dicom-toolkit-bugs-raise-medical-imaging-security-risks-a-32114
-
-Credit:
-
-  Reported by Abhinav Agarwal.
+Thanks,
+Pawan
