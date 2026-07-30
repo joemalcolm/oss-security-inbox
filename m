@@ -1,29 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/10
-Message-ID: <be73f60e-6ba6-d61d-f781-ad5d67829684@apache.org>
-Date: Sun, 09 Aug 2026 04:31:05 +0000
-From: Velmurugan Periasamy <vel@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65945: Apache Ranger: Logs contain replayable JWT bearer tokens 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/18
+Message-ID: <CAMufup5aPhEb19OJ=x9boWS+X8hxPVZrBSWsGCg_msGvNch+vQ@mail.gmail.com>
+Date: Thu, 30 Jul 2026 14:14:53 +0200
+From: Juan Pablo Santos Rodríguez <juanpablo@...che.org>
+To: dev@...wiki.apache.org, user@...wiki.apache.org,  Apache Security Team <security@...che.org>, announce@...che.org, oss-security@...ts.openwall.com,  Justin Ng <fishp0rridg3@...mail.com>
+Subject: CVE-2026-48910: Apache JSPWiki: Markdown parser allows XSS injection in Markdown error processing
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity
+Moderate
 
-Affected versions:
+Vendor
+The Apache Software Foundation
 
-- Apache Ranger through 2.8.0
+Versions Affected
+Apache JSPWiki up to 2.12.3
 
-Description:
+Description
+A carefully crafted editing request could trigger an XSS vulnerability
+on Apache JSPWiki when parsing errors on the markdown renderer, which
+could allow the attacker to execute javascript in the victim's browser
+and get some sensitive information about the victim.
 
-Logs contain replayable JWT tokens in Apache Ranger versions <= 2.8.0
-Users are recommended to upgrade to version [FIXED_VERSION], which fixes this issue.
+Mitigation
+Apache JSPWiki users should upgrade to 2.12.4 or later.
 
-Credit:
+Credit
+The issue was discovered by Justin Ng from Cyver Security Agency of
+Singapore / Inland Reveue Authority of Singapore
 
-Andrew Rukin (Arenadata) (finder)
-
-References:
-
-https://ranger.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65945
-
+References
+https://jspwiki-wiki.apache.org/Wiki.jsp?page=CVE-2026-48910
+https://www.cve.org/CVERecord?id=CVE-2026-48910
