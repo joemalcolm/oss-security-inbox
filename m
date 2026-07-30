@@ -1,40 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/14
-Message-ID: <99be4a95-5ea9-167a-21c5-56ef7fe3ca20@apache.org>
-Date: Mon, 08 Jun 2026 12:51:36 +0000
-From: Eric Covener <covener@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44631: Apache HTTP Server: Heap Underflow in `ap_regname` via Signed Char Overflow 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/20
+Message-ID: <bb5fa6f3-75af-48b8-bd11-cd62931ed6f0@cpansec.org>
+Date: Thu, 30 Jul 2026 14:44:19 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-60075: Date::Manip versions through 6.99 for Perl allow CPU exhaustion via quadratic backtracking in the unanchored time substitution in _parse_time
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
 
-Affected versions:
+========================================================================
+CVE-2026-60075                                       CPAN Security Group
+========================================================================
 
-- Apache HTTP Server 2.4.0 through 2.4.67
+         CVE ID:  CVE-2026-60075
+   Distribution:  Date-Manip
+       Versions:  through 6.99
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/Date-Manip
+       VCS Repo:  https://github.com/SBECK-github/Date-Manip
 
-Buffer Underwrite vulnerability in Apache HTTP Server on crafted regular expressions in the configuration.
 
-This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.
+Date::Manip versions through 6.99 for Perl allow CPU exhaustion via
+quadratic backtracking in the unanchored time substitution in
+_parse_time
 
-Users are recommended to upgrade to version 2.4.68, which fixes the issue.
+Description
+-----------
+Date::Manip versions through 6.99 for Perl allow CPU exhaustion via
+quadratic backtracking in the unanchored time substitution in
+_parse_time.
 
-Credit:
+_parse_time removes a time from anywhere in the string with the
+unanchored substitution `s/$timerx/ /`, where $timerx is an
+auto-generated alternation of time patterns reached through a leading
+`(?:$atrx|^|\s+)`. The engine therefore retries the match at every
+position of an interior whitespace run: at each start position the
+leading `\s+` consumes the rest of the run greedily, the time
+alternation fails because the run holds no digits, and the engine
+backtracks a space at a time across the run before advancing the start
+position, which is quadratic in the length of the run. No time need be
+present in the string for this to happen, only a long run of
+whitespace, and the parse time rises about fourfold for each doubling
+of the run: a few kilobytes of whitespace costs seconds of CPU per
+parse and tens of kilobytes costs minutes.
 
-Zhenpeng (Leo) Lin at depthfirst (finder)
-Bartlomiej Dmitruk (finder)
+Any caller that passes an untrusted string of unbounded length to
+ParseDate(), Date::Manip::Date->parse() or ->parse_time() can be made
+to spend unbounded CPU in a single parse, a denial of service.
 
-References:
+Problem types
+-------------
+- CWE-1333 Inefficient Regular Expression Complexity
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44631
+Workarounds
+-----------
+No fixed release is available. Apply the patch, which rejects a string
+longer than 256 characters at the parse entries, or cap the length of
+untrusted input before parsing it; legitimate date strings are well
+under 100 characters.
 
-Timeline:
 
-2026-04-27: reported
-2026-06-05: fixed in 2.4.x by r1935015
-2026-06-08: 2.4.68 released
+References
+----------
+https://security.metacpan.org/patches/D/Date-Manip/6.99/CVE-2026-60075-r1.patch
+https://metacpan.org/release/SBECK/Date-Manip-6.99/source/lib/Date/Manip/Date.pm#L1811
+https://metacpan.org/release/SBECK/Date-Manip-6.99/source/lib/Date/Manip/Date.pm#L1526
+
+
 
