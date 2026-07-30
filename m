@@ -1,42 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/6
-Message-ID: <3f2c416c-f900-8a1f-a0b2-c6bfbf480af8@apache.org>
-Date: Mon, 14 Sep 2026 08:17:26 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/27
+Message-ID: <ecc52e71-0798-438d-8c43-91de641b3780@oracle.com>
+Date: Thu, 30 Jul 2026 14:41:15 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-73195: Apache Syncope: CSV export spreadsheet formula injection 
+Subject: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+https://blogs.gnome.org/mcatanzaro/2026/07/20/some-changes-to-gnome-security-tracking/
+announces some changes to the GNOME project's security bug handling:
 
-Affected versions:
+1) The disclosure deadline is cut from 90 days to 30 days, as most
+    GNOME maintainers that fix bugs during the embargo do so within
+    the first 30 days.  This is effective for new bugs reported starting
+    August 1.
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.1.0-M0 through 4.1.2
+2) The GNOME security team will no longer forward vulnerability reports
+    to projects that ban AI-generated content, since most reports they
+    get these days have at least some AI-generated content.
 
-Description:
+3) Michael Catanzaro will be stepping down in November, after 6 years
+    of handling this work for GNOME.  He's looking for someone to step
+    up to replace him.
 
-Improper Encoding or Escaping of Output vulnerability in Apache Syncope.
-
-
-
-Authenticated users can store a spreadsheet formula payload in one of their own plain attributes. When such users are included in a CSV export and the generated CSV file is opened by a spreadsheet application, the formula may be executed.
-
-
-
-
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
-
-Credit:
-
-meifukun (finder)
-
-References:
-
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-73195
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
