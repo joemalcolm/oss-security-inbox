@@ -1,123 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/19
-Message-ID: <8e5f68b5-d214-4816-8f48-4df3958bb950@gmail.com>
-Date: Wed, 5 Aug 2026 09:59:26 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2026-031] OpenStack Swift: Proxy denial of service via Accept header (CVE-2026-71190)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/26
+Message-ID: <m1qzkk1dpa.fsf@gmail.com>
+Date: Thu, 30 Jul 2026 12:26:25 -0700
+From: Collin Funk <collin.funk1@...il.com>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: 33 Vulnerabilities in cJSON
 Content-Type: text/plain; charset=utf-8
 
-Errata 1 for OSSA-2026-031: CVE-2026-71190 has been assigned.
+Alan Coopersmith <alan.coopersmith@...cle.com> writes:
 
-==============================================================
-OSSA-2026-031: Swift proxy denial of service via Accept header
-==============================================================
+> https://joshua.hu/cjson-json-parser-cve-vulnerabilities says:
+>> cJSON is probably the most widely used JSON parser in the C world. It’s
+>> vendored into ESP-IDF, into a lot of embedded firmware, and into a whole lot
+>> more server-side C. I found 33 security issues in it, using a mix of AI and
+>> some manual fuzzing and review. They affect every version up to and including
+>> v1.7.19, and every one of them is still in the current code.
+>> Looking at cJSON’s GitHub, several of these issues have been
+>> reported before,
+>> some with working proofs of concept attached, and a few of those reports are
+>> years old by now. Development has been more or less stagnant for four
+>> years. Memory-safety reports sit open and unanswered, and in a few cases the
+>> patch that would fix them is sitting right there in the same thread,
+>> unmerged. For most of what follows there is simply nothing available to
+>> apply. So this is a writeup instead of another bug report. If you ship cJSON,
+>> you need to know what’s in it, because nobody is going to hand you a fixed
+>> version.
+>> Every proof of concept below is complete and self-contained. I
+>> compiled them
+>> all with:
+>>   cc -fsanitize=address,undefined -fno-omit-frame-pointer -g -O0 \
+>>      -I. cJSON.c cJSON_Utils.c poc.c -o poc -lm
+>> One thing to know before you try to reproduce any of this. A few of
+>> them only
+>> crash with AddressSanitizer and UndefinedBehaviorSanitizer enabled together,
+>> on an unoptimised build, because it’s the instrumentation that fattens the
+>> stack frames enough to run off the end. With ASan alone, or at -O2, some of
+>> them quietly return NULL instead. Test with a partial sanitizer set and this
+>> library looks considerably healthier than it is.
+>> The first thirteen are memory-safety issues and a denial of service.
+>> The rest
+>> are logic bugs, most of which lose data or operate on the wrong object member
+>> without saying so. In a library whose whole job is applying somebody else’s
+>> patch document to your data, I count those.
+>> Note: I used AI to help write this post, mostly because there are so
+>> many of
+>> them and doing 33 of these by hand is miserable. I have no emotional
+>> attachment to this project or to these findings, and getting them published
+>> seemed more useful than getting the prose exactly the way I’d write it myself.
+>> If cJSON is parsing attacker-controlled JSON anywhere in your stack,
+>> look at
+>> what it would take to move off it. And don’t just merge the unlanded patches
+>> sitting on the GitHub repository and call it done, either. Some of those
+>> introduce fresh bugs of their own, from what I saw.
+>
+> See https://joshua.hu/cjson-json-parser-cve-vulnerabilities for the
+> writeups of each claimed vulnerability.
 
-:Date: July 28, 2026
-:CVE: CVE-2026-71190
+Complaining about free software maintainers, who are presumably not
+funded by the projects (some certainly being corporate) depending on it,
+while also admitting that you had AI write part of the article for you
+(as in the author of the post, not the email I am replying to) because
+you are too lazy is certainly a choice.
 
+> https://cert.pl/en/posts/2026/07/CVE-2026-16554/ appears to cover
+> an unrelated vulnerability also disclosed this week.
 
-Affects
-~~~~~~~
-- Swift: >=1.9.1 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
+Does anyone actually use platforms with 32-bit size_t? I guess maybe
+some programs compiled for 32-bit x86 but run on x86_64?
 
-
-Description
-~~~~~~~~~~~
-Christian Schwede from NVIDIA reported a denial of service vulnerability 
-in Swift's proxy server. The Accept header parser is vulnerable to 
-catastrophic regular expression backtracking. An unauthenticated 
-attacker can send crafted requests that exhaust proxy worker threads, 
-rendering the service unavailable. All deployments running Swift proxy 
-with versions between 1.9.1 and the fixed releases listed below are 
-affected.
-
-
-Errata
-~~~~~~
-CVE-2026-71190 has been assigned for this vulnerability.
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/998953 (2025.1/epoxy)
-- https://review.opendev.org/998952 (2025.2/flamingo)
-- https://review.opendev.org/998951 (2026.1/gazpacho)
-- https://review.opendev.org/998950 (2026.2/hibiscus (development))
-
-
-Credits
-~~~~~~~
-- Christian Schwede from NVIDIA
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2158771
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71190
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2026-08-05 - Errata 1
-- 2026-07-28 - Original Version
-
---
-Goutham Pacha Ravi
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
-
-On 7/28/26 8:28 AM, Goutham Pacha Ravi wrote:
-> ==============================================================
-> OSSA-2026-031: Swift proxy denial of service via Accept header
-> ==============================================================
-> 
-> :Date: July 28, 2026
-> :CVE: CVE-2026-pending
-> 
-> 
-> Affects
-> ~~~~~~~
-> - Swift: >=1.9.1 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
-> 
-> 
-> Description
-> ~~~~~~~~~~~
-> Christian Schwede from NVIDIA reported a denial of service vulnerability 
-> in Swift's proxy server. The Accept header parser is vulnerable to 
-> catastrophic regular expression backtracking. An unauthenticated 
-> attacker can send crafted requests that exhaust proxy worker threads, 
-> rendering the service unavailable. All deployments running Swift proxy 
-> with versions between 1.9.1 and the fixed releases listed below are 
-> affected.
-> 
-> 
-> 
-> Patches
-> ~~~~~~~
-> - https://review.opendev.org/998953 (2025.1/epoxy)
-> - https://review.opendev.org/998952 (2025.2/flamingo)
-> - https://review.opendev.org/998951 (2026.1/gazpacho)
-> - https://review.opendev.org/998950 (2026.2/hibiscus (development))
-> 
-> 
-> Credits
-> ~~~~~~~
-> - Christian Schwede from NVIDIA
-> 
-> 
-> References
-> ~~~~~~~~~~
-> - https://launchpad.net/bugs/2158771
-> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
-> 
-> -- 
-> Goutham Pacha Ravi
-> OpenStack Vulnerability Management Team
-> https://security.openstack.org/vmt.html
-
-
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+Collin
