@@ -1,178 +1,209 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/26
-Message-ID: <5634d9bb-f1be-4307-8298-f58d15cbf2dd@gmail.com>
-Date: Fri, 24 Jul 2026 10:27:00 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2026-027] OpenStack Ironic Python Agent: Command execution via unsanitized config (CVE-2026-66138)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/11
+Message-ID: <d1cbc238607848a3b25504e8d87cfa35@sba-research.org>
+Date: Thu, 30 Jul 2026 10:01:07 +0000
+From: SBA Research Security Advisory <advisory@...-research.org>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: [SBA-ADV-20260128-02] CVE-2026-16971 CVE-2026-18362: DFIR-IRIS 2.4.26 and possibly others Missing Brute Force Protection
 Content-Type: text/plain; charset=utf-8
 
-=======================================================
-OSSA-2026-027: Command execution via unsanitized config
-=======================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-:Date: July 23, 2026
-:CVE: CVE-2026-66138
+# DFIR-IRIS Missing Brute Force Protection #
 
+Link: https://github.com/sbaresearch/advisories/tree/public/2026/SBA-ADV-20260128-02_DFIR-IRIS_Missing_Brute_Force_Protection
 
-Affects
-~~~~~~~
-- Ironic-python-agent: >=6.0.0 <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 
-<11.5.1, ==11.6.0
+## Vulnerability Overview ##
 
+The IRIS web application in version 2.4.26 and possibly others does not
+protect its MFA validation (CVE-2026-16971) and user authentication
+(CVE-2026-18362) against brute-force attacks.
 
-Description
-~~~~~~~~~~~
-Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
-from the Metal3.io Security Team reported a vulnerability in
-Ironic-Python-Agent's (IPAs) time syncing code.
+* **Identifier**            : SBA-ADV-20260128-02
+* **Type of Vulnerability** : Missing Brute Force Protection
+* **Software/Product Name** : [IRIS](https://www.dfir-iris.org/)
+* **Vendor**                : [DFIR-IRIS](https://github.com/dfir-iris)
+* **Affected Versions**     : 2.4.26
+* **Fixed in Version**      : not currently available
+* **CVE IDs**               : CVE-2026-16971 CVE-2026-18362
+* **CVSS Vector**           : CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N
+* **CVSS Base Score**       : 5.9 (Medium)
 
-The value of the ntp_server configuration option is inserted into a shell
-command without sanitization. This command is run as root very early in the
-IPA startup flow, allowing an attacker to run arbitrary commands as root.
+## Vendor Description ##
 
-This value can be set in three ways; directly in an operator-created 
-ramdisk,
-set via kernel command line using Ironic, or passing the parameters via mDNS
-responder for mDNS enabled installation. For the most common, and highest
-security risk case, this means a Manager role associated with the 
-project set
-as ``node.owner`` may be able to trigger this vulnerability.
+> IRIS is a collaborative digital platform designed for incident response
+> analysts to share complex investigations at a technical level. It can be
+> installed on a dedicated server or as a portable application for roaming
+> investigations where internet access might not be available.
 
+Source: <https://docs.dfir-iris.org/2.4.24/>
 
+## Impact ##
 
-Errata
-~~~~~~
-CVE-2026-66138 has been assigned for this vulnerability.
+There is no observable rate-limiting for the endpoints which validate a
+user’s password or OTP. This means that brute-force attacks on a user’s
+password are possible and MFA must be considered ineffective.
 
+## Vulnerability Description ##
 
+The affected system does not implement sufficient restrictions on resources
+and requests. This creates the potential for a brute force attack on
+authentication endpoints.
 
-Patches
-~~~~~~~
-- https://review.opendev.org/998492 (2023.1/antelope (unmaintained))
-- https://review.opendev.org/998491 (2024.1/caracal (unmaintained))
-- https://review.opendev.org/998490 (2025.1/epoxy)
-- https://review.opendev.org/998489 (2025.2/flamingo)
-- https://review.opendev.org/998488 (2026.1/gazpacho)
-- https://review.opendev.org/998486 (2026.2/hibiscus (development))
-- https://review.opendev.org/998483 (Bugfix/11.3)
-- https://review.opendev.org/998482 (Bugfix/11.4)
-- https://review.opendev.org/998487 (Bugfix/11.6)
+## Proof of Concept ##
 
+### OTP Validation (CVE-2026-16971) ###
 
-Credits
-~~~~~~~
-- Dmitry Tantsur from Red Hat
-- Tuomo Tanskanen from Ericsson Software Technology
+The following request is sent to the application if the user enters a
+*One-time Password (OTP)* to complete the *Multi-factor Authentication (MFA)*:
 
+```http
+POST /auth/mfa-verify HTTP/1.1
+Host: myiris.local
+Cookie: session=.eJwd[...]
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 110
+Origin: https://myiris.local
+Referer: https://myiris.local/auth/mfa-verify
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers
+Connection: keep-alive
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2160050
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-66138
+csrf_token=IjZjMWQ5YWZiOTg4MDQyZDBkMGFhNzMwYWIyOTBkNTFkZGMxYTJiM2Ei.aWTb9g.CqozcZ7VxJNwjX0VCwq4MZe1i_k&token=123456
 
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 26 Jan 2026 11:33:23 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 4223
+Connection: keep-alive
+Vary: Cookie
+Set-Cookie: session=.eJyd[...]; Secure; HttpOnly; Path=/; SameSite=Lax
+Content-Security-Policy: default-src 'self' https://analytics.dfir-iris.org; script-src 'self' 'unsafe-inline' https://analytics.dfir-iris.org; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000: includeSubDomains
+Front-End-Https: on
 
-Notes
-~~~~~
-- Branches 2024.1/caracal and 2023.1/antelope are unmaintained and
-   patches are provided as a courtesy.
-- Bugfix branches will receive patches in git but will not receive an
-   updated release.
-- While root access to a node running an Ironic workflow has security
-   implications for that specific node, there is no known method for
-   turning node ramdisk shell access into a full compromise of the Ironic
-   service.
+[...]
+```
 
+Note that the response code of the application indicates a success (`200 OK`)
+even if an incorrect OTP has been sent. A valid OTP causes a redirect:
 
-OSSA History
-~~~~~~~~~~~~
-- 2026-07-24 - Errata 1
-- 2026-07-23 - Original Version
+```http
+HTTP/1.1 302 FOUND
+Server: nginx
+Date: Mon, 26 Jan 2026 11:32:45 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 219
+Connection: keep-alive
+Location: /dashboard?cid=1
+Vary: Cookie
+Set-Cookie: session=.eJw1[...]; Secure; HttpOnly; Path=/; SameSite=Lax
+Content-Security-Policy: default-src 'self' https://analytics.dfir-iris.org; script-src 'self' 'unsafe-inline' https://analytics.dfir-iris.org; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000: includeSubDomains
+Front-End-Https: on
 
---
-Goutham Pacha Ravi
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
+<!doctype html>
+<html lang=en>
+<title>Redirecting...</title>
+<h1>Redirecting...</h1>
+<p>You should be redirected automatically to the target URL: <a href="/dashboard?cid=1">/dashboard?cid=1</a>. If not, click the link.
+```
 
-On 7/23/26 7:59 AM, Goutham Pacha Ravi wrote:
-> =======================================================
-> OSSA-2026-027: Command execution via unsanitized config
-> =======================================================
-> 
-> :Date: July 23, 2026
-> :CVE: CVE-2026-pending
-> 
-> 
-> Affects
-> ~~~~~~~
-> - Ironic-python-agent: >=6.0.0 <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 
-> <11.5.1, ==11.6.0
-> 
-> 
-> Description
-> ~~~~~~~~~~~
-> Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
-> from the Metal3.io Security Team reported a vulnerability in
-> Ironic-Python-Agent's (IPAs) time syncing code.
-> 
-> The value of the ntp_server configuration option is inserted into a shell
-> command without sanitization. This command is run as root very early in the
-> IPA startup flow, allowing an attacker to run arbitrary commands as root.
-> 
-> This value can be set in three ways; directly in an operator-created 
-> ramdisk,
-> set via kernel command line using Ironic, or passing the parameters via 
-> mDNS
-> responder for mDNS enabled installation. For the most common, and highest
-> security risk case, this means a Manager role associated with the 
-> project set
-> as ``node.owner`` may be able to trigger this vulnerability.
-> 
-> 
-> Patches
-> ~~~~~~~
-> - https://review.opendev.org/998486 (2026.2/hibiscus (development))
-> - https://review.opendev.org/998488 (2026.1/gazpacho)
-> - https://review.opendev.org/998489 (2025.2/flamingo)
-> - https://review.opendev.org/998490 (2025.1/epoxy)
-> - https://review.opendev.org/998491 (2024.1/caracal (unmaintained))
-> - https://review.opendev.org/998492 (2023.1/antelope (unmaintained))
-> - https://review.opendev.org/998487 (bugfix/11.6)
-> - https://review.opendev.org/998482 (bugfix/11.4)
-> - https://review.opendev.org/998483 (bugfix/11.3)
-> 
-> 
-> Credits
-> ~~~~~~~
-> - Dmitry Tantsur from Red Hat
-> - Tuomo Tanskanen from Ericsson Software Technology
-> 
-> 
-> References
-> ~~~~~~~~~~
-> - https://launchpad.net/bugs/2160050
-> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
-> 
-> 
-> Notes
-> ~~~~~
-> - A CVE assignment is pending from MITRE. This advisory will be updated
->    when the CVE is assigned.
-> - Branches 2024.1/caracal and 2023.1/antelope are unmaintained and
->    patches are provided as a courtesy.
-> - Bugfix branches will receive patches in git but will not receive an
->    updated release.
-> - While root access to a node running an Ironic workflow has security
->    implications for that specific node, there is no known method for
->    turning node ramdisk shell access into a full compromise of the Ironic
->    service.
-> 
-> -- 
-> Goutham Pacha Ravi
-> OpenStack Vulnerability Management Team
-> https://security.openstack.org/vmt.html
+During the test the whole possible space of valid OTPs (6 digits, 1 million
+possibilities) was sent to the application in quick succession. No delay or
+account lockout was observed, the user could still authenticate with the
+correct OTP afterwards.
 
+Since the space of possible values is so small for OTPs, this effectively
+constitutes a bypass of the MFA policy.
 
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+### User Authentication (CVE-2026-18362) ###
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+No limitation of any kind was observed when performing a brute-force attack
+on an account’s password. Neither were the requests delayed or blocked, nor
+was the user’s account locked.
+
+## Recommended Countermeasures ##
+
+We are not aware of a fix yet. Please contact the vendor.
+
+We recommend implementing a generic solution that allows context-dependent
+rate limiting to be applied at least
+
+* per source (e.g., IP address),
+* per subject (e.g., account or session),
+* per object (e.g., queried database entry), and
+* per time (e.g., one minute)
+
+is allowed. For example, this can be implemented in the form of an annotation
+that allows different limits per action. It is common to return the HTTP
+error code 429 “Too Many Requests” if the limit is exceeded.
+
+It is important that not only further requests are blocked when the limit is
+exceeded, but to also log the exceeding ones.
+
+Especially sensitive endpoints used for authentication purposes need a
+dedicated protection against brute-force attacks.
+
+## Timeline ##
+
+* `2026-01-28` Identified the vulnerability in version 2.4.26
+* `2026-01-30` Initial vendor contact attempt via e-mail
+* `2026-02-27` Second vendor contact attempt via e-mail
+* `2026-03-30` Report on GitHub due to a missing response from the vendor
+* `2026-07-07` Informed project about imminent publication
+* `2026-07-24` SBA assigned CVE number
+* `2026-07-30` SBA assigned additional CVE numbers since the instances are
+               independently fixable
+* `2026-07-30` Public disclosure due to missing response from the vendor
+
+## References ##
+
+* OWASP API Security Top 10 2023. API4:2023 Unrestricted Resource Consumption:
+  <https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/>
+* Common Weakness Enumeration. CWE-770 Allocation of Resources Without Limits
+  or Throttling: <https://cwe.mitre.org/data/definitions/770.html>
+
+## Credits ##
+
+* Michael Koppmann ([SBA Research](https://www.sba-research.org/))
+* Mathias Tausig ([SBA Research](https://www.sba-research.org/))
+
+The discovery of this vulnerability was made possible through support from
+[CYSSDE](https://cyssde.eu/) and the European Union.
+
+![CYSSDE](images/cyssde.png)
+-----BEGIN PGP SIGNATURE-----
+
+iQJPBAEBCAA5FiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAmprIOEbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMiwxAAoJEPu4hi9Y93WyyskP/RVsR9TOZfleeRe7ORlD
+SILyVDfkaooauJHEMxw5zM302pd9CYYzlBRzZZSkFI8miOVh5n9ijhcDEp35zFfU
+nBc7qBPIUqsPjzmfq6Ru217a0hUvphn+zPMaybfzBPyOtUajKKp8D+TzuQh4LpMR
+NapyVa5Sm0unvwBQzcIZF2ftDeIXFfgMN49wJNFCHJ2yuHsL+1lBOr0p8v2sVWbX
+oh6EorFuIEYN2VbD+rKlgJltHGWYVAzg12xRZ2WMXc7JDrEyuIKHXh4DtGVYNjJA
+YUikrU1jA9JPzlAm85imtAejhyd+Mfl/HdqXYR148UEjPgqCuLYqAoS4xB9+jA60
+R93adPKAsDRBAYgdhpKuVjb0cNMPeAGonvgxJC282QodgZZMK+QGcndkaRKpFqKl
+VoofeIAu3FKVE+JzGgJmm+gVH2u0DXq4iA3k7LGXu6toTJcVM8D85qTIndeyvOye
+fQuFTsBjdQewDNMHPDnwQU/McfWbPTZvkq78zI7hBYSzYu4vfqSLYlyUfb+Trt6D
+ZaHxrGborIrmZnwpOmT29t+jKY/+LCg3ljoCctKWwQFr4jo0K+5t5zO12n/0xgcI
+N8v0/d07K4ae9DEcNQIaWmAJ6R9s6uOvNbwiyh6JaRsR9zfksnIlQt5aCOzdL8Bp
+XQPAp+f48yvmVej8T/AwWn/5
+=OGB3
+-----END PGP SIGNATURE-----
