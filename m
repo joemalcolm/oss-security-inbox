@@ -1,66 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/25/10
-Message-ID: <63605bc9-306b-4d61-9409-1f76f7b9d516@pipping.org>
-Date: Thu, 25 Jun 2026 18:23:01 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: libexpat 2.8.2 fixes 14 vulnerabilities (integer overflow, out-of-bounds write, ..)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/19
+Message-ID: <8bd3e66a-4adb-4be7-8827-653dd7085d77@cpansec.org>
+Date: Thu, 30 Jul 2026 14:43:45 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-60074: Date::Manip versions through 6.99 for Perl return corrupted dates via non-ASCII decimal digits that pass the numeric range tests in check
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+
+========================================================================
+CVE-2026-60074                                       CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-60074
+   Distribution:  Date-Manip
+       Versions:  through 6.99
+
+       MetaCPAN:  https://metacpan.org/dist/Date-Manip
+       VCS Repo:  https://github.com/SBECK-github/Date-Manip
 
 
-just a quick note that libexpat 2.8.2 (or "Expat 2.8.2") released
-today is fixing 13 vulnerabilities of three classes:
+Date::Manip versions through 6.99 for Perl return corrupted dates via
+non-ASCII decimal digits that pass the numeric range tests in check
 
-  - 1x out-of-bounds write
-  - 3x missing control flow integrity checks
-  - 9x integer overflow
+Description
+-----------
+Date::Manip versions through 6.99 for Perl return corrupted dates via
+non-ASCII decimal digits that pass the numeric range tests in check.
 
-The related section of the change log says this:
+The parse regexes capture year, month and day with the `\d` shorthand,
+which on a character string matches the whole Unicode decimal digit
+property `\p{Nd}` and not just `[0-9]`. Date::Manip::Base::check then
+validates the captured fields with numeric comparisons alone (`$y<1 ||
+$y>9999`, `$m<1 || $m>12`, `$d<1 || $d>$days`), and _parse_check stores
+the numified fields (`$y+0`). Perl truncates a string at the first
+character that is not an ASCII digit, so a field whose leading
+characters are ASCII digits numifies to an in-range prefix and
+satisfies every test: a year field of three ASCII digits followed by
+U+0664 ARABIC-INDIC DIGIT FOUR numifies to 202, giving the year 0202,
+and one non-ASCII digit in the month or day field shifts those fields
+the same way. The hour, minute and second fields match explicit ASCII
+character classes (`0?[0-9]`, `[0-5][0-9]`) and do not shift, though a
+non-ASCII digit in a fractional hour or minute field truncates the
+fraction.
 
-       #1246  CVE-2026-50219 -- Disallow calls to functions
-                `XML_GetBuffer`, `XML_Parse`, `XML_ParseBuffer`,
-                `XML_ParserFree`, `XML_ParserReset` to guard e.g.
-                Expat bindings from memory corruption;
-                this CPython issue is related:
-                https://github.com/python/cpython/issues/146169
-       #1267  CVE-2026-56131 -- Protect XML_ResumeParser from being
-                                called from a handler, plugging a hole in
-                                the fix to CVE-2026-50219
-       #1272  CVE-2026-56132 -- Fix out-of-bound scaffolding index store
-                                in `doProlog`
-#1229 #1232  CVE-2026-56403 -- Integer overflow in `storeAtts`
-       #1249  CVE-2026-56404 -- Integer overflow in `addBinding`
-       #1251  CVE-2026-56405 -- Integer overflow in `getAttributeId`
-       #1255  CVE-2026-56406 -- Integer overflow in `XML_ParseBuffer`
-       #1262  CVE-2026-56407 -- Integer overflow in `textLen` handling
-        #565  CVE-2026-56408 -- Integer overflow in `copyString`
-                (commit 16e2efd867ea8567ffa012210b52ef5918e20817)
-       #1259  CVE-2026-56409 -- xmlwf: Integer overflow in output path
-                                       join
-       #1252  CVE-2026-56410 -- xmlwf: Integer overflow in
-                `resolveSystemId`
-       #1263  CVE-2026-56411 -- xmlwf: Integer overflow in notation list
-                allocation
-       #1278  CVE-2026-56412 -- Guard XML_TOK_DATA_CHARS handler calls in
-                `doCdataSection`, plugging a hole in the fix to
-                CVE-2026-50219
+Any caller that passes an untrusted character string to ParseDate() or
+Date::Manip::Date->parse() can get back a date that differs from the
+string it parsed, with no parse error. Where the parsed date gates
+logic such as an expiry check or a retention window, the shift goes
+unnoticed.
 
-Some key links are:
+Problem types
+-------------
+- CWE-1289 Improper Validation of Unsafe Equivalence in Input
 
-- The blog post about it
-   https://blog.hartwork.org/posts/expat-2-8-2-released/
+Workarounds
+-----------
+No fixed release is available. Apply the patch, which spells the
+numeric field captures as `[0-9]` and requires the date fields to be
+ASCII digit strings, or reject untrusted date strings containing
+non-ASCII characters before parsing them.
 
-- The change log of release 2.8.2
-   https://github.com/libexpat/libexpat/blob/R_2_8_2/expat/Changes
 
-- The related pull requests
-  
-https://github.com/libexpat/libexpat/pulls?q=is%3Apr+label%3Asecurity+milestone%3A2.8.2+is%3Aclosed
-
-Best
+References
+----------
+https://security.metacpan.org/patches/D/Date-Manip/6.99/CVE-2026-60074-r1.patch
+https://metacpan.org/release/SBECK/Date-Manip-6.99/source/lib/Date/Manip/Base.pm#L602-614
+https://metacpan.org/release/SBECK/Date-Manip-6.99/source/lib/Date/Manip/Date.pm#L1536-1539
 
 
 
-Sebastian
