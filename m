@@ -1,29 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/04/5
-Message-ID: <87ecf8gbr7.fsf@gentoo.org>
-Date: Fri, 04 Sep 2026 18:35:56 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/2
+Message-ID: <75da3a58-ba87-1aca-894e-ac8f822fbdf5@apache.org>
+Date: Fri, 31 Jul 2026 09:19:29 +0000
+From: Akira Ajisaka <aajisaka@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerabilities fixed in libxml2-2.15.4
+Subject: CVE-2026-62391: Apache Kyuubi: kyuubi.session.local.dir.allow.list bypass via unprefixed Spark file-conf aliases 
 Content-Type: text/plain; charset=utf-8
 
-From libxml2-2.15.4:
+Severity: important 
 
-+v2.15.4: Sep 01 2026
-+
-+### Security
-+
-+- xmlregexp: Prevent out-of-bounds read in NXT macro
-+- fix: add missing overflow checks in dict.c, uri.c, and valid.c
-+- xmlregexp: Calc string length after null checking
-+- xpointer: Check overflow in xmlXPtrEvalXPtrPart
-+- xmlIO: Check for int overflow before calling writecallback
-+- fix(xinclude): propagate parseFlags in xmlXIncludeProcess and xmlXIncludeProcessTree
-+
-+ [...]
+Affected versions:
 
-I possess no further details.
+- Apache Kyuubi (org.apache.kyuubi:kyuubi-server) 1.6.0 before 1.12.0
 
-sam
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+The security fix for CVE-2025-66518 is incomplete. Any client who can access to Apache Kyuubi Server via Kyuubi frontend protocols can bypass server-side config kyuubi.session.local.dir.allowlist via unprefixed Spark config aliases.
+
+This issue affects Apache Kyuubi: from 1.6.0 before 1.12.0.
+
+Users are recommended to upgrade to version 1.12.0, which fixes the issue.
+
+Credit:
+
+Anand Nalya (finder)
+
+References:
+
+https://kyuubi.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-62391
+
