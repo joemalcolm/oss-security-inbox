@@ -1,23 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/14/6
-Message-ID: <09ea7851-c5ca-4978-a5b3-102fda13269e@oracle.com>
-Date: Fri, 14 Aug 2026 14:01:29 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Elman Shahbazov <shahbazovelman97@...il.com>
-Cc: linux-bluetooth@...r.kernel.org
-Subject: Re: CVE Request: BlueZ AVRCP Out-of-Bounds Read (CWE-125)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/9
+Message-Id: <4F97B7BC-01F2-4FFE-92F8-CB06C0D0C29A@dwheeler.com>
+Date: Fri, 31 Jul 2026 11:39:46 -0400
+From: "David A. Wheeler" <dwheeler@...eeler.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-On 8/14/26 10:27, Elman Shahbazov wrote:
-> Hello,
+
+
+> On Jul 30, 2026, at 10:02 PM, Peter Gutmann <pgut001@...auckland.ac.nz> wrote:
 > 
-> I would like to request a CVE ID for an Out-of-Bounds Read vulnerability
-> (CWE-125) that was recently fixed in the official BlueZ Bluetooth stack.
+> Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+> 
+>> 2) The GNOME security team will no longer forward vulnerability reports
+>>  to projects that ban AI-generated content, since most reports they
+>>  get these days have at least some AI-generated content.
+> 
+> So you've got a bunch of projects where people are clamoring for them to
+> reject anything that might have been touched by AI, and another bunch of
+> projects where people have decided to refuse to take part in anything that
+> rejects things that have been touched by AI.
 
-Then you need to contact the Red Hat Security Team at secalert@...hat.com.
+To be fair: Michael Catanzaro is saying he's simply abiding by the request of
+those projects. They don't want to receive any AI-generated content,
+and since most vulnerability reports have AI-generated content, Michael won't send them any.
 
-CVE requests have not been accepted on the oss-security list since 2017.
+Of course, that's absurd. It's appropriate to reject *bad* reports,
+but people should be open to truth wherever it comes from.
+Projects that reject truthful security reports are putting their users at risk.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+--- David A. Wheeler
+
