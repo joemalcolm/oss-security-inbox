@@ -1,29 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/6
-Message-ID: <bc74b42b-44da-0e3f-e528-df6de7e3c164@apache.org>
-Date: Thu, 11 Jun 2026 16:55:00 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/5
+Message-ID: <CAFfBHfamJKqSx5XHzNDB7ozM_r9-nov85SfgOBxywNQC0c7SJg@mail.gmail.com>
+Date: Thu, 30 Jul 2026 21:58:03 -0500
+From: Aaron Rainbolt <arraybolt3@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50629: Apache CXF: OAuth2: Log Injection via Unsanitized Client Identifier 
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+On Thu, Jul 30, 2026 at 9:45 PM Alan Coopersmith
+<alan.coopersmith@...cle.com> wrote:
+>
+> https://blogs.gnome.org/mcatanzaro/2026/07/20/some-changes-to-gnome-security-tracking/
+> announces some changes to the GNOME project's security bug handling:
+>
+> 1) The disclosure deadline is cut from 90 days to 30 days, as most
+>     GNOME maintainers that fix bugs during the embargo do so within
+>     the first 30 days.  This is effective for new bugs reported starting
+>     August 1.
+>
+> 2) The GNOME security team will no longer forward vulnerability reports
+>     to projects that ban AI-generated content, since most reports they
+>     get these days have at least some AI-generated content.
 
-Affected versions:
+Is there a convenient list somewhere of what projects are in this
+category? Distributions may be wise to mark such applications as
+ineligible for security support, and end-users would probably do well
+to avoid using them to process untrusted data.
 
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.2.0 before 4.2.2
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) before 4.1.7
+--
+Aaron
 
-Description:
-
-The 'clientId' parameter from incoming HTTP requests is directly concatenated into OAuth2 server log warning messages without sanitizing control characters. This allows an attacker to inject arbitrary content, including fake log entries, into the server's log files. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fixes this issue.
-
-Credit:
-
-Guanping Zhang reported this vulnerability. (finder)
-
-References:
-
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50629
-
+> 3) Michael Catanzaro will be stepping down in November, after 6 years
+>     of handling this work for GNOME.  He's looking for someone to step
+>     up to replace him.
+>
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@...cle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+>
