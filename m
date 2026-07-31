@@ -1,73 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/01/8
-Message-ID: <d23d48e4-078a-49a6-bbdd-49dd97482480@gmail.com>
-Date: Sat, 1 Aug 2026 11:36:27 +0100
-From: Robert Rothenberg <robrwo@...il.com>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-18536: Data::Entropy versions before 0.010 for Perl read remote entropy sources over plain HTTP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/12
+Message-ID: <m1cxw36onv.fsf@gmail.com>
+Date: Fri, 31 Jul 2026 10:43:00 -0700
+From: Collin Funk <collin.funk1@...il.com>
+To: "David A. Wheeler" <dwheeler@...eeler.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
+"David A. Wheeler" <dwheeler@...eeler.com> writes:
 
-========================================================================
-CVE-2026-18536                                       CPAN Security Group
-========================================================================
+>> On Jul 30, 2026, at 10:02 PM, Peter Gutmann <pgut001@...auckland.ac.nz> wrote:
+>> 
+>> Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+>> 
+>>> 2) The GNOME security team will no longer forward vulnerability reports
+>>>  to projects that ban AI-generated content, since most reports they
+>>>  get these days have at least some AI-generated content.
+>> 
+>> So you've got a bunch of projects where people are clamoring for them to
+>> reject anything that might have been touched by AI, and another bunch of
+>> projects where people have decided to refuse to take part in anything that
+>> rejects things that have been touched by AI.
+>
+> To be fair: Michael Catanzaro is saying he's simply abiding by the request of
+> those projects. They don't want to receive any AI-generated content,
+> and since most vulnerability reports have AI-generated content, Michael won't send them any.
+>
+> Of course, that's absurd. It's appropriate to reject *bad* reports,
+> but people should be open to truth wherever it comes from.
+> Projects that reject truthful security reports are putting their users at risk.
 
-         CVE ID:  CVE-2026-18536
-   Distribution:  Data-Entropy
-       Versions:  before 0.010
+I'm sure the projects banning AI submissions don't like it either.
 
-       MetaCPAN:  https://metacpan.org/dist/Data-Entropy
-       VCS Repo:  https://github.com/robrwo/Data-Entropy
+It takes time to filter out the "bad" reports if you actually care about
+checking each of them. This is especially true when AI submissions are
+unnecessarily verbose, which is true for a large portion of them. They
+also tend to exaggerate the security implications of bugs, and are
+annoying in various other ways.
 
-
-Data::Entropy versions before 0.010 for Perl read remote entropy
-sources over plain HTTP
-
-Description
------------
-Data::Entropy versions before 0.010 for Perl read remote entropy
-sources over plain HTTP.
-
-The Data::Entropy::RawSource::RandomOrg and
-Data::Entropy::RawSource::RandomnumbersInfo remote sources are accessed
-over plain HTTP.
-
-The Data::Entropy::RawSource::RandomOrg integrity check trivially
-matches any non-empty byte string.
-
-Any on-path attacker, such as open WiFi, a compromised ISP, captive
-portal, or a hostile egress proxy substitutes the response and thereby
-chooses the bytes returned by rand_bits and rand_int for every
-application that selected one of these sources via with_entropy_source.
-The _checkbuf method response is equally attacker-controlled, so the
-retry/sleep behaviour is steerable too.
-
-Problem types
--------------
-- CWE-319 Cleartext Transmission of Sensitive Information
-- CWE-353 Missing Support for Integrity Check
-
-Workarounds
------------
-Deployments should not use the RandomOrg or RandomnumbersInfo sources,
-as these are flawed.
-
-They have been removed from Data::Entropy 0.010. (There was a change to
-use HTTPS to connect to these sources in version 0.009 that did not
-work.)
-
-Note that Data::Entropy has been deprecated since version 0.008. Users
-are advised to migrate to alternative solutions that use system sources
-of random data, such as Crypt::SysRandom, Crypt::URandom or
-Crypt::PRNG.
-
-
-References
-----------
-https://github.com/robrwo/Data-Entropy/security/advisories/GHSA-845w-rcqw-jwvv
-https://metacpan.org/release/RRWO/Data-Entropy-0.010/changes
-https://metacpan.org/release/RRWO/Data-Entropy-0.008/view/lib/Data/Entropy.pm#STATUS
-https://security.metacpan.org/docs/guides/random-data-for-security.html
-
-
-
+Collin
