@@ -1,41 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/13
-Message-ID: <e696b170-4492-40e8-9675-f380a67f6890@oracle.com>
-Date: Fri, 31 Jul 2026 11:22:46 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/01/7
+Message-ID:  <SYBPR01MB6336B704782A9B3ED105B1ECEED72@SYBPR01MB6336.ausprd01.prod.outlook.com>
+Date: Sat, 1 Aug 2026 02:14:36 +0000
+From: Peter Gutmann <pgut001@...auckland.ac.nz>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
 Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-On 7/31/2026 4:01 AM, Sebastian Pipping wrote:
-> On 7/30/26 23:41, Alan Coopersmith wrote:
->> https://blogs.gnome.org/mcatanzaro/2026/07/20/some-changes-to-gnome- 
->> security-tracking/
->> announces some changes to the GNOME project's security bug handling:
->>
->> 1) The disclosure deadline is cut from 90 days to 30 days, as most
->>     GNOME maintainers that fix bugs during the embargo do so within
->>     the first 30 days.  This is effective for new bugs reported starting
->>     August 1.
-> 
-> I hope that new approach won't be copied by other projects: I would
-> certainly not be amused about a 30 days deadline where it affects me, in
-> particular not with sometimes multiple cases coming in at nearly the 
-> same time. If most issues are resolved within a 30 days window in GNOME,
-> that's not saying that cutting down the window will work well for all
-> projects involved, and the post seems to lack a good rationale about it.
-Notably he's not saying most are resolved within 30 days, just that if
-it's not resolved in the first 30 days, the rest of the time is wasted,
-with very few being resolved in the 31-90 day window, and most that
-missed 30 days going public unfixed after 90 days.  You can look at
-https://gitlab.gnome.org/Teams/Releng/security/-/wikis/home to see if
-the data backs him up there.
+Jeremy Stanley writes:
 
-He also points to the growing number of projects, such as the Linux
-kernel, not applying embargoes at all to AI generated reports, since
-the AI models can regenerate those reports for anyone who asks.
+>Now the vast majority of bug reports we receive are from disconnected
+>"researchers" looking to make a name for themselves, pad their resumés/CVs,
+>or promote their LLM-oriented code auditing services.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Bit of an aside, I've been working on a presentation "The Cost of Stunt
+Cryptography" that looks at the real-world cost to open-source project
+maintainers of stunt cryptography / CVEnhancement "vulnerabilities" that
+present no practical attack or weakness but can result in months of
+remediation work and thousands to tens of thousands of dollars in costs to
+projects with a lot of downstreams.  I've got several examples already but if
+anyone has any particularly egregious examples with accompanying data (time
+spent, cost) that they'd like to share I'm always looking for more.
+
+Peter.
+
 
