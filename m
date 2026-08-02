@@ -1,56 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/11
-Message-ID: <63c0a950-9351-4ee2-bdbe-e4497a64790a@oracle.com>
-Date: Fri, 11 Sep 2026 13:17:33 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: pcre2 version 10.48 released with security fixes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/02/4
+Message-ID: <87mrv4poxj.fsf@hope.eyrie.org>
+Date: Sun, 02 Aug 2026 07:39:04 -0700
+From: Russ Allbery <eagle@...ie.org>
+To: Peter Gutmann <pgut001@...auckland.ac.nz>
+Cc: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-On 9/4/26 16:25, Alan Coopersmith wrote:
->> * (Security fix for very specific API usage, GHSA-2p8c-ff85-vh9x) If
->> pcre2_jit_compile() is called with options for some match modes, and then
->> pcre2_match() is used to perform a match for a different match mode, an
->> out-of-bounds read can occur if the match is attempted against invalid UTF input.
+Peter Gutmann <pgut001@...auckland.ac.nz> writes:
+> Russ Allbery <eagle@...ie.org> writes:
 
-This is now assigned CVE-2026-89156.
+>> One solution that anyone in open source software communities has heard
+>> about for decades now is to turn open source software maintenance into
+>> a job with a paycheck. Then it doesn't necessarily have to be fun
 
->> * (Security fix for pattern conversion, GHSA-q8g2-wprr-34m9) If pcre2_convert()
->> is called on untrusted input on platforms with 32-bit size_t, an out-of-bounds
->> heap write can occur.
+> It can still be fun, and in some cases more fun than pure open-source.
+> Consider the difference between "we have a practical real-world problem
+> that we need solved, there's real-world demand for it, we can describe
+> it in detail, and we'll pay you to solve it" (commercial user) vs "i
+> have some me-only feature that I want you to add to your code just for
+> me and I'll whine endlessly on Github/Discord/whatever if you don't"
+> (open-source).
 
-This is now assigned CVE-2026-89157.
+Speaking as someone who has structured his entire career to be in the
+first position that you describe, you're preaching to the choir on this. I
+completely agree; part of the reason why I do less open source software
+work in my free time these days is because I get paid to do it as part of
+my day job and that comes with a much more satisfying and meaningful
+problem stream to solve.
 
->> * (Security fix, GHSA-3r4p-g7gg-ppmf) Fixed an out-of-bounds write in DFA
->> matching when using a heap limit; also fixed possible integer overflows which
->> could cause under-allocation of the workspace.
+I'm not saying that open source software becoming paid work is bad. It's
+great, I love it, I highly recommend it if you can arrange it.
 
-As Salvatore previously noted, this one got CVE-2026-86145.
+My point is a little bit different than that. First, I'm a lot more able
+(in terms of time and emotional energy) to do the annoying, obnoxious
+tasks that make the software ecosystem more robust if I'm getting paid to
+do them. And second, we don't know how to pay people for all of the open
+source software that's out there today. We have tried a whole lot of
+business models over the thirty-odd years that I've been following open
+source and free software, and we've made some of them work for some
+people. But we have never come up with a reasonable replacement for that
+*vast* sea of hobby projects that fill in all the cracks and smooth over
+all the sharp edges and provide all the irreplacable small tools for which
+there is no large corporate benefactor.
 
->> * (Security fix, GHSA-fmgr-6ggq-9859) Added bounds checks for several integer
->> overflows while compiling patterns on 32-bit CPUs, which could cause
->> under-allocation followed by out-of-bounds writes.
+Necessity is the mother of invention, so perhaps if we make volunteer
+software maintenance sufficiently miserable that people start abandoning
+the important small projects left and right, we will discover a way to pay
+others to pick up that maintenance. I think I already see signs of that
+happening in the Python ecosystem. It would be nice if we could do that in
+a way that respects the existing volunteers and isn't hugely disruptive,
+though, and that's the part that I don't feel like is happening.
 
-This is now assigned CVE-2026-89158.
+(I am also somewhat cynical about what's going to happen to many of these
+paid open source software models when the massive venture capital funding
+stream for AI dries up, as it inevitably will like every other windfall
+tech funding stream in the past has dried up, and the sector goes through
+another massive contraction. I'm old enough to remember the dot.com
+crash.)
 
->> * (Security fix, GHSA-9qww-pwc4-77qq) Applied lower buffer bound to prevent
->> two out-of-bounds reads while scanning backwards through invalid UTF data with
->> PCRE2_MATCH_INVALID_UTF.
+> That's an extreme for illustrative purposes, but with commercial users
+> you've got direction and focus while with open-source you've got a kind
+> of free-for-all where people want this and hack in that unless you have
+> a strong benevolent-dictator model or small group of maintainers who
+> screen everything to keep the codebase stable and bells and whistles to
+> a minimum.
 
-This is now assigned CVE-2026-89160.
+Yes, I agree. There is real benefit to filtering work based on whether
+people care enough about it to put actual resources into accomplishing it.
 
->> * (Security fix for very specific API usage, #937) Fixed a leak and later
->> invalid free when calling the fast-path pcre2_jit_match() function with a match
->> data object previously used with pcre2_match() and
->> PCRE2_COPY_MATCHED_SUBJECT.
-
-This is now assigned CVE-2026-89161.
-
->> * (Low-severity security fix, GHSA-q7rw-r7qq-2hx6) Fixed exposure of two
->> uninitialised bytes from malloc() via pcre2_serialize_encode().
-
-This is now assigned CVE-2026-89162.
+But there are also real problems with using money here because money is
+not as fungible for open source developers as it might appear. There is a
+*huge* threshold problem: The states of "I maintain some open source
+software as volunteer work in my free time" and "I have stable employment
+with a reliable salary as an open source developer" are separated by a
+vast chasm of financial and resource complications. A lot of the positions
+in between, in the middle of that chasm, are only livable for people who
+are very comfortable with contracting, fund-raising, and unstable incomes.
+For everyone else, there is often a hard ceiling on how much volunteer
+work they can do, even if they're getting tips and other irregular
+payments, because their full-time job has to take priority. And whenever
+there's a hard ceiling, the parts of the job that suck are, quite
+reasonably, not the parts that are going to get prioritized.
 
 -- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Russ Allbery (eagle@...ie.org)             <https://www.eyrie.org/~eagle/>
