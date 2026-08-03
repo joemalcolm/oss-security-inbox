@@ -1,35 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/01/4
-Message-ID: <a592a219-ebf7-3fc3-3098-e651a8e7387b@apache.org>
-Date: Tue, 01 Sep 2026 20:57:04 +0000
-From: Holden Karau <holden@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/14
+Message-ID: <085c96a4-dda8-4e85-ad48-9f264115585b@jvf.cc>
+Date: Mon, 3 Aug 2026 13:51:53 -0700
+From: Jay Faulkner <jay@....cc>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-32773: Apache Spark: XSS Vulnerability in Spark Web 3.5.4 
+Subject: OSSN-0104: Ironic-Python-Agent may fallback to mDNS unexpectedly
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Ironic-Python-Agent may fallback to mDNS unexpectedly
 
-Affected versions:
+### Summary ###
+Ironic-Python-Agent (IPA) has had support for several releases for
+configuring your agent via multicast DNS (mDNS). This feature's
+design is such that, in some extremely rare cases, a booted IPA
+could be reconfigured or directed to a different Ironic API service.
 
-- Apache Spark (org.apache.spark:*) 3.0.0 before 3.5.8
 
-Description:
+### Affected Services / Software ###
+- ironic-python-agent: >=3.7.0 <11.6.2
 
-There is a lack of XSS escaping in the Spark History Server prior to 3.5.8 which allows a malicious Spark job to generate arbitrary unescaped frontend code which could lead to a minimal privilege escalation in browser. Users are encouraged to upgrade to Spark 3.5.8 or later.
 
-This CVE is marked as "low" since the path to exploit requires both relatively high permissions (ability to launch a Spark job) and requires tricking a user with higher permissions to log in and visit the Spark history web page.
+### Discussion ###
+When IPA is booted, the first thing it does is look for a valid
+URL to check into the Ironic API or an Ironic Inspection service.
+The mDNS fallback would, in situations where IPA had no API url
+configured, use mDNS lookups to configure IPA, including the endpoint
+of the Ironic API service. This is typically only used in rare cases
+for bootstrapping clusters with minimal infrastructure using virtual
+media or physical USB thumb drives.
 
-Users are encouraged to upgrade their Spark history servers to Spark 3.5.8 or later.
+Ironic's default configuration always sends a valid API url. The
+current development branch has been updated to always require an
+explicit opt-in to mDNS fallback, either by setting ``ipa-api-url``
+to ``mdns``, or by setting ``ipa-use-mdns`` to ``True`` on the
+command line.
 
-This issue is being tracked as SPARK-53747 
 
-Credit:
+### Recommended Actions ###
+* Ensure all IPA boots are managed by Ironic; do not boot any
+   IPA ramdisks without proper configuration. This is the default
+   behavior but may be different in environments with unique
+   networking or DHCP configurations.
+* Operators utilizing the mDNS discovery features should, before
+   upgrading to 2026.2, ensure they are explicitly enabling mDNS
+   fallback in their virtual media images.
 
-Yann Gourio (finder)
+#### Patches ####
+The following patches are backwards incompatible and were not merged
+into stable branches. Operators are welcome to backport them manually
+if they feel it improves their security standing and they do not
+use mDNS fallback.
 
-References:
+2026.2/hibiscus (development):
+- https://review.opendev.org/997637
+- https://review.opendev.org/997638
+- https://review.opendev.org/999337
 
-https://spark.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-32773
-https://issues.apache.org/jira/browse/SPARK-53747
+### Credits ###
+- Dmitry Tantsur, Red Hat (Metal3.io Security Team)
+- Tuomo Tanskanen, Ericsson Software Technology (Metal3.io Security Team)
 
+### Contacts / References ###
+Authors:
+- Jay Faulkner, G-Research OSS
+
+This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0104
+Original Launchpad bug: 
+https://bugs.launchpad.net/ironic-python-agent/+bug/2160054
+Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
+OpenStack Security : https://security.openstack.org/
+CVE: none
+
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
