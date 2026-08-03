@@ -1,37 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/23
-Message-ID: <293a3197-4d4c-2d62-4312-615db1f80863@apache.org>
-Date: Sun, 05 Jul 2026 11:51:02 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/1
+Message-ID: <CAFfBHfYgoH0JYBopECF=xxq_Kb5LO=9=L6ZW7g_GOaU+7=w+kQ@mail.gmail.com>
+Date: Mon, 3 Aug 2026 17:35:21 -0500
+From: Aaron Rainbolt <arraybolt3@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49098: Apache Camel: Camel-Kafka: The kafka.OVERRIDE_TOPIC (and other kafka.*) Exchange header constants used non-Camel-prefixed names that bypass the upstream HTTP header filter, allowing an HTTP client to redirect Kafka messages to an arbitrary topic 
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On Mon, Aug 3, 2026 at 1:41 PM Emily Shepherd <emily@...coat.dev> wrote:
+>
+> On Mon Aug 3, 2026 at 5:33 PM BST, David A. Wheeler wrote:
+> > Please allow me to point you to the actual announcement & project
+> > page, which explains what is *actually* going on instead.
+> >
+> > The Akrites announcement here:
+> > https://www.linuxfoundation.org/press/linux-foundation-and-industry-leaders-launch-akrites-to-defend-critical-open-source-software-against-ai-enabled-cyber-threats
+> > instead says, "Bug fixes flow back into each project’s original home, on maintainers’ terms. Where a critical package HAS NO ACTIVE MAINTAINER [emphasis mine], Akrites will serve as maintainer of last resort so fixes to the latest version reach everyone in a timely fashion."
+> >
+> > Note that the "last resort" ONLY applies when there is NO active
+> > maintainer.
+>
+> Whether a project is actively maintained or not does not change its
+> licence and retained copyright rights.
+>
+> The point referenced by the pkgconfig example clearly points out that a
+> licence may allow forks and subordinate works to be created (as
+> pkgconfig does) but may well not grant others to use the project name or
+> pass of subordinate forks *as the project*. In the pkgconfig example,
+> their licence would quite explicitly not allow that.
+>
+> I fail to see how an organisation unilaterally declaring themselves a
+> maintainer of last resort, regardless of what the project licence says,
+> is going to work out well. The intentions may be noble, but copyright
+> doesn't care about intention, it cares about what the licence says.
 
-Affected versions:
+IMO this is splitting hairs. Look at the cJSON thread on this mailing
+list; we have an unmaintained project with a ton of vulnerabilities
+found by AI, and every library user is vulnerable and will be
+vulnerable. Isn't this the very situation Akrites is trying to make
+slightly less horrible? Maybe cJSON has a license that requires
+renaming if one is to fork it (I don't think it does, but let's assume
+it does for the sake of argument, and let's also assume that Akrites
+decides to provide fixes for it, not that they will but again assume
+they will for the sake of argument). Maybe then Akrites has to rename
+the project to fork it. No big deal, the Linux Foundation knows how to
+do a fork-and-rename, look at Valkey, forked from Redis when Redis
+decided to change their license. The important part is that a project
+that would otherwise have been permanently vulnerable isn't anymore. I
+think that's generally a good thing. If an upstream doesn't like
+Akrites using the existing project name, they can always complain and
+say "please rename if you're going to fork".
 
-- Apache Camel (org.apache.camel:camel-kafka) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-kafka) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-kafka) 4.19.0 before 4.21.0
+--
+Aaron
 
-Description:
-
-Improper Input Validation, Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection') vulnerability in Apache Camel Kafka Component.
-
-The camel-kafka producer can override its configured target topic at runtime from the kafka.OVERRIDE_TOPIC Exchange header: KafkaProducer.evaluateTopic() returns the header value in preference to the topic configured on the endpoint. The control-header constants in KafkaConstants (for example OVERRIDE_TOPIC = kafka.OVERRIDE_TOPIC, OVERRIDE_TIMESTAMP = kafka.OVERRIDE_TIMESTAMP, PARTITION_KEY = kafka.PARTITION_KEY) used plain, non-Camel-prefixed values. camel-kafka's own KafkaHeaderFilterStrategy does filter the kafka.* namespace, but only on the Kafka-to-Exchange serialization boundary (reading Kafka record headers into the Exchange, and writing Exchange headers into a Kafka record); it does not apply to headers that arrive from an upstream consumer in a multi-component route. The upstream HTTP consumer uses HttpHeaderFilterStrategy, which blocks only the Camel / camel namespace, so a kafka.* header passes through unfiltered. As a result, in a route that bridges an HTTP consumer (for example platform-http) into a kafka: producer, any HTTP client could set the kafka.OVERRIDE_TOPIC header and cause the message to be published to an arbitrary Kafka topic instead of the configured one - redirecting it to a sensitive internal topic, or injecting attacker-crafted messages into a topic consumed by a critical downstream service. The related kafka.OVERRIDE_TIMESTAMP and kafka.PARTITION_KEY headers could likewise be injected to backdate messages or target specific partitions. No credentials are required when the bridging consumer is unauthenticated.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
-
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, routes that set or read Kafka headers via the raw header names must use the CamelKafka* names (for example CamelKafkaOverrideTopic and CamelKafkaTopic) instead of the old kafka.* values. For deployments that cannot upgrade immediately, strip the kafka.* headers from any untrusted ingress before the kafka: producer (for example removeHeaders('kafka.*') at the start of the route), and set the target topic from a trusted source.
-
-Credit:
-
-Yu Bao from PayPal (finder)
-Andrea Cosentino (remediation developer)
-
-References:
-
-https://camel.apache.org/security/CVE-2026-49098.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49098
-
+> In this age of AI, the industry as a whole appears to be suffering a
+> severe case of collective amnesia over the fact that the people who make
+> a creative work get to decide how that creative work is used or amended.
+>
+> Emily
