@@ -1,40 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/1
-Message-ID: <94a907d3-1454-f353-f88b-24c2b5837a84@apache.org>
-Date: Tue, 28 Jul 2026 17:24:58 +0000
-From: Radhika Kundam <radhikakundam@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/3
+Message-ID: <4310cbe7f8f53860f940208d9eca3d6533733508.camel@debian.org>
+Date: Mon, 03 Aug 2026 10:19:25 +0200
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50622: Apache Atlas: Missing Authorization on Admin Endpoints 
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+On Fri, 2026-07-31 at 12:42 -0400, Eli Schwartz wrote:
+> > Projects that reject truthful security reports are putting their users at
+> > risk.
+> 
+> 
+> Correction: Linux Foundation stakeholders such as OpenAI, Anthropic,
+> Microsoft, Google, Facebook, NVIDIA, Oracle, etc. are putting GNOME (and
+> other project) users at risk.
+> 
+> I heard that the Linux Foundation has declared the danger of "AI
+> vulnerabilities" is so great that they are founding a group called
+> Akrites, devoted to coordinating security incident response. Members can
+> pay their dues in LLM compute credits. If projects don't fix their
+> software "fast enough", Akrites will declare themselves the "maintainer
+> of last resort" to publish a fixed version.
+> 
+> 
+> Yes, that's right, not "we will provide the fiscal support you've been
+> lacking for 20 years that resulted in you being so sick and tired of
+> slaving away for free that you declared Enough Is Enough and drew a
+> moral line in the sand about what constitutes harassment and bullying".
+> 
+> Instead, the Linux Foundation will fork your project and declare
+> themselves the new maintainers and "fix it without you".
 
-Affected versions:
+Hey,
 
-- Apache Atlas (org.apache.atlas:atlas-webapp) 0.8.0 through 2.5.0
+I heard about Akrites but missed the fine prints about this. Could you point
+us to where they talk about this (I assume it's not written exactly like this
+but still I'd be interested in reading it).
 
-Description:
-
-Description:
-Missing Authorization in Apache Atlas.
-A missing authorization vulnerability in Apache Atlas's admin endpoints allows any authenticated user, regardless of their assigned role, to perform administrative operations.
-
-
-
-
-Affect Version:
-This issue affects Apache Atlas: from 0.8 through 2.5.0.
-
-
-Mitigation:
-Users are recommended to upgrade to version 2.6.0, which fixes the issue.
-
-Credit:
-
-Geo (finder)
-
-References:
-
-https://atlas.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50622
-
+Regards,
+-- 
+Yves-Alexis
