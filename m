@@ -1,92 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/17
-Message-ID: <amKIF03IxtOBbwKW@256bit.org>
-Date: Thu, 23 Jul 2026 23:31:03 +0200
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/10
+Message-ID: <f0b27b72-20a3-8f76-a264-0ff829b3b6b5@apache.org>
+Date: Mon, 03 Aug 2026 19:44:58 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [vim-security] Arbitrary Code Execution via Shell Keyword Lookup in Vim < 9.2.0839
+Subject: CVE-2026-68979: Apache NiFi: Missing Authorization for Components Referenced by Parameter Context Updates 
 Content-Type: text/plain; charset=utf-8
 
-Arbitrary Code Execution via Shell Keyword Lookup in Vim < 9.2.0839
-===================================================================
+Severity: Medium 
 
-Date: 23.07.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Neutralization of Special Elements used in an OS Command
-     (CWE-78)
+Affected versions:
 
-## Summary
+- Apache NiFi (org.apache.nifi:nifi-web-api) 1.10.0 through 2.10.0
 
-The shell filetype plugins `runtime/ftplugin/sh.vim` and
-`runtime/ftplugin/zsh.vim` install a buffer-local `keywordprg` that
-interpolates its argument into a `bash -c` or `zsh -c` command without
-shell escaping.  Because a `keywordprg` beginning with `:` is escaped with
-`fnameescape()`, which does not neutralize shell metacharacters, and because
-`K` in Visual mode passes the whole selection verbatim, a crafted line in a
-shell script can execute arbitrary commands when the user selects it and
-presses `K`.  `runtime/ftplugin/ps1.vim` is affected in the same way through
-PowerShell.
+Description:
 
-## Description
+Apache NiFI 1.10.0 through 2.10.0 provide a Parameter Context update REST API method that does not enforce authorization checking on components referencing Parameter values. Updating a Parameter Context can change parameter values that affect referencing components, but framework authorization was limited to read and write privileges on the Parameter Context itself. As a result of the missing authorization, an authenticated user authorized to modify a Parameter Context, but not authorized on referencing components, could alter Parameter values affecting those components. In deployments where a Parameter value contains executable scripting content, updating a Parameter can result in code execution during automatic component validation, without starting the referencing component. The impact was limited to stopped components by existing verification checks, and the issue applies only to deployments that use component-level authorization policies. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, which aligns the Parameter Context update method authorization with other methods, adding authorization checking on affected components.
 
-When a buffer's filetype resolves to bash, zsh or PowerShell, the bundled
-filetype plugin defines a keyword lookup command and points `keywordprg` at
-it, for example:
+This issue is being tracked as NIFI-16148 
 
-    command! -buffer -nargs=1 ShKeywordPrg silent exe
-      \ ':hor term bash -c "help "<args>" 2>/dev/null || man "<args>""'
-    setlocal keywordprg=:ShKeywordPrg
+Credit:
 
-For a `keywordprg` that starts with `:`, Vim escapes the argument of `K`
-with `vim_strsave_fnameescape()` (`src/normal.c`), which uses
-`PATH_ESC_CHARS` (`src/vim.h`).  That set omits the shell metacharacters
-`;`, `&`, `(`, `)` and `>`; those appear only in `SHELL_ESC_CHARS`, which is
-used exclusively for a `keywordprg` that is not an Ex command.  The filetype
-plugin adds no escaping of its own, so these characters reach the inner
-`bash -c` unchanged and terminate the intended command.
+D0HY30N (finder)
 
-In Visual mode, `K` passes the entire selection rather than the keyword
-under the cursor, so shell metacharacters are preserved.  In Normal mode the
-argument is restricted to 'iskeyword' characters, which excludes these
-metacharacters, and the issue does not arise.
+References:
 
-The same pattern applies to `runtime/ftplugin/zsh.vim`, which builds a
-`zsh -c` command, and to `runtime/ftplugin/ps1.vim`, which passes the
-argument to PowerShell via `-Command`.
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68979
+https://issues.apache.org/jira/browse/NIFI-16148
 
-## Impact
+Timeline:
 
-Arbitrary operating-system command execution in the context of the user
-running Vim.  Exploitation requires:
+2026-07-22: reported
 
-- Vim with filetype plugins enabled
-- the buffer's filetype resolving to sh, bash, zsh or PowerShell
-- the victim opening a crafted file, selecting the crafted line in Visual
-  mode and invoking the keyword lookup with `K`.
-
-The severity is rated Medium because Normal-mode `K` is not affected and
-exploitation requires the victim to deliberately select the crafted text in
-Visual mode and invoke the keyword lookup; the bug does not fire on
-file-open alone.
-
-## Acknowledgements
-
-The Vim project would like to thank Github user @manus-use for reporting the issue.
-
-## References
-
-The issue has been fixed as of Vim patch [v9.2.0839](https://github.com/vim/vim/releases/tag/v9.2.0839).
-
-- [Commit](https://github.com/vim/vim/commit/c5a82fe013e73c98004ad7cd4f906b1ad1ed610e)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-r5v6-q6j8-8qw2)
-
-
-
-Thanks,
-Chris
--- 
-Von wem stammt der Ausspruch: lernen, lernen und nochmals lernen?
-Von Lenin.
-Ja, aber wann hat er das gesagt?
-Na, als er das Zeugnis von Ulbricht gesehen hat!
