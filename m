@@ -1,30 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/17/9
-Message-Id: <3EDDDBE4-215E-48A5-B18A-073ABE1C7E47@dwheeler.com>
-Date: Wed, 17 Jun 2026 10:11:43 -0400
-From: "David A. Wheeler" <dwheeler@...eeler.com>
-To: Alan Coopersmith <alan.coopersmith@...cle.com>, oss-security@...ts.openwall.com
-Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/9
+Message-ID: <d7d9f2fc-a222-45b9-95c3-4f1e378da1d3@pipping.org>
+Date: Mon, 3 Aug 2026 21:01:54 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
+To: oss-security@...ts.openwall.com
+Cc: "David A. Wheeler" <dwheeler@...eeler.com>
+Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-
-
-> On Jun 15, 2026, at 1:56 PM, Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
+On 8/3/26 18:33, David A. Wheeler wrote:
+> On Jul 31, 2026, at 12:42 PM, Eli Schwartz <eschwartz@...too.org> wrote:
+>>> I heard that the Linux Foundation has declared the danger of "AI
+>>> vulnerabilities" is so great that they are founding a group called
+>>> Akrites, devoted to coordinating security incident response. ... If projects don't fix their
+>>> software "fast enough", Akrites will declare themselves the "maintainer
+>>> of last resort" to publish a fixed version.
 > 
-> On 6/8/26 16:46, David A. Wheeler wrote:
->> All: I propose that we create a *separate* mailing list...
+> Please allow me to point you to the actual announcement & project page,
+> which explains what is *actually* going on instead.
 > 
-> If it comes to the point we have to split the lists, I think it would be easier
-> to create a oss-security-discuss for the discussions than to get dozens of
-> projects to update their security advisory release process to send their
-> advisories to a new list
+> The Akrites announcement here:
+> https://www.linuxfoundation.org/press/linux-foundation-and-industry-leaders-launch-akrites-to-defend-critical-open-source-software-against-ai-enabled-cyber-threats
+> instead says, "Bug fixes flow back into each project’s original home, on maintainers’ terms. Where a critical package HAS NO ACTIVE MAINTAINER [emphasis mine], Akrites will serve as maintainer of last resort so fixes to the latest version reach everyone in a timely fashion."
+> 
+> Note that the "last resort" ONLY applies when there is NO active maintainer.
 
-That sounds good to me. "Have to" will be in the eye of the beholder.
-It appears we have about ~400-500 messages/month. I hope people will be
-willing to create a new list if we reach 5x or 10x as many per month.
-
-Frankly, I'd love to see the split anyway. Those who want to see both could
-subscribe to both.
-
---- David A. Wheeler
-
+I would like to note that it says "no active maintainer" rather than
+"no maintainer" so this now depends on the definition of "active"
+and e.g. how many weeks of no fix or say no overall Git activity it
+would take for a maintainer to be considered inactive by Akrites.
+Would be great if that could be clarified, officially.
