@@ -1,42 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/16
-Message-ID: <46d36ac0-d776-d2a1-1bce-9956fc6edd11@apache.org>
-Date: Mon, 14 Sep 2026 08:38:47 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/11
+Message-ID: <70530039-4ae3-fdd7-2957-fbe206a9efbf@apache.org>
+Date: Mon, 03 Aug 2026 19:46:59 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-77181: Apache Syncope: ClientApp update entitlement not effective 
+Subject: CVE-2026-62354: Apache NiFi: Incorrect Authorization for Parameter Context Validation Requests 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: High 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core.am:syncope-core-am-logic) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core.am:syncope-core-am-logic) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core.am:syncope-core-am-logic) 4.1.0-M0 through 4.1.2
+- Apache NiFi (org.apache.nifi:nifi-web-api) 1.10.0 through 2.10.0
 
 Description:
 
-Incorrect Authorization vulnerability in Apache Syncope.
+Authorization handling for Parameter Context validation requests in Apache NiFi 1.10.0 through 2.10.0 allows clients with read access to submit proposed Parameter values. The proposed values override current configuration, enabling users with read access to invoke predefined component validation methods with alternative settings. Apache NiFi installations that do not implement different levels of authorization for viewing and modifying Parameter Context configuration are not subject to this vulnerability. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, requiring write access to submit Parameter Context validation requests.
 
-
-
-An administrator with ClientApp's update entitlement is unable to perform the related operation, while ClientApp's create entitlement is checked both for create and update operations on ClientApp.
-
-
-
-
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+This issue is being tracked as NIFI-16112 
 
 Credit:
 
-n0mi1k (finder)
+Nguyen Van Hiep from MBBank (finder)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-77181
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-62354
+https://issues.apache.org/jira/browse/NIFI-16112
+
+Timeline:
+
+2026-07-08: reported
 
