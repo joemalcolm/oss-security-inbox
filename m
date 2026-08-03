@@ -1,55 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/01/9
-Message-ID: <87bjbma22v.fsf@gmail.com>
-Date: Fri, 31 Jul 2026 21:37:12 -0700
-From: Collin Funk <collin.funk1@...il.com>
-To: oss-security@...ts.openwall.com
-Cc: Alan Coopersmith <alan.coopersmith@...cle.com>
-Subject: Re: 33 Vulnerabilities in cJSON
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/4
+Message-ID: <CAOGQQ286sURd0knfOf=NRfq=idObEwemvW2tkKuPSFoH5h7XnQ@mail.gmail.com>
+Date: Mon, 3 Aug 2026 11:44:01 -0300
+From: Marco Benatto <mbenatto@...hat.com>
+To: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
+Cc: oss-security@...ts.openwall.com, "Darrick J. Wong" <djwong@...nel.org>
+Subject: Re: RefluXFS: LPE in the Linux kernel via XFS reflink race (CVE-2026-64600)
 Content-Type: text/plain; charset=utf-8
 
-Peter Gutmann <pgut001@...auckland.ac.nz> writes:
+Sorry for the late reply,
 
-> Collin Funk <collin.funk1@...il.com> writes:
+I haven't run any tests using an XFS filesystem exported via an NFS share,
+nor have I tested any layered filesystem running on top of XFS.
+I'm presuming that if the filesystem running on top of XFS passes along the
+reflink feature, the exploit is still valid however the overhead
+introduced by upper layers may change the race window a bit and make it
+harder to exploit, at least.
+
+I see Darrick is copied in this thread, so I defer to him if he has any
+further thoughts.
+
+
+Marco Benatto
+Red Hat Product Security
+secalert@...hat.com for urgent response
+
+
+On Fri, Jul 31, 2026 at 4:37 AM Dr. Thomas Orgis <
+thomas.orgis@...-hamburg.de> wrote:
+
+> Am Wed, 22 Jul 2026 18:07:03 -0300
+> schrieb Marco Benatto <mbenatto@...hat.com>:
 >
->>Complaining about free software maintainers, who are presumably not funded by
->>the projects (some certainly being corporate) depending on it, while also
->>admitting that you had AI write part of the article for you (as in the author
->>of the post, not the email I am replying to) because you are too lazy is
->>certainly a choice.
+> > While disabling reflink once the filesystem is created is not possible
+> > we manage to mitigate the issue using the following SystemTap script:
 >
-> I assume you're new to this process so I'll explain: When someone submits bug
-> reports to your project that help fix problems, the polite thing to do is to
-> say "thanks for the time you've taken to help improve the project", not
-> "FOAD", which tends to discourage future contributions.
+> I'm a bit late, but I do wonder if the issue also pertains to XFS fs
+> exported via NFS. It seems like the reflink feature is passed through,
+> but so far I was not able reproduce using
+>
+>
+> https://github.com/litosmartin/CVE-2026-64600-Refluxfs-PoC/blob/main/refluxfs.c
+>
+> I guess the race condition is avoided when going through the NFS stack,
+> but maybe only by chance. The poc ran unsuccessfully for several
+> minutes over NFS while it is successful _instantly_ locally on the NFS
+> server.
+>
+> Anyone got insight on this? XFS behind NFS should also be quite common
+> … though I had to adapt the exploit code not to work on /etc/password,
+> which is on on the NFS and thus limits the impact not to system
+> compromise, but on one user manipulating files of another user, which
+> is bad enough in my book.
+>
+>
+> Alrighty then,
+>
+> Thomas
+> --
+> Dr. Thomas Orgis
+> HPC @ Universität Hamburg
+>
+>
 
-Note that I am not a maintainer of cJSON, and have never interacted with
-them. My understanding is that the maintainers have not been active, as
-in they have not been writing commits or reviewing bugs/patches. I am
-not sure why you think I would defend anyone saying "FOAD", which I am
-not aware of them doing, and would certainly not defend if they did.
-Perhaps the weird dreams you refer to are based on personal experience.
-
-My criticism is that the author of this article seems to feel entitled
-to fixes. But perhaps that is just my reading. I am referring
-specifically to lines like:
-
-    Memory-safety reports sit open and unanswered, and in a few cases
-    the patch that would fix them is sitting right there in the same
-    thread, unmerged.
-
-Do we need government-mandated pagers for free software maintainers of
-packages that are widely depended on, which get triggered every time a
-memory-safety bug is reported to their project? That would allow them to
-meet their SLAs (which they do not get paid for) to fix them!
-
-Also, the comment "nobody is going to hand you a fixed version". This is
-quite literally what the maintainers were doing before they went
-inactive, which is perfectly fine and morally permissible for them to
-do.
-
-> For the record, if anyone wants to send me a bug report for my code I'll
-> accept it whether you found it yourself, used an AI, or it came to you in a
-> weird dream you had after a dodgy vindaloo.
-
-Collin
