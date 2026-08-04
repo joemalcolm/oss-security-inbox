@@ -1,38 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/3
-Message-ID: <d0550f78-f98a-45b9-b872-f1c45285e9a1@pipping.org>
-Date: Mon, 8 Jun 2026 17:29:11 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/24
+Message-ID: <f5910e21-21a6-3457-b110-03fa947304d0@apache.org>
+Date: Tue, 04 Aug 2026 18:44:35 +0000
+From: "Timothy A. Bish" <tabish@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: offlineimap 8.0.3 fixes CVE-2020-37248 (STARTTLS stripping)
+Subject: CVE-2026-67553: Apache Qpid Proton Dotnet: Incoming session flow control window can be exceeded 
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Severity: important 
 
+Affected versions:
 
-just a quick note that offlineimap 8.0.3 fixes CVE-2020-37248
-"STARTTLS stripping":
+- Apache Qpid Proton Dotnet (org.apache.qpid) through 1.0.0
 
-   OfflineIMAP before 8.0.3 trusts the server with their STARTTLS
-   capability prior to authentication, which allows STRIPTLS/man-in-the-
-   middle attacks, taking over the connection and extracting account
-   credentials in cleartext.
+Description:
 
-The key fix commit is…
+An authenticated attacker could exceed the session flow control incoming window potentially leading to denial of service.
 
-  
-https://github.com/OfflineIMAP/offlineimap3/commit/46505c53ef995455d66c685f9ec3ff6ea93dbb74
+This issue affects Apache Qpid Proton-Dotnet: through 1.0.0.
 
-…and issues…
+Users are recommended to upgrade to version 1.1.0, which fixes the issue.
 
-- https://github.com/OfflineIMAP/offlineimap3/issues/222
-- https://github.com/OfflineIMAP/offlineimap/issues/669
+References:
 
-…are related. The issue was first reported in 2020, hence CVE-2020-*.
-
-Best
-
-
-
-Sebastian
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-67553
 
