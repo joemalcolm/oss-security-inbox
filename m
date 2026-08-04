@@ -1,238 +1,99 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/28
-Message-ID: <CADCSfHUqviT_t31RU18UJf6ENcS3kLP4Y6kmj_W=k9Oda5osvw@mail.gmail.com>
-Date: Mon, 14 Sep 2026 21:00:05 +0300
-From: Evgenios Gkritsis <evgeniosgkritsis@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: rosbridge_library Protocol.incoming() quadratic CPU cost in JSON fallback
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/34
+Message-ID: <5ed082bf-eb2c-4725-8d34-4e16a6081717@cpansec.org>
+Date: Tue, 4 Aug 2026 21:50:56 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-66901: Google::Auth versions before 0.09 for Perl allow server side request forgery and credential exfiltration via unvalidated URLs taken from the credentials JSON
 Content-Type: text/plain; charset=utf-8
 
-Hello,
 
-I am reporting an algorithmic-complexity defect in
-rosbridge_library.protocol.Protocol.incoming() in rosbridge_suite. It is
-present in the current code on the ros2 branch and was not removed by PR
-#1199.
+========================================================================
+CVE-2026-66901                                       CPAN Security Group
+========================================================================
 
-Affected:
+         CVE ID:  CVE-2026-66901
+   Distribution:  Google-Auth
+       Versions:  before 0.09
 
-Product:  rosbridge_suite (rosbridge_library)
-Component: Protocol.incoming() JSON fallback
-Versions: current ros2 branch; present since the fallback was introduced
-CWE:  CWE-407 (Inefficient Algorithmic Complexity) / CWE-1050
-
-
-Vulnerable code:
-
-When json.loads(buffer) fails, incoming() falls back to scanning the buffer
-for every { and } pair:
-
-```python
-#!/usr/bin/env python3
-
-import json
-import math
-import statistics
-import time
+       MetaCPAN:  https://metacpan.org/dist/Google-Auth
+       VCS Repo: 
+https://github.com/GoogleCloudPlatform/google-auth-library-perl
 
 
-def vulnerable_fallback(buffer: str):
-    """
-    Reproduce the current rosbridge Protocol.incoming() fallback:
+Google::Auth versions before 0.09 for Perl allow server side request
+forgery and credential exfiltration via unvalidated URLs taken from the
+credentials JSON
 
-        opening_brackets = [...]
-        closing_brackets = [...]
+Description
+-----------
+Google::Auth versions before 0.09 for Perl allow server side request
+forgery and credential exfiltration via unvalidated URLs taken from the
+credentials JSON.
 
-        for start in opening_brackets:
-            for end in closing_brackets:
-                try:
-                    json.loads(buffer[start:end + 1])
-                except Exception:
-                    pass
+The URLs the library requests are read from the credentials JSON, and
+their hosts were not checked against the universe domain before the
+request. For an external_account configuration, retrieve_subject_token
+fetched credential_source.url with headers from the same JSON, and
+fetch_access_token posted the subject token to token_url, then sent the
+STS access token it received to service_account_impersonation_url in an
+Authorization: Bearer header. The authorized_user,
+impersonated_service_account and service_account configurations posted
+the client secret and refresh token, the source access token, and a
+signed JWT assertion to their own JSON-supplied token_uri or
+impersonation URL.
 
-    We deliberately provide JSON which cannot produce a valid message,
-    so the nested loops have to exhaust their candidates.
-    """
+Any caller that builds credentials from a configuration it does not
+fully control issues those requests from the application's network
+position, reaching hosts the configuration names, including internal
+services and link-local metadata endpoints, and hands them the
+credentials each request carries. The service_account assertion is
+bound to aud, so it is not replayable against Google.
 
-    opening_brackets = [
-        i for i, letter in enumerate(buffer)
-        if letter == "{"
-    ]
+Version 0.06 added a _validate_url host check to the external_account
+class, keyed on a universe_domain read from the same credentials JSON.
+Version 0.07 gated a JSON-supplied universe domain behind
+GOOGLE_EXTERNAL_ACCOUNT_ALLOW_CUSTOM_UNIVERSES=1, deriving the pin flag
+from arguments that an earlier BUILDARGS pass had already merged on the
+make_creds path. Version 0.08 passed the pin decision through as an
+explicit constructor argument and moved _validate_url to
+Google::Auth::Credentials, adding the call to UserRefreshCredentials
+and ImpersonatedServiceAccountCredentials, and 0.09 added it to
+ServiceAccountCredentials.
 
-    closing_brackets = [
-        i for i, letter in enumerate(buffer)
-        if letter == "}"
-    ]
+Problem types
+-------------
+- CWE-918 Server-Side Request Forgery (SSRF)
+- CWE-201 Insertion of Sensitive Information Into Sent Data
 
-    attempts = 0
-
-    for start in opening_brackets:
-        for end in closing_brackets:
-            attempts += 1
-
-            try:
-                msg = json.loads(buffer[start:end + 1])
-
-                if isinstance(msg, dict) and msg.get("op") is not None:
-                    return attempts
-
-            except Exception:
-                pass
-
-    return attempts
-
-
-def build_input(n: int) -> str:
-    """
-    Prevent any candidate substring from being valid JSON.
-
-    Every opening brace is followed by a syntactically incomplete
-    JSON object fragment, so the fallback keeps trying candidates.
-    """
-
-    return '{"x":' * n + '}' * n
+Workarounds
+-----------
+For deployments that cannot upgrade to 0.09, ensure that every
+credentials configuration reaching the Application Default Credentials
+flow comes from a trusted source.
 
 
-def benchmark(n: int, repeats: int = 3):
-    data = build_input(n)
-
-    times = []
-    attempts = None
-
-    for _ in range(repeats):
-        t0 = time.perf_counter()
-
-        result = vulnerable_fallback(data)
-
-        elapsed = time.perf_counter() - t0
-
-        times.append(elapsed)
-        attempts = result
-
-    return (
-        len(data),
-        attempts,
-        statistics.median(times),
-    )
+Solutions
+---------
+Upgrade to Google-Auth 0.09 or later, which validates each URL host
+against googleapis.com or a universe domain pinned by the application
+before the request.
 
 
-def main():
-    print("=== rosbridge JSON fallback complexity PoC ===")
-    print()
+References
+----------
+https://github.com/GoogleCloudPlatform/google-auth-library-perl/commit/c95c77e70bec94f17e239d88050f843ea1cade95.patch
+https://github.com/GoogleCloudPlatform/google-auth-library-perl/commit/cd42bdef53afcc4531161e85e91d0d5997e01324.patch
+https://github.com/GoogleCloudPlatform/google-auth-library-perl/commit/9b5157062acc605ca9e6c507b910587f4829ce9e.patch
+https://github.com/GoogleCloudPlatform/google-auth-library-perl/commit/cbbb07804e3f8cc7cf9638ecc9c2097d80a9ef50.patch
+https://metacpan.org/release/CJCOLLIER/Google-Auth-0.09/changes
 
-    sizes = [
-        50,
-        100,
-        200,
-        400,
-        800,
-        1200,
-        1600,
-        2400,
-    ]
-
-    results = []
-
-    print(
-        f"{'n':>8} "
-        f"{'bytes':>10} "
-        f"{'attempts':>14} "
-        f"{'median(s)':>12}"
-    )
-    print("-" * 52)
-
-    for n in sizes:
-        size, attempts, elapsed = benchmark(n)
-
-        print(
-            f"{n:>8} "
-            f"{size:>10} "
-            f"{attempts:>14,} "
-            f"{elapsed:>12.6f}"
-        )
-
-        results.append((n, elapsed))
-
-    print()
-    print("Local scaling exponent:")
-
-    for (n1, t1), (n2, t2) in zip(
-        results,
-        results[1:],
-    ):
-        if t1 > 0 and t2 > 0:
-            k = math.log(t2 / t1) / math.log(n2 / n1)
-            print(
-                f"{n1:>5} -> {n2:<5}: k={k:.3f}"
-            )
+Timeline
+--------
+- 2026-07-28: Version 0.06 released with a partial fix.
+- 2026-08-02: Version 0.08 released, extending the fix to two further
+   credential classes.
+- 2026-08-03: Version 0.09 released with the complete fix.
 
 
-if __name__ == "__main__":
-    main()
-```
-For a buffer with n opening braces and n closing braces, this performs n²
-calls to json.loads().
-Each call also slices buffer[start:end + 1], which is a full string copy
---> so the aggregate cost is worse than quadratic.
-
-PoC and measurements:
-
-I measured the fallback in isolation with a buffer of n balanced brace
-pairs that contains no valid JSON substring, so every inner json.loads()
-call fails and the full loop runs:
-
-text
-       n      bytes       attempts    median(s)
-----------------------------------------------------
-      50        300          2,500     0.012958
-     100        600         10,000     0.047005
-     200       1200         40,000     0.284308
-     400       2400        160,000     0.974249
-     800       4800        640,000     7.461380
-    1200       7200      1,440,000    25.122452
-    1600       9600      2,560,000    58.779579
-    2400      14400      5,760,000   200.800991
-
-Local scaling exponent (largest intervals):
-   800 -> 1200 : k=2.994
-  1200 -> 1600 : k=2.955
-  1600 -> 2400 : k=3.030
-The exponent of ~3.0 is consistent with the nested loop plus per-iteration
-slice: O(n²) iterations, each costing O(n) for the slice copy.
-
-Relationship to PR #1199:
-
-PR #1199 by tomqext fixed the binary-WebSocket path that made this fallback
-run on every message. The PR description states the fallback "is still
-there for TCP fragmentation, it just stops being the hot path." The O(n²)
-loop was not removed; it was made harder to reach accidentally. This report
-concerns the loop itself, not the binary-frame bug that PR #1199 addressed.
-
-Reachability (what I have and have not verified):
-
-The PoC drives the fallback function directly. I have not completed an
-end-to-end test through the WebSocket or TCP transport, so I cannot state
-the exact frame size an unauthenticated client would need to send. However,
-the fallback exists specifically to handle partial or concatenated messages
-arriving over TCP, so reaching it should not require malformed input; a
-legitimate client sending a fragmented message can trigger it.
-
-
-I am reporting now because the code path is present and measurable, and the
-fix is independent of the reachability question.
-
-
-Credit:
-Evgenios Gkritsis, Athena Research Center & University of Piraeus, Athens,
-Greece
-Constantinos Patsakis, Athena Research Center & University of Piraeus,
-Athens, Greece
-George C. Stergiopoulos, Athens University of Economics and Business,
-Athens, Greece
-
-I plan to reference this in a research paper on algorithmic-complexity
-vulnerabilities in protocol parsers. I will not disclose publicly until a
-fix is published or 90 days have passed.
-
-Thank you.
 
