@@ -1,44 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/07/2
-Message-ID: <20260807125041.4fe3881e@plasteblaster>
-Date: Fri, 7 Aug 2026 12:50:41 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: fourie <littleddfu@...il.com>
-CC: <oss-security@...ts.openwall.com>, Solar Designer <solar@...nwall.com>
-Subject: Re: CVE-2026-64564: Linux SCTP ASCONF transport UAF leading to local privilege escalation and container escape
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/30
+Message-ID: <3759be44-9ee8-55b3-304c-23554ff66201@apache.org>
+Date: Tue, 04 Aug 2026 18:49:14 +0000
+From: "Timothy A. Bish" <tabish@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-67591: Apache Qpid ProtonJ2: Incoming session flow control window can be exceeded 
 Content-Type: text/plain; charset=utf-8
 
-Am Fri, 7 Aug 2026 09:52:57 +0800
-schrieb fourie <littleddfu@...il.com>:
+Severity: important 
 
-> Yes. On systems where SCTP is built as a loadable module rather than
-> built into the kernel,
-> unloading the sctp module and preventing it from being loaded should
-> mitigate exploitation
-> of this issue.
+Affected versions:
 
-What I am missing is if any other conditions need to be met for a suser
-to exploit this. I'd presume that the user needs to be able to run
-their own network namespace. Or does it even work without it? No extra
-privileges of any kind needed?
+- Apache Qpid ProtonJ2 (org.apache.qpid:protonj2) through 1.1.0
 
-Gladly, my systems are once again safe from this as we disable module
-loading after a startup phase. But it would be good to know if the SCTP
-functionality would be available to anyone or just to users with their
-own network namespaces, further reason to never ever allow those (which
-of course makes a number of container setups less fun, but not relevant
-to my HPC use case).
+Description:
 
+An authenticated attacker could exceed the session flow control incoming window potentially leading to denial of service.
 
-Alrighty then,
+This issue affects Apache Qpid ProtonJ2: through 1.1.0.
 
-Thomas
+Users are recommended to upgrade to version 1.2.0, which fixes the issue.
 
-PS: I'd have to read up on SCTP to figure out if I'd ever miss that
-functionality. So far there is a good bet for this kind of bug that it
-is in code I never intended to run, and hence probably shouldn't even
-include in my kernel build.
+References:
 
--- 
-Dr. Thomas Orgis
-HPC @ Universität Hamburg
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-67591
+
