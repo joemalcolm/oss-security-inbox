@@ -1,77 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/21/1
-Message-ID: <87fr07oawo.fsf@athena.silentflame.com>
-Date: Fri, 21 Aug 2026 14:33:59 +0100
-From: Sean Whitton <spwhitton@...hitton.name>
-To: oss-security@...ts.openwall.com
-Cc: Bas Alberts <anticomputer@...hub.com>, Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>
-Subject: Emacs zero-click local command execution via TRAMP
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/35
+Message-ID: <0da550d3-db9e-487d-8639-a3f4a4e7c95f@cpansec.org>
+Date: Tue, 4 Aug 2026 21:52:00 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-66902: Google::Auth versions before 0.06 for Perl run a command named in an external_account credentials JSON via an ungated system call
 Content-Type: text/plain; charset=utf-8
 
-Bas Alberts of the GitHub Security Lab discovered a local command
-execution vulnerability in GNU Emacs 30.2 onwards, and possibly earlier.
 
-I am attaching a fix prepared by Michael Albinus, the TRAMP maintainer.
+========================================================================
+CVE-2026-66902                                       CPAN Security Group
+========================================================================
 
-Here is Bas's description of the problem (edited down a bit).
+         CVE ID:  CVE-2026-66902
+   Distribution:  Google-Auth
+       Versions:  before 0.06
 
---8<---------------cut here---------------start------------->8---
-1. Tramp: local shell command injection through the user field
-   (tramp-sh.el, CRITICAL)
+       MetaCPAN:  https://metacpan.org/dist/Google-Auth
+       VCS Repo: 
+https://github.com/GoogleCloudPlatform/google-auth-library-perl
 
-tramp-maybe-open-connection builds the login command by expanding
-tramp-login-args (%u, %h, ...) and joining the words with
-string-join, unquoted, into a command line that is sent to a live
-LOCAL shell (tramp-encoding-shell, i.e. /bin/sh) that Tramp has
-already spawned for the connection:
 
-- tramp-sh.el:5489-5514  unquoted string-join of login args
-- tramp-sh.el:5406-5413  the local shell the string is sent to
+Google::Auth versions before 0.06 for Perl run a command named in an
+external_account credentials JSON via an ungated system call
 
-tramp-user-regexp (tramp.el:1073) is
-(+ (not (any "/:|[]" blank))), which admits $ ( ) ; ` ' " \ and more.
-tramp-dissect-file-name performs no sanitization.
+Description
+-----------
+Google::Auth versions before 0.06 for Perl run a command named in an
+external_account credentials JSON via an ungated system call.
 
-Consequence: merely stat-ing a file name such as
+The Pluggable subclass reads credential_source.executable.command from
+the credentials JSON and runs it as `system($command)`, a single
+argument call that passes the whole string to /bin/sh -c. The
+executable's environment_variables map from the same JSON is copied
+into %ENV first. No opt-in gate guards the call. make_creds selects the
+Pluggable subclass whenever credential_source.executable is present, so
+the path is reached from the standard Application Default Credentials
+flow, including a "type": "external_account" configuration read from
+the file named by GOOGLE_APPLICATION_CREDENTIALS. Configurations
+without credential_source.executable do not select this subclass and do
+not reach the call.
 
-    /ssh:$(cd;touch$IFS'pwned')@127.0.0.1:/x
+Any caller that builds credentials from a configuration it does not
+fully control runs the embedded command with the privileges of the
+application process.
 
-e.g. via file-exists-p, executes the $(...) payload in the local
-shell during connection setup, before and regardless of any actual
-ssh connection or server. The excluded characters are easily worked
-around within the allowed charset: $IFS substitutes for blanks,
-$(printf$IFS'\057') composes the excluded /, and $(cd;...) sidesteps
-absolute paths entirely, so arbitrary commands are expressible.
+Problem types
+-------------
+- CWE-78 Improper Neutralization of Special Elements used in an OS
+   Command ('OS Command Injection')
+- CWE-829 Inclusion of Functionality from Untrusted Control Sphere
 
-2. Tramp: file name dispatch regexp is line-anchored, not
-   string-anchored (tramp.el, CRITICAL enabler)
+Workarounds
+-----------
+For deployments that cannot upgrade to 0.06, apply the upstream fix
+commit, or ensure that every credentials configuration reaching the
+Application Default Credentials flow comes from a trusted source.
 
-tramp-build-prefix-regexp (tramp.el:1025-1027) anchors with rx "bol";
-the docstring even says the result "Should always start with ^". The
-derived tramp-file-name-regexp is what Tramp registers in
-file-name-handler-alist once loaded (replacing the string-anchored
-tramp-initial-file-name-regexp autoload entry, tramp.el:1284-1288).
 
-Consequence: after Tramp is loaded, any file name merely CONTAINING
-newline + "/ssh:..." is dispatched to Tramp handlers, and
-tramp-dissect-file-name parses the embedded line, feeding defect 1.
-File names cannot contain "/", but two on-disk carriers exist:
+Solutions
+---------
+Upgrade to Google-Auth 0.06 or later, which throws unless the
+environment variable GOOGLE_EXTERNAL_ACCOUNT_ALLOW_EXECUTABLES is set
+to 1.
 
-  a. symlink targets (arbitrary bytes except NUL, committable to
-     git);
-  b. a directory whose name ends in a newline, containing a file
-     named "ssh:...": the path component boundary supplies the "/",
-     so any code that composes the path (e.g.
-     directory-files-recursively) produces a string containing
-     "\n/ssh:...". Verified: recursively scanning such a tree
-     executes the payload with Tramp loaded.
 
-Additionally, an ABSOLUTE symlink target "/ssh:$(...)@host:/x"
-matches even the string-anchored autoload regexp, so no Tramp preload
-is required for carrier (a).
---8<---------------cut here---------------end--------------->8---
+References
+----------
+https://github.com/GoogleCloudPlatform/google-auth-library-perl/commit/c95c77e70bec94f17e239d88050f843ea1cade95.patch
+https://metacpan.org/release/CJCOLLIER/Google-Auth-0.06/diff/CJCOLLIER/Google-Auth-0.05
 
--- 
-Sean Whitton
+Timeline
+--------
+- 2026-07-28: Version 0.06 released with fix, which is not noted in the
+   changelog.
 
-View attachment "tramp-fix.diff" of type "text/x-diff" (11257 bytes)
+
+
