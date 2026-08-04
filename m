@@ -1,64 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/1
-Message-ID: <36df5b39-29a3-4fea-96dd-e554270148c0@gmail.com>
-Date: Sun, 2 Aug 2026 20:11:09 -0500
-From: Jacob Bachmeyer <jcb62281@...il.com>
-To: oss-security@...ts.openwall.com, Demi Marie Obenour <demiobenour@...il.com>, Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/32
+Message-ID: <a32e6f10-bd5b-4d12-9af8-1ecdb595e540@oracle.com>
+Date: Tue, 4 Aug 2026 12:23:12 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Albert Veli <albert.veli@...il.com>
 Subject: Re: Some Changes to GNOME Security Tracking
 Content-Type: text/plain; charset=utf-8
 
-On 8/2/26 16:13, Demi Marie Obenour wrote:
-> On 7/30/26 17:41, Alan Coopersmith wrote:
->> https://blogs.gnome.org/mcatanzaro/2026/07/20/some-changes-to-gnome-security-tracking/
->> announces some changes to the GNOME project's security bug handling:
+On 8/4/2026 2:10 AM, Albert Veli wrote:
+> Hi!
+> 
+> On 8/3/26 18:33, David A. Wheeler wrote:
+>> Please allow me to point you to the actual announcement & project page,
+>> which explains what is *actually* going on instead.
 >>
->> 1) The disclosure deadline is cut from 90 days to 30 days, as most
->>      GNOME maintainers that fix bugs during the embargo do so within
->>      the first 30 days.  This is effective for new bugs reported starting
->>      August 1.
->>
->> 2) The GNOME security team will no longer forward vulnerability reports
->>      to projects that ban AI-generated content, since most reports they
->>      get these days have at least some AI-generated content.
->>
->> 3) Michael Catanzaro will be stepping down in November, after 6 years
->>      of handling this work for GNOME.  He's looking for someone to step
->>      up to replace him.
-> General comment on security fixes in open source projects:
->
-> I think the motivation for projects like Akrites is simple.  Companies
-> need vulnerabilities fixed fast enough that attackers do not exploit
-> them first.  To that end, they want a contract that guarantees that
-> vulnerabilities will be fixed in a certain amount of time.  Even if
-> one offered to pay open source maintainers a significant amount of
-> money for such a contract, there is no guarantee they would accept.
-> One needs a team of a certain minimum size to guarantee someone will
-> be available while still giving everyone enough time off.
->
-> Also, the volume of security fixes may swamp upstream review capacity,
-> even if the maintainers *are* paid.  It might be necessary to maintain
-> downstream forks until upstream is able to catch up.  [...]
+>> The Akrites announcement here:
+>> https://www.linuxfoundation.org/press/linux-foundation-and-industry- 
+>> leaders-launch-akrites-to-defend-critical-open-source-software- 
+>> against-ai-enabled-cyber-threats
+> I read through this as well as the information at https://akrites.org/. 
+> It sounds like Akrites does something similar to what I understand is 
+> already being done at the distros list. I hope you (the organisations on 
+> the distros list) can find a way to cooperate with Akrites. Otherwise, 
+> there is a risk of fragmenting the community and creating parallel 
+> vulnerability coordination processes.
 
-This is a perfectly legitimate support model; to some extent, it is what 
-distributions do today.  Akrites seems to have managed to pursue this in 
-an incredibly hostile manner, however:  appointing yourself a general 
-"maintainer of last resort" is not the most polite way to address the 
-problem.
+No, these are working at different stages of the process.
 
-It might also be worth remembering that complaints along the lines of 
-"this project isn't being maintained" were part of the campaign "Jia 
-Tan" used to become an xz-utils co-maintainer.  That such an attitude 
-now draws great disapproval should surprise no one.
+The akrites.org site lists they are involved at:
+   1) Intake
+   2) Deduplicate & Validate
+   3) Remediate
+   4) Synchronized Disclosure
 
-> That said, I think the solution is systemic fixes, as explained by
-> Alex Gaynor in [1].  Unfortunately, for lots of C and C++ code, the
-> systemic fix is a complete rewrite in a safe language, or at least
-> using a safe language for new code.  That's a huge amount of work,
-> and it is work that existing maintainers may have no interest in.
+The distros list only is involved with step 4 there - after projects
+have triaged, verified, and fixed a security vulnerability, they contact
+the distros list to let the distros have early access to the fixes so
+that distros can prepare and test their packages with the fixes.
 
-I believe that there is also a huge amount of controversy over the idea 
-of rewriting "everything" in "safe" languages, but that is a separate topic.
+While we haven't heard from them directly, I would hope that when 
+Akrites has a fix to distribute for software packaged in distros,
+they use the existing distros list instead of creating a new forum.
+Of course, there's a lot of software out there outside the scope of
+common OS distros, and they may need a different disclosure process
+for that.
 
-
--- Jacob
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
