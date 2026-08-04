@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/17
-Message-ID: <85630932-f7bf-220d-68fd-79e0eb582c1a@apache.org>
-Date: Sun, 05 Jul 2026 11:55:06 +0000
-From: Andrea Cosentino <acosentino@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-48203: Apache Camel: Camel-Solr: The SolrParam. and SolrField. Exchange header prefixes used non-Camel-prefixed names that bypass the HTTP header filter, allowing an HTTP client to inject Solr query parameters (server-side request forgery) and document fields 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/7
+Message-ID: <41a8fff9-9180-477e-b872-e22f86684603@oracle.com>
+Date: Tue, 4 Aug 2026 10:23:23 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
+Subject: Re: Bouncy Castle 1.85 release fixes 32 CVEs
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On 8/3/2026 7:37 PM, Peter Gutmann wrote:
+> Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+> 
+>> It also says the release contains fixes for the following CVEs:
+> 
+> Given the quantity and sweeping scope of those, was this the result of some
+> new tool used for code analysis?  I'm assuming AI, it sounds like there'd be
+> an interesting backstory to how all of this was turned up.
+I didn't see anything in the announcements from the Bouncy Castle folks
+about that.
 
-Affected versions:
+They do have more info about the CVE's in their wiki, such as:
+https://github.com/bcgit/bc-java/wiki/CVE%E2%80%902026%E2%80%908763
+but I don't see any reference there to how they were found/reported.
 
-- Apache Camel (org.apache.camel:camel-solr) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-solr) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-solr) 4.19.0 before 4.21.0
-
-Description:
-
-Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'), Improper Input Validation, Server-Side Request Forgery (SSRF) vulnerability in Apache Camel Solr component.
-
-The camel-solr producer copies Exchange message headers whose names begin with the SolrParam. prefix into the parameters of the Solr request, and headers whose names begin with the SolrField. prefix into the fields of the indexed Solr document. The prefix constants (SolrConstants.HEADER_PARAM_PREFIX / HEADER_FIELD_PREFIX) were the plain strings SolrParam. / SolrField.. Because these names do not start with the Camel / camel prefix, HttpHeaderFilterStrategy - which blocks only the Camel header namespace on the HTTP boundary - let them pass from an inbound HTTP request straight into the Exchange. In a route that bridges an HTTP consumer (for example platform-http) into a solr: producer, any HTTP client could therefore set SolrParam.* headers to inject arbitrary Solr request parameters - including shards or stream.url, which cause the Solr server to issue server-side requests to an attacker-chosen URL (server-side request forgery, for example to an internal service or a cloud metadata endpoint), or qt to reach administrative request handlers - and set SolrField.* headers to inject arbitrary fields into indexed documents. No credentials are required when the bridging consumer is unauthenticated.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
-
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, routes that set Solr parameters or fields via the raw header prefixes must use CamelSolrParam. / CamelSolrField. instead of SolrParam. / SolrField.. For deployments that cannot upgrade immediately, strip the SolrParam.* and SolrField.* headers from any untrusted ingress before the solr: producer, and set the required Solr parameters and fields from a trusted source in the route.
-
-Credit:
-
-Yu Bao from Paypal (finder)
-Andrea Cosentino (remediation developer)
-
-References:
-
-http://camel.apache.org/security/CVE-2026-48203.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-48203
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
