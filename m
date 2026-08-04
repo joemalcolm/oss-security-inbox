@@ -1,61 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/6
-Message-ID: <678dc540-92de-e764-8a37-6e3833f5ed38@apache.org>
-Date: Sun, 13 Sep 2026 05:45:23 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/16
+Message-ID: <0e885715-2b58-e79f-689e-de4cf68090c1@apache.org>
+Date: Tue, 04 Aug 2026 18:14:24 +0000
+From: Daniil Kirilyuk <dakirily@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82426: Apache Storm Nimbus: Arbitrary File Read on Nimbus via Unvalidated Uploaded Jar Location 
+Subject: CVE-2026-68074: Apache Qpid Broker-J: Unbounded symbol value caching can lead to pre-authentication resource exhaustion 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
 
 Affected versions:
 
-- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
+- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol) through 10.0.1
 
 Description:
 
-Description
+A pre-authentication attacker could leverage unbounded symbol value caching to cause resource exhaustion leading to denial of service.
 
-Nimbus accepted the `uploadedJarLocation` argument of `submitTopology` / `submitTopologyWithOpts` as a
-server-side path and opened it directly, without checking that it referred to a file the caller had
-actually uploaded. The intended flow is that a client first calls `beginFileUpload`, which returns a path
-inside the Nimbus inbox, and uploads the jar in chunks to that location; nothing bound submission to that
-flow, and the `uploaders` map populated by `beginFileUpload` was never consulted at submit time.
+This issue affects Apache Qpid Broker-J: through 10.0.1.
 
-An authenticated user with topology submission rights could therefore submit any path readable by the
-Nimbus daemon user as their topology jar. Nimbus copied the file into the topology's jar blob, and the
-blob ACL grants the submitting subject read access, so the contents could then be retrieved with the
-ordinary blob download RPCs. Candidate targets include the Nimbus Kerberos keytab, Thrift and UI TLS
-private keys, and `storm.yaml` with the ZooKeeper authentication payload. Possession of the Nimbus keytab
-turns an ordinary tenant into a cluster administrator.
-
-In a deployment configured as the documentation recommends, submission is available to every
-authenticated principal when `nimbus.users` is unset, so no elevated privilege is required.
-
-Mitigation
-
-Upgrade to 3.1.0, where the submitted location is canonicalised and must resolve inside the Nimbus inbox.
-
-Users who cannot upgrade immediately should restrict topology submission to trusted principals via
-`nimbus.users` or `nimbus.groups`, and should treat any file readable by the Nimbus daemon user as
-potentially exposed to submitters: rotate the Nimbus keytab and any TLS private keys or ZooKeeper
-credentials reachable from that account. Local mode is unaffected.
-
-
-Credit
-
-Independently reported to the Apache Storm PMC by n0mi1k, with a proof of concept.
-
-Also found by the ASF using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
-
-Credit:
-
-n0mi1k (finder)
-The ASF using Claude Agents (finder)
+Users are recommended to upgrade to version 10.1.0, which fixes the issue.
 
 References:
 
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82426
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68074
 
