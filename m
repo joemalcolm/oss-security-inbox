@@ -1,45 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/10
-Message-ID: <fcccf7c2-ed12-5b75-7f28-c2eec5de1988@apache.org>
-Date: Mon, 24 Aug 2026 14:07:07 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/14
+Message-ID: <f055a013-dc50-6f8a-a3c4-7de2fb9eb70d@apache.org>
+Date: Tue, 04 Aug 2026 18:12:16 +0000
+From: Daniil Kirilyuk <dakirily@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66906: Apache Camel: Camel-Azure-Storage-Blob: the downloadBlobToFile operation built the local download target from the remote blob name without constraining it to the configured fileDir 
+Subject: CVE-2026-68060: Apache Qpid Broker-J: Type size/count handling can lead to excessive allocation pre-authentication 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-azure-storage-blob) 4.0.0 before 4.14.9
-- Apache Camel (org.apache.camel:camel-azure-storage-blob) 4.15.0 before 4.18.4
-- Apache Camel (org.apache.camel:camel-azure-storage-blob) 4.19.0 before 4.22.0
+- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol) through 10.0.1
 
 Description:
 
-Relative path traversal vulnerability in Apache Camel Azure Storage Blob component.
+A pre-authentication attacker could leverage type size/count handling to cause excessive allocation leading to potential denial of service.
 
+This issue affects Apache Qpid Broker-J: through 10.0.1.
 
-
-This issue affects Apache Camel: from 4.0.0 before 4.14.9, from 4.15.0 before 4.18.4, from 4.19.0 before 4.22.0.
-
-
-
-The camel-azure-storage-blob component can download an Azure Storage blob to the local filesystem through its downloadBlobToFile operation, writing into the directory named by the fileDir endpoint option, which is documented as usable from both the producer and the consumer. BlobOperations.downloadBlobToFile built the local target by joining fileDir with the remote blob name exactly as the Azure SDK reported it (new File(fileDir, client.getBlobName())) and passed the result straight to the SDK download call, with no lexical normalization and no check that the resolved location stayed inside fileDir. The blob name is not route-controlled data: the consumer enumerates the container in BlobConsumer.createBatchExchangesFromContainer, which lists blobs and creates one exchange per entry from BlobItem.getName() verbatim, applying no name filtering by default. A blob name containing parent-directory segments therefore resolved to a location outside the configured fileDir, letting anyone able to influence the names present in the consumed container cause Camel to create or overwrite a file at a location of their choosing, with the privileges of the Camel process. Depending on what the process can write to, overwriting a file outside the download directory can escalate beyond the loss of integrity of that file. Azure Storage blob containers use a flat namespace in which the blob name is an opaque key, so a name carrying such segments is stored and listed as given. The fileDir option is an ordinary common-group configuration parameter and carries no security marker, so nothing signalled to users that its value was not being enforced as a containment boundary. Camel's other file-download consumers - camel-file, camel-ftp, camel-smb, camel-mina-sftp and camel-azure-files - already constrained their local downloads to the configured directory using a path-segment boundary check; the camel-azure-storage-blob download path was not covered by that work.
-
-
-
-Users are recommended to upgrade to version 4.22.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.9. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.4. For deployments that cannot upgrade immediately, constrain the names the consumer will act on using the regex endpoint option, which is applied to each listed blob name as a full-string match, so that only simple single-segment names are accepted and any name carrying a path separator or a parent-directory segment is filtered out before an exchange is created; the prefix option can additionally narrow the listing server-side, noting that when both are set regex takes priority and prefix is ignored. Alternatively, avoid the downloadBlobToFile operation on untrusted containers and write the payload from the route under a file name the route itself controls, rather than one taken from the remote listing. As defence in depth, treat the blob names in any externally writable container as untrusted input and do not derive local filesystem paths from them.
-
-Credit:
-
-Hiep Nguyen (finder)
-n0mi1k (finder)
-Andrea Cosentino (remediation developer)
+Users are recommended to upgrade to version 10.1.0, which fixes the issue.
 
 References:
 
-https://camel.apache.org/security/CVE-2026-66906.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66906
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68060
 
