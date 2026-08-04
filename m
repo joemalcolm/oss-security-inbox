@@ -1,37 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/24
-Message-ID: <93bd977e-9e1e-a7c3-96f2-6f07bc813bf6@apache.org>
-Date: Sun, 05 Jul 2026 11:50:23 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/21
+Message-ID: <23e4f3b4-af8a-e862-8d79-de98b740b9f6@apache.org>
+Date: Tue, 04 Aug 2026 18:41:59 +0000
+From: "Timothy A. Bish" <tabish@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49099: Apache Camel: Camel-Salesforce: Non-Camel-prefixed Exchange header constants (sObjectQuery, sObjectSearch, apexUrl, ...) bypass the HTTP header filter, allowing an HTTP client to inject SOQL/SOSL queries, override the target SObject, and redirect Apex REST calls using t 
+Subject: CVE-2026-67465: Apache Qpid Proton Dotnet: Unbounded symbol value caching can lead to pre-authentication resource exhaustion 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-salesforce) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-salesforce) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-salesforce) 4.19.0 before 4.21.0
+- Apache Qpid Proton Dotnet (Apache.Qpid.Proton) through 1.0.0
 
 Description:
 
-Improper Neutralization of Special Elements in Output Used by a Downstream Component ('Injection'), Authorization Bypass Through User-Controlled Key vulnerability in Apache Camel Salesforce Component.
+A pre-authentication attacker could leverage unbounded symbol value caching to cause resource exhaustion leading to denial of service.
 
-The camel-salesforce producer resolves its operation parameters - the SOQL query, the SOSL search, the target SObject name and id, the Apex REST URL and method, and the Apex query parameters - from Exchange message headers, reading the header in preference to the value configured on the endpoint (AbstractSalesforceProcessor.getParameter() reads the header first and uses the endpoint configuration only as a fallback). The control-header constants in SalesforceEndpointConfig (for example SOBJECT_QUERY = sObjectQuery, SOBJECT_SEARCH = sObjectSearch, SOBJECT_NAME = sObjectName, SOBJECT_ID = sObjectId, APEX_URL = apexUrl, APEX_METHOD = apexMethod, and the apexQueryParam. prefix) used plain, non-Camel-prefixed values. Because these names do not start with the Camel / camel prefix, HttpHeaderFilterStrategy - which blocks only the Camel header namespace on the HTTP boundary - let them pass from an inbound HTTP request straight into the Exchange. In a route that bridges an HTTP consumer (for example platform-http) into a salesforce: producer, any HTTP client could therefore set these headers and override what the route intended - supplying its own SOQL query or SOSL search to read data from any SObject the connected Salesforce user can access, overriding the target SObject name and id for CRUD operations, or redirecting an Apex REST call to a different endpoint and HTTP method (including destructive methods) with injected query parameters. All such operations run with the full permissions of the Salesforce connected (integration) user, which is typically broad. No credentials are required from the attacker when the bridging consumer is unauthenticated.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
+This issue affects Apache Qpid Proton-Dotnet: through 1.0.0.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. After upgrading, routes that set Salesforce operation parameters via the raw header names must use the CamelSalesforce* names (for example CamelSalesforceSObjectQuery and CamelSalesforceApexUrl) instead of the old sObject* / apex* values; the endpoint-option spelling is unchanged. For deployments that cannot upgrade immediately, strip the Salesforce control headers from any untrusted ingress before the salesforce: producer (for example removeHeaders('sObject*') and removeHeaders('apex*') at the start of the route), and set the query, SObject and Apex parameters from a trusted source.
-
-Credit:
-
-Yu Bao from PayPal (finder)
-Andrea Cosentino (remediation developer)
+Users are recommended to upgrade to version 1.1.0, which fixes the issue.
 
 References:
 
-https://camel.apache.org/security/CVE-2026-49099.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49099
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-67465
 
