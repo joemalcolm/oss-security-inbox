@@ -1,57 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/14/15
-Message-ID: <af986899-f819-4332-993b-cab5f802148d@cpansec.org>
-Date: Tue, 14 Jul 2026 16:39:48 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-15392: DBD::File versions before 1.651 for Perl do not ensure the table file is not a symlink to an untrusted location
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/18
+Message-ID: <511a4d62-b218-859c-2624-df522c73f443@apache.org>
+Date: Tue, 04 Aug 2026 18:15:18 +0000
+From: Daniil Kirilyuk <dakirily@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-68077: Apache Qpid Broker-J: Unbounded disposition range handling can lead to denial of service 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
 
-========================================================================
-CVE-2026-15392                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-15392
-   Distribution:  DBI
-       Versions:  before 1.651
+- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol) through 10.0.1
 
-       MetaCPAN:  https://metacpan.org/dist/DBI
-       VCS Repo:  https://github.com/perl5-dbi/dbi
+Description:
 
+An authenticated attacker can craft a disposition frame with large or illegal ranges causing excessive CPU usage due to naive range handling, leading to denial of service.
 
-DBD::File versions before 1.651 for Perl do not ensure the table file
-is not a symlink to an untrusted location
+This issue affects Apache Qpid Broker-J: through 10.0.1.
 
-Description
------------
-DBD::File versions before 1.651 for Perl do not ensure the table file
-is not a symlink to an untrusted location.
+Users are recommended to upgrade to version 10.1.0, which fixes the issue.
 
-The complete_table_name method builds the absolute table file path
-without checking whether the file is a symbolic link. A link inside the
-data directory can point to a table file at any path outside of the
-configured f_dir and f_dir_search directories.
+References:
 
-Callers of file-based drivers can read or write files outside of the
-data directory.
-
-Problem types
--------------
-- CWE-22 Improper Limitation of a Pathname to a Restricted Directory
-   ('Path Traversal')
-- CWE-59 Improper Link Resolution Before File Access ('Link Following')
-
-Solutions
----------
-Upgrade to version 1.651 or later.
-
-
-References
-----------
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-mh3j-xwf4-jrqw
-https://metacpan.org/release/HMBRAND/DBI-1.651/changes
-https://github.com/perl5-dbi/dbi/commit/96d62dfe4528bf56fe13f413ed323d4252531728.patch
-
-
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68077
 
