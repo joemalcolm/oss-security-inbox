@@ -1,58 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/17/3
-Message-ID: <allVZM9ibZQHlI_4@pjcj.com>
-Date: Fri, 17 Jul 2026 00:05:18 +0200
-From: Paul Johnson <paul@...j.net>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-57076: YAML::Syck versions before 1.47 for Perl allow a heap use-after-free via an anchor name reused as an anchors-table key in syck_hdlr_add_anchor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/23
+Message-ID: <28e4ba57-3f18-15e7-d1da-27ccac8f3a26@apache.org>
+Date: Tue, 04 Aug 2026 18:44:06 +0000
+From: "Timothy A. Bish" <tabish@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-67552: Apache Qpid Proton Dotnet: Unbounded type nesting can lead to pre-authentication stackoverflow 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-57076                                       CPAN Security Group
-========================================================================
+Severity: important 
 
-        CVE ID:  CVE-2026-57076
-  Distribution:  YAML-Syck
-      Versions:  before 1.47
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/YAML-Syck
-      VCS Repo:  https://github.com/toddr/YAML-Syck
+- Apache Qpid Proton Dotnet (org.apache.qpid) through 1.0.0
 
+Description:
 
-YAML::Syck versions before 1.47 for Perl allow a heap use-after-free
-via an anchor name reused as an anchors-table key in
-syck_hdlr_add_anchor
+A pre-authentication attacker could leverage type nesting to cause a StackOverflowError potentially leading to denial of service.
 
-Description
------------
-YAML::Syck versions before 1.47 for Perl allow a heap use-after-free
-via an anchor name reused as an anchors-table key in
-syck_hdlr_add_anchor.
+This issue affects Apache Qpid Proton-Dotnet through 1.0.0.
 
-In the bundled libsyck an anchor name allocated by syck_strndup is
-stored both as node->anchor, freed when the node is freed, and as the
-key in the parser's anchors table. Freeing the node frees the shared
-key, and a later anchor redefinition makes st_delete compare against
-the freed key, so st_strcmp reads freed heap memory. Anchors are a
-standard YAML feature and need no special flags, so this is reached on
-the default Load path.
+Users are recommended to upgrade to version 1.1.0, which fixes the issue
 
-Any caller that runs Load or LoadFile on an untrusted document that
-redefines an anchor reaches the read of freed memory.
+References:
 
-Problem types
--------------
-- CWE-416 Use After Free
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-67552
 
-Solutions
----------
-Upgrade to YAML-Syck 1.47 or later.
-
-
-References
-----------
-https://metacpan.org/release/TODDR/YAML-Syck-1.47/changes
-https://github.com/toddr/YAML-Syck/commit/44c90a109ec3215ee7ce747bd11209835e123d8b.patch
-
--- 
-Paul Johnson - paul@...j.net
