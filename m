@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/29
-Message-ID: <89c09c6f-963c-48fc-9204-dd852814f7ec@oracle.com>
-Date: Thu, 30 Jul 2026 16:49:15 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/9
+Message-ID: <5af25190-5423-2e94-a093-89b0467932a0@apache.org>
+Date: Tue, 04 Aug 2026 17:49:39 +0000
+From: Robbie Gemmell <robbie@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: PHP 30 July 2026 security releases
+Subject: CVE-2026-66273: Apache Qpid Proton-J: Type size/count handling can lead to excessive allocation pre-authentication 
 Content-Type: text/plain; charset=utf-8
 
-https://www.php.net/archive/2026.php#2026-07-30-5 announces the releases
-of PHP 8.5.9, 8.4.24, 8.3.33, and 8.2.33, all of which are labeled
-"This is a security release."
+Severity: important 
 
-The changelogs for all four releases include:
+Affected versions:
 
-* GD:
-     Upgrade libgd. (CVE-2026-9672)
+- Apache Qpid Proton-J (org.apache.qpid:proton-j) through 0.34.1
 
-* PGSQL:
-     Fixed https://github.com/php/php-src/security/advisories/GHSA-7qpv-r5mr-78m4
-     (SQL injection via E'...' backslash breakout). (CVE-2026-17543)
+Description:
 
-* Phar:
-     Fixed https://github.com/php/php-src/security/advisories/GHSA-vc5h-9ppw-p5f3
-     (Crash via recursive symlinks). (CVE-2026-7260)
+A pre-authentication attacker could leverage type size/count handling to cause excessive allocation leading to potential denial of service.
 
-The changelogs for 8.4.24 & 8.5.9 also include:
+This issue affects Apache Qpid Proton-J: through 0.34.1.
 
-* BCMath:
-     Fixed https://github.com/php/php-src/security/advisories/GHSA-x692-q9x7-8c3f
-     (Out-of-bounds write in bccomp()). (CVE-2026-17544)
+Users are recommended to upgrade to version 0.35.0, which fixes the issue.
+
+References:
+
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-66273
 
