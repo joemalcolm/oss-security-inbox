@@ -1,30 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/19/1
-Message-ID: <76607838-6f70-4c6a-8fa8-3f9b3d2e5bd8@oracle.com>
-Date: Thu, 18 Jun 2026 17:37:44 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Amos Jeffries <squid3@...enet.co.nz>
-Subject: Re: Squid CVE-2026-47729 and CVE-2026-50012
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/11
+Message-ID: <82ccf235-9a7b-cd6c-e3be-3a2b25fb540b@apache.org>
+Date: Wed, 05 Aug 2026 14:26:28 +0000
+From: Enxin Xie <linkinstar@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-48912: Apache Answer: Improper authorization in avatar update cleanup allows authenticated users to delete arbitrary uploaded files by URL 
 Content-Type: text/plain; charset=utf-8
 
-On 6/15/26 04:26, Amos Jeffries wrote:
-> On 12/06/2026 20:21, Amos Jeffries wrote:
->> Hi all,
->>
->> Squid 7.6 release contains fixes for and releases the embargo on 
->> CVE-2026-47729 and CVE-2026-50012.
->>
-> 
-> Apologies, this first one (CVE-2026-47729) embargo is over, but the fix will 
-> actually be in Squid 7.7.
+Severity: moderate 
 
-A blog was posted about it today:
-https://blog.calif.io/p/squidbleed-cve-2026-47729
+Affected versions:
 
-It says the root cause was a misunderstanding of what the C standard requires:
-> strchr(w_space, '\0') returns non-NULL per C11 §7.24.5.2 (terminating NUL
-> is part of the string). 
+- Apache Answer through 2.0.1
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Description:
+
+Improper Input Validation vulnerability in Apache Answer.
+
+This issue affects Apache Answer: through 2.0.1.
+
+ A missing ownership check in the avatar-cleanup logic allows any authenticated user to delete other users' uploaded files by supplying their file URLs.
+Users are recommended to upgrade to version 2.0.2, which fixes the issue.
+
+Credit:
+
+tonghuaroot (reporter)
+
+References:
+
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-48912
+
