@@ -1,39 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/8
-Message-ID: <a98b6b57-0d97-2924-43e3-5ce202bdb830@apache.org>
-Date: Mon, 29 Jun 2026 18:20:59 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/9
+Message-ID: <8f3e1f1b-b97f-887d-6a77-ff19a3c37427@apache.org>
+Date: Wed, 05 Aug 2026 14:25:42 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49434: Apache ActiveMQ Broker, Apache ActiveMQ, Apache ActiveMQ All: LdapNetworkConnector instantiates denied transports and a remote-properties broker 
+Subject: CVE-2026-48834: Apache Answer: Denial of service via crafted Accept-Language header parsing 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.8
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.2.7
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.8
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.7
+- Apache Answer through 2.0.1
 
 Description:
 
-Improper Input Validation vulnerability in Apache ActiveMQ Broker, Apache ActiveMQ, Apache ActiveMQ All.
+Improper Handling of Length Parameter Inconsistency vulnerability in Apache Answer.
 
-An attacker that has access to publish or modify entries in LDAP that match the configured searchBase and searchFilter can instantiate denied transports inside the broker JVM. This can be used to fetch an attacker URL and spawn a second BrokerService inside the same JVM.
-This issue affects Apache ActiveMQ Broker: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ All: before 5.19.8, from 6.0.0 before 6.2.7.
+This issue affects Apache Answer: through 2.0.1.
 
-
-Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
+Unauthenticated attackers can cause a denial of service via a specially crafted Accept-Language header that triggers excessive CPU consumption during parsing.
+Users are recommended to upgrade to version 2.0.2, which fixes the issue.
 
 Credit:
 
-@Add Content (finder)
+tonghuaroot (reporter)
 
 References:
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49434
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-48834
 
