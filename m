@@ -1,39 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/22
-Message-ID: <5a8e0433-4f3b-e9b6-3a9d-8d19408b0b7b@apache.org>
-Date: Mon, 14 Sep 2026 08:46:32 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/12
+Message-ID: <046a5913-3b60-54d2-993a-51adf0dad59b@apache.org>
+Date: Wed, 05 Aug 2026 14:26:49 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86460: Apache Syncope: Cypher Injection via FIQL Search on Neo4j Persistence 
+Subject: CVE-2026-50749: Apache Answer: Missing authorization in revision audit reject allows authenticated users to reject pending revisions 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-neo4j) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-neo4j) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-neo4j) 4.1.0-M0 through 4.1.2
+- Apache Answer through 2.0.1
 
 Description:
 
-Cypher injection vulnerability in the Neo4j persistence layer when processing some FIQL search conditions.
+Improper Authorization vulnerability in Apache Answer.
 
+This issue affects Apache Answer: through 2.0.1.
 
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+Any authenticated user can reject arbitrary pending edit-revisions without review permission due to a missing authorization check on the reject operation.
+Users are recommended to upgrade to version 2.0.2, which fixes the issue.
 
 Credit:
 
-CyberLeo (finder)
-Ho1aAs (finder)
+tonghuaroot (reporter)
+Mattia Campanelli (reporter)
+Cavan Loughran (reporter)
+Xi Yang (reporter)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86460
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-50749
 
