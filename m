@@ -1,37 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/22/7
-Message-ID: <c18a3c95-3e6d-4e71-8c46-06ad82e13191@oracle.com>
-Date: Mon, 22 Jun 2026 13:01:15 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/19
+Message-ID: <8e5f68b5-d214-4816-8f48-4df3958bb950@gmail.com>
+Date: Wed, 5 Aug 2026 09:59:26 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Common PKCS#7 / CMS parsing issues in OpenSSL, WolfSSL, Bouncy Castle, & GnuPG
+Subject: Re: [OSSA-2026-031] OpenStack Swift: Proxy denial of service via Accept header (CVE-2026-71190)
 Content-Type: text/plain; charset=utf-8
 
-https://blog.calif.io/p/how-to-format-a-ciphertext discusses how the issue
-that OpenSSL disclosed on June 9 as CVE-2026-34182 similarly affected the
-PKCS#7 / CMS parsing implementations from WolfSSL, Bouncy Castle, & GnuPG.
+Errata 1 for OSSA-2026-031: CVE-2026-71190 has been assigned.
 
-The common failure is accepting the sender provided length for the
-authentication tag, and not enforcing the minimum length specified
-in the RFC - allowing an attacker to specify a one-byte tag length
-and then use brute force to determine which of the 256 possible
-values matches the first byte of the actual tag.
+==============================================================
+OSSA-2026-031: Swift proxy denial of service via Accept header
+==============================================================
 
-The OpenSSL CVE-2026-34182 was already covered on oss-security in:
-https://www.openwall.com/lists/oss-security/2026/06/09/15
+:Date: July 28, 2026
+:CVE: CVE-2026-71190
 
-The WolfSSL CVE-2026-5500 was also already sent here in:
-https://www.openwall.com/lists/oss-security/2026/04/14/6
 
-https://x.com/calif_io/status/2068786334844715142 notes:
-> Both Bouncy Castle and GnuPG have acknowledged and fixed the reported issues.
+Affects
+~~~~~~~
+- Swift: >=1.9.1 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
+
+
+Description
+~~~~~~~~~~~
+Christian Schwede from NVIDIA reported a denial of service vulnerability 
+in Swift's proxy server. The Accept header parser is vulnerable to 
+catastrophic regular expression backtracking. An unauthenticated 
+attacker can send crafted requests that exhaust proxy worker threads, 
+rendering the service unavailable. All deployments running Swift proxy 
+with versions between 1.9.1 and the fixed releases listed below are 
+affected.
+
+
+Errata
+~~~~~~
+CVE-2026-71190 has been assigned for this vulnerability.
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/998953 (2025.1/epoxy)
+- https://review.opendev.org/998952 (2025.2/flamingo)
+- https://review.opendev.org/998951 (2026.1/gazpacho)
+- https://review.opendev.org/998950 (2026.2/hibiscus (development))
+
+
+Credits
+~~~~~~~
+- Christian Schwede from NVIDIA
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2158771
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71190
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2026-08-05 - Errata 1
+- 2026-07-28 - Original Version
+
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+
+On 7/28/26 8:28 AM, Goutham Pacha Ravi wrote:
+> ==============================================================
+> OSSA-2026-031: Swift proxy denial of service via Accept header
+> ==============================================================
 > 
-> CVE-2026-12802 will be published with Bouncy Castle 1.85.
+> :Date: July 28, 2026
+> :CVE: CVE-2026-pending
 > 
-> GnuPG fix: 
-> https://github.com/gpg/gnupg/commit/4c7e68cf3d335328821bdbb70db309a60d0e4fd4
+> 
+> Affects
+> ~~~~~~~
+> - Swift: >=1.9.1 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
+> 
+> 
+> Description
+> ~~~~~~~~~~~
+> Christian Schwede from NVIDIA reported a denial of service vulnerability 
+> in Swift's proxy server. The Accept header parser is vulnerable to 
+> catastrophic regular expression backtracking. An unauthenticated 
+> attacker can send crafted requests that exhaust proxy worker threads, 
+> rendering the service unavailable. All deployments running Swift proxy 
+> with versions between 1.9.1 and the fixed releases listed below are 
+> affected.
+> 
+> 
+> 
+> Patches
+> ~~~~~~~
+> - https://review.opendev.org/998953 (2025.1/epoxy)
+> - https://review.opendev.org/998952 (2025.2/flamingo)
+> - https://review.opendev.org/998951 (2026.1/gazpacho)
+> - https://review.opendev.org/998950 (2026.2/hibiscus (development))
+> 
+> 
+> Credits
+> ~~~~~~~
+> - Christian Schwede from NVIDIA
+> 
+> 
+> References
+> ~~~~~~~~~~
+> - https://launchpad.net/bugs/2158771
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+> 
+> -- 
+> Goutham Pacha Ravi
+> OpenStack Vulnerability Management Team
+> https://security.openstack.org/vmt.html
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
