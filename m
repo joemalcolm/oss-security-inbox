@@ -1,78 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/4
-Message-ID: <c0afb2f6938bfdcbaf0e6d24eb198ee92b499ed1.camel@openssl.foundation>
-Date: Thu, 13 Aug 2026 15:50:12 +0200
-From: Tomas Mraz <tomas@...nssl.foundation>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/2
+Message-ID: <CAFhtw61Gdx8q-Ls0cjaYyNiQG5z85N+mYMXw8QMNOvAw=HNkGw@mail.gmail.com>
+Date: Wed, 5 Aug 2026 17:39:21 +1200
+From: TvT <tvtreeck@...atec.de>
 To: oss-security@...ts.openwall.com
-Subject: OpenSSL Security Advisory
+Cc: Peter Gutmann <pgut001@...auckland.ac.nz>
+Subject: Re: Bouncy Castle 1.85 release fixes 32 CVEs
 Content-Type: text/plain; charset=utf-8
 
-OpenSSL Security Advisory [13th August 2026]
-============================================
+I had the same thought so I asked the project owner and he shared the story
+:-)
 
-Unbounded Memory Growth in QUIC Server Incoming Channel Queue (CVE-2026-14456)
-==============================================================================
+https://github.com/bcgit/bc-java/discussions/2388
 
-Severity: Low
 
-Issue summary: When an OpenSSL QUIC server (Listener SSL object) processes
-valid QUIC Initial packets for unknown destination connection IDs, it
-can allocate and queue new incoming channels without enforcing any limit.
+Am Mi., 5. Aug. 2026 um 05:24 Uhr schrieb Alan Coopersmith <
+alan.coopersmith@...cle.com>:
 
-Impact summary: A remote peer that can make many Initial packets reach the
-server listener faster than the application accepts connections, can cause the
-memory allocated to store the per-channel state to grow without any limits,
-potentially making the QUIC listener unavailable and causing Denial of Service.
+> On 8/3/2026 7:37 PM, Peter Gutmann wrote:
+> > Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+> >
+> >> It also says the release contains fixes for the following CVEs:
+> >
+> > Given the quantity and sweeping scope of those, was this the result of
+> some
+> > new tool used for code analysis?  I'm assuming AI, it sounds like
+> there'd be
+> > an interesting backstory to how all of this was turned up.
+> I didn't see anything in the announcements from the Bouncy Castle folks
+> about that.
+>
+> They do have more info about the CVE's in their wiki, such as:
+> https://github.com/bcgit/bc-java/wiki/CVE%E2%80%902026%E2%80%908763
+> but I don't see any reference there to how they were found/reported.
 
-CWE: CWE-770: Allocation of Resources Without Limits or Throttling
-
-Description: The function that handles inbound QUIC packets uses
-Connection-Id from the packet header to find an existing connection
-(QUIC channel). If no existing connection is found and the packet
-type is INITIAL, the function treats the packet as a new connection. It
-allocates a new channel object and inserts it into a queue where it
-waits to be accepted by the local application with SSL_accept(3ossl).
-The memory occupied by these initial channel objects may grow
-without bounds if the application is not able to call SSL_accept()
-frequently enough to serve these inbound connection requests.
-
-The issue is present since OpenSSL 3.5 when the QUIC server implementation
-was added.
-
-The fix introduces a limit for pending connections. The default limit is set
-to 256 pending connections (waiting to be accepted by the local application).
-Applications may change the default by calling SSL_set_value_uint(3ossl).
-
-FIPS impact: no
-The FIPS module is not affected as the QUIC implementation is outside of
-the OpenSSL FIPS module boundary.
-
-OpenSSL 4.0, 3.6 and 3.5 are vulnerable to this issue.
-
-OpenSSL 3.4, 3.0, 1.1.1 and 1.0.2 are not affected by this issue.
-
-OpenSSL 4.0 users should upgrade to OpenSSL 4.0.2 once it is released.
-OpenSSL 3.6 users should upgrade to OpenSSL 3.6.4 once it is released.
-OpenSSL 3.5 users should upgrade to OpenSSL 3.5.8 once it is released.
-
-Due to the low severity of this issue we are not issuing new releases of
-OpenSSL at this time. The fix will be included in the next release of 4.0,
-3.6, and 3.5 branches, once it becomes available. The fix is also available
-in commits f2f1465 (for 4.0), 4084152 (for 3.6), and 08e7756 (for 3.5) in
-the OpenSSL git repository.
-
-This issue was reported on 25 June 2026 by Filipe Casal (Trail of Bits)
-in collaboration with OpenAI.
-The fix has been developed by Alexandr Nedvedicky.
-
-General Advisory Notes
-======================
-
-URL for this Security Advisory:
-https://openssl-library.org/news/secadv/20260813.txt
-
-Note: the online version of the advisory may be updated with additional details
-over time.
-
-For details of OpenSSL severity classifications please see:
-https://openssl-library.org/policies/general/security-policy/
