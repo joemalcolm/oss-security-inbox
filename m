@@ -1,82 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/10
-Message-ID: <3e2632bc-db3f-4b42-a3d4-e8622c12a6fc@jvf.cc>
-Date: Tue, 16 Jun 2026 13:05:13 -0700
-From: Jay Faulkner <jay@....cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/15
+Message-ID: <fc8a17b4-08be-423e-8f42-fc60cab03a0c@ehuk.net>
+Date: Wed, 5 Aug 2026 16:34:56 +0100
+From: Eddie Chapman <eddie@...k.net>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-023] Ironic: Sensitive properties returned unredacted in POST and PATCH HTTP responses (CVE-2026-54421)
+Subject: ejabberd 26.07 released with several security fixes
 Content-Type: text/plain; charset=utf-8
 
-========================================================================================
-OSSA-2026-023: Sensitive properties returned unredacted in POST and 
-PATCH HTTP responses
-========================================================================================
+Greetings,
 
-:Date: June 16, 2026
-:CVE: CVE-2026-54421
+I'm not in any way anything to do with ejabberd, just thought I'd post 
+that 26.07 was released a few days ago with a large "Security fixes" 
+section.
 
+https://www.process-one.net/blog/ejabberd-26-07/
 
-Affects
-~~~~~~~
-- Ironic: >=17.0.0 <29.0.6, >=30.0.0 <32.0.2, >=33.0.0 <35.0.2, >=36.0.0 
-<37.0.1
+It's notable as I've followed the project for years and can't remember 
+the last time one of their releases had security fixes listed, let alone 
+this many.
 
+Copying/pasting the "Security fixes" section verbatim below, from the 
+release announcement above, as I know this is desired on this list. I've 
+no idea if any of these are being tracked in any security databases.
 
-Description
-~~~~~~~~~~~
-Tuomo Tanskanen (Ericsson Software Technology) and Dmitry Tantsur (Red Hat)
-of the Metal3.io Security Team discovered a vulnerability in Ironic API RBAC
-handling, where a user with a valid token and credentials to send a
-POST or PATCH request to ``/v1/volume/targets`` can have potentially
-sensitive properties returned in the response unredacted, such as iSCSI
-credentials.
+Eddie
 
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/c/openstack/ironic/+/992335 
-(2023.1/antelope (unmaintained))
-- https://review.opendev.org/c/openstack/ironic/+/992333 (2024.1/caracal 
-(unmaintained))
-- https://review.opendev.org/c/openstack/ironic/+/992326 (2025.1/epoxy)
-- https://review.opendev.org/c/openstack/ironic/+/992325 (2025.2/flamingo)
-- https://review.opendev.org/c/openstack/ironic/+/992321 (2026.1/gazpacho)
-- https://review.opendev.org/c/openstack/ironic/+/990430 
-(2026.2/hibiscus (development))
-- https://review.opendev.org/c/openstack/ironic/+/992323 (Bugfix/33.0)
-- https://review.opendev.org/c/openstack/ironic/+/992322 (Bugfix/34.0)
-
-
-Credits
-~~~~~~~
-- Tuomo Tanskanen from Ericsson Software Technology
-- Dmitry Tantsur from Red Hat
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/ironic/+bug/2155049
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-54421
-
-
-Notes
-~~~~~
-- The vulnerable code path has existed since Ironic 9.0.0 (OpenStack
-   Pike), however, this could only be considered an escalation of
-   privileges after Ironic 17.0.0 (OpenStack Wallaby), when Ironic
-   introduced the ability for project-scoped users to interact via the
-   owner/lessee model.
-- Branches for 2024.1 (caracal) and 2023.1 (antelope) are unmaintained.
-   Patches are provided as a courtesy. Releases 2023.2 (bobcat) and
-   2024.2 (dalmatian) are end of life and have not had patches provided.
-   See https://releases.openstack.org for more information on supported
-   releases.
-- Ironic bugfix branch patches will be available in git for interested
-   operators. We will not perform an additional release from these
-   branches.
-
-
-Download attachment "OpenPGP_0x6B75D939B424C6D4.asc" of type "application/pgp-keys" (6373 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+- It's possible to craft PLAIN auth request and authenticate as one 
+user, but then open session for different one.
+- mod_caps persistent cache can be poisoned by using legacy version 
+requests.This cache was only used to determine list of nodes that should 
+trigger notifications in PubSub presence-based delivery.
+- SQL injection in mod_pubsub handling of paging requests.
+- Possible atom exhaustion that can be triggered by issuing REST 
+requests to mod_http_api.
+- It was possible to make ejabberd send redirect response for OAuth 
+requests to unvetted url. This required enabling ejabberd to act as 
+OAuth provider (by adding request handler for ejabberd_oauth in http 
+listener). As part of this fix we changed oauth_client_id_check default 
+value to db.
+- using ejabberd as OAuth provider will be only allowed by clients
+- that were previously registered with oauth_add_client_password or 
+oauth_add_client_implicit commands.
+- Tokens generated by mod_bosh, captcha, mod_auth_fast, mod_http_upload 
+and mod_invites used not cryptographically strong random number generators.
+- Files server by mod_http_upload didn't have XSS prevention headers.
+- Issues in authentication of SIP requests.
+- Request to web_admin were lacking CSRF protection.
+- It was possible to skip captcha verification in mod_register_web.
+- mod_conversejs allowed putting unescaped value from url in page content.
