@@ -1,79 +1,140 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/2
-Message-ID: <ffa2ea1e-a452-4a97-847a-ab228db6d6f0@cpansec.org>
-Date: Thu, 13 Aug 2026 00:15:12 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-16770: PDF::WebKit versions through 1.2 for Perl allow argument injection into wkhtmltopdf via meta tags in the source document
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/18
+Message-ID: <8cc7b627-5c98-4c71-b5ea-ba62ba727e11@gmail.com>
+Date: Wed, 5 Aug 2026 09:59:18 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: [OSSA-2026-030] OpenStack Swift: S3API header authorization bypass (CVE-2026-71191, CVE-2026-71192)
 Content-Type: text/plain; charset=utf-8
 
+Errata 1 for OSSA-2026-030: CVE-2026-71191 and CVE-2026-71192 have been 
+assigned.
 
-========================================================================
-CVE-2026-16770                                       CPAN Security Group
-========================================================================
+======================================================
+OSSA-2026-030: Swift S3API header authorization bypass
+======================================================
 
-         CVE ID:  CVE-2026-16770
-   Distribution:  PDF-WebKit
-       Versions:  through 1.2
-
-       MetaCPAN:  https://metacpan.org/dist/PDF-WebKit
-       VCS Repo:  https://github.com/kingpong/perl-PDF-WebKit
+:Date: July 28, 2026
+:CVE: CVE-2026-71191,
+       CVE-2026-71192
 
 
-PDF::WebKit versions through 1.2 for Perl allow argument injection into
-wkhtmltopdf via meta tags in the source document
+Affects
+~~~~~~~
+- Swift: >=2.18.0 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
+
 
 Description
------------
-PDF::WebKit versions through 1.2 for Perl allow argument injection into
-wkhtmltopdf via meta tags in the source document.
+~~~~~~~~~~~
+Christian Schwede from NVIDIA reported two authorization bypass 
+vulnerabilities in Swift's S3API middleware. Insufficient validation of 
+request headers allows an attacker to copy and read objects belonging to 
+other tenants. The first issue affects the default ``s3_acl=false`` 
+configuration; the second affects deployments with ``s3_acl=true``. Both 
+require the attacker to know the target container and object names. All 
+deployments using the S3API middleware with versions between 2.18.0 and 
+the fixed releases listed below are affected.
 
-For an HTML string or file source, the constructor collects every <meta
-name="pdf-webkit-KEY" content="VALUE"> element in the document head
-through _pdf_webkit_meta_tags and turns each one into a wkhtmltopdf
-command line option. KEY is normalized to an option name matching
---[a-z0-9-]+ but is not checked against an allow list, VALUE is passed
-through unchanged as the argument that follows it, and a VALUE of "yes"
-emits the option as a bare flag. BUILD merges the meta derived options
-last, so they also override the module defaults and the options passed
-to new. Switches such as --enable-local-file-access and --cookie-jar
-are reachable this way. The renderer is executed with an argument list
-rather than a shell command, so this is argument injection and not
-shell injection.
 
-Any caller that renders untrusted HTML lets the document choose the
-renderer's options and override those set by the application, including
-options that read local files into the resulting PDF or write to a
-chosen path. A URL source is not scanned, and the scan is skipped when
-XML::LibXML, a recommended dependency, is not installed.
+Errata
+~~~~~~
+CVE-2026-71191 and CVE-2026-71192 have been assigned for these 
+vulnerabilities.
 
-Problem types
--------------
-- CWE-88 Improper Neutralization of Argument Delimiters in a Command
-   ('Argument Injection')
 
-Workarounds
------------
-No fixed release is available. Apply the patch, which restricts the
-options taken from meta tags to an allow list of presentational
-switches with checked values, extensible through the new
-allowed_meta_options configuration attribute, and merges them before
-the options passed to new rather than after.
+Patches
+~~~~~~~
+- https://review.opendev.org/998948 (2025.1/epoxy)
+- https://review.opendev.org/998949 (2025.1/epoxy)
+- https://review.opendev.org/998946 (2025.2/flamingo)
+- https://review.opendev.org/998947 (2025.2/flamingo)
+- https://review.opendev.org/998944 (2026.1/gazpacho)
+- https://review.opendev.org/998945 (2026.1/gazpacho)
+- https://review.opendev.org/998942 (2026.2/hibiscus (development))
+- https://review.opendev.org/998943 (2026.2/hibiscus (development))
 
-Otherwise, applications that render untrusted HTML should remove meta
-elements whose name attribute begins with the configured
-meta_tag_prefix (default "pdf-webkit-") before passing the document to
-new.
 
-Note that the wkhtmltopdf project is no longer being developed, and
-users of this package should migrate to alternative solutions.
+Credits
+~~~~~~~
+- Christian Schwede from NVIDIA
 
 
 References
-----------
-https://github.com/kingpong/perl-PDF-WebKit/issues/9
-https://security.metacpan.org/patches/P/PDF-WebKit/1.2/CVE-2026-16770-r1.patch
-https://wkhtmltopdf.org/status.html
+~~~~~~~~~~
+- https://launchpad.net/bugs/2158733
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71191
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71192
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2026-08-05 - Errata 1
+- 2026-07-28 - Original Version
+
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
 
 
 
+On 7/28/26 8:27 AM, Goutham Pacha Ravi wrote:
+> ======================================================
+> OSSA-2026-030: Swift S3API header authorization bypass
+> ======================================================
+> 
+> :Date: July 28, 2026
+> :CVE: CVE-2026-pending,
+>        CVE-2026-pending
+> 
+> 
+> Affects
+> ~~~~~~~
+> - Swift: >=2.18.0 <2.35.4, >=2.36.0 <2.36.3, >=2.37.0 <2.37.3, ==2.38.0
+> 
+> 
+> Description
+> ~~~~~~~~~~~
+> Christian Schwede from NVIDIA reported two authorization bypass 
+> vulnerabilities in Swift's S3API middleware. Insufficient validation of 
+> request headers allows an attacker to copy and read objects belonging to 
+> other tenants. The first issue affects the default ``s3_acl=false`` 
+> configuration; the second affects deployments with ``s3_acl=true``. Both 
+> require the attacker to know the target container and object names. All 
+> deployments using the S3API middleware with versions between 2.18.0 and 
+> the fixed releases listed below are affected.
+> 
+> 
+> 
+> Patches
+> ~~~~~~~
+> - https://review.opendev.org/998948 (2025.1/epoxy)
+> - https://review.opendev.org/998949 (2025.1/epoxy)
+> - https://review.opendev.org/998946 (2025.2/flamingo)
+> - https://review.opendev.org/998947 (2025.2/flamingo)
+> - https://review.opendev.org/998944 (2026.1/gazpacho)
+> - https://review.opendev.org/998945 (2026.1/gazpacho)
+> - https://review.opendev.org/998942 (2026.2/hibiscus (development))
+> - https://review.opendev.org/998943 (2026.2/hibiscus (development))
+> 
+> 
+> Credits
+> ~~~~~~~
+> - Christian Schwede from NVIDIA
+> 
+> 
+> References
+> ~~~~~~~~~~
+> - https://launchpad.net/bugs/2158733
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+> 
+> -- 
+> Goutham Pacha Ravi
+> OpenStack Vulnerability Management Team
+> https://security.openstack.org/vmt.html
+
+
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
