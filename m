@@ -1,34 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/9
-Message-ID: <45a08d16-434e-0f1e-9fc6-c391262eacf3@apache.org>
-Date: Mon, 29 Jun 2026 18:29:26 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/16
+Message-ID: <047074fe-da98-4160-e478-75b8f6320471@apache.org>
+Date: Thu, 06 Aug 2026 10:09:43 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49877: Apache ActiveMQ: Authenticated web users retain admin access by default in the Web Console 
+Subject: CVE-2026-64958: Apache CXF: Denial of service via message header attachments 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
+- Apache CXF (org.apache.cxf:cxf-core) 4.2.0 before 4.2.3
+- Apache CXF (org.apache.cxf:cxf-core) 4.0.0 before 4.1.8
+- Apache CXF (org.apache.cxf:cxf-core) before 3.6.12
 
 Description:
 
-Improper Authorization vulnerability in Apache ActiveMQ.
-
-An authenticated low-privilege Web Console user by default can access /admin/* paths in the Web Console. The default Jetty settings incorrectly did not limit those paths to only admins.
-This issue affects Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7.
-
-Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
+An incomplete fix for CVE-2026-50645 means that it is still possible to perform a denial of service attack on Apache CXF by sending a message with many attachment headers. Users are recommended to upgrade to versions 4.2.3 or 4.1.8 or 3.6.12, which fix this issue.
 
 Credit:
 
-Leon Johnson (github: lokerxx) (finder)
+Markus Vogl, RISE GmbH (finder)
 
 References:
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49877
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-64958
 
