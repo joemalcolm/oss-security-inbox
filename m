@@ -1,28 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/27
-Message-ID: <f3ec07bd-141c-83f9-dc54-499ec0bbf87a@apache.org>
-Date: Tue, 04 Aug 2026 18:47:56 +0000
-From: "Timothy A. Bish" <tabish@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/15
+Message-ID: <cd9957d2-0630-f4cc-671d-19791ce8df5f@apache.org>
+Date: Thu, 06 Aug 2026 10:04:42 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-67588: Apache Qpid ProtonJ2: Unbounded symbol value caching can lead to pre-authentication resource exhaustion 
+Subject: CVE-2026-57819: Apache CXF: No default restriction on the amount of form parameters per message 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low 
 
 Affected versions:
 
-- Apache Qpid ProtonJ2 (org.apache.qpid:protonj2) through 1.1.0
+- Apache CXF (org.apache.cxf:cxf-rt-frontend-jaxrs) 4.2.0 before 4.2.3
+- Apache CXF (org.apache.cxf:cxf-rt-frontend-jaxrs) 4.0.0 before 4.1.8
+- Apache CXF (org.apache.cxf:cxf-rt-frontend-jaxrs) before 3.6.12
 
 Description:
 
-A pre-authentication attacker could leverage unbounded symbol value caching to cause resource exhaustion leading to denial of service.
-
-This issue affects Apache Qpid ProtonJ2: through 1.1.0.
-
-Users are recommended to upgrade to version 1.2.0, which fixes the issue.
+Apache CXF allows to set a limit on the number of form parameters in a JAX-RS message via the "maxFormParameterCount" configuration option. However, no default limit is set which may lead to denial of service attacks when processing  requests with very large numbers of form parameters. Users are recommended to upgrade to versions 4.2.3 or 4.1.8 or 3.6.12, which fix this issue by using a default limit of 500 parameters.
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-67588
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-57819
 
