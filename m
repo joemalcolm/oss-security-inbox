@@ -1,55 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/16/4
-Message-ID: <6491df66-067c-4e47-b9ff-52279d3d745a@cpansec.org>
-Date: Thu, 16 Jul 2026 17:18:54 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-13397: HTML::Bare versions through 0.04 for Perl will hang in an infinite loop when parsing malformed attributes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/11
+Message-ID: <37a82793-aa26-e2ef-c0dd-ab34b6356c79@apache.org>
+Date: Thu, 06 Aug 2026 14:06:11 +0000
+From: Eric Covener <covener@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-34501: Apache Portable Runtime Utility: Heap buffer overflow in APR redis client 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-========================================================================
-CVE-2026-13397                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-13397
-   Distribution:  HTML-Bare
-       Versions:  through 0.04
+- Apache Portable Runtime Utility 1.6.0 through 1.6.3
 
-       MetaCPAN:  https://metacpan.org/dist/HTML-Bare
-       VCS Repo:  https://github.com/nanoscopic/perl-HTML-Bare
+Description:
 
+Heap-based Buffer Overflow vulnerability in Apache Portable Runtime Utility redis client.
 
-HTML::Bare versions through 0.04 for Perl will hang in an infinite loop
-when parsing malformed attributes
+This issue affects Apache Portable Runtime Utility: from 1.6.0 through 1.6.3.
 
-Description
------------
-HTML::Bare versions through 0.04 for Perl will hang in an infinite loop
-when parsing malformed attributes.
+Users are recommended to upgrade to version 1.6.4, which fixes the issue.
 
-The parserc_parse function never advances the attribute-parse state
-cursor on certain malformed attribute forms, looping forever.
+Credit:
 
-Nameless attributes such as "<a ='c'>" or unbalanced quotes "<a
-b='''''''c'>" can trigger this condition.
+Elhanan Haenel (finder)
 
-Note that the latest version available on CPAN is version 0.02. Newer
-versions are available on the git repository.
+References:
 
-Problem types
--------------
-- CWE-835 Loop with Unreachable Exit Condition ('Infinite Loop')
+https://apr.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-34501
 
-Workarounds
------------
-Apply the patch.
+Timeline:
 
-
-References
-----------
-https://github.com/nanoscopic/perl-HTML-Bare/pull/1
-https://security.metacpan.org/patches/H/HTML-Bare/0.02/CVE-2026-13397-r1.patch
-
-
+2026-03-27: reported
+2026-08-06: fixed in 1.6.x by r1936810
 
