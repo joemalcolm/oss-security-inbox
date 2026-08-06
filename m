@@ -1,40 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/2
-Message-ID: <7465c80d-1458-f83b-54a7-6aeea15ee437@apache.org>
-Date: Mon, 31 Aug 2026 06:44:25 +0000
-From: Emond Papegaaij <papegaaij@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/3
+Message-Id: <1C2E7D31-E6F2-483E-9218-9D78F0530A5B@gmail.com>
+Date: Thu, 6 Aug 2026 19:33:31 +0800
+From: Fourie Zhang <littleddfu@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76982: Apache Wicket: XSS in Button via its model object 
+Subject: CVE-2026-64564: Linux SCTP ASCONF transport UAF leading to local privilege escalation and container escape
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hi all,
 
-Affected versions:
+We are publishing details of SCTPhantom, CVE-2026-64564, a use-after-free
+in Linux SCTP Dynamic Address Reconfiguration.
 
-- Apache Wicket (org.apache.wicket:wicket-core) 8.0.0 through 8.18.0
-- Apache Wicket (org.apache.wicket:wicket-core) 9.0.0 through 9.23.0
-- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
+Impact:
+- Local low-privileged user -> root on affected systems.
+- Container -> host root.
 
-Description:
+Bug:
+--------
+In the Linux kernel's SCTP implementation, sctp_process_asconf() caches the
+transport used to process an ASCONF chunk in asconf->transport. When
+__sctp_rcv_asconf_lookup() locates the ASCONF through its Address Parameter,
+the cached transport may differ from the transport associated with the
+packet's source address. An attacker can supply an ordered ASCONF sequence:
+a DEL-IP for a non-source address L first passes the D8 check and frees the
+transport referenced by asconf->transport. A subsequent wildcard DEL-IP
+(0.0.0.0) then reuses the dangling pointer in sctp_assoc_set_primary() and
+sctp_assoc_del_nonprimary_peers(), triggering a use-after-free that can lead
+to local privilege escalation or container escape.
 
-Improper neutralization of input during web page generation in Apache Wicket.
+CVSS assessment
+---------------
 
-org.apache.wicket.markup.html.form.Button clears the escape-model-strings flag in its constructor, so that the value attribute it writes is not encoded twice — ComponentTag already encodes attribute values when it writes the tag. That reasoning holds only for the attribute. When the component is attached to a <button> element rather than an <input>, it writes its model object into the element body instead, and nothing encodes an element body, so markup in the model is rendered as markup.
+CVSS v4.0 Base Score (CVSS-B): 8.5 (High)
+Vector: CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+Calculator:
+https://www.first.org/cvss/calculator/4.0#CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
 
-An application is affected where it renders a Button on a <button> element and that button's model holds data an attacker can influence. Wicket cannot determine where a model value comes from, so whether it reaches the page from a request or from storage is a property of the application. The subclasses that inherit this constructor — AjaxButton, AjaxFallbackButton and WizardButton — are affected on the same terms.
+The trigger is deterministic. It requires local access with low
+privileges and no user interaction. Successful exploitation provides
+full kernel-level confidentiality, integrity, and availability impact.
 
-As a workaround, calling setEscapeModelStrings(true) on a button that renders as a <button> element escapes the body correctly, and does not cause double encoding, because the value attribute is written only for <input> elements.
+Fix
+---
 
-This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases from 6.25.0 and 7.5.0 onwards are also affected.
+The vulnerable sequence dates back to Linux 2.6.25 commit 42e30bf3463c:
+https://git.kernel.org/linus/42e30bf3463cd37d73839376662cb79b4d5c416c
 
-Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
+The mainline fix is 9b2854f86f0b:
+https://git.kernel.org/linus/9b2854f86f0b56e9027d68e7a3fc909d1a9b566f
 
-Credit:
+The first fixed versions listed by the Linux kernel CVE announcement are:
 
-Emond Papegaaij (finder)
+   6.6.148
+   6.12.101
+   6.18.42
+   7.1.6
+   7.2-rc5
 
-References:
+Vendor kernels may carry a backport while retaining an older base version.
 
-https://wicket.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76982
+Tested distros
+--------------------
+Below is a summary of the tested distributions and kernels. Each target
+reached root in the retained tests:
 
+- Debian 13, 6.12.95+deb13-amd64
+- Rocky Linux 9 / RHEL 9-family target, vendor 5.14 kernel (SCTP loaded)
+- Ubuntu 24.04, 6.8.0-134-generic
+
+The exploit was also validated on the Linux 7.2-rc2 research kernel.
+
+References
+----------
+
+CVE record:
+https://www.cve.org/CVERecord?id=CVE-2026-64564
+
+Linux kernel CVE announcement:
+https://lore.kernel.org/linux-cve-announce/2026080404-CVE-2026-64564-6762@gregkh/
+
+Technical write-up:
+https://matrix.tencent.com/en/2026/08/06/sctphantom-CVE-2026-64564
+
+Corvus AI assisted with source analysis, reproduction, exploit
+development, and cross-platform validation.
+
+Regards,
+
+Fourie Zhang
+TencentOS Security Team ( Tencent Zhuque Lab )
