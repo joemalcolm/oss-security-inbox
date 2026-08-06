@@ -1,61 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/22/2
-Message-ID: <73b6423d-7b32-435d-9501-e6db2cc15102@cpansec.org>
-Date: Sat, 22 Aug 2026 00:59:05 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-77781: Tie::Hash::Regex versions before 2.0.0 for Perl will throw an exception on unparseable lookup keys
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/23
+Message-ID: <4b9411f2-a9ad-e322-08eb-d542f5cb700d@apache.org>
+Date: Thu, 06 Aug 2026 10:44:32 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-65583: Apache CXF: Self-issued ID token claims validation skipped 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-77781                                       CPAN Security Group
-========================================================================
+Severity: low 
 
-         CVE ID:  CVE-2026-77781
-   Distribution:  Tie-Hash-Regex
-       Versions:  before 2.0.0
+Affected versions:
 
-       MetaCPAN:  https://metacpan.org/dist/Tie-Hash-Regex
-       VCS Repo:  https://github.com/davorg-cpan/tie-hash-regex
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-sso-oidc) 4.2.0 before 4.2.3
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-sso-oidc) 4.0.0 before 4.1.8
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-sso-oidc) before 3.6.12
 
+Description:
 
-Tie::Hash::Regex versions before 2.0.0 for Perl will throw an exception
-on unparseable lookup keys
+Apache CXF’s OIDC relying-party token validation could accept self-issued ID tokens without enforcing required claim checks (issuer/subject/audience/time and sub_jwk binding), enabling authentication bypass with crafted tokens. However, note that self-issued ID tokens are not accepted by default in the validator. Users are recommended to upgrade to versions 4.2.3 or 4.1.8 or 3.6.12, which fixes this issue.
 
-Description
------------
-Tie::Hash::Regex versions before 2.0.0 for Perl will throw an exception
-on unparseable lookup keys.
+Credit:
 
-The FETCH, EXISTS and DELETE methods throw an exception when on
-malformed regular expressions.
+Guanping Zhang reported this vulnerability. (finder)
 
-Each method falls back to a regex match when the key is not already
-stored in the hash, compiling the caller's key with a bare qr// and no
-eval guard. A key that is not a valid regular expression pattern, such
-as a single unmatched bracket, dies.
+References:
 
-An application that looks up externally supplied strings in a tied hash
-will die on an invalid key.
-
-Problem types
--------------
-- CWE-248 Uncaught Exception
-
-Workarounds
------------
-For deployments that cannot be upgraded, ensure that calls to check the
-existence of keys, fetch values from keys or delete keys are wrapped in
-an eval block.
-
-Solutions
----------
-Upgrade to Tie::Hash::Regex version 2.0.0 or later.
-
-References
-----------
-https://metacpan.org/release/DAVECROSS/Tie-Hash-Regex-2.0.0/source/Changes
-https://github.com/davorg-cpan/tie-hash-regex/commit/4239732cb76233543e2ded8ff5e0f238af152e0c.patch
-
-
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-65583
 
