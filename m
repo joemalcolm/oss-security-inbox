@@ -1,112 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/19/6
-Message-ID: <0a2b61e1-b3de-494c-b6b5-a371afce319b@jvf.cc>
-Date: Wed, 19 Aug 2026 12:39:48 -0700
-From: Jay Faulkner <jay@....cc>
-To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-008] ERRATA 2: Ironic Command Injection in IPMI Console Implementations
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/13
+Message-ID: <20260806200421.GA597@openwall.com>
+Date: Thu, 6 Aug 2026 22:04:21 +0200
+From: Solar Designer <solar@...nwall.com>
+To: Fourie Zhang <littleddfu@...il.com>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: CVE-2026-64564: Linux SCTP ASCONF transport UAF leading to local privilege escalation and container escape
 Content-Type: text/plain; charset=utf-8
 
-=======================================================================
-OSSA-2026-008: Command Injection in Ironic IPMI Console Implementations
-=======================================================================
+Hi,
 
-:Date: April 27, 2026
-:CVE: CVE-2026-42510
+Thank you for bringing this to oss-security.
 
+On Thu, Aug 06, 2026 at 07:33:31PM +0800, Fourie Zhang wrote:
+> - Rocky Linux 9 / RHEL 9-family target, vendor 5.14 kernel (SCTP loaded)
 
-Affects
-~~~~~~~
-- Ironic: >=4.3.0 <26.1.6, >=27.0.0 <29.0.5, >=30.0.0 <32.0.1, >=33.0.0 
-<35.0.1
+On these distros, the SCTP module is not part of a typical install, but
+is in the kernel-modules-extra subpackage.
 
+Further, that subpackage includes module blacklist files with:
 
-Description
-~~~~~~~~~~~
-Dmitry Tantsur and Tuomo Tanskanen from the Metal3.io Security Team 
-reported a vulnerability in Ironic's IPMI console backends. A project 
-manager for the project marked as a ``node.owner`` can inject arbitrary 
-commands which a conductor executes on console activation.
-No console backends are enabled by default in Ironic. Only installations 
-which have set ``[conductor]/enabled_console_interfaces`` to enable 
-either ``ipmitool-shellinabox`` or ``ipmitool-socat`` are vulnerable.
+blacklist sctp
+blacklist sctp_diag
 
+which prevents unprivileged autoload of these modules on demand.
 
+So the sysadmin would have to explicitly install kernel-modules-extra
+and load the SCTP module to expose this vulnerability, meaning that in
+practice it would only be exposed on systems that actually use SCTP.
 
-Errata
-~~~~~~
-- **Errata 1:** When the original advisory was published a CVE number was
-   not assigned. CVE-2026-42510 was assigned on 2026-04-29.
+Of course, exposure likely varies by distro.  The above is just about
+the RHEL family distros with their recent kernels.
 
-- **Errata 2:** The original fix shell-quoted the console command, but
-   socat executes it directly without a shell and so treated the quoted
-   command line as a single program name. Deployments using the
-   ipmitool-socat console interface lose console functionality entirely as
-   a result, though the vulnerability itself is not reintroduced. The
-   Errata 2 patches provide an additional fix which escapes the command
-   for socat's own address syntax.
-
-
-
-Patches
-~~~~~~~
-- **Original** https://review.opendev.org/c/openstack/ironic/+/986418 
-(2023.1/antelope (unmaintained))
-- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000990 
-(2023.1/antelope (unmaintained))
-- **Original** https://review.opendev.org/c/openstack/ironic/+/986417 
-(2024.1/caracal (unmaintained))
-- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000989 
-(2024.1/caracal (unmaintained))
-- **Original** https://review.opendev.org/c/openstack/ironic/+/986363 
-(2024.2/dalmatian)
-- **Original** https://review.opendev.org/c/openstack/ironic/+/986362 
-(2025.1/epoxy)
-- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000986 
-(2025.1/epoxy)
-- **Original** https://review.opendev.org/c/openstack/ironic/+/986361 
-(2025.2/flamingo)
-- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000985 
-(2025.2/flamingo)
-- **Original** https://review.opendev.org/c/openstack/ironic/+/986235 
-(2026.1/gazpacho)
-- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000984 
-(2026.1/gazpacho)
-- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/999701 
-(2026.2/hibiscus)
-
-
-Credits
-~~~~~~~
-- Dmitry Tantsur from Metal3.io Security Team
-- Tuomo Tanskanen from Metal3.io Security Team
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2148331
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-42510
-
-
-Notes
-~~~~~
-- A CVE request was filed with MITRE on 2026-04-27.
-- Patches for unmaintained branches are provided as a courtesy.
-- The ``ipmitool-shellinabox`` console interface is already scheduled
-   for removal from Ironic for lack of security support for shellinabox.
-   Security sensitive operators are strongly encouraged to stop use of
-   this console interface immediately.
-- **Errata 2** The console regression affects the 26.1.6, 29.0.5,
-   29.0.6, 32.0.1, 35.0.1, 36.0.0, 37.0.0 and 38.0.0 releases;
-   stable/2024.2 has since been retired, so 26.1.6 can only be corrected
-   by applying the additional fix locally.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2026-08-19 - Errata 2
-- 2026-04-29 - Errata 1
-- 2026-04-27 - Original Version
-
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+Alexander
