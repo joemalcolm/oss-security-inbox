@@ -1,119 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/9
-Message-ID: <2b677f79-742c-4912-b916-59ab56de8bed@cpansec.org>
-Date: Thu, 13 Aug 2026 17:30:30 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/07/7
+Message-ID: <bfa01c32-3f21-4865-8010-95ef51c4b118@cpansec.org>
+Date: Fri, 7 Aug 2026 20:04:36 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2022-4993: HTML::FormHandler versions through 0.40068 for Perl allow attacker selected method dispatch and resource exhaustion because _apply_actions and add_error use error message text built from request data as a Locale::Maketext bracket notation template
+Subject: CVE-2026-17435: File::Rotate::Simple versions before 0.4.0 for Perl create the target of dangling symlinks when rotating files
 Content-Type: text/plain; charset=utf-8
 
 
 ========================================================================
-CVE-2022-4993                                        CPAN Security Group
+CVE-2026-17435                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2022-4993
-   Distribution:  HTML-FormHandler
-       Versions:  through 0.40068
+         CVE ID:  CVE-2026-17435
+   Distribution:  File-Rotate-Simple
+       Versions:  before 0.4.0
 
-       MetaCPAN:  https://metacpan.org/dist/HTML-FormHandler
-       VCS Repo:  https://github.com/gshank/html-formhandler
+       MetaCPAN:  https://metacpan.org/dist/File-Rotate-Simple
+       VCS Repo:  https://github.com/robrwo/File-Rotate-Simple
 
 
-HTML::FormHandler versions through 0.40068 for Perl allow attacker
-selected method dispatch and resource exhaustion because _apply_actions
-and add_error use error message text built from request data as a
-Locale::Maketext bracket notation template
+File::Rotate::Simple versions before 0.4.0 for Perl create the target
+of dangling symlinks when rotating files
 
 Description
 -----------
-HTML::FormHandler versions through 0.40068 for Perl allow attacker
-selected method dispatch and resource exhaustion because _apply_actions
-and add_error use error message text built from request data as a
-Locale::Maketext bracket notation template.
+File::Rotate::Simple versions before 0.4.0 for Perl create the target
+of dangling symlinks when rotating files.
 
-add_error hands its first argument to the language handle as the
-Locale::Maketext message key, and the default handle's lexicon sets
-`_AUTO`, so a string that is not a lexicon entry is compiled as a
-bracket notation template instead of being looked up. In a bracket
-group the first token names a method called on the language handle and
-the remaining tokens are its arguments.
+When the file to be rotated is a symbolic link to a missing file, and
+the touch option is enabled, then the rotate method assumes that the
+file is absent (since the existence check is against the target), and
+does not rotate it. But it touches the file, which creates the target.
 
-Three kinds of text the library did not author reach that position.
-_apply_actions installs a `$SIG{__WARN__}` handler that stores the
-warning text in `$error_message`, and a captured warning survives a
-successful action, so a field carrying a numeric transform turns
-`Argument "[sprintf,%50000000d,0]" isn't numeric` into the template; a
-warning quotes the submitted value verbatim, so the group is well
-formed and dispatches. `$error_message ||= $tobj->validate($new_value)`
-takes a type constraint's own failure message, which renders the
-rejected value through a partial dumper in bracket and comma form
-(Devel::PartialDump when Moose can load it, Type::Tiny's own dumper
-always), so a field with `apply => [ Str ]` given a parameter sent more
-than once, which arrives as an array, gets `Reference ["a","b"] did not
-pass type constraint "Str"` as its template, from a request that
-carries no bracket character of its own. A coercion or transform
-exception reaches it the same way. Beyond those, a validator whose
-message contains the field value puts that value in the template
-directly, and add_error replaces the message list with the contents of
-an arrayref first argument (`@...sage = @{$message[0]} if ref
-$message[0] eq 'ARRAY'`), so a value arriving as an array fills the
-argument slots from the same request as well.
+An attacker that has the ability to create the symlink can use this to
+create an arbitrary file with permissions of the process rotating the
+files (which may be different from the process that normally writes to
+the log file that is being rotated).
 
-A malformed group such as `[0]` makes the compile croak, and
-HTML::FormHandler::I18N::maketext and add_error each re-raise that as a
-die, so process() throws. A well formed group naming sprintf reaches
-CORE::sprintf with an attacker chosen field width. Any caller that
-applies a type constraint or a transform to an untrusted field, or
-whose validator passes an untrusted field value to add_error, can be
-made to throw an unhandled exception out of process(), or to allocate
-an arbitrary amount of memory in one request, and an application whose
-language handle subclass defines side effecting public methods makes
-those callable with attacker chosen arguments. The dumped type
-constraint message is bounded to the exception, because both dumpers
-quote non-numeric elements so the method slot is never an attacker
-chosen name. The built-in messages pass fixed templates with the value
-in an argument slot, where it stays inert, and the built-in field types
-attach explicit message callbacks, so neither is affected.
+Note that the touch option is disabled by default.
 
 Problem types
 -------------
-- CWE-1336 Improper Neutralization of Special Elements Used in a
-   Template Engine
-- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
-   ('Unsafe Reflection')
+- CWE-59 Improper Link Resolution Before File Access ('Link Following')
 
 Workarounds
 -----------
-No fixed release is available. Apply the patch, which escapes the
-bracket notation metacharacters in the trapped warning, the type
-constraint message and the coercion or transform exception before they
-are used as a template, and in element 0 of an arrayref first argument.
-A message an application builds from a field value cannot be told apart
-from a template inside the library: pass a fixed template to add_error
-and supply the value as an argument, as the built-in messages do
-(`$field->add_error('[_1] not allowed', $field->value)`), so the value
-lands in an inert argument slot. Setting an allowlist on the language
-handle bounds the methods bracket notation can reach.
+For deployments that cannot be upgraded, ensure the touch option is
+disabled.
+
+
+Solutions
+---------
+Upgrade to version 0.4.0 or later.
+
 
 References
 ----------
-https://security.metacpan.org/patches/H/HTML-FormHandler/0.40068/CVE-2022-4993-r2.patch
-https://metacpan.org/release/GSHANK/HTML-FormHandler-0.40068/source/lib/HTML/FormHandler/Validate.pm#L161-261
-https://metacpan.org/release/GSHANK/HTML-FormHandler-0.40068/source/lib/HTML/FormHandler/Field.pm#L861-876
-https://metacpan.org/release/GSHANK/HTML-FormHandler-0.40068/source/lib/HTML/FormHandler/I18N/en_us.pm#L9-11
-https://www.cve.org/CVERecord?id=CVE-2012-6329
-
-Timeline
---------
-- 2022-01-10: Issue was first reported to author without a proof of
-   concept.
-- 2024-10-27: Issue was forwarded to CPANSec.
-- 2026-06-22: Investigation and development of proof of concept by
-   CPANSec, aided by LLM tooling.
-- 2026-07-02: Issue was again reported to author with proof of concept.
-- 2026-07-30: Additional analysis and development of patch by CPANSec,
-   aided by LLM tooling.
+https://github.com/robrwo/File-Rotate-Simple/commit/ead3f5c0e51217b34d286aa243949dba60b39eba.patch
+https://github.com/robrwo/File-Rotate-Simple/security/advisories/GHSA-fpmm-8f6h-wv74
+https://metacpan.org/release/RRWO/File-Rotate-Simple-v0.4.0/changes
 
 
 
