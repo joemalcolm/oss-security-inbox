@@ -1,50 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/4
-Message-ID: <1a51664d-3a49-4617-a13e-deecfa54aeab@cpansec.org>
-Date: Mon, 20 Jul 2026 08:05:20 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-6656: Crypt::Password versions through 0.28 for Perl are susceptible to timing attacks
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/07/3
+Message-ID: <78dc3b77-1c9b-50a5-0e7a-89e8a455ad38@apache.org>
+Date: Fri, 07 Aug 2026 07:32:46 +0000
+From: Chaokun Yang <chaokunyang@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-71558: Apache Fory: Heap type confusion in C++ polymorphic smart-pointer deserialization 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
 
-========================================================================
-CVE-2026-6656                                        CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-6656
-   Distribution:  Crypt-Password
-       Versions:  through 0.28
+- Apache Fory 0.14.0 before 1.5.0
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-Password
+Description:
 
+Heap type confusion vulnerability in Apache Fory C++ deserialization.
 
-Crypt::Password versions through 0.28 for Perl are susceptible to
-timing attacks
-
-Description
------------
-Crypt::Password versions through 0.28 for Perl are susceptible to
-timing attacks.
-
-The check_password method uses the built-in eq operator. This allows
-discrepancies in timing to be used to guess the underlying hash.
-
-Problem types
--------------
-- CWE-208 Observable Timing Discrepancy
-
-Workarounds
------------
-This module has not been updated since 2012.
-
-Users should migrate to an alternative solution.
+This issue affects Apache Fory C++ versions from 0.14.0 before 1.5.0. A crafted input payload can bypass type compatibility checks during polymorphic smart-pointer deserialization, causing an object of an incompatible type to be treated as the declared base type. This may result in undefined behavior and potentially lead to denial of service or arbitrary code execution.
 
 
-References
-----------
-https://metacpan.org/release/DRSTEVE/Crypt-Password-0.28/source/lib/Crypt/Password.pm#L190-193
-https://rt.cpan.org/Ticket/Display.html?id=180162
+Users are recommended to upgrade to Apache Fory 1.5.0, which fixes this issue. Applications not using Apache Fory C++ polymorphic smart-pointer deserialization are not affected.
 
+Credit:
 
+Zhixi "Jace Sun", independent security researcher (reporter)
+
+References:
+
+https://fory.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-71558
 
