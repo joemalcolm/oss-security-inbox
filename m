@@ -1,33 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/10/13
-Message-ID: <2d8faa44-6bb1-8490-ee53-7aa155112917@apache.org>
-Date: Wed, 10 Jun 2026 16:40:39 +0000
-From: Jacopo Cappellato <jacopoc@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/2
+Message-ID: <31e49b5f-87a3-8e28-5c93-e060514fed38@apache.org>
+Date: Sun, 09 Aug 2026 04:25:54 +0000
+From: Velmurugan Periasamy <vel@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50223: Apache OFBiz: DataResource Low-Privileged Authenticated FreeMarker Template Injection Leads to Remote Code Execution 
+Subject: CVE-2026-28672: Apache Ranger: OS Command Injection via Username in UnixUserGroupBuilder 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache OFBiz before 24.09.07
+- Apache Ranger (org.apache.ranger.unixusersync) 0.6 through 2.8
 
 Description:
 
-Improper Control of Generation of Code ('Code Injection') vulnerability in Apache OFBiz allows a low-privileged authenticated user with Content/DataResource editing privileges to perform template injection attacks that could lead to Remote Code Execution.
+Improper Neutralization of Special Elements used in a Command ('Command Injection') vulnerability in Apache Ranger.
 
-This issue affects Apache OFBiz: before 24.09.07.
-
-Users are recommended to upgrade to version 24.09.07, which fixes the issue.
+This issue affects Apache Ranger: from 0.6 through 2.8.
 
 Credit:
 
-yi (reporter)
-Jongyeon Lee (reporter)
+Andrea Cosentino (finder)
 
 References:
 
-https://ofbiz.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50223
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-28672
 
