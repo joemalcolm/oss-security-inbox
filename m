@@ -1,70 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/5
-Message-ID: <ai8N9tPO4mAda87d@pjcj.com>
-Date: Sun, 14 Jun 2026 22:28:36 +0200
-From: Paul Johnson <paul@...j.net>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-11527: Config::IniFiles versions before 3.001000 for Perl allow OS command injection and file overwrite via a 2-arg open() of the -file argument in _make_filehandle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/7
+Message-ID: <ebb0bad0-0ffe-015b-8656-76ebd6142de6@apache.org>
+Date: Sun, 09 Aug 2026 04:29:52 +0000
+From: Velmurugan Periasamy <vel@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-55799: Apache Ranger: Remote Code Execution Vulnerability in GraalScriptEngineCreator 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-11527                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-        CVE ID:  CVE-2026-11527
-  Distribution:  Config-IniFiles
-      Versions:  before 3.001000
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/Config-IniFiles
-      VCS Repo:  https://github.com/shlomif/perl-Config-IniFiles
+- Apache Ranger through 2.8.0
 
+Description:
 
-Config::IniFiles versions before 3.001000 for Perl allow OS command
-injection and file overwrite via a 2-arg open() of the -file argument
-in _make_filehandle
+Remote Code Execution Vulnerability in GraalScriptEngineCreator in Apache Ranger <= 2.8.0
+Users are recommended to upgrade to version [FIXED_VERSION], which fixes this issue.
 
-Description
------------
-Config::IniFiles versions before 3.001000 for Perl allow OS command
-injection and file overwrite via a 2-arg open() of the -file argument
-in _make_filehandle.
+Credit:
 
-Config::IniFiles::_make_filehandle opens a filename argument with
-Perl's 2-arg open(), so a filename that begins or ends with a pipe ("|
-cmd", "cmd |") or begins with a redirect ("> path", ">> path") is run
-as a command or redirect rather than opened as a file. The helper is
-the open path behind the documented -file argument: new(-file =>
-$thing) reaches it through ReadConfig. An in-memory scalar reference
-(-file => \$text) does not open a path and is unaffected.
+kippford Q. <k3ppf0r@...il.com> (finder)
 
-Any caller that forwards untrusted input to the -file argument can run
-an arbitrary command or truncate a file under the process UID.
+References:
 
-Problem types
--------------
-- CWE-78 Improper Neutralization of Special Elements used in an OS
-  Command ('OS Command Injection')
-- CWE-73 External Control of File Name or Path
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-55799
 
-Workarounds
------------
-For deployments that cannot upgrade to 3.001000, do not pass untrusted
-input as the -file argument. Callers can open the file themselves and
-pass the resulting filehandle, or pass the configuration as an
-in-memory scalar reference, which bypasses the affected string path.
-
-
-Solutions
----------
-Upgrade to Config::IniFiles 3.001000 or later, which opens the -file
-argument with a 3-arg read open so the filename is never interpreted as
-a command or redirect.
-
-
-References
-----------
-https://github.com/shlomif/perl-Config-IniFiles/commit/3e48f9627fbba4dae5de35be1f735cdeb7e47fb8.patch
-https://metacpan.org/release/SHLOMIF/Config-IniFiles-3.001000/changes
-
--- 
-Paul Johnson - paul@...j.net
