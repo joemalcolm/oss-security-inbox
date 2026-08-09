@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/5
-Message-ID: <anSjfoJ5BWBSrdGW@netmeister.org>
-Date: Thu, 6 Aug 2026 11:08:46 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/3
+Message-ID: <71951e2f-1c75-7c11-170d-132a87b20e8a@apache.org>
+Date: Sun, 09 Aug 2026 04:26:41 +0000
+From: Velmurugan Periasamy <vel@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Some Changes to GNOME Security Tracking
+Subject: CVE-2026-32227: Apache Ranger: SQL Injection vulnerability in lookup functionality 
 Content-Type: text/plain; charset=utf-8
 
-Francis Perron <francis@...uxfoundation.org> wrote:
-> We are going to try our best and involve project
-> maintainers early in the development of the fixes 
+Severity: moderate 
 
-> We will not take generic findings and send them through Upstream directly;
-> our pipeline will validate, deduplicate, enrich and get a patch ready
-> before any disclosure.
+Affected versions:
 
-Aren't those two statements somewhat conflicting?
-I.e., early involvement of the maintainers vs
-(paraphrased) "get a patch ready before any
-disclosure" -- or is "disclosure" here "disclosure
-to the public" and not "disclosure to the
-maintainer"?
+- Apache Ranger (org.apache.ranger.services) 2.0.0 through 2.8.0 unknown
 
-I happen to think that _patch development_ absolutely
-should happen with maintainer / upstream involvement
-and not in a vacuum prior to disclosure to upstream.
+Description:
 
-IME, developing a fix is rarely the most difficult
-part; a concrete description with a reproducible
-proof-of-concept is usually the much harder part.
+SQL Injection vulnerability vulnerability in Apache Ranger.
 
--Jan
+This issue affects .
+
+Users are recommended to upgrade to version [FIXED_VERSION], which fixes the issue.
+
+Credit:
+
+罗鑫 <lx2317103712@...il.com> (finder)
+
+References:
+
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-32227
+
