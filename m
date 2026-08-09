@@ -1,39 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/4
-Message-ID: <0ff8ce17-d5c5-adba-8e9b-c0d93491ffbe@apache.org>
-Date: Mon, 08 Jun 2026 12:50:06 +0000
-From: Eric Covener <covener@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-29167: Apache HTTP Server: mod_ldap per-dir use-after-free 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/1
+Message-ID: <3ac7a0973c8f6b495f1caa782db6340b@cpansec.org>
+Date: Sat, 08 Aug 2026 22:27:15 -0300
+From: Timothy Legge <timlegge@...nsec.org>
+To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
+Subject: CVE-2026-17510: Crypt::OpenSSL::PKCS12 versions before 1.98 for Perl allow a NULL pointer dereference in print_attribute via a zero length BMPSTRING attribute
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+========================================================================
+CVE-2026-17510                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-17510
+   Distribution:  Crypt-OpenSSL-PKCS12
+       Versions:  before 1.98
 
-- Apache HTTP Server 2.4.0 through 2.4.67
+       MetaCPAN:  https://metacpan.org/dist/Crypt-OpenSSL-PKCS12
+       VCS Repo:  https://github.com/dsully/perl-crypt-openssl-pkcs12
 
-Description:
 
-Use After Free vulnerability in Apache HTTP Server with mod_ldap in per-directory configuration
+Crypt::OpenSSL::PKCS12 versions before 1.98 for Perl allow a NULL
+pointer dereference in print_attribute via a zero length BMPSTRING
+attribute
 
-This issue affects Apache HTTP Server: from 2.4.0 through 2.4.67.
+Description
+-----------
+Crypt::OpenSSL::PKCS12 versions before 1.98 for Perl allow a NULL
+pointer dereference in print_attribute via a zero length BMPSTRING
+attribute.
 
-Users are recommended to upgrade to version 2.4.68, which fixes the issue.
+print_attribute() sizes the destination buffer for a BMPSTRING
+attribute from its declared byte length with `Renew(*attribute, length,
+char)`. A zero length attribute makes that a zero size reallocation,
+which Perl implements as a free returning NULL, so the buffer pointer
+becomes NULL, the following `strncpy` copies nothing, and the caller
+dereferences NULL in the `strlen()` it passes to `newSVpvn()`. A zero
+length BMPSTRING is even length, so the ASN.1 decoder accepts it and
+the value reaches this code. The UTF8STRING, OCTET STRING and BIT
+STRING arms size on `length + 1` or `length * 4 + 1` and are
+unaffected.
 
-Credit:
+Any caller that passes an untrusted PKCS#12 file to info_as_hash() can
+crash the process. info() prints attribute values directly without
+sizing a buffer and is unaffected.
 
-Pavel Kohout, Aisle Research, Aisle.com (finder)
+Problem types
+-------------
+- CWE-476 NULL Pointer Dereference
 
-References:
+Workarounds
+-----------
+For deployments that cannot upgrade to 1.98, ensure that PKCS#12 files
+passed to info_as_hash() come from trusted sources.
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-29167
 
-Timeline:
+Solutions
+---------
+Upgrade to Crypt::OpenSSL::PKCS12 1.98 or later, which sizes the buffer
+on the decoded string length plus one and writes an explicit
+terminator.
 
-2026-03-02: reported
-2026-06-03: fixed in 2.4.x by r1934935
-2026-06-08: 2.4.68 released
+
+References
+----------
+https://metacpan.org/release/JONASBN/Crypt-OpenSSL-PKCS12-1.98/source/Changes.md
+https://github.com/dsully/perl-crypt-openssl-pkcs12/commit/6cb282d8d8e8ded4859551cd2d3cfa7c6028ce48.patch
 
