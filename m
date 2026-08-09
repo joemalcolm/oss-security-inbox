@@ -1,60 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/7
-Message-ID: <d221babf-3ef0-579d-162e-bd8aab744dc3@apache.org>
-Date: Fri, 24 Jul 2026 07:10:22 +0000
-From: Richard Zowalla <rzo1@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-63317: Apache OpenNLP: Arbitrary Class Instantiation in GeneratorFactory via Feature Descriptor XML 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/12
+Message-Id: <26D09784-6FF0-4690-81CC-9F9DE92E8903@stig.io>
+Date: Sun, 9 Aug 2026 19:51:48 +0200
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-15534: Perl versions through 5.45.1 have out-of-bounds heap reads and writes during regular expression matching via an undersized superlinear cache in S_regmatch
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-15534                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-15534
+  Distribution:  perl
+      Versions:  through 5.45.1
 
-- Apache OpenNLP (org.apache.opennlp:opennlp-tools) 3.0.0-M1 before 3.0.0-M4
-- Apache OpenNLP (org.apache.opennlp:opennlp-tools) before 2.5.11
+      MetaCPAN:  https://metacpan.org/dist/perl
+      VCS Repo:  https://github.com/Perl/perl5
 
-Description:
 
-Arbitrary Class Instantiation via XML Feature Generator Descriptor and Format Name in Apache OpenNLP
+Perl versions through 5.45.1 have out-of-bounds heap reads and writes
+during regular expression matching via an undersized superlinear cache
+in S_regmatch
 
-Versions Affected: 
+Description
+-----------
+Perl versions through 5.45.1 have out-of-bounds heap reads and writes
+during regular expression matching via an undersized superlinear cache
+in S_regmatch.
 
-- before 2.5.10
-- before 3.0.0-M5
+The regex engine's superlinear cache holds one bit per subject position
+for each participating WHILEM node, so the bit count is the subject
+length plus one times the number of nodes. Nothing checks that product
+for positive overflow of the signed 32-bit count: a 286331153 byte
+subject matched against a pattern with 15 participating nodes stores
+the count as 14, leaving a two byte cache. The cache is then indexed
+from the real match position and node number, so reads go past the end
+of the allocation, and on failure CACHEsayNO sets a bit past it.
 
-Description: 
+A caller that matches an attacker controlled subject of this size
+against a pattern of this shape can crash the process or corrupt heap
+memory.
 
-Three code paths in Apache OpenNLP load a class by its fully-qualified name via Class.forName() and invoke its no-arg constructor without any prior validation of the class name or its type. 
+Problem types
+-------------
+- CWE-190 Integer Overflow or Wraparound
+- CWE-125 Out-of-bounds Read
+- CWE-787 Out-of-bounds Write
 
-The affected paths are: 
+Solutions
+---------
+Upgrade to a future Perl release, or apply the upstream patches.
 
-(1) GeneratorFactory, which reads the class attribute of generator elements in an XML feature generator descriptor; such descriptors are embedded as artifacts in model archives (e.g. TokenNameFinder and POSTagger models) and are parsed during model loading, so an attacker who can supply a crafted model archive controls the class name directly. 
 
-(2) StreamFactoryRegistry.getFactory(Class, String), which falls back to interpreting an unregistered format name as the fully-qualified class name of an ObjectStreamFactory; this is exploitable in applications that pass untrusted format names (e.g. exposing the -format parameter of the command-line tooling to external input). 
+References
+----------
+https://github.com/Perl/perl5/commit/568e6fd238867bb9e99fa3f47cba3169009239e0.patch
+https://github.com/Perl/perl5/commit/54cf3d44cbbedd17d774e9a37921963e8fd5d0cb.patch
 
-(3) StringInterners, which instantiates the interner implementation named by the opennlp.interner.class system property; this value is normally deployer-controlled, so it is hardened as defense in depth rather than being independently attacker-reachable.
-
-Exploitation requires a class with attacker-useful side effects in its static initializer or no-arg constructor (JNDI lookup, outbound network I/O, filesystem access) to be present on the classpath, so this is not drop-in remote code execution. T
-
-Mitigation: 
-
-Upgrade to a fixed release. 
-
-The fix routes all three paths through ExtensionLoader.instantiateExtension(...), which consults a package-prefix allowlist before Class.forName() is invoked, so a disallowed class is never loaded, initialized, or constructed. 
-Classes under the opennlp. prefix remain permitted by default. Deployments that load models referencing feature generator factories, object stream factories, or string interners outside opennlp.* must opt those packages in, either programmatically via ExtensionLoader.registerAllowedPackage(String) before the first model load, or by setting the OPENNLP_EXT_ALLOWED_PACKAGES system property to a comma-separated list of allowed package prefixes. 
-
-Users who cannot upgrade immediately should ensure all model files and format names are sourced from trusted origins and should audit their classpath for classes with side-effecting static initializers or constructors.
-
-This issue is being tracked as OPENNLP-1890 
-
-Credit:
-
-Subramanian S (finder)
-
-References:
-
-https://opennlp.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-63317
-https://issues.apache.org/jira/browse/OPENNLP-1890
 
