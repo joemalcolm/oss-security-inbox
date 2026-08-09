@@ -1,17 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/13
-Message-ID: <2c1b8381-4932-41bd-b6bc-ad598ece68ef@geeklan.co.uk>
-Date: Sun, 9 Aug 2026 21:02:52 +0100
-From: Sevan Janiyan <venture37@...klan.co.uk>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/8
+Message-ID: <656961d0-50cf-8693-fd88-7d7fdd76b53a@apache.org>
+Date: Sun, 09 Aug 2026 04:30:17 +0000
+From: Velmurugan Periasamy <vel@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-15534: Perl versions through 5.45.1 have out-of-bounds heap reads and writes during regular expression matching via an undersized superlinear cache in S_regmatch
+Subject: CVE-2026-55814: Apache Ranger: Download APIs expose plugin data without authentication 
 Content-Type: text/plain; charset=utf-8
 
-On 09/08/2026 18:51, Stig Palmquist wrote:
-> Perl versions through 5.45.1
+Severity: low 
 
-If anyone is wondering, that means up to and including version 5.45.1 of 
-Perl.
+Affected versions:
 
+- Apache Ranger through 2.8.0
 
-Sevan
+Description:
+
+Missing Authentication in Apache Ranger Download APIs on versions <= 2.8.0.
+Users are recommended to upgrade to version [FIXED_VERSION], which fixes this issue.
+
+Credit:
+
+Andrew Rukin (Arenadata) (finder)
+
+References:
+
+https://ranger.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-55814
+
