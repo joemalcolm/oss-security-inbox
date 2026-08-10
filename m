@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/25
-Message-ID: <cbfd5ad8-1cdd-ccda-c299-2d0073dd3fdf@apache.org>
-Date: Thu, 06 Aug 2026 10:49:28 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/10/1
+Message-ID: <331c70f4-e449-ddc2-637b-94bfe5e0c934@apache.org>
+Date: Mon, 10 Aug 2026 06:47:22 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68481: Apache CXF: Revocation bypass in DefaultEncryptingOAuthDataProvider 
+Subject: CVE-2026-44630: Apache IoTDB: RPC service denial of service via unchecked Thrift string length 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: important 
 
 Affected versions:
 
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.2.0 before 4.2.3
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) 4.0.0 before 4.1.8
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-oauth2) before 3.6.12
+- Apache IoTDB before 1.3.8
+- Apache IoTDB 2.0.0 before 2.0.10
 
 Description:
 
-In Apache CXF's DefaultEncryptingOAuthDataProvider, revoked access tokens still decrypt successfully, and TokenIntrospectionService reports active:true. The same applies to refresh tokens. This violates the RFC stipulations that 'The authorization server MUST invalidate the token.' and 'introspection of a revoked token MUST return {"active":false}'. Users are recommended to upgrade to versions 4.2.3 or 4.1.8 or 3.6.12, which fix this issue.
+Improper validation of length fields in the Apache IoTDB RPC service may allow a remote unauthenticated attacker to cause a denial of service. By sending a crafted malformed Thrift frame, an attacker can cause IoTDB to allocate an excessive amount of memory and crash with an OutOfMemoryError.
 
-Credit:
 
-Guanping Zhang reported this vulnerability (finder)
+This issue affects Apache IoTDB: before 1.3.8, from 2.0.0 before 2.0.9.
+
+Users are recommended to upgrade to version 2.0.10, which fixes the issue.
 
 References:
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68481
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-44630
 
