@@ -1,55 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/8
-Message-ID: <c0f971b1-1c01-4252-8bd5-f7974cf4e299@apache.org>
-Date: Tue, 25 Aug 2026 22:59:57 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/10/2
+Message-ID: <20260810093339.6de7b3e7@hboeck.de>
+Date: Mon, 10 Aug 2026 09:33:39 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68569: Apache Tomcat: Principal lookup can fail open in some cases
+Subject: Roundcube webmail: Many security fixes in 1.6.18 / 1.7.3
 Content-Type: text/plain; charset=utf-8
 
-Severity: important
+Release announcement from Roundcube Webmail:
+https://roundcube.net/news/2026/08/09/security-updates-1.6.18-and-1.7.3
 
-Affected versions:
+## Security fixes
 
-- Apache Tomcat 11.0.0-M1 through 11.0.24
-- Apache Tomcat 10.1.0-M1 through 10.1.57
-- Apache Tomcat 9.0.0.M1 through 9.0.120
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.0 through 70.109
-- Apache Tomcat before 7.0.0 unknown
+  * Add basic validation for content proxied by the css proxy
+  * Fix SSRF bypass via specific local address URLs using 100.64.0.0/10
+    and fe80::/10 nets, reported by Dmytro Ivanenko
+  * Fix SSRF filter bypass via various forms of nip.io/sslip.io
+    hostnames evading is_local_url() check, reported by Milan Hoppe
+  * Fix remote content blocking bypass via unclosed url() in a FuncIRI
+    attribute, reported by Milan Hoppe
+  * Fix LDAP filter injection via unescaped %u/%fu/%d substitution into
+    the `search_filter`, reported by Milan Hoppe
+  * Fix arbitrary Sieve script injection via a filter rule name
+    bypassing `managesieve_disabled_actions`, reported by Milan Hoppe
+  * Fix RCE via cmd_learn driver of markasjunk plugin, reported by
+    nept1337
+  * Fix IMAP command injection via mail search and LITERAL+ byte-count
+    desynchronization, reported by Zach Hanley of Horizon3.ai
+  * Fix password’s modoboa driver leak of an authentication token to a
+    user-controlled host, reported by
+    [meifukun](https://github.com/meifukun)
+  * Fix stored XSS in “Add to address book” action, reported by Paulos
+    Yibelo from pwn.ai
+  * Fix HTML/CSS sanitization bypass via SVG animate `by` attribute,
+    reported by vectrain
 
-Description:
+See the full changelogs in the release notes on the Github download
+pages for the updated versions
+[1.6.18](https://github.com/roundcube/roundcubemail/releases/tag/1.6.18)
+and
+[1.7.3](https://github.com/roundcube/roundcubemail/releases/tag/1.7.3).
 
-Improper Authentication vulnerability in Apache Tomcat meant that in 
-some circumstances (e.g. CLIENT-CERT, SPNEGO) that a user would be 
-authenticated even if the user did not exist in the DataSourceRealm.
+We strongly recommend to update all productive installations of
+Roundcube 1.6.x and 1.7.x with this new versions.
 
-
-
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
-10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120.
-
-
-
+URL:
+https://roundcube.net/news/2026/08/09/security-updates-1.6.18-and-1.7.3
 
 
 
-
-The following versions were EOL at the time the CVE was created but are
-known to be affected: from 8.5.0 through 8.5.100, from 7.0.0 through 
-7.0.109. Other unsupported versions may also be affected.
-
-
-
-
-
-
-
-Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, 
-which fix the issue.
-
-References:
-
-https://lists.apache.org/thread/8robqo76q0osxgw0b5lcwgz0hcf9h4zc
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68569
+-- 
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
