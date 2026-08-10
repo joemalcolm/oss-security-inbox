@@ -1,71 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/06/4
-Message-ID: <9bbe71c705197dba5a14743725499de5@cpansec.org>
-Date: Sun, 06 Sep 2026 19:25:51 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-86304: MojoX::Authentication versions before 0.006 for Perl allow SAML authentication bypass because parse_assertion builds Net::SAML2::Binding::POST without a trust anchor
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/10/5
+Message-ID: <e1a30d3e-b20c-def2-eaf3-bd91c4495405@apache.org>
+Date: Mon, 10 Aug 2026 16:01:36 +0000
+From: Jarek Potiuk <potiuk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-68871: Apache Airflow Yandex provider: yandex Lockbox backend: team-scope guard bypass resolves another team's Connection or Variable 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-86304                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-         CVE ID:  CVE-2026-86304
-   Distribution:  MojoX-Authentication
-       Versions:  before 0.006
+Affected versions:
 
-       MetaCPAN:  https://metacpan.org/dist/MojoX-Authentication
+- Apache Airflow Yandex provider (apache-airflow-providers-yandex) before 4.5.1
 
+Description:
 
-MojoX::Authentication versions before 0.006 for Perl allow SAML
-authentication bypass because parse_assertion builds
-Net::SAML2::Binding::POST without a trust anchor
+The Yandex Lockbox secrets backend in Apache Airflow's Yandex provider resolved a team-scoped Connection or Variable id through the team-agnostic lookup when the team-scoped lookup missed. In a deployment running multi-team mode with this backend, a caller in one team could resolve a secret belonging to another team by supplying an id that spells out that team's namespace, obtaining its credentials in full. No unusual configuration is required beyond enabling multi-team mode and using this backend. Users are advised to upgrade to apache-airflow-providers-yandex 4.5.1 or later, which refuses the team-agnostic fall-through for an id that could name a team namespace.
 
-Description
------------
-MojoX::Authentication versions before 0.006 for Perl allow SAML
-authentication bypass because parse_assertion builds
-Net::SAML2::Binding::POST without a trust anchor.
+Credit:
 
-parse_assertion in MojoX::Authentication::Model::SAML2 calls
-Net::SAML2::Binding::POST->new with no cacert, cert_text or anchors
-argument, then passes the returned XML to
-Net::SAML2::Protocol::Assertion->new_from_xml with the IdP signing
-certificate as cacert. In Net::SAML2 before 0.86 that certificate
-guards only encrypted assertions, so the signature on an unencrypted
-assertion is checked against the certificate the response itself
-carries.
+Apache Airflow security team (finder)
+Jarek Potiuk (remediation developer)
 
-An attacker starts a SAML login, then posts a response signed with a
-certificate of their own. The audience, InResponseTo and timestamp
-checks that follow are all satisfiable by the attacker, so the response
-authenticates any NameID it carries.
+References:
 
-Problem types
--------------
-- CWE-347 Improper Verification of Cryptographic Signature
-
-Impacts
--------
-- CAPEC-115 Authentication Bypass
-
-Workarounds
------------
-For deployments that cannot upgrade, install Net::SAML2 0.86 or later.
-SAML login then fails rather than accepting a forged assertion.
-
-Solutions
----------
-Upgrade to MojoX-Authentication 0.006 or later.
-
-References
-----------
-https://metacpan.org/release/POLETTIX/MojoX-Authentication-0.006/source/Changes
-https://metacpan.org/release/POLETTIX/MojoX-Authentication-0.004/source/lib/MojoX/Authentication/Model/SAML2.pm#L188
-https://www.cve.org/CVERecord?id=CVE-2026-18089
-
-Timeline
---------
-- 2026-07-31: Version 0.006 released with fix.
+https://github.com/apache/airflow/pull/70877
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68871
 
