@@ -1,24 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/1
-Message-ID:  <SYBPR01MB6336F3768C6EBED78F9F5E88EEC82@SYBPR01MB6336.ausprd01.prod.outlook.com>
-Date: Fri, 31 Jul 2026 02:02:01 +0000
-From: Peter Gutmann <pgut001@...auckland.ac.nz>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Some Changes to GNOME Security Tracking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/10
+Message-ID: <antTVEMW-L2Q8C8p@definition.pseudorandom.co.uk>
+Date: Tue, 11 Aug 2026 17:52:36 +0100
+From: Simon McVittie <smcv@...ian.org>
+To: oss-security@...ts.openwall.com
+Subject: xdg-dbus-proxy: GHSA-r7hp-698j-2h6c: broadcast message filtering bypass
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+https://github.com/flatpak/xdg-dbus-proxy/security/advisories/GHSA-r7hp-698j-2h6c
 
->2) The GNOME security team will no longer forward vulnerability reports
->   to projects that ban AI-generated content, since most reports they
->   get these days have at least some AI-generated content.
+xdg-dbus-proxy is a filtering proxy for D-Bus messages, used by Flatpak 
+and perhaps other sandboxing frameworks (for example Firejail seems to 
+contain references to it).
 
-So you've got a bunch of projects where people are clamoring for them to
-reject anything that might have been touched by AI, and another bunch of
-projects where people have decided to refuse to take part in anything that
-rejects things that have been touched by AI.
+xdg-dbus-proxy versions 0.1.6 and 0.1.7 had an incorrect implementation 
+of broadcast message filtering, which allowed sandboxed apps to receive 
+more broadcast messages than the configured filter rules allow. In 
+Flatpak, this typically affects the D-Bus session bus (user bus) used by 
+user applications, and the AT-SPI bus used by accessibility tools.
 
-Just to sort things out in my mind, which of the two is the People's Front of
-Judea and which is the Judean People's Front?
+A CVE ID has been requested, but is not yet available: please 
+cross-reference this vulnerability as GHSA-r7hp-698j-2h6c until a CVE ID 
+becomes available.
 
-Peter.
+This is fixed in 0.1.8, or can be patched in older versions by reverting 
+commit 029784535ed9cbec6c431b12ba1a9eca6c147055 "Don't require TALK 
+permission for broadcast rules". Versions 0.1.5 or older are not 
+vulnerable.
+
+Note that fixing this vulnerability may cause regressions unless app 
+frameworks are updated appropriately: see the full advisory for details. 
+In Flatpak, this regression was avoided by commit 2afb4cf "run-dbus: 
+Correct --broadcast rules for the AT-SPI bus", which was included in the 
+1.18.1 and 1.19.0 releases. Other sandboxing frameworks might need a 
+similar change.
+
+-- 
+Simon McVittie, Collabora Ltd. / Debian
