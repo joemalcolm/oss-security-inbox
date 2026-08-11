@@ -1,43 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/22/3
-Message-ID: <66cce82d-8342-4934-82a2-fa2f9e4d65f6@canonical.com>
-Date: Mon, 22 Jun 2026 18:21:02 +0530
-From: Sudhakar Verma <sudhakar.verma@...onical.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/5
+Message-ID: <df7cb6f8-c393-4ae0-864f-36239ca22759@pipping.org>
+Date: Tue, 11 Aug 2026 16:11:09 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-6653: libxml2: use after free in xmlParseInternalSubset (>=2.9.11, <2.11.0)
+Subject: libexpat 2.8.3 fixes CVE-2026-72522 (denial of service)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium
-
-Affected versions:
-
-- upstream versions - 2.9.11 to 2.11.0
-
-Description:
-
-libxml2 had a use after free in xmlParseInternalSubset due to improper 
-entity resolution handling. A remote attacker could possibly use this 
-issue to crash or possibly run arbitrary programs.
-
-The latest upstream is already patched and this only applies to a set of 
-older versions. This likely also applies if upstream patch for 
-CVE-2021-3541 was cherry picked.
-
-Credit:
-
-Geoffrey Humphreys (reporter)
-
-References:
-https://bugs.launchpad.net/ubuntu/+source/libxml2/+bug/2141260
-https://gitlab.gnome.org/GNOME/libxml2/-/work_items/1058
+Hello oss-security,
 
 
-The linked launchpad issue has PoC and reproduction instructions if needed.
+just a quick note that libexpat 2.8.3 (or "Expat 2.8.3") released
+yesterday is fixing CVE-2026-72522:
 
-Timeline:
-2026-02-09 : reported to Canonical's Ubuntu Security Team
-2026-02-17 : reported to upstream
-2026-06-08 : PoC and details send to distros list
-2026-06-22 : public disclosure
+   Fix an out-of-bounds read and the resulting infinite loop caused by
+   treating low surrogates (Unicode) the same as high surrogates in
+   functions *_toUtf16.
+   Needs Expat compiled with 16bit character support (e.g. with Firefox
+   and/or on Windows) to be affected.
+   Upstream CVSS 3.1 vector:
+   AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H (CVSS score: 7.5)
+   (Note the "AV:N" for network/remote, the "AV:L" in NVD by Mitre is
+   mistaken.)
+   Original bug report from Mozilla at:
+   https://bugzilla.mozilla.org/show_bug.cgi?id=2053153
 
+Some key links are:
+
+- The blog post about it
+   https://blog.hartwork.org/posts/expat-2-8-3-released/
+
+- The change log of release 2.8.3
+   https://github.com/libexpat/libexpat/blob/R_2_8_3/expat/Changes
+
+- The fixing pull request
+   https://github.com/libexpat/libexpat/pull/1296
+
+- The NVD CVE metadata
+   https://nvd.nist.gov/vuln/detail/CVE-2026-72522
+   (with mistaken CVSS vector, see above)
+
+Best
+
+
+
+Sebastian
 
