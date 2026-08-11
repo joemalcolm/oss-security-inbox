@@ -1,30 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/27/3
-Message-ID: <20260727162531.GA2120@openwall.com>
-Date: Mon, 27 Jul 2026 18:25:31 +0200
-From: Solar Designer <solar@...nwall.com>
-To: Reid Sutherland <reid@...rddimension.net>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Linux kernel: KVM: Merge branch 'kvm-chainsaw' into HEAD
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/8
+Message-ID: <ed0bbf72-cee5-42f7-8f01-560ed359f455@jvf.cc>
+Date: Tue, 11 Aug 2026 08:50:52 -0700
+From: Jay Faulkner <jay@....cc>
+To: oss-security@...ts.openwall.com
+Subject: [OSSN-0106] Ironic API ramdisk endpoints require network-level access controls
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Jul 27, 2026 at 09:46:12AM -0400, Reid Sutherland wrote:
-> For your information.
-> 
-> https://git.kernel.org/pub/scm/virt/kvm/kvm.git/commit/?id=a204badd8432f93b7e862e7dac6db0fe3d65f370
+Ironic API ramdisk endpoints require network-level access controls
+---
 
-Thanks, but can you please explain why exactly you think this is
-noteworthy for oss-security?
+### Summary ###
+The Ironic Bare Metal API combines authenticated endpoints for client
+use with unauthenticated endpoints for coordination with the
+Ironic Python Agent ramdisk into a single API service. Depending on
+the deployment architecture, this can expose security risks if the
+unauthenticated endpoints are reachable from untrusted networks.
 
-I see there's a recent Phoronix story:
+### Affected Services / Software ###
+- ironic: >=6.2.0
+   - /v1/lookup and /v1/heartbeat: API version 1.22 (Newton, ironic 6.2.0)
+   - /v1/continue_inspection: API version 1.84 (2024.2)
 
-https://www.phoronix.com/news/KVM-Chainsaw-Linux-7.3
+### Discussion ###
+Ironic has three endpoints which allow unauthenticated access:
 
-and the patch series had been tracked and archived by LWN.
+- ``GET /v1/lookup``
+- ``POST /v1/heartbeat/{node_ident}``
+- ``POST /v1/continue_inspection``
 
-This is definitely noteworthy for KVM project development, but even
-seeing all those other resources, I do not see why bring this in here?
+These endpoints are a documented aspect of Ironic's architecture and
+are covered in the Ironic security guide. They already have significant
+security controls to mitigate risk, such as bootstrapping into
+credentials via the agent token mechanism (mandatory since the Victoria
+release), callback URL validation, and defaulting to limiting access
+to nodes whose provisioning state requires use of them.
 
-In general, posting a link without explanation is inappropriate here.
+Regardless of authentication methodology, operators in multi-tenant
+or untrusted environments should deploy a split-horizon API
+configuration where the unauthenticated endpoints are not reachable
+from public or tenant networks. Using Keystone does not eliminate
+the need for this network-level separation. Previously, Ironic only
+provided policy-based overrides to disable these endpoints, which
+required Keystone and left operators using HTTP basic auth or noauth
+without an equivalent control. A new ``[api]enable_ramdisk_endpoints``
+configuration option is being added to allow any operator, regardless
+of authentication methodology, to disable these endpoints on a
+per-service basis.
 
-Alexander
+For full details on the security model around these endpoints, refer
+to the Ironic security guide:
+https://docs.openstack.org/ironic/latest/admin/security.html
+
+### Recommended Actions ###
+Operators using Ironic in a multi-tenant or untrusted environment
+should configure the Ironic API so that the unauthenticated endpoints
+are only accessible from networks where the Ironic Python Agent
+ramdisk operates. This can be achieved in several ways depending on
+infrastructure setup:
+
+1. Run separate public-facing and ramdisk-facing Ironic API services.
+
+    WARNING: Disabling the ramdisk endpoints without maintaining a
+    separate API service that the Ironic Python Agent can reach will
+    break all deployment, cleaning, inspection, rescue, and servicing
+    workflows. These endpoints must remain available to the ramdisk
+    on at least one API service.
+
+    On the public-facing service, disable the ramdisk endpoints using
+    one of the following methods:
+
+    * Set ``[api]enable_ramdisk_endpoints`` to ``False`` in
+      ironic.conf (anticipated in the 2026.2 Hibiscus cycle,
+      ironic 39.0.0; available earlier by applying the linked patch).
+
+    * For Keystone-authenticated deployments, add the following to
+      policy.yaml::
+
+        "baremetal:node:ipa_heartbeat": "!"
+        "baremetal:driver:ipa_lookup": "!"
+        "baremetal:driver:ipa_continue_inspection": "!"
+
+    When using this architecture, the
+    ``[deploy]external_callback_url`` setting can direct the agent
+    callback URL to the internal API service, and the
+    ``[service_catalog]endpoint_override`` setting can override
+    Ironic's own internal endpoint resolution, if required.
+
+2. Use a fronting HTTP proxy, WSGI runner, or other external method
+    to restrict access to ``/v1/lookup``, ``/v1/heartbeat``, and
+    ``/v1/continue_inspection`` to only networks which run the
+    Ironic Python Agent. This method requires no Ironic code changes.
+
+3. Ensure ``[api]restrict_lookup`` remains set to its default value
+    of ``True``. Disabling this setting removes state-based filtering
+    on the lookup endpoint and significantly broadens exposure.
+
+### Credits ###
+- Tuomo Tanskanen, Ericsson Software Technology (Metal3.io Security Team)
+- Dmitry Tantsur, Red Hat (Metal3.io Security Team)
+
+### Contacts / References ###
+Authors:
+- Julia Kreger, Red Hat
+- Jay Faulkner, G-Research OSS
+
+This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0106
+Original Launchpad bugs:
+- https://bugs.launchpad.net/ironic/+bug/2162821
+- https://bugs.launchpad.net/ironic/+bug/2162818
+Proposed enhancement: https://review.opendev.org/c/openstack/ironic/+/999897
+Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
+OpenStack Security : https://security.openstack.org/
+CVE: none
+
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
