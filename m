@@ -1,41 +1,157 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/5
-Message-Id: <5B415E28-11C7-4BCD-81FF-2F120FDC0357@gmail.com>
-Date: Fri, 24 Jul 2026 11:20:10 +0100
-From: John Haxby <john.haxby@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/1
+Message-ID: <1a765b35b9ba68a2@cvs.openbsd.org>
+Date: Mon, 10 Aug 2026 22:40:18 -0600 (MDT)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: 432 Linux kernel CVEs
+Subject: Announce: OpenSSH 10.5 released
 Content-Type: text/plain; charset=utf-8
 
+OpenSSH 10.5 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-> On 23 Jul 2026, at 11:00, Peter Gutmann <pgut001@...auckland.ac.nz> wrote:
-> 
->> 
->> If it is *vitally* important that your kernel *never* need to updated *ever*,
->> then a traditional kernel like Linux, *BSD, MacOS, iOS, or Windows is NOT
->> what you're looking for. What you need is a formally-proved kernel.
-> 
-> That's the textbook answer.  The practical answer is "what you need is a
-> minimal RTOS".  It doesn't need any formal proof, it just needs to be basic
-> enough that there's nothing there to attack.  Not being able to get a shell on
-> something because there isn't one is probably the single biggest win you can
-> have in device security.
+Recently the OpenSSH team have received a large number of security
+bug reports, many of which are findings from AI models or made with
+AI assistance. While many AI reports are determined not to have
+security impact when considered in the context of a realistic
+threat model, we very much welcome these reports, especially when
+combined with human triage, analysis, test-cases and particularly
+when accompanied by proposed fixes.
 
+We have seen a number of cases where a security bug identified by
+AI tools is subsequently independently discovered by a different
+researcher. This suggests that adversaries who do not report bugs
+to OSS projects are likely to be able to discover these bugs too.
+Given this, the OpenSSH team will, for now, be making more frequent
+releases to get bugfixes into users' hands more quickly rather than
+batching them until the next planned release.
 
-Live patching in it various guises is also useful.  I know at Oracle we had systems that were (and probably are) running for some years without a reboot and fully up yo date with security fixes.   The danger there, of course, that they've been hacked about while running and when, eventually, you do need to reboot it won't come up.  (When I worked at HP we had exactly that: two vital machines were both dependent on the other one being up and normally that's OK, but not when someone accidentally hit the big power button instead of the big exit button).
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-But to Peter's point, if there isn't a shell, the attack surface is greatly reduced.  I recall one customer who was adamant that they wanted to remove the shell to do just that.   I pointed out that, sure, there's no shell but they had python which is just as useful to an attacker and if the attacker really wants a shell then they could use python to download one ... 
+Potentially-incompatible changes
+--------------------------------
 
-There are, of course, numerous IoT devices and home routers and whatnot that are vulnerable to attack, shell or no shell, that are regularly recruited into botnets but in those the weakness is very rarely, if ever, the kernel -- it's badly written, unmaintained webapps or cgi programs.  I'm reminded that most of the security breaches that came to my attention over the years were in application code because updates were just too difficult, needing signficant effort and downtime.
+ * Portable OpenSSH now requires ECC (Elliptic Curve Cryptography)
+   support in libcrypto, including support for the NISTP521 curve.
+   ECC is included in the default build configurations of all
+   versions of all libcrypto implementations currently supported by
+   OpenSSH, including LibreSSL, OpenSSL, BoringSSL and AWS LC.
+   The --without-openssl build configuration is not affected.
 
-In the end, it's not the number of CVEs, it's the design of the application platform.  The platform needs to have a seamless update mechanism *designed in*.   My phone and the laptop that I'm typing this message on both update automatically (or would do if I let them, [*]).  At least one of my linux machines used "dnf automatic" (as well as live patching) so I didn't need to worry if I want on holiday).  The point it, though, that those cheap home routers and IoT devices don't have automatic updates because the infrastructure needed to support that is too expensive: my ubiquity router and nest thermostats are relatively expensive because, in part, I paid for the infrastructure to update them.
+Changes since OpenSSH 10.4
+==========================
 
-And I don't care if you say you have a kernel with a formal proof -- you'll still have bugs in somewhere in the application stack.
+This release contains a number of security fixes and small bugfixes.
 
-jch
+Security
+========
 
+ * ssh-agent(1): fix an interaction between agent locking and the
+   session-bind@...nssh.com extension that is used to identify
+   forwarded agents. These binding requests were refused when the
+   agent was locked, with the result that operations that were
+   intended to be limited to local use only could be performed
+   remotely, including the ability to add PKCS#11 tokens and make
+   use of keys that had destination restrictions applied.
+   Reported by sn0x-sharma
 
+ * ssh(1): avoid potential realloc use-after-free in the client if a
+   remote forwarding is added via the local session multiplexing
+   socket while a remote forwarding open request is pending with the
+   server. Report and fix from Brian Mingus of Cognatory
 
-[*] I update my various devices first so that if there are any problems then I can warn my friends and family.   That's just paranoia now, I not had a problem with updates for, oh, 15 years or more.
-Download attachment "signature.asc" of type "application/pgp-signature" (269 bytes)
+ * sshd(8): make the authorized_keys "restrict" keyword apply
+   correctly to tunnel forwarding too (which is administratively
+   disabled by default). Reported by Erichen, Institute of Computing
+   Technology, Chinese Academy of Sciences
+    
+New features
+------------
+
+ * ssh-keygen(1): add ability to set or clear the touch-required and
+   verify-required flags on FIDO private keys when resetting a
+   private key's passphrase.
+
+ * ssh(1): tweak ordering of certificates tried during pubkey
+    authentication to prefer FIDO keys that do not require user
+    presence (touch) first, and FIDO keys that require user
+    verification via PIN or biometrics last. This effectively tries
+    low-friction authenticators before higher friction ones.
+
+ * ssh(1): add a "ssh -Z user@...t" mode that prints the keys that
+   will be tried for public key authentication in the order that
+   they will be used.
+    
+ * sshd(8) use setproctitle(3) to identify sshd-session when its
+   acting as a post-authentication monitor.
+    
+Bugfixes
+--------
+
+ * ssh-keyscan(1): make reading the server banner a non-blocking
+   operation to prevent a stuck server from blocking a many-host
+   keyscan from proceeding.
+
+ * sshd(8): use sshpkt_fatal() instead of plain fatal() for errors
+   in the packet code as this provides context of the failing peer
+   (address, port, user, etc).
+
+ * sshd(8): when signing hostkey proofs for a client UpdateHostKeys
+   request, allow each hostkey to perform at most one signature
+   operation.
+    
+ * sshd(8) fix GSSAPI option names, that were broken during a
+   servconf.c refactoring in openssh-10.4; bz3974.
+    
+ * ssh-keygen(1): pass back errors from ed25519 key generation, which
+   theoretically can fail. GHPR702.
+
+ * sshd(8): move check of public key type against allowed algorithms
+   to before parsing of the key sent by the peer. This removes at
+   least some key parsing and verification paths from the pre-auth
+   attack surface. Suggested by Christopher Paul Rohlf of Anthropic.
+    
+ * ssh-keygen(1): fix double frees (impossible to reach outside of a
+   test harness), and also use freezero where possible. From
+   Christopher Paul Rohlf at Anthropic.
+
+ * sshd(8): fix ChannelTimeout and RekeyLimit not being applied in
+   sshd_config Match blocks.
+
+ * sshd(8): in sshd config dump mode, write all directives in mixed
+   case for consistency
+    
+Portability
+-----------
+
+ * sshd(8): re-allow PAMServiceName inside a Match block, which
+   was incorrectly disabled during a refactoring in openssh-10.4.
+   bz3987
+
+Checksums:
+==========
+
+ - SHA1 (openssh-10.5.tar.gz) = 273163972f623bb9bffef9fd75a85c74d3b22633
+ - SHA256 (openssh-10.5.tar.gz) = 9Zhp0C/mDWNLmnatq68mtbqOUhvbyYcffH04dsHUwZQ=
+
+ - SHA1 (openssh-10.5p1.tar.gz) = 3067e2af7c526b31c7e94bc3ed38904ef791eb2c
+ - SHA256 (openssh-10.5p1.tar.gz) = 1E0oqDnqna+WnMaRUP3lmRCys5Nh2tgaO9bL0ZIY2xE=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
+
