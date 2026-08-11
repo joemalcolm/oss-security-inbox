@@ -1,69 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/4
-Message-ID: <ai8NBqZeD-zb3wnf@pjcj.com>
-Date: Sun, 14 Jun 2026 22:24:10 +0200
-From: Paul Johnson <paul@...j.net>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-11526: GD versions before 2.86 for Perl allow OS command injection and file overwrite via a 2-arg open() of filename arguments in _make_filehandle
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/11/7
+Message-ID: <428ff71d-ee61-40d5-a651-a39cc81bb19c@gmail.com>
+Date: Tue, 11 Aug 2026 08:39:05 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: [OSSN-0105] OpenStack Glance legacy Tasks import bypasses image import URI filtering
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-11526                                       CPAN Security Group
-========================================================================
+OSSN-0105: OpenStack Glance legacy Tasks import bypasses image import 
+URI filtering
+---
 
-        CVE ID:  CVE-2026-11526
-  Distribution:  GD
-      Versions:  before 2.86
+### Summary ###
+The deprecated Glance /v2/tasks API accepts type=import tasks that
+bypass import_filtering_opts, allowing an admin to fetch internal
+URLs from the Glance service network (SSRF). The tasks API has been
+admin-only since Xena and deprecated for several releases.
 
-      MetaCPAN:  https://metacpan.org/dist/GD
-      VCS Repo:  https://github.com/lstein/Perl-GD
+### Affected Services / Software ###
+- glance: >=30.0.0 <30.3.0, >=31.0.0 <31.1.1, ==32.0.0
 
+### Discussion ###
+The legacy tasks import path uses a permissive URI validator that
+only checks for http:// or https:// prefixes, bypassing the host
+and port restrictions enforced by the modern web-download import.
 
-GD versions before 2.86 for Perl allow OS command injection and file
-overwrite via a 2-arg open() of filename arguments in _make_filehandle
+### Recommended Actions ###
+Disable the legacy tasks API via policy if you are not using it.
+Otherwise, upgrade Glance to a version containing the fix.
 
-Description
------------
-GD versions before 2.86 for Perl allow OS command injection and file
-overwrite via a 2-arg open() of filename arguments in _make_filehandle.
+#### Patches ####
+The following reviews contain the fix for this issue:
 
-GD::Image::_make_filehandle opens a filename argument with Perl's 2-arg
-open(), so a filename that begins or ends with a pipe ("| cmd", "cmd
-|") or begins with a redirect ("> path", ">> path") is run as a command
-or redirect rather than opened as a file. _make_filehandle is the
-single open path behind every filename-accepting constructor (new,
-newFromPng, newFromJpeg, and the rest); the in-memory *Data variants do
-not open a path and are unaffected.
+2026.2/hibiscus (development): https://review.opendev.org/993588
+2026.1/gazpacho: https://review.opendev.org/994466
+2025.2/flamingo: https://review.opendev.org/994592
+2025.1/epoxy: https://review.opendev.org/1000061
 
-Any caller that forwards untrusted input to one of these constructors
-as a pathname can run an arbitrary command or truncate a file under the
-process UID.
+### Credits ###
+Tim Shephard, roiai.ca
 
-Problem types
--------------
-- CWE-78 Improper Neutralization of Special Elements used in an OS
-  Command ('OS Command Injection')
-- CWE-73 External Control of File Name or Path
+### Contacts / References ###
+Authors:
+- Goutham Pacha Ravi, Red Hat
 
-Workarounds
------------
-For deployments that cannot upgrade to 2.86, do not pass untrusted
-input as a pathname to GD::Image constructors. Callers can open the
-file themselves and pass the resulting filehandle, which bypasses the
-affected string path.
+This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0105
+Original Launchpad bug: https://bugs.launchpad.net/glance/+bug/2152110
+Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
+OpenStack Security : https://security.openstack.org/
+CVE: none
 
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
 
-Solutions
----------
-Upgrade to GD 2.86 or later, which opens filename arguments with a
-3-arg read open so the filename is never interpreted as a command or
-redirect.
-
-
-References
-----------
-https://github.com/lstein/Perl-GD/commit/67b163713c6c78dfeb693da0978ae934e5cd8210.patch
-https://metacpan.org/release/RURBAN/GD-2.86/changes
-
--- 
-Paul Johnson - paul@...j.net
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
