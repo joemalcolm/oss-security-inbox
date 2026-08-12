@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/11/11
-Message-ID: <325a5e08-8747-5c35-a378-5a81694599e8@apache.org>
-Date: Thu, 11 Jun 2026 17:05:47 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/7
+Message-ID: <c4b978c5-7692-8b73-b4ef-3650fc2600f5@apache.org>
+Date: Wed, 12 Aug 2026 13:23:58 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-50634: Apache CXF: WS JSON request filter trusts metadata from an unvalidated first signature entry 
+Subject: CVE-2026-59244: Apache Airflow: Secrets masker: `var.json` Variable values not masked in the Rendered Templates UI 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-jose-jaxrs) 4.2.0 before 4.2.2
-- Apache CXF (org.apache.cxf:cxf-rt-rs-security-jose-jaxrs) before 4.1.7
+- Apache Airflow (apache-airflow) before 3.3.1
 
 Description:
 
-A vulnerability in Apache CXF's JwsJsonContainerRequestFilter can be exploited to cause CXF to process metadata that was not authenticated by the accepted signature. This can bypass the application's assumption
-
-that accepted `Content-Type` or protected HTTP-header metadata came from a verified signature entry, and may steer downstream JAX-RS entity parsing or signed-header consistency checks. Users are recommended to upgrade to versions 4.2.2 or 4.1.7, which fix this issue.
+Apache Airflow's secrets masker did not mask `var.json` Variable values whose value is a dict in the Rendered Templates UI — the dict value failed an `isinstance(str)` guard — so a secret stored as a JSON Variable and referenced in a template via `var.json` was displayed in cleartext to any user with access to that task's Rendered Templates view. Users are advised to upgrade to apache-airflow 3.3.1 or later, which masks nested Variable values regardless of type.
 
 Credit:
 
-Mitchell Benjamin / Revamp Studio. (finder)
+Juan Pablo Guereca (@jpgerek) (finder)
+Juan Pablo Guereca (@jpgerek) (remediation developer)
 
 References:
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-50634
+https://github.com/apache/airflow/pull/68975
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-59244
 
