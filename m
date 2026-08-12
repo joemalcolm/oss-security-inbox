@@ -1,72 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/19
-Message-ID: <8bd3e66a-4adb-4be7-8827-653dd7085d77@cpansec.org>
-Date: Thu, 30 Jul 2026 14:43:45 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-60074: Date::Manip versions through 6.99 for Perl return corrupted dates via non-ASCII decimal digits that pass the numeric range tests in check
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/4
+Message-ID: <63bbf1ed-70e3-c6cf-1e37-8f7d096ee024@apache.org>
+Date: Wed, 12 Aug 2026 13:27:44 +0000
+From: Rahul Vats <rahulvats@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-54183: Apache Airflow: Airflow Variables were not masked in the UI for authenticated users 
 Content-Type: text/plain; charset=utf-8
 
+Severity: low 
 
-========================================================================
-CVE-2026-60074                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-60074
-   Distribution:  Date-Manip
-       Versions:  through 6.99
+- Apache Airflow (apache-airflow) before 3.3.1
 
-       MetaCPAN:  https://metacpan.org/dist/Date-Manip
-       VCS Repo:  https://github.com/SBECK-github/Date-Manip
+Description:
 
+Apache Airflow's secrets masker hides values stored under sensitive key names when they are displayed in the UI. The masker's recursion-depth limit did not descend into values nested inside a list, tuple, or set beyond that limit, so an Airflow Variable holding such a deeply-nested value was shown unmasked in the Variables UI. The exposure is limited to the UI: any authenticated user who can see the Variable in the UI can already read its full value through the Variables REST API, so this does not disclose data the user could not otherwise obtain — the masking is a shoulder-surfing defense for the UI, not an access-control boundary.
 
-Date::Manip versions through 6.99 for Perl return corrupted dates via
-non-ASCII decimal digits that pass the numeric range tests in check
+This is an incomplete-fix follow-up to CVE-2026-42358, whose fix made only the dictionary walk unbounded; lists, tuples, and sets beyond the depth limit remained unmasked in the UI. Deployments that applied the CVE-2026-42358 fix should also upgrade to address this residual case. Upgrade to apache-airflow 3.3.1 or later.
 
-Description
------------
-Date::Manip versions through 6.99 for Perl return corrupted dates via
-non-ASCII decimal digits that pass the numeric range tests in check.
+Credit:
 
-The parse regexes capture year, month and day with the `\d` shorthand,
-which on a character string matches the whole Unicode decimal digit
-property `\p{Nd}` and not just `[0-9]`. Date::Manip::Base::check then
-validates the captured fields with numeric comparisons alone (`$y<1 ||
-$y>9999`, `$m<1 || $m>12`, `$d<1 || $d>$days`), and _parse_check stores
-the numified fields (`$y+0`). Perl truncates a string at the first
-character that is not an ASCII digit, so a field whose leading
-characters are ASCII digits numifies to an in-range prefix and
-satisfies every test: a year field of three ASCII digits followed by
-U+0664 ARABIC-INDIC DIGIT FOUR numifies to 202, giving the year 0202,
-and one non-ASCII digit in the month or day field shifts those fields
-the same way. The hour, minute and second fields match explicit ASCII
-character classes (`0?[0-9]`, `[0-5][0-9]`) and do not shift, though a
-non-ASCII digit in a fractional hour or minute field truncates the
-fraction.
+Omkhar Arasaratnam (@omkhar) (finder)
+Jarek Potiuk (remediation developer)
 
-Any caller that passes an untrusted character string to ParseDate() or
-Date::Manip::Date->parse() can get back a date that differs from the
-string it parsed, with no parse error. Where the parsed date gates
-logic such as an expiry check or a retention window, the shift goes
-unnoticed.
+References:
 
-Problem types
--------------
-- CWE-1289 Improper Validation of Unsafe Equivalence in Input
-
-Workarounds
------------
-No fixed release is available. Apply the patch, which spells the
-numeric field captures as `[0-9]` and requires the date fields to be
-ASCII digit strings, or reject untrusted date strings containing
-non-ASCII characters before parsing them.
-
-
-References
-----------
-https://security.metacpan.org/patches/D/Date-Manip/6.99/CVE-2026-60074-r1.patch
-https://metacpan.org/release/SBECK/Date-Manip-6.99/source/lib/Date/Manip/Base.pm#L602-614
-https://metacpan.org/release/SBECK/Date-Manip-6.99/source/lib/Date/Manip/Date.pm#L1536-1539
-
-
+https://github.com/apache/airflow/pull/68422
+https://www.cve.org/CVERecord?id=CVE-2026-42358
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-54183
 
