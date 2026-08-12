@@ -1,41 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/12
-Message-ID: <96c60cbd-9da7-ed20-e402-fb79ee60f3a8@apache.org>
-Date: Mon, 14 Sep 2026 08:27:52 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/18
+Message-ID: <fd07b77f-56cb-4c01-901a-8f87f5310497@brondsema.net>
+Date: Wed, 12 Aug 2026 12:29:09 -0400
+From: Dave Brondsema <dave@...ndsema.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-75015: Apache Syncope: Nested secrets leak cleartext into audit records readable 
+Subject: CVE-2026-73239: Apache Allura: Missing permission checks IDOR
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.1.0-M0 through 4.1.2
+- Apache Allura before 1.19.1
 
 Description:
 
-Insufficiently Protected Credentials vulnerability in Apache Syncope.
+Insecure Direct Object Reference (IDOR) due to missing permission checks for 
+multiple Artifact types in Apache Allura.
 
-Audit events, when sent to the configured store, are not sufficiently masked for the sensitive values they might carry on their payloads, thus allowing administrators to access such sensitive values.
+This issue affects Apache Allura: before 1.19.1.
 
-
-
-
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
-
-Credit:
-
-n0mi1k (finder)
+Users are recommended to upgrade to version 1.19.1, which fixes the issue.
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-75015
+https://allura.apache.org/posts/2026-allura-1.19.1.html
+https://allura.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73239
 
