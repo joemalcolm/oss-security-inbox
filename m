@@ -1,40 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/27/8
-Message-ID: <efba3ac0-ad81-0238-589a-ea4253b29a97@apache.org>
-Date: Mon, 27 Jul 2026 17:18:11 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/13
+Message-ID: <e1c5b5a1-1383-ad2b-cf66-e748d96b667d@apache.org>
+Date: Wed, 12 Aug 2026 13:51:41 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-61487: Apache ActiveMQ Broker, Apache ActiveMQ All, Apache ActiveMQ: Authorization bypass via temporary composite destinations 
+Subject: CVE-2026-68969: Apache Airflow: Bulk Variable and Connection endpoints record secret values in the audit log in cleartext 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.9
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.2.8
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.9
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.8
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.9
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.8
+- Apache Airflow (apache-airflow) before 3.3.1
 
 Description:
 
-Improper Authorization vulnerability in Apache ActiveMQ Broker, Apache ActiveMQ All, Apache ActiveMQ.
-
- An authenticated low-privilege user can bypass a per-destination
-write ACL by sending to an ActiveMQ temporary composite destination whose physical name is a
-comma-separated composite of real queues. This allows publishing messages to any of the destinations in the list without proper write ACL permissions because the authorization check is bypassed due to the composite destination being marked as temporary.
-This issue affects Apache ActiveMQ Broker: before 5.19.9, from 6.0.0 before 6.2.8; Apache ActiveMQ All: before 5.19.9, from 6.0.0 before 6.2.8; Apache ActiveMQ: before 5.19.9, from 6.0.0 before 6.2.8.
-
-Users are recommended to upgrade to version 5.19.9, 6.2.8 or 6.3.0, which fixes the issue.
+Apache Airflow wrote Variable values and Connection `extra` contents to the audit log in cleartext when they were submitted through the bulk endpoints (`PATCH /api/v2/variables` and `PATCH /api/v2/connections`). The audit-log masking recognised only top-level request fields, and a bulk request nests its entities two levels below, so no masking was applied to them. Any authenticated user with audit-log read access -- who need not hold Variables or Connections read at all -- could recover those secrets verbatim, and the Connection `extra` copy is stored unencrypted in the log while the connection table encrypts it. The Airflow UI's *Import Variables* action posts to this endpoint, so an ordinary operator import wrote every secret in the file to the log. This is a different code path from CVE-2026-50204: that fix shipped in 3.3.0 and covers the single-entity endpoints only, so deployments that upgraded in response to that advisory remain affected and must upgrade again. Users are advised to upgrade to apache-airflow 3.3.1 or later.
 
 Credit:
 
-Claude and Ada Logics (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-61487
+https://github.com/apache/airflow/pull/70890
+https://www.cve.org/CVERecord?id=CVE-2026-50204
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68969
 
