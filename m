@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/17
-Message-ID: <c4a212b1-4bac-0b0a-3e75-5ad8739011a4@apache.org>
-Date: Mon, 20 Jul 2026 20:19:33 +0000
-From: Thomas Wolf <twolf@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/11
+Message-ID: <1bd3834d-91da-f208-64d1-f0a57169ed32@apache.org>
+Date: Wed, 12 Aug 2026 13:53:59 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-56624: Apache MINA SSHD: SSH certificate options lack validations 
+Subject: CVE-2026-68076: Apache Airflow: Connections test API: team-scope guard bypass resolves another team's environment Connection 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache MINA SSHD (org.apache.sshd:sshd-core) 2.0.0 through 2.18.0
-- Apache MINA SSHD (org.apache.sshd:sshd-core) 3.0.0-M1 through 3.0.0-M4
+- Apache Airflow (apache-airflow) before 3.3.1
 
 Description:
 
-Improper certificate validation in Apache MINA SSHD (server-side). Apache MINA SSHD is a Java library for client-side and server-side SSH.
-
-
-
-
-Server-side OpenSSH user certificate validation during user authentication in an Apache MINA SSHD server did not check for the unsupported force-command or verify-required options that could be embedded in the certificate, nor did it validate these options. As a result it was possible that a user could authenticate with such a certificate that included a force-command option but still was able to execute other commands. What other command exactly would be available to the user depends on the implementation of the server.
-
-
-
-
-This issue is fixed in Apache MINA SSHD 2.19.0 and 3.0.0-M5. Applications are advised to upgrade to these versions.
-
-
-
-
-The fix rejects OpenSSH user certificates that include these options, since Apache MINA SSHD implements neither force-command nor sk-*-cert-v01@...nssh.com user certificates (which are the only ones for which verify-required would make sense).
+Apache Airflow's environment-variable secrets backend resolved a team-scoped Connection or Variable from the wrong team's scope. The guard meant to prevent this only ran when no team scope was supplied, and its pattern could not match a team name containing an underscore, which team names are allowed to contain. When the guard did not apply, the lookup fell through to an unconditional global read that resolved the stored `AIRFLOW_CONN__<TEAM>___<ID>` variable regardless of which team asked. In multi-team mode an authenticated user of one team could therefore have `POST /api/v2/connections/test` resolve another team's Connection and authenticate outward with that team's credentials; the endpoint uses the credentials rather than returning them. Exploitation requires `[core] multi_team` enabled, `[core] test_connection` set to `Enabled` (it ships `Disabled`), team-scoped secrets provisioned as environment variables in the API-server process, and knowledge of the encoded identifier. Redirecting the test at an attacker-controlled host is separately blocked. Users are advised to upgrade to apache-airflow 3.3.1 or later.
 
 Credit:
 
-Mitchell Benjamin (finder)
+Andrew Rukin (Arenadata) (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-56624
+https://github.com/apache/airflow/pull/70736
+https://github.com/apache/airflow/pull/70902
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68076
 
