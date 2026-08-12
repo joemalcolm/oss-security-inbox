@@ -1,35 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/18/4
-Message-Id: <4ca13bf9-513e-4642-8913-a4b1e2104c46n@googlegroups.com>
-Date: Thu, 18 Jun 2026 06:34:01 -0700 (PDT)
-From: Rafael Gonzaga <work@...aelgss.dev>
-To: <oss-security@...ts.openwall.com>
-Subject: Fwd: Node.js security updates for all active release lines, June 2026
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/12/10
+Message-ID: <b6277264-9900-a76a-9090-881651c1347c@apache.org>
+Date: Wed, 12 Aug 2026 13:45:53 +0000
+From: Rahul Vats <rahulvats@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-67587: Apache Airflow: DAG-author remote code execution on the Scheduler via a Serde `Callback` deserialization gadget 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
 
+Affected versions:
 
----------- Mensagem encaminhada ---------
-De: Rafael Gonzaga <work@...aelgss.dev>
-Data: quinta-feira, 18 de junho de 2026 às 10:33:52 UTC-3
-Assunto: Re: Node.js security updates for all active release lines, June 
-2026
-Para: nodejs-sec <nodejs-sec@...glegroups.com>
+- Apache Airflow (apache-airflow) 3.3.0 before 3.3.1
 
+Description:
 
-The planned security releases are now available. You can read more about 
-the details at 
-https://nodejs.org/en/blog/vulnerability/june-2026-security-releases
+Apache Airflow's Task SDK rebuilt a `Callback` object from serialized data by re-running its constructor, which imports the module named by the stored callback path. Because `SyncCallback` is itself an Airflow class it passes the default `allowed_deserialization_classes` allow-list, so tightening that setting does not help. A Dag author — who controls a task instance's `next_kwargs` through the task execution API — can therefore cause an arbitrary module to be imported inside the scheduler process, when the scheduler's `awaiting_input` timeout sweep deserializes that value. No non-default configuration is required; the sweep runs unconditionally. Versions before 3.3.0 are not affected: the class existed, but the scheduler sweep that reaches it did not. This is a separate code path from CVE-2026-58076 and CVE-2026-67260, which cover different gadgets reaching deserialization — applying either of those fixes does not address this one. Users are advised to upgrade to apache-airflow 3.3.1 or later.
 
-Em quarta-feira, 10 de junho de 2026 às 11:53:26 UTC-3, Rafael Gonzaga 
-escreveu:
+Credit:
 
-The Node.js project will release new versions of all supported release 
-lines on or shortly after June 17th, 2026
+Nguyen Van Hiep (@hypnguyen1209), MBBank (finder)
+Jarek Potiuk (remediation developer)
 
-For more information, see: 
-https://nodejs.org/en/blog/vulnerability/june-2026-security-releases 
-<https://nodejs.org/en/blog/vulnerability/march-2026-security-releases>
+References:
 
+https://github.com/apache/airflow/pull/70704
+https://www.cve.org/CVERecord?id=CVE-2026-58076
+https://www.cve.org/CVERecord?id=CVE-2026-67260
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-67587
 
-Content of type "text/html" skipped
