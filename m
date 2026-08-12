@@ -1,48 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/2
-Message-ID: <b3f12f97-bfe8-482d-a7eb-226746350d59@oracle.com>
-Date: Mon, 3 Aug 2026 19:04:10 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Bouncy Castle 1.85 release fixes 32 CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/3
+Message-ID: <ff1ae084-d277-4145-bbaa-c13fcbe1afac@cpansec.org>
+Date: Thu, 13 Aug 2026 00:18:02 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-17431: PDF::WebKit versions through 1.2 for Perl allow OS command injection via a 2-arg open() of the output path in to_pdf and of stylesheet paths in _style_tag_for
 Content-Type: text/plain; charset=utf-8
 
-https://www.bouncycastle.org/resources/new-release-bouncy-castle-java-1-85/
-announces the July 28 release of Bouncy Castle Java 1.85, "bringing
-significant advances in post-quantum cryptography, PKI migration,
-electronic signatures, secure messaging, and blockchain support."
 
-It also says the release contains fixes for the following CVEs:
+========================================================================
+CVE-2026-17431                                       CPAN Security Group
+========================================================================
 
-     CVE-2026-8763 - Name Constraints bypass via trailing dot in rfc822Name and URI.
-     CVE-2026-12185 - BKS/UBER keystore allocates from untrusted lengths before integrity check.
-     CVE-2026-12802 - CMS AuthEnvelopedData fails to enforce tag-length on decryption.
-     CVE-2026-12803 - KCCMBlockCipher MAC does not bind nonce when AAD is absent (cross-nonce AEAD forgery).
-     CVE-2026-12816 - IESEngine stream-mode MAC forgery via length-dependent KDF split.
-     CVE-2026-12817 - OpenPGP AEAD decryption skips final tag on chunk-aligned data.
-     CVE-2026-12852 - MLS wire decoder allocates attacker-declared opaque length before bounds check.
-     CVE-2026-12860 - RSA PKCS#1 verification skips last two hash bytes in NULL-omitted path.
-     CVE-2026-13506 - Lazy ASN.1 sequence forcing resets nesting-depth guard.
-     CVE-2026-13586 - PKCS#12 MAC and bag-decryption KDF iteration-count bound (DoS).
-     CVE-2026-14682 - Possible OOM from unbounded up-front allocation on a definite-length read.
-     CVE-2026-15055 - PKCS#8 / PBES2 decryptors honour unbounded KDF cost from input.
-     CVE-2026-58059 - Quadratic-time escaping when stringifying X.500 distinguished names.
-     CVE-2026-58060 - HSS public-key level count unbounded, enabling huge allocation on verify.
-     CVE-2026-58061 - CCM-family modes write plaintext to caller buffer before tag check.
-     CVE-2026-58062 - Stapled OCSP response accepted without binding to the checked certificate.
-     CVE-2026-58063 - BCFKS keystore load honours unbounded KDF cost from untrusted file.
-     CVE-2026-59638 - JSSE hostname verifier CN-fallback enabled by default despite documented opt-in.
-     CVE-2026-59639 - CMS verifySignatures returns true for SignedData with zero signers.
-     CVE-2026-59640 - OpenPGP CFB quick-check oracle active on symmetric/session-key paths.
-     CVE-2026-59641 - S/MIME validator trusts signer-asserted signingTime for path validation.
-     CVE-2026-59642 - CMS AuthenticatedData content not bound to MAC when authAttrs present.
-     CVE-2026-59643 - OpenPGP inline-signature policy failures silently ignored.
-     CVE-2026-59644 - MLS hash-ratchet honours arbitrary 32-bit generation counter from sender.
-     CVE-2026-59645 - OER parser recurses without depth limit on self-referential IEEE 1609.2 schema.
-     CVE-2026-59646 - DTLS handshake reassembler allocates buffer from unchecked 24-bit length.
-     CVE-2026-59647 - CRMF/CMP password-MAC honours unbounded iteration count.
-     CVE-2026-59648 - OpenPGP Argon2 S2K honours attacker-chosen memory and passes.
-     CVE-2026-59649 - OpenPGP user-attribute subpacket length bounded only by JVM max memory.
-     CVE-2026-59650 - MTI/A0 DH agreement exponentiates unvalidated peer value.
-     CVE-2026-59651 - BKS keystore accepts legacy version with 16-bit integrity MAC key.
-     CVE-2026-59652 - LDAP filter injection in legacy jdk1.4 LDAPStoreHelper.
+         CVE ID:  CVE-2026-17431
+   Distribution:  PDF-WebKit
+       Versions:  through 1.2
+
+       MetaCPAN:  https://metacpan.org/dist/PDF-WebKit
+       VCS Repo:  https://github.com/kingpong/perl-PDF-WebKit
+
+
+PDF::WebKit versions through 1.2 for Perl allow OS command injection
+via a 2-arg open() of the output path in to_pdf and of stylesheet paths
+in _style_tag_for
+
+Description
+-----------
+PDF::WebKit versions through 1.2 for Perl allow OS command injection
+via a 2-arg open() of the output path in to_pdf and of stylesheet paths
+in _style_tag_for.
+
+to_pdf reads the generated PDF back from its path argument, and
+_style_tag_for reads each entry of the stylesheets list, by assigning
+the path to a local @ARGV and reading it with the diamond operator,
+which opens each @ARGV element with Perl's 2-arg open(). A value that
+begins or ends with a pipe ("| cmd", "cmd |") is run as a command
+rather than opened as a file, and one that begins with a redirect (">
+path", ">> path") opens that path for write or append. to_file forwards
+its path argument to to_pdf and reaches the same read.
+
+Any caller that forwards untrusted input as the output path or as a
+stylesheets entry can run a command under the process UID; with the
+"cmd |" form the command's output is returned in place of the PDF, and
+with the "> path" form the named file is truncated. Stylesheets may
+only be added to an HTML source, so a URL or file source exposes the
+output path alone.
+
+Problem types
+-------------
+- CWE-78 Improper Neutralization of Special Elements used in an OS
+   Command ('OS Command Injection')
+- CWE-73 External Control of File Name or Path
+
+Workarounds
+-----------
+No fixed release is available. Apply the patch, which reads both paths
+with a 3-arg open so the value is never interpreted as a command or
+redirect.
+
+Otherwise, do not pass untrusted input as the output path to to_pdf or
+to_file, or as an entry in the stylesheets list.
+
+Note that the wkhtmltopdf project is no longer being developed, and
+users of this package should migrate to alternative solutions.
+
+
+References
+----------
+https://github.com/kingpong/perl-PDF-WebKit/issues/8
+https://security.metacpan.org/patches/P/PDF-WebKit/1.2/CVE-2026-17431-r1.patch
+https://wkhtmltopdf.org/status.html
+
+
+
