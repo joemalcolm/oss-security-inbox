@@ -1,328 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/09/3
-Message-ID:  <DB9PR07MB8823C88E4853B92E2E33051791FE2@DB9PR07MB8823.eurprd07.prod.outlook.com>
-Date: Thu, 9 Jul 2026 15:18:29 +0000
-From: Robert Davies <rmd@...ger.ac.uk>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: "samtools@...ger.ac.uk" <samtools@...ger.ac.uk>
-Subject: HTSlib <= 1.23.1 Multiple vulnerabilities in file reading code
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/4
+Message-ID: <c0afb2f6938bfdcbaf0e6d24eb198ee92b499ed1.camel@openssl.foundation>
+Date: Thu, 13 Aug 2026 15:50:12 +0200
+From: Tomas Mraz <tomas@...nssl.foundation>
+To: oss-security@...ts.openwall.com
+Subject: OpenSSL Security Advisory
 Content-Type: text/plain; charset=utf-8
 
-Multiple vulnerabilities, listed below, have been disclosed in the HTSlib
-package.  These have all been fixed in a new release 1.24 and have also been
-pack-ported to versions 1.23.2, 1.22.3 and 1.21.2
+OpenSSL Security Advisory [13th August 2026]
+============================================
 
-We do not yet have CVE numbers for these as our CVE assigning authority,
-GitHub, has a long backlog.  Therefore we are linking to the GitHub pages as
-these will be updated automatically once the CVEs have been assigned.
-
-The issues fall into several categories:
-
-- Overflows (read and write) in BCF file format decoding
-- Heap write overflows in handling of FASTA and CRAM indices
-- CRAM 3.x decoding overflows (read and write)
-- CRAM 4.x decoding overflows (read and write)
-
-We have back-ported the CRAM 4.x fixes, but we took the decision to remove
-this from the current and future releases as it is an experimental and
-currently unused file format.
-
-Contents
-========
-
-- Heap buffer overflow in BCF reader due to improper validation of input
-- Heap write overflow in HTSlib FASTA index handling
-- Heap write overflow in HTSlib CRAM index handling
-- Stack write overflow in HTSlib CRAM decoder
-- Out-of-bounds read in HTSlib CRAM 3.x / 4.0 reader due to improper validation
-- Heap read and write overflow in HTSlib CRAM 4.0 decoder
-- Out-of-bounds read in HTSlib CRAM 4.0 reader due to improper validation
-
-
-Heap buffer overflow in BCF reader due to improper validation of input
-======================================================================
-
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file formats. BCF
-is a format which stores data on genomic variation. In the BCF reader, it
-was possible to trigger an integer overflow in code designed to check that
-the number of bytes in a record was sufficient to account for the expected
-number and size of items stored. Bypassing this check could result in
-reading beyond the end of the stored data, and in some cases, modifying the
-data beyond the end of the buffer by attempting to set the least significant
-bit of each byte accessed.
-
-Impact
-------
-Exploiting this bug causes a heap buffer overflow. If a user opens a file
-crafted to exploit this issue, it could lead to the program crashing, or
-overwriting of data and heap structures in ways not expected by the
-program. It may be possible to use this to obtain arbitrary code execution.
-
-Severity: High
---------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-Versions 1.21.2, 1.22.3, 1.23.2 and 1.24 include fixes for this issue.
-
-Workarounds
------------
-There is no workaround for this issue.
-
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-2wm6-8hgm-7g92
-
-Credits
--------
-Thanks to VulnSeeker Security Research for reporting this issue.
-
-
-
-Heap write overflow in HTSlib FASTA index handling
-==================================================
-
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file
-formats. FASTA files hold reference DNA sequences and have an associated
-index, in .fai format, to permit random access. The fai_retrieve function
-does not validate the line length in the fai index file is greater or equal
-to the number of bases present per line.
-
-Impact
-------
-When the line length is one less than the number of bases per line, this
-leads to writing one byte beyond the end of the allocated heap buffer. With
-more than 1 byte difference between length and base count, this fails due to
-a negative malloc which will return NULL with the error being correctly
-handled.
-
-Severity: High
---------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-Versions 1.24, 1.23.2, 1.22.3 and 1.21.2 include fixes for this issue.
-
-Workarounds
------------
-There is no workaround for this issue.
-
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-4hjq-r829-8c8v
-
-
-
-Heap write overflow in HTSlib CRAM index handling
-=================================================
-
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file
-formats. CRAM is a compressed format which stores DNA sequence alignment
-data. It has an associated index, the .crai format, to permit random
-access. The cram_index_load function does not validate that the CRAM index
-file has the same number or fewer reference sequences as the CRAM file
-header.
-
-Impact
-------
-With a malformed CRAI index file, this can lead to unbounded memory
-allocations, offering the potential for Denial Of Service attacks. When the
-number of references in the index is within 2 of INT_MAX, the check to grow
-the memory fails due to integer wrap-around, leading to reading beyond the
-end of an heap buffer. The contents of that read are then used as a pointer
-to write to, leading to an unvalidated memory write.
-
-This is triggered by any region query, even valid ones.
-
-Severity: High
---------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-Versions 1.24, 1.23.2, 1.22.3 and 1.21.2 include fixes for this issue.
-
-Workarounds
------------
-There is no workaround for this issue.
-
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-28r7-prwc-hf5c
-
-
-
-Stack write overflow in HTSlib CRAM decoder
-===========================================
-
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file
-formats. CRAM is a compressed format which stores DNA sequence alignment
-data. The query-name is limited to 254 characters by the specification and
-the name is decoded into a 1024 byte array on the stack. However the name
-length limitation was validated too late, providing a mechanism to overflow
-the local stack array based on input from user-controlled data. This
-validation has now also been added to the cram_decode_slice function. This
-affects all versions of the CRAM file format.
-
-Impact
-------
-Exploiting this bug causes a stack write overflow. If a user opens a file
-crafted to exploit this issue, it could lead to the program crashing, or
-overwriting of data in ways not expected by the program. It may be possible
-to use this to obtain arbitrary code execution.
-
-Severity: High
---------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-Versions 1.24, 1.23.2, 1.22.3 and 1.21.2 include fixes for this issue.
-
-Workarounds
------------
-There is no workaround for this issue.
-
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-2jx2-wm7f-rv9m
-
-Credits
--------
-Thanks to Claude and Ada Logics for reporting bugs caused by the late
-validation.
-
-
-
-Out-of-bounds read in HTSlib CRAM 3.x / 4.0 readers due to improper validation
+Unbounded Memory Growth in QUIC Server Incoming Channel Queue (CVE-2026-14456)
 ==============================================================================
 
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file
-formats. CRAM is a compressed format which stores DNA sequence alignment
-data. The CRAM BETA decoder and the experimental CRAM v4 XPACK decoder,
-functions cram_beta_decode_long, cram_beta_decode_int,
-cram_beta_decode_char, cram_xpack_decode_long and cram_xpack_decode_int,
-have flaws in the bounds checking caused by an integer overflow after a
-multiplication, leading to reading beyond the supplied input buffer.
+Severity: Low
 
-Impact
-------
-This bug may allow information about program state to be leaked. It may also
-cause a program crash through an attempt to access invalid memory.
+Issue summary: When an OpenSSL QUIC server (Listener SSL object) processes
+valid QUIC Initial packets for unknown destination connection IDs, it
+can allocate and queue new incoming channels without enforcing any limit.
 
-Severity: Moderate
-------------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
+Impact summary: A remote peer that can make many Initial packets reach the
+server listener faster than the application accepts connections, can cause the
+memory allocated to store the per-channel state to grow without any limits,
+potentially making the QUIC listener unavailable and causing Denial of Service.
 
-Patches
--------
-Versions 1.24, 1.23.2, 1.22.3 and 1.21.2 include fixes for this issue
+CWE: CWE-770: Allocation of Resources Without Limits or Throttling
 
-Workarounds
------------
-There is no workaround for this issue.
+Description: The function that handles inbound QUIC packets uses
+Connection-Id from the packet header to find an existing connection
+(QUIC channel). If no existing connection is found and the packet
+type is INITIAL, the function treats the packet as a new connection. It
+allocates a new channel object and inserts it into a queue where it
+waits to be accepted by the local application with SSL_accept(3ossl).
+The memory occupied by these initial channel objects may grow
+without bounds if the application is not able to call SSL_accept()
+frequently enough to serve these inbound connection requests.
 
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-rjqv-xg3q-g423
+The issue is present since OpenSSL 3.5 when the QUIC server implementation
+was added.
 
-Credits
--------
-Thanks to Team Atlanta for reporting the initial issue.
+The fix introduces a limit for pending connections. The default limit is set
+to 256 pending connections (waiting to be accepted by the local application).
+Applications may change the default by calling SSL_set_value_uint(3ossl).
 
+FIPS impact: no
+The FIPS module is not affected as the QUIC implementation is outside of
+the OpenSSL FIPS module boundary.
 
+OpenSSL 4.0, 3.6 and 3.5 are vulnerable to this issue.
 
-Heap read and write overflow in HTSlib CRAM 4.0 decoder
-=======================================================
+OpenSSL 3.4, 3.0, 1.1.1 and 1.0.2 are not affected by this issue.
 
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file
-formats. CRAM is a compressed format which stores DNA sequence alignment
-data. The experimental CRAM v4 format XPACK and XRLE decoders cache a copy
-of the block pointer in the slice->block_by_id array, but beyond the
-allocated extents of this array (always 512 elements). This is initially a
-read to check whether the block is known. If this is zero, a memory block is
-allocated and written to this array element.
+OpenSSL 4.0 users should upgrade to OpenSSL 4.0.2 once it is released.
+OpenSSL 3.6 users should upgrade to OpenSSL 3.6.4 once it is released.
+OpenSSL 3.5 users should upgrade to OpenSSL 3.5.8 once it is released.
 
-Impact
-------
-These codecs always trigger a heap read overrun. This may lead to a crash if
-the data read was an invalid non-NULL pointer. If it is NULL, this will then
-lead to a heap write overrun. The index into this buffer is partially
-controlled by data within the input file supplied by the user. It may be
-possible to use this to obtain arbitrary code execution.
+Due to the low severity of this issue we are not issuing new releases of
+OpenSSL at this time. The fix will be included in the next release of 4.0,
+3.6, and 3.5 branches, once it becomes available. The fix is also available
+in commits f2f1465 (for 4.0), 4084152 (for 3.6), and 08e7756 (for 3.5) in
+the OpenSSL git repository.
 
-Severity: High
---------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
+This issue was reported on 25 June 2026 by Filipe Casal (Trail of Bits)
+in collaboration with OpenAI.
+The fix has been developed by Alexandr Nedvedicky.
 
-Patches
--------
-Versions 1.24, 1.23.2, 1.22.3 and 1.21.2 include fixes for this issue.
+General Advisory Notes
+======================
 
-Workarounds
------------
-There is no workaround for this issue.
+URL for this Security Advisory:
+https://openssl-library.org/news/secadv/20260813.txt
 
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-6q7c-m967-9v37
+Note: the online version of the advisory may be updated with additional details
+over time.
 
-Credits
--------
-Thanks to Trail of Bits and Anthropic for reporting this issue.
-
-
-
-Out-of-bounds read in HTSlib CRAM 4.0 reader due to improper validation
-=======================================================================
-
-Description
------------
-HTSlib is a library for reading and writing bioinformatics file
-formats. CRAM is a compressed format which stores DNA sequence alignment
-data. The experimental CRAM v4 XPACK and XRLE decoders, functions
-cram_xpack_decode_char and cram_xrle_decode_char, lack array range
-validation. This can be governed by user-controlled input, leading to
-reading beyond the supplied input buffer.
-
-Impact
-------
-This bug may allow information about program state to be leaked. It may also
-cause a program crash through an attempt to access invalid memory.
-
-Severity: Moderate
-------------------
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-Versions 1.24, 1.23.2, 1.22.3 and 1.21.2 include fixes for this issue
-
-Workarounds
------------
-There is no workaround for this issue.
-
-References
-----------
-https://github.com/samtools/htslib/security/advisories/GHSA-hg3g-v57p-459q
-
-Credits
--------
-Thanks to Team Atlanta for reporting this issue.
-
-----------------------------------------------------------------------
-The Wellcome Sanger Institute is operated by Genome Research Limited, a charity registered in England with number 1021457 and a company registered in England with number 2742969, whose registered office is Wellcome Sanger Institute, Wellcome Genome Campus, Hinxton, CB10 1SA.
+For details of OpenSSL severity classifications please see:
+https://openssl-library.org/policies/general/security-policy/
