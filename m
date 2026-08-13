@@ -1,73 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/5
-Message-ID: <trinity-dae8cf01-252d-4bec-854d-9eff3f7ed5ac-1782751566176@trinity-msg-rest-gmx-gmx-live-5556f6f97d-x94lh>
-Date: Mon, 29 Jun 2026 16:46:06 +0000
-From: shvedov@....com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/1
+Message-ID: <CAAbv5Ga++cZUxX5B+GFbJOUTUis4dP8zJZqnr7t6ocpjuR7c9A@mail.gmail.com>
+Date: Wed, 12 Aug 2026 17:37:56 -0700
+From: Andrew Tridgell <tridge60@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-70100: lwext4 divide-by-zero in ext4_block_set_lb_size
+Subject: rsync 3.5.0 released with fixes for 33 CVEs
 Content-Type: text/plain; charset=utf-8
 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-Product:    lwext4
-Affected:   lwext4 1.0.0, commit 58bcf89a121b72d4fb66334f1693d3b30e4cb9c5
-CVE:        CVE-2025-70100
-CWE:        CWE-369 (Divide By Zero)
-CVSS 3.1:   5.5 MEDIUM (CISA-ADP: AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:   Alexander A. Shvedov (@sigdevel) & Daniil Dulov
+We have just released rsync 3.5.0. This release addresses 33 CVEs. For
+details of the CVEs see:
+https://download.samba.org/pub/rsync/NEWS#3.5.0
+The release itself can be downloaded from:
+https://rsync.samba.org/
+Backport patch sets for 3.2.7 and 3.4.1 were sent to
+distros@...openwall.org last week so I expect the distro LTS releases to be
+updated soon.
+You can get the patches for 3.2.7 and 3.4.1 here:
+https://github.com/RsyncProject/rsync/tree/v3.4.1-sec-patches3
+https://github.com/RsyncProject/rsync/tree/v3.2.7-sec-patches3
 
-Description:
-  A divide-by-zero vulnerability exists in lwext4 when mounting or parsing a
-  crafted EXT4 filesystem image with an invalid logical block size.
+Many thanks to everyone who contributed to this release!
+Best regards,
+Andrew Tridgell
+-----BEGIN PGP SIGNATURE-----
+Version: FlowCrypt Email Encryption 8.5.14
+Comment: Seamlessly send and receive encrypted email
 
-  ext4_mount() reads the logical block size from the filesystem superblock and
-  forwards it to ext4_block_set_lb_size(). ext4_block_set_lb_size() then uses
-  lb_size in arithmetic without validating that the value is non-zero:
-
-      src/ext4_blockdev.c:127
-      Function: ext4_block_set_lb_size()
-
-      src/ext4.c:421
-      Function: ext4_mount()
-
-  A malformed image that results in lb_size == 0 triggers a Floating Point
-  Exception. Under AddressSanitizer the crash is reported as an FPE, while
-  standard builds terminate at runtime due to the missing validation. An
-  attacker who can supply a malformed EXT4 image to an application using
-  lwext4 for mounting or image processing can cause denial of service.
-
-Reproduction:
-  The issue is reproducible with the public PoC image using the fuzzing harness:
-
-      ./afl_ext4_mount_read ./sig8_2_lwext4_ext4_blockdev_c_127
-
-ASan log excerpt:
-  AddressSanitizer:DEADLYSIGNAL
-  ==1900824==ERROR: AddressSanitizer: FPE on unknown address 0x55f254cc29e9
-      #0 0x55f254cc29e9 in ext4_block_set_lb_size
-         /home/labuser/target/2025/lwext4/src/ext4_blockdev.c:127:34
-      #1 0x55f254cb2b5b in ext4_mount
-         /home/labuser/target/2025/lwext4/src/ext4.c:421:2
-      #2 0x55f254cb12d1 in ext4g_mount
-         /home/labuser/target/2025/fuzz/ext4_mount_read/src/ext4_glue.c:59:13
-      #3 0x55f254cb0c7d in LLVMFuzzerTestOneInput
-         /home/labuser/target/2025/fuzz/ext4_mount_read/fuzz_ext4_mount_read.c:17:9
-  SUMMARY: AddressSanitizer: FPE
-    /home/labuser/target/2025/lwext4/src/ext4_blockdev.c:127:34
-    in ext4_block_set_lb_size
-
-Fix:
-  The issue is addressed in lwext4 v1.0.1, released by Aladdin-R-D. Users
-  should upgrade to v1.0.1 or apply the corresponding upstream patch.
-
-References:
-  https://github.com/gkostka/lwext4/issues/90
-  https://github.com/sigdevel/pocs/blob/main/res/lwext4/2/sig8_2_lwext4_ext4_blockdev_c_127
-  https://github.com/Aladdin-R-D/lwext4/releases/tag/v1.0.1
-  https://www.cve.org/CVERecord?id=CVE-2025-70100
-  https://nvd.nist.gov/vuln/detail/CVE-2025-70100
-  https://infosec.exchange/@sigdevel/116668952003072580
-  https://bdu.fstec.ru/vul/2025-15478
-
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+wsG5BAEBCgBtBYJqfRHjCRAbskmXqFNfb0UUAAAAAAAcACBzYWx0QG5vdGF0
+aW9ucy5vcGVucGdwanMub3JnuYSdjc5Oue3p9LlCCksZL6DZfvuHH9aiOMeL
+5+VgTQMWIQSf7xEtzhmg3H6ILLgbskmXqFNfbwAAbJUP/0oEtEdZTfDb3zbw
+Oz0O2lv4jRyA4qxFz947Y56cP0eBMu4eySOlUeqrhtJXdrtwEh0H1raTs9no
+EBRkrTvtmhn+uZhKOgMNFREe3IuXpy8+tNhklN452FDeZoTaUPHVXOq2ibrR
+H302JsI7hiCTuVx+A4ShY6ecAkI8PQL6CxRHUGQ9vSldoXB/sgxba46tzVGI
+21FZ5ZViQI1ji/w0TlsO0njo58fqauCsG2tsIijxkLgKA6dW3wBilQbM0j9V
+UF09cGDqHc2NmrW9TZgLRj7d7CH4T8eQhyBagXpyeP+VedaYDPD+qvSA/Gv7
+noVcnY6jZgq58E0v1/UmXN2afeWQLLRxEDVMtgOpNleArpTryXzvTiZy+s4a
+rPdnTqJL4kY/krxfj/WQkfV8b3GrxGm+JLZNBvKyH431vxI+UlP+igb3CXwp
+eyv46/RjUwDgexYeLBNhCJy1uqdY9UaUmaV6+1cL7isMalnTz4pI7Pb4Cv4b
+QqVz17hZ5xw0CI7Fi6qHpSVIViTLlkrkV0ymjKr7bd6dgljj3qUKhM/v9fBw
+a80PQ5rkwHlzXNkC1SfPrR/ThRW496uXP0CrfwJigNojj2PpAVglwSvHrQkT
+ZCrL0MMqRpH524bnipAMa8uKh+5jgyUa1KlLnuKFL+OBlJzAVY5h7tdNitwt
+6gB39jr8
+=3uSL
+-----END PGP SIGNATURE-----
