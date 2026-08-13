@@ -1,72 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/7
-Message-Id: <A2980B4A-82BC-407B-ACF3-AB557F6703B1@stig.io>
-Date: Wed, 8 Jul 2026 15:57:34 +0100
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-49145: App::Ack versions through 3.10.0 for Perl read arbitrary files via --files-from in a project .ackrc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/5
+Message-ID: <752c6e12-50ff-d95c-d3bb-35d471ab631e@apache.org>
+Date: Thu, 13 Aug 2026 08:52:34 +0000
+From: Oleg Kalnichevski <olegk@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-64607: Apache HttpComponents Client: Connection Leak on Content-Encoding Decode Error Leads to Pool Exhaustion DoS 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-49145                                       CPAN Security Group
-========================================================================
+Severity: important 
 
-        CVE ID:  CVE-2026-49145
-  Distribution:  ack
-      Versions:  through 3.10.0
+Affected versions:
 
-      MetaCPAN:  https://metacpan.org/dist/ack
-      VCS Repo:  https://github.com/beyondgrep/ack3
+- Apache HttpComponents Client (org.apache.httpcomponents.client5:httpclient5) 5.0-alpha through 5.6.2
 
+Description:
 
-App::Ack versions through 3.10.0 for Perl read arbitrary files via
---files-from in a project .ackrc
+HttpClient based on the classic i/o model fails to correctly release the underlying connection back to the connection manager if it encounters an invalid or unsupported `Content-Encoding` header value in the response message. Please note this defect does not affect HttpClient based on the async i/o model.
 
-Description
------------
-App::Ack versions through 3.10.0 for Perl read arbitrary files via
---files-from in a project .ackrc.
+This issue affects Apache HttpComponents Client: from 5.0-alpha1 through 5.6.2.
 
-ack searches up the directory hierarchy from the current directory for
-a project .ackrc and loads its options. The project-source option
-blocklist in App::Ack::ConfigLoader does not include --files-from, so a
-project .ackrc can set it to a path whose listed files ack then reads
-and searches. Version 3.10.0 added --follow to the blocklist;
---files-from remains accepted.
+Credit:
 
-A project .ackrc committed to an untrusted repository can make ack read
-files outside the project and print their matching lines.
+Yu Bao from PayPal Cyber Security Team (finder)
 
-Problem types
--------------
-- CWE-73 External Control of File Name or Path
-- CWE-426 Untrusted Search Path
+References:
 
-Workarounds
------------
-Run ack with --noenv, or avoid running ack in a directory tree that
-contains an untrusted .ackrc.
-
-
-Solutions
----------
-Upgrade to a future ack release.
-
-
-References
-----------
-https://metacpan.org/release/PETDANCE/ack-v3.10.0/source/Changes
-
-Timeline
---------
-- 2026-06-07: Version 3.10.0 released with partial fix for the --follow
-  option.
-
-Credits
--------
-Michał Majchrowicz (AFINE), finder
-Marcin Wyczechowski (AFINE), finder
-
-
-
+https://lists.apache.org/thread/qqfzo3fqcdk4l5496vz95ppvl4ty511q
+https://hc.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-64607
 
