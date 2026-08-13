@@ -1,37 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/14
-Message-ID: <1694828e-a226-4419-a9bd-7c21e8b126e3@apache.org>
-Date: Tue, 15 Sep 2026 18:31:06 +0000
-From: Vincent Beck <vincbeck@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86465: Apache Airflow Akeyless provider: Akeyless secrets backend: team-scope guard bypass via user-controlled key 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/11
+Message-ID: <f4fdfbbf-1a71-4123-9c09-8ce4bf32e890@cpansec.org>
+Date: Thu, 13 Aug 2026 17:31:58 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13051: Form::Processor::Field::HtmlArea versions from 0.06 through 1.162360 for Perl allow attacker selected method dispatch and resource exhaustion via an HTML::Tidy diagnostic that validate passes to add_error as a Locale::Maketext template
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
 
-Affected versions:
+========================================================================
+CVE-2026-13051                                       CPAN Security Group
+========================================================================
 
-- Apache Airflow Akeyless provider (apache-airflow-providers-akeyless) before 0.3.1
+         CVE ID:  CVE-2026-13051
+   Distribution:  Form-Processor
+       Versions:  from 0.06 through 1.162360
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/Form-Processor
 
-Apache Airflow Akeyless provider: the Akeyless secrets backend's team-scope guard can be bypassed with a user-controlled key. In a multi-team deployment, a Dag author scoped to one team can supply a Variable key containing a path separator that causes the backend to resolve a secret belonging to a different team, because the lookup path is concatenated from an unvalidated key after the team-scoped lookup misses. The Execution API Variables route accepts a path-shaped key, so this is reachable from ordinary Dag code.
 
-Affects multi-team deployments using the Akeyless secrets backend. Single-team deployments are not affected, as there is no cross-team boundary to cross. This is the same class as CVE-2026-68870, CVE-2026-68871 and CVE-2026-68872 in the Azure Key Vault, Yandex Lockbox and Amazon secrets backends.
+Form::Processor::Field::HtmlArea versions from 0.06 through 1.162360
+for Perl allow attacker selected method dispatch and resource
+exhaustion via an HTML::Tidy diagnostic that validate passes to
+add_error as a Locale::Maketext template
 
-Users of apache-airflow-providers-akeyless are recommended to upgrade to version 0.3.1 or later, which fixes the issue.
+Description
+-----------
+Form::Processor::Field::HtmlArea versions from 0.06 through 1.162360
+for Perl allow attacker selected method dispatch and resource
+exhaustion via an HTML::Tidy diagnostic that validate passes to
+add_error as a Locale::Maketext template.
 
-Credit:
+validate runs HTML::Tidy over the submitted markup and passes each
+resulting message to add_error as its first argument, which add_error
+hands to the language handle as the Locale::Maketext message key. The
+default handle's lexicon sets `_AUTO`, so a message that is not a
+lexicon entry is compiled as a bracket notation template instead of
+being looked up. Tidy diagnostics quote the offending attribute name or
+value, so a bracket group in the submitted markup reaches the template
+position, where the first token of the group names a method called on
+the language handle and the remaining tokens are its arguments. A group
+such as `[0]` makes the compile croak, and neither the field nor the
+handle catches it, so the exception leaves validate.
+`[sprintf,%2000000000d,7]` reaches CORE::sprintf with an attacker
+chosen field width.
 
-ReturnZero (finder)
-Jarek Potiuk (remediation developer)
+One submission of crafted markup to an HtmlArea field throws an
+unhandled exception out of form validation or allocates an arbitrary
+amount of memory, and an application whose language handle subclass
+defines side effecting public methods makes those callable with
+attacker chosen arguments. The other field types pass fixed templates
+with the submitted value in an argument slot, where it stays inert, and
+are unaffected.
 
-References:
+Problem types
+-------------
+- CWE-1336 Improper Neutralization of Special Elements Used in a
+   Template Engine
+- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
+   ('Unsafe Reflection')
 
-https://github.com/apache/airflow/pull/72646
-https://www.cve.org/CVERecord?id=CVE-2026-68870
-https://www.cve.org/CVERecord?id=CVE-2026-68871
-https://www.cve.org/CVERecord?id=CVE-2026-68872
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86465
+Workarounds
+-----------
+No fixed release is available, and the distribution has not been
+updated since 2016. Apply the patch, which passes the tidy message as
+an interpolation argument so its brackets are displayed rather than
+compiled. Deployments that cannot patch should not use the HtmlArea
+field type.
+
+References
+----------
+https://security.metacpan.org/patches/F/Form-Processor/1.162360/CVE-2026-13051-r1.patch
+https://metacpan.org/release/HANK/Form-Processor-1.162360/source/lib/Form/Processor/Field/HtmlArea.pm#L28-31
+https://metacpan.org/release/HANK/Form-Processor-1.162360/source/lib/Form/Processor/Field.pm#L163
+https://www.cve.org/CVERecord?id=CVE-2012-6329
+
+
 
