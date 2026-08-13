@@ -1,50 +1,119 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/9
-Message-ID: <6mqqzqzujeduybqeojfh7tmblksmqjksocri5ayeudze6l4fqm@ijx64jfxrwbt>
-Date: Wed, 29 Jul 2026 18:31:11 -0700
-From: Pawan Gupta <pawan.kumar.gupta@...ux.intel.com>
-To: Jose R Rodriguez <jose.r.r@...ztli.com>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Backports available - cBPF JIT spray hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/13/9
+Message-ID: <2b677f79-742c-4912-b916-59ab56de8bed@cpansec.org>
+Date: Thu, 13 Aug 2026 17:30:30 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2022-4993: HTML::FormHandler versions through 0.40068 for Perl allow attacker selected method dispatch and resource exhaustion because _apply_actions and add_error use error message text built from request data as a Locale::Maketext bracket notation template
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Jul 29, 2026 at 05:15:46PM -0700, Jose R Rodriguez wrote:
-> On 2026-07-29 13:04, Pawan Gupta wrote:
-> > Hi All,
-> > 
-> > This is an inform distro maintainers about recently upstreamed hardening
-> > against speculative execution attacks using BPF JIT spraying.
-> > 
-> > The backports are available here:
-> > 
-> >   6.1  - https://lore.kernel.org/all/20260727-cbpf-jit-spray-hardening-6-1-y-v1-0-eb80dcf1eb6e@linux.intel.com
-> >   6.6  - https://lore.kernel.org/all/20260717-cbpf-jit-spray-hardening-6-6-y-v1-0-e04f1b2893de@linux.intel.com
-> >   6.12 - https://lore.kernel.org/all/20260715-cbpf-jit-spray-hardening-6-12-y-v1-0-d8585a9aed80@linux.intel.com
-> >   6.18 - https://lore.kernel.org/all/20260713-cbpf-jit-spray-hardening-6-18-y-v1-0-755f60c55705@linux.intel.com
-> >   7.1  - https://lore.kernel.org/all/20260709-cbpf-jit-spray-hardening-7-1-y-v1-0-5ac5a2d6797f@linux.intel.com
-> > 
-> > 6.1 backport is queued. Others are part of LTS kernels.
-> > 
-> > 5.15 and older do not support pack allocator for BPF on which the
-> > hardening
-> > is based on. So the series is not directly applicable to 5.15 and older,
-> > and may need custom hardening patches.
-> 
-> Any patches out there for kernel 5.17.15? Thanks in advance!
 
-Pack allocator was first introduced in 5.18 by commit:
+========================================================================
+CVE-2022-4993                                        CPAN Security Group
+========================================================================
 
-  57631054fae6 ("bpf: Introduce bpf_prog_pack allocator")
+         CVE ID:  CVE-2022-4993
+   Distribution:  HTML-FormHandler
+       Versions:  through 0.40068
 
-This means that 5.17 is in the same boat as 5.15, it does not support BPF
-pack allocator, and these hardening patches dont apply.
+       MetaCPAN:  https://metacpan.org/dist/HTML-FormHandler
+       VCS Repo:  https://github.com/gshank/html-formhandler
 
-Pack allocator makes the JIT spraying attacks easier, but this doesn't mean
-that kernels withouth it are immune to such attacks. This needs a fresh
-assessment and possibly a different hardening approach.
 
-BTW, I am confused by the choice of distro kernel 5.17 which is not an LTS
-kernel.
+HTML::FormHandler versions through 0.40068 for Perl allow attacker
+selected method dispatch and resource exhaustion because _apply_actions
+and add_error use error message text built from request data as a
+Locale::Maketext bracket notation template
 
-Thanks,
-Pawan
+Description
+-----------
+HTML::FormHandler versions through 0.40068 for Perl allow attacker
+selected method dispatch and resource exhaustion because _apply_actions
+and add_error use error message text built from request data as a
+Locale::Maketext bracket notation template.
+
+add_error hands its first argument to the language handle as the
+Locale::Maketext message key, and the default handle's lexicon sets
+`_AUTO`, so a string that is not a lexicon entry is compiled as a
+bracket notation template instead of being looked up. In a bracket
+group the first token names a method called on the language handle and
+the remaining tokens are its arguments.
+
+Three kinds of text the library did not author reach that position.
+_apply_actions installs a `$SIG{__WARN__}` handler that stores the
+warning text in `$error_message`, and a captured warning survives a
+successful action, so a field carrying a numeric transform turns
+`Argument "[sprintf,%50000000d,0]" isn't numeric` into the template; a
+warning quotes the submitted value verbatim, so the group is well
+formed and dispatches. `$error_message ||= $tobj->validate($new_value)`
+takes a type constraint's own failure message, which renders the
+rejected value through a partial dumper in bracket and comma form
+(Devel::PartialDump when Moose can load it, Type::Tiny's own dumper
+always), so a field with `apply => [ Str ]` given a parameter sent more
+than once, which arrives as an array, gets `Reference ["a","b"] did not
+pass type constraint "Str"` as its template, from a request that
+carries no bracket character of its own. A coercion or transform
+exception reaches it the same way. Beyond those, a validator whose
+message contains the field value puts that value in the template
+directly, and add_error replaces the message list with the contents of
+an arrayref first argument (`@...sage = @{$message[0]} if ref
+$message[0] eq 'ARRAY'`), so a value arriving as an array fills the
+argument slots from the same request as well.
+
+A malformed group such as `[0]` makes the compile croak, and
+HTML::FormHandler::I18N::maketext and add_error each re-raise that as a
+die, so process() throws. A well formed group naming sprintf reaches
+CORE::sprintf with an attacker chosen field width. Any caller that
+applies a type constraint or a transform to an untrusted field, or
+whose validator passes an untrusted field value to add_error, can be
+made to throw an unhandled exception out of process(), or to allocate
+an arbitrary amount of memory in one request, and an application whose
+language handle subclass defines side effecting public methods makes
+those callable with attacker chosen arguments. The dumped type
+constraint message is bounded to the exception, because both dumpers
+quote non-numeric elements so the method slot is never an attacker
+chosen name. The built-in messages pass fixed templates with the value
+in an argument slot, where it stays inert, and the built-in field types
+attach explicit message callbacks, so neither is affected.
+
+Problem types
+-------------
+- CWE-1336 Improper Neutralization of Special Elements Used in a
+   Template Engine
+- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
+   ('Unsafe Reflection')
+
+Workarounds
+-----------
+No fixed release is available. Apply the patch, which escapes the
+bracket notation metacharacters in the trapped warning, the type
+constraint message and the coercion or transform exception before they
+are used as a template, and in element 0 of an arrayref first argument.
+A message an application builds from a field value cannot be told apart
+from a template inside the library: pass a fixed template to add_error
+and supply the value as an argument, as the built-in messages do
+(`$field->add_error('[_1] not allowed', $field->value)`), so the value
+lands in an inert argument slot. Setting an allowlist on the language
+handle bounds the methods bracket notation can reach.
+
+References
+----------
+https://security.metacpan.org/patches/H/HTML-FormHandler/0.40068/CVE-2022-4993-r2.patch
+https://metacpan.org/release/GSHANK/HTML-FormHandler-0.40068/source/lib/HTML/FormHandler/Validate.pm#L161-261
+https://metacpan.org/release/GSHANK/HTML-FormHandler-0.40068/source/lib/HTML/FormHandler/Field.pm#L861-876
+https://metacpan.org/release/GSHANK/HTML-FormHandler-0.40068/source/lib/HTML/FormHandler/I18N/en_us.pm#L9-11
+https://www.cve.org/CVERecord?id=CVE-2012-6329
+
+Timeline
+--------
+- 2022-01-10: Issue was first reported to author without a proof of
+   concept.
+- 2024-10-27: Issue was forwarded to CPANSec.
+- 2026-06-22: Investigation and development of proof of concept by
+   CPANSec, aided by LLM tooling.
+- 2026-07-02: Issue was again reported to author with proof of concept.
+- 2026-07-30: Additional analysis and development of patch by CPANSec,
+   aided by LLM tooling.
+
+
+
