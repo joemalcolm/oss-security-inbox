@@ -1,75 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/27/1
-Message-ID: <CAOp4FwS5i_8wAp5+rVE=TYV0Lrr5RmDw2d-r_mghwCOhGma7cQ@mail.gmail.com>
-Date: Mon, 27 Jul 2026 12:12:28 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/14/5
+Message-ID: <CADE-WFd0FhWa=cc-w1_cm3C8kRdc3PE5HaFJ+uSM+99jjr_wjg@mail.gmail.com>
+Date: Fri, 14 Aug 2026 21:27:43 +0400
+From: Elman Shahbazov <shahbazovelman97@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: 432 Linux kernel CVEs
+Cc: linux-bluetooth@...r.kernel.org
+Subject: CVE Request: BlueZ AVRCP Out-of-Bounds Read (CWE-125)
 Content-Type: text/plain; charset=utf-8
 
-Great.
+Hello,
 
-Down here in africa, the cheapest phones come from an eastern country,
-except for rich africans who can afford phones or high end android phones.
+I would like to request a CVE ID for an Out-of-Bounds Read vulnerability
+(CWE-125) that was recently fixed in the official BlueZ Bluetooth stack.
 
-One of the things we need to look at here is with the wave of cves, how
-good is the security posture of african digital infrastructure.
+Vulnerability Type: CWE-125 (Out-of-bounds Read)
+Component: profiles/audio/avrcp.c (AVRCP GetFolderItems parsing)
+Impact: A remote Bluetooth device acting as an AVRCP controller can send
+  a specially crafted response with an inflated name length field but a short
+  packet size, causing bluetoothd to read past the allocated packet buffer
+  (Denial of Service / Information Disclosure).
 
-African countries might copy something similar to cra as we have a tendency
-to copy from europe.
+The vulnerability was discovered by me, and the patch has been officially
+accepted and applied to the BlueZ master branch by the maintainers
+(Red Hat / Intel).
 
+Fixed Commit:
+https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=bd8989620ed6
 
+Discoverer: Elman Shahbazov (shahbazovelman97@...il.com)
 
-On Wed, 22 Jul 2026, 20:29 Marcus Meissner, <meissner@...e.de> wrote:
-
-> Hi,
->
-> On Wed, Jul 22, 2026 at 03:27:57AM +0000, Peter Gutmann wrote:
-> > Steffen Nurpmeso <steffen@...oden.eu> quotes:
-> >
-> >  |As observed on social media[1], the Linux kernel
-> >  |published 432 CVEs between 2026-07-19T09:09 and
-> >  |2026-07-20T16:27 (in addition to the >40 other CVEs
-> >  |already published this month alone):
-> >
-> > Isn't that part of the malicious compliance approach,
-> > https://news.risky.biz/risky-biz-news-the-linux-cna-mess/, where
-> "almost any
-> > bug might be exploitable to compromise the security of the kernel [...]
-> > Because of this, the CVE assignment team is overly cautious and assign
-> CVE
-> > numbers to any bugfix that they identify"?  So the 432 CVEs could
-> potentially
-> > be 1 security problem and 432 "fixed a typo in a code comment"s.
-> >
-> > >Then again i would also see the mentioned current flood under the
-> Linu[sx]-
-> > >specific "every bug is a security vulnerability"
-> >
-> > Yup.  So without analysing every single one you can't really tell
-> whether it
-> > matters or not.  And if you're on something other than an x64 or Raspbian
-> > distro, so very popular ones, you're probably not going to get an update
-> any
-> > time soon, if ever, anyway - the oldest kernel I'm running on a still-
-> > currently-sold system is, let's see, "GNU/Linux 4.9.337-38".
-> >
-> > >What i know for sure is that being a patch pumpkin and being
-> responsible for
-> > >several linux kernel series is surely a hard thing to do.
-> >
-> > This is why so many systems are on "it's finally working, never touch
-> this
-> > again" kernels, they're often running on SoCs with a pile of special-case
-> > peripherals that require extensive custom support so they never get
-> updated
-> > once they've been made mostly functional.
->
-> So this is not new, in 2024 and 2025 the kernel CNA has issues around
-> 4500+ CVEs already, and speaking for SUSE in specific, we adjusted our
-> tooling and
-> increased automation massively to handle those.
->
-> Ciao, Marcus
->
-
+Thank you,
+Elman Shahbazov
