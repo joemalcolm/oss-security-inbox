@@ -1,70 +1,71 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/6
-Message-ID: <87y0e1tqbi.fsf@gentoo.org>
-Date: Thu, 20 Aug 2026 04:37:37 +0100
-From: Sam James <sam@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: libmspack: heap buffer overflow in make_decode_table() (Huffman decode table construction) -- CVE requested
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/15/4
+Message-ID: <f7325244ba756f28e0bc5aa57db2fe88@cpansec.org>
+Date: Sat, 15 Aug 2026 10:27:27 -0300
+From: Timothy Legge <timlegge@...nsec.org>
+To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
+Subject: CVE-2026-15689: Dancer2::Plugin::Auth::Extensible versions through 0.713 for Perl allow password reset link poisoning via the request Host header in _default_email_password_reset and _default_welcome_send
 Content-Type: text/plain; charset=utf-8
 
-Sumit Chakraborty <sumit.ch2004@...il.com> writes:
+========================================================================
+CVE-2026-15689                                       CPAN Security Group
+========================================================================
 
-> Hi all,
->
-> Reporting a memory-safety issue found via independent source audit of
-> libmspack (https://github.com/kyz/libmspack), a small C library for
-> Microsoft compression formats (CAB, CHM, LIT, HLP, KWAJ, SZDD) used by
-> cabextract and vendored by ClamAV (libclammspack), among others.
+         CVE ID:  CVE-2026-15689
+   Distribution:  Dancer2-Plugin-Auth-Extensible
+       Versions:  through 0.713
 
-Thanks for sharing and bringing it to the list.
+       MetaCPAN:  
+https://metacpan.org/dist/Dancer2-Plugin-Auth-Extensible
+       VCS Repo:  
+https://github.com/PerlDancer/Dancer2-Plugin-Auth-Extensible
 
->
-> Summary: make_decode_table() in mspack/readhuff.h -- the shared Huffman
-> decode-table builder used across the library's CAB/CHM/LZX decoders -- does
-> not validate that its input code-length array satisfies Kraft's inequality
-> before building extension nodes for long codes. A crafted, format-legal
-> length distribution can cause it to write past the end of the
-> caller-allocated decode table while still returning success, giving the
-> caller no indication anything went wrong.
->
-> I've confirmed this is reachable through real library API calls with a
-> hand-crafted input file, not just direct/synthetic function calls, and
-> precisely measured the resulting out-of-bounds write. I'm holding back
-> further technical detail (exact trigger conditions, PoC construction,
-> affected call sites) pending coordinated disclosure.
->
-> Reported to the maintainer (Stuart Caie) directly by email on 2026-08-16.
-> No CVE currently assigned. Requesting a CVE ID be reserved for tracking;
-> full technical writeup and PoC will follow once a fix is available or a
-> reasonable disclosure window has passed.
 
-I'm not sure if I follow the purpose of the email. If you'd like to
-handle disclosure to distros, you can use the linux-distros@ or distros@
-mailing list as appropriate, provided you're able & willing to follow
-the rules at
-https://oss-security.openwall.org/wiki/mailing-lists/distros#list-policy-and-instructions-for-reporters.
+Dancer2::Plugin::Auth::Extensible versions through 0.713 for Perl allow
+password reset link poisoning via the request Host header in
+_default_email_password_reset and _default_welcome_send
 
-If you're *not* interested in doing that, then we'd IMO generally like to
-see some link to a bug report (that had gone unfixed), or a patch or PoC
-or something. As it stands, all this post seems to signal is: there's a
-bug; you found a bug; the maintainer knows about it; there is not much
-actionable to remedy the bug.
+Description
+-----------
+Dancer2::Plugin::Auth::Extensible versions through 0.713 for Perl allow
+password reset link poisoning via the request Host header in
+_default_email_password_reset and _default_welcome_send.
 
-It's not strictly wrong to post what you have but it's unusual and I am
-not sure who or what it helps.
+Both default emails emit a link of the form `$base/login/$code`, whose
+authority comes from the request Host header, or from X-Forwarded-Host
+under behind_proxy (obtained from Dancer2's request->base function). A
+POST to /login carrying submit_reset and a username needs no
+authentication: it stores a fresh reset code against that account and
+mails the account holder a link to a host of the sender's choosing. The
+welcome mail takes the same path when the application calls create_user
+with email_welcome set.
 
-Am I missing something here? What was your intent with posting it at
-this stage?
+Through 0.711 the handlers read `request->uri_base` and `request->base`
+directly; Versions 0.712 and later provide an uri_base configuration
+key that defaults to the untrusted `request->uri_base` when unset.
 
->
-> Happy to share full details privately with anyone who needs them for triage
-> (distro security teams, downstream maintainers, etc.) -- just reach out
-> directly.
->
-> Thanks,
-> Sumit Chakraborty
+The default configuration with reset_password_handler enabled and the
+default message text, a recipient who follows the link hands a working
+reset code to the sender's host, which is enough to take over the
+account.
 
-thanks,
-sam
+Problem types
+-------------
+- CWE-640 Weak Password Recovery Mechanism for Forgotten Password
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+Workarounds
+-----------
+No fixed release is available. In 0.712 and later, set the uri_base
+configuration key to the application's own base URL; otherwise reject
+requests whose host is not an expected application hostname, including
+X-Forwarded-Host under behind_proxy.
+
+
+References
+----------
+https://metacpan.org/release/ABEVERLEY/Dancer2-Plugin-Auth-Extensible-0.711/source/lib/Dancer2/Plugin/Auth/Extensible.pm#L1031-1053
+https://metacpan.org/release/ABEVERLEY/Dancer2-Plugin-Auth-Extensible-0.711/source/lib/Dancer2/Plugin/Auth/Extensible.pm#L1097-1121
+https://metacpan.org/release/ABEVERLEY/Dancer2-Plugin-Auth-Extensible-0.712/source/lib/Dancer2/Plugin/Auth/Extensible.pm#L178-194
+https://metacpan.org/release/ABEVERLEY/Dancer2-Plugin-Auth-Extensible-0.713/source/lib/Dancer2/Plugin/Auth/Extensible.pm#L178-196
+https://metacpan.org/release/ABEVERLEY/Dancer2-Plugin-Auth-Extensible-0.713/changes
+
