@@ -1,37 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/08/15
-Message-ID: <4e805602-85cf-a283-ed08-c6fd9118c342@apache.org>
-Date: Mon, 08 Jun 2026 12:51:46 +0000
-From: Eric Covener <covener@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-48913: Apache HTTP Server: mod_http2 memory corruption when file handles exhausted 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/15/2
+Message-ID: <06231e20-46c4-4230-951e-3fdbf05ee115@cpansec.org>
+Date: Sat, 15 Aug 2026 13:10:35 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-73193: DBI versions before 1.652 for Perl allow a heap out-of-bounds write on 32-bit perl via an integer wraparound in the output buffer size computed by preparse
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
 
-Affected versions:
+========================================================================
+CVE-2026-73193                                       CPAN Security Group
+========================================================================
 
-- Apache HTTP Server 2.4.55 through 2.4.67
+         CVE ID:  CVE-2026-73193
+   Distribution:  DBI
+       Versions:  before 1.652
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/DBI
+       VCS Repo:  https://github.com/perl5-dbi/dbi
 
-Use After Free vulnerability in Apache HTTP Server module mod_http2 when file handles are already exhausted.
 
-This issue affects Apache HTTP Server: from 2.4.55 through 2.4.67.
+DBI versions before 1.652 for Perl allow a heap out-of-bounds write on
+32-bit perl via an integer wraparound in the output buffer size
+computed by preparse
 
-Credit:
+Description
+-----------
+DBI versions before 1.652 for Perl allow a heap out-of-bounds write on
+32-bit perl via an integer wraparound in the output buffer size
+computed by preparse.
 
-Sam Lovejoy, IBM X-Force Offensive Research (XOR) (finder)
+preparse reserves its output buffer with `newSV(strlen(statement) * 7 +
+16)`, budgeting seven output bytes per input byte for the longest
+':p99999' expansion. The product is computed in STRLEN, which is 32
+bits wide on a 32-bit perl build, so a statement of 613,566,757 bytes
+multiplies to 4,294,967,299, wraps modulo 2^32 to 3, and reserves 19
+bytes. The parser then copies the statement out through a raw pointer
+with no capacity check, writing the whole 585 MB input past the end of
+the allocation. The 99,999 placeholder limit does not bound this path,
+which is reached by ordinary non-placeholder content.
 
-References:
+Any caller that passes an untrusted statement of that length to
+preparse on a 32-bit perl gets a heap out-of-bounds write of attacker
+controlled bytes. Builds with a 64-bit STRLEN are not affected, since
+the wrap there needs a statement of about 2.3 exabytes.
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-48913
+Problem types
+-------------
+- CWE-190 Integer Overflow or Wraparound
+- CWE-787 Out-of-bounds Write
 
-Timeline:
+Workarounds
+-----------
+On 32-bit depoyments that cannot be upgraded, limit the size of SQL
+statements under 292 megabytes.
 
-2026-05-22: reported
-2026-06-03: fixed in 2.4.x by r1934882
-2026-06-08: 2.4.68 released
+Solutions
+---------
+Upgrade to DBI 1.652 or later.
+
+References
+----------
+https://www.cve.org/CVERecord?id=CVE-2026-14739
+https://github.com/perl5-dbi/dbi/security/advisories/GHSA-wj3v-c3hh-mhqr
+https://github.com/perl5-dbi/dbi/commit/c751ae5a5a6f56c2f8284f37c1f4d43500352ef1.patch
+
+Credits
+-------
+Chrysostomos Manousis, reporter
+
+
 
