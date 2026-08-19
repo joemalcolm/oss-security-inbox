@@ -1,36 +1,112 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/14
-Message-ID: <f289ccbd-c594-ca0c-b76c-304d49967e09@apache.org>
-Date: Mon, 06 Jul 2026 08:15:00 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/19/6
+Message-ID: <0a2b61e1-b3de-494c-b6b5-a371afce319b@jvf.cc>
+Date: Wed, 19 Aug 2026 12:39:48 -0700
+From: Jay Faulkner <jay@....cc>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-43867: Apache Camel: Camel-PQC: The AWS Secrets Manager key-lifecycle manager deserializes persisted key metadata with java.io.ObjectInputStream and no ObjectInputFilter 
+Subject: [OSSA-2026-008] ERRATA 2: Ironic Command Injection in IPMI Console Implementations
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+=======================================================================
+OSSA-2026-008: Command Injection in Ironic IPMI Console Implementations
+=======================================================================
 
-Affected versions:
+:Date: April 27, 2026
+:CVE: CVE-2026-42510
 
-- Apache Camel (org.apache.camel:camel-pqc) 4.18.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-pqc) 4.19.0 before 4.21.0
 
-Description:
+Affects
+~~~~~~~
+- Ironic: >=4.3.0 <26.1.6, >=27.0.0 <29.0.5, >=30.0.0 <32.0.1, >=33.0.0 
+<35.0.1
 
-Deserialization of Untrusted Data vulnerability in Apache Camel PQC Component.
 
-The camel-pqc component persists post-quantum key metadata (KeyMetadata) through pluggable KeyLifecycleManager implementations. AwsSecretsManagerKeyLifecycleManager.deserializeMetadata() reads that metadata back from the configured AWS Secrets Manager secret by Base64-decoding the stored value and deserializing it with a raw java.io.ObjectInputStream.readObject() and no ObjectInputFilter or class allow-list; the cast to KeyMetadata happens only after readObject() returns, so any readObject() side effects in a crafted object run before the type check. A principal who can write to the AWS Secrets Manager secret that holds this metadata (requiring secretsmanager:PutSecretValue on that secret) could store a crafted serialized object that is deserialized during normal key-lifecycle operations, potentially leading to code execution in the context of the application that manages the keys. This is the same underlying defect, in the same code path and remediated by the same fix, as CVE-2026-46590, which was reported independently and additionally covers the HashiCorp Vault and file-based sibling managers; both are incomplete-remediation follow-ons to CVE-2026-40048 (CAMEL-23200).
-This issue affects Apache Camel: from 4.18.0 before 4.18.3, from 4.19.0 before 4.21.0.
+Description
+~~~~~~~~~~~
+Dmitry Tantsur and Tuomo Tanskanen from the Metal3.io Security Team 
+reported a vulnerability in Ironic's IPMI console backends. A project 
+manager for the project marked as a ``node.owner`` can inject arbitrary 
+commands which a conductor executes on console activation.
+No console backends are enabled by default in Ironic. Only installations 
+which have set ``[conductor]/enabled_console_interfaces`` to enable 
+either ``ipmitool-shellinabox`` or ``ipmitool-socat`` are vulnerable.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.18.x LTS releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, restrict write access to the AWS Secrets Manager secret that holds the camel-pqc key metadata so that only the application’s own identity holds secretsmanager:PutSecretValue on it (least-privilege IAM), and keep the PQC key material in a secret separate from any data that less-trusted principals can write.
 
-Credit:
 
-Venkatraman Kumar from Securin (finder)
-Andrea Cosentino (remediation developer)
+Errata
+~~~~~~
+- **Errata 1:** When the original advisory was published a CVE number was
+   not assigned. CVE-2026-42510 was assigned on 2026-04-29.
 
-References:
+- **Errata 2:** The original fix shell-quoted the console command, but
+   socat executes it directly without a shell and so treated the quoted
+   command line as a single program name. Deployments using the
+   ipmitool-socat console interface lose console functionality entirely as
+   a result, though the vulnerability itself is not reintroduced. The
+   Errata 2 patches provide an additional fix which escapes the command
+   for socat's own address syntax.
 
-https://camel.apache.org/security/CVE-2026-43867.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-43867
 
+
+Patches
+~~~~~~~
+- **Original** https://review.opendev.org/c/openstack/ironic/+/986418 
+(2023.1/antelope (unmaintained))
+- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000990 
+(2023.1/antelope (unmaintained))
+- **Original** https://review.opendev.org/c/openstack/ironic/+/986417 
+(2024.1/caracal (unmaintained))
+- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000989 
+(2024.1/caracal (unmaintained))
+- **Original** https://review.opendev.org/c/openstack/ironic/+/986363 
+(2024.2/dalmatian)
+- **Original** https://review.opendev.org/c/openstack/ironic/+/986362 
+(2025.1/epoxy)
+- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000986 
+(2025.1/epoxy)
+- **Original** https://review.opendev.org/c/openstack/ironic/+/986361 
+(2025.2/flamingo)
+- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000985 
+(2025.2/flamingo)
+- **Original** https://review.opendev.org/c/openstack/ironic/+/986235 
+(2026.1/gazpacho)
+- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/1000984 
+(2026.1/gazpacho)
+- **Errata 2** https://review.opendev.org/c/openstack/ironic/+/999701 
+(2026.2/hibiscus)
+
+
+Credits
+~~~~~~~
+- Dmitry Tantsur from Metal3.io Security Team
+- Tuomo Tanskanen from Metal3.io Security Team
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2148331
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-42510
+
+
+Notes
+~~~~~
+- A CVE request was filed with MITRE on 2026-04-27.
+- Patches for unmaintained branches are provided as a courtesy.
+- The ``ipmitool-shellinabox`` console interface is already scheduled
+   for removal from Ironic for lack of security support for shellinabox.
+   Security sensitive operators are strongly encouraged to stop use of
+   this console interface immediately.
+- **Errata 2** The console regression affects the 26.1.6, 29.0.5,
+   29.0.6, 32.0.1, 35.0.1, 36.0.0, 37.0.0 and 38.0.0 releases;
+   stable/2024.2 has since been retired, so 26.1.6 can only be corrected
+   by applying the additional fix locally.
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2026-08-19 - Errata 2
+- 2026-04-29 - Errata 1
+- 2026-04-27 - Original Version
+
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
