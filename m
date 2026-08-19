@@ -1,37 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/11
-Message-ID: <4e000529-b33a-a779-ab72-9c6a4a7e1deb@apache.org>
-Date: Mon, 20 Jul 2026 09:21:14 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-63071: Apache Syncope: RCE via Groovy Sandbox bypass 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/19/3
+Message-ID: <517e44be-1ae8-46af-b0f1-f07ea04a1053@cpansec.org>
+Date: Wed, 19 Aug 2026 08:24:06 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-75589: Net::OAuth versions before 0.33 for Perl check HMAC-SHA1, HMAC-SHA256 and PLAINTEXT signatures with a non-constant-time comparison in verify
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
 
-Affected versions:
+========================================================================
+CVE-2026-75589                                       CPAN Security Group
+========================================================================
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0.0-M0 through 4.0.6
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.1.0-M0 through 4.1.1
+         CVE ID:  CVE-2026-75589
+   Distribution:  Net-OAuth
+       Versions:  before 0.33
 
-Description:
+       MetaCPAN:  https://metacpan.org/dist/Net-OAuth
+       VCS Repo:  https://github.com/vurtdev/Net-OAuth
 
-Improper Isolation or Compartmentalization vulnerability in Apache Syncope.
 
-An administrator with adequate entitlements for Implementations can create a malicious Groovy class containing untrusted code bypassing the Groovy security sandbox.
+Net::OAuth versions before 0.33 for Perl check HMAC-SHA1, HMAC-SHA256
+and PLAINTEXT signatures with a non-constant-time comparison in verify
 
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 through 4.0.6, from 4.1.0-M0 through 4.1.1.
+Description
+-----------
+Net::OAuth versions before 0.33 for Perl check HMAC-SHA1, HMAC-SHA256
+and PLAINTEXT signatures with a non-constant-time comparison in verify.
 
-Users are recommended to upgrade to version 4.0.7 / 4.1.2, which fix this issue by tightening the Groovy security sandbox.
+Each of the three compares the signature carried in the message against
+the locally computed one with the eq operator, which returns as soon as
+the two strings differ. The time taken to reject a signature varies
+with the length of the matching prefix. RSA-SHA1 is not affected, as it
+verifies through the RSA key object rather than by comparing strings.
 
-Credit:
+A client that can submit messages and time the replies may recover a
+valid signature one byte at a time rather than searching the whole
+signature space. Under PLAINTEXT the value compared against is the
+signature key itself, so the search recovers consumer_secret and
+token_secret.
 
-elin kai (finder)
-无聊 (finder)
+Problem types
+-------------
+- CWE-208 Observable Timing Discrepancy
 
-References:
+Solutions
+---------
+Upgrade to Net-OAuth 0.33 or later.
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-63071
+References
+----------
+https://github.com/vurtdev/Net-OAuth/security/advisories/GHSA-g8xr-69p3-gw56
+https://github.com/vurtdev/Net-OAuth/commit/a1a16b58add85668ef4fcda642a486ceed098eba.patch
+https://metacpan.org/release/RRWO/Net-OAuth-0.33/changes
+
+
 
