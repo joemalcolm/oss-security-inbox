@@ -1,209 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/11
-Message-ID: <d1cbc238607848a3b25504e8d87cfa35@sba-research.org>
-Date: Thu, 30 Jul 2026 10:01:07 +0000
-From: SBA Research Security Advisory <advisory@...-research.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: [SBA-ADV-20260128-02] CVE-2026-16971 CVE-2026-18362: DFIR-IRIS 2.4.26 and possibly others Missing Brute Force Protection
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/13
+Message-ID: <e940fcf4-fb94-2ff5-3755-be38e67e2ccf@apache.org>
+Date: Thu, 20 Aug 2026 14:21:22 +0000
+From: Charles Zhang <dockerzhang@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-63039: Apache InLong: SQL Injection via Unvalidated MyBatis Dollar-Sign Interpolation in AuditAlertRuleService 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate 
 
-# DFIR-IRIS Missing Brute Force Protection #
+Affected versions:
 
-Link: https://github.com/sbaresearch/advisories/tree/public/2026/SBA-ADV-20260128-02_DFIR-IRIS_Missing_Brute_Force_Protection
+- Apache InLong 2.0.0 before 2.4.0
 
-## Vulnerability Overview ##
+Description:
 
-The IRIS web application in version 2.4.26 and possibly others does not
-protect its MFA validation (CVE-2026-16971) and user authentication
-(CVE-2026-18362) against brute-force attacks.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache InLong. This allows an attacker to inject the string value into
+the SQL statement, enabling SQL injection.
 
-* **Identifier**            : SBA-ADV-20260128-02
-* **Type of Vulnerability** : Missing Brute Force Protection
-* **Software/Product Name** : [IRIS](https://www.dfir-iris.org/)
-* **Vendor**                : [DFIR-IRIS](https://github.com/dfir-iris)
-* **Affected Versions**     : 2.4.26
-* **Fixed in Version**      : not currently available
-* **CVE IDs**               : CVE-2026-16971 CVE-2026-18362
-* **CVSS Vector**           : CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N
-* **CVSS Base Score**       : 5.9 (Medium)
 
-## Vendor Description ##
+This issue affects Apache InLong: from 2.0.0 before 2.4.0.
 
-> IRIS is a collaborative digital platform designed for incident response
-> analysts to share complex investigations at a technical level. It can be
-> installed on a dedicated server or as a portable application for roaming
-> investigations where internet access might not be available.
 
-Source: <https://docs.dfir-iris.org/2.4.24/>
 
-## Impact ##
+Users are advised to upgrade to Apache InLong's  2.4.0 or cherry-pick [1] to solve it.
 
-There is no observable rate-limiting for the endpoints which validate a
-user’s password or OTP. This means that brute-force attacks on a user’s
-password are possible and MFA must be considered ineffective.
+[1]  https://github.com/apache/inlong/pull/12080 .
 
-## Vulnerability Description ##
+Credit:
 
-The affected system does not implement sufficient restrictions on resources
-and requests. This creates the potential for a brute force attack on
-authentication endpoints.
+Andrea Cosentino (finder)
 
-## Proof of Concept ##
+References:
 
-### OTP Validation (CVE-2026-16971) ###
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-63039
 
-The following request is sent to the application if the user enters a
-*One-time Password (OTP)* to complete the *Multi-factor Authentication (MFA)*:
-
-```http
-POST /auth/mfa-verify HTTP/1.1
-Host: myiris.local
-Cookie: session=.eJwd[...]
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate, br
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 110
-Origin: https://myiris.local
-Referer: https://myiris.local/auth/mfa-verify
-Upgrade-Insecure-Requests: 1
-Sec-Fetch-Dest: document
-Sec-Fetch-Mode: navigate
-Sec-Fetch-Site: same-origin
-Sec-Fetch-User: ?1
-Priority: u=0, i
-Te: trailers
-Connection: keep-alive
-
-csrf_token=IjZjMWQ5YWZiOTg4MDQyZDBkMGFhNzMwYWIyOTBkNTFkZGMxYTJiM2Ei.aWTb9g.CqozcZ7VxJNwjX0VCwq4MZe1i_k&token=123456
-
-HTTP/1.1 200 OK
-Server: nginx
-Date: Mon, 26 Jan 2026 11:33:23 GMT
-Content-Type: text/html; charset=utf-8
-Content-Length: 4223
-Connection: keep-alive
-Vary: Cookie
-Set-Cookie: session=.eJyd[...]; Secure; HttpOnly; Path=/; SameSite=Lax
-Content-Security-Policy: default-src 'self' https://analytics.dfir-iris.org; script-src 'self' 'unsafe-inline' https://analytics.dfir-iris.org; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
-X-XSS-Protection: 1; mode=block
-X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Strict-Transport-Security: max-age=31536000: includeSubDomains
-Front-End-Https: on
-
-[...]
-```
-
-Note that the response code of the application indicates a success (`200 OK`)
-even if an incorrect OTP has been sent. A valid OTP causes a redirect:
-
-```http
-HTTP/1.1 302 FOUND
-Server: nginx
-Date: Mon, 26 Jan 2026 11:32:45 GMT
-Content-Type: text/html; charset=utf-8
-Content-Length: 219
-Connection: keep-alive
-Location: /dashboard?cid=1
-Vary: Cookie
-Set-Cookie: session=.eJw1[...]; Secure; HttpOnly; Path=/; SameSite=Lax
-Content-Security-Policy: default-src 'self' https://analytics.dfir-iris.org; script-src 'self' 'unsafe-inline' https://analytics.dfir-iris.org; style-src 'self' 'unsafe-inline'; img-src 'self' data:;
-X-XSS-Protection: 1; mode=block
-X-Frame-Options: DENY
-X-Content-Type-Options: nosniff
-Strict-Transport-Security: max-age=31536000: includeSubDomains
-Front-End-Https: on
-
-<!doctype html>
-<html lang=en>
-<title>Redirecting...</title>
-<h1>Redirecting...</h1>
-<p>You should be redirected automatically to the target URL: <a href="/dashboard?cid=1">/dashboard?cid=1</a>. If not, click the link.
-```
-
-During the test the whole possible space of valid OTPs (6 digits, 1 million
-possibilities) was sent to the application in quick succession. No delay or
-account lockout was observed, the user could still authenticate with the
-correct OTP afterwards.
-
-Since the space of possible values is so small for OTPs, this effectively
-constitutes a bypass of the MFA policy.
-
-### User Authentication (CVE-2026-18362) ###
-
-No limitation of any kind was observed when performing a brute-force attack
-on an account’s password. Neither were the requests delayed or blocked, nor
-was the user’s account locked.
-
-## Recommended Countermeasures ##
-
-We are not aware of a fix yet. Please contact the vendor.
-
-We recommend implementing a generic solution that allows context-dependent
-rate limiting to be applied at least
-
-* per source (e.g., IP address),
-* per subject (e.g., account or session),
-* per object (e.g., queried database entry), and
-* per time (e.g., one minute)
-
-is allowed. For example, this can be implemented in the form of an annotation
-that allows different limits per action. It is common to return the HTTP
-error code 429 “Too Many Requests” if the limit is exceeded.
-
-It is important that not only further requests are blocked when the limit is
-exceeded, but to also log the exceeding ones.
-
-Especially sensitive endpoints used for authentication purposes need a
-dedicated protection against brute-force attacks.
-
-## Timeline ##
-
-* `2026-01-28` Identified the vulnerability in version 2.4.26
-* `2026-01-30` Initial vendor contact attempt via e-mail
-* `2026-02-27` Second vendor contact attempt via e-mail
-* `2026-03-30` Report on GitHub due to a missing response from the vendor
-* `2026-07-07` Informed project about imminent publication
-* `2026-07-24` SBA assigned CVE number
-* `2026-07-30` SBA assigned additional CVE numbers since the instances are
-               independently fixable
-* `2026-07-30` Public disclosure due to missing response from the vendor
-
-## References ##
-
-* OWASP API Security Top 10 2023. API4:2023 Unrestricted Resource Consumption:
-  <https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/>
-* Common Weakness Enumeration. CWE-770 Allocation of Resources Without Limits
-  or Throttling: <https://cwe.mitre.org/data/definitions/770.html>
-
-## Credits ##
-
-* Michael Koppmann ([SBA Research](https://www.sba-research.org/))
-* Mathias Tausig ([SBA Research](https://www.sba-research.org/))
-
-The discovery of this vulnerability was made possible through support from
-[CYSSDE](https://cyssde.eu/) and the European Union.
-
-![CYSSDE](images/cyssde.png)
------BEGIN PGP SIGNATURE-----
-
-iQJPBAEBCAA5FiEEL9Wp/yZWFD9OpIt6+7iGL1j3dbIFAmprIOEbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMiwxAAoJEPu4hi9Y93WyyskP/RVsR9TOZfleeRe7ORlD
-SILyVDfkaooauJHEMxw5zM302pd9CYYzlBRzZZSkFI8miOVh5n9ijhcDEp35zFfU
-nBc7qBPIUqsPjzmfq6Ru217a0hUvphn+zPMaybfzBPyOtUajKKp8D+TzuQh4LpMR
-NapyVa5Sm0unvwBQzcIZF2ftDeIXFfgMN49wJNFCHJ2yuHsL+1lBOr0p8v2sVWbX
-oh6EorFuIEYN2VbD+rKlgJltHGWYVAzg12xRZ2WMXc7JDrEyuIKHXh4DtGVYNjJA
-YUikrU1jA9JPzlAm85imtAejhyd+Mfl/HdqXYR148UEjPgqCuLYqAoS4xB9+jA60
-R93adPKAsDRBAYgdhpKuVjb0cNMPeAGonvgxJC282QodgZZMK+QGcndkaRKpFqKl
-VoofeIAu3FKVE+JzGgJmm+gVH2u0DXq4iA3k7LGXu6toTJcVM8D85qTIndeyvOye
-fQuFTsBjdQewDNMHPDnwQU/McfWbPTZvkq78zI7hBYSzYu4vfqSLYlyUfb+Trt6D
-ZaHxrGborIrmZnwpOmT29t+jKY/+LCg3ljoCctKWwQFr4jo0K+5t5zO12n/0xgcI
-N8v0/d07K4ae9DEcNQIaWmAJ6R9s6uOvNbwiyh6JaRsR9zfksnIlQt5aCOzdL8Bp
-XQPAp+f48yvmVej8T/AwWn/5
-=OGB3
------END PGP SIGNATURE-----
