@@ -1,78 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/30/28
-Message-ID: <7789ea2d3640661c1871cdffc35f9240@metztli.com>
-Date: Thu, 30 Jul 2026 16:12:30 -0700
-From: Jose R Rodriguez <jose.r.r@...ztli.com>
-To: oss-security@...ts.openwall.com
-Cc: Greg KH <greg@...ah.com>, Pawan Gupta <pawan.kumar.gupta@...ux.intel.com>
-Subject: Re: Backports available - cBPF JIT spray hardening
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/1
+Message-ID: <6eeef013f4e102e330485ebcef7a6153@cpansec.org>
+Date: Wed, 19 Aug 2026 21:43:21 -0300
+From: Timothy Legge <timlegge@...nsec.org>
+To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
+Subject: CVE-2026-75628: Punk::OAuth2 versions before 0.03 for Perl allow an attacker-chosen off-site redirect after login because same_origin_path accepts a backslash or tab in the return parameter
 Content-Type: text/plain; charset=utf-8
 
-On 2026-07-30 07:00, Greg KH wrote:
-> On Wed, Jul 29, 2026 at 06:31:11PM -0700, Pawan Gupta wrote:
->> On Wed, Jul 29, 2026 at 05:15:46PM -0700, Jose R Rodriguez wrote:
->> > On 2026-07-29 13:04, Pawan Gupta wrote:
->> > > Hi All,
->> > >
->> > > This is an inform distro maintainers about recently upstreamed hardening
->> > > against speculative execution attacks using BPF JIT spraying.
->> > >
->> > > The backports are available here:
->> > >
->> > >   6.1  - https://lore.kernel.org/all/20260727-cbpf-jit-spray-hardening-6-1-y-v1-0-eb80dcf1eb6e@linux.intel.com
->> > >   6.6  - https://lore.kernel.org/all/20260717-cbpf-jit-spray-hardening-6-6-y-v1-0-e04f1b2893de@linux.intel.com
->> > >   6.12 - https://lore.kernel.org/all/20260715-cbpf-jit-spray-hardening-6-12-y-v1-0-d8585a9aed80@linux.intel.com
->> > >   6.18 - https://lore.kernel.org/all/20260713-cbpf-jit-spray-hardening-6-18-y-v1-0-755f60c55705@linux.intel.com
->> > >   7.1  - https://lore.kernel.org/all/20260709-cbpf-jit-spray-hardening-7-1-y-v1-0-5ac5a2d6797f@linux.intel.com
->> > >
->> > > 6.1 backport is queued. Others are part of LTS kernels.
->> > >
->> > > 5.15 and older do not support pack allocator for BPF on which the
->> > > hardening
->> > > is based on. So the series is not directly applicable to 5.15 and older,
->> > > and may need custom hardening patches.
->> >
->> > Any patches out there for kernel 5.17.15? Thanks in advance!
->> 
->> Pack allocator was first introduced in 5.18 by commit:
->> 
->>   57631054fae6 ("bpf: Introduce bpf_prog_pack allocator")
->> 
->> This means that 5.17 is in the same boat as 5.15, it does not support 
->> BPF
->> pack allocator, and these hardening patches dont apply.
->> 
->> Pack allocator makes the JIT spraying attacks easier, but this doesn't 
->> mean
->> that kernels withouth it are immune to such attacks. This needs a 
->> fresh
->> assessment and possibly a different hardening approach.
->> 
->> BTW, I am confused by the choice of distro kernel 5.17 which is not an 
->> LTS
->> kernel.
-> 
-> Yes, that's a very odd choice for anyone to run these days.  According
-> to the cve tools:
-> 	Total Vulnerable CVE's in 5.17.15 : 7035
-> 
-> That's a non-trivial amount...
-> 
-> good luck!
-> 
-> greg k-h
+========================================================================
+CVE-2026-75628                                       CPAN Security Group
+========================================================================
 
-Your insight is appreciated, i.e., hint taken. Thank you!
+         CVE ID:  CVE-2026-75628
+   Distribution:  Punk-OAuth2
+       Versions:  before 0.03
 
--- 
-Best Professional Regards.
+       MetaCPAN:  https://metacpan.org/dist/Punk-OAuth2
 
---
-Jose R R
-http://metztli.it
----------------------------------------------------------------------------------------------
-Download Metztli Reiser4: Debian Trixie w/ Linux 5.17.15-3 AMD64
----------------------------------------------------------------------------------------------
-feats ZSTD compression https://sf.net/projects/metztli-reiser4/
--------------------------------------------------------------------------------------------
-Official current Reiser4 resources: https://reiser4.wiki.kernel.org/
+
+Punk::OAuth2 versions before 0.03 for Perl allow an attacker-chosen
+off-site redirect after login because same_origin_path accepts a
+backslash or tab in the return parameter
+
+Description
+-----------
+Punk::OAuth2 versions before 0.03 for Perl allow an attacker-chosen
+off-site redirect after login because same_origin_path accepts a
+backslash or tab in the return parameter.
+
+oauth2_login reads the return parameter from the initiation request,
+runs same_origin_path over it, and stores the survivor in the session
+flow record as the post-login redirect target. That check rejects a
+value that does not begin with a slash, one with a slash as its second
+byte, and one containing CR or LF. A backslash and a tab pass. The URL
+Standard treats a backslash as equivalent to a slash for special
+schemes, so `/\evil.example` parses with the authority `evil.example`.
+It also strips ASCII tab before parsing, so a tab between two leading
+slashes leaves `//evil.example`.
+
+A crafted link to the application's own login route lands the victim on
+the attacker's site after a genuine authentication. The redirect
+carries no authorization code or access token.
+
+Problem types
+-------------
+- CWE-601 URL Redirection to Untrusted Site ('Open Redirect')
+
+Workarounds
+-----------
+For deployments that cannot upgrade to 0.03, strip the return query
+parameter from requests to the oauth2_login initiation route at the
+reverse proxy. Logins then use the configured redirect_ok destination.
+
+Solutions
+---------
+Upgrade to Punk-OAuth2 0.03 or later.
+
+References
+----------
+https://metacpan.org/release/LNATION/Punk-OAuth2-0.03/changes
+https://metacpan.org/release/LNATION/Punk-OAuth2-0.02/source/include/pox/pox_util.h#L94
+https://datatracker.ietf.org/doc/html/rfc9700#section-4.11.1
+https://url.spec.whatwg.org/#relative-slash-state
+https://url.spec.whatwg.org/#concept-basic-url-parser
