@@ -1,70 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/1
-Message-ID: <ak2ksdJ1BOEIQBCg@quokka>
-Date: Wed, 8 Jul 2026 11:15:52 +1000
-From: Peter Hutterer <peter.hutterer@...-t.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/4
+Message-ID: <87o6exv5pn.fsf@gentoo.org>
+Date: Thu, 20 Aug 2026 04:19:48 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: FW: X.Org Security Advisory: multiple security issues in libXfont2
+Subject: Multiple vulnerabilities fixed in libgit2-1.9.5, 1.9.7
 Content-Type: text/plain; charset=utf-8
 
-======================================================================
-X.Org Security Advisory: July 08, 2026
+Hi,
 
-Issues in libXfont2 prior to 2.0.8
-======================================================================
+libgit2-1.9.5 fixes several vulnerabilities [0]:
+"""
+    Fix for blame error handling on hunk creation failures
 
-Multiple issues have been found in the libXfont2 library published by
-X.Org for which we are releasing security fixes in libXfont2-2.0.8.
+    Fix for potential PCRE memory access: 1-byte heap-buffer-overflow WRITE in bundled PCRE 8.45 reachable via revspec
 
-* CVE-2026-56001: BitmapScaleBitmaps Integer Overflow Heap Buffer Overflow
+🔒 This is a security release with multiple changes.
 
-   In libXfont2's BitmapScaleBitmaps() function, a 32-bit variable
-   keeps the number of bytes to allocate. If the value overflows due to
-   excessive per-glyph byte counts, the resulting calloc() allocates a buffer
-   too small for the subsequent operations.
-   
-   An attacker can trigger this by loading a crafted PCF font via SetFontPath +
-   OpenFont at a scale factor that inflates per-glyph byte counts.
+    This vulnerability was identified by @DavidKorczynski.
 
-   Fixed in: libXfont2-2.0.8
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxfont/-/commit/be0b08e2d354138d3222b4490e2a77c6ee42f778
-   Found by: Anonymous working with Trend Micro Zero Day Initiative.
-             (ZDI-CAN-30558)
+    hunk_from_entry can return NULL on error; handle that and
+    return an error.
 
-* CVE-2026-56002: PCF Font Parsing Heap Buffer Overflow
+    libgit2's builtin HTTP transport follows offsite redirects for the initial smart HTTP request by default. If the redirected server then
+    returns 401 Unauthorized, libgit2 asks the application credential callback for credentials using the original remote URL, not the redirected URL. The returned credential is then attached to the next request to the redirected host as an Authorization header.
 
-   In libXfont2's pcfReadFont() function, the repadded bitmap buffer
-   is allocated using a bitmapSizes[] value read directly from the PCF
-   file without cross-validation against per-glyph metrics. Writing to
-   that array uses the per-glyph metrics from the file also without validation.
+    git_revparse_single accepts revspecs of the form :/<pattern> (the "grep by commit message" shorthand) and forwards <pattern> directly to libgit2's regex backend. When libgit2 is using its builtin regular expression engine, this causes a heap buffer overflow.
 
-   A malicious PCF font can declare a tiny bitmapSizes[] value (e.g. 16
-   bytes) for the server's glyph pad index and a per-glyph
-   metrics that exceeds this size, causing a write past the end of the
-   allocation with attacker-controlled content from the PCF BITMAPS payload. No
-   rendering is needed -- the overflow occurs during font parsing itself.
+    Fix for CVE-2026-53587: libgit2 version 1.9.4 and below is vulnerable to a heap out-of-bounds read in set_data in src/libgit2/transports/smart_pkt.c.
 
-   Fixed in: libXfont2-2.0.8
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxfont/-/commit/b4389e0b1d84a690b819bb27b1439968811a3674
-   Found by: Anonymous working with Trend Micro Zero Day Initiative.
-             (ZDI-CAN-30559)
+    Fix for CVE-2026-53586: give auth callback current host
 
-* CVE-2026-56003: computeProps Property Buffer Heap Buffer Overflow
+    This vulnerability was identified by @manop55555, and CVE-2026-53587 was issued for this vulnerability.
 
-   In libXfont2's ComputeScaledProperties() function, a fixed-size
-   property buffer of 70 slots (1120 bytes) is allocated. The 
-   source font properties then trigger a write of 1 slot per unscaled match or
-   2 slots per scaledX/scaledY match, with no bounds check against the buffer
-   capacity.
+    This vulnerability was identified by @sondt99, and CVE-2026-53586 was issued for this vulnerability.
 
-   The PCF parser does not deduplicate properties, so a malicious font
-   can include arbitrarily many properties with the same name atom
-   (e.g. 40 duplicate MIN_SPACE entries), exceeding the property buffer.
+    Potential denial of service because git_delta_apply reads the claimed result size (res_sz) from the delta object header — data entirely controlled by the sender — and immediately allocates a buffer of that size.
 
-   Fixed in: libXfont2-2.0.8
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxfont/-/commit/dff957a5158da038a282a59a31fe736702732939
-   Found by: Anonymous working with Trend Micro Zero Day Initiative.
-             (ZDI-CAN-30560)
+    When given capabilities, we check for the object-format capability; we need to ensure that the current packet buffer is large enough before actually doing the check.
 
+    Fix for CVE-2026-53584: submodule: check paths for escaping
 
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+    Fix for CVE-2026-53585: Unbounded Memory Allocation via Delta Object Result-Size Header
+
+    This vulnerability was identified by @sectroyer, and CVE-2026-53584 was issued for this vulnerability.
+
+    This vulnerability was identified by Michał Majchrowicz and Marcin Wyczechowski, members of the AFINE Team, and CVE-2026-53585 was issued for this vulnerability.
+
+    An inverted comparison in the OpenSSL TLS backend causes IP SubjectAltName (SAN) verification to accept certificates with mismatched IP addresses and reject certificates with correct IP addresses. This allows a network attacker with a valid CA-signed certificate containing any IP SAN to perform MITM attacks against libgit2 clients connecting to IP-literal HTTPS URLs.
+
+    A crafted repository with a submodule whose path contains traversal components (e.g. "../") can cause the library to create directories outside the repository's working tree.
+
+    This vulnerability was identified by @pavelkohout396, and CVE-2026-53583 was issued for this vulnerability.
+
+    Fix for CVE-2026-53583: inverted IP SubjectAltName comparison in OpenSSL backend.
+
+All users of the v1.8 release line are recommended to upgrade.
+
+libgit2 thanks the reporters of these issues for their responsible disclosure.
+"""
+
+(I'm sorry for not reformatting but if I were to impose that constraint
+upon myself for every such announcement, it would likely deter me from
+posting at least in some cases.)
+
+Out of those, CVE-2026-53587 and CVE-2026-53584 seem the most
+significant.
+
+Further, in 1.9.7 [1], there is another escape fix:
+
+"""
+    Escape remote repository paths in libssh2
+
+    In v1.8.5, we started escaping repository paths in the OpenSSH-based exec ssh transport. Bring the same escaping to the libssh2 transport to avoid any potential command injection.
+
+This is a security release with one change.
+
+In addition, changes have been ported from the main branch to update CI builds.
+
+Thank you to @izzy0101010101 for responsibly disclosing this issue to us, and thank you to @sgallagher for the fix. This bug was identified as CVE 2026-5917 by an unrelated third party.
+"""
+
+I believe 1.8.6 and 1.8.7 have equivalent fixes for the 1.8.x branch.
+
+[0] https://github.com/libgit2/libgit2/releases/tag/v1.9.5
+[1] https://github.com/libgit2/libgit2/releases/tag/v1.9.7
+
+thanks,
+sam
+
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
