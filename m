@@ -1,54 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/3
-Message-ID: <71031d79-c246-435d-bbc2-1ff75fe0e903@cpansec.org>
-Date: Mon, 20 Jul 2026 08:04:45 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-16235: Crypt::Password versions through 0.28 for Perl generate insecure random values for salts
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/3
+Message-ID: <87jyplxzbq.fsf@gentoo.org>
+Date: Thu, 20 Aug 2026 04:09:29 +0100
+From: Sam James <sam@...too.org>
+To: oss-security@...ts.openwall.com
+Subject: GNU Emacs vulnerability upon opening arbitrary file
 Content-Type: text/plain; charset=utf-8
 
+Eshel Yaron has shared an arbitrary code execution bug in GNU Emacs
+exploitable upon opening an file. It affects >= Emacs 28.1.
 
-========================================================================
-CVE-2026-16235                                       CPAN Security Group
-========================================================================
+The reporter has a writeup at
+https://eshelyaron.com/posts/2026-08-06-emacs-arbitrary-code-execution-returns.html.
+It's from the same reporter as CVE-2024-53920 [0].
 
-         CVE ID:  CVE-2026-16235
-   Distribution:  Crypt-Password
-       Versions:  through 0.28
+Thread on emacs-devel:
+* https://lists.gnu.org/archive/html/emacs-devel/2026-07/msg00453.html
+* https://lists.gnu.org/archive/html/emacs-devel/2026-08/msg00000.html
 
-       MetaCPAN:  https://metacpan.org/dist/Crypt-Password
+There's a workaround patch available for Emacs 31
+(https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-31&id=8466eb44991707d128110bdc549fad14c8e1d61e)
+while on master it apparently had a bigger rework
+(https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=c1337758a6c00e22e2a685e0556068fd73fa9a54).
 
+In Gentoo, we backported the fix [1] down to 28.2.
 
-Crypt::Password versions through 0.28 for Perl generate insecure random
-values for salts
+[0] https://www.openwall.com/lists/oss-security/2025/02/26/2
+[1] https://bugs.gentoo.org/980616
 
-Description
------------
-Crypt::Password versions through 0.28 for Perl generate insecure random
-values for salts.
+thanks,
+sam
 
-These versions use the built-in rand function, which is predictable and
-unsuitable for cryptography.
-
-Problem types
--------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-   (PRNG)
-
-Workarounds
------------
-Users can generate a salt manually using a module such as
-Crypt::URandom::Token, and pass the salt directly to the password and
-crypt_password methods.
-
-This module has not been updated since 2012.
-
-Users should migrate to an alternative solution.
-
-
-References
-----------
-https://metacpan.org/release/DRSTEVE/Crypt-Password-0.28/source/lib/Crypt/Password.pm#L306-309
-
-
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
