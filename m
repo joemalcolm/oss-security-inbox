@@ -1,30 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/26/1
-Message-ID: <140c26a3-a80a-6040-df34-2217dad28515@apache.org>
-Date: Fri, 26 Jun 2026 05:18:07 +0000
-From: Shahar Epstein <shahar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/12
+Message-ID: <7e82b4ee-0f80-5683-13a8-37190a15ae1e@apache.org>
+Date: Thu, 20 Aug 2026 14:21:18 +0000
+From: Charles Zhang <dockerzhang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49486: Apache Airflow FTP provider: FTP Provider does not protect FTPS data channel (missing PROT_P) 
+Subject: CVE-2026-63038: Apache InLong: SQL Injection via String Concatenation Vulnerability Report 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Airflow FTP provider (apache-airflow-providers-ftp) before 3.15.1
+- Apache InLong 2.0.0 before 2.4.0
 
 Description:
 
-The Apache Airflow FTP provider's `FTPSHook.get_conn()` created an `ftplib.FTP_TLS` connection but never called `prot_p()`, so although the control channel was TLS-protected the data channel was transmitted in cleartext. Any deployment using `FTPSHook` or `FTPSFileTransmitOperator` to move files over FTPS exposed file contents and credentials-in-transit to a network attacker able to observe the data connection. Upgrade apache-airflow-providers-ftp to `3.15.1` or later, which issues `PROT P` to encrypt the data channel.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache InLong. This allows an attacker to inject arbitrary SQL code through the
+dbName, tableName, schemaName, and username parameters. 
+
+This issue affects Apache InLong: from 2.0.0 before 2.4.0.
+
+
+
+Users are advised to upgrade to Apache InLong's  2.4.0 or cherry-pick [1] to solve it.
+
+[1]  https://github.com/apache/inlong/issues/12135 .
 
 Credit:
 
-Andrew Rukin (Arenadata) (finder)
-Shubham Raj (remediation developer)
+zhaokaifei (finder)
 
 References:
 
-https://github.com/apache/airflow/pull/67946
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49486
+https://inlong.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-63038
 
