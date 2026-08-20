@@ -1,147 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/05/17
-Message-ID: <ab05ce84-4216-464f-9029-c6a0da7c08d8@gmail.com>
-Date: Wed, 5 Aug 2026 09:58:06 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/2
+Message-ID: <878q61mso6.fsf@gmail.com>
+Date: Wed, 19 Aug 2026 19:28:41 -0700
+From: Collin Funk <collin.funk1@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2026-007] OpenStack Keystone: LDAP identity backend does not convert enabled attribute to boolean (CVE-2026-40683)
+Cc: Pádraig Brady <P@...igBrady.com>, Sylvestre Ledru <sylvestre@...ian.org>
+Subject: uutils coreutils 'stdbuf' uses LD_PRELOAD on a world-writable temporary file
 Content-Type: text/plain; charset=utf-8
 
-Errata 1 for OSSA-2026-007: CVE-2026-40683 has been assigned.
+GNU coreutils distributes a 'stdbuf' program that executes another
+program with modified buffering characteristics for its standard
+streams. It does this by setting environment variables and then setting
+LD_PRELOAD (or the platform-specific equivalent) to a shared library
+named "libstdbuf.so". This shared library uses .init and .init_array (or
+the platform-specific equivalent) sections that alter the standard
+stream characteristics based on the current environment before main
+begins executing:
 
-==================================================================================
-OSSA-2026-007: LDAP identity backend does not convert enabled attribute 
-to boolean
-==================================================================================
+    $ readelf -S src/libstdbuf.so  | grep init
+      [ 2] .init             PROGBITS         0000000000000294  00000294
+      [17] .init_array       INIT_ARRAY       0000000000002dd0  00001dd0
 
-:Date: April 14, 2026
-:CVE: CVE-2026-40683
+GNU coreutils defines this library using the pkglibexec_PROGRAMS
+Automake variable, such that it is always installed in $(pkglibexecdir)
+with proper permissions.
 
+On the other hand, uutils coreutils implementation does not do this by
+default. By default it creates a world-accessible temporary directory,
+and world writable shared library inside of that, and sets LD_PRELOAD
+pointing to it. This can easily be seen since the temporary directory
+and shared library are never removed. Here is an example on my NetBSD
+virtual machine:
 
-Affects
-~~~~~~~
-- Keystone: >=8.0.0 <25.0.1, >=26.0.0 <26.1.1, >=27.0.0 <27.0.1, 
- >=28.0.0 <28.0.1
+    $ (umask 0; uu-stdbuf -oL true; ls -lRa /tmp/.tmp*)
+    /tmp/.tmpHObxOQ:
+    total 380
+    drwxrwxrwx 2 collin wheel     48 Aug 19 02:15 .
+    drwxrwxrwt 3 root   wheel     48 Aug 19 02:15 ..
+    -rw-rw-rw- 1 collin wheel 380128 Aug 19 02:15 libstdbuf.so
 
+If a user has a permissive umask, another user on the system could
+modify the shared library before 'stdbuf' executes the other program,
+allowing them to execute arbitrary code.
 
-Description
-~~~~~~~~~~~
-Benedikt Trefzer and Andrew Bogott independently reported a 
-vulnerability in the Keystone LDAP identity backend. When the 
-user_enabled_invert configuration option was False (the default), 
-Keystone did not correctly interpret the LDAP enabled attribute, causing 
-users disabled in LDAP to be treated as enabled and allowed to 
-authenticate. Deployments using the LDAP identity backend without 
-user_enabled_invert=True or user_enabled_emulation are affected.
+The fix is to build uutils with 'feat_external_libstdbuf', e.g., by
+running:
 
+    $ cargo build --features feat_external_libstdbuf
 
-Errata
-~~~~~~
-CVE-2026-40683 has been assigned for this vulnerability.
+This issue is present in the uutils-coreutils (or similarly named)
+package on, at least, Fedora, Alpine Linux, FreeBSD, and NetBSD.
 
+I had commented on this poor behavior publicly [1], before I had
+realized how many distributions were affected by it. Sorry about that. I
+will remember to check before speaking next time...
 
-Patches
-~~~~~~~
-- https://review.opendev.org/982409 (2024.2/dalmatian)
-- https://review.opendev.org/982408 (2025.1/epoxy)
-- https://review.opendev.org/982407 (2025.2/flamingo)
-- https://review.opendev.org/958205 (2026.1/gazpacho)
+Collin
 
-
-Credits
-~~~~~~~
-- Benedikt Trefzer from Cirrax GmbH (CVE-2026-40683)
-- Andrew Bogott from Wikimedia Foundation (CVE-2026-40683)
-- Grzegorz Grasza from Red Hat (CVE-2026-40683)
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2121152
-- https://launchpad.net/bugs/2141713
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-40683
-
-
-Notes
-~~~~~
-- To work around this vulnerability, set user_enabled_invert=True and
-   use an LDAP attribute with inverted semantics such as nsAccountLock,
-   or use user_enabled_emulation with group-based enabled status.
-- The fix was merged on the master branch before the stable/2026.1
-   branch was cut, so no specific stable/2026.1 patch exists. The fix is
-   included in the gazpacho (29.0.0) release.
-
-
-OSSA History
-~~~~~~~~~~~~
-- 2026-08-05 - Errata 1
-- 2026-04-14 - Original Version
-
---
-Goutham Pacha Ravi
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
-
-
-On 4/14/26 9:51 AM, Goutham Pacha Ravi wrote:
-> ==================================================================================
-> OSSA-2026-007: LDAP identity backend does not convert enabled attribute to boolean
-> ==================================================================================
-> 
-> :Date: April 14, 2026
-> :CVE: CVE-2026-pending
-> 
-> 
-> Affects
-> ~~~~~~~
-> - Keystone: >=8.0.0 <25.0.1, >=26.0.0 <26.1.1, >=27.0.0 <27.0.1, >=28.0.0 <28.0.1
-> 
-> 
-> Description
-> ~~~~~~~~~~~
-> Benedikt Trefzer and Andrew Bogott independently reported a vulnerability in the Keystone LDAP identity backend. When the user_enabled_invert configuration option was False (the default), Keystone did not correctly interpret the LDAP enabled attribute, causing users disabled in LDAP to be treated as enabled and allowed to authenticate. Deployments using the LDAP identity backend without user_enabled_invert=True or user_enabled_emulation are affected.
-> 
-> 
-> 
-> Patches
-> ~~~~~~~
-> -https://review.opendev.org/982409 (2024.2/dalmatian)
-> -https://review.opendev.org/982408 (2025.1/epoxy)
-> -https://review.opendev.org/982407 (2025.2/flamingo)
-> -https://review.opendev.org/958205 (2026.1/gazpacho)
-> 
-> 
-> Credits
-> ~~~~~~~
-> - Benedikt Trefzer from Cirrax GmbH (CVE-2026-pending)
-> - Andrew Bogott from Wikimedia Foundation (CVE-2026-pending)
-> - Grzegorz Grasza from Red Hat (CVE-2026-pending)
-> 
-> 
-> References
-> ~~~~~~~~~~
-> -https://launchpad.net/bugs/2121152
-> -https://launchpad.net/bugs/2141713
-> 
-> 
-> Notes
-> ~~~~~
-> - To work around this vulnerability, set user_enabled_invert=True and
->    use an LDAP attribute with inverted semantics such as nsAccountLock,
->    or use user_enabled_emulation with group-based enabled status.
-> - A CVE request was filed with MITRE on 2026-04-10.
-> - The fix was merged on the master branch before the stable/2026.1
->    branch was cut, so no specific stable/2026.1 patch exists. The fix is
->    included in the gazpacho (29.0.0) release.
-> 
-> 
-> --
-> Goutham Pacha Ravi (gouthamr)
-> OpenStack Vulnerability Management Team
-> 
-> 
-
-
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+[1] https://github.com/uutils/coreutils/issues/13939#issuecomment-5303138075
