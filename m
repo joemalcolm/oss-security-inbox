@@ -1,67 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/07/6
-Message-Id: <F4245F93-FEC5-43EA-9524-AAE2C7235493@stig.io>
-Date: Fri, 7 Aug 2026 19:59:15 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-19082: Imager versions from 0.45_02 before 1.034 for Perl may expose adjacent heap bytes via strlen() over-read from zero-count ASCII EXIF entries in copy_string_tags
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/8
+Message-ID: <CADk+mPB0bhx+TdW6WyUS7Vnq6zTLQGk9ZY-ei4E0WcwtEuZe0w@mail.gmail.com>
+Date: Thu, 20 Aug 2026 13:02:27 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
+To: oss-security@...ts.openwall.com
+Subject: rsyslog: omfile dynaFile containment hardening (GHSA-xmp9-244p-5ggv)
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-19082                                       CPAN Security Group
-========================================================================
+Hello,
 
-        CVE ID:  CVE-2026-19082
-  Distribution:  Imager
-      Versions:  from 0.45_02 before 1.034
+rsyslog has published GHSA-xmp9-244p-5ggv covering hardening of
+dynamic filename handling in the omfile output module:
 
-      MetaCPAN:  https://metacpan.org/dist/Imager
-      VCS Repo:  https://github.com/tonycoz/imager
+https://github.com/rsyslog/rsyslog/security/advisories/GHSA-xmp9-244p-5ggv
 
+The affected area is omfile configurations that use dynaFile. Dynamic
+filenames are intentionally flexible: some established deployments
+need that flexibility, including paths that cannot be restricted to
+one static base directory. Consequently, preserving this mode is
+important for compatibility.
 
-Imager versions from 0.45_02 before 1.034 for Perl may expose adjacent
-heap bytes via strlen() over-read from zero-count ASCII EXIF entries in
-copy_string_tags
+Historically, configurations using this flexible behavior did not
+provide a clear warning about the associated path-containment risk.
+The secure configuration mechanisms have always been documented as the
+recommended way to constrain dynamic output paths, but the legacy
+behavior remained the default to avoid silently breaking existing
+logging configurations.
 
-Description
------------
-Imager versions from 0.45_02 before 1.034 for Perl may expose adjacent
-heap bytes via strlen() over-read from zero-count ASCII EXIF entries in
-copy_string_tags.
+The current hardening adds default lexical containment where a static
+base path can be determined, together with diagnostics and an
+explicit, per-action compatibility opt-in for configurations that
+intentionally require path escape. This provides an additional
+containment layer for users who need dynaFile flexibility; it is not
+presented as a complete filesystem sandbox.
 
-copy_string_tags() computes an ASCII EXIF tag's length as `entry->size
-- 1` to strip the trailing NUL. A zero-count ASCII entry sets
-`entry->size` to 0, and the derived length reaches i_tags_add() as -1,
-which is interpreted as a request to call strlen(), scanning past the
-entry to the next NUL and copying those bytes into the tag. JPEG
-reaches this path via im_decode_exif(), as does the separate
-Imager::File::WEBP distribution, which is fixed by upgrading Imager.
+For deployments where untrusted data can influence dynamic filename
+expansion, the recommended mitigation is to use the documented secure
+path options, including securepath and the secpath-drop or
+secpath-replace policies. These options are the reliable security
+boundary and should be applied by affected users. Building a
+universally complete sandbox around all legacy dynamic-path semantics
+would be difficult to do reliably and would risk breaking legitimate
+existing configurations.
 
-Any caller of Imager->read() on an attacker-supplied image with such an
-entry may receive an exif_* tag holding adjacent heap bytes instead of
-an empty string.
+The advisory intentionally avoids unnecessary reproduction details.
+The attached patch is provided for downstream maintainers.
 
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
+Regards,
+Rainer Gerhards
+rsyslog project
 
-Solutions
----------
-Upgrade to Imager 1.034 or later.
-
-
-References
-----------
-https://github.com/tonycoz/imager/security/advisories/GHSA-hx46-55wp-hv6m
-https://github.com/tonycoz/imager/commit/24bde0427a113264d53f45a9c29ae756d84c82fe.patch
-https://metacpan.org/release/TONYC/Imager-1.034/changes
-
-Timeline
---------
-- 2026-08-07: Version 1.034 released with fix.
-
-Credits
--------
-Arpit Jain (arpitjain099), finder
-
-
+View attachment "0001-omfile-harden-dynafile-default-containment.patch" of type "text/x-patch" (54250 bytes)
