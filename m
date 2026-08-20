@@ -1,54 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/18
-Message-ID: <5d698b02-5bce-2adb-52c9-2f1f0bc385a2@apache.org>
-Date: Mon, 20 Jul 2026 20:19:51 +0000
-From: Thomas Wolf <twolf@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-58624: Apache MINA SSHD: Remote execution of JGit commands can write files on the server 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/19
+Message-ID:  <SN1PR12MB23821AFFC5663499B4897D5EDEA42@SN1PR12MB2382.namprd12.prod.outlook.com>
+Date: Thu, 20 Aug 2026 21:11:27 +0000
+From: Manuel Huber <manuelh@...dia.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: CVE-2026-77176: Kata-containers: insufficient validation of createcontainer mount and storage rules in genpolicy
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+This vulnerability has been fixed in Kata Containers. The fix will be
+included
 
-Affected versions:
+in the upcoming 4.1.0 release, which is expected to be available shortly:
 
-- Apache MINA SSHD (org.apache.sshd:sshd-git) 2.0.0 through 2.18.0
-- Apache MINA SSHD (org.apache.sshd:sshd-git) 3.0.0-M1 through 3.0.0-M4
+ 
+
+genpolicy: don't match image pull storages to mounts
+<https://github.com/kata-containers/kata-containers/commit/fe8eeefcd0bec13c0
+37ceb8f0889e48b75db17ab> . kata-containers/kata-containers@...eeef
+
+ 
 
 Description:
 
-Improper input validation in sshd-git in Apache MINA SSHD. Apache MINA SSHD is a Java library for client-side and server-side SSH.
+ 
+
+A flaw was found in Kata Containers. In configurations utilizing genpolicy
+for
+
+Confidential Containers guest protection, a malicious host operator can
+
+exploit insufficient validation of CreateContainer mount and storage rules.
+
+This allows them to mount arbitrary container-rootfs paths over sensitive
+
+host locations or provision arbitrary content, potentially exposing
+
+confidential information or enabling the acceptance of attacker-controlled
+
+input.
+
+ 
+
+CVE: CVE-2026-77176
+
+GHSA: GHSA-fmg6-v47x-52wr
+
+ 
+
+Original report:
+
+generated policy allows mounting attacker-chosen guest paths to specific
+locations
+<https://github.com/kata-containers/kata-containers/security/advisories/GHSA
+-fmg6-v47x-52wr> . Advisory . kata-containers/kata-containers
+
+ 
+
+---
+
+Manuel Huber, on behalf of the
+
+Kata Containers Vulnerability Management Team
+
+ 
 
 
+Content of type "text/html" skipped
 
-
-Component org.apache.sshd:sshd-git provides though its GitPgmCommandFactory a way to configure an Apache MINA SSHD server such that SSH clients can remotely execute git commands via the JGit library on git repositories stored on the server.
-
-
-
-
-This GitPgmCommandFactory allowed a user authenticated via SSH to run any JGit command available, including commands that could write files at arbitrary places such as git archive with the --output option.
-
-
-
-
-Affected are SSH servers implemented with Apache MINA SSHD and using the GitPgmCommandFactory. If the GitPgmCommandFactory is not configured on the server, the server is not affected.
-
-
-
-
-It is recommended to upgrade affected servers to Apache MINA SSHD 2.19.0 or 3.0.0-M5, which fix this issue.
-
-
-
-
-The issue is fixed by restricting the available commands to a small whitelist of uncritical commands (such as git log). git archive is also allowed, but its --output argument is ignored and the archive is always sent through the SSH channel to the client.
-
-Credit:
-
-Unbbal (finder)
-
-References:
-
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-58624
-
+Download attachment "smime.p7s" of type "application/pkcs7-signature" (6327 bytes)
