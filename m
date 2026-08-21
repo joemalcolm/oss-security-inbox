@@ -1,18 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/3
-Message-ID:  <SYBPR01MB63365EF4F7A7447216688DFEEED42@SYBPR01MB6336.ausprd01.prod.outlook.com>
-Date: Tue, 4 Aug 2026 02:37:34 +0000
-From: Peter Gutmann <pgut001@...auckland.ac.nz>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Bouncy Castle 1.85 release fixes 32 CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/22/2
+Message-ID: <73b6423d-7b32-435d-9501-e6db2cc15102@cpansec.org>
+Date: Sat, 22 Aug 2026 00:59:05 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-77781: Tie::Hash::Regex versions before 2.0.0 for Perl will throw an exception on unparseable lookup keys
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+========================================================================
+CVE-2026-77781                                       CPAN Security Group
+========================================================================
 
->It also says the release contains fixes for the following CVEs:
+         CVE ID:  CVE-2026-77781
+   Distribution:  Tie-Hash-Regex
+       Versions:  before 2.0.0
 
-Given the quantity and sweeping scope of those, was this the result of some
-new tool used for code analysis?  I'm assuming AI, it sounds like there'd be
-an interesting backstory to how all of this was turned up.
+       MetaCPAN:  https://metacpan.org/dist/Tie-Hash-Regex
+       VCS Repo:  https://github.com/davorg-cpan/tie-hash-regex
 
-Peter.
+
+Tie::Hash::Regex versions before 2.0.0 for Perl will throw an exception
+on unparseable lookup keys
+
+Description
+-----------
+Tie::Hash::Regex versions before 2.0.0 for Perl will throw an exception
+on unparseable lookup keys.
+
+The FETCH, EXISTS and DELETE methods throw an exception when on
+malformed regular expressions.
+
+Each method falls back to a regex match when the key is not already
+stored in the hash, compiling the caller's key with a bare qr// and no
+eval guard. A key that is not a valid regular expression pattern, such
+as a single unmatched bracket, dies.
+
+An application that looks up externally supplied strings in a tied hash
+will die on an invalid key.
+
+Problem types
+-------------
+- CWE-248 Uncaught Exception
+
+Workarounds
+-----------
+For deployments that cannot be upgraded, ensure that calls to check the
+existence of keys, fetch values from keys or delete keys are wrapped in
+an eval block.
+
+Solutions
+---------
+Upgrade to Tie::Hash::Regex version 2.0.0 or later.
+
+References
+----------
+https://metacpan.org/release/DAVECROSS/Tie-Hash-Regex-2.0.0/source/Changes
+https://github.com/davorg-cpan/tie-hash-regex/commit/4239732cb76233543e2ded8ff5e0f238af152e0c.patch
+
+
+
