@@ -1,34 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/9
-Message-ID: <93099201-4f6a-23b3-3b25-9ed031094b04@apache.org>
-Date: Tue, 15 Sep 2026 18:25:10 +0000
-From: Vincent Beck <vincbeck@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/8
+Message-ID: <e00bc732-91c5-37fa-d121-eddcde4a1a01@apache.org>
+Date: Mon, 24 Aug 2026 14:05:31 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76187: Apache Airflow Keycloak provider: Any realm client's credentials mint an Airflow session JWT 
+Subject: CVE-2026-60093: Apache Camel: Camel-Azure-Storage-DataLake: the downloadToFile operation built the local download target from the remote path name without constraining it to the configured fileDir 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Airflow Keycloak provider (apache-airflow-providers-keycloak) before 0.10.0
+- Apache Camel (org.apache.camel:camel-azure-storage-datalake) 4.0.0 before 4.14.9
+- Apache Camel (org.apache.camel:camel-azure-storage-datalake) 4.15.0 before 4.18.4
+- Apache Camel (org.apache.camel:camel-azure-storage-datalake) 4.19.0 before 4.22.0
 
 Description:
 
-Apache Airflow Keycloak provider: the unauthenticated token endpoint accepts a client-credentials grant for any confidential client registered in the Keycloak realm, not only the client configured for Airflow. No allowlist restricts which client ids may authenticate, so the credentials of an unrelated application that happens to share the realm are valid Airflow login credentials, and Airflow mints a signed session token for that application's service account. The endpoint also answers unauthenticated credential guesses against Keycloak under Airflow's identity.
+Relative path traversal vulnerability in Apache Camel Azure-Storage Datalake component
 
-Affects deployments using the Keycloak auth manager whose realm is shared with other confidential clients. The attacker needs valid credentials for any one of those clients, not for Airflow. Resource authorization is still evaluated per subject, so the access gained is whatever that service account holds, plus any endpoint gated only on being authenticated.
 
-Users of apache-airflow-providers-keycloak are recommended to upgrade to version 0.10.0 or later, which accepts only the configured client on that grant.
+
+This issue affects Apache Camel: from 4.0.0 before 4.14.9, from 4.15.0 before 4.18.4, from 4.19.0 before 4.22.0.
+
+
+
+The camel-azure-storage-datalake component can download an Azure Data Lake Storage Gen2 file to the local filesystem through its downloadToFile operation, writing into the directory named by the fileDir endpoint option. DataLakeFileOperations.downloadToFile built the local target by joining fileDir with the remote path name exactly as the Azure SDK reported it (new File(fileDir, fileClientWrapper.getFileName())) and passed the result straight to the SDK download call, with no lexical normalization and no check that the resolved location stayed inside fileDir. The remote name is not route-controlled data: the consumer enumerates the filesystem in DataLakeConsumer.createBatchExchangesFromPath, which lists paths and creates one exchange per entry from PathItem.getName() verbatim, applying no name filtering by default. A path name containing parent-directory segments therefore resolved to a location outside the configured fileDir, letting anyone able to influence the names present in the consumed Data Lake filesystem cause Camel to create or overwrite a file at a location of their choosing, with the privileges of the Camel process. Depending on what the process can write to, overwriting a file outside the download directory can escalate beyond the loss of integrity of that file. The fileDir option is an ordinary common-group configuration parameter and carries no security marker, so nothing signalled to users that its value was not being enforced as a containment boundary. Camel's other file-download consumers - camel-file, camel-ftp, camel-smb, camel-mina-sftp and camel-azure-files - already constrained their local downloads to the configured directory using a path-segment boundary check; the camel-azure-storage-datalake download path was not covered by that work.
+
+
+
+Users are recommended to upgrade to version 4.22.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.9. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.4. For deployments that cannot upgrade immediately, constrain the names the consumer will act on using the regex endpoint option, which is applied to each listed path name as a full-string match, so that only simple single-segment names are accepted and any name carrying a path separator or a parent-directory segment is filtered out before an exchange is created. Alternatively, avoid the downloadToFile operation on untrusted filesystems and write the payload from the route under a file name the route itself controls, rather than one taken from the remote listing. As defence in depth, treat the object names in any externally writable Data Lake filesystem as untrusted input and do not derive local filesystem paths from them.
 
 Credit:
 
-Claude Security Scans (tool)
-Jarek Potiuk (remediation developer)
+Hiep Nguyen (finder)
+n0mi1k (finder)
+Andrea Cosentino (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/72205
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76187
+https://camel.apache.org/security/CVE-2026-60093.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-60093
 
