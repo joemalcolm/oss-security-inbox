@@ -1,33 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/7
-Message-ID: <80f64502-5d75-f453-a275-a1ad17a7fbc7@apache.org>
-Date: Tue, 09 Jun 2026 05:16:37 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/6
+Message-ID: <28d102ec-652e-4c14-9c84-5ce575dca59d@brondsema.net>
+Date: Mon, 24 Aug 2026 12:19:24 -0400
+From: Dave Brondsema <dave@...ndsema.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-25688: Apache Answer: XSS in AI Answer Rendering 
+Subject: CVE-2026-75099: Apache Allura: Unauthenticated REST disclosure
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: important
 
 Affected versions:
 
-- Apache Answer through 2.0.0
+- Apache Allura through 1.19.1
 
 Description:
 
-Improper Neutralization of Alternate XSS Syntax vulnerability in Apache Answer.
+Unauthenticated REST disclosure of certain content items in Apache Allura.
 
-This issue affects Apache Answer: through 2.0.0.
+This issue affects Apache Allura: through 1.19.1.
 
-AI-generated response content was rendered in the browser without proper sanitization, allowing malicious scripts to be executed when the content was viewed.
-Users are recommended to upgrade to version 2.0.1, which fixes the issue.
+Users are recommended to upgrade to version 1.20.0, which fixes the issue.
 
 Credit:
 
-Sho Odagiri (reporter)
+Venkatraman Kumar, securin.io (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-25688
+https://allura.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-75099
 
