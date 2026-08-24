@@ -1,33 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/24/16
-Message-ID: <addb3acd-169c-77e7-a3ac-c25b1cc89fe5@apache.org>
-Date: Fri, 24 Jul 2026 11:08:43 +0000
-From: Szymon Janc <janc@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/4
+Message-ID: <2026082431-onscreen-edge-01b1@gregkh>
+Date: Mon, 24 Aug 2026 10:57:45 +0200
+From: Greg KH <greg@...ah.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46452: Apache NimBLE: Mesh Proxy SAR reassembly unbounded append and unchecked failure 
+Subject: Re: Linux kernel: Guest-to-Host DoS via TAP
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+On Wed, Aug 12, 2026 at 10:01:50AM -0700, Dongli Zhang wrote:
+> Hi,
+> 
+> This report describes a Denial of Service (DoS) vulnerability where a guest VM
+> using the virtio-net driver can intentionally trigger a host panic when the
+> host uses a tap device, such as macvtap, as the vhost-net backend.
+> 
+> VM (virtio-net) -- Host (vhost-net) -- Host (macvtap)
+> 
+> This is only one example scenario. Other tap device users may also be able to
+> send malformed packets that cause the tap driver to panic.
+> 
+> This vulnerability is related to CVE-2022-50073. The fix for that CVE addressed
+> the tap_get_user() path, but missed the tap_get_user_xdp() path.
+> 
+> The fix has already been merged into the mainline tree in the commit below.
+> 
+> net: tap: set skb->dev before parsing virtio net header in tap_get_user_xdp()
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=3874892dd27d5387aa9a06f58d9060f18f351d24
+> 
+> So far, no CVE has been assigned by the Linux kernel CNA.
 
-Affected versions:
-
-- Apache NimBLE through 1.9.0
-
-Description:
-
-Improper Input Validation vulnerability in Apache NimBLE in Mesh Proxy SAR reassembly could result in passing broken data toward application resulting in memory pressure and unstable parsing behavior.
-
-This issue affects Apache NimBLE: through 1.9.0.
-
-Users are recommended to upgrade to version 1.10.0, which fixes the issue.
-
-Credit:
-
-Yicheng Yang <orangeyyc.mail@...il.com> (reporter)
-
-References:
-
-https://github.com/apache/mynewt-nimble/commit/593f95227a4073efde840a9bb34614929dfa7ed1
-https://mynewt.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-46452
+To follow up with this, it has been assigned CVE-2026-74684
 
