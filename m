@@ -1,111 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/7
-Message-Id: <E1x3uVG-00GjtI-0E@xenbits.xenproject.org>
-Date: Tue, 08 Sep 2026 12:00:42 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 510 v3 (CVE-2026-79602) - x86: improper handling of HVM emulation return codes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/7
+Message-ID: <8d27d0b4-b4af-0ecd-7003-0c048272e473@apache.org>
+Date: Mon, 24 Aug 2026 14:04:30 +0000
+From: Andrea Cosentino <acosentino@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-59230: Apache Camel: Camel-Mail: the MimeMultipart data format copied MIME headers onto the Camel message without a header filter strategy when unmarshalling with headersInline enabled 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate 
 
-            Xen Security Advisory CVE-2026-79602 / XSA-510
-                               version 3
+Affected versions:
 
-           x86: improper handling of HVM emulation return codes
+- Apache Camel (org.apache.camel:camel-mail) 2.17.0 before 4.14.9
+- Apache Camel (org.apache.camel:camel-mail) 4.15.0 before 4.18.4
+- Apache Camel (org.apache.camel:camel-mail) 4.19.0 before 4.22.0
 
-UPDATES IN VERSION 3
-====================
+Description:
 
-Public release.
+Improper input validation vulnerability in Apache Camel.
 
-ISSUE DESCRIPTION
-=================
 
-A guest with a PCI device assigned that has at least a BAR on the IO port
-space can trigger a BUG() in Xen.
 
-IMPACT
-======
+This issue affects Apache Camel: from 2.17.0 before 4.14.9, from 4.15.0 before 4.18.4, from 4.19.0 before 4.22.0.
 
-Passing through a PCI device with at least one BAR in IO address space to
-unprivileged HVM guests can result in a Denial of Service (DoS) affecting
-the entire host.
 
-VULNERABLE SYSTEMS
-==================
 
-Xen versions 4.6 and later are vulnerable.  This is known to be the case
-with the fix for XSA-491, but it's possible the issue can also be
-triggered from other, non-analyzed paths.
+The camel-mail component ships a MimeMultipart data format that can unmarshal a MIME multipart message. When it is configured with headersInline set to true, the unmarshal path copies the MIME headers of the incoming message onto the Camel message: it enumerates every header that is not one of the three standard ones it generates itself - Message-ID, MIME-Version and Content-Type - and calls setHeader for each, applying no HeaderFilterStrategy. The names of those MIME headers come from the message being unmarshalled, so a sender able to influence the message could place a header whose name falls in the Camel-internal namespace and have it set on the Exchange. Camel components read control headers from that namespace to override their configured behaviour - the camel-sql producer, for instance, takes the statement to execute from a Camel header when one is present - so an injected header could redirect what a downstream step in the route does with data the route author never intended it to take from the message. Which sinks are reachable, and what the consequences are, depends entirely on what the route does after the unmarshal step. The camel-mail consumer already applied a header filter strategy on its own inbound path, so this was the parallel inbound path into the same component that the earlier hardening did not cover. The affected copy is reached only when headersInline is enabled, which is not the default: with the default setting the MIME headers are surfaced as attachments rather than as message headers, and are not affected. The behaviour dates back to the introduction of the data format in 2.17.0 and was present on every release line until this fix.
 
-Only x86 systems are vulnerable.  Arm systems are not vulnerable.
 
-Only HVM guests with a PCI device with IO BARs assigned can leverage the
-vulnerability.
 
-MITIGATION
-==========
+Users are recommended to upgrade to version 4.22.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.9. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.4. For deployments that cannot upgrade immediately, leave headersInline at its default of false where the inline headers are not needed, since the copy is only reached when it is enabled. Where it must stay enabled, strip Camel-internal headers immediately after the unmarshal step, for example with removeHeaders(“Camel*”) placed before any processor or producer that reads control headers, and do not unmarshal MIME content from an untrusted sender into a route that dispatches on header values. As defence in depth, treat the header names of any MIME message arriving from outside the trust boundary as untrusted input.
 
-There is no mitigation available.
+Credit:
 
-CREDITS
-=======
+Atuin - Automated Vulnerability Discovery Engine, anciety of Tencent Xuanwu Lab (finder)
+Andrea Cosentino (remediation developer)
 
-This issue was discovered by Jiqian Chen of AMD and diagnosed as a
-security issue by Roger Pau Monné of AMD.
+References:
 
-RESOLUTION
-==========
+https://camel.apache.org/security/CVE-2026-59230.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-59230
 
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa510.patch           xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa510*
-915cca4f0e6af998683a3551e5913d2489b23a697d5eab11358d4d8ffe0a0e55  xsa510.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmqf98UMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ3GEIALHxkeOzpl3/ctf8o9R89LFTfayDXMY6xGbUTsRk
-oiLIoKkYkZJPtiG6cY8YGRvzm/UYr+KpeMBsNtm0EcbZlPClGjkEc7JSSpMvcVps
-XTzRkIUhyOTfpKklhDQJynIIpMu8NkJBLvyVYDcY8fpeZ7yDykMkQ4RyvXT5A56r
-Vn18FJ401QqBO0+NTD0aCcasiLFpfrsh3AhPfKLIi7c3q0tIayyNBS8NBSNss+TF
-OJew3jWX7bWnAUlPl4b8EMm4gwK/7o6YJYW+NMCTNMJ/UdfvOJkkq9T8l/41FIXq
-ArtZrFpKWxsitNoXG7pJIyH/C5wBH2DFABzfqgNjkpzfqKw=
-=sVA/
------END PGP SIGNATURE-----
-
-Download attachment "xsa510.patch" of type "application/octet-stream" (1243 bytes)
