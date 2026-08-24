@@ -1,56 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/30/1
-Message-ID: <CAK3hNHbaYo2ra4mjwXwA2QeLQOk6UbTus28nnp7h5Wcrv7rOrA@mail.gmail.com>
-Date: Mon, 29 Jun 2026 19:50:51 -0700
-From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/13
+Message-ID: <d1557b70-2e10-6cb9-b376-7e1854b981f2@apache.org>
+Date: Mon, 24 Aug 2026 14:08:32 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: hostapd: OOB write in Wi-Fi 7 MLD association parsing (pre-auth DoS)
+Subject: CVE-2026-71300: Apache Camel: Camel-Atmosphere-Websocket: WebSocket dispatch header injection 
 Content-Type: text/plain; charset=utf-8
 
-A Wi-Fi 7 / IEEE 802.11be MLD parsing issue in hostapd AP mode has
-been fixed upstream:
+Severity: moderate 
 
-https://w1.fi/security/2026-1/missing-ml-parsing-validation.txt
+Affected versions:
 
-Issue:
-  Missing link ID validation in hostapd_process_ml_assoc_req()
-  (src/ap/ieee802_11_eht.c). link_id is masked with 0x000f
-  (values 0-15), but links[] only has valid entries 0..14
-  (MAX_NUM_MLD_LINKS=15). A crafted Per-STA Profile with
-  link_id=15 can write past the end of links[] during association
-  processing.
+- Apache Camel (org.apache.camel:camel-atmosphere-websocket) 4.0.0 before 4.14.9
+- Apache Camel (org.apache.camel:camel-atmosphere-websocket) 4.15.0 before 4.18.4
+- Apache Camel (org.apache.camel:camel-atmosphere-websocket) 4.19.0 before 4.22.0
 
-  This is reachable before the 4-way handshake; no credentials are
-  required. An attacker within radio range can trigger it with a
-  crafted association request.
+Description:
 
-Affected:
-  hostapd v2.11 and newer repository snapshots before v2.12, built
-  with CONFIG_IEEE80211BE and running Wi-Fi 7 / MLD AP configuration.
+Improper input validation vulnerability in Apache Camel Atmosphere Websocket component.
 
-Impact:
-  hostapd process termination / denial of service, and small memory
-  corruption, per the upstream advisory.
 
-Fix:
-  https://git.w1.fi/cgit/hostap/commit/?id=46dd5a4ffc9bcf44cf8fc45120b3e1e5ec922187
 
-  Additional related fixes are listed in the upstream advisory.
+This issue affects Apache Camel: from 4.0.0 before 4.14.9, from 4.15.0 before 4.18.4, from 4.19.0 before 4.22.0.
 
-Mitigation:
-  Update to hostapd v2.12 or newer once available, or apply the
-  upstream fixes and rebuild.
 
-CVE status:
-  CVE assignment requested from MITRE under CAN-2026-2032030
+
+The camel-atmosphere-websocket producer selects which connected WebSocket peers a message is delivered to through Exchange headers, and the string values of those headers sat outside the Camel namespace: websocket.connectionKey and websocket.connectionKey.list, along with websocket.sendToAll, websocket.eventType and websocket.errorType. WebsocketEndpoint extends ServletEndpoint and so inherits HttpHeaderFilterStrategy, which filters only the Camel and camel prefixes; the dotted names therefore fell outside the filtered namespace and were admitted in both directions by every HTTP-family consumer. In a route bridging an HTTP consumer into an atmosphere-websocket producer, an external sender could supply the list header and take over the producer's dispatch decision. WebsocketProducer.process tests the list header before the single-key header, so an injected value discarded the recipient the route had selected: a notification intended for one connected client could be suppressed, or delivered instead to a different client whose connection key the sender knows. The header need not be a query parameter and need not be supplied as a list literally - Camel's HTTP binding promotes a repeated header name, and a bracketed value, to a List when mapping onto the Exchange - so an ordinary inbound HTTP header is sufficient to reach the list-valued branch. This is distinct from CVE-2026-55993, which concerns the consumer-side query-parameter path in the same component. The behaviour dates back to the introduction of these constants, first released in 2.17.0, and was unchanged until this fix.
+
+
+
+Users are recommended to upgrade to version 4.22.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.9. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.4. For deployments that cannot upgrade immediately, strip the dispatch headers at the trust boundary before the producer, for example with removeHeaders(“websocket.*”) placed between the HTTP consumer and the atmosphere-websocket producer. Note that the fix renames the header string values into the Camel namespace, which is a breaking change for routes that set them by literal string: routes referencing the WebsocketConstants fields symbolically are unaffected, and the change is documented in the upgrade guides. As defence in depth, do not bridge an untrusted HTTP consumer directly into a WebSocket producer whose dispatch is header-driven without stripping the dispatch namespace first.
 
 Credit:
-  The upstream advisory credits Sebastián Alba Vives, with independent
-  discovery and report by Abhinav Agarwal.
 
-Timeline:
-  2026-05-14  reported to upstream
-  2026-06-05  upstream published security advisory
+Barak Srour from Apiiro (finder)
+Andrea Cosentino (remediation developer)
 
---
-Abhinav Agarwal
+References:
+
+https://camel.apache.org/security/CVE-2026-71300.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-71300
+
