@@ -1,118 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/7
-Message-ID: <add5f4fd-dae7-44cd-8d02-7810682871ec@nlnetlabs.nl>
-Date: Wed, 22 Jul 2026 16:52:25 +0200
-From: Yorgos Thessalonikefs <yorgos@...etlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/5
+Message-ID: <2289ded7-b97e-46c3-b34f-bc1effd90088@apache.org>
+Date: Tue, 25 Aug 2026 22:53:59 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Unbound: 1.25.2 addresses multiple CVE items
+Subject: CVE-2026-65927: Apache Tomcat: RewriteValve [N] restarts at the second rule and may bypass access control
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Severity: important
 
-(The official announcement can be found at:
-https://community.nlnetlabs.nl/t/unbound-1-25-2-released/3430)
+Affected versions:
 
-Several vulnerabilities were found in Unbound.
+- Apache Tomcat 11.0.0-M1 through 11.0.24
+- Apache Tomcat 10.1.0-M1 through 10.1.57
+- Apache Tomcat 9.0.0.M1 through 9.0.120
+- Apache Tomcat 8.5.0 through 8.5.100
+- Apache Tomcat 7.0.0 through 7.0.109 unaffected
+- Apache Tomcat before 7.0.0 unaffected
 
-We are releasing 1.25.2 as a security release on July 22 including the 
-relevant fixes.
+Description:
 
-The overview of the vulnerabilities with a brief description is:
-
-CVE-2026-32665 - severity: HIGH
-Remote DNS-over-QUIC denial of service due to `quic-size` budget bypass
-
-CVE-2026-40691 - severity: HIGH
-Packet of death for DNSCrypt over TCP
-
-CVE-2026-44690 - severity: HIGH
-Cross-zone wildcard cache poisoning via RRSIG.labels manipulation
-
-CVE-2026-55973 - severity: HIGH
-'dns-error-reporting: yes' leads to stack buffer overflow
-
-CVE-2026-14586 - severity: MEDIUM
-Assertion in libngtcp2 when under pressure in high concurrency 
-DNS-over-QUIC environments
-
-CVE-2026-44621 - severity: MEDIUM
-Libunbound applications configured with 'unwanted-reply-threshold' could
-eventually be abruptly terminated
-
-CVE-2026-50045 - severity: MEDIUM
-'max-global-quota' reset by DNSSEC validation restarts
-
-CVE-2026-50046 - severity: MEDIUM
-Possible heap use-after-free in an error path when a DoT forwarded query 
-is jostled out
-
-CVE-2026-50243 - severity: MEDIUM
-'response-ip'/'rpz' can rewrite BOGUS answers instead of returning SERVFAIL
-
-CVE-2026-50248 - severity: MEDIUM
-BOGUS configured primary hostname accepted for XFR in auth/rpz zones
-
-CVE-2026-50251 - severity: MEDIUM
-Attacker supplied `0.0.0.0`/`::` glue triggers defensive full-cache flush
-
-CVE-2026-50252 - severity: MEDIUM
-Possible cache poisoning attack by mapping source port population per thread
-
-CVE-2026-52863 - severity: MEDIUM
-Memory corruption could lead to crash and denial of service
-
-CVE-2026-55717 - severity: MEDIUM
-'serve-expired-client-timeout' and 'response-ip' CNAME redirect could 
-lead to a crash
-
-CVE-2026-55990 - severity: MEDIUM
-Packet of death for a DNSCrypt misconfigured Unbound
-
-CVE-2026-55991 - severity: MEDIUM
-Remote DNS-over-QUIC (DoQ) flow-control assertion failure in libngtcp2
-
-CVE-2026-56416 - severity: MEDIUM
-Possible heap buffer overflow when validator canonicalizes RDATA that 
-contains domain name
-
-CVE-2026-56444 - severity: MEDIUM
-Degradation of resolution service when 'discard-timeout' and
-'serve-expired-client-timeout' are combined in unusual configuration
-
-CVE-2026-41637 - severity: LOW
-Degradation of resolution service from improperly accounted 
-client-terminated DNS-over-QUIC queries
-
-CVE-2026-42955 - severity: LOW
-Extra fix for CVE-2026-40622 to also clamp the TTL of A/AAAA records 
-disallowing a one-time 'ghost domain' delegation renewal via glue records
-
-CVE-2026-44687 - severity: LOW
-Off-by-one error in 'harden-below-nxdomain' logic can shadow a stub/forward
-zone by a legitimate parent's NXDOMAIN
-
-CVE-2026-46582 - severity: LOW
-A wildcard replay, as another piece of data, triggers poisoning in the serve
-expired reply path
-
-CVE-2026-54478 - severity: LOW
-DNS Cookie bypass when combined with proxy-protocol use
-
-CVE-2026-55708 - severity: LOW
-Privacy/configuration issue when adding local data in views through 
-'unbound-control'
+Off-by-one Error vulnerability in Apache Tomcat impacting the [N] flag 
+on the rewrite valves causes rewrite processing to restart at the second 
+rule rather than the first rule.
 
 
 
-More information about the vulnerabilities can be found at:
-https://nlnetlabs.nl/projects/unbound/security-advisories/
 
 
-Best regards,
--- Yorgos, on behalf of the Unbound team.
 
 
-** This email is signed. Keys of the NLnet Labs people are published on
-https://www.nlnetlabs.nl/people/ **
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
+10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120.
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+
+
+The following versions were EOL at the time the CVE was created but are
+known to be affected: from 8.5.0 through 8.5.100. Other unsupported 
+versions may also be affected.
+
+
+
+Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121 
+which fix the issue.
+
+Credit:
+
+4ra1n, pyn3rd and unam4 (finder)
+
+References:
+
+https://lists.apache.org/thread/st1dx1zyn5y7ny2s0sscmh6lrv3worr4
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-65927
