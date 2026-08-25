@@ -1,62 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/6
-Message-ID: <64388b74-6a36-4273-a8de-e404a7445985@cpansec.org>
-Date: Wed, 1 Jul 2026 07:47:12 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-56016: CGI::Session::ID::md5 versions before 4.49 for Perl generate predictable session ids from low-entropy sources
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/8
+Message-ID: <c0f971b1-1c01-4252-8bd5-f7974cf4e299@apache.org>
+Date: Tue, 25 Aug 2026 22:59:57 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-68569: Apache Tomcat: Principal lookup can fail open in some cases
 Content-Type: text/plain; charset=utf-8
 
+Severity: important
 
-========================================================================
-CVE-2026-56016                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-56016
-   Distribution:  CGI-Session
-       Versions:  before 4.49
+- Apache Tomcat 11.0.0-M1 through 11.0.24
+- Apache Tomcat 10.1.0-M1 through 10.1.57
+- Apache Tomcat 9.0.0.M1 through 9.0.120
+- Apache Tomcat 8.5.0 through 8.5.100
+- Apache Tomcat 7.0.0 through 70.109
+- Apache Tomcat before 7.0.0 unknown
 
-       MetaCPAN:  https://metacpan.org/dist/CGI-Session
-       VCS Repo:  http://github.com/cromedome/cgi-session
+Description:
 
-
-CGI::Session::ID::md5 versions before 4.49 for Perl generate
-predictable session ids from low-entropy sources
-
-Description
------------
-CGI::Session::ID::md5 versions before 4.49 for Perl generate
-predictable session ids from low-entropy sources.
-
-The generate_id method builds the session id from a MD5 digest of the
-process id, the epoch time, and the built-in rand() function. All three
-are predictable, low-entropy sources: the PID is drawn from a small
-range, the epoch time can be guessed or read from the HTTP Date header,
-and Perl's rand() is unsuitable for security purposes because it is
-predictable and reversible.
-
-An attacker who predicts a session id can impersonate the corresponding
-session and bypass authentication.
-
-Problem types
--------------
-- CWE-340 Generation of Predictable Numbers or Identifiers
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-
-Solutions
----------
-Upgrade to CGI::Session 4.49 or later, which generates session ids from
-Crypt::SysRandom.
-
-
-References
-----------
-https://metacpan.org/release/MARKSTOS/CGI-Session-4.49/changes
-https://metacpan.org/release/MARKSTOS/CGI-Session-4.49/source/lib/CGI/Session/ID/md5.pm
-
-Timeline
---------
-- 2026-06-30: Version 4.49 released with fix.
+Improper Authentication vulnerability in Apache Tomcat meant that in 
+some circumstances (e.g. CLIENT-CERT, SPNEGO) that a user would be 
+authenticated even if the user did not exist in the DataSourceRealm.
 
 
 
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
+10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120.
+
+
+
+
+
+
+
+The following versions were EOL at the time the CVE was created but are
+known to be affected: from 8.5.0 through 8.5.100, from 7.0.0 through 
+7.0.109. Other unsupported versions may also be affected.
+
+
+
+
+
+
+
+Users are recommended to upgrade to version 11.0.25, 10.1.58 or 9.0.121, 
+which fix the issue.
+
+References:
+
+https://lists.apache.org/thread/8robqo76q0osxgw0b5lcwgz0hcf9h4zc
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68569
