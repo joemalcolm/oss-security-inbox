@@ -1,35 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/12
-Message-ID: <1b830088-787a-f809-b48a-c05bcec54d37@apache.org>
-Date: Thu, 06 Aug 2026 14:06:24 +0000
-From: Eric Covener <covener@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/1
+Message-ID: <8518a778-4999-4dc1-b720-c2acd892dd34@apache.org>
+Date: Tue, 25 Aug 2026 22:46:35 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-34502: Apache Portable Runtime Utility: Heap buffer overflow in APR memcached client 
+Subject: CVE-2026-65182: Apache Tomcat: Bypass longest prefix security constraint
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important
 
 Affected versions:
 
-- Apache Portable Runtime Utility 1.3.0 through 1.6.3
+- Apache Tomcat 11.0.0-M1 through 11.0.24
+- Apache Tomcat 10.1.0-M1 through 10.1.57
+- Apache Tomcat 9.0.0.M1 through 9.0.120
+- Apache Tomcat 8.5.0 through 8.5.100
+- Apache Tomcat 7.0.0 through 7.0.109
+- Apache Tomcat before 7.0.0 unknown
 
 Description:
 
-Heap-based Buffer Overflow vulnerability in Apache Portable Runtime Utility memcached client
+Improper Access Control, Incorrect Authorization vulnerability in Apache 
+Tomcat leads to security constraint bypass if a constraint for a longer 
+path is specified before a more restrictive constraint for a shorter 
+sub-path.
 
-This issue affects Apache Portable Runtime Utility: from 1.3.0 through 1.6.3.
+
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.24, from 
+10.1.0-M1 through 10.1.57, from 9.0.0.M1 through 9.0.120, from 8.5.0 
+through 8.5.100, from 7.0.0 through 7.0.109.
+
+
+
+Users are recommended to upgrade to version 11.0.25, 10.1.58, 9.0.121, 
+which fixes the issue.
 
 Credit:
 
-Elhanan Haenel (finder)
+4ra1n, pyn3rd and unam4 (finder)
 
 References:
 
-https://apr.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-34502
-
-Timeline:
-
-2026-03-27: reported
-2026-08-06: fixed in 1.6.x by r1936813
-
+https://lists.apache.org/thread/joosxvzc9b49ttj8lj0jw9mqt0ml767m
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-65182
