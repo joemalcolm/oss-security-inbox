@@ -1,35 +1,104 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/12
-Message-ID: <e0ab25a1-34ee-1eeb-9651-99764875283f@apache.org>
-Date: Mon, 03 Aug 2026 19:48:39 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/25/5
+Message-ID: <7f909095-8110-4658-9c2e-6733f57da199@gmail.com>
+Date: Tue, 25 Aug 2026 10:06:15 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68980: Apache NiFi: Authorization Bypass for Parameter Context Asset Deletion 
+Subject: [OSSA-2026-037] OpenStack Keystone: Inconsistent scope enforcement for delegated tokens (CVE-2026-pending)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low 
+==============================================================================
+OSSA-2026-037: Inconsistent scope enforcement for delegated tokens in 
+Keystone
+==============================================================================
 
-Affected versions:
+:Date: August 25, 2026
+:CVE: CVE-2026-pending,
+       CVE-2026-pending
 
-- Apache NiFi (org.apache.nifi:nifi-web-api) 2.0.0 through 2.10.0
 
-Description:
+Affects
+~~~~~~~
+- Keystone: >=13.0.0 <27.0.3, >=28.0.0 <28.0.3, >=29.0.0 <29.0.3
 
-Apache NiFi 2.0.0 through 2.10.0 support creating, reading, and deleting Assets associated with Parameter Contexts through the REST API. The framework authorizes asset deletion against the owning Parameter Context using the supplied Parameter Context Identifier and Asset Identifier. The framework performed authorized based on the supplied Parameter Context Identifier without verifying the requested Identifier against the stored Identifier. Apache NiFi installations that do not implement different levels of authorization across Parameter Contexts are not subject to this vulnerability, because the framework enforces write permissions as the security boundary. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, which verifies Parameter Context ownership of the requested Asset before deletion using the same strategy applied to Asset read operations.
 
-This issue is being tracked as NIFI-16154 
+Description
+~~~~~~~~~~~
+Grzegorz Grasza (Red Hat) reported that OpenStack Keystone did not
+consistently block delegated tokens from creating new long-lived
+credentials or authorizing new delegations. Tim Shephard (roiai.ca)
+separately reported that delegated tokens could be submitted to the
+token-method authentication path to escape their project scope.
 
-Credit:
+A token scoped through an OAuth1 access token, an application
+credential, or a trust could create new long-lived credentials or
+authorize new delegations that persist independently of, and outlive,
+the credential used to obtain them. Separately, tokens obtained
+through any of these delegation mechanisms could be submitted to the
+token-method authentication path for reauthentication. When an
+application credential token was presented with no explicit scope,
+Keystone would issue a new token scoped to the credential owner's
+default project rather than the project for which the credential was
+issued, escaping the intended project boundary.
 
-mak3bread (Minseong Kim) (finder)
+All Keystone deployments that permit delegated authentication through
+OAuth1 access tokens, application credentials, or trusts are affected.
 
-References:
 
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68980
-https://issues.apache.org/jira/browse/NIFI-16154
+Patches
+~~~~~~~
+- https://review.opendev.org/1002307 (2025.1/epoxy)
+- https://review.opendev.org/1002308 (2025.1/epoxy)
+- https://review.opendev.org/1002305 (2025.2/flamingo)
+- https://review.opendev.org/1002306 (2025.2/flamingo)
+- https://review.opendev.org/1002303 (2026.1/gazpacho)
+- https://review.opendev.org/1002304 (2026.1/gazpacho)
+- https://review.opendev.org/1002301 (2026.2/hibiscus (development))
+- https://review.opendev.org/1002302 (2026.2/hibiscus (development))
 
-Timeline:
 
-2026-07-27: reported
+Credits
+~~~~~~~
+- Grzegorz Grasza from Red Hat
+- Tim Shephard from roiai.ca
 
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2153453
+- https://launchpad.net/bugs/2158538
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+
+
+Notes
+~~~~~
+- Two CVEs have been requested from MITRE for these vulnerabilities and
+   are pending assignment.
+- The two patch sets are interdependent and must be applied together.
+   The token reauthentication guard introduced by the second patch
+   depends on the delegation classification logic and the new ``[auth]
+   additional_primary_auth_methods`` configuration option introduced by
+   the first. Packaging or applying a subset is not supported.
+- After upgrading, Keystone treats any authentication method not built
+   in to Keystone as a delegated credential and rejects it from guarded
+   operations (managing trusts, application credentials, and OAuth1
+   access tokens, and token reauthentication). Deployments running a
+   custom or third-party authentication plugin must add it to ``[auth]
+   additional_primary_auth_methods`` or those authentication flows will
+   fail.
+- This advisory does not address a related weakness in EC2 credential
+   (``ec2credential``) handling, which is being tracked and fixed in
+   public and will be covered by a separate OpenStack Security Note
+   (OSSN).
+- A related fix to the Keystone Tempest plugin test suite was proposed
+   at https://review.opendev.org/1002296
+
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
