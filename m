@@ -1,40 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/7
-Message-ID: <20260911191635.GA6663@openwall.com>
-Date: Fri, 11 Sep 2026 21:16:35 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/25/10
+Message-ID: <de7959d5-a863-414e-8b56-81f2011e0060@oracle.com>
+Date: Tue, 25 Aug 2026 16:35:37 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: AI slops from Eve
+Subject: [CVE-2026-19672] CPython: tarfile extraction filter bypass allows creation of directories outside the destination
 Content-Type: text/plain; charset=utf-8
 
-On Fri, Sep 11, 2026 at 12:44:19PM -0400, Joe Krause wrote:
-> I'm not looking for this to be posted onto the list, or to continue the
-> discussion, but if it is posted, all that people need to know is that
-> cock.li is a mail hosting provider that houses a lot of script kiddies, so
-> almost any email coming from that domain should be treated like spam.
 
-The moderation here is primarily by content, not by sender domain, and
-there isn't a volume of undesirable messages from any particular domain
-so high that we would have to resort to pre-filtering by domain.
 
-That mail hosting provider is interesting, especially their /log.txt is
-an interesting read.  They say "User count: ~1,400,000".
 
-Much of what was posted to early security mailing lists could be said to
-have been by "script kiddies" as well, yet it also contributed to making
-our present security industry what it is, for better or worse.
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-19672] tarfile extraction filter bypass allows creation of directories outside the destination
+Date: 	Wed, 19 Aug 2026 14:56:06 +0100
+From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
+CC: 	Stan Ulbrych <stanulbrych@...il.com>
 
-Now major players in the industry are making serious use of AI for
-security research, but also various other players are making various
-uses, and it may be useful for us to see and preserve the full picture.
+There is a MEDIUM severity vulnerability affecting CPython.
 
-I don't intend to let a lot of this through to here (including not too
-many opinionated postings like Joe's above or this reply of mine), but
-luckily we're not even getting a lot of it sent in here.  For now, the
-spike appears to be over - we had 455 messages posted in May, but fewer
-than 400 in each of June, July, August, and it's further decline in
-September so far.  These are post-moderation counts, so more messages
-than this were sent to the list address, but excluding genuine spam not
-a lot were rejected.  We'll see what's next and will adapt accordingly.
+The tarfile module's tar and data extraction filters created directories outside
+the destination for members whose name leaves the destination and returns to it,
+such as ../evil/../dest/sub/file. The containment check used the resolved path,
+but intermediate directories were created from the name as given.
 
-Alexander
+Only empty directories are created outside the destination. Member contents are
+still extracted inside it. To return to the destination the member's name must
+contain the destination directory's own final component, so extraction into a
+secure randomised directory is not affected.
+
+This affects POSIX platforms only. On Windows, .. components are collapsed
+before the path reaches the filesystem, so the directories outside the
+destination are never created.
+
+Please see the linked CVE ID for the latest information on affected versions:
+
+* https://www.cve.org/CVERecord?id=CVE-2026-19672
+* https://github.com/python/cpython/pull/156000
+
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
