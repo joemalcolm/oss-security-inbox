@@ -1,92 +1,106 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/3
-Message-Id: <1C2E7D31-E6F2-483E-9218-9D78F0530A5B@gmail.com>
-Date: Thu, 6 Aug 2026 19:33:31 +0800
-From: Fourie Zhang <littleddfu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/25/8
+Message-ID: <ao4I6V4jQwlICU2w@256bit.org>
+Date: Tue, 25 Aug 2026 23:28:09 +0200
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-64564: Linux SCTP ASCONF transport UAF leading to local privilege escalation and container escape
+Cc: Yee Cheng Chin <ychin.macvim@...il.com>, "T.J. Townsend" <tj@...k.me>, Ken Takata <ktakata65536@...il.com>, Jiaqi Zhou <zeertzjq@...look.com>, Dominique Pelle <dominique.pelle@...il.com>, mattn.jp@...il.com, sthen@...nbsd.org, adamw@...ebsd.org, James McCoy <jamessan@...essan.com>, Yegappan Lakshmanan <yegappanl@...il.com>, Doug Kearns <dougkearns@...il.com>, glepnir <glephunter@...il.com>, Hirohito Higashi <h.east.727@...il.com>, Daniel Horecki <morr@...r.pl>, Zdenek Dohnal <zdohnal@...hat.com>
+Subject: [vim-security] Arbitrary Ex Command Execution via File Names in C Omni-Completion in Vim < 9.2.1011
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+Arbitrary Ex Command Execution via File Names in C Omni-Completion in Vim < 9.2.1011
+====================================================================================
 
-We are publishing details of SCTPhantom, CVE-2026-64564, a use-after-free
-in Linux SCTP Dynamic Address Reconfiguration.
+Date: 25.08.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Control of Generation of Code ('Code Injection') (CWE-94),
+     Inclusion of Functionality from Untrusted Control Sphere (CWE-829),
+     Improper Neutralization of Argument Delimiters in a Command ('Argument Injection') (CWE-88)
 
-Impact:
-- Local low-privileged user -> root on affected systems.
-- Container -> host root.
+## Summary
 
-Bug:
---------
-In the Linux kernel's SCTP implementation, sctp_process_asconf() caches the
-transport used to process an ASCONF chunk in asconf->transport. When
-__sctp_rcv_asconf_lookup() locates the ASCONF through its Address Parameter,
-the cached transport may differ from the transport associated with the
-packet's source address. An attacker can supply an ordered ASCONF sequence:
-a DEL-IP for a non-source address L first passes the D8 check and frees the
-transport referenced by asconf->transport. A subsequent wildcard DEL-IP
-(0.0.0.0) then reuses the dangling pointer in sctp_assoc_set_primary() and
-sctp_assoc_del_nonprimary_peers(), triggering a use-after-free that can lead
-to local privilege escalation or container escape.
+The C omni-completion script in `runtime/autoload/ccomplete.vim` looks up
+struct members by building a `:vimgrep` command and running it with
+`:execute`.  Besides the type name, that command line also holds the list of
+tags file names returned by `tagfiles()`.  Those names were escaped for the
+space, the backslash, `#` and `%`, but not for the bar.  Since `:vimgrep`
+accepts another command after a bar, a file name whose name contains one
+ends the `:vimgrep` command early and what follows is executed as an Ex
+command when the user invokes omni-completion on a member access.
 
-CVSS assessment
----------------
+This is the same defect in the same command line as GHSA-cx73-phcg-3j5g,
+fixed in patch [v9.2.0845](https://github.com/vim/vim/releases/tag/v9.2.0845),
+which addressed only the type name.  Unlike that issue, no crafted tags file
+content is needed here: the file name itself carries the payload.
 
-CVSS v4.0 Base Score (CVSS-B): 8.5 (High)
-Vector: CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
-Calculator:
-https://www.first.org/cvss/calculator/4.0#CVSS:4.0/AV:L/AC:L/AT:N/PR:L/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N
+## Description
 
-The trigger is deterministic. It requires local access with low
-privileges and no user interaction. Successful exploitation provides
-full kernel-level confidentiality, integrity, and availability impact.
+`runtime/ftplugin/c.vim` sets `omnifunc=ccomplete#Complete` on C buffers
+when filetype plugins are enabled.  When completing a member access, and the
+declaration is not found in the buffer itself, `StructMembers()` searches the
+tags files:
 
-Fix
----
+    var fnames: string = tagfiles()
+      ->map((_, v: string) => escape(v, ' \#%'))
+      ->join()
+    ...
+    execute 'silent! keepjumps noautocmd '
+      .. n .. 'vimgrep ' .. '/\t\V' .. escape(typename, '/\') .. '\m\(\t\|$\)/j '
+      .. fnames
 
-The vulnerable sequence dates back to Linux 2.6.25 commit 42e30bf3463c:
-https://git.kernel.org/linus/42e30bf3463cd37d73839376662cb79b4d5c416c
+`tagfiles()` returns the names of the tags files in effect for the buffer,
+derived from the `'tags'` option.  The names are appended unquoted to the
+`:vimgrep` argument list.
 
-The mainline fix is 9b2854f86f0b:
-https://git.kernel.org/linus/9b2854f86f0b56e9027d68e7a3fc909d1a9b566f
+The `:vimgrep` command is defined with the `EX_TRLBAR` flag, so a bar ends
+the command and starts a new one.  A bar in a file name is therefore not
+part of the name but a command separator, and the remainder of the line is
+parsed and executed as an independent Ex command by the same `:execute`.
+Escaping the space limits what such a command can contain, but does not
+prevent it, and `ccomplete.vim` is a `vim9script` file, so the injected text
+is parsed with Vim9 syntax.  The leading `:silent!` suppresses the resulting
+error, so the injected command runs without a visible failure.
 
-The first fixed versions listed by the Linux kernel CVE announcement are:
+The issue has been addressed by escaping the bar in the tags file names as
+well.
 
-   6.6.148
-   6.12.101
-   6.18.42
-   7.1.6
-   7.2-rc5
+## Impact
 
-Vendor kernels may carry a backport while retaining an older base version.
+Arbitrary Ex command execution, and through commands such as `:!` arbitrary
+operating-system command execution, in the context of the user running Vim.
+Exploitation requires:
 
-Tested distros
---------------------
-Below is a summary of the tested distributions and kernels. Each target
-reached root in the retained tests:
+- Vim with filetype plugins enabled
+- a tags file whose path contains a bar, for example because it is stored in
+  a directory whose name contains one, and a `'tags'` value under which that
+  file is found,
+- the victim opening a C file from that tree and invoking omni-completion
+  with `CTRL-X CTRL-O` on a member access whose type is only known from the
+  tags file.
 
-- Debian 13, 6.12.95+deb13-amd64
-- Rocky Linux 9 / RHEL 9-family target, vendor 5.14 kernel (SCTP loaded)
-- Ubuntu 24.04, 6.8.0-134-generic
+The severity is rated Medium.  The payload travels in a path rather than in
+file content, so it is not visible to review that inspects files only.  On
+the other hand a bar in a directory name is unusual and conspicuous, it is
+not a valid character in file names on MS-Windows, and the crafted name has
+no effect until the user deliberately invokes omni-completion on a type that
+is not declared in the edited buffer, since the completion would otherwise
+not consult the tags files at all.
 
-The exploit was also validated on the Linux 7.2-rc2 research kernel.
+## Acknowledgements
 
-References
-----------
+The Vim project would like to thank Yazan Balawneh, Cystack.ps for reporting
+the issue.
 
-CVE record:
-https://www.cve.org/CVERecord?id=CVE-2026-64564
+## References
 
-Linux kernel CVE announcement:
-https://lore.kernel.org/linux-cve-announce/2026080404-CVE-2026-64564-6762@gregkh/
+The issue has been fixed as of Vim patch [v9.2.1011](https://github.com/vim/vim/releases/tag/v9.2.1011).
 
-Technical write-up:
-https://matrix.tencent.com/en/2026/08/06/sctphantom-CVE-2026-64564
+- [Commit](https://github.com/vim/vim/commit/331d5d67028505c5b6043603a57d1e8497b922b5)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-r77m-8m55-rpr6)
 
-Corvus AI assisted with source analysis, reproduction, exploit
-development, and cross-platform validation.
-
-Regards,
-
-Fourie Zhang
-TencentOS Security Team ( Tencent Zhuque Lab )
+Best,
+Christian
+-- 
+Auge um Auge - und die ganze Welt wird blind sein.
+		-- Mahatma Gandhi
