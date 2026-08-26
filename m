@@ -1,34 +1,18 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/03/3
-Message-ID: <b85ec504-0550-51f4-3245-137790baa839@apache.org>
-Date: Thu, 02 Jul 2026 23:04:15 +0000
-From: Paul Irwin <paulirwin@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/15
+Message-ID: <87ld9tmdr0.fsf@athena.silentflame.com>
+Date: Wed, 26 Aug 2026 10:29:07 +0100
+From: Sean Whitton <spwhitton@...hitton.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-47898: Apache Lucene.Net: XXE vulnerability in Lucene.Net.Analysis.Common PatternParser 
+Cc: Bas Alberts <anticomputer@...hub.com>, Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>
+Subject: Re: Emacs zero-click local command execution via TRAMP
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Sean Whitton [21/Aug  2:33pm +01] wrote:
+> Bas Alberts of the GitHub Security Lab discovered a local command
+> execution vulnerability in GNU Emacs 30.2 onwards, and possibly earlier.
 
-Affected versions:
+This has been assigned CVE-2026-79992, with thanks to Marco Benatto.
 
-- Apache Lucene.Net (Lucene.Net.Analysis.Common) 4.8.0-beta00005 before 4.8.0-beta00018
-
-Description:
-
-Improper Restriction of XML External Entity Reference vulnerability in Apache Lucene.Net (Lucene.Net.Analysis.Common library).
-
-This issue affects Apache Lucene.Net.Analysis.Common: from 4.8.0-beta00005 before 4.8.0-beta00018.
-
-Users are recommended to upgrade to version 4.8.0-beta00018, which fixes the issue.
-
-Credit:
-
-Daniel Cervera (reporter)
-Paul Irwin (coordinator)
-Shad Storhaug (remediation reviewer)
-
-References:
-
-https://lucenenet.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-47898
-
+-- 
+Sean Whitton
