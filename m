@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/24
-Message-ID: <28b02a6e-aa57-d134-9a23-608f9a56218b@apache.org>
-Date: Mon, 14 Sep 2026 08:47:50 +0000
-From: Francesco Chicchiriccò <ilgrosso@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/11
+Message-ID: <f850ca6a-dca9-8d0d-50bb-01acdf3f1a32@apache.org>
+Date: Wed, 26 Aug 2026 04:42:48 +0000
+From: Abhishek Choudhary <shreemaanabhishek@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-87785: Apache Syncope: JWT subject spoofing 
+Subject: CVE-2026-63041: Apache APISIX: attach-consumer-label does not strip client-supplied consumer-label headers 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: 
 
 Affected versions:
 
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0.0-M0 through 3.0.16
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0.0-M0 through 4.0.7
-- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.1.0-M0 through 4.1.2
+- Apache APISIX 3.11.0 through 3.17.0
 
 Description:
 
-Authentication bypass by spoofing vulnerability in Apache Syncope.
+Reliance on Untrusted Inputs in a Security Decision vulnerability in Apache APISIX.
+
+This vulnerability allows an attacker to escalate privilege or perform an authorization bypass by sending certain values that the attach-consumer-label plugin does not sanitise correctly.
+
+
+This issue affects Apache APISIX: from 3.11.0 through 3.17.0.
 
 
 
-When the configured JWKS settings for internal JWT authentication are disclosed (at least protocol and key), an attacker can spoof another user's privileges after completing a successful authentication and obtaining a valid JWT.
-
-This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 through 4.0.7, from 4.1.0-M0 through 4.1.2.
-
-
-
-Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+Users are recommended to upgrade to version <pending>, which fixes the issue.
 
 Credit:
 
-Alon Galili (finder)
+tonghuaroot (reporter)
 
 References:
 
-https://syncope.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-87785
+https://apisix.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-63041
 
