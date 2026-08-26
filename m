@@ -1,57 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/16/3
-Message-ID: <d4278f25-8ecd-4c9e-859c-d8d2989c85a1@cpansec.org>
-Date: Thu, 16 Jul 2026 17:18:16 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-57073: HTML::Bare versions through 0.04 for Perl have an unbounded character lookahead
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/12
+Message-ID: <2545a9f7-20bb-8014-f2e0-10f4b669994b@apache.org>
+Date: Wed, 26 Aug 2026 14:51:22 +0000
+From: Abhishek Choudhary <shreemaanabhishek@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-74848: Apache APISIX: Cross-user response poisoning in serverless plugins 
 Content-Type: text/plain; charset=utf-8
 
+Severity: 
 
-========================================================================
-CVE-2026-57073                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-57073
-   Distribution:  HTML-Bare
-       Versions:  through 0.04
+- Apache APISIX 2.12.0 through 3.17.0
 
-       MetaCPAN:  https://metacpan.org/dist/HTML-Bare
-       VCS Repo:  https://github.com/nanoscopic/perl-HTML-Bare
+Description:
 
+Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response Smuggling') vulnerability in Apache APISIX.
 
-HTML::Bare versions through 0.04 for Perl have an unbounded character
-lookahead
-
-Description
------------
-HTML::Bare versions through 0.04 for Perl have an unbounded character
-lookahead.
-
-The parserc_parse function attempts to check for multicharacter strings
-such as "<![CDATA" or element terminators such as ">" without checking
-that the offsets are within the buffer.
-
-Truncated strings such as "<a/" can trigger an out-of-bounds read.
-
-Note that the latest version available on CPAN is version 0.02. Newer
-versions are available on the git repository.
-
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
-
-Workarounds
------------
-Apply the patch to version 0.02 (from CPAN) or version 0.04 (from the
-git repository).
+An attacker could make other clients receive attacker-chosen or other users' responses on serverless-plugin routes.
 
 
-References
-----------
-https://github.com/nanoscopic/perl-HTML-Bare/pull/2
-https://security.metacpan.org/patches/H/HTML-Bare/0.02/CVE-2026-57073-r1.patch
-https://security.metacpan.org/patches/H/HTML-Bare/0.04/CVE-2026-57073-r2.patch
 
 
+This issue affects Apache APISIX: from 2.12.0 through 3.17.0.
+
+
+
+Users are recommended to upgrade to version 3.18.0, which fixes the issue.
+
+Credit:
+
+Xclow3n (Rajat Raghav) (reporter)
+
+References:
+
+https://apisix.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-74848
 
