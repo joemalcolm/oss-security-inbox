@@ -1,99 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/4
-Message-ID: <046ca5c3-8439-4c33-b62b-5e2ce999dc21@jvf.cc>
-Date: Wed, 8 Jul 2026 08:09:18 -0700
-From: Jay Faulkner <jay@....cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/27/6
+Message-ID: <CAAHN_R08W0akhbqkrCg2-5UZJ7Chm9s7yvkDq+3B0qSLGgA5Yw@mail.gmail.com>
+Date: Thu, 27 Aug 2026 15:25:35 -0400
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-026] Ironic: Insufficient Access Controls regarding parent/child nodes
+Subject: The GNU C Library security advisory update for 2026-08-27
 Content-Type: text/plain; charset=utf-8
 
-==================================================================================
-OSSA-2026-026: Insufficient Access Controls in Ironic regarding 
-Parent/Child Nodes
-==================================================================================
+Hello,
 
-:Date: July 08, 2026
-:CVE: CVE-2026-44918
+The following security advisory has been published:
 
+GLIBC-SA-2026-0015:
+===================
 
-Affects
-~~~~~~~
-- Ironic: >=27.0.0 <29.0.6, >=30.0.0 <32.0.2, >=33.0.0 <35.0.2, >=36.0.0 
-<37.0.1
+Passing an effectively empty string to the `,ccs=` syntax extension of
+the mode argument in the `fopen` function in the GNU C Library version
+2.45 or earlier may result in a heap buffer overflow when the mode
+string input to the function is attacker controlled.
 
+This usage pattern is not seen in applications in common GNU or Linux
+distributions and applications that process user-supplied values for
+`ccs` should not pass them through without validation.
 
-Description
-~~~~~~~~~~~
-Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
-from the Metal3.io Security Team reported a vulnerability in Ironic's
-access control code.
+CVE-Id: CVE-2026-18374
+Public-Date: 2026-08-27
+Vulnerable-Commit: 129d706d77587e4d6627cc1ebef9be0f7cbc65f0
+Reported-by: AISLE in partnership with Red Hat
+CVSS: CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L - 4.9
 
-This OSSA represents multiple related vulnerabilities in Ironic RBAC. An
-authenticated project manager can change the node associated with
-Volume Connectors or Volume Target objects, potentially changing the
-project permitted to access the object. Volume Connectors
-contain secrets in environments configuring boot from volume with iSCSI
-volumes. This is tracked as bug #2150256.
+Notes:
+======
 
-Objects reparented in this manner cannot be detected
-via inspection of the data. Operators who are concerned they may have
-had this occur are encouraged to perform a basic audit of node
-configuration, for instance, insuring the expected number of
-volume targets, and volume connectors are present.
-
-Additionally, a project manager with the ability to create nodes can use
-the UUID of a node not owned by their project as a parent node when creating
-a new node. This mismatched child node can then be used to impact operations
-on the parent, such as forcing it to power on. This is tracked as bug
-#2150450.
-
-Ironic now specifically checks, and requires node parents and children to
-have matching ``node.owner`` values. This patch contains an enhancement
-to Ironic's upgrade check to detect this mismatched state. Operators can
-use the provided ``ironic-status upgrade check`` to identify misconfigured
-nodes.
-
-
-
-Patches
-~~~~~~~
-- https://review.opendev.org/c/openstack/ironic/+/996479 (2024.1/caracal 
-(unmaintained))
-- https://review.opendev.org/c/openstack/ironic/+/996478 (2025.1/epoxy)
-- https://review.opendev.org/c/openstack/ironic/+/996476 (2025.2/flamingo)
-- https://review.opendev.org/c/openstack/ironic/+/996469 (2026.1/gazpacho)
-- https://review.opendev.org/c/openstack/ironic/+/996462 (2026.2/hibiscus)
-- https://review.opendev.org/c/openstack/ironic/+/996474 (Bugfix/33.0)
-- https://review.opendev.org/c/openstack/ironic/+/996471 (Bugfix/34.0)
-- https://review.opendev.org/c/openstack/ironic/+/996464 (Bugfix/37.0)
-
-
-Credits
-~~~~~~~
-- Dmitry Tantsur from Red Hat
-- Tuomo Tanskanen from Ericsson Software Technology
-
-
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/ironic/+bug/2150256
-- https://bugs.launchpad.net/ironic/+bug/2150450
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-44918
-
-
-Notes
-~~~~~
-- Volume Targets and Volume Connectors only contain sensitive
-   information in environments utilizing boot-from-volume with iSCSI
-   volumes.
-- These patches also contain hardening logic to prevent this class of
-   vulnerability in Port and Portgroup objects. This is a defense in
-   depth measure to provide consistent errors at the API level for
-   invalid data.
-- Branch 2024.1/caracal is unmaintained and patches are provided as a
-   courtesy.
-- Bugfix branches will recieve patches in git but will not recieve a
-   updated release.
-
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+Published advisories are available directly in the project git repository:
+https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD
