@@ -1,82 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/4
-Message-ID: <CADk+mPBTM+VcNFT=bKyOFLaXTEAB9esSbUXgJfSYEv5E6=7WYg@mail.gmail.com>
-Date: Tue, 23 Jun 2026 17:15:54 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/27/7
+Message-ID: <apC0ZALTQNxF-H2c@definition.pseudorandom.co.uk>
+Date: Thu, 27 Aug 2026 23:04:20 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-55556: rsyslog imhttp Basic Auth heap overflow
+Subject: bubblewrap 0.12.0 fixes writes outside sandbox
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+bubblewrap 0.12.0 fixes a security vulnerability
+involving symlink traversal during container setup:
+<https://github.com/containers/bubblewrap/security/advisories/GHSA-pxhw-h44j-8pfx>.
+A CVE ID has been requested but is not yet available; please refer to
+this vulnerability as GHSA-pxhw-h44j-8pfx until a CVE ID is allocated.
 
-We are publishing CVE-2026-55556 for a heap overflow in the optional
-rsyslog imhttp input module.
+All versions older than 0.12.0 are vulnerable.
 
-imhttp is a contributed rsyslog plugin. It is not part of typical default
-rsyslog installations, is seldom installed in production deployments, and is
-not frequently packaged by distributions. Systems that do not build, package,
-install, load, and configure imhttp are not affected.
+>## Impact
+>
+>If bubblewrap is used to create files on attacker controlled filesystem
+>content (such as a malicious app image), then the attacker can use symlinks
+>to redirect those files to be created on the host. This happens during
+>setup of the sandbox, before anything is running, so there is no way to
+>escape a sandbox at runtime.
+>
+>The bubblewrap arguments are not typically under the attacker's control,
+>so the risks depend on exactly how bwrap it is being used. Any files
+>created by bubblewrap in this way are created by the uid/gid that
+>launched bubblewrap, which is generally not root, so sandbox escapes
+>are not privileged.
+>
+>This vulnerability affects Flatpak if a malicious or compromised app
+>is used, and potentially affects other app frameworks that work in a
+>similar way.
+>
+>## Description
+>
+>During sandbox setup the host filesystem is mounted at /oldroot and the
+>sandboxed root is mounted at /newroot. When bubblewrap creates a file in
+>/newroot it may follow a symlink in a parent that points to /oldroot. For
+>example `bwrap --bind /untrusted / --dir /subdir/newdir ...` would follow
+>a link at /untrusted/subdir which, if it pointed to /newroot/some/path,
+>would then create the new directory in /some/path/newdir on the host.
+>
+>## Patches
+>
+>This has been fixed in the 0.12.0 release by using openat2 with the
+>RESOLVE_IN_ROOT flag (with fallback for older kernels), and all affected
+>users should update.
+>
+>## Note on setuid versions of bubblewrap
+>
+>This has been fixed only in 0.12.0, which doesn't support building a
+>setuid version of bubblewrap. Due to the complexity of the fix, there is
+>currently no backport to older versions that support setuid. Essentially
+>all modern Linux distributions support unprivileged user namespaces,
+>so the risks involved with a setuid version of bubblewrap are not worth
+>keeping it, and all users should stop using it.
+>
+>## Credits
+>
+>Reported by @geeknik.
 
-The issue is in the HTTP Basic Authentication parser used by imhttp. Older
-code used:
-
-    auth->pworkbuf = calloc(0, len);
-
-when decoding an oversized Basic Authentication header, instead of allocating
-len bytes. If imhttp Basic Authentication was enabled, a remote client able to
-reach the imhttp listener could trigger heap memory corruption. The practical
-expected impact is denial of service; stronger impact would depend on platform,
-allocator behavior, compiler options, and process hardening.
-
-Affected configurations require all of the following:
-
-- rsyslog built with the contributed imhttp module
-- imhttp installed and available
-- imhttp loaded and configured
-- HTTP Basic Authentication enabled for the affected imhttp endpoint
-- attacker access to that HTTP endpoint
-
-Default rsyslog configurations do not load imhttp.
-
-The affected upstream code path was removed in rsyslog 8.2604.0 by commit:
-
-    acde2ba25ea33816694b787859f4a727a247b6d6
-    imhttp: add route-scoped API key authentication
-
-That change was primarily a feature enhancement and general imhttp auth
-refactor adding route-scoped API key authentication and mixed auth selection.
-As is now common in rsyslog development, nearby hardening was done as part of
-that work. In this case, the old Basic Authentication parser and its dynamic
-work-buffer allocation were replaced with bounded parsing, including a cap on
-Basic Authentication header size.
-
-For downstreams maintaining older branches that do not take the broader auth
-refactor, the reporter-provided minimal targeted fix is:
-
-diff --git a/contrib/imhttp/imhttp.c b/contrib/imhttp/imhttp.c
-index d0b8a18b6..c0298856c 100644
---- a/contrib/imhttp/imhttp.c
-+++ b/contrib/imhttp/imhttp.c
-@@ -702,7 +702,7 @@ static int parse_auth_header(struct mg_connection
-*conn, struct auth_s *auth) {
-     size_t len = apr_base64_decode_len((const char *)src);
-     auth->pworkbuf = auth->workbuf;
-     if (len > sizeof(auth->workbuf)) {
--        auth->pworkbuf = calloc(0, len);
-+        auth->pworkbuf = calloc(1, len);
-         auth->workbuf_len = len;
-     }
-     len = apr_base64_decode(auth->pworkbuf, src);
-
-Credit: reported by 0xseiryuu, who also provided the minimal targeted fix
-shown above.
-
-References:
-
-- CVE-2026-55556
-- GHSA-947w-69ph-mc2r
-- upstream refactor:
-  https://github.com/rsyslog/rsyslog/commit/acde2ba25ea33816694b787859f4a727a247b6d6
-
-Regards,
-Rainer
+-- 
+Simon McVittie, Collabora Ltd. / Debian
