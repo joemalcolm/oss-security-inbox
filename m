@@ -1,124 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/5
-Message-ID: <CADk+mPA811WMNT_xtyVuVBKY_sVQHjrVCd=C7vnt_FvnONaJtA@mail.gmail.com>
-Date: Wed, 22 Jul 2026 12:34:37 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
-To: oss-security@...ts.openwall.com
-Subject: rsyslog v8.36.0 through v8.2606.0: imptcp regex-framing remote denial of service
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/28/4
+Message-ID: <R3P7n9I-CK3htaSivHZopNQR6_O-RXVN8uBC88EyTSyGLNqJ9vQAwVIAkPiVSIPYvqSuGoKAyVnIi1SiQthMfSaQ2-pMfdIcVS7qLyg3-yc=@pm.me>
+Date: Fri, 28 Aug 2026 17:02:36 +0000
+From: "t.preissl" <t.preissl@...me>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Multiple Integer Overflows in U-Boot Filesystem Parsing (CVE-2025-70290 through CVE-2025-70293)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN SECURITY ADVISORY-----
 
-The rsyslog project has published a security advisory and proposed
-upstream fix for a configuration-dependent denial-of-service issue in
-the optional imptcp input module.
+Title: Multiple Integer Overflows in U-Boot Filesystem Handling
+Author: Timo Preißl <t.preissl@...ton.me>
+Date: 2026-02-11
+CVEs: CVE-2025-70290, CVE-2025-70291, CVE-2025-70292, CVE-2025-70293
+Affected: Denx U-Boot <= v2026.01-rc4
+Fixed in: v2026.04-rc1 (commit adccdb2)
 
-Summary
-=======
+== Overview ==
 
-A configuration-dependent issue in rsyslog's optional imptcp input
-module can allow an unauthenticated remote peer to crash rsyslogd.
+Multiple integer overflow vulnerabilities were discovered in the U-Boot
+bootloader's filesystem handling code and command-line interface. These
+flaws can lead to heap memory under-allocation followed by heap-based
+buffer overflows, potentially allowing Arbitrary Code Execution (ACE)
+in the pre-boot environment.
 
-The issue is not active in a default installation. Exploitation
-requires all of the following:
+== Vulnerability Details ==
 
-* imptcp is explicitly loaded.
-* An imptcp listener uses the non-default framing.delimiter.regex mode.
-* An attacker can establish a TCP connection to that listener.
+--- CVE-2025-70290: ZFS Metadata Integer Overflow ---
 
-A crafted input sequence during oversize-frame recovery can cause an
-invalid internal message length and terminate rsyslogd. No
-confidentiality or integrity impact, privilege escalation, or code
-execution has been identified.
+Component: fs/zfs/zfs.c, function zfs_nvlist_lookup_nvlist
+Impact: A crafted ZFS filesystem image with malformed on-disk metadata
+can trigger an integer overflow during the size calculation
+passed to calloc(), resulting in an undersized allocation and
+subsequent out-of-bounds memory access.
+Fix: Validation of allocation size using __builtin_add_overflow.
 
-imtcp and the default imptcp framing modes are not affected.
+--- CVE-2025-70291: Heap Buffer Overflow in do_mv Command ---
 
-Affected versions
-=================
+Component: fs/fs.c, function do_mv
+Impact: Missing length checks in the directory move command allow an
+integer overflow during string length addition. An attacker
+with U-Boot shell access can trigger an under-allocation,
+resulting in a heap buffer overflow via strcpy().
+Fix: Safe addition of string lengths using compiler intrinsics.
 
-The vulnerable regex-framing implementation was introduced in rsyslog
-v8.36.0. Scheduled stable releases from v8.36.0 through v8.2606.0 are
-affected, as are daily stable builds published before 2026-07-23 CEST.
+--- CVE-2025-70292: SquashFS Integer Overflow ---
 
-Severity
-========
+Component: fs/squashfs/sqfs.c, function sqfs_concat_tokens
+Impact: Manipulated token lists trigger an overflow in
+sqfs_get_tokens_length(), causing heap under-allocation
+subsequently overflown by strcpy().
+Fix: Validation of total token length before allocation.
 
-CVSS v3.1: 7.5 High
-CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+--- CVE-2025-70293: EXT4 Block Group Descriptor Table Integer Overflow ---
 
-The practical exposure is limited because both imptcp and regex
-framing are optional and not enabled by default.
+Component: fs/ext4/ext4_write.c, function ext4fs_get_bgdtable
+Impact: An integer overflow in the block group descriptor table size
+calculation results in an undersized buffer being passed to
+memcpy(), causing memory corruption.
+Fix: Guarded multiplication of block group count and descriptor size.
 
-Mitigations
-===========
+== Patch ==
 
-Until updating, users can disable the affected imptcp listener, remove
-its framing.delimiter.regex setting, restrict network access to the
-listener, or replace the listener with an equivalent imtcp listener.
+All issues are fixed in the U-Boot master branch.
 
-Fix and advisory
-================
+Commit: adccdb2f605a6e8e046712398712398123
+"fix integer overflows in filesystem code"
 
-The proposed upstream fix is public and available for review:
+https://source.denx.de/u-boot/u-boot/-/commit/adccdb2
 
-https://github.com/rsyslog/rsyslog/pull/7410
+== Timeline ==
 
-A fixed daily stable package will be published through the normal
-daily stable workflow on 2026-07-23 CEST. The next scheduled stable
-release, v8.2608.0, will include the same fix.
+Patch series submitted to upstream mailing list:
+https://lore.kernel.org/u-boot/20251231100831.119142-1-t.preissl@proton.me/T/
 
-The GitHub Security Advisory is available at:
-
-https://github.com/rsyslog/rsyslog/security/advisories/GHSA-cj5r-wh2m-7w29
-
-A CVE has been requested through GitHub and is pending. Current CVE
-status is tracked in the GitHub Security Advisory.
-
-Credit
-======
-
-Thanks to Raphael Eikenberg, independent security researcher, for
-reporting the issue.
-
-AI assistance disclosure
-========================
-
-The reporter stated that he used AI tools to help identify the issue
-and draft the reproducer and report. He personally built the reported
-rsyslog revision, reproduced the daemon termination in all six test
-runs, and confirmed that the daemon remained operational after
-applying the proposed guard.
-
-The maintainer-side minimal patch and regression-test changes were
-prepared with OpenAI Codex assistance and subsequently reviewed and
-validated through the rsyslog testbench, static analysis, PR-ready
-container validation, and focused ASan/UBSan testing.
-
-Independent maintainer review and patch verification were the final
-acceptance gate. The patch was accepted based on that verification,
-not on the AI output alone.
-
-Regards,
-Rainer Gerhards
-rsyslog project
-
-Patch
-=====
-
-diff --git a/plugins/imptcp/imptcp.c b/plugins/imptcp/imptcp.c
-index 838e1648f..90a7d6f7e 100644
---- a/plugins/imptcp/imptcp.c
-+++ b/plugins/imptcp/imptcp.c
-@@ -1053,7 +1053,7 @@ static rsRetVal ATTR_NONNULL()
-processDataRcvd_regexFraming(ptcpsess_t *const __
-         pThis->iCurrLine = pThis->iMsg;
-     } else {
-         const int isMatch = !regexec(&inst->start_preg, (char
-*)pThis->pMsg + pThis->iCurrLine, 0, NULL, 0);
--        if (isMatch) {
-+        if (pThis->iCurrLine > 0 && isMatch) {
-             DBGPRINTF("regex match (%d), framing line: %s\n",
-pThis->iCurrLine, pThis->pMsg);
-             memmove(pThis->pMsg_save, pThis->pMsg + pThis->iCurrLine,
-ustrlen(pThis->pMsg + pThis->iCurrLine) + 1);
-             pThis->iMsg = pThis->iCurrLine - 1;
+Fix merged: v2026.04-rc1
+-----END SECURITY ADVISORY-----
