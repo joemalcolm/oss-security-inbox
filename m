@@ -1,41 +1,156 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/29/7
-Message-ID: <0f76ef6e-978b-faeb-8a63-c5580960b14f@apache.org>
-Date: Mon, 29 Jun 2026 18:29:09 +0000
-From: "Christopher L. Shannon" <cshannon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/29/1
+Message-ID: <CADk+mPBVPrss9--xRDrD9HzZPpvoKqMVYiY0QGpm4viU2F9xFQ@mail.gmail.com>
+Date: Sat, 29 Aug 2026 18:29:51 +0200
+From: Rainer Gerhards <rgerhards@...adiscon.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49432: Apache ActiveMQ, Apache ActiveMQ All, Apache ActiveMQ Stomp: STOMP negative content-length enables denial of service 
+Subject: CVE-2026-78002: rsyslog RainerScript replace() heap buffer overflow
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hello,
 
-Affected versions:
+This is the public follow-up to the earlier embargoed notification to the
+distros list. The embargo ended on 2026-08-24. We apologize for the delayed
+oss-security posting.
 
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.8
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.2.7
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.8
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.2.7
-- Apache ActiveMQ Stomp (org.apache.activemq:activemq-stomp) before 5.19.8
-- Apache ActiveMQ Stomp (org.apache.activemq:activemq-stomp) 6.0.0 before 6.2.7
+rsyslog contains a heap buffer overflow in the core RainerScript replace()
+function. The three-argument form of wrap() uses the same implementation and
+is also affected.
 
-Description:
+The issue is not active in the default configuration. A deployment is exposed
+only when a ruleset applies replace(), or the three-argument form of wrap(), to
+sender-controlled or otherwise untrusted data.
 
-Improper Input Validation vulnerability in Apache ActiveMQ, Apache ActiveMQ All, Apache ActiveMQ Stomp.
+Technical details
+=================
 
-A remote unauthenticated peer that can reach an exposed STOMP connector can trigger denial-of-service behavior by sending a negative content-length. For the NIO STOMP transport, an attacker can keep streaming body bytes and grow the per-connection command buffer beyond configured limits to cause OOM. For the blocking STOMP protocol, an error will instead force abnormal transport exception handling for the affected connection and closure.
-This issue affects Apache ActiveMQ: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ All: before 5.19.8, from 6.0.0 before 6.2.7; Apache ActiveMQ Stomp: before 5.19.8, from 6.0.0 before 6.2.7.
+replace() calculates the required output-buffer size and constructs the output
+in two separate passes. Following certain failed partial matches, the two
+passes resumed scanning at different source positions. The construction pass
+could consequently write more data than the sizing pass had allocated.
 
+Triggering the issue requires:
 
+* A ruleset that calls replace() or three-argument wrap().
+* Sender-controlled or otherwise untrusted source data.
+* A search string containing at least two characters.
+* A replacement string longer than the search string.
+* Input containing the partial-match pattern that causes the sizing and
+  construction passes to diverge.
 
+Impact
+======
 
-Users are recommended to upgrade to version 6.2.7 or 5.19.8, which fixes the issue.
+A remote sender able to submit messages to an affected ruleset can trigger
+heap corruption and termination of rsyslogd, interrupting log processing. No
+authentication is required when the configured network input accepts
+unauthenticated senders.
 
-Credit:
+The heap-buffer overflow and daemon termination were reproduced with
+AddressSanitizer. Confidentiality loss, integrity loss, and code execution
+have not been demonstrated.
 
-Youngjoon Kim (finder)
+Affected versions
+=================
 
-References:
+The vulnerable implementation was introduced in rsyslog 8.6.0.
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49432
+Affected scheduled releases:
 
+  rsyslog 8.6.0 through 8.2608.0
+
+Affected daily stable builds:
+
+  Builds published before the fixed 2026-08-24 daily stable build
+
+Fixed versions
+==============
+
+The fix is available in the rsyslog daily stable build dated 2026-08-24 and
+later daily stable builds. It will also be included in the scheduled rsyslog
+8.2610.0 release.
+
+Users of affected configurations should update to a fixed daily stable build
+rather than wait for the scheduled release.
+
+Severity
+========
+
+CVSS v3.1: 7.5 High
+
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
+
+The score reflects the demonstrated, repeatable, network-triggered
+availability impact. Practical exposure is limited to deployments whose
+rulesets explicitly apply the affected function to untrusted data.
+
+Weakness classifications:
+
+  CWE-122: Heap-based Buffer Overflow
+  CWE-131: Incorrect Calculation of Buffer Size
+
+Mitigations
+===========
+
+Until an update can be installed, operators can prevent exploitation by:
+
+* Not applying replace() or three-argument wrap() to untrusted message
+  content.
+* Ensuring that the replacement string is not longer than the search string.
+* Restricting affected network inputs to trusted senders.
+
+These mitigations should not replace installing a fixed package.
+
+Fix
+===
+
+The sizing pass now uses the same rewind behavior as the output-construction
+pass, so both passes identify the same replacement positions and calculate a
+matching output length.
+
+Minimal patch:
+
+--- a/grammar/rainerscript.c
++++ b/grammar/rainerscript.c
+@@ -1827,8 +1827,8 @@ static es_str_t *doFuncReplace(struct svar
+ *__restrict__ const operandVal,
+         if (src_buff[i] == find[j]) {
+             j++;
+         } else if (j > 0) {
+-            i -= (j - 1);
+-            lDst -= (j - 1);
++            i -= j;
++            lDst -= j;
+             j = 0;
+         }
+     }
+
+References
+==========
+
+GitHub Security Advisory:
+https://github.com/rsyslog/rsyslog/security/advisories/GHSA-g72f-gc6v-f2w3
+
+Fix:
+https://github.com/rsyslog/rsyslog/commit/667e3f61aec5ee02c5c2ee6f0f8accf6fe4301a9
+
+Pull request and regression test:
+https://github.com/rsyslog/rsyslog/pull/7525
+
+rsyslog downloads and package repositories:
+https://www.rsyslog.com/downloads/
+
+Identifier:
+
+  CVE-2026-78002
+
+Credit
+======
+
+The issue was found by Anthropic using Claude to study the security of
+open-source software and manually validated by Ada Logics. It was reported by
+David Korczynski.
+
+Regards,
+Rainer Gerhards
+rsyslog project
