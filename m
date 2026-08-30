@@ -1,56 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/11
-Message-ID: <4fe6fe05-43ce-889d-a996-12e33880886c@apache.org>
-Date: Sun, 13 Sep 2026 05:46:10 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/30/5
+Message-ID: <2a66dcb5-de56-a617-7df2-e28f894cb02b@apache.org>
+Date: Sun, 30 Aug 2026 18:55:42 +0000
+From: Emond Papegaaij <papegaaij@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82431: Apache Storm Client: Authorization Bypass When nimbus.groups Is Configured Without nimbus.users 
+Subject: CVE-2026-71378: Apache Wicket: Cross-Site Request Forgery (CSRF) protection bypass in ResourceIsolationRequestCycleListener 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Storm Client (org.apache.storm:storm-client) 3.0.0 before 3.1.0
+- Apache Wicket (org.apache.wicket:wicket-core) 9.1.0 through 9.23.0
+- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
 
 Description:
 
-Description
+ResourceIsolationRequestCycleListener protects a Wicket application against cross-site request forgery by rejecting requests that a resource isolation policy judges to come from another origin. Its default policy, FetchMetadataResourceIsolationPolicy, was derived from a reference implementation written to guard static resources, and it inherited two allowances that are unsafe when the thing being guarded is an action on a page:
+  *  Every "simple top-level navigation" was allowed. Any GET request carrying Sec-Fetch-Mode: navigate whose Sec-Fetch-Dest was neither object nor embed was allowed, whatever Sec-Fetch-Site said — including cross-site. Wicket invokes component listeners (Link.onClick(), form submits, behaviour callbacks) through ordinary GET navigations, so a page under an attacker's control could navigate the victim's browser to a listener URL and have that listener run inside the victim's authenticated session. Browsers send SameSite=Lax cookies — the effective default when no SameSite attribute is set — on cross-site top-level GET navigations, so the victim's session cookie accompanied the request.
+  *  Sec-Fetch-Site: same-site was allowed unconditionally. That value means the same registrable domain and scheme but a different origin — another subdomain or another port. Any sibling origin could therefore invoke any listener by any method, POST form submits included, and cookies are always sent on same-site requests regardless of SameSite. A hostile sibling origin obtained through a subdomain takeover, through delegated user content, or through an XSS elsewhere on the site could act as the authenticated user.
+Users are recommended to upgrade to version 9.24.0 or 10.11.0, which fix the issue.
+Affected versions
 
-`SimpleACLAuthorizer` evaluated the user-level command set by returning early when `nimbus.users` was empty,
-before `nimbus.groups` was considered. An operator who restricted cluster access by group alone, leaving
-`nimbus.users` unset, therefore received no restriction at all: every authenticated principal was permitted
-every user-level operation, including `submitTopology`, `beginFileUpload` and `getNimbusConf`.
+  *  Apache Wicket 9.1.0 through 9.23.0
+  *  Apache Wicket 10.0.0 through 10.10.0
 
-`docs/SECURITY.md` presents `nimbus.groups` as a supported way to lock down a cluster, so a deployment
-following the documentation could believe it was restricted while it was not. The failure is silent; nothing
-in the logs or the configuration indicates that the group list is being ignored.
 
-Both lists left empty continues to mean that no restriction is configured, which is the shipped default and
-is unchanged.
 
-Mitigation
+Not affected
 
-Upgrade to 3.1.0, where `nimbus.groups` is evaluated whether or not `nimbus.users` is set.
-
-Users who cannot upgrade immediately should additionally populate `nimbus.users` with the intended
-principals, since a non-empty user list causes the group list to be evaluated on affected versions.
-Operators should review Nimbus access logs for operations by principals outside the intended groups.
-
-Note that after upgrading, a cluster configured with `nimbus.groups` alone becomes restrictive for the first
-time. This includes `NimbusClient`, which calls `getLeader` on every connection, so clients outside the
-configured groups will begin to be refused.
-
-Credit
-
-The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
+Any release older than 9.1.0:
+  *  Apache Wicket 8.x (8.0.0 through 8.17.0). The resource isolation classes do not exist in the 8.x line, which offers only the Origin/Referer-based CsrfPreventionRequestCycleListener. No 8.x release requires a fix.
+  *  Apache Wicket 9.0.0. ResourceIsolationRequestCycleListener and FetchMetadataResourceIsolationPolicy were introduced by WICKET-6786 and first shipped in 9.1.0 (released 2020-10-07).
 
 Credit:
 
-The ASF using Claude Agents (finder)
+Darren Carreras (finder)
+Andre Kropp (Nexory) (finder)
 
 References:
 
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82431
+https://wicket.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-71378
 
