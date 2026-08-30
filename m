@@ -1,61 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/25/5
-Message-ID: <a090f4da-5876-4d45-9c66-2718d32e0263@gmail.com>
-Date: Sat, 25 Jul 2026 00:19:05 -0400
-From: Demi Marie Obenour <demiobenour@...il.com>
-To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
-Subject: Re: 432 Linux kernel CVEs
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/30/4
+Message-ID: <2a3ee84e-768d-88e7-efbe-26058aa16756@apache.org>
+Date: Sun, 30 Aug 2026 17:52:49 +0000
+From: Emond Papegaaij <papegaaij@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-71257: Apache Wicket: Configured file upload limits are not enforced when the multipart request has already been parsed 
 Content-Type: text/plain; charset=utf-8
 
-On 7/23/26 06:00, Peter Gutmann wrote:
-> David A. Wheeler <dwheeler@...eeler.com> writes:
-> 
->> Obviously not everyone agrees with this policy, but please note that there
->> *are* arguments for it.
-> 
-> Just to clarify, I'm not disagreeing with it either.  Given for example Daniel
-> Stenberg's comments on them, one being "CVE-2020-19909 is everything that is
-> wrong with CVEs",
-> https://daniel.haxx.se/blog/2023/08/26/cve-2020-19909-is-everything-that-is-wrong-with-cves/,
-> I can see arguments both for and against.  So I borrowed the term "malicious
-> compliance" from Risky Biz with a certain amount of glee rather than as a
-> criticism.
-> 
->> There is a VERY VERY SIMPLE way to not have this problem: be ready to update
->> your kernel.
-> 
-> Alternatively, don't build a product that relies on updates every two weeks in
-> order to remain secure.  That's not pontificating, it's pointing out that
-> something that turns your ceiling fan on and off doesn't need to run Linux
-> when a minimal RTOS, or just an event loop on bare metal, will do the same
-> thing.> >> If it is *vitally* important that your kernel *never* need to updated *ever*,
->> then a traditional kernel like Linux, *BSD, MacOS, iOS, or Windows is NOT
->> what you're looking for. What you need is a formally-proved kernel.
-> 
-> That's the textbook answer.  The practical answer is "what you need is a
-> minimal RTOS".  It doesn't need any formal proof, it just needs to be basic
-> enough that there's nothing there to attack.  Not being able to get a shell on
-> something because there isn't one is probably the single biggest win you can
-> have in device security.
+Severity: moderate 
 
-The problem is that that thing wants to talk to the outside world, as
-otherwise one would just use a mechanical switch.  That means a complex
-protocol stack.  Nowhere near as complex as Linux, but still complex.
+Affected versions:
 
-Of course, part of the problem is that people insist on making
-everything wireless, or at least networked.  The simplest form of
-security is "nobody untrusted can physically connect."
+- Apache Wicket (org.apache.wicket:wicket-core) 8.0.0 through 8.18.0
+- Apache Wicket (org.apache.wicket:wicket-core) 9.0.0 through 9.23.0
+- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
 
-Unfortunately, this runs into two nasty real-world problems: money
-and aesthetics.  In-the-wall cabling is very expensive to install.
-Over-the-wall cabling is much cheaper, but many if not most humans find
-it unacceptably ugly.  Security nerds and highly regulated industries
-might willing to accept these tradeoffs.  Most people won't be.
+Description:
 
-What might be a solution to this problem?
--- 
-Sincerely,
-Demi Marie Obenour (she/her/hers)
+Apache Wicket enforces the upload limits configured on a form or upload field while parsing a multipart request with Apache Commons FileUpload. If the request body has already been consumed by another component, Commons FileUpload returns no items and Wicket falls back to reading the upload through HttpServletRequest#getParts(). The per-file size limit (for example Form#setFileMaxSize) and the file count limit (Form#setFileCountMax) are not applied to the parts obtained that way, and no exception is raised, so the upload is processed as though those limits had been satisfied. A remote uploader can therefore submit files that are larger, or more numerous, than the application permits, up to whatever the component that parsed the request allows. A part carrying no Content-Type header is additionally read into memory in full during parsing, so the size of that allocation is determined by the request and bounded only by those same external limits.
 
+The total upload size limit (Form#setMaxSize) is not affected. Commons FileUpload compares the declared Content-Length against it before reading the body, so a request declaring an oversized length is rejected before the fallback is reached.
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+The fallback is reached in deployments where a servlet or filter has already parsed the request body — for example a servlet annotated with @MultipartConfig, Spring Boot's multipart resolver, or any filter that calls HttpServletRequest#getParameter() on a multipart request. It applies to the Wicket components that accept uploads on that path, including Form with FileUploadField, FileUploadToResourceField and AjaxFileDropBehavior. Applications that configure neither a per-file nor a file-count limit are not affected, as Wicket applies neither by default.
+
+This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0.
+
+Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue. Users of Apache Wicket 7.x or older, which are no longer supported, should upgrade to a supported version. As a workaround, configure equivalent limits in the component that parses the request — for example spring.servlet.multipart.max-file-size and max-request-size, or maxFileSize and maxRequestSize in @MultipartConfig or in the web.xml <multipart-config> element.
+
+Credit:
+
+GitHub: @deprrous (finder)
+
+References:
+
+https://wicket.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-71257
+
