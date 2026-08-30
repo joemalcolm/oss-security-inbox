@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/24/11
-Message-ID: <fde97da9-9ca3-33a0-9bdf-5d47cbaa492d@apache.org>
-Date: Mon, 24 Aug 2026 14:07:39 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/30/3
+Message-ID: <73ec500a-1472-f63e-2195-fa5aa4838c0d@apache.org>
+Date: Sun, 30 Aug 2026 17:50:05 +0000
+From: Emond Papegaaij <papegaaij@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-66907: Apache Camel: Camel-Google-Storage: the consumer appended the remote object name to the configured downloadFileName directory without constraining the result 
+Subject: CVE-2026-70449: Apache Wicket: Path traversal in resource style/variation/locale 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-google-storage) 4.0.0 before 4.14.9
-- Apache Camel (org.apache.camel:camel-google-storage) 4.15.0 before 4.18.4
-- Apache Camel (org.apache.camel:camel-google-storage) 4.19.0 before 4.22.0
+- Apache Wicket (org.apache.wicket:wicket-core) 8.0.0 through 8.18.0
+- Apache Wicket (org.apache.wicket:wicket-core) 9.0.0 through 9.23.0
+- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
 
 Description:
 
-Relative path traversal vulnerability in Apache Camel Google Storage component.
+Improper validation of resource URL attributes in Apache Wicket allows an unauthenticated remote attacker to read files from the web application, including files under WEB-INF that the servlet container would not otherwise serve.
 
+The locale, style and variation attributes decoded from a package resource URL are spliced into the resource lookup path without being checked for path separators. The IPackageResourceGuard — whose rejection of .. is one of the two intended controls — is applied to the resource name before those attributes are appended, and WebApplicationPath rejects only paths literally beginning with WEB-INF/. Neither control ever inspects the attacker-controlled portion of the path. On servlet containers that normalize .. in ServletContext.getResource(), a crafted request therefore escapes the intended package directory.
 
+The set of readable files is limited to the file extensions permitted by the configured IPackageResourceGuard. The default SecurePackageResourceGuard permits only js, css, png, jpg, jpeg, gif, ico, cur, map, html, txt, swf, bmp, svg, avif, eot, ttf, woff and woff2, which excludes configuration formats. Applications that have added patterns to the guard, or replaced it with the blocklist-based PackageResourceGuard, can additionally disclose configuration files such as web.xml. Independently of the extension, the lookup performed before the guard runs acts as an existence oracle for arbitrary paths.
 
-This issue affects Apache Camel: from 4.0.0 before 4.14.9, from 4.15.0 before 4.18.4, from 4.19.0 before 4.22.0.
+This issue affects Apache Wicket 8.18.0 and before, 9.23.0 and before and 10.10.0 and before.
 
-
-
-The camel-google-storage consumer downloads Google Cloud Storage objects to the local filesystem when the downloadFileName option is set. That option is documented as a folder or a filename, and when its value contains no expression token the consumer builds the local destination by appending the object name to it: evaluateFileExpression sets the Exchange file-name header to the remote object name and evaluates downloadFileName + "/${file:name}". The ${file:name} token returns the file-name header verbatim, unlike ${file:onlyname}, which applies FileUtil.stripPath to it. The resulting string was passed directly to new File(result) and blob.downloadTo(file.toPath()) with no lexical normalization and no check that the destination stayed inside the configured directory. The object name is not route-controlled data: the consumer lists the bucket, iterates every returned blob and creates one exchange per object from blob.getBlobId().getName() verbatim, and the filter option that could restrict those names is not applied at all unless it has been explicitly set. Google Cloud Storage object names are opaque UTF-8 keys that the service stores and lists exactly as written, with no server-side canonicalization, and a forward slash is only a display convention for pseudo-directories, so a key containing parent-directory segments survives round-tripping intact. An object name containing such segments therefore resolved to a location outside the configured downloadFileName directory, letting anyone able to influence the names present in the consumed bucket cause Camel to create or overwrite a file at a location of their choosing, with the privileges of the Camel process. Depending on what the process can write to, overwriting a file outside the download directory can escalate beyond the loss of integrity of that file. The downloadFileName option is an ordinary consumer parameter and carries no security marker, so nothing signalled to users that its value was not being enforced as a containment boundary. The defect is consumer-only; the producer has no download-to-file sink. Camel's other file-download consumers - camel-file, camel-ftp, camel-smb, camel-mina-sftp, camel-azure-files and the Azure Storage download paths - already constrained their local downloads to the configured directory using a path-segment boundary check; camel-google-storage was the remaining object-store download sink not covered by that work.
-
-
-
-Users are recommended to upgrade to version 4.22.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.9. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.4. For deployments that cannot upgrade immediately, set the filter option to a regular expression that accepts only simple single-segment object names, so that any name carrying a path separator or a parent-directory segment is excluded before an exchange is created; note that no filtering whatsoever is applied when the option is left unset, and that the expression is matched against the whole object name. Alternatively, give downloadFileName an explicit expression that does not carry the remote path through, for example one built on ${file:onlyname} rather than the implicit ${file:name}, keeping in mind that a downloadFileName containing an expression is treated as route-author-controlled and is not covered by the containment check added in the fix. As defence in depth, treat the object names in any externally writable bucket as untrusted input and do not derive local filesystem paths from them.
+Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue. Users of Apache Wicket 7.x or older, which are no longer supported, should upgrade to a supported version.
 
 Credit:
 
+Michael Mullins (finder)
 n0mi1k (finder)
-Andrea Cosentino (remediation developer)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-66907.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-66907
+https://wicket.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-70449
 
