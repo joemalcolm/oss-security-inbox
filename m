@@ -1,60 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/17/2
-Message-ID: <aoNZ67XppWoJX0Ot@yuggoth.org>
-Date: Mon, 17 Aug 2026 18:58:51 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/1
+Message-ID: <f2ed47a5-7eb2-76c7-197c-08e9c0ee8637@apache.org>
+Date: Mon, 31 Aug 2026 06:45:03 +0000
+From: Emond Papegaaij <papegaaij@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: [OSSA-2026-035] OpenStack Octavia: Unauthorized QoS policy deletion lock (CVE-2026-74248) errata 1
+Subject: CVE-2026-75802: Apache Wicket: XSS in AjaxEditableLabel and its subclasses via IChoiceRenderer and defaultNullLabel 
 Content-Type: text/plain; charset=utf-8
 
-====================================================
-OSSA-2026-035: Unauthorized QoS policy deletion lock
-====================================================
+Severity: moderate 
 
-:Date: August 13, 2026
-:CVE: CVE-2026-74248
+Affected versions:
 
-Affects
-~~~~~~~
-- Octavia: <16.0.2, ==17.0.0, ==18.0.0
+- Apache Wicket (org.apache.wicket:wicket-extensions) 8.0.0 through 8.18.0
+- Apache Wicket (org.apache.wicket:wicket-extensions) 9.0.0 through 9.23.0
+- Apache Wicket (org.apache.wicket:wicket-extensions) 10.0.0 through 10.10.0
 
-Description
-~~~~~~~~~~~
-Chen YuXiang with the Institute of Computing Technology, Chinese 
-Academy of Sciences, reported a vulnerability in Octavia quality of 
-service (QoS) policy authorization. By associating another project's 
-QoS policy with an amphora, an authenticated user may prevent 
-deletion of that policy. All Octavia deployments are affected.
+Description:
 
-Errata
-~~~~~~
-MITRE assigned CVE-2026-74248 after intial publication.
+AjaxEditableChoiceLabel in wicket-extensions, when constructed with a non-null IChoiceRenderer, writes the display value obtained from that renderer into the label's markup without applying the HTML escaping Wicket performs by default for component model values. An attacker who can influence the choice or model data rendered by such a label can inject HTML or script that executes in the browser of any user who views the page. The same value is correctly escaped when the component's dropdown editor renders it as an option, so only the label rendering is affected.
 
-Patches
-~~~~~~~
-- https://review.opendev.org/1000296 (2025.1/epoxy)
-- https://review.opendev.org/1000295 (2025.2/flamingo)
-- https://review.opendev.org/1000094 (2026.1/gazpacho)
-- https://review.opendev.org/998935 (2026.2/hibiscus (development))
+AjaxEditableLabel, AjaxEditableChoiceLabel and AjaxEditableMultiLineLabel write the value returned by the protected defaultNullLabel() method into the label's markup the same way when the component's model is empty, while the model value they show otherwise is escaped. The default implementation returns a constant, so an application is affected where it overrides that method and returns a value an attacker can influence.
 
-Credits
-~~~~~~~
-- Chen YuXiang from Institute of Computing Technology, Chinese 
-   Academy of Sciences (CVE-2026-74248)
+Neither value could be escaped by configuration, because escapeModelStrings had no effect on any of the three components: it is read by the label they render with rather than by the component itself, and nothing carried the setting across.
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2161500
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-74248
+This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases are also affected; the display value from the renderer since 6.22.0 and the null label since 1.4.0. Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
 
-OSSA History
-~~~~~~~~~~~~
-- 2026-08-17 - Errata 1
-- 2026-08-13 - Original Version
+Credit:
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
+Ho1aAs (finder)
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+References:
+
+https://wicket.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-75802
+
