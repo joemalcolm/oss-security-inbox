@@ -1,53 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/8
-Message-ID: <CADk+mPB0bhx+TdW6WyUS7Vnq6zTLQGk9ZY-ei4E0WcwtEuZe0w@mail.gmail.com>
-Date: Thu, 20 Aug 2026 13:02:27 +0200
-From: Rainer Gerhards <rgerhards@...adiscon.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/3
+Message-ID: <b7a8b5a8-0a47-7e3b-eafd-79130fd2a96e@apache.org>
+Date: Mon, 31 Aug 2026 06:44:13 +0000
+From: Emond Papegaaij <papegaaij@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: rsyslog: omfile dynaFile containment hardening (GHSA-xmp9-244p-5ggv)
+Subject: CVE-2026-76983: Apache Wicket: XSS in AutoLabelTextResolver via FormComponent.setLabel 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: moderate 
 
-rsyslog has published GHSA-xmp9-244p-5ggv covering hardening of
-dynamic filename handling in the omfile output module:
+Affected versions:
 
-https://github.com/rsyslog/rsyslog/security/advisories/GHSA-xmp9-244p-5ggv
+- Apache Wicket (org.apache.wicket:wicket-core) 8.0.0 through 8.18.0
+- Apache Wicket (org.apache.wicket:wicket-core) 9.0.0 through 9.23.0
+- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
 
-The affected area is omfile configurations that use dynaFile. Dynamic
-filenames are intentionally flexible: some established deployments
-need that flexibility, including paths that cannot be restricted to
-one static base directory. Consequently, preserving this mode is
-important for compatibility.
+Description:
 
-Historically, configurations using this flexible behavior did not
-provide a clear warning about the associated path-containment risk.
-The secure configuration mechanisms have always been documented as the
-recommended way to constrain dynamic output paths, but the legacy
-behavior remained the default to avoid silently breaking existing
-logging configurations.
+Improper neutralization of input during web page generation in Apache Wicket.
 
-The current hardening adds default lexical containment where a static
-base path can be determined, together with diagnostics and an
-explicit, per-action compatibility opt-in for configurations that
-intentionally require path escape. This provides an additional
-containment layer for users who need dynaFile flexibility; it is not
-presented as a complete filesystem sandbox.
+The <wicket:label> tag is provided by org.apache.wicket.markup.html.form.AutoLabelTextResolver, which is registered by default in every WebApplication. The resolver writes the label it finds into the markup as it is, and reads no escaping setting at all, so markup in a label is rendered as markup.
 
-For deployments where untrusted data can influence dynamic filename
-expansion, the recommended mitigation is to use the documented secure
-path options, including securepath and the secpath-drop or
-secpath-replace policies. These options are the reliable security
-boundary and should be applied by affected users. Building a
-universally complete sandbox around all legacy dynamic-path semantics
-would be difficult to do reliably and would risk breaking legitimate
-existing configurations.
+When the label comes from the labelled component's label model, set through FormComponent#setLabel(IModel), it is written to the markup unescaped. An application is affected where the label of a form component holds data an attacker can influence. Wicket cannot determine where a model value comes from, so whether it reaches the page from a request or from storage is a property of the application.
 
-The advisory intentionally avoids unnecessary reproduction details.
-The attached patch is provided for downstream maintainers.
+There is no workaround. Unlike every other rendering path in Wicket, the resolver never consulted the escape-model-strings setting, so an application had no way to ask for the label to be escaped.
 
-Regards,
-Rainer Gerhards
-rsyslog project
+The body of a <wicket:label> tag is markup by design and is not affected; it remains the supported way to place markup in a label.
 
-View attachment "0001-omfile-harden-dynafile-default-containment.patch" of type "text/x-patch" (54250 bytes)
+This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases from 1.5.0 onwards are also affected. Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
+
+Credit:
+
+Ho1aAs (finder)
+
+References:
+
+https://wicket.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-76983
+
