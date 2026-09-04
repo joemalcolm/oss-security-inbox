@@ -1,35 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/19/13
-Message-ID: <d4f1a163-e072-7ef5-96cc-c55722b09cb4@apache.org>
-Date: Fri, 19 Jun 2026 06:57:04 +0000
-From: Abhishek Choudhary <shreemaanabhishek@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/04/5
+Message-ID: <87ecf8gbr7.fsf@gentoo.org>
+Date: Fri, 04 Sep 2026 18:35:56 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49231: Apache APISIX: Identity spoofing issue in APISIX opa plugin 
+Subject: Vulnerabilities fixed in libxml2-2.15.4
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+From libxml2-2.15.4:
 
-Affected versions:
++v2.15.4: Sep 01 2026
++
++### Security
++
++- xmlregexp: Prevent out-of-bounds read in NXT macro
++- fix: add missing overflow checks in dict.c, uri.c, and valid.c
++- xmlregexp: Calc string length after null checking
++- xpointer: Check overflow in xmlXPtrEvalXPtrPart
++- xmlIO: Check for int overflow before calling writecallback
++- fix(xinclude): propagate parseFlags in xmlXIncludeProcess and xmlXIncludeProcessTree
++
++ [...]
 
-- Apache APISIX 3.5.0 through 3.16.0
+I possess no further details.
 
-Description:
+sam
 
-Authentication Bypass by Spoofing vulnerability in opa plugin.
-
-An attacker could relay spoofed identity headers to upstream capitalising on non-default configuration in opa plugin.
-
-This could allow the attacker to assume higher privileges on the upstream service.
-This issue affects Apache APISIX: from 3.5.0 through 3.16.0.
-
-Users are recommended to upgrade to version 3.17.0, which fixes the issue.
-
-Credit:
-
-lokerxxx (reporter)
-
-References:
-
-https://apisix.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-49231
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
