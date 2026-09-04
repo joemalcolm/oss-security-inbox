@@ -1,113 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/26/16
-Message-ID: <CAK=gNzqFv7qQ7Y6Nw7Na4tJX-oDFFAmOgbhipBuTt_okpCZRmg@mail.gmail.com>
-Date: Wed, 26 Aug 2026 18:22:12 +0200
-From: First name Last name <0x6675636b736f6369617479@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: graphql-go/graphql <= 0.8.1: quadratic CPU-exhaustion DoS via per-error full-document rescan (GetLocation)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/04/3
+Message-ID: <5e2dad8b-1ce5-4b13-bc9e-f75792f05c54@cpansec.org>
+Date: Fri, 4 Sep 2026 13:22:06 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-82309: Robots::Validate versions from 0.3.2 before 0.3.11 for Perl allow unbounded outbound DNS queries per validation via a forward-confirmation loop that does not bound the names it queries
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+========================================================================
+CVE-2026-82309                                       CPAN Security Group
+========================================================================
 
-This reports an algorithmic-complexity denial-of-service defect in
-github.com/graphql-go/graphql, affecting all released versions up to and
-including the latest, v0.8.1. No fixed version exists. It is
-unauthenticated, network-reachable, triggered purely by attacker-controlled
-query text, and requires no special configuration. Reproduced against the
-published v0.8.1 module fetched from the Go module proxy.
+         CVE ID:  CVE-2026-82309
+   Distribution:  Robots-Validate
+       Versions:  from 0.3.2 before 0.3.11
 
-== Affected ==
-
-  Product:  github.com/graphql-go/graphql
-  Versions: all <= v0.8.1; no fix available
-  CWE:      CWE-407 (Inefficient Algorithmic Complexity) / CWE-1050
-  CVSS:     CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H  = 7.5 (High)
+       MetaCPAN:  https://metacpan.org/dist/Robots-Validate
+       VCS Repo:  https://github.com/robrwo/Robots-Validate
 
 
-== Details ==
+Robots::Validate versions from 0.3.2 before 0.3.11 for Perl allow
+unbounded outbound DNS queries per validation via a
+forward-confirmation loop that does not bound the names it queries
 
-The helper language/location.GetLocation converts a byte offset to a
-line/column for error messages. On every call it recompiles a regexp and
-rescans the ENTIRE source document from the beginning to locate line breaks:
+Description
+-----------
+Robots::Validate versions from 0.3.2 before 0.3.11 for Perl allow
+unbounded outbound DNS queries per validation via a
+forward-confirmation loop that does not bound the names it queries.
 
-    func GetLocation(s *source.Source, position int) SourceLocation {
-        ...
-        lineRegexp := regexp.MustCompile("\r\n|[\n\r]")  // recompiled
-every call
-        matches := lineRegexp.FindAllIndex(body, -1)      // rescans whole
-body
-        ...
-    }
+_check_dns issues one PTR query for the client address, keeps the
+returned names matching the rule's domain, and issues a forward query
+for each until one resolves back to that address. Nothing bounds that
+list, and a client controls the reverse zone for its own address, so it
+chooses how many names the PTR answer holds. Net::DNS refetches a
+truncated answer over TCP by default, so the 512-byte UDP payload does
+not cap it either.
 
-GetLocation is called once per reported error from reportError (invoked by
-nearly every validation rule, once per offending element) and from
-handleFieldError during execution. Each call is O(document_size); N errors
-cost O(N * document_size). Because a query with N invalid elements is
-itself O(N) in size, total cost is O(n^2) in request size. Any rule that
-reports one error per element is a valid trigger.
+Any client whose User-Agent matches a rule with a domain reaches
+_check_dns. Each forward name is distinct and client-chosen, so every
+query misses the local cache and is resolved against the authoritative
+servers for that domain. The queries are synchronous, so the caller is
+held until all of them answer or time out.
 
+Problem types
+-------------
+- CWE-770 Allocation of Resources Without Limits or Throttling
+- CWE-405 Asymmetric Resource Consumption (Amplification)
 
-== Proof of concept ==
+Solutions
+---------
+Upgrade to Robots-Validate 0.3.11 or later.
 
-Public API; a trivial one-field schema and a query with many unused
-fragment definitions (each triggers one NoUnusedFragments validation error):
-
-    package main
-
-    import (
-        "fmt"
-        "strings"
-        "github.com/graphql-go/graphql"
-    )
-
-    func main() {
-        queryType := graphql.NewObject(graphql.ObjectConfig{
-            Name:   "Query",
-            Fields: graphql.Fields{"hello": &graphql.Field{Type:
-graphql.String}},
-        })
-        schema, _ := graphql.NewSchema(graphql.SchemaConfig{Query:
-queryType})
-
-        const N = 2000
-        var b strings.Builder
-        b.WriteString("{ hello }\n")
-        for i := 0; i < N; i++ {
-            fmt.Fprintf(&b, "fragment F%d on Query { hello }\n", i)
-        }
-        graphql.Do(graphql.Params{Schema: schema, RequestString:
-b.String()})
-    }
-
-Measured wall-clock against v0.8.1 (clean quadratic scaling, each 2x in
-error count is ~4-5x in time):
-
-    N=500  -> 0.38 s
-    N=1000 -> 1.57 s
-    N=2000 -> 8.49 s
-    N=4000 -> ~38 s   (request ~150 KB)
-
-== Impact ==
-
-A single unauthenticated request of a few hundred KB consumes many seconds
-of server CPU; a small number of concurrent such requests saturates the
-worker pool and denies service. Triggered by ordinary query text over the
-network, no authentication and no special configuration. The same path also
-runs during normal execution (handleFieldError), so a large,
-non-adversarial query in which many nullable fields error pays the same
-quadratic cost.
-
-== Remediation ==
-
-No fixed release exists. Precompute a sorted index of newline byte offsets
-per source.Source once (O(n)), cache it on the Source, and have GetLocation
-binary-search that index (O(log n)) instead of rescanning the whole
-document per call. (Hoisting regexp.MustCompile to a package-level var
-alone is insufficient, it removes recompilation but not the O(n) scan.)
-
-== Credit ==
-
-  William Carrier, independent security researcher.
-
-Sincerely,
+References
+----------
+https://github.com/robrwo/Robots-Validate/security/advisories/GHSA-6399-5qhh-48h5
+https://github.com/robrwo/Robots-Validate/commit/6426178c49ff6c440922f31a92a6feb3c661b143.patch
+https://metacpan.org/release/RRWO/Robots-Validate-v0.4.0/changes
 
