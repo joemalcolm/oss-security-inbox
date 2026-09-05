@@ -1,49 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/22/6
-Message-ID: <c0a06c34-828f-4635-9265-d700c8b2b52a@tenstral.net>
-Date: Wed, 22 Apr 2026 17:29:25 +0200
-From: Matthias Klumpp <matthias@...stral.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/05/3
+Message-ID: <apvE4ugnjS0YiqgK@eldamar.lan>
+Date: Sat, 5 Sep 2026 09:29:38 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-41651: TOCTOU vulnerability in PackageKit <= 1.3.4 leads to local root exploit
+Subject: Re: pcre2 version 10.48 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hello everyone!
+Hi,
 
-I am the maintainer of PackageKit, a D-Bus abstraction layer for 
-distribution package management that is commonly used on non-atomic 
-(Linux) desktop distributions, as well as some servers running 
-management software that make use of it.
+On Fri, Sep 04, 2026 at 04:25:51PM -0700, Alan Coopersmith wrote:
+> https://github.com/PCRE2Project/pcre2/blob/pcre2-10.48/NEWS reports:
+> > Version 10.48 31-August-2026
+> > ----------------------------
+> > 
+> > This is a regular release, incorporating security fixes along with small
+> > improvements and fixes to library behaviour.
+> > 
+> > Only changes to behaviour, changes to the API, and other significant changes
+> > are described here. Please see the ChangeLog and Git log for further details.
+> > 
+> > As well as the tarball and Git tag for this release, there are detailed
+> > instructions for backporting security and correctness fixes, for the last
+> > five years of releases.
+> > 
+> > * (Git change) Renamed the default development branch from master to main.
+> > 
+> > * (Maintenance change) Added a five-year support lifecycle policy and
+> > publication of backport patches for security and high-severity fixes in older
+> > releases.
+> > 
+> > * (Security fix for very specific API usage, GHSA-2p8c-ff85-vh9x) If
+> > pcre2_jit_compile() is called with options for some match modes, and then
+> > pcre2_match() is used to perform a match for a different match mode, an
+> > out-of-bounds read can occur if the match is attempted against invalid UTF input.
+> > 
+> > * (Security fix for pattern conversion, GHSA-q8g2-wprr-34m9) If pcre2_convert()
+> > is called on untrusted input on platforms with 32-bit size_t, an out-of-bounds
+> > heap write can occur.
+> > 
+> > * (Security fix, GHSA-3r4p-g7gg-ppmf) Fixed an out-of-bounds write in DFA
+> > matching when using a heap limit; also fixed possible integer overflows which
+> > could cause under-allocation of the workspace.
+[...]
+> None seem to have CVE id's assigned at this time.
 
-A vulnerability was reported to the project by Deutsche Telekom’s Red 
-Team that allows the user to install/remove arbitrary packages, leading 
-to a local root exploit on most systems.
+This one got CVE-2026-86145, but so far not the others I think.
 
-Distributors were informed in advance (directly and via distros@), so 
-fixed packages should be available already. Assume all versions of 
-PackageKit <= 1.3.4 that were not patched are vulnerable.
+For tracking downstream fixes defintively it would be more helpful to
+have a CVE identifier assigned sooner, but right now as we know many
+of the CNAs in scope for products have huge backlogs.
 
-This patch resolves the issue:
-https://github.com/PackageKit/PackageKit/commit/76cfb675fb31acc3ad5595d4380bfff56d2a8697
-
-PackageKit 1.3.5 which resolves this issue was released today as well, 
-with the embargo lift.
-
-For further information on the issue, the security researchers published 
-a blog post:
-https://github.security.telekom.com/2026/04/pack2theroot-linux-local-privilege-escalation.html
-
-A GHSA is also available at: 
-https://github.com/PackageKit/PackageKit/security/advisories/GHSA-f55j-vvr9-69xv
-
-We are currently intentionally light on details, to give users some time 
-to update their systems before this issue is actively exploited. So, 
-expect a detailed vulnerability report soon (the blog post will be 
-updated in that case).
-
-The patch that fixes the issue is already a huge tell though, so please 
-make sure your users receive the update soon (or update yourself), to 
-ensure this is fixed before anyone actively exploits the issue.
-
-With kind regards,
-     Matthias Klumpp
-
+Regards,
+Salvatore
