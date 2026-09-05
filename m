@@ -1,35 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/06/15
-Message-ID: <7ba32f4d-458c-e61d-2759-d306ad574f33@apache.org>
-Date: Mon, 06 Jul 2026 09:23:54 +0000
-From: Federico Mariani <fmariani@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/05/2
+Message-ID: <apvDY4zzw-eAgE_7@eldamar.lan>
+Date: Sat, 5 Sep 2026 09:23:15 +0200
+From: Salvatore Bonaccorso <carnil@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-46587: Apache Camel: Couchbase: Non-Camel-prefixed Exchange headers bypass HeaderFilterStrategy allowing operation override from untrusted input 
+Subject: Re: Vulnerability fixes in util-linux-2.42.3
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hi,
 
-Affected versions:
+On Fri, Sep 04, 2026 at 06:38:13PM +0100, Sam James wrote:
+> +util-linux 2.42.3 Release Notes
+> +===============================
+> +
+> +Security fixes:
+[...]
+> + CVE-2026-78408 - nsenter(1), unshare(1) file descriptor leak.
+> +   File descriptors in nsenter and unshare were not created with
+> +   O_CLOEXEC, potentially leaking them across exec.  Added O_CLOEXEC
+> +   as defense in depth.
 
-- Apache Camel through 4.14.7
-- Apache Camel 4.15.0 through 4.18.2
-- Apache Camel 4.19.0 through 4.20.0
+Note this needs a followup fix in the stable branches:
+https://github.com/util-linux/util-linux/commit/286dd3ff41526b582ef48830de239dffbaa61f90
 
-Description:
-
-Improper Input Validation vulnerability in Apache Camel.
-
-This issue affects Apache Camel: through 4.14.7, from 4.15.0 through 4.18.2, from 4.19.0 through 4.20.0.
-
-Users are recommended to upgrade to version 4.14.8, 4.18.3, 4.21.0, which fixes the issue.
-
-Credit:
-
-Yu Bao - yubao@...pal.com, who works for paypal.com. (reporter)
-
-References:
-
-https://camel.apache.org/security/CVE-2026-46587.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-46587
-
+Regards,
+Salvatore
