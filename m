@@ -1,62 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/22/5
-Message-ID: <de046635-08a6-4cee-b319-84508fec15cb@beuc.net>
-Date: Mon, 22 Jun 2026 11:26:17 +0200
-From: Sylvain Beucler <beuc@...c.net>
-To: oss-security@...ts.openwall.com
-Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/07/2
+Message-ID: <1e7caa35-92c5-4cc4-848e-6e5e12df7103@cpansec.org>
+Date: Mon, 7 Sep 2026 19:40:48 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-16028: Protocol::HTTP2 versions before 1.14 for Perl allow memory exhaustion via closed streams that stream_state never removes from the connection stream table
 Content-Type: text/plain; charset=utf-8
 
-Hello Jeremy,
+========================================================================
+CVE-2026-16028                                       CPAN Security Group
+========================================================================
 
-On 18/06/2026 18:33, Jeremy Stanley wrote:
-> On 2026-06-18 15:11:47 +0200 (+0200), Sylvain Beucler wrote:
-> [...]
->> I skim through the oss-security posts as part of CVE triaging for 
->> Debian Long Term Support.
->>
->> I'd rather see projects group their notifications by release (which is 
->> when we usually have to act in the distros), as Alexander suggested, 
->> instead of sending them individually / automatically.
->> For example, I don't need 10 notifications for a single project 
->> release that we don't even package at Debian.
-> [...]
-> 
-> I suppose it depends on the project's practices. For some projects in 
-> which I'm involved doing upstream vulnerability coordination, we already 
-> notify popular distributions with advance copies of the fixes prior to 
-> publishing any advisory, and our public advisories initially link to 
-> patches that in many cases are not even merged into upstream revision 
-> control yet much less included in a release.
-> 
-> Our release process in those projects is predictable but asynchronous 
-> and entirely disconnected from vulnerability management and even the 
-> merging of the fixes themselves, so our advisories speculatively imply 
-> the predicted version numbers for releases in which the fixes are 
-> expected to eventually be included, but those releases may not occur for 
-> days or weeks after advisory publication occurs.
-> 
-> The distributions I'm familiar with don't wait until there's an official 
-> release including the fix, but instead apply the fixes to their copies 
-> of our source trees (backporting or otherwise adapting them as 
-> necessary) in order to be able to distribute patched packages in tandem 
-> with the publication of our advisories.
+         CVE ID:  CVE-2026-16028
+   Distribution:  Protocol-HTTP2
+       Versions:  before 1.14
 
-Interesting.
+       MetaCPAN:  https://metacpan.org/dist/Protocol-HTTP2
+       VCS Repo:  https://github.com/vlet/p5-Protocol-HTTP2
 
-This seems like an embargo-like workflow, usually for high/critical 
-CVEs, which I believe won't involve sending notifications to this public 
-list (though maybe to the private linux-distros@).
 
-I was following-up about the common, lighter workflow in which a project 
-registers some non-critical CVEs, publish a release along with a public 
-announcement here, and let all distros get notified through triaging 
-said new CVEs. Which contributes to the mass of notifications we may 
-want to split to a separate list, or may want to regroup (my point).
+Protocol::HTTP2 versions before 1.14 for Perl allow memory exhaustion
+via closed streams that stream_state never removes from the connection
+stream table
 
-If grouping by release still feels impractical, we can also encourage 
-grouping by date, e.g. avoid 10 posts in a row for the same project.
+Description
+-----------
+Protocol::HTTP2 versions before 1.14 for Perl allow memory exhaustion
+via closed streams that stream_state never removes from the connection
+stream table.
 
-Cheers!
-Sylvain Beucler
-Debian LTS Team
+When a stream reaches the CLOSED state, stream_state returns the
+concurrency slot and clears most of the stream's keys, but the entry
+itself stays in the connection stream table and nothing in the
+distribution removes it. Stream identifiers increase monotonically, so
+a peer can open and close streams on one connection indefinitely, each
+close leaving a residual entry that is retained for the life of the
+connection.
+
+SETTINGS_MAX_CONCURRENT_STREAMS does not bound this. That setting caps
+how many streams are live at once and is enforced, while the growth is
+made of streams the cap has already released, so it accumulates with
+concurrency never exceeding one. The client keeps the same table and
+grows the same way against a hostile server.
+
+Measured against a server built on this module, roughly 920 bytes are
+retained per closed stream for about 19 bytes on the wire, so 100,000
+sequential streams on one connection grow server resident memory by
+about 88 MiB. The streams are ordinary requests that the application
+accepts and completes.
+
+Problem types
+-------------
+- CWE-401 Missing Release of Memory after Effective Lifetime
+
+Workarounds
+-----------
+For deployments that are not able to upgrade to Protocol-HTTP2 1.14,
+close each connection after a fixed number of requests, which discards
+its stream table.
+
+Solutions
+---------
+Upgrade to Protocol-HTTP2 1.14 or later.
+
+References
+----------
+https://metacpan.org/release/CRUX/Protocol-HTTP2-1.13/source/lib/Protocol/HTTP2/Stream.pm#L113-126
+https://github.com/vlet/p5-Protocol-HTTP2/commit/27a488a34d74fd16f123e5e6186d4f677faa246f.patch
+https://metacpan.org/release/CRUX/Protocol-HTTP2-1.14/changes
+
+
+
