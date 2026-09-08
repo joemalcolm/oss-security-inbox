@@ -1,59 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/16/4
-Message-ID: <f4262b7b-4488-4ad1-867a-c965f2bc3cfb@cpansec.org>
-Date: Sun, 16 Aug 2026 14:52:26 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-72888: Net::OAuth versions before 0.32 for Perl allow memory exhaustion via unbounded caching of failed module loads in smart_require
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/19
+Message-ID: <aqBzcUxtFU-ewErk@codewreck.org>
+Date: Wed, 9 Sep 2026 05:43:29 +0900
+From: Dominique Martinet <asmadeus@...ewreck.org>
+To: oss-security@...ts.openwall.com
+Subject: Re: Linux kernel LPEs: ZcopyReaper (CVE-2026-43502) and 20 more
 Content-Type: text/plain; charset=utf-8
 
+Dr. Thomas Orgis wrote on Tue, Sep 08, 2026 at 06:52:03PM +0200:
+> Do we need an LLM agent to dig through the reports and give a summary
+> where the vulnerabilities lie and what the mitigation would be?
 
-========================================================================
-CVE-2026-72888                                       CPAN Security Group
-========================================================================
+There are quite a few, but unlike the recent similar poc releases they
+were nice enough to wait a bit, so a quick look through the kernel
+vulns repo[1] will show that they're almost all fixed in most stable
+kernels.
 
-         CVE ID:  CVE-2026-72888
-   Distribution:  Net-OAuth
-       Versions:  before 0.32
+[1] https://git.kernel.org/pub/scm/linux/security/vulns.git/
 
-       MetaCPAN:  https://metacpan.org/dist/Net-OAuth
-       VCS Repo:  https://github.com/vurtdev/Net-OAuth
+Looking at cve/published/2026/*.mbox, for the last four you handpicked:
 
+> === Linux-CVE-2026-43502-openSUSE-6.4.0-150600 ===
 
-Net::OAuth versions before 0.32 for Perl allow memory exhaustion via
-unbounded caching of failed module loads in smart_require
+CVE-2026-43502: net/rds: handle zerocopy send cleanup before the message
 
-Description
------------
-Net::OAuth versions before 0.32 for Perl allow memory exhaustion via
-unbounded caching of failed module loads in smart_require.
+introduced in 4.17, fixed in all stable trees
 
-smart_require stores results in a process-global hash with no bound and
-no eviction, and keeps an entry for every class name it is asked about,
-including names that failed to load, because the return value of the
-failed eval is stored before the error is checked. The key comes off
-the wire on the server side: _signature_method_class builds the class
-name from the signature_method parameter of the incoming message, and
-verify resolves it before any signature is checked.
+> === Linux-CVE-2026-52929-Ubuntu-7.0.0-28 ===
 
-A remote client chooses both how many entries are created and how long
-each key is. In a persistent server the hash grows for the life of the
-worker process until it exhausts memory. Header size limits bound the
-key length on the Authorization header path, but not on a POST body.
+CVE-2026-52929: sctp: stream: fully roll back denied add-stream state
 
-Problem types
--------------
-- CWE-770 Allocation of Resources Without Limits or Throttling
+4.15+, also fixed
 
-Solutions
----------
-Upgrade to Net-OAuth 0.32 or later.
+> === Linux-CVE-2026-52933-Fedora-6.19.10-300 ===
 
-References
-----------
-https://github.com/vurtdev/Net-OAuth/security/advisories/GHSA-m2cv-cq5x-47ph
-https://github.com/vurtdev/Net-OAuth/commit/ee713fc96263c70b3b9a5280612618b474576f8f.patch
-https://metacpan.org/release/RRWO/Net-OAuth-0.32/changes
+CVE-2026-52933: io_uring/poll: fix signed comparison in io_poll_get_ownership()
+
+6.1+, also fixed
+
+> === Linux-CVE-2026-72137-ubuntu-7.0.0-28 ===
+
+CVE-2026-72137: xfrm: nat_keepalive: avoid double free on send error
+
+6.11+, also fixed
 
 
 
+FWIW, the ones that aren't fixed yet are:
+- 'CVE-2026-72255: netfilter: nf_queue: pin bridge device while NFQUEUE
+holds fake dst' was missing 5.10, someone already sent a patch
+
+- 'CVE-2026-43042: mpls: add seqcount to protect the platform_label{,s}
+pair' is missing 4.1(so 5.10) ~ 6.18 (only 6.19+ fixed); I tried backporting it
+but that code changed too much, I'm not sure the Fixes commit was
+correctly identified but conversely the prereqs added locks so one could
+argue that older code was maybe even worse?
+I'm not sure, but MPLS is low level network stuff and likely needs a net
+namespace as your grep showed
+(there are multiple mpls modules, this CVE apparently affects the
+`mpls_router` module looking at which files the fix touched)
+
+- 'CVE-2026-31678: openvswitch: defer tunnel netdev_put to RCU release'
+is missing 4.3(5.10) ~ 6.0 (6.1+ fixed). OVS is disabled for our kernel
+so I didn't look deeper but openvswitch is likely to be built as a
+module and definitely needs network namespaces.
+
+
+
+Cheers(?),
+-- 
+Dominique Martinet | Asmadeus
