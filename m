@@ -1,73 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/25/7
-Message-ID: <885015e228d3315a9086438952656fbc@cpansec.org>
-Date: Tue, 25 Aug 2026 18:24:59 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-78655: Punk::Plugin::TOTP versions before 0.05 for Perl allow the second-factor attempt limit to be reset by replaying an earlier session cookie because the challenge route counts failures in the session
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/11
+Message-ID: <CAE+PnUGpb1h16kRF+NJuHE54UfDTSaEa1+dOqmmx+xTmV8SxHw@mail.gmail.com>
+Date: Tue, 8 Sep 2026 15:36:12 +0300
+From: Gidon Gershinsky <gg5070@...il.com>
+To: dev@...quet.apache.org, n0mi1k Security <nomilksec@...il.com>,  ASF Security <security@...che.org>, oss-security@...ts.openwall.com
+Subject: CVE-2026-73334: Apache Parquet Hadoop: File-controlled KMS URL is forwarded to pluggable KmsClient that skips host validation
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-78655                                       CPAN Security Group
-========================================================================
+Severity: moderate
 
-         CVE ID:  CVE-2026-78655
-   Distribution:  Punk-TOTP
-       Versions:  before 0.05
+Affected versions:
 
-       MetaCPAN:  https://metacpan.org/dist/Punk-TOTP
+- Apache Parquet Hadoop (org.apache.parquet.crypto.keytools:parquet-hadoop)
+1.12 through 1.18.0
 
+Description:
 
-Punk::Plugin::TOTP versions before 0.05 for Perl allow the
-second-factor attempt limit to be reset by replaying an earlier session
-cookie because the challenge route counts failures in the session
+Potential vulnerability in the org.apache.parquet.crypto.keytools package
+in Apache parquet-java, versions 1.12 to 1.18.0
+This package helps users encrypt Parquet files via an envelope encryption
+mechanism that wraps (encrypts) data keys via a Key Management Service
+(KMS).
+If an optional KMS URL parameter is set by the writer application, it is
+stored in a file. On the reader side, the KMS URL can be
+application-controlled, or file-controlled, or ignored. If a reader does
+not leverage application control for this parameter, a file-controlled KMS
+URL is forwarded to a pluggable KmsClient implementation.
+If the pluggable implementation does not ignore the URL and does not
+perform host validation, a KMS token can be sent to a malicious host
+specified by an attacker in the file.
 
-Description
------------
-Punk::Plugin::TOTP versions before 0.05 for Perl allow the
-second-factor attempt limit to be reset by replaying an earlier session
-cookie because the challenge route counts failures in the session.
+Mitigation:
 
-The POST handler on challenge_path keeps the failure count as tries
-inside the totp_pending record in the session, raising it on each
-rejected code and deleting the pending record once it reaches attempts,
-five by default. Punk::Session carries the session in a signed cookie
-unless the application declares a store, and keeps no server-side
-record, so an earlier value of the same session stays valid until the
-expiry stamped inside it. A client that saves the cookie before its
-failed attempts and presents it again gets the pending record back with
-its counter, and the limit never fires. The replayed record is accepted
-while its own expiry, pending_ttl seconds from the challenge and 300 by
-default, has not passed.
+Applications that make use of the KMS URL parameter are required, where
+possible, to leverage the application control for this parameter when
+reading files with any parquet-java version (1.12 and above). If
+application control is not possible, users are required to validate the
+file-controlled KMS URL and use authentication in their custom KmsClient
+implementations.
+Parquet-java version 1.18.1 disables file-controlled KMS URLs by default,
+and introduces a new application parameter that allows them to be enabled.  The
+documentation for the new parameter explicitly requires validating the KMS
+URL and using authentication in custom KmsClient implementations.
 
-Sessions declared with a store are not affected: the pending record and
-its counter then live server-side.
+Credit:
 
-The attempt limit does not bound guessing of the second factor, which
-is left to the per-address rate limit the plugin registers on the same
-path, 30 requests per 60 seconds.
+Reported by n0mi1k
 
-Problem types
--------------
-- CWE-307 Improper Restriction of Excessive Authentication Attempts
-- CWE-642 External Control of Critical State Data
+References:
 
-Workarounds
------------
-For deployments that cannot upgrade to 0.05, declare the session
-keyword with a store, which needs a Punk::Cache backend shared between
-workers. The cookie then carries only an opaque id and the counter is
-out of the client's reach.
+https://parquet.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73334
 
-Solutions
----------
-Upgrade to Punk-TOTP 0.05 or later, and add the two columns the count
-is kept in to the user table (totp_failed and totp_failed_at by
-default, named by fields).
-
-References
-----------
-https://metacpan.org/release/LNATION/Punk-TOTP-0.04/source/include/ptotp/ptotp_plugin.h
-https://metacpan.org/release/LNATION/Punk-TOTP-0.04/view/lib/Punk/Plugin/TOTP.pm
-https://metacpan.org/release/LNATION/Punk-0.32/view/lib/Punk/Session.pm
-https://metacpan.org/release/LNATION/Punk-TOTP-0.05/source/Changes
