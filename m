@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/25/2
-Message-ID: <207ffd7a-8f43-dc1b-e2b5-9b607db021d9@apache.org>
-Date: Sat, 25 Apr 2026 16:59:13 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/24
+Message-ID: <eef0476e-e251-e4f0-bce0-ac259bebe5e0@apache.org>
+Date: Tue, 08 Sep 2026 20:57:36 +0000
+From: Michael Smith <michaelsmith@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-40557: Apache Storm Prometheus Reporter: Disabling TLS verification for Prometheus Reporter also disables it for all other connections 
+Subject: CVE-2026-65181: Apache Impala: RCE via External Data Source Class Loading 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Storm Prometheus Reporter (org.apache.storm:storm-metrics-prometheus) 2.6.3 before 2.8.7
+- Apache Impala 2.7.0 through 4.5.1
 
 Description:
 
-Improper Certificate Validation via Global SSL Context Downgrade in Apache Storm Prometheus Reporter
-
-
-Versions Affected: from 2.6.3 to 2.8.6
-
-
-Description: 
-
-In production deployments where an administrator enables storm.daemon.metrics.reporter.plugin.prometheus.skip_tls_validation (by default it is disabled) intending to affect only the Prometheus reporter, the undocumented global side effect creates an attack surface across every TLS-protected communication channel in the Storm daemon.
-
-
-The PrometheusPreparableReporter class implements an INSECURE_TRUST_MANAGER that accepts all SSL certificates without validation, with empty checkClientTrusted and checkServerTrusted methods. Most critically, when the storm.daemon.metrics.reporter.plugin.prometheus.skip_tls_validation configuration option is enabled (default = disabled) for HTTPS Prometheus PushGateway connections, the INSECURE_CONNECTION_FACTORY calls SSLContext.setDefault(sslContext), which globally replaces the JVM's default SSL context rather than applying the insecure context only to the Prometheus connection. This payload flows through storm.yaml configuration → PrometheusPreparableReporter.prepare() → INSECURE_CONNECTION_FACTORY → SSLContext.setDefault(), resulting in a JVM-wide TLS security downgrade. All subsequent HTTPS connections in the process - including ZooKeeper, Thrift, Netty, and UI connections - silently trust all certificates, including self-signed, expired, and attacker-generated ones, enabling man-in-the-middle interception of cluster state, topology submissions, tuple data, and administrative credentials.
-
-
-
-
-Mitigation: 2.x users should upgrade to 2.8.7 if the Prometheus Metrics Reporter is used. Prometheus Metrics Reporter Users who cannot upgrade immediately should remove the storm.daemon.metrics.reporter.plugin.prometheus.skip_tls_validation: true setting from their storm.yaml configuration and instead configure a proper truststore containing the PushGateway's certificate.
+Insufficient authorization of Data Source tables in Impala 2.7-4.5 allows a client with privileges to upload a file to remote storage and create a table to execute arbitrary Java code.
+Users are recommended to upgrade to version 4.5.2, which fixes this issue.
 
 Credit:
 
-K (finder)
+zhaokaifei ChinaTelecom (reporter)
 
 References:
 
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-40557
+https://impala.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-65181
 
