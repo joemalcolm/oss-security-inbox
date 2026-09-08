@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/7
-Message-ID: <39c19d9d-a66f-9164-b0bb-4c549a581151@apache.org>
-Date: Thu, 06 Aug 2026 08:53:34 +0000
-From: Alexandre Dutra <adutra@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/22
+Message-ID: <b346787c-81b4-984e-7e4c-96ad88772ab8@apache.org>
+Date: Tue, 08 Sep 2026 20:49:03 +0000
+From: Michael Smith <michaelsmith@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-64640: Apache Polaris: register endpoint reads attacker-controlled storage location before allowed-locations validation 
+Subject: CVE-2026-56207: Apache Impala: SAML authentication bypass via forged bearer token 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: critical 
 
 Affected versions:
 
-- Apache Polaris (org.apache.polaris:polaris-runtime-service) through 1.6.0
+- Apache Impala 4.0.0 through 4.5.1
 
 Description:
 
-Apache Polaris did not consistently validate storage locations supplied during table and view registration.
-
-An authenticated principal with permission to register a table or view could, depending on the affected release and registration path, cause Polaris to use the catalog's storage credentials to read a caller-selected Iceberg metadata file before verifying that the file was within the catalog's allowed storage locations.
-
-If the catalog's underlying credentials could read an object outside that boundary, this could disclose limited information from the object.
+Signature of Bearer token is not verified in last step of SAML2 authentication for Impala's hs2-http interface, allowing altering user name and acting as another user.
 
 
-Polaris could also accept registration metadata located within an allowed location that contained references to storage locations outside the allowed boundary.
 
-This second condition did not itself cause Polaris to read the referenced external locations during registration.
-
-
-The demonstrated impact is limited to confidentiality.
-
-No unauthorized data modification or availability impact has been demonstrated.
+This issue affects Apache Impala: >=4.0.0.
 
 
-The server-side read requires a deployment using S3 credential vending and an object outside the allowed locations that the catalog's underlying storage credentials can read.
 
-Exploitation requires an authenticated principal with table- or view-registration privileges.
+Users are recommended to upgrade to version 4.5.2, which fixes this issue.
 
 Credit:
 
-Andrea Cosentino (finder)
+Andrew Rukin (Arenadata) (reporter)
 
 References:
 
-https://polaris.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-64640
+https://impala.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-56207
 
