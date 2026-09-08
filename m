@@ -1,115 +1,126 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/11
-Message-ID: <69961bd7-bd21-4ede-b000-cdba3333515f@jvf.cc>
-Date: Tue, 16 Jun 2026 13:49:14 -0700
-From: Jay Faulkner <jay@....cc>
-To: oss-security@...ts.openwall.com
-Subject: [OSSN-0100] Ironic: Command Injection in IPA (CVE-2026-43003)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/8
+Message-Id: <E1x3uVJ-00GkHd-0R@xenbits.xenproject.org>
+Date: Tue, 08 Sep 2026 12:00:45 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 511 v3 (CVE-2026-79603) - Unconditionally do TLB flushing ahead of page scrubbing
 Content-Type: text/plain; charset=utf-8
 
-Command Injection in IPA via chroot Execution of Tenant-Controlled binaries
----
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-### Summary ###
-Tuomo Tanskanen (Ericsson Software Technology) and Dmitry Tantsur (Red Hat)
-from the Metal3.io Security Team reported a vulnerability in Ironic Python
-Agent (IPA) when deploying a partition image that lacks boot artifacts.
-A malicious partition image can include crafted grub-install
-binary or other arbitrary binaries in the chroot path which IPA executes on
-the provisioning network host. This affects all partition images that
-require Ironic to manage the bootloader installation (BIOS-booted nodes
-without boot artifacts).
+            Xen Security Advisory CVE-2026-79603 / XSA-511
+                               version 3
 
-The practical impact is limited; the attacker needs the ability to supply a
-partition image for bare-metal deployment and at the point of exploitation,
-IPA holds only an outdated agent_token and a heavily redacted node object.
+        Unconditionally do TLB flushing ahead of page scrubbing
 
-Whole disk images are not affected and partition images that include their
-own EFI boot artifacts at /boot and /efi are also not affected as Ironic
-copies them without executing grub-install.
+UPDATES IN VERSION 3
+====================
 
-### Affected Services / Software ###
-- ironic: <29.0.6, >=30.0.0 <32.0.2, >=33.0.0 <35.0.2, >=36.0.0 <37.0.0
-- ironic-python-agent: <10.2.3, >=11.0.0 <11.2.1, >=11.3.0 <11.5.1
+Public release.
 
-### Discussion ###
-As it is not feasible to secure execution of a bootloader install binary
-due to technical limitations, the Ironic team has chosen to make this 
-feature
-optional and disabled by default in the current development version.
+ISSUE DESCRIPTION
+=================
 
-Backported versions of this change do not enable this restriction by default
-to avoid breaking existing installations.
+x86 PV guests can free memory pages while still keeping a stale TLB entry
+pointing to them.  A TLB flush is only issued by Xen (if needed) when the
+page is re-used.  Since it's possible for the page to be scrubbed ahead of
+the TLB flush, there's a window where a PV guest can modify an already
+scrubbed page.
 
-The vulnerable code path has existed for the entirety of the history of 
-Ironic
-Python Agent, however, there are safeguards in place to prevent 
-escalation of
-privileges from the provisioning network. Additionally, prior to Ironic
-17.0.0, only cloud administrators could supply images for deployment, 
-limiting
-the impact of this issue.
+IMPACT
+======
 
-### Recommended Actions ###
-Apply the provided Ironic and Ironic-Python-Agent patches.
+Deployments using `xsm=silo scrub-domheap` with the aim of not allowing the
+exchange of information amongst guests are not effective in the presence of
+PV guests.
 
-Evaluate your use cases; flip ``CONF.agent.enable_bios_bootloader_install``
-to ``False`` on Ironic conductors once confirming you are not using any
-partition images relying on a bootloader installation.
+VULNERABLE SYSTEMS
+==================
 
-#### Patches ####
-The following reviews contain the fix for this issue:
+All Xen versions from 4.13 onwards are vulnerable.  Xen versions 4.12 and
+earlier are not vulnerable as they lack the `scrub-domheap` command line
+option.
 
-##### Ironic #####
-2026.2/hibiscus (development): 
-https://review.opendev.org/c/openstack/ironic/+/990724
-2026.1/gazpacho: https://review.opendev.org/c/openstack/ironic/+/991179
-2025.2/flamingo: https://review.opendev.org/c/openstack/ironic/+/993685
-2025.1/epoxy: https://review.opendev.org/c/openstack/ironic/+/993684
-2024.1/caracal (unmaintained): 
-https://review.opendev.org/c/openstack/ironic/+/993686
-2023.1/antelope (unmaintained): 
-https://review.opendev.org/c/openstack/ironic/+/993687
-bugfix/33.0: https://review.opendev.org/c/openstack/ironic/+/993682
-bugfix/34.0: https://review.opendev.org/c/openstack/ironic/+/993683
-bugfix/37.0: Ironic 37.0.0 is not vulnerable.
+Only x86 PV guests can exploit the vulnerability.
 
-##### Ironic Python Agent #####
-2026.2/hibiscus (development): 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/987391
-2026.1/gazpacho: 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993016
-2025.2/flamingo: 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993020
-2025.1/epoxy: 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993024
-2024.1/caracal (unmaintained): 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993025
-2023.1/antelope (unmaintained): 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993026
-bugfix/11.3: 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993464
-bugfix/11.4: 
-https://review.opendev.org/c/openstack/ironic-python-agent/+/993463
-bugfix/11.6: IPA 11.6.0 is not vulnerable.
+MITIGATION
+==========
 
-### Credits ###
-Dmitry Tantsur, Red Hat
-Tuomo Tanskanen, Ericsson Software Technology
-Metal3.io Security Team
+There is no known mitigation.
 
-### Contacts / References ###
-Authors:
-- Jay Faulkner, G-Research Open Source Software (GR-OSS)
+CREDITS
+=======
 
-This OSSN: https://wiki.openstack.org/wiki/OSSN/OSSN-0100
-Original Launchpad bug: 
-https://bugs.launchpad.net/ironic-python-agent/+bug/2148310
-Mailing List : [security-sig] tag on openstack-discuss@...ts.openstack.org
-OpenStack Security : https://security.openstack.org/
-CVE: CVE-2026-43003
+This issue was discovered by Roger Pau Monné of AMD.
 
+RESOLUTION
+==========
 
-Download attachment "OpenPGP_0x6B75D939B424C6D4.asc" of type "application/pgp-keys" (6373 bytes)
+Applying the appropriate attached patch resolves this issue.
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa511.patch           xen-unstable - Xen 4.22.x
+xsa511-4.21.patch      Xen 4.21.x
+xsa511-4.20.patch      Xen 4.20.x
+xsa511-4.19.patch      Xen 4.19.x
+xsa511-4.18.patch      Xen 4.18.x - Xen 4.17.x
+
+$ sha256sum xsa511*
+ba3731960983ef88836f96655f917abb25447eab69fda1d9cf7f4e8203138403  xsa511.patch
+c05a2d9fb391739a9ed39aa9247be264eb039bdac74f2db3b51e20199e6234cd  xsa511-4.18.patch
+9653110b3e82ea5c28185d436b22231f39d6e875712a7c9c6882d8cb1bd0d406  xsa511-4.19.patch
+0a475b8622d867210346612c5f97a9c3b7b638de2704d51fbd86317b6b11a840  xsa511-4.20.patch
+61aa358aef962a1e4dda3dd45cac7436e395362e9b5f9314ad3c60d39231cb97  xsa511-4.21.patch
+$
+
+DEPLOYMENT DURING EMBARGO
+=========================
+
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
+
+But: Distribution of updated software is prohibited (except to other
+members of the predisclosure list).
+
+Predisclosure list members who wish to deploy significantly different
+patches and/or mitigations, please contact the Xen Project Security
+Team.
+
+(Note: this during-embargo deployment notice is retained in
+post-embargo publicly released Xen Project advisories, even though it
+is then no longer applicable.  This is to enable the community to have
+oversight of the Xen Project Security Team's decisionmaking.)
+
+For more information about permissible uses of embargoed information,
+consult the Xen Project community's agreed Security Policy:
+  http://www.xenproject.org/security-policy.html
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmqf98YMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZf6EH/3BoQ+95hSDLUYJzmWNdjdqwYpyrWe1RaMcXWfuM
+DuvbkEd6SIrtkhEmO8ZHSiBm2g5v9/SyXrm0L4NZ2+LcZWbOAx0PK9D3DOjpIZk2
+LpQJg75GPWLkBZ62vgZlCzcXa0opVNSrmnJvYimoHvdplMpFQOhd7Ve3988XCx1G
+Mb7tKeQ7IdgAW0P/gMTGpunGL9dF58N2d8H5qbp5695tneszzW1UtAVB+4BxlEuh
+WenQ1hJVtEWznRTYvaEJ7v6CYBoY7TmeYkpZviGhTj8cuTWguMNrKuSitPkRNJ+P
+OLIQ/pz3E6PGhJxXWw8BpjkDzHf9ETACu1g+sa+18z6/+1o=
+=/FMW
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa511.patch" of type "application/octet-stream" (7746 bytes)
+
+Download attachment "xsa511-4.18.patch" of type "application/octet-stream" (6527 bytes)
+
+Download attachment "xsa511-4.19.patch" of type "application/octet-stream" (6377 bytes)
+
+Download attachment "xsa511-4.20.patch" of type "application/octet-stream" (7748 bytes)
+
+Download attachment "xsa511-4.21.patch" of type "application/octet-stream" (7754 bytes)
