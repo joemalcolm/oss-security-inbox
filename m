@@ -1,69 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/24/2
-Message-ID: <8d24df5b-42b3-40bd-b13d-31193d108968@greenbone.net>
-Date: Wed, 24 Jun 2026 11:38:39 +0200
-From: Christian Fischer <christian.fischer@...enbone.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/5
+Message-ID: <204115ac-37b6-fdc7-eeea-217a74743d2f@apache.org>
+Date: Tue, 08 Sep 2026 10:37:49 +0000
+From: Sebastian Nagel <snagel@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Squid CVE-2026-47729 and CVE-2026-50012
+Subject: CVE-2026-41871: Apache Nutch: Unauthenticated reflection-based job execution in Nutch Server (Nutch REST API) 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: important 
 
-On 6/22/26 8:35 AM, Salvatore Bonaccorso wrote:
-> Hi Amos,
-> 
-> On Mon, Jun 15, 2026 at 11:26:10PM +1200, Amos Jeffries wrote:
->> On 12/06/2026 20:21, Amos Jeffries wrote:
->>> Hi all,
->>>
->>> Squid 7.6 release contains fixes for and releases the embargo on
->>> CVE-2026-47729 and CVE-2026-50012.
->>>
->>
->> Apologies, this first one (CVE-2026-47729) embargo is over, but the fix will
->> actually be in Squid 7.7.
->>
->>>
->>> CVE-2026-47729
->>>
->>> Due to a Improper Validation of Syntactic Correctness of Input
->>> bug, Squid is vulnerable to a Out-of-bounds Read
->>> attack against the FTP gateway.
->>>
->>> This problem allows a trusted client to perform an Out-of-Bounds
->>> Read from random unrelated transactions when accessing a
->>> misbehaving FTP server through Squid's gateway feature.
->>>
->>> <https://github.com/squid-cache/squid/
->>> commit/865a131c7d557e68c965043d98c2eccae26deef8.patch>
-> 
-> I'm slightly confused about this. The referenced fix is in 7.6. Can
-> you point us to the correct fix in 7.7 for CVE-2026-47729?
-> 
-> At least
-> https://github.com/squid-cache/squid/commit/865a131c7d557e68c965043d98c2eccae26deef8
-> matches as well the followup from Alan.
-> 
+Affected versions:
 
-Official advisories for both CVEs seems to be available now:
-- 
-https://github.com/squid-cache/squid/security/advisories/GHSA-8c37-pxjq-qwrg
-- 
-https://github.com/squid-cache/squid/security/advisories/GHSA-5vmx-9x64-9284
+- Apache Nutch 1.10 through 1.22
 
-For CVE-2026-47729 the advisory now also lists versions < 7.6 as fixed 
-not < 7.7.
+Description:
 
-Regards,
+Missing Authorization, Use of Externally-Controlled Input to Select Classes or Code ('Unsafe Reflection') vulnerability in Apache Nutch Server  (Nutch REST API).
 
--- 
 
-Christian Fischer | PGP Key: 0x54F3CE5B76C597AD
 
-Greenbone AG, Neumarkt 12, 49074 Osnabrück, Germany
-https://www.greenbone.net
+This issue affects Apache Nutch: from 1.10 through 1.22.
 
-Commercial Register: Amtsgericht Osnabrück, HRB 218768
-Executive Board: Elmar Geese
-Chairman of the Supervisory Board: Lukas Grunwald
+
+
+Users are recommended to upgrade to version 1.23, which removes the Nutch Server.
+If an upgrade is not possible, user must restrict access to instances running the Nutch Service to trusted users only.
+Please, also visit the  Apache Nutch security advisories https://nutch.apache.org/documentation/security/ .
+
+This issue is being tracked as NUTCH-3165 
+
+Credit:
+
+The Apache Nutch Project Management Committee would like to thank Th1nk for reporting this issue. (finder)
+
+References:
+
+https://nutch.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-41871
+https://issues.apache.org/jira/browse/NUTCH-3165
 
