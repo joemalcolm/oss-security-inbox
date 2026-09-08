@@ -1,65 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/1
-Message-ID: <6eeef013f4e102e330485ebcef7a6153@cpansec.org>
-Date: Wed, 19 Aug 2026 21:43:21 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-75628: Punk::OAuth2 versions before 0.03 for Perl allow an attacker-chosen off-site redirect after login because same_origin_path accepts a backslash or tab in the return parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/15
+Message-ID: <fa0f4133-0afe-48e9-846a-db74ac7ff731@cpansec.org>
+Date: Tue, 8 Sep 2026 21:11:00 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-19872: HTML::FormHandler versions before 0.410000 for Perl allow cross-site scripting via a submitted value rendered unescaped in an error message
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-75628                                       CPAN Security Group
+CVE-2026-19872                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-75628
-   Distribution:  Punk-OAuth2
-       Versions:  before 0.03
+         CVE ID:  CVE-2026-19872
+   Distribution:  HTML-FormHandler
+       Versions:  before 0.410000
 
-       MetaCPAN:  https://metacpan.org/dist/Punk-OAuth2
+       MetaCPAN:  https://metacpan.org/dist/HTML-FormHandler
+       VCS Repo:  https://github.com/gshank/html-formhandler
 
 
-Punk::OAuth2 versions before 0.03 for Perl allow an attacker-chosen
-off-site redirect after login because same_origin_path accepts a
-backslash or tab in the return parameter
+HTML::FormHandler versions before 0.410000 for Perl allow cross-site
+scripting via a submitted value rendered unescaped in an error message
 
 Description
 -----------
-Punk::OAuth2 versions before 0.03 for Perl allow an attacker-chosen
-off-site redirect after login because same_origin_path accepts a
-backslash or tab in the return parameter.
+HTML::FormHandler versions before 0.410000 for Perl allow cross-site
+scripting via a submitted value rendered unescaped in an error message.
 
-oauth2_login reads the return parameter from the initiation request,
-runs same_origin_path over it, and stores the survivor in the session
-flow record as the post-login redirect target. That check rejects a
-value that does not begin with a slash, one with a slash as its second
-byte, and one containing CR or LF. A backslash and a tab pass. The URL
-Standard treats a backslash as equivalent to a slash for special
-schemes, so `/\evil.example` parses with the authority `evil.example`.
-It also strips ASCII tab before parsing, so a tab between two leading
-slashes leaves `//evil.example`.
+The wrappers and renderers that emit a form's errors interpolate the
+error string straight into HTML with no escaping. Two of the library's
+own messages, no_match and not_allowed, splice the submitted value into
+that string, and a failing type constraint puts the rejected value into
+the message it builds, which _apply_actions hands to add_error.
 
-A crafted link to the application's own login route lands the victim on
-the attacker's site after a genuine authentication. The redirect
-carries no authorization code or access token.
+A field declared with a check regexp, a check list or a type constraint
+reaches those messages, with no custom validator and no non-default
+configuration. Errors rendered through an application's own escaping
+template layer rather than the library's rendering roles are not
+affected.
+
+A request over the network that submits markup to such a field gets it
+back live inside the error span, running script in the victim's origin.
+Re-rendering a rejected value later gives the stored variant.
 
 Problem types
 -------------
-- CWE-601 URL Redirection to Untrusted Site ('Open Redirect')
-
-Workarounds
------------
-For deployments that cannot upgrade to 0.03, strip the return query
-parameter from requests to the oauth2_login initiation route at the
-reverse proxy. Logins then use the configured redirect_ok destination.
+- CWE-79 Improper Neutralization of Input During Web Page Generation
+   ('Cross-site Scripting')
 
 Solutions
 ---------
-Upgrade to Punk-OAuth2 0.03 or later.
+Upgrade to HTML-FormHandler 0.410000 or later.
 
 References
 ----------
-https://metacpan.org/release/LNATION/Punk-OAuth2-0.03/changes
-https://metacpan.org/release/LNATION/Punk-OAuth2-0.02/source/include/pox/pox_util.h#L94
-https://datatracker.ietf.org/doc/html/rfc9700#section-4.11.1
-https://url.spec.whatwg.org/#relative-slash-state
-https://url.spec.whatwg.org/#concept-basic-url-parser
+https://github.com/gshank/html-formhandler/commit/2574fdb4561f5c32d44cfbfbb3188345d49eb5a2.patch
+https://metacpan.org/release/ABRAXXA/HTML-FormHandler-0.410000/changes
+
+
+
