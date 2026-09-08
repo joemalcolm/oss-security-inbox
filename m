@@ -1,108 +1,156 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/23
-Message-Id: <E1wogYs-003Dzb-3C@xenbits.xenproject.org>
-Date: Tue, 28 Jul 2026 12:05:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 507 v2 (CVE-2026-62434) - PoD: Don't try to reclaim special pages
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/20
+Message-ID: <8733vjcvc1.fsf@cmpct.info>
+Date: Tue, 08 Sep 2026 22:00:14 +0100
+From: Sam James <sam@...ct.info>
+To: oss-security@...ts.openwall.com
+Subject: Fwd: Tor Project Forum: Security Release 0.4.9.12
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Here's the relevant release notes at the link in the email below:
+"""
+Changes in version 0.4.9.12 - 2026-09-08
+  Another security release containing several high security fixes reported by
+  the exciting and controversial world of LLMs. One important note is that new
+  protocol versions are recommended for clients and relays (41316).
+  Furthermore, authorities will NOT accept relay descriptor containing TAP keys
+  anymore hence the importance for all relays to upgrade to the latest 0.4.9.x
+  stable version. We very strongly recommend upgrading as soon as possible.
 
-            Xen Security Advisory CVE-2026-62434 / XSA-507
-                               version 2
+  o Major bugfixes (security):
+    - Do not purge memory for OOM from within low-level code.
+      Previously, we would handle OOM conditions from within
+      append_cell_to_circuit_queue, which could appear at various places
+      within our call stack, and lead to objects being freed at
+      surprising points in the code, with attendent risk of use-after-
+      free errors. Now we only check for OOM conditions there, and
+      handle them from much higher in the stack. Fixes bugs 41341,
+      41336, 41326, and 41363; bugfix on 0.2.4.14-alpha. Root-cause fix
+      for TROVE-2026-043.
+    - Fix a bug where a hostile cache could trick a client into falsely
+      believing that certain relays' microdescriptors or router
+      descriptors were unusable. Fixes bug 41358; bugfix on 0.2.6.1-alpha
+      or earlier. Tracked as TROVE-2026-034.
+    - Fix a use-after-free error that could occur if
+      AutomapHostsOnResolve was set. Applications using
+      AutomapHostsOnResolve with IPv4, or with small VirtualAddrNetwork
+      values, are especially vulnerable. Fixes bug 41319; bugfix on
+      0.2.1.29. Tracked as TROVE-2026-036.
+    - Limit the size of consensus diffs, in bytes and in lines, to
+      prevent a class of memory-based denial-of-service attacks. Fixes
+      bug 41329; bugfix on 0.3.1.1-alpha. This is tracked
+      as TROVE-2026-042.
+    - Negotiate CGO cryptography with every hop that supports it.
+      Previously, we failed to negotiate CGO with hops other than the
+      final hop of a circuit, since we did not enable congestion-control
+      with those hops. Now, we negotiate congestion-control _and_ CGO
+      whenever we can. Fixes bug 41348; bugfix on 0.4.9.3-alpha. Tracked
+      as TROVE-2026-033.
+    - Reject the CC_RESPONSE extension in any handshakes for which
+      congestion control was _not_ requested. Previously, clients would
+      interpret this extension, which could put congestion control into
+      an invalid state, leading to a possible remote crash attack. Fixes
+      bug 41345; bugfix on 0.4.9.3-alpha. Tracked as TROVE-2026-032.
+    - Validate DNS names for complience whenever providing or receiving
+      them from evdns, to limit exposure to a class of application and
+      library bugs. Fixes bug 41320; bugfix on 0.1.1.23.
+      Resolves TROVE-2026-035.
 
-                PoD: Don't try to reclaim special pages
+  o Major bugfixes (conflux, client, stream isolation):
+    - Keep the stream isolation state in sync of a linked conflux set on
+      every leg when attaching new streams. This is TROVE-2026-040.
+      Fixes bug 41325; bugfix on 0.4.8.1-alpha.
 
-UPDATES IN VERSION 2
-====================
+  o Minor feature (authority):
+    - Reject 0.4.8.x series at the authority level. Closes ticket 41234.
 
-Public release.
+  o Minor features (directory authority):
+    - Authorities now recommend additional protocols for clients and
+      relays. Part of ticket 41316.
+    - Provide a new `AuthDirSupport048Clients` option, which is disabled
+      by default. When this option is disabled, authorities will accept
+      router descriptors that do not contain TAP keys, and will be
+      willing to generate microdescriptors without TAP keys in response
+      to such descriptors. This introduces a new consensus method (36).
+      Part of ticket 41316.
 
-ISSUE DESCRIPTION
-=================
+  o Minor features (fallbackdir):
+    - Regenerate fallback directories generated on September 08, 2026.
 
-A guest started with Populated on Demand enabled (PoD) can attempt to
-reclaim pages which aren't regular guest RAM.  This can cause corruption
-of memory management state in Xen.
+  o Minor features (geoip data):
+    - Update the geoip files to match the IPFire Location Database, as
+      retrieved on 2026/09/08.
 
-IMPACT
-======
+  o Minor features (portability):
+    - Fix seccomp compilation with recent versions of glibc. (Closes
+      ticket 41317.)
 
-A buggy or malicious guest can cause corruption of Xen's state, leading
-to crashes or other malfunctions.  Information leak and privilege
-escalation cannot be ruled out.
+  o Minor bugfixes (controller):
+    - Fix an assert that can happen if a controller requests an HSFETCH
+      naming a relay that has a local descriptor but isn't in the
+      consensus. Fixes bug 41367; bugfix on 0.2.7.1-alpha.
 
-VULNERABLE SYSTEMS
-==================
+  o Minor bugfixes (directory authorities):
+    - If two shared-random-value commitments are equal, directory
+      authorities now tie-break by authority identity during the reveal
+      phase. Equal commits could happen if an evil authority republishes
+      another's public commitment (and later its public reveal) as its
+      own. Previously the two tied entries could cause honest
+      authorities to disagree about the resulting SRV. Fixes bug 41356;
+      bugfix on 0.2.9.1-alpha.
 
-All Xen versions from 3.4 onwards are vulnerable.  Xen versions 3.3 and
-earlier are not vulnerable.
+  o Removed features:
+    - Tor clients no longer accept consensus instructions to downgrade
+      the congestion control algorithm. This is defense-in-depth for
+      issues like 41345. Implements ticket 41361.
+"""
 
-Only x86 systems are vulnerable.
+-------------------- Start of forwarded message --------------------
+Date: Tue, 08 Sep 2026 20:14:49 +0000
+From: David Goulet <noreply@...um.torproject.org>
+To: sam@...ct.info
+Subject: Tor Project Forum: Security Release 0.4.9.12
 
-Only x86 HVM and PVH guests started in populate-on-demand mode are
-believed to be able to leverage the vulnerability.  Populate-on-demand
-mode is activated when the guest's xl configuration file specifies a
-"maxmem" value which is larger than the "memory" value.
 
-MITIGATION
-==========
 
-Running only PV guests or HVM/PVH guests without PoD will avoid the
-vulnerability.
 
-RESOLUTION
-==========
+# Where to Download
 
-Applying the attached patch resolves this issue.
+* [Tarballs](https://dist.torproject.org/)
+* [Gitlab Repository](https://gitlab.torproject.org/tpo/core/tor)
+* [Bug Report](https://gitlab.torproject.org/tpo/core/tor/-/issues/new)
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+# Changes
 
-xsa507.patch           xen-unstable - Xen 4.17.x
+Below are the major changes of the released versions and links to more detailed release notes.
 
-$ sha256sum xsa507*
-41485ddf0912cfa53fa05e236aa27c3c6490919ac2dab5b9f57ed69f5b38f60a  xsa507.patch
-$
+## Stable
 
-DEPLOYMENT DURING EMBARGO
-=========================
+Today, we released stable version **0.4.9.12** to address a series of high-severity security issues and some minor new features.
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+We expect to make the related tickets public roughly one week from today. Until then, the only publicly available details about these security issues can be found in the `ReleaseNotes` file (see below).
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+We **strongly** recommend updating as soon as possible. Debian packages are already available [here](https://deb.torproject.org), and packages for other distributions should follow shortly after this announcement.
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+Final note: We are actively working on additional important security issues, so starting today, we are moving C-tor releases to a **two-week** cadence. This means that the next release, 0.4.9.13, is expected around September 22.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Nothing is set in stone, however, as the recent flurry of security issues may require us to adapt quickly.
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+#### Release Notes
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomr4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ+04H/i3UMWbGcPG2kp978waMmF3Gtfb/r8mw3UBzVGCi
-cIOBWf/FizjWu54SQEQtjwYPfi0nKftFN1UPqAGs+OUtyiZ8EcPL5x9i7arrqA2T
-uGfpCTb3NtFmacBbrpGnqkNahMtSLWtE8aSVEQhLxvZcLTPB6OPzIi/MVPGyA7jl
-/LSGWs4vd99Y8ZvAN20rhxaEAjYynfd7N4tXn38EoW9WiQBuPZ5eNzsbieah8PEo
-Ajntyx774ipvtYYStA4fhsLwO+6LyqH7okDR1g8Xkq6IVrOshP194mxnsuEfcMIO
-4TCkWbzhmspfxQ1E2aW2VVPzIC2X2b+i8JieUK/z3mmrRSU=
-=AfG5
------END PGP SIGNATURE-----
+* [0.4.9.x](https://gitlab.torproject.org/tpo/core/tor/-/raw/release-0.4.9/ReleaseNotes)
 
-Download attachment "xsa507.patch" of type "application/octet-stream" (2186 bytes)
+
+
+
+
+---
+[Visit
+Topic](https://forum.torproject.org/t/security-release-0-4-9-12/22096/1)
+or reply to this email to respond.
+
+[stripped HTML content]
+-------------------- End of forwarded message --------------------
+
+
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
