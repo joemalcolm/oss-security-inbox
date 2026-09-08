@@ -1,40 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/3
-Message-ID: <20260731093051.36478e82@plasteblaster>
-Date: Fri, 31 Jul 2026 09:30:51 +0200
-From: "Dr. Thomas Orgis" <thomas.orgis@...-hamburg.de>
-To: Marco Benatto <mbenatto@...hat.com>
-CC: <oss-security@...ts.openwall.com>, "Darrick J. Wong" <djwong@...nel.org>
-Subject: Re: RefluXFS: LPE in the Linux kernel via XFS reflink race (CVE-2026-64600)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/1
+Message-ID: <c5ae84ca-f7f2-41a2-b0e2-db32ebcba76b@nebusec.ai>
+Date: Mon, 7 Sep 2026 20:29:16 -0700
+From: Yuan Tan <yuant@...usec.ai>
+To: oss-security@...ts.openwall.com
+Subject: Linux kernel LPEs: ZcopyReaper (CVE-2026-43502) and 20 more
 Content-Type: text/plain; charset=utf-8
 
-Am Wed, 22 Jul 2026 18:07:03 -0300
-schrieb Marco Benatto <mbenatto@...hat.com>:
+Hi all,
 
-> While disabling reflink once the filesystem is created is not possible
-> we manage to mitigate the issue using the following SystemTap script:
+We found a Linux kernel local privilege escalation vulnerability in the
+RDS zerocopy send path, tracked as CVE-2026-43502. We call the exploit
+ZcopyReaper.
 
-I'm a bit late, but I do wonder if the issue also pertains to XFS fs
-exported via NFS. It seems like the reflink feature is passed through,
-but so far I was not able reproduce using
+The vulnerability was introduced in Linux v4.17 and fixed by commit
+44b550d88b26. The first mainline release containing the fix was Linux
+v7.1-rc3.
 
-	https://github.com/litosmartin/CVE-2026-64600-Refluxfs-PoC/blob/main/refluxfs.c
+We successfully demonstrated local privilege escalation on an openSUSE
+system running Linux kernel 6.4.0-150600.23.100.
 
-I guess the race condition is avoided when going through the NFS stack,
-but maybe only by chance. The poc ran unsuccessfully for several
-minutes over NFS while it is successful _instantly_ locally on the NFS
-server.
+An unprivileged local user can trigger the vulnerability. The minimal
+kernel configuration required to reach the vulnerable path is:
 
-Anyone got insight on this? XFS behind NFS should also be quite common
-… though I had to adapt the exploit code not to work on /etc/password,
-which is on on the NFS and thus limits the impact not to system
-compromise, but on one user manipulating files of another user, which
-is bad enough in my book.
+  CONFIG_INET=y
+  CONFIG_AIO=y
+  CONFIG_RDS=y or m
+  CONFIG_RDS_TCP=y or m
+
+When RDS is built as modules, rds.ko and rds_tcp.ko must either be
+loaded or be available for automatic loading.
+
+No Linux capabilities are required. CONFIG_USER_NS is not required.
+Disabling unprivileged user namespace creation does not mitigate the
+vulnerability.
 
 
-Alrighty then,
+In addition to CVE-2026-43502, there are 20 other Linux bugs that have
+been confirmed to be exploitable, with public exploits available:
 
-Thomas
--- 
-Dr. Thomas Orgis
-HPC @ Universität Hamburg
+CVE-2026-80714
+CVE-2026-74597
+CVE-2026-74581
+CVE-2026-74480
+CVE-2026-72255
+CVE-2026-72137
+CVE-2026-68376
+CVE-2026-68162
+CVE-2026-64560 
+CVE-2026-63834
+CVE-2026-52933
+CVE-2026-52929
+CVE-2026-52924 
+CVE-2026-52923
+CVE-2026-52912
+CVE-2026-43502
+CVE-2026-43501
+CVE-2026-43074 
+CVE-2026-43042
+CVE-2026-31678
+CVE-2026-31659
+CVE-2026-23274
+
+These vulnerabilities were identified and exploited by NebuSec's
+automatic exploit generation pipeline. The exploits are available at:
+https://github.com/NebuSec/CyberMeowfia/blob/main/security-research
