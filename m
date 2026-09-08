@@ -1,40 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/04/26/9
-Message-ID: <a6c17ec3-2bdb-27fb-fef5-0d8046d99733@apache.org>
-Date: Sun, 26 Apr 2026 18:09:28 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/12
+Message-ID: <ddb4f4cd-5131-4a17-4701-c302b9568256@apache.org>
+Date: Tue, 08 Sep 2026 14:26:48 +0000
+From: Matt Pavlovich <mattrpav@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-40858: Apache Camel: Camel-Infinispan: Unsafe Deserialization in Remote Aggregation Repository 
+Subject: CVE-2026-74761: Apache ActiveMQ Broker, Apache ActiveMQ All, Apache ActiveMQ: Spoofing of RemoveSubscription clientId 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-infinispan) 4.0.0 before 4.14.7
-- Apache Camel (org.apache.camel:camel-infinispan) 4.15.0 before 4.18.2
-- Apache Camel (org.apache.camel:camel-infinispan) 4.19.0 before 4.20.0
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.3.2
+- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.11
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.3.2
+- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.11
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.3.2
+- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.11
 
 Description:
 
-The camel-infinispan component's ProtoStream-based remote aggregation repository deserializes data read from a remote Infinispan cache using java.io.ObjectInputStream without applying any ObjectInputFilter. An attacker who can write to the Infinispan cache used by a Camel application can inject a crafted serialized Java object that, when read during normal aggregation repository operations such as get or recover, results in arbitrary code execution in the context of the application.
+Improper input validation in TopicRegion in Apache ActiveMQ, Apache ActiveMQ Broker, and Apache ActiveMQ All on all platforms.
 
-This issue affects Apache Camel: from 4.0.0 before 4.14.7, from 4.15.0 before 4.18.2, from 4.19.0 before 4.20.0.
 
-Users are recommended to upgrade to version 4.20.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.7. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.2.
 
-The JIRA ticket:  https://issues.apache.org/jira/browse/CAMEL-23322  refers to the various commits that resolved the issue, and have more details. This issue follows the same class of vulnerability previously addressed in CVE-2024-22369, CVE-2024-23114 and CVE-2026-25747.
 
-This issue is being tracked as CAMEL-23322 
+An authenticated client can spoof clientId when removing a durable topic subscription.
+
+
+
+This issue affects Apache ActiveMQ Broker: before 5.19.11, from 6.0.0 before 6.3.2; Apache ActiveMQ All: before 5.19.11, from 6.0.0 before 6.3.2; Apache ActiveMQ: before 5.19.11, from 6.0.0 before 6.3.2.
+
+
+
+Users are recommended to upgrade to version 6.3.2 or 5.19.11 which fixes the issue.
 
 Credit:
 
-Feng Ning from Innora Pte. Ltd. (finder)
+Wanxin Yin <yhellow123456@...il.com> (finder)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-40858.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-40858
-https://issues.apache.org/jira/browse/CAMEL-23322
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-74761
 
