@@ -1,38 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/4
-Message-ID: <7819606b-2330-4c50-9739-1ec8e9a1b804@ucar.edu>
-Date: Tue, 16 Jun 2026 10:28:18 -0400
-From: Prentice Bisbal <prentice@...r.edu>
-To: oss-security@...ts.openwall.com
-Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/17
+Message-ID: <1c60707b-0721-46ed-851d-2a5fbdf2134c@cpansec.org>
+Date: Tue, 8 Sep 2026 21:13:39 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-85485: HTML::FormHandler versions before 0.410002 for Perl render some error messages into HTML without escaping
 Content-Type: text/plain; charset=utf-8
 
+========================================================================
+CVE-2026-85485                                       CPAN Security Group
+========================================================================
 
-On 6/15/26 1:56 PM, Alan Coopersmith wrote:
-> On 6/8/26 16:46, David A. Wheeler wrote:
->> All: I propose that we create a *separate* mailing list, say
->> "oss-security-vulnerability-reports", for run-of-the-mill 
->> vulnerability reports
->> about open source software (OSS). Run-of-the-mill reports would then 
->> go there
->> and *not* to this mailing list "oss-security". This would leave 
->> *this* oss-security" mailing list
->> for general discussions about the topic of OSS security, including 
->> discussions about
->> specific publicly known vulnerabilities that are especially 
->> noteworthy in some way.
->> Tools that want the full flood could monitor 
->> "oss-security-vulnerability-reports".
->
-> If it comes to the point we have to split the lists, I think it would 
-> be easier
-> to create a oss-security-discuss for the discussions than to get 
-> dozens of
-> projects to update their security advisory release process to send their
-> advisories to a new list, or to rely on the projects to determine 
-> which are
-> newsworthy enough to go to the main list vs. your proposed new
-> ...-vulnerability-reports list. 
+         CVE ID:  CVE-2026-85485
+   Distribution:  HTML-FormHandler
+       Versions:  before 0.410002
 
-I second this.
+       MetaCPAN:  https://metacpan.org/dist/HTML-FormHandler
+       VCS Repo:  https://github.com/gshank/html-formhandler
+
+
+HTML::FormHandler versions before 0.410002 for Perl render some error
+messages into HTML without escaping
+
+Description
+-----------
+HTML::FormHandler versions before 0.410002 for Perl render some error
+messages into HTML without escaping.
+
+The Table form layout and the Bootstrap 2 and 3 wrappers splice each
+error string straight into the surrounding markup. Version 0.410000,
+the fix for CVE-2026-19872, escaped the equivalent values in the other
+layouts and wrappers, and 0.410002 extended that to these three.
+
+Error messages that contain attacker-influenced content such as
+rejected field values could embed JavaScript in rendered pages.
+
+Problem types
+-------------
+- CWE-79 Improper Neutralization of Input During Web Page Generation
+   ('Cross-site Scripting')
+
+Solutions
+---------
+Upgrade to HTML-FormHandler 0.410002 or later.
+
+References
+----------
+https://metacpan.org/release/ABRAXXA/HTML-FormHandler-0.410002/changes
+https://github.com/gshank/html-formhandler/commit/2ea9e138dbfe231e317c13936abe6583217c807f.patch
+
+
 
