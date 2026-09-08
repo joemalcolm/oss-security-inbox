@@ -1,30 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/31/4
-Message-ID: <amxnYzp06coSRJa-@definition.pseudorandom.co.uk>
-Date: Fri, 31 Jul 2026 10:14:11 +0100
-From: Simon McVittie <smcv@...ian.org>
-To: oss-security@...ts.openwall.com
-Subject: Re: 33 Vulnerabilities in cJSON
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/16
+Message-ID: <312cdf6e-8803-435c-9a5f-7257a32c4b88@cpansec.org>
+Date: Tue, 8 Sep 2026 21:12:01 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-85484: HTML::FormHandler versions before 0.410002 for Perl render option group labels and radio button labels into HTML without escaping
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 30 Jul 2026 at 12:26:25 -0700, Collin Funk wrote:
->Alan Coopersmith <alan.coopersmith@...cle.com> writes:
->> https://cert.pl/en/posts/2026/07/CVE-2026-16554/ appears to cover
->> an unrelated vulnerability also disclosed this week.
->
->Does anyone actually use platforms with 32-bit size_t? I guess maybe
->some programs compiled for 32-bit x86 but run on x86_64?
+========================================================================
+CVE-2026-85484                                       CPAN Security Group
+========================================================================
 
-Yes, people still compile and use i386 libraries on x86_64 systems to 
-run legacy i386 binaries. On open-source OSs, in practice this mostly 
-means proprietary games that were never ported to x86_64, like Portal 
-(but could also mean e.g. firmware updaters, printer drivers, installers).
+         CVE ID:  CVE-2026-85484
+   Distribution:  HTML-FormHandler
+       Versions:  before 0.410002
 
-I happen to know that cJSON is used in at least some libraries that are 
-relevant to the gaming use-case (GLVND and Vulkan-Loader), although any 
-security issues in cJSON are hopefully not relevant for those libraries 
-because they only parse trusted JSON: if an attacker was able to edit 
-the JSON manifests describing EGL and Vulkan drivers, they'd be able to 
-load arbitrary code into applications anyway.
+       MetaCPAN:  https://metacpan.org/dist/HTML-FormHandler
+       VCS Repo:  https://github.com/gshank/html-formhandler
 
-     smcv
+
+HTML::FormHandler versions before 0.410002 for Perl render option group
+labels and radio button labels into HTML without escaping
+
+Description
+-----------
+HTML::FormHandler versions before 0.410002 for Perl render option group
+labels and radio button labels into HTML without escaping.
+
+The Select, RadioGroup, CheckboxGroup and HorizCheckboxGroup widgets
+render a group label unescaped, Select into a label attribute and the
+other three into element content. RadioGroup also renders each radio
+button's own label unescaped.
+
+Any application whose option list is built from data rather than
+literals, using options_from, an options_fieldname method, or the DBIC
+model, allows attacker-influenced text in a label that can override the
+options or embed JavaScript in rendered pages.
+
+Problem types
+-------------
+- CWE-79 Improper Neutralization of Input During Web Page Generation
+   ('Cross-site Scripting')
+
+Solutions
+---------
+Upgrade to HTML-FormHandler 0.410002 or later.
+
+References
+----------
+https://metacpan.org/release/ABRAXXA/HTML-FormHandler-0.410002/changes
+https://github.com/gshank/html-formhandler/commit/49b562e0fed5146fc1a372c5fa8a879876b8841d.patch
+
+
+
