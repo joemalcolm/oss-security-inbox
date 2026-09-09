@@ -1,48 +1,166 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/21/8
-Message-ID: <al_Adqw5WhhLWX_9@netmeister.org>
-Date: Tue, 21 Jul 2026 14:54:46 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/09/5
+Message-ID: <87v78e8ids.fsf@gentoo.org>
+Date: Wed, 09 Sep 2026 18:05:51 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: 432 Linux kernel CVEs
+Cc: Lasse Collin <lasse.collin@...aani.org>
+Subject: Fwd: XZ Utils 5.8.4 and a security fix
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-------------------- Start of forwarded message --------------------
+Date: Wed, 9 Sep 2026 19:53:10 +0300
+From: Lasse Collin <lasse.collin@...aani.org>
+To: xz-devel@...aani.org
+Subject: XZ Utils 5.8.4 and a security fix
 
-As observed on social media[1], the Linux kernel
-published 432 CVEs between 2026-07-19T09:09 and
-2026-07-20T16:27 (in addition to the >40 other CVEs
-already published this month alone):
+XZ Utils 5.8.4 is available at <https://tukaani.org/xz/#_stable>.
 
-https://lore.kernel.org/linux-cve-announce/
+In XZ Utils 5.8.3 and older, an invalid memory write can occur if a
+decoder is reinitialized after allocation failure. For details, see the
+security advisory:
 
-I understand the position that CVEs were always a
-flawed way to track or prioritize security changes,
-and "but it's the only thing we have" isn't a great
-argument in favor.
+    https://tukaani.org/xz/invalid-write-after-reinit.html
 
-But this onslaught really shows it's not feasible to
-attempt to prioritize individual kernel changes.
+This and a few other fixes have also been committed to the old stable
+branches (v5.2, v5.4, and v5.6) in the xz Git repository. Those fixes
+are marked below. No new 5.2.x, 5.4.x, or 5.6.x releases will be made.
 
-You might attempt to process this large set of changes
-by pointing an LLM at the intake and asking it to
-prioritize them for your environment based on the
-additional context you may be able to feed it with,
-but if it spits out a dozen today and another 25 the
-next, you haven't won much.
+5.8.4 (2026-09-09)
 
-Alternatively, you might shrug and wait to see which
-of these will get a logo and catchy name in the next
-few weeks and then try to focus on those.
+    * liblzma:
 
-Another approach might be to sit back, have a nice cup
-of zen, and just always pull all updates and then
-update your entire fleet of systems on a weekly basis,
-which, yes, I sure would like to be able to do, but
-reality keeps getting in my way.
+        - lzma_alone_decoder(), lzma_lzip_decoder(),
+          lzma_auto_decoder(), and lzma_microlzma_decoder(): Fix an
+          invalid memory access after memory allocation has failed and
+          the application reinitializes the existing decoder to decode
+          a different file. This bug could at least result in a crash.
+          This is tracked as GHSA-5qpq-xqfv-j9pg. CVE number is pending.
+          (Also in v5.2, v5.4, and v5.6.)
 
-I'm not sure what to do here going forward.
+        - lzma_stream_buffer_decode(): Fix wrong error code and,
+          in debug builds, assertion failure. LZMA_BUF_ERROR could
+          be returned with truncated inputs while LZMA_DATA_ERROR
+          is the correct one in this function.
+          (Also in v5.2, v5.4, and v5.6.)
 
--Jan
+        - Fix a performance issue in the typical use case of
+          lzma_index_cat(). Internally liblzma calls it from
+          lzma_file_info_decoder(), so that was affected too. The
+          problem occurred if the input .xz file was created by
+          concatenating a large number of .xz files. A crafted file
+          could make "xz --list" very slow or effectively hang.
+          Normal decompression doesn't use these functions and
+          thus wasn't affected.
+          (Also in v5.2, v5.4, and v5.6.)
 
-[1] https://mstdn.social/@nixCraft@mastodon.social/116953574783239363
+        - Fix a theoretical integer overflow in lzma_index_cat().
+          (Also in v5.2, v5.4, and v5.6.)
+
+        - Fix bogus memory usage report in lzma_index_decoder() when
+          the .xz Index is obviously invalid. A huge bogus value could
+          cause an integer overflow in lzma_file_info_decoder()'s
+          memory usage reporting due to a missing overflow check,
+          making lzma_memused() report an incorrect tiny value. This
+          bug didn't affect the memory usage limiter in these two
+          decoders; only the reporting via lzma_memused() was affected.
+          (Also in v5.2, v5.4, and v5.6.)
+
+        - Fix a too low memory usage report in lzma_index_decoder()
+          if lzma_memused() is called after a part of the Index has
+          already been decoded. The typical use case is to call
+          lzma_memused() immediately after LZMA_MEMLIMIT_ERROR,
+          which did work correctly.
+
+        - Fix copying of check type in lzma_index_dup(). Calling
+          lzma_index_checks() on the duplicated lzma_index returned
+          return garbage a result. lzma_index_dup() is rarely used;
+          liblzma doesn't use it internally and xz itself doesn't use
+          it either.
+          (Also in v5.2, v5.4, and v5.6.)
+
+        - lzma_file_info_decoder() and lzma_index_decoder(): Reject
+          an obviously-invalid Number of Records field earlier.
+          (Partially also in v5.2, v5.4, and v5.6.)
+
+        - Fix a missing synchronization in the threaded .xz decoder. It
+          could make lzma_get_progress() return incorrect progress info.
+          (Also in v5.4 and v5.6.)
+
+        - Detect certain kinds of corrupt inputs slightly earlier in
+          the LZMA2 decoder.
+
+        - ARM64 and LoongArch: Don't use aligned reads on unaligned
+          buffers. This makes the code work on strict-align processors
+          and fixes a sanitizer error in other cases. (Since 5.7.1alpha)
+
+    * xz:
+
+        - Fix a use-after-free when showing an error message if --files
+          or --files0 was specified in the environment variables XZ_OPT
+          or XZ_DEFAULTS.
+          (Also in v5.2, v5.4, and v5.6.)
+
+        - Fix a use-after-free bug when --verbose is used and
+          standard error isn't a terminal. (Since 5.7.1alpha)
+
+        - Make it an error if the totals in "xz --list" exceed the range
+          of 64-bit integers.
+          (Also in v5.2, v5.4, and v5.6.)
+
+    * xz and xzdec on Linux:
+
+        - Add support for Landlock ABI version 9.
+
+        - Use fallback macros for Landlock ABI version 2, 3, and 5
+          (but not 4) if <linux/landlock.h> is older than ABI version 5.
+          This makes the binary slightly more protected if it is run on
+          a kernel that supports newer ABIs than <linux/landlock.h>.
+
+    * Scripts:
+
+        - xzgrep: Fix handling of the ' char at the end of a command
+          line option. For example, the following tricked xzgrep to
+          run "id": xzgrep "-e'" "-e;id;'" somefile
+          (Also in v5.2, v5.4, and v5.6.)
+
+        - xzdiff: Use the C locale (LC_ALL=C) with "sed" and "expr"
+          to ensure safe behavior with invalid multibyte sequences.
+          An equivalent improvement was made in xzgrep in 5.2.6
+          (2022-08-12), but it was forgotten from xzdiff.
+          (Also in v5.2, v5.4, and v5.6.)
+
+    * Tests:
+
+        - Improve a few tests and fuzz targets.
+
+        - Add new test files:
+            * bad-0-index-1.xz (32 bytes)
+            * bad-1-index-huge-uncomp.xz (72 bytes)
+
+    * Man pages:
+
+        - Improve the rendering with OpenBSD's mandoc(1).
+
+        - Reduce indentation of the tables to avoid overlong lines
+          in translated versions of the xz man page.
+
+    * Translations:
+
+        - In translated man pages, workaround an issue with non-ASCII
+          characters in tables.
+
+        - Fix syntax errors in a few man page translations.
+
+        - Update Arabic and German man page translations.
+
+        - Update Brazilian Portuguese, Croatian, Dutch, German, Italian,
+          Korean, Polish, Portuguese, Romanian, and Ukrainian message
+          translations.
+
+-- 
+Lasse Collin
+
+-------------------- End of forwarded message --------------------
+
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
