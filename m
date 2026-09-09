@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/05/29
-Message-ID: <a44e7a57-9e31-8342-4e94-6c39cf6a2cf0@apache.org>
-Date: Sun, 05 Jul 2026 11:46:42 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/4
+Message-ID: <98c14965-67ce-b04b-327e-5145adeec9a1@apache.org>
+Date: Wed, 09 Sep 2026 20:25:17 +0000
+From: Clebert Suconic <clebertsuconic@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-56139: Apache Camel: Camel-Undertow: The muteException consumer option defaulted to false, so a processing error returned the full Java stack trace in the HTTP response body, disclosing sensitive internal information to unauthenticated clients - and the option was not honoured 
+Subject: CVE-2026-57822: Apache Artemis, Apache ActiveMQ Artemis: Message-based management parameter deserialization may lead to denial of service 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-undertow) 4.0.0 before 4.14.8
-- Apache Camel (org.apache.camel:camel-undertow) 4.15.0 before 4.18.3
-- Apache Camel (org.apache.camel:camel-undertow) 4.19.0 before 4.21.0
+- Apache Artemis (org.apache.artemis:artemis-core-client) 2.50.0 through 2.56.0
+- Apache ActiveMQ Artemis (org.apache.activemq:artemis-core-client) 1.3.0 through 2.44.0
 
 Description:
 
-Generation of Error Message Containing Sensitive Information vulnerability in Apache Camel Undertow Component.
+When the broker is processing message-based management requests, sent by an authenticated messaging client that is authorized with MANAGE permission to perform management-via-messaging, the parameter processing can trigger Java deserialization of certain method parameters that the broker will not utilise. The permitted types allow to craft a payload causing excessive computation and pinning the processing thread, leading to denial of service.
 
-The camel-undertow HTTP server consumer exposes a muteException option that controls what is returned to the client when a route processing error occurs. This option defaulted to false, whereas the other Camel HTTP server components (camel-http / camel-jetty / camel-servlet and camel-platform-http) default it to true. With muteException=false, when a request triggers an exception during route processing the consumer writes the full Throwable stack trace into the HTTP response body as text/plain instead of returning an empty body. Any unauthenticated client that can reach the endpoint and cause a processing error - for example by sending a malformed request body, an invalid parameter, or otherwise triggering a route-internal failure - therefore receives a complete Java stack trace. Such a stack trace can disclose sensitive internal information, including credentials embedded in exception messages, internal host names and IP addresses, filesystem paths, dependency and version details, database and class names, and the application's internal structure, which an attacker can use to plan further attacks. In addition, for Rest DSL consumers the muteException option was not honoured at all: the RestUndertowHttpBinding was created with a hard-coded false, so the stack trace was returned even when muteException=true had been configured.
-This issue affects Apache Camel: from 4.0.0 before 4.14.8, from 4.15.0 before 4.18.3, from 4.19.0 before 4.21.0.
 
-Users are recommended to upgrade to version 4.21.0, which fixes the issue. If users are on the 4.14.x LTS releases stream, then they are suggested to upgrade to 4.14.8. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.3. For deployments that cannot upgrade immediately, set muteException=true explicitly on the camel-undertow consumer (for example undertow: http://0.0.0.0:8080/api?muteException=true , or globally via the camel.component.undertow.mute-exception=true property), so that processing errors no longer return the stack trace to the client; note that on affected releases this workaround does not cover Rest DSL consumers, whose binding ignores the option until the fix is applied.
+
+
+This issue affects Apache Artemis: from 2.50.0 through 2.56.0; Apache ActiveMQ Artemis: from 1.3.0 through 2.44.0.
+
+
+
+Users are recommended to upgrade to version 2.57.0, which fixes the issue.
 
 Credit:
 
-Yu Bao from PayPal (finder)
-Andrea Cosentino (remediation developer)
+Clebert Suconic (finder)
+Mike Read (reporter)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-56139.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-56139
+https://artemis.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-57822
 
