@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/31/4
-Message-ID: <b2e8bf3b-fb97-9e00-ee1f-13c64ccfa61a@apache.org>
-Date: Mon, 31 Aug 2026 06:44:05 +0000
-From: Emond Papegaaij <papegaaij@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/14
+Message-ID: <6f889b16-d6ce-63e3-7b74-d13981adac91@apache.org>
+Date: Thu, 10 Sep 2026 06:42:12 +0000
+From: Pasquale Congiusti <pcongiusti@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76984: Apache Wicket: XSS in MetaDataHeaderItem via addTagAttribute 
+Subject: CVE-2026-80351: Apache Camel K: Camel K Tenant repositories reach Maven execution inside operator pod 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: critical 
 
 Affected versions:
 
-- Apache Wicket (org.apache.wicket:wicket-core) 8.0.0 through 8.18.0
-- Apache Wicket (org.apache.wicket:wicket-core) 9.0.0 through 9.23.0
-- Apache Wicket (org.apache.wicket:wicket-core) 10.0.0 through 10.10.0
+- Apache Camel K (apache/camel-k) 2.0.0 before 2.9.3
+- Apache Camel K (apache/camel-k) 2.10.1 before 2.10.2
 
 Description:
 
-Improper neutralization of input during web page generation in Apache Wicket.
+Improper neutralization of directives in dynamically evaluated code ('eval injection') vulnerability in Apache Camel K.
 
-org.apache.wicket.markup.head.MetaDataHeaderItem generates <meta> and <link> header tags. It escaped the attribute names it wrote, but ran the attribute values through a replacement of " with \". A backslash before a double quote means nothing in HTML, so a value containing a double quote ends its own attribute and what follows is parsed as further attributes of the generated tag.
 
-An application is affected where it supplies an attribute value holding data an attacker can influence, through addTagAttribute or the forMetaTag and forLinkTag factory methods. A value may be given as an IModel, so it is not necessarily a literal.
 
-There is no setting to change; an application can only avoid supplying a value that contains a double quote. Note that these values have never been escaped effectively: before the change released in 6.24.0, 7.4.0 and 8.0.0 they were written with no escaping at all.
+An improper neutralization of directives in dynamically evaluated Maven configuration allows tenant-controlled repository content to influence code execution within the operator pod, potentially enabling tenants to execute arbitrary code with the privileges of the operator.
 
-This issue affects Apache Wicket: from 8.0.0 through 8.18.0, from 9.0.0 through 9.23.0, from 10.0.0 through 10.10.0. Older, unsupported releases from 6.17.0 onwards are also affected. Users are recommended to upgrade to version 8.19.0, 9.24.0 or 10.11.0, which fix the issue.
 
-Credit:
 
-Emond Papegaaij (finder)
+This issue affects Apache Camel K: from 2.0.0 before 2.9.3, from 2.10.1 before 2.10.2.
+
+
+
+Users are recommended to upgrade to version 2.9.3, 2.10.2 or 2.11.0, which fixes the issue.
 
 References:
 
-https://wicket.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76984
+https://camel.apache.org/security/CVE-2026-80351.html
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-80351
 
