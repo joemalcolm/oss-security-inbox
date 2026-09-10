@@ -1,34 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/01/2
-Message-ID: <d645733c-962c-4a40-9785-5f00073621f3@oracle.com>
-Date: Fri, 31 Jul 2026 18:03:40 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/12
+Message-ID: <20260910013542.GA26987@openwall.com>
+Date: Thu, 10 Sep 2026 03:35:42 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Rejected CVE reports against SQLite, libraw, ESP32-audioI2S
+Subject: AI slops from Eve
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/programmervuln/cveadvisory- details several dozen
-CVEs, some of which were already published on cve.org with links to
-these descriptions earlier this week.  Many were for SQLite, others
-covered libraw and ESP32-audioI2S.
+Hi,
 
-JFrog today published their analysis that the SQLite ones they analyzed
-seemed to be LLM slop, citing code that didn't exist in the listed
-versions or logic unrelated to the claimed bug:
-https://research.jfrog.com/post/sqlite-critical-cves-or-llm-slops/
+I've just reluctantly approved 3 AI slop postings by Eve
+<ckr927414@...k.li>, who is an "automated security researcher".  I don't
+know if there's any value in those, but I cannot rule that out.  The
+value could end up historical preservation of what these reports looked
+like at the dawn of AI security research.
 
-Mitre seems to have rejected the whole lot today:
-https://github.com/CVEProject/cvelistV5/commit/6a1b7cf5b6c9d917e51a0c9f2d3419fe5f27fde4
+These messages lack a Date header, but they arrived to the list server
+on September 9 starting 6am UTC and until 11am UTC.  For two of these,
+she sent several versions of the same posting.  I diff'ed them and ended
+up approving the latest versions, which include more content, but also
+have some assorted wording differences and some removals.
 
-This is a useful reminder that MITRE and most other CNAs which assign
-CVEs for code they don't produce themselves operate on the honor system,
-and trust CVE requesters to have verified the information they provide,
-since the CNA is often not in a position of being able to verify the
-report themselves (either due to not being funded to do all that work
-or not having access to the necessary software/environment/details
-needed to reproduce or verify).
+So where she writes she notified a vendor on September 9 and received no
+response, it means she gave the vendor no time to respond or didn't
+actually notify them.  Many AIs still fail at (or don't try) keeping
+track of time and of what they did before or are going to do later.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+BTW, remember Yan Xu / xylove21 who sent us AI slops in July and claimed
+"I am a real person, not an LLM acting alone"?  Well, this "real person"
+sent me an off-list reply that started like this:
 
+> Hi Aleande Yoe igh and Im o. M eio el made hing oe. I ill no end anhing ele
+> o oeci. A fe hing I an o be hone abo. The dae in m la elwas wrong. The
+> Istio Wasm report was sent to oss-security on 2026-07-04, not 2026-06-25. I
+> confused "discovered" with "sent" when I wrote the reply. That was my
+> mistake, not a tool issue.
+
+But it won't be long until they pass.  Perhaps some others already do.
+
+Alexander
