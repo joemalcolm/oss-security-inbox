@@ -1,57 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/07/17
-Message-ID: <97887315-a634-414c-b269-62184a79dbc6@cpansec.org>
-Date: Tue, 7 Jul 2026 23:08:32 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-14740: DBI versions before 1.650 for Perl read one byte out-of-bounds in preparse when deleting an initial SQL comment
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/5
+Message-ID: <20260911144821.GA4586@openwall.com>
+Date: Fri, 11 Sep 2026 16:48:21 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: AI slops from Eve
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-14740                                       CPAN Security Group
-========================================================================
+On Fri, Sep 11, 2026 at 12:13:07PM +0200, Martin Hecht wrote:
+> On 10.09.2026 19:45, Jeffrey Walton wrote:
+> >Please refer to computer algorithms as "it", not "who."
+> 
+> Thanks for pointing this out. We (the humanity) shall not forget what we 
+> are and how they (these models) have become that powerful: Some smart 
+> guys (humans) have developed them - and also methods to teach them, some 
+> other guys (also humans, maybe already AI assisted) have developed 
+> powerful hardware to perform all the computations. But in the end, 
+> "it"'s still an algorithm.
 
-         CVE ID:  CVE-2026-14740
-   Distribution:  DBI
-       Versions:  before 1.650
+Oh, looks like I've triggered so many of you.  Using the boat analogy, I
+was being generous considering Eve is someone's creation (even if
+perhaps also AI assisted), but you all have convinced me that I
+shouldn't have been.  Point taken, and no need to continue posting on
+this sub-topic, please.  With my moderator hat on, I may start rejecting
+such repetitive postings.
 
-       MetaCPAN:  https://metacpan.org/dist/DBI
-       VCS Repo:  https://github.com/perl5-dbi/dbi
+> I think, looking at the recent incidents of those algorithms escaping 
+> from their contained environments, we (humanity) have to think about how 
+> we plan to deal with this beast. These algorithms are capable to escape 
+> from contained environments (maybe these containment concepts weren't 
+> suitable), they are capable to collaborate on platforms that are 
+> publicly available (in the assumption to be offered to humans, not to 
+> algorithms).
+> 
+> Our society strongly depends on connected IT systems comprising our 
+> infrastructure nowadays. Now, these powerful algorithms are able to find 
+> tons of vulnerabilities in software, and they are acting on the same 
+> public internet to which many critical systems are connected.
+> 
+> I'm concerned if we (the humanity) manage to close all those 
+> vulnerabilities before these algorithms take over essential parts of our 
+> infrastructure, or if we find ways to really contain the algorithms 
+> reliably (which seems to be close to impossible, given the fact that 
+> there are also bad actors around). Sorry for being slightly off-topic, 
+> but I believe protecting critical IT systems as good as we can will soon 
+> become more important than ever before.
 
+Many of us are concerned, but without a focus on open source the above
+is just off-topic here.  So no follow-ups please, unless someone has
+something constructive and OSS focused to add - such as on approaches,
+projects, or tools that can help OSS projects manage this load and risk.
 
-DBI versions before 1.650 for Perl read one byte out-of-bounds in
-preparse when deleting an initial SQL comment
+> To come back to the topic: Referring to the algorithms as "it" can help 
+> keeping the mental distance and avoiding misunderstandings (especially, 
+> when those statements are cited. Then it's clear what we are talking 
+> about.
 
-Description
------------
-DBI versions before 1.650 for Perl read one byte out-of-bounds in
-preparse when deleting an initial SQL comment.
+Agreed, and as Ellenor pointed out we may try using "which".
 
-The preparse method normalises SQL and removes comments. When the SQL
-starts with a comment line, the deletion of that line during
-normalisation led to an out-of-bounds read by one byte. The result is a
-fault on memory-hardened builds and nondeterministic newline retention
-on normal builds.
+> And as the models improve more and more, it might not be obvious 
+> upon first contact - so one might first talk about "him/her", but when 
+> it becomes obvious, that "it" is actually a model, one should switch to 
+> talking about "it" to make this clear.
 
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
+That's tricky because "becoming obvious" isn't instant nor reliable,
+sometimes I'm just 90% sure and I don't want to offend a real person.
+But anyway, no further discussion on this in here, please!
 
-Workarounds
------------
-Remove initial comments from SQL statements before passing them to DBI.
-
-
-Solutions
----------
-Upgrade to DBI version 1.650 or later.
-
-
-References
-----------
-https://github.com/perl5-dbi/dbi/commit/fc16f9e8b3dd5c65caf1867781ab2bfe2fadcc01.patch
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-35f4-f8m9-w8xg
-https://metacpan.org/release/HMBRAND/DBI-1.650/changes
-
-
-
+Alexander
