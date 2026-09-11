@@ -1,96 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/22/10
-Message-ID: <2026072227-aware-wrinkly-5aa3@gregkh>
-Date: Wed, 22 Jul 2026 10:30:58 +0200
-From: Greg KH <greg@...ah.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/9
+Message-ID: <828235ec-5343-af7a-2c52-d44f1c3050db@apache.org>
+Date: Fri, 11 Sep 2026 17:38:50 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: 432 Linux kernel CVEs
+Subject: CVE-2026-67211: Apache OpenNLP: OOM DoS via Unbounded Array Allocation in SymSpellModelSerializer 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Jul 21, 2026 at 08:44:41PM -0400, Jan Schaumann wrote:
-> Steffen Nurpmeso <steffen@...oden.eu> wrote:
-> > I wonder a bit what your desire is.
-> 
-> I'm looking to take the temperature on how people are
-> responding to a significant influx of reported CVE
-> fixes.  I believe it ought to change how organizations
-> handle linux kernel security updates.
+Severity: moderate 
 
-The kernel isn't "special" here, all companies are finally coming to
-realize they need to re-evaluate their software updates for all of their
-systems and devices as traditionally, it's been woefully ignored.
+Affected versions:
 
-> I currently see the following possible approaches:
-> 
-> 1) I don't care: I always run the latest kernel
-> everywhere and update at least once per
-> $toleranceTimeWindow across all systems I manage.
+- Apache OpenNLP (org.apache.opennlp:opennlp-symspell) 3.0.0-M4 before 3.0.0-M6
 
-Great!  This is what the kernel developer community recommends and
-supports.  If you want support from us, do this.  If you can't do this,
-then wonderful, pay a company to provide the needed support you wish to
-have.  If you can't pay a company, then just use Debian or Yocto as
-their security practices are amazing and because of this, it turns out
-that those systems run the world (after Android.)
+Description:
 
-> 2) I do care: I review every single CVE and decide
-> which changes I need to address / backport in my
-> environment.
+OOM Denial of Service via Unbounded Map Pre-Sizing in Apache OpenNLP SymSpellModelSerializer
 
-Great, you can do that in an automated way if you do an intersection
-between what files a CVE addresses, and what files you actually
-build/use in your kernel.  If you do that, it's normally down to about
-10% of the overall total of CVEs you have to even pay attention to on a
-"normal" system.
+Versions Affected: 
 
-> 3) I update selectively whenever a single
-> vulnerability makes big enough waves that somebody
-> bothers me.  This usually happens in panic mode.
+- 3.0.0-M4
+- 3.0.0-M5
 
-Good luck with that!  Luckily governments now realize this is not a good
-idea and are mandating that you not do that (i.e. the CRA.)  Also, your
-insurance company might wish to have a talk with you as well...
+(The opennlp-spellcheck extension was introduced in 3.0.0-M4. Releases 1.x and 2.x do not contain the affected code.)
 
-> (1) is great, but I haven't seen that be a realistic
-> option in large environments.
+Description:
 
-Android does this pretty well for billions of devices (i.e. the largest
-deployment of software in the world), with one very-overworked developer
-guiding it all.  So it can be done.
+The SymSpellModelSerializer.create() method reads two 32-bit signed integer count fields (unigramCount and bigramCount) from a binary SymSpell model stream and passes each value directly to LinkedHashMap.newLinkedHashMap() after validating only that it is non-negative. No upper bound is applied, so the count is fully attacker-controlled when the model file originates from an untrusted source.
 
-> (2) hasn't been a scalable approach for a while, and
-> perhaps the recent volume changes are leading to
-> people to stop deceiving themselves.
+A crafted .bin model file in which either count field is set to Integer.MAX_VALUE (or any value large enough to exhaust the available heap) causes the map to be pre-sized to a capacity of 2^30 entries. The oversized backing array is allocated on the first put() into that map, requesting 4–8 GB depending on whether compressed oops are in effect, and the load fails with an OutOfMemoryError. Because the count fields sit immediately after a fixed-size header (magic, format version, three UTF strings, the configuration fields, and the edit-distance identifier) the attacker pays no meaningful size cost to weaponize a payload: a file of well under 100 bytes plus a single real entry is sufficient to crash a JVM that loads it.
 
-Again, this can be done in an automated way to trim the # of CVEs down,
-and is what many/most of the "enterprise" distros are doing today for
-their customers.  So yes, it can be done.
+Any code path that deserializes a SymSpell model is affected, including SymSpellModels.deserialize(InputStream), SymSpellModels.fromBytes(byte[]), classpath model loading via SymSpellModelResolver.resolveByLanguage(String), the CorrectTextTool command-line tool, and model-archive loading through the registered ArtifactSerializer. The opennlp-spellcheck extension ships in the official OpenNLP binary distribution.
 
-> (3) is what I see most people do.  It kind of "worked"
-> if you got a small number of events per year, not per
-> week.
+The practical impact is denial of service against processes that load SymSpell model files from untrusted or semi-trusted origins.
 
-Again, this is going to be legislated away, and rightfully so.
+Mitigation:
 
-The number of llm-found issues is only on the rise right now, it's going
-to be a very long 18 months at the least to dig ourselves out of this
-mess, and people had BETTER be updating their systems all along the way
-if they expect to be secure in any way.
+- 3.x users should upgrade to 3.0.0-M6.
 
-To quote Halvar Flake:
-	“Software was never designed for perfect security,
-	 that choice is now catching up with us”
+Note: The fix applies an upper bound to both count fields, checked before the map is pre-sized; counts that are negative or exceed the bound cause an IOException to be thrown and the read to fail fast with no large allocation. The bound is the existing AbstractModelReader.MAX_ENTRIES limit introduced earlie, which the current change promotes to public visibility so that serializers implementing their own binary format can share it. The default bound is 10,000,000, which is well above the entry counts of legitimate SymSpell dictionaries but far below any value that would threaten heap exhaustion. Deployments that legitimately need to load larger dictionaries can raise the limit at JVM startup by setting the OPENNLP_MAX_ENTRIES system property to the desired positive integer (e.g. -DOPENNLP_MAX_ENTRIES=50000000); invalid or non-positive values fall back to the default. Note that this property is shared with the model-reader limit and raising it relaxes both.
 
+Users who cannot upgrade immediately should treat all SymSpell .bin model files as untrusted input unless their provenance is verified, and should avoid loading models supplied by end users or fetched from third-party repositories without integrity checks.
 
-Meta-comment about the 400+ CVEs on Sunday.  I finally carved some time
-out of my weekend to catch up on the pending review queue that I was
-_way_ behind in, and got closer to finishing it up.  All of the kernel
-CVEs are reviewed in public, in our git repo, for everyone to watch and
-comment on.  These were all pending for weeks, they shouldn't have come
-as a suprise to anyone, except for the only issue being that it has
-taken us this long to get them out (which was due to a perfect storm of
-6 week straight of conferences and vacations).
+This issue is being tracked as OPENNLP-1899 
 
-thanks,
+Credit:
 
-greg k-h
+Arpit Jain / arpitjain099 (finder)
+
+References:
+
+https://opennlp.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-67211
+https://issues.apache.org/jira/browse/OPENNLP-1899
+
