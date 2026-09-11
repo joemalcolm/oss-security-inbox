@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/10
-Message-ID: <f0b27b72-20a3-8f76-a264-0ff829b3b6b5@apache.org>
-Date: Mon, 03 Aug 2026 19:44:58 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/7
+Message-ID: <20260911191635.GA6663@openwall.com>
+Date: Fri, 11 Sep 2026 21:16:35 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68979: Apache NiFi: Missing Authorization for Components Referenced by Parameter Context Updates 
+Subject: Re: AI slops from Eve
 Content-Type: text/plain; charset=utf-8
 
-Severity: Medium 
+On Fri, Sep 11, 2026 at 12:44:19PM -0400, Joe Krause wrote:
+> I'm not looking for this to be posted onto the list, or to continue the
+> discussion, but if it is posted, all that people need to know is that
+> cock.li is a mail hosting provider that houses a lot of script kiddies, so
+> almost any email coming from that domain should be treated like spam.
 
-Affected versions:
+The moderation here is primarily by content, not by sender domain, and
+there isn't a volume of undesirable messages from any particular domain
+so high that we would have to resort to pre-filtering by domain.
 
-- Apache NiFi (org.apache.nifi:nifi-web-api) 1.10.0 through 2.10.0
+That mail hosting provider is interesting, especially their /log.txt is
+an interesting read.  They say "User count: ~1,400,000".
 
-Description:
+Much of what was posted to early security mailing lists could be said to
+have been by "script kiddies" as well, yet it also contributed to making
+our present security industry what it is, for better or worse.
 
-Apache NiFI 1.10.0 through 2.10.0 provide a Parameter Context update REST API method that does not enforce authorization checking on components referencing Parameter values. Updating a Parameter Context can change parameter values that affect referencing components, but framework authorization was limited to read and write privileges on the Parameter Context itself. As a result of the missing authorization, an authenticated user authorized to modify a Parameter Context, but not authorized on referencing components, could alter Parameter values affecting those components. In deployments where a Parameter value contains executable scripting content, updating a Parameter can result in code execution during automatic component validation, without starting the referencing component. The impact was limited to stopped components by existing verification checks, and the issue applies only to deployments that use component-level authorization policies. Upgrading to Apache NiFi 2.11.0 is the recommended mitigation, which aligns the Parameter Context update method authorization with other methods, adding authorization checking on affected components.
+Now major players in the industry are making serious use of AI for
+security research, but also various other players are making various
+uses, and it may be useful for us to see and preserve the full picture.
 
-This issue is being tracked as NIFI-16148 
+I don't intend to let a lot of this through to here (including not too
+many opinionated postings like Joe's above or this reply of mine), but
+luckily we're not even getting a lot of it sent in here.  For now, the
+spike appears to be over - we had 455 messages posted in May, but fewer
+than 400 in each of June, July, August, and it's further decline in
+September so far.  These are post-moderation counts, so more messages
+than this were sent to the list address, but excluding genuine spam not
+a lot were rejected.  We'll see what's next and will adapt accordingly.
 
-Credit:
-
-D0HY30N (finder)
-
-References:
-
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68979
-https://issues.apache.org/jira/browse/NIFI-16148
-
-Timeline:
-
-2026-07-22: reported
-
+Alexander
