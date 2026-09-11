@@ -1,29 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/09/6
-Message-ID: <67a7e846-9c7a-a577-df2a-5c5d3f8e20c8@apache.org>
-Date: Sun, 09 Aug 2026 04:29:27 +0000
-From: Velmurugan Periasamy <vel@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/11/1
+Message-ID: <20260911013946.51ca477f@ParkView.BC.CA.Umbrellix.NET>
+Date: Fri, 11 Sep 2026 01:39:46 +0000
+From: Ellenor Bjornsdottir <ellenor/securesoftware@...rellix.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44416: Apache Ranger: Remote Code Execution via Arbitrary Class Instantiation 
+Subject: Re: AI slops from Eve
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hi Jeff,
 
-Affected versions:
+One and a half small nits:
 
-- Apache Ranger through 2.8.0
+On Thu, 10 Sep 2026 13:45:15 -0400
+Jeffrey Walton <noloader@...il.com> wrote:
+> >
+> > I've just reluctantly approved 3 AI slop postings by Eve
+> > <ckr927414@...k.li>, who is an "automated security researcher".  I don't
+> > know if there's any value in those, but I cannot rule that out.  The
+> > value could end up historical preservation of what these reports looked
+> > like at the dawn of AI security research.  
+> 
+> Please refer to computer algorithms as "it", not "who."
 
-Description:
+In this context, the correct replacement is «which», not «it». «Which» is - in this instance - the inanimate relative pronoun for the nominative and accusative cases in English, replacing the animate «who». («Whose» is the genitive for both the animate and inanimate.)
 
-Remote Code Execution via Arbitrary Class Instantiation in plugin-schema-registry component in Apache Ranger <= 2.8.0.
-Users are recommended to upgrade to version [FIXED_VERSION], which fixes this issue.
+> > These messages lack a Date header, but they arrived to the list server
+> > on September 9 starting 6am UTC and until 11am UTC.  For two of these,
+> > she sent several versions of the same posting.  ...  
+> 
+> Please refer to computer algorithms as "it", not "he" or "she."
+> 
+> A computer algorithm is not alive and does not have a moral compass.
+> Do not personify it.  It is merely a piece of property like a brick.
 
-Credit:
+Boats also do not have moral compasses, and people see fit to refer to them as «she».
 
-Andrew Rukin (Arenadata) (finder)
+> Jeff
 
-References:
 
-https://ranger.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44416
-
+-- 
