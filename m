@@ -1,24 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/01/11
-Message-ID: <akV9V0rGX7uxq04M@mertle>
-Date: Wed, 1 Jul 2026 16:49:27 -0400
-From: Michael Orlitzky <michael@...itzky.com>
-To: OSS Security <oss-security@...ts.openwall.com>
-Subject: Re: check_icmp (Monitoring Plugins): host-count overflow leads to heap buffer overflow in setuid-root binary
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/12/4
+Message-ID: <875x0ap3no.fsf@gmail.com>
+Date: Sat, 12 Sep 2026 14:20:59 -0700
+From: Collin Funk <collin.funk1@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: AI slops from Eve
 Content-Type: text/plain; charset=utf-8
 
-On 2026-07-01 15:36:00, Holger Weiß wrote:
-> We released Monitoring Plugins 3.0.1, which fixes a security issue in 
-> the check_icmp plugin.
->
-> ...
->
-> A local user can trigger a heap buffer overflow in check_icmp by 
-> supplying more than 65535 target hosts, which overflows an internal 
-> counter. This happens before check_icmp drops its privileges, so the 
-> corruption occurs while still running as root on setuid-root 
-> installations.
+"David A. Wheeler" <dwheeler@...eeler.com> writes:
 
-If anyone was wondering, nagios-plugins has the same problem.
+> The "rocky time" can easily be prepared for, though. I encourage
+> everyone to do the following, assisted by AI:
+>
+> 1. Find & fix vulnerabilities.
+>
+> 2. Speed component update response. I argue this further here:
+> https://www.linkedin.com/pulse/accelerate-deployment-vulnerability-tsunami-david-a-wheeler-eapge/
+>
+> 3. Harden systems so even break-ins will be less effective.
+>
+> I'd encourage others to do the same. The "vulnpocalypse" is starting.
+> Like many storms, if you're ready, it will be far less damaging. I
+> look forward to the end-state: WAY more secure software.
 
-Fix: https://github.com/nagios-plugins/nagios-plugins/pull/833
+It would be nice if the major labs actually helped free software
+projects with that process. Instead, they give you a trial for a few
+months in hopes you become dependent on it, and drain your wallet into
+theirs once the trial is finished. They probably learned that tactic
+from drug dealers.
+
+I used to be more charitable, recognizing that the compute would be
+expensive. But seeing recent events where OpenAI decided to spend
+millions of dollars to steal credit from independent math researchers
+has made it even clearer that money is no concern of theirs.
+
+Collin
