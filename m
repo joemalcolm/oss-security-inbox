@@ -1,35 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/20/4
-Message-ID: <8634d37e-c37d-f677-5a82-f97115fd1d35@apache.org>
-Date: Sat, 20 Jun 2026 16:52:04 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/19
+Message-ID: <3259e0fb-f6a7-d61f-247f-4e5a3cc68127@apache.org>
+Date: Sun, 13 Sep 2026 05:48:41 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44911: Apache NiFi: Incorrect Authorization for Configuration Verification Requests 
+Subject: CVE-2026-82441: Apache Storm Nimbus: Cross-Tenant Blob Deletion and Cluster Denial of Service via Unvalidated Topology Dependency Keys 
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: moderate 
 
 Affected versions:
 
-- Apache NiFi (org.apache.nifi:nifi-web-api) 1.15.0 through 2.9.0
+- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
 
 Description:
 
-Authorization handling for component configuration verification requests in Apache NiFi 1.15.0 through 2.9.0 allows clients with read access to submit proposed configuration properties. The proposed properties override current configuration, enabling users with read access to invoke predefined verification methods with alternative settings. Apache NiFi installations that do not implement different levels of authorization for viewing and modifying component configuration are not subject to this vulnerability. Upgrading to Apache NiFi 2.10.0 is the recommended mitigation, requiring write access to submit configuration verification requests.
+Description
 
-This issue is being tracked as NIFI-15875 
+A submitted topology carries two lists of blobstore keys, `dependency_jars` and `dependency_artifacts`,
+which the client fills in after uploading the corresponding blobs. Nimbus performed no validation of their
+contents on the submission path, yet acts on them in two places.
+
+During cleanup of a finished topology, Nimbus deletes the keys named in those lists, and the deletion is
+performed as the Nimbus subject, for which the blobstore short-circuits its ACL check. A submitter who
+listed a key belonging to another topology, such as its `-stormjar.jar`, could therefore cause
+that blob to be deleted when their own topology was cleaned up.
+
+Separately, on acquiring leadership a Nimbus compares the dependency keys of all active topologies against
+the blobstore contents and surrenders leadership if any is missing. A single key that does not exist, on a
+single active topology, therefore causes every Nimbus to acquire leadership, surrender it and requeue
+indefinitely, leaving the cluster without a leader and unable to schedule, clean up or accept submissions.
+
+Mitigation
+
+Upgrade to 3.1.0, where a submission is refused unless every entry in both lists is a dependency blob key
+and exists in the blobstore.
+
+Note that this validates new submissions only; a topology stored by an affected version with an invalid list
+is unaffected by the upgrade. An operator whose cluster is failing to retain a leader should inspect the
+Nimbus log for the dependency keys reported as missing and remove or resubmit the topology naming them.
+
+Users who cannot upgrade immediately should restrict topology submission to trusted principals.
+
+Credit
+
+This issue was discovered by rzo1 while investigating an unrelated blobstore defect.
 
 Credit:
 
-Kaixuan Li from Nanyang Technological University (finder)
+rzo1 (finder)
 
 References:
 
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44911
-https://issues.apache.org/jira/browse/NIFI-15875
-
-Timeline:
-
-2026-04-21: reported
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-82441
 
