@@ -1,41 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/10/12
-Message-ID: <20260910013542.GA26987@openwall.com>
-Date: Thu, 10 Sep 2026 03:35:42 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/17
+Message-ID: <5d5a133b-072f-ce7f-6a18-7386f5677d5f@apache.org>
+Date: Sun, 13 Sep 2026 05:48:07 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: AI slops from Eve
+Subject: CVE-2026-82438: Apache Storm Webapp: Authenticated API Responses Exposed to Arbitrary Web Origins 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important 
 
-I've just reluctantly approved 3 AI slop postings by Eve
-<ckr927414@...k.li>, who is an "automated security researcher".  I don't
-know if there's any value in those, but I cannot rule that out.  The
-value could end up historical preservation of what these reports looked
-like at the dawn of AI security research.
+Affected versions:
 
-These messages lack a Date header, but they arrived to the list server
-on September 9 starting 6am UTC and until 11am UTC.  For two of these,
-she sent several versions of the same posting.  I diff'ed them and ended
-up approving the latest versions, which include more content, but also
-have some assorted wording differences and some removals.
+- Apache Storm Webapp (org.apache.storm:storm-webapp) 3.0.0 before 3.1.0
 
-So where she writes she notified a vendor on September 9 and received no
-response, it means she gave the vendor no time to respond or didn't
-actually notify them.  Many AIs still fail at (or don't try) keeping
-track of time and of what they did before or are going to do later.
+Description:
 
-BTW, remember Yan Xu / xylove21 who sent us AI slops in July and claimed
-"I am a real person, not an LLM acting alone"?  Well, this "real person"
-sent me an off-list reply that started like this:
+Description
 
-> Hi Aleande Yoe igh and Im o. M eio el made hing oe. I ill no end anhing ele
-> o oeci. A fe hing I an o be hone abo. The dae in m la elwas wrong. The
-> Istio Wasm report was sent to oss-security on 2026-07-04, not 2026-06-25. I
-> confused "discovered" with "sent" when I wrote the reply. That was my
-> mistake, not a tool issue.
+Three separate mechanisms allowed a web page on an unrelated origin to read responses that Storm's HTTP
+components served to an authenticated user.
 
-But it won't be long until they pass.  Perhaps some others already do.
+The Logviewer reflected the request's `Origin` header back in `Access-Control-Allow-Origin` while also
+sending `Access-Control-Allow-Credentials: true`. The published security model documents a permissive
+`Access-Control-Allow-Origin: *` posture as accepted, which is safe precisely because browsers refuse to
+honour `*` together with credentials; reflecting the concrete origin removes that protection.
 
-Alexander
+The shared CORS filter used by the UI, the Logviewer and DRPC was configured with a response header name
+where an initialisation parameter name was expected. The container ignored the setting and applied its own
+defaults, which allow credentials.
+
+Finally, the UI and Logviewer wrapped API responses in a caller-supplied JSONP callback for every GET
+request. A script element on any origin can load such a response, which bypasses the same-origin policy
+entirely rather than negotiating it, and there was no way to turn the behaviour off.
+
+In each case the effect is that a page visited by an authenticated operator can read cluster, topology and
+log data on their behalf.
+
+Mitigation
+
+Upgrade to 3.1.0, where the Logviewer no longer reflects the request origin in a credentialed response, the
+CORS filter is configured explicitly, and JSONP wrapping is governed by `ui.enable.jsonp`, which defaults to
+false.
+
+Note that disabling JSONP is a behaviour change for tooling that passes a `callback` query parameter; such
+tooling should be moved to ordinary JSON requests.
+
+Users who cannot upgrade immediately should place the UI, Logviewer and DRPC HTTP endpoints behind a reverse
+proxy that strips `Access-Control-Allow-Origin` and `Access-Control-Allow-Credentials` from responses and
+rejects requests carrying a `callback` parameter.
+
+Credit
+
+The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
+
+Credit:
+
+The ASF using Claude Agents (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-82438
+
