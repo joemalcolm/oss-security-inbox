@@ -1,49 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/02/3
-Message-ID: <87fqzsj5se.fsf@gentoo.org>
-Date: Wed, 02 Sep 2026 11:39:45 +0100
-From: Sam James <sam@...too.org>
-To: Werner Koch <wk@...pg.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: Fwd: [Announce] Libgcrypt 1.12.3 released
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/6
+Message-ID: <678dc540-92de-e764-8a37-6e3833f5ed38@apache.org>
+Date: Sun, 13 Sep 2026 05:45:23 +0000
+From: Richard Zowalla <rzo1@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-82426: Apache Storm Nimbus: Arbitrary File Read on Nimbus via Unvalidated Uploaded Jar Location 
 Content-Type: text/plain; charset=utf-8
 
-Werner Koch <wk@...pg.org> writes:
+Severity: important 
 
-> Hi Sam!
->
+Affected versions:
 
-Hi Werner!
+- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
 
-> On Mon, 31 Aug 2026 14:09, Sam James said:
->> I can't reach GnuPG's bug tracker at the moment so I can't check
->> the mentioned bugs (if they're even public, I don't know) to see if
->
-> Fixed bugs are always public. In case we accidently missed to list the
-> restriction, please let us know.  We are really soprry about the
-> problems but there is not much we can do.  400Hz SYN-Floods all from
-> different IPs are not easy to handle.  Our main goal is currently that
-> we are able to work.  We are also working on a solution for at least
-> providing the static pages more reliable.
+Description:
 
-Nono, it's OK, I very much understand. We are suffeirng the same and I
-nearly even wrote something about how I don't blame you guys at all as I
-didn't want it to sound like that.
+Description
 
-I just wanted to tell list members I hadn't done any inspection myself.
+Nimbus accepted the `uploadedJarLocation` argument of `submitTopology` / `submitTopologyWithOpts` as a
+server-side path and opened it directly, without checking that it referred to a file the caller had
+actually uploaded. The intended flow is that a client first calls `beginFileUpload`, which returns a path
+inside the Nimbus inbox, and uploads the jar in chunks to that location; nothing bound submission to that
+flow, and the `uploaders` map populated by `beginFileUpload` was never consulted at submit time.
 
->
->> One thing I did see, however, is this from Lukasz Olejnik on X [0]:
->
-> Doesn't the use of what used to be Twitter not immediatley disqualify a
-> report .-)
+An authenticated user with topology submission rights could therefore submit any path readable by the
+Nimbus daemon user as their topology jar. Nimbus copied the file into the topology's jar blob, and the
+blob ACL grants the submitting subject read access, so the contents could then be retrieved with the
+ordinary blob download RPCs. Candidate targets include the Nimbus Kerberos keytab, Thrift and UI TLS
+private keys, and `storm.yaml` with the ZooKeeper authentication payload. Possession of the Nimbus keytab
+turns an ordinary tenant into a cluster administrator.
 
-;)
+In a deployment configured as the documentation recommends, submission is available to every
+authenticated principal when `nimbus.users` is unset, so no elevated privilege is required.
 
-Thanks for the commentary below.
+Mitigation
 
-> [...]
+Upgrade to 3.1.0, where the submitted location is canonicalised and must resolve inside the Nimbus inbox.
 
-sam
+Users who cannot upgrade immediately should restrict topology submission to trusted principals via
+`nimbus.users` or `nimbus.groups`, and should treat any file readable by the Nimbus daemon user as
+potentially exposed to submitters: rotate the Nimbus keytab and any TLS private keys or ZooKeeper
+credentials reachable from that account. Local mode is unaffected.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+
+Credit
+
+Independently reported to the Apache Storm PMC by n0mi1k, with a proof of concept.
+
+Also found by the ASF using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
+
+Credit:
+
+n0mi1k (finder)
+The ASF using Claude Agents (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-82426
+
