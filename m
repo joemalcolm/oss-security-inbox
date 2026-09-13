@@ -1,33 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/4
-Message-ID: <e36bfd06-09d7-eb64-bfaf-5c285e501a27@apache.org>
-Date: Tue, 09 Jun 2026 05:15:03 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/14
+Message-ID: <8a64bad9-c692-51d2-31c0-45e2a5aa73d3@apache.org>
+Date: Sun, 13 Sep 2026 05:46:30 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-34031: Apache Answer: The custom avatar was not properly validated 
+Subject: CVE-2026-82434: Apache Storm Nimbus, Apache Storm Client: Disclosure of the Topology ZooKeeper Credential to Read-Only Users and to Logs 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: 
 
 Affected versions:
 
-- Apache Answer through 2.0.0
+- Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
+- Apache Storm Client (org.apache.storm:storm-client) 3.0.0 before 3.1.0
 
 Description:
 
-Unrestricted Upload of File with Dangerous Type vulnerability in Apache Answer.
+Description
 
-This issue affects Apache Answer: through 2.0.0.
+When ZooKeeper authentication is configured, Storm deliberately retains
+`storm.zookeeper.topology.auth.payload` in the topology configuration, because workers need it. Nimbus then
+served that configuration verbatim to any caller holding read-only topology permissions, so a user whose
+only grant was the ability to view a topology received its ZooKeeper credential.
 
-The server did not sufficiently validate user-supplied image URLs, allowing arbitrary external content to be embedded as profile images, which could expose users to unintended external requests and tracking by third-party servers.
-Users are recommended to upgrade to version 2.0.1, which fixes the issue.
+That credential is not read-only. The cluster state implementation uses write-capable ACLs for worker
+heartbeats, backpressure and error state, so a recipient can forge or remove that state for the topology
+concerned. It is not a write credential on assignments.
+
+The same advisory covers the submission client, which logged the generated payload at INFO on every
+submission that generated one, and the SASL handlers, which logged it at DEBUG. The credential therefore
+also reached any log aggregation or support bundle collected from the cluster.
+
+Mitigation
+
+Upgrade to 3.1.0, where the payload is removed from the configuration served to read-only callers and is no
+longer written to logs.
+
+Users who cannot upgrade immediately should rotate `storm.zookeeper.topology.auth.payload` for existing
+topologies, review retained logs and support bundles for the value, and restrict read-only topology
+permissions to trusted principals.
+
+Credit
+
+The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
 
 Credit:
 
-Reimar Fritz (reporter)
+The ASF using Claude Agents (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-34031
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-82434
 
