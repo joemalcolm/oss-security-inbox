@@ -1,78 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/28/4
-Message-ID: <R3P7n9I-CK3htaSivHZopNQR6_O-RXVN8uBC88EyTSyGLNqJ9vQAwVIAkPiVSIPYvqSuGoKAyVnIi1SiQthMfSaQ2-pMfdIcVS7qLyg3-yc=@pm.me>
-Date: Fri, 28 Aug 2026 17:02:36 +0000
-From: "t.preissl" <t.preissl@...me>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Multiple Integer Overflows in U-Boot Filesystem Parsing (CVE-2025-70290 through CVE-2025-70293)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/13/23
+Message-ID: <f2a70ce8-b7a8-45f7-a924-103afc105096@gmail.com>
+Date: Sun, 13 Sep 2026 21:39:29 +0200
+From: Gabriel Ravier <gabravier@...il.com>
+To: oss-security@...ts.openwall.com, Richard Zowalla <rzo1@...che.org>
+Subject: Re: CVE-2026-82434: Apache Storm Nimbus, Apache Storm Client: Disclosure of the Topology ZooKeeper Credential to Read-Only Users and to Logs
 Content-Type: text/plain; charset=utf-8
 
------BEGIN SECURITY ADVISORY-----
+On 9/13/26 7:46 AM, Richard Zowalla wrote:
+> Severity:
 
-Title: Multiple Integer Overflows in U-Boot Filesystem Handling
-Author: Timo Preißl <t.preissl@...ton.me>
-Date: 2026-02-11
-CVEs: CVE-2025-70290, CVE-2025-70291, CVE-2025-70292, CVE-2025-70293
-Affected: Denx U-Boot <= v2026.01-rc4
-Fixed in: v2026.04-rc1 (commit adccdb2)
 
-== Overview ==
+This vulnerability was filed without a severity? Or is it missing from here?
 
-Multiple integer overflow vulnerabilities were discovered in the U-Boot
-bootloader's filesystem handling code and command-line interface. These
-flaws can lead to heap memory under-allocation followed by heap-based
-buffer overflows, potentially allowing Arbitrary Code Execution (ACE)
-in the pre-boot environment.
+>
+> Affected versions:
+>
+> - Apache Storm Nimbus (org.apache.storm:storm-server) 3.0.0 before 3.1.0
+> - Apache Storm Client (org.apache.storm:storm-client) 3.0.0 before 3.1.0
+>
+> Description:
+>
+> Description
+>
+> When ZooKeeper authentication is configured, Storm deliberately retains
+> `storm.zookeeper.topology.auth.payload` in the topology configuration, because workers need it. Nimbus then
+> served that configuration verbatim to any caller holding read-only topology permissions, so a user whose
+> only grant was the ability to view a topology received its ZooKeeper credential.
+>
+> That credential is not read-only. The cluster state implementation uses write-capable ACLs for worker
+> heartbeats, backpressure and error state, so a recipient can forge or remove that state for the topology
+> concerned. It is not a write credential on assignments.
+>
+> The same advisory covers the submission client, which logged the generated payload at INFO on every
+> submission that generated one, and the SASL handlers, which logged it at DEBUG. The credential therefore
+> also reached any log aggregation or support bundle collected from the cluster.
+>
+> Mitigation
+>
+> Upgrade to 3.1.0, where the payload is removed from the configuration served to read-only callers and is no
+> longer written to logs.
+>
+> Users who cannot upgrade immediately should rotate `storm.zookeeper.topology.auth.payload` for existing
+> topologies, review retained logs and support bundles for the value, and restrict read-only topology
+> permissions to trusted principals.
+>
+> Credit
+>
+> The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
+>
+> Credit:
+>
+> The ASF using Claude Agents (finder)
+>
+> References:
+>
+> https://storm.apache.org/
+> https://www.cve.org/CVERecord?id=CVE-2026-82434
+>
 
-== Vulnerability Details ==
-
---- CVE-2025-70290: ZFS Metadata Integer Overflow ---
-
-Component: fs/zfs/zfs.c, function zfs_nvlist_lookup_nvlist
-Impact: A crafted ZFS filesystem image with malformed on-disk metadata
-can trigger an integer overflow during the size calculation
-passed to calloc(), resulting in an undersized allocation and
-subsequent out-of-bounds memory access.
-Fix: Validation of allocation size using __builtin_add_overflow.
-
---- CVE-2025-70291: Heap Buffer Overflow in do_mv Command ---
-
-Component: fs/fs.c, function do_mv
-Impact: Missing length checks in the directory move command allow an
-integer overflow during string length addition. An attacker
-with U-Boot shell access can trigger an under-allocation,
-resulting in a heap buffer overflow via strcpy().
-Fix: Safe addition of string lengths using compiler intrinsics.
-
---- CVE-2025-70292: SquashFS Integer Overflow ---
-
-Component: fs/squashfs/sqfs.c, function sqfs_concat_tokens
-Impact: Manipulated token lists trigger an overflow in
-sqfs_get_tokens_length(), causing heap under-allocation
-subsequently overflown by strcpy().
-Fix: Validation of total token length before allocation.
-
---- CVE-2025-70293: EXT4 Block Group Descriptor Table Integer Overflow ---
-
-Component: fs/ext4/ext4_write.c, function ext4fs_get_bgdtable
-Impact: An integer overflow in the block group descriptor table size
-calculation results in an undersized buffer being passed to
-memcpy(), causing memory corruption.
-Fix: Guarded multiplication of block group count and descriptor size.
-
-== Patch ==
-
-All issues are fixed in the U-Boot master branch.
-
-Commit: adccdb2f605a6e8e046712398712398123
-"fix integer overflows in filesystem code"
-
-https://source.denx.de/u-boot/u-boot/-/commit/adccdb2
-
-== Timeline ==
-
-Patch series submitted to upstream mailing list:
-https://lore.kernel.org/u-boot/20251231100831.119142-1-t.preissl@proton.me/T/
-
-Fix merged: v2026.04-rc1
------END SECURITY ADVISORY-----
