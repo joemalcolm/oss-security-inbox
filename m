@@ -1,67 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/04/9
-Message-ID: <43836296-9c6f-4fa9-8045-786f68363c8e@cpansec.org>
-Date: Sat, 4 Jul 2026 18:55:31 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-12746: Dancer2::Plugin::Auth::OAuth::Provider versions before 0.23 for Perl do not support the OAuth 2.0 state parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/8
+Message-ID: <161b4e7b-da87-4861-278b-31384dfcffd8@apache.org>
+Date: Mon, 14 Sep 2026 08:19:36 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-73370: Apache Syncope: Cross-Realm boundaries reconciliation bypass 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-========================================================================
-CVE-2026-12746                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-12746
-   Distribution:  Dancer2-Plugin-Auth-OAuth
-       Versions:  before 0.23
+- Apache Syncope (org.apache.syncope.core.idm:syncope-core-idm-logic) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core.idm:syncope-core-idm-logic) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core.idm:syncope-core-idm-logic) 4.1.0-M0 through 4.1.2
 
-       MetaCPAN: https://metacpan.org/dist/Dancer2-Plugin-Auth-OAuth
-       VCS Repo: https://github.com/biafra/perl-Dancer2-Plugin-Auth-OAuth
+Description:
 
-
-Dancer2::Plugin::Auth::OAuth::Provider versions before 0.23 for Perl do
-not support the OAuth 2.0 state parameter
-
-Description
------------
-Dancer2::Plugin::Auth::OAuth::Provider versions before 0.23 for Perl do
-not support the OAuth 2.0 state parameter.
-
-The authentication_url method builds the provider authorization
-redirect without issuing a state value, and the callback method
-exchanges the callback code and registers the resulting token into the
-session without verifying that the callback corresponds to an
-authorization request this session initiated.
-
-Any application that uses this plugin for OAuth 2.0 login is exposed to
-login cross-site request forgery: because the callback is not bound to
-the session that began the flow, an attacker who starts an
-authorization with their own provider account can deliver the resulting
-callback to a victim, causing the victim's session to complete the
-attacker's authorization and associating the attacker's provider
-identity and access token with that session. Where the application
-persists this as an account link, the attacker may retain access to the
-victim's account through their own provider credentials.
-
-Problem types
--------------
-- CWE-352 Cross-Site Request Forgery (CSRF)
-
-Solutions
----------
-Upgrade to version 0.23 or later.
+Incorrect Authorization vulnerability in Apache Syncope.
 
 
-References
-----------
-https://metacpan.org/release/BIAFRA/Dancer2-Plugin-Auth-OAuth-0.23/diff/BIAFRA/Dancer2-Plugin-Auth-OAuth-0.22
-https://github.com/biafra/perl-Dancer2-Plugin-Auth-OAuth/commit/806420fc2abbe13bede4461475f2f3dcd7daf5f2.patch
-https://datatracker.ietf.org/doc/html/rfc6749#section-10.12
 
-Timeline
---------
-- 2026-06-22: Version 0.23 released with a fix.
+Delegated administration security checks performed by Reconciliation service's pull and push, being incomplete, could accept calls by administrator not provided with adequate entitlements.
 
 
+
+
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+
+Credit:
+
+n0mi1k (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73370
 
