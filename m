@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/20
-Message-ID: <93603426-b5fb-3650-cc44-28e0c6dc69bf@apache.org>
-Date: Tue, 04 Aug 2026 18:15:44 +0000
-From: Daniil Kirilyuk <dakirily@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/9
+Message-ID: <b08410a3-167f-fa37-166b-3a41032fad85@apache.org>
+Date: Mon, 14 Sep 2026 08:24:01 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68080: Apache Qpid Broker-J: Unbounded echo flow responses can lead to denial of service 
+Subject: CVE-2026-73470: Apache Syncope: Delegating users can grant unowned Roles 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
 
 Affected versions:
 
-- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol) through 10.0.1
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.1.0-M0 through 4.1.2
 
 Description:
 
-It was not possible to govern the rate at which the broker would respond to an echo flow, enabling an authenticated attacker to cause excessive resource usage and potential denial of service.
+Improper Privilege Management vulnerability in Apache Syncope.
 
-This issue affects Apache Qpid Broker-J: through 10.0.1.
 
-Users are recommended to upgrade to version 10.1.0, which fixes the issue.
+
+
+
+Delegations can be created or updated with Roles not owned by the delegating User, or not for the same Realm subtree under the delegation management was granted for.
+
+
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+
+Credit:
+
+n0mi1k (finder)
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68080
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73470
 
