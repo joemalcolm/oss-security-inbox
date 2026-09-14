@@ -1,65 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/14/2
-Message-ID: <CA+W5nygF6YakOD0J7_p2eddNBmcQuLSfvfJMeeDL5P-LXPvDsg@mail.gmail.com>
-Date: Fri, 14 Aug 2026 20:24:08 +0800
-From: Bakabaka_9 <qilunuobakabaka9@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/2
+Message-ID: <52b6f846-1817-9d12-5f00-4b6e598594d0@apache.org>
+Date: Mon, 14 Sep 2026 09:18:17 +0000
+From: Calvin Kirs <kirs@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: IXP Manager: Authenticated IDOR / BOLA + Mass Assignment in API Key Update Allows Overwrite of Other Users’ API Keys (incl. Superuser)
+Subject: CVE-2026-68570: Apache Doris: Authorization bypass leading to unauthorized data access 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: important 
 
-In IXP Manager (tested on v7), an authenticated user with at least
-AUTH_CUSTUSER privileges can update or delete arbitrary API key records by
-directly addressing their numeric api_keys.id.
+Affected versions:
 
-The update path mass-assigns request data into the ApiKey model, and the
-model permits the apiKey attribute itself to be mass-assigned. As a result,
-a low-privileged customer can overwrite another user's API key (including a
-superuser's) with an attacker-controlled value, and subsequently
-authenticate as that user via the API.
+- Apache Doris 2.0.0 through 2.1.*
+- Apache Doris 3.0.0 through 3.0.*
+- Apache Doris 4.0.0 before 4.0.8
+- Apache Doris 4.1.0 before 4.1.4
 
-The list endpoint correctly scopes results to the current user:
+Description:
 
-// app/Http/Controllers/ApiKeyController.php:159-167
-
-return ApiKey::where( 'user_id', Auth::id() )
+Incorrect Authorization vulnerability in Apache Doris allows an authenticated user to bypass privilege checks and access data they are not authorized to read, resulting in unauthorized disclosure of information.
 
 
-However, the update/delete paths do not enforce ownership.
 
-*Conditions required for exploitation:*
-
-
-   1. Valid authenticated account with at least AUTH_CUSTUSER
-   2. Ability to obtain a normal CSRF token for the session
-   3. Existence of a victim API key row
-   4. Knowledge (or enumeration) of the numeric api_keys.id
-   5. For superuser escalation, the target key must belong to a superuser
-   6. Victim user and default customer must not be disabled
-
-*Simple PoC (run in browser console while logged in as a customer):*
-
-const victimKeyId = 1; // target api_keys.id const newKey =
-"poc-admin-key-" + Date.now();
-
-const token = document.querySelector('meta[name="csrf-token"]')?.content ||
-document.querySelector('input[name="_token"]')?.value;
-
-await fetch(`/api-key/update/${victimKeyId}`, { method: "POST",
-credentials: "include", headers: { "Content-Type":
-"application/x-www-form-urlencoded" }, body: new URLSearchParams({ _token:
-token, _method: "PUT", apiKey: newKey, description: "overwritten by
-customer PoC", expires: "2030-01-01" }) });
-
-console.log(newKey);
+This issue affects Apache Doris: from 2.0.0 through 2.1.*, from 3.0.0 through 3.0.*, from 4.0.0 before 4.0.8, and from 4.1.0 before 4.1.4.
 
 
-After a successful request the new key can be used for API authentication
-as the victim.
 
-*Suggested mitigation:*
+Users are recommended to upgrade to a fixed release (4.0.8 or 4.1.4), which fixes the issue.
 
+Credit:
 
-   - Update to latest IXP-Manager version
+Calvin Kirs, Security Researcher at SelectDB (finder)
+
+References:
+
+https://doris.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-68570
 
