@@ -1,65 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/03/4
-Message-ID: <cb0ac67c-662d-4384-91a8-d39dd6e97cdc@cpansec.org>
-Date: Fri, 3 Jul 2026 13:57:05 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-56015: Net::IP::LPM versions through 1.10 for Perl allow a heap out-of-bounds read via an unbounded prefix length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/12
+Message-ID: <96c60cbd-9da7-ed20-e402-fb79ee60f3a8@apache.org>
+Date: Mon, 14 Sep 2026 08:27:52 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-75015: Apache Syncope: Nested secrets leak cleartext into audit records readable 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-========================================================================
-CVE-2026-56015                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-56015
-   Distribution:  Net-IP-LPM
-       Versions:  through 1.10
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.1.0-M0 through 4.1.2
 
-       MetaCPAN:  https://metacpan.org/dist/Net-IP-LPM
+Description:
 
+Insufficiently Protected Credentials vulnerability in Apache Syncope.
 
-Net::IP::LPM versions through 1.10 for Perl allow a heap out-of-bounds
-read via an unbounded prefix length
-
-Description
------------
-Net::IP::LPM versions through 1.10 for Perl allow a heap out-of-bounds
-read via an unbounded prefix length.
-
-add() passes the prefix string to the trie builder addPrefixToTrie()
-without checking it against the address width.
-
-addPrefixToTrie() then walks the prefix buffer by prefix_length bits,
-reading prefix[byte] for byte up to prefix_len/8, where prefix is the
-4-byte (IPv4) or 16-byte (IPv6) packed address. A prefix length greater
-than 32 for IPv4 or 128 for IPv6, for example add("1.2.3.4/255", $v) or
-add("2001:db8::/255", $v), reads past the end of the packed address.
-
-The out-of-bounds read happens during trie construction and is bounded:
-the prefix length is stored as an unsigned char, so the bit walk reads
-at most 32 bytes from the start of the packed address, a short distance
-past the end of the 4-byte or 16-byte buffer. It is detectable under
-AddressSanitizer, valgrind, or a hardened allocator, where it can abort
-the process. Lookups and dump() format only the valid address width, so
-the out-of-bounds bytes are not exposed through the module's API.
-
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
-
-Workarounds
------------
-Apply the patch.
-
-Otherwise, reject prefix lengths greater than 32 (IPv4) or 128 (IPv6)
-before passing them to add().
+Audit events, when sent to the configured store, are not sufficiently masked for the sensitive values they might carry on their payloads, thus allowing administrators to access such sensitive values.
 
 
-References
-----------
-https://rt.cpan.org/Ticket/Display.html?id=179856
-https://security.metacpan.org/patches/N/Net-IP-LPM/1.10/CVE-2026-56015-r2.patch
 
 
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+
+Credit:
+
+n0mi1k (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-75015
 
