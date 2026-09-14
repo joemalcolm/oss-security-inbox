@@ -1,113 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/28/22
-Message-Id: <E1wogYp-003Dy5-0f@xenbits.xenproject.org>
-Date: Tue, 28 Jul 2026 12:05:27 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 506 v2 (CVE-2026-62433) - correct buffer checks for DM_OP hypercalls
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/14
+Message-ID: <e8ba31b5-1fc9-da28-bc2d-e5389f594eba@apache.org>
+Date: Mon, 14 Sep 2026 08:29:30 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-77051: Apache Syncope: SQL injection via unsanitized entityKey and opEvent in Audit Events search 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: moderate 
 
-            Xen Security Advisory CVE-2026-62433 / XSA-506
-                               version 2
+Affected versions:
 
-              correct buffer checks for DM_OP hypercalls
+- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-persistence-jpa) 4.1.0-M0 through 4.1.2
 
-UPDATES IN VERSION 2
-====================
+Description:
 
-Public release.
+Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache Syncope.
 
-ISSUE DESCRIPTION
-=================
 
-Parts of the DM_OP handling code assumes the caller has provided the
-required number of buffers for the given operation without any checking
-being done.  As a result, certain operations might access stack
-rubble as structures are possibly uninitialized.
 
-IMPACT
-======
 
-A device model of a HVM guest can gain insight on the contents of the
-Xen stack, thus possibly leaking data from other guests contexts.
 
-VULNERABLE SYSTEMS
-==================
+An administrator with adequate entitlements can achieve execution of arbitrary SQL via stacked queries, leveraging unsanitized entityKey and opEvent parameters.
 
-All Xen versions from 4.10 onwards are vulnerable.  Xen versions 4.9 and
-earlier are not vulnerable.
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
 
-Only entities controlling HVM guests can leverage the vulnerability.
-These are device models running in either a stub domain or de-privileged
-in Dom0.
 
-MITIGATION
-==========
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
 
-Running only PV or PVH guests will avoid the vulnerability.
+Credit:
 
-(Switching from a device model stub domain or a de-privileged device
-model to a fully privileged Dom0 device model does NOT mitigate this
-vulnerability.  Rather, it simply recategorises the vulnerability to
-hostile management code, regarding it "as designed"; thus it merely
-reclassifies these issues as "not a bug".  The security of a Xen system
-using stub domains is still better than with a qemu-dm running as a Dom0
-process.  Users and vendors of stub qemu dm systems should not change
-their configuration to use a Dom0 QEMU process.)
+n0mi1k (finder)
+Ho1aAs (finder)
 
-RESOLUTION
-==========
+References:
 
-Applying the attached patch resolves this issue.
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-77051
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa506.patch           xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa506*
-7fa79f0421eafa420f7af791ad35a96a769c945260d81419052611771347b411  xsa506.patch
-$
-
-DEPLOYMENT DURING EMBARGO
-=========================
-
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmpomrwMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZNF4H/0c6JMsivAWWDIQ920Bwh7EEOKhMv3nGIrBqrN8/
-TGKJNNoNQinhoQv9fnqwsHaiC8e49PNUJqTpEN8/o/b0obnl4Tw2JyUXFY1bZyaz
-XNS85rkrUc0+Ue/Ka2464mmQ826TJXfaXG9CZYlC5cO/JtzX65ecMW4H7ju2tdnt
-c9xK+I5kIQPwUwy3HUMrKFvWi+JIvpCzhuHYDH2iJDecmk42pOmnKtS54q6YO15n
-c4xdn7aNyeECKQw4qUcjKC7zKRgrqFu5J3BlvXauZOkJCL50PK+OpWK6QV+fRNGy
-N7dnY5w+1BMVrHywZI5iy8WqZtJoi6TOO1Gl0WcB07/vvJk=
-=APkr
------END PGP SIGNATURE-----
-
-Download attachment "xsa506.patch" of type "application/octet-stream" (2424 bytes)
