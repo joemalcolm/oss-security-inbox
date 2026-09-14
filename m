@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/13/3
-Message-ID: <12869722-1c2d-8c2f-fdfe-3fb31fb40c81@apache.org>
-Date: Mon, 13 Jul 2026 14:17:24 +0000
-From: Vincent Beck <vincbeck@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/32
+Message-Id: <DC806F2C-6179-4146-9B6E-A13E7FE67861@redhat.com>
+Date: Mon, 14 Sep 2026 21:28:03 +0200
+From: Clemens Lang <cllang@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-58065: Apache Airflow Git provider: Git provider hook defaults to StrictHostKeyChecking=no, disabling SSH host-key verification 
+Cc: "Lexi Groves (49016)" <contact@....fail>, Werner Koch <wk@...pg.org>
+Subject: Re: Retrospective by 'gpg.fail' authors
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hi,
 
-Affected versions:
+> On 13. Sep 2026, at 02:44, Sam James <sam@...too.org> wrote:
+> 
+> They also mention another vulnerability in the slides that is in the
+> talk but I've not seen that yet. A PoC is available in their repo [3].
 
-- Apache Airflow Git provider (apache-airflow-providers-git) before 0.4.1
+I see two potential vulnerabilities discussed in this talk:
 
-Description:
+(1) A RCE in `gpgsm` 2.4.9 when invoked as `gpgsm --debug all --import bad.cert`, with the bad.cert file at [1]. This is apparently a 0-day, as they say it was not reported to GnuPG. I’m not sure how widely used this code is, and how many users regularly call `gpgsm --import` with untrusted inputs. The researcher(s) say "if you're here to write a patch for the calc pop: sm/certcheck.c:634 lol” for this problem, which may be a pointer to debugging it.
 
-The Apache Airflow Git provider runs its git-over-SSH operations with `StrictHostKeyChecking=no` by default, disabling SSH host-key verification. An attacker who can intercept the network path between an Airflow worker and the Git server can impersonate the server (man-in-the-middle), capturing the SSH deploy key or injecting malicious repository content. Deployments that use the Git DAG bundle or Git provider to clone over SSH with a deploy key are affected. The fix changes the default to verify host keys; upgrade to apache-airflow-providers-git `0.4.1` or later and configure a `known_hosts` file.
+(2) An integer underflow followed by a buffer overflow in libgcrypt’s RSASSA-PSS verification discussed in slides 38-45 of [2], fixed in libgcrypt commit 0d64fc2 [3] (also reported by somebody using Claude Code) released in (apparently) libgcrypt 1.12.3 without a CVE assigned. The researcher(s) claim this can be used for RCE from the S/MIME verifier and GnuPG with a 53-bit preimage attack (they don’t say which hash algorithm, but I wouldn’t be surprised if SHA-1 is sufficient).
 
-Credit:
+Personally, I’m not all that interested in (1), but (2) seems to be in code that’s widely used, and there should probably be a CVE assigned for it so we can track fixes and backports.
 
-Siyang Wu (independent researcher) (finder)
-Ephraim Anierobi (remediation developer)
 
-References:
+[1]: https://git.gay/49016/gpg-fail-aftermath/src/branch/main/pocs/bad.cert
+[2]: https://git.gay/49016/gpg-fail-aftermath/src/branch/main/slides.pdf
+[3]: https://gitlab.com/redhat-crypto/libgcrypt/libgcrypt-mirror/-/commit/0d64fc2
 
-https://github.com/apache/airflow/pull/69103
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-58065
+
+-- 
+Clemens Lang
+RHEL Crypto Team
+Red Hat
 
