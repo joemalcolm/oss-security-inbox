@@ -1,30 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/09/8
-Message-ID: <d3ec642c-4549-b380-fc88-4c222bb4a916@apache.org>
-Date: Tue, 09 Jun 2026 07:37:45 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/5
+Message-ID: <2af0eb38-33b2-90d3-0337-1462e43582d5@apache.org>
+Date: Mon, 14 Sep 2026 08:15:40 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49818: Apache Airflow Samba provider: Path traversal in GCSToSambaOperator via GCS object names 
+Subject: CVE-2026-73191: Apache Syncope: CAS service URL injection via Forwarded HTTP headers 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Airflow Samba provider (apache-airflow-providers-samba) before 4.12.6
+- Apache Syncope (org.apache.syncope:syncope-sra) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope:syncope-sra) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope:syncope-sra) 4.1.0-M0 through 4.1.2
 
 Description:
 
-The Apache Airflow Samba provider's `GCSToSambaOperator` joined GCS object names to the SMB destination path without a containment check, so an object named with `../` segments resolved a write path outside the configured `destination_path`. An attacker able to write objects into the source GCS bucket — typically an external data producer distinct from the trusted DAG author — could write files to arbitrary locations on the Samba target when the operator ran. Upgrade apache-airflow-providers-samba to 4.12.6 or later, which validates the resolved destination stays within `destination_path`.
+URL Redirection to Untrusted Site ('Open Redirect') vulnerability in Apache Syncope.
+
+
+
+
+
+When the Syncope SRA is configured for CAS authentication, the target Apereo CAS instance's URL is calculated by unconditionally looking at client-supplied forwarded HTTP headers.
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
 
 Credit:
 
-secuholic (finder)
-Jarek Potiuk (remediation developer)
+meifukun (finder)
 
 References:
 
-https://github.com/apache/airflow/pull/67857
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49818
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73191
 
