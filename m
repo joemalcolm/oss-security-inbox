@@ -1,39 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/03/7
-Message-Id: <DKFIUARAP211.1Z3GE57JB9DYK@redcoat.dev>
-Date: Mon, 03 Aug 2026 19:31:12 +0100
-From: "Emily Shepherd" <emily@...coat.dev>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Some Changes to GNOME Security Tracking
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/7
+Message-ID: <fc2c109f-f4bc-55a3-eb45-6e716fc4ea4d@apache.org>
+Date: Mon, 14 Sep 2026 08:18:24 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-73236: Apache Syncope: Cross-Realm authorization bypass in delegated administration 
 Content-Type: text/plain; charset=utf-8
 
-On Mon Aug 3, 2026 at 5:33 PM BST, David A. Wheeler wrote:
-> Please allow me to point you to the actual announcement & project 
-> page, which explains what is *actually* going on instead.
->
-> The Akrites announcement here:
-> https://www.linuxfoundation.org/press/linux-foundation-and-industry-leaders-launch-akrites-to-defend-critical-open-source-software-against-ai-enabled-cyber-threats
-> instead says, "Bug fixes flow back into each project’s original home, on maintainers’ terms. Where a critical package HAS NO ACTIVE MAINTAINER [emphasis mine], Akrites will serve as maintainer of last resort so fixes to the latest version reach everyone in a timely fashion."
->
-> Note that the "last resort" ONLY applies when there is NO active
-> maintainer.
+Severity: important 
 
-Whether a project is actively maintained or not does not change its 
-licence and retained copyright rights.
+Affected versions:
 
-The point referenced by the pkgconfig example clearly points out that a 
-licence may allow forks and subordinate works to be created (as 
-pkgconfig does) but may well not grant others to use the project name or 
-pass of subordinate forks *as the project*. In the pkgconfig example, 
-their licence would quite explicitly not allow that.
+- Apache Syncope 3.0.0-M0 through 3.0.16
+- Apache Syncope 4.0.0-M0 through 4.0.7
+- Apache Syncope 4.1.0-M0 through 4.1.2
 
-I fail to see how an organisation unilaterally declaring themselves a 
-maintainer of last resort, regardless of what the project licence says, 
-is going to work out well. The intentions may be noble, but copyright 
-doesn't care about intention, it cares about what the licence says.
+Description:
 
-In this age of AI, the industry as a whole appears to be suffering a 
-severe case of collective amnesia over the fact that the people who make 
-a creative work get to decide how that creative work is used or amended.
+Incorrect Authorization vulnerability in Apache Syncope.
 
-Emily
+
+
+Delegated administration security checks are based on Realm hierarchy and enforced via prefix matches.
+Due to incorrect implementation, two sibling Realms whose names begin with the same string cannot be correctly distinguished, resulting in incorrect authorization.
+
+
+
+
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+
+Credit:
+
+Aleksandar Djordjevic (finder)
+n0mi1k (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73236
+
