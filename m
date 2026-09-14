@@ -1,57 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2015/01/11/9
-Message-ID: <CAFYC4_2sUmk28j8fFD3T_O-z=PFbsMSs9WZpJNRRbdk5Yr2rog@mail.gmail.com>
-Date: Sun, 11 Jan 2015 22:09:30 +0000
-From: Daniel Strøm <ds@...4web.dk>
-To: cve-assign@...re.org, Daniel Strøm <ds@...4web.dk>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: CVE request
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/23
+Message-ID: <107e44a4-6ed7-6638-af97-a206d701ac93@apache.org>
+Date: Mon, 14 Sep 2026 08:47:17 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-87779: Apache Syncope: AES Secret Key disclosure via log output 
 Content-Type: text/plain; charset=utf-8
 
-Thank you very much :)
+Severity: important 
+
+Affected versions:
+
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 3.0.15 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.0.3 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-spring) 4.1.0-M0 through 4.1.2
+
+Description:
+
+Insertion of sensitive information into log file vulnerability in Apache Syncope.
 
 
-On Sun Jan 11 2015 at 3:41:04 PM <cve-assign@...re.org> wrote:
 
->
-> > I'd like a CVE for the following security issue:
-> > https://github.com/ZF-Commons/ZfcUser/issues/550
-> >
-> > And in text:
-> > Security advisory: XSS vulnerability in login redirect param
-> >
-> > ZfcUser version 1.2.2 has been released and includes a security for this
-> > vulnerability. Fix has been applied in @baf0e46
-> > <https://github.com/ZF-Commons/ZfcUser/commit/baf0e460>
-> > Affected versions
-> >
-> > All versions below 1.2.2 are affected. dev-master is fixed starting from
-> @
-> > 2cc167a <https://github.com/ZF-Commons/ZfcUser/commit/2cc167a>
-> > Exploits
-> >
-> > Because of missing escaping of the URL param redirect a XSS attack is
-> > possible.
-> > For example: Setting the redirect param to "><a%20href="
-> http://github.com
-> > ">GitHub.com</a><inpu%20type="hidden"%20" would result in a link added
-> to
-> > the login page.
-> > Resolution
-> >
-> > If you are using any version of ZfcUser below 1.2.2 please upgrade
-> > immediately by running composer update.
-> > Credits
-> >
-> > The vulnerability was discovered and fixed by @GyunerZeki
-> > <https://github.com/GyunerZeki>
->
-> Use CVE-2015-1039.
->
-> ---
->
-> CVE assignment team, MITRE CVE Numbering Authority M/S M300
-> 202 Burlington Road, Bedford, MA 01730 USA
-> [ PGP key available through http://cve.mitre.org/cve/request_id.html ]
->
+When AES key of non-standard length (not 16/24/32 bytes) is configured, Syncope will pad the provided value with random characters. The resulting key value is logged.
+
+
+
+This issue affects Apache Syncope: from 3.0.15 through 3.0.16, from 4.0.3 through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+
+Credit:
+
+CyberLeo (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-87779
 
