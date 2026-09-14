@@ -1,46 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/08/12
-Message-ID: <ddb4f4cd-5131-4a17-4701-c302b9568256@apache.org>
-Date: Tue, 08 Sep 2026 14:26:48 +0000
-From: Matt Pavlovich <mattrpav@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/6
+Message-ID: <3f2c416c-f900-8a1f-a0b2-c6bfbf480af8@apache.org>
+Date: Mon, 14 Sep 2026 08:17:26 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-74761: Apache ActiveMQ Broker, Apache ActiveMQ All, Apache ActiveMQ: Spoofing of RemoveSubscription clientId 
+Subject: CVE-2026-73195: Apache Syncope: CSV export spreadsheet formula injection 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) 6.0.0 before 6.3.2
-- Apache ActiveMQ Broker (org.apache.activemq:activemq-broker) before 5.19.11
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) 6.0.0 before 6.3.2
-- Apache ActiveMQ All (org.apache.activemq:activemq-all) before 5.19.11
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) 6.0.0 before 6.3.2
-- Apache ActiveMQ (org.apache.activemq:apache-activemq) before 5.19.11
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-java) 4.1.0-M0 through 4.1.2
 
 Description:
 
-Improper input validation in TopicRegion in Apache ActiveMQ, Apache ActiveMQ Broker, and Apache ActiveMQ All on all platforms.
+Improper Encoding or Escaping of Output vulnerability in Apache Syncope.
+
+
+
+Authenticated users can store a spreadsheet formula payload in one of their own plain attributes. When such users are included in a CSV export and the generated CSV file is opened by a spreadsheet application, the formula may be executed.
 
 
 
 
-An authenticated client can spoof clientId when removing a durable topic subscription.
 
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
 
-
-This issue affects Apache ActiveMQ Broker: before 5.19.11, from 6.0.0 before 6.3.2; Apache ActiveMQ All: before 5.19.11, from 6.0.0 before 6.3.2; Apache ActiveMQ: before 5.19.11, from 6.0.0 before 6.3.2.
-
-
-
-Users are recommended to upgrade to version 6.3.2 or 5.19.11 which fixes the issue.
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
 
 Credit:
 
-Wanxin Yin <yhellow123456@...il.com> (finder)
+meifukun (finder)
 
 References:
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-74761
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-73195
 
