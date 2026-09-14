@@ -1,45 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/14/3
-Message-ID: <f42daef7-4c29-1d75-d89e-0ad32248526b@iki.fi>
-Date: Sun, 14 Jun 2026 13:31:53 +0300 (EEST)
-From: Harry Sintonen <sintonen@....fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/17
+Message-ID: <f7e79d8f-e33d-5693-1672-bfc5266b6d2c@apache.org>
+Date: Mon, 14 Sep 2026 08:41:05 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-9641: Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default algorithm and number of iterations
+Subject: CVE-2026-77883: Apache Syncope: Information disclosure via one-hop JEXL navigation past the JexlContextBuilder name denylist 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 14 Jun 2026, Jacob Bachmeyer wrote:
+Severity: moderate 
 
-> On 6/12/26 20:37, Peter Gutmann wrote:
->> Robert Rothenberg <rrwo@...nsec.org> writes:
->> 
->>> Crypt::PBKDF2 versions before 0.261630 for Perl have a weak default 
->>> algorithm
->>> and number of iterations.
->>> 
->>> The default algorithm is HMAC-SHA1, which should only be used for legacy
->>> systems.
->> Minor nit, there's actually nothing wrong with HMAC-SHA1 since the HMAC
->> construct prevents all of the attacks on SHA1.  Even the rather broken MD5 
->> is
->> still fine if used in an HMAC construct.
->
-> Does the shorter output length (128 bits for MD5; 160 bits for SHA-1) cause 
-> problems?  Has the general advance of computing power caught up to HMAC-MD5 
-> and HMAC-SHA1, or do they remain secure? (Similar to how DES remains unbroken 
-> in the cryptanalytic sense, but its 56-bit keyspace is now vulnerable to 
-> brute force.)
+Affected versions:
 
-No it doesn't. Since with HMAC the collisions are not a problem(*), 
-2^128 is plenty large enough keyspace against bruteforce attacks. Even 
-combining the insane compute power that is in things like the current 
-cryptocurrency systems it would still take way longer than the current 
-age of the universe to bruteforce.
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-api) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-api) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core:syncope-core-provisioning-api) 4.1.0-M0 through 4.1.2
 
-*) https://eprint.iacr.org/2006/043.pdf
+Description:
 
+Exposure of sensitive information through data queries vulnerability in Apache Syncope.
 
-   Regards,
--- 
-l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
-i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
-("  Harry 'Piru' Sintonen <sintonen@....fi> https://www.iki.fi/sintonen");}
+An administrator with adequate entitlements for Derived Schemas can create a malicious JEXL expression which allows any administrator with sufficient entitlements for User read to access LinkedAccount's (if present) or Manager's (if defined) sensitive information, possibly including hashed credentials.
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
+
+Credit:
+
+n0mi1k (finder)
+
+References:
+
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-77883
+
