@@ -1,30 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/06/16
-Message-ID: <047074fe-da98-4160-e478-75b8f6320471@apache.org>
-Date: Thu, 06 Aug 2026 10:09:43 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/20
+Message-ID: <04435d6f-6c7e-97a0-04af-a489105894ce@apache.org>
+Date: Mon, 14 Sep 2026 08:44:22 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-64958: Apache CXF: Denial of service via message header attachments 
+Subject: CVE-2026-78336: Apache Syncope: OIDCC4UI provider list discloses client secrets to any authenticated user 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache CXF (org.apache.cxf:cxf-core) 4.2.0 before 4.2.3
-- Apache CXF (org.apache.cxf:cxf-core) 4.0.0 before 4.1.8
-- Apache CXF (org.apache.cxf:cxf-core) before 3.6.12
+- Apache Syncope (org.apache.syncope.ext.oidcc4ui:syncope-ext-oidcc4ui-logic) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.ext.oidcc4ui:syncope-ext-oidcc4ui-logic) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.ext.oidcc4ui:syncope-ext-oidcc4ui-logic) 4.1.0-M0 through 4.1.2
 
 Description:
 
-An incomplete fix for CVE-2026-50645 means that it is still possible to perform a denial of service attack on Apache CXF by sending a message with many attachment headers. Users are recommended to upgrade to versions 4.2.3 or 4.1.8 or 3.6.12, which fix this issue.
+Insertion of sensitive information into sent data vulnerability in Apache Syncope.
+
+
+
+Any authenticated user can query for the list of available OIDC providers configured for SSO with Console and Enduser. The returned payload contains all configuration settings, including client secrets, regardless of the entitlements owned by the caller.
+
+
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
 
 Credit:
 
-Markus Vogl, RISE GmbH (finder)
+Moritz Theile (finder)
 
 References:
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-64958
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-78336
 
