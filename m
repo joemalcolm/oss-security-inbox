@@ -1,37 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/20/12
-Message-ID: <7e82b4ee-0f80-5683-13a8-37190a15ae1e@apache.org>
-Date: Thu, 20 Aug 2026 14:21:18 +0000
-From: Charles Zhang <dockerzhang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/16
+Message-ID: <46d36ac0-d776-d2a1-1bce-9956fc6edd11@apache.org>
+Date: Mon, 14 Sep 2026 08:38:47 +0000
+From: Francesco Chicchiriccò <ilgrosso@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-63038: Apache InLong: SQL Injection via String Concatenation Vulnerability Report 
+Subject: CVE-2026-77181: Apache Syncope: ClientApp update entitlement not effective 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low 
 
 Affected versions:
 
-- Apache InLong 2.0.0 before 2.4.0
+- Apache Syncope (org.apache.syncope.core.am:syncope-core-am-logic) 3.0.0-M0 through 3.0.16
+- Apache Syncope (org.apache.syncope.core.am:syncope-core-am-logic) 4.0.0-M0 through 4.0.7
+- Apache Syncope (org.apache.syncope.core.am:syncope-core-am-logic) 4.1.0-M0 through 4.1.2
 
 Description:
 
-Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection') vulnerability in Apache InLong. This allows an attacker to inject arbitrary SQL code through the
-dbName, tableName, schemaName, and username parameters. 
-
-This issue affects Apache InLong: from 2.0.0 before 2.4.0.
+Incorrect Authorization vulnerability in Apache Syncope.
 
 
 
-Users are advised to upgrade to Apache InLong's  2.4.0 or cherry-pick [1] to solve it.
+An administrator with ClientApp's update entitlement is unable to perform the related operation, while ClientApp's create entitlement is checked both for create and update operations on ClientApp.
 
-[1]  https://github.com/apache/inlong/issues/12135 .
+
+
+
+
+This issue affects Apache Syncope: from 3.0.0-M0 through 3.0.16, from 4.0.0-M0 Through 4.0.7, from 4.1.0-M0 through 4.1.2.
+
+Users are recommended to upgrade to version 4.0.8 / 4.1.3, which fix this issue.
 
 Credit:
 
-zhaokaifei (finder)
+n0mi1k (finder)
 
 References:
 
-https://inlong.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-63038
+https://syncope.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-77181
 
