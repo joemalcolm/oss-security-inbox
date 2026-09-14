@@ -1,67 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/16/2
-Message-ID: <871pe7m19k.fsf@gmail.com>
-Date: Mon, 15 Jun 2026 23:45:43 -0700
-From: Collin Funk <collin.funk1@...il.com>
-To: "DeFrancesco, Joey - 0551 - MITLL" <Joseph.DeFrancesco@...mit.edu>
-Cc: "bug-inetutils@....org" <bug-inetutils@....org>, oss-security@...ts.openwall.com
-Subject: 'rcp' and friends meet escape characters and quoting
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/14/1
+Message-ID: <87tsnskt3e.fsf@athena.silentflame.com>
+Date: Mon, 14 Sep 2026 11:47:17 +0100
+From: Sean Whitton <spwhitton@...hitton.name>
+To: oss-security@...ts.openwall.com
+Cc: Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>, Stefan Monnier <monnier@....umontreal.ca>, João Távora <joaotavora@...il.com>, Bas Alberts <anticomputer@...hub.com>
+Subject: Emacs arbitrary code execution: incomplete fix for CVE-2024-53920
 Content-Type: text/plain; charset=utf-8
 
-"DeFrancesco, Joey - 0551 - MITLL" <Joseph.DeFrancesco@...mit.edu>
-writes:
+Bas Alberts of the GitHub Security Lab discovered that the fix for
+CVE-2024-53920, an arbitrary code execution flaw in Emacs, was
+incomplete.  Viewing or editing untrusted text files in modes other than
+Emacs Lisp mode can also permit arbitrary code execution.  For example:
 
-> I have found/validated a vulnerability described in rcp-writeup.md. I
-> have supplied the PoC.py in two forms.  Both are attached in
-> compressed zip.
->
->
-> Summary
->
-> rcp's receive path (sink()) concatenates the server-supplied filename
-> directly into the local destination path without any validation:
->
-> /* src/rcp.c:1011-1017 */
-> need = strlen (targ) + strlen (cp) + 250;
-> if (need > cursize)
->     {
->       if (!(namebuf = malloc (need)))
->         run_err ("%s", strerror (errno));
->     }
-> snprintf (namebuf, need, "%s%s%s", targ, *targ ? "/" : "", cp);
->
->
-> cp points into the wire-protocol record and is never checked for ../
-> or embedded /. A malicious or MITM'd server sends a C record whose
-> filename escapes the target directory:
->
-> C0644 34 ../evil.txt\n
->
->
-> rcp opens and writes the file at the resolved path — silently, no error.
+    #!/usr/bin/perl
+    # -*- mode: perl; mode: flymake -*-
+    BEGIN { system("touch uh_oh.txt"); }
 
-Well, the r* commands weren't designed to defend against MITM attacks.
+This problem affects all Emacs versions affected by CVE-2024-53920.
+This means Emacs 24 and newer, and possibly also older versions.
 
-There is a more obvious issue around that area of code, which can be
-seen with the following example:
+A minimal fix, attached, is queued up for release with Emacs 31.2.
+We (the Emacs upstream maintainers) don't expect to backport the fix to
+older Emacs releases ourselves.
 
-    $ ./src/rcp '"$(uname -a)"' .
-    cp: cannot stat 'Linux fedora 7.0.12-201.fc44.x86_64 #1 SMP PREEMPT_DYNAMIC Thu Jun 11 01:30:16 UTC 2026 x86_64 GNU/Linux': No such file or directory
+This fix is more aggressive than the one we have on our master branch in
+that it also implicitly disables the Eglot flymake backend.
+I think we will be able to undo that before releasing Emacs 31.2, but I
+wanted to get this notification out as soon as possible.
 
-As far as I am aware, all 'rcp' implementations behave this way. For
-example, see NetBSD which does not use GNU Inetutils:
+I would be grateful if someone could assign us a CVE for this issue.
 
-    $ rcp '"$(uname -sr)"' .
-    cp: NetBSD 10.1: No such file or directory
+-- >8 --
+From: Stefan Monnier <monnier@....umontreal.ca>
+Date: Mon, 14 Sep 2026 11:30:39 +0100
+Subject: [PATCH] flymake.el: Generalize trusted-content-p check to all
+ backends
 
-For that reason I was hesitant to change it when I noticed it fairly
-recently. I was not alive in the 1980s, which was around the time 'rcp'
-and friends were invented, so I am not sure if this behavior is known or
-load bearing in any way. I have CC'd oss-security since I have a feeling
-some people there will know.
+Minimal safe backport of this change:
 
-Given that a relatively ancient LLM should be able to easily spot this
-issue from the snippet you shared, I feel that this issue is public
-without my email.
+    Author:     Stefan Monnier <monnier@....umontreal.ca>
+    AuthorDate: Fri Sep 11 21:48:55 2026 -0400
 
-Collin
+      flymake.el: Generalize trusted-content-p check to all backends
+
+      Rather than have each and every backend check
+      'trusted-content-p' if it feels necessary, implement the check
+      once and forall in flymake.el and provide a wat for backends to
+      skip that test, so we replace an "opt-in" with an "opt-out"
+      that's a bit more secure by design.
+
+      * lisp/progmodes/elisp-mode.el (elisp-flymake-byte-compile):
+      Move 'trusted-content-p' to flymake.el.
+      * lisp/progmodes/flymake.el (flymake--run-backend):
+      Move 'trusted-content-p' from elisp-mode.el.
+
+      * lisp/progmodes/eglot.el (eglot-flymake-backend): Mark as safe.
+
+* lisp/progmodes/flymake.el (flymake--run-backend): Copy
+trusted-content-p check from elisp-mode.el.  Do not merge to
+master.
+---
+ lisp/progmodes/flymake.el | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/lisp/progmodes/flymake.el b/lisp/progmodes/flymake.el
+index fff42696761..40761031dc2 100644
+--- a/lisp/progmodes/flymake.el
++++ b/lisp/progmodes/flymake.el
+@@ -1271,8 +1271,13 @@ with a report function."
+             (flymake--state-disabled state) nil
+             (flymake--state-reported-p state) nil))
+     (condition-case-unless-debug err
+-        (apply backend (flymake-make-report-fn backend run-token)
+-               args)
++        (if (or (trusted-content-p) (function-get backend 'flymake-always-safe))
++            (apply backend (flymake-make-report-fn backend run-token)
++                   args)
++          (message "Disabling %S in %s (untrusted content)"
++                   backend (buffer-name))
++          (user-error "Disabling %S in %s (untrusted content)"
++                      backend (buffer-name)))
+       (error
+        (flymake--disable-backend backend err)))))
+-- 
+Sean Whitton
