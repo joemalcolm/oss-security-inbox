@@ -1,81 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/07/20/13
-Message-ID: <5d5d51df-b111-447a-8f68-c6ac948fee4f@cpansec.org>
-Date: Mon, 20 Jul 2026 18:56:09 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-64194: Net::DNS versions through 1.55 for Perl allow Denial of Service via deep DNS compression pointer chains
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/8
+Message-ID: <f60350c5-4082-e0f8-a9e5-02181c3f05a7@apache.org>
+Date: Tue, 15 Sep 2026 18:26:40 +0000
+From: Vincent Beck <vincbeck@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-76186: Apache Airflow Keycloak provider: Keycloak token cookies not bound to Airflow session identity 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
 
-========================================================================
-CVE-2026-64194                                       CPAN Security Group
-========================================================================
+Affected versions:
 
-         CVE ID:  CVE-2026-64194
-   Distribution:  Net-DNS
-       Versions:  through 1.55
+- Apache Airflow Keycloak provider (apache-airflow-providers-keycloak) before 0.10.0
 
-       MetaCPAN:  https://metacpan.org/dist/Net-DNS
-       VCS Repo:  https://www.net-dns.org/svn/net-dns/
+Description:
 
+Apache Airflow Keycloak provider: from Airflow 3.3 the Keycloak auth manager takes a user's identity from the signed Airflow session token but takes the Keycloak access and refresh tokens used for every authorization decision from separate, unauthenticated cookies, and never checks that the two describe the same subject. A user who holds any valid Airflow login of their own, together with another subject's Keycloak access or refresh token obtained out of band, can pair the two: Airflow then authorizes requests with the foreign token's privileges while the session identity, audit log and cache keys continue to name the attacker's own account. The refresh path re-issues an Airflow session token for the original identity carrying the foreign tokens, so the mismatched pairing survives across sessions.
 
-Net::DNS versions through 1.55 for Perl allow Denial of Service via
-deep DNS compression pointer chains
+Affects deployments running Airflow 3.3 or later with the Keycloak auth manager. Earlier versions carried the Keycloak tokens inside the signed session token, so the binding existed and was lost when they moved into separate cookies.
 
-Description
------------
-Net::DNS versions through 1.55 for Perl allow Denial of Service via
-deep DNS compression pointer chains.
+Users of apache-airflow-providers-keycloak are recommended to upgrade to version 0.10.0 or later, which binds the cookie-supplied tokens to the session identity.
 
-Net::DNS::DomainName::decode follows RFC 1035 compression pointers by
-recursing into itself with no depth limit. It is possible to construct
-a name which saturates the call stack (at least with larger TCP
-responses), leading to a potential Denial of Service.
+Credit:
 
-The guard `$link < $offset` prevents forward and circular chains, but
-still allows arbitrarily long backward chains. The per-offset cache
-(`$cache`) is populated at the start of each call and short-circuits
-only re-traverses of the same offset - the initial descent through a
-fresh chain still recurses at full depth.
+Claude Security Scans (tool)
+Jarek Potiuk (remediation developer)
 
-A crafted packet can chain two-byte compression pointers so that each
-one points two bytes earlier than the previous, producing a chain
-length of `offset / 2`. For the 14-bit pointer field (max offset 16383)
-this gives up to ~8191 recursive frames. For a TCP DNS message the
-limit is the 16-bit length field (~32767 frames). Perl's default C
-stack handles only a few thousand frames; beyond that the process
-receives SIGSEGV or similar, which is a denial-of-service for any
-application parsing untrusted DNS data.
+References:
 
-The vulnerability is triggered by `Net::DNS::Packet->new(\$wire)` i.e.
-any point where the library decodes a DNS message from the network.
-
-Problem types
--------------
-- CWE-674 Uncontrolled Recursion
-
-Solutions
----------
-Upgrade to version 1.56 or later.
-
-
-References
-----------
-https://www.net-dns.org/blog/#release-candidate-for-netdns-1.56
-https://rt.cpan.org/Ticket/Display.html?id=179946
-https://metacpan.org/release/NLNETLABS/Net-DNS-1.55_01/changes
-
-Timeline
---------
-- 2026-07-10: Issue reported publicly via RT.
-- 2026-07-10: Version 1.55_01 (release candidate for version 1.56)
-   published on CPAN.
-- 2026-07-18: Version 1.56 published on CPAN.
-
-Credits
--------
-Steffen Ullrich, reporter
-
-
+https://github.com/apache/airflow/pull/72207
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-76186
 
