@@ -1,51 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/15/11
-Message-ID: <6853032f-c3a1-418a-8de7-d4b5829f7a5b@cpansec.org>
-Date: Mon, 15 Jun 2026 22:22:43 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-11832: Dancer2::Plugin::Auth::OAuth versions before 0.22 for Perl default to a predictable nonce
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/7
+Message-ID: <ea78633e-51a4-4f94-ba3c-60e197ef1c2d@apache.org>
+Date: Tue, 15 Sep 2026 17:22:09 +0000
+From: Andor Molnar <andor@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-84501: Apache ZooKeeper: Operational log forgery via newline injection in EnsembleAuthenticationProvider 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-11832                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-         CVE ID:  CVE-2026-11832
-   Distribution:  Dancer2-Plugin-Auth-OAuth
-       Versions:  before 0.22
+Affected versions:
 
-       MetaCPAN: https://metacpan.org/dist/Dancer2-Plugin-Auth-OAuth
-       VCS Repo: https://github.com/biafra/perl-Dancer2-Plugin-Auth-OAuth
+- Apache ZooKeeper (org.apache.zookeeper:zookeeper) 3.9.0 through 3.9.5
+- Apache ZooKeeper (org.apache.zookeeper:zookeeper) 3.8.0 through 3.8.6
 
+Description:
 
-Dancer2::Plugin::Auth::OAuth versions before 0.22 for Perl default to a
-predictable nonce
+An unauthenticated attacker can inject arbitrary fake log lines into Apache ZooKeeper's operational log by sending a crafted add_auth("ensemble", ...) request containing newline characters (\n). When the ensemble name doesn't match, EnsembleAuthenticationProvider.handleAuthentication() logs the raw, unsanitized name via LOG.warn(). Because SLF4J's {} placeholder preserves embedded newlines, the attacker can forge complete log entries — with arbitrary timestamps, log levels, class names, and messages — that are visually indistinguishable from genuine ZooKeeper log output.
 
-Description
------------
-Dancer2::Plugin::Auth::OAuth versions before 0.22 for Perl default to a
-predictable nonce.
+This issue affects Apache ZooKeeper: from 3.9.0 through 3.9.5, from 3.8.0 through 3.8.6.
 
-The default nonce was generated using an MD5 hash of the epoch time,
-which is predictable.
+Users are recommended to upgrade to version 3.8.7 or 3.9.6, which fixes the issue.
 
-Problem types
--------------
-- CWE-338 Use of Cryptographically Weak Pseudo-Random Number Generator
-   (PRNG)
+Credit:
 
-Solutions
----------
-Upgrade to version 0.22 or later.
+Youlong Chen Institute of Computing Technology <chenyoulong20g@....ac.cn> (finder)
 
+References:
 
-References
-----------
-https://metacpan.org/release/BIAFRA/Dancer2-Plugin-Auth-OAuth-0.22/changes
-https://www.cve.org/CVERecord?id=CVE-2025-22376
-https://datatracker.ietf.org/doc/html/rfc5849#section-3.3
-https://datatracker.ietf.org/doc/html/rfc5849#section-4.9
-
-
+https://zookeeper.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-84501
 
