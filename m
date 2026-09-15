@@ -1,33 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/06/17/8
-Message-ID: <215b5c2d-2151-596b-f912-488847c0feb1@apache.org>
-Date: Wed, 17 Jun 2026 12:51:22 +0000
-From: Lenny Primak <lprimak@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/13
+Message-ID: <c5fc73b4-82b3-fae2-c86f-11dacd85f650@apache.org>
+Date: Tue, 15 Sep 2026 18:23:24 +0000
+From: Vincent Beck <vincbeck@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-49268: Apache Shiro: LDAP DN Injection in DefaultLdapRealm 
+Subject: CVE-2026-86466: Apache Airflow FAB provider: FAB Authentik provider: id_token issuer/audience not validated 
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Shiro (org.apache.shiro:shiro-core) through 2.2.0
-- Apache Shiro (org.apache.shiro:shiro-core) 3.0.0-alpha-0 through 3.0.0-alpha-1
+- Apache Airflow FAB provider (apache-airflow-providers-fab) before 3.9.0
 
 Description:
 
-A remote attacker can inject LDAP special characters into the Distinguished Name (DN) construction in DefaultLdapRealm class. User-supplied username input is directly concatenated into the LDAP DN template without any escaping of RFC 2253 special characters. This allows an attacker to manipulate the DN structure used for LDAP bind authentication, potentially bypassing authentication or impersonating other users.
+Apache Airflow FAB provider: the Authentik OAuth path in the FAB auth manager does not validate the issuer or audience claims of the id_token it accepts. An attacker holding a token that the same Authentik identity provider minted for a different client application can present it to Airflow and be authenticated as the user it names, because the audience claim is never checked. Affects deployments using the FAB auth manager with Authentik OAuth where the same Authentik instance also serves other applications; the attacker needs a valid token for any of those other applications, not for Airflow.
 
-This issue affects all Apache Shiro versions through 2.2.0, and 3.0.0-alpha-1 when using DefaultLdapRealm
-Upgrade to Apache Shiro 2.2.1 or 3.0.0-alpha-2 or later, which fixes the issue.
+CVE-2026-75156 corrected the same missing validation on the Azure AD path in this file; the Authentik path was left unchanged and is fixed here. Deployments that applied the CVE-2026-75156 fix and use Authentik must also upgrade for this one.
+
+Users of apache-airflow-providers-fab are recommended to upgrade to version 3.9.0 or later, which fixes the issue.
 
 Credit:
 
-zhaokaifei (reporter) - ChinaTelecom (finder)
-Lenny Primak <lenny@...wlogix.com> (remediation developer)
+Ritik Chaddha & NEO by ProjectDiscovery (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-49268
+https://github.com/apache/airflow/pull/72645
+https://www.cve.org/CVERecord?id=CVE-2026-75156
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-86466
 
