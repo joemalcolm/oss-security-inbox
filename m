@@ -1,28 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/08/04/17
-Message-ID: <85b5f1de-4a79-f0c4-80ee-2370cd67ffa2@apache.org>
-Date: Tue, 04 Aug 2026 18:14:49 +0000
-From: Daniil Kirilyuk <dakirily@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/15/9
+Message-ID: <93099201-4f6a-23b3-3b25-9ed031094b04@apache.org>
+Date: Tue, 15 Sep 2026 18:25:10 +0000
+From: Vincent Beck <vincbeck@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68075: Apache Qpid Broker-J: Incoming session flow control window can be exceeded 
+Subject: CVE-2026-76187: Apache Airflow Keycloak provider: Any realm client's credentials mint an Airflow session JWT 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-1-0-protocol) through 10.0.1
+- Apache Airflow Keycloak provider (apache-airflow-providers-keycloak) before 0.10.0
 
 Description:
 
-An authenticated attacker could exceed the session flow control incoming window potentially leading to denial of service.
+Apache Airflow Keycloak provider: the unauthenticated token endpoint accepts a client-credentials grant for any confidential client registered in the Keycloak realm, not only the client configured for Airflow. No allowlist restricts which client ids may authenticate, so the credentials of an unrelated application that happens to share the realm are valid Airflow login credentials, and Airflow mints a signed session token for that application's service account. The endpoint also answers unauthenticated credential guesses against Keycloak under Airflow's identity.
 
-This issue affects Apache Qpid Broker-J: through 10.0.1.
+Affects deployments using the Keycloak auth manager whose realm is shared with other confidential clients. The attacker needs valid credentials for any one of those clients, not for Airflow. Resource authorization is still evaluated per subject, so the access gained is whatever that service account holds, plus any endpoint gated only on being authenticated.
 
-Users are recommended to upgrade to version 10.1.0, which fixes the issue.
+Users of apache-airflow-providers-keycloak are recommended to upgrade to version 0.10.0 or later, which accepts only the configured client on that grant.
+
+Credit:
+
+Claude Security Scans (tool)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68075
+https://github.com/apache/airflow/pull/72205
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-76187
 
