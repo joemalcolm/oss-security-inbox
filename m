@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/8
-Message-ID: <e43ca47b-6d9d-d6b6-625c-878bbbb6d4e9@apache.org>
-Date: Wed, 16 Sep 2026 14:00:51 +0000
-From: David Handermann <exceptionfactory@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/4
+Message-ID: <9cb7931b-7ae5-4183-a739-f9610cdcb1b2@isc.org>
+Date: Wed, 16 Sep 2026 15:31:00 +0200
+From: Nicki Křížek <nicki@....org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-81866: Apache NiFi: Missing Authorization for Assets and Secrets Referenced by Connector Configuration 
+Cc: security-officer@....org
+Subject: ISC has disclosed fourteen vulnerabilities in BIND 9 (CVE-2026-19033, CVE-2026-19662, CVE-2026-19666, CVE-2026-19667, CVE-2026-19668, CVE-2026-19941, CVE-2026-75029, CVE-2026-76163, CVE-2026-77119, CVE-2026-77692, CVE-2026-78301, CVE-2026-80274, CVE-2026-81563, CVE-2026-81736)
 Content-Type: text/plain; charset=utf-8
 
-Severity: Low 
+On 16 September 2026, Internet Systems Consortium disclosed fourteen vulnerabilities affecting our BIND 9 software:
 
-Affected versions:
+- CVE-2026-19033:       Unauthenticated IXFR deltas are applied to the live zone before TSIG verification https://kb.isc.org/docs/cve-2026-19033
+- CVE-2026-19662:       qpcache NOQNAME proof use-after-free crashes recursive resolver https://kb.isc.org/docs/cve-2026-19662
+- CVE-2026-19666:       Use-after-free in query_addnoqnameproof() via the DNS64 filter64 path https://kb.isc.org/docs/cve-2026-19666
+- CVE-2026-19667:       Remote assertion failure via 16-bit length truncation in `dns_ncache_add()` https://kb.isc.org/docs/cve-2026-19667
+- CVE-2026-19668:       Resource Exhaustion via Excessive DNSSEC Cryptographic Material Matching https://kb.isc.org/docs/cve-2026-19668
+- CVE-2026-19941:       checkwildcard() accepts an out-of-zone NSEC as a wildcard-nonexistence proof https://kb.isc.org/docs/cve-2026-19941
+- CVE-2026-75029:       Message parser retains every identical singleton RDATA, enabling wire-to-work amplification https://kb.isc.org/docs/cve-2026-75029
+- CVE-2026-76163:       named aborts on a TKEY query when the user configuration has no global options statement https://kb.isc.org/docs/cve-2026-76163
+- CVE-2026-77119:       NSEC3 insecure-referral proof can use unrelated cached NSEC3 RRsets https://kb.isc.org/docs/cve-2026-77119
+- CVE-2026-77692:       Unauthenticated remote crash of named via a single DoH SIG(0) request https://kb.isc.org/docs/cve-2026-77692
+- CVE-2026-78301:       Out-of-zone database nodes can become authoritative zone cuts https://kb.isc.org/docs/cve-2026-78301
+- CVE-2026-80274:       Validating resolver can abort while caching a mismatched NOQNAME proof https://kb.isc.org/docs/cve-2026-80274
+- CVE-2026-81563:       SVCB AliasMode additional-data error leaks qpcache references https://kb.isc.org/docs/cve-2026-81563
+- CVE-2026-81736:       Remote CPU denial of service through cached SVCB/HTTPS AliasMode trees https://kb.isc.org/docs/cve-2026-81736
 
-- Apache NiFi (org.apache.nifi:nifi-web-api) 2.9.0 through 2.11.0
+New versions of BIND 9 are available:
 
-Description:
+- https://downloads.isc.org/isc/bind9/9.20.29/
+- https://downloads.isc.org/isc/bind9/9.21.26/
 
-Apache NiFi 2.9.0 through 2.11.0 provide Connector configuration update and verification REST API methods that do not enforce authorization checking on Assets and Secrets referenced in proposed configuration. Updating or verifying a Connector configuration step can apply Asset and Secret references, but framework authorization was limited to write privileges on the Connector itself. As a result of the missing authorization, an authenticated user authorized to modify a Connector, but not authorized to read a referenced Parameter Provider, could apply Secret values backed by that Parameter Provider. The same methods also accepted Asset identifiers without verifying that the Asset belonged to the Connector being configured. Apache NiFi installations that do not implement different levels of authorization across Connectors and Parameter Providers are not subject to this vulnerability, because the framework enforces write permissions on the Connector as the security boundary. Upgrading to Apache NiFi 2.12.0 is the recommended mitigation, which authorizes read access to referenced Parameter Providers and verifies Connector ownership of referenced Assets during configuration update and verification.
+For more information and other release formats, consult the ISC software download page: https://www.isc.org/download/
 
-This issue is being tracked as NIFI-16205 
+With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
 
-Credit:
+-- 
+Nicki Křížek
 
-h1ei1 (finder)
-Arpit Jain (finder)
 
-References:
+Download attachment "OpenPGP_0x01623B9B652A20A7.asc" of type "application/pgp-keys" (3176 bytes)
 
-https://nifi.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-81866
-https://issues.apache.org/jira/browse/NIFI-16205
-
-Timeline:
-
-2026-08-05: reported
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (229 bytes)
