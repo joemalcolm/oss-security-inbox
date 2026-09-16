@@ -1,64 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/3
-Message-ID: <72f6073c-62ed-4e2e-bb78-b06ee3cce433@nlnetlabs.nl>
-Date: Wed, 16 Sep 2026 10:26:55 +0200
-From: Yorgos Thessalonikefs <yorgos@...etlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/7
+Message-ID: <786ca2f3-e972-84c9-bd86-10610073aca2@apache.org>
+Date: Wed, 16 Sep 2026 13:58:53 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Unbound: 1.26.1 addresses multiple CVE items
+Subject: CVE-2026-70469: Apache NiFi: Improper Handling of Case Sensitivity for Content-Encoding in HTTP Requests 
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Severity: High 
 
-(The official announcement can be found at:
-https://community.nlnetlabs.nl/t/unbound-1-26-1-released/3463)
+Affected versions:
 
-Several vulnerabilities were found in Unbound.
+- Apache NiFi (org.apache.nifi:nifi-jetty) 2.11.0
 
-We are releasing 1.26.1 as a security release today (September 16) 
-including the relevant fixes.
+Description:
 
-The overview of the vulnerabilities with a brief description is:
+Apache NiFi 2.11.0 disabled support for gzip-encoded HTTP requests for the application REST API and rejected requests that included the standard Content-Encoding header indicating gzip encoding. The framework enforcement filter did not check multiple instances of the Content-Encoding header and did not reject non-standard identifiers for gzip encoding, allowing a malicious client to send crafted requests that could consume excessive amounts of memory. Upgrading to Apache NiFi 2.12.0 is the recommended mitigation, which disables decompression of gzip-encoded HTTP requests regardless of header number or encoding identifiers.
 
-CVE-2026-81642 - severity: CRITICAL
-Heap buffer overflow and possible Remote Code Execution when digesting 
-DNSKEY
+This issue is being tracked as NIFI-16170 
 
-CVE-2026-81634 - severity: HIGH
-Possible heap buffer overflow during DNSSEC canonicalization
+Credit:
 
-CVE-2026-82717 - severity: HIGH
-CNAME synthesis could lead to heap corruption
+mak3bread (Minseong Kim) (finder)
 
-CVE-2026-77955 - severity: MEDIUM
-Possible ZONEMD verification bypass window
+References:
 
-CVE-2026-78227 - severity: MEDIUM
-Use-after-free in DoQ stream output buffer on reset re-transmission
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-70469
+https://issues.apache.org/jira/browse/NIFI-16170
 
-CVE-2026-80225 - severity: MEDIUM
-Possible degradation of service from continuous queries on the same 
-TCP/DoT connection
+Timeline:
 
-CVE-2026-82720 - severity: MEDIUM
-Use-after-free in DoH stream cleanup code path
+2026-08-04: reported
 
-CVE-2026-85501 - severity: MEDIUM
-Retrap: Novel Vulnerabilities to launch Algorithmic Complexity Attacks 
-on DNSSEC
-
-CVE-2026-77860 - severity: LOW
-'serve-expired' can bypass Unbound 'wait-limit'
-
-
-More information about the vulnerabilities can be found at:
-https://nlnetlabs.nl/projects/unbound/security-advisories/
-
-
-Best regards,
--- Yorgos, on behalf of the Unbound team.
-
-
-** This email is signed. Keys of the NLnet Labs people are published on
-https://www.nlnetlabs.nl/people/ **
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
