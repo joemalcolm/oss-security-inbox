@@ -1,34 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/13
-Message-ID: <e209696b-8d1d-011a-31b7-fb9fdb87967b@apache.org>
-Date: Wed, 16 Sep 2026 15:24:23 +0000
-From: Volodymyr Siedlecki <volosied@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/11
+Message-ID: <40ee045c-82af-8c1f-8d1c-cf223bd4fd95@apache.org>
+Date: Wed, 16 Sep 2026 14:16:18 +0000
+From: David Handermann <exceptionfactory@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-68536: Apache MyFaces: Server-Side Request Forgery / Local File Inclusion Vulnerability 
+Subject: CVE-2026-87976: Apache NiFi Registry: Improper Limitation of Pathname in Persisted Extension Bundles 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: High 
 
 Affected versions:
 
-- Apache MyFaces (org.apache.myfaces.core:myfaces-impl) 2.2.*
-- Apache MyFaces (org.apache.myfaces.core:myfaces-impl) 2.3.*
-- Apache MyFaces (org.apache.myfaces.core:myfaces-impl) 3.0.*
-- Apache MyFaces (org.apache.myfaces.core:myfaces-impl) 4.0.*
-- Apache MyFaces (org.apache.myfaces.core:myfaces-impl) 4.1.*
-- Apache MyFaces (org.apache.myfaces.core:myfaces-impl) 2.3-next-*
+- Apache NiFi Registry (org.apache.nifi.registry:nifi-registry-framework) 0.4.0 through 2.11.0
 
 Description:
 
-Server-Side Request Forgery / Local File Inclusion in Apache MyFace Core.
+Apache NiFi Registry 0.4.0 through 2.11.0 are subject to path manipulation when storing extension bundle content using group, artifact, and version coordinates from uploaded NAR manifests. The default file persistence provider used coordinates as filesystem path components without rejected parent-directory names, and the path-containment check compared an unnormalized resolved path. An authenticated user authorized to write and delete bundles in a bucket can upload a NAR with a crafted manifest resulting in file system operations outside of the file persistence directory. Upgrading to Apache NiFi Registry 2.12.0 is the recommended mitigation, which rejects parent-directory coordinates and requires a normalized path toremain a strict child of the storage root location.
 
-Older unsupported versions may also be affected. 
+This issue is being tracked as NIFI-16329 
 
-Users are recommended to upgrade to versions 2.3.12, 2.3-next-M9, 3.0.4, 4.0.4, or 4.1.4, which fix this issue.
+Credit:
+
+lichoin (finder)
 
 References:
 
-https://lists.apache.org/thread/4kwh2dys1sdcm3o4pbk41t2lt9or72qq
-https://myfaces.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-68536
+https://nifi.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-87976
+https://issues.apache.org/jira/browse/NIFI-16329
 
