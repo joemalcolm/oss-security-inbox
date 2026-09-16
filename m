@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/4
-Message-ID: <9cb7931b-7ae5-4183-a739-f9610cdcb1b2@isc.org>
-Date: Wed, 16 Sep 2026 15:31:00 +0200
-From: Nicki Křížek <nicki@....org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/14
+Message-ID: <aqq9PbKgAITNSYEl@v4bel>
+Date: Thu, 17 Sep 2026 01:01:01 +0900
+From: Hyunwoo Kim <imv4bel@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed fourteen vulnerabilities in BIND 9 (CVE-2026-19033, CVE-2026-19662, CVE-2026-19666, CVE-2026-19667, CVE-2026-19668, CVE-2026-19941, CVE-2026-75029, CVE-2026-76163, CVE-2026-77119, CVE-2026-77692, CVE-2026-78301, CVE-2026-80274, CVE-2026-81563, CVE-2026-81736)
+Cc: imv4bel@...il.com
+Subject: CVE-2026-89775: Guest-to-Host Escape in KVM/arm64
 Content-Type: text/plain; charset=utf-8
 
-On 16 September 2026, Internet Systems Consortium disclosed fourteen vulnerabilities affecting our BIND 9 software:
+Hi,
 
-- CVE-2026-19033:       Unauthenticated IXFR deltas are applied to the live zone before TSIG verification https://kb.isc.org/docs/cve-2026-19033
-- CVE-2026-19662:       qpcache NOQNAME proof use-after-free crashes recursive resolver https://kb.isc.org/docs/cve-2026-19662
-- CVE-2026-19666:       Use-after-free in query_addnoqnameproof() via the DNS64 filter64 path https://kb.isc.org/docs/cve-2026-19666
-- CVE-2026-19667:       Remote assertion failure via 16-bit length truncation in `dns_ncache_add()` https://kb.isc.org/docs/cve-2026-19667
-- CVE-2026-19668:       Resource Exhaustion via Excessive DNSSEC Cryptographic Material Matching https://kb.isc.org/docs/cve-2026-19668
-- CVE-2026-19941:       checkwildcard() accepts an out-of-zone NSEC as a wildcard-nonexistence proof https://kb.isc.org/docs/cve-2026-19941
-- CVE-2026-75029:       Message parser retains every identical singleton RDATA, enabling wire-to-work amplification https://kb.isc.org/docs/cve-2026-75029
-- CVE-2026-76163:       named aborts on a TKEY query when the user configuration has no global options statement https://kb.isc.org/docs/cve-2026-76163
-- CVE-2026-77119:       NSEC3 insecure-referral proof can use unrelated cached NSEC3 RRsets https://kb.isc.org/docs/cve-2026-77119
-- CVE-2026-77692:       Unauthenticated remote crash of named via a single DoH SIG(0) request https://kb.isc.org/docs/cve-2026-77692
-- CVE-2026-78301:       Out-of-zone database nodes can become authoritative zone cuts https://kb.isc.org/docs/cve-2026-78301
-- CVE-2026-80274:       Validating resolver can abort while caching a mismatched NOQNAME proof https://kb.isc.org/docs/cve-2026-80274
-- CVE-2026-81563:       SVCB AliasMode additional-data error leaks qpcache references https://kb.isc.org/docs/cve-2026-81563
-- CVE-2026-81736:       Remote CPU denial of service through cached SVCB/HTTPS AliasMode trees https://kb.isc.org/docs/cve-2026-81736
+The embargo agreed with the maintainers of
+linux-distros@...openwall.org has expired, so I am posting this report.
 
-New versions of BIND 9 are available:
+CVE-2026-89775 is a guest-to-host escape in KVM/arm64 on hosts where
+nested virtualization is enabled.
 
-- https://downloads.isc.org/isc/bind9/9.20.29/
-- https://downloads.isc.org/isc/bind9/9.21.26/
+The root cause is a type truncation of the stage-1 walk level, which
+makes the size computation return 0, the value that means "size
+unknown". The VNCR pseudo-TLB invalidation path interprets that 0 as a
+valid size, so the invalidation range becomes an empty interval and the
+invalidation is always skipped.
 
-For more information and other release formats, consult the ISC software download page: https://www.isc.org/download/
+As a result, a freed host page stays mapped writable at a fixed address
+in the host kernel, and the attacking guest obtains 64-bit reads and
+writes to that page without any trap or VM exit.
 
-With the public announcement of these vulnerabilities, the embargo period is ended and any updated software packages that have been prepared may be released.
+An attacker can escape to the host after creating an instance that
+provides nested virtualization on a multi-tenant arm64 public cloud. On
+distributions such as RHEL, /dev/kvm is world-writable (0666), so if
+nested virtualization is enabled on the host, an unprivileged user can
+use this vulnerability as a reliable LPE to gain root.
 
--- 
-Nicki Křížek
+This vulnerability was reported and is now patched in mainline. It
+covers the range from 7270cc9157f47 (2025-05-14) to 8053393680d4
+(2026-08-06):
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8053393680d4
 
 
-Download attachment "OpenPGP_0x01623B9B652A20A7.asc" of type "application/pgp-keys" (3176 bytes)
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (229 bytes)
+Best regards,
+Hyunwoo Kim
