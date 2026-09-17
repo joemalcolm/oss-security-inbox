@@ -1,52 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/2
-Message-ID: <871parvrti.fsf@jacob.g10code.de>
-Date: Thu, 17 Sep 2026 17:08:25 +0200
-From: Werner Koch <wk@...pg.org>
-To: Soatok Dreamseeker <soatok.dhole@...il.com>
-Cc: oss-security@...ts.openwall.com,  Sam James <sam@...too.org>,  Clemens Lang <cllang@...hat.com>,  "Lexi Groves (49016)" <contact@....fail>
-Subject: Re: Retrospective by 'gpg.fail' authors
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/4
+Message-ID: <b59a8aab-43cd-402d-bc02-9dafdd357c2a@linaro.org>
+Date: Thu, 17 Sep 2026 16:56:19 +0000
+From: Adhemerval Zanella Netto <adhemerval.zanella@...aro.org>
+To: libc-announce@...rceware.org, oss-security@...ts.openwall.com
+Subject: The GNU C Library security advisories update for 2026-09-17
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 16 Sep 2026 13:06, Soatok Dreamseeker said:
+The following security advisories have been published:
 
->> Yes, sure.  But 2003 was a different time and that part of the code was
->> simply forgotten:
->>
->
-> So... why not delete it? Unmaintained code is a liability (and,
-> categorically, forgotten about code is not being maintained).
+GLIBC-SA-2026-0021:
+===================
+Assertion failure in the DNS stub resolver with a long search domain
 
-By "forgotten" I meant that -Wformat-nonlietral was not anymore used to
-that specific problem.  The time string formatting is still required and
-gcc actually provides a working method to disable warnings for a specific
-function (or maybe even code lines).
+Initializing the DNS stub resolver from an /etc/resolv.conf file, or a
+LOCALDOMAIN environment variable, whose search list contains a domain
+of roughly 200 characters or more in the GNU C Library version 2.26 to
+2.44 results in an assertion failure which aborts the process.
 
-GnuPG commit: 98871aadb70378343541128e80ffd391e413e248
+The resolver truncates the search list when copying it into the
+fixed-size _res.defdname buffer, then asserts that the copy is
+consistent with the full configuration.  The consistency check
+compared against the wrong size and did not handle a first entry that
+does not fit, so a correctly truncated list failed the assertion.  Any
+process that resolves names through the library is affected, including
+long-running processes that reload /etc/resolv.conf on the next query
+after it changes.  Search domains are commonly written to
+/etc/resolv.conf from data received over DHCP or from a VPN server, so
+an attacker on the local network may be able to trigger this without
+privileges on the target system, subject to validation by the network
+configuration software.
 
-  + * Note: gcc -Wformat-noliteral would complain here.  Thus we disable
-  + * it for this function.  */
-  +#if defined(HAVE_STRFTIME) && defined(HAVE_NL_LANGINFO)
-  +# if GPGRT_HAVE_PRAGMA_GCC_PUSH
-  +#  pragma GCC diagnostic push
-  +#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
-  +# endif
-  +static void
-  +format_time_nl_langinfo (char *buffer, size_t bufsize, struct tm *tp)
-  [...]
-   
-             mycflags="$mycflags -W -Wno-sign-compare -Wno-format-zero-length"
-  +          mycflags="$mycflags -Wformat-nonliteral"
-             mycflags="$mycflags -Wno-missing-field-initializers"
-  
-
-Salam-Shalom,
-
-   Werner
-
-
--- 
-The pioneers of a warless world are the youth that
-refuse military service.             - A. Einstein
-
-Download attachment "openpgp-digital-signature.asc" of type "application/pgp-signature" (285 bytes)
+CVE-Id: CVE-2026-8674
+Public-Date: 2023-11-07
+Vulnerable-Commit: 3f853f22c87f0b671c0366eb290919719fa56c0e (2.26)
+Fix-Commit: 506ea57086bfb9ce3daff1c14246a1cb532aba0a (2.45)
+Reported-by: Joshua Rogers - joshua@...hua.hu
+CVSS: CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H - 5.3
