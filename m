@@ -1,47 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/16/16
-Message-ID: <CAPLcw7J-tnr4dSne5hCM1nfyH0ZQZN_qE3K4hRmRa1A8_Y5a+g@mail.gmail.com>
-Date: Thu, 17 Sep 2026 00:09:54 +0100
-From: Haitam Lazaar <lazaar.haitam.official@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91752: GNU libextractor < 1.15 Stack Overflow via OLE2
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/2
+Message-ID: <871parvrti.fsf@jacob.g10code.de>
+Date: Thu, 17 Sep 2026 17:08:25 +0200
+From: Werner Koch <wk@...pg.org>
+To: Soatok Dreamseeker <soatok.dhole@...il.com>
+Cc: oss-security@...ts.openwall.com,  Sam James <sam@...too.org>,  Clemens Lang <cllang@...hat.com>,  "Lexi Groves (49016)" <contact@....fail>
+Subject: Re: Retrospective by 'gpg.fail' authors
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+On Wed, 16 Sep 2026 13:06, Soatok Dreamseeker said:
 
-A stack-based buffer overflow vulnerability was identified in GNU
-libextractor's OLE2 plugin for versions prior to 1.15. The vulnerability
-has been assigned CVE-2026-91752.
+>> Yes, sure.  But 2003 was a different time and that part of the code was
+>> simply forgotten:
+>>
+>
+> So... why not delete it? Unmaintained code is a liability (and,
+> categorically, forgotten about code is not being maintained).
 
-Description:
-GNU libextractor before 1.15 contains a stack-based buffer overflow
-vulnerability in the `process_star_office` function that sizes a
-variable-length stack array from attacker-controlled OLE2 stream data.
-Attackers can craft malicious StarOffice documents that allocate up to 4 MB
-on the stack, causing stack overflow and crashing any application
-extracting metadata from the document (Denial of Service). In
-multi-threaded contexts using EXTRACTOR_OPTION_IN_PROCESS, the overflow
-bypasses -fstack-clash-protection by overflowing into adjacent thread stack
-frames, allowing for arbitrary Code Execution.
+By "forgotten" I meant that -Wformat-nonlietral was not anymore used to
+that specific problem.  The time string formatting is still required and
+gcc actually provides a working method to disable warnings for a specific
+function (or maybe even code lines).
 
-Affected Versions: libextractor >= 0, < 1.15
+GnuPG commit: 98871aadb70378343541128e80ffd391e413e248
 
-Fix:
-The issue is patched in GNU libextractor version 1.15.
+  + * Note: gcc -Wformat-noliteral would complain here.  Thus we disable
+  + * it for this function.  */
+  +#if defined(HAVE_STRFTIME) && defined(HAVE_NL_LANGINFO)
+  +# if GPGRT_HAVE_PRAGMA_GCC_PUSH
+  +#  pragma GCC diagnostic push
+  +#  pragma GCC diagnostic ignored "-Wformat-nonliteral"
+  +# endif
+  +static void
+  +format_time_nl_langinfo (char *buffer, size_t bufsize, struct tm *tp)
+  [...]
+   
+             mycflags="$mycflags -W -Wno-sign-compare -Wno-format-zero-length"
+  +          mycflags="$mycflags -Wformat-nonliteral"
+             mycflags="$mycflags -Wno-missing-field-initializers"
+  
 
-References:
-CVE Record: https://www.cve.org/CVERecord?id=CVE-2026-91752
-VulnCheck Advisory:
-https://www.vulncheck.com/advisories/gnu-libextractor-before-1.15-stack-overflow-via-ole2
-PoC & Technical Details:
-https://github.com/Haitam-lazaar/libextractor-ole2-rce
-Upstream Patches:
-  -
-https://git.gnunet.org/gnunet/libextractor/commit/04004eb19033e093938138b09befdf31e71e8522.html
-  -
-https://git.gnunet.org/gnunet/libextractor/commit/2781c7e9095f4ddaff4f535d69342f3903b18422.html
-GNU libextractor: https://www.gnu.org/software/libextractor/
+Salam-Shalom,
 
-Regards,
-Haitam Lazaar
+   Werner
 
+
+-- 
+The pioneers of a warless world are the youth that
+refuse military service.             - A. Einstein
+
+Download attachment "openpgp-digital-signature.asc" of type "application/pgp-signature" (285 bytes)
