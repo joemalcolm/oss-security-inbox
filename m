@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/4
-Message-ID: <b59a8aab-43cd-402d-bc02-9dafdd357c2a@linaro.org>
-Date: Thu, 17 Sep 2026 16:56:19 +0000
-From: Adhemerval Zanella Netto <adhemerval.zanella@...aro.org>
-To: libc-announce@...rceware.org, oss-security@...ts.openwall.com
-Subject: The GNU C Library security advisories update for 2026-09-17
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/3
+Message-ID: <8893ea57-5817-bce5-f37e-e13d77a6f691@apache.org>
+Date: Thu, 17 Sep 2026 15:09:49 +0000
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-92230: Apache Karaf: Improper release of ClassLoader references via static ThreadLocal caching 
 Content-Type: text/plain; charset=utf-8
 
-The following security advisories have been published:
+Severity: moderate 
 
-GLIBC-SA-2026-0021:
-===================
-Assertion failure in the DNS stub resolver with a long search domain
+Affected versions:
 
-Initializing the DNS stub resolver from an /etc/resolv.conf file, or a
-LOCALDOMAIN environment variable, whose search list contains a domain
-of roughly 200 characters or more in the GNU C Library version 2.26 to
-2.44 results in an assertion failure which aborts the process.
+- Apache Karaf before 4.4.11
 
-The resolver truncates the search list when copying it into the
-fixed-size _res.defdname buffer, then asserts that the copy is
-consistent with the full configuration.  The consistency check
-compared against the wrong size and did not handle a first entry that
-does not fit, so a correctly truncated list failed the assertion.  Any
-process that resolves names through the library is affected, including
-long-running processes that reload /etc/resolv.conf on the next query
-after it changes.  Search domains are commonly written to
-/etc/resolv.conf from data received over DHCP or from a VPN server, so
-an attacker on the local network may be able to trigger this without
-privileges on the target system, subject to validation by the network
-configuration software.
+Description:
 
-CVE-Id: CVE-2026-8674
-Public-Date: 2023-11-07
-Vulnerable-Commit: 3f853f22c87f0b671c0366eb290919719fa56c0e (2.26)
-Fix-Commit: 506ea57086bfb9ce3daff1c14246a1cb532aba0a (2.45)
-Reported-by: Joshua Rogers - joshua@...hua.hu
-CVSS: CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H - 5.3
+Apache Karaf's XmlUtils cached XML parser/transformer factories in static ThreadLocal fields on long-lived container threads. Because a ThreadLocal value outlives the OSGi bundle that created it, repeated bundle or feature install, update, or refresh operations can leave successive bundle ClassLoader's pinned in memory and unreachable for garbage collection, leading to unbounded Metaspace growth and eventual denial of service of the Karaf instance.
+
+This issue is being tracked as https://github.com/apache/karaf/issues/2278 
+
+Credit:
+
+Baoquan Cui & Yucheng Qiu (reporter)
+
+References:
+
+https://karaf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-92230
+https://issues.apache.org/jira/browse/https://github.com/apache/karaf/issues/2278
+
