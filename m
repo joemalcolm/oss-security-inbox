@@ -1,76 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/6
-Message-Id: <33E818F7-D6CA-4810-83EE-42765E34577C@stig.io>
-Date: Thu, 17 Sep 2026 23:25:38 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/17/5
+Message-Id: <E1D899BA-25E2-4C7F-A793-3CB236654D51@stig.io>
+Date: Thu, 17 Sep 2026 23:27:30 +0200
 From: Stig Palmquist <stig@...g.io>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-73639: Imager::File::PNG versions from 1.003 before 1.004 for Perl write past the end of the row buffer reading a PNG with a tRNS transparency chunk in read_direct8
+Subject: CVE-2026-73638: Imager versions from 0.45_02 before 1.035 for Perl read outside the EXIF block via unchecked start offsets in tiff_load_ifd
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-73639                                       CPAN Security Group
+CVE-2026-73638                                       CPAN Security Group
 ========================================================================
 
-        CVE ID:  CVE-2026-73639
-
-  Distribution:  Imager-File-PNG
-      Versions:  from 1.003 before 1.004
-      MetaCPAN:  https://metacpan.org/dist/Imager-File-PNG
-      VCS Repo:  https://github.com/tonycoz/imager
+        CVE ID:  CVE-2026-73638
 
   Distribution:  Imager
-      Versions:  from 1.034 before 1.035
+      Versions:  from 0.45_02 before 1.035
       MetaCPAN:  https://metacpan.org/dist/Imager
       VCS Repo:  https://github.com/tonycoz/imager
 
 
-Imager::File::PNG versions from 1.003 before 1.004 for Perl write past
-the end of the row buffer reading a PNG with a tRNS transparency chunk
-in read_direct8
+Imager versions from 0.45_02 before 1.035 for Perl read outside the
+EXIF block via unchecked start offsets in tiff_load_ifd
 
 Description
 -----------
-Imager::File::PNG versions from 1.003 before 1.004 for Perl write past
-the end of the row buffer reading a PNG with a tRNS transparency chunk
-in read_direct8.
+Imager versions from 0.45_02 before 1.035 for Perl read outside the
+EXIF block via unchecked start offsets in tiff_load_ifd.
 
-With a tRNS chunk, read_direct8() adds an alpha channel to the image it
-creates but still sizes the row buffer from the original channel count.
-libpng expands the transparency into that extra channel, so
-png_read_row() fills one channel more than the buffer holds, at one
-byte per sample, and writes width bytes past the end of the allocation.
-Palette images go to read_paletted() and 16-bit images to
-read_direct16(), which sizes its buffer from png_get_rowbytes() and
-allocates enough for the expanded row.
+tiff_load_ifd() validates an IFD entry's data by checking that
+`entry->offset + entry->size` stays within the EXIF block, and never
+checks the start offset itself. Where that sum is not the real end of
+the data, the check passes with the entry starting outside the block.
 
-The same reader ships bundled in the Imager distribution.
+Through 1.032 `entry->offset` is a plain int, so on the usual
+two's-complement implementations an offset with the high bit set
+converts to negative and the sum can land back inside the block. From
+1.033 the field is a size_t and the addition wraps only where size_t is
+32 bits. The IFD's own start offset is checked the same way and wraps
+where unsigned long is 32 bits, which includes 64-bit Windows.
 
-Reading an attacker-supplied PNG through Imager->read() corrupts the
-heap, which can crash the process.
+Any caller of Imager->read() on an attacker-supplied image may receive
+EXIF tags holding bytes from outside the block, or crash the process.
 
 Problem types
 -------------
-- CWE-787 Out-of-bounds Write
+- CWE-125 Out-of-bounds Read
 
 Solutions
 ---------
-Upgrade to Imager-File-PNG 1.004 or later, or to Imager 1.035 or later
-if the bundled copy is in use.
+Upgrade to Imager 1.035 or later.
 
 References
 ----------
-https://github.com/tonycoz/imager/security/advisories/GHSA-jhx5-34j8-9g88
-https://github.com/tonycoz/imager/commit/d973bd7e8843f084e8071caa24b89545c88b1e4b.patch
-https://github.com/tonycoz/imager/pull/567
-https://metacpan.org/release/TONYC/Imager-File-PNG-1.004/changes
+https://github.com/tonycoz/imager/security/advisories/GHSA-j47j-8w8p-3mmc
+https://github.com/tonycoz/imager/commit/48ba8ac0749f89466b6e6681fb88cbdb51086ebd.patch
+https://github.com/tonycoz/imager/commit/6f1fd003a8e48c7e6e58b7019a04cc71bbfec2c3.patch
+https://github.com/tonycoz/imager/issues/568
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1144226
 https://metacpan.org/release/TONYC/Imager-1.035/changes
 
 Timeline
 --------
-- 2026-08-19: Imager-File-PNG 1.004 and Imager 1.035 released with fix.
-
-Credits
--------
-Alexander Bluhm (bluhm), finder
+- 2026-08-19: Version 1.035 released with fix.
 
 
