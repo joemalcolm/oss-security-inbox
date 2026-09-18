@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/4
-Message-ID: <20260918090439.2a6012f6@hboeck.de>
-Date: Fri, 18 Sep 2026 09:04:39 +0200
-From: Hanno Böck <hanno@...eck.de>
-To: oss-security@...ts.openwall.com
-Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/2
+Message-ID: <e6850d87-e78e-4fed-8628-0dbc929af81f@gmail.com>
+Date: Fri, 18 Sep 2026 00:07:48 -0500
+From: Jacob Bachmeyer <jcb62281@...il.com>
+To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
+Cc: Sam James <sam@...too.org>, Clemens Lang <cllang@...hat.com>, "Lexi Groves (49016)" <contact@....fail>
+Subject: Re: Removing dead code (was: Retrospective by 'gpg.fail' authors)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 9/16/26 22:08, Peter Gutmann wrote:
+> [...]  Given that it's open source with an unknown number of downstream users
+> doing unknown things with it, there's no way to tell whether it's safe to
+> remove or not.
 
-On Fri, 18 Sep 2026 06:15:07 +0000
-manizada <manizada@...me> wrote:
+I actually have a very rare counterexample to that, from DejaGnu.
 
->   ("xfrm: ah6: validate routing header segments_left")
-[...]
->   ("net: tun: bound receive headroom")
-[...]
->   ("pppoe: reload header pointer after dev_hard_header()")
-[...]
->   ("sctp: prevent peer transport count overflow")
+DejaGnu is a software testing framework, and more-or-less cannot have 
+security issues by definition, as its purpose is to execute arbitrary 
+code from trusted testsuites.  DejaGnu once "had" a feature that was 
+supposed to catch tests that failed to run to completion.
 
-Reading these abbrevations (xfrm/ah6, pppoe, sctp), I can't help
-thinking "that sounds like a lot of non-standard networking protocols".
+A Tcl variable, "testcnt" could be set to the expected number of test 
+results.  However, the code that handled checking that the actual 
+results matched the expected results would crash the framework with a 
+Tcl error if it were ever actually run.  (It would be run only if 
+"testcnt" had been set.)
 
-I think it emphasizes what I wrote here a while ago:
-https://seclists.org/oss-sec/2026/q2/557
+Since no had ever complained (in 24 years) about the feature being 
+broken, it was safe to say that the feature had never been used.  :-)
 
-Attack surface reduction is a successful strategy to not be affected
-by vulnerabilities. If you build your own kernels, you can avoid being
-hit by many of the recent and future kernel vulnerabilities by
-disabling functionalities you don't use. 
 
--- 
-Hanno Böck - Independent security researcher
-https://itsec.hboeck.de/
-https://badkeys.info/
+-- Jacob
+
+
