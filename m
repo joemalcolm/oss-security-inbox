@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/4
-Message-ID: <20260918090439.2a6012f6@hboeck.de>
-Date: Fri, 18 Sep 2026 09:04:39 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/10
+Message-ID: <a545f376-6c34-1cda-a5e7-7267367edb82@apache.org>
+Date: Fri, 18 Sep 2026 15:28:04 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
+Subject: CVE-2026-91863: Apache Neethi: Uncontrolled recursion while parsing crafted WS-Policy documents allows denial of service 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate 
 
-On Fri, 18 Sep 2026 06:15:07 +0000
-manizada <manizada@...me> wrote:
+Affected versions:
 
->   ("xfrm: ah6: validate routing header segments_left")
-[...]
->   ("net: tun: bound receive headroom")
-[...]
->   ("pppoe: reload header pointer after dev_hard_header()")
-[...]
->   ("sctp: prevent peer transport count overflow")
+- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
 
-Reading these abbrevations (xfrm/ah6, pppoe, sctp), I can't help
-thinking "that sounds like a lot of non-standard networking protocols".
+Description:
 
-I think it emphasizes what I wrote here a while ago:
-https://seclists.org/oss-sec/2026/q2/557
+A specially crafted WS-Policy document with deeply nested policy elements can bypass Neethi's nesting-depth limit and exhaust the thread stack, crashing the parser (denial of service).
+Users are recommended to upgrade to version 3.2.4, which fixes this issue.
 
-Attack surface reduction is a successful strategy to not be affected
-by vulnerabilities. If you build your own kernels, you can avoid being
-hit by many of the recent and future kernel vulnerabilities by
-disabling functionalities you don't use. 
+Credit:
 
--- 
-Hanno Böck - Independent security researcher
-https://itsec.hboeck.de/
-https://badkeys.info/
+This issue was found using Claude agents to study the security of open-source projects (finder)
+
+References:
+
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91863
+
