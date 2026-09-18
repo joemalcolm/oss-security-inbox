@@ -1,44 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/16
-Message-ID: <CAELMOr=vz-CDx0AhccByNzgKn7DvPnWo617CnS1LOfEEFFoUdw@mail.gmail.com>
-Date: Fri, 18 Sep 2026 17:46:28 -0300
-From: SOFIA ETCHEPARE DARONCO <sofia.etchepare@...d.ufsm.br>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/14
+Message-ID: <5e1ce331-46f3-f3fd-6b8a-6275754f2a9f@apache.org>
+Date: Fri, 18 Sep 2026 15:31:27 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
+Subject: CVE-2026-91867: Apache Neethi: Remote policy fetch lacks a total timeout, allowing a slow server to hang the request indefinitely 
 Content-Type: text/plain; charset=utf-8
 
-FWIW PPPoE is quite ubiquitous, though normally for gateway <-> ISP
-communication rather than anything in end user machines.
+Severity: moderate 
 
-On Fri, Sep 18, 2026 at 10:57 AM Hanno Böck <hanno@...eck.de> wrote:
+Affected versions:
 
-> Hi,
->
-> On Fri, 18 Sep 2026 06:15:07 +0000
-> manizada <manizada@...me> wrote:
->
-> >   ("xfrm: ah6: validate routing header segments_left")
-> [...]
-> >   ("net: tun: bound receive headroom")
-> [...]
-> >   ("pppoe: reload header pointer after dev_hard_header()")
-> [...]
-> >   ("sctp: prevent peer transport count overflow")
->
-> Reading these abbrevations (xfrm/ah6, pppoe, sctp), I can't help
-> thinking "that sounds like a lot of non-standard networking protocols".
->
-> I think it emphasizes what I wrote here a while ago:
-> https://seclists.org/oss-sec/2026/q2/557
->
-> Attack surface reduction is a successful strategy to not be affected
-> by vulnerabilities. If you build your own kernels, you can avoid being
-> hit by many of the recent and future kernel vulnerabilities by
-> disabling functionalities you don't use.
->
-> --
-> Hanno Böck - Independent security researcher
-> https://itsec.hboeck.de/
-> https://badkeys.info/
->
+- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
+
+Description:
+
+When Neethi fetches a remote policy reference, it only limits the time per read, not the whole transfer, so a server that trickles bytes slowly can keep the fetch alive indefinitely and tie up the calling thread (denial of service).
+Users are recommended to upgrade to version 3.2.4, which fixes this issue.
+
+Credit:
+
+This issue was found using Claude agents to study the security of open-source projects (finder)
+
+References:
+
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91867
 
