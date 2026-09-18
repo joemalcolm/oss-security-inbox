@@ -1,17 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/16
-Message-ID: <CAELMOr=vz-CDx0AhccByNzgKn7DvPnWo617CnS1LOfEEFFoUdw@mail.gmail.com>
-Date: Fri, 18 Sep 2026 17:46:28 -0300
-From: SOFIA ETCHEPARE DARONCO <sofia.etchepare@...d.ufsm.br>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/6
+Message-ID: <CAAnjWm+aUr3bv1QXO00eZFG3RseyHNZt6Oa3a_KTBbL2-CbYvQ@mail.gmail.com>
+Date: Fri, 18 Sep 2026 11:30:40 -0400
+From: Kevin Riggle <kevinr@...plexsystems.group>
 To: oss-security@...ts.openwall.com
 Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
 Content-Type: text/plain; charset=utf-8
 
-FWIW PPPoE is quite ubiquitous, though normally for gateway <-> ISP
-communication rather than anything in end user machines.
+Would it be as conceptually straightforward on the distro side as
+breaking most of these less-common modules out into their own
+packages, e.g. linux-module-pppoe, linux-module-sctp, etc?
 
-On Fri, Sep 18, 2026 at 10:57 AM Hanno Böck <hanno@...eck.de> wrote:
+It would add an extra step of installing the kernel module for anyone
+who wanted to use one of these protocols, but as you say Hanno it
+would provide a great deal of attack surface reduction for the
+overwhelming majority of user who don't use these modules.
 
+Best,
+- Kevin
+
+On Fri, Sep 18, 2026 at 9:57 AM Hanno Böck <hanno@...eck.de> wrote:
+>
 > Hi,
 >
 > On Fri, 18 Sep 2026 06:15:07 +0000
@@ -40,5 +49,10 @@ On Fri, Sep 18, 2026 at 10:57 AM Hanno Böck <hanno@...eck.de> wrote:
 > Hanno Böck - Independent security researcher
 > https://itsec.hboeck.de/
 > https://badkeys.info/
->
 
+
+
+-- 
+Kevin Riggle - Principal, Complex Systems Group LLC
+he/him • Brooklyn, NY, USA • Eastern Time
+https://complexsystems.group • https://calendly.com/kevinriggle/coffee
