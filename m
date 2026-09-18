@@ -1,74 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/4
-Message-ID: <af1a12d7-278e-4579-bbc0-13c1ee1550a7@cpansec.org>
-Date: Sat, 19 Sep 2026 11:47:09 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-78030: DBI versions before 1.653 for Perl load arbitrary modules via unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/10
+Message-ID: <a545f376-6c34-1cda-a5e7-7267367edb82@apache.org>
+Date: Fri, 18 Sep 2026 15:28:04 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-91863: Apache Neethi: Uncontrolled recursion while parsing crafted WS-Policy documents allows denial of service 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-78030                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-         CVE ID:  CVE-2026-78030
+Affected versions:
 
-   Distribution:  DBI
-       Versions:  before 1.653
-       MetaCPAN:  https://metacpan.org/dist/DBI
-       VCS Repo:  https://github.com/perl5-dbi/dbi
+- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
 
+Description:
 
-DBI versions before 1.653 for Perl load arbitrary modules via
-unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM
+A specially crafted WS-Policy document with deeply nested policy elements can bypass Neethi's nesting-depth limit and exhaust the thread stack, crashing the parser (denial of service).
+Users are recommended to upgrade to version 3.2.4, which fixes this issue.
 
-Description
------------
-DBI versions before 1.653 for Perl load arbitrary modules via
-unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM.
+Credit:
 
-DBD::DBM passes the dbm_type and dbm_mldbm connect attributes to
-require without checking that the value names a module. require treats
-a path-shaped string as a literal filename and does not consult @INC,
-so the attribute chooses the file that Perl loads and runs.
+This issue was found using Claude agents to study the security of open-source projects (finder)
 
-The MLDBM::Serializer:: prefix that DBD::DBM prepends to dbm_mldbm is
-not a boundary: only the :: separators are rewritten to /, so a value
-containing / traverses out of the serializer directory. The value is
-also assigned to $MLDBM::Serializer, which MLDBM requires the same way
-when it ties the table.
+References:
 
-A caller that lets an untrusted party influence either attribute, for
-example through a DSN fragment or a parameter that selects a storage
-backend, runs the file-scope code of whatever module the value names.
-
-For example,
-
-     my $dsn = "dbi:DBM:f_dir=/var/db;dbm_type=../../Untrusted.pm"
-     my $dbh = DBI->connect( $dsn );
-
-Note that DBD::Gofer forwards connect attributes to the server side,
-and DBI::ProxyServer checks only that a DSN starts with a driver
-prefix.
-
-Problem types
--------------
-- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
-   ('Unsafe Reflection')
-
-Solutions
----------
-Upgrade to DBI version 1.653 or later, or apply the upstream patch.
-
-References
-----------
-https://metacpan.org/release/HMBRAND/DBI-1.653/changes
-https://github.com/perl5-dbi/dbi/commit/315c6ce703b8b3cbe9188062d9ec80730293554a.patch
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-wqmw-wqwx-3fr7
-
-Credits
--------
-Harsh Raj Singhania, finder
-
-
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91863
 
