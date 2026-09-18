@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/2
-Message-ID: <e6850d87-e78e-4fed-8628-0dbc929af81f@gmail.com>
-Date: Fri, 18 Sep 2026 00:07:48 -0500
-From: Jacob Bachmeyer <jcb62281@...il.com>
-To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
-Cc: Sam James <sam@...too.org>, Clemens Lang <cllang@...hat.com>, "Lexi Groves (49016)" <contact@....fail>
-Subject: Re: Removing dead code (was: Retrospective by 'gpg.fail' authors)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/1
+Message-ID: <0aece58f-4c1a-628e-d745-d7c2e0355240@apache.org>
+Date: Fri, 18 Sep 2026 04:45:03 +0000
+From: Rahul Vats <rahulvats@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-75157: Apache Airflow: Asset queued-events DELETE endpoints gated on Dag READ instead of Dag EDIT (asset-triggered scheduling suppression) 
 Content-Type: text/plain; charset=utf-8
 
-On 9/16/26 22:08, Peter Gutmann wrote:
-> [...]  Given that it's open source with an unknown number of downstream users
-> doing unknown things with it, there's no way to tell whether it's safe to
-> remove or not.
+Severity: low 
 
-I actually have a very rare counterexample to that, from DejaGnu.
+Affected versions:
 
-DejaGnu is a software testing framework, and more-or-less cannot have 
-security issues by definition, as its purpose is to execute arbitrary 
-code from trusted testsuites.  DejaGnu once "had" a feature that was 
-supposed to catch tests that failed to run to completion.
+- Apache Airflow before 3.3.2
 
-A Tcl variable, "testcnt" could be set to the expected number of test 
-results.  However, the code that handled checking that the actual 
-results matched the expected results would crash the framework with a 
-Tcl error if it were ever actually run.  (It would be run only if 
-"testcnt" had been set.)
+Description:
 
-Since no had ever complained (in 24 years) about the feature being 
-broken, it was safe to say that the feature had never been used.  :-)
+Apache Airflow's asset queued-events DELETE endpoints checked the caller's Dag-axis permission with `READ` instead of `EDIT`. Any authenticated user who could read a Dag could therefore delete that Dag's queued asset events, silently suppressing asset-triggered scheduling for it — a state-changing action gated on a read-only permission. Deployments are affected whenever asset-triggered scheduling is in use and Dag read access is granted more widely than Dag edit access, which is the normal RBAC arrangement; no special configuration is required. Upgrade to apache-airflow 3.3.2 or later.
 
+Credit:
 
--- Jacob
+n0mi1k (finder)
+Jarek Potiuk (remediation developer)
 
+References:
+
+https://github.com/apache/airflow/pull/71736
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-75157
 
