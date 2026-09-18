@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/10
-Message-ID: <a545f376-6c34-1cda-a5e7-7267367edb82@apache.org>
-Date: Fri, 18 Sep 2026 15:28:04 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91863: Apache Neethi: Uncontrolled recursion while parsing crafted WS-Policy documents allows denial of service 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/2
+Message-ID: <e6850d87-e78e-4fed-8628-0dbc929af81f@gmail.com>
+Date: Fri, 18 Sep 2026 00:07:48 -0500
+From: Jacob Bachmeyer <jcb62281@...il.com>
+To: oss-security@...ts.openwall.com, Peter Gutmann <pgut001@...auckland.ac.nz>
+Cc: Sam James <sam@...too.org>, Clemens Lang <cllang@...hat.com>, "Lexi Groves (49016)" <contact@....fail>
+Subject: Re: Removing dead code (was: Retrospective by 'gpg.fail' authors)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On 9/16/26 22:08, Peter Gutmann wrote:
+> [...]  Given that it's open source with an unknown number of downstream users
+> doing unknown things with it, there's no way to tell whether it's safe to
+> remove or not.
 
-Affected versions:
+I actually have a very rare counterexample to that, from DejaGnu.
 
-- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
+DejaGnu is a software testing framework, and more-or-less cannot have 
+security issues by definition, as its purpose is to execute arbitrary 
+code from trusted testsuites.  DejaGnu once "had" a feature that was 
+supposed to catch tests that failed to run to completion.
 
-Description:
+A Tcl variable, "testcnt" could be set to the expected number of test 
+results.  However, the code that handled checking that the actual 
+results matched the expected results would crash the framework with a 
+Tcl error if it were ever actually run.  (It would be run only if 
+"testcnt" had been set.)
 
-A specially crafted WS-Policy document with deeply nested policy elements can bypass Neethi's nesting-depth limit and exhaust the thread stack, crashing the parser (denial of service).
-Users are recommended to upgrade to version 3.2.4, which fixes this issue.
+Since no had ever complained (in 24 years) about the feature being 
+broken, it was safe to say that the feature had never been used.  :-)
 
-Credit:
 
-This issue was found using Claude agents to study the security of open-source projects (finder)
+-- Jacob
 
-References:
-
-https://ws.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91863
 
