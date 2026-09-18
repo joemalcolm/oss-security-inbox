@@ -1,61 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/9
-Message-Id: <F78CD654-B1BC-49CD-BA1A-30F639DE678D@stig.io>
-Date: Fri, 18 Sep 2026 16:00:22 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-93019: Imager versions before 1.036 for Perl exit the process reading a TGA with a colour map length of 32768 or more in tga_palette_read 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/4
+Message-ID: <20260918090439.2a6012f6@hboeck.de>
+Date: Fri, 18 Sep 2026 09:04:39 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-93019                                       CPAN Security Group
-========================================================================
+Hi,
 
-        CVE ID:  CVE-2026-93019
+On Fri, 18 Sep 2026 06:15:07 +0000
+manizada <manizada@...me> wrote:
 
-  Distribution:  Imager
-      Versions:  before 1.036
-      MetaCPAN:  https://metacpan.org/dist/Imager
-      VCS Repo:  https://github.com/tonycoz/imager
+>   ("xfrm: ah6: validate routing header segments_left")
+[...]
+>   ("net: tun: bound receive headroom")
+[...]
+>   ("pppoe: reload header pointer after dev_hard_header()")
+[...]
+>   ("sctp: prevent peer transport count overflow")
 
+Reading these abbrevations (xfrm/ah6, pppoe, sctp), I can't help
+thinking "that sounds like a lot of non-standard networking protocols".
 
-Imager versions before 1.036 for Perl exit the process reading a TGA
-with a colour map length of 32768 or more in tga_palette_read
+I think it emphasizes what I wrote here a while ago:
+https://seclists.org/oss-sec/2026/q2/557
 
-Description
------------
-Imager versions before 1.036 for Perl exit the process reading a TGA
-with a colour map length of 32768 or more in tga_palette_read.
+Attack surface reduction is a successful strategy to not be affected
+by vulnerabilities. If you build your own kernels, you can avoid being
+hit by many of the recent and future kernel vulnerabilities by
+disabling functionalities you don't use. 
 
-The reader unpacks the two-byte colour map length into a signed short,
-so a length of 32768 or more becomes negative. tga_palette_read() casts
-that value to size_t and asks mymalloc() for a size near SIZE_MAX. The
-allocation fails and Imager's allocator calls exit(3).
-
-Reading an attacker-supplied file through Imager->read() triggers an
-uncatchable exit.
-
-Problem types
--------------
-- CWE-196 Unsigned to Signed Conversion Error
-- CWE-789 Memory Allocation with Excessive Size Value
-
-Solutions
----------
-Upgrade to Imager 1.036 or later.
-
-References
-----------
-https://github.com/tonycoz/imager/security/advisories/GHSA-p4vw-rc54-p2c2
-https://github.com/tonycoz/imager/commit/74ed50e0625f9f51054e595bb4a8da92c1e0d571.patch
-https://metacpan.org/release/TONYC/Imager-1.036/changes
-
-Timeline
---------
-- 2026-09-18: Version 1.036 released with fix.
-
-Credits
--------
-router0mail, finder
-
-
+-- 
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
