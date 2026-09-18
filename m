@@ -1,29 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/12
-Message-ID: <56c6388b-da6e-dda0-a947-f6ea442eb6f0@apache.org>
-Date: Fri, 18 Sep 2026 15:30:31 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/4
+Message-ID: <20260918090439.2a6012f6@hboeck.de>
+Date: Fri, 18 Sep 2026 09:04:39 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91865: Apache Neethi: Crafted policy references cause exponential expansion during normalization leading to denial of service 
+Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hi,
 
-Affected versions:
+On Fri, 18 Sep 2026 06:15:07 +0000
+manizada <manizada@...me> wrote:
 
-- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
+>   ("xfrm: ah6: validate routing header segments_left")
+[...]
+>   ("net: tun: bound receive headroom")
+[...]
+>   ("pppoe: reload header pointer after dev_hard_header()")
+[...]
+>   ("sctp: prevent peer transport count overflow")
 
-Description:
+Reading these abbrevations (xfrm/ah6, pppoe, sctp), I can't help
+thinking "that sounds like a lot of non-standard networking protocols".
 
-A small WS-Policy document using repeated policy references can force Neethi to re-expand the same references exponentially during normalization, consuming huge amounts of CPU and memory (denial of service).
-Users are recommended to upgrade to version 3.2.4, which fixes this issue.
+I think it emphasizes what I wrote here a while ago:
+https://seclists.org/oss-sec/2026/q2/557
 
-Credit:
+Attack surface reduction is a successful strategy to not be affected
+by vulnerabilities. If you build your own kernels, you can avoid being
+hit by many of the recent and future kernel vulnerabilities by
+disabling functionalities you don't use. 
 
-This issue was found using Claude agents to study the security of open-source projects (finder)
-
-References:
-
-https://ws.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91865
-
+-- 
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
