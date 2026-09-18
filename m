@@ -1,37 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/5
-Message-ID: <aq0ZE_yVYZMWcaOO@donburi.himad.notcom.org>
-Date: Fri, 18 Sep 2026 14:10:30 +0300
-From: Valtteri Vuorikoski <vuori@...com.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: A quartet of Linux local root vulns: DirtyAH6, PPPoEject, TUNderflow, and DiagSpill
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/12
+Message-ID: <56c6388b-da6e-dda0-a947-f6ea442eb6f0@apache.org>
+Date: Fri, 18 Sep 2026 15:30:31 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-91865: Apache Neethi: Crafted policy references cause exponential expansion during normalization leading to denial of service 
 Content-Type: text/plain; charset=utf-8
 
-Credit where it's due: this is an excellent announcement (except for the bugs of course):
+Severity: moderate 
 
-  * List of fix commits.
-  * List of stable versions containing the fix.
-  * Detailed pre-requisites for exploitation.
-  * Concrete list of affected subsystems/modules to apply mitigations.
-  * Clear list of vulnerable versions.
-  * No Markdown, no extraneous LLM product placement, just the relevant bits in clear
-  plaintext.
+Affected versions:
 
-With LPEs coming out every few weeks having this level of informative posts is a
-great help.
+- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
 
- -valtteri
+Description:
 
-On Fri, Sep 18, 2026 at 06:15:07AM +0000, manizada wrote:
-> Hi folks,
-> 
-> Emailing here now that the embargo agreed upon with linux-distros@ has
-> expired.
-> 
-> Flagging four local root vulnerabilities in the Linux kernel, originally
-> reported to security@...nel.org and the relevant maintainers in
-> mid-July:
-> 
->   DirtyAH6 (CVE-2026-80844), TUNderflow (CVE-2026-81000), PPPoEject
->   (CVE-2026-68121), and DiagSpill (CVE-2026-74469).
-[...]
+A small WS-Policy document using repeated policy references can force Neethi to re-expand the same references exponentially during normalization, consuming huge amounts of CPU and memory (denial of service).
+Users are recommended to upgrade to version 3.2.4, which fixes this issue.
+
+Credit:
+
+This issue was found using Claude agents to study the security of open-source projects (finder)
+
+References:
+
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91865
+
