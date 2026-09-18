@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/11
-Message-ID: <ce4c0088-2aa1-b6ea-e10a-b9254fb16884@apache.org>
-Date: Fri, 18 Sep 2026 15:29:51 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91864: Apache Neethi: Crafted WS-Policy documents bypass element/attribute limits causing memory exhaustion 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/7
+Message-ID:  <SYDP300MB2666704BE58A92389ADB4D9B98EE872@SYDP300MB266670.AUSP300.PROD.OUTLOOK.COM>
+Date: Fri, 18 Sep 2026 09:57:10 +0000
+From: Peter Gutmann <pgut001@...auckland.ac.nz>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "jcb62281@...il.com" <jcb62281@...il.com>
+CC: Sam James <sam@...too.org>, Clemens Lang <cllang@...hat.com>, "Lexi Groves (49016)" <contact@....fail>
+Subject: Re: Removing dead code (was: Retrospective by 'gpg.fail' authors)
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Jacob Bachmeyer <jcb62281@...il.com> writes:
 
-Affected versions:
+>Since no had ever complained (in 24 years) about the feature being broken, it
+>was safe to say that the feature had never been used.  :-)
 
-- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
+That's exactly how I deprecate things: Make it a config option -> make it a
+disabled-by-default config option -> make it a disabled-by-default compile-
+time option with a #error if enabled telling users to contact me if they see
+the message.  If after about 10 years no-one has complained, disable it
+permanently and eventually remove it on the next major release.
 
-Description:
+However, this is a slow and awkward process when there are dozens of options
+to go through, and prone to kickback if you accidentally hit one that's being
+actively used without you knowing about it.  The least painful one is the
+compile-time disable, where you can apologise, tell users to rebuild with
+-Denable-thing, and then in the next release re-enable it explicitly.
 
-A specially crafted WS-Policy document can pack unlimited content inside a policy assertion, which Neethi copies into memory without counting it against its size limits, exhausting the heap (denial of service).
-Users are recommended to upgrade to version 3.2.4, which fixes this issue.
+Another strategy is to announce support for X, enable basic handling so it
+looks like you support it, and if after some years no-one complains that it's
+not working, remove it again.  It's amazing how many "critical security
+features", a.k.a. "pointless wank that someone dreamed up and got added to the
+spec", no-one actually cares about or uses when it comes down to it.  Every
+bit of this stuff that you simply don't do is more attack surface reduction
+for your code.
 
-Credit:
-
-This issue was found using Claude agents to study the security of open-source projects (finder)
-
-References:
-
-https://ws.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91864
-
+Peter.
