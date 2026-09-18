@@ -1,65 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/6
-Message-Id: <CC0D9B08-B3CA-44D1-88A4-79A856B5DE22@stig.io>
-Date: Sat, 19 Sep 2026 17:18:54 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-82560: Pod::Text versions before 6.1.1 for Perl allow CPU and memory exhaustion formatting a POD document whose =over nesting drives the margin to the output width
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/14
+Message-ID: <5e1ce331-46f3-f3fd-6b8a-6275754f2a9f@apache.org>
+Date: Fri, 18 Sep 2026 15:31:27 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-91867: Apache Neethi: Remote policy fetch lacks a total timeout, allowing a slow server to hang the request indefinitely 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-82560                                       CPAN Security Group
-========================================================================
+Severity: moderate 
 
-        CVE ID:  CVE-2026-82560
+Affected versions:
 
-  Distribution:  podlators
-      Versions:  before 6.1.1
-      MetaCPAN:  https://metacpan.org/dist/podlators
-      VCS Repo:  https://github.com/rra/podlators
+- Apache Neethi (org.apache.neethi:neethi) before 3.2.4
 
-  Distribution:  perl
-      Versions:  through 5.45.2
-      MetaCPAN:  https://metacpan.org/dist/perl
-      VCS Repo:  https://github.com/Perl/perl5
+Description:
 
+When Neethi fetches a remote policy reference, it only limits the time per read, not the whole transfer, so a server that trickles bytes slowly can keep the fetch alive indefinitely and tie up the calling thread (denial of service).
+Users are recommended to upgrade to version 3.2.4, which fixes this issue.
 
-Pod::Text versions before 6.1.1 for Perl allow CPU and memory
-exhaustion formatting a POD document whose =over nesting drives the
-margin to the output width
+Credit:
 
-Description
------------
-Pod::Text versions before 6.1.1 for Perl allow CPU and memory
-exhaustion formatting a POD document whose =over nesting drives the
-margin to the output width.
+This issue was found using Claude agents to study the security of open-source projects (finder)
 
-Each =over adds its indent to the margin, which wrap() subtracts from
-the output width to get the space available for text. When that space
-reaches zero, the line-splitting substitution matches the empty string,
-and the loop consumes no input while appending the margin padding on
-every pass.
+References:
 
-Formatting an attacker-supplied POD document never returns, and the
-output grows until memory is exhausted.
-
-Problem types
--------------
-- CWE-835 Loop with Unreachable Exit Condition ('Infinite Loop')
-
-Workarounds
------------
-Until a Perl release carries the fix, install podlators v6.1.1 or
-later, which takes precedence over the bundled copy.
-
-Solutions
----------
-Upgrade to podlators v6.1.1 or later.
-
-References
-----------
-https://metacpan.org/release/RRA/podlators-v6.1.0/source/lib/Pod/Text.pm#L245-261
-https://github.com/rra/podlators/commit/70510174f69eb54aa6d617bde4e1402cd9b7c61f.patch
-https://metacpan.org/release/RRA/podlators-v6.1.1/changes
-
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91867
 
