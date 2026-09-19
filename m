@@ -1,74 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/4
-Message-ID: <af1a12d7-278e-4579-bbc0-13c1ee1550a7@cpansec.org>
-Date: Sat, 19 Sep 2026 11:47:09 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-78030: DBI versions before 1.653 for Perl load arbitrary modules via unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/5
+Message-ID: <20260919111415.60fa8522@hboeck.de>
+Date: Sat, 19 Sep 2026 11:14:15 +0200
+From: Hanno Böck <hanno@...eck.de>
+To: oss-security@...ts.openwall.com
+Subject: Re: Vulnerabilities in libheif and libde265
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-78030                                       CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-78030
-
-   Distribution:  DBI
-       Versions:  before 1.653
-       MetaCPAN:  https://metacpan.org/dist/DBI
-       VCS Repo:  https://github.com/perl5-dbi/dbi
+Hi,
 
 
-DBI versions before 1.653 for Perl load arbitrary modules via
-unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM
+On Fri, 18 Sep 2026 16:57:13 -0700
+Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
 
-Description
------------
-DBI versions before 1.653 for Perl load arbitrary modules via
-unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM.
+> https://heif-heist.com/ seems more promotional than informational at
+> this point, but it does point out there are a number of exploitable
+> vulnerabilities in "native C/C++ decoders such as libheif and
+> libde265".
 
-DBD::DBM passes the dbm_type and dbm_mldbm connect attributes to
-require without checking that the value names a module. require treats
-a path-shaped string as a literal filename and does not consult @INC,
-so the attribute chooses the file that Perl loads and runs.
 
-The MLDBM::Serializer:: prefix that DBD::DBM prepends to dbm_mldbm is
-not a boundary: only the :: separators are rewritten to /, so a value
-containing / traverses out of the serializer directory. The value is
-also assigned to $MLDBM::Serializer, which MLDBM requires the same way
-when it ties the table.
+Not sure if related, but this very recent commit
+https://github.com/strukturag/libheif/commit/6ce2bba558a27b63a508e81c085025f91c89899b
+sounds like it could be security-related and it is not part of the
+1.23.4 release.
 
-A caller that lets an untrusted party influence either attribute, for
-example through a DSN fragment or a parameter that selects a storage
-backend, runs the file-scope code of whatever module the value names.
-
-For example,
-
-     my $dsn = "dbi:DBM:f_dir=/var/db;dbm_type=../../Untrusted.pm"
-     my $dbh = DBI->connect( $dsn );
-
-Note that DBD::Gofer forwards connect attributes to the server side,
-and DBI::ProxyServer checks only that a DSN starts with a driver
-prefix.
-
-Problem types
--------------
-- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
-   ('Unsafe Reflection')
-
-Solutions
+Copying over commit description:
 ---------
-Upgrade to DBI version 1.653 or later, or apply the upstream patch.
+Reject in-band coded image sizes over the security limit for all codecs (GHSA-v8qw-hwjv-44hw)
+A crafted image can declare a small size in its container 'ispe' property while
+its bitstream declares a much larger coded frame. The container-level checks are
+based on 'ispe', so the oversized bitstream was handed to the decoder, which
+allocated a buffer for the in-band size before libheif rejected the mismatch.
+The advisory demonstrated this for AV1 with the libaom backend (a ~351-byte AVIF
+declaring 64x64 but coding 8192x8192..27648x27648, allocating hundreds of MB to
+>10 GB), but the same class affects every codec whose real frame size lives in
+the bitstream rather than in the container.
 
-References
-----------
-https://metacpan.org/release/HMBRAND/DBI-1.653/changes
-https://github.com/perl5-dbi/dbi/commit/315c6ce703b8b3cbe9188062d9ec80730293554a.patch
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-wqmw-wqwx-3fr7
+Enforce the coded size in the codec-independent decode path, before any bytes
+reach a decoder plugin, so the fix is both codec- and backend-independent (it
+protects the ffmpeg backend too, which does no size check of its own):
 
-Credits
--------
-Harsh Raj Singhania, finder
+  - Rename the per-decoder hook get_coded_image_size_from_config() to
+    get_max_coded_image_size(const std::vector<uint8_t>&). The old name no longer
+    described the behaviour: it now scans the whole bitstream, not just the
+    configuration record. It is an internal method with a single caller.
+
+  - decode_sequence_frame_from_compressed_data() now fetches the compressed data
+    once and passes that same buffer to both the size gate and the decoder push,
+    so the combined config+bitstream buffer is not built twice per decode.
+
+  - AV1/AVIF: scan every OBU_SEQUENCE_HEADER in the combined configOBUs + item
+    data for the largest max_frame_width/height (new
+    find_max_av1_frame_size_in_stream()).
+
+  - AVC/HEVC/VVC: scan every SPS NAL unit in the combined config + item data
+    (new split_nal_units_4byte_length_prefixed()), not just the SPS in
+    avcC/hvcC/vvcC, since an SPS carried in the item data also drives the
+    decoder's allocation. Return the largest coded (pre-crop) size.
+
+  - JPEG: parse the SOF marker dimensions (previously discarded) and gate on them.
+
+  - JPEG 2000 / HTJ2K: parse the SIZ reference grid (Xsiz, Ysiz) from the
+    codestream. This makes the check backend-independent; the OpenJPEG plugin's
+    own grid gate (GHSA-q492-cfcm-895h) remains as a backstop.
+
+Uncompressed images are libheif's own decoder and are sized from the container,
+so they are not in this class.
+
+Add regression tests: tests/inband_coded_size_limit.cc (the advisory AV1 PoC
+plus HEVC/AVC/JPEG in-band attack files) and tests/nal_split.cc (NAL splitter
+edge cases).
 
 
-
+-- 
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
