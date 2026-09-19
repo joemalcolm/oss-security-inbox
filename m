@@ -1,36 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/18/7
-Message-ID:  <SYDP300MB2666704BE58A92389ADB4D9B98EE872@SYDP300MB266670.AUSP300.PROD.OUTLOOK.COM>
-Date: Fri, 18 Sep 2026 09:57:10 +0000
-From: Peter Gutmann <pgut001@...auckland.ac.nz>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>, "jcb62281@...il.com" <jcb62281@...il.com>
-CC: Sam James <sam@...too.org>, Clemens Lang <cllang@...hat.com>, "Lexi Groves (49016)" <contact@....fail>
-Subject: Re: Removing dead code (was: Retrospective by 'gpg.fail' authors)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/6
+Message-Id: <CC0D9B08-B3CA-44D1-88A4-79A856B5DE22@stig.io>
+Date: Sat, 19 Sep 2026 17:18:54 +0200
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-82560: Pod::Text versions before 6.1.1 for Perl allow CPU and memory exhaustion formatting a POD document whose =over nesting drives the margin to the output width
 Content-Type: text/plain; charset=utf-8
 
-Jacob Bachmeyer <jcb62281@...il.com> writes:
+========================================================================
+CVE-2026-82560                                       CPAN Security Group
+========================================================================
 
->Since no had ever complained (in 24 years) about the feature being broken, it
->was safe to say that the feature had never been used.  :-)
+        CVE ID:  CVE-2026-82560
 
-That's exactly how I deprecate things: Make it a config option -> make it a
-disabled-by-default config option -> make it a disabled-by-default compile-
-time option with a #error if enabled telling users to contact me if they see
-the message.  If after about 10 years no-one has complained, disable it
-permanently and eventually remove it on the next major release.
+  Distribution:  podlators
+      Versions:  before 6.1.1
+      MetaCPAN:  https://metacpan.org/dist/podlators
+      VCS Repo:  https://github.com/rra/podlators
 
-However, this is a slow and awkward process when there are dozens of options
-to go through, and prone to kickback if you accidentally hit one that's being
-actively used without you knowing about it.  The least painful one is the
-compile-time disable, where you can apologise, tell users to rebuild with
--Denable-thing, and then in the next release re-enable it explicitly.
+  Distribution:  perl
+      Versions:  through 5.45.2
+      MetaCPAN:  https://metacpan.org/dist/perl
+      VCS Repo:  https://github.com/Perl/perl5
 
-Another strategy is to announce support for X, enable basic handling so it
-looks like you support it, and if after some years no-one complains that it's
-not working, remove it again.  It's amazing how many "critical security
-features", a.k.a. "pointless wank that someone dreamed up and got added to the
-spec", no-one actually cares about or uses when it comes down to it.  Every
-bit of this stuff that you simply don't do is more attack surface reduction
-for your code.
 
-Peter.
+Pod::Text versions before 6.1.1 for Perl allow CPU and memory
+exhaustion formatting a POD document whose =over nesting drives the
+margin to the output width
+
+Description
+-----------
+Pod::Text versions before 6.1.1 for Perl allow CPU and memory
+exhaustion formatting a POD document whose =over nesting drives the
+margin to the output width.
+
+Each =over adds its indent to the margin, which wrap() subtracts from
+the output width to get the space available for text. When that space
+reaches zero, the line-splitting substitution matches the empty string,
+and the loop consumes no input while appending the margin padding on
+every pass.
+
+Formatting an attacker-supplied POD document never returns, and the
+output grows until memory is exhausted.
+
+Problem types
+-------------
+- CWE-835 Loop with Unreachable Exit Condition ('Infinite Loop')
+
+Workarounds
+-----------
+Until a Perl release carries the fix, install podlators v6.1.1 or
+later, which takes precedence over the bundled copy.
+
+Solutions
+---------
+Upgrade to podlators v6.1.1 or later.
+
+References
+----------
+https://metacpan.org/release/RRA/podlators-v6.1.0/source/lib/Pod/Text.pm#L245-261
+https://github.com/rra/podlators/commit/70510174f69eb54aa6d617bde4e1402cd9b7c61f.patch
+https://metacpan.org/release/RRA/podlators-v6.1.1/changes
+
+
