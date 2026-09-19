@@ -1,78 +1,194 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/5
-Message-ID: <20260919111415.60fa8522@hboeck.de>
-Date: Sat, 19 Sep 2026 11:14:15 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/3
+Message-ID: <15a64f1f-91db-4b15-9394-a61b7a88132b@inliniac.net>
+Date: Sat, 19 Sep 2026 08:18:45 +0200
+From: Victor Julien <lists@...iniac.net>
 To: oss-security@...ts.openwall.com
-Subject: Re: Vulnerabilities in libheif and libde265
+Subject: Re: Suricata 8.0.7 released with 67 vulnerabilities fixed
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Thanks for sharing this. I'm leading the Suricata project and I'm a long 
+time list lurker here. Happy to post these announcements to the list 
+myself if this would be appreciated.
 
+Cheers,
+Victor
 
-On Fri, 18 Sep 2026 16:57:13 -0700
-Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
-
-> https://heif-heist.com/ seems more promotional than informational at
-> this point, but it does point out there are a number of exploitable
-> vulnerabilities in "native C/C++ decoders such as libheif and
-> libde265".
-
-
-Not sure if related, but this very recent commit
-https://github.com/strukturag/libheif/commit/6ce2bba558a27b63a508e81c085025f91c89899b
-sounds like it could be security-related and it is not part of the
-1.23.4 release.
-
-Copying over commit description:
----------
-Reject in-band coded image sizes over the security limit for all codecs (GHSA-v8qw-hwjv-44hw)
-A crafted image can declare a small size in its container 'ispe' property while
-its bitstream declares a much larger coded frame. The container-level checks are
-based on 'ispe', so the oversized bitstream was handed to the decoder, which
-allocated a buffer for the in-band size before libheif rejected the mismatch.
-The advisory demonstrated this for AV1 with the libaom backend (a ~351-byte AVIF
-declaring 64x64 but coding 8192x8192..27648x27648, allocating hundreds of MB to
->10 GB), but the same class affects every codec whose real frame size lives in
-the bitstream rather than in the container.
-
-Enforce the coded size in the codec-independent decode path, before any bytes
-reach a decoder plugin, so the fix is both codec- and backend-independent (it
-protects the ffmpeg backend too, which does no size check of its own):
-
-  - Rename the per-decoder hook get_coded_image_size_from_config() to
-    get_max_coded_image_size(const std::vector<uint8_t>&). The old name no longer
-    described the behaviour: it now scans the whole bitstream, not just the
-    configuration record. It is an internal method with a single caller.
-
-  - decode_sequence_frame_from_compressed_data() now fetches the compressed data
-    once and passes that same buffer to both the size gate and the decoder push,
-    so the combined config+bitstream buffer is not built twice per decode.
-
-  - AV1/AVIF: scan every OBU_SEQUENCE_HEADER in the combined configOBUs + item
-    data for the largest max_frame_width/height (new
-    find_max_av1_frame_size_in_stream()).
-
-  - AVC/HEVC/VVC: scan every SPS NAL unit in the combined config + item data
-    (new split_nal_units_4byte_length_prefixed()), not just the SPS in
-    avcC/hvcC/vvcC, since an SPS carried in the item data also drives the
-    decoder's allocation. Return the largest coded (pre-crop) size.
-
-  - JPEG: parse the SOF marker dimensions (previously discarded) and gate on them.
-
-  - JPEG 2000 / HTJ2K: parse the SIZ reference grid (Xsiz, Ysiz) from the
-    codestream. This makes the check backend-independent; the OpenJPEG plugin's
-    own grid gate (GHSA-q492-cfcm-895h) remains as a backstop.
-
-Uncompressed images are libheif's own decoder and are sized from the container,
-so they are not in this class.
-
-Add regression tests: tests/inband_coded_size_limit.cc (the advisory AV1 PoC
-plus HEVC/AVC/JPEG in-band attack files) and tests/nal_split.cc (NAL splitter
-edge cases).
+On 9/19/26 02:58, Alan Coopersmith wrote:
+> https://forum.suricata.io/t/suricata-8-0-7-released/6467 states:
+>> We are pleased to announce the release of Suricata 8.0.7.
+>>
+>> This is a security release, fixing a number of important issues. This 
+>> is the
+>> release with the highest number of vulnerability reports we’ve had so 
+>> far,
+>> as a result of the rise of AI(-assisted) analysis, resulting in a much
+>> higher-than-usual number of issues.
+>>
+>> Get the release here:
+>>     https://www.openinfosecfoundation.org/download/suricata-8.0.7.tar.gz
+>>
+>> Notable Changes
+>> ---------------
+>>
+>> Various security, performance, accuracy, and stability issues have 
+>> been fixed.
+>>
+>> All tickets for 8.0.7: https://redmine.openinfosecfoundation.org/ 
+>> versions/236
+>>
+>> (note that private Suricata tickets will be opened to the public 2 
+>> weeks after the release)
+>>
+>> CVE IDs Addressed:
+>> ------------------
+>> CVE             Severity (OISF) Severity (CVSS 3.1)     Tickets
+>> Pending         MODERATE        MODERATE                9013
+>> Pending         HIGH            HIGH                    9009
+>> Pending         LOW             LOW                     9005
+>> Pending         CRITICAL        CRITICAL                9004
+>> Pending         HIGH            MODERATE                9002
+>> Pending         HIGH            HIGH                    9000
+>> Pending         HIGH            HIGH                    8998
+>> Pending         LOW             LOW                     8989
+>> Pending         MODERATE        MODERATE                8988
+>> Pending         LOW             LOW                     8987
+>> Pending         LOW             LOW                     8986
+>> Pending         LOW             LOW                     8985
+>> Pending         LOW             MODERATE                8984
+>> Pending         MODERATE        MODERATE                8983
+>> Pending         LOW             LOW                     8982
+>> Pending         LOW             LOW                     8981
+>> Pending         LOW             MODERATE                8977
+>> Pending         CRITICAL        CRITICAL                8974
+>> Pending         MODERATE        MODERATE                8972
+>> Pending         MODERATE        LOW                     8971
+>> Pending         LOW             LOW                     8965
+>> Pending         LOW             LOW                     8963
+>> Pending         HIGH            HIGH                    8957
+>> Pending         LOW             LOW                     8950
+>> Pending         MODERATE        MODERATE                8947
+>> Pending         MODERATE        MODERATE                8946
+>> Pending         HIGH            HIGH                    8945
+>> Pending         HIGH            MODERATE                8941
+>> Pending         LOW             MODERATE                8938
+>> Pending         MODERATE        MODERATE                8937
+>> Pending         HIGH            LOW                     8933
+>> Pending         LOW             MODERATE                8932
+>> Pending         HIGH            MODERATE                8931
+>> Pending         HIGH            LOW                     8930
+>> Pending         LOW             MODERATE                8927
+>> Pending         HIGH            LOW                     8925
+>> Pending         LOW             LOW                     8924
+>> Pending         MODERATE        MODERATE                8922
+>> Pending         MODERATE        MODERATE                8921
+>> Pending         MODERATE        MODERATE                8920
+>> Pending         MODERATE        MODERATE                8913
+>> Pending         LOW             MODERATE                8910
+>> Pending         MODERATE        MODERATE                8909
+>> Pending         HIGH            LOW                     8906
+>> Pending         HIGH            MODERATE                8898
+>> Pending         LOW             LOW                     8883
+>> Pending         MODERATE        LOW                     8881
+>> Pending         HIGH            MODERATE                8877
+>> Pending         MODERATE        MODERATE                8875
+>> Pending         LOW             MODERATE                8872
+>> Pending         HIGH            MODERATE                8871
+>> Pending         HIGH            MODERATE                8870
+>> Pending         MODERATE        MODERATE                8810
+>> Pending         HIGH            MODERATE                8808
+>> Pending         HIGH            LOW                     8806
+>> Pending         HIGH            HIGH                    8801
+>> Pending         HIGH            HIGH                    8794
+>> Pending         MODERATE        HIGH                    8792
+>> Pending         MODERATE        HIGH                    8790
+>> Pending         MODERATE        MODERATE                8788
+>> Pending         LOW             MODERATE                8769
+>> Pending         MODERATE        HIGH                    8758
+>> Pending         HIGH            HIGH                    8756
+>> Pending         LOW             LOW                     8751
+>> Pending         HIGH            HIGH                    8746
+>> Pending         LOW             LOW                     8732
+>> Pending         HIGH            MODERATE                8677
+>>
+>> Severity scores defined by OISF and CVSS may vary due to how we assess 
+>> and
+>> evaluate impact. While CVSS has a more generic view on vulnerabilities 
+>> and
+>> will penalize any network-related issues, for instance, OISF considers
+>> Suricata context as the baseline (thus, as example, affecting the network
+>> isn’t taken into account).
+>>
+>> Suricata Security Policies: https://github.com/OISF/suricata/security/ 
+>> policy
+>>
+>> Suricata Security Advisories: https://github.com/OISF/suricata/ 
+>> security/advisories
+>>
+>> Security Issues
+>> ---------------
+>>
+>> Note that we have refined our severities sometime back. CRITICAL 
+>> severity is
+>> reserved for issues affecting Tier 1 features enabled by default, 
+>> involving
+>> remotely triggerable traffic-based code execution. HIGH severity also 
+>> covers
+>> Tier 1 features enabled by default, where there’s possible loss of 
+>> visibility
+>> or availability.
+>>
+>> If you think you’ve encountered a security vulnerability, please see
+>> https://github.com/OISF/suricata/security/policy#reporting-issues
+>>
+>> Suricata 7 is End of Life
+>> -------------------------
+>>
+>> Suricata 7 has reached EOL with the last Suricata 7.0.17. Please upgrade
+>> your setups to the latest supported version in the Suricata 8 branch.
+>>
+>> With Suricata 7 EOL, the LibHTP project is also end-of-life now, and the
+>> repository has been archived: https://github.com/OISF/libhtp? 
+>> tab=readme-ov-file
+>>
+>> Special Thanks
+>> --------------
+>>
+>> For contributing patches, reporting vulnerabilities and bugs, or 
+>> otherwise
+>> helping keep Suricata code secure, we appreciate:
+>>
+>> Aaron Chen, Ada Logics in collaboration with Anthropic Research,
+>> Adam Kiripolsky, Alexander Stadnikov, Luukas Larinkoski,
+>> Nozomi Networks Labs Advisory, Antoine Abou Faysal, Andreas Dolp, 
+>> aramosf,
+>> Arthur Chan, Binbin Xu of Tencent YUNDING LAB CodeBuddy Security,
+>> Bin Luo (University of Electronic Science and Technology of China 
+>> (UESTC)),
+>> Communications Security Establishment Canada (CSE), Denis Balashov, 
+>> z00xcv,
+>> Feng Xue,
+>> Kevin Valerio and Quan Nguyen from Trail of Bits in collaboration with 
+>> OpenAI,
+>> Lucas Ariel Sotomayor, Maksim Hayder, Kuniyoshi Noguchi (野口晋義), 
+>> Riyan Dhiman,
+>> Stephen Donnelly, Urval Kheni, Yash Datre, Yazan Balawneh, OSS-Fuzz, 
+>> Coverity.
+>>
+>> About Suricata
+>>
+>> Suricata is a high-performance Network Threat Detection, IDS, IPS, and 
+>> Network
+>> Security Monitoring engine. Open-source and owned by a community-run 
+>> non-profit
+>> foundation, the Open Information Security Foundation (OISF). Suricata is
+>> developed by OISF, its supporting vendors, and the community.
 
 
 -- 
-Hanno Böck - Independent security researcher
-https://itsec.hboeck.de/
-https://badkeys.info/
+----------------------------------------------
+Victor Julien
+https://www.inliniac.net/
+PGP: https://www.inliniac.net/victorjulien.asc
+----------------------------------------------
+
