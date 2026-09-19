@@ -1,65 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/6
-Message-Id: <CC0D9B08-B3CA-44D1-88A4-79A856B5DE22@stig.io>
-Date: Sat, 19 Sep 2026 17:18:54 +0200
-From: Stig Palmquist <stig@...g.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/19/4
+Message-ID: <af1a12d7-278e-4579-bbc0-13c1ee1550a7@cpansec.org>
+Date: Sat, 19 Sep 2026 11:47:09 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-82560: Pod::Text versions before 6.1.1 for Perl allow CPU and memory exhaustion formatting a POD document whose =over nesting drives the margin to the output width
+Subject: CVE-2026-78030: DBI versions before 1.653 for Perl load arbitrary modules via unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-82560                                       CPAN Security Group
+CVE-2026-78030                                       CPAN Security Group
 ========================================================================
 
-        CVE ID:  CVE-2026-82560
+         CVE ID:  CVE-2026-78030
 
-  Distribution:  podlators
-      Versions:  before 6.1.1
-      MetaCPAN:  https://metacpan.org/dist/podlators
-      VCS Repo:  https://github.com/rra/podlators
-
-  Distribution:  perl
-      Versions:  through 5.45.2
-      MetaCPAN:  https://metacpan.org/dist/perl
-      VCS Repo:  https://github.com/Perl/perl5
+   Distribution:  DBI
+       Versions:  before 1.653
+       MetaCPAN:  https://metacpan.org/dist/DBI
+       VCS Repo:  https://github.com/perl5-dbi/dbi
 
 
-Pod::Text versions before 6.1.1 for Perl allow CPU and memory
-exhaustion formatting a POD document whose =over nesting drives the
-margin to the output width
+DBI versions before 1.653 for Perl load arbitrary modules via
+unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM
 
 Description
 -----------
-Pod::Text versions before 6.1.1 for Perl allow CPU and memory
-exhaustion formatting a POD document whose =over nesting drives the
-margin to the output width.
+DBI versions before 1.653 for Perl load arbitrary modules via
+unvalidated dbm_type and dbm_mldbm attributes in DBD::DBM.
 
-Each =over adds its indent to the margin, which wrap() subtracts from
-the output width to get the space available for text. When that space
-reaches zero, the line-splitting substitution matches the empty string,
-and the loop consumes no input while appending the margin padding on
-every pass.
+DBD::DBM passes the dbm_type and dbm_mldbm connect attributes to
+require without checking that the value names a module. require treats
+a path-shaped string as a literal filename and does not consult @INC,
+so the attribute chooses the file that Perl loads and runs.
 
-Formatting an attacker-supplied POD document never returns, and the
-output grows until memory is exhausted.
+The MLDBM::Serializer:: prefix that DBD::DBM prepends to dbm_mldbm is
+not a boundary: only the :: separators are rewritten to /, so a value
+containing / traverses out of the serializer directory. The value is
+also assigned to $MLDBM::Serializer, which MLDBM requires the same way
+when it ties the table.
+
+A caller that lets an untrusted party influence either attribute, for
+example through a DSN fragment or a parameter that selects a storage
+backend, runs the file-scope code of whatever module the value names.
+
+For example,
+
+     my $dsn = "dbi:DBM:f_dir=/var/db;dbm_type=../../Untrusted.pm"
+     my $dbh = DBI->connect( $dsn );
+
+Note that DBD::Gofer forwards connect attributes to the server side,
+and DBI::ProxyServer checks only that a DSN starts with a driver
+prefix.
 
 Problem types
 -------------
-- CWE-835 Loop with Unreachable Exit Condition ('Infinite Loop')
-
-Workarounds
------------
-Until a Perl release carries the fix, install podlators v6.1.1 or
-later, which takes precedence over the bundled copy.
+- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
+   ('Unsafe Reflection')
 
 Solutions
 ---------
-Upgrade to podlators v6.1.1 or later.
+Upgrade to DBI version 1.653 or later, or apply the upstream patch.
 
 References
 ----------
-https://metacpan.org/release/RRA/podlators-v6.1.0/source/lib/Pod/Text.pm#L245-261
-https://github.com/rra/podlators/commit/70510174f69eb54aa6d617bde4e1402cd9b7c61f.patch
-https://metacpan.org/release/RRA/podlators-v6.1.1/changes
+https://metacpan.org/release/HMBRAND/DBI-1.653/changes
+https://github.com/perl5-dbi/dbi/commit/315c6ce703b8b3cbe9188062d9ec80730293554a.patch
+https://github.com/perl5-dbi/dbi/security/advisories/GHSA-wqmw-wqwx-3fr7
+
+Credits
+-------
+Harsh Raj Singhania, finder
+
 
 
