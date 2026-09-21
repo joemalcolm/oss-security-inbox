@@ -1,34 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/5
-Message-ID: <ae4a55d7-dab0-2725-6738-4b6cf145009a@apache.org>
-Date: Mon, 21 Sep 2026 13:23:02 +0000
-From: Rahul Vats <rahulvats@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/7
+Message-ID: <3e07d2dd-acd8-4278-9601-7d25688c086c@gmail.com>
+Date: Mon, 21 Sep 2026 10:10:18 -0700
+From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86473: Apache Airflow: Logout ignores a presented Authorization bearer token, leaving it revocable only by expiry 
+Subject: [OSSA-2026-040] OpenStack Blazar: Multiple authorization vulnerabilities in the Blazar V2 lease API (CVE-2026-93852, CVE-2026-93854)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+================================================================================
+OSSA-2026-040: Multiple authorization vulnerabilities in the Blazar V2 
+lease API
+================================================================================
 
-Affected versions:
+:Date: September 21, 2026
+:CVE: CVE-2026-93852,
+       CVE-2026-93854
 
-- Apache Airflow 3.0.0 before 3.3.2
 
-Description:
+Affects
+~~~~~~~
+- Blazar: >=1.0.0 <15.1.1, ==16.0.0, ==17.0.0
 
-Apache Airflow: the Core API logout endpoint revokes only a session token presented as the _token cookie. When a client logs out presenting its credential as an Authorization bearer header instead, the endpoint returns its normal logout response but revokes nothing, so the token remains valid until it expires. An attacker who already holds a copy of that token keeps the victim's access after the victim has logged out and believes the session ended; the default token lifetime is 24 hours and is configurable.
 
-Affects API clients that authenticate with a bearer token rather than the browser session cookie. The attacker must already possess a copy of a valid token; obtaining one is outside the scope of this issue, and no privileges beyond the victim's own are gained.
+Description
+~~~~~~~~~~~
+Rohan Das from the University of Engineering and Management, Kolkata,
+reported that the Blazar V2 lease API does not enforce object-level
+authorization on its update and delete operations. As a result, any
+authenticated user who knows a lease ID can modify or delete leases
+belonging to other users and projects.
 
-Users of apache-airflow are recommended to upgrade to apache-airflow version 3.3.2 or later, which fixes the issue.
+The same reporter found that the Blazar V2 lease listing operation
+returns leases for every project without enforcing project scoping
+or an administrator-only policy. Any authenticated user can
+enumerate other projects' leases, exposing lease and reservation
+identifiers along with reservation metadata. The exposed
+identifiers enable the object-level authorization bypass
+described above, allowing an attacker to then modify or delete the
+enumerated leases.
 
-Credit:
+Only deployments that enable Blazar's V2 lease API are affected.
+Deployers that do not use the V2 API endpoint can set
+``api_v2_controllers`` to an empty value in the ``[api]`` section of
+``blazar.conf``. Patches below address the issue if the API
+controllers cannot be disabled.
 
-OpenSec Intelligence (finder)
-Jarek Potiuk (remediation developer)
 
-References:
 
-https://github.com/apache/airflow/pull/72649
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86473
+Patches
+~~~~~~~
+- https://review.opendev.org/1006053 (2025.1/epoxy)
+- https://review.opendev.org/1006052 (2025.2/flamingo)
+- https://review.opendev.org/1006051 (2026.1/gazpacho)
+- https://review.opendev.org/1006050 (2026.2/hibiscus)
+- https://review.opendev.org/1006049 (2027.1/indri (development))
 
+
+Credits
+~~~~~~~
+- Rohan Das from University of Engineering and Management, Kolkata
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2162719
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-93852
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-93854
+
+
+Notes
+~~~~~
+- A single patch on each branch fixes both vulnerabilities.
+
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
+
+Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
