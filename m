@@ -1,37 +1,102 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/4
-Message-ID: <585a9838-b86a-94c1-cae7-9a28a36cf271@apache.org>
-Date: Mon, 21 Sep 2026 13:22:25 +0000
-From: Rahul Vats <rahulvats@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/1
+Message-ID: <54fa35fa-0979-be3c-6f0a-6375d43d3bc9@apache.org>
+Date: Mon, 21 Sep 2026 07:40:33 +0000
+From: Emmanuel Lécharny <elecharny@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82355: Apache Airflow: Session cookie silently overrides explicit Authorization bearer header, enabling session fixation 
+Subject: CVE-2026-47321: Apache MINA: Unbounded Decompression Amplification DoS in Zlib.inflate 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: 
 
 Affected versions:
 
-- Apache Airflow 3.3.0 before 3.3.2
+- Apache MINA (org.apache.mina:mina-filter-compression) 2.2.0 before 2.2.8
+- Apache MINA (org.apache.mina:mina-filter-compression) 2.1.0 before 2.1.13
+- Apache MINA (org.apache.mina:mina-filter-compression) 2.0.0 before 2.0.29
 
 Description:
 
-When a request to the Airflow core API carries both a session cookie and an explicit `Authorization: Bearer` token, Airflow resolves the caller from the cookie and ignores the bearer token, inverting the intended precedence of bearer over cookie. The request then executes -- and is recorded in the audit log -- as the cookie's principal rather than the identity the client explicitly presented.
+The CompressionFilter class uses ZLib to deflate and inflate data sent and received. When we inflate incoming data, the filter does not control the resulting size, and create a buffer no matter what.
 
-Only Apache Airflow 3.3.0 and 3.3.1 are affected. Earlier releases do not contain the code path that caches the cookie-derived user, and are not vulnerable.
+Some compressed data may have a compression ration greater than 1 thousand, leading to an exhaustion of the application memory, as we don't control the deflated size.
 
-Exploiting this requires an attacker to first place a valid session cookie of their own into the victim's browser or client: for example by cookie tossing from a sibling subdomain, through cross-site scripting in a separate application sharing a parent domain, or via a shared workstation. Deployments that host the Airflow UI on a domain shared with other applications are therefore the most exposed; a deployment on a dedicated domain with no co-hosted applications is not reachable this way. The consequence is principal confusion and misattributed audit records rather than a direct privilege escalation.
 
-Users of 3.3.0 or 3.3.1 should upgrade to Apache Airflow 3.3.2 or later, which resolves the caller from the explicitly supplied credential whenever one is present.
+
+
+The fix adds such a control by allowing the application developer to provide a fixed size limit, which when reached throws an exception. It also allows the user to provide a compression ratio that should not be exceeded, protected the application from small inflated files that inflate in gigantic files, but with a grace limit for the resulting size (1Mb) to avoid false positive (like a very small file inflating with a high ratio, but resulting with a acceptable size, like a few thousands bytes)
+
+
+
+
+For application using this feature, it is highly recommended to create the CompressionFilter and to pass the maximum limit as a forth constructor parameter, maxDecompressedSize:
+
+
+
+
+public CompressionFilter(final boolean compressInbound, final boolean compressOutbound, final int compressionLevel, final int maxDecompressedSize)Optionally one can also provide a maxDecompressRatio fifth parameter, and a decompressRatioMinSize sixth parameter to allow small inflated files with a high compression ratio to still be accepted.
+
+
+
+
+Here are the additional constructor:
+
+
+
+
+
+
+public CompressionFilter(final boolean compressInbound, final boolean compressOutbound,
+
+
+
+            final int compressionLevel, final int maxDecompressedSize,
+
+
+
+            final long maxDecompressRatio, final long decompressRatioMinSize)
+
+
+
+
+
+
+
+
+Also note that a fluent API has been added to spare the users the pain to call a constructor with that many parameters:
+
+
+
+
+
+
+ CompressionFilter compressionFilter = new CompressionFilter()
+
+                                                .setCompressionLevel(Zlib.COMPRESSION_MAX)
+
+                                                .setMaxDecompressedSize(1_000_000)
+
+                                                .setMaxDecompressRatio(100).
+
+                                                .setDecompressRatioMinSize(100_000); 
+
+
+
+
+
+
+
+
+
+Applications using Apache MINA are advised to upgrade and configure their CompressionFilter instance.
 
 Credit:
 
-Claude Security Scans (tool)
-Jarek Potiuk (remediation developer)
+Venkatraman Kumar, SecurIn (finder)
 
 References:
 
-https://github.com/apache/airflow/pull/72225
-https://github.com/apache/airflow/pull/72723
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82355
+https://lists.apache.org/thread/y7xj1bl8qo47p9bktb11hg5v6k1d4dyj
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-47321
 
