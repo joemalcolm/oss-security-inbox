@@ -1,102 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/1
-Message-ID: <54fa35fa-0979-be3c-6f0a-6375d43d3bc9@apache.org>
-Date: Mon, 21 Sep 2026 07:40:33 +0000
-From: Emmanuel Lécharny <elecharny@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/5
+Message-ID: <ae4a55d7-dab0-2725-6738-4b6cf145009a@apache.org>
+Date: Mon, 21 Sep 2026 13:23:02 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-47321: Apache MINA: Unbounded Decompression Amplification DoS in Zlib.inflate 
+Subject: CVE-2026-86473: Apache Airflow: Logout ignores a presented Authorization bearer token, leaving it revocable only by expiry 
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
+Severity: low 
 
 Affected versions:
 
-- Apache MINA (org.apache.mina:mina-filter-compression) 2.2.0 before 2.2.8
-- Apache MINA (org.apache.mina:mina-filter-compression) 2.1.0 before 2.1.13
-- Apache MINA (org.apache.mina:mina-filter-compression) 2.0.0 before 2.0.29
+- Apache Airflow 3.0.0 before 3.3.2
 
 Description:
 
-The CompressionFilter class uses ZLib to deflate and inflate data sent and received. When we inflate incoming data, the filter does not control the resulting size, and create a buffer no matter what.
+Apache Airflow: the Core API logout endpoint revokes only a session token presented as the _token cookie. When a client logs out presenting its credential as an Authorization bearer header instead, the endpoint returns its normal logout response but revokes nothing, so the token remains valid until it expires. An attacker who already holds a copy of that token keeps the victim's access after the victim has logged out and believes the session ended; the default token lifetime is 24 hours and is configurable.
 
-Some compressed data may have a compression ration greater than 1 thousand, leading to an exhaustion of the application memory, as we don't control the deflated size.
+Affects API clients that authenticate with a bearer token rather than the browser session cookie. The attacker must already possess a copy of a valid token; obtaining one is outside the scope of this issue, and no privileges beyond the victim's own are gained.
 
-
-
-
-The fix adds such a control by allowing the application developer to provide a fixed size limit, which when reached throws an exception. It also allows the user to provide a compression ratio that should not be exceeded, protected the application from small inflated files that inflate in gigantic files, but with a grace limit for the resulting size (1Mb) to avoid false positive (like a very small file inflating with a high ratio, but resulting with a acceptable size, like a few thousands bytes)
-
-
-
-
-For application using this feature, it is highly recommended to create the CompressionFilter and to pass the maximum limit as a forth constructor parameter, maxDecompressedSize:
-
-
-
-
-public CompressionFilter(final boolean compressInbound, final boolean compressOutbound, final int compressionLevel, final int maxDecompressedSize)Optionally one can also provide a maxDecompressRatio fifth parameter, and a decompressRatioMinSize sixth parameter to allow small inflated files with a high compression ratio to still be accepted.
-
-
-
-
-Here are the additional constructor:
-
-
-
-
-
-
-public CompressionFilter(final boolean compressInbound, final boolean compressOutbound,
-
-
-
-            final int compressionLevel, final int maxDecompressedSize,
-
-
-
-            final long maxDecompressRatio, final long decompressRatioMinSize)
-
-
-
-
-
-
-
-
-Also note that a fluent API has been added to spare the users the pain to call a constructor with that many parameters:
-
-
-
-
-
-
- CompressionFilter compressionFilter = new CompressionFilter()
-
-                                                .setCompressionLevel(Zlib.COMPRESSION_MAX)
-
-                                                .setMaxDecompressedSize(1_000_000)
-
-                                                .setMaxDecompressRatio(100).
-
-                                                .setDecompressRatioMinSize(100_000); 
-
-
-
-
-
-
-
-
-
-Applications using Apache MINA are advised to upgrade and configure their CompressionFilter instance.
+Users of apache-airflow are recommended to upgrade to apache-airflow version 3.3.2 or later, which fixes the issue.
 
 Credit:
 
-Venkatraman Kumar, SecurIn (finder)
+OpenSec Intelligence (finder)
+Jarek Potiuk (remediation developer)
 
 References:
 
-https://lists.apache.org/thread/y7xj1bl8qo47p9bktb11hg5v6k1d4dyj
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-47321
+https://github.com/apache/airflow/pull/72649
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-86473
 
