@@ -1,65 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/8
-Message-Id: <483CCEF8-5A86-4432-A798-73A424683A5B@stig.io>
-Date: Mon, 21 Sep 2026 19:21:07 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-93012: Email::Sender::Transport::Sendmail versions before 2.602 for Perl allow arbitrary command execution on Windows sending a message whose envelope address reaches the shell in _sendmail_pipe
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/21/2
+Message-ID: <abb35bcb-e25b-3c20-d01e-fb36a955a2ca@apache.org>
+Date: Mon, 21 Sep 2026 12:47:17 +0000
+From: Emmanuel Lécharny <elecharny@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-94301: Apache MINA: CVE-2026-47065 resolveProxyClass fix missing from 2.0.X and 2.1.X branches (2.0.30 / 2.1.14) ZDRES-232 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-93012                                       CPAN Security Group
-========================================================================
+Severity: 
 
-        CVE ID:  CVE-2026-93012
+Affected versions:
 
-  Distribution:  Email-Sender
-      Versions:  before 2.602
-      MetaCPAN:  https://metacpan.org/dist/Email-Sender
-      VCS Repo:  https://github.com/rjbs/Email-Sender
+- Apache MINA 2.0.0 before 2.0.31
+- Apache MINA 2.1.0 before 2.1.15
 
+Description:
 
-Email::Sender::Transport::Sendmail versions before 2.602 for Perl allow
-arbitrary command execution on Windows sending a message whose envelope
-address reaches the shell in _sendmail_pipe
+The fix for CVE-2026-47065/ZDRES-232 ("resolveProxyClass Not Overridden - acceptMatchers Filter Bypass via java.lang.reflect.Proxy"), released on 2026-06-02 and announced as "Fully addressed" in MINA 2.2.8, 2.1.13 and 2.0.29, was committed to the
+ 2.2.X branch only. The 2.0.X and 2.1.X maintenance branches never received the resolveProxyClass() override, so the 2.0.29 and 2.1.13 artifacts listed as fixed -- and every later release on those lines, up to and including the current 2.0.30 and 2.1.14 -- remain vulnerable to the exact allow-list bypass that CVE-2026-47065 was meant to close.
 
-Description
------------
-Email::Sender::Transport::Sendmail versions before 2.602 for Perl allow
-arbitrary command execution on Windows sending a message whose envelope
-address reaches the shell in _sendmail_pipe.
+Credit:
 
-On MSWin32 the envelope sender and every recipient go into a single
-command string, which open() passes to a shell. Every other platform
-gets the list form, which runs sendmail directly. When the caller
-supplies no envelope, Email::Sender::Simple takes the recipients from
-the To and Cc headers and the sender from the From header.
+tonghuaroot (finder)
 
-An attacker who controls one of those header addresses runs commands as
-the sending process.
+References:
 
-Problem types
--------------
-- CWE-78 Improper Neutralization of Special Elements used in an OS
-  Command ('OS Command Injection')
-
-Workarounds
------------
-For Windows deployments that cannot upgrade to Email-Sender 2.602, use
-a transport that does not build a command line, such as
-Email::Sender::Transport::SMTP.
-
-Solutions
----------
-Upgrade to Email-Sender 2.602 or later.
-
-References
-----------
-https://github.com/rjbs/Email-Sender/commit/9a587bc9ff4edae13239190c2651da2c76b1e72c.patch
-https://metacpan.org/release/RJBS/Email-Sender-2.602/changes
-
-Timeline
---------
-- 2026-09-21: Version 2.602 released with fix.
-
+https://lists.apache.org/thread/rzos6zds5x7obl8trkvznt1djw4f996p
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-94301
 
