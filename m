@@ -1,83 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/21
-Message-ID: <3431a851-5c3a-4837-b498-eb725755de91@cpansec.org>
-Date: Tue, 22 Sep 2026 19:22:50 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/17
+Message-ID: <arI3XrCf7hgIbFlM@pjcj.com>
+Date: Tue, 22 Sep 2026 10:09:22 +0200
+From: Paul Johnson <paul@...j.net>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-95831: Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl contains malware which executes Python code from an obfuscated URL
+Subject: CVE-2026-87082: Net::IDN::Punycode versions before 2.590 for Perl hang, crash or return a wrong label via unvalidated malformed UTF-8 in encode_punycode
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-95831                                       CPAN Security Group
+CVE-2026-87082                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-95831
+        CVE ID:  CVE-2026-87082
 
-   Distribution:  Crypt-SelfCertificate
-       Versions:  from 1.01 through 1.05
-       MetaCPAN:  https://metacpan.org/dist/Crypt-SelfCertificate
+  Distribution:  Net-IDN-Encode
+      Versions:  before 2.590
+      MetaCPAN:  https://metacpan.org/dist/Net-IDN-Encode
+      VCS Repo:  https://github.com/robrwo/Net-IDN-Encode
 
 
-Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl
-contains malware which executes Python code from an obfuscated URL
+Net::IDN::Punycode versions before 2.590 for Perl hang, crash or return
+a wrong label via unvalidated malformed UTF-8 in encode_punycode
 
 Description
 -----------
-Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl
-contains malware which executes Python code from an obfuscated URL.
+Net::IDN::Punycode versions before 2.590 for Perl hang, crash or return
+a wrong label via unvalidated malformed UTF-8 in encode_punycode.
 
-The generate_certificate runs a Python script saved as a certificate
-file.  The pyhton script attempts to retrieve code from a hardcoded
-http URL that is obfuscated with base64 encoding and run the response
-body directly.
+Neither backend checks that its input is well-formed UTF-8, so a string
+with the UTF-8 flag set over malformed bytes, as the :utf8 PerlIO layer
+produces from any malformed input, reaches the encoder unchecked. On
+perl 5.32 and later the XS backend reports a malformed sequence with a
+length of `(STRLEN)-1`, so the scan steps back one byte instead of
+forward and never ends. On earlier perls the XS returns a valid label
+for a different name. The pure-Perl backend runs a regex over the
+flagged string. Depending on the bytes, it aborts with SIGBUS on perl
+5.28 and later, dies with a panic, or returns a wrong label.
 
-The impact is that arbitrary code can be invoked as the user, without a
-dropped script being saved on the affected host.
+The documented conversion functions match the label against Unicode
+properties first and that match dies on such a string, so only a direct
+call to encode_punycode reaches the defect. The decoder is not
+affected.
 
-The releases have no test scripts nor build hooks.  The intention may
-have been to trigger the payload after installation.
-
-For version 1.01, the dropper script is in
-lib/Crypt/SelfCertificate/sample/validate.p12.
-
-For version 1.05, the dropper script is in
-lib/Crypt/SelfCertificate/sample/cert7.pem.
-
-The SHA-256 digests of the files are
-
-fbff21f45ff748365062a5e36fb2d72558cad82a507a6f357f320b4fcdf07760 
-Crypt-SelfCertificate-1.01.tar.gz
-27b2d2d3174ad771474fff2521f5084ec231e9218ea8c832515aef1cbd5897bc 
-lib/Crypt/SelfCertificate/sample/validate.p12
-
-9fdfa7d69b034b77d4510cda567e8da1e486ca81c7daaadc5732a45c41d71991 
-Crypt-SelfCertificate-1.05.tar.gz
-27b2d2d3174ad771474fff2521f5084ec231e9218ea8c832515aef1cbd5897bc 
-lib/Crypt/SelfCertificate/sample/cert7.pem
+A direct caller encoding attacker-supplied bytes hangs, crashes or gets
+a label for a name the input never held.
 
 Problem types
 -------------
-- CWE-506 Embedded Malicious Code
-
-Impacts
--------
-- CAPEC-253 Remote Code Inclusion
+- CWE-835 Loop with Unreachable Exit Condition ('Infinite Loop')
+- CWE-1286 Improper Validation of Syntactic Correctness of Input
 
 Solutions
 ---------
-Systems on which the affected package was installed should be
-considered potentially compromised and investigated accordingly.
+Upgrade to Net-IDN-Encode 2.590-TRIAL or later.
 
 References
 ----------
-https://www.nntp.perl.org/group/perl.cpan.testers.discuss/2026/09/msg4754.html
+https://metacpan.org/release/PJCJ/Net-IDN-Encode-2.590-TRIAL/changes
+https://github.com/robrwo/Net-IDN-Encode/commit/0918fb4a951ed5f4494c4cf202419c2842507ea4.patch
+https://github.com/robrwo/Net-IDN-Encode/commit/59dc7f2c605a897bcbfe0ac5eb2b8dbe6792348d.patch
+https://github.com/robrwo/Net-IDN-Encode/commit/accb6df57ad107ec0c4bfb27b21551eed97c700e.patch
+https://github.com/robrwo/Net-IDN-Encode/commit/572af0183b3a6294e22c6b509268da09697cf77d.patch
 
-Timeline
---------
-- 2026-09-15: Crypt::SelfCertificate version 1.00 uploaded to CPAN
-- 2026-09-17: Crypt::SelfCertificate version 1.01 uploaded to CPAN
-- 2026-09-22: Crypt::SelfCertificate version 1.05 uploaded to CPAN
-- 2026-09-22: Malware identified by CPANSec scanning
-
-
-
+-- 
+Paul Johnson - paul@...j.net
