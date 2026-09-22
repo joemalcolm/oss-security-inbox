@@ -1,30 +1,61 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/7
-Message-ID: <CAAwz41Rg82u-o8QG7xr9qsr39izkMozd+=GhK0gFr83-1Dr+9g@mail.gmail.com>
-Date: Tue, 22 Sep 2026 16:09:13 +0200
-From: Norbert Pócs <norbertp@...nssl.org>
-To: oss-security@...ts.openwall.com
-Subject: New OpenSSL Releases
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/10
+Message-ID: <arIz5JUBL9rwFEvg@pjcj.com>
+Date: Tue, 22 Sep 2026 09:55:03 +0200
+From: Paul Johnson <paul@...j.net>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2016-15059: Net::IDN::Punycode versions before 2.301 for Perl allow a heap buffer overflow via unchecked writes past the output buffer in encode_punycode
 Content-Type: text/plain; charset=utf-8
 
-*OpenSSL Release Announcement*
+========================================================================
+CVE-2016-15059                                       CPAN Security Group
+========================================================================
 
-The OpenSSL project team would like to announce the upcoming release of
-OpenSSL versions 4.0.3, 3.6.5, 3.5.9, and 3.4.8.
+        CVE ID:  CVE-2016-15059
 
-We will also be releasing extended support for OpenSSL versions
-3.0.23, 1.1.1zj, and 1.0.2zs which will be available to premium support
-customers.
+  Distribution:  Net-IDN-Encode
+      Versions:  before 2.301
+      MetaCPAN:  https://metacpan.org/dist/Net-IDN-Encode
+      VCS Repo:  https://github.com/robrwo/Net-IDN-Encode
 
-These releases will be made available on Tuesday, 29 September 2026,
-between 1300 and 1700 UTC.
 
-These are security-fix releases. The highest severity issue fixed in these
-releases is High:
+Net::IDN::Punycode versions before 2.301 for Perl allow a heap buffer
+overflow via unchecked writes past the output buffer in encode_punycode
 
-https://openssl-library.org/policies/general/security-policy/index.html
+Description
+-----------
+Net::IDN::Punycode versions before 2.301 for Perl allow a heap buffer
+overflow via unchecked writes past the output buffer in
+encode_punycode.
 
-Yours
+The XS backend builds the encoded label in the string buffer of the
+scalar it returns, sized from the input length. The loop that emits the
+digits of each code point checks for room before every write, but the
+write of the last digit of each round and the write of the terminating
+NUL do not, so an input whose encoded form fills the buffer writes past
+its end.
 
-The OpenSSL Project Team
+Only the XS backend is affected.
 
+Encoding an attacker-supplied string corrupts the heap.
+
+Problem types
+-------------
+- CWE-122 Heap-based Buffer Overflow
+
+Solutions
+---------
+Upgrade to Net-IDN-Encode 2.301 or later.
+
+References
+----------
+https://rt.cpan.org/Ticket/Display.html?id=118924
+https://github.com/robrwo/Net-IDN-Encode/commit/9a3ba07f15d22c0347eefee9625b012cbc803657.patch
+https://metacpan.org/release/CFAERBER/Net-IDN-Encode-2.301/changes
+
+Timeline
+--------
+- 2016-12-03: Version 2.301 released with fix.
+
+-- 
+Paul Johnson - paul@...j.net
