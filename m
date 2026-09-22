@@ -1,55 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/16
-Message-ID: <arI3HIgrQ0hzqqSX@pjcj.com>
-Date: Tue, 22 Sep 2026 10:07:56 +0200
-From: Paul Johnson <paul@...j.net>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-87081: Net::IDN::UTS46 versions before 2.590 for Perl allow CPU exhaustion via quadratic punycode encoding of an overlong label before the length check in to_ascii
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/7
+Message-ID: <CAAwz41Rg82u-o8QG7xr9qsr39izkMozd+=GhK0gFr83-1Dr+9g@mail.gmail.com>
+Date: Tue, 22 Sep 2026 16:09:13 +0200
+From: Norbert Pócs <norbertp@...nssl.org>
+To: oss-security@...ts.openwall.com
+Subject: New OpenSSL Releases
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-87081                                       CPAN Security Group
-========================================================================
+*OpenSSL Release Announcement*
 
-        CVE ID:  CVE-2026-87081
+The OpenSSL project team would like to announce the upcoming release of
+OpenSSL versions 4.0.3, 3.6.5, 3.5.9, and 3.4.8.
 
-  Distribution:  Net-IDN-Encode
-      Versions:  before 2.590
-      MetaCPAN:  https://metacpan.org/dist/Net-IDN-Encode
-      VCS Repo:  https://github.com/robrwo/Net-IDN-Encode
+We will also be releasing extended support for OpenSSL versions
+3.0.23, 1.1.1zj, and 1.0.2zs which will be available to premium support
+customers.
 
+These releases will be made available on Tuesday, 29 September 2026,
+between 1300 and 1700 UTC.
 
-Net::IDN::UTS46 versions before 2.590 for Perl allow CPU exhaustion via
-quadratic punycode encoding of an overlong label before the length
-check in to_ascii
+These are security-fix releases. The highest severity issue fixed in these
+releases is High:
 
-Description
------------
-Net::IDN::UTS46 versions before 2.590 for Perl allow CPU exhaustion via
-quadratic punycode encoding of an overlong label before the length
-check in to_ascii.
+https://openssl-library.org/policies/general/security-policy/index.html
 
-to_ascii punycode encodes each label and only then applies the 63-byte
-DNS limit. encode_punycode in both backends follows the sample
-implementation in RFC 3492, whose outer loop runs once per distinct
-non-ASCII code point and scans the whole input each round, so a label
-of distinct non-ASCII characters costs the square of its length before
-the limit rejects it. Every ASCII conversion in the distribution,
-including domain_to_ascii and email_to_ascii, goes through to_ascii.
+Yours
 
-Problem types
--------------
-- CWE-407 Inefficient Algorithmic Complexity
+The OpenSSL Project Team
 
-Solutions
----------
-Upgrade to Net-IDN-Encode 2.590-TRIAL or later.
-
-References
-----------
-https://metacpan.org/release/PJCJ/Net-IDN-Encode-2.590-TRIAL/changes
-https://github.com/robrwo/Net-IDN-Encode/commit/5ac3315131264670efcd3a29857b651506dfee8e.patch
-https://github.com/robrwo/Net-IDN-Encode/commit/ea34f812d7dc67f3b211f4d92e74c6a7e24d764a.patch
-
--- 
-Paul Johnson - paul@...j.net
