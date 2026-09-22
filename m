@@ -1,45 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/8
-Message-ID: <99db5458-7f91-43d1-96c9-20b22969c6d6@pipping.org>
-Date: Tue, 22 Sep 2026 16:56:13 +0200
-From: Sebastian Pipping <sebastian@...ping.org>
-To: oss-security@...ts.openwall.com
-Subject: libexpat 2.8.5 fixes CVE-2026-93990 (malformed UTF-16 smuggling)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/12
+Message-ID: <arI1QVR6ttK0F177@pjcj.com>
+Date: Tue, 22 Sep 2026 10:01:44 +0200
+From: Paul Johnson <paul@...j.net>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-74766: Net::IDN::Punycode versions from 2.301 before 2.590 for Perl allow a heap use-after-free via a decoded code point that reallocates the output buffer in decode_punycode
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+========================================================================
+CVE-2026-74766                                       CPAN Security Group
+========================================================================
+
+        CVE ID:  CVE-2026-74766
+
+  Distribution:  Net-IDN-Encode
+      Versions:  from 2.301 before 2.590
+      MetaCPAN:  https://metacpan.org/dist/Net-IDN-Encode
+      VCS Repo:  https://github.com/robrwo/Net-IDN-Encode
 
 
-just a quick note that libexpat 2.8.5 (or "Expat 2.8.5") released
-today is fixing CVE-2026-93990:
+Net::IDN::Punycode versions from 2.301 before 2.590 for Perl allow a
+heap use-after-free via a decoded code point that reallocates the
+output buffer in decode_punycode
 
-   Reject high surrogates not followed by a low surrogate during UTF-16
-   decoding; previously, malformed UTF-16 could be smuggled into the
-   application using Expat and could cause arbitrary damage there,
-   depending on how malformed UTF-16 was handled inside the application;
-   validation was not their job but Expat's. This is similar to past
-   vulnerability CVE-2022-25235.
-   Upstream CVSS 3.1 vector:
-   AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H (CVSS score: 9.8)
+Description
+-----------
+Net::IDN::Punycode versions from 2.301 before 2.590 for Perl allow a
+heap use-after-free via a decoded code point that reallocates the
+output buffer in decode_punycode.
 
-Some key links are:
+The XS backend inserts each decoded code point into the string buffer
+of the scalar it returns. decode_punycode computes the insertion
+pointer first and only then grows the buffer when the code point does
+not fit. The growth reallocates the buffer and updates every pointer
+except the insertion pointer, so the move that follows and the write of
+the code point go through a freed pointer. The buffer starts at twice
+the label length, and a code point above U+FFFF takes four bytes in the
+output, so a label of such code points outgrows it and forces the
+reallocation.
 
-- The blog post about it
-   https://blog.hartwork.org/posts/expat-2-8-5-released/
+Version 2.301, the fix for CVE-2016-15059, introduced the defect. Only
+the XS backend is affected.
 
-- The change log of release 2.8.5
-   https://github.com/libexpat/libexpat/blob/R_2_8_5/expat/Changes
+Decoding an attacker-supplied punycode label reads and writes freed
+heap memory.
 
-- The fixing pull request
-   https://github.com/libexpat/libexpat/pull/1282
+Problem types
+-------------
+- CWE-416 Use After Free
 
-- The NVD CVE metadata
-   https://nvd.nist.gov/vuln/detail/CVE-2026-93990
-   (with a different CVSS vector)
+Solutions
+---------
+Upgrade to Net-IDN-Encode 2.590-TRIAL or later.
 
-Best
+References
+----------
+https://metacpan.org/release/PJCJ/Net-IDN-Encode-2.590-TRIAL/changes
+https://github.com/robrwo/Net-IDN-Encode/commit/259e74c5739175b063c5393a4ce4a0705678ba61.patch
+https://github.com/robrwo/Net-IDN-Encode/commit/2fbc71e4d8517ab65c5d5d35fda086371b735a3f.patch
+https://www.cve.org/CVERecord?id=CVE-2016-15059
 
+Timeline
+--------
+- 2016-12-03: Version 2.301 released, introducing the defect.
+- 2026-09-17: Version 2.590-TRIAL released with fix.
 
-
-Sebastian
-
+-- 
+Paul Johnson - paul@...j.net
