@@ -1,63 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/20
-Message-ID: <a7a19d53-0124-482f-a7bb-7dfb42c8ae48@redhat.com>
-Date: Tue, 22 Sep 2026 12:52:12 -0400
-From: Carlos O'Donell <carlos@...hat.com>
-To: oss-security@...ts.openwall.com
-Subject: The GNU C Library security advisories update for 2026-09-22
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/21
+Message-ID: <3431a851-5c3a-4837-b498-eb725755de91@cpansec.org>
+Date: Tue, 22 Sep 2026 19:22:50 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-95831: Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl contains malware which executes Python code from an obfuscated URL
 Content-Type: text/plain; charset=utf-8
 
-The following security advisories have been published:
+========================================================================
+CVE-2026-95831                                       CPAN Security Group
+========================================================================
 
-GLIBC-SA-2026-0022:
-===================
-AT_SECURE programs may load attacker-controlled code via $ORIGIN
+         CVE ID:  CVE-2026-95831
 
-A time-of-check to time-of-use (TOCTOU) race condition in the dynamic
-loader (ld.so) of the GNU C Library (glibc) versions 2.14 through 2.44
-allows a local attacker to escalate privileges. When expanding $ORIGIN
-in DT_RPATH for setuid/setgid (AT_SECURE) programs, glibc validates the
-lexically normalized search path against the trusted directories but
-then opens the raw, un-normalized path. On systems where the Linux
-fs.protected_hardlinks sysctl is disabled, a local attacker who
-hard-links such a program into an attacker-controlled directory and wins
-a race to replace an intermediate path component with a symbolic link
-can direct the loader outside the trusted directory, causing it to load
-an attacker-controlled shared object and execute arbitrary code with the
-elevated privileges of the program.
+   Distribution:  Crypt-SelfCertificate
+       Versions:  from 1.01 through 1.05
+       MetaCPAN:  https://metacpan.org/dist/Crypt-SelfCertificate
 
-Exploitation requires an installed setuid or setgid binary whose DT_RPATH
-uses $ORIGIN followed by ".." traversal that normalizes into a trusted
-directory, and the ability to hard-link that binary and win the race by
-swapping a path component for a symbolic link. Major Linux-based OS
-distributions ship with fs.protected_hardlinks enabled by default and
-mitigate the vulnerability.
 
-CVE-Id: CVE-2026-86805
-Public-Date: 2026-07-06
-Vulnerable-Commit: 47c3cd7a74e8c089d60d603afce6d9cf661178d6 (2.13-113)
-Fix-Commit: ed0c137b97eb940b4b64981e84ed806d3276edd9 (2.45)
-Reported-by: Jann Horn <jannh@...gle.com>
-CVSS: CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:L - 6.3
+Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl
+contains malware which executes Python code from an obfuscated URL
 
-GLIBC-SA-2026-0023:
-===================
-AT_SECURE program buffer overflow via $ORIGIN processing
+Description
+-----------
+Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl
+contains malware which executes Python code from an obfuscated URL.
 
-A stack-based buffer overflow in the dynamic loader (ld.so) of the GNU C
-Library (glibc) versions 2.14 through 2.44 allows a local attacker to
-crash or corrupt the memory of setuid/setgid (AT_SECURE) programs.
+The generate_certificate runs a Python script saved as a certificate
+file.  The pyhton script attempts to retrieve code from a hardcoded
+http URL that is obfuscated with base64 encoding and run the response
+body directly.
 
-When such a program's DT_RPATH or DT_RUNPATH begins with $ORIGIN and is
-followed by NUL or '/' the loader both reads past the end of the path
-buffer and writes past the end of a stack-allocated internal buffer.
-The corrupted loader stack can lead to a loader crash (denial of
-service) and limited disclosure of process memory.
+The impact is that arbitrary code can be invoked as the user, without a
+dropped script being saved on the affected host.
 
-CVE Id: CVE-2026-95818
-Public-Date: 2026-08-14
-Vulnerable-Commit: 47c3cd7a74e8c089d60d603afce6d9cf661178d6 (2.13-113)
-Fix-Commit: ed0c137b97eb940b4b64981e84ed806d3276edd9 (2.45)
-Reported-by: AISLE in partnership with Red Hat
-CVSS: CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N - 3.6
+The releases have no test scripts nor build hooks.  The intention may
+have been to trigger the payload after installation.
+
+For version 1.01, the dropper script is in
+lib/Crypt/SelfCertificate/sample/validate.p12.
+
+For version 1.05, the dropper script is in
+lib/Crypt/SelfCertificate/sample/cert7.pem.
+
+The SHA-256 digests of the files are
+
+fbff21f45ff748365062a5e36fb2d72558cad82a507a6f357f320b4fcdf07760 
+Crypt-SelfCertificate-1.01.tar.gz
+27b2d2d3174ad771474fff2521f5084ec231e9218ea8c832515aef1cbd5897bc 
+lib/Crypt/SelfCertificate/sample/validate.p12
+
+9fdfa7d69b034b77d4510cda567e8da1e486ca81c7daaadc5732a45c41d71991 
+Crypt-SelfCertificate-1.05.tar.gz
+27b2d2d3174ad771474fff2521f5084ec231e9218ea8c832515aef1cbd5897bc 
+lib/Crypt/SelfCertificate/sample/cert7.pem
+
+Problem types
+-------------
+- CWE-506 Embedded Malicious Code
+
+Impacts
+-------
+- CAPEC-253 Remote Code Inclusion
+
+Solutions
+---------
+Systems on which the affected package was installed should be
+considered potentially compromised and investigated accordingly.
+
+References
+----------
+https://www.nntp.perl.org/group/perl.cpan.testers.discuss/2026/09/msg4754.html
+
+Timeline
+--------
+- 2026-09-15: Crypt::SelfCertificate version 1.00 uploaded to CPAN
+- 2026-09-17: Crypt::SelfCertificate version 1.01 uploaded to CPAN
+- 2026-09-22: Crypt::SelfCertificate version 1.05 uploaded to CPAN
+- 2026-09-22: Malware identified by CPANSec scanning
+
+
 
