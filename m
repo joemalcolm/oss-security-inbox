@@ -1,47 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/1
-Message-Id: <F9A23577-9BB7-4278-9368-57D73D9ADDB9@stig.io>
-Date: Tue, 22 Sep 2026 02:54:18 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/4
+Message-Id: <0F05E8F4-FFF8-42B6-805C-004E0454B003@stig.io>
+Date: Tue, 22 Sep 2026 02:57:51 +0200
 From: Stig Palmquist <stig@...g.io>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-93709: Dancer2 versions before 2.2.0 for Perl serve a layout as a page when an equivalent spelling of its path misses the guard in the AutoPage handler
+Subject: CVE-2026-93712: Dancer2 versions from 2.1.0 before 2.2.0 for Perl serve files from outside public_dir via relative path segments in the File route handler
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-93709                                       CPAN Security Group
+CVE-2026-93712                                       CPAN Security Group
 ========================================================================
 
-        CVE ID:  CVE-2026-93709
+        CVE ID:  CVE-2026-93712
 
   Distribution:  Dancer2
-      Versions:  before 2.2.0
+      Versions:  from 2.1.0 before 2.2.0
       MetaCPAN:  https://metacpan.org/dist/Dancer2
       VCS Repo:  https://github.com/PerlDancer/Dancer2
 
 
-Dancer2 versions before 2.2.0 for Perl serve a layout as a page when an
-equivalent spelling of its path misses the guard in the AutoPage
-handler
+Dancer2 versions from 2.1.0 before 2.2.0 for Perl serve files from
+outside public_dir via relative path segments in the File route handler
 
 Description
 -----------
-Dancer2 versions before 2.2.0 for Perl serve a layout as a page when an
-equivalent spelling of its path misses the guard in the AutoPage
+Dancer2 versions from 2.1.0 before 2.2.0 for Perl serve files from
+outside public_dir via relative path segments in the File route
 handler.
 
-The handler compares the request path against the layout directory name
-as text, while the lookup that follows canonicalises it. A doubled
-slash, a dot segment, a percent-encoded slash, or a different
-capitalisation on a case-insensitive filesystem therefore misses the
-guard.
+The handler joins the request path onto public_dir without collapsing
+relative segments, and checks only that the result is a readable
+regular file. A request for `/../outside.txt` escapes public_dir, and
+percent-encoding the dots reaches the same file.
 
-The handler is off by default, enabled with auto_page. The layout
-wrapping every page is already public, so this discloses one of the
-application's other layouts.
+The handler is off by default. An application is affected once it names
+File in route_handlers and sets static_handler to 0, which otherwise
+refuses a dot segment before the route runs.
+
+Any file the worker process can read is served to an unauthenticated
+request, including the application's config.yml above public_dir.
 
 Problem types
 -------------
-- CWE-41 Improper Resolution of Path Equivalence
+- CWE-22 Improper Limitation of a Pathname to a Restricted Directory
+  ('Path Traversal')
 
 Solutions
 ---------
@@ -49,9 +51,8 @@ Upgrade to Dancer2 2.2.0 or later.
 
 References
 ----------
-https://github.com/PerlDancer/Dancer2/issues/1823
-https://github.com/PerlDancer/Dancer2/commit/293fce08812b0928f34ab2d7b9357450707c3630.patch
-https://github.com/PerlDancer/Dancer2/commit/753b385350a54acb8d4b686723890205268634a8.patch
+https://github.com/PerlDancer/Dancer2/security/advisories/GHSA-6xw8-v24c-m783
+https://github.com/PerlDancer/Dancer2/commit/2446a09ffb83fef71cc75c327bd6e4b1f007b885.patch
 https://metacpan.org/release/CROMEDOME/Dancer2-2.2.0/changes
 
 Timeline
