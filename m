@@ -1,31 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/16
-Message-ID: <dc944422-5691-4384-5333-3512157daa1e@apache.org>
-Date: Wed, 23 Sep 2026 08:22:59 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/15
+Message-ID: <91c3ab2a-be08-471c-d526-b802b89f77b8@apache.org>
+Date: Wed, 23 Sep 2026 08:25:29 +0000
 From: Joerg Hoh <joerghoh@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-94243: Apache Sling Security Bundle: RefererFilter accepts weaker-than-origin evidence 
+Subject: CVE-2026-92001: Apache Sling XSS: Missing parser resource limits 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Sling Security Bundle before 1.3.2
+- Apache Sling XSS before 2.4.12
 
 Description:
 
-A vulnerability in Apache Sling Security Bundle: the ReferrerFilter accepts weaker-than-orgin evidence.
+Improper restriction of recursive entity references in DTDs ('XML entity expansion') vulnerability in Apache Sling XSS.
 
 
 
-This issue affects Apache Sling Security Bundle: before 1.3.2.
+This issue affects Apache Sling XSS: before 2.4.12.
 
 
 
-Users are recommended to upgrade to version 1.3.2, which fixes the issue.
+Users are recommended to upgrade to version 2.4.12, which fixes the issue.
 
-This issue is being tracked as SLING-13312 
+This issue is being tracked as SLING-13336 
 
 Credit:
 
@@ -35,6 +35,6 @@ Claude Code (tool)
 References:
 
 https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-94243
-https://issues.apache.org/jira/browse/SLING-13312
+https://www.cve.org/CVERecord?id=CVE-2026-92001
+https://issues.apache.org/jira/browse/SLING-13336
 
