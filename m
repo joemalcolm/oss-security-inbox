@@ -1,31 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/18
-Message-ID: <d8e2b0dc-84b2-9d23-c7cb-dc2e57420e7e@apache.org>
-Date: Wed, 23 Sep 2026 08:25:54 +0000
-From: Joerg Hoh <joerghoh@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-73192: Apache Sling XSS: XSS possible through XSSAPI.getValidHref() 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/7
+Message-ID: <20260923133721.21ad72a7@moche20>
+Date: Wed, 23 Sep 2026 13:37:21 +0200
+From: Tomas Hoger <thoger@...hat.com>
+To: Sam James <sam@...too.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: GNU Emacs vulnerability upon opening arbitrary file
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+On Thu, 20 Aug 2026 04:09:29 +0100 Sam James wrote:
 
-Affected versions:
+> Eshel Yaron has shared an arbitrary code execution bug in GNU Emacs
+> exploitable upon opening an file. It affects >= Emacs 28.1.
+> 
+> The reporter has a writeup at
+> https://eshelyaron.com/posts/2026-08-06-emacs-arbitrary-code-execution-returns.html.
+> It's from the same reporter as CVE-2024-53920 [0].
+> 
+> Thread on emacs-devel:
+> * https://lists.gnu.org/archive/html/emacs-devel/2026-07/msg00453.html
+> * https://lists.gnu.org/archive/html/emacs-devel/2026-08/msg00000.html
+> 
+> There's a workaround patch available for Emacs 31
+> (https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-31&id=8466eb44991707d128110bdc549fad14c8e1d61e)
+> while on master it apparently had a bigger rework
+> (https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=c1337758a6c00e22e2a685e0556068fd73fa9a54).
+> 
+> In Gentoo, we backported the fix [1] down to 28.2.
+> 
+> [0] https://www.openwall.com/lists/oss-security/2025/02/26/2
+> [1] https://bugs.gentoo.org/980616
 
-- Apache Sling XSS before 2.4.12
+CVE-2026-96269 was assigned to this issue yesterday.
 
-Description:
-
-An improper neutralization of input during web page generation ('Cross-site Scripting') [CWE-79] vulnerability when using the XSSAPI.getValidHref() in Apache Sling XSS version 2.4.10 and prior may allow an attacker to perform a reflected cross-site scripting (XSS) attack in every feature using this method. In order to successfully attack an application, the attacker needs to be able to submit a value which is not correctly sanitized by that library.
-
-Upgrade to Apache Sling XSS >= 2.4.12
-
-Credit:
-
-Apache Sling would like to thank github user Vectrain51 and n0mi1k for reporting this issue (finder)
-
-References:
-
-https://sling.apache.org/news.html
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-73192
+-- 
+Tomas Hoger / Red Hat Product Security
 
