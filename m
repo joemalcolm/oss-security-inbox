@@ -1,47 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/27
-Message-ID: <2a2f86a3-029e-420c-9f55-b61efb14af76@apache.org>
-Date: Wed, 23 Sep 2026 12:28:29 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/36
+Message-ID: <CABrZYSB=Q+qhth0pjLSMJVhTJOVpzp3-oF+AyFuK7RjVJ4GAjw@mail.gmail.com>
+Date: Wed, 23 Sep 2026 16:13:08 -0700
+From: Nathan Herz <nathan.herz97@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-79677: Apache Tomcat: WebSocket DoS due to lost asynchronous write timeout
+Subject: [kubernetes] CVE-2026-76654: Subpath symlinking on Windows nodes permits NTLM coercion
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Hello Kubernetes Community,
 
-Affected versions:
+An NTLM coercion vulnerability exists on Windows nodes when the subPath
+supplied in a pod's volumeMounts is set to a symbolic link that points to
+an attacker-controlled network share. When a kubelet resolves symlinks, it
+does not reject a target that resolves to a UNC path. As a result, the
+kubelet will transparently attempt to authenticate to the share using NTLM.
 
-- Apache Tomcat 11.0.0-M1 through 11.0.25
-- Apache Tomcat 10.1.0-M1 through 10.1.59
-- Apache Tomcat 9.0.0.M1 through 9.0.121
-- Apache Tomcat 8.5.0 through 8.5.100
-- Apache Tomcat 7.0.43 through 7.0.109
-- Apache Tomcat before 7.0.43 unaffected
+This allows an attacker to obtain the NetNTLMv2 hash of the account under
+which the kubelet is running. An attacker could then attempt to crack the
+hash to retrieve the corresponding password or relay it to impersonate the
+node, if the node is domain-joined.
 
-Description:
+This issue has been rated Medium (5.8)
+CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:N/A:N
+<https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:C/C:H/I:N/A:N>,
+and assigned CVE-2026-76654.
 
-Missing release of resource after effective lifetime, Comparison using 
-wrong factors vulnerability in Apache Tomcat allows a denial of service 
-as a result of lost time outs for asynchronous WebSocket writes.
+Affected Versions
 
+   -
 
+   kubelet: <= v1.34.11
+   -
 
-This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.25, from 
-10.1.0-M1 through 10.1.59, from 9.0.0.M1 through 9.0.121.
+   kubelet: <= v1.35.8
+   -
 
+   kubelet: <= v1.36.4
+   -
 
+   kubelet: = v1.37.0
 
-The following versions were EOL at the time the CVE was created but are 
-known to be affected: from 8.5.0 through 8.5.100, from 7.0.43 through 
-7.0.109. Other unsupported versions may also be affected.
+How do I mitigate this vulnerability?
 
+This issue can be mitigated by upgrading to a fixed kubelet version. The
+fixed versions update kubelet to refuse UNC symlink targets on Windows.
 
+Fixed Versions
 
-Users are recommended to upgrade to version 11.0.26, 10.1.60 or 9.0.122, 
-which fix the issue.
+   -
 
-References:
+   kubelet: >= v1.34.12
+   -
 
-https://lists.apache.org/thread/bzwps6ck4szf2hmksbbon3syyl9qnkv8
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-79677
+   kubelet: >= v1.35.9
+   -
+
+   kubelet: >= v1.36.5
+   -
+
+   kubelet: >= v1.37.1
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io.
+
+Additional Details
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/142098
+
+Acknowledgements
+
+This vulnerability was reported by the Kubernetes Third-Party Security
+Audit subproject, OSTIF, and Shielder.
+
+The issue was fixed and coordinated by:
+
+Yuanliang Zhang @zylxjtu
+
+Verónica López @Verolop
+
+Jeremy Rickard @jeremyrickard
+
+Nathan Herz @natherz97
+
+Thank you,
+
+Nathan Herz on behalf of the Kubernetes Security Response Committee
+
