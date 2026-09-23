@@ -1,25 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/34
-Message-ID: <arQbCisO5qy7RC3Z@definition.pseudorandom.co.uk>
-Date: Wed, 23 Sep 2026 19:31:38 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/14
+Message-ID: <9206cd6c-a3f6-6915-05db-29b902b8031d@apache.org>
+Date: Wed, 23 Sep 2026 08:25:17 +0000
+From: Joerg Hoh <joerghoh@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: flatpak@...ts.freedesktop.org
-Subject: Re: Flatpak 1.18.1 fixes multiple vulnerabilities
+Subject: CVE-2026-91999: Apache Sling XSS: Improper escaping in the XSS Webconsole plugin 
 Content-Type: text/plain; charset=utf-8
 
-On Tue, 22 Sep 2026 at 22:48:19 +0100, Simon McVittie wrote:
->On Tue, 11 Aug 2026 at 17:38:45 +0100, Simon McVittie wrote:
->>* Fix local root privilege escalation via revokefs symlink path traversal and
->> commit tampering   (https://github.com/flatpak/flatpak/security/advisories/GHSA-qrwq-7qwx-q9rp,
->> thanks to Ee Yang)
+Severity: low 
 
-CVE-2026-96808 was allocated for GHSA-qrwq-7qwx-q9rp.
+Affected versions:
 
->>* Fix fixed-filename writes to arbitrary locations via symlink attack on .ld.so
->> (https://github.com/flatpak/flatpak/security/advisories/GHSA-99wv-m8rp-g58x,
->> thanks to Sebastian Wick)
+- Apache Sling XSS before 2.4.12
 
-CVE-2026-96807 was allocated for GHSA-99wv-m8rp-g58x.
+Description:
 
-(Thanks to MITRE CNA-LR for these)
+Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Apache Sling XSS.
+
+
+
+This issue affects Apache Sling XSS: before 2.4.12.
+
+
+
+Users are recommended to upgrade to version 2.4.12, which fixes the issue.
+
+This issue is being tracked as SLING-13335 
+
+Credit:
+
+The Apache Software Foundation (finder)
+Claude Code (tool)
+
+References:
+
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91999
+https://issues.apache.org/jira/browse/SLING-13335
+
