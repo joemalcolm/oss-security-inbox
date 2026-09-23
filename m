@@ -1,41 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/28
-Message-ID: <6378613f-b125-4c0a-8302-0084b745d7a0@apache.org>
-Date: Wed, 23 Sep 2026 12:30:03 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/31
+Message-ID: <4e28d39a-4dc7-45af-bfc6-3c5151607ee8@apache.org>
+Date: Wed, 23 Sep 2026 13:25:46 +0100
 From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86248: Apache Tomcat: Fix for CVE-2026-34500 was incomplete. OCSP checks sometimes soft-fail with FFM even when soft-fail is disabled
+Subject: CVE-2026-86243: Apache Tomcat Native: DoS via TLS handshake
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: important
 
 Affected versions:
 
-- Apache Tomcat 11.0.0-M14 through 11.0.25
-- Apache Tomcat 10.1.22 through 10.1.59
-- Apache Tomcat 9.0.92 through 9.0.121
+- Apache Tomcat Native 2.0.0 through 2.0.15
+- Apache Tomcat Native 1.3.0 through 1.3.8
 
 Description:
 
-CLIENT_CERT authentication does not fail as expected for some scenarios 
-when soft fail is disabled vulnerability in Apache Tomcat.
+Buffer over-read vulnerability in Apache Tomcat Native during the TLS 
+handshake permits a malicious user to trigger a DoS via a JVM crash.
 
 
 
-This issue affects Apache Tomcat: from 11.0.0-M14 through 11.0.25, from 
-10.1.22 through 10.1.59, from 9.0.92 through 9.0.121.
+This issue affects Apache Tomcat Native: from 2.0.0 through 2.0.15, from 
+1.3.0 through 1.3.8. Earlier, unsupported versions may also be affected.
 
 
 
-Users are recommended to upgrade to version 11.0.26, 10.1.60 or 9.0.122, 
-which fix the issue.
-
-Credit:
-
-Mike Read (github.com/Michael-JRead) (finder)
+Users are recommended to upgrade to version 1.3.9 or 2.0.16, which fix 
+the issue.
 
 References:
 
-https://lists.apache.org/thread/nmkmjp9l53y8h3oc4n8fc0bkw9dv15sk
+https://lists.apache.org/thread/8p4jf02w54m22x0cwpq2x53w3ov8o557
 https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86248
+https://www.cve.org/CVERecord?id=CVE-2026-86243
