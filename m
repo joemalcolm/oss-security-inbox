@@ -1,53 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/10
-Message-ID: <014ef7d8-25f5-ad20-2cdb-8a163abbdbfb@apache.org>
-Date: Wed, 23 Sep 2026 08:43:48 +0000
-From: Calvin Kirs <kirs@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/20
+Message-ID: <c14bd336-fd79-409d-8cbb-8eff613f587d@apache.org>
+Date: Wed, 23 Sep 2026 12:14:41 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-31377: Apache Doris: Improper Authentication Allows Unauthorized Access to FE Meta Service 
+Subject: CVE-2026-75973: Apache Tomcat: Cross-context authentication mix-up with Jakarta Authentication configured
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
-    CVSS 3.1: 7.5 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
+Severity: low
 
 Affected versions:
 
-- Apache Doris 2.0.0 before 4.0.8
-- Apache Doris 4.1.0 before 4.1.4
-- Apache Doris before 2.0.0 unaffected
-- Apache Doris 4.0.8 before 4.1.0 unaffected
-- Apache Doris 4.1.4 or later unaffected
+- Apache Tomcat 11.0.0-M1 through 11.0.25
+- Apache Tomcat 10.1.0-M1 through 10.1.59
+- Apache Tomcat 9.0.0.M4 through 9.0.121
+- Apache Tomcat 8.5.0 through 8.5.100
+- Apache Tomcat through 7.0.109 unaffected
 
 Description:
 
-An Improper Authentication vulnerability in the Apache Doris Frontend (FE) meta service allows an unauthenticated remote attacker to access internal metadata service endpoints.
+Improper Authentication vulnerability in Apache Tomcat. When Jakarta 
+Authentication was configured with SimpleAuthConfigProvider as the 
+default provider and multiple web application used that provider, the 
+realm for the first web application to authenticate a request would be 
+used for all web applications.
 
 
 
-The affected endpoints relied on client-supplied node information for authentication without providing sufficient authentication of the requesting party. Under certain network configurations, a remote attacker may be able to bypass the intended access control and access internal FE metadata interfaces, potentially exposing sensitive cluster information.
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.25, from 
+10.1.0-M1 through 10.1.59, from 9.0.0.M4 through 9.0.121.
 
 
 
-This issue affects Apache Doris: from 2.0.0 through 2.0.*, from 2.1.0 through 2.1.*, from 3.0.0 through 3.0.*, from 3.1.0 through 3.1.*, from 4.0.0 before 4.0.8, and from 4.1.0 before 4.1.4. Versions 1.2.x and earlier are not affected by this header-trust vulnerability.
+The following versions were EOL at the time the CVE was created but are
+known to be affected: from 8.5.0 through 8.5.100. Other unsupported 
+versions may also be affected.
 
 
 
 
-Users are recommended to upgrade to a fixed release (4.0.8 or 4.1.4), which fixes the issue.
+Users are recommended to upgrade to version 11.0.26, 10.1.60, 9.0.122, 
+which fixes the issue.
 
 Credit:
 
-Mapta / BugBunny_ai (reporter)
-Calvin Kirs, Security Researcher at SelectDB (reporter)
-Vlary (Huntree Security Team) (reporter)
-Vladimir Tokarev (g1nd1l4) (reporter)
-lalalala5678 (reporter)
-4ra2n (A code security AI agent) (reporter)
-Fakile Emmanuel (reporter)
-Fried Chicken (reporter)
+0xCc.zhang (finder)
 
 References:
 
-https://doris.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-31377
-
+https://lists.apache.org/thread/njjcdkkzqyzx4n3ffc4ffjmyh5mpl1gr
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-75973
