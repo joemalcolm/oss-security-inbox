@@ -1,38 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/7
-Message-ID: <20260923133721.21ad72a7@moche20>
-Date: Wed, 23 Sep 2026 13:37:21 +0200
-From: Tomas Hoger <thoger@...hat.com>
-To: Sam James <sam@...too.org>
-Cc: oss-security@...ts.openwall.com
-Subject: Re: GNU Emacs vulnerability upon opening arbitrary file
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/24
+Message-ID: <9e74ce34-eaae-4cca-97c0-3ca01b393ea4@apache.org>
+Date: Wed, 23 Sep 2026 12:21:40 +0100
+From: Mark Thomas <markt@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-77791: Apache Tomcat: DoS via busy wait during WebSocket close
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 20 Aug 2026 04:09:29 +0100 Sam James wrote:
+Severity: important
 
-> Eshel Yaron has shared an arbitrary code execution bug in GNU Emacs
-> exploitable upon opening an file. It affects >= Emacs 28.1.
-> 
-> The reporter has a writeup at
-> https://eshelyaron.com/posts/2026-08-06-emacs-arbitrary-code-execution-returns.html.
-> It's from the same reporter as CVE-2024-53920 [0].
-> 
-> Thread on emacs-devel:
-> * https://lists.gnu.org/archive/html/emacs-devel/2026-07/msg00453.html
-> * https://lists.gnu.org/archive/html/emacs-devel/2026-08/msg00000.html
-> 
-> There's a workaround patch available for Emacs 31
-> (https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?h=emacs-31&id=8466eb44991707d128110bdc549fad14c8e1d61e)
-> while on master it apparently had a bigger rework
-> (https://cgit.git.savannah.gnu.org/cgit/emacs.git/commit/?id=c1337758a6c00e22e2a685e0556068fd73fa9a54).
-> 
-> In Gentoo, we backported the fix [1] down to 28.2.
-> 
-> [0] https://www.openwall.com/lists/oss-security/2025/02/26/2
-> [1] https://bugs.gentoo.org/980616
+Affected versions:
 
-CVE-2026-96269 was assigned to this issue yesterday.
+- Apache Tomcat 11.0.0-M5 through 11.0.25
+- Apache Tomcat 10.1.8 through 10.1.59
+- Apache Tomcat 9.0.74 through 9.0.121
+- Apache Tomcat 8.5.88 through 8.5.100
+- Apache Tomcat through 7.0.109 unaffected
 
--- 
-Tomas Hoger / Red Hat Product Security
+Description:
 
+Uncontrolled Resource Consumption vulnerability in Apache Tomcat during 
+sending of WebSocket close message enabled a DoS attack.
+
+
+
+This issue affects Apache Tomcat: from 11.0.0-M5 through 11.0.25, from 
+10.1.8 through 10.1.59, from 9.0.74 through 9.0.121.
+
+
+
+The following versions were EOL at the time the CVE was created but are
+known to be affected: from 8.5.88 through 8.5.100. Other unsupported 
+versions may also be affected.
+
+
+
+
+Users are recommended to upgrade to version 11.0.26, 10.1.60 or 9.0.122, 
+which fix the issue.
+
+References:
+
+https://lists.apache.org/thread/mb1pjjooqytrl6hbvbt3rw1lqwlon4cz
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-77791
