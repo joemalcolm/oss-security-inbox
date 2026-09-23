@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/26
-Message-ID: <0c2df1c8-9881-4a7c-a4b4-706b43d0e93b@apache.org>
-Date: Wed, 23 Sep 2026 12:26:59 +0100
-From: Mark Thomas <markt@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/3
+Message-ID: <0d8f7ac8-bf1d-4df6-bd93-3445064a2fc6@cpansec.org>
+Date: Wed, 23 Sep 2026 08:58:30 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-78437: Apache Tomcat: HTTP/2 DoS via malformed request
+Subject: Re: CVE-2026-95831: Crypt::SelfCertificate versions from 1.01 through 1.05 for Perl contains malware which executes Python code from an obfuscated URL
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+On 23/09/2026 02:53, Sam James wrote:
+> CPAN shows it doesn't have any reverse dependencies:
+> https://metacpan.org/dist/Crypt-SelfCertificate/requires
 
-Affected versions:
+We are not aware of reverse dependencies.
 
-- Apache Tomcat 11.0.19 through 11.0.25
-- Apache Tomcat 10.1.53 through 10.1.59
-- Apache Tomcat 9.0.116 through 9.0.121
-- Apache Tomcat through 8.5.100 unaffected
+> The https://metacpan.org/dist/Crypt-SelfCertificate/changes page doesn't
+> work for me, presumably because it's all been yanked.
+Yes, all versions have been removed, however they may exist on 
+independent mirrors.
+> Did this module have any legitimate releases? From a dropdown on
+> metacpan, it looks like it had 3 total releases (but I don't know if
+> some got yanked -> missing): 1.00, 1.01, and 1.05.
+1.00 did not have the dropper, but does not appear to have worked 
+properly. It may have functioned as staging so that an upgrade would 
+have installed the dropper.
+> Is there any other background available? Has this author published any
+> other modules (looks like no)? Have they been banned now (I assume yes)?
 
-Description:
-
-Incomplete cleanup vulnerability in Apache Tomcat allows a malformed 
-request to potentially (depends on timing) cause one request from 
-another user to fail.
-
-
-
-This issue affects Apache Tomcat: from 11.0.19 through 11.0.25, from 
-10.1.53 through 10.1.59, from 9.0.116 through 9.0.121.
-
+CPANSec are still investigating.
 
 
-Users are recommended to upgrade to version 11.0.26, 10.1.60 or 9.0.122, 
-which fix the issue.
-
-References:
-
-https://lists.apache.org/thread/qkmsos3s8chn5053qr466rzwv6sk5gjg
-https://tomcat.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-78437
