@@ -1,69 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/4
-Message-ID: <6db2826a-e05a-4a3a-8f5e-2a75a83b597c@tuxera.com>
-Date: Wed, 23 Sep 2026 15:04:10 +0300
-From: Rostislav <rostislav@...era.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/10
+Message-ID: <014ef7d8-25f5-ad20-2cdb-8a163abbdbfb@apache.org>
+Date: Wed, 23 Sep 2026 08:43:48 +0000
+From: Calvin Kirs <kirs@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerabilities in ntfs-3g
+Subject: CVE-2026-31377: Apache Doris: Improper Authentication Allows Unauthorized Access to FE Meta Service 
 Content-Type: text/plain; charset=utf-8
 
-Hello oss-security,
+Severity: important 
+    CVSS 3.1: 7.5 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
 
-Multiple vulnerabilities have been discovered in ntfs-3g 
-(https://github.com/tuxera/ntfs-3g). The vulnerabilities have been fixed 
-in version 2026.9.18.
+Affected versions:
 
-Below is the list of vulnerabilities with their CVSS score and severity:
-[NTFS-3G-SA_2026-06-1_20] Heap buffer overflow in ntfs_acl_owner()
-CVSS: 6.2 Severity: Moderate
-Credit: Jurre van Bergen
+- Apache Doris 2.0.0 before 4.0.8
+- Apache Doris 4.1.0 before 4.1.4
+- Apache Doris before 2.0.0 unaffected
+- Apache Doris 4.0.8 before 4.1.0 unaffected
+- Apache Doris 4.1.4 or later unaffected
 
-[NTFS-3G-SA_2026-06-1_19] Heap buffer overflow in ntfs_same_sid()
-CVSS: 6.8 Severity: Moderate
-Credit: Jurre van Bergen
+Description:
 
-[NTFS-3G-SA_2026-06-1_12] Denial-of-service in 
-ntfs_inode_attach_all_extents()
-CVSS: 6.2 Severity: Moderate
-Credit: Jurre van Bergen
+An Improper Authentication vulnerability in the Apache Doris Frontend (FE) meta service allows an unauthenticated remote attacker to access internal metadata service endpoints.
 
-[NTFS-3G-SA_2026-06-1_11] Heap buffer overflow in ntfs_check_restart_area()
-CVSS: 2.9 Severity: Low
-Credit: Jurre van Bergen
 
-[NTFS-3G-SA_2026-06-1_10] Heap buffer overflow in ntfs_ea_check_wsldev()
-CVSS: 4.0 Severity: Moderate
-Credit: Matthieu Olivier at ANSSI and Jurre van Bergen
 
-[NTFS-3G-SA_2026-06-1_08] Heap buffer overflow in ntfs_external_attr_find()
-CVSS: 2.9 Severity: Low
-Credit: Jurre van Bergen
+The affected endpoints relied on client-supplied node information for authentication without providing sufficient authentication of the requesting party. Under certain network configurations, a remote attacker may be able to bypass the intended access control and access internal FE metadata interfaces, potentially exposing sensitive cluster information.
 
-[NTFS-3G-SA_2026-06-1_07] Heap data corruption in 
-ntfs_mapping_pairs_decompress_i()
-CVSS: 2.9 Severity: Low
-Credit: Jurre van Bergen
 
-[NTFS-3G-SA_2026-06-1_05] Heap out of bounds read/write in ntfs_ie_add_vcn()
-CVSS: 6.2 Severity: Moderate
-Credit: Jurre van Bergen
 
-CVE IDs have been requested for these vulnerabilities. They will be 
-published separately after we receive them.
+This issue affects Apache Doris: from 2.0.0 through 2.0.*, from 2.1.0 through 2.1.*, from 3.0.0 through 3.0.*, from 3.1.0 through 3.1.*, from 4.0.0 before 4.0.8, and from 4.1.0 before 4.1.4. Versions 1.2.x and earlier are not affected by this header-trust vulnerability.
 
-Links to the latest version with fixes and patches for older versions:
 
-https://download.tuxera.com/opensource/ea5899b4ab87d243f6bed2f8fc13e6e5ff1f6d51fdf22b2ccbe708c8c0256166/ntfs-3g-2026.9.18.tar.gz
-https://download.tuxera.com/opensource/ea5899b4ab87d243f6bed2f8fc13e6e5ff1f6d51fdf22b2ccbe708c8c0256166/ntfs-3g_2022.10.3_SR_2026-09_patches.tar.gz
-https://download.tuxera.com/opensource/ea5899b4ab87d243f6bed2f8fc13e6e5ff1f6d51fdf22b2ccbe708c8c0256166/ntfs-3g_2026.7.7_SR_2026-09_patches.tar.gz
 
-SHA256 checksums:
-bcf3cf301a79e42d330128ffb52d4cf615bd1d30c10a92d9d8d14f2bb4fcd9bf 
-ntfs-3g-2026.9.18.tar.gz
-cee152395dd784e4c5ccb6f8766d7612da51bce38a4941d62e96a50d7bd5425e 
-ntfs-3g_2022.10.3_SR_2026-09_patches.tar.gz
-051bb6d0ea123087cd3ffa029ca7969b43489fbdda9ce8e5767eed098cff49ca 
-ntfs-3g_2026.7.7_SR_2026-09_patches.tar.gz
 
-We would like to thank Matthieu Olivier at ANSSI and Jurre van Bergen 
-for reporting the vulnerabilities and coordinating disclosure with us.
+Users are recommended to upgrade to a fixed release (4.0.8 or 4.1.4), which fixes the issue.
+
+Credit:
+
+Mapta / BugBunny_ai (reporter)
+Calvin Kirs, Security Researcher at SelectDB (reporter)
+Vlary (Huntree Security Team) (reporter)
+Vladimir Tokarev (g1nd1l4) (reporter)
+lalalala5678 (reporter)
+4ra2n (A code security AI agent) (reporter)
+Fakile Emmanuel (reporter)
+Fried Chicken (reporter)
+
+References:
+
+https://doris.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-31377
+
