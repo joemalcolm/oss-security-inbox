@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/12
-Message-ID: <e88730ba-632d-96d1-74d3-a6ab51a5a35c@apache.org>
-Date: Wed, 23 Sep 2026 08:24:43 +0000
-From: Joerg Hoh <joerghoh@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/29
+Message-ID: <5a409f62-2a8b-4327-8351-46f6b29934bb@apache.org>
+Date: Wed, 23 Sep 2026 12:32:02 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91852: Apache Sling XSS: CWE-79 multiple raw-string break-outs and ReDOS in XSSImpl 
+Subject: CVE-2026-86350: Apache Tomcat: Regression in fix for CVE-2026-41293 can trigger request header mix-up
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important
 
 Affected versions:
 
-- Apache Sling XSS before 2.4.12
+- Apache Tomcat 11.0.22 through 11.0.25
+- Apache Tomcat 10.1.55 through 10.1.59
+- Apache Tomcat 9.0.118 through 9.0.121
 
 Description:
 
-Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Apache Sling XSS.
+Inconsistent interpretation of HTTP/2 requests ('HTTP Request/Response 
+smuggling') vulnerability in Apache Tomcat caused by a regression in fix 
+for CVE-2026-41293 can trigger request header mix-up.
 
 
 
-This issue affects Apache Sling XSS: before 2.4.12.
+This issue affects Apache Tomcat: from 11.0.22 through 11.0.25, from 
+10.1.55 through 10.1.59, from 9.0.118 through 9.0.121.
 
 
 
-Users are recommended to upgrade to version 2.4.12, which fixes the issue.
-
-This issue is being tracked as https://issues.apache.org/jira/browse/SLING-13334 
+Users are recommended to upgrade to version 11.0.26, 10.1.60 or 9.0.122, 
+which fix the issue.
 
 Credit:
 
-Apache Sling would like to thank the github user n0mi1k, the group of Mohsen Iranmanesh, Sina Moradi Sabet, Sina Marefat, Ali Javidi Ghasr and Mohammad A. Tayebi and The Apache Software Foundation for reporting this issue (finder)
+Jeppe Weikop (finder)
 
 References:
 
-https://sling.apache.org/news.html
-https://sling.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91852
-https://issues.apache.org/jira/browse/https://issues.apache.org/jira/browse/SLING-13334
-
+https://lists.apache.org/thread/mss45z99lcdd5dtpgcn45dy82f3toswc
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-86350
