@@ -1,64 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/5
-Message-ID: <arPfLYJxr9VNtE0_@definition.pseudorandom.co.uk>
-Date: Wed, 23 Sep 2026 15:16:13 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/22
+Message-ID: <0faa9a61-119f-46b8-a83b-d9189899c099@apache.org>
+Date: Wed, 23 Sep 2026 12:18:34 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: flatpak@...ts.freedesktop.org
-Subject: xdg-dbus-proxy 0.1.9 fixes sandbox escape CVE-2026-94422
+Subject: CVE-2026-77756: Apache Tomcat: Transfer-Encoding honored for HTTP/1.0 requests
 Content-Type: text/plain; charset=utf-8
 
-xdg-dbus-proxy 0.1.9 fixes a security vulnerability, CVE-2026-94422:
-<https://github.com/flatpak/xdg-dbus-proxy/security/advisories/GHSA-2cgv-pwcq-wvpq>
-<https://github.com/flatpak/xdg-dbus-proxy/releases/tag/0.1.9>
+Severity: low
 
-All versions older than 0.1.9 are vulnerable.
+Affected versions:
 
->An incorrect implementation of message filtering in xdg-dbus-proxy
->versions before 0.1.9 allows an attacker to bypass the intended message
->filtering on the D-Bus session bus by setting a reply serial number on
->non-reply messages.
->
->xdg-dbus-proxy was designed to be part of the sandbox boundary for Flatpak,
->but it is released as a separate project and is sometimes used by other
->app frameworks such as Firejail.
->
->Impact
->======
->
->A malicious or compromised Flatpak app could achieve arbitrary code
->execution outside its sandbox.
->
->If other app frameworks rely on xdg-dbus-proxy in the same way that
->Flatpak does, then they will have an equivalent vulnerability until
->xdg-dbus-proxy is updated.
->
->Patches
->=======
->
->Fixed in 0.1.9 by commits:
->
-> * e5702fc "proxy: Don't assume that only returns and errors have a reply-serial"
-> * fc027f7 "proxy: Make it clearer which direction messages are going in"
-> * e4465a0 "proxy: Only allow replies to go to the correct destination"
->
->Test coverage is provided by commits
->
-> * 4427d5d "tests: Add basic test coverage for reply handling"
-> * e7f2f89 "tests: Assert that "replies" of inappropriate types aren't accepted"
-> * 78045ce "tests: Assert that forged replies cannot be sent to wrong destination"
->
->Workarounds
->===========
->
->Avoid running untrusted Flatpak apps.
->
->Avoid running untrusted apps via other frameworks that use xdg-dbus-proxy.
->
->Credits
->=======
->
->Reported by @refi64.
+- Apache Tomcat 11.0.0-M1 through 11.0.25
+- Apache Tomcat 10.1.0-M1 through 10.1.59
+- Apache Tomcat 9.0.47 through 9.0.121
+- Apache Tomcat 8.5.67 through 8.5.100
+- Apache Tomcat through 7.0.109 unaffected
 
--- 
-Simon McVittie, Collabora Ltd. / Debian
+Description:
+
+Inconsistent Interpretation of HTTP Requests ('HTTP Request/Response 
+Smuggling') vulnerability in Apache Tomcat caused by processing the 
+transfer-encoding header for an HTTP/1.0 request may allow an attacker 
+to cause one request from another user to fail when Tomcat is located 
+behind a reverse proxy.
+
+
+
+This issue affects Apache Tomcat: from 11.0.0-M1 through 11.0.25, from 
+10.1.0-M1 through 10.1.59, from 9.0.47 through 9.0.121.
+
+
+
+The following versions were EOL at the time the CVE was created but are
+known to be affected: from 8.5.67 through 8.5.100. Other unsupported 
+versions may also be affected.
+
+
+
+Users are recommended to upgrade to version 11.0.26, 10.1.60 or 9.0.122, 
+which fix the issue.
+
+References:
+
+https://lists.apache.org/thread/bl5b6rxqh3vb2k9bj2794vhor7o6xl3z
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-77756
