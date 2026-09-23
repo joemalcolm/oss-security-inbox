@@ -1,17 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/22/23
-Message-ID: <arL4KjK6qLHeF1S9@definition.pseudorandom.co.uk>
-Date: Tue, 22 Sep 2026 22:50:34 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/23/1
+Message-ID: <arMe186AmwjPYg3d@ryzen.an3e.de>
+Date: Wed, 23 Sep 2026 02:35:35 +0200
+From: Matthias Andree <matthias.andree@....de>
 To: oss-security@...ts.openwall.com
-Subject: Re: bubblewrap 0.12.0 fixes writes outside sandbox
+Subject: CVE-2026-94184: some builds of fetchmail 6.6.6 and older vulnerable to remote code execution in NTLM authentication client (revised fetchmail-SA-2026-01)
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 27 Aug 2026 at 23:04:23 +0100, Simon McVittie wrote:
->bubblewrap 0.12.0 fixes a security vulnerability
->involving symlink traversal during container setup:
-><https://github.com/containers/bubblewrap/security/advisories/GHSA-pxhw-h44j-8pfx>.
+I have released fetchmail 6.6.8 which predominantly corrects
+the security announcement fetchmail-SA-2026-01 (corrected version 
+attached) and the NEWS file that was shipping with fetchmail 6.6.7 
+because they ruled out an exploitability, which turns out to be
+inaccurate, but also tweaks autoconf-based configuration and
+adds two translations (sr, zh_TW) to NLS-enabled default installs,
+so is not only a documentation update, strictly speaking.
 
-CVE-2026-87766 was assigned.
+While the fetchmail 6.6.7 release did indeed fix the vulnerable NTLM 
+authentication client code and check buffer sizes to avoid overflowing 
+its end by several dozen bytes, the inaccurate documentation needs
+to be corrected to avoid confusion.
 
-     smcv
+Tristan Madani, the original reporter, pointed out that in some 
+circumstances, NTLM-enabled builds of fetchmail may be exploitable and
+worst case suffer remote code execution, so let's advise caution.
+
+The revised security announcement is attached.
+
+-- 
+Matthias Andree
+fetchmail maintainer
+
+View attachment "fetchmail-SA-2026-01.txt" of type "text/plain" (8047 bytes)
