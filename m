@@ -1,69 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/3
-Message-ID: <ab859903e29126e86e916168d640afd2@cpansec.org>
-Date: Thu, 24 Sep 2026 22:34:50 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-95811: Lemonldap::NG::Handler versions from 2.0.0 before 2.16.10, from 2.17.0 before 2.21.6, from 2.22.0 before 2.23.4 for Perl allow an equivalent spelling of a path to bypass the locationRules that restrict it
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/17
+Message-ID: <3b0516a9-4abc-0c72-3398-d15e75de922d@apache.org>
+Date: Thu, 24 Sep 2026 22:25:29 +0000
+From: Daniil Kirilyuk <dakirily@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-92609: Apache Qpid Broker-J: Missing HTTP-session renewal after successful authentication 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-95811                                       CPAN Security Group
-========================================================================
+Severity: important 
 
-         CVE ID:  CVE-2026-95811
+Affected versions:
 
-   Distribution:  Lemonldap-NG-Handler
-       Versions:  from 2.0.0 before 2.16.10
-                  from 2.17.0 before 2.21.6
-                  from 2.22.0 before 2.23.4
-       MetaCPAN:  https://metacpan.org/dist/Lemonldap-NG-Handler
-       VCS Repo:  https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng
+- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-management-http) through 10.1.0
 
+Description:
 
-Lemonldap::NG::Handler versions from 2.0.0 before 2.16.10, from 2.17.0
-before 2.21.6, from 2.22.0 before 2.23.4 for Perl allow an equivalent
-spelling of a path to bypass the locationRules that restrict it
+Session fixation in HTTP management authentication allows remote attackers to gain unauthorized access to an authenticated management session via reuse of a session identifier retained across successful authentication.
 
-Description
------------
-Lemonldap::NG::Handler versions from 2.0.0 before 2.16.10, from 2.17.0
-before 2.21.6, from 2.22.0 before 2.23.4 for Perl allow an equivalent
-spelling of a path to bypass the locationRules that restrict it.
+This issue affects Apache Qpid Broker-J: through 10.1.0.
 
-The handler matches each vhost's locationRules regular expressions
-against REQUEST_URI, the raw request line, while the web server routes
-on the path it has already percent-decoded and normalized. A request
-that percent-encodes a character of the path, inserts dot segments, or
-doubles a slash therefore reaches the protected resource under a URI
-that no rule regexp matches, and the vhost's default rule decides
-access. Deny rules, identity and group conditions, and unprotect and
-skip rules are bypassed alike.
+Users are recommended to upgrade to version 10.1.1, which fixes the issue.
 
-Only a vhost whose default rule is more permissive than its other rules
-is affected. An authenticated user then reaches any URL a locationRules
-regexp was meant to restrict, but gains no more than that default rule
-already grants.
+Credit:
 
-Problem types
--------------
-- CWE-863 Incorrect Authorization
-- CWE-180 Incorrect Behavior Order: Validate Before Canonicalize
+Abhishek Kushwaha (reporter)
 
-Solutions
----------
-Upgrade to Lemonldap-NG-Handler 2.16.10, 2.21.6 or 2.23.4 or later.
-Only 2.23.4 is on CPAN; the 2.16.10 and 2.21.6 LTS releases are
-available from https://lemonldap-ng.org/download.html.
+References:
 
-References
-----------
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/issues/3723
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/releases/v2.23.4
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/releases/v2.21.6
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/releases/v2.16.10
-https://www.cve.org/CVERecord?id=CVE-2020-24660
+https://qpid.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-92609
 
-Credits
--------
-Deepseek agent, Linagora, finder
