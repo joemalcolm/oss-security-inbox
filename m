@@ -1,21 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/12
-Message-ID: <7a61c205-d229-b504-1ed2-bb5a2113c9a8@apache.org>
-Date: Thu, 24 Sep 2026 22:17:05 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/16
+Message-ID: <a106cb59-0e7c-a5ec-6964-fe45d3c141da@apache.org>
+Date: Thu, 24 Sep 2026 22:24:29 +0000
 From: Daniil Kirilyuk <dakirily@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-92550: Apache Qpid Broker-J: Type size/count handling can lead to excessive allocation pre-authentication in the AMQP 0-8/0-9/0-9-1 decoder 
+Subject: CVE-2026-92608: Apache Qpid Broker-J: Incomplete property conversion handling from AMQP 1.0 to AMQP 0-10 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-0-8-protocol) through 10.1.0
+- Apache Qpid Broker-J (org.apache.qpid:qpid-broker-plugins-amqp-msg-conv-0-10-to-1-0) through 10.1.0
 
 Description:
 
-A pre-authentication attacker could leverage type size/count handling to cause excessive allocation leading to potential denial of service.
+Improper handling of property-encoding exceptions in AMQP 1.0-to-AMQP 0-10 message conversion allows authenticated message producers to disrupt delivery to AMQP 0-10 consumers via message properties that the target encoder does not handle correctly.
 
 This issue affects Apache Qpid Broker-J: through 10.1.0.
 
@@ -23,11 +23,10 @@ Users are recommended to upgrade to version 10.1.1, which fixes the issue.
 
 Credit:
 
-Khaled Suliman of AISLE Research (finder)
 n0mi1k (reporter)
 
 References:
 
 https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-92550
+https://www.cve.org/CVERecord?id=CVE-2026-92608
 
