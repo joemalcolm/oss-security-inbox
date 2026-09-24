@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/4
-Message-ID: <CADPtTvN90v+cSmNVC0MQssEE1kneQ6Ay0Kv+Q7cetO5Uz2pAMQ@mail.gmail.com>
-Date: Thu, 24 Sep 2026 10:44:04 -0300
-From: Ermenson Junior <ermenson.sec@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/11
+Message-ID: <87mrt69s0e.fsf@gentoo.org>
+Date: Thu, 24 Sep 2026 23:57:53 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-96512: sudo: TZ still affects NOTBEFORE/NOTAFTER
+Cc: Sebastian Pipping <sping@...too.org>
+Subject: XSS vulnerability in <ansi2html-1.9.4
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-CVE-2026-96512 was assigned to a sudo bug where TZ from the calling user
-still affects NOTBEFORE/NOTAFTER checks in sudoers.
+Normally, I don't find XSS particularly interesting, but I saw
+writeup leverging a bug in <ansi2html-1.9.4 which others may also find
+of interest: https://blog.arusekk.pl/posts/srht-account-takeover/
 
-If the timestamp in the rule has no trailing Z, parse_gentime() uses
-mktime(), which reads TZ again. Commit db669167c fixed an earlier report of
-this (no CVE, not mine) but only covered localtime_r(), so mktime() was
-still reachable.
+In short, crafted lines in a build log on sr.ht's Ci service were
+transformed into HTML by ansi2html, and allowed XSS for viewers of that log.
 
-A local user can set TZ to an extreme offset and move the time window by
-almost 25 hours. That lets an expired rule keep working, or a future rule
-work early. Authentication still happens, only the time check is wrong.
+I've attached a plain text version of the post but it's not particularly
+easy to read, just doing so for archival. I'd recommend reading it on
+the website.
 
-Affected: 1.8.20 to 1.9.17p2 and main before the fix. Tested on glibc and
-musl.
+thanks,
+sam
 
-Fix is in main, no release yet:
-https://github.com/sudo-project/sudo/commit/1820a349687522f51023d1ae5925125f59679a8c
 
-The commit credits me as reporter ("Reported by Ermenson Junior").
+View attachment "srht-account-takeover.txt" of type "text/plain" (15649 bytes)
 
-Workaround: use UTC timestamps ending in Z.
-
-CVSS 7.8 (AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H), CWE-863
-https://access.redhat.com/security/cve/CVE-2026-96512
-https://bugzilla.redhat.com/show_bug.cgi?id=2539327
-
-Reported 2026-08-28, fixed by Todd Miller the same day, CVE published
-2026-09-23.
-
-Ermenson Junior
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
