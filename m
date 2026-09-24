@@ -1,78 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/5
-Message-ID: <6e0df360-4055-405b-8242-67310d323f40@gmail.com>
-Date: Thu, 24 Sep 2026 09:21:57 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/24/6
+Message-ID: <080d7bad-ec61-488d-82ea-bf1576e28f87@gmail.com>
+Date: Thu, 24 Sep 2026 09:22:58 -0700
 From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-041] OpenStack Swift: Cross-container information disclosure via Swift tempurl (CVE-2026-97149)
+Subject: [OSSA-2026-042] OpenStack Zaqar: Zaqar empty URL-Signature header bypasses authentication (CVE-2026-97404)
 Content-Type: text/plain; charset=utf-8
 
 =======================================================================
-OSSA-2026-041: Cross-container information disclosure via Swift tempurl
+OSSA-2026-042: Zaqar empty URL-Signature header bypasses authentication
 =======================================================================
 
 :Date: September 24, 2026
-:CVE: CVE-2026-97149
+:CVE: CVE-2026-97404
 
 
 Affects
 ~~~~~~~
-- Swift: >=1.4.6 <2.35.5, >=2.36.0 <2.36.4, >=2.37.0 <2.37.4, >=2.38.0 
-<2.38.2
+- Zaqar: >=1.0.0 <20.1.2, >=21.0.0 <21.0.2, >=22.0.0 <22.0.2
 
 
 Description
 ~~~~~~~~~~~
-Oren Yomtov from ACT Security and "swdb", a security
-researcher, independently reported a vulnerability in the
-Swift tempurl middleware. A party holding a single-object PUT
-TempURL signed with an account-level key
-(``X-Account-Meta-Temp-URL-Key``) could resend the signed request
-with an ``X-Copy-From`` header naming any object in the same
-account, causing Swift to copy the named object into the granted
-destination object, and read the copied bytes back with a second
-GET TempURL, disclosing objects the holder of the TempURL was not
-authorized to access. Only deployments with the tempurl middleware
-enabled are affected. The copy is limited to the account that
-owns the key, and the attacker must know the target container and
-object name.
-
-As a mitigation, operators can add ``x-copy-from`` to the
-``incoming_remove_headers`` option of the ``[filter:tempurl]``
-section of their proxy server configuration. With that
-configuration the header is silently removed and the PUT stores no
-data; the patches below instead reject the request with a 400
-response.
+pple, an independent security researcher, reported that Zaqar's
+WSGI transport mishandles an empty URL-Signature header: a request
+carrying the header with an empty value bypasses both Keystone
+authentication and pre-signed URL verification. An unauthenticated
+remote attacker who knows a target project's UUID can then read,
+enumerate, create, and delete that project's queues, messages,
+claims, and subscriptions. By additionally claiming an
+administrative role, the attacker may also perform administrative
+operations, such as managing pools and flavors in admin_mode
+deployments. Only deployments using the WSGI transport with an
+authentication strategy configured are affected; the websocket
+transport is not affected.
 
 
 
 Patches
 ~~~~~~~
-- https://review.opendev.org/1007050 (2025.1/epoxy)
-- https://review.opendev.org/1007049 (2025.2/flamingo)
-- https://review.opendev.org/1007048 (2026.1/gazpacho)
-- https://review.opendev.org/1007047 (2026.2/hibiscus)
-- https://review.opendev.org/1007046 (2027.1/indri (development))
+- https://review.opendev.org/1007162 (2025.1/epoxy)
+- https://review.opendev.org/1007161 (2025.2/flamingo)
+- https://review.opendev.org/1007160 (2026.1/gazpacho)
+- https://review.opendev.org/1007159 (2026.2/hibiscus)
+- https://review.opendev.org/1007158 (2027.1/indri (development))
 
 
 Credits
 ~~~~~~~
-- Oren Yomtov from ACT Security
-- swdb from Independent
+- pple from Independent (CVE-2026-97404)
 
 
 References
 ~~~~~~~~~~
-- https://launchpad.net/bugs/2166876
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-97149
+- https://launchpad.net/bugs/2164987
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-97404
 
 
 Notes
 ~~~~~
-- This issue is distinct from the S3API vulnerabilities in
-   OSSA-2026-030; it affects the native Swift API with the default proxy
-   pipeline and does not require the S3API middleware or the ``s3_acl``
-   configuration.
+- This issue is distinct from the EXTRA-SPEC header bypass in
+   OSSA-2026-029; the fix for that issue removed the EXTRA-SPEC branch
+   but left the empty-value handling of the URL-Signature header
+   untouched.
 
 --
 Goutham Pacha Ravi
