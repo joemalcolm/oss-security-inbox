@@ -1,86 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/4
-Message-ID: <179032685474.254052.15397970022917167373@notcve.org>
-Date: Fri, 25 Sep 2026 11:00:54 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/6
+Message-ID: <179035511269.583188.4151197876832520707@notcve.org>
+Date: Fri, 25 Sep 2026 18:51:52 +0200
 From: advisories@...cve.org
 To: oss-security@...ts.openwall.com
-Subject: [NotCVE-2026-0014] Input Leap 3.0.3 Drag-and-Drop File Transfer Path Traversal Allows Arbitrary File Write Outside the Drop Directory
+Subject: [NotCVE-2026-0015] Input Leap through 3.0.3 input-leapd Unauthenticated IPC Command Execution Allows Local Privilege Escalation to SYSTEM
 Content-Type: text/plain; charset=utf-8
 
 ----------------------------------------------------------------------------
-NotCVE Advisory — NotCVE-2026-0014
+NotCVE Advisory — NotCVE-2026-0015
 ----------------------------------------------------------------------------
 
 [-] Summary:
-Improper limitation of a pathname in the drag-and-drop file transfer
-feature of Input Leap, the open-source keyboard and mouse sharing tool,
-allows a connected peer to write a file outside the configured drop-target
-directory. Writing into the per-user Startup folder turns this into code
-execution as the receiving user at the next login. CVSS:3.1 5.3
-(AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:N).
+Missing authentication for a critical function in the input-leapd daemon of
+Input Leap, the open-source keyboard and mouse sharing tool, allows a
+local, low-privileged user on Windows to execute arbitrary commands as
+NT AUTHORITY\SYSTEM by sending a single IPC command message to the
+daemon's unauthenticated listener on 127.0.0.1:24801. The command persists
+and runs again after a service restart or reboot. CVSS:3.1 7.8
+(AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H).
 
 [-] Affected:
-Input Leap through 3.0.3 (the final release) and master, on Windows and
-macOS. The input-leap/input-leap repository was archived read-only on
-26 July 2026; no fixed version exists or is expected.
+Input Leap on Windows from v2.4.0 through 3.0.3 (the final release), where
+input-leapd is registered as a service. The input-leap/input-leap
+repository was archived read-only on 26 July 2026; no fixed version exists
+or is expected.
 
 [-] Technical Description:
-DragInformation::parseDragInfo() in src/lib/inputleap/DragInformation.cpp
-reduces each received filename to its basename. It picks one separator for
-the whole received blob ('/' if the data contains a '/' anywhere, otherwise
-'\') and then locates the last separator at or before each entry's comma:
+IpcServer::listen() binds a TCPListenSocket to 127.0.0.1:24801 (IPC_HOST
+and IPC_PORT in src/lib/ipc/Ipc.h). IpcServer::handle_client_connecting()
+accepts the socket and wraps it in an IpcClientProxy with no check of the
+peer's identity, session or integrity level; the only thing that tells
+clients apart is the type each one declares for itself in the kIpcMsgHello
+handshake.
 
-  findResult2 = data.find_last_of(slash, findResult1);
-  ...
-  if (findResult1 - findResult2 > 1) {
-      auto filename = data.substr(findResult2 + 1,
-                                  findResult1 - findResult2 - 1);
+IpcClientProxy::parseCommand() reads a length-prefixed command string and
+a trailing one-byte elevate flag from the stream, and
+DaemonApp::handle_ipc_message() passes both to the watchdog unchanged:
 
-find_last_of() returns std::string::npos when no separator is present, and
-that value is never tested. The unsigned arithmetic wraps: findResult2 + 1
-becomes 0, the guard still passes, and the call degrades to
-data.substr(0, findResult1) - the whole attacker-supplied string up to the
-comma, with any ".." sequences intact.
+  m_watchdog->setCommand(command, cm.elevate());
 
-Because the separator is chosen once per blob, a peer can force the
-mismatch: a single stray '/' after the first comma selects '/', while a
-filename written with '\' separators contains no '/' before that comma.
+There is no allowlist, no check that the command is an Input Leap binary,
+and no authorisation check on the elevate flag. With the flag set,
+MSWindowsWatchdog::getUserToken() locates winlogon.exe, duplicates its
+primary token (OpenProcessToken, DuplicateTokenEx) and the watchdog calls
+CreateProcessAsUser() with the attacker's command line. winlogon.exe runs
+as NT AUTHORITY\SYSTEM, so the new process does too.
 
-DropHelper::writeToDir() in src/lib/inputleap/DropHelper.cpp appends the
-result to the drop-target directory and opens it for writing, with no
-normalisation, no check for ".." or absolute prefixes, and no check that
-the path stays beneath the drop target. A name such as
-..\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\ escapes
-the configured folder, and a file written there runs as the receiving user
-at the next login.
+handle_ipc_message() also stores the input with ARCH->setting("Command")
+and ARCH->setting("Elevate"). DaemonApp::mainLoop() reads both back at
+daemon start ("using last known command") and calls setCommand() again, so
+the command is re-executed as SYSTEM after a restart or reboot without
+further action by the attacker.
 
-Preconditions: the feature is opt-in (--enable-drag-drop, not the
-default), and ArgParser refuses the flag on Linux, so only Windows and
-macOS targets are affected. Both directions are reachable (malicious
-client against a server, malicious server against a client). Under the
-default ENCRYPTED_AUTHENTICATED level the sender must already be a paired
-peer; a target started with --disable-crypto has no such requirement.
+Preconditions: the input-leapd service is installed; beyond that, only
+local code execution under any account. ArchDaemonWindows::installDaemon()
+registers the service with SERVICE_AUTO_START as LocalSystem, the listener
+is opened unconditionally, and no administrative rights, file write or
+desktop session are needed.
 
-The same unchecked find_last_of() result is present in the ancestor
-debauchee/barrier codebase. The sibling fork Deskflow removed drag-and-drop
-file transfer and does not appear to carry this code path.
+The sibling project Deskflow fixed the equivalent defect in 1.26.0.161
+(CVE-2026-41477); that fix does not apply to Input Leap, which uses a TCP
+socket rather than a named pipe and so has no ACL on the endpoint. The
+same class of defect in the ancestor Barrier 2.4.0 is NotCVE-2026-0010.
+Mitigation until a fork ships a fix: stop and disable the input-leapd
+service on hosts where Input Leap is not in use.
 
 Weaknesses:
-CWE-22: Improper Limitation of a Pathname to a Restricted Directory
-CWE-191: Integer Underflow (Wrap or Wraparound)
-CAPEC-126: Path Traversal
-CAPEC-139: Relative Path Traversal
+CWE-306: Missing Authentication for Critical Function
+CWE-862: Missing Authorization
+CAPEC-69: Target Programs with Elevated Privileges
 
 [-] Credit:
-Discovered by Christopher Duram
+Reported by Christopher Duram
 (https://www.linkedin.com/in/christopherduram/).
 
 [-] Full Details and Updates:
-https://notcve.org/notcve/NotCVE-2026-0014
+https://notcve.org/notcve/NotCVE-2026-0015
 
 [-] Main References:
 https://github.com/input-leap/input-leap
-https://github.com/input-leap/input-leap/blob/v3.0.3/src/lib/inputleap/DragInformation.cpp
+https://github.com/input-leap/input-leap/blob/v3.0.3/src/lib/ipc/IpcClientProxy.cpp
+https://github.com/deskflow/deskflow/security/advisories/GHSA-6rx5-g478-775c
 
 [-] About NotCVE:
 NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
