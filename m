@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/10
-Message-ID: <5db00fa2-5bc2-22ea-20f6-4173d8e50fe4@apache.org>
-Date: Fri, 25 Sep 2026 20:12:36 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/13
+Message-ID: <16b89e0a-492d-840b-45ef-30713366b05e@apache.org>
+Date: Fri, 25 Sep 2026 20:11:35 +0000
 From: "David M. Johnson" <snoopdave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82377: Apache Roller: Missing weblog authorization in XML-RPC Blogger/MetaWeblog handlers 
+Subject: CVE-2026-82380: Apache Roller: CSRF protection bypass via self-generated salt validation 
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate 
-    CVSS 3.1: 9.9 (critical) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+Severity: Important 
+    CVSS 3.1: 8.1 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H
 
 Affected versions:
 
@@ -16,17 +16,15 @@ Affected versions:
 
 Description:
 
-Missing Authorization in Apache Roller 6.1.5 allows an authenticated user to read, modify, or delete weblog content belonging to other weblogs through the legacy XML-RPC Blogger and MetaWeblog APIs, because the handlers authenticate the caller but do not verify the caller's permission on the weblog or entry actually affected. Only installations that enable the non-default global XML-RPC setting are affected; the per-weblog API flag defaults to enabled for UI-created weblogs. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which applies an explicit per-method permission check, or to keep the XML-RPC feature disabled.
+Cross-Site Request Forgery (CSRF) in Apache Roller 6.1.5 allows a remote attacker to cause a logged-in user to perform state-changing actions under the victim's authority, because the CSRF validation filters accept a request that does not submit the required salt token, validating instead against a value the server itself generated for the request. No optional feature or non-default configuration is required; any logged-in author or administrator is affected when induced to visit a crafted page. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which validates only the submitted salt and applies the same check to multipart forms.
 
 Credit:
 
 meifukun (finder)
-n0mi1k (finder)
-Ivan Iushkevich (Steph) (finder)
 
 References:
 
-https://github.com/apache/roller/pull/164
+https://github.com/apache/roller/pull/167
 https://roller.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82377
+https://www.cve.org/CVERecord?id=CVE-2026-82380
 
