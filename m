@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/16
-Message-ID: <7a4e6a61-9c50-fc29-eafa-646f06720db2@apache.org>
-Date: Fri, 25 Sep 2026 20:11:57 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/10
+Message-ID: <5db00fa2-5bc2-22ea-20f6-4173d8e50fe4@apache.org>
+Date: Fri, 25 Sep 2026 20:12:36 +0000
 From: "David M. Johnson" <snoopdave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82383: Apache Roller: Anonymous setup action allows frontpage configuration tampering 
+Subject: CVE-2026-82377: Apache Roller: Missing weblog authorization in XML-RPC Blogger/MetaWeblog handlers 
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important 
-    CVSS 3.1: 8.2 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L
+Severity: Moderate 
+    CVSS 3.1: 9.9 (critical) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
 
 Affected versions:
 
@@ -16,15 +16,17 @@ Affected versions:
 
 Description:
 
-Missing Authentication for Critical Function in Apache Roller 6.1.5 allows an unauthenticated remote attacker to persistently change a site-global configuration value (the frontpage weblog selection) on any installed instance, because the setup action remains anonymously reachable after installation and persists configuration without an authorization check. No optional feature or non-default configuration is required; the result can redirect or break the site's public frontpage, with administrative recovery available. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which restricts the write to global administrators.
+Missing Authorization in Apache Roller 6.1.5 allows an authenticated user to read, modify, or delete weblog content belonging to other weblogs through the legacy XML-RPC Blogger and MetaWeblog APIs, because the handlers authenticate the caller but do not verify the caller's permission on the weblog or entry actually affected. Only installations that enable the non-default global XML-RPC setting are affected; the per-weblog API flag defaults to enabled for UI-created weblogs. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which applies an explicit per-method permission check, or to keep the XML-RPC feature disabled.
 
 Credit:
 
 meifukun (finder)
+n0mi1k (finder)
+Ivan Iushkevich (Steph) (finder)
 
 References:
 
-https://github.com/apache/roller/pull/170
+https://github.com/apache/roller/pull/164
 https://roller.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82383
+https://www.cve.org/CVERecord?id=CVE-2026-82377
 
