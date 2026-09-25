@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/21
-Message-ID: <f8a5ccd2-cce4-8fbc-cf66-685c78d171dd@apache.org>
-Date: Fri, 25 Sep 2026 20:16:46 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/18
+Message-ID: <5ff57758-1c82-509d-9c71-aa9bb7029593@apache.org>
+Date: Fri, 25 Sep 2026 20:13:00 +0000
 From: "David M. Johnson" <snoopdave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82546: Apache Roller: Stored cross-site scripting through incoming Trackback links 
+Subject: CVE-2026-82385: Apache Roller: Weblog template include escapes the Velocity sandbox and reads classpath files 
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate 
-    CVSS 3.1: 6.1 (medium) CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N
+Severity: Important 
+    CVSS 3.1: 6.5 (medium) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N
 
 Affected versions:
 
@@ -16,15 +16,15 @@ Affected versions:
 
 Description:
 
-Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') in Apache Roller 6.1.5 allows an unauthenticated remote attacker to store a crafted comment-author URL through the incoming Trackback endpoint when a published entry accepts comments and Trackbacks. The shipped Trackback, verification and moderation defaults allow the value to be approved and rendered as an active link; a visitor who clicks the link executes script in the weblog's origin. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which removes incoming Trackback support and suppresses non-HTTP(S) comment-author links. Users unable to upgrade should disable Trackbacks and remove untrusted Trackback comments.
+Exposure of Sensitive Information to an Unauthorized Actor in Apache Roller 6.1.5 allows a weblog administrator to read files on the application classpath, including Roller configuration files containing secrets, by authoring a Velocity template that uses an include directive to load a classpath resource outside the theme namespace. Roller treats weblog administrators as untrusted and enables a Velocity sandbox, but the include and parse directives are not confined by it. No non-default configuration is required; this affects any weblog whose administrator can author templates. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which confines includes to the active theme and removes classpath resource loading from weblog rendering.
 
 Credit:
 
-m4dn355 (finder)
+n0mi1k (finder)
 
 References:
 
-https://github.com/apache/roller/pull/178
+https://github.com/apache/roller/pull/172
 https://roller.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82546
+https://www.cve.org/CVERecord?id=CVE-2026-82385
 
