@@ -1,30 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/13
-Message-ID: <16b89e0a-492d-840b-45ef-30713366b05e@apache.org>
-Date: Fri, 25 Sep 2026 20:11:35 +0000
-From: "David M. Johnson" <snoopdave@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/25
+Message-ID: <CAKTWQS84gn2uNvJzbto9=9aCM0VsxS93tB-g4LMaGjfORZBsEg@mail.gmail.com>
+Date: Fri, 25 Sep 2026 22:26:57 +0000
+From: Haitam Lazaar <contact.lazaar.haitam@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82380: Apache Roller: CSRF protection bypass via self-generated salt validation 
+Subject: CVE-2026-100310: GNU libextractor < 1.16 Privilege Escalation via LIBEXTRACTOR_PREFIX
 Content-Type: text/plain; charset=utf-8
 
-Severity: Important 
-    CVSS 3.1: 8.1 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:H
+Hello oss-security,
 
-Affected versions:
-
-- Apache Roller 6.1.5
+An untrusted search path vulnerability leading to Local Privilege
+Escalation (LPE) was identified in GNU libextractor for versions prior
+to 1.16. The vulnerability has been assigned CVE-2026-100310.
 
 Description:
+GNU libextractor before 1.16 uses getenv("LIBEXTRACTOR_PREFIX") in
+`src/main/extractor_plugpath.c` (`get_installation_paths()`) to
+determine plugin search paths without checking whether the calling
+process is running with elevated privileges (setuid/setgid).
 
-Cross-Site Request Forgery (CSRF) in Apache Roller 6.1.5 allows a remote attacker to cause a logged-in user to perform state-changing actions under the victim's authority, because the CSRF validation filters accept a request that does not submit the required salt token, validating instead against a value the server itself generated for the request. No optional feature or non-default configuration is required; any logged-in author or administrator is affected when induced to visit a crafted page. Users are recommended to upgrade to Apache Roller 6.1.6 or later, which validates only the submitted salt and applies the same check to multipart forms.
+Because this environment variable is not an `LD_*` variable, the
+dynamic linker does not strip it from the environment of setuid
+binaries. A local unprivileged attacker can set `LIBEXTRACTOR_PREFIX`
+to a directory containing a malicious shared object, which is then
+loaded and executed with elevated privileges (e.g., euid=0) when any
+setuid application linked against libextractor runs. An attacker can
+call `setuid(0)` from within the shared library's constructor to
+achieve full root privilege escalation.
 
-Credit:
+Affected Versions:
+libextractor >= 0, < 1.16
 
-meifukun (finder)
+Fix:
+The issue is patched in GNU libextractor version 1.16.
 
 References:
+* CVE Record: https://www.cve.org/CVERecord?id=CVE-2026-100310
+* VulnCheck Advisory:
+https://www.vulncheck.com/advisories/gnu-libextractor-before-1.16-privilege-escalation-via-libextractor-prefix
+* PoC & Technical Details: https://github.com/Haitam-lazaar/libextractor-privesc
+* Upstream Patch:
+https://git.gnunet.org/gnunet/libextractor/commit/6edfa653c048800e24a17f7e8cc2bb42659b8d01.html
+* GNU libextractor: https://www.gnu.org/software/libextractor/
 
-https://github.com/apache/roller/pull/167
-https://roller.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82380
+Regards,
+Haitam Lazaar
 
