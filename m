@@ -1,67 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/1
-Message-ID: <d6246ea4522ad9a31c85efb31a55d02e@cpansec.org>
-Date: Thu, 24 Sep 2026 21:12:12 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-92288: Lemonldap::NG::Portal versions from 2.20.0 before 2.21.6, from 2.22.0 before 2.23.4 for Perl allow unauthenticated OAuth2 token introspection because checkEndPointAuthenticationCredentials does not verify the client secret of a public Relying Party
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/25/4
+Message-ID: <179032685474.254052.15397970022917167373@notcve.org>
+Date: Fri, 25 Sep 2026 11:00:54 +0200
+From: advisories@...cve.org
+To: oss-security@...ts.openwall.com
+Subject: [NotCVE-2026-0014] Input Leap 3.0.3 Drag-and-Drop File Transfer Path Traversal Allows Arbitrary File Write Outside the Drop Directory
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-92288                                       CPAN Security Group
-========================================================================
+----------------------------------------------------------------------------
+NotCVE Advisory — NotCVE-2026-0014
+----------------------------------------------------------------------------
 
-         CVE ID:  CVE-2026-92288
+[-] Summary:
+Improper limitation of a pathname in the drag-and-drop file transfer
+feature of Input Leap, the open-source keyboard and mouse sharing tool,
+allows a connected peer to write a file outside the configured drop-target
+directory. Writing into the per-user Startup folder turns this into code
+execution as the receiving user at the next login. CVSS:3.1 5.3
+(AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:N).
 
-   Distribution:  Lemonldap-NG-Portal
-       Versions:  from 2.20.0 before 2.21.6
-                  from 2.22.0 before 2.23.4
-       MetaCPAN:  https://metacpan.org/dist/Lemonldap-NG-Portal
-       VCS Repo:  https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng
+[-] Affected:
+Input Leap through 3.0.3 (the final release) and master, on Windows and
+macOS. The input-leap/input-leap repository was archived read-only on
+26 July 2026; no fixed version exists or is expected.
 
+[-] Technical Description:
+DragInformation::parseDragInfo() in src/lib/inputleap/DragInformation.cpp
+reduces each received filename to its basename. It picks one separator for
+the whole received blob ('/' if the data contains a '/' anywhere, otherwise
+'\') and then locates the last separator at or before each entry's comma:
 
-Lemonldap::NG::Portal versions from 2.20.0 before 2.21.6, from 2.22.0
-before 2.23.4 for Perl allow unauthenticated OAuth2 token introspection
-because checkEndPointAuthenticationCredentials does not verify the
-client secret of a public Relying Party
+  findResult2 = data.find_last_of(slash, findResult1);
+  ...
+  if (findResult1 - findResult2 > 1) {
+      auto filename = data.substr(findResult2 + 1,
+                                  findResult1 - findResult2 - 1);
 
-Description
------------
-Lemonldap::NG::Portal versions from 2.20.0 before 2.21.6, from 2.22.0
-before 2.23.4 for Perl allow unauthenticated OAuth2 token introspection
-because checkEndPointAuthenticationCredentials does not verify the
-client secret of a public Relying Party.
+find_last_of() returns std::string::npos when no separator is present, and
+that value is never tested. The unsigned arithmetic wraps: findResult2 + 1
+becomes 0, the guard still passes, and the call degrades to
+data.substr(0, findResult1) - the whole attacker-supplied string up to the
+comma, with any ".." sequences intact.
 
-checkEndPointAuthenticationCredentials() skips the secret comparison
-for a Relying Party marked public and still returns the authentication
-method deduced from the request, client_secret_basic or
-client_secret_post. introspection() rejects a caller only when that
-method is missing or none, so a request carrying a public client_id and
-an arbitrary or empty secret passes the endpoint's authentication
-check.
+Because the separator is chosen once per blob, a peer can force the
+mismatch: a single stray '/' after the first comma selects '/', while a
+filename written with '\' separators contains no '/' before that comma.
 
-An attacker who holds an access token and knows the client_id of any
-public Relying Party can confirm the token is active and read its
-metadata, including scope, audience, expiry and the sub claim. The sub
-claim is computed with the calling Relying Party's user identifier
-attribute, so an attacker can translate a user identifier from one
-Relying Party to another, defeating per-client and pseudonymous
-identifiers.
+DropHelper::writeToDir() in src/lib/inputleap/DropHelper.cpp appends the
+result to the drop-target directory and opens it for writing, with no
+normalisation, no check for ".." or absolute prefixes, and no check that
+the path stays beneath the drop target. A name such as
+..\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\ escapes
+the configured folder, and a file written there runs as the receiving user
+at the next login.
 
-Problem types
--------------
-- CWE-1390 Weak Authentication
+Preconditions: the feature is opt-in (--enable-drag-drop, not the
+default), and ArgParser refuses the flag on Linux, so only Windows and
+macOS targets are affected. Both directions are reachable (malicious
+client against a server, malicious server against a client). Under the
+default ENCRYPTED_AUTHENTICATED level the sender must already be a paired
+peer; a target started with --disable-crypto has no such requirement.
 
-Solutions
----------
-Upgrade to Lemonldap-NG-Portal 2.21.6 or 2.23.4 or later. Only 2.23.4
-is on CPAN; the 2.21.6 LTS release is available from
-https://lemonldap-ng.org/download.html.
+The same unchecked find_last_of() result is present in the ancestor
+debauchee/barrier codebase. The sibling fork Deskflow removed drag-and-drop
+file transfer and does not appear to carry this code path.
 
-References
-----------
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/work_items/3719
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/work_items/3721
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/releases/v2.23.4
-https://gitlab.ow2.org/lemonldap-ng/lemonldap-ng/-/releases/v2.21.6
+Weaknesses:
+CWE-22: Improper Limitation of a Pathname to a Restricted Directory
+CWE-191: Integer Underflow (Wrap or Wraparound)
+CAPEC-126: Path Traversal
+CAPEC-139: Relative Path Traversal
 
+[-] Credit:
+Discovered by Christopher Duram
+(https://www.linkedin.com/in/christopherduram/).
+
+[-] Full Details and Updates:
+https://notcve.org/notcve/NotCVE-2026-0014
+
+[-] Main References:
+https://github.com/input-leap/input-leap
+https://github.com/input-leap/input-leap/blob/v3.0.3/src/lib/inputleap/DragInformation.cpp
+
+[-] About NotCVE:
+NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
+vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
+Request a NotCVE: https://notcve.org/form/ · Contributors:
+https://notcve.org/hall/
