@@ -1,51 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/26/2
-Message-ID: <areTHR70amCNWd8i@definition.pseudorandom.co.uk>
-Date: Sat, 26 Sep 2026 10:40:45 +0100
-From: Simon McVittie <smcv@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/8
+Message-ID: <649e56b8-232f-5007-ecd3-4efc1bf5aa33@apache.org>
+Date: Mon, 28 Sep 2026 15:31:48 +0000
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-100310: GNU libextractor < 1.16 Privilege Escalation via LIBEXTRACTOR_PREFIX
+Subject: CVE-2026-91012: Apache Karaf: Path Traversal in Config Service Allows Manager-to-Admin Privilege Escalation 
 Content-Type: text/plain; charset=utf-8
 
-On Fri, 25 Sep 2026 at 22:26:57 +0000, Haitam Lazaar wrote:
->GNU libextractor before 1.16 uses getenv("LIBEXTRACTOR_PREFIX") in
->`src/main/extractor_plugpath.c` (`get_installation_paths()`) to
->determine plugin search paths without checking whether the calling
->process is running with elevated privileges (setuid/setgid).
+Severity: important 
 
-Was this library advertised as being safe for use in setuid, setgid or 
-otherwise privileged processes? Looking at its description in my package 
-manager ("provides developers of file-sharing networks, file managers, 
-and WWW-indexing bots with a universal library to obtain meta-data about 
-files") I don't immediately see why it would be appropriate for a setuid 
-program to use this.
+Affected versions:
 
-I think it's going to scale incredibly badly if every shared library 
-that calls getenv() is going to get a CVE just because it could 
-conceivably be used by a setuid program: there are a lot of shared 
-libraries in the world, and most of them aren't designed to be part of a 
-security boundary.
+- Apache Karaf (org.apache.karaf.config.core.impl) before 4.4.12
 
-Some libraries *have to* trust environment variables because that's part 
-of their API, and not doing so would be a major compatibility break - 
-for example, all X11 implementations are expected to trust $DISPLAY, 
-because that's part of how X11 was designed, and an X11 library that 
-stopped accepting $DISPLAY would not be doing its job. Using libX11 or 
-libxcb in a setuid process would be widely regarded as unsafe, but isn't 
-the same equally true for something like GNU libextractor?
+Description:
 
-It's the setuid program that has been designed to do something unusual 
-(being installed with the setuid bit set, so that it will run with 
-privileges higher than those of its caller), so I think it should be the 
-setuid program maintainer's responsibility to take care to only link 
-libraries that are designed and documented to be safe to use in setuid 
-programs.
+org.apache.karaf.config.core.impl.ConfigRepositoryImpl#update(pid, properties),
+which backs the "config" MBean and the config:* shell commands, derives the file
+it writes a configuration to from caller-supplied input without checking that
+the result stays inside ${karaf.etc}:
 
-I'm not saying that libextractor has no security-relevant surface area - 
-if it can be crashed or subverted by a crafted/malicious media file, 
-like CVE-2026-91752, then that's a valid vulnerability - but I don't 
-think that hypothetically being used by a setuid program is something 
-that the security community should consider to be part of its threat 
-model.
+  *  if the submitted property map contains a felix.fileinstall.filename entry, that value is turned directly into a File (getCfgFileFromProperty), so it can point to any absolute path the Karaf process can write to;
+  *  otherwise the configuration PID is concatenated verbatim into the target file name (generateConfigFilename(): new File(karaf.etc, pid + ".cfg")), so a PID containing ".." segments resolves outside ${karaf.etc}. createFactoryConfiguration() has the same issue via the factory PID/alias.
 
-     smcv
+
+Both code paths are reachable by any caller holding the "manager" role under Karaf's shipped command/JMX ACL (org.apache.karaf.command.acl.conf.cfg: "update = manager"). Such a user can therefore write attacker-controlled content to any file the Karaf process can write, including files the same ACL otherwise reserves to "admin" (etc/users.properties, etc/*.acl.*.cfg, etc/org.apache.karaf.management.cfg, and similar), allowing a manager-role user to grant themselves the admin role or otherwise take over the container.
+
+
+
+
+
+
+ConfigMBeanImpl.install() and the config:install shell command already guarded the equivalent risk on their own code path with a finalname.contains("..") string check, but that check does not stop absolute paths or symlink-based escapes, and it was never applied to ConfigRepositoryImpl.update() / createFactoryConfiguration() at all.
+
+Credit:
+
+n0mi1k <nomilksec@...il.com> (reporter)
+
+References:
+
+https://karaf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91012
+
