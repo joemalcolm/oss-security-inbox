@@ -1,36 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/7
-Message-ID: <CAAHN_R1kZOY4Mwz9ztjsGsKP6BZP0_-UtYe=F_zdzR=87_R4Ww@mail.gmail.com>
-Date: Mon, 28 Sep 2026 11:44:00 -0400
-From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/1
+Message-ID: <CADB963yW_1kdoNGF4TzQ7kiLQMourkMhF9rt_Wjo3G=c9=nPQQ@mail.gmail.com>
+Date: Mon, 28 Sep 2026 17:02:56 +0530
+From: Vyom Yadav <vyom.yadav@...onical.com>
 To: oss-security@...ts.openwall.com
-Subject: The GNU C Library security advisory update for 2026-09-28
+Subject: [kubernetes] CVE-2026-19444: kubectl cp path traversal on Windows allows arbitrary file writes
 Content-Type: text/plain; charset=utf-8
 
-The following security advisories have been published:
+Hello Kubernetes Community,
 
-GLIBC-SA-2026-0024:
-===================
+A security issue was discovered in Kubernetes where a malicious tar binary
+in a container may be able to write files to arbitrary paths on the local
+machine of a user running kubectl cp on Windows, limited only by the
+permissions of the local user.
 
-One-byte overread in strncasecmp on Power8
+This issue has been rated *Medium* (CVSS calculator:
+https://www.first.org/cvss/calculator/3.1) (score 6.5), and assigned
+*CVE-2026-19444*.
 
-The strncasecmp function in the GNU C Library 2.24 and later optimized
-for the Power8 architecture may read one byte beyond the input size
-limit, which may crash a program when that byte is not readable.
+*Am I vulnerable?*
 
-This condition may happen when the input strings to the strncasecmp
-function are attacker controlled in an application and they match all
-the way up to the edge of their page and the neighbouring page is either
-not mapped or is not readable.
+You are affected if you run the kubectl client on Windows and use kubectl cp
+to copy files *from* a container whose contents you do not fully control.
+This issue only affects clients on Windows platforms; Linux and macOS
+clients are not affected.
 
-CVE Id: CVE-2026-97399
-Public-Date: 2026-09-28
-Vulnerable-Commit: c8376f3e07602aaef9cb843bb73cb5f2b860634a (2.23.90-474)
-CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L - 3.7
-Reported-by: AISLE in partnership with Red Hat
+To determine whether your kubectl client is an affected version, run:
+kubectl version --client
 
-Notes:
-======
+*Affected Versions*
 
-Published advisories are available directly in the project git repository:
-https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD
+   - kubectl v1.34.0 to v1.34.11
+   - kubectl v1.35.0 to v1.35.8
+   - kubectl v1.36.0 to v1.36.4
+
+*How do I mitigate this vulnerability?*
+
+Prior to upgrading, this vulnerability can be mitigated by only copying
+files from containers you trust, or by avoiding kubectl cp from untrusted
+containers on Windows.
+
+*Fixed Versions*
+
+   - kubectl >= v1.34.12
+   - kubectl >= v1.35.9
+   - kubectl >= v1.36.5
+
+If you find evidence that this vulnerability has been exploited, please
+contact security@...ernetes.io
+
+*Additional Details*
+
+See the GitHub issue for more details:
+https://github.com/kubernetes/kubernetes/issues/141294
+
+*Acknowledgements*
+
+This vulnerability was reported by Moriel Harush.
+
+The issue was fixed and coordinated by Marly Salazar, Maciej Szulik, and
+Vyom Yadav.
+
+Thank You,
+
+Vyom Yadav on behalf of the Kubernetes Security Response Committee
+
