@@ -1,39 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/4
-Message-ID: <20260928114817.GI9951@qaa.vinc17.org>
-Date: Mon, 28 Sep 2026 13:48:17 +0200
-From: Vincent Lefevre <vincent@...c17.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/9
+Message-ID: <d725e135-8eb9-0916-85c6-613962e124df@apache.org>
+Date: Mon, 28 Sep 2026 15:52:22 +0000
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: crontab(1) silently truncates file path arguments >=100 chars
+Subject: CVE-2026-91048: Apache Karaf: Missing authorization on the jdbc:* shell command scope allows privilege escalation to remote code execution via jdbc:ds-create 
 Content-Type: text/plain; charset=utf-8
 
-A "minor" bug in cron was reported in the Debian BTS:
+Severity: moderate 
 
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1144850
+Affected versions:
 
-"cron: crontab(1) silently truncates file path arguments >=100 chars"
+- Apache Karaf before 4.4.12
 
-I suspect that there is a typo in the given instructions there
-because the total number of characters is incorrect. Moreover,
-the truncation is not silent, unless the file exists, in which
-case it leads to a different crontab file being loaded, possibly
-belonging to another user of the machine. So this is actually a
-vulnerability, with possible execution of code from another user.
+Description:
 
-Under Debian with the cron 3.0pl1-210 package:
+The jdbc shell command scope shipped no org.apache.karaf.command.acl.jdbc.cfg. Karaf's command guard (SecuredSessionFactoryImpl) treats a command with no matching ACL rule as allowed, so any authenticated shell session (including one holding only the viewer role) could run every jdbc:* command. jdbc:ds-create stores a fully attacker-controlled JDBC URL into a pax-jdbc-config factory Configuration with no validation. pax-jdbc-config reactively turns that into a live DataSource. Several JDBC drivers run code or SQL at connection time based on URL parameters (e.g. H2 INIT=RUNSCRIPT), so a viewer-level shell user could reach arbitrary code execution, bypassing the admin-role gate that already protects shell:exec. This is a privilege-escalation-to-RCE chain, not merely an "admin misconfiguration".
 
-$ a=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-$ mkdir /tmp/${a}b
-$ echo '* * * * * true' > /tmp/${a}b/x
-$ echo '* * * * * false' > /tmp/${a}
-$ crontab /tmp/${a}b/x
-$ crontab -l
-* * * * * false
 
-(also reproducible with root creating /tmp/${a}b/x (actually not used)
-and running "crontab /tmp/${a}b/x").
+The same applies to jms:* shell commands.
 
--- 
-Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+Credit:
+
+MopMonk-AI <mopmonk-ai@...hant.com> (reporter)
+
+References:
+
+https://karaf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-91048
+
