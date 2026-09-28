@@ -1,36 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/5
-Message-ID: <7f925018-c1d2-a765-9a65-5d6a820519dc@apache.org>
-Date: Mon, 28 Sep 2026 12:37:16 +0000
-From: Hongtao Gao <hanahmily@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/2
+Message-ID: <564003b7-396a-a744-18a6-fd06d2bd4d07@apache.org>
+Date: Mon, 28 Sep 2026 09:03:25 +0000
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-85499: Apache SkyWalking BanyanDB: Canopy does not enforce readonly-role restrictions on the /monitoring/* proxy 
+Subject: CVE-2026-90979: Apache Karaf: LDAP filter injection in JAAS LDAP login modules
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
-- Apache SkyWalking BanyanDB 0.11.0 before 0.11.1
+- Apache Karaf (org.apache.karaf.jaas.modules.ldap) before 4.4.12
 
 Description:
 
-Improper Authorization vulnerability in Apache SkyWalking BanyanDB.
+LDAPCache and LDAPBackingEngine build LDAP search filters for user lookup and role lookup by textually substituting the placeholders %u, %dn, and %fqdn (drawn from the login name, the resolved user DN, and its fully qualified namespace form) into administrator-configured filter templates (userFilter, roleFilter). Before the fix, the only sanitization applied to the substituted value was double backslashed:
+
+filter = filter.replaceAll(Pattern.quote("%u"), Matcher.quoteReplacement(user));
+
+filter = filter.replace("\\", "\\\\");
 
 
 
-The Canopy includes incomplete proof-of-concept role and monitoring-proxy functionality. Under a non-default configuration with a readonly Canopy user and a reachable monitoring target, that user can send non-read requests through the monitoring proxy.
+
+This does not escape the other characters RFC 4515 requires escaping in an LDAP search filter: *, (, ), and NUL. A login name containing any of these can change the structure of the resulting filter rather than being matched as a literal value (e.g. a crafted username can turn an equality match into a wildcard match, or close/reopen filter clauses), widening what the search returns and potentially causing a login or role lookup to match an LDAP entry other than the intended one, over-granting roles, and depending on deployment-specific filter templates, potentially affecting which account a login resolved to.
 
 
 
-This issue affects Apache SkyWalking BanyanDB: from 0.11.0 before 0.11.1.
 
+It's not exploitable through every entry points: LDAPLoginModule and LDAPPubkeyLoginModule both called Util.doRFC2254Encoding() (correct RFC 4515 escaping) on the login name before handing it to LDAPCache, which masked the missing escaping in LDAPCache for those two call paths. Using LDAPCache directly (bypassing the login modules) does not reproduce through the normal LDAPLoginModule/LDAPPubkeyLoginModule authentication flow for this reason. It does reproduce through two other call paths that reach LDAPCache/LDAPBackingEngine without any prior escaping:
 
+  *  GSSAPILdapLoginModule passes the NameCallback name straight through, unescaped.
+  *  LDAPBackingEngine (listRoles) passes principal.getName() straight through, unescaped.
 
-Users are recommended to upgrade to version 0.11.1, which fixes the issue.
+This issue is being tracked as https://github.com/apache/karaf/pull/2880 
+
+Credit:
+
+Gjoko Krstic <gjoko@...oscience.mk> (reporter)
 
 References:
 
-https://skywalking.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-85499
+https://karaf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-90979
+https://issues.apache.org/jira/browse/https://github.com/apache/karaf/pull/2880
 
