@@ -1,82 +1,67 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/7
-Message-ID: <179067032099.3666653.10486620282212629769@notcve.org>
-Date: Tue, 29 Sep 2026 10:25:20 +0200
-From: advisories@...cve.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/2
+Message-ID: <87y0cl3vsz.fsf@gentoo.org>
+Date: Mon, 28 Sep 2026 22:33:48 +0100
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: [NotCVE-2026-0016] game-music-emu VGM Command Interpreter Unvalidated 0xE0 PCM Seek Offset Allows Out-of-Bounds Read and Denial of Service
+Subject: JIT buffer overflow fixed in libpcre2-10.49
 Content-Type: text/plain; charset=utf-8
 
-----------------------------------------------------------------------------
-NotCVE Advisory — NotCVE-2026-0016
-----------------------------------------------------------------------------
+From https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.49
+"""
+This is a security-only release, to address GHSA-r9hj-j2rw-4q3m.
 
-[-] Summary:
-An out-of-bounds read in the VGM command interpreter of game-music-emu
-(libgme), the open-source video game music emulation library, allows an
-attacker who supplies a crafted .vgm or .vgz file to crash the hosting
-process or to have adjacent heap memory influence the rendered audio, via
-a PCM seek command whose offset is never validated. CVSS:3.1 7.1
-(AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H).
+Compared to 10.48, this release has only a minimal code change to
+prevent an out-of-bounds write with arbitrary data. An
+attacker-controlled regular expression is required. Applications are
+affected only when they use pcre2_jit_stack_create() and
+pcre2_jit_stack_assign() to provide a growable JIT stack, then match a
+pattern with unusually high JIT stack usage, such as one containing a
+large number of capturing groups.
 
-[-] Affected:
-game-music-emu (libgme) through 0.6.5, and master as of commit fe8da4b.
-Default builds; no fixed version is verified.
+The implications of an out-of-bounds write could include arbitrary code
+execution.
 
-[-] Technical Description:
-Vgm_Emu_Impl::run_commands() in gme/Vgm_Emu_Impl.cpp handles VGM command
-0xE0 (cmd_pcm_seek) by building an interior pointer straight from file
-content:
+The issue is not a regression and affects releases 10.48 and
+earlier. Users should upgrade to 10.49. Backport patches for supported
+earlier releases are listed in SUPPORT-LIFECYCLE.md.
 
-  case cmd_pcm_seek:
-      pcm_pos = pcm_data + pos [3] * 0x1000000L + pos [2] * 0x10000L +
-              pos [1] * 0x100L + pos [0];
-      pos += 4;
-      break;
+This release is available as a signed Git tag, or alternatively as a
+signed tarball of the Git tag (attestation).
+"""
 
-pcm_data points into the decompressed file buffer, set by a preceding 0x67
-(cmd_data_block) command. The 32-bit little-endian operand is
-attacker-controlled and is compared neither against the declared
-data-block size nor against data_end, so pcm_pos can be placed up to 4 GiB
-past the end of the allocation. The following 0x80-0x8F (cmd_pcm_delay)
-case then executes write_pcm( vgm_time, *pcm_pos++ ), dereferencing the
-pointer without a bounds check of its own. The reporter's AddressSanitizer
-log records a SEGV on a read at Vgm_Emu_Impl.cpp:255 in run_commands().
+My default response to these is always "OK, how realistic is
+attacker-controlled $X?", but libpcre2's maintainers are quite sensible,
+and indeed, reading the advisory [0], it had some interesting detail.
 
-When the computed address is unmapped the read faults and the process
-terminates; when it is mapped, the byte read becomes part of the decoded
-audio, so memory adjacent to the file buffer can influence
-attacker-observable output.
+Quoting just a bit of that:
+"""
+Summary
 
-Reachability: the VGM emulator is part of the default build, and the
-command stream runs during gme_start_track(), on the file-open path. VLC's
-modules/demux/gme.c calls gme_start_track() from its demuxer Open
-function, and FFmpeg links the library when built with --enable-libgme. No
-authentication, privileges or configuration change are needed; the file
-only has to reach a libgme consumer.
+Maintainer note: This vulnerability is not specific to phpMyAdmin, and may affect other PHP software, and other software using PCRE2.
 
-Upstream issue #165 reports a related but different overread in the same
-function (unchecked command argument bytes); it is not this defect.
+While testing phpMyAdmin 5.2.3, I developed a lab proof of concept that
+achieved command execution through phpMyAdmin's use of an attacker-controlled
+regular expression. Root-cause analysis of the memory corruption led to an
+independent vulnerability in the PCRE2 8-bit JIT.
 
-Weaknesses:
-CWE-823: Use of Out-of-range Pointer Offset
-CWE-125: Out-of-bounds Read
-CAPEC-540: Overread Buffers
-CAPEC-129: Pointer Manipulation
+An attacker-controlled pattern can make the JIT write below its stack mapping.
+The escaped writes can corrupt a separate allocation and include pointers into
+the attacker-controlled subject buffer.
 
-[-] Credit:
-Discovered by netspacer1124 (https://github.com/netspacer1124).
+I reproduced the issue with clean official PCRE2 10.48 builds on
+Linux/AArch64, macOS/ARM64, and macOS/x86_64 under Rosetta. The same stack
+boundary failure is also present in PCRE2 10.42 with an earlier trigger. I have
+not identified the first affected release or tested other JIT backends.
+"""
 
-[-] Full Details and Updates:
-https://notcve.org/notcve/NotCVE-2026-0016
+[I'm reluctant to just paste the whole advisory text from my browser but
+haven't looked to see if there's a convenient way to get a plaintext
+advisory from GHSAs, like GitHub supports for PRs & commits (.patch +
+.diff). If someone is aware of such a way, let me know please!]
 
-[-] Main References:
-https://github.com/libgme/game-music-emu
-https://raw.githubusercontent.com/libgme/game-music-emu/0.6.5/gme/Vgm_Emu_Impl.cpp
-https://github.com/videolan/vlc/blob/master/modules/demux/gme.c
+[0] https://github.com/PCRE2Project/pcre2/security/advisories/GHSA-r9hj-j2rw-4q3m
 
-[-] About NotCVE:
-NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
-vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
-Request a NotCVE: https://notcve.org/form/ · Contributors:
-https://notcve.org/hall/
+sam
+
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
