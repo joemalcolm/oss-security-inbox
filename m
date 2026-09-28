@@ -1,38 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/3
-Message-ID: <901b22cd-c4ac-d4c5-b6b0-31d43e63943c@apache.org>
-Date: Mon, 28 Sep 2026 09:56:28 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/4
+Message-ID: <20260928114817.GI9951@qaa.vinc17.org>
+Date: Mon, 28 Sep 2026 13:48:17 +0200
+From: Vincent Lefevre <vincent@...c17.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91006: Apache Karaf: OS Command Injection in Child-Instance Launch (instance:* / InstancesMBean)
+Subject: crontab(1) silently truncates file path arguments >=100 chars
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+A "minor" bug in cron was reported in the Debian BTS:
 
-Affected versions:
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1144850
 
-- Apache Karaf (org.apache.karaf:org.apache.karaf.instance.core) before 4.4.12
+"cron: crontab(1) silently truncates file path arguments >=100 chars"
 
-Description:
+I suspect that there is a typo in the given instructions there
+because the total number of characters is incorrect. Moreover,
+the truncation is not silent, unless the file exists, in which
+case it leads to a different crontab file being loaded, possibly
+belonging to another user of the machine. So this is actually a
+vulnerability, with possible execution of code from another user.
 
-Apache Karaf's instance-management service (InstanceServiceImpl) builds the command line used to launch a child Karaf JVM by string concatenation, then executes it through /bin/sh (Unix) or cscript (Windows). The caller-supplied javaOpts value is spliced into that string unquoted. A javaOpts value containing shell metacharacters (;, |, `, $(...)) is interpreted by the shell instead of being passed to the JVM as an option, giving arbitrary OS command execution as the Karaf process user.
+Under Debian with the cron 3.0pl1-210 package:
 
+$ a=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+$ mkdir /tmp/${a}b
+$ echo '* * * * * true' > /tmp/${a}b/x
+$ echo '* * * * * false' > /tmp/${a}
+$ crontab /tmp/${a}b/x
+$ crontab -l
+* * * * * false
 
-Reachable via the shell commands instance:create, instance:start, instance:restart, instance:change-opts, and the equivalent InstanceMBean JMX operations (createInstance, startInstance, changeJavaOpts, cloneInstance).
+(also reproducible with root creating /tmp/${a}b/x (actually not used)
+and running "crontab /tmp/${a}b/x").
 
-Mitigation   *  Set karaf.secured.command.compulsory.roles=admin in etc/system.properties to close the fail-open gap for all unconfigured command scopes.
-  *  Restrict which principals can reach instance:* commands and InstancesMBean via etc/users.properties role assignments.
-  *  Treat javaOpts passed to instance:create/instance:start/instance:change-opts/InstancesMBean as untrusted input only from fully-trusted operators.
-
-This issue is being tracked as https://github.com/apache/karaf/pull/2878 
-
-Credit:
-
-n0mi1k <nomilksec@...il.com> (reporter)
-
-References:
-
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91006
-https://issues.apache.org/jira/browse/https://github.com/apache/karaf/pull/2878
-
+-- 
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
