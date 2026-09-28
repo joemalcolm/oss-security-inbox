@@ -1,31 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/9
-Message-ID: <d725e135-8eb9-0916-85c6-613962e124df@apache.org>
-Date: Mon, 28 Sep 2026 15:52:22 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/7
+Message-ID: <CAAHN_R1kZOY4Mwz9ztjsGsKP6BZP0_-UtYe=F_zdzR=87_R4Ww@mail.gmail.com>
+Date: Mon, 28 Sep 2026 11:44:00 -0400
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91048: Apache Karaf: Missing authorization on the jdbc:* shell command scope allows privilege escalation to remote code execution via jdbc:ds-create 
+Subject: The GNU C Library security advisory update for 2026-09-28
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+The following security advisories have been published:
 
-Affected versions:
+GLIBC-SA-2026-0024:
+===================
 
-- Apache Karaf before 4.4.12
+One-byte overread in strncasecmp on Power8
 
-Description:
+The strncasecmp function in the GNU C Library 2.24 and later optimized
+for the Power8 architecture may read one byte beyond the input size
+limit, which may crash a program when that byte is not readable.
 
-The jdbc shell command scope shipped no org.apache.karaf.command.acl.jdbc.cfg. Karaf's command guard (SecuredSessionFactoryImpl) treats a command with no matching ACL rule as allowed, so any authenticated shell session (including one holding only the viewer role) could run every jdbc:* command. jdbc:ds-create stores a fully attacker-controlled JDBC URL into a pax-jdbc-config factory Configuration with no validation. pax-jdbc-config reactively turns that into a live DataSource. Several JDBC drivers run code or SQL at connection time based on URL parameters (e.g. H2 INIT=RUNSCRIPT), so a viewer-level shell user could reach arbitrary code execution, bypassing the admin-role gate that already protects shell:exec. This is a privilege-escalation-to-RCE chain, not merely an "admin misconfiguration".
+This condition may happen when the input strings to the strncasecmp
+function are attacker controlled in an application and they match all
+the way up to the edge of their page and the neighbouring page is either
+not mapped or is not readable.
 
+CVE Id: CVE-2026-97399
+Public-Date: 2026-09-28
+Vulnerable-Commit: c8376f3e07602aaef9cb843bb73cb5f2b860634a (2.23.90-474)
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L - 3.7
+Reported-by: AISLE in partnership with Red Hat
 
-The same applies to jms:* shell commands.
+Notes:
+======
 
-Credit:
-
-MopMonk-AI <mopmonk-ai@...hant.com> (reporter)
-
-References:
-
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91048
-
+Published advisories are available directly in the project git repository:
+https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD
