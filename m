@@ -1,48 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/10
-Message-ID: <a92cf85a-4714-e9e0-8f73-93e04b528ba5@apache.org>
-Date: Mon, 28 Sep 2026 16:08:52 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-91085: Apache Karaf: config:install missing ACL entry allows privilege escalation to admin
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/12
+Message-ID: <50a7b174-e92f-4883-a991-64e067435131@cpansec.org>
+Date: Mon, 28 Sep 2026 17:05:45 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-88815: DBI versions before 1.654 for Perl incorrectly treat numeric values as strings in sql_type_cast_svpv
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-88815                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-88815
 
-- Apache Karaf before 4.4.12
-
-Description:
-
-Apache Karaf's shell/SSH command security is enforced by per-scope ACL configuration files (etc/org.apache.karaf.command.acl.<scope>.cfg). SecuredSessionFactoryImpl.checkSecurity() resolves the roles required for an invocation and, when no ACL rule matches the command, fails open: ACLConfigurationParser.Specificity.NO_MATCH sets passCheck = true. The safety valve for this, karaf.secured.command.compulsory.roles, ships commented out in etc/system.properties, so an unmatched command is allowed for any authenticated user.
-
-
-The shipped org.apache.karaf.command.acl.config ACL (assemblies/features/standard/src/main/feature/feature.xml, mirrored into instance/.../etc/org.apache.karaf.command.acl.config.cfg) has no install entry. It restricts delete to admin, restricts edit/property-*/update on the jmx.acl.*, org.apache.karaf.command.acl.* and org.apache.karaf.service.acl.* PIDs to admin, and allows manager for everything else, but config:install was simply unmatched, and therefore allowed for any authenticated user, including one holding only the viewer role.
+   Distribution:  DBI
+       Versions:  before 1.654
+       MetaCPAN:  https://metacpan.org/dist/DBI
+       VCS Repo:  https://github.com/perl5-dbi/dbi
 
 
+DBI versions before 1.654 for Perl incorrectly treat numeric values as
+strings in sql_type_cast_svpv
+
+Description
+-----------
+DBI versions before 1.654 for Perl incorrectly treat numeric values as
+strings in sql_type_cast_svpv.
+
+When casting to SQL_NUMERIC, sql_type_cast_svpv passes the string
+pointer and length of the SV to grok_number without stringifying it
+first. An integer (IV) or floating-point (NV) value has no valid string
+pointer, so grok_number reads from an invalid address, triggering a
+segmentation fault.
+
+This is reachable in Perl using the sql_type_cast function:
+
+   my $num = 42;
+   DBI::sql_type_cast( $num, DBI::SQL_NUMERIC, 0 );
+
+Problem types
+-------------
+- CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
+
+Solutions
+---------
+Upgrade to DBI 1.654 or later.
+
+References
+----------
+https://github.com/perl5-dbi/dbi/security/advisories/GHSA-c8vq-w3wr-6979
+https://github.com/perl5-dbi/dbi/commit/e5ad87e5602da995d28b4d65df222368b58d6702.patch
+https://metacpan.org/release/HMBRAND/DBI-1.654/changes
+
+Credits
+-------
+Harsh Raj Singhania, finder
 
 
-config:install <url> <finalname> fetches url and writes it into ${karaf.etc} as finalname. It calls PathUtils.checkWithin() to block .. traversal outside karaf.etc, but that folder holds every security-relevant file Karaf ships: users.properties, keys.properties, host.key, and all org.apache.karaf.*.acl.* files, including the very ACL file that (mis)governs this command. With -o/--override, an existing file is overwritten with attacker-controlled bytes fetched from an arbitrary URL.
-
-
-
-
-Because felix.fileinstall.dir = ${karaf.etc} (etc/config.properties), Felix FileInstall also watches and reloads any .cfg file dropped there, closing the loop without requiring a restart.
-
-
-
-
-By contrast, bundle:install, feature:install and kar:install are all admin-only in their own ACLs, and config:delete is admin in this same ACL, config:install was the outlier.
-
-MitigationAdd install = admin in etc/org.apache.karaf.command.acl.config.cfg (create the file is absent), and/or set karaf.secured.command.compulsory.roles=admin in etc/system.properties (and restart) to make unmatched commands fail closed by default.
-
-Credit:
-
-Rin Ray <rindilray@...il.com> (reporter)
-
-References:
-
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-91085
 
