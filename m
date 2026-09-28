@@ -1,48 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/2
-Message-ID: <564003b7-396a-a744-18a6-fd06d2bd4d07@apache.org>
-Date: Mon, 28 Sep 2026 09:03:25 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/6
+Message-ID: <arpxQYDVantx_OC9@definition.pseudorandom.co.uk>
+Date: Mon, 28 Sep 2026 14:53:05 +0100
+From: Simon McVittie <smcv@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90979: Apache Karaf: LDAP filter injection in JAAS LDAP login modules
+Cc: flatpak@...ts.freedesktop.org
+Subject: Flatpak 1.18.4 fixes multiple security vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Flatpak 1.18.4 fixes several security vulnerabilties.
+<https://github.com/flatpak/flatpak/releases/tag/1.18.4>
+All older releases should be assumed to be vulnerable.
 
-Affected versions:
+>* Prevent privileged overwrite of arbitrary files with an empty file or a
+>  symlink to /run/host/monitor/resolv.conf when a malicious app is installed
+>  (CVE-2026-97024, GHSA-8xgq-v545-vgvf; thanks to Sebastian Wick)
+>
+>* Prevent privileged deletion of arbitrary files when a malicious app
+>  is installed
+>  (CVE-2026-97023, GHSA-5p67-xh8x-rq54; thanks to Sebastian Wick)
+>
+>* When downloading apps or runtimes from an OCI repository that requires
+>  authentication, don't make the authentication token visible to other users
+>  (CVE-2026-97025, GHSA-7rvf-rqr3-43j4; thanks to AISLE in cooperation
+>  with Red Hat)
+>
+>* Restrict permissions on temporary repository directories in
+>  /var/tmp/flatpak-cache-*
+>  (CVE-2026-97026, GHSA-r9w3-qx54-qvc8; thanks to AISLE in cooperation
+>  with Red Hat)
+>
+>* Filter .desktop and D-Bus .service files against an allowlist of fields,
+>  preventing denial of service and unintended interactions with host services
+>  (CVE-2026-97027, GHSA-v64f-hrwr-j4vh; thanks to Markus Göllnitz)
+>
+>* Prevent apps from sending signals to a process group that includes a
+>  parent process outside the app, causing denial of service by killing
+>  the desktop environment
+>  (CVE-2026-97029, GHSA-f3p8-vr7v-gxf2; thanks to Guthrie Armstrong,
+>  Coalition, Inc.)
 
-- Apache Karaf (org.apache.karaf.jaas.modules.ldap) before 4.4.12
+For more details please see the Github advisories linked from the 
+release announcement 
+<https://github.com/flatpak/flatpak/releases/tag/1.18.4>.
 
-Description:
+This release also improves hardening against symlink traversal (related 
+to CVE-2026-97023 and CVE-2026-97024), and updates the Meson wrap file 
+for xdg-dbus-proxy to a version that is not vulnerable to 
+CVE-2026-94422.
 
-LDAPCache and LDAPBackingEngine build LDAP search filters for user lookup and role lookup by textually substituting the placeholders %u, %dn, and %fqdn (drawn from the login name, the resolved user DN, and its fully qualified namespace form) into administrator-configured filter templates (userFilter, roleFilter). Before the fix, the only sanitization applied to the substituted value was double backslashed:
+If possible please upgrade to the latest stable release, 1.18.4. For 
+users of development prereleases, the 1.19.2 prerelease also fixes the 
+same vulnerabilities.
 
-filter = filter.replaceAll(Pattern.quote("%u"), Matcher.quoteReplacement(user));
+Older LTS operating system distributions might prefer to backport fixes
+to an older stable-branch. The 1.16.x branch is no longer supported by
+upstream and is unlikely to receive new formal releases, but backports
+of the applicable vulnerability fixes are included in the upstream git
+repository in the flatpak-1.16.x branch,
+https://github.com/flatpak/flatpak/commits/flatpak-1.16.x/ (for example
+those changes should appear in a Debian 13 security update soon).
 
-filter = filter.replace("\\", "\\\\");
-
-
-
-
-This does not escape the other characters RFC 4515 requires escaping in an LDAP search filter: *, (, ), and NUL. A login name containing any of these can change the structure of the resulting filter rather than being matched as a literal value (e.g. a crafted username can turn an equality match into a wildcard match, or close/reopen filter clauses), widening what the search returns and potentially causing a login or role lookup to match an LDAP entry other than the intended one, over-granting roles, and depending on deployment-specific filter templates, potentially affecting which account a login resolved to.
-
-
-
-
-It's not exploitable through every entry points: LDAPLoginModule and LDAPPubkeyLoginModule both called Util.doRFC2254Encoding() (correct RFC 4515 escaping) on the login name before handing it to LDAPCache, which masked the missing escaping in LDAPCache for those two call paths. Using LDAPCache directly (bypassing the login modules) does not reproduce through the normal LDAPLoginModule/LDAPPubkeyLoginModule authentication flow for this reason. It does reproduce through two other call paths that reach LDAPCache/LDAPBackingEngine without any prior escaping:
-
-  *  GSSAPILdapLoginModule passes the NameCallback name straight through, unescaped.
-  *  LDAPBackingEngine (listRoles) passes principal.getName() straight through, unescaped.
-
-This issue is being tracked as https://github.com/apache/karaf/pull/2880 
-
-Credit:
-
-Gjoko Krstic <gjoko@...oscience.mk> (reporter)
-
-References:
-
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-90979
-https://issues.apache.org/jira/browse/https://github.com/apache/karaf/pull/2880
-
+-- 
+Simon McVittie, Collabora Ltd. / Debian
