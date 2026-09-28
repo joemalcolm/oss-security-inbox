@@ -1,67 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/1
-Message-ID: <CADB963yW_1kdoNGF4TzQ7kiLQMourkMhF9rt_Wjo3G=c9=nPQQ@mail.gmail.com>
-Date: Mon, 28 Sep 2026 17:02:56 +0530
-From: Vyom Yadav <vyom.yadav@...onical.com>
-To: oss-security@...ts.openwall.com
-Subject: [kubernetes] CVE-2026-19444: kubectl cp path traversal on Windows allows arbitrary file writes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/28/14
+Message-ID: <a1f0c38b-5c22-4d1c-ada2-e1e63cc60124@cpansec.org>
+Date: Mon, 28 Sep 2026 17:10:19 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-85644: XS::Parse::Infix versions from 0.40 through 0.49 for Perl treat a number as an array reference
 Content-Type: text/plain; charset=utf-8
 
-Hello Kubernetes Community,
+========================================================================
+CVE-2026-85644                                       CPAN Security Group
+========================================================================
 
-A security issue was discovered in Kubernetes where a malicious tar binary
-in a container may be able to write files to arbitrary paths on the local
-machine of a user running kubectl cp on Windows, limited only by the
-permissions of the local user.
+         CVE ID:  CVE-2026-85644
 
-This issue has been rated *Medium* (CVSS calculator:
-https://www.first.org/cvss/calculator/3.1) (score 6.5), and assigned
-*CVE-2026-19444*.
+   Distribution:  XS-Parse-Keyword
+       Versions:  from 0.40 through 0.49
+       MetaCPAN:  https://metacpan.org/dist/XS-Parse-Keyword
 
-*Am I vulnerable?*
 
-You are affected if you run the kubectl client on Windows and use kubectl cp
-to copy files *from* a container whose contents you do not fully control.
-This issue only affects clients on Windows platforms; Linux and macOS
-clients are not affected.
+XS::Parse::Infix versions from 0.40 through 0.49 for Perl treat a
+number as an array reference
 
-To determine whether your kubectl client is an affected version, run:
-kubectl version --client
+Description
+-----------
+XS::Parse::Infix versions from 0.40 through 0.49 for Perl treat a
+number as an array reference.
 
-*Affected Versions*
+The wrapper function XS::Parse::Infix generates for a list-associative
+infix operator checks whether arguments are array references, but it
+tests using SvRV() rather than SvROK(). SvRV() reads a union slot that
+only holds a referent once SvROK(sv) is true, so the guard never
+validates that it is a reference. For an IV or NV that slot holds the
+number itself, SvRV() returns the caller's value and SvTYPE()
+dereferences it at offset 12. This will generally result in a
+segmentation fault.
 
-   - kubectl v1.34.0 to v1.34.11
-   - kubectl v1.35.0 to v1.35.8
-   - kubectl v1.36.0 to v1.36.4
+An application that hands the wrapper a list built from decoded input
+(for example, from JSON) lets whoever supplies a number in that list
+choose the address that the interpreter dereferences.
 
-*How do I mitigate this vulnerability?*
+An ordinary string's byte 12 is rarely SVt_PVAV so the guard croaks by
+luck, but an attacker-crafted string carrying 0x0b there passes, and
+the buffer is then used as an AV head, with AvARRAY taken from bytes
+16-23 and its entries pushed onto the Perl stack as live SVs.
 
-Prior to upgrading, this vulnerability can be mitigated by only copying
-files from containers you trust, or by avoiding kubectl cp from untrusted
-containers on Windows.
+A simple proof-of-concept uses the zip operator:
 
-*Fixed Versions*
+     use Syntax::Operator::Zip 'zip';
 
-   - kubectl >= v1.34.12
-   - kubectl >= v1.35.9
-   - kubectl >= v1.36.5
+     my @args = ([1], 2);
+     zip(@args);
 
-If you find evidence that this vulnerability has been exploited, please
-contact security@...ernetes.io
+Problem types
+-------------
+- CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
+- CWE-125 Out-of-bounds Read
 
-*Additional Details*
+Workarounds
+-----------
+For deployments that cannot upgrade, ensure that correct arguments
+(only array references where they are expected) are passed to
+list-associative operators that are defined with XS::Parse::Infix, such
+as those in Syntax::Operator::Zip.
 
-See the GitHub issue for more details:
-https://github.com/kubernetes/kubernetes/issues/141294
+Solutions
+---------
+Upgrade to XS-Parse-Keyword 0.50 or later.
 
-*Acknowledgements*
-
-This vulnerability was reported by Moriel Harush.
-
-The issue was fixed and coordinated by Marly Salazar, Maciej Szulik, and
-Vyom Yadav.
-
-Thank You,
-
-Vyom Yadav on behalf of the Kubernetes Security Response Committee
+References
+----------
+https://metacpan.org/release/PEVANS/XS-Parse-Keyword-0.50/changes
+https://metacpan.org/release/PEVANS/XS-Parse-Keyword-0.50/diff/PEVANS/XS-Parse-Keyword-0.49#src/infix.c
 
