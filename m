@@ -1,67 +1,82 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/2
-Message-ID: <87y0cl3vsz.fsf@gentoo.org>
-Date: Mon, 28 Sep 2026 22:33:48 +0100
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/4
+Message-ID: <CAAoVtZzeTEWoAX3QALt-GL=b3KA4nA477DfhQW=gHGO+vZEoCw@mail.gmail.com>
+Date: Tue, 29 Sep 2026 04:26:38 +0300
+From: Cosmin Truta <ctruta@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: JIT buffer overflow fixed in libpcre2-10.49
+Subject: libpng 1.6.59: Use-after-free vulnerability fixed: CVE-2026-46675
 Content-Type: text/plain; charset=utf-8
 
-From https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.49
-"""
-This is a security-only release, to address GHSA-r9hj-j2rw-4q3m.
+Hello, everyone,
 
-Compared to 10.48, this release has only a minimal code change to
-prevent an out-of-bounds write with arbitrary data. An
-attacker-controlled regular expression is required. Applications are
-affected only when they use pcre2_jit_stack_create() and
-pcre2_jit_stack_assign() to provide a growable JIT stack, then match a
-pattern with unusually high JIT stack usage, such as one containing a
-large number of capturing groups.
+libpng 1.6.59 has been released, fixing a medium-severity
+use-after-free vulnerability in the sequential reader, present since
+libpng 1.6.0. It affects applications that call png_read_end without
+first starting to read the image rows.
 
-The implications of an out-of-bounds write could include arbitrary code
-execution.
+Users should either upgrade to libpng 1.6.59 or apply the fix
+described below.
 
-The issue is not a regression and affects releases 10.48 and
-earlier. Users should upgrade to 10.49. Backport patches for supported
-earlier releases are listed in SUPPORT-LIFECYCLE.md.
+=== CVE-2026-46675 ===
 
-This release is available as a signed Git tag, or alternatively as a
-signed tarball of the Git tag (attestation).
-"""
+Use-after-free of zlib input in png_read_end after incomplete zTXt,
+iTXt or iCCP decompression
 
-My default response to these is always "OK, how realistic is
-attacker-controlled $X?", but libpcre2's maintainers are quite sensible,
-and indeed, reading the advisory [0], it had some interesting detail.
+Security advisory:
+https://github.com/pnggroup/libpng/security/advisories/GHSA-qvg3-h654-xq3j
 
-Quoting just a bit of that:
-"""
-Summary
+Fix:
+https://github.com/pnggroup/libpng/commit/aa77ef38c17ab2fc1b41bec09fb973c6a386641d
 
-Maintainer note: This vulnerability is not specific to phpMyAdmin, and may affect other PHP software, and other software using PCRE2.
+CVSS 3.1: 5.9 (Medium) - CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H
+CWE: CWE-416 (Use After Free), CWE-825 (Expired Pointer Dereference)
+Affected: libpng 1.6.0 through 1.6.58
+Fixed: libpng 1.6.59
 
-While testing phpMyAdmin 5.2.3, I developed a lab proof of concept that
-achieved command execution through phpMyAdmin's use of an attacker-controlled
-regular expression. Root-cause analysis of the memory corruption led to an
-independent vulnerability in the PCRE2 8-bit JIT.
+A crafted zTXt, iTXt or iCCP chunk can make libpng abandon
+decompression while zlib still expects more input: for example, with
+an invalid window size in the zlib header, with decompressed data too
+large for libpng to accept, or with an ICC profile that fails
+validation. The chunk handlers released the zlib stream without
+clearing its input pointer and count. If the application then calls
+png_read_end after png_read_info, without first starting to read the
+image rows, png_read_end resumes decompression from that stale
+pointer instead of reading the IDAT data.
 
-An attacker-controlled pattern can make the JIT write below its stack mapping.
-The escaped writes can corrupt a separate allocation and include pointers into
-the attacker-controlled subject buffer.
+- zTXt and iTXt: the pointer refers to libpng's chunk read buffer,
+  which a later, larger chunk before IDAT (tEXt or pCAL, for example)
+  frees and reallocates; the read is a heap use-after-free.
+- iCCP: the pointer refers to local arrays of png_handle_iCCP; the
+  read is a stack use-after-return.
 
-I reproduced the issue with clean official PCRE2 10.48 builds on
-Linux/AArch64, macOS/ARM64, and macOS/x86_64 under Rosetta. The same stack
-boundary failure is also present in PCRE2 10.42 with an earlier trigger. I have
-not identified the first affected release or tested other JIT backends.
-"""
+Impact:
+- The dangling pointer is only read, and the decompressed bytes go to
+  a scratch buffer that is discarded, so no data is disclosed or
+  corrupted.
+- The worst outcome is a crash in the heap variant, when the freed
+  memory is no longer mapped at the time of the read.
+- The affected call sequence is rare in practice: png_read_end called
+  this way parses the unread image data as chunks, and fails with a
+  libpng error on well-formed files; the stale read happens before
+  that error.
 
-[I'm reluctant to just paste the whole advisory text from my browser but
-haven't looked to see if there's a convenient way to get a plaintext
-advisory from GHSAs, like GitHub supports for PRs & commits (.patch +
-.diff). If someone is aware of such a way, let me know please!]
+Workaround:
+Do not call png_read_end when the image rows are not read. If the
+chunks after the image data are needed, call png_start_read_image
+before png_read_end. Whether upgraded or not, applications that call
+png_read_end without reading the image rows should be prepared to
+handle a libpng error from it.
 
-[0] https://github.com/PCRE2Project/pcre2/security/advisories/GHSA-r9hj-j2rw-4q3m
+Credits:
+- Ze Sheng, O2Lab and AISLE
+- @JasonHonKL (independent report of the iCCP variant)
 
-sam
+=== References ===
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+- Release: https://github.com/pnggroup/libpng/releases/tag/v1.6.59
+- Independent report: https://github.com/pnggroup/libpng/issues/855
+- libpng homepage: http://www.libpng.org/pub/png/libpng.html
+
+---
+Cosmin Truta
+libpng maintainer
