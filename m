@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/33
-Message-ID: <8dfd7223-113b-fdc8-8f71-2bf6f3a700b3@apache.org>
-Date: Tue, 29 Sep 2026 18:06:55 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/34
+Message-ID: <2e4af329-a6b9-978d-405e-83d37696c608@apache.org>
+Date: Tue, 29 Sep 2026 18:07:39 +0000
 From: Thomas Wolf <twolf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-93994: Apache MINA SSHD: Repeated-publickey policy bypass on server 
+Subject: CVE-2026-93995: Apache MINA SSHD: Remote execution of JGit "archive -o=file.zip" can write file on the server 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
-    CVSS 3.1: 8.1 (high) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N
+Severity: moderate 
+    CVSS 3.1: 6.5 (medium) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N
 
 Affected versions:
 
@@ -17,14 +17,20 @@ Affected versions:
 
 Description:
 
-Apache MINA SSHD is a Java library for client-side and server-side SSH. SSH servers can be configured to require multi-authentication schemes, for instance two different public keys, not just one. In OpenSSH, this would be done by setting in sshd_config AuthenticationMethods "publickey,publickey". Apache MINA SSHD provides an equivalent configuration mechanism.
+Improper input validation in sshd-git in Apache MINA SSHD, versions up to 2.19.0 and 3.0.0-M1 to 3.0.0-M5. Apache 
+MINA SSHD is a Java library for client-side and server-side SSH.
 
 
 
 
-In Apache MINA SSHD versions up to 2.19.0 and 3.0.0-M1 to 3.0.0-M5 the server code in component sshd-core does not enforce that the two public keys presented are different. A user can thus successfully authenticate with only one of the two key pairs required by presenting this single key twice. This is a partial authentication bypass.
+Component org.apache.sshd:sshd-git provides though class GitPgmCommandFactory a way to configure an Apache MINA SSHD server such 
+that authenticated SSH clients can remotely execute git commands via the JGit library 
+on git repositories stored on the server. In CVE-2026-58624 this mechanism was restricted to only a few git commands, including "git archive" without "--output" or "-o" options such that the resulting archive would not be written on the server but instead sent back to the client over the SSH connection.
 
 
+
+
+The fix done for CVE-2026-58624 was insufficient as it missed removing the single-argument "-o=file.zip" version of the command parameter from the "archive" command.
 
 
 
@@ -33,10 +39,10 @@ Users are recommended to upgrade to version 2.20.0 or 3.0.0-M6, which fix this i
 
 Credit:
 
-Abhishek Kushwaha (finder)
+Ho1aAs <xxy010605@...il.com> (finder)
 
 References:
 
 https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-93994
+https://www.cve.org/CVERecord?id=CVE-2026-93995
 
