@@ -1,46 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/18
-Message-ID: <aru6MwcXY0NMwMey@netmeister.org>
-Date: Tue, 29 Sep 2026 09:16:35 -0400
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/15
+Message-ID: <de033805-c3fa-ce6a-541b-bae6d1df662e@apache.org>
+Date: Tue, 29 Sep 2026 11:02:57 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: "several" CVEs in latest Debian linux security advisory DSA 6528-1
+Subject: CVE-2026-102495: Apache XMLSchema: Denial of service through unbounded recursion when resolving schema imports and includes 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: low 
 
-https://lists.debian.org/debian-security-announce/2026/msg00441.html
-notes that:
+Affected versions:
 
-"Several vulnerabilities have been discovered in the
-Linux kernel that may lead to a privilege escalation,
-denial of service or information leaks."
+- Apache XMLSchema before 2.3.3
 
-Where "several" is a list of 1,313 CVE IDs.
+Description:
 
-I understand that this is a result of the Linux kernel
-team assigning a CVE ID for virtually any change
-combined with the onslaught of AI assisted findings,
-but I think a security advisory of this sort serves no
-meaningful purpose and illustrates the argument that
-it's pointless for defenders to attempt to track and
-assess individual vulnerabilities.
+Apache XmlSchema doesn't limit how deeply schema imports and includes can be nested, so a malicious schema can make parsing recurse until the stack overflows. This causes a denial of service.
+Users are recommended to upgrade to version 2.3.3, which fixes this issue.
 
-At the same time, automatically and frequently pulling
-and applying all updates without scrutiny isn't really
-an option for large scale, multi-purpose environments
-either -- many of the vulnerabilities will not apply
-to them at all, and the churn may introduce other
-problems.
+Credit:
 
-The only reasonable approach I see is to hunker down,
-do all the basics that should have been done before
-(disable unused modules, don't use containers as a
-reliable security boundary, reduce attack surface,
-...), but at this point I've come to believe that
-multi-user linux systems may effectively no longer be
-viable, as a LPE ought to be assumed.
+This issue was found using Claude agents to study the security of open-source projects (finder)
 
-I don't know how everybody else approaches this shift.
+References:
 
--Jan
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-102495
+
