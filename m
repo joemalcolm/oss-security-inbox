@@ -1,68 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/1
-Message-ID: <CAOnRL-WBJFx70z-_aCbnyRWvAgUkxvcJPmqQ-YAcsLzuT=L7Dw@mail.gmail.com>
-Date: Mon, 28 Sep 2026 22:34:55 +0500
-From: Muhammad Arslan Official <arslanqofficial@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/13
+Message-ID: <60d0a35b-4c29-2048-5cfc-c0cabfc05469@apache.org>
+Date: Tue, 29 Sep 2026 08:49:33 +0000
+From: Shahar Epstein <shahar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Moodle LMS 3.9.2: authenticated file-upload validation bypass (CWE-434) leading to RCE under misconfiguration
+Subject: CVE-2026-81914: Apache Airflow Google provider: Google Drive query injection via unescaped file and folder names 
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Severity: low 
 
-I am disclosing a vulnerability in Moodle LMS and requesting a CVE ID, as
-the
-vendor (a registered CNA) has not assigned one after coordinated disclosure,
-and a MITRE CNA-LR request (CAN-2026-2032565) has been under review for ~3
-months without response.
+Affected versions:
 
-Product: Moodle LMS
-Confirmed version: 3.9.2 (other versions not yet verified)
-Class: CWE-434 / CWE-20 - Unrestricted file upload / improper input
-validation
-Privilege required: authenticated, Student-level account
-Vendor status: reported via Bugcrowd 2025-08-31, triaged P3 (2025-09-06);
-vendor acknowledged the behaviour but has not assigned a CVE or committed
-to a
-code fix.
+- Apache Airflow Google provider before 22.6.0
 
-Summary
--------
-The user profile picture upload is intended to accept images only and
-enforces
-this through multiple server- and client-side validation layers. All of
-these
-can be bypassed, allowing an authenticated Student-level user to store a
-non-image, server-executable file (a PHP web shell). The bypass combines a
-spoofed Content-Type, a non-image executable extension, a valid image magic-
-byte header prepended to the payload, and manipulation of the client-side
-accepted_types control.
+Description:
 
-Impact
-------
-The validation bypass (a code-level defect) is independent of server config.
-Where the Moodle data directory (moodledata) is located inside the web root
--
-a configuration Moodle documents as forbidden but which occurs in practice -
-the stored file is directly reachable and executes, resulting in remote code
-execution in the web-server context. Even in hardened configurations, the
-stored payload is a durable chaining primitive for any file-inclusion flaw.
+Apache Airflow's Google provider built Google Drive search expressions by interpolating file and folder names directly into single-quoted string literals, without escaping the quote character that delimits them. A name containing an apostrophe therefore terminated the literal early and appended clauses of the attacker's choosing to the query.
 
-Disclosure timeline
--------------------
-2025-08-31  Reported to vendor via Bugcrowd
-2025-09-06  Triaged and accepted P3 by Bugcrowd
-2025-11 to 2026-05  Vendor technical discussion; no fix commitment, no CVE
-2026-06-27  MITRE CNA-LR request filed (CAN-2026-2032565) - still under
-review
-2026-09     Public disclosure via this post
+The names are frequently not written by the Dag author. In a wildcard `gcs_to_gdrive` transfer they come from the source bucket listing, so anyone able to create objects in that bucket controls them — typically an external data producer or an ingest-only service account, a different trust principal from the Dag author. An injected clause can broaden the match and so steer which file or folder the hook resolves: an upload can be directed into a folder the attacker named, and, because downloads select the most recently modified match, a download can return a file they placed rather than the one the Dag asked for.
 
-I am withholding the full step-by-step exploit chain and PoC here, since no
-patch exists, but can provide complete technical documentation (intercepted
-requests, reproduction steps, command-execution evidence) to coordinators or
-the vendor on request.
+Affects deployments passing externally-sourced names to the Google Drive hook, including wildcard `gcs_to_gdrive` transfers from buckets writable by less-trusted principals. Users are advised to upgrade to `apache-airflow-providers-google` `22.6.0` or later, which escapes quote and backslash characters in every value interpolated into a Drive query.
 
-Requesting a CVE ID for this issue.
+Credit:
 
-Regards,
-Muhammad Arslan Qureshi (unlitshadow)
+Claude Security Scans (tool)
+Jarek Potiuk (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/72166
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-81914
 
