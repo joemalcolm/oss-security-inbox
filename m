@@ -1,83 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/10
-Message-ID: <179067069848.3669815.17711523371311619649@notcve.org>
-Date: Tue, 29 Sep 2026 10:31:38 +0200
-From: advisories@...cve.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/5
+Message-ID: <CAH+3ta4aLo9vfn9a+ER4iLy_hgpuJDXy0YziEodsotaVtHJofg@mail.gmail.com>
+Date: Tue, 29 Sep 2026 16:00:52 +0900
+From: Jinu Kim <kimjw04271234@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [NotCVE-2026-0019] game-music-emu through 0.6.5 VGM Command Interpreter Missing Operand Length Check Allows Heap Out-of-Bounds Read
+Subject: Linux KVM/x86 (tested on 6.1.74): guest-triggered host panic via SMM shadow MMU
 Content-Type: text/plain; charset=utf-8
 
-----------------------------------------------------------------------------
-NotCVE Advisory — NotCVE-2026-0019
-----------------------------------------------------------------------------
+Hello,
 
-[-] Summary:
-An out-of-bounds read in the VGM command interpreter of game-music-emu
-(libgme), the open-source video game music emulation library, allows an
-attacker who supplies a crafted .vgm or .vgz file to read heap memory past
-the end of the buffer holding the file. The read happens as soon as
-playback begins. CVSS:3.1 5.4 (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L).
+I found a guest-triggerable host-kernel panic in KVM's x86 shadow MMU. I
+reproduced it on Linux 6.1.74 and on pre-fix mainline. An attacker with
+kernel-level control of an L1 guest can reach it; my reproducer uses nested
+VMX/EPT, Q35 SMM, and two vCPUs.
 
-[-] Affected:
-game-music-emu (libgme) through 0.6.5 (present in 0.6.0, 0.6.3 and 0.6.5),
-and master as of commit fe8da4b. Default builds; no fixed version is
-verified.
+Q35 compatibility SMRAM lets the normal and SMM KVM address spaces access
+the same backing guest page. KVM write-tracks a nested-EPT page directory
+in its normal-address-space memslot. On a write through SMM,
+mmu_try_to_unsync_pages() checks only the SMM memslot for write tracking,
+but then searches the VM-wide shadow-page hash. It consequently marks the
+normal address space's level-2 shadow page unsync, although the sync path
+expects unsync pages to be level 1.
 
-[-] Technical Description:
-The command loop of Vgm_Emu_Impl::run_commands() (gme/Vgm_Emu_Impl.cpp) is
-bounded only by
+The reproducer shadows the EPT directory in the normal address space,
+changes an entry through an SMI handler in SMM, and reuses the directory
+under another EPT root. When KVM later synchronizes that upper-level shadow
+page, it treats a non-leaf SPTE as a leaf. drop_spte() takes the leaf
+reverse-map removal path, and pte_list_remove() executes BUG() because
+that reverse map does not own the SPTE. On the tested 6.1.74 host this
+ends in a fatal kernel panic:
 
-  while ( vgm_time < end_time && pos < data_end )
+    WARNING: mmu_try_to_unsync_pages
+    WARNING: ept_sync_page
+    RIP: pte_list_remove
+    Kernel panic - not syncing: Fatal exception
 
-which validates the position of the opcode byte and nothing else. Each
-opcode handler then fetches its operands from pos unconditionally. The
-source records the gap in a TODO at the loop head: "be sure there are
-enough bytes left in stream for particular command so we don't read past
-end".
+The bug was introduced by commit 699023e23965 ("KVM: x86: add SMM to the
+MMU role, support SMRAM address space"). Upstream commit 0f38453cdb2e
+checks write tracking in both x86 address spaces and is included in
+v7.2. The adapted 6.1.y backport is commit 09aa68552d25, included
+in v6.1.187. The companion upstream commit 2e8a2c1b0306 fixes a newer
+hugepage fast-path check; that fast path is not present in 6.1.74.
 
-When a command stream ends right after an opcode byte, the operand fetch
-crosses the end of the allocation made by Gme_File::load_(). Maximum
-over-read per handler:
+Upstream fix:
+https://github.com/torvalds/linux/commit/0f38453cdb2e17566ccb7c0f3dabd5bd21caca26
 
-  - PSG and Game Gear register writes (*pos++): 1 byte
-  - 16-bit delay 0x61 (pos[0], pos[1]): up to 2 bytes
-  - YM2413 and YM2612 register writes: up to 2 bytes
-  - PCM seek 0xE0 (pos[0] .. pos[3]): up to 4 bytes
-  - data block header 0x67 (pos[1], get_le32( pos + 2 )): up to 6 bytes
+6.1.y backport:
+https://github.com/gregkh/linux/commit/09aa68552d2542cc6c23edd1568ac265dc5d886f
 
-The bytes read are consumed as sound-chip register data, so adjacent heap
-contents can influence the decoded audio (limited, indirect disclosure).
-AddressSanitizer aborts on the over-read; the researcher's two
-proof-of-concept files reproduce it at two sites (a trailing 0x50 PSG
-write and a trailing 0x67 data block header). Under a standard allocator a
-read of this size normally stays within the same chunk, so a crash is
-layout-dependent rather than reliable. No write, length control or code
-execution is shown.
-
-Reachability: VGM/VGZ support is in the default build. FFmpeg's
-libavformat/libgme.c calls gme_open_data() and then gme_start_track()
-inside read_header_gme(), so a server-side transcoder reaches the defect
-while merely reading a file's header. VLC exposes the library through its
-gme demux module, which handles VGM and VGZ.
-
-Weaknesses:
-CWE-125: Out-of-bounds Read
-CWE-126: Buffer Over-read
-CAPEC-540: Overread Buffers
-
-[-] Credit:
-Discovered by netspacer1124 (https://github.com/netspacer1124).
-
-[-] Full Details and Updates:
-https://notcve.org/notcve/NotCVE-2026-0019
-
-[-] Main References:
-https://github.com/libgme/game-music-emu
-https://raw.githubusercontent.com/libgme/game-music-emu/0.6.5/gme/Vgm_Emu_Impl.cpp
-https://ffmpeg.org/doxygen/5.1/libgme_8c_source.html
-
-[-] About NotCVE:
-NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
-vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
-Request a NotCVE: https://notcve.org/form/ · Contributors:
-https://notcve.org/hall/
+Regards,
+Jinu Kim
