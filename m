@@ -1,82 +1,76 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/4
-Message-ID: <CAAoVtZzeTEWoAX3QALt-GL=b3KA4nA477DfhQW=gHGO+vZEoCw@mail.gmail.com>
-Date: Tue, 29 Sep 2026 04:26:38 +0300
-From: Cosmin Truta <ctruta@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/8
+Message-ID: <179067044684.3667765.7808481475513690258@notcve.org>
+Date: Tue, 29 Sep 2026 10:27:26 +0200
+From: advisories@...cve.org
 To: oss-security@...ts.openwall.com
-Subject: libpng 1.6.59: Use-after-free vulnerability fixed: CVE-2026-46675
+Subject: [NotCVE-2026-0017] game-music-emu (libgme) 0.6.5 and Earlier AY Loader NULL Pointer Dereference Allows Denial of Service
 Content-Type: text/plain; charset=utf-8
 
-Hello, everyone,
+----------------------------------------------------------------------------
+NotCVE Advisory — NotCVE-2026-0017
+----------------------------------------------------------------------------
 
-libpng 1.6.59 has been released, fixing a medium-severity
-use-after-free vulnerability in the sequential reader, present since
-libpng 1.6.0. It affects applications that call png_read_end without
-first starting to read the image rows.
+[-] Summary:
+A NULL pointer dereference in the AY file loader of game-music-emu
+(libgme), the open-source video game music emulation library, allows an
+attacker who supplies a crafted .ay file to terminate any application that
+begins playback of it. CVSS:3.1 6.5 (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H).
 
-Users should either upgrade to libpng 1.6.59 or apply the fix
-described below.
+[-] Affected:
+game-music-emu (libgme) 0.6.5 and earlier (present in 0.6.0 and 0.6.5),
+and master as of commit fe8da4b. Default builds; no fixed version is
+verified.
 
-=== CVE-2026-46675 ===
+[-] Technical Description:
+get_data() resolves the format's internal 16-bit relative offsets and
+returns 0 when an offset word is 0x0000, as well as when the target would
+fall outside the file buffer. The data-block copy loop in
+Ay_Emu::start_track_() (gme/Ay_Emu.cpp) uses that result without testing
+it:
 
-Use-after-free of zlib input in png_read_end after incomplete zTXt,
-iTXt or iCCP decompression
+  - the block's source pointer comes from get_data( file, blocks, 0 ) and
+    is never compared against NULL;
+  - the only guard before the copy, if ( len > uint32_t (file.end - in) ),
+    compares len against the low 32 bits of the buffer's end address when
+    in == NULL, so it does not reliably clamp;
+  - execution reaches memcpy( mem.ram + addr, in, len ) with in == NULL.
 
-Security advisory:
-https://github.com/pnggroup/libpng/security/advisories/GHSA-qvg3-h654-xq3j
+The process terminates with SIGSEGV. The invalid access is a read from
+address 0, so no attacker-controlled data is read or written; the impact
+is denial of service of the process that parses the file.
 
-Fix:
-https://github.com/pnggroup/libpng/commit/aa77ef38c17ab2fc1b41bec09fb973c6a386641d
+Reachability: the AY handler is part of a default build
+(option(USE_GME_AY ... ON)) and is reached from the public entry point
+gme_start_track() via Music_Emu::start_track(). The condition is a
+two-byte field in an otherwise structurally valid file, so it survives
+type detection and track enumeration. FFmpeg documents optional use of the
+library; the researcher additionally names VLC, Kodi and Audacious as
+consumers.
 
-CVSS 3.1: 5.9 (Medium) - CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H
-CWE: CWE-416 (Use After Free), CWE-825 (Expired Pointer Dereference)
-Affected: libpng 1.6.0 through 1.6.58
-Fixed: libpng 1.6.59
+Commit ae10a8f ("Ay_Emu.cpp: Don't read farther than buffer allows",
+July 2026) changed get_data() to return 0 instead of asserting when the
+pointer is out of range. That widens the set of inputs that produce a NULL
+return in release builds and does not add the missing check.
 
-A crafted zTXt, iTXt or iCCP chunk can make libpng abandon
-decompression while zlib still expects more input: for example, with
-an invalid window size in the zlib header, with decompressed data too
-large for libpng to accept, or with an ICC profile that fails
-validation. The chunk handlers released the zlib stream without
-clearing its input pointer and count. If the application then calls
-png_read_end after png_read_info, without first starting to read the
-image rows, png_read_end resumes decompression from that stale
-pointer instead of reading the IDAT data.
+Weaknesses:
+CWE-476: NULL Pointer Dereference
+CWE-252: Unchecked Return Value
+CAPEC-165: File Manipulation
 
-- zTXt and iTXt: the pointer refers to libpng's chunk read buffer,
-  which a later, larger chunk before IDAT (tEXt or pCAL, for example)
-  frees and reallocates; the read is a heap use-after-free.
-- iCCP: the pointer refers to local arrays of png_handle_iCCP; the
-  read is a stack use-after-return.
+[-] Credit:
+Discovered by netspacer1124 (https://github.com/netspacer1124).
 
-Impact:
-- The dangling pointer is only read, and the decompressed bytes go to
-  a scratch buffer that is discarded, so no data is disclosed or
-  corrupted.
-- The worst outcome is a crash in the heap variant, when the freed
-  memory is no longer mapped at the time of the read.
-- The affected call sequence is rare in practice: png_read_end called
-  this way parses the unread image data as chunks, and fails with a
-  libpng error on well-formed files; the stale read happens before
-  that error.
+[-] Full Details and Updates:
+https://notcve.org/notcve/NotCVE-2026-0017
 
-Workaround:
-Do not call png_read_end when the image rows are not read. If the
-chunks after the image data are needed, call png_start_read_image
-before png_read_end. Whether upgraded or not, applications that call
-png_read_end without reading the image rows should be prepared to
-handle a libpng error from it.
+[-] Main References:
+https://github.com/libgme/game-music-emu
+https://github.com/libgme/game-music-emu/blob/0.6.5/gme/Ay_Emu.cpp
+https://github.com/libgme/game-music-emu/commit/ae10a8f
 
-Credits:
-- Ze Sheng, O2Lab and AISLE
-- @JasonHonKL (independent report of the iCCP variant)
-
-=== References ===
-
-- Release: https://github.com/pnggroup/libpng/releases/tag/v1.6.59
-- Independent report: https://github.com/pnggroup/libpng/issues/855
-- libpng homepage: http://www.libpng.org/pub/png/libpng.html
-
----
-Cosmin Truta
-libpng maintainer
+[-] About NotCVE:
+NotCVE (https://notcve.org) assigns public, timestamped NotCVE IDs to
+vulnerabilities not acknowledged by vendors. Vendor will not assign a CVE?
+Request a NotCVE: https://notcve.org/form/ · Contributors:
+https://notcve.org/hall/
