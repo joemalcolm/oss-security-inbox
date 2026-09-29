@@ -1,26 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/29
-Message-ID: <ad23fa61-30cf-4c2f-93de-0be84d728330@oracle.com>
-Date: Tue, 29 Sep 2026 09:53:01 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/24
+Message-ID: <a00107ab-d617-b0a2-f04e-8a835ada445e@apache.org>
+Date: Tue, 29 Sep 2026 11:27:51 +0000
+From: Wenjun Ruan <wenjun@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Moodle LMS 3.9.2: authenticated file-upload validation bypass (CWE-434) leading to RCE under misconfiguration
+Subject: CVE-2026-81569: Apache DolphinScheduler: Improper Authorization in Sub-Workflow Tasks Allows Unauthorized Workflow Execution 
 Content-Type: text/plain; charset=utf-8
 
-On 9/28/26 10:34, Muhammad Arslan Official wrote:
-> I am disclosing a vulnerability in Moodle LMS and requesting a CVE ID, as
-> the
-> vendor (a registered CNA) has not assigned one after coordinated disclosure,
-> and a MITRE CNA-LR request (CAN-2026-2032565) has been under review for ~3
-> months without response.
+Severity: moderate 
 
-oss-security is not a CNA and cannot issue CVE IDs.  Before 2017, the
-MITRE CNA-LR used to accept CVE requests via this mailing list, but they
-stopped in 2017 and redirected people to their web forms instead [1], so
-this has never been a way to bypass MITRE to get a CVE assignment.
+Affected versions:
 
-[1] https://www.openwall.com/lists/oss-security/2017/02/09/7
+- Apache DolphinScheduler (org.apache.dolphinscheduler:dolphinscheduler-api) before 3.4.3
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+Description:
+
+An improper authorization vulnerability exists in the handling of sub-workflow tasks. An authenticated user who does not have permission to access a target project can reference and invoke a workflow belonging to that project through a sub-workflow task.
+
+
+
+The system does not properly verify whether the user has permission to execute the referenced workflow or access its project. As a result, the user can bypass project-level authorization controls and cause workflows in unauthorized projects to be executed.
+
+
+
+Successful exploitation may allow unauthorized execution of workflow tasks and access to the resources or data available to the target workflow.
+
+
+
+This issue affects Apache DolphinScheduler: before 3.4.3.
+
+
+
+Users are recommended to upgrade to version 3.4.3, which fixes the issue.
+
+This issue is being tracked as CWE-863 Incorrect Authorization 
+
+Credit:
+
+Meng Qingwei (finder)
+
+References:
+
+https://dolphinscheduler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-81569
+https://issues.apache.org/jira/browse/CWE-863 Incorrect Authorization
+
