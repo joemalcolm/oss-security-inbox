@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/31
-Message-ID: <arvwp6gKyUBDbFWK@horn.ics.muni.cz>
-Date: Tue, 29 Sep 2026 19:08:55 +0200
-From: Zdenek Salvet <salvet@....muni.cz>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/40
+Message-ID: <c1719aaa-1b58-49a7-82b8-78b5f56437e6@oracle.com>
+Date: Tue, 29 Sep 2026 13:05:50 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "several" CVEs in latest Debian linux security advisory DSA 6528-1
+Subject: CPython [CVE-2026-12345] Race condition in tempfile.TemporaryDirectory cleanup allows deleting files outside the temporary directory
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Sep 29, 2026 at 09:16:35AM -0400, Jan Schaumann wrote:
-> Where "several" is a list of 1,313 CVE IDs.
-> 
-> I understand that this is a result of the Linux kernel
-> team assigning a CVE ID for virtually any change
-> combined with the onslaught of AI assisted findings,
-> but I think a security advisory of this sort serves no
-> meaningful purpose and illustrates the argument that
-> it's pointless for defenders to attempt to track and
-> assess individual vulnerabilities.
 
-Hello,
-I think the number also reflects Debian maintainers' effor
-to avoid too much churn...  You check Debian changelog
-to select issues most relevant to your environment reasonably
-quickly (in couple hours :-( )
 
-> (disable unused modules, don't use containers as a
-> reliable security boundary, reduce attack surface,
-> ...), but at this point I've come to believe that
-> multi-user linux systems may effectively no longer be
-> viable, as a LPE ought to be assumed.
 
-Nothing is 100% secure, I hope we will run out of the most serious 
-vulnerabilities soon at this pace...
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-12345] Race condition in 
+tempfile.TemporaryDirectory cleanup allows deleting files outside the temporary 
+directory
+Date: 	Tue, 29 Sep 2026 18:28:51 +0100
+From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
+CC: 	Stan Ulbrych <stanulbrych@...il.com>
 
-Regards,
-Zdenek Salvet                                              salvet@....muni.cz 
-Institute of Computer Science of Masaryk University, Brno, Czech Republic
-and CESNET, z.s.p.o., Prague, Czech Republic
-Phone: ++420-549 49 6534                           Fax: ++420-541 212 747
-----------------------------------------------------------------------------
-      Teamwork is essential -- it allows you to blame someone else.
+There is a MEDIUM severity vulnerability affecting CPython.
 
+The cleanup of tempfile.TemporaryDirectory is vulnerable to a race condition. An 
+attacker who can modify the tree during cleanup can replace a directory with a 
+symbolic link, causing files outside of the temporary directory to be deleted or 
+have their permissions and file flags reset, with the privileges of the process 
+performing the cleanup.
+
+Note that platforms where shutil.rmtree.avoids_symlink_attacks is false, remain 
+affected, and file flags may still be reset outside of the tree on all platforms.
+
+Please see the linked CVE ID for the latest information on affected versions:
+
+* https://www.cve.org/CVERecord?id=CVE-2026-12345
+* https://github.com/python/cpython/pull/157580
+
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
