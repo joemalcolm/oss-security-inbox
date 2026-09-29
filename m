@@ -1,48 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/34
-Message-ID: <2e4af329-a6b9-978d-405e-83d37696c608@apache.org>
-Date: Tue, 29 Sep 2026 18:07:39 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/32
+Message-ID: <deb8726f-12be-c45d-9d70-b501edd25a14@apache.org>
+Date: Tue, 29 Sep 2026 18:06:15 +0000
 From: Thomas Wolf <twolf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-93995: Apache MINA SSHD: Remote execution of JGit "archive -o=file.zip" can write file on the server 
+Subject: CVE-2026-77185: Apache MINA SSHD: Asynchronous authentication can bypass signature verification 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
-    CVSS 3.1: 6.5 (medium) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N
+Severity: critical 
+    CVSS 3.1: 9.1 (critical) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N
 
 Affected versions:
 
-- Apache MINA SSHD before 2.20.0
-- Apache MINA SSHD 3.0.0-M1 before 3.0.0-M6
+- Apache MINA SSHD (org.apache.sshd:sshd-core) 2.0.0 before 2.20.0
+- Apache MINA SSHD (org.apache.sshd:sshd-core) 3.0.0-M1 before 3.0.0-M6
 
 Description:
 
-Improper input validation in sshd-git in Apache MINA SSHD, versions up to 2.19.0 and 3.0.0-M1 to 3.0.0-M5. Apache 
-MINA SSHD is a Java library for client-side and server-side SSH.
+Authentication bypass in sshd-core in Apache MINA SSHD versions 2.0.0 to 2.19.0 and 3.0.0-M1 to 3.0.0-M5 for a certain (presumed rare) way to implement an SSH server.
 
 
 
 
-Component org.apache.sshd:sshd-git provides though class GitPgmCommandFactory a way to configure an Apache MINA SSHD server such 
-that authenticated SSH clients can remotely execute git commands via the JGit library 
-on git repositories stored on the server. In CVE-2026-58624 this mechanism was restricted to only a few git commands, including "git archive" without "--output" or "-o" options such that the resulting archive would not be written on the server but instead sent back to the client over the SSH connection.
+Apache MINA SSHD is a Java library for client- and server-side SSH. In the server part of the library, a mechanism to perform "asynchronous authentication" exists. A server implemented with Apache MINA SSHD must contain explicit code to make use of this feature. The implementation of this feature was flawed and could potentially lead to skipping checking the signature in public-key or hostbased authentication, or returning a wrong result.
 
 
 
 
-The fix done for CVE-2026-58624 was insufficient as it missed removing the single-argument "-o=file.zip" version of the command parameter from the "archive" command.
-
-
-
-
-Users are recommended to upgrade to version 2.20.0 or 3.0.0-M6, which fix this issue.
+Users are recommended to upgrade to Apache MINA SSHD 2.20.0 or 3.0.0-M6, which fix the logic error and which additionally forbid the use of this "asynchronous authentication" mechanism with the public-key or hostbased authentication schemes: if used, the SSH session will be closed and the server will log an entry indicating that asynchronous authentication may be used only with password or keyboard-interactive authentication.
 
 Credit:
 
-Ho1aAs <xxy010605@...il.com> (finder)
+Chris Jarret-Davies, OpenAI Security Research Team (finder)
 
 References:
 
 https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-93995
+https://www.cve.org/CVERecord?id=CVE-2026-77185
 
