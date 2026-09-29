@@ -1,41 +1,26 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/22
-Message-ID: <0cb45ea3-c3bf-9126-4487-4a2e6d366f4e@apache.org>
-Date: Tue, 29 Sep 2026 11:27:15 +0000
-From: Wenjun Ruan <wenjun@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/29
+Message-ID: <ad23fa61-30cf-4c2f-93de-0be84d728330@oracle.com>
+Date: Tue, 29 Sep 2026 09:53:01 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-71899: Apache DolphinScheduler: Missing Authorization in query-dynamic-sub-workflows API Leads to Information Disclosure 
+Subject: Re: Moodle LMS 3.9.2: authenticated file-upload validation bypass (CWE-434) leading to RCE under misconfiguration
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+On 9/28/26 10:34, Muhammad Arslan Official wrote:
+> I am disclosing a vulnerability in Moodle LMS and requesting a CVE ID, as
+> the
+> vendor (a registered CNA) has not assigned one after coordinated disclosure,
+> and a MITRE CNA-LR request (CAN-2026-2032565) has been under review for ~3
+> months without response.
 
-Affected versions:
+oss-security is not a CNA and cannot issue CVE IDs.  Before 2017, the
+MITRE CNA-LR used to accept CVE requests via this mailing list, but they
+stopped in 2017 and redirected people to their web forms instead [1], so
+this has never been a way to bypass MITRE to get a CVE assignment.
 
-- Apache DolphinScheduler 3.2.0 before 3.4.3
+[1] https://www.openwall.com/lists/oss-security/2017/02/09/7
 
-Description:
-
-A missing authorization vulnerability exists in the `query-dynamic-sub-workflows` API of Apache DolphinScheduler. The API does not properly verify whether the authenticated user has permission to access the workflows being queried.
-
-
-
-An authenticated user who does not have permission to access a specific project can invoke the API with parameters referencing workflows belonging to that project and retrieve workflow information. This allows users to access workflow data outside their authorized project scope, resulting in unauthorized information disclosure.
-
-
-
-This issue affects Apache DolphinScheduler: from 3.2.0 before 3.4.3.
-
-
-
-Users are recommended to upgrade to version 3.4.3, which fixes the issue.
-
-Credit:
-
-yansong (finder)
-MopMonk AI (finder)
-
-References:
-
-https://dolphinscheduler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-71899
-
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
