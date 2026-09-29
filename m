@@ -1,57 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/39
-Message-ID: <3e118e07-dfd2-a71f-f790-6e903e54a146@apache.org>
-Date: Tue, 29 Sep 2026 18:09:48 +0000
-From: Thomas Wolf <twolf@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/29/31
+Message-ID: <arvwp6gKyUBDbFWK@horn.ics.muni.cz>
+Date: Tue, 29 Sep 2026 19:08:55 +0200
+From: Zdenek Salvet <salvet@....muni.cz>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-94053: Apache MINA SSHD: LDAP injection in sshd-ldap 
+Subject: Re: "several" CVEs in latest Debian linux security advisory DSA 6528-1
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
-    CVSS 3.1: 9.1 (critical) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N
+On Tue, Sep 29, 2026 at 09:16:35AM -0400, Jan Schaumann wrote:
+> Where "several" is a list of 1,313 CVE IDs.
+> 
+> I understand that this is a result of the Linux kernel
+> team assigning a CVE ID for virtually any change
+> combined with the onslaught of AI assisted findings,
+> but I think a security advisory of this sort serves no
+> meaningful purpose and illustrates the argument that
+> it's pointless for defenders to attempt to track and
+> assess individual vulnerabilities.
 
-Affected versions:
+Hello,
+I think the number also reflects Debian maintainers' effor
+to avoid too much churn...  You check Debian changelog
+to select issues most relevant to your environment reasonably
+quickly (in couple hours :-( )
 
-- Apache MINA SSHD 1.2.0 before 2.20.0
-- Apache MINA SSHD 3.0.0-M1 before 3.0.0-M6
+> (disable unused modules, don't use containers as a
+> reliable security boundary, reduce attack surface,
+> ...), but at this point I've come to believe that
+> multi-user linux systems may effectively no longer be
+> viable, as a LPE ought to be assumed.
 
-Description:
+Nothing is 100% secure, I hope we will run out of the most serious 
+vulnerabilities soon at this pace...
 
-Authentication bypass via LDAP injection in component sshd-ldap in Apache MINA SSHD versions 1.2.0 to 2.19.0 and 3.0.0-M1 to 3.0.0-M5.
-
-
-
-
-Apache MINA SSHD is a Java library for client-side and server-side SSH. 
-The optional sshd-ldap component provides support for integrating 
-password and publickey authentication on the server side with an LDAP 
-server.
-
-
-
-
-sshd-ldap is an optional component. SSH servers implemented with Apache 
-MINA SSHD are affected only if they use sshd-ldap and do configure it to be used for password of public key authentication.
-
-Other Apache MINA SSHD servers are not affected.
-
-
-
-
-Lack of escaping LDAP filter metacharacters enabled successful authentication with username "*" and password "*".
-
-
-
-
-Users are recommended to upgrade affected applications to version 2.20.0 or 3.0.0-M6, which fix this issue by properly escaping filter parameters according to RFC 4515.
-
-Credit:
-
-Dilrevx (finder)
-Ho1aAs <xxy010605@...il.com> (finder)
-
-References:
-
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-94053
+Regards,
+Zdenek Salvet                                              salvet@....muni.cz 
+Institute of Computer Science of Masaryk University, Brno, Czech Republic
+and CESNET, z.s.p.o., Prague, Czech Republic
+Phone: ++420-549 49 6534                           Fax: ++420-541 212 747
+----------------------------------------------------------------------------
+      Teamwork is essential -- it allows you to blame someone else.
 
