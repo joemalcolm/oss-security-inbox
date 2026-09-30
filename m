@@ -1,31 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/8
-Message-ID: <99d411b7-6527-36e0-4ceb-602699d41bb5@apache.org>
-Date: Wed, 30 Sep 2026 10:28:16 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/5
+Message-ID: <2324cb71-f5fc-52e9-d554-b9b1a8595e48@apache.org>
+Date: Wed, 30 Sep 2026 07:37:12 +0000
+From: Christofer Dutz <cdutz@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-85532: Apache WSS4J: Insufficient Validation of Derived-Key Parameters 
+Subject: CVE-2026-102509: Apache PLC4X: Pre-authentication resource exhaustion in the OPC UA driver and the Java SPI parser 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: 
+    CVSS 4.0: 8.7 (high) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N
 
 Affected versions:
 
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-common) 4.0.0 before 4.0.2
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-common) 3.0.0 before 3.0.6
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-common) before 2.4.4
+- Apache PLC4X 0.10.0 before 1.0.0
+- Apache PLC4X 1.0.0 unaffected
+- Apache PLC4X 0.10.0 before 1.0.0
+- Apache PLC4X 1.0.0 unaffected
 
 Description:
 
-Apache WSS4J accepted attacker-controlled derived-key lengths and offsets without adequate bounds. This could permit cryptographically weak keys or excessive CPU and memory consumption when processing crafted WS-Security messages. The fixes enforce a minimum key length of 16 bytes, a maximum length of 512 bytes, and a maximum offset of 4096 bytes.
-Users are recommended to upgrade to versions 4.0.2 or 3.0.6 or 2.4.4, which fix this issue.
+Memory Allocation with Excessive Size Value, Allocation of Resources Without Limits, and Uncontrolled Recursion in the Java implementation of Apache PLC4X (PLC4J) allow a malicious or impersonated device to exhaust the memory or stack of the client application, causing a denial of service.
+
+In the OPC UA driver these defects are reachable before authentication: the offending data is parsed while the secure channel and session are being established, before the server's identity has been bound to it. Configuring a trusted server therefore does not prevent exploitation by an attacker who can 
+impersonate it.
+
+The individual defects are:
+- Length-prefixed byte strings are allocated at the size claimed on the wire before the length is checked against the data actually received (0.10.0 through 0.13.1).
+- Array fields in generated protocol parsers pre-allocate a list with the element count claimed on the wire, allowing a single count field to trigger a multi-gigabyte allocation. This parser is shared by all PLC4J drivers; the OPC UA driver is the verified pre-authentication path (0.10.0 through 0.13.1).
+- The OPC UA driver accumulates message chunks without enforcing the negotiated maximum chunk count and message size (0.12.0 through 0.13.1).
+- The OPC UA driver pre-allocates collections using element counts received from the server (0.10.0 through 0.13.1).
+- Recursive protocol types are parsed without a nesting-depth limit. The same defect in the Go implementation is covered by  CVE-2026-102510 https://cveprocess.apache.org/cve5/CVE-2026-102510 .
+
+This issue affects Apache PLC4X: from 0.10.0 before 1.0.0.
+
+Users are recommended to upgrade to version 1.0.0, which fixes the issue.
 
 Credit:
 
-This issue was independently reported by Ho1aAs (GitHub: @HolaAsuka) and also found using Claude agents to study the security of open-source projects (finder)
+Abhinav Agarwal (finder)
 
 References:
 
-https://ws.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-85532
+https://plc4x.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-102509
+
+Timeline:
+
+2026-07-09: reported to the Apache Security Team
+2026-07-10: reported issues fixed on develop (a2dbb6bfc0, 5a4d5bdb4c)
+2026-09-07: Apache PLC4X 1.0.0 released with the fixes
 
