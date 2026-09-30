@@ -1,60 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/3
-Message-ID: <ab4813ac-530d-4e20-8b1c-4a2e04c93417@tuwien.ac.at>
-Date: Wed, 30 Sep 2026 10:41:39 +0200
-From: Daniel Ziegenberg <daniel.ziegenberg@...ien.ac.at>
-To: <oss-security@...ts.openwall.com>
-Subject: Re: Moodle LMS 3.9.2: authenticated file-upload validation bypass (CWE-434) leading to RCE under misconfiguration
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/12
+Message-ID: <167cca1b-a8b3-2539-33f1-c3319d18f174@apache.org>
+Date: Wed, 30 Sep 2026 10:36:24 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-92121: Apache WSS4J: WS-SecurityPolicy signature checks skipped in the streaming code after an STR-Transform reference 
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+Severity: moderate 
 
-The oldest supported security release in the 4.x line is Moodle LTS 4.5 
-(see https://moodledev.io/general/releases), and there are three other 
-newer releases in the 5.x line. The next Moodle LTS, 5.4, will be 
-released this coming week. If it's not reproducible in either of those 
-two LTS versions, there will be no fix, as there are plenty of options 
-for updating.
+Affected versions:
 
-Bug fixes for security issues in 3.9.x ended on 11th December 2023. So 
-this very release was already out of support by the time the bug was 
-reported in 2025.
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-stax) 4.0.0 before 4.0.2
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-stax) 3.0.0 before 3.0.6
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-stax) before 2.4.4
 
-greetings,
-Daniel
+Description:
 
+In the WSS4J streaming (StAX) code, a signature reference using the WS-Security STR-Transform leaves an internal "inside signed content" flag permanently set. The WS-SecurityPolicy enforcer uses that flag to decide whether an element needs checking, so it stops evaluating SignedParts and SignedElements for the rest of the message. A policy requiring the SOAP Body to be signed is then satisfied even when the Body carries no signature, removing the protection against XML Signature Wrapping. Signature verification itself is unaffected. The DOM code is not affected. 
+Users are recommended to upgrade to versions 4.0.2 or 3.0.6 or 2.4.4 which fix this issue.
 
-On 29/09/2026 09:42, Michael Straßberger wrote:
-> Hello,
->
-> 3.9.2 is a very old version. The latest in that minor release is from 8
-> Dec 2023 (3.9.25). According to
-> https://download.moodle.org/releases/security/ it does not even have
-> Security Support any more.
->
-> Is this Behaviour reproducible in at least Moodle 4.1.22? If not I
-> don't think a CVE should be issued here, since it would only increase
-> the Noise. The Influx of CVE's and advisory is high as is and I don't
-> think it's beneficial to issue even more for software version that are
-> way beyond EOL.
->
-> On Mon, 2026-09-28 at 22:34 +0500, Muhammad Arslan Official wrote:
->> Hello,
->>
->> I am disclosing a vulnerability in Moodle LMS and requesting a CVE
->> ID, as the vendor (a registered CNA) has not assigned one after
->> coordinated disclosure, and a MITRE CNA-LR request (CAN-2026-2032565)
->> has been under review for ~3 months without response.
->>
->> Product: Moodle LMS
->> Confirmed version: 3.9.2 (other versions not yet verified)
->> Class: CWE-434 / CWE-20 - Unrestricted file upload / improper input
->> validation
->> Privilege required: authenticated, Student-level account
->> Vendor status: reported via Bugcrowd 2025-08-31, triaged P3 (2025-09-
->> 06);
->> vendor acknowledged the behaviour but has not assigned a CVE or
->> committed to a code fix.
-> Kind Regards
->
-> Michael
+Credit:
+
+Reported by n0mi1k (finder)
+
+References:
+
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-92121
+
