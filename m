@@ -1,24 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/9
-Message-ID: <0d19faef-ccf9-428e-8c2d-38d26c95560f@apache.org>
-Date: Wed, 30 Sep 2026 10:29:52 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/13
+Message-ID: <d198fa5f-20f8-a3d4-8ae4-2575cc6ee64f@apache.org>
+Date: Wed, 30 Sep 2026 10:37:31 +0000
 From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-87830: Apache WSS4J: Streaming WS-SecurityPolicy validation may skip element-protection checks. 
+Subject: CVE-2026-92899: Apache WSS4J: UsernameToken replay protection bypassed by re-encoding the Nonce 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-policy-stax) 4.0.0 before 4.0.2
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-policy-stax) 3.0.0 before 3.0.6
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-policy-stax) before 2.4.4
+- Apache WSS4J 4.0.0 before 4.0.2
+- Apache WSS4J 3.0.0 before 3.0.6
+- Apache WSS4J before 2.4.4
 
 Description:
 
-In the StAX streaming WS-SecurityPolicy validator, certain relative or unsupported XPath expressions can be converted into paths that never match the actual XML element path. A remote SOAP peer may therefore send a required element without the expected signature or encryption.
-Users are recommended to upgrade to versions 4.0.2 or 3.0.6 or 2.4.4, which fix this issue.
+Apache WSS4J remembers the Nonce of each UsernameToken it accepts, so a captured token cannot be reused. It stored the Nonce as raw base64 text, but authentication decodes that text and uses the bytes.The same bytes can be written as base64 in several ways. An attacker who captured an authenticated request could re-send it with a space added to the Nonce: the password digest still verified, but the token no longer matched the remembered one, so the replay was accepted. Since a UsernameToken does not cover the message body, the captured token could then be reused on requests of the attacker's choosing until it expired. Affects deployments with a nonce replay cache configured, as Apache CXF has by default, and only tokens using a password digest. The cache is now keyed on the decoded Nonce. Users are recommended to upgrade to versions 4.0.2 or 3.0.6 or 2.4.4, which fix this issue.
 
 Credit:
 
@@ -27,5 +26,5 @@ Reported by n0mi1k (finder)
 References:
 
 https://ws.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-87830
+https://www.cve.org/CVERecord?id=CVE-2026-92899
 
