@@ -1,75 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/2
-Message-ID: <f5e3f67f-a573-4c83-9934-5857d963ffaf@gmail.com>
-Date: Wed, 30 Sep 2026 00:58:09 +0200
-From: Gabriel Ravier <gabravier@...il.com>
-To: oss-security@...ts.openwall.com, Sam James <sam@...too.org>
-Subject: Re: JIT buffer overflow fixed in libpcre2-10.49
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/7
+Message-ID: <06aba59c-9a1b-9716-313c-6535de1b0ca0@apache.org>
+Date: Wed, 30 Sep 2026 07:37:33 +0000
+From: Christofer Dutz <cdutz@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-102511: Apache PLC4X: ADS discovery accepts spoofed responses and derives the connection target from them 
 Content-Type: text/plain; charset=utf-8
 
-On 9/28/26 11:33 PM, Sam James wrote:
->  From https://github.com/PCRE2Project/pcre2/releases/tag/pcre2-10.49
-> """
-> This is a security-only release, to address GHSA-r9hj-j2rw-4q3m.
->
-> Compared to 10.48, this release has only a minimal code change to
-> prevent an out-of-bounds write with arbitrary data. An
-> attacker-controlled regular expression is required. Applications are
-> affected only when they use pcre2_jit_stack_create() and
-> pcre2_jit_stack_assign() to provide a growable JIT stack, then match a
-> pattern with unusually high JIT stack usage, such as one containing a
-> large number of capturing groups.
->
-> The implications of an out-of-bounds write could include arbitrary code
-> execution.
->
-> The issue is not a regression and affects releases 10.48 and
-> earlier. Users should upgrade to 10.49. Backport patches for supported
-> earlier releases are listed in SUPPORT-LIFECYCLE.md.
->
-> This release is available as a signed Git tag, or alternatively as a
-> signed tarball of the Git tag (attestation).
-> """
->
-> My default response to these is always "OK, how realistic is
-> attacker-controlled $X?", but libpcre2's maintainers are quite sensible,
-> and indeed, reading the advisory [0], it had some interesting detail.
->
-> Quoting just a bit of that:
-> """
-> Summary
->
-> Maintainer note: This vulnerability is not specific to phpMyAdmin, and may affect other PHP software, and other software using PCRE2.
->
-> While testing phpMyAdmin 5.2.3, I developed a lab proof of concept that
-> achieved command execution through phpMyAdmin's use of an attacker-controlled
-> regular expression. Root-cause analysis of the memory corruption led to an
-> independent vulnerability in the PCRE2 8-bit JIT.
->
-> An attacker-controlled pattern can make the JIT write below its stack mapping.
-> The escaped writes can corrupt a separate allocation and include pointers into
-> the attacker-controlled subject buffer.
->
-> I reproduced the issue with clean official PCRE2 10.48 builds on
-> Linux/AArch64, macOS/ARM64, and macOS/x86_64 under Rosetta. The same stack
-> boundary failure is also present in PCRE2 10.42 with an earlier trigger. I have
-> not identified the first affected release or tested other JIT backends.
-> """
->
-> [I'm reluctant to just paste the whole advisory text from my browser but
-> haven't looked to see if there's a convenient way to get a plaintext
-> advisory from GHSAs, like GitHub supports for PRs & commits (.patch +
-> .diff). If someone is aware of such a way, let me know please!]
->
-> [0] https://github.com/PCRE2Project/pcre2/security/advisories/GHSA-r9hj-j2rw-4q3m
->
-> sam
+Severity: 
+    CVSS 4.0: 8.5 (high) CVSS:4.0/AV:A/AC:L/AT:N/PR:N/UI:P/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N
 
+Affected versions:
 
-I believe that `gh api 
-repos/PCRE2Project/pcre2/security-advisories/GHSA-r9hj-j2rw-4q3m --jq 
-.description` would give you the plaintext advistory. It is Markdown 
-though - if you want literal plaintext plaintext I guess piping the 
-output of `gh api [etc.] | pandom -f gfm -t plain` would render GitHub's 
-markdown into "proper" plaintext.
+- Apache PLC4X 0.11.0 before 1.0.0
+- Apache PLC4X 1.0.0 unaffected
+- Apache PLC4X 0.10.0 before 1.0.0
+- Apache PLC4X 1.0.0 unaffected
+- Apache PLC4X 0.10.0 before 1.0.0
+- Apache PLC4X 1.0.0 unaffected
+- Apache PLC4X 0.11.0 before 1.0.0
+- Apache PLC4X 1.0.0 unaffected
+
+Description:
+
+Improper Verification of Source of a Communication Channel in the ADS discovery of the Go implementation of Apache PLC4X (PLC4Go) allows an attacker able to send UDP datagrams to the discovering host to redirect subsequent connections to an arbitrary, attacker-chosen address. The discovery result's connection 
+address was derived from the AmsNetId claimed in the response body rather than from the datagram's actual source address. One spoofed discovery response can therefore insert an inventory entry pointing at any host, including hosts outside the local network, and an application that connects to discovered devices
+will open its ADS session, including any configured route credentials, to that host.
+
+Additionally, discovery listeners in both implementations can be disabled by a single malformed datagram:
+- In PLC4Go ADS discovery, a short version block causes a panic that ends the listener for the rest of the discovery call, so legitimate devices answering afterwards are not reported.
+- In PLC4J, the ADS and EtherNet/IP discoverers stop on an unhandled exception from a malformed response.
+- The PLC4J Modbus discoverer can be made to spin indefinitely, consuming a CPU core, by a scanned host that sends a partial response.
+
+Exploitation requires the application to invoke the discovery API, which is opt-in, and for the connection redirect, to act on the discovered items.
+
+This issue affects Apache PLC4X: PLC4Go from 0.11.0 before 1.0.0; PLC4J ADS and Modbus drivers from 0.10.0 before 1.0.0; PLC4J EtherNet/IP driver from 0.11.0 before 1.0.0. PLC4Go is consumed as the Go module github.com/apache/plc4x/plc4go; versions refer to the corresponding Apache PLC4X releases.
+
+Users are recommended to upgrade to version 1.0.0, which fixes the issue. Version 1.0.0 derives the connection address from the datagram's source address and logs a warning when the claimed AmsNetId disagrees with it.
+
+References:
+
+https://plc4x.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-102511
+
+Timeline:
+
+2026-08-11: found during the internal security review
+2026-09-07: Apache PLC4X 1.0.0 released with the fixes
 
