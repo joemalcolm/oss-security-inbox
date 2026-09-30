@@ -1,51 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/16
-Message-ID: <16c22653-f977-4271-8b22-1f10767259cb@oracle.com>
-Date: Wed, 30 Sep 2026 09:56:07 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CPython [CVE-2026-19553] SSLContext.wrap_bio() missing validation of server_hostname parameter
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/18
+Message-ID: <20261001012214.GG438502783399260@igalia.com>
+Date: Thu, 1 Oct 2026 01:22:14 +0200
+From: Adrian Perez de Castro <aperez@...lia.com>
+To: webkit-gtk@...ts.webkit.org, webkit-wpe@...ts.webkit.org
+Cc: security@...kit.org, oss-security@...ts.openwall.com
+Subject: Re: WebKitGTK and WPE WebKit Security Advisory WSA-2026-0006
 Content-Type: text/plain; charset=utf-8
 
+Hello all,
 
+On Tue, 29 Sep 2026 02:18:45 +0200 Adrian Perez de Castro <aperez@...lia.com> wrote:
+> ------------------------------------------------------------------------
+> WebKitGTK and WPE WebKit Security Advisory                 WSA-2026-0006
+> ------------------------------------------------------------------------
+> 
+> [...]
+>     
+> CVE-2025-6558
+>     Versions affected: WebKitGTK and WPE WebKit before 2.54.0 or
+>     earlier.
+>     Insufficient validation of untrusted input in ANGLE and GPU in
+>     Google Chrome prior to 138.0.7204.157 allowed a remote attacker to
+>     potentially perform a sandbox escape via a crafted HTML page.
+>     (Chromium security severity: High).
+>
+> [...]
 
+CVE-2025-6558 had been already reported as fixed in version WebKitGTK 2.48.5
+and WPE WebKit 2.48.5, as per WSA-2025-0005 [1].
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-19553] SSLContext.wrap_bio() missing 
-validation of server_hostname parameter
-Date: 	Wed, 30 Sep 2026 16:08:09 +0000
-From: 	Seth Larson <seth@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
+Sorry about the inconvenience this mistake might have caused.
 
-There is a HIGH severity vulnerability affecting CPython.
+Cheers,
+—Adrián
 
-`ssl.SSLContext.wrap_bio()` didn't require the `server_hostname` argument to not 
-be `None` if `ssl.SSLContext.check_hostname` was set. Due to a missing parameter 
-check in `SSLObject`, if the `server_hostname` argument isn't supplied then 
-hostname verification would be silently skipped.
+---
+[1] https://webkitgtk.org/security/WSA-2025-0005.html#CVE-2025-6558
 
-This defect could lead to programs where certificate hostname verification 
-*appeared* to be succeeding with `SSLContext.check_hostname = True` and no 
-`ValueError` being raised due to misconfiguration.
-
-If the program passes a `server_hostname` value that isn't an empty string or 
-`None` to any of these APIs then certificate hostname verification proceeds as 
-expected and the program is not affected by this vulnerability.
-
-Mitigating this vulnerability doesn't require updating Python or applying the 
-patch. To mitigate, pass a valid non-`None` and non-empty `server_hostname` 
-value to `SSLContext.wrap_bio()`, `asyncio.create_connection()`, or 
-`asyncio.loop.start_tls()` and certificate hostname verification will proceed as 
-expected. Upgrading to the latest version of Python or applying the patch only 
-changes the behavior from silently skipping hostname verification to raising a 
-`ValueError`, similar to `SSLContext.wrap_socket()`, when `server_hostname` 
-isn't supplied.
-
-Please see the linked CVE ID for the latest information on affected versions:
-
-* https://www.cve.org/CVERecord?id=CVE-2026-19553
-* https://github.com/python/cpython/pull/158503
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
+Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
