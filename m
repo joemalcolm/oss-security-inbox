@@ -1,52 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/1
-Message-ID: <4a2caa1d-7cc6-4943-89ef-053a1ffdfa07@oracle.com>
-Date: Tue, 29 Sep 2026 17:41:03 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/11
+Message-ID: <eed93fd0-411a-5834-e213-0f49d6906720@apache.org>
+Date: Wed, 30 Sep 2026 10:34:05 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Branch Target Reuse: Practical Spectre-v2 Attacks in JIT Engines via Stale Branch Prediction Entries
+Subject: CVE-2026-89238: Apache WSS4J: WSS4J EncryptedHeader child confusion causing wrong protected-header selection 
 Content-Type: text/plain; charset=utf-8
 
-https://www.vusec.net/projects/btr/ was announced today:
-> We present Branch Target Reuse (BTR), a new Spectre-v2 attack
-> targeting just-in-time (JIT) compilers. BTR affects the JIT engines
-> found in web browsers, language runtimes, and the operating system
-> kernel, across multiple CPU vendors. We analyzed the attack surface of
-> Linux cBPF, Oracle GraalVM and SpiderMonkey (the JIT engine of the
-> Firefox browser), and built two end-to-end exploits against the Linux
-> kernel.
-> 
-> The key insight behind the attack is that, while modern CPUs restore
-> architectural code coherence after self-modification, they do not
-> necessarily invalidate stale indirect branch prediction entries (i.e.,
-> branch targets). In JIT engines, these stale targets can outlive the
-> original code and later be reused when the code cache is repopulated,
-> yielding a speculative execute-after-free primitive. This allows
-> attackers to hijack speculative control flow to newly generated code
-> at obsolete offsets, bypassing software hardening or reaching
-> misaligned gadgets.
+Severity: important 
 
-The paper is at: https://download.vusec.net/papers/btr_ccs26.pdf
+Affected versions:
 
-And their PoC code: https://github.com/vusec/btr
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-dom) 4.0.0 before 4.0.2
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-dom) 3.0.0 before 3.0.6
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-dom) before 2.4.4
 
-As for mitigations:
-> Linux kernel. The kernel developers upstreamed a new mitigation for
-> x86 that issues an IBPB on all cores when a cBPF program reuses a
-> previously executed cBPF/eBPF region, and discourages such reuse as an
-> optimization. The mitigation applies whether or not IBT is
-> enabled. Two CVEs were assigned:
-> 
->     CVE-2026-64507 – x86/bugs: Enable IBPB flush on BPF JIT allocation
->     CVE-2026-64508 – bpf: Support for hardening against JIT spraying
-> 
-> Oracle. GraalVM instead hinders region reuse by randomizing JIT
-> code-cache locations.
-> 
-> Mozilla. Mozilla considered IBPB-based mitigations, but is currently
-> prioritizing the completion and deployment of site isolation.
+Description:
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+WSS4J EncryptedHeader child confusion could promote an attacker-controlled plaintext element as the decrypted header, leading to incorrect confidentiality coverage and possible policy bypass.
+Users are recommended to upgrade to versions 4.0.2 or 3.0.6 or 2.4.4, which fix this issue.
+
+Credit:
+
+Reported by n0mi1k (finder)
+
+References:
+
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-89238
 
