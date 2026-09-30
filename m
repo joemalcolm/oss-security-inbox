@@ -1,32 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/10
-Message-ID: <4804e279-9e3d-ba5d-961a-f6ae455685f5@apache.org>
-Date: Wed, 30 Sep 2026 10:31:52 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/09/30/8
+Message-ID: <99d411b7-6527-36e0-4ceb-602699d41bb5@apache.org>
+Date: Wed, 30 Sep 2026 10:28:16 +0000
 From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-88920: Apache WSS4J: SAML Sender-Vouches Authentication Bypass 
+Subject: CVE-2026-85532: Apache WSS4J: Insufficient Validation of Derived-Key Parameters 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-dom) 4.0.0 before 4.0.2
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-dom) 3.0.0 before 3.0.6
-- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-dom) before 2.4.4
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-common) 4.0.0 before 4.0.2
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-common) 3.0.0 before 3.0.6
+- Apache WSS4J (org.apache.wss4j:wss4j-ws-security-common) before 2.4.4
 
 Description:
 
-An authentication bypass in the DOM security processor in Apache WSS4J allows unauthenticated remote attackers to forge authenticated SOAP messages via a crafted unsigned SAML sender-vouches assertion containing an attacker-controlled key.
-
+Apache WSS4J accepted attacker-controlled derived-key lengths and offsets without adequate bounds. This could permit cryptographically weak keys or excessive CPU and memory consumption when processing crafted WS-Security messages. The fixes enforce a minimum key length of 16 bytes, a maximum length of 512 bytes, and a maximum offset of 4096 bytes.
 Users are recommended to upgrade to versions 4.0.2 or 3.0.6 or 2.4.4, which fix this issue.
 
 Credit:
 
-Reported by n0mi1k (finder)
+This issue was independently reported by Ho1aAs (GitHub: @HolaAsuka) and also found using Claude agents to study the security of open-source projects (finder)
 
 References:
 
 https://ws.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-88920
+https://www.cve.org/CVERecord?id=CVE-2026-85532
 
