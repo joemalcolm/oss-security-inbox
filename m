@@ -1,55 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/01/10
-Message-Id: <57C12FD3-85FE-4901-9D24-30ADAF352BC9@stig.io>
-Date: Thu, 1 Oct 2026 15:13:34 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-102505: Imager versions before 1.037 for Perl overflow a heap buffer fetching float samples from a paletted image in i_gsampf_fp
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/01/7
+Message-ID: <0067034d-e1fa-4f39-6ec1-653674da7158@apache.org>
+Date: Thu, 01 Oct 2026 09:02:43 +0000
+From: Abhishek Choudhary <shreemaanabhishek@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-94269: Apache APISIX: Servlet-style normalization creates a route/upstream authorization mismatch 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-102505                                      CPAN Security Group
-========================================================================
+Severity: 
+    CVSS 4.0: 6.3 (medium) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N
 
-        CVE ID:  CVE-2026-102505
+Affected versions:
 
-  Distribution:  Imager
-      Versions:  before 1.037
-      MetaCPAN:  https://metacpan.org/dist/Imager
-      VCS Repo:  https://github.com/tonycoz/imager
+- Apache APISIX 2.14.1 through 3.18.0
+
+Description:
+
+Use of Non-Canonical URL paths for authorization decisions vulnerability in Apache APISIX.
 
 
-Imager versions before 1.037 for Perl overflow a heap buffer fetching
-float samples from a paletted image in i_gsampf_fp
 
-Description
------------
-Imager versions before 1.037 for Perl overflow a heap buffer fetching
-float samples from a paletted image in i_gsampf_fp.
+In some configurations where a permissive route overlaps a protected one, a crafted encoded path can reach an upstream endpoint that the matched route's policies were never meant to cover. A request that should have been rejected is served instead, giving unauthenticated access to a protected upstream endpoint. This issue affects Apache APISIX: from 2.14.1 through 3.18.0.
 
-For a paletted image, getsamples() with type "float" allocates a buffer
-of one sample per pixel and fetches every requested channel of each
-pixel into it. Requesting more than one channel writes past its end.
 
-An attacker-supplied image controls the overflowing bytes through its
-palette.
 
-Problem types
--------------
-- CWE-131 Incorrect Calculation of Buffer Size
+Users are recommended to upgrade to version 3.19.0, which fixes the issue.
 
-Solutions
----------
-Upgrade to Imager 1.037 or later.
+Credit:
 
-References
-----------
-https://github.com/tonycoz/imager/security/advisories/GHSA-4rx6-cgv3-fmxp
-https://github.com/tonycoz/imager/commit/aae49c6be065aa467e834105c816359394a634db.patch
-https://metacpan.org/release/TONYC/Imager-1.037/changes
+Ziyue (reporter)
+shreemaan-abhishek (coordinator)
+shreemaan-abhishek (remediation developer)
 
-Timeline
---------
-- 2026-09-30: Version 1.037 released with fix.
+References:
 
+https://apisix.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-94269
 
