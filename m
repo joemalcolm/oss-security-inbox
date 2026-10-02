@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/01/20
-Message-ID: <0ec2a8cb-b527-4565-703d-2307d8b90b90@apache.org>
-Date: Thu, 01 Oct 2026 18:07:17 +0000
-From: Eric Covener <covener@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/02/2
+Message-ID: <a1c023a8-0da7-94a2-ca61-b5acb2617b7f@apache.org>
+Date: Fri, 02 Oct 2026 17:30:55 +0000
+From: Dave Fisher <wave@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-58415: Apache HTTP Server: mod_dav_fs property database read access 
+Subject: CVE-2026-59265: Apache OpenOffice: Opening a malicious document can lead to system takeover 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: critical 
 
 Affected versions:
 
-- Apache HTTP Server 2.4.0 through 2.4.68
+- Apache OpenOffice through 4.1.16
+- Apache OpenOffice before 95923fd437e06edd38a4f0e139a27c755a6f3ba6
+- Apache OpenOffice before 181421139242694b309751fb666406eddc203c50
 
 Description:
 
-Internal state files accessible to external parties in mod_dav_fs in Apache Software Foundation Apache HTTP Server before 2.4.69 on all platforms allows a remote client to read WebDAV dead properties of resources it cannot author via a GET request for the .DAV state directory
+A code execution issue in the Java integration in Apache OpenOffice v4.1.16 and earlier allows a crafted untrusted document to trigger executing arbitrary (even remote) code when opened by the user.
 
 
 
-This issue affects Apache HTTP Server: from 2.4.0 through 2.4.68.
+This issue is expected to be fixed in version 4.1.17, which is in the release candidate phase.
+
+
+
+Until then, users can mitigate this issue by disabling Java runtime integration in the Preferences dialog. This prevents the attack. If this is not possible, or as an extra precaution, you can avoid opening open untrusted files entirely. Once 4.1.17 is released, upgrade to that version to fix the issue.
 
 Credit:
 
-이지웅 (kimchunbok) (finder)
-sungbyeongchan (finder)
+Thomas Rinsma and Edoardo Geraci from Codean Labs (finder)
+Rick de Jager (finder)
 
 References:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-58415
-
-Timeline:
-
-2026-06-24: reported
-2026-10-01: fixed in 2.4.x by r1938668
-2026-10-01: 2.4.69 released
+https://github.com/apache/openoffice/commit/c699bed3f75e79bd64ddec9dec49f9e210eed281.patch
+https://github.com/apache/openoffice/commit/95923fd437e06edd38a4f0e139a27c755a6f3ba6.patch
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-59265
 
