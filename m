@@ -1,51 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/17
-Message-ID: <c17baee1-cdb0-4fda-a780-f9e2ca017f0e@andrew.cmu.edu>
-Date: Mon, 5 Oct 2026 17:41:59 -0400
-From: Chad Dougherty <crd@...rew.cmu.edu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/12
+Message-ID: <f464d5f7-9509-a38f-db24-456084ff75fd@apache.org>
+Date: Mon, 05 Oct 2026 07:13:06 +0000
+From: Lukasz Lenart <lukaszlenart@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: [Freeipmi-announce] FreeIPMI 1.6.20 Released
+Subject: CVE-2026-104713: Apache Struts: Unbounded request body read in the REST plugin 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
 
+Affected versions:
 
--------- Forwarded Message --------
-Subject: 	[Freeipmi-announce] FreeIPMI 1.6.20 Released
-Date: 	Mon, 5 Oct 2026 20:56:51 +0000
-From: 	Chu, Al via Freeipmi-announce <freeipmi-announce@....org>
-Reply-To: 	Chu, Al <chu11@...l.gov>
-To: 	freeipmi-devel <freeipmi-devel@....org>, Al Chu via Freeipmi-users 
-<freeipmi-users@....org>, freeipmi-announce@....org 
-<freeipmi-announce@....org>
+- Apache Struts 2.1.8 through 2.3.37
+- Apache Struts 2.5.0 through 2.5.33
+- Apache Struts 6.0.0 through 6.11.0
+- Apache Struts 7.0.0 through 7.3.0
 
+Description:
 
+Allocation of resources without limits or throttling vulnerability in the Apache Struts REST plugin. A request body is read into memory without any bound on how much will be accepted, so a single request can cause the server to allocate memory in proportion to its size, exhausting the Java heap and denying service to other users. No additional setting has to be enabled. Applications that do not use the REST plugin are not affected.
 
-Please note that this release has fixes for two buffer overflows.
+This issue affects Apache Struts: from 2.1.8 through 2.3.37, from 2.5.0 through 2.5.33, from 6.0.0 through 6.11.0, from 7.0.0 through 7.3.0.
 
-https://ftp.gnu.org/gnu/freeipmi/freeipmi-1.6.20.tar.gz 
-<https://ftp.gnu.org/gnu/freeipmi/freeipmi-1.6.20.tar.gz>
+Users are recommended to upgrade to version 6.12.0 or 7.4.0, which fixes the issue.
 
-FreeIPMI 1.6.20 - 10/05/26
---------------------------
-o The format specifier %h was used for two different format fields.
-    Use %H as target host specifier.
-o Fix minor output errors in Intel Node Manager DIMMs and Windmill
-    device IDs.
-o Fix ipmi-oem command line parsing bugs.
-o In ipmi-oem, fix error in with wistron get/set-ipv6-trap-settings.
-o In ipmi-oem, fix output error in dell get-system-info cmc-info.
-o In libipmidetect fix potential hostname sscanf bound overflow.
-o In ipmi-oem fujitsu get-sel-entry-long-text, fix potential memory
-    buffer overflow.
-o Fix ipmiconsole workaround flag parsing issues.
-o Fix minor libfreeipmi corner cases (e.g. parameter input corner cases).
-o Fix minor SEL output corner cases in several OEM vendors.
-o Fix libfreeipmi macro inconsistencies / errors.
-o Minor documentation fixes.
+Credit:
 
-Al
+n0mi1k (finder)
 
---
-Al Chu
-Livermore Computing
-Lawrence Livermore National Laboratory
+References:
+
+https://cwiki.apache.org/confluence/display/WW/S2-077
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-104713
+
