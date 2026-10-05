@@ -1,54 +1,142 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/1
-Message-ID: <CAKe4=-LAib=qBaW=4yCk0w+4jfd5dErYdCV7w9BO5vuMTm-M4w@mail.gmail.com>
-Date: Sun, 4 Oct 2026 18:39:13 -0500
-From: Jonathan Wright <jonathan@...alinux.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/4
+Message-ID: <775962383b00d78067fec6158c678c71@herricane.ca>
+Date: Sun, 04 Oct 2026 22:25:45 -0400
+From: Katie <katie@...ricane.ca>
 To: oss-security@...ts.openwall.com
 Subject: Re: cloud computing provider disclosures
 Content-Type: text/plain; charset=utf-8
 
-A big question that comes up then is where is the line draw?  How big must
-one be to qualify for this?
+On 2026-10-04 21:45, Aaron Rainbolt wrote:
+> On Sun, 4 Oct 2026 18:56:44 -0400
+> Jan Schaumann <jschauma@...meister.org> wrote:
+> 
+>> Hello,
+>> 
+>> I was wondering whether it might make sense to
+>> establish a disclosure list for cloud computing /
+>> virtual private server hosting providers.
+>> 
+>> The reason that I think this might make sense is that
+>> not every cloud computing provider necessarily offers
+>> their own OS / Linux distribution, and thus may not be
+>> qualified for membership on distros@.
+>> 
+>> At the same time there are vulnerabilities that
+>> directly and significantly impact cloud computing
+>> providers such that the internet would benefit from
+>> them being able to mitigate prior to disclosure on
+>> e.g., oss-security@.
+>> 
+>> An obvious example might be disclosure of VM escapes,
+>> which disproportionally impacts such service
+>> providers.
+>> 
+>> Another option might be to grant cloud computing
+>> providers membership on distros@ even if they do not
+>> offer their own custom Linux distribution.
+>> 
+>> What do people think?
+> 
+> I don't really think I'm a frequent enough contributor here to have
+> much say, nor do I run a cloud service, but I personally don't like 
+> this
+> idea so much. Cloud providers have to have a robust method to update
+> their world at any instant because the zero-day market is a thing, and
+> because people sometimes see a fix go public and immediately come up
+> with an exploit for the vuln it fixes without knowing anything more
+> about the vuln. If cloud providers can't update with near-zero notice,
+> they arguably shouldn't be providing cloud services. (Maybe I'm showing
+> my ignorance by saying this...)
+> 
+> The "early access to security vuln details" group should be as tiny as
+> possible to reduce the chances of anyone malicious being in the early
+> access list. Restricting it to people who can meaningfully contribute
+> seems like a good middle ground to me.
+> 
+> What might be useful is some system to alert users that something
+> important is going to be fixed soon and they need to brace for impact.
+> Maybe at the same time a VM escape vuln is disclosed on distros@, for
+> instance, an email could be sent to oss-security@ saying "A
+> high-severity vulnerability has been discovered in the Linux kernel.
+> Cloud providers are expected to be disproportionately affected." Of
+> course then the challenge becomes how to figure out what use cases are
+> affected by a certain vulnerability with the least possible effort on
+> the reporters, and how to not flood the list with notices for every
+> single high-severity vuln that affects a niche use case.
+> 
+> --
+> Aaron
 
-There are tons of smaller-than-AWS/Azure/GCP/OCP but still huge hosting
-providers out there.
+A thought at the bottom.
 
-On Sun, Oct 4, 2026 at 6:29 PM Jan Schaumann <jschauma@...meister.org>
-wrote:
+On 2026-10-04 21:45, Aaron Rainbolt wrote:
+> On Sun, 4 Oct 2026 18:56:44 -0400
+> Jan Schaumann <jschauma@...meister.org> wrote:
+> 
+>> Hello,
+>> 
+>> I was wondering whether it might make sense to
+>> establish a disclosure list for cloud computing /
+>> virtual private server hosting providers.
+>> 
+>> The reason that I think this might make sense is that
+>> not every cloud computing provider necessarily offers
+>> their own OS / Linux distribution, and thus may not be
+>> qualified for membership on distros@.
+>> 
+>> At the same time there are vulnerabilities that
+>> directly and significantly impact cloud computing
+>> providers such that the internet would benefit from
+>> them being able to mitigate prior to disclosure on
+>> e.g., oss-security@.
+>> 
+>> An obvious example might be disclosure of VM escapes,
+>> which disproportionally impacts such service
+>> providers.
+>> 
+>> Another option might be to grant cloud computing
+>> providers membership on distros@ even if they do not
+>> offer their own custom Linux distribution.
+>> 
+>> What do people think?
+> 
+> I don't really think I'm a frequent enough contributor here to have
+> much say, nor do I run a cloud service, but I personally don't like 
+> this
+> idea so much. Cloud providers have to have a robust method to update
+> their world at any instant because the zero-day market is a thing, and
+> because people sometimes see a fix go public and immediately come up
+> with an exploit for the vuln it fixes without knowing anything more
+> about the vuln. If cloud providers can't update with near-zero notice,
+> they arguably shouldn't be providing cloud services. (Maybe I'm showing
+> my ignorance by saying this...)
+> 
+> The "early access to security vuln details" group should be as tiny as
+> possible to reduce the chances of anyone malicious being in the early
+> access list. Restricting it to people who can meaningfully contribute
+> seems like a good middle ground to me.
+> 
+> What might be useful is some system to alert users that something
+> important is going to be fixed soon and they need to brace for impact.
+> Maybe at the same time a VM escape vuln is disclosed on distros@, for
+> instance, an email could be sent to oss-security@ saying "A
+> high-severity vulnerability has been discovered in the Linux kernel.
+> Cloud providers are expected to be disproportionately affected." Of
+> course then the challenge becomes how to figure out what use cases are
+> affected by a certain vulnerability with the least possible effort on
+> the reporters, and how to not flood the list with notices for every
+> single high-severity vuln that affects a niche use case.
+> 
+> --
+> Aaron
 
-> Hello,
->
-> I was wondering whether it might make sense to
-> establish a disclosure list for cloud computing /
-> virtual private server hosting providers.
->
-> The reason that I think this might make sense is that
-> not every cloud computing provider necessarily offers
-> their own OS / Linux distribution, and thus may not be
-> qualified for membership on distros@.
->
-> At the same time there are vulnerabilities that
-> directly and significantly impact cloud computing
-> providers such that the internet would benefit from
-> them being able to mitigate prior to disclosure on
-> e.g., oss-security@.
->
-> An obvious example might be disclosure of VM escapes,
-> which disproportionally impacts such service
-> providers.
->
-> Another option might be to grant cloud computing
-> providers membership on distros@ even if they do not
-> offer their own custom Linux distribution.
->
-> What do people think?
->
-> -Jan
->
+Interesting conversation.  I notice that Aaron mentions restricting the 
+early access group to those who can meaningfully contribute. To some 
+(like myself) a meaningful contribution might be creating a piece of art 
+(ex. fan art) for the oss-security list.  Therefore, it might be best to 
+qualify the type of contribution (ex. those who can meaningfully 
+contribute code maintenance).
 
-
--- 
-Jonathan Wright
-AlmaLinux OS Foundation
-Mattermost: chat <https://chat.almalinux.org/almalinux/messages/@jonathan>
+-Katie
 
