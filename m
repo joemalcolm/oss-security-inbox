@@ -1,64 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/9
-Message-ID: <e7814b25-cdeb-4639-bb72-e2fa1b900a2e@cpansec.org>
-Date: Mon, 5 Oct 2026 07:55:09 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/8
+Message-Id: <E48C9287-ECC2-46EC-BF9D-7BAD8BB75C20@stig.io>
+Date: Mon, 5 Oct 2026 08:54:33 +0200
+From: Stig Palmquist <stig@...g.io>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-19954: Net::Whois::Raw versions before 2.99044 for Perl ship a pwhois command-line tool that queries WHOIS for the wrong domain for unicode domain names
+Subject: CVE-2017-20285: YAML versions before 1.30 for Perl allow a loaded document to trigger the DESTROY method of arbitrary classes
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-19954                                       CPAN Security Group
+CVE-2017-20285                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-19954
+        CVE ID:  CVE-2017-20285
 
-   Distribution:  Net-Whois-Raw
-       Versions:  before 2.99044
-       MetaCPAN:  https://metacpan.org/dist/Net-Whois-Raw
-       VCS Repo:  https://github.com/regru/Net-Whois-Raw
+  Distribution:  YAML
+      Versions:  before 1.30
+      MetaCPAN:  https://metacpan.org/dist/YAML
+      VCS Repo:  https://github.com/ingydotnet/yaml-pm
 
 
-Net::Whois::Raw versions before 2.99044 for Perl ship a pwhois
-command-line tool that queries WHOIS for the wrong domain for unicode
-domain names
+YAML versions before 1.30 for Perl allow a loaded document to trigger
+the DESTROY method of arbitrary classes
 
 Description
 -----------
-Net::Whois::Raw versions before 2.99044 for Perl ship a pwhois
-command-line tool that queries WHOIS for the wrong domain for unicode
-domain names.
+YAML versions before 1.30 for Perl allow a loaded document to trigger
+the DESTROY method of arbitrary classes.
 
-pwhois encodes each non-ASCII label directly using Net::IDN::Punycode
-and prepends xn--. Apart from lowercasing ASCII and Cyrillic letters,
-it skips the IDNA mapping and normalization steps, so a label with
-other uppercase letters, or not in NFC, encodes to a different A-label
-than its IDNA form. For example, a label of U+00C9 followed by "cole"
-encodes to "xn--cole-pka" rather than "xn--cole-9oa".
+A perl/hash:Class tag blesses a hash into the class it names. The
+document supplies the object's fields, and Perl calls DESTROY when it
+goes out of scope.
 
-The Net::Whois::Raw library modules are not affected.
+What DESTROY does depends on the classes the process has loaded. With
+File::Temp::Dir from core Perl, it can delete a directory tree the
+document names.
 
 Problem types
 -------------
-- CWE-176 Improper Handling of Unicode Encoding
+- CWE-502 Deserialization of Untrusted Data
+- CWE-470 Use of Externally-Controlled Input to Select Classes or Code
+  ('Unsafe Reflection')
 
 Workarounds
 -----------
-Apply the patch.
+For deployments that cannot upgrade to YAML 1.30, set
+$YAML::LoadBlessed = 0 before loading untrusted input. The option
+exists from YAML 1.25.
 
-For deployments that cannot apply the patch, convert the domain name to
-its A-label form, for example with Net::IDN::Encode::domain_to_ascii,
-before passing it to pwhois. pwhois passes all-ASCII names through
-unchanged.
+Solutions
+---------
+Upgrade to YAML 1.30 or later.
 
 References
 ----------
-https://metacpan.org/release/NALOBIN/Net-Whois-Raw-2.99044/changes
-https://security.metacpan.org/patches/N/Net-Whois-Raw/2.99043/CVE-2026-19954-r1.patch
-https://github.com/regru/Net-Whois-Raw/issues/34
-https://github.com/regru/Net-Whois-Raw/pull/35
-https://metacpan.org/release/PJCJ/Net-IDN-Encode-2.590-TRIAL/view/lib/Net/IDN/Punycode.pm#WARNING
-https://www.rfc-editor.org/rfc/rfc5891#section-5.2
+https://github.com/ingydotnet/yaml-pm/issues/176
+https://github.com/ingydotnet/yaml-pm/commit/471314bbdcbd62077eea32755929122aa8bd00a3.patch
+https://github.com/ingydotnet/yaml-pm/commit/7736f38bd02e4f9f77d5468721e3be3d7b34a8ec.patch
+https://metacpan.org/release/TINITA/YAML-1.30/changes
 
+Timeline
+--------
+- 2017-05-10: Issue reported.
+- 2018-05-11: Version 1.25 released with the $YAML::LoadBlessed option.
+- 2020-01-27: Version 1.30 released with the option defaulting to off.
+- 2022-06-27: Issue added as CPANSA-YAML-2017-01 in the CPAN::Audit
+  database.
+- 2026-09-21: CVE number reserved.
 
 
