@@ -1,43 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/15
-Message-ID: <asOxewM8cOGtoEYn@yuggoth.org>
-Date: Mon, 5 Oct 2026 14:17:39 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/13
+Message-ID: <9ae337f9-d966-d408-ec55-87379b3bb2cb@apache.org>
+Date: Mon, 05 Oct 2026 07:13:29 +0000
+From: Lukasz Lenart <lukaszlenart@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: cloud computing provider disclosures
+Subject: CVE-2026-104714: Apache Struts: Shared message formatter exposes date and time values across concurrent requests 
 Content-Type: text/plain; charset=utf-8
 
-On 2026-10-04 21:45:06 -0400 (-0400), Aaron Rainbolt wrote:
-[...]
-> If cloud providers can't update with near-zero notice, they 
-> arguably shouldn't be providing cloud services.
-[...]
+Severity: moderate 
 
-While this is true to some extent, getting early access to fixes 
-helps reduce the window between public disclosure and risk 
-mitigation by allowing their operators to schedule this work to 
-coincide with a coordinated advisory publication. Also I've lost 
-count of the number of times a public cloud operator has spotted a 
-logic or testing gap in the pre-advisory copies of fixes which were 
-missed by the developers in review (reviewing and testing fixes in 
-secret under embargo is notoriously challenging for open source 
-developer communities used to working completely in the open under 
-normal circumstances).
+Affected versions:
 
-> The "early access to security vuln details" group should be as 
-> tiny as possible to reduce the chances of anyone malicious being 
-> in the early access list.
-[...]
+- Apache Struts 2.0.0 through 2.3.37
+- Apache Struts 2.5.0 through 2.5.33
+- Apache Struts 6.0.0 through 6.11.0
+- Apache Struts 7.0.0 through 7.3.0
 
-Yes, for the open source cloud platform I'm involved in, I help 
-coordinate and vet a list of known downstream operator contacts for 
-(brief) advance notice of upcoming coordinated advisory publications 
-under embargo. While we do also notify the private linux-distros 
-list (because a majority of them package at least some of our 
-software), I don't think we'd send advance notice to a list of cloud 
-operators where we don't even know if they're running our software 
-at all.
--- 
-Jeremy Stanley
+Description:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
+Concurrent execution using shared resource with improper synchronization ('race condition') vulnerability in Apache Struts. Where a localized message formats a date or time argument, the formatter retained for that message by the application-wide text provider is used by concurrently served requests without isolation, so a value belonging to one user can appear in another user's response, or the rendering can fail and surface as a server error. Applications whose localized messages format no date or time arguments are not affected.
+
+This issue affects Apache Struts: from 2.0.0 through 2.3.37, from 2.5.0 through 2.5.33, from 6.0.0 through 6.11.0, from 7.0.0 through 7.3.0.
+
+Users are recommended to upgrade to version 6.12.0 or 7.4.0, which fixes the issue.
+
+Credit:
+
+n0mi1k (finder)
+
+References:
+
+https://cwiki.apache.org/confluence/display/WW/S2-078
+https://struts.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-104714
+
