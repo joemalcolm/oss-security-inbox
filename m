@@ -1,36 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/10
-Message-ID: <edf6bdd6-a4ac-7101-cf74-609a57ac76ad@apache.org>
-Date: Mon, 05 Oct 2026 07:11:49 +0000
-From: Lukasz Lenart <lukaszlenart@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/16
+Message-ID: <06678f84-23c7-4fca-a88e-bc32bce55375@pipping.org>
+Date: Mon, 5 Oct 2026 20:18:10 +0200
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-104711: Apache Struts: OGNL injection in the legacy RESTful action mapper 
+Subject: libexpat 2.9.0 fixes two vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hello oss-security,
 
-Affected versions:
 
-- Apache Struts 2.0.0 through 2.3.37
-- Apache Struts 2.5.0 through 2.5.33
-- Apache Struts 6.0.0 through 6.11.0
-- Apache Struts 7.0.0 through 7.3.0
+just a quick note that libexpat 2.9.0 (or "Expat 2.9.0") released today
+is fixing two vulnerabilities:
 
-Description:
+- CVE-2026-77214
+- CVE-2026-102633
 
-Improper neutralization of special elements used in an expression language statement ('Expression Language Injection') vulnerability in Apache Struts. If the application is configured to use the legacy RESTful action mapper, a crafted request can inject an OGNL expression that may lead to remote code execution. Struts 7 is affected only when the OGNL allowlist is disabled; it is enabled by default. Applications using the default action mapper, the restful2 mapper, or the Struts REST plugin are not affected.
+The related part of the change log is this:
 
-This issue affects Apache Struts: from 2.0.0 through 2.3.37, from 2.5.0 through 2.5.33, from 6.0.0 through 6.11.0, from 7.0.0 through 7.3.0.
+   #1392  CVE-2026-102633 -- Integer overflow in function expat_realloc
+            on 32bit platforms
+   #1393  CVE-2026-77214 -- Validate parameter `len` against available
+            buffer capacity in XML_ParseBuffer
 
-Users are recommended to upgrade to version 6.12.0 or 7.4.0, which fixes the issue.
+Some key links are:
 
-Credit:
+- The blog post about it
+   https://blog.hartwork.org/posts/expat-2-9-0-released/
 
-LeaveSong (finder)
+- The full change log of release 2.9.0
+   https://github.com/libexpat/libexpat/blob/R_2_9_0/expat/Changes
 
-References:
+- The fixing pull requests
+   - https://github.com/libexpat/libexpat/pull/1392
+   - https://github.com/libexpat/libexpat/pull/1393
 
-https://cwiki.apache.org/confluence/display/WW/S2-075
-https://struts.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-104711
+- The NVD CVE metadata
+   - https://nvd.nist.gov/vuln/detail/cve-2026-77214
+   - https://nvd.nist.gov/vuln/detail/cve-2026-102633
+
+Best
+
+
+
+Sebastian
 
