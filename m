@@ -1,36 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/12
-Message-ID: <f464d5f7-9509-a38f-db24-456084ff75fd@apache.org>
-Date: Mon, 05 Oct 2026 07:13:06 +0000
-From: Lukasz Lenart <lukaszlenart@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/15
+Message-ID: <asOxewM8cOGtoEYn@yuggoth.org>
+Date: Mon, 5 Oct 2026 14:17:39 +0000
+From: Jeremy Stanley <fungi@...goth.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-104713: Apache Struts: Unbounded request body read in the REST plugin 
+Subject: Re: cloud computing provider disclosures
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+On 2026-10-04 21:45:06 -0400 (-0400), Aaron Rainbolt wrote:
+[...]
+> If cloud providers can't update with near-zero notice, they 
+> arguably shouldn't be providing cloud services.
+[...]
 
-Affected versions:
+While this is true to some extent, getting early access to fixes 
+helps reduce the window between public disclosure and risk 
+mitigation by allowing their operators to schedule this work to 
+coincide with a coordinated advisory publication. Also I've lost 
+count of the number of times a public cloud operator has spotted a 
+logic or testing gap in the pre-advisory copies of fixes which were 
+missed by the developers in review (reviewing and testing fixes in 
+secret under embargo is notoriously challenging for open source 
+developer communities used to working completely in the open under 
+normal circumstances).
 
-- Apache Struts 2.1.8 through 2.3.37
-- Apache Struts 2.5.0 through 2.5.33
-- Apache Struts 6.0.0 through 6.11.0
-- Apache Struts 7.0.0 through 7.3.0
+> The "early access to security vuln details" group should be as 
+> tiny as possible to reduce the chances of anyone malicious being 
+> in the early access list.
+[...]
 
-Description:
+Yes, for the open source cloud platform I'm involved in, I help 
+coordinate and vet a list of known downstream operator contacts for 
+(brief) advance notice of upcoming coordinated advisory publications 
+under embargo. While we do also notify the private linux-distros 
+list (because a majority of them package at least some of our 
+software), I don't think we'd send advance notice to a list of cloud 
+operators where we don't even know if they're running our software 
+at all.
+-- 
+Jeremy Stanley
 
-Allocation of resources without limits or throttling vulnerability in the Apache Struts REST plugin. A request body is read into memory without any bound on how much will be accepted, so a single request can cause the server to allocate memory in proportion to its size, exhausting the Java heap and denying service to other users. No additional setting has to be enabled. Applications that do not use the REST plugin are not affected.
-
-This issue affects Apache Struts: from 2.1.8 through 2.3.37, from 2.5.0 through 2.5.33, from 6.0.0 through 6.11.0, from 7.0.0 through 7.3.0.
-
-Users are recommended to upgrade to version 6.12.0 or 7.4.0, which fixes the issue.
-
-Credit:
-
-n0mi1k (finder)
-
-References:
-
-https://cwiki.apache.org/confluence/display/WW/S2-077
-https://struts.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-104713
-
+Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
