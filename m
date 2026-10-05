@@ -1,142 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/4
-Message-ID: <775962383b00d78067fec6158c678c71@herricane.ca>
-Date: Sun, 04 Oct 2026 22:25:45 -0400
-From: Katie <katie@...ricane.ca>
-To: oss-security@...ts.openwall.com
-Subject: Re: cloud computing provider disclosures
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/9
+Message-ID: <e7814b25-cdeb-4639-bb72-e2fa1b900a2e@cpansec.org>
+Date: Mon, 5 Oct 2026 07:55:09 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-19954: Net::Whois::Raw versions before 2.99044 for Perl ship a pwhois command-line tool that queries WHOIS for the wrong domain for unicode domain names
 Content-Type: text/plain; charset=utf-8
 
-On 2026-10-04 21:45, Aaron Rainbolt wrote:
-> On Sun, 4 Oct 2026 18:56:44 -0400
-> Jan Schaumann <jschauma@...meister.org> wrote:
-> 
->> Hello,
->> 
->> I was wondering whether it might make sense to
->> establish a disclosure list for cloud computing /
->> virtual private server hosting providers.
->> 
->> The reason that I think this might make sense is that
->> not every cloud computing provider necessarily offers
->> their own OS / Linux distribution, and thus may not be
->> qualified for membership on distros@.
->> 
->> At the same time there are vulnerabilities that
->> directly and significantly impact cloud computing
->> providers such that the internet would benefit from
->> them being able to mitigate prior to disclosure on
->> e.g., oss-security@.
->> 
->> An obvious example might be disclosure of VM escapes,
->> which disproportionally impacts such service
->> providers.
->> 
->> Another option might be to grant cloud computing
->> providers membership on distros@ even if they do not
->> offer their own custom Linux distribution.
->> 
->> What do people think?
-> 
-> I don't really think I'm a frequent enough contributor here to have
-> much say, nor do I run a cloud service, but I personally don't like 
-> this
-> idea so much. Cloud providers have to have a robust method to update
-> their world at any instant because the zero-day market is a thing, and
-> because people sometimes see a fix go public and immediately come up
-> with an exploit for the vuln it fixes without knowing anything more
-> about the vuln. If cloud providers can't update with near-zero notice,
-> they arguably shouldn't be providing cloud services. (Maybe I'm showing
-> my ignorance by saying this...)
-> 
-> The "early access to security vuln details" group should be as tiny as
-> possible to reduce the chances of anyone malicious being in the early
-> access list. Restricting it to people who can meaningfully contribute
-> seems like a good middle ground to me.
-> 
-> What might be useful is some system to alert users that something
-> important is going to be fixed soon and they need to brace for impact.
-> Maybe at the same time a VM escape vuln is disclosed on distros@, for
-> instance, an email could be sent to oss-security@ saying "A
-> high-severity vulnerability has been discovered in the Linux kernel.
-> Cloud providers are expected to be disproportionately affected." Of
-> course then the challenge becomes how to figure out what use cases are
-> affected by a certain vulnerability with the least possible effort on
-> the reporters, and how to not flood the list with notices for every
-> single high-severity vuln that affects a niche use case.
-> 
-> --
-> Aaron
+========================================================================
+CVE-2026-19954                                       CPAN Security Group
+========================================================================
 
-A thought at the bottom.
+         CVE ID:  CVE-2026-19954
 
-On 2026-10-04 21:45, Aaron Rainbolt wrote:
-> On Sun, 4 Oct 2026 18:56:44 -0400
-> Jan Schaumann <jschauma@...meister.org> wrote:
-> 
->> Hello,
->> 
->> I was wondering whether it might make sense to
->> establish a disclosure list for cloud computing /
->> virtual private server hosting providers.
->> 
->> The reason that I think this might make sense is that
->> not every cloud computing provider necessarily offers
->> their own OS / Linux distribution, and thus may not be
->> qualified for membership on distros@.
->> 
->> At the same time there are vulnerabilities that
->> directly and significantly impact cloud computing
->> providers such that the internet would benefit from
->> them being able to mitigate prior to disclosure on
->> e.g., oss-security@.
->> 
->> An obvious example might be disclosure of VM escapes,
->> which disproportionally impacts such service
->> providers.
->> 
->> Another option might be to grant cloud computing
->> providers membership on distros@ even if they do not
->> offer their own custom Linux distribution.
->> 
->> What do people think?
-> 
-> I don't really think I'm a frequent enough contributor here to have
-> much say, nor do I run a cloud service, but I personally don't like 
-> this
-> idea so much. Cloud providers have to have a robust method to update
-> their world at any instant because the zero-day market is a thing, and
-> because people sometimes see a fix go public and immediately come up
-> with an exploit for the vuln it fixes without knowing anything more
-> about the vuln. If cloud providers can't update with near-zero notice,
-> they arguably shouldn't be providing cloud services. (Maybe I'm showing
-> my ignorance by saying this...)
-> 
-> The "early access to security vuln details" group should be as tiny as
-> possible to reduce the chances of anyone malicious being in the early
-> access list. Restricting it to people who can meaningfully contribute
-> seems like a good middle ground to me.
-> 
-> What might be useful is some system to alert users that something
-> important is going to be fixed soon and they need to brace for impact.
-> Maybe at the same time a VM escape vuln is disclosed on distros@, for
-> instance, an email could be sent to oss-security@ saying "A
-> high-severity vulnerability has been discovered in the Linux kernel.
-> Cloud providers are expected to be disproportionately affected." Of
-> course then the challenge becomes how to figure out what use cases are
-> affected by a certain vulnerability with the least possible effort on
-> the reporters, and how to not flood the list with notices for every
-> single high-severity vuln that affects a niche use case.
-> 
-> --
-> Aaron
+   Distribution:  Net-Whois-Raw
+       Versions:  before 2.99044
+       MetaCPAN:  https://metacpan.org/dist/Net-Whois-Raw
+       VCS Repo:  https://github.com/regru/Net-Whois-Raw
 
-Interesting conversation.  I notice that Aaron mentions restricting the 
-early access group to those who can meaningfully contribute. To some 
-(like myself) a meaningful contribution might be creating a piece of art 
-(ex. fan art) for the oss-security list.  Therefore, it might be best to 
-qualify the type of contribution (ex. those who can meaningfully 
-contribute code maintenance).
 
--Katie
+Net::Whois::Raw versions before 2.99044 for Perl ship a pwhois
+command-line tool that queries WHOIS for the wrong domain for unicode
+domain names
+
+Description
+-----------
+Net::Whois::Raw versions before 2.99044 for Perl ship a pwhois
+command-line tool that queries WHOIS for the wrong domain for unicode
+domain names.
+
+pwhois encodes each non-ASCII label directly using Net::IDN::Punycode
+and prepends xn--. Apart from lowercasing ASCII and Cyrillic letters,
+it skips the IDNA mapping and normalization steps, so a label with
+other uppercase letters, or not in NFC, encodes to a different A-label
+than its IDNA form. For example, a label of U+00C9 followed by "cole"
+encodes to "xn--cole-pka" rather than "xn--cole-9oa".
+
+The Net::Whois::Raw library modules are not affected.
+
+Problem types
+-------------
+- CWE-176 Improper Handling of Unicode Encoding
+
+Workarounds
+-----------
+Apply the patch.
+
+For deployments that cannot apply the patch, convert the domain name to
+its A-label form, for example with Net::IDN::Encode::domain_to_ascii,
+before passing it to pwhois. pwhois passes all-ASCII names through
+unchanged.
+
+References
+----------
+https://metacpan.org/release/NALOBIN/Net-Whois-Raw-2.99044/changes
+https://security.metacpan.org/patches/N/Net-Whois-Raw/2.99043/CVE-2026-19954-r1.patch
+https://github.com/regru/Net-Whois-Raw/issues/34
+https://github.com/regru/Net-Whois-Raw/pull/35
+https://metacpan.org/release/PJCJ/Net-IDN-Encode-2.590-TRIAL/view/lib/Net/IDN/Punycode.pm#WARNING
+https://www.rfc-editor.org/rfc/rfc5891#section-5.2
+
+
 
