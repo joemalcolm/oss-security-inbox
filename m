@@ -1,36 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/2
-Message-ID: <CAK4yqw5rQZt_S1r77V+06KwQQqfuWj6LAfk95gs6-8XzrO9h3A@mail.gmail.com>
-Date: Tue, 6 Oct 2026 18:31:21 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/11
+Message-ID: <CAK4yqw6ZCoGkZASSZAzTZZFCefCLQO7Air=gwhH+2X4rQJoDhA@mail.gmail.com>
+Date: Tue, 6 Oct 2026 18:31:53 +0200
 From: Ondrej Gajdusek <ogajduse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-96658: Foreman: Safemode bypass leading to RCE (fixed in 3.19.2, 5.0.1)
+Subject: CVE-2026-12405: Foreman Remote Execution: command injection via effective_user (fixed in 16.6.6, 17.2.2, 18.0.1)
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-A security fix has been released in Foreman, an open-source lifecycle
-management tool for physical and virtual servers.
+A security fix has been released in Foreman Remote Execution, an open-source
+plugin for Foreman, an open-source lifecycle management tool for physical and
+virtual servers.
 
-CVE-2026-96658: Foreman: Safemode bypass leading to RCE
+CVE-2026-12405: Foreman Remote Execution: command injection via effective_user
 
-A low-privilege user permitted to render supplied template content can bypass
-Foreman's Safemode restrictions and reach Ruby code execution with Foreman
-service privileges.
+An authenticated user with permission to execute job templates can inject
+commands through the overridable `effective_user` parameter during job
+invocation. Improper input handling allows command execution with the
+execution user's privileges on managed hosts.
 
-Affected versions: Foreman releases bundling Safemode before 2.0.1,
-including Foreman 3.19.0, 3.19.1, and 5.0.0
-CVSS: 9.9 (Critical)
-CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
-Fixed versions: Foreman 3.19.2 and 5.0.1; Safemode 2.0.1 or later must
-be installed
-Credit: Robb Gatica
+Affected versions: Foreman Remote Execution 0.1.2–16.6.5, 16.7.0,
+17.0.0–17.2.1, and 18.0.0
+CVSS: 8.8 (Important)
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+Fixed versions: Foreman Remote Execution 16.6.6, 17.2.2, and 18.0.1
+Credit: Guilherme Suckevicz
 
 References:
-- Foreman Security: https://theforeman.org/security.html#2026-96658
-- Redmine: https://projects.theforeman.org/issues/39845
-- Fix: https://github.com/theforeman/safemode/pull/68
-- Dependency update: https://github.com/theforeman/safemode/pull/69
+- Foreman Security: https://theforeman.org/security.html#2026-12405
+- Redmine: https://projects.theforeman.org/issues/39836
+- Fix: https://github.com/theforeman/foreman_remote_execution/pull/1072
 
 Thanks,
 Ondrej Gajdusek
