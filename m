@@ -1,236 +1,362 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/06/3
-Message-ID: <CAN+fQHyG9O-QgKjaRAGaJ678OWB5KH2aQQHKYnYka9qmH+sjpw@mail.gmail.com>
-Date: Tue, 6 Oct 2026 15:38:18 +0200
-From: Sarah Boyce <sarahboyce@...ngoproject.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/06/2
+Message-ID: <9392213b8eb11c23@cvs.openbsd.org>
+Date: Tue, 6 Oct 2026 06:11:18 -0600 (MDT)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Cc: Django Security Team <security@...ngoproject.com>
-Subject: Django CVE-2026-77050, CVE-2026-84429, CVE-2026-87890, and CVE-2026-87975
+Subject: Announce: OpenSSH 10.6 released
 Content-Type: text/plain; charset=utf-8
 
-* Announce:
-https://www.djangoproject.com/weblog/2026/oct/06/security-releases/
+OpenSSH 10.6 has just been released. It will be available from the
+mirrors listed at https://www.openssh.com/ shortly.
 
-* CVE JSON Record for CVE-2026-77050:
-https://www.cve.org/CVERecord?id=CVE-2026-77050
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
 
-* CVE JSON Record for CVE-2026-84429:
-https://www.cve.org/CVERecord?id=CVE-2026-84429
+Recently the OpenSSH team have received a large number of security
+bug reports, many of which are findings from AI models or made with
+AI assistance. While many AI reports are determined not to have
+security impact when considered in the context of a realistic
+threat model, we very much welcome these reports, especially when
+combined with human triage, analysis, test-cases and particularly
+when accompanied by proposed fixes.
 
-* CVE JSON Record for CVE-2026-87890:
-https://www.cve.org/CVERecord?id=CVE-2026-87890
+** We have seen a number of cases where a security bug identified
+** by AI tools is subsequently independently discovered by a
+** different researcher. This suggests that adversaries who do not
+** report bugs to OSS projects are likely to be able to discover
+** these bugs too. Given this, the OpenSSH team will, for now, be
+** making more frequent releases to get bugfixes into users' hands
+** more quickly rather than batching them until the next planned
+** release.
 
-* CVE JSON Record for CVE-2026-87975:
-https://www.cve.org/CVERecord?id=CVE-2026-87975
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
 
-In accordance with [our security release policy](
-https://docs.djangoproject.com/en/dev/internals/security/),
-the Django team is issuing releases for
-[Django 6.1.2](https://docs.djangoproject.com/en/dev/releases/6.1.2/),
-[Django
-6.0.9](https://docs.djangoproject.com/en/dev/releases/6.0.9/), and [Django
-5.2.18](https://docs.djangoproject.com/en/dev/releases/5.2.18/).
-These releases address the security issues detailed below. We encourage all
-users of Django to upgrade as soon as possible.
+Future deprecation notice
+-------------------------
 
-## CVE-2026-77050: Potential denial-of-service vulnerability in
-`get_supported_language_variant()`
+ * scp(1): begin deprecating the -R flag, which is used to perform a
+   remote-to-remote copy by executing scp on a remote host. This
+   option is a fragile optimisation that is difficult to use because
+   it requires credentials on the remote host. It also creates
+   security risks if the shell quoting rules on the remote system
+   where the copy is performed differ from the client's expectations.
 
-`django.utils.translation.get_supported_language_variant()` was subject to
-a potential denial-of-service attack when processing many distinct, very
-long
-language codes. Language codes were used as keys in an in-memory cache
-before
-their length was limited, potentially consuming excessive process memory.
+   From OpenSSH 10.6, this option will continue to work but will
+   cause a deprecation warning to be emitted to standard error. In
+   a future release, the option will be ignored and will leave in
+   place the default remote-to-remote copy behaviour (copy via the
+   host running scp).
 
-To mitigate this vulnerability, language codes longer than 500 characters
-are
-now rejected or truncated before the cached lookup.
+ * sshd(8): support for platforms that do not allow file descriptor
+   passing and that also require root privilege for PTY allocation
+   will be removed in a future release. Affected platforms are known
+   to include SCO OpenServer 5 and QNX 6 but may include other
+   similarly old operating systems. This deprecation can be avoided
+   if the user community for these platforms is able to assist us in
+   building alternatives, such as avoiding the need for root in PTY
+   allocation.
 
-This issue has severity "low" according to the [Django security policy](
-https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
-).
+Potentially-incompatible changes
+--------------------------------
 
-Thanks to Gleb Lizunov for the report.
+ * ssh(1), sshd(8): compression will be less effective as a result
+   of the change noted below in the "Security" section
 
+ * ssh(1): destination usernames entered on the commandline are now
+   more stricly checked and will refuse usernames that include
+   backslash and dollar symbols. Usernames that are specified by
+   the "User" directive in configuration files are no subject to
+   these restrictions. This motivation for this change is mentioned
+   below in the "Security" section.
 
-## CVE-2026-84429: Potential denial-of-service vulnerability in HTTP header
-parsing
+ * sshd(8): on platforms that do not support file descriptor passing
+   and that require root for PTY allocation, the GatewayPorts and
+   StreamLocalForwarding options are forcibly disabled. The
+   motivation for this changes is discussed below in the "Security"
+   section.
 
-`django.utils.http.parse_header_parameters()` was subject to a potential
-denial-of-service attack due to quadratic time complexity when parsing a
-value with many separators inside a quoted parameter. An unauthenticated
-request could reach this parsing through headers such as `Accept` or
-`Content-Type`, for instance via the content negotiation performed by
-`HttpRequest.accepts()`. The per-call length limit does not bound the
-combined size of repeated headers.
+Changes since OpenSSH 10.5
+==========================
 
-The undocumented `django.utils.http.parse_header_parameters()` function now
-uses Python's `email.message.Message` for parsing. As a result, parsing of
-some malformed or unusual header values may differ, for example, RFC 2231
-values with a missing encoding are now decoded.
+This release contains a number of security fixes, several new
+features and some small bugfixes.
 
-This issue has severity "moderate" according to the [Django security
-policy](
-https://docs.djangoproject.com/en/stable/internals/security/#severity-levels
-).
+Security
+========
 
-Thanks to Jisung Chae for the report.
+ * sftp(1): more strictly validate paths returned from the server to
+   avoid some cases where a server could return paths that could
+   manipulate a recursive copy operation into writing outside its
+   target directory. Report and patch from Junghoon Cho.
 
+ * sshd(8): when GSSAPIAuthentication is in use, only store GSSAPI
+   credentials when authentication has succeeded. Avoids a situation
+   where credentials from a failed GSSAPIAuthentication attempt may
+   persist and be made inappropriately available if another
+   authentication subsequently succeeds. Issue report and patch from
+   Moritz Theile.
 
-## CVE-2026-87890: Potential request forgery via spatial lookup byte values
+ * sshd(8): reset GSSAPIAuthentication before authentication, avoiding
+   state from one authentication attempt being confused with that of
+   a later attempt. Report and feedback from Moritz Theile.
 
-Spatial lookups accepted raster values provided as `bytes` without requiring
-them to be explicitly wrapped in `django.contrib.gis.gdal.GDALRaster`.
-Although these values were opened through GDAL's in-memory virtual
-filesystem,
-they could contain a VRT document referencing an external raster source.
-This
-could cause GDAL to issue network requests as the Django process user while
-preparing the lookup.
+ * sshd(8), ssh(1): disable LZ77 dictionary coder to mitigate the
+   side-channel leaks described in "Crossing the Streams: SSH
+   Plaintext Recovery via a Common Compression Context in
+   Multiplexed Channels" by Fabian Bäumer and Marcus Brinkmann,
+   preprint https://arxiv.org/abs/2609.07709 (2026)
 
-This issue could be exploited by applications that passed
-attacker-controlled
-bytes directly to a spatial lookup. It was overlooked in the fix for
-CVE-2026-15307.
+   A chosen-plaintext attack method exists which makes use of
+   dictionary-based compression to recover secrets from one channel
+   by interacting with the SSH session's shared compression
+   dictionary through another channel.
 
-To mitigate this issue, raster values provided as `bytes` must now be
-wrapped
-in `GDALRaster` before being used in spatial lookups. Byte values
-representing
-valid hexadecimal geometries remain accepted.
+   Attacker-controlled input can recognizably reflect into the
+   total length of transmitted ciphertexts by virtue of LZ77
+   replacing repeated strings with back-references into the SSH
+   session's encoder search buffer, which is shared across all
+   channels. For this reason, the documentation already recommended
+   against enabling compression for connections that share trusted
+   and untrusted traffic.
 
-This is a backward incompatible change. As a reminder, all untrusted user
-input
-should be validated before use.
+   This change will reduce the effectiveness of the Compression
+   option. Users are encouraged to use application-level compression
+   over the SSH protocol where possible, as this will typically be
+   more effective and will be completely immune to this type of
+   attack.
 
-This issue has severity "moderate" according to the [Django security
-policy](
-https://docs.djangoproject.com/en/dev/internals/security/#security-issue-severity-levels
-).
+ * ssh(1): disallow '$' and '\' characters in usernames entered on
+   the command-line to avoid usernames from untrusted sources
+   yielding injection in shell context via ProxyCommand, Match exec,
+   etc. Usernames specified via the configuration files are not
+   subject this this control. Reported by SecBuddyF KeenLab Tencent
+   (CodeBuddy Security)
 
-Thanks to sicksec for the report.
+   We continue to recommend against directly exposing ssh(1) and
+   other tools' command-lines to untrusted input. Mitigations such
+   as this can not be absolute given the variety of shells and user
+   configurations in use.
 
+ * ssh-keygen(1): correct handling of Daylight Saving Time when
+   converting dates. Previous handling could cause errors of
+   up to +/- 1 hour (unless you are in the Antarctica/Troll
+   timezone, where the error could be +/- 2 hours). These errors
+   could result in creation of certificates with incorrect expiry
+   times. bz4004; from Khush Patel
 
-## CVE-2026-87975: Privilege abuse in model formsets with editable primary
-keys
+ * sshd(8), ssh(1): ensure that compressed payloads don't inflate
+   past the maximum supported packet length. Reported by Oleh Konko.
 
-Model formsets incorrectly allowed forged `POST` data to either delete
-instances outside the limiting queryset or create instances via `edit-only`
-formsets when the model's primary key could be set through the form,
-such as with: a `OneToOneField` (or parent link used as the primary key
-of an inline formset's model), or a natural or UUID primary key included
-in the form's fields. Models using the default `BigAutoField` primary key
-were not affected.
+ * sshd(8): fully honor the authorized_keys "restrict" keyword,
+   which was not being properly applied to tunnel forwarding
+   (PermitTunnel, disabled by default). This is a separate problem
+   to the one fixed in openssh-10.5.
 
-This issue has severity "moderate" according to the [Django security
-policy](
-https://docs.djangoproject.com/en/stable/internals/security/#severity-levels
-).
+ * sshd(8): correctly handle some options that accept "none". Some
+   options, including AuthorizedPrincipalsFile, were documented as
+   accepting "none" as a way to disable them; however, when
+   overridden by an sshd_config(5) Match keyword, this argument was
+   being incorrectly interpreted as a literal file.
+   With Chris Rohlf in collaboration with Claude and Anthropic Research
 
-Thanks to Seonggwon Yoon for the report.
+ * sshd(8): On OS X SDK >= 27, sandboxing is no longer supported
+   as the API we depended upon has been removed and no obvious
+   alternative provided.
 
+ * sshd(8): on platforms that do not support file descriptor passing
+   and that require root for PTY allocation, the post-authentication
+   sshd-session process retains root privilege, whereas on other
+   platforms this process runs with the privilege of the logged-in
+   user. When sshd-session was run with elevated privlege, it could
+   perform certain actions as root and circumvent controls that
+   would normally have applied to the user, such as making unix
+   domain socket connections or binding (via -R forwarding) to low-
+   numbered TCP ports.
 
+   For this reason, this release disables the GatewayPorts and
+   StreamLocalForwarding options and support for these (few)
+   platforms will be removed in future if no alteratives to
+   requiring privilege in the post-authentication process are found.
+   Affected platforms include QNX 6, SCO OpenServer 5 and builds
+   that were made with the --disable-fd-passing configure option.
 
-## Affected supported versions
+   This problem was reported separately by sn0x-sharma and by Dark
+   River.
 
-* Django main
-* Django 6.1
-* Django 6.0
-* Django 5.2
+New features
+------------
 
-## Resolution
+ * All: enable hybrid post-quantum ssh-mldsa44-ed25519 signature
+   algorithm. Note that this no longer uses the "@openssh.com"
+   vendor extension suffix that the previous experimental
+   implementation used. Keys generated with the previous experimental
+   support must be regenerated and/or removed.
 
-Patches to resolve the issue have been applied to Django's
-main, 6.1, 6.0, and 5.2 branches.
-The patches may be obtained from the following changesets.
+ * sshd(8): Add the WarnWeakCrypto option to sshd_config(5). This
+   option was previously available for the client only. This option
+   is enabled by default and will log when the client uses a key
+   agreement scheme that is not post-quantum safe.
 
-### CVE-2026-77050: Potential denial-of-service vulnerability in
-`get_supported_language_variant()`
+ * ssh-keygen(1), ssh-add(1): preserve user-verification (PIN or
+   biometric) requirement for resident keys loaded from a FIDO
+   token, by checking the credential's credProtect policy.
+   GHPR701 from Savely Krasovsky
 
-* On the [main branch](
-https://github.com/django/django/commit/c88b304cc2d90fc37d3bd1f5f3829706fa6c13bc
-)
-* On the [6.1 branch](
-https://github.com/django/django/commit/7e878b0f8bd42260903e6a0d38996a93b0474a0b
-)
-* On the [6.0 branch](
-https://github.com/django/django/commit/3d32ee80ae52745d686bf94d3555000ddf073267
-)
-* On the [5.2 branch](
-https://github.com/django/django/commit/02a69e3791e3df23d45ea4ea7e7fc489f0eef2be
-)
+ * ssh(1): include local and remote version strings in the ~I
+   connection information display.
 
-### CVE-2026-84429: Potential denial-of-service vulnerability in HTTP
-header parsing
+ * ssh-add(1): add a -P flag to skip PIN entry for FIDO and PKCS#11
+   tokens that do not require it.
 
-* On the [main branch](
-https://github.com/django/django/commit/7ff7fcc0508864a4bc39693128ace38b1e95a890
-)
-* On the [6.1 branch](
-https://github.com/django/django/commit/de56deeabd4c48dfb5193f0001469d80102fb367
-)
-* On the [6.0 branch](
-https://github.com/django/django/commit/3d8f121695c21234aff3071de0d38b6bd38c3f52
-)
-* On the [5.2 branch](
-https://github.com/django/django/commit/6ecd66e09a383be004a78a3a738ea9727ff07b0e
-)
+ * sftp(1): add '-p' flag for mkdir/lmkdir to create directories as
+   required. This flag has similar ergonomics to mkdir(1), and
+   previously-existing directories do not cause an error.
 
-### CVE-2026-87890: Potential request forgery via spatial lookup byte values
+ * ssh-keygen(1): add a "hexdump" key export mode that dumps the SSH
+   wire-formatted key blob in hex format. Useful when writing
+   documentation, tests, etc. E.g. `ssh-keygen -em hexdump -f /key`
 
-* On the [main branch](
-https://github.com/django/django/commit/ebcb13b327301f28cbc6cd5e4988a719f00575aa
-)
-* On the [6.1 branch](
-https://github.com/django/django/commit/4e77ef1e69c94780006b82795aa7db101996c3af
-)
-* On the [6.0 branch](
-https://github.com/django/django/commit/a2347fe8234a1831d56c875acc0ea51e0742957c
-)
-* On the [5.2 branch](
-https://github.com/django/django/commit/dd0558d1617619e0d66163675ef02135d0f54e5f
-)
+ * ssh(1), sshd(8): ChannelTimeout now accepts timeouts with
+   fractional seconds.
 
-### CVE-2026-87975: Privilege abuse in model formsets with editable primary
-keys
+ * sshd(8): allow specification of the location of $SSH_AUTH_SOCK
+   used for agent forwarding using a new AgentSocketPath option.
+   This supports both using a user-specific path, such as the
+   default of a subdirectory of $HOME ("user:.ssh/agent"), and
+   the previous approach of allowing agent forwarding sockets to be
+   located in a shared directory (e.g. "shared:/tmp"). Sockets
+   created in shared directories will be created inside a
+   subdirectory with a randomised name. bz3860
 
-* On the [main branch](
-https://github.com/django/django/commit/83cbd21be57483e6b3eb6e4688a561c841aff75e
-)
-* On the [6.1 branch](
-https://github.com/django/django/commit/cce6c57ed30ea83725f9d6abb2fe5ee932bab107
-)
-* On the [6.0 branch](
-https://github.com/django/django/commit/b83ab92bc5474558b083a840ea4628b3261b2cfe
-)
-* On the [5.2 branch](
-https://github.com/django/django/commit/ff27883ca055aa9ab23015b50674a5b10dfe5a41
-)
+ * ssh-agent(1): allow specification of agent socket directories
+   using a -A flag. It accepts "user:" and "shared:" directory
+   styles similar to the sshd AgentSocketPath option.
 
+ * sshd(8): account for public key authentication "key ok" tests
+   separately to auth attempts. Add a `PubkeyOptions max-pk-ok:nnnn`
+   option to allow a number of PK_OK tests (asking whether the
+   server might accept a given public key) that do not count against
+   MaxAuthTries, defaulting to 6 attempts. After these attempts are
+   exhausted, further attempts count as failed authentications
+   against MaxAuthTries. Practically, this allows more keys on disk
+   or held in ssh-agent to be checked for use before the server
+   disconnects.
 
-## The following releases have been issued
+ * ssh(1), sshd(8): extend the existing TCPKeepAlive option to also
+   support setting keepalives on sockets created for forwarding
+   connections. Previously this option controlled keepalives on the
+   connection socket only. TCPKeepAlive "yes" or "transport" enables
+   keepalives on the connection socket. "TCPKeepAlive all" additionally
+   enables them for forwarding sockets. bz3921
 
-* Django 6.1.2 ([tarball](
-https://www.djangoproject.com/download/6.1.2/tarball/) | [checksums](
-https://www.djangoproject.com/download/6.1.2/checksum/))
-* Django 6.0.9 ([tarball](
-https://www.djangoproject.com/download/6.0.9/tarball/) | [checksums](
-https://www.djangoproject.com/download/6.0.9/checksum/))
-* Django 5.2.18 ([tarball](
-https://www.djangoproject.com/download/5.2.18/tarball/) | [checksums](
-https://www.djangoproject.com/download/5.2.18/checksum/))
+Bugfixes
+--------
 
-The PGP key ID used for this release is Sarah Boyce: [3955B19851EA96EF](
-https://github.com/sarahboyce.gpg)
+ * sshd(8), ssh(1): fix configuration matching on more Turkic
+   languages which have disjoint dotted and dotless i/I characters,
+   specifically Azerbaijani and Crimean Tatar. bz3991
 
+ * ssh(1), sshd(8): don't attempt to set TCP_NODELAY on non-IP/IPv6
+   sockets. Eliminates some noise in debug logs.
 
-## General notes regarding security reporting
+ * ssh(1): fix case for ssh -G option output; bz4005
 
-As always, we ask that potential security issues be reported via private
-email
-to `security@...ngoproject.com`, and not via Django's Trac instance, nor via
-the Django Forum. Please see
-[our security policies](https://www.djangoproject.com/security/) for further
-information.
+ * ssh(1), sshd(8): Fix ChannelTimeout specificity; previously a
+   more specific channel type (e.g. "session:shell") could clobber
+   a user-specified ChannelTimeout if it was less specific (e.g.
+   "session").  Also, in some cases, the debug messages were
+   printing 0 instead of the effective timeout. bz3994
+
+ * sftp(1): avoid NULL dereference crash in some circumstances when
+   a server fails a stat/lstat operation. GHPR707
+
+ * sshd(8): close a race condition where a SIGTERM/SIGQUIT would be
+   ignored if it was received by the server while it was processing a
+   SIGHUP restart request. bz3981
+
+ * sshd(8), ssh(1): check key and CA signature types during key
+   parsing against allowlists (PubkeyAcceptedAlgorithms, etc) as
+   early as possible. This reduces the attack surface presented by
+   disabled algorithms. Suggested by and with extensive feedback
+   from Chris Rohlf in collaboration with Claude and Anthropic
+   Research.
+
+ * All: switch the fallback implementation of the ed25519 signature
+   algorithm used when libcrypto is disabled from SUPERCOP ed25519
+   to libsodium. The libsodium implementation includes a number of
+   strictness checks over the original reference implementation we
+   have used to this point and a more ergonomic API.
+
+ * ssh-add(1), ssh(1), ssh-keygen(1): fix spin on password entry when
+   the program attempting to read a password was started in a
+   background process group, with no TTY and with certain signals
+   ignored. bz3995
+
+ * scp(1): disallow nul byte in received scp -O filename. This was
+   not reachable in normal operation. Reported by Chua Wei Xun.
+
+ * ssh-keygen(1), ssh(1), sshd(8): implement a maximum number of KDF
+   rounds that will be accepted when writing an OpenSSH-format
+   private key or when loading one. This limit is set quite high
+   (1M), but ensures that a service that is passed a bad key with a
+   ridiculously high number of rounds will eventually complete
+   parsing it.
+
+ * ssh-keygen(1): bump the default number of KDF rounds from 24 to
+   32 (this is a linear increase, not like bcrypt(3) which is
+   exponential).
+
+ * ssh(1): make StreamLocalBindMask properly respect Host/Match
+   blocks and make it first-match-wins as documented. bz4013
+
+ * sshd(8): make StreamLocalBindMask properly first-match-wins.
+
+Portability
+-----------
+
+ * All: remove the NetBSD BROKEN_READ_COMPARISON workaround. This
+   appears to be no longer required and caused pre-auth CPU spinning.
+
+ * sshd(8): don't link sshd against libselinux when SELinux support
+   is enabled (note: this library is still linked for the sshd-auth
+   and sshd-session helper binaries).
+
+ * sshd(8): allow madvise(..., MADV_DONTNEED_LOCKED) in the seccomp
+   sandbox; needed by GrapheneOS' hardened allocator. bz4001
+
+ * sshd(8): restrict mremap(2) flags accepted by the seccomp
+   sandbox. Only MREMAP_MAYMOVE is now accepted as other flags may
+   have some utility in attack chains. Reported by: Mohammad Hossein
+   Abedini.
+
+ * sshd(8): allow PAMServiceName in Match (regressed in 10.4).
+   During the refactor of server option parsing, the ability to set
+   PAMServiceName in Match blocks was accidentally disabled.
+
+ * sshd(8): the --disable-fd-passing configure option has been
+   removed.
+
+Checksums:
+==========
+
+ - SHA1 (openssh-10.6.tar.gz) = 096e9cd60cd08e0acacfe16b615144f8c0463da5
+ - SHA256 (openssh-10.6.tar.gz) = 0lP9h9/QH3k667vqbxKhkkusc3CN5iKUiDNI9fsR06A=
+ - SHA1 (openssh-10.6p1.tar.gz) = e6a34f5625e20172b214c50ebd4e0dcb4fd18013
+ - SHA256 (openssh-10.6p1.tar.gz) = qdyVZd/+hkD2TYY80poyvEo9vewFZqf8RMXW7nZ9Xzk=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
 
