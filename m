@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/15
-Message-ID: <4c002927-77b6-ed3a-1aba-9ab46b5576c9@apache.org>
-Date: Tue, 06 Oct 2026 19:43:05 +0000
-From: Jan Friedrich <freeandnil@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/20
+Message-ID: <4b98bbdc-37b4-22d5-084b-0e954346dc23@apache.org>
+Date: Tue, 06 Oct 2026 22:08:24 +0000
+From: Michael Smith <michaelsmith@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-105241: Apache log4net: Unencodable content discards a whole SmtpPickupDirAppender batch 
+Subject: CVE-2026-90466: Apache Impala: Path traversal executes JARs outside trusted paths 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
-    CVSS 3.1: 5.3 (medium) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Severity: important 
 
 Affected versions:
 
-- Apache log4net 1.2.9 before 3.5.0
-- Apache log4net 02e1e115435888485f2e28b414d267e39e799e07 before 4d2e10f0908199604b4326f9df6d0b43b871e333
+- Apache Impala 4.5.2 before 4.5.3
 
 Description:
 
-Improper Handling of Unicode Encoding vulnerability in the SmtpPickupDirAppender of Apache log4net.
+Path traversal of 'trusted_jar_paths' in Impala 4.5.2 allows an attacker-controlled JAR to be loaded via a relative path where the prefix matches a path specified in 'trusted_jar_paths'.
 
-Content that the mail file writer cannot encode, such as an unpaired UTF-16 surrogate, made the write throw. Every buffered event in the batch was discarded, not only the one carrying the content, and a truncated mail could be left in the pickup directory. A party whose data reaches a log message could suppress the records of other events. Only applications that use SmtpPickupDirAppender are affected.
 
-This issue affects Apache log4net: from 1.2.9 before 3.5.0.
 
-Users are recommended to upgrade to version 3.5.0, which fixes the issue.
+
+The startup flag 'trusted_jar_paths' references URIs for loading files from local or remote filesystems. Path traversal can't override the schema, but can result in loading a JAR that has been uploaded to a different location in that filesystem via Impala DDLs such as CREATE DATA SOURCE and CREATE TABLE. Path traversal can only be used if a trusted path exists, so this attack requires 'trusted_jar_paths' have a non-empty value configured by the Impala admin.
+
+
+
+
+Users are recommended to upgrade to version 4.5.3, which fixes this issue.
+
+This issue is being tracked as IMPALA-15345 
 
 Credit:
 
-The Apache Software Foundation (finder)
-Claude Security (tool)
-Jan Friedrich (remediation developer)
+Andrew Rukin (Arenadata) (reporter)
 
 References:
 
-https://github.com/apache/logging-log4net/pull/315
-https://github.com/apache/logging-log4net/commit/4d2e10f0908199604b4326f9df6d0b43b871e333
-https://logging.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-105241
+https://impala.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-90466
+https://issues.apache.org/jira/browse/IMPALA-15345
 
