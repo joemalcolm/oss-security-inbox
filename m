@@ -1,35 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/5
-Message-ID: <CAK4yqw78S76Oij0Wguf=oaNJQrx0V781kL6+unK-k_2sSwGTAw@mail.gmail.com>
-Date: Tue, 6 Oct 2026 18:31:32 +0200
-From: Ondrej Gajdusek <ogajduse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/14
+Message-ID: <1a9eb148-0f4d-9cf5-87e6-a0dd0a692a63@apache.org>
+Date: Tue, 06 Oct 2026 19:42:36 +0000
+From: Jan Friedrich <freeandnil@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-12545: Hammer CLI: editor command injection (fixed in 3.19.1, 5.0.1)
+Subject: CVE-2026-105239: Apache log4net: NUL character truncates EventLogAppender records 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate 
+    CVSS 3.1: 5.3 (medium) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
 
-A security fix has been released in Hammer CLI, a command-line interface for
-Foreman.
+Affected versions:
 
-CVE-2026-12545: Hammer CLI: editor command injection
+- Apache log4net 1.2.9 before 3.5.0
+- Apache log4net 02e1e115435888485f2e28b414d267e39e799e07 before dc5855a0720c91590fd7a81d729ea01fdd69e000
 
-A local attacker who can influence Hammer CLI's editor configuration can cause
-commands to execute when a user invokes the affected editor flow. If Hammer CLI
-runs with elevated privileges, this can result in privilege escalation.
+Description:
 
-Affected versions: Hammer CLI 0.15.1 through 3.19.0, and 5.0.0
-CVSS: 6.7 (Moderate)
-CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:H/I:H/A:H
-Fixed versions: Hammer CLI 3.19.1 and 5.0.1
-Credit: Guilherme Suckevicz
+Improper Neutralization of Null Byte or NUL Character vulnerability in the EventLogAppender of Apache log4net.
+
+A NUL character in logged content ended the Windows Event Log record at that point, so everything the layout rendered after it, including exception text and trailing fields, was silently not stored. A party whose data reaches a log message could hide the rest of that record. Only applications on Windows that use EventLogAppender are affected.
+
+This issue affects Apache log4net: from 1.2.9 before 3.5.0.
+
+Users are recommended to upgrade to version 3.5.0, which fixes the issue.
+
+Credit:
+
+The Apache Software Foundation (finder)
+Claude Security (tool)
+Jan Friedrich (remediation developer)
 
 References:
-- Foreman Security: https://theforeman.org/security.html#2026-12545
-- Redmine: https://projects.theforeman.org/issues/39842
-- Fix: https://github.com/theforeman/hammer-cli/pull/407
 
-Thanks,
-Ondrej Gajdusek
-Foreman Release Team
+https://github.com/apache/logging-log4net/pull/315
+https://github.com/apache/logging-log4net/commit/dc5855a0720c91590fd7a81d729ea01fdd69e000
+https://logging.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-105239
 
