@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/6
-Message-ID: <CAK4yqw63WPVjnRYMF9stbrfSvq8pSU_Ou+n7Lakrtti--GrjhQ@mail.gmail.com>
-Date: Tue, 6 Oct 2026 18:31:34 +0200
-From: Ondrej Gajdusek <ogajduse@...hat.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/15
+Message-ID: <4c002927-77b6-ed3a-1aba-9ab46b5576c9@apache.org>
+Date: Tue, 06 Oct 2026 19:43:05 +0000
+From: Jan Friedrich <freeandnil@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-12544: Foreman: SSTI and unsafe deserialization in configuration (fixed in 3.19.2, 5.0.1)
+Subject: CVE-2026-105241: Apache log4net: Unencodable content discards a whole SmtpPickupDirAppender batch 
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Severity: moderate 
+    CVSS 3.1: 5.3 (medium) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
 
-A security fix has been released in Foreman, an open-source lifecycle
-management tool for physical and virtual servers.
+Affected versions:
 
-CVE-2026-12544: Foreman: SSTI and unsafe deserialization in configuration
+- Apache log4net 1.2.9 before 3.5.0
+- Apache log4net 02e1e115435888485f2e28b414d267e39e799e07 before 4d2e10f0908199604b4326f9df6d0b43b871e333
 
-An attacker who can influence Foreman configuration can trigger server-side
-template evaluation or unsafe deserialization during `foreman-rake` startup,
-leading to code execution in a privileged service context.
+Description:
 
-Affected versions: Foreman 1.0 through 3.19.1, and 5.0.0; the ERB
-execution path starts at 1.15.0
-CVSS: 7.7 (Important)
-CVSS:3.1/AV:L/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:H
-Fixed versions: Foreman 3.19.2 and 5.0.1
-Credit: Guilherme Suckevicz
+Improper Handling of Unicode Encoding vulnerability in the SmtpPickupDirAppender of Apache log4net.
+
+Content that the mail file writer cannot encode, such as an unpaired UTF-16 surrogate, made the write throw. Every buffered event in the batch was discarded, not only the one carrying the content, and a truncated mail could be left in the pickup directory. A party whose data reaches a log message could suppress the records of other events. Only applications that use SmtpPickupDirAppender are affected.
+
+This issue affects Apache log4net: from 1.2.9 before 3.5.0.
+
+Users are recommended to upgrade to version 3.5.0, which fixes the issue.
+
+Credit:
+
+The Apache Software Foundation (finder)
+Claude Security (tool)
+Jan Friedrich (remediation developer)
 
 References:
-- Foreman Security: https://theforeman.org/security.html#2026-12544
-- Redmine: https://projects.theforeman.org/issues/39841
-- Fix: https://github.com/theforeman/foreman/pull/11310
 
-Thanks,
-Ondrej Gajdusek
-Foreman Release Team
+https://github.com/apache/logging-log4net/pull/315
+https://github.com/apache/logging-log4net/commit/4d2e10f0908199604b4326f9df6d0b43b871e333
+https://logging.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-105241
 
