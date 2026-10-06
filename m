@@ -1,29 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/22
-Message-ID: <0aab5697-0850-d932-a226-d666c1de940f@apache.org>
-Date: Tue, 06 Oct 2026 22:05:32 +0000
-From: Michael Smith <michaelsmith@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/1
+Message-ID: <CAK4yqw5n-89PczFX+DckvX=RsbZxA8GsrSJGRZ5=rn348-0+Lw@mail.gmail.com>
+Date: Tue, 6 Oct 2026 18:31:15 +0200
+From: Ondrej Gajdusek <ogajduse@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-97720: Apache Impala: Impala Executor Webserver Auth Bypass 
+Subject: CVE-2026-96659: Foreman: excessive Viewer permissions on preview (fixed in 3.19.2, 5.0.1)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Hi,
 
-Affected versions:
+A security fix has been released in Foreman, an open-source lifecycle
+management tool for physical and virtual servers.
 
-- Apache Impala 4.1.0 through 4.5.2
+CVE-2026-96659: Foreman: excessive Viewer permissions on preview
 
-Description:
+The Viewer role can access data through template preview beyond intended
+authorization boundaries. In configurations where Safemode is disabled or
+bypassed, this can lead to code execution as the Foreman service account.
 
-Incorrect implementation of JWT/OAuth authentication in Impala executors in Apache Impala versions up to and including 4.5.2 which allows attacked to access resources served by the executor's webserver when that webserver is configured to accept JWT/OAuth tokens.  Bearer token (JWT) signatures are not validated resulting in the webserver accepting any valid JWT.
-Users are recommended to either disable JWT/OAuth auth for Impala executors or upgrade to version 4.5.3, which fixes this issue.
-
-Credit:
-
-Andrew Rukin (Arenadata) (finder)
+Affected versions: Foreman 1.9.0 through 3.19.1, and 5.0.0
+CVSS: 9.1 (Important)
+CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:L/A:L
+Fixed versions: Foreman 3.19.2 and 5.0.1
+Credit: Robb Gatica
 
 References:
+- Foreman Security: https://theforeman.org/security.html#2026-96659
+- Redmine: https://projects.theforeman.org/issues/39846
+- Fix: https://github.com/theforeman/foreman/pull/11310
 
-https://impala.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-97720
+Thanks,
+Ondrej Gajdusek
+Foreman Release Team
 
