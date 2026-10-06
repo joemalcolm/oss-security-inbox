@@ -1,35 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/05/11
-Message-ID: <79a84ab1-6c1b-97d9-801b-ec269daefc5a@apache.org>
-Date: Mon, 05 Oct 2026 07:12:32 +0000
-From: Lukasz Lenart <lukaszlenart@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-104712: Apache Struts: Disproportionate response size when rendering BigDecimal request parameters 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/06/1
+Message-ID: <e3c9469815721aa1bac6b22b93de6636@cpansec.org>
+Date: Mon, 05 Oct 2026 22:14:49 -0300
+From: Timothy Legge <timlegge@...nsec.org>
+To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
+Subject: CVE-2026-104380: Punk versions from 0.48 before 0.55 for Perl route Extended CONNECT requests to any GET route without an Origin check in ps_serve_one
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-104380                                      CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-104380
 
-- Apache Struts 2.5.14 through 2.5.33
-- Apache Struts 6.0.0 through 6.11.0
-- Apache Struts 7.0.0 through 7.3.0
+   Distribution:  Punk
+       Versions:  from 0.48 before 0.55
+       MetaCPAN:  https://metacpan.org/dist/Punk
 
-Description:
 
-Asymmetric resource consumption (amplification) vulnerability in Apache Struts. When a request parameter is bound to an arbitrary-precision decimal (java.math.BigDecimal) property that is then rendered through the Struts tag library, the framework can produce a response many orders of magnitude larger than the request, allowing an unauthenticated remote attacker to exhaust server CPU and outbound network capacity with sustained low-volume traffic. Applications that do not bind request parameters to BigDecimal properties, or never render such a property through the Struts tag library, are not affected.
+Punk versions from 0.48 before 0.55 for Perl route Extended CONNECT
+requests to any GET route without an Origin check in ps_serve_one
 
-This issue affects Apache Struts: from 2.5.14 through 2.5.33, from 6.0.0 through 6.11.0, from 7.0.0 through 7.3.0.
+Description
+-----------
+Punk versions from 0.48 before 0.55 for Perl route Extended CONNECT
+requests to any GET route without an Origin check in ps_serve_one.
 
-Users are recommended to upgrade to version 6.12.0 or 7.4.0, which fixes the issue.
+On HTTP/2 and HTTP/3 a WebSocket handshake arrives as an Extended
+CONNECT, which is matched as a GET and so reaches every GET route, API
+operation and mount. The Origin check runs only when a websocket route
+matches. On this transport the handler's status is the handshake
+response, and a 2xx accepts it.
 
-Credit:
+A cross-origin page can open a WebSocket to any path and learn from its
+open or error event whether that path returns 2xx.
 
-0xCc.zhang (finder)
+Problem types
+-------------
+- CWE-1385 Missing Origin Validation in WebSockets
 
-References:
+Solutions
+---------
+Upgrade to Punk 0.55 or later.
 
-https://cwiki.apache.org/confluence/display/WW/S2-076
-https://struts.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-104712
-
+References
+----------
+https://metacpan.org/release/LNATION/Punk-0.55/diff/LNATION/Punk-0.54
+https://metacpan.org/release/LNATION/Punk-0.55/changes
