@@ -1,40 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/14
-Message-ID: <1a9eb148-0f4d-9cf5-87e6-a0dd0a692a63@apache.org>
-Date: Tue, 06 Oct 2026 19:42:36 +0000
-From: Jan Friedrich <freeandnil@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/26
+Message-ID: <2c4af9fd-8ce0-4d64-43cd-1f7873a4549d@apache.org>
+Date: Wed, 07 Oct 2026 06:45:02 +0000
+From: Wilfred Spiegelenburg <wilfreds@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-105239: Apache log4net: NUL character truncates EventLogAppender records 
+Subject: CVE-2026-97146: Apache YuniKorn: Admission control bypass via system label forgery 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
-    CVSS 3.1: 5.3 (medium) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+Severity: 
+    CVSS 4.0: 4.8 (medium) CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:P/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N
 
 Affected versions:
 
-- Apache log4net 1.2.9 before 3.5.0
-- Apache log4net 02e1e115435888485f2e28b414d267e39e799e07 before dc5855a0720c91590fd7a81d729ea01fdd69e000
+- Apache YuniKorn before 1.10.0
 
 Description:
 
-Improper Neutralization of Null Byte or NUL Character vulnerability in the EventLogAppender of Apache log4net.
+Apache YuniKorn 1.9.0 and earlier allows bypassing the check for the user annotation by setting a secondary label on the pod. If the pod has the label 'app=yunikorn' the checks limiting the user annotation content are not run. The label is used to identify the YuniKorn application itself in the deployments.
 
-A NUL character in logged content ended the Windows Event Log record at that point, so everything the layout rendered after it, including exception text and trailing fields, was silently not stored. A party whose data reaches a log message could hide the rest of that record. Only applications on Windows that use EventLogAppender are affected.
 
-This issue affects Apache log4net: from 1.2.9 before 3.5.0.
+The bypass allows any user to specify an arbitrary user info annotation. The arbitrary user information could allow access to a queue that the user normally would not have access to. Quota usage for the queue might be impacted if the application runs in the incorrect queue. User based quota enforcement is also based on the user annotation. User quota tracking could be side stepped even if the application runs in the correct queue.
 
-Users are recommended to upgrade to version 3.5.0, which fixes the issue.
+
+
+
+Users are recommended to upgrade to version 1.10.0, which fixes this issue.
+
+This issue is being tracked as YUNIKORN-3472 
 
 Credit:
 
-The Apache Software Foundation (finder)
-Claude Security (tool)
-Jan Friedrich (remediation developer)
+mopmonk-ai@...hant.com (finder)
 
 References:
 
-https://github.com/apache/logging-log4net/pull/315
-https://github.com/apache/logging-log4net/commit/dc5855a0720c91590fd7a81d729ea01fdd69e000
-https://logging.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-105239
+https://yunikorn.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-97146
+https://issues.apache.org/jira/browse/YUNIKORN-3472
 
