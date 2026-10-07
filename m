@@ -1,85 +1,141 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/32
-Message-ID: <b68daa8d-aa17-4568-8836-416c52971221@gmail.com>
-Date: Wed, 7 Oct 2026 15:42:25 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/31
+Message-ID: <244e7d0f-2446-4428-9e90-e240944728da@gmail.com>
+Date: Wed, 7 Oct 2026 14:25:32 -0700
 From: Goutham Pacha Ravi <gouthampravi@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSN-0109] Cross-project metric association bypass in Gnocchi
+Subject: Re: [OSSA-2026-043] OpenStack Zaqar: Zaqar WebSocket project substitution allows cross-project queue access (CVE-2026-107363) errata 1
 Content-Type: text/plain; charset=utf-8
 
-==========================================================================
-OSSN-0109: Cross-project metric association bypass in Gnocchi (2026-10-07)
-==========================================================================
+Errata 1 for OSSA-2026-043: CVE-2026-107363 has been assigned for this 
+vulnerability.
 
-Summary
+=====================================================================================
+OSSA-2026-043: Zaqar WebSocket project substitution allows cross-project 
+queue access
+=====================================================================================
+
+:Date: October 07, 2026
+:CVE: CVE-2026-107363
+
+
+Affects
 ~~~~~~~
-The Gnocchi metric creation endpoint allows authenticated users to associate
-metrics with resources owned by others by passing resource_id in the request
-body bypassing proper authorization checks.
-
-This improper access control enables attackers to inject arbitrary measures
-into resources, squat on metric names, and trigger downstream actions 
-including
-Aodh alarms and Heat scaling policies across project boundaries.
+- Zaqar: >=1.0.0 <20.1.3, >=21.0.0 <21.0.3, >=22.0.0 <22.0.3, ==23.0.0
 
 
+Description
+~~~~~~~~~~~
+Chen YuXiang from the Institute of Computing Technology, Chinese Academy
+of Sciences reported a vulnerability in Zaqar's WebSocket transport. An
+authenticated remote attacker who knows a target project's UUID may
+substitute it in subsequent WebSocket frames to enumerate, inspect,
+create, or delete queues belonging to that project. This may result in
+unauthorized disclosure, modification, or loss of queue data. Only
+deployments using the WebSocket transport with Keystone authentication
+are affected.
 
-Affected Services / Software
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-- Gnocchi (<4.6.6, ==4.7.0)
 
 
-Discussion
+Errata
+~~~~~~
+CVE-2026-107363 has been assigned for this vulnerability.
+
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/1009254 (2025.1/epoxy)
+- https://review.opendev.org/1009253 (2025.2/flamingo)
+- https://review.opendev.org/1009252 (2026.1/gazpacho)
+- https://review.opendev.org/1009251 (2026.2/hibiscus)
+- https://review.opendev.org/1009250 (2027.1/indri (development))
+
+
+Credits
+~~~~~~~
+- Chen YuXiang from Institute of Computing Technology, Chinese Academy 
+of Sciences (CVE-2026-107363)
+
+
+References
 ~~~~~~~~~~
-The Gnocchi API did not apply any policy when passing ``resource_id`` in the
-request body when creating metrics using ``POST /v1/metric``.
+- https://launchpad.net/bugs/2161402
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-107363
 
-This allowed an attacker to create metrics for another project's 
-resources if
-the resource UUID was known or could be enumerated.
 
-The attacker can push measures to this metric potentially affecting Aodh 
-alarms
-and thus Heat scaling policies that could trigger stack changes that causes
-changes in OpenStack resources on the project.
+OSSA History
+~~~~~~~~~~~~
+- 2026-10-07 - Errata 1
+- 2026-10-07 - Original Version
 
-The attacker can use this to squat on metric names, other members in the 
-project
-cannot delete metrics created by the attacker due to (correct) policy 
-enforcement.
-
-This vulnerability was originally disclosed by gnocchi's upstream
-at https://github.com/gnocchixyz/gnocchi.
+--
+Goutham Pacha Ravi
+OpenStack Vulnerability Management Team
+https://security.openstack.org/vmt.html
 
 
 
-Recommended Actions
-~~~~~~~~~~~~~~~~~~~
-Upgrade to a version containing the fix or apply the relevant patch and 
-restart
-the Gnocchi API service.
+On 10/7/26 10:59 AM, Goutham Pacha Ravi wrote:
+> =====================================================================================
+> OSSA-2026-043: Zaqar WebSocket project substitution allows cross-project 
+> queue access
+> =====================================================================================
+> 
+> :Date: October 07, 2026
+> :CVE: CVE-2026-pending
+> 
+> 
+> Affects
+> ~~~~~~~
+> - Zaqar: >=1.0.0 <20.1.3, >=21.0.0 <21.0.3, >=22.0.0 <22.0.3, ==23.0.0
+> 
+> 
+> Description
+> ~~~~~~~~~~~
+> Chen YuXiang from the Institute of Computing Technology, Chinese Academy
+> of Sciences reported a vulnerability in Zaqar's WebSocket transport. An
+> authenticated remote attacker who knows a target project's UUID may
+> substitute it in subsequent WebSocket frames to enumerate, inspect,
+> create, or delete queues belonging to that project. This may result in
+> unauthorized disclosure, modification, or loss of queue data. Only
+> deployments using the WebSocket transport with Keystone authentication
+> are affected.
+> 
+> 
+> 
+> Patches
+> ~~~~~~~
+> - https://review.opendev.org/1009254 (2025.1/epoxy)
+> - https://review.opendev.org/1009253 (2025.2/flamingo)
+> - https://review.opendev.org/1009252 (2026.1/gazpacho)
+> - https://review.opendev.org/1009251 (2026.2/hibiscus)
+> - https://review.opendev.org/1009250 (2027.1/indri (development))
+> 
+> 
+> Credits
+> ~~~~~~~
+> - Chen YuXiang from Institute of Computing Technology, Chinese Academy 
+> of Sciences
+> 
+> 
+> References
+> ~~~~~~~~~~
+> - https://launchpad.net/bugs/2161402
+> - http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
+> 
+> 
+> Notes
+> ~~~~~
+> - A CVE identifier was requested from MITRE for this vulnerability on
+>    2026-10-06. The CVE will be added to this advisory by errata once
+>    assigned.
+> 
+> -- 
+> Goutham Pacha Ravi
+> OpenStack Vulnerability Management Team
+> https://security.openstack.org/vmt.html
 
-**Patches:**
-
-- master (development): 
-https://github.com/gnocchixyz/gnocchi/commit/db32814f594bae25a8483c6d9af4e6378191b7c3
-- 4.7 release series: 
-https://github.com/gnocchixyz/gnocchi/commit/5078143c29efa53cffaf8c456ce94baaa6e88724
-- 4.6 release series: 
-https://github.com/gnocchixyz/gnocchi/commit/0672fc6a40319e5d632d727afa6aaa5031651ff5
-
-
-**Credits:** swdb
-
-
-Contacts / References
-~~~~~~~~~~~~~~~~~~~~~
-**Author:** Tobias Urdin (Binero)
-
-
-* This OSSN : https://docs.openstack.org/security-notes/OSSN-0109.html
-* GitHub Advisory : 
-https://github.com/gnocchixyz/gnocchi/security/advisories/GHSA-cjq3-6hm7-q33w
 
 Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
 
