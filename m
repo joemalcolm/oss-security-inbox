@@ -1,40 +1,260 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/17
-Message-ID: <d44696e2-320b-8cf3-5cc5-a1c774b06556@apache.org>
-Date: Tue, 06 Oct 2026 19:43:24 +0000
-From: Jan Friedrich <freeandnil@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/07/23
+Message-ID: <asWmihxZ2NQIptyf@frog>
+Date: Wed, 7 Oct 2026 11:56:08 +1000
+From: Peter Hutterer <peter.hutterer@...-t.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-105243: Apache log4net: Oversize EventLogAppender record silently discarded 
+Subject: FW: X.Org Security Advisory: multiple security issues in X.Org X server
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
-    CVSS 3.1: 5.3 (medium) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N
+======================================================================
+X.Org Security Advisory: October 07, 2026
 
-Affected versions:
+Issues in X.Org X server prior to xorg-server-21.1.25
+and Xwayland prior to xwayland-24.1.14
+======================================================================
 
-- Apache log4net 1.2.9 before 3.5.0
-- Apache log4net 02e1e115435888485f2e28b414d267e39e799e07 before 28fbfb25678c48a8cc5bc9b94ead0dddfc39ffed
+Multiple issues have been found in the X server and Xwayland implementations
+published by X.Org for which we are releasing security fixes for in
+xorg-server-21.1.25 and xwayland-24.1.14.
 
-Description:
+* CVE-2026-88812: XKB SetGeometry TextDoodad Double Free
 
-Insufficient Logging vulnerability in the EventLogAppender of Apache log4net.
+   _CheckSetDoodad() in xkb/xkb.c frees doodad->text.text on error but does
+   not NULL the pointer. When the error path continues, _XkbClearDoodad() is
+   called during cleanup and frees the same pointer again, resulting in a
+   double free.
 
-Long messages were truncated to a fixed size that exceeds what the Windows Event Log accepts once the log and source names are counted, and the event log then stored nothing and reported nothing. A party whose data reaches a log message could suppress the whole record by making it long enough. Only applications on Windows that use EventLogAppender are affected.
+   An authenticated X client can trigger this by sending a crafted
+   XkbSetGeometry request with a malformed TextDoodad entry that causes the
+   initial error path to be taken.
 
-This issue affects Apache log4net: from 1.2.9 before 3.5.0.
+   The double free can lead to heap corruption, potentially enabling arbitrary
+   code execution or denial of service (crash).
 
-Users are recommended to upgrade to version 3.5.0, which fixes the issue.
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/0d1b1b0bad86
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31221)
 
-Credit:
+* CVE-2026-93515: Present Extension Cross-Window Notify Use-After-Free
 
-The Apache Software Foundation (finder)
-Claude Security (tool)
-Jan Friedrich (remediation developer)
+   present_clear_window_notifies() does not unlink notify entries from the
+   per-window list before freeing window_priv. When the window is
+   subsequently destroyed or reused, the stale list entries are traversed,
+   resulting in a use-after-free.
 
-References:
+   An authenticated X client can trigger this by creating cross-window
+   Present notifies and then destroying the target window. Both the
+   Present and SYNC extensions must be enabled (they are by default).
 
-https://github.com/apache/logging-log4net/pull/315
-https://github.com/apache/logging-log4net/commit/28fbfb25678c48a8cc5bc9b94ead0dddfc39ffed
-https://logging.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-105243
+   The use-after-free can lead to denial of service (crash) or potentially
+   information disclosure.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/1b6955c3108e
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31830)
+
+* CVE-2026-93516: XInput Passive Grab modifierDevice Use-After-Free
+
+   GrabRec stores a raw DeviceIntPtr for the modifierDevice without any
+   lifetime management. When a master device is removed via
+   XIRemoveMaster, the device is freed but the passive grab still holds a
+   dangling pointer to it. Subsequent operations that dereference the
+   modifierDevice pointer trigger a use-after-free.
+
+   An authenticated X client with the ability to add and remove master
+   devices (XI2) can trigger this by creating a passive grab, then
+   removing the master device referenced as the modifier device. 
+
+   The use-after-free can lead to denial of service (crash) or potentially
+   arbitrary code execution.
+
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/be5726341588
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31832)
+
+* CVE-2026-93517: GLX RenderLarge Heap Buffer Overflow
+
+   In the GLX RenderLarge request handling, the buffer is allocated to the
+   size of cmdlen but the subsequent memcpy copies dataBytes into it.
+   There is no validation that dataBytes is less than or equal to cmdlen,
+   allowing an attacker to write past the end of the allocated buffer.
+
+   An authenticated X client can trigger this by sending a crafted GLX
+   RenderLarge request where dataBytes exceeds cmdlen, causing a 
+   heap buffer overflow.
+
+   The heap buffer overflow can lead to arbitrary code execution or denial of
+   service.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/2abe4632d793
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31833)
+
+* CVE-2026-93518: XKB ResizeKeyType Numeric Truncation
+
+   In XkbResizeKeyType(), the size_syms variable is declared as unsigned
+   short. The expression (nTotal * 15) / 10 can exceed 65535 for large
+   nTotal values, and the result is truncated when assigned to the
+   unsigned short variable. This causes an undersized allocation, and
+   subsequent writes overflow the heap buffer.
+
+   An authenticated X client can trigger this by sending XKB requests that
+   cause a key type resize with a sufficiently large nTotal value.
+
+   The heap buffer overflow resulting from the truncated allocation can lead
+   to arbitrary code execution or denial of service.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/89101a6c6618
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31834)
+
+* CVE-2026-93519: XFixes Pointer Barrier Event List Buffer Overflow
+
+   input_constrain_cursor() writes barrier events into a fixed-size buffer
+   without checking bounds. When more than 100 pointer barriers are active,
+   the writes overflow the fixed buffer on the stack or heap.
+
+   An authenticated X client can trigger this by creating more than 100
+   pointer barriers (using the XFIXES extension) and then generating pointer
+   motion events (e.g. via XTEST). Both extensions are enabled by default.
+
+   The buffer overflow can lead to arbitrary code execution or denial of
+   service.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/1f42cc1f00d9
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31938)
+
+* CVE-2026-93520: XKB ChangeKeycodeRange Heap Out-of-Bounds Write
+
+   This is caused by an incomplete fix in commit a3171732d.
+   XkbAllocNames() still uses max_key_code+1 for the names->keys allocation
+   size, while memset in the ChangeKeycodeRange path uses MAP_LENGTH which
+   can be larger. This causes a heap out-of-bounds write when the keycode
+   range is changed to a value where MAP_LENGTH exceeds max_key_code+1.
+
+   An authenticated X client can trigger this by sending XKB requests that
+   change the keycode range.
+
+   The heap out-of-bounds write can lead to arbitrary code execution or denial
+   of service.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/b941a473e06f
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31941)
+
+* CVE-2026-93521: RandR ChangeProviderProperty Heap Buffer Overflow
+
+   In RRChangeProviderProperty() with PrependMode, new_value.size is set to
+   len instead of total_len. Additionally, the old_data offset calculation
+   uses prop_value->size instead of len for the memcpy of existing data. This
+   causes a heap buffer overflow when prepending property data, as the buffer
+   is undersized and the copy offset is incorrect.
+
+   This mirrors a bug pattern that was previously fixed in
+   RRChangeOutputProperty but was not applied to the provider property path.
+
+   An authenticated X client can trigger this by sending RandR
+   ChangeProviderProperty requests with PrependMode on a system with RandR
+   providers (standard on modern GPUs).
+
+   The heap buffer overflow can lead to arbitrary code execution or denial of
+   service.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/5dc9efd5a199
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-31944)
+
+* CVE-2026-93522: Glamor CopyArea CPU-FBO Heap Buffer Overflow
+
+   In glamor's CopyArea CPU-to-FBO path, the temporary buffer (tmp_bits)
+   is sized based on the destination height but is indexed using source
+   coordinates. When the source region is taller than the destination, writes
+   overflow the allocated buffer.
+
+   An authenticated X client can trigger this by performing a CopyArea
+   operation between drawables with mismatched depth (depth-24 to depth-32
+   or vice versa) where the source is taller than the destination, on a
+   system using glamor/GPU acceleration.
+
+   The heap buffer overflow can lead to arbitrary code execution or denial of
+   service.
+
+   This issue does not affect xorg-server-21.1.x
+
+   Fixed in: xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/ad26c26bf795
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-32361)
+
+* CVE-2026-93523: XInput2 PassiveUngrabDevice Modifier Out-of-Bounds Write
+
+   The XI2 passive ungrab path (XIPassiveUngrabDevice) is missing the modifier
+   validation that exists in the grab path and in legacy XI paths. Without
+   checking against AllModifiersMask, a client can supply out-of-range modifier
+   values that lead to an out-of-bounds write when the modifier is used as an
+   index.
+
+   An authenticated X client can trigger this by sending an
+   XIPassiveUngrabDevice request with an out-of-range modifier value.
+
+   The out-of-bounds write can lead to arbitrary code execution or denial of
+   service.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/37a1847a60c6
+   Found by: Anonymous working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-32366)
+
+* CVE-2026-93524: XKB SetMap Key Width/Action Count Desync Out-Of-Bounds Read
+
+   CheckKeySyms() in xkb/xkb.c populates a symsPerKey[] validation array with
+   new key widths for keys in the SetMap request range, then continues filling
+   entries for keys beyond the range. However, the second loop starts at index
+   i = nKeySyms (the first loop's counter) rather than i = firstKeySym +
+   nKeySyms. When firstKeySym is large and nKeySyms is small, the second loop
+   overwrites symsPerKey[target] with the old width from the existing map.
+
+   CheckKeyActions() then validates the wire action count against the stale old
+   width and accepts it. In _XkbSetMap(), SetKeySyms() widens the key (resizing
+   actions to nGroups * newWidth), but SetKeyActions() then resizes again to the
+   old count. A subsequent XkbGetMap request reads XkbKeyNumActions() entries
+   (derived from the new wider key_sym_map.width) from the shorter action
+   allocation, causing an out-of-bounds heap read. The overread bytes are
+   copied into the GetMap reply and sent back to the requesting client,
+   producing a bounded heap information disclosure.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/cea71d0273e4
+   Found by: WONJOON HWANG (@joon1337) working with TrendAI Zero Day
+             Initiative.
+             (ZDI-CAN-32408)
+
+* CVE-2026-93536: GestureBuildSprite Use-After-Free
+
+   GestureBuildSprite() copies raw WindowPtr values into the gesture sprite
+   trace via CopySprite() without any reference counting or lifetime
+   management. WindowGone() only repairs touch sprite traces when a window
+   is destroyed -- gesture sprite traces are never checked or cleaned. This
+   leaves stale WindowPtr references in gesture sprites.
+
+   When DeliverOneGestureEvent() later dereferences the stale WindowPtr via
+   DeepestSpriteWin(&gi->sprite)->drawable.id, it produces a use-after-free.
+   The freed 4 bytes (drawable.id) can be read back, potentially leaking
+   information about the contents of the freed memory region.
+
+   Fixed in: xorg-server-21.1.25 and xwayland-24.1.14
+   Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/efcfd8acc754
+   Found by: 4nibhal working with TrendAI Zero Day Initiative.
+             (ZDI-CAN-32753)
 
