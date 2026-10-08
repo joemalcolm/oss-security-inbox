@@ -1,33 +1,92 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/6
-Message-ID: <a6135355-3162-fbe6-ef83-f645a2b0866c@apache.org>
-Date: Fri, 09 Oct 2026 09:52:54 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/2
+Message-ID: <90f35f99-2f79-4796-ad88-004998e76ac0@jvf.cc>
+Date: Thu, 8 Oct 2026 12:16:48 -0700
+From: Jay Faulkner <jay@....cc>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-78384: Apache CXF: Unbounded DEFLATE Decompression in CXF JOSE/JWE and SAML Processing (Decompression Bomb) 
+Subject: [OSSN-0110] Ironic can leak basic auth credentials to image server
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+=============================================================
+OSSN-0110: Ironic can leak basic auth credentials to image server 
+(2026-10-08)
+=============================================================
+Summary
+~~~~~~~
+Dmitry Tantsur (Red Hat) and Tuomo Tanskanen (Ericsson Software Technology)
+from the Metal3.io security team reported a vulnerability in Ironic. When
+``[deploy]/image_server_auth_strategy`` option is configured for HTTP(S) 
+Basic
+Authentication, the operator's image server username and password are 
+sent to
+every host from which image data is requested. Any tenant with access to 
+perform
+a deployment can set ``instance_info/image_source`` or
+``instance_info/image_checksum`` to a host they control, triggering this 
+vulnerability.
 
-Affected versions:
 
-- Apache CXF (org.apache.cxf:cxf-core) 4.2.0 before 4.2.4
-- Apache CXF (org.apache.cxf:cxf-core) 4.0.0 before 4.1.9
-- Apache CXF (org.apache.cxf:cxf-core) before 3.6.13
 
-Description:
+Affected Services / Software
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- ironic ('>=24.0.0 <29.1.1, >=30.0.0 <32.1.1, >=33.0.0 <35.1.1, 
+ >=36.0.0 <39.0.0')
 
-CompressionUtils.inflate() decompressed attacker-controlled DEFLATE data with no output-size cap. A small (~KB) crafted payload could expand to gigabytes on the heap. Reachable via JWE decryption when zip=DEF (e.g. JoseSessionTokenProvider with RSA-OAEP key wrap) and via SAML redirect/POST binding token inflation — in both cases decompression happens before/independent of trust validation.
 
-Fix: Added a configurable maximum inflated-size cap (default 10 MiB, org.apache.cxf.compression-max-inflated-size system property) to CompressionUtils.inflate(); aborts with DataFormatException once exceeded.
-Users are recommended to upgrade to versions 4.2.4 or 4.1.9 or 3.6.13, which fix this issue.
+Discussion
+~~~~~~~~~~
+The fix adds a ``[deploy]/image_server_auth_hosts`` option allowing
+operators to restrict the hosts to which credentials are sent, along
+with a ``[deploy]/image_server_auth_permit_unknown_hosts`` option.
 
-Credit:
+Deployments of OpenStack-integrated Ironic typically use Glance
+for image management and are not impacted by this vulnerability.
 
-Guanping Zhang reported this vulnerability. (finder)
 
-References:
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-78384
+Recommended Actions
+~~~~~~~~~~~~~~~~~~~
+Operators utilizing the basic auth feature for image retrieval
+should:
 
+* Apply the relevant patch for their release
+* set ``[deploy]/image_server_auth_hosts`` to a list of acceptable
+   hosts to pass authentication credentials to
+* set ``[deploy]/image_server_auth_permit_unknown_hosts`` to ``False``
+
+Ironic intends to change the default of
+``[deploy]/image_server_auth_permit_unknown_hosts`` to ``False`` in the
+2027.1 release. See https://review.opendev.org/999907 for more information.
+
+**Patches**
+
+* **2027.1/indri**: The fix for this CVE was merged before 2027.1 was 
+branched.
+* **2026.2/hibiscus**: https://review.opendev.org/999744
+* **2026.1/gazpacho**: https://review.opendev.org/1003587
+* **2025.2/flamingo**: https://review.opendev.org/1003597
+* **2025.1/epoxy**: https://review.opendev.org/1003598
+* **bugfix/38.0**: https://review.opendev.org/1003577
+* **bugfix/37.0**: https://review.opendev.org/1003579
+
+
+**Credits:**
+
+* Tuomo Tanskanen, Metal3.io Security Team (Ericsson Software Technology)
+* Dmitry Tantsur, Metal3.io Security Team (Red Hat)
+
+
+Contacts / References
+~~~~~~~~~~~~~~~~~~~~~
+**Author:** Jay Faulkner (G-Research OSS)
+
+
+
+* Original bug : https://launchpad.net/bugs/2162816
+* This OSSN : https://docs.openstack.org/security-notes/OSSN-0110.html
+* Mailing List : openstack-discuss@...ts.openstack.org
+* OpenStack Security : https://security.openstack.org/
+* CVE-2026-90461 : https://nvd.nist.gov/vuln/detail/CVE-2026-90461
+
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
