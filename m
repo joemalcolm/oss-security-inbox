@@ -1,56 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/17
-Message-ID: <0fc5c7b6-91fc-80cb-9078-8e3a0e12a622@apache.org>
-Date: Fri, 09 Oct 2026 11:41:37 +0000
-From: Andrea Cosentino <acosentino@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-103413: Apache Camel Karavan: unvalidated Kubernetes resources applied from a project's kubernetes.yaml 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/3
+Message-Id: <E1xF6LU-001PzP-2R@xenbits.xenproject.org>
+Date: Fri, 09 Oct 2026 08:52:52 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 522 v1 (CVE-2026-98375) - Linux xen-netfront: backend can crash guest via malformed RX packets
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
-    CVSS 3.1: 8.8 (high) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+            Xen Security Advisory CVE-2026-98375 / XSA-522
 
-- Apache Camel Karavan 4.0.0 before 4.22.1
+ Linux xen-netfront: backend can crash guest via malformed RX packets
 
-Description:
+ISSUE DESCRIPTION
+=================
 
-Improper input validation vulnerability in Apache Camel Karavan.
+If a RX packet sent from the networking backend to the Linux xen-netfront
+driver is split into multiple slots and the first slot is shorter than
+an Ethernet header, a BUG() will crash the guest. This is a backend induced
+Denial of Service (DoS).
 
+IMPACT
+======
 
+A malicious network backend can cause a DoS affecting the entire guest it
+is serving.
 
-When a deployment was started, Karavan unmarshalled a project's `kubernetes.yaml` and applied every resource it contained to the cluster without restricting the resource kinds, without rejecting security-sensitive pod options, and without pinning the target namespace. An authenticated user of any role could therefore have Karavan apply arbitrary Kubernetes resources within the reach of its service account, including pods requesting hostNetwork, hostPID, hostIPC, hostPath volumes, host ports, privileged containers, privilege escalation or added capabilities.
+VULNERABLE SYSTEMS
+==================
 
+All Linux guests being served by a potentially untrusted network backend
+(i.e. a network backend in a driver domain) are affected.
 
+Linux guests with a kernel from 2.6.23 onwards are affected.
 
-This issue affects Apache Camel Karavan: from 4.0.0 before 4.22.1.
+MITIGATION
+==========
 
+Using a trusted network backend will avoid the issue in the guests.
 
+CREDITS
+=======
 
-Users are recommended to upgrade to version 4.22.1, which fixes the issue.
+This issue was discovered by Josef Bacik of Anthropic.
 
-Solution:
+RESOLUTION
+==========
 
-Upgrade to Apache Camel Karavan 4.22.1. Apache Camel Karavan has no maintenance branches, so 4.22.1 is the only release containing the fix. Operators should also ensure PodSecurity admission is enforced on the namespace Karavan deploys into, and keep the service account's RBAC no wider than Karavan requires.
+Applying the attached patch resolves this issue.
 
-Credit:
+xsa522-linux.patch           Linux
 
-MopMonk-AI (reporter)
-Marat Gubaidullin (remediation developer)
-Andrea Cosentino (coordinator)
+$ sha256sum xsa522*
+5bd78edbf9f039b6e12e725c883a44485fd60e7e8e06c493d57bb2ecfeccbb6e  xsa522-linux.patch
+$
 
-References:
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-https://camel.apache.org/security/CVE-2026-103413.html
-https://github.com/apache/camel-karavan/commit/a773db372eab9f180110ad6129d58004a1bce571
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-103413
+This issue was disclosed in public.
+-----BEGIN PGP SIGNATURE-----
 
-Timeline:
+iQFcBAEBCABGFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrIqswbFIAAAAAABAAO
+bWFudTIsMi41KzEuMTIsMCwzDBxwZ3BAeGVuLm9yZwAKCRCD/hTJV+gr2Z0aB/4x
+lyvVclfKLPKO7TezBS0Du+ee3t8PbwMfWe7Gw3rMOkaytQs+XbBZrZ/lF9uNgSyu
+a+bwaALjNvTuBJiU2Hq6w6qSMjrDb4Kfn1vRe+iw/MXj5K1q8J6NzXP/rZGkIPCl
+E1NyC8RPiRzva/X3CgfO59nsHNxmVxy5cFowP4oxGjp/sAqTLR4JMbK9tALa50Hz
+5dc+CUC7i9YlbVgcn1KatORknlSBBqvefRM/zF/uLtGi5YCmVWVc7QlHF5BCBgio
+Gu5zjEqA+De5/Rg0o5gHH3Jh6xWTtfThoZewROQgu+P9QYUmHZpGKfCkYazTddzi
+Ns9Hz1obvGY4JuCanYvF
+=QR/D
+-----END PGP SIGNATURE-----
 
-2026-08-28: Reported to the Apache Security Team and forwarded to the Apache Camel PMC
-2026-08-28: Fix committed
-2026-09-29: Apache Camel Karavan 4.22.1 released
-2026-10-07: Advisory published
-
+Download attachment "xsa522-linux.patch" of type "application/octet-stream" (2347 bytes)
