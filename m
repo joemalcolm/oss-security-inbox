@@ -1,31 +1,56 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/14
-Message-ID: <db1a9edb-54ba-9844-c385-de74e376f168@apache.org>
-Date: Fri, 09 Oct 2026 10:10:49 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/17
+Message-ID: <0fc5c7b6-91fc-80cb-9078-8e3a0e12a622@apache.org>
+Date: Fri, 09 Oct 2026 11:41:37 +0000
+From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-108039: Apache CXF: Prevent unbounded XML document size in StaxUtils by adding default element and character limits 
+Subject: CVE-2026-103413: Apache Camel Karavan: unvalidated Kubernetes resources applied from a project's kubernetes.yaml 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: 
+    CVSS 3.1: 8.8 (high) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
 
 Affected versions:
 
-- Apache CXF 4.2.0 before 4.2.4
-- Apache CXF 4.0.0 before 4.1.9
-- Apache CXF before 3.6.13
+- Apache Camel Karavan 4.0.0 before 4.22.1
 
 Description:
 
-By default, StaxUtils placed no limit on the total number of elements or the total number of characters in an XML document. A very large request could therefore use a lot of memory and CPU during parsing, especially where CXF builds a DOM from the input (for example SAAJ or WS-Security), and could cause a denial of service when no request size limit was configured. Both limits now have defaults: the maximum element count is 100 × maxChildElements (5,000,000 by default), and the maximum document size is 256M characters. Applications that process larger documents can raise the limits with the org.apache.cxf.stax.maxElementCount and org.apache.cxf.stax.maxXMLCharacters properties.
-Users are recommended to upgrade to versions 4.2.4 or 4.1.9 or 3.6.13, which fix this issue.
+Improper input validation vulnerability in Apache Camel Karavan.
+
+
+
+When a deployment was started, Karavan unmarshalled a project's `kubernetes.yaml` and applied every resource it contained to the cluster without restricting the resource kinds, without rejecting security-sensitive pod options, and without pinning the target namespace. An authenticated user of any role could therefore have Karavan apply arbitrary Kubernetes resources within the reach of its service account, including pods requesting hostNetwork, hostPID, hostIPC, hostPath volumes, host ports, privileged containers, privilege escalation or added capabilities.
+
+
+
+This issue affects Apache Camel Karavan: from 4.0.0 before 4.22.1.
+
+
+
+Users are recommended to upgrade to version 4.22.1, which fixes the issue.
+
+Solution:
+
+Upgrade to Apache Camel Karavan 4.22.1. Apache Camel Karavan has no maintenance branches, so 4.22.1 is the only release containing the fix. Operators should also ensure PodSecurity admission is enforced on the namespace Karavan deploys into, and keep the service account's RBAC no wider than Karavan requires.
 
 Credit:
 
-Wanxin Yin (yaklang.io) <yhellow123456@...il.com> (finder)
+MopMonk-AI (reporter)
+Marat Gubaidullin (remediation developer)
+Andrea Cosentino (coordinator)
 
 References:
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-108039
+https://camel.apache.org/security/CVE-2026-103413.html
+https://github.com/apache/camel-karavan/commit/a773db372eab9f180110ad6129d58004a1bce571
+https://camel.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-103413
+
+Timeline:
+
+2026-08-28: Reported to the Apache Security Team and forwarded to the Apache Camel PMC
+2026-08-28: Fix committed
+2026-09-29: Apache Camel Karavan 4.22.1 released
+2026-10-07: Advisory published
 
