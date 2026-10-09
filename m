@@ -1,57 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/10/1
-Message-ID: <55328b5d-3e87-4f29-a193-7cd2a76bb1bc@oracle.com>
-Date: Fri, 9 Oct 2026 16:07:22 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/21
+Message-ID: <bb20ca51-4cc5-4cd9-8366-87ee09593a32@oracle.com>
+Date: Fri, 9 Oct 2026 15:05:43 -0700
 From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: 3 Vulnerabilities in GNU Aspell before 0.60.8.3
+Subject: mutt 2.4.3 released, fixes CVE-2026-107570
 Content-Type: text/plain; charset=utf-8
 
-https://cert.pl/en/posts/2026/10/CVE-2026-75818/ says:
-> CERT Polska has received a report about vulnerabilities in GNU Aspell
-> software and participated in coordination of their disclosure.
-> 
-> The vulnerability CVE-2026-75818: GNU Aspell prezip-bin contains a
-> heap-based buffer overflow vulnerability in the decompressor in
-> prog/prezip.c. The decompressor does not properly check buffer space,
-> so a crafted compressed file can cause out-of-bounds read and write
-> operations on the heap. An attacker who convinces a user to process a
-> malicious compressed file with prezip-bin can trigger memory
-> corruption, leading to a processs crash.
-> 
-> This issue was fixed in commit 15b188437f9e0192d4ac4472ad66a4e2f62a782f
-> which will be released in version 0.60.8.3.
+https://marc.info/?l=mutt-users&m=179154210212456&w=2 announces:
+> List:       mutt-users
+> Subject:    mutt 2.4.3 released
+> From:       "Kevin J. McCarthy" <kevin () 8t8 ! us>
+> Date:       2026-10-09 10:27:27
+> Message-ID: 20261009102727.mvf3qZLZ () 8t8 ! us
 > 
 > 
-> The vulnerability CVE-2026-75819: GNU Aspell contains an out-of-bounds
-> read vulnerability in ReadOnlyDict::load() in readonly_ws.cpp. When
-> loading a binary .rws dictionary file, it uses offset fields from the
-> file header as byte indices into a heap buffer without validating
-> their bounds. An attacker can trigger this by convincing a user to run
-> aspell with a crafted dictionary file supplied through --master,
-> --dict-dir, or configuration options, leading to heap memory
-> disclosure or a denial of service via application crash.
+> Hello Mutt Users,
 > 
-> This issue was fixed in commit 941953b25031bc9104e83f58e138a664b8dedc3f
-> which will be released in version 0.60.8.3.
+> I've just released version 2.4.3.  Instructions for downloading are 
+> available at <http://www.mutt.org/download.html>, or the tarball can be 
+> directly downloaded from <http://ftp.mutt.org/pub/mutt/>.  Please take 
+> the time to verify the signature file against my public key[1].
 > 
+> This release fixes two bugs.  One of them is for CVE-2026-107570, fixing 
+> an OOB heap write.  This is triggered by a specially crafted 
+> Content-Header line in an email that is used as a template for a new 
+> email, via <resend-message>.  Thanks to Calif.io, in collaboration with 
+> Anthropic for sending me a detailed write up and suggested patch.
 > 
-> The vulnerability CVE-2026-75820: GNU Aspell contains an integer
-> truncation vulnerability in the WritableDict::add() function in
-> modules/speller/default/writable.cpp. When loading a personal
-> wordlist, the word length is stored as a single byte, causing
-> truncation for words whose length is a multiple of 256. This leads to
-> heap corruption. An attacker can exploit this by convincing a user to
-> run aspell with a crafted personal wordlist containing such a word,
-> resulting in denial of service.
+> The full set of changes are:
 > 
-> This issue was fixed in commit 782ce94e4dc71eaec4ee1bd945eb3b9c47c5387d
-> which will be released in version 0.60.8.3.
+> 7752d93f  Fix OOB heap write in convert_file_from_to().
+> 4364e5b0  Fix mutt_signed_handler() goodsig setting.
 > 
-> Credits
-> -------
-> We thank Michał Majchrowicz and Marcin Wyczechowski from AFINE Team
-> for the responsible vulnerability report.
-
+> Thanks to everyone who for reporting issues, generated patches, reviewed 
+> code, helped test, and provided feedback on the mailing list.
+> 
+> -Kevin
+> 
+> [1]
+> My public key is available at:
+>     - my personal website: https://8t8.us/configs/80316BDA.asc.pubkey
+>     - the mutt website: http://www.mutt.org/keys/kevin.key
+>     - The keys.openpgp.org network
+>       https://keys.openpgp.org/vks/v1/by-fingerprint/8975A9B33AA37910385C5308ADEF768480316BDA
 
 
