@@ -1,66 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/10/8
-Message-ID: <ee519c9f-41b6-4b75-84c5-7dd7aeabb4d1@cpansec.org>
-Date: Sat, 10 Oct 2026 13:48:43 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-107794: ExtUtils::Typemaps::STL::List versions before 1.07 for Perl allocate a 32 GiB array on an empty list
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/10/6
+Message-ID: <3e07b2de-bf59-c857-0dc4-d4e16c45ff3d@apache.org>
+Date: Fri, 09 Oct 2026 22:19:23 +0000
+From: Lee Rhodes <leerho@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-103636: Apache DataSketches: datasketches-cpp: Out-of-bounds read in VarOpt union deserialization allows denial of service via a truncated sketch 
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-107794                                      CPAN Security Group
-========================================================================
+Severity: low 
 
-         CVE ID:  CVE-2026-107794
+Affected versions:
 
-   Distribution:  ExtUtils-Typemaps-Default
-       Versions:  before 1.07
-       MetaCPAN: https://metacpan.org/dist/ExtUtils-Typemaps-Default
-       VCS Repo:  https://github.com/tsee/extutils-typemap-default
+- Apache DataSketches 2.0.0-incubating through 5.2.0
 
+Description:
 
-ExtUtils::Typemaps::STL::List versions before 1.07 for Perl allocate a
-32 GiB array on an empty list
+Out-of-bounds read in the VarOpt union deserialization of Apache DataSketches C++ (repo: datasketches-cpp).
 
-Description
------------
-ExtUtils::Typemaps::STL::List versions before 1.07 for Perl allocate a
-32 GiB array on an empty list.
+var_opt_union::deserialize() read the 32-byte preamble of a non-empty union after checking that only 8 bytes were available, so a truncated serialized union could cause a read of up to 24 bytes past the end of the input. For such inputs, the size remaining for the embedded sketch was also computed by an unsigned subtraction that could wrap around, so the embedded sketch's own size checks no longer limited reads to the input. The bytes read can become part of the deserialized union's state. This can cause a crash (denial of service) and could expose adjacent memory contents.
 
-The OUTPUT typemaps call av_extend( av, len-1 ). On an empty list, this
-undeflows, and av_extend will allocate an array with 2^32 slots,
-leading to memory exhaustion.
+This issue affects Apache DataSketches C++: from 2.0.0-incubating before 5.3.0. Only applications that deserialize VarOpt unions from untrusted sources are affected.
 
-Note that a similar issue was fixed in ExtUtils::Typemaps::STL::Vector
-version 1.05.
+Users are recommended to upgrade to version 5.3.0, which fixes this issue.
 
-Problem types
--------------
-- CWE-191 Integer Underflow (Wrap or Wraparound)
+Credit:
 
-Solutions
----------
-Upgrade to ExtUtils::Typemaps::Default version 1.07 or later.
+He Huang (finder)
+NexusSan (tool)
 
-Rebuild any modules that use ExtUtils::Typemaps::Default as part of
-their build process.
+References:
 
-References
-----------
-https://metacpan.org/release/SMUELLER/ExtUtils-Typemaps-Default-1.07/changes
-https://rt.cpan.org/Public/Bug/Display.html?id=91213
-https://www.cve.org/CVERecord?id=CVE-2013-10076
-
-Timeline
---------
-- 2013-12-06: Issue with ExtUtils::Typemaps::STL::Vector reported for
-   version 1.04.
-- 2013-12-06: ExtUtils::Typemaps::Default version 1.05 released with
-   fix for CVE-2013-10076.
-- 2026-10-08: Issue with ExtUtils::Typemaps::STL::List reported to
-   CPANSec. CVE-2013-10076 assigned retroactively.
-- 2026-10-09: ExtUtils::Typemaps::Default version 1.07 released with
-   fix for CVE-2026-107794.
-
-
+https://datasketches.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-103636
 
