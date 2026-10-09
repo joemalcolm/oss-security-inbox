@@ -1,21 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/15
-Message-ID: <asjBQ7umQss_YTol@symphytum.spacehopper.org>
-Date: Fri, 9 Oct 2026 11:26:11 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/7
+Message-ID: <adb7cb25-e600-1122-9ef1-1ca701bd7948@apache.org>
+Date: Fri, 09 Oct 2026 09:56:20 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: OpenJPEG: heap-buffer-overflow write fixed on master since Feb 2026, still present in every release (2.5.3, 2.5.4)
+Subject: CVE-2026-79650: Apache CXF: OIDC RP Open Redirect 
 Content-Type: text/plain; charset=utf-8
 
-On 2026/10/08 00:51, TheSecguy wrote:
-> I contacted the OpenJPEG maintainer
+Severity: important 
 
-It is unmaintained:
+Affected versions:
 
-https://github.com/uclouvain/openjpeg/commit/06bbae8b5d5e57f8c28fe862b80a9464b320e314
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-sso-oidc) 4.2.0 before 4.2.4
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-sso-oidc) 4.0.0 before 4.1.9
+- Apache CXF (org.apache.cxf:cxf-rt-rs-security-sso-oidc) before 3.6.13
 
-"This repository should be considered unmaintained. Commits may appear
-from time to time depending on committer interest and mood, but no
-committer currently feel responsible to regularly review tickets or pull
-requests."
+Description:
+
+Apache CXF’s OIDC relying-party component could redirect users to an attacker-controlled URL after successful authentication. The issue occurs because attacker-controlled state parameters are preserved and later used as redirect targets without validating that the final decoded URI belongs to the RP’s origin. Both directly encoded and double-encoded external URLs can trigger the issue, depending on which validation path is used. Users are recommended to upgrade to versions 4.2.4 or 4.1.9 or 3.6.13, which fix this issue.
+
+Credit:
+
+Guanping Zhang reported this vulnerability (finder)
+
+References:
+
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-79650
 
