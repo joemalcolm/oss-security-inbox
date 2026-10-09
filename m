@@ -1,78 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/3
-Message-Id: <E1xF6LU-001PzP-2R@xenbits.xenproject.org>
-Date: Fri, 09 Oct 2026 08:52:52 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 522 v1 (CVE-2026-98375) - Linux xen-netfront: backend can crash guest via malformed RX packets
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/13
+Message-ID: <19ab71b6-6f6f-66fa-e002-aa91c00cd145@apache.org>
+Date: Fri, 09 Oct 2026 10:06:42 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-107938: Apache CXF: The Netty HTTP client transport does not perform TLS hostname verification. 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: important 
 
-            Xen Security Advisory CVE-2026-98375 / XSA-522
+Affected versions:
 
- Linux xen-netfront: backend can crash guest via malformed RX packets
+- Apache CXF 4.2.0 before 4.2.4
+- Apache CXF 4.0.0 before 4.1.9
+- Apache CXF before 3.6.13
 
-ISSUE DESCRIPTION
-=================
+Description:
 
-If a RX packet sent from the networking backend to the Linux xen-netfront
-driver is split into multiple slots and the first slot is shorter than
-an Ethernet header, a BUG() will crash the guest. This is a backend induced
-Denial of Service (DoS).
+In Apache CXF, the Netty-based HTTP client transport (cxf-rt-transports-http-netty-client) did not verify that the hostname in the server’s TLS certificate matched the host being called. This applied over both HTTP/1.1 and HTTP/2, even when disableCNCheck was left at its default value of false. The certificate chain was validated against the configured trust store, but the endpoint’s identity was not. A network attacker able to intercept traffic could present any certificate trusted by the client, such as a publicly issued certificate for a domain they control, and impersonate the target service. They could then read or modify the exchanged messages, including credentials. 
+Users are recommended to upgrade to versions 4.2.4 or 4.1.9 or 3.6.13, which fix this issue.
 
-IMPACT
-======
+Credit:
 
-A malicious network backend can cause a DoS affecting the entire guest it
-is serving.
+This issue was found using Claude agents to study the security of open-source projects (finder)
 
-VULNERABLE SYSTEMS
-==================
+References:
 
-All Linux guests being served by a potentially untrusted network backend
-(i.e. a network backend in a driver domain) are affected.
+https://cxf.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-107938
 
-Linux guests with a kernel from 2.6.23 onwards are affected.
-
-MITIGATION
-==========
-
-Using a trusted network backend will avoid the issue in the guests.
-
-CREDITS
-=======
-
-This issue was discovered by Josef Bacik of Anthropic.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa522-linux.patch           Linux
-
-$ sha256sum xsa522*
-5bd78edbf9f039b6e12e725c883a44485fd60e7e8e06c493d57bb2ecfeccbb6e  xsa522-linux.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed in public.
------BEGIN PGP SIGNATURE-----
-
-iQFcBAEBCABGFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrIqswbFIAAAAAABAAO
-bWFudTIsMi41KzEuMTIsMCwzDBxwZ3BAeGVuLm9yZwAKCRCD/hTJV+gr2Z0aB/4x
-lyvVclfKLPKO7TezBS0Du+ee3t8PbwMfWe7Gw3rMOkaytQs+XbBZrZ/lF9uNgSyu
-a+bwaALjNvTuBJiU2Hq6w6qSMjrDb4Kfn1vRe+iw/MXj5K1q8J6NzXP/rZGkIPCl
-E1NyC8RPiRzva/X3CgfO59nsHNxmVxy5cFowP4oxGjp/sAqTLR4JMbK9tALa50Hz
-5dc+CUC7i9YlbVgcn1KatORknlSBBqvefRM/zF/uLtGi5YCmVWVc7QlHF5BCBgio
-Gu5zjEqA+De5/Rg0o5gHH3Jh6xWTtfThoZewROQgu+P9QYUmHZpGKfCkYazTddzi
-Ns9Hz1obvGY4JuCanYvF
-=QR/D
------END PGP SIGNATURE-----
-
-Download attachment "xsa522-linux.patch" of type "application/octet-stream" (2347 bytes)
