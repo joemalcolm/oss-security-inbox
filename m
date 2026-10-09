@@ -1,31 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/10
-Message-ID: <ff5a548e-8eec-8dbb-e965-180538191ff0@apache.org>
-Date: Fri, 09 Oct 2026 10:02:24 +0000
-From: Colm O hEigeartaigh <coheigea@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/09/20
+Message-ID: <603f2093-6707-4551-8186-13aec56ec9dd@oracle.com>
+Date: Fri, 9 Oct 2026 13:29:45 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-97791: Apache CXF: STSTokenValidator can accept untrusted SAML assertions because it shares validation state between requests 
+Subject: Unfixed vulnerabilities in Cyrus SASL
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+https://github.com/cyrusimap/cyrus-sasl/issues/891 points out there are
+a number of publicly reported security issues in the Cyrus SASL project,
+with no response from maintainers, other than former maintainers saying
+they are no longer involved; no new version since 2022, and the only
+commits in the past year being doc updates to note cyrus-imapd releases.
 
-Affected versions:
+The listed open security issues are:
 
-- Apache CXF 4.2.0 before 4.2.4
-- Apache CXF 4.0.0 before 4.1.9
-- Apache CXF before 3.6.13
+* Memory leaks in _sasl_make_plain_secret and _sasl_auxprop_verify_apop,
+   lib/checkpw.c #887 - https://github.com/cyrusimap/cyrus-sasl/issues/887
 
-Description:
+* [VS-CSASL-2026-0001] - 1-Byte Heap Out-of-Bounds Read in Cyrus SASL SCRAM
+   GS2 Header Parser #888 - https://github.com/cyrusimap/cyrus-sasl/issues/888
 
-In Apache CXF, STSTokenValidator checks whether a SAML assertion is signed by a trusted certificate before deciding to send it to the STS. That result was stored in one object shared by all requests, so one request could read another's result. A remote, unauthenticated attacker could send a forged assertion signed with an untrusted certificate while legitimate requests were being processed, and it could be accepted as trusted without ever reaching the STS. Only services that use STSTokenValidator to validate SAML tokens without alwaysValidateToSts set are affected. 
-Users are recommended to upgrade to versions 4.2.4 or 4.1.9 or 3.6.13, which fix this issue.
+* [Security] Heap Buffer Overflow in DIGEST-MD5 add_to_challenge()doc
+   (plugins/digestmd5.c) and others #889
+   - https://github.com/cyrusimap/cyrus-sasl/issues/889
 
-Credit:
+* --with-pic static build registers zero SASL mechanisms and yields a
+    non-PIC libsasl2.a (CRAM-MD5 unavailable; won't link into a PIE) #895
+  - https://github.com/cyrusimap/cyrus-sasl/issues/895
 
-MopMonk-AI (finder)
+* [Security] SRP server authentication bypass: A == 0 (mod N) not rejected
+   (CWE-347) #896 - https://github.com/cyrusimap/cyrus-sasl/issues/887
 
-References:
+Only one of these appears to have been assigned a CVE id so far - Red Hat
+assigned CVE-2026-107161 for https://bugzilla.redhat.com/show_bug.cgi?id=2460420
+which seems to match https://github.com/cyrusimap/cyrus-sasl/issues/889 (or
+perhaps be an independent finding of the same issue?)
 
-https://cxf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-97791
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
