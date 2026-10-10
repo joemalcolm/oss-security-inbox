@@ -1,34 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/10/2
-Message-ID: <4a355b9a-0037-0433-240f-8cff97391336@apache.org>
-Date: Fri, 09 Oct 2026 22:15:43 +0000
-From: Lee Rhodes <leerho@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-103501: Apache DataSketches: datasketches-cpp: HLL CouponList Deserialization Buffer Overflow allows memory corruption via a crafted sketch 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/10/8
+Message-ID: <ee519c9f-41b6-4b75-84c5-7dd7aeabb4d1@cpansec.org>
+Date: Sat, 10 Oct 2026 13:48:43 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-107794: ExtUtils::Typemaps::STL::List versions before 1.07 for Perl allocate a 32 GiB array on an empty list
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-107794                                      CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-107794
 
-- Apache DataSketches 1.0.0-incubating through 5.2.0
+   Distribution:  ExtUtils-Typemaps-Default
+       Versions:  before 1.07
+       MetaCPAN: https://metacpan.org/dist/ExtUtils-Typemaps-Default
+       VCS Repo:  https://github.com/tsee/extutils-typemap-default
 
-Description:
 
-Heap buffer overflow in the HLL sketch deserialization of Apache DataSketches C++ (repo: datasketches-cpp).
+ExtUtils::Typemaps::STL::List versions before 1.07 for Perl allocate a
+32 GiB array on an empty list
 
-When deserializing a sketch in LIST mode, from either a byte buffer or a stream, the coupon count was read from the input and used as the number of entries to copy into a fixed buffer of 8 entries, without checking it against the buffer's capacity. A crafted sketch could cause a write of up to 988 bytes past the end of this internal heap buffer. This can corrupt heap memory, causing a crash and potentially enabling further exploitation.
+Description
+-----------
+ExtUtils::Typemaps::STL::List versions before 1.07 for Perl allocate a
+32 GiB array on an empty list.
 
-This issue affects Apache DataSketches C++: from 1.0.0-incubating before 5.3.0. Only applications that deserialize HLL sketches from untrusted sources are affected.
+The OUTPUT typemaps call av_extend( av, len-1 ). On an empty list, this
+undeflows, and av_extend will allocate an array with 2^32 slots,
+leading to memory exhaustion.
 
-Users are recommended to upgrade to version 5.3.0, which fixes this issue.
+Note that a similar issue was fixed in ExtUtils::Typemaps::STL::Vector
+version 1.05.
 
-Credit:
+Problem types
+-------------
+- CWE-191 Integer Underflow (Wrap or Wraparound)
 
-Reported anonymously. (finder)
+Solutions
+---------
+Upgrade to ExtUtils::Typemaps::Default version 1.07 or later.
 
-References:
+Rebuild any modules that use ExtUtils::Typemaps::Default as part of
+their build process.
 
-https://datasketches.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-103501
+References
+----------
+https://metacpan.org/release/SMUELLER/ExtUtils-Typemaps-Default-1.07/changes
+https://rt.cpan.org/Public/Bug/Display.html?id=91213
+https://www.cve.org/CVERecord?id=CVE-2013-10076
+
+Timeline
+--------
+- 2013-12-06: Issue with ExtUtils::Typemaps::STL::Vector reported for
+   version 1.04.
+- 2013-12-06: ExtUtils::Typemaps::Default version 1.05 released with
+   fix for CVE-2013-10076.
+- 2026-10-08: Issue with ExtUtils::Typemaps::STL::List reported to
+   CPANSec. CVE-2013-10076 assigned retroactively.
+- 2026-10-09: ExtUtils::Typemaps::Default version 1.07 released with
+   fix for CVE-2026-107794.
+
+
 
