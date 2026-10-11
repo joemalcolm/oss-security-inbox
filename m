@@ -1,35 +1,114 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/10/4
-Message-ID: <6bb3e23d-09fb-f5e4-60f1-0df9666d68db@apache.org>
-Date: Fri, 09 Oct 2026 22:17:30 +0000
-From: Lee Rhodes <leerho@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/11/1
+Message-ID: <87zewkjn1n.fsf@melete.silentflame.com>
+Date: Sun, 11 Oct 2026 16:04:52 +0100
+From: Sean Whitton <spwhitton@...hitton.name>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-103634: Apache DataSketches: datasketches-cpp: Out-of-bounds read and write in Count-Min sketch deserialization allows memory corruption via a crafted sketch 
+Cc: Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>, 정원영 <wonyoung.jung@...esearchlab.com>, 남성엽 <synam@...esearchlab.com>
+Subject: Incomplete fix for Emacs CVE-2026-79992
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Wonyoung Jung of 78ResearchLab, using their PatchHawk tool, discovered
+that the fix for CVE-2026-79992 was incomplete.
+The tramp-user-regexp failed to check for some additional problematic
+characters in user names, meaning that exploitation was still possible.
 
-Affected versions:
+The attached patch by TRAMP maintainer Michael Albinus addresses the
+problem.  It will be included in Emacs 31.2 though that won't be
+released soon.
 
-- Apache DataSketches 4.1.0 through 5.2.0
+-- >8 --
+From: Michael Albinus <michael.albinus@....de>
 
-Description:
+diff --git a/lisp/net/tramp-archive.el b/lisp/net/tramp-archive.el
+index 2c7a65b375f..59442bb1c2b 100644
+--- a/lisp/net/tramp-archive.el
++++ b/lisp/net/tramp-archive.el
+@@ -741,6 +741,20 @@ tramp-archive-handle-not-implemented
+      v 'remote-file-error
+      "Operation `%s' not implemented for file archives" operation)))
 
-Out-of-bounds read and write in the Count-Min sketch deserialization of Apache DataSketches C++ (repo: datasketches-cpp).
++;;; Default connection-local variables for Tramp.
++
++(defconst tramp-archive-connection-local-default-variables
++  '((tramp-allow-double-percent . t))
++  "Default connection-local variables for file archives.")
++
++(connection-local-set-profile-variables
++ 'tramp-archive-connection-local-default-profile
++ tramp-archive-connection-local-default-variables)
++
++(connection-local-set-profiles
++ `(:application tramp :protocol ,tramp-archive-method)
++ 'tramp-archive-connection-local-default-profile)
++
+ (add-hook 'tramp-unload-hook
+ 	  (lambda ()
+ 	    (unload-feature 'tramp-archive 'force)))
+diff --git a/lisp/net/tramp.el b/lisp/net/tramp.el
+index 1c1d05d91e0..eec297ef5cf 100644
+--- a/lisp/net/tramp.el
++++ b/lisp/net/tramp.el
+@@ -1071,7 +1071,7 @@ tramp-postfix-method-regexp
+ Derived from `tramp-postfix-method-format'.")
 
-count_min_sketch::deserialize() did not include the preamble in its input size check, so a truncated sketch could cause a read of up to 16 bytes past the end of the input. In addition, the table size was computed from the serialized number of buckets and number of hash functions in 32-bit arithmetic. A crafted sketch could make it wrap to zero, so that the sketch deserialized with an empty table, and later updates and estimate queries read and wrote outside the heap allocation. This can corrupt heap memory, causing a crash and potentially enabling further exploitation.
+ (defconst tramp-user-regexp
+-  (rx (| (+ (not (any "/\\^$?*:;|[]{}()<>`'\"" blank)))
++  (rx (| (+ (not (any "/\\^$!#&?*:;,|[]{}()<>`'\"" blank control)))
+ 	 ;; Environment variable.
+ 	 (: "$" (+ (any "_" alnum)))))
+   "Regexp matching user names.")
+@@ -1837,6 +1837,11 @@ tramp-find-host
+ 	result
+       (propertize result 'tramp-default t))))
 
-This issue affects Apache DataSketches C++: from 4.1.0 before 5.3.0. Only applications that deserialize Count-Min sketches from untrusted sources are affected.
++(defvar tramp-allow-double-percent (not (eq system-type 'windows-nt))
++  "Whether a pattern \"%NAME%\" can be used in user or host names.
++It is not recommended to change this variable globally.  Instead, it
++should be set connection-local.")
++
+ ;;;###tramp-autoload
+ (defun tramp-dissect-file-name (name &optional nodefault)
+   "Return a `tramp-file-name' structure of NAME, a remote file name.
+@@ -1903,7 +1908,37 @@ tramp-dissect-file-name
+ 	  ;; Only some methods from tramp-sh.el do support multi-hops.
+ 	  (unless (or (null hop) nodefault non-essential (tramp-multi-hop-p v))
+ 	    (tramp-user-error
+-	     v "Method `%s' is not supported for multi-hops" method)))))))
++	     v "Method `%s' is not supported for multi-hops" method))
++	  (let (connection-local-variables-alist)
++	    (hack-connection-local-variables
++	     (tramp-get-connection-local-criteria v))
++	    (let ((allow-double-percent
++		   (alist-get
++		    'tramp-allow-double-percent
++		    connection-local-variables-alist
++		    tramp-allow-double-percent)))
++	      ;; User name could be invalid after expansion of
++	      ;; environment variables, or contain a literal
++	      ;; environment variable.
++	      (unless (tramp-string-empty-or-nil-p user)
++		(when (or (not (string-match-p tramp-user-regexp user))
++			  (string-match-p
++			   (rx "$") (tramp-file-name-user-domain v))
++			  (and (not allow-double-percent)
++			       (string-match-p
++				(rx "%" (* nonl) "%")
++				(tramp-file-name-user-domain v))))
++		  (tramp-user-error
++		   v "Not a valid user name: \"%s\""
++		   (tramp-file-name-user-domain v))))
++	      ;; Host name could contain a literal environment variable.
++	      (unless (tramp-string-empty-or-nil-p host)
++		(when (or (not (string-match-p tramp-host-regexp host))
++			  (string-match-p (rx "$") host)
++			  (and (not allow-double-percent)
++			       (string-match-p (rx "%" (* nonl) "%") host)))
++		  (tramp-user-error
++		   v "Not a valid host name: \"%s\"" host))))))))))
 
-Users are recommended to upgrade to version 5.3.0, which fixes this issue.
+ ;; We cannot use the `declare' form for `tramp-suppress-trace' in
+ ;; autoloaded functions, because the tramp-loaddefs.el generation
 
-Credit:
-
-He Huang (finder)
-NexusSan (tool)
-
-References:
-
-https://datasketches.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-103634
-
+-- 
+Sean Whitton
