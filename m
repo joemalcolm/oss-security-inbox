@@ -1,79 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/12/1
-Message-ID: <CAD9hHLHJZGWhmEMmgYXPdqhmPNStZnrjKAAn88X5vGXtVvb1wA@mail.gmail.com>
-Date: Mon, 12 Oct 2026 09:28:29 +0200
-From: Nebojša Jaćović <nebojsa.jacovic@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/12/6
+Message-ID: <as1XwQXuYS57of2Q@256bit.org>
+Date: Mon, 12 Oct 2026 23:57:21 +0200
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: Unpatched credential leak in kubernetes/cloud-provider-gcp (auth-provider-gcp) - CVE requested (CAN-2026-2039459)
+Subject: [vim-security] Arbitrary Code Execution via Ruby Omni-Completion in Vim < 9.2.1177
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Arbitrary Code Execution via Ruby Omni-Completion in Vim < 9.2.1177
+===================================================================
+Date: 12.10.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Directives in Dynamically Evaluated Code
+     (CWE-95), Improper Control of Generation of Code (CWE-94)
 
-I'm disclosing a vulnerability in kubernetes/cloud-provider-gcp that I
-reported to Google Cloud VRP on 2026-06-14 (Issue #523808414). The 90-day
-disclosure deadline I communicated to the vendor (2026-10-06) has passed
-with no substantive response beyond automated queue acknowledgments and a
-priority reassignment to P2. I've independently reconfirmed the issue
-remains present in master as of 2026-10-11.
+## Summary
+The Ruby omni-completion script in `runtime/autoload/rubycomplete.vim`
+derives the type of a variable from the contents of the edited buffer and
+passes that text to Ruby's `eval()` without checking that it is a class name.
+A crafted Ruby file can place a Ruby expression where a class name is
+expected, which is evaluated when the user invokes omni-completion.
 
-A CVE ID has been requested from MITRE's CNA-LR (CAN-2026-2039459,
-pending). I'll follow up with the CVE ID once assigned.
+## Description
+`runtime/ftplugin/ruby.vim` installs `omnifunc=rubycomplete#Complete` on every
+Ruby buffer when Vim is built with the Ruby interface.  When completing after
+a variable reference, `s:GetRubyVarType()` takes the variable's type from its
+assignment in the buffer, and the result is passed to `eval()`.
 
-Affected component: pkg/gcpcredential/gcpcredential.go, line 314
-Project: https://github.com/kubernetes/cloud-provider-gcp
+`:help ft-ruby-omni` states that evaluating buffer code for completion must be
+opted into with `g:rubycomplete_buffer_loading`.  This code path is not covered
+by that setting and is reachable in the default configuration.
 
-Description:
+## Impact
+Arbitrary Ruby code execution, and therefore arbitrary operating-system command
+execution, in the context of the user running Vim.
 
-auth-provider-gcp is a kubelet credential provider plugin deployed on every
-GKE node, invoked by kubelet on every image pull from GCR/Artifact
-Registry. ContainerRegistryProvider.Provide() unconditionally logs the raw
-GCE metadata server response body via klog.Errorf when JSON parsing of the
-token response fails:
+Exploitation requires:
 
-    if err := json.Unmarshal([]byte(tokenJSONBlob), &parsedBlob); err !=
-nil {
-        klog.Errorf("while parsing json blob %s: %v", tokenJSONBlob, err)
-        return cfg
-    }
+- Vim built with the Ruby interface (`+ruby` or `+ruby/dyn`),
+- filetype plugins enabled
+- the victim opening a crafted Ruby file and invoking omni-completion.
 
-tokenJSONBlob is the raw HTTP response from the GCE metadata server (
-http://metadata.google.internal./computeMetadata/v1/instance/service-accounts/default/token),
-which contains a valid GCP OAuth2 access token. klog.Errorf logs at ERROR
-level regardless of kubelet's -v verbosity flag, guaranteeing the token
-reaches system/kubelet logs whenever a malformed or truncated JSON response
-is received (e.g. due to network issues, proxy truncation, or transient
-metadata service problems).
+The severity is rated Medium because the user must open a crafted file and
+invoke omni-completion. The bug does not fire on file-open alone.
 
-This is a regression of CVE-2020-8563. The same binary explicitly guards
-against this exact pattern elsewhere
-(cmd/auth-provider-gcp/app/getcredentials.go:130):
+## Acknowledgements
+The Vim project would like to thank github user @tnshima for
+reporting and analyzing the issue.
 
-    // The error from json.Marshal is intentionally not included so as to
-not leak credentials into the logs
-    return fmt.Errorf("error marshaling credentials")
+## References
+The issue has been fixed as of Vim patch [v9.2.1177](https://github.com/vim/vim/releases/tag/v9.2.1177).
+- [Commit](https://github.com/vim/vim/commit/05d704d2856dbb75e95bd33cf222c2e6264fff8b)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-4xgr-vqh2-xfx8)
 
-Attack preconditions:
-- GKE Standard cluster without Pod Security Standards enforcement (common
-default; GKE Autopilot is unaffected - hostPath blocked by policy)
-- Malformed/truncated JSON response from the metadata server (realistic via
-network timeout, proxy truncation, or transient metadata service issues)
-- Attacker controls a pod on the same node, with either a hostPath mount to
-the kubelet log location, or Cloud Logging read access for the node
 
-Impact:
-
-An attacker who controls a pod on a GKE Standard node can exfiltrate the
-node's GCE service account access token from system logs when a metadata
-server parse failure occurs, then authenticate to GCP APIs with that
-service account's privileges. Impact scales with the node SA's OAuth scope:
-- devstorage.read_only (minimum): unauthorized read access to GCR/Artifact
-Registry images across the project
-- cloud-platform (GKE default for non-hardened clusters): read/write access
-across all GCP services in the project - storage, compute, secrets, KMS
-
-PoC and full reproduction steps (standalone Go harness + kind cluster
-integration test) were included in the original Cloud VRP report; happy to
-share on request.
-
-Nebojša Jaćović
-
+Thanks,
+Christian
+-- 
+Wer die Wahrheit geigt, dem schlägt man leicht die Fiedel auf den
+Kopf.
+		-- Jean Paul (eig. Johann Paul Friedrich Richter)
