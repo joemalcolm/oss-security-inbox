@@ -1,114 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/11/1
-Message-ID: <87zewkjn1n.fsf@melete.silentflame.com>
-Date: Sun, 11 Oct 2026 16:04:52 +0100
-From: Sean Whitton <spwhitton@...hitton.name>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/12/2
+Message-ID: <CAD9hHLH96OsYqDJ--wj+9DLkqaMMmzari4X+V_0bwU0g8LmiaQ@mail.gmail.com>
+Date: Mon, 12 Oct 2026 09:39:19 +0200
+From: Nebojša Jaćović <nebojsa.jacovic@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>, 정원영 <wonyoung.jung@...esearchlab.com>, 남성엽 <synam@...esearchlab.com>
-Subject: Incomplete fix for Emacs CVE-2026-79992
+Subject: Unpatched cross-namespace secret exfiltration in GoogleCloudPlatform/k8s-config-connector - CVE requested (CAN-2026-2039460)
 Content-Type: text/plain; charset=utf-8
 
-Wonyoung Jung of 78ResearchLab, using their PatchHawk tool, discovered
-that the fix for CVE-2026-79992 was incomplete.
-The tramp-user-regexp failed to check for some additional problematic
-characters in user names, meaning that exploitation was still possible.
+Hi,
 
-The attached patch by TRAMP maintainer Michael Albinus addresses the
-problem.  It will be included in Emacs 31.2 though that won't be
-released soon.
+I'm disclosing a vulnerability in GoogleCloudPlatform/k8s-config-connector
+that I reported to Google Cloud VRP on 2026-06-17. The 90-day disclosure
+deadline I communicated to the vendor (2026-10-09) has passed with no
+substantive response beyond automated queue acknowledgments. I've
+independently reconfirmed the issue remains present in master as of
+2026-10-11.
 
--- >8 --
-From: Michael Albinus <michael.albinus@....de>
+A CVE ID has been requested from MITRE's CNA-LR (CAN-2026-2039460,
+pending). I'll follow up with the CVE ID once assigned.
 
-diff --git a/lisp/net/tramp-archive.el b/lisp/net/tramp-archive.el
-index 2c7a65b375f..59442bb1c2b 100644
---- a/lisp/net/tramp-archive.el
-+++ b/lisp/net/tramp-archive.el
-@@ -741,6 +741,20 @@ tramp-archive-handle-not-implemented
-      v 'remote-file-error
-      "Operation `%s' not implemented for file archives" operation)))
+Affected component: apis/refs/v1beta1/secret/interface.go, function
+NormalizedSecret()
+Project: https://github.com/GoogleCloudPlatform/k8s-config-connector
 
-+;;; Default connection-local variables for Tramp.
-+
-+(defconst tramp-archive-connection-local-default-variables
-+  '((tramp-allow-double-percent . t))
-+  "Default connection-local variables for file archives.")
-+
-+(connection-local-set-profile-variables
-+ 'tramp-archive-connection-local-default-profile
-+ tramp-archive-connection-local-default-variables)
-+
-+(connection-local-set-profiles
-+ `(:application tramp :protocol ,tramp-archive-method)
-+ 'tramp-archive-connection-local-default-profile)
-+
- (add-hook 'tramp-unload-hook
- 	  (lambda ()
- 	    (unload-feature 'tramp-archive 'force)))
-diff --git a/lisp/net/tramp.el b/lisp/net/tramp.el
-index 1c1d05d91e0..eec297ef5cf 100644
---- a/lisp/net/tramp.el
-+++ b/lisp/net/tramp.el
-@@ -1071,7 +1071,7 @@ tramp-postfix-method-regexp
- Derived from `tramp-postfix-method-format'.")
+Description:
 
- (defconst tramp-user-regexp
--  (rx (| (+ (not (any "/\\^$?*:;|[]{}()<>`'\"" blank)))
-+  (rx (| (+ (not (any "/\\^$!#&?*:;,|[]{}()<>`'\"" blank control)))
- 	 ;; Environment variable.
- 	 (: "$" (+ (any "_" alnum)))))
-   "Regexp matching user names.")
-@@ -1837,6 +1837,11 @@ tramp-find-host
- 	result
-       (propertize result 'tramp-default t))))
+k8s-config-connector's Direct controller implementations fail to enforce
+Kubernetes namespace boundaries when resolving Secret references, allowing
+cross-namespace secret exfiltration and live credential misuse.
+NormalizedSecret() accepts a user-supplied namespace from the custom
+resource's SecretRef and uses it directly to fetch the Secret, only falling
+back to the resource's own namespace when the field is empty:
 
-+(defvar tramp-allow-double-percent (not (eq system-type 'windows-nt))
-+  "Whether a pattern \"%NAME%\" can be used in user or host names.
-+It is not recommended to change this variable globally.  Instead, it
-+should be set connection-local.")
-+
- ;;;###tramp-autoload
- (defun tramp-dissect-file-name (name &optional nodefault)
-   "Return a `tramp-file-name' structure of NAME, a remote file name.
-@@ -1903,7 +1908,37 @@ tramp-dissect-file-name
- 	  ;; Only some methods from tramp-sh.el do support multi-hops.
- 	  (unless (or (null hop) nodefault non-essential (tramp-multi-hop-p v))
- 	    (tramp-user-error
--	     v "Method `%s' is not supported for multi-hops" method)))))))
-+	     v "Method `%s' is not supported for multi-hops" method))
-+	  (let (connection-local-variables-alist)
-+	    (hack-connection-local-variables
-+	     (tramp-get-connection-local-criteria v))
-+	    (let ((allow-double-percent
-+		   (alist-get
-+		    'tramp-allow-double-percent
-+		    connection-local-variables-alist
-+		    tramp-allow-double-percent)))
-+	      ;; User name could be invalid after expansion of
-+	      ;; environment variables, or contain a literal
-+	      ;; environment variable.
-+	      (unless (tramp-string-empty-or-nil-p user)
-+		(when (or (not (string-match-p tramp-user-regexp user))
-+			  (string-match-p
-+			   (rx "$") (tramp-file-name-user-domain v))
-+			  (and (not allow-double-percent)
-+			       (string-match-p
-+				(rx "%" (* nonl) "%")
-+				(tramp-file-name-user-domain v))))
-+		  (tramp-user-error
-+		   v "Not a valid user name: \"%s\""
-+		   (tramp-file-name-user-domain v))))
-+	      ;; Host name could contain a literal environment variable.
-+	      (unless (tramp-string-empty-or-nil-p host)
-+		(when (or (not (string-match-p tramp-host-regexp host))
-+			  (string-match-p (rx "$") host)
-+			  (and (not allow-double-percent)
-+			       (string-match-p (rx "%" (* nonl) "%") host)))
-+		  (tramp-user-error
-+		   v "Not a valid host name: \"%s\"" host))))))))))
+    nn := types.NamespacedName{
+        Namespace: r.GetNamespace(),
+        Name:      r.GetName(),
+    }
+    if nn.Namespace == "" {
+        nn.Namespace = otherNamespace
+    }
+    ...
+    if err := reader.Get(ctx, nn, secret); err != nil { ... }
 
- ;; We cannot use the `declare' form for `tramp-suppress-trace' in
- ;; autoloaded functions, because the tramp-loaddefs.el generation
+The SecretRef struct exposes a mutable namespace field directly in the CRD
+schema for Direct-controller-managed resource types (e.g.
+BigQueryConnection, Datastream, AlloyDBBackup, and ~20+ others). A user
+with permission to create such a resource in namespace A can set
+secretRef.namespace to any other namespace (e.g. kube-system); the
+controller, which runs with cluster-wide Secret read permissions, will
+fetch and use that Secret.
 
--- 
-Sean Whitton
+This is a regression relative to the project's own Legacy implementation
+(apis/refs/v1beta1/secret/legacy.go, ReadSecretValue()), which hardcodes
+the namespace to the resource's own namespace and does not expose a
+namespace field at all.
+
+Attack preconditions:
+- Attacker has RBAC permission to create custom resources in at least one
+namespace (no cluster-admin or elevated privileges needed)
+- k8s-config-connector deployed with cluster-wide Secret read permissions
+(standard configuration)
+- A sensitive Secret exists in a different, protected namespace (e.g.
+kube-system)
+
+Impact:
+
+Any user able to create a Direct-controller-managed custom resource in any
+namespace can cause the controller to read and actively use Secrets
+(database credentials, GCP service account keys, API tokens, TLS material)
+from any other namespace, including kube-system. The credential is used
+live to authenticate to GCP services on the attacker's behalf - not merely
+information disclosure, but direct privilege escalation and lateral
+movement within the victim's GCP project. This completely bypasses
+Kubernetes RBAC namespace isolation, the cluster's primary security
+boundary, at the application level.
+
+Full attack scenario and reproduction steps (crafted BigQueryConnection
+manifest triggering cross-namespace read) were included in the original
+Cloud VRP report; happy to share on request.
+
+Nebojša Jaćović
+
