@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/9
-Message-Id: <E1xGbcp-0000000F9FM-3n4i@xenbits.xenproject.org>
-Date: Tue, 13 Oct 2026 12:28:59 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/3
+Message-Id: <E1xGbcM-0000000F8M0-0z6F@xenbits.xenproject.org>
+Date: Tue, 13 Oct 2026 12:28:30 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 520 v2 (CVE-2026-102700) - gnttab: cache-flush handling may cause page reference leak
+Subject: Xen Security Advisory 514 v2 (CVE-2026-79607) - Xenstore: Guests can crash xenstored during Live Update
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-           Xen Security Advisory CVE-2026-102700 / XSA-520
-                              version 2
+            Xen Security Advisory CVE-2026-79607 / XSA-514
+                               version 2
 
-      gnttab: cache-flush handling may cause page reference leak
+        Xenstore: Guests can crash xenstored during Live Update
 
 UPDATES IN VERSION 2
 ====================
@@ -24,61 +24,63 @@ Public release.
 ISSUE DESCRIPTION
 =================
 
-With its original introduction, GNTTAB_cache_flush was made available
-uniformly.  XSA-232 (CVE-2017-14318) then covered an omitted NULL
-pointer check, yet the addition of that check failed to adjust the
-subsequent error path.  That error path fails to drop a page reference in
-case the specified page is owned by a special system domain (DOM_IO and
-DOM_COW are system domains which can have memory pages assigned to them.)
+During Xenstore live update the state record for a Xenstore watch with
+specified watch depth is written with two bytes missing.  This results
+in an inconsistent state when reading the state back in the new Xenstore,
+causing a crash of Xenstore or wrong Xenstore data.
 
 IMPACT
 ======
 
-The most likely outcome is Denial of Service (DoS) of either Domain 0
-(then likely affecting the entire host) or of another domain.
+An unprivileged guest can cause the Xenstore service to crash or to get
+corrupted during a live update of Xenstore, causing a DoS of the host
+regarding further domain administration actions.
 
 VULNERABLE SYSTEMS
 ==================
 
-Xen versions 4.5 through 4.20 are affected.  Xen versions 4.21 and
-newer as well as 4.4 and older are not affected.
+Only systems running Xen 4.22 are vulnerable.  Systems running Xen 4.21
+or older are not vulnerable.
 
-Only x86 systems are vulnerable.  Arm systems are not vulnerable.
+Only systems running C xenstore either as daemon or as stubdom are
+vulnerable. Systems running oxenstored are not vulnerable.
 
 MITIGATION
 ==========
 
-There is no known mitigation.
+Not doing a live update of Xenstore avoids the vulnerability.
+
+Switching to oxenstored avoids the vulnerability.
 
 CREDITS
 =======
 
-This issue was discovered independently by Andrew Cooper of Citrix and
-Yehyeong Lee.
+This issue was discovered by Andrii Sultanov of Vates.
 
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+Applying the attached patch resolves this issue.
 
 Note that patches for released versions are generally prepared to
 apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa520.patch           Xen 4.20.x - Xen 4.17.x
+xsa514.patch           xen-unstable - Xen 4.22.x
 
-$ sha256sum xsa520*
-e6814fe4a77d38f83c7bf3b92e8d24a0d95508572b845c622985e7021338cca9  xsa520.patch
+$ sha256sum xsa514*
+8774d9b45db75851560db70a9be06d5e379311bd3042d9049bc29456e141ae7d  xsa514.patch
 $
 
 DEPLOYMENT DURING EMBARGO
 =========================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
+Deployment of the patches described above (or others which are substantially similar)
+is permitted during the embargo, even on public-facing systems with untrusted guest
+users and administrators.  Not doing a live update of Xenstore as a mitigation is
+permitted.  Switching to oxenstored is not permitted, as this is a guest visible
+configuration change.
 
 But: Distribution of updated software is prohibited (except to other
 members of the predisclosure list).
@@ -97,14 +99,14 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOItgMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZw3AIALH4pnPt5g51TX1HIUUjtyqxK9j6IyFtYgHqptRA
-XTaZAD+NlU9R97SKGG8/YkMwdIDOQ43HE0sjJpARScQbCXcoq781yf4U1xbuy56z
-prClo+bFT61BnbJnzpQuhmZ1kfPYhqqeYSEsm9TUj6g1Z3j2oq45aISrgyDJgsRJ
-/t8Reelp/kFhQHql7Bt7uRy0xYTHcYuN56dGDAJJ1MsExsbEdLW4hgIcTjBkD04A
-29MSv3j1WlCpWSCIEs27dzJv3i5mrcp1hSXfDo84NYMzxEY9FRcSGPNaGiG0/5pG
-gRe67qr5htHW8rYiTjJRc2b/Sp6D1f7+QThqcq010NwdrzE=
-=v0su
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOIa8MHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZB5YH+wf2251Z1DOOtQcCB1LV9vsunIaEGd5l7pHdIZ3a
+3j9A6r/KGc+RtSgDB9TWCMgjKLbBfwivOxBHHhxjhejsfnUKUJNryJFLn86plFdu
+VRrdk5pHmypNgb9mCf3KQ8BQputnuAu36QuIlw3F5z5XAanmyurT1QJKV0RXLrQF
+J3ROkGAGYp6gHhPDBFwCi/dWE/I1PRfvi53oyPPflj2kAh3DPwycpPQV0JZommjC
+ljh1uvyPMnwr76nnh5e4LmismWa9Gks/p3BQuF01w3Prj/vR4wRxLEMCPjhK6xV6
+PLcKgrt+DGn/xwj7fEdaAVlXyh4YcxQlmUWHzaNm94Knq+8=
+=BuOZ
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa520.patch" of type "application/octet-stream" (790 bytes)
+Download attachment "xsa514.patch" of type "application/octet-stream" (1323 bytes)
