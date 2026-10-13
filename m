@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/6
-Message-Id: <E1xGbcd-0000000F8nY-3bRd@xenbits.xenproject.org>
-Date: Tue, 13 Oct 2026 12:28:47 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/10
+Message-Id: <E1xGbct-0000000F9PF-18JY@xenbits.xenproject.org>
+Date: Tue, 13 Oct 2026 12:29:03 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 517 v2 (CVE-2026-79610) - grant-table: double version change race
+Subject: Xen Security Advisory 521 v2 (CVE-2026-102701) - tapdisk: Out-of-bounds access in tap_ctl_connect_xenblkif()
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-            Xen Security Advisory CVE-2026-79610 / XSA-517
-                               version 2
+           Xen Security Advisory CVE-2026-102701 / XSA-521
+                              version 2
 
-                grant-table: double version change race
+      tapdisk: Out-of-bounds access in tap_ctl_connect_xenblkif()
 
 UPDATES IN VERSION 2
 ====================
@@ -24,44 +24,28 @@ Public release.
 ISSUE DESCRIPTION
 =================
 
-XSA-501 was about issues with v1 -> v2 and v2 -> v1 changes racing certain
-other grant table operations.  Sadly a v2 -> v1 -> v2 change has yet
-another effect which wasn't accounted for: During the first change, status
-pages would be freed.  During the second change they would be allocated
-again.  Hence across the full pair of change the addresses of the status
-pages may change, rendering stale previously calculated pointers into the
-status array.
+Tapdisk is a userspace xen-blkback implementation used by the XAPI
+toolstack.
+
+During connection, multi-page rings may be negotiated between the
+frontend and backend.  Tapdisk had no boundary check on the size
+requested by the frontend, and assumed it did not exceed 8.
 
 IMPACT
 ======
 
-An unprivileged guest may be able to elevate its privileges to that of the
-host.  Information leaks and Denial of Service (DoS) are possible as well.
+A buggy or malicious guest can cause a stack overflow in tapdisk,
+potentially leading to code execution.  Tapdisk normally runs as root.
 
 VULNERABLE SYSTEMS
 ==================
 
-All Xen versions from 4.0 onwards are vulnerable.  Xen versions 3.4 and
-earlier are not vulnerable.
-
-Only x86 guests permitted to use grant table version 2 interfaces can
-leverage this vulnerability.  On Arm, grant table v2 use is explicitly
-unsupported.
-
-Only multi-vCPU guests can leverage this vulnerability.
-
-Xen versions 4.13 and newer offer a way to build Xen without grant table
-support.  Such hypervisors (CONFIG_GRANT_TABLE turned off) are not
-vulnerable.
+All versions of tapdisk are vulnerable.
 
 MITIGATION
 ==========
 
-Using the "gnttab=max-ver:1" hypervisor command line option will avoid
-the vulnerability.
-
-Using the "max_grant_version=1" guest configuration option for guests will
-also avoid the vulnerability.
+There are no mitigations.
 
 CREDITS
 =======
@@ -72,43 +56,29 @@ by Teddy Astie of Vates.
 RESOLUTION
 ==========
 
-Applying the appropriate attached patch resolves this issue.
+Applying the attached patch resolves this issue.
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+xsa521.patch           blktap master
 
-xsa517.patch           xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa517*
-0f114af84cd925f8bc69b26386e2e4a95a52f947bc400f961a9e1ba46c0a2e05  xsa517.patch
+$ sha256sum xsa521*
+72ece150e9d0836f217f3382c8dc76cd51bffbe4b7610c00f219b90e5600cbc5  xsa521.patch
 $
 
 DEPLOYMENT DURING EMBARGO
 =========================
 
-Deployment of the patches described above (or others which are
-substantially similar) is permitted during the embargo, even on public-
-facing systems with untrusted guest users and administrators.
+Deployment of the patches and/or mitigations described above (or
+others which are substantially similar) is permitted during the
+embargo, even on public-facing systems with untrusted guest users and
+administrators.
 
-HOWEVER, deployment of the mitigation is NOT permitted (except where
-all the affected systems and VMs are administered and used only by
-organisations which are members of the Xen Project Security Issues
-Predisclosure List).  Specifically, deployment on public cloud systems
-is NOT permitted.
-
-This is because restricting the available grant table version is a guest
-visible configuration change, which may lead to re-discovery of the issue.
-
-Deployment of this mitigation is permitted only AFTER the embargo ends.
-
-AND: Distribution of updated software is prohibited (except to other
+But: Distribution of updated software is prohibited (except to other
 members of the predisclosure list).
 
 Predisclosure list members who wish to deploy significantly different
 patches and/or mitigations, please contact the Xen Project Security
 Team.
+
 
 (Note: this during-embargo deployment notice is retained in
 post-embargo publicly released Xen Project advisories, even though it
@@ -120,14 +90,14 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOIlkMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZAGUH/3wERoCBP6lIwfFmIMiAcqVVctqz6/8OgplQEp8A
-inNRPR8Avx++0lt4AdERiNYy3xwxGAZzJsxYC3ipCaHvMwOmm11DiMX5yuhvefNw
-TJxWaWut2QmF0Vi0G4acvvlfslb9JA9quEgLDzF/2dMiyHzTL4xvdeJ5OR5zXAoD
-hexjk0DCSDcYRHnD0OautofMGTaBaGJVHz08uRNkz3gOxumAeKnxmfelF8QgnTb3
-jRYIt5z+Kye8oXZ0uTVY86YR7YbuiaHAJx1YZzceyfaVjJzvS8ZsTFt2CXshcex8
-33fw3iQnY9ImA/NC11y4OLt8F8nb+Ge2Cge98wBt8NPSoBc=
-=SAIu
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOIvgMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZgdgIAKXTyop/90HNxeBpRVbYP2vrPCm2YBMzoc3YtxdM
+0wWdbFvUptHWnzypCWuUGJWq8ZFf4lInnkJrj0sJ9te+OSQDqcfwTMEQuDWzBM08
+lQ27H0kcum3rble2V2CFCK4uOoLYwOYX/bA5vCeGiiPQcUU3m++6IoAMaRY7G2V7
+RTNJmNCtbGiC7l3ExUX9KxnFCSaX9gL99YkygybBecSsjJhdlGZj7pzvJtomv1sC
+fVSAFmXkivLGKX8TXQdj/48xmdqNSIQgYbdSdyZgGjmy7bxIgxB576FHwlN/fzf7
+ZzpeEO8yZTFWeCJCKZavvjsq/7u2vxUtpoL3c81vSKWCOLc=
+=w1aW
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa517.patch" of type "application/octet-stream" (1925 bytes)
+Download attachment "xsa521.patch" of type "application/octet-stream" (2560 bytes)
