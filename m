@@ -1,20 +1,20 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/8
-Message-Id: <E1xGbcm-0000000F959-03cI@xenbits.xenproject.org>
-Date: Tue, 13 Oct 2026 12:28:56 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/9
+Message-Id: <E1xGbcp-0000000F9FM-3n4i@xenbits.xenproject.org>
+Date: Tue, 13 Oct 2026 12:28:59 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 519 v2 (CVE-2026-102699,CVE-2026-102702) - Arm: multiple issues with GNTTABOP_cache_flush
+Subject: Xen Security Advisory 520 v2 (CVE-2026-102700) - gnttab: cache-flush handling may cause page reference leak
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-   Xen Security Advisory CVE-2026-102699,CVE-2026-102702 / XSA-519
+           Xen Security Advisory CVE-2026-102700 / XSA-520
                               version 2
 
-            Arm: multiple issues with GNTTABOP_cache_flush
+      gnttab: cache-flush handling may cause page reference leak
 
 UPDATES IN VERSION 2
 ====================
@@ -24,37 +24,26 @@ Public release.
 ISSUE DESCRIPTION
 =================
 
-1) XSA-437 (CVE-2023-34321) addressed issues with overflows in
-   calculations involved in guests flushing caches through
-   GNTTABOP_cache_flush.  Unfortunately the fix there introduced a
-   calculation which may underflow, resulting in a loop which would - at
-   least on 64-bit Arm - take excessively long, and which would likely
-   eventually crash the hypervisor.
-
-   This is CVE-2026-102699.
-
-2) GNTTABOP_cache_flush may be issued on memory mapped from another
-   domain using the grant table interface.  However there was no
-   restriction to disallow the use of invalidate-without-clean against
-   read-only grant mappings, which may corrupt the granted memory.
-
-   This is CVE-2026-102702.
+With its original introduction, GNTTAB_cache_flush was made available
+uniformly.  XSA-232 (CVE-2017-14318) then covered an omitted NULL
+pointer check, yet the addition of that check failed to adjust the
+subsequent error path.  That error path fails to drop a page reference in
+case the specified page is owned by a special system domain (DOM_IO and
+DOM_COW are system domains which can have memory pages assigned to them.)
 
 IMPACT
 ======
 
-A malicious unprivileged guest may crash the hypervisor, causing a
-Denial of Service (DoS) affecting the entire host, or corrupt memory
-belonging to another domain.  Privilege escalation and information leaks
-cannot be ruled out.
+The most likely outcome is Denial of Service (DoS) of either Domain 0
+(then likely affecting the entire host) or of another domain.
 
 VULNERABLE SYSTEMS
 ==================
 
-All Xen versions from 4.5 onwards are vulnerable.  Xen versions 4.4 and
-earlier are not vulnerable.
+Xen versions 4.5 through 4.20 are affected.  Xen versions 4.21 and
+newer as well as 4.4 and older are not affected.
 
-Only Arm systems are vulnerable.  x86 systems are not vulnerable.
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
 
 MITIGATION
 ==========
@@ -64,11 +53,8 @@ There is no known mitigation.
 CREDITS
 =======
 
-CVE-2026-102699 was discovered by Leonid Komarianskyi of EPAM.  It was
-later independently reported by Ayan Kumar Halder of AMD.
-
-CVE-2026-102702 was found by the security team while looking at the
-surrounding code.
+This issue was discovered independently by Andrew Cooper of Citrix and
+Yehyeong Lee.
 
 RESOLUTION
 ==========
@@ -80,14 +66,10 @@ apply to the stable branches, and may not apply cleanly to the most
 recent release tarball.  Downstreams are encouraged to update to the
 tip of the stable branch before applying these patches.
 
-xsa519-?.patch           xen-unstable - Xen 4.21.x
-xsa519-4.20-?.patch      Xen 4.20.x - Xen 4.17.x
+xsa520.patch           Xen 4.20.x - Xen 4.17.x
 
-$ sha256sum xsa519*
-3abfe7776402ba82d54b72163427694055cc3a5a729fd50a15af58699fef7903  xsa519-1.patch
-6f09a24c5c793570e290ec853220099c617e372d96b93f938439ac4a18191dd2  xsa519-2.patch
-1ed852f7e22fafe75e278dc913377fda5b0b73c8af51fe872684eb5b0bcb9597  xsa519-4.20-1.patch
-df5ba864761f3274df817fa362e234afb4b5e3f95b47daf25a307ac3d922aab6  xsa519-4.20-2.patch
+$ sha256sum xsa520*
+e6814fe4a77d38f83c7bf3b92e8d24a0d95508572b845c622985e7021338cca9  xsa520.patch
 $
 
 DEPLOYMENT DURING EMBARGO
@@ -115,20 +97,14 @@ consult the Xen Project community's agreed Security Policy:
   http://www.xenproject.org/security-policy.html
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOIrAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZ9ccIALBHbUY7GDoW1oFxKSpvrFFzwdSeq+yR7Y+cnBy7
-6j9ehJE2zC1qLqHy0MQjFcmdSvdm/1Qy4CZ+cZgKtOMCeOvV8OwA6QkuHV5fch0f
-2wHq71u/9p7wWhsILb9EHaUHBFNXiQ+joahKPyX4FHwz2aCB+aodqCRMsvk0Kd7K
-PSX4FotvGHSfgxrdzP6oLPOrmvVwy91ienOabE7QMTW2anghDIFVfjycYuebfXxF
-S+d7ciAcHdd72fOhM/wVlXZohslxw14ESJYZMUOvha8godQjPwCtT/A/SDc/k0Et
-98xImFp4NU9W4Pk42eS+JUs3KNLWFapzVePRQ0Ku80Ia6wg=
-=xgyt
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOItgMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZw3AIALH4pnPt5g51TX1HIUUjtyqxK9j6IyFtYgHqptRA
+XTaZAD+NlU9R97SKGG8/YkMwdIDOQ43HE0sjJpARScQbCXcoq781yf4U1xbuy56z
+prClo+bFT61BnbJnzpQuhmZ1kfPYhqqeYSEsm9TUj6g1Z3j2oq45aISrgyDJgsRJ
+/t8Reelp/kFhQHql7Bt7uRy0xYTHcYuN56dGDAJJ1MsExsbEdLW4hgIcTjBkD04A
+29MSv3j1WlCpWSCIEs27dzJv3i5mrcp1hSXfDo84NYMzxEY9FRcSGPNaGiG0/5pG
+gRe67qr5htHW8rYiTjJRc2b/Sp6D1f7+QThqcq010NwdrzE=
+=v0su
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa519-1.patch" of type "application/octet-stream" (4994 bytes)
-
-Download attachment "xsa519-2.patch" of type "application/octet-stream" (2653 bytes)
-
-Download attachment "xsa519-4.20-1.patch" of type "application/octet-stream" (4705 bytes)
-
-Download attachment "xsa519-4.20-2.patch" of type "application/octet-stream" (2661 bytes)
+Download attachment "xsa520.patch" of type "application/octet-stream" (790 bytes)
