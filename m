@@ -1,71 +1,171 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/8
-Message-ID: <CAARiyJpKUG+_c6VE=mNb+91NNbt1tTKXTuFN6dnM5MsPEskooA@mail.gmail.com>
-Date: Wed, 14 Oct 2026 17:27:18 +0200
-From: Tomasz Kaye <tomasz.brain@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Godot 4.x: heap out-of-bounds write via negative string length in binary resource loader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/7
+Message-ID: <ae11482f-c6e4-4213-acff-d4fdf0ed4324@redhat.com>
+Date: Wed, 14 Oct 2026 17:00:24 +0200
+From: Maxime Coquelin <maxime.coquelin@...hat.com>
+To: announce@...k.org, oss-security@...ts.openwall.com
+Cc: dev@...k.org, stable@...k.org
+Subject: DPDK security advisory: Multiple vulnerabilities in vhost/vhost-crypto/vDPA/GSO libraries
 Content-Type: text/plain; charset=utf-8
 
-Three memory-safety bugs in Godot 4's untrusted-file parsers were
-publicly disclosed on 2026-09-21 [1]. This thread covers the binary
-resource loader bug.
+Multiple vulnerabilities were fixed in DPDK.
+Downstream stakeholders were warned in advance in order to coordinate 
+the release of fixes and reduce the vulnerability window.
 
-Affected versions:
-Godot 4.7-stable, official release build, verified. Earlier versions
-presumed affected. The parser has been in the engine since the day it
-was open-sourced in 2014 (commit 0b806ee0fc). Unpatched as of
-2026-10-13 (master, 4.7.2, 4.7.1, 4.7).
+A malicious guest can exploit various memory safety issues in the DPDK 
+vhost, vhost-crypto, vDPA, and GSO libraries to cause host crashes, 
+denial of service, or potential memory corruption.
+Some of these vulnerabilities affect the vhost-user boundary and can be 
+triggered by a malicious VM.
 
-Description:
-ResourceLoaderBinary::get_unicode_string
-(core/io/resource_format_binary.cpp:864) reads a 32-bit string length
-from the file. A length with the high bit set is negative; the size
-guard does not catch the negative value, and the subsequent copy uses
-the value as a huge unsigned size, writing past the end of the
-undersized heap buffer. AddressSanitizer reports heap-buffer-overflow
-WRITE at resource_format_binary.cpp:872.
+Fixed in DPDK 23.11.8, 24.11.8, 25.11.4 LTS releases and main branch.
 
-Impact:
-Attacker-controlled heap out-of-bounds write on load. The binary
-resource loader ships in export templates; an exported game that loads
-player- or community-supplied .res files runs this code on untrusted
-input.
+---
 
-Reproduction:
-Archive godot47_binres_oob_repro.zip (README, bug_analysis.md,
-make_repro.py regenerates the crafted resource), with extracted
-contents and per-bug README:
-https://github.com/bitbutter/godot-security-pocs/tree/main/2026-09-untrusted-file-parsers/binres
-SHA-256: 920daf712f53fd8e0085bfc148c5ea5c6839d4136bf6e0d13a14a3e4385a4620
-Trigger paths (Windows): placing the crafted .res in a project folder
-crashes the editor on startup (resource-dependency scan, no user
-action); a headless script load exits with STATUS_HEAP_CORRUPTION
-(0xC0000374). Under AddressSanitizer or PageHeap, a 4 KiB payload
-yields an immediate heap-buffer-overflow WRITE at
-resource_format_binary.cpp:872. The same archive was distributed with
-the original report and is linked from the correspondence section of
-the disclosure post [1].
+CVE-2026-86848 / CVE-2026-86846
+Summary: vhost-crypto TOCTOU out-of-bounds write in finalize path
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2001
+            https://bugs.dpdk.org/show_bug.cgi?id=2026
+CVSS 3.1: 8.8 (High)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+Note: CVE-2026-86846 is a duplicate issue with avail ring index, fixed 
+in same patch.
 
-Fix status:
-Unpatched as of 2026-10-13 (master, 4.7.2, 4.7.1, 4.7).
+---
 
-CVE status:
-Requested from MITRE's CVE Numbering Authority of Last Resort (CNA-LR)
-on 2026-09-20, prior to publication. No IDs assigned as of 2026-10-14;
-this thread will be self-replied when IDs arrive.
+CVE-2026-86561
+Summary: Missing memory size validation before mmap in vhost memory 
+region setup
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2002
+CVSS 3.1: 6.5 (Medium)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
 
-Timeline (dates and links only):
-2026-06-23 — reported privately to security@...otengine.org with
-reproduction and suggested patch.
-2026-09-18 — public notice: https://github.com/godotengine/godot/issues/123608
-2026-09-19 — vendor response classifying the issues as not security
-issues: https://github.com/godotengine/godot/issues/123608
+---
 
-Credit:
-Found during an automated audit directed by the reporter (LLM-driven
-source analysis; Claude Code — discovery by Opus 4.8, report and
-reproduction by Sonnet 4.6). Reproductions verified against official
-release binaries. Reported and disclosed by Tomasz Kaye.
+CVE-2026-86562
+Summary: Double-fetch leading to heap buffer overflow in 
+virtio_net_ctrl_pop (VDUSE)
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2003
+            https://bugs.dpdk.org/show_bug.cgi?id=2021
+CVSS 3.1: 7.8 (High)
+CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
 
-[1] https://axeghost.offprint.app/a/3mvs6zo4blo23-three-memory-safety-bugs-in-godots-untrusted-file-parsers
+---
+
+CVE-2026-86563
+Summary: Double offset bug in vhost log mapping calculation
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2004
+CVSS 3.1: 7.8 (High)
+CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:H/A:H
+
+---
+
+CVE-2026-86567
+Summary: VDUSE vring stale pointer rebinding (use-after-unmap)
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2029
+CVSS 3.1: 8.8 (High)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+
+---
+
+CVE-2026-86566
+Summary: Copy length underflow in vhost enqueue (mbuf_to_desc)
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2020
+CVSS 3.1: 6.5 (Medium)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
+
+---
+
+CVE-2026-86849
+Summary: Integer overflow and missing validation in vhost-crypto request 
+handling
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2022
+CVSS 3.1: 6.5 (Medium)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
+
+
+---
+
+CVE-2026-86845
+Summary: Use-after-free and type confusion in vhost-crypto session handling
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2028
+CVSS 3.1: 6.5 (Medium)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
+
+
+---
+
+CVE-2026-86847
+Summary: Infinite cleanup loop in vhost-crypto writeback chain
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2023
+CVSS 3.1: 6.5 (Medium)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
+
+
+---
+
+CVE-2026-86856
+Summary: Stack and heap buffer overflow in nfp vDPA driver
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2027
+CVSS 3.1: 6.5 (Medium)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:N/I:N/A:H
+
+
+---
+
+CVE-2026-86564
+Summary: Out-of-bounds heap read in vhost control virtqueue handler
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2007
+CVSS 3.1: 3.3 (Low)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
+
+
+---
+
+CVE-2026-86565
+Summary: Split-ring inflight descriptor table overflow
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2008
+CVSS 3.1: 8.8 (High)
+CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+
+
+---
+
+CVE-2026-93683
+Summary: Indirect descriptor table double-fetch (TOCTOU)
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2046
+CVSS 3.1: 6.4 (Medium)
+CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:C/C:H/I:N/A:L
+
+
+---
+
+CVE-2026-100236
+Summary: GSO library heap out-of-bounds read/write with small mbuf pools
+Bugzilla: https://bugs.dpdk.org/show_bug.cgi?id=2047
+CVSS 3.1: 8.6 (High)
+CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:H
+
+---
+
+Acknowledgments:
+
+The DPDK project thanks the following security researchers for 
+responsibly reporting these vulnerabilities:
+
+- Adiel Sol (Dream Group) - CVE-2026-86848
+- Ivar Al-Safawi - CVE-2026-86561, CVE-2026-86562, CVE-2026-86563, 
+CVE-2026-86567
+- Jia Jia - CVE-2026-86565
+- Arthur Chan (Adalogics) - CVE-2026-86566, CVE-2026-86849, 
+CVE-2026-86845, CVE-2026-86846, CVE-2026-86847, CVE-2026-86856
+- syber steve - CVE-2026-86564
+- Naseeb Dangi and Xiang Li from AOSP Lab aty Nankai Universit - 
+CVE-2026-93683
+
+---
+
+For more information on DPDK security, see:
+https://doc.dpdk.org/guides/contributing/vulnerability.html
+
+
