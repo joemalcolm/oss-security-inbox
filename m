@@ -1,112 +1,177 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/13/3
-Message-Id: <E1xGbcM-0000000F8M0-0z6F@xenbits.xenproject.org>
-Date: Tue, 13 Oct 2026 12:28:30 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 514 v2 (CVE-2026-79607) - Xenstore: Guests can crash xenstored during Live Update
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/2
+Message-ID: <CAHtpoa3MzvkdrmPCBNFyKojFDiQkvf2OiV4TigOJ+SWwMAttzg@mail.gmail.com>
+Date: Wed, 14 Oct 2026 10:16:22 +0800
+From: fourie <littleddfu@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-74580: Linux vhost stale IOTLB cache leading to LPE and VM escape
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Hi all,
 
-            Xen Security Advisory CVE-2026-79607 / XSA-514
-                               version 2
+We are disclosing Vghost (CVE-2026-74580), a stale IOTLB metadata-cache
+vulnerability affecting Linux vhost frontends.
 
-        Xenstore: Guests can crash xenstored during Live Update
+Impact
+------
 
-UPDATES IN VERSION 2
-====================
+- Local user with access to /dev/vhost-* -> arbitrary kernel read/write -> root.
+- Guest using vIOMMU + iommu_platform + VIRTIO_F_RING_RESET -> QEMU heap
+  overwrite, and control-flow hijacking.
 
-Public release.
+Bug
+---
 
-ISSUE DESCRIPTION
-=================
+vq->meta_iotlb[] caches the IOTLB mappings for the descriptor, available,
+and used rings. VHOST_SET_VRING_ADDR and VHOST_SET_VRING_NUM replace the
+vring configuration without clearing that cache. A later cache hit skips
+range validation and translates the new address through the old mapping:
 
-During Xenstore live update the state record for a Xenstore watch with
-specified watch depth is written with two bytes missing.  This results
-in an inconsistent state when reading the state back in the new Xenstore,
-causing a crash of Xenstore or wrong Xenstore data.
+    translated = old_map->addr + new_addr - old_map->start
 
-IMPACT
-======
+The translated pointer reaches unchecked raw_copy_to_user() or
+raw_copy_from_user(). The defect comes from the interaction of f88949138058
+(metadata cache) and 0210a8db2aec (deferred GIOVA validation).
 
-An unprivileged guest can cause the Xenstore service to crash or to get
-corrupted during a live update of Xenstore, causing a DoS of the host
-regarding further domain administration actions.
+Exploit chain outline
+---------------------
 
-VULNERABLE SYSTEMS
-==================
+The completed local chain:
 
-Only systems running Xen 4.22 are vulnerable.  Systems running Xen 4.21
-or older are not vulnerable.
+    ATTACKER (uid=1000)                    VHOST / KERNEL
+           |                                     |
+           |  configure device IOTLB + vrings    |
+           |------------------------------------>|
+           |  kick queue: prime meta_iotlb[]     |
+           |------------------------------------>|
+           |                                     |
+           |  VHOST_SET_VRING_ADDR               |
+           |  (new address, stale cache kept)    |
+           |------------------------------------>|
+           |                                     |
+           |  repoint desc ring + kick           |
+           |------------------------------------>| read target as desc[0]
+           |<------------------------------------| IOTLB_MISS leaks 8 bytes
+           |                                     |
+           |  read IDT[0]                        |
+           |------------------------------------>| recover KASLR slide
+           |                                     |
+           |  repoint used ring + kick           |
+           |------------------------------------>| write vring_used_elem
+           |                                     | to runtime modprobe_path
+           |                                     |
+           |  trigger request_module()           |
+           |------------------------------------>| execute memfd payload
+           |<------------------------------------| uid=0(root)
+           |                                     |
+           |  restore modprobe_path              |
+           |------------------------------------>|
 
-Only systems running C xenstore either as daemon or as stubdom are
-vulnerable. Systems running oxenstored are not vulnerable.
+The guest-triggered path:
 
-MITIGATION
-==========
+    UNTRUSTED GUEST                         QEMU / VHOST
+           |                                     |
+           |  prime used-ring metadata cache     |
+           |------------------------------------>|
+           |  queue_reset + new queue address    |
+           |------------------------------------>| VHOST_SET_VRING_ADDR
+           |  queue_enable + kick                | (stale cache survives)
+           |------------------------------------>|
+           |                                     | used-ring write escapes
+           |                                     | guest RAM into QEMU heap
+           |                                     v
+           |                              crash / QOM table corruption
+           |                                     |
+           |                              controlled QEMU RIP
 
-Not doing a live update of Xenstore avoids the vulnerability.
 
-Switching to oxenstored avoids the vulnerability.
+CVSS assessment
+---------------
 
-CREDITS
-=======
+CVSS v3.1 Base Score: 8.8 (High)
+Vector: CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+Calculator:
+https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
 
-This issue was discovered by Andrii Sultanov of Vates.
+Fix
+---
 
-RESOLUTION
-==========
+The upstream fix resets the vring metadata cache from
+vhost_vring_set_num_addr(), forcing reconfigured addresses through IOTLB
+validation again:
 
-Applying the attached patch resolves this issue.
+https://git.kernel.org/linus/de845981da67a6b049080c87e605130b0c30adc5
 
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
+The first fixed upstream stable releases identified for the affected series
+are:
 
-xsa514.patch           xen-unstable - Xen 4.22.x
+    5.10.265
+    5.15.216
+    6.1.183
+    6.6.152
+    6.12.104
+    6.18.45
+    7.1.9
+    7.2
 
-$ sha256sum xsa514*
-8774d9b45db75851560db70a9be06d5e379311bd3042d9049bc29456e141ae7d  xsa514.patch
-$
+Vendor kernels may contain a backport while retaining an older base version.
 
-DEPLOYMENT DURING EMBARGO
-=========================
+Tested distributions
+--------------------
 
-Deployment of the patches described above (or others which are substantially similar)
-is permitted during the embargo, even on public-facing systems with untrusted guest
-users and administrators.  Not doing a live update of Xenstore as a mitigation is
-permitted.  Switching to oxenstored is not permitted, as this is a guest visible
-configuration change.
+We reproduced the complete local-user-to-root chain with the same generic
+x86-64 exploit on:
 
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
+- Ubuntu 26.04 LTS, 7.0.0-28-generic
+- RHEL 9.8, 5.14.0-687.5.3.el9_8.x86_64
+- Amazon Linux 2023.12.20260817, 6.1.180-225.360.amzn2023.x86_64
+- Microsoft Azure Linux 3.0, 6.6.150.1-1.azl3
+- Oracle Linux 10.2, 6.12.0-204.92.4.2.el10uek
 
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
+The tested Ubuntu image exposed /dev/vhost-vsock as 0660 root:kvm. The tested
+RHEL 9.8, Amazon Linux, Azure Linux, and Oracle Linux images exposed it as 0666,
+making the local chain reachable by an ordinary user. In every retained test,
+modprobe_path was restored and the temporary root helper was removed.
 
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
+Mitigation
+----------
 
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
------BEGIN PGP SIGNATURE-----
+Apply a kernel containing the upstream fix or the corresponding vendor
+backport, and reboot into that kernel.
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrOIa8MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZB5YH+wf2251Z1DOOtQcCB1LV9vsunIaEGd5l7pHdIZ3a
-3j9A6r/KGc+RtSgDB9TWCMgjKLbBfwivOxBHHhxjhejsfnUKUJNryJFLn86plFdu
-VRrdk5pHmypNgb9mCf3KQ8BQputnuAu36QuIlw3F5z5XAanmyurT1QJKV0RXLrQF
-J3ROkGAGYp6gHhPDBFwCi/dWE/I1PRfvi53oyPPflj2kAh3DPwycpPQV0JZommjC
-ljh1uvyPMnwr76nnh5e4LmismWa9Gks/p3BQuF01w3Prj/vR4wRxLEMCPjhK6xV6
-PLcKgrt+DGn/xwj7fEdaAVlXyh4YcxQlmUWHzaNm94Knq+8=
-=BuOZ
------END PGP SIGNATURE-----
+Until then, restrict access to all vhost device nodes, including
+/dev/vhost-net, /dev/vhost-vsock, /dev/vhost-scsi, and /dev/vhost-vdpa-*;
+prevent untrusted containers from receiving them; and treat membership in a
+device-owning group such as kvm as privileged. Permission changes do not
+revoke already-open file descriptors and do not address the guest-triggered
+path. For unpatched virtualization hosts, avoid exposing vhost devices with
+iommu_platform behind a vIOMMU to untrusted guests.
 
-Download attachment "xsa514.patch" of type "application/octet-stream" (1323 bytes)
+References
+----------
+
+Technical write-up:
+https://matrix.tencent.com/en/2026/10/12/vghost-cve-2026-74580
+
+PoC:
+https://github.com/zhangutah/security-research/tree/main/pocs/linux/cve-2026-74580
+
+Linux kernel CVE announcement:
+https://lore.kernel.org/linux-cve-announce/2026082158-CVE-2026-74580-5db9@gregkh/
+
+Mainline fix:
+https://git.kernel.org/linus/de845981da67a6b049080c87e605130b0c30adc5
+
+Amazon Linux advisory:
+https://explore.alas.aws.amazon.com/CVE-2026-74580.html
+
+Oracle Linux errata:
+https://linux.oracle.com/errata/ELSA-2026-500248.html
+
+Corvus AI assisted with source analysis, reproduction, exploit development,
+and cross-platform validation.
+
+Regards,
+
+Fourie Zhang
+TencentOS Security Team (Tencent Zhuque Lab)
