@@ -1,177 +1,122 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/2
-Message-ID: <CAHtpoa3MzvkdrmPCBNFyKojFDiQkvf2OiV4TigOJ+SWwMAttzg@mail.gmail.com>
-Date: Wed, 14 Oct 2026 10:16:22 +0800
-From: fourie <littleddfu@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/1
+Message-ID: <43115c9c-d74c-49af-81d9-7eb050e08e84@oracle.com>
+Date: Tue, 13 Oct 2026 18:15:57 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-74580: Linux vhost stale IOTLB cache leading to LPE and VM escape
+Subject: Hex 2.5.2 released with security fixes
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+https://github.com/hexpm/hex/releases/tag/v2.5.2 lists:
+> Bug fixes
+> ---------
+> 
+>  * Fail with the download error instead of crashing in mix hex.package
+>    fetch when the version isn't in the registry but a copy of it is cached
+>  
+>  * Fetch the docs of organization packages in mix.lock with mix
+>    hex.docs fetch. They were requested from an organization named
+>    after the repository, such as hexpm:myorg, and never found.
+>    Packages from other repositories are skipped with a warning
+>  
+>  * Reject package and organization names that hex.pm doesn't accept
+>    and invalid versions in mix hex.docs. A version such as
+>    1.0.0/../../x on the command line or in mix.lock made mix hex.docs
+>    fetch write docs outside the docs directory
+> 
+> Security fixes
+> --------------
+> 
+>  * Trust only the CA certificates in cacerts_path (HEX_CACERTS_PATH)
+>    when it's set. Hex also accepted a server certificate chain that
+>    led to a CA in its bundled store, so every bundled CA could still
+>    authenticate Hex's servers (GHSA-rw8q-hg7m-cxgr, CVE-2026-103503)
+> 
+>  * Don't trust copies of CA certificates sent by the server. Hex
+>    accepted a server-sent certificate with the same public key as a CA
+>    in the CA store in place of that CA, so a server could send a copy
+>    of an expired CA certificate with a later expiry date
+>    (GHSA-rw8q-hg7m-cxgr, CVE-2026-103503)
+> 
+>  * Verify the registry checksum of the package tarball that mix
+>    hex.package fetch PACKAGE VERSION --output - writes to standard
+>    output, so a mirror can't substitute the package, and print the
+>    command's messages to standard error, so standard output only
+>    carries the tarball. Error responses and warnings from the mirror
+>    were printed to standard output before the tarball. With --output
+>    DIR the tarball is no longer written when its checksum doesn't
+>    match (GHSA-98jr-23pm-vj7c, CVE-2026-105280)
+> 
+>  * Keep applying the release-age cooldown to a package when its locked
+>    release is retired. Retiring a release takes the same package owner
+>    permission as publishing one, so retiring the locked release let a
+>    new release skip the cooldown. A locked release with a security
+>    advisory still lifts the cooldown for its package and for the
+>    direct dependencies of the locked release. When newer versions of a
+>    retired locked release are filtered by the cooldown, mix deps.get
+>    and mix deps.update say that the locked release is retired and show
+>    the command to update without the cooldown, and mix hex.outdated
+>    marks the update with (cooldown) and no longer exits with a
+>    non-zero status for it (GHSA-pqhp-5x9x-69h7, CVE-2026-105668)
+> 
+>  * Only lift the release-age cooldown for a locked package in the
+>    repository it's locked from. A locked package also lifted the
+>    cooldown for packages with the same name in other repositories,
+>    such as an organization repository and hexpm (GHSA-pqhp-5x9x-69h7,
+>    CVE-2026-105668)
+> 
+>  * Stop downloading a registry file, package, docs tarball or other
+>    file from a repository or mirror once it's larger than 16 MiB,
+>    including after decompressing a gzip-encoded response. A package
+>    mirror could make Hex use any amount of memory or disk before the
+>    registry signature or package checksum was checked. Responses with
+>    a status other than 200 are limited the same way on OTP 27.3.4.17,
+>    28.5.0.6, 29.0.6, 29.1 or later when they have a Content-Length
+>    header or chunked encoding, and are otherwise still read in full
+>    (GHSA-gf42-pg2f-63jp, CVE-2026-96618)
+> 
+>  * Stop decompressing a gzip-encoded API response once it's larger
+>    than 64 MiB. A small response could make Hex use any amount of
+>    memory (GHSA-gf42-pg2f-63jp, CVE-2026-96618)
+> 
+>  * Check a package against the registry checksum before writing it to
+>    the package cache and before unpacking a cached copy, including in
+>    offline mode and when fetching the package fails. A cached package
+>    that doesn't match the registry is removed instead of being
+>    unpacked (GHSA-gf42-pg2f-63jp, CVE-2026-96618)
+> 
+>  * Apply the 16 MiB compressed and 128 MiB uncompressed size limits
+>    for docs to mix hex.docs fetch and mix hex.docs offline
+>    (GHSA-gf42-pg2f-63jp, CVE-2026-96618)
+> 
+>  * Stop decompressing a registry file once its contents are larger
+>    than 16 MiB, before its signature is checked, and reject compressed
+>    Erlang terms in API responses. A mirror could send a small registry
+>    file, and an API server a small response, that decompressed to any
+>    size (GHSA-7c4r-cgf9-9jmq, CVE-2026-105274)
+> 
+>  * Skip package releases that give a dependency an application name
+>    other than a letter followed by letters, digits, _ and -, such as
+>    ../name, and warn about them when resolving
+>    dependencies. Resolution fails if no other release of the package
+>    fits the requirements. Hex used the application name as the
+>    dependency's directory, so such a release could make mix deps.get
+>    delete and replace a directory outside deps/ (GHSA-2vjj-c5hr-6xc3,
+>    CVE-2026-96612)
+> 
+>  * Escape terminal control characters in text from hex.pm and the
+>    registry before printing it, such as package descriptions and
+>    links, retirement messages, security advisories, search results and
+>    error messages. A package publisher could otherwise send escape
+>    sequences that clear the screen, rewrite earlier output or set the
+>    clipboard in terminals that support it. A dependency in the
+>    registry whose package or repository name isn't a valid name is now
+>    rejected (GHSA-fpmj-3cxg-p766, CVE-2026-81856)
 
-We are disclosing Vghost (CVE-2026-74580), a stale IOTLB metadata-cache
-vulnerability affecting Linux vhost frontends.
+The listed GHSA ids can be found on:
+https://github.com/hexpm/hex/security/advisories
 
-Impact
-------
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-- Local user with access to /dev/vhost-* -> arbitrary kernel read/write -> root.
-- Guest using vIOMMU + iommu_platform + VIRTIO_F_RING_RESET -> QEMU heap
-  overwrite, and control-flow hijacking.
-
-Bug
----
-
-vq->meta_iotlb[] caches the IOTLB mappings for the descriptor, available,
-and used rings. VHOST_SET_VRING_ADDR and VHOST_SET_VRING_NUM replace the
-vring configuration without clearing that cache. A later cache hit skips
-range validation and translates the new address through the old mapping:
-
-    translated = old_map->addr + new_addr - old_map->start
-
-The translated pointer reaches unchecked raw_copy_to_user() or
-raw_copy_from_user(). The defect comes from the interaction of f88949138058
-(metadata cache) and 0210a8db2aec (deferred GIOVA validation).
-
-Exploit chain outline
----------------------
-
-The completed local chain:
-
-    ATTACKER (uid=1000)                    VHOST / KERNEL
-           |                                     |
-           |  configure device IOTLB + vrings    |
-           |------------------------------------>|
-           |  kick queue: prime meta_iotlb[]     |
-           |------------------------------------>|
-           |                                     |
-           |  VHOST_SET_VRING_ADDR               |
-           |  (new address, stale cache kept)    |
-           |------------------------------------>|
-           |                                     |
-           |  repoint desc ring + kick           |
-           |------------------------------------>| read target as desc[0]
-           |<------------------------------------| IOTLB_MISS leaks 8 bytes
-           |                                     |
-           |  read IDT[0]                        |
-           |------------------------------------>| recover KASLR slide
-           |                                     |
-           |  repoint used ring + kick           |
-           |------------------------------------>| write vring_used_elem
-           |                                     | to runtime modprobe_path
-           |                                     |
-           |  trigger request_module()           |
-           |------------------------------------>| execute memfd payload
-           |<------------------------------------| uid=0(root)
-           |                                     |
-           |  restore modprobe_path              |
-           |------------------------------------>|
-
-The guest-triggered path:
-
-    UNTRUSTED GUEST                         QEMU / VHOST
-           |                                     |
-           |  prime used-ring metadata cache     |
-           |------------------------------------>|
-           |  queue_reset + new queue address    |
-           |------------------------------------>| VHOST_SET_VRING_ADDR
-           |  queue_enable + kick                | (stale cache survives)
-           |------------------------------------>|
-           |                                     | used-ring write escapes
-           |                                     | guest RAM into QEMU heap
-           |                                     v
-           |                              crash / QOM table corruption
-           |                                     |
-           |                              controlled QEMU RIP
-
-
-CVSS assessment
----------------
-
-CVSS v3.1 Base Score: 8.8 (High)
-Vector: CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
-Calculator:
-https://www.first.org/cvss/calculator/3.1#CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
-
-Fix
----
-
-The upstream fix resets the vring metadata cache from
-vhost_vring_set_num_addr(), forcing reconfigured addresses through IOTLB
-validation again:
-
-https://git.kernel.org/linus/de845981da67a6b049080c87e605130b0c30adc5
-
-The first fixed upstream stable releases identified for the affected series
-are:
-
-    5.10.265
-    5.15.216
-    6.1.183
-    6.6.152
-    6.12.104
-    6.18.45
-    7.1.9
-    7.2
-
-Vendor kernels may contain a backport while retaining an older base version.
-
-Tested distributions
---------------------
-
-We reproduced the complete local-user-to-root chain with the same generic
-x86-64 exploit on:
-
-- Ubuntu 26.04 LTS, 7.0.0-28-generic
-- RHEL 9.8, 5.14.0-687.5.3.el9_8.x86_64
-- Amazon Linux 2023.12.20260817, 6.1.180-225.360.amzn2023.x86_64
-- Microsoft Azure Linux 3.0, 6.6.150.1-1.azl3
-- Oracle Linux 10.2, 6.12.0-204.92.4.2.el10uek
-
-The tested Ubuntu image exposed /dev/vhost-vsock as 0660 root:kvm. The tested
-RHEL 9.8, Amazon Linux, Azure Linux, and Oracle Linux images exposed it as 0666,
-making the local chain reachable by an ordinary user. In every retained test,
-modprobe_path was restored and the temporary root helper was removed.
-
-Mitigation
-----------
-
-Apply a kernel containing the upstream fix or the corresponding vendor
-backport, and reboot into that kernel.
-
-Until then, restrict access to all vhost device nodes, including
-/dev/vhost-net, /dev/vhost-vsock, /dev/vhost-scsi, and /dev/vhost-vdpa-*;
-prevent untrusted containers from receiving them; and treat membership in a
-device-owning group such as kvm as privileged. Permission changes do not
-revoke already-open file descriptors and do not address the guest-triggered
-path. For unpatched virtualization hosts, avoid exposing vhost devices with
-iommu_platform behind a vIOMMU to untrusted guests.
-
-References
-----------
-
-Technical write-up:
-https://matrix.tencent.com/en/2026/10/12/vghost-cve-2026-74580
-
-PoC:
-https://github.com/zhangutah/security-research/tree/main/pocs/linux/cve-2026-74580
-
-Linux kernel CVE announcement:
-https://lore.kernel.org/linux-cve-announce/2026082158-CVE-2026-74580-5db9@gregkh/
-
-Mainline fix:
-https://git.kernel.org/linus/de845981da67a6b049080c87e605130b0c30adc5
-
-Amazon Linux advisory:
-https://explore.alas.aws.amazon.com/CVE-2026-74580.html
-
-Oracle Linux errata:
-https://linux.oracle.com/errata/ELSA-2026-500248.html
-
-Corvus AI assisted with source analysis, reproduction, exploit development,
-and cross-platform validation.
-
-Regards,
-
-Fourie Zhang
-TencentOS Security Team (Tencent Zhuque Lab)
