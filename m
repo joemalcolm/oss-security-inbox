@@ -1,90 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/11
-Message-ID:  <DBBPR04MB7673D6B7BB8E058423E608DB929D2@DBBPR04MB7673.eurprd04.prod.outlook.com>
-Date: Wed, 14 Oct 2026 18:46:01 +0000
-From: Oleh Konko <security@...al.org>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Multiple TLS libraries: X.509 Name Constraints enforcement bypasses (CVE-2026-34073, CVE-2026-3833, CVE-2026-5263, CVE-2026-33810; CERT/CC VU#573195, VU#948176, VU#410595)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/14/3
+Message-ID: <q63rq4o4-13o0-s37n-2qpq-6r75o9opo0p0@unkk.fr>
+Date: Wed, 14 Oct 2026 08:07:46 +0200 (CEST)
+From: Daniel Stenberg <daniel@...x.se>
+To: curl security announcements -- curl users <curl-users@...ts.haxx.se>,  curl-announce@...ts.haxx.se, libcurl hacking <curl-library@...ts.haxx.se>,  oss-security@...ts.openwall.com
+Subject: [SECURITY ADVISORIES] curl 8.23.0
 Content-Type: text/plain; charset=utf-8
 
 Hello,
 
-CERT/CC published three vulnerability notes on 13 and 14 October 2026
-about how open-source TLS/X.509 libraries enforce Name Constraints
-(RFC 5280 section 4.2.1.10). I reported the findings. This is a
-summary of public fixes and statuses; it does not announce new CVEs.
+Today the curl project publishes a set of twenty-four separate vulnerabilities
+in association with the release of curl 8.23.0.
 
-https://kb.cert.org/vuls/id/573195
-https://kb.cert.org/vuls/id/948176
-https://kb.cert.org/vuls/id/410595
+All vulnerabilities have their fixes mentioned in text and link to the
+corresponding commit that fixes the problem.
 
-The differences fall into four areas: DNS-name comparison (RFC 5280
-requires case-insensitive matching), IP addresses (the RFC does not say
-whether IPv4-mapped IPv6 should be treated as IPv4), URI-authority
-parsing, and wildcards (the RFC does not define wildcard SAN semantics).
+Detailed information about all vulnerabilities are available on
+https://curl.se/docs/security.html
 
-Fixed or merged:
+One vulnerability is considered severity HIGH:
 
-  pyca/cryptography  CVE-2026-34073, fixed in 46.0.6. DNS constraints
-                     were checked against the certificate's SANs but not
-                     against the requested peer name.
-                     GHSA-m959-cc7f-wv43
-  rustls/webpki      wildcards under permitted subtrees: CVE-2026-93601,
-                     fixed in 0.103.12 / 0.104.0-alpha.6
-                     (GHSA-xgp8-3hg3-c2mh). Unsupported URI constraints
-                     were accepted: CVE-2026-93600, first fix in
-                     0.103.12 / 0.104.0-alpha.6, excludedSubtrees case
-                     completed in 0.103.13 / 0.104.0-alpha.7
-                     (GHSA-965h-392x-2mh5).
-  GnuTLS             CVE-2026-3833, fixed in 3.8.13. DNS names and the
-                     domain part of rfc822Name constraints compared
-                     case-sensitively. Independently co-reported.
-  wolfSSL            CVE-2026-5263, fixed in 5.9.1: URI constraints parsed
-                     but not enforced. Fragment wildcards (e.g. *foo.com):
-                     PR 9991, in 5.9.1. Note: VU#948176 cites
-                     CVE-2026-3547 for the URI report; that CVE record
-                     describes an ALPN parsing issue.
-  AWS-LC             wildcard Common Name fallback fixed in 1.71.0 /
-                     aws-lc-sys 0.39.0 (GHSA-3jrg-j22w-mpmc,
-                     GHSA-394x-vwmw-crm3). The same advisory covers
-                     Unicode CN; VU#948176 lists that report as still
-                     under coordination.
-  Go crypto/x509     CVE-2026-33810, fixed in Go 1.26.2 (GO-2026-4866,
-                     co-credited): case handling in wildcard
-                     parent-constraint lookup.
-  OpenSSL            URI authority: the userinfo scan for @ ran past
-                     /, ? or #. PR #30319; OpenSSL confirmed on
-                     2026-09-10 that it is in all then-supported versions.
-  BoringSSL          VU#410595.8 (wildcard vs excluded host) and .12
-                     (trailing-dot DNS names) fixed upstream in commit
-                     5774eca (2026-03-04), legacy crypto/x509 path.
+CVE-2026-92392: HTTP/2 upload Use-After-Free
 
-Open, disputed or declined (per the notes):
+The other vulnerabilities are considered severity LOW:
 
-  Go                 two reports in triage; IPv4-mapped IPv6 report not
-                     accepted as meeting the security bar
-  OpenSSL            userinfo-colon report in triage
-  BoringSSL          .9 accepted (upstream change b84dc60, 2026-05-05),
-                     .10 disputed, .11 declined
-  Mozilla NSS        IP-address report under coordination
-  LibreSSL           wildcard report under coordination
-  s2n-tls            Common Name fallback report in triage
-  Mbed TLS           non-critical Name Constraints not enforced in the
-                     reported configuration; vendor treats support as a
-                     feature request, reporter's concern disputed
+CVE-2026-107929: local interface connection reuse mixup
+CVE-2026-107928: info leak uploading over WebSockets with GnuTLS
+CVE-2026-94266: password leak in CURLINFO_EFFECTIVE_URL
+CVE-2026-94265: Authorization: Negotiate sent to foreign origin
+CVE-2026-92391: curl_mime_free stack overflow by recursion
+CVE-2026-92390: -J no-clobber guarantee bypassed with 103 early hints
+CVE-2026-92389: TFTP direction confusion
+CVE-2026-92388: FTP wildcard write callback mixup
+CVE-2026-92387: never-ending loop via server response omission
+CVE-2026-92386: server-set cookie aborts cookie jar load
+CVE-2026-87866: wolfSSL public-key pinning bypass
+CVE-2026-87865: knownhost callback mismatches key as missing
+CVE-2026-87864: IMAP APPEND plus CRLF conversion command injection
+CVE-2026-87863: HSTS response erases persisted entries
+CVE-2026-87862: HSTS cache import drops longer-lived child
+CVE-2026-87861: cross-origin reuse of a Negotiate connection
+CVE-2026-86415: auto client cert connection reuse mixup
+CVE-2026-86414: leaking host credentials to HTTP proxy
+CVE-2026-86413: Negotiate credentials sent to redirected origin
+CVE-2026-86412: server-set cookie erases cookie jar
+CVE-2026-86411: FTP connection reuse inherits client-certificate
+CVE-2026-86410: redirect to SFTP or SCP bypasses host verification
+CVE-2026-86409: stale SigV4 headers sent unintended
 
-Conditions, according to CERT/CC: an attacker needs a trusted signature
-over chosen certificate fields, an affected validation path must be
-reachable, and the application must use the accepted name for
-authorization. The notes do not report exploitation. Using one of these
-libraries does not by itself mean a product reaches an affected path.
+-- 
 
-No test vectors are published for anything not fixed.
-
-Per-finding status with dated sources:
-https://paperlock.org/findings/
-
-Regards,
-Oleh Konko
-1seal - https://1seal.org/research/
-
+  / daniel.haxx.se || https://rock-solid.curl.dev
