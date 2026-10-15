@@ -1,65 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/6
-Message-ID: <atE5bDhTfX2hqna9@256bit.org>
-Date: Thu, 15 Oct 2026 22:37:00 +0200
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/10
+Message-ID: <3ab5c86a-6056-addb-d82f-237a4cb4c9e9@apache.org>
+Date: Thu, 15 Oct 2026 21:08:04 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [vim-security] Ex Command Execution via Cargo Quickfix Hooks in Vim < 9.2.1201
+Subject: CVE-2026-94134: Apache Airflow SSH provider, Apache Airflow SFTP provider: SSH hook disables host-key verification by default 
 Content-Type: text/plain; charset=utf-8
 
-Ex Command Execution via Cargo Quickfix Hooks in Vim < 9.2.1201
-===============================================================
-Date: 15.10.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Improper Neutralization of Special Elements used in a Command
-(CWE-77), Improper Neutralization of Special Elements used in an OS Command
-(CWE-78)
+Severity: moderate 
 
-## Summary
-The Rust support in `runtime/autoload/cargo/quickfix.vim` changes to the
-directory of the nearest `Cargo.toml` before running `:make` and restores the
-previous directory afterwards.  The directory names were passed unescaped to
-the `:lchdir` and `:chdir` Ex commands, so a crafted directory name can inject
-arbitrary Ex commands, including running shell commands, when the user runs
-`:make` in a Rust buffer.
+Affected versions:
 
-## Description
-When the cargo compiler is active for a Rust buffer, the `QuickFixCmdPre` and
-`QuickFixCmdPost` autocommands call `cargo#quickfix#CmdPre()` and
-`cargo#quickfix#CmdPost()`.  `CmdPre()` determines the directory of the
-nearest `Cargo.toml` and changes into it using:
+- Apache Airflow SSH provider before 7.0.0
+- Apache Airflow SFTP provider before 7.0.0
 
-    execute 'lchdir! ' . l:nearest
+Description:
 
-The directory name is not escaped.  Since `:lchdir` treats `|` as a command
-separator, a directory name such as `x|call system('...')` containing a
-`Cargo.toml` file causes the text after the `|` to be executed as an Ex
-command.  `CmdPost()` restores the previous directory in the same unescaped
-way.
+The Apache Airflow SSH provider hook disables SSH host-key verification by default: unless `host_key` is configured or `no_host_key_check` is explicitly set to false, it accepts any server key. This affects SSH and SFTP connections that rely on the default. An attacker in a machine-in-the-middle position between the worker and the SSH or SFTP server can impersonate the server and capture the credentials or data a task sends.
 
-## Impact
-Arbitrary Ex command execution, and therefore arbitrary shell command
-execution, in the context of the user running Vim, when the user runs `:make`
-on a Rust file inside a crafted directory tree, e.g. a cloned repository.
+Users of apache-airflow-providers-ssh and apache-airflow-providers-sftp are recommended to upgrade to apache-airflow-providers-ssh 7.0.0 and apache-airflow-providers-sftp 7.0.0 or later. The deferrable SFTP code paths had the same default and are covered separately by CVE-2026-94135; apache-airflow-providers-sftp 7.0.0 fixes both.
 
-Exploitation requires:
+Credit:
 
-* a system that allows to use "|" in a directory name
-* a Rust buffer using the cargo compiler,
-* the victim running `:make` within a crafted directory tree.
+Claude Security Scans (tool)
+Igor Stepansky, OX Security (finder)
+Jarek Potiuk (remediation developer)
 
-## Acknowledgements
-The Vim project would like to thank github user @Dalvelac for reporting the issue.
+References:
 
-## References
-The issue has been fixed as of Vim patch [v9.2.1201](https://github.com/vim/vim/releases/tag/v9.2.1201).
+https://github.com/apache/airflow/pull/73419
+https://www.cve.org/CVERecord?id=CVE-2026-94135
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-94134
 
-- [Commit](https://github.com/vim/vim/commit/b93c000ddfc27c6a1192bcba77204709536cf094)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-4vf6-278g-hq7j)
-
-
-Best,
-Christian
--- 
-Ist erst die letzte Klammer zu, hat der Lispler seine Ruh.
