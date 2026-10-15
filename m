@@ -1,32 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/12
-Message-ID: <71a939d7-4faf-9471-f05e-a40def5e650e@apache.org>
-Date: Thu, 15 Oct 2026 21:08:30 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/6
+Message-ID: <atE5bDhTfX2hqna9@256bit.org>
+Date: Thu, 15 Oct 2026 22:37:00 +0200
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-96806: Apache Airflow Keycloak provider: Keycloak auth manager: logout does not invalidate the session — JWTMiddleware mints an unrevoked replacement token 
+Subject: [vim-security] Ex Command Execution via Cargo Quickfix Hooks in Vim < 9.2.1201
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Ex Command Execution via Cargo Quickfix Hooks in Vim < 9.2.1201
+===============================================================
+Date: 15.10.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Special Elements used in a Command
+(CWE-77), Improper Neutralization of Special Elements used in an OS Command
+(CWE-78)
 
-Affected versions:
+## Summary
+The Rust support in `runtime/autoload/cargo/quickfix.vim` changes to the
+directory of the nearest `Cargo.toml` before running `:make` and restores the
+previous directory afterwards.  The directory names were passed unescaped to
+the `:lchdir` and `:chdir` Ex commands, so a crafted directory name can inject
+arbitrary Ex commands, including running shell commands, when the user runs
+`:make` in a Rust buffer.
 
-- Apache Airflow Keycloak provider before 0.11.1
+## Description
+When the cargo compiler is active for a Rust buffer, the `QuickFixCmdPre` and
+`QuickFixCmdPost` autocommands call `cargo#quickfix#CmdPre()` and
+`cargo#quickfix#CmdPost()`.  `CmdPre()` determines the directory of the
+nearest `Cargo.toml` and changes into it using:
 
-Description:
+    execute 'lchdir! ' . l:nearest
 
-The Apache Airflow Keycloak auth manager did not end the session on logout: the logout route revoked the presented token, but `KeycloakJWTMiddleware` then issued a new, unrevoked token on the same response, so the user stayed logged in. Deployments using the Keycloak auth manager are affected: after a user logs out, anyone with later access to the same browser (for example on a shared workstation) can continue to act as that user.
+The directory name is not escaped.  Since `:lchdir` treats `|` as a command
+separator, a directory name such as `x|call system('...')` containing a
+`Cargo.toml` file causes the text after the `|` to be executed as an Ex
+command.  `CmdPost()` restores the previous directory in the same unescaped
+way.
 
-Users of apache-airflow-providers-keycloak are recommended to upgrade to apache-airflow-providers-keycloak 0.11.1 or later.
+## Impact
+Arbitrary Ex command execution, and therefore arbitrary shell command
+execution, in the context of the user running Vim, when the user runs `:make`
+on a Rust file inside a crafted directory tree, e.g. a cloned repository.
 
-Credit:
+Exploitation requires:
 
-JelyFishhhhhh (finder)
-Jarek Potiuk (remediation developer)
+* a system that allows to use "|" in a directory name
+* a Rust buffer using the cargo compiler,
+* the victim running `:make` within a crafted directory tree.
 
-References:
+## Acknowledgements
+The Vim project would like to thank github user @Dalvelac for reporting the issue.
 
-https://github.com/apache/airflow/pull/73695
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-96806
+## References
+The issue has been fixed as of Vim patch [v9.2.1201](https://github.com/vim/vim/releases/tag/v9.2.1201).
 
+- [Commit](https://github.com/vim/vim/commit/b93c000ddfc27c6a1192bcba77204709536cf094)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-4vf6-278g-hq7j)
+
+
+Best,
+Christian
+-- 
+Ist erst die letzte Klammer zu, hat der Lispler seine Ruh.
