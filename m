@@ -1,41 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/8
-Message-ID: <20261015210928.GA13251@openwall.com>
-Date: Thu, 15 Oct 2026 23:09:28 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/9
+Message-ID: <ed72ed34-1c50-c0c7-af27-19050dd1a94a@apache.org>
+Date: Thu, 15 Oct 2026 21:12:30 +0000
+From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: eddyflores100@...il.com
-Subject: Re: FOLLOW-UP: taikotalent.xyz fake-recruiter trojan — RESOLVED (registrar clientHold 2026-10-10)
+Subject: CVE-2026-92228: Apache Airflow Keycloak provider: Keycloak multi-team provisioning grants every team role global audit-log read 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Oct 15, 2026 at 12:58:45PM -0700, eddyflores100@...il.com wrote:
-> Follow-up: taikotalent.xyz fake-recruiter trojan — RESOLVED (registrar clientHold 2026-10-10)
-> 
-> Summary for the list: the campaign previously disclosed here
+Severity: important 
 
-This looks like an AI slop.  Nothing was previously disclosed here, so I
-assume an LLM hallucinated that.  The message looks AI-generated.  I am
-unhappy about AI-generated postings that don't even disclose that fact.
+Affected versions:
 
-Yet the incident may have been real (I checked that the domain name was
-in fact registered not long ago and its record last modified 2026-10-10)
-and I don't mind us having _relevant_ IoCs and such in here.  Whether
-this one is relevant enough is doubtful, but given that we're luckily not
-getting many of these yet, I let it through to the list as an example.
+- Apache Airflow Keycloak provider before 0.11.1
 
-> Full updated evidence: https://github.com/eddyflores100-lang/taikotalent-phishing-iocs (IoCs, YARA, timeline)
+Description:
 
-For actually relevant cases, we want actual content directly included in
-list postings, especially the IoCs.  In this case, the above GitHub page
-gives this:
+The Apache Airflow Keycloak provider's multi-team provisioning (`_attach_team_permissions`) granted every team role global read access to audit logs. Deployments that enable multi-team mode with the Keycloak auth manager and provision teams through it are affected: any authenticated member of one team could read other teams' audit events through the UI or the event-log API.
 
-> Host compromise check (macOS/Linux):
-> 
-> ls -la /var/tmp/.kdm.* 2>/dev/null
-> pgrep -fl 'verify_m|deepfake_guard|guard-launcher'
-> find ~ -maxdepth 2 \( -name 'verify_m' -o -name 'verify_w' -o -name 'v.cmd' \) 2>/dev/null
+Users of apache-airflow-providers-keycloak are recommended to upgrade to apache-airflow-providers-keycloak 0.11.1 or later.
 
-If we start getting more of these, this one would probably be below my
-threshold for accepting a posting.  Not relevant and significant enough.
+Credit:
 
-Alexander
+OpenSec Intelligence (finder)
+Jarek Potiuk (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/73696
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-92228
+
