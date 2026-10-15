@@ -1,33 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/1
-Message-ID: <atBu5i3RfF1TEmsx@eldamar.lan>
-Date: Thu, 15 Oct 2026 08:12:54 +0200
-From: Salvatore Bonaccorso <carnil@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/2
+Message-ID: <CAARiyJp20xi0Px11PuKx7kOUuOfC3skyTbCNbLuZADt4EMEf4w@mail.gmail.com>
+Date: Thu, 15 Oct 2026 11:36:55 +0200
+From: Tomasz Kaye <tomasz.brain@...il.com>
 To: oss-security@...ts.openwall.com
-Cc: Eli Zaretskii <eliz@....org>, Michael Albinus <michael.albinus@....de>, 정원영 <wonyoung.jung@...esearchlab.com>, 남성엽 <synam@...esearchlab.com>, Tomas Hoger <thoger@...hat.com>
-Subject: Re: Incomplete fix for Emacs CVE-2026-79992
+Subject: Re: Godot 4.x: heap out-of-bounds read in OptimizedTranslation message lookup
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Follow-up: a CVE identifier has been assigned for this issue.
 
-On Wed, Oct 14, 2026 at 10:17:08AM +0100, Sam James wrote:
-> Sean Whitton <spwhitton@...hitton.name> writes:
-> 
-> > Wonyoung Jung of 78ResearchLab, using their PatchHawk tool, discovered
-> > that the fix for CVE-2026-79992 was incomplete.
-> > The tramp-user-regexp failed to check for some additional problematic
-> > characters in user names, meaning that exploitation was still possible.
-> >
-> > The attached patch by TRAMP maintainer Michael Albinus addresses the
-> > problem.  It will be included in Emacs 31.2 though that won't be
-> > released soon.
-> >
-> 
-> Red Hat, would you be willing to provide another CVE for this? Thank
-> you.
+CVE-2026-110736 — record: https://www.cve.org/CVERecord?id=CVE-2026-110736
 
-FWIW, this is already https://www.cve.org/CVERecord?id=CVE-2026-108976
-.
+The record is tagged "disputed"; the description quotes the supplier
+position ("no security issues"). MITRE scored it
+CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:N/A:L (3.6). I have filed a
+reconsideration request with MITRE's CVE Numbering Authority of Last
+Resort (CNA-LR), asking for
+CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:L (6.1). NVD analysis is
+pending.
 
-Regards,
-Salvatore
+Still unpatched upstream as of 2026-10-15.
+
+Tomasz Kaye
