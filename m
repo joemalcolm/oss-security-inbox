@@ -1,34 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/11
-Message-ID: <f1401db5-ae08-2ad9-614a-596e73afda38@apache.org>
-Date: Thu, 15 Oct 2026 21:07:03 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/12
+Message-ID: <71a939d7-4faf-9471-f05e-a40def5e650e@apache.org>
+Date: Thu, 15 Oct 2026 21:08:30 +0000
 From: Jarek Potiuk <potiuk@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-94135: Apache Airflow SFTP provider: Async SFTP hook disables host-key verification by default 
+Subject: CVE-2026-96806: Apache Airflow Keycloak provider: Keycloak auth manager: logout does not invalidate the session — JWTMiddleware mints an unrevoked replacement token 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Airflow SFTP provider before 7.0.0
+- Apache Airflow Keycloak provider before 0.11.1
 
 Description:
 
-The Apache Airflow SFTP provider's deferrable code paths (`SFTPTrigger`, `SFTPHookAsync`, `SFTPClientPool`) disable SSH host-key verification by default unless the connection explicitly sets `no_host_key_check` to false. Deployments that run SFTP sensors or operators in deferrable mode are affected. An attacker in a machine-in-the-middle position between the triggerer and the SFTP server can impersonate the server and capture the credentials or data exchanged.
+The Apache Airflow Keycloak auth manager did not end the session on logout: the logout route revoked the presented token, but `KeycloakJWTMiddleware` then issued a new, unrevoked token on the same response, so the user stayed logged in. Deployments using the Keycloak auth manager are affected: after a user logs out, anyone with later access to the same browser (for example on a shared workstation) can continue to act as that user.
 
-Users of apache-airflow-providers-sftp are recommended to upgrade to apache-airflow-providers-sftp 7.0.0 or later. This is a separate defect from CVE-2026-94134 (the synchronous SSH hook default, which also affects the SFTP hook); users who applied the fix for one also need this release for the other - apache-airflow-providers-sftp 7.0.0 fixes both.
+Users of apache-airflow-providers-keycloak are recommended to upgrade to apache-airflow-providers-keycloak 0.11.1 or later.
 
 Credit:
 
-Claude Security Scans (tool)
-Igor Stepansky, OX Security (finder)
+JelyFishhhhhh (finder)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/73419
-https://www.cve.org/CVERecord?id=CVE-2026-94134
+https://github.com/apache/airflow/pull/73695
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-94135
+https://www.cve.org/CVERecord?id=CVE-2026-96806
 
