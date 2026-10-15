@@ -1,32 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/9
-Message-ID: <ed72ed34-1c50-c0c7-af27-19050dd1a94a@apache.org>
-Date: Thu, 15 Oct 2026 21:12:30 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/15/7
+Message-ID: <6ad13075.209e6232.116456.79df@mx.google.com>
+Date: Thu, 15 Oct 2026 12:58:45 -0700 (PDT)
+From: eddyflores100@...il.com
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-92228: Apache Airflow Keycloak provider: Keycloak multi-team provisioning grants every team role global audit-log read 
+Subject: FOLLOW-UP: taikotalent.xyz fake-recruiter trojan — RESOLVED (registrar clientHold 2026-10-10)
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Follow-up: taikotalent.xyz fake-recruiter trojan — RESOLVED (registrar clientHold 2026-10-10)
 
-Affected versions:
+Summary for the list: the campaign previously disclosed here (fake "Engineering opening - Taiko" emails leading to a paste-in-terminal bash stager "deepfake_guard", 49,916 B, SHA-256 c7c22e322c..., C2 api.gaganata.ink, base64 second stage /var/tmp/.kdm.*, anti-forensic self-deletion) has been taken down.
 
-- Apache Airflow Keycloak provider before 0.11.1
+Timeline:
+- 2026-10-05: reported to AWS Trust & Safety (case P01M4696RCMDN90PYQGW7NJHGT0), Resend, Taiko.
+- 2026-10-09: payload still live and byte-identical; disclosure expanded (IoC gist, GitHub repo with YARA, dev.to write-up, GitLab snippet, Telegraph mirror); infrastructure mapped via RDAP (NameCheap registrar, 193.160.32.10 payload host, Cloudflare-fronted C2); abuse reports to all three providers + blocklists + media.
+- 2026-10-10 02:39 UTC: registrar applied clientHold to taikotalent.xyz (~12 h after the live-payload follow-up).
+- 2026-10-15: verified dead - no DNS for portal/subdomains, payload unreachable, hold in place. Domain lifetime 13 days. Remnant: C2 still resolves behind Cloudflare (404 at root), final report in flight.
 
-Description:
+Full updated evidence: https://github.com/eddyflores100-lang/taikotalent-phishing-iocs (IoCs, YARA, timeline) - takedown write-up: https://telegra.ph/The-takedown-that-worked-a-fake-recruiter-trojan-died-12-hours-after-the-last-evidence-backed-report-10-15
 
-The Apache Airflow Keycloak provider's multi-team provisioning (`_attach_team_permissions`) granted every team role global read access to audit logs. Deployments that enable multi-team mode with the Keycloak auth manager and provision teams through it are affected: any authenticated member of one team could read other teams' audit events through the UI or the event-log API.
-
-Users of apache-airflow-providers-keycloak are recommended to upgrade to apache-airflow-providers-keycloak 0.11.1 or later.
-
-Credit:
-
-OpenSec Intelligence (finder)
-Jarek Potiuk (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/73696
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-92228
-
+Edison Flores - AliceLabs
