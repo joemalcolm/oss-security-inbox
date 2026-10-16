@@ -1,315 +1,444 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/37
-Message-ID: <d6df5e3c-1eac-4b9e-8504-d6d5354ecb90@oracle.com>
-Date: Fri, 16 Oct 2026 14:53:04 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/38
+Message-Id: <23807DFC-2581-4F0A-BC27-66EFEF85C6D6@stig.io>
+Date: Sat, 17 Oct 2026 00:23:11 +0200
+From: Stig Palmquist <stig@...g.io>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: X.Org Security Advisory: multiple security issues in X.Org X client libraries
+Subject: Text::CSV_XS versions before 1.65 for Perl (8 CVEs)
 Content-Type: text/plain; charset=utf-8
 
-All five library releases are available now, see
-https://lists.x.org/archives/xorg-announce/2026-October/thread.html
-for links to their release announcements.
+CVE-2026-110752
+  Text::CSV_XS versions before 1.65 for Perl allow memory exhaustion by
+  allocating one entry per index of an RFC 7111 selector in fragment
 
+CVE-2026-110753
+  Text::CSV_XS versions from 1.46 before 1.65 for Perl have a
+  use-after-free of bind_columns variables when skip_empty_rows skips
+  an empty line in getline
 
--------- Forwarded Message --------
-Subject: X.Org Security Advisory: multiple security issues in X.Org X client 
-libraries
-Date: Fri, 16 Oct 2026 12:04:10 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: xorg-announce@...ts.x.org
-CC: xorg@...ts.x.org
+CVE-2026-110754
+  Text::CSV_XS versions before 1.65 for Perl leak the parsed fields of
+  a record that fails to parse in getline
 
-======================================================================
-X.Org Security Advisory: October 16, 2026
+CVE-2026-110755
+  Text::CSV_XS versions before 1.65 for Perl allow quadratic CPU use by
+  copying the unparsed remainder per record of CR-only input in getline
 
-Issues in X.Org X client libraries prior to libX11 1.8.14,
-libXi 1.8.4, libXpm 3.5.20, libXrender 0.9.13, libXtst 1.2.6
-======================================================================
+CVE-2026-110756
+  Text::CSV_XS versions before 1.65 for Perl drop the end of a record
+  and its line ending when a UTF-8 flagged field precedes invalid UTF-8
+  bytes in print
 
-Multiple issues have been found in the X client library implementations
-published by X.Org for which we are releasing security fixes for in
-* libX11 1.8.14
-* libXi 1.8.4
-* libXpm 3.5.20
-* libXrender 0.9.13
-* libXtst 1.2.6
+CVE-2026-110757
+  Text::CSV_XS versions before 1.65 for Perl allow record splitting by
+  writing strings used as numbers without quotes in combine
+
+CVE-2026-110758
+  Text::CSV_XS versions before 1.65 for Perl read before the start of
+  an all-blank field under allow_whitespace in strip_trail_whitespace
+
+CVE-2026-110759
+  Text::CSV_XS versions before 1.65 for Perl return a 0xFF byte that is
+  not in the input for an empty last field followed by a lone CR in
+  parse
 
 
 ========================================================================
-libX11 - 4 CVEs
+CVE-2026-110752                                      CPAN Security Group
 ========================================================================
 
-For those considering cherry-picking the fixes, note that libX11 1.8.14
-also includes additional code hardening fixes without CVEs assigned
-that you may also want to consider.
+        CVE ID:  CVE-2026-110752
 
-* CVE-2026-88806:
-   Out-of-bounds write vulnerability in libX11's XKB (X Keyboard Extension)
-   action parser.
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
 
-   A malicious server could send a XkbGetMap reply with keycode values
-   exceeding max_keycode + 1, causing a write past the end of the allocated
-   array during reply handling.
 
-   Fixed in: libX11 1.8.14
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/6d4432b13
-   Found by: Adam Bedard working with TrendAI Zero Day Initiative (ZDI-CAN-32061)
+Text::CSV_XS versions before 1.65 for Perl allow memory exhaustion by
+allocating one entry per index of an RFC 7111 selector in fragment
 
-* CVE-2026-94283:
-   Out-of-bounds read vulnerability in libX11's XIM (X Input Method)
-   attribute parser.
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl allow memory exhaustion by
+allocating one entry per index of an RFC 7111 selector in fragment.
 
-   A malicious or compromised XIM server can send a crafted XIM_OPEN_REPLY
-   message with inconsistent nested attribute lengths, causing the client
-   to read past the end of the received packet buffer during parsing.
+fragment expands a row= or col= selector into an array with one element
+per selected index before it reads any data, and it does not clamp an
+explicit end column in a cell= selector to the row. Only the syntax and
+order of the ranges are checked, so row=1-400000000 on a two-line file
+allocates 400 million elements.
 
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+An application that passes a request-supplied fragment to fragment or
+csv can be made to exhaust memory, which ends the process with an Out
+of memory error that eval cannot catch.
 
-   Fixed in: libX11 1.8.14
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/f263bbca2
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-15963)
-   * CVE-2026-94284:
-   Out-of-bounds read vulnerability in libX11's XIM trigger-key
-   registration parser.
+Problem types
+-------------
+- CWE-770 Allocation of Resources Without Limits or Throttling
 
-   A malicious XIM server can send a crafted XIM_REGISTER_TRIGGERKEYS
-   message with oversized inner on-keys/off-keys length fields, causing the
-   client to read past the received buffer during memcpy() and crash.
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
 
-   CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 5.5 (MEDIUM)
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/d9d3d66f9ff6a8a1bc255a6ef05100f9b102b92b.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
 
-   Fixed in: libX11 1.8.14
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/924fc91f0
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-16671)
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
 
-* CVE-2026-94285:
-   Out-of-bounds read in libX11's byte-oriented codeset parser.
-
-   When the last byte of input is a valid lead byte for a multi-byte locale
-   (e.g. GBK, Big5), byteM_parse_codeset() reads past the caller-provided
-   buffer while matching the second byte range.
-
-   CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L — 5.3 (MEDIUM)
-
-   Fixed in: libX11 1.8.14
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/797eaf0bd
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-16718)
 
 ========================================================================
-libXi - 9 CVEs
+CVE-2026-110753                                      CPAN Security Group
 ========================================================================
 
-For those considering cherry-picking the fixes, note that libXi 1.8.4
-also includes additional code hardening fixes without CVEs assigned
-that you may also want to consider.
+        CVE ID:  CVE-2026-110753
 
-* CVE-2026-93541:
-   Out-of-bounds read in libXi's XQueryDeviceState().
+  Distribution:  Text-CSV_XS
+      Versions:  from 1.46 before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
 
-   XQueryDeviceState() trusts the num_valuators value from a
-   ValuatorClass reply without checking it fits in the declared class
-   length, enabling an OOB read and client crash via a forged reply.
 
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+Text::CSV_XS versions from 1.46 before 1.65 for Perl have a
+use-after-free of bind_columns variables when skip_empty_rows skips an
+empty line in getline
 
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/9a5f8636b
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-13253)
+Description
+-----------
+Text::CSV_XS versions from 1.46 before 1.65 for Perl have a
+use-after-free of bind_columns variables when skip_empty_rows skips an
+empty line in getline.
 
-* CVE-2026-93542:
-   Out-of-bounds read in libXi's XI2 class parsing via size_classes()
-   and copy_classes().
+With bind_columns, the parser writes each field into the caller's own
+scalar without taking a reference to it. When skip_empty_rows skips an
+empty last line, the parser frees the current field scalar without
+checking whether it is bound, dropping one reference from the
+application's variable. The "eof" mode does the same on any empty line.
 
-   Malicious XIQueryDevice replies or XI_DeviceChanged events with
-   inconsistent class lengths can drive the parser past the received
-   buffer and crash the client.
+The variable is then freed while the application still references it,
+so later code uses freed memory and can crash the process.
 
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+Problem types
+-------------
+- CWE-416 Use After Free
+- CWE-911 Improper Update of Reference Count
 
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/59f8dece8
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-13600)
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
 
-* CVE-2026-93543:
-   Out-of-bounds read in libXi's XI2 class parser.
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/f082d5c8aab1b8d16b6181d4f3042a06947e260f.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
 
-   A malicious X server can send forged XI_DeviceChanged events
-   (or XIQueryDevice replies) with inconsistent class metadata.
-   An overlong num_classes, zero or oversized per-class length,
-   or button/key counts exceeding the class bytes causing the
-   size_classes() and copy_classes() to walk past the event/reply
-   buffer and crash the client.
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
 
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 5.9 (MEDIUM)
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/f885619bb
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-13717)
-
-* CVE-2026-93544:
-   Out-of-bounds read in libXi's XI2 XIQueryDevice reply parsing.
-
-   Class parsing helpers size_classes()/copy_classes() and the
-   XIQueryDevice() caller walk wire data using data provided by the
-   Xserver (length, num_buttons and num_keycodes) without bounds
-   checking, enabling OOB reads and client crashes via malformed
-   replies.
-
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/e2ec4a1c8
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14043)
-
-* CVE-2026-93545:
-   Out-of-bounds read in libXi's XListInputDevices()
-
-   A malicious server can set a name length byte that exceeds the
-   remaining reply bytes, causing memcpy() to read past the buffer
-   when parsing device name strings from a ListInputDevices reply.
-
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L — 5.4 (MEDIUM)
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/2e5ecd187
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14711)
-
-* CVE-2026-94281:
-   Out-of-bounds read in libXi's XListInputDevices() class parsing.
-
-   SizeClassInfo() validates each class record's length against the
-   original buffer size but never decrements it, allowing a sequence
-   of individually-valid class lengths to cumulatively advance past
-   the buffer. ParseClassInfo() then walks the same records without
-   any bounds checking.
-
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L — 5.4 (MEDIUM)
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/1d5813ba0
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14718)
-
-* CVE-2026-94282:
-   Out-of-bounds read in libXi's XI2 enter/leave/focus cookie conversion.
-
-   A malicious X server can send a crafted XI2 Enter, Leave, FocusIn,
-   or FocusOut GenericEvent with a small outer length but an oversized
-   buttons_len field, causing wireToEnterLeave() to copy data past the
-   end of the received event buffer.
-
-   CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H — 6.1 (MEDIUM)
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/8caed97a3
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-15083)
-
-* CVE-2026-109089:
-   libXi XGetDeviceControl Control Type Mismatch Heap Buffer Overflow
-
-   XGetDeviceControl() sizes the client buffer from the server's
-   d->control and fills it from the caller's control argument. A hostile
-   server can answer DEVICE_RESOLUTION with a small fixed-size control
-   type so allocation is tiny while the fill still walks an unbounded
-   DEVICE_RESOLUTION valuator list, overflowing the heap.
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/f7836d0a0
-   Found by: Adam Bedard, Security Researcher.
-
-* CVE-2026-109090:
-   libXi XGetDeviceControl DEVICE_ENABLE Heap Buffer Overflow
-
-   DEVICE_ENABLE has a fill path in XGetDeviceControl() but no size arm,
-   so allocation uses the wire length (8 bytes) while the fill writes a
-   full XDeviceEnableState (12–16 bytes), overflowing the heap.
-
-   Fixed in: libXi 1.8.4
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/4eb9f70b6
-   Found by: Adam Bedard, Security Researcher.
 
 ========================================================================
-libXpm - 1 CVE
+CVE-2026-110754                                      CPAN Security Group
 ========================================================================
 
-* CVE-2026-94287:
-   Denial of service via unsigned underflow in libXpm's write path.
+        CVE ID:  CVE-2026-110754
 
-   A crafted 0x0 XPM passes the parser's dimension checks and, when
-   serialized through WritePixels(), causes an unsigned underflow in the
-   row loop bound (height - 1 wraps to UINT_MAX), resulting in prolonged
-   CPU use and continuous output growth.
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
 
-   CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H — 5.5 (MEDIUM)
 
-   Fixed in: libXpm 3.5.20
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/58eb875b7
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14424)
+Text::CSV_XS versions before 1.65 for Perl leak the parsed fields of a
+record that fails to parse in getline
+
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl leak the parsed fields of a
+record that fails to parse in getline.
+
+getline collects the fields of a record into a new array and returns a
+reference to it only when the parse succeeds. When the record has a
+syntax error, getline returns undef and never frees the array or the
+fields parsed before the error.
+
+A long-running process parsing untrusted CSV retains every malformed
+record it is sent, so repeated malformed input exhausts its memory.
+
+Problem types
+-------------
+- CWE-401 Missing Release of Memory after Effective Lifetime
+
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
+
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/eb4f739ffc605bfb1ab710e5330704faa0e89f08.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
+
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
+
 
 ========================================================================
-libXrender - 1 CVE
+CVE-2026-110755                                      CPAN Security Group
 ========================================================================
 
-* CVE-2026-88807:
-   Out-of-bounds read in libXrender's XRenderQueryFormat reply parser.
+        CVE ID:  CVE-2026-110755
 
-   A malicious server could reply to XRenderQueryFormat with a numSubpixels
-   count greater than the number of screens, causing an OOB write into
-   screen->subpixel which was allocated using numScreens.
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
 
-   Fixed in: libXrender 0.9.13
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxrender/-/commit/0564bce54
-   Found by: Adam Bedard working with TrendAI Zero Day Initiative (ZDI-CAN-32093)
+
+Text::CSV_XS versions before 1.65 for Perl allow quadratic CPU use by
+copying the unparsed remainder per record of CR-only input in getline
+
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl allow quadratic CPU use by
+copying the unparsed remainder per record of CR-only input in getline.
+
+With eol unset, the default, getline reads with Perl's default line
+separator, so input with CR-only line endings arrives as one chunk.
+After each record the parser copies the whole unparsed remainder into a
+new buffer, which the next call parses and copies again, so the work
+grows with the square of the input size.
+
+A reader with default options that is sent CSV with classic Mac line
+endings spends seconds of CPU time on a megabyte of input.
+
+Problem types
+-------------
+- CWE-407 Inefficient Algorithmic Complexity
+
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
+
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/f25e00aacd6fc15857b22487cb2e5ca263f377e0.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
+
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
+
 
 ========================================================================
-libXtst - 2 CVEs
+CVE-2026-110756                                      CPAN Security Group
 ========================================================================
 
-* CVE-2026-94286:
-   Out-of-bounds read in libXtst's RECORD reply parser.
+        CVE ID:  CVE-2026-110756
 
-   A malicious Xserver can send a crafted RECORD reply where the inner
-   element's datum_bytes exceeds the actual reply buffer size, causing
-   the RECORD callback to receive a pointer/length pair that extends past
-   the allocated buffer.
-   When the callback reads the advertised payload, it triggers an out of
-   bounds read that can crash the client or expose adjacent process memory.
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
 
-   CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H — 7.1 (HIGH)
 
-   Fixed in: libXtst 1.2.6
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxtst/-/commit/b84737d84
-   Found by: Aisle Research (AISLE-Report-PSIRTSUPT-16762)
+Text::CSV_XS versions before 1.65 for Perl drop the end of a record and
+its line ending when a UTF-8 flagged field precedes invalid UTF-8 bytes
+in print
 
-* CVE-2026-109088:
-   libXtst RECORD EnableContext Reply Endless Loop
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl drop the end of a record and
+its line ending when a UTF-8 flagged field precedes invalid UTF-8 bytes
+in print.
 
-   parse_reply_call_callback() advances through RECORD EnableContext
-   reply elements by datum_bytes. A zero-sized XRecordFromClient
-   (BIG-REQUESTS length 0) or an undefined category byte leaves
-   datum_bytes at 0 while bytes remain, so the loop never terminates
-   and the application callback is invoked forever with empty data.
+When a record contains a UTF-8 flagged field, print holds back trailing
+bytes that are not valid UTF-8 at each buffer flush, so that a
+character split across two flushes can be completed. Nothing writes the
+held-back bytes after the record's final flush. A record whose last
+field ends in such a byte loses it, any closing quote and the line
+ending, while print still returns true. combine is not affected.
 
-   A malicious or compromised X server answering EnableContext can hang
-   XRecordEnableContext() (sync) or livelock Xlib reply processing
-   (async).
+The next record is written onto the same line, or, when the last field
+was quoted, the missing closing quote makes a reader take every
+following record as part of that field.
 
-   Fixed in: libXtst 1.2.6
-   Fix: https://gitlab.freedesktop.org/xorg/lib/libxtst/-/commit/ac60f5f47
-   Found by: Kaya Emre Arikan.
+Problem types
+-------------
+- CWE-116 Improper Encoding or Escaping of Output
+
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
+
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/0610a8d81262ae6f1ac82a88d73c8a471f38af19.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
+
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
+
 
 ========================================================================
+CVE-2026-110757                                      CPAN Security Group
+========================================================================
 
-X.Org thanks all of those who reported and fixed these issues, and those
-who helped with the review and release of this advisory and these fixes.
+        CVE ID:  CVE-2026-110757
 
-The X.Org security team would like to take this opportunity to remind X
-client authors that current best practices suggest separating code that
-requires privileges from the GUI, to reduce the risk of issues like these.
-
--- 
-      -Alan Coopersmith-              alan.coopersmith@...cle.com
-        X.Org Security Response Team - xorg-security@...ts.x.org
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
 
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+Text::CSV_XS versions before 1.65 for Perl allow record splitting by
+writing strings used as numbers without quotes in combine
+
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl allow record splitting by
+writing strings used as numbers without quotes in combine.
+
+combine and print do not check whether a field needs quotes when its
+value has Perl's integer or numeric flag set. Perl sets these flags on
+a string used in a numeric operation when it parses as a number, which
+allows leading and trailing whitespace. With binary set, as csv does by
+default, "12\n" passes a check such as $qty > 0 and is then written
+unquoted with its newline.
+
+A value validated as a number can end the record early and turn the
+fields after it into a separate row.
+
+Problem types
+-------------
+- CWE-116 Improper Encoding or Escaping of Output
+
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
+
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/fcfb796cb50de9cef8b94a70535304ac41a50c56.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
+
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
+
+
+========================================================================
+CVE-2026-110758                                      CPAN Security Group
+========================================================================
+
+        CVE ID:  CVE-2026-110758
+
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
+
+
+Text::CSV_XS versions before 1.65 for Perl read before the start of an
+all-blank field under allow_whitespace in strip_trail_whitespace
+
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl read before the start of an
+all-blank field under allow_whitespace in strip_trail_whitespace.
+
+Under allow_whitespace, strip_trail_whitespace removes trailing spaces
+and tabs from each unquoted field without stopping at the start of the
+field. For a field of only blanks it reads the byte before the field's
+heap buffer. If that byte is also a space or tab, it may be zeroed and
+the walk continue backwards, depending on what the allocator placed
+there.
+
+Leading blanks are normally skipped before a field is stored, but an
+all-blank field still arrives after a leading escape_char that differs
+from quote_char, or as a quoted field in getline when its line ends in
+two CRs.
+
+Problem types
+-------------
+- CWE-127 Buffer Under-read
+
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
+
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/efed7ee21177c59a5b69e787f84154e1fcb0d095.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
+
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
+
+
+========================================================================
+CVE-2026-110759                                      CPAN Security Group
+========================================================================
+
+        CVE ID:  CVE-2026-110759
+
+  Distribution:  Text-CSV_XS
+      Versions:  before 1.65
+      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
+      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
+
+
+Text::CSV_XS versions before 1.65 for Perl return a 0xFF byte that is
+not in the input for an empty last field followed by a lone CR in parse
+
+Description
+-----------
+Text::CSV_XS versions before 1.65 for Perl return a 0xFF byte that is
+not in the input for an empty last field followed by a lone CR in
+parse.
+
+When the input to parse ends in a separator and a lone CR, the parser
+treats the end of the input as the next character and stores the
+end-of-file marker in the field as the byte 0xFF. With binary set,
+parse("a,\r") returns the fields "a" and "\xFF". On UTF-8 flagged input
+the last field is a UTF-8 flagged string holding that lone byte, which
+is malformed UTF-8. The same input with a non-empty last field is
+rejected as an error.
+
+A CRLF file read line by line and chomped ends this way when its last
+column is empty, so the application receives a byte that is not in its
+input.
+
+Problem types
+-------------
+- CWE-1286 Improper Validation of Syntactic Correctness of Input
+
+Solutions
+---------
+Upgrade to Text-CSV_XS 1.65 or later.
+
+References
+----------
+https://github.com/cpan-authors/Text-CSV_XS/commit/7627f1a2bb8ffe4e81d9847318a060822043f7f3.patch
+https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
+
+Timeline
+--------
+- 2026-10-14: Fix committed to upstream repository.
+- 2026-10-15: Version 1.65 released with fix.
+
+
