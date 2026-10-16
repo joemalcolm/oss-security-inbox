@@ -1,42 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/2
-Message-ID: <09ba85b3-be00-057b-2e2a-484d82121efa@apache.org>
-Date: Fri, 16 Oct 2026 02:27:53 +0000
-From: Li Yang <liyang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/28
+Message-ID: <197ca060-6bce-b87f-f8ed-3da3aaa1697b@apache.org>
+Date: Fri, 16 Oct 2026 03:35:21 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-63619: Apache Kylin: Missing authorization and path-confinement on system meta dump 
+Subject: CVE-2026-76994: Apache Answer: Exposure of Hidden Question Metadata Through Public Answer Profiles 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Kylin 4..0.0 through 5.0.4
+- Apache Answer through 2.0.2
 
 Description:
 
-Missing Authorization vulnerability in Apache Kylin. A backend metadata dump API misses the enough authorization and the path-confinement. Impact most to the kylin services that are directly exposed to public network, which is not common. In-house kylin deployments are mostly not impacted.
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Answer.
 
 
 
-This issue affects Apache Kylin: from 4 through 5.0.4.
+This issue affects Apache Answer: through 2.0.2.
+
+Unauthenticated attackers could obtain metadata associated with hidden questions through public answer profiles.
 
 
-
-Users are recommended to upgrade to version 5.0.5, which fixes the issue.
-
-This issue is being tracked as KYLIN-6093 KYLIN-6102 
+Users are recommended to upgrade to version 2.0.3, which fixes the issue.
 
 Credit:
 
-"George Chen" <http://github.com/geo-chen> (finder)
-n0mi1k Security (finder)
-MopMonk-AI (finder)
+sec-reex (reporter)
 
 References:
 
-https://kylin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-63619
-https://issues.apache.org/jira/browse/KYLIN-6093
-https://issues.apache.org/jira/browse/KYLIN-6102
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-76994
 
