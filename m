@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/24
-Message-ID: <8d26dc05-3bab-0753-16ab-fc0c183461df@apache.org>
-Date: Fri, 16 Oct 2026 03:32:02 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/21
+Message-ID: <1865a6f9-c5bb-5893-0c96-8c2ba772d6a4@apache.org>
+Date: Fri, 16 Oct 2026 03:12:18 +0000
+From: Li Yang <liyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-64945: Apache Answer: Incorrect permission mapping allows users with only the unpin permission to hide/show questions 
+Subject: CVE-2026-108837: Apache Kylin: Potential computed-column resource exhaustion 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low 
 
 Affected versions:
 
-- Apache Answer through 2.0.2
+- Apache Kylin 4.0.0 through 5.0.4
 
 Description:
 
-A vulnerability in Apache Answer.
+Allocation of resources without limits or throttling vulnerability in Apache Kylin. Given an attacker has got project admin permission, an cache API maybe used to cause computed-column resource exhaustion.
 
 
 
-This issue affects Apache Answer: through 2.0.2.
-
-The question operation controller gates hide/show operations on the wrong permission check result (the unpin permission instead of the hide permission), so in custom role configurations that separate these permissions, a user granted only question.unpin can hide or restore questions without holding question.hide or question.show.
+This issue affects Apache Kylin: from 4.0.0 through 5.0.4.
 
 
-Users are recommended to upgrade to version 2.0.3, which fixes the issue.
+
+Users are recommended to upgrade to version 5.0.5, which fixes the issue.
+
+This issue is being tracked as KYLIN-6112 
 
 Credit:
 
-meifukun (reporter)
+HRsGIT (https://github.com/HRsGIT) (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-64945
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-108837
+https://issues.apache.org/jira/browse/KYLIN-6112
 
