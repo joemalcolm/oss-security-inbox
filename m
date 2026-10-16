@@ -1,10 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/27
-Message-ID: <5c861e9f-b5ab-40e9-ecee-c79b346de347@apache.org>
-Date: Fri, 16 Oct 2026 03:34:36 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/33
+Message-ID: <03034508-1da9-5719-0e85-a47cbcf1e2b1@apache.org>
+Date: Fri, 16 Oct 2026 03:38:38 +0000
 From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-71563: Apache Answer: MCP Answer Retrieval Exposes Content from Non-Public Questions 
+Subject: CVE-2026-86589: Apache Answer: User Center integration does not revoke first-login sessions after central account suspension 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
@@ -15,24 +15,27 @@ Affected versions:
 
 Description:
 
-Missing Authorization vulnerability in Apache Answer.
+Incorrect implementation of authentication algorithm vulnerability in Apache Answer.
 
 
 
 This issue affects Apache Answer: through 2.0.2.
 
-An authorization flaw in the MCP answer retrieval tool allows holders of a global API key to access answer content associated with hidden, deleted, or pending-review questions.
+
+
+A flaw in the User Center login integration can cause a newly created external user session to omit its external identity, allowing subsequent requests to bypass central account suspension or deletion checks until the session
+  expires or is revoked.
+
 
 
 Users are recommended to upgrade to version 2.0.3, which fixes the issue.
 
 Credit:
 
-Han, JunGyu (reporter)
-VK, AzeFox Foundations (reporter)
+ascanner (reporter)
 
 References:
 
 https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-71563
+https://www.cve.org/CVERecord?id=CVE-2026-86589
 
