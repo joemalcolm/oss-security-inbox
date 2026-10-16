@@ -1,39 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/12
-Message-ID: <efc172de-5a14-cb9c-abd5-3cc9e21a7cc0@apache.org>
-Date: Fri, 16 Oct 2026 03:00:12 +0000
-From: Li Yang <liyang@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/27
+Message-ID: <5c861e9f-b5ab-40e9-ecee-c79b346de347@apache.org>
+Date: Fri, 16 Oct 2026 03:34:36 +0000
+From: Enxin Xie <linkinstar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-108743: Apache Kylin: spark job OS command injection 
+Subject: CVE-2026-71563: Apache Answer: MCP Answer Retrieval Exposes Content from Non-Public Questions 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Kylin 4.0.4 through 5.0.4
+- Apache Answer through 2.0.2
 
 Description:
 
-Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection') vulnerability in Apache Kylin. Impact most to the kylin services that are directly exposed to public network, which is not common. In-house kylin deployments are mostly not impacted.
+Missing Authorization vulnerability in Apache Answer.
 
 
 
-This issue affects Apache Kylin: from 4.0.4 through 5.0.4.
+This issue affects Apache Answer: through 2.0.2.
+
+An authorization flaw in the MCP answer retrieval tool allows holders of a global API key to access answer content associated with hidden, deleted, or pending-review questions.
 
 
-
-Users are recommended to upgrade to version 5.0.5, which fixes the issue.
-
-This issue is being tracked as KYLIN-6106 
+Users are recommended to upgrade to version 2.0.3, which fixes the issue.
 
 Credit:
 
-n0mi1k Security (finder)
+Han, JunGyu (reporter)
+VK, AzeFox Foundations (reporter)
 
 References:
 
-https://kylin.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-108743
-https://issues.apache.org/jira/browse/KYLIN-6106
+https://answer.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-71563
 
