@@ -1,40 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/29
-Message-ID: <08abed6b-d068-4c9a-7d8b-80fae3d5e1c0@apache.org>
-Date: Fri, 16 Oct 2026 03:35:48 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/2
+Message-ID: <09ba85b3-be00-057b-2e2a-484d82121efa@apache.org>
+Date: Fri, 16 Oct 2026 02:27:53 +0000
+From: Li Yang <liyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-79613: Apache Answer: Disclosure of Comments on Non-Public Content Through Public Profiles 
+Subject: CVE-2026-63619: Apache Kylin: Missing authorization and path-confinement on system meta dump 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Answer through 2.0.2
+- Apache Kylin 4..0.0 through 5.0.4
 
 Description:
 
-vulnerability in Apache Answer.
+Missing Authorization vulnerability in Apache Kylin. A backend metadata dump API misses the enough authorization and the path-confinement. Impact most to the kylin services that are directly exposed to public network, which is not common. In-house kylin deployments are mostly not impacted.
 
 
 
-This issue affects Apache Answer: through 2.0.2.
+This issue affects Apache Kylin: from 4 through 5.0.4.
 
 
 
-Unauthenticated attackers could access comments associated with non-public content through public user profiles.
+Users are recommended to upgrade to version 5.0.5, which fixes the issue.
 
-
-
-Users are recommended to upgrade to version 2.0.3, which fixes the issue.
+This issue is being tracked as KYLIN-6093 KYLIN-6102 
 
 Credit:
 
-n0mi1k (reporter)
+"George Chen" <http://github.com/geo-chen> (finder)
+n0mi1k Security (finder)
+MopMonk-AI (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-79613
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-63619
+https://issues.apache.org/jira/browse/KYLIN-6093
+https://issues.apache.org/jira/browse/KYLIN-6102
 
