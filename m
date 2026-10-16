@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/31
-Message-ID: <874c17fd-8ecc-955b-4dbd-9caa514eed69@apache.org>
-Date: Fri, 16 Oct 2026 03:37:21 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/10
+Message-ID: <05ff270d-5350-156b-ecb9-98d5668ca221@apache.org>
+Date: Fri, 16 Oct 2026 02:45:32 +0000
+From: Li Yang <liyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-79624: Apache Answer: Stale Visit Tokens Retain Access to Private Uploads After Session Revocation 
+Subject: CVE-2026-69080: Apache Kylin: Broken Access Control in QuerySQLBlacklistController 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Answer through 2.0.2
+- Apache Kylin 4..0.0 through 5.0.4
 
 Description:
 
-Insufficient session expiration vulnerability in Apache Answer.
+Exposure of SQL Black List to an Unauthorized Actor vulnerability in Apache Kylin.
 
 
 
-This issue affects Apache Answer: through 2.0.2.
+This issue affects Apache Kylin: from 4 through 5.0.4.
 
 
 
-Insufficient session invalidation allowed revoked users to continue accessing known private uploaded files with a stale visit token.
-
-
-
-Users are recommended to upgrade to version 2.0.3, which fixes the issue.
+Users are recommended to upgrade to version 5.0.5, which fixes the issue.
 
 Credit:
 
-Maksim Hayder (reporter)
+Haoran Zhao, Yicheng Yu, and Lei Zhang  (System and Software Security Lab in Fudan University) (finder)
+Yan Xu (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-79624
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-69080
 
