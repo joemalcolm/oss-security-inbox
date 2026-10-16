@@ -1,444 +1,69 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/38
-Message-Id: <23807DFC-2581-4F0A-BC27-66EFEF85C6D6@stig.io>
-Date: Sat, 17 Oct 2026 00:23:11 +0200
-From: Stig Palmquist <stig@...g.io>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/39
+Message-ID: <20261016223210.GA22879@openwall.com>
+Date: Sat, 17 Oct 2026 00:32:10 +0200
+From: Solar Designer <solar@...nwall.com>
 To: oss-security@...ts.openwall.com
-Subject: Text::CSV_XS versions before 1.65 for Perl (8 CVEs)
+Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-110752
-  Text::CSV_XS versions before 1.65 for Perl allow memory exhaustion by
-  allocating one entry per index of an RFC 7111 selector in fragment
+Hi,
 
-CVE-2026-110753
-  Text::CSV_XS versions from 1.46 before 1.65 for Perl have a
-  use-after-free of bind_columns variables when skip_empty_rows skips
-  an empty line in getline
+Here's an update:
 
-CVE-2026-110754
-  Text::CSV_XS versions before 1.65 for Perl leak the parsed fields of
-  a record that fails to parse in getline
+On Sun, Jun 14, 2026 at 12:32:41AM +0200, Solar Designer wrote:
+> I do indeed see the problem, but I don't like the proposal.  Also, for
+> now the increased volume on this list hasn't exceeded its historical
+> pre-AI peak: we had 485 messages in October 2014, but 455 in May 2026.
+> I'm not seeing a mass exodus of subscribers either.  There's greater
+> churn - more people are leaving, but at the same time more are joining.
 
-CVE-2026-110755
-  Text::CSV_XS versions before 1.65 for Perl allow quadratic CPU use by
-  copying the unparsed remainder per record of CR-only input in getline
+We stayed in the range of 319 to 400 accepted messages per month for
+June through September.  However, the number of subscribers started
+decreasing slightly - a few more people are leaving than are joining -
+and the churn is still much higher than it had been "before AI".
 
-CVE-2026-110756
-  Text::CSV_XS versions before 1.65 for Perl drop the end of a record
-  and its line ending when a UTF-8 flagged field precedes invalid UTF-8
-  bytes in print
+> Rather than tell people to send something to the other list, I ask this:
+> 
+> Whenever practical, please group related vulnerability disclosures into
+> fewer messages (like security advisories) and use helpful Subject lines.
+> Include the project name in a fixed place near the beginning of Subject,
+> and make the Subject specific to the one disclosure rather than generic
+> shared between multiple disclosures.
 
-CVE-2026-110757
-  Text::CSV_XS versions before 1.65 for Perl allow record splitting by
-  writing strings used as numbers without quotes in combine
+> I greatly appreciate that Apache projects post their CVE disclosures in
+> here, but it does sometimes result in a lot of messages for the same
+> project on the same day.
 
-CVE-2026-110758
-  Text::CSV_XS versions before 1.65 for Perl read before the start of
-  an all-blank field under allow_whitespace in strip_trail_whitespace
+I recently started delaying approval of multi-message disclosures until
+after single-message ones already in the moderation queue have been
+approved and had a good chance to be delivered.  This should lower
+delays and improve delivery rate for the single-message disclosures as
+many recipient servers impose rate limits.
 
-CVE-2026-110759
-  Text::CSV_XS versions before 1.65 for Perl return a 0xFF byte that is
-  not in the input for an empty last field followed by a lone CR in
-  parse
+This month, I also started imposing a limit on the number of messages
+per project per day, which depends on the multi-message disclosures
+being delayed a bit (as otherwise I don't know how many more messages
+are coming).  Currently I reluctantly accept up to 20-something
+messages, but not 30+.  I intend to slowly decrease this threshold.
 
+Here's the first case where 61 messages were replaced with one combined
+disclosure:
 
-========================================================================
-CVE-2026-110752                                      CPAN Security Group
-========================================================================
+https://www.openwall.com/lists/oss-security/2026/10/04/1
 
-        CVE ID:  CVE-2026-110752
+The second one is 39 messages for Apache Camel today, which are
+similarly going to be replaced by one message on Monday (I'm told).
 
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
+So that's 98 messages fewer getting through to the list already.
 
+The ASF are planning to improve their tooling, which is tracked here:
 
-Text::CSV_XS versions before 1.65 for Perl allow memory exhaustion by
-allocating one entry per index of an RFC 7111 selector in fragment
+"Sending a batched notification email"
+https://github.com/apache/security-vulnogram/issues/255
 
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl allow memory exhaustion by
-allocating one entry per index of an RFC 7111 selector in fragment.
+Meanwhile it's a manual process, not specifically defined but approved
+by the ASF, to combine the disclosures into fewer postings in extreme
+cases like these two.
 
-fragment expands a row= or col= selector into an array with one element
-per selected index before it reads any data, and it does not clamp an
-explicit end column in a cell= selector to the row. Only the syntax and
-order of the ranges are checked, so row=1-400000000 on a two-line file
-allocates 400 million elements.
-
-An application that passes a request-supplied fragment to fragment or
-csv can be made to exhaust memory, which ends the process with an Out
-of memory error that eval cannot catch.
-
-Problem types
--------------
-- CWE-770 Allocation of Resources Without Limits or Throttling
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/d9d3d66f9ff6a8a1bc255a6ef05100f9b102b92b.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110753                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110753
-
-  Distribution:  Text-CSV_XS
-      Versions:  from 1.46 before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions from 1.46 before 1.65 for Perl have a
-use-after-free of bind_columns variables when skip_empty_rows skips an
-empty line in getline
-
-Description
------------
-Text::CSV_XS versions from 1.46 before 1.65 for Perl have a
-use-after-free of bind_columns variables when skip_empty_rows skips an
-empty line in getline.
-
-With bind_columns, the parser writes each field into the caller's own
-scalar without taking a reference to it. When skip_empty_rows skips an
-empty last line, the parser frees the current field scalar without
-checking whether it is bound, dropping one reference from the
-application's variable. The "eof" mode does the same on any empty line.
-
-The variable is then freed while the application still references it,
-so later code uses freed memory and can crash the process.
-
-Problem types
--------------
-- CWE-416 Use After Free
-- CWE-911 Improper Update of Reference Count
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/f082d5c8aab1b8d16b6181d4f3042a06947e260f.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110754                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110754
-
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions before 1.65 for Perl leak the parsed fields of a
-record that fails to parse in getline
-
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl leak the parsed fields of a
-record that fails to parse in getline.
-
-getline collects the fields of a record into a new array and returns a
-reference to it only when the parse succeeds. When the record has a
-syntax error, getline returns undef and never frees the array or the
-fields parsed before the error.
-
-A long-running process parsing untrusted CSV retains every malformed
-record it is sent, so repeated malformed input exhausts its memory.
-
-Problem types
--------------
-- CWE-401 Missing Release of Memory after Effective Lifetime
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/eb4f739ffc605bfb1ab710e5330704faa0e89f08.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110755                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110755
-
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions before 1.65 for Perl allow quadratic CPU use by
-copying the unparsed remainder per record of CR-only input in getline
-
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl allow quadratic CPU use by
-copying the unparsed remainder per record of CR-only input in getline.
-
-With eol unset, the default, getline reads with Perl's default line
-separator, so input with CR-only line endings arrives as one chunk.
-After each record the parser copies the whole unparsed remainder into a
-new buffer, which the next call parses and copies again, so the work
-grows with the square of the input size.
-
-A reader with default options that is sent CSV with classic Mac line
-endings spends seconds of CPU time on a megabyte of input.
-
-Problem types
--------------
-- CWE-407 Inefficient Algorithmic Complexity
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/f25e00aacd6fc15857b22487cb2e5ca263f377e0.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110756                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110756
-
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions before 1.65 for Perl drop the end of a record and
-its line ending when a UTF-8 flagged field precedes invalid UTF-8 bytes
-in print
-
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl drop the end of a record and
-its line ending when a UTF-8 flagged field precedes invalid UTF-8 bytes
-in print.
-
-When a record contains a UTF-8 flagged field, print holds back trailing
-bytes that are not valid UTF-8 at each buffer flush, so that a
-character split across two flushes can be completed. Nothing writes the
-held-back bytes after the record's final flush. A record whose last
-field ends in such a byte loses it, any closing quote and the line
-ending, while print still returns true. combine is not affected.
-
-The next record is written onto the same line, or, when the last field
-was quoted, the missing closing quote makes a reader take every
-following record as part of that field.
-
-Problem types
--------------
-- CWE-116 Improper Encoding or Escaping of Output
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/0610a8d81262ae6f1ac82a88d73c8a471f38af19.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110757                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110757
-
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions before 1.65 for Perl allow record splitting by
-writing strings used as numbers without quotes in combine
-
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl allow record splitting by
-writing strings used as numbers without quotes in combine.
-
-combine and print do not check whether a field needs quotes when its
-value has Perl's integer or numeric flag set. Perl sets these flags on
-a string used in a numeric operation when it parses as a number, which
-allows leading and trailing whitespace. With binary set, as csv does by
-default, "12\n" passes a check such as $qty > 0 and is then written
-unquoted with its newline.
-
-A value validated as a number can end the record early and turn the
-fields after it into a separate row.
-
-Problem types
--------------
-- CWE-116 Improper Encoding or Escaping of Output
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/fcfb796cb50de9cef8b94a70535304ac41a50c56.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110758                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110758
-
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions before 1.65 for Perl read before the start of an
-all-blank field under allow_whitespace in strip_trail_whitespace
-
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl read before the start of an
-all-blank field under allow_whitespace in strip_trail_whitespace.
-
-Under allow_whitespace, strip_trail_whitespace removes trailing spaces
-and tabs from each unquoted field without stopping at the start of the
-field. For a field of only blanks it reads the byte before the field's
-heap buffer. If that byte is also a space or tab, it may be zeroed and
-the walk continue backwards, depending on what the allocator placed
-there.
-
-Leading blanks are normally skipped before a field is stored, but an
-all-blank field still arrives after a leading escape_char that differs
-from quote_char, or as a quoted field in getline when its line ends in
-two CRs.
-
-Problem types
--------------
-- CWE-127 Buffer Under-read
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/efed7ee21177c59a5b69e787f84154e1fcb0d095.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
-========================================================================
-CVE-2026-110759                                      CPAN Security Group
-========================================================================
-
-        CVE ID:  CVE-2026-110759
-
-  Distribution:  Text-CSV_XS
-      Versions:  before 1.65
-      MetaCPAN:  https://metacpan.org/dist/Text-CSV_XS
-      VCS Repo:  https://github.com/cpan-authors/Text-CSV_XS
-
-
-Text::CSV_XS versions before 1.65 for Perl return a 0xFF byte that is
-not in the input for an empty last field followed by a lone CR in parse
-
-Description
------------
-Text::CSV_XS versions before 1.65 for Perl return a 0xFF byte that is
-not in the input for an empty last field followed by a lone CR in
-parse.
-
-When the input to parse ends in a separator and a lone CR, the parser
-treats the end of the input as the next character and stores the
-end-of-file marker in the field as the byte 0xFF. With binary set,
-parse("a,\r") returns the fields "a" and "\xFF". On UTF-8 flagged input
-the last field is a UTF-8 flagged string holding that lone byte, which
-is malformed UTF-8. The same input with a non-empty last field is
-rejected as an error.
-
-A CRLF file read line by line and chomped ends this way when its last
-column is empty, so the application receives a byte that is not in its
-input.
-
-Problem types
--------------
-- CWE-1286 Improper Validation of Syntactic Correctness of Input
-
-Solutions
----------
-Upgrade to Text-CSV_XS 1.65 or later.
-
-References
-----------
-https://github.com/cpan-authors/Text-CSV_XS/commit/7627f1a2bb8ffe4e81d9847318a060822043f7f3.patch
-https://metacpan.org/release/HMBRAND/Text-CSV_XS-1.65/changes
-
-Timeline
---------
-- 2026-10-14: Fix committed to upstream repository.
-- 2026-10-15: Version 1.65 released with fix.
-
-
+Alexander
