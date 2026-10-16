@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/34
-Message-ID: <49e6a30e-7da3-5db7-8242-af59ee4dc9d1@apache.org>
-Date: Fri, 16 Oct 2026 03:39:03 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/6
+Message-ID: <496d52e3-9eb0-cc37-8410-345c0a1884fc@apache.org>
+Date: Fri, 16 Oct 2026 02:37:29 +0000
+From: Li Yang <liyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90910: Apache Answer: Reaction API authorization bypass for restricted content 
+Subject: CVE-2026-68572: Apache Kylin: Unauthorized SQL execution to Spark SQL env 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache Answer through 2.0.2
+- Apache Kylin 4..0.0 through 5.0.4
 
 Description:
 
-Missing authentication for critical function vulnerability in Apache Answer.
+Exposure of Sensitive Information to an Unauthorized Actor vulnerability in Apache Kylin.
 
 
 
-This issue affects Apache Answer: through 2.0.2.
+This issue affects Apache Kylin: from 4 through 5.0.4.
 
 
 
-The reaction API did not enforce content visibility controls, allowing unauthorized users to read reaction metadata from restricted content or add and remove their own reactions.
-
-
-
-Users are recommended to upgrade to version 2.0.3, which fixes the issue.
+Users are recommended to upgrade to version 5.0.5, which fixes the issue.
 
 Credit:
 
-Maksim Hayder (reporter)
+Yicheng <yyc2569580673@...il.com> (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-90910
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68572
 
