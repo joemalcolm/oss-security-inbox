@@ -1,40 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/32
-Message-ID: <a822daba-a576-cf3e-d54d-0dd9f8d10979@apache.org>
-Date: Fri, 16 Oct 2026 03:37:51 +0000
-From: Enxin Xie <linkinstar@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/7
+Message-ID: <d74a7e3e-db3a-d8c5-4c16-3fc3e246adbe@apache.org>
+Date: Fri, 16 Oct 2026 02:39:59 +0000
+From: Li Yang <liyang@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-79633: Apache Answer: Missing Authorization Allows Mutations of Non-Public Content 
+Subject: CVE-2026-68573: Apache Kylin: Unauthenticated Metastore Cleanup 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Answer through 2.0.2
+- Apache Kylin 4.0.0 through 5.0.4
 
 Description:
 
-vulnerability in Apache Answer.
+Improper Authentication vulnerability in Apache Kylin. Unauthenticated user may access to system cleanup actions. Impact most to the kylin services that are directly exposed to public network, which is not common. In-house kylin deployments are mostly not impacted. 
 
 
 
-This issue affects Apache Answer: through 2.0.2.
+This issue affects Apache Kylin: from 4 through 5.0.4.
 
 
 
-Missing authorization checks allowed authenticated users to perform actions on non-public content they were not permitted to access.
+Users are recommended to upgrade to version 5.0.5, which fixes the issue.
 
-
-
-Users are recommended to upgrade to version 2.0.3, which fixes the issue.
+This issue is being tracked as KYLIN-6093 
 
 Credit:
 
-Luigi Colluto (reporter)
+Fabian Fleischer (finder)
+MopMonk-AI (finder)
+Wanxin Yin (finder)
 
 References:
 
-https://answer.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-79633
+https://kylin.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-68573
+https://issues.apache.org/jira/browse/KYLIN-6093
 
