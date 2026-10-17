@@ -1,69 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/16/39
-Message-ID: <20261016223210.GA22879@openwall.com>
-Date: Sat, 17 Oct 2026 00:32:10 +0200
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/17/1
+Message-ID: <179219961514.1806.576806807373716693@gmail.com>
+Date: Sat, 17 Oct 2026 01:13:35 -0000
+From: eddyflores100@...il.com
 To: oss-security@...ts.openwall.com
-Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+Subject: Re: FOLLOW-UP: taikotalent.xyz fake-recruiter trojan — RESOLVED (registrar clientHold 2026-10-10)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Alexander,
 
-Here's an update:
+Fair on both counts, and thank you for verifying the domain state yourself before
+responding - that is more diligence than the posting deserved in the shape it was sent.
 
-On Sun, Jun 14, 2026 at 12:32:41AM +0200, Solar Designer wrote:
-> I do indeed see the problem, but I don't like the proposal.  Also, for
-> now the increased volume on this list hasn't exceeded its historical
-> pre-AI peak: we had 485 messages in October 2014, but 455 in May 2026.
-> I'm not seeing a mass exodus of subscribers either.  There's greater
-> churn - more people are leaving, but at the same time more are joining.
+Two process corrections, both accepted:
 
-We stayed in the range of 319 to 400 accepted messages per month for
-June through September.  However, the number of subscribers started
-decreasing slightly - a few more people are leaving than are joining -
-and the churn is still much higher than it had been "before AI".
+1. Disclosure: the follow-up was drafted with LLM assistance as part of our
+   incident-response workflow (AliceLabs, agent-security research), and it should have
+   said so. Future postings from us will carry that line explicitly.
 
-> Rather than tell people to send something to the other list, I ask this:
-> 
-> Whenever practical, please group related vulnerability disclosures into
-> fewer messages (like security advisories) and use helpful Subject lines.
-> Include the project name in a fixed place near the beginning of Subject,
-> and make the Subject specific to the one disclosure rather than generic
-> shared between multiple disclosures.
+2. Content: the load-bearing indicators belong in the posting itself, not behind a
+   GitHub link. Inlined below.
 
-> I greatly appreciate that Apache projects post their CVE disclosures in
-> here, but it does sometimes result in a lot of messages for the same
-> project on the same day.
+Campaign: taikotalent.xyz fake-recruiter trojan (macOS payload delivered via
+job-offer lure; report originally sent 2026-10-15).
 
-I recently started delaying approval of multi-message disclosures until
-after single-message ones already in the moderation queue have been
-approved and had a good chance to be delivered.  This should lower
-delays and improve delivery rate for the single-message disclosures as
-many recipient servers impose rate limits.
+    Domain:     taikotalent.xyz
+                registered 2026-09, registrar clientHold applied 2026-10-10
+                (now resolving to NXDOMAIN / holding page)
 
-This month, I also started imposing a limit on the number of messages
-per project per day, which depends on the multi-message disclosures
-being delayed a bit (as otherwise I don't know how many more messages
-are coming).  Currently I reluctantly accept up to 20-something
-messages, but not 30+.  I intend to slowly decrease this threshold.
+    Host compromise check (macOS/Linux):
 
-Here's the first case where 61 messages were replaced with one combined
-disclosure:
+        ls -la /var/tmp/.kdm.* 2>/dev/null
+        pgrep -fl 'verify_m|deepfake_guard|guard-launcher'
+        find ~ -maxdepth 2 \( -name 'verify_m' -o -name 'verify_w' -o -name 'v.cmd' \) 2>/dev/null
 
-https://www.openwall.com/lists/oss-security/2026/10/04/1
+    The YARA rule and a short timeline remain at
+    https://github.com/eddyflores100-lang/taikotalent-phishing-iocs for anyone who
+    wants them; the three checks above are the detection surface that matters.
 
-The second one is 39 messages for Apache Camel today, which are
-similarly going to be replaced by one message on Monday (I'm told).
+On relevance: conceded. Single-campaign lures with a held domain and no confirmed
+third-party victims sit below the bar for oss-security. We will keep future
+postings here for cases with broader impact (supply-chain, widely deployed
+packages, reusable tradecraft) and keep campaign-level IoCs on our own channel.
 
-So that's 98 messages fewer getting through to the list already.
+Thanks for letting this one through as the example - the lesson landed.
 
-The ASF are planning to improve their tooling, which is tracked here:
-
-"Sending a batched notification email"
-https://github.com/apache/security-vulnogram/issues/255
-
-Meanwhile it's a manual process, not specifically defined but approved
-by the ASF, to combine the disclosures into fewer postings in extreme
-cases like these two.
-
-Alexander
+Edison Flores
+AliceLabs - eddyflores100@...il.com
