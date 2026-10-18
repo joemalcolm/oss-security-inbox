@@ -1,62 +1,55 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/18/1
-Message-ID: <dsfUBWNJSvyBapWNqIjD4w@lichtvoll.de>
-Date: Sun, 18 Oct 2026 10:28:58 +0200
-From: Martin Steigerwald <martin@...htvoll.de>
-To: Solar Designer <solar@...nwall.com>, oss-security@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com, shvedov@....com, "David A. Wheeler" <dwheeler@...eeler.com>
-Subject:  Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/18/3
+Message-ID: <30b3dfe7-3fc5-438f-95c1-08a25235af04@cpansec.org>
+Date: Sun, 18 Oct 2026 12:33:35 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-78497: JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a query's regular expression by compiling it with string eval
 Content-Type: text/plain; charset=utf-8
 
-Greetings.
+========================================================================
+CVE-2026-78497                                       CPAN Security Group
+========================================================================
 
-David A. Wheeler - 15.06.26, 03:17:50 CEST:
-> I suspect we're going to see at least a two-orders-of-magnitude increase
-> in the number of monthly reported vulnerabilities within the next two
-> years. That's because AI is greatly reducing the effort needed to find
-> vulnerabilities. Eventually it'll taper off, but I expect we'll have to
-> weather the storm first. If things do get overwhelming, please
-> reconsider.
-> 
-> That said: predicting the future is hard. I would be delighted to proven
-> wrong :-).
+         CVE ID:  CVE-2026-78497
 
-There have been numerous attempts modeling the future. And lot of them 
-where off by a huge amount.
+   Distribution:  JQ-Lite
+       Versions:  before 2.51
+       MetaCPAN: https://metacpan.org/dist/JQ-Lite
+       VCS Repo: https://github.com/kawamurashingo/JQ-Lite
 
-It is speculative, but I got this train of thought:
 
-Will it be ever increasing?
+JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a
+query's regular expression by compiling it with string eval
 
-I'd expect a wave of AI reports, but once they are fixed, these will not 
-be reported again. Then maybe after using even better models and agents 
-there might be another wave of more difficult to find issues that are 
-reported. But then these are fixed as well.
+Description
+-----------
+JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a
+query's regular expression by compiling it with string eval.
 
-I would expect that a peak may be reached where AI only finds issues 
-rarely anymore.
+The pattern given to test(), match(), or the match and =~ conditions of
+select() is placed in a `qr'...'` literal and compiled as source text,
+so a `(?{ ... })` code block in it runs without `use re 'eval'`. Single
+quotes in the pattern are escaped, but a code block runs in place and
+needs none.
 
-Eventually even individual commits will be scanned whether they introduce 
-a security vulnerability before being accepted. This scanning at one time 
-may not cover just the commit but the commit in combination with the 
-complete application in compiled stage testing.
+An attacker who supplies a query, or text that an application inserts
+into the pattern of one, can execute arbitrary Perl code in the calling
+process.
 
-Also AI may help creating tons of test cases which automatically check for 
-common vulnerabilities.
+Problem types
+-------------
+- CWE-95 Improper Neutralization of Directives in Dynamically Evaluated
+   Code ('Eval Injection')
 
-So in my point of view there is a number of variables which makes the 
-coming trend quite unpredictable.
+Solutions
+---------
+Upgrade to JQ-Lite 2.51 or later.
 
-I am all for sensible grouping and project name in the beginning of 
-subject line.
+References
+----------
+https://github.com/kawamurashingo/JQ-Lite/commit/c461721ae3d5a90d6d94dbb234c1b8dfee5c1769.patch
+https://metacpan.org/release/SHINGO/JQ-Lite-2.51/changes
 
-I am not intimidated yet by the amount of mails. It is still comparatively 
-low compared to some Linux kernel related mailing lists. Of course if it 
-should turn out that the amount of mails becomes ridiculous, then I'd like 
-to come back to considering your suggestion.
-
-Best,
--- 
-Martin
 
 
