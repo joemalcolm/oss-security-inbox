@@ -1,55 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/18/3
-Message-ID: <30b3dfe7-3fc5-438f-95c1-08a25235af04@cpansec.org>
-Date: Sun, 18 Oct 2026 12:33:35 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-78497: JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a query's regular expression by compiling it with string eval
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/18/4
+Message-ID: <atTshVdmdK81NjVb@netmeister.org>
+Date: Sun, 18 Oct 2026 11:57:57 -0400
+From: Jan Schaumann <jschauma@...meister.org>
+To: oss-security@...ts.openwall.com
+Cc: Solar Designer <solar@...nwall.com>, shvedov@....com, "David A. Wheeler" <dwheeler@...eeler.com>
+Subject: Re: Proposal: Add separate oss-security-vulnerability-reports mailing list (for AI vulnpocalypse)
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-78497                                       CPAN Security Group
-========================================================================
+Martin Steigerwald <martin@...htvoll.de> wrote:
 
-         CVE ID:  CVE-2026-78497
+> I'd expect a wave of AI reports, but once they are fixed, these will not 
+> be reported again. Then maybe after using even better models and agents 
+> there might be another wave of more difficult to find issues that are 
+> reported. But then these are fixed as well.
+> 
+> I would expect that a peak may be reached where AI only finds issues 
+> rarely anymore.
 
-   Distribution:  JQ-Lite
-       Versions:  before 2.51
-       MetaCPAN: https://metacpan.org/dist/JQ-Lite
-       VCS Repo: https://github.com/kawamurashingo/JQ-Lite
+This sounds akin to proposing that, effectively, there
+will be (almost) no more security vulnerabilities in
+our software.
 
+I don't see that happening.
 
-JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a
-query's regular expression by compiling it with string eval
+The imbalance between the cost of identifying and
+reporting issues versus analyzing and fixing them as
+well as the cost of software development and
+maintenance (both monetary as well as in terms of
+infrastructure, support, and human time and brain
+cells) in Open Source projects will, I expect, prevent
+this utopic vision from coming true.
 
-Description
------------
-JQ::Lite versions before 2.51 for Perl execute Perl code embedded in a
-query's regular expression by compiling it with string eval.
-
-The pattern given to test(), match(), or the match and =~ conditions of
-select() is placed in a `qr'...'` literal and compiled as source text,
-so a `(?{ ... })` code block in it runs without `use re 'eval'`. Single
-quotes in the pattern are escaped, but a code block runs in place and
-needs none.
-
-An attacker who supplies a query, or text that an application inserts
-into the pattern of one, can execute arbitrary Perl code in the calling
-process.
-
-Problem types
--------------
-- CWE-95 Improper Neutralization of Directives in Dynamically Evaluated
-   Code ('Eval Injection')
-
-Solutions
----------
-Upgrade to JQ-Lite 2.51 or later.
-
-References
-----------
-https://github.com/kawamurashingo/JQ-Lite/commit/c461721ae3d5a90d6d94dbb234c1b8dfee5c1769.patch
-https://metacpan.org/release/SHINGO/JQ-Lite-2.51/changes
-
-
-
+-Jan
