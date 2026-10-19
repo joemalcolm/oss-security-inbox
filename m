@@ -1,35 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/19/3
-Message-ID: <36d8085b-a59f-6295-f6a9-d44c2f948b38@apache.org>
-Date: Mon, 19 Oct 2026 15:47:28 +0000
-From: Jarek Potiuk <potiuk@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/19/1
+Message-ID: <CAH+3ta4gn4EStEPJnSbBFPjY5CbRpA7gx7fdk6vgjp1h2-_XNw@mail.gmail.com>
+Date: Mon, 19 Oct 2026 15:54:08 +0900
+From: Jinu Kim <kimjw04271234@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86467: Apache Airflow Amazon provider: AWS auth manager: SAML login CSRF logs users into the attacker's account 
+Subject: Linux KVM/x86: stale SMM MMIO cache bypasses write tracking
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hello,
 
-Affected versions:
+I found a guest-triggerable write-tracking bypass in KVM/x86's per-vCPU
+MMIO cache. On pre-fix mainline, a KVM selftest reproduces a tracked RAM
+write misreported as KVM_EXIT_MMIO and the WARN_ON_ONCE() in
+kvm_mmu_write_protect_fault(). A VMM completing such an exit against RAM
+can modify the backing page without KVM write tracking.
 
-- Apache Airflow Amazon provider before 9.38.0
+KVM has separate normal and SMM memslot address spaces. The MMIO cache
+fill and validity checks, vcpu_cache_mmio_info() and
+vcpu_match_mmio_gen(), used kvm_memslots(vcpu->kvm), which selects the
+normal address space's generation even when the vCPU is using the SMM
+address space. An SMM memslot update can therefore leave an old SMM
+cache entry valid after the guest returns from SMM. If the backing page
+holds a nested EPT table, the untracked write can leave KVM using shadow
+translations built from the table's old contents.
 
-Description:
+On Linux 6.1.74, before later shadow-MMU hardening, this same cache
+bug enabled guest-to-host code execution. A stale MMIO cache entry
+turned an L1 guest's write to a tracked EPT12 page into an MMIO
+completion, so KVM missed the page-table change. The resulting stale
+shadow translations were used to obtain arbitrary host memory read and
+write and execute code in the host kernel. I reproduced this with
+nested VMX/EPT and Q35 SMM under kernel-level control of the L1 guest.
 
-Apache Airflow Amazon provider: the AWS auth manager's SAML login flow does not bind the authentication response to the browser that began it. The login handler discards the AuthnRequest ID and the callback validates the assertion without requiring a matching InResponseTo, so an unauthenticated attacker who can cause a victim to load a page can complete a SAML login in the victim's browser using the attacker's own assertion, silently logging the victim into the attacker's Airflow account. Subsequent work the victim performs lands in a session the attacker controls.
+The bug was introduced when commit 699023e23965 added the SMM address
+space without making these cache checks use its memslots. Upstream commit
+b3e6212dea2e4328a841ceb37f377583176dc735 fixes both checks to use
+the vCPU's active memslots. The fix is included in Linux v7.3.
 
-Affects deployments using the AWS auth manager with SAML authentication. The victim needs only to visit an attacker-controlled page; no Airflow account or credential is required of the attacker. This is the same login-CSRF class fixed in the Keycloak auth manager as CVE-2026-40948.
+Upstream fix:
+https://github.com/torvalds/linux/commit/b3e6212dea2e4328a841ceb37f377583176dc735
 
-Users of apache-airflow-providers-amazon are recommended to upgrade to version 9.38.0, which fixes the issue.
-
-Credit:
-
-Andrew Rukin (Arenadata) (finder)
-Jarek Potiuk (remediation developer)
-
-References:
-
-https://github.com/apache/airflow/pull/73698
-https://www.cve.org/CVERecord?id=CVE-2026-40948
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86467
-
+Regards,
+Jinu Kim
