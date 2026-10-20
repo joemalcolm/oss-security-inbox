@@ -1,42 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/20
-Message-ID: <40113c07-6ec1-44c7-8af0-42f3e746cfa8@oracle.com>
-Date: Tue, 20 Oct 2026 09:41:05 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/2
+Message-ID: <187282f8-66fd-a6d4-e267-ed8091ec1192@apache.org>
+Date: Tue, 20 Oct 2026 09:54:56 +0000
+From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [GHSA-6q48-6c7w-9gw2] CRITICAL security update for certifi, removal of emSign root certificate
+Subject: CVE-2026-108086: Apache Cocoon: XEE could lead to SSRF and information disclosure 
 Content-Type: text/plain; charset=utf-8
 
+Severity: moderate 
+
+Affected versions:
+
+- Apache Cocoon: all versions
+
+Description:
+
+** UNSUPPORTED WHEN ASSIGNED ** Improper restriction of recursive entity references in DTDs ('XML entity expansion') vulnerability in Apache Cocoon.
 
 
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][GHSA-6q48-6c7w-9gw2] CRITICAL security update for 
-certifi, removal of emSign root certificate
-Date: 	Tue, 20 Oct 2026 14:03:26 +0000
-From: 	Seth Larson <seth@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
-
-There is a CRITICAL severity vulnerability affecting certifi.
-
-Certifi 2026.10.19 removes root certificates from "emSign" from the root store. 
-These root certificates have intermediates which have been revoked due to key 
-compromise. A compromised key for a certificate authority can be used to issue 
-certificates to enable MITM attacks.
-
-Upgrade to certifi 2026.10.19 and rebuild container images to refresh CA 
-certificate stores.
-
-Please see the links for the latest information on affected versions:
-
-* https://github.com/certifi/python-certifi/security/advisories/GHSA-6q48-6c7w-9gw2
-* 
-https://groups.google.com/a/mozilla.org/g/dev-security-policy/c/0R3XLJL6FuE/m/0XofdebrAAAJ 
+This issue affects Apache Cocoon: all versions. XEE in the fp: form processor could lead to SSRF, including exposing files from the server to an untrusted external system
 
 
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
 
+As this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative or restrict access to the instance to trusted users.
+
+
+
+NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+
+Credit:
+
+Tiago Abreu (finder)
+
+References:
+
+https://attic.apache.org/projects/cocoon.html
+https://www.cve.org/CVERecord?id=CVE-2026-108086
 
