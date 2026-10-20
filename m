@@ -1,13 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/4
-Message-ID: <8f6aa7cd-34d5-ec08-de6d-239a2238fec8@apache.org>
-Date: Tue, 20 Oct 2026 09:55:10 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/5
+Message-ID: <a10cd20a-7ee4-98c7-0e19-efdc0dd1dbda@apache.org>
+Date: Tue, 20 Oct 2026 09:55:14 +0000
 From: Arnout Engelen <engelen@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-108088: Apache Cocoon: Cross-user cache poisoning 
+Subject: CVE-2026-108089: Apache Cocoon: Unauthenticated access to diagnostic interfaces 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
@@ -15,7 +15,7 @@ Affected versions:
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** Use of cache containing sensitive information vulnerability in Apache Cocoon. When using the cache on a multi-user application, cached values for one user could be used when serving content for other users.
+** UNSUPPORTED WHEN ASSIGNED ** Exposure of sensitive system information to an unauthorized control sphere vulnerability in Apache Cocoon. An unauthenticated user could gain access to diagnostic interfaces, including triggering of cache, exposure of (verbose) debug logging and profile information.
 
 
 
@@ -36,5 +36,5 @@ Tiago Abreu (finder)
 References:
 
 https://attic.apache.org/projects/cocoon.html
-https://www.cve.org/CVERecord?id=CVE-2026-108088
+https://www.cve.org/CVERecord?id=CVE-2026-108089
 
