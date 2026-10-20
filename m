@@ -1,40 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/5
-Message-ID: <a10cd20a-7ee4-98c7-0e19-efdc0dd1dbda@apache.org>
-Date: Tue, 20 Oct 2026 09:55:14 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/14
+Message-Id: <1DD78A7D-4508-4EFA-8C54-86E61FBE6CF2@apache.org>
+Date: Tue, 20 Oct 2026 14:30:02 +0200
+From: Jan Lehnardt <jan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-108089: Apache Cocoon: Unauthenticated access to diagnostic interfaces 
+Subject: CVE-2026-90799: Apache CouchDB: Atom-table exhaustion in _changes sequences and _search bookmarks with specially crafted sequence values
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: 
+CVSS 4.0: 1.3 (low) CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:L/E:U/S:N/AU:Y/R:A/V:D/RE:M/U:Amber
 
 Affected versions:
 
-- Apache Cocoon: all versions
+- Apache CouchDB before 3.5.3
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** Exposure of sensitive system information to an unauthorized control sphere vulnerability in Apache Cocoon. An unauthenticated user could gain access to diagnostic interfaces, including triggering of cache, exposure of (verbose) debug logging and profile information.
+Unsafe binary deserialisation in chttpd in Apache CouchDB 3.5.2 and below on all platforms allows an authenticated user to cause a denial of service via memory exhaustion.
 
-
-
-This issue affects Apache Cocoon: all versions.
-
-
-
-As this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative or restrict access to the instance to trusted users.
-
-
-
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+Users are recommended to upgrade to version 3.5.3, which fixes this issue.
 
 Credit:
 
-Tiago Abreu (finder)
+Piotr Karwasz & ZeroVuln Labs reported this issue independently (finder)
 
 References:
 
-https://attic.apache.org/projects/cocoon.html
-https://www.cve.org/CVERecord?id=CVE-2026-108089
+https://lists.apache.org/thread.html/pj83174r8f8f64odf47fwhozbfjtot0f
+https://couchdb.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-90799
 
