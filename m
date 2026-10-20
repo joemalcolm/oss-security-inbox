@@ -1,31 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/12
-Message-Id: <1D695562-D480-4771-B3A6-145FBE5BB2D3@apache.org>
-Date: Tue, 20 Oct 2026 14:28:03 +0200
-From: Jan Lehnardt <jan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/35
+Message-ID: <CA+c_x6mqXn5xtwfeDxCJb3U6+M8MO7JMr_hq6NGyaQbx0kajBg@mail.gmail.com>
+Date: Tue, 20 Oct 2026 20:38:18 +0000
+From: Yusuf Can TURK <iamcanturk@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90797: Apache CouchDB: Pre-authentication gzip decompression bomb via POST /_session
+Subject: CVE-2026-28403, CVE-2026-28412: Textream (macOS) < 1.5.1 local WebSocket server: missing Origin check and unlimited connections
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
-CVSS 4.0: 7.7 (high) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:U/S:N/AU:Y/R:A/V:D/RE:M/U:Red
+Hello,
 
-Affected versions:
+Two issues in Textream, an open-source macOS teleprompter app
+(https://github.com/f/textream
+<https://www.google.com/url?q=https://github.com/f/textream&source=gmail&ust=1792615097455000&sa=E>),
+were fixed in version 1.5.1.
+Both affect its local WebSocket server ("DirectorServer").
 
-- Apache CouchDB before 3.5.3
+CVE-2026-28403 (CVSS 7.6): Cross-Site WebSocket Hijacking. The server
+accepted connections from any origin and did not check the Origin header
+during the handshake. A web page open in the user's browser could connect
+to it and send commands.
+Fix: f5ebad82750b9313386c34af8f0ede50c213a8a0
 
-Description:
+CVE-2026-28412 (CVSS 6.5): Uncontrolled resource consumption. The server
+had no limit on concurrent connections. Together with a 100 ms broadcast
+timer, flooding it exhausted CPU and memory and could freeze the app during
+a live session.
+Fix: 3524fa96f98ba17025b48ce9e19d49d859fc2ec1
 
-An unlimited gzip decompression routine in chttpd in Apache CouchDB 3.5.2 and below on all platforms allows any remote client to cause a denial of service via memory exhaustion.
-Users are recommended to upgrade to version 3.5.3, which fixes this issue.
+Affected: Textream < 1.5.1. Fixed: 1.5.1.
 
-Credit:
+Advisories:
+https://github.com/f/textream/security/advisories/GHSA-wr3v-x247-337w
+<https://www.google.com/url?q=https://github.com/f/textream/security/advisories/GHSA-wr3v-x247-337w&source=gmail&ust=1792615097456000&sa=E>
+https://github.com/f/textream/security/advisories/GHSA-qr5p-7x47-qxh9
+<https://www.google.com/url?q=https://github.com/f/textream/security/advisories/GHSA-qr5p-7x47-qxh9&source=gmail&ust=1792615097456000&sa=E>
 
-ZeroVuln labs (reporter)
+Write-ups:
+https://iamcanturk.dev/en/security/cve-2026-28403/
+<https://www.google.com/url?q=https://iamcanturk.dev/en/security/cve-2026-28403/&source=gmail&ust=1792615097456000&sa=E>
+https://iamcanturk.dev/en/security/cve-2026-28412/
+<https://www.google.com/url?q=https://iamcanturk.dev/en/security/cve-2026-28412/&source=gmail&ust=1792615097456000&sa=E>
 
-References:
+Credit: Can Türk (reporter).
 
-https://lists.apache.org/thread.html/pj83174r8f8f64odf47fwhozbfjtot0f
-https://couchdb.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-90797
+--
+Can Türk
+https://iamcanturk.dev
+<https://www.google.com/url?q=https://iamcanturk.dev&source=gmail&ust=1792615097456000&sa=E>
 
