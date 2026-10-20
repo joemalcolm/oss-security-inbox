@@ -1,50 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/35
-Message-ID: <CA+c_x6mqXn5xtwfeDxCJb3U6+M8MO7JMr_hq6NGyaQbx0kajBg@mail.gmail.com>
-Date: Tue, 20 Oct 2026 20:38:18 +0000
-From: Yusuf Can TURK <iamcanturk@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-28403, CVE-2026-28412: Textream (macOS) < 1.5.1 local WebSocket server: missing Origin check and unlimited connections
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/37
+Message-ID: <1f181059-4d08-444b-9c99-a28fc6b5d14f@cpansec.org>
+Date: Tue, 20 Oct 2026 22:26:04 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-108518: DBI versions before 1.656 for Perl crash via type confusion in dbi_profile when a database handle is destroyed under a Profile Path with an {attr} element
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+========================================================================
+CVE-2026-108518                                      CPAN Security Group
+========================================================================
 
-Two issues in Textream, an open-source macOS teleprompter app
-(https://github.com/f/textream
-<https://www.google.com/url?q=https://github.com/f/textream&source=gmail&ust=1792615097455000&sa=E>),
-were fixed in version 1.5.1.
-Both affect its local WebSocket server ("DirectorServer").
+         CVE ID:  CVE-2026-108518
 
-CVE-2026-28403 (CVSS 7.6): Cross-Site WebSocket Hijacking. The server
-accepted connections from any origin and did not check the Origin header
-during the handshake. A web page open in the user's browser could connect
-to it and send commands.
-Fix: f5ebad82750b9313386c34af8f0ede50c213a8a0
+   Distribution:  DBI
+       Versions:  before 1.656
+       MetaCPAN: https://metacpan.org/dist/DBI
+       VCS Repo: https://github.com/perl5-dbi/dbi
 
-CVE-2026-28412 (CVSS 6.5): Uncontrolled resource consumption. The server
-had no limit on concurrent connections. Together with a 100 ms broadcast
-timer, flooding it exhausted CPU and memory and could freeze the app during
-a live session.
-Fix: 3524fa96f98ba17025b48ce9e19d49d859fc2ec1
 
-Affected: Textream < 1.5.1. Fixed: 1.5.1.
+DBI versions before 1.656 for Perl crash via type confusion in
+dbi_profile when a database handle is destroyed under a Profile Path
+with an {attr} element
 
-Advisories:
-https://github.com/f/textream/security/advisories/GHSA-wr3v-x247-337w
-<https://www.google.com/url?q=https://github.com/f/textream/security/advisories/GHSA-wr3v-x247-337w&source=gmail&ust=1792615097456000&sa=E>
-https://github.com/f/textream/security/advisories/GHSA-qr5p-7x47-qxh9
-<https://www.google.com/url?q=https://github.com/f/textream/security/advisories/GHSA-qr5p-7x47-qxh9&source=gmail&ust=1792615097456000&sa=E>
+Description
+-----------
+DBI versions before 1.656 for Perl crash via type confusion in
+dbi_profile when a database handle is destroyed under a Profile Path
+with an {attr} element.
 
-Write-ups:
-https://iamcanturk.dev/en/security/cve-2026-28403/
-<https://www.google.com/url?q=https://iamcanturk.dev/en/security/cve-2026-28403/&source=gmail&ust=1792615097456000&sa=E>
-https://iamcanturk.dev/en/security/cve-2026-28412/
-<https://www.google.com/url?q=https://iamcanturk.dev/en/security/cve-2026-28412/&source=gmail&ust=1792615097456000&sa=E>
+An {attr} element names a database handle attribute, which dbi_profile
+reads from the handle's inner hash. It expects the inner handle as a
+reference and dereferences it, but a handle that is being destroyed
+hands back the inner hash itself, so the dereference yields the hash's
+bucket array. A type check on that pointer usually fails and the call
+goes unprofiled. When the memory it addresses passes the check, the
+attribute lookup dereferences a NULL or invalid pointer and the process
+dies on SIGSEGV.
 
-Credit: Can Türk (reporter).
+The Path is set by the application, by the Profile handle attribute, or
+by the DBI_PROFILE environment variable, so
+`DBI_PROFILE={ImplementorClass}` can crash an unmodified program.
 
---
-Can Türk
-https://iamcanturk.dev
-<https://www.google.com/url?q=https://iamcanturk.dev&source=gmail&ust=1792615097456000&sa=E>
+Problem types
+-------------
+- CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
+
+Solutions
+---------
+Upgrade to DBI 1.656 or later.
+
+References
+----------
+https://github.com/perl5-dbi/dbi/security/advisories/GHSA-7393-6f8r-fhh3
+https://github.com/perl5-dbi/dbi/commit/c2ff4df575d7af625bb4d0d1ef7539f90b22d8b2.patch
+https://metacpan.org/release/HMBRAND/DBI-1.656/changes
+
+Credits
+-------
+Henrik Teichmann, finder
+
+
 
