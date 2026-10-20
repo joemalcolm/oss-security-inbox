@@ -1,64 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/37
-Message-ID: <1f181059-4d08-444b-9c99-a28fc6b5d14f@cpansec.org>
-Date: Tue, 20 Oct 2026 22:26:04 +0100
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-108518: DBI versions before 1.656 for Perl crash via type confusion in dbi_profile when a database handle is destroyed under a Profile Path with an {attr} element
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/33
+Message-ID: <CAH8yC8nkBEzKS379o5En5XnJo_-w6P-Nf=oEqJMB7Bw7Dd3m0A@mail.gmail.com>
+Date: Tue, 20 Oct 2026 15:44:34 -0400
+From: Jeffrey Walton <noloader@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: eMudhra Intermediates Compromise
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-108518                                      CPAN Security Group
-========================================================================
+On Tue, Oct 20, 2026 at 1:07 PM Valtteri Vuorikoski <vuori@...com.org> wrote:
+>
+> A test website is available at <https://emudhra.we-have-a-problem.com/> which
+> also lists mitigation options for systems which do not receive CRL or equivalent
+> revocation updates. Effectively: disable the root CAs "emSign ECC Root CA - G3"
+> and "Comodo AAA Services root" in your operating system trust store, while being
+> mindful of collateral damage. The Comodo root in particular has been widely used
+> in the past.
 
-         CVE ID:  CVE-2026-108518
+It is probably worth noting the Comodo AAA Services Root removal is
+not related to the eMudhra incident.
 
-   Distribution:  DBI
-       Versions:  before 1.656
-       MetaCPAN: https://metacpan.org/dist/DBI
-       VCS Repo: https://github.com/perl5-dbi/dbi
+The issue with Comodo AAA Services Root was the removal of the TLS
+trust bit by browsers because the root is too old.  The current
+CA/Browser (CA/B) Baseline Requirements (BR) policies say a root has a
+maximum lifespan of 15 years from creation date.  Comodo AAA Services
+Root was issued in 2004, so it violates current policy.  Also see
+<https://cabforum.org/working-groups/server/baseline-requirements/>.
 
+> The site also has a zip file with signatures using the private keys of the
+> affected intermediate certificates, which verify using OpenSSL. Postings on
+> social media claim that the private keys are easily discoverable.
 
-DBI versions before 1.656 for Perl crash via type confusion in
-dbi_profile when a database handle is destroyed under a Profile Path
-with an {attr} element
-
-Description
------------
-DBI versions before 1.656 for Perl crash via type confusion in
-dbi_profile when a database handle is destroyed under a Profile Path
-with an {attr} element.
-
-An {attr} element names a database handle attribute, which dbi_profile
-reads from the handle's inner hash. It expects the inner handle as a
-reference and dereferences it, but a handle that is being destroyed
-hands back the inner hash itself, so the dereference yields the hash's
-bucket array. A type check on that pointer usually fails and the call
-goes unprofiled. When the memory it addresses passes the check, the
-attribute lookup dereferences a NULL or invalid pointer and the process
-dies on SIGSEGV.
-
-The Path is set by the application, by the Profile handle attribute, or
-by the DBI_PROFILE environment variable, so
-`DBI_PROFILE={ImplementorClass}` can crash an unmodified program.
-
-Problem types
--------------
-- CWE-843 Access of Resource Using Incompatible Type ('Type Confusion')
-
-Solutions
----------
-Upgrade to DBI 1.656 or later.
-
-References
-----------
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-7393-6f8r-fhh3
-https://github.com/perl5-dbi/dbi/commit/c2ff4df575d7af625bb4d0d1ef7539f90b22d8b2.patch
-https://metacpan.org/release/HMBRAND/DBI-1.656/changes
-
-Credits
--------
-Henrik Teichmann, finder
-
-
-
+Jeff
