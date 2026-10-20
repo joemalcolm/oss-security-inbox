@@ -1,14 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/16
-Message-Id: <9D3D8710-D66C-42E4-A905-D61339780951@apache.org>
-Date: Tue, 20 Oct 2026 14:32:09 +0200
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/12
+Message-Id: <1D695562-D480-4771-B3A6-145FBE5BB2D3@apache.org>
+Date: Tue, 20 Oct 2026 14:28:03 +0200
 From: Jan Lehnardt <jan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-107755: Apache CouchDB: Credential Disclosure to Non-Owner Members via Object-Form Replication Endpoint URLs
+Subject: CVE-2026-90797: Apache CouchDB: Pre-authentication gzip decompression bomb via POST /_session
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
-CVSS 4.0: 6.0 (medium) CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:H/VI:H/VA:L/SC:H/SI:H/SA:L/E:U/S:N/AU:Y/R:U/V:C/RE:M/U:Amber
+Severity: 
+CVSS 4.0: 7.7 (high) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:H/E:U/S:N/AU:Y/R:A/V:D/RE:M/U:Red
 
 Affected versions:
 
@@ -16,17 +16,16 @@ Affected versions:
 
 Description:
 
-Insufficient filtering of credentials in the _replicator database in Apache CouchDB 3.5.2 and below on all platforms allows an authenticated user to read replication credentials of other users’ replications, not just their own.
-
+An unlimited gzip decompression routine in chttpd in Apache CouchDB 3.5.2 and below on all platforms allows any remote client to cause a denial of service via memory exhaustion.
 Users are recommended to upgrade to version 3.5.3, which fixes this issue.
 
 Credit:
 
-Sakil Ahamed Gayen (reporter)
+ZeroVuln labs (reporter)
 
 References:
 
 https://lists.apache.org/thread.html/pj83174r8f8f64odf47fwhozbfjtot0f
 https://couchdb.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-107755
+https://www.cve.org/CVERecord?id=CVE-2026-90797
 
