@@ -1,85 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/18
-Message-ID: <700f5b76-5aec-4417-b29a-95cd52d25cc4@gmail.com>
-Date: Tue, 20 Oct 2026 09:30:32 -0700
-From: Goutham Pacha Ravi <gouthampravi@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/29
+Message-ID: <273d354c-1963-4b6f-9d73-d8c314a43b23@oracle.com>
+Date: Tue, 20 Oct 2026 10:09:26 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-046] OpenStack Manila: Manila allows cross-project public-share and export-metadata changes (CVE-2026-71195)
+Subject: Go 1.27.3 and Go 1.26.10 are released for CA certificate removal
 Content-Type: text/plain; charset=utf-8
 
-===================================================================================
-OSSA-2026-046: Manila allows cross-project public-share and 
-export-metadata changes
-===================================================================================
-
-:Date: October 20, 2026
-:CVE: CVE-2026-71195
-
-
-Affects
-~~~~~~~
-- Manila: >=1.0.0 <20.0.3, >=21.0.0 <21.0.3, >=22.0.0 <22.0.2, ==23.0.0
-
-
-Description
-~~~~~~~~~~~
-Chen YuXiang from the Institute of Computing Technology, Chinese Academy of
-Sciences reported that a non-owner could modify access rules and
-export-location metadata of another project's public share. Goutham Pacha
-Ravi and Carlos da Silva from Red Hat identified further public-share paths:
-a non-owner could soft-delete or restore a foreign public share, or create a
-backup of it. A compatible storage backend may apply unauthorized changes to
-existing access rules, disrupting access for the share's owner or authorized
-users.
-
-Separately, Yuliang Xiao reported that the export-location metadata API does
-not scope its lookup to the share in the request. An authenticated project
-member may therefore read, modify, or delete another project's 
-export-location
-metadata by supplying the target export-location UUID with the identifier of
-a share they control. This issue is more easily exploitable with public
-shares.
-
-Deployments with public shares are affected by the public-share operations.
-Deployments that utilize export-location metadata for shares are 
-affected by the metadata vulnerability.
 
 
 
-Patches
-~~~~~~~
-- https://review.opendev.org/1011483 (2025.1/epoxy)
-- https://review.opendev.org/1011482 (2025.2/flamingo)
-- https://review.opendev.org/1011481 (2026.1/gazpacho)
-- https://review.opendev.org/1011479 (2026.2/hibiscus)
-- https://review.opendev.org/1011478 (2027.1/indri (development))
+-------- Forwarded Message --------
+Subject: 	[security] Go 1.27.3 and Go 1.26.10 are released
+Date: 	Tue, 20 Oct 2026 02:11:31 +0000
+From: 	announce@...ang.org
+To: 	golang-nuts@...glegroups.com
 
 
-Credits
-~~~~~~~
-- Chen YuXiang from Institute of Computing Technology, Chinese Academy 
-of Sciences (CVE-2026-71195)
-- Yuliang Xiao (CVE-2026-71195)
+Hello gophers,
 
+We have just released Go versions 1.27.3 and 1.26.10, minor point releases.
 
-References
-~~~~~~~~~~
-- https://bugs.launchpad.net/manila/+bug/2161412
-- https://bugs.launchpad.net/manila/+bug/2168962
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71195
+These releases include 1 security fix following the security policy 
+<https://go.dev/doc/security/policy>:
 
+   *
 
-Notes
-~~~~~
-- The companion Manila Tempest plugin update,
-   https://review.opendev.org/1011484, updates cross-project export-
-   location tests to expect 404 after the fix.
+     crypto/x509: mitigation for security concerns with a specific Certificate
+     Authority
 
---
-Goutham Pacha Ravi
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
+     We're blocking trust in a small set of intermediate certificates due to
+     specific security concerns around their operation.
 
-Download attachment "OpenPGP_0x0638DAD3B82C3988.asc" of type "application/pgp-keys" (3241 bytes)
+     Verify will now filter out chains which contain these intermediates,
+     preventing them from being returned to the caller.
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (841 bytes)
+     We highly recommend immediately upgrading to this release.
+
+     This is CVE-2026-111943 and Go issue https://go.dev/issue/82345
+     <https://go.dev/issue/82345>.
+
+View the release notes for more information:
+https://go.dev/doc/devel/release#go1.27.3 
+<https://go.dev/doc/devel/release#go1.27.3>
+
+You can download binary and source distributions from the Go website:
+https://go.dev/dl/ <https://go.dev/dl/>
+
+To compile from source using a Git clone, update to the release with
+|git checkout go1.27.3| and build as usual.
+
+Thanks to everyone who contributed to the releases.
+
+Cheers,
+Carlos and David for the Go team
+
+-- 
+You received this message because you are subscribed to the Google Groups 
+"golang-announce" group.
+To view this discussion visit 
+https://groups.google.com/d/msgid/golang-announce/78458b16.EAAACZTU18IAAAAAAAAAA-p9MGAAAYKKSQYAAAAAADE8OwBq1s3T%40mailjet.com
