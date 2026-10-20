@@ -1,49 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/19/6
-Message-ID: <a22ea2ff-ff89-ffcb-0621-43c627e68def@apache.org>
-Date: Mon, 19 Oct 2026 22:24:52 +0000
-From: Adam Reeve <areeve@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/27
+Message-ID: <48ce2cfe-1f4f-4083-b4f8-c2486960668f@apache.org>
+Date: Tue, 20 Oct 2026 14:47:15 +0100
+From: Mark Thomas <markt@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-92287: Apache Arrow C++, PyArrow: Parquet file-controlled KMS URL is forwarded to pluggable KmsClient that skips host validation 
+Subject: CVE-2026-101356: Apache Tomcat: HTTP/2 request/response mix-up after error during async processing
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important
 
 Affected versions:
 
-- Apache Arrow C++ 4.0.0 before 26.0.0
-- Apache Arrow C++ 26.0.0 unaffected
-- PyArrow 8.0.0 before 26.0.0
-- PyArrow 26.0.0 unaffected
+- Apache Tomcat 11.0.22 through 11.0.26
+- Apache Tomcat 10.1.55 through 10.1.60
+- Apache Tomcat 9.0.118 through 9.0.122
 
 Description:
 
-Pass-through of unvalidated KMS URLs to KMS clients in Apache C++ Parquet and PyArrow versions 4.0.0 to 25.0.1.
+Incorrect object recycling and re-use vulnerability in Apache Tomcat 
+affecting HTTP/2 processing of asynchronous servlets can trigger request 
+and/or response mix-up between users.
 
 
 
-
-This affects users who read Parquet files and configure Parquet decryption properties with a KmsClient implementation.
-
-
-
-
-On the reader side, the KMS URL can be application-controlled (specified in the KmsConnectionConfig) or file-controlled.
-If the user does not leverage application control for this parameter, a file-controlled KMS URL is forwarded to a pluggable KmsClient implementation. 
-If the KMS implementation does not perform host validation and makes use of the provided KMS URL, a KMS token can be sent to a malicious host set by an attacker in the file. 
+This issue affects Apache Tomcat: from 11.0.22 through 11.0.26, from 
+10.1.55 through 10.1.60, from 9.0.118 through 9.0.122.
 
 
 
-
-Users are recommended to upgrade to version 26.0.0, which disables this behavior by default and requires that users opt-in to it by enabling the read_kms_url flag in the DecryptionConfiguration. Users of affected versions are recommended to either specify the KMS URL in the KmsConnectionConfig when reading files, or ensure any KmsClient implementations validate received KMS URLs. Users that opt-in to file-controlled KMS URLs in version 26.0.0 and later must ensure KmsClients validate KMS URLs.
-
-Credit:
-
-n0mi1k (finder)
+Users are recommended to upgrade to version 11.0.27, 10.1.61 or 9.0.123, 
+which fixes the issue.
 
 References:
 
-https://github.com/apache/arrow/issues/51349
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-92287
-
+https://lists.apache.org/thread.html/d1xjt7bbjqw7y7n5mcb4fm815hpfgc27
+https://tomcat.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-101356
