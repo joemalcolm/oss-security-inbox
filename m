@@ -1,80 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/8
-Message-ID: <trinity-47303db3-0a4b-49c3-be63-4ae8fb4b70b9-1792494823265@trinity-msg-rest-gmx-gmx-live-5d6886bf55-6nhrw>
-Date: Tue, 20 Oct 2026 11:13:43 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/9
+Message-ID: <trinity-f00d5db3-258b-49e1-a974-4eb29c375120-1792493991748@trinity-msg-rest-gmx-gmx-live-674956c65c-gswkz>
+Date: Tue, 20 Oct 2026 10:59:51 +0000
 From: "Alexander A. Shvedov" <sigdevel@...amail.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-55667: NULL pointer dereference in GPAC/MP4Box dump_isom_saps via crafted MP4 input
+Subject: CVE-2025-60480: Heap buffer overflow in GPAC/MP4Box gf_odf_ac4_cfg_alternative_info via crafted AC-4 file
 Content-Type: text/plain; charset=utf-8
 
 Product:   GPAC (MP4Box)
-Affected:  GPAC/MP4Box 2.5-DEV-rev1672-gc9a31d0e1-master; reproduced at commit
-           c9a31d0e1b649a30814c6d81c5461859ed63d075
-Fixed:     e6d01820d7bf3967d931fedb379ee5f209bc133b
-CVE:       CVE-2025-55667
-CWE:       CWE-476 (NULL Pointer Dereference)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H; BDU assessment)
+Affected:  2.5-DEV-rev1593-gfe88c3545-master
+           Commit fe88c3545aadd597b250ccf23271d5d3de50ccc8
+Fixed:     e02d1fd24cdc26acb1b236ab38b3832cffcae21b
+CVE:       CVE-2025-60480
+CWE:       CWE-122 (Heap-based Buffer Overflow)
+CVSS 3.1:  6.5 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H; BDU assessment)
 Reporter:  Alexander A. Shvedov (@sigdevel)
 
 Description:
-  A NULL pointer dereference occurs in dump_isom_saps() in
-  applications/mp4box/filedump.c when MP4Box processes a crafted MP4 file
-  whose track structure is missing a valid Sample Description box (stsd).
+  MP4Box performs an out-of-bounds heap read when parsing a crafted AC-4
+  audio stream. gf_odf_ac4_cfg_alternative_info() in odf/descriptors.c
+  accesses AC-4 alt_group_id data without sufficient bounds checking.
 
-  The function iterates over track metadata to dump SAP (Sync Access Point)
-  information without validating track metadata pointers before dereferencing
-  them. When stsd is absent, the pointer holds a near-NULL value and the
-  subsequent dereference at filedump.c:1743 reads from address 0x00000000001c
-  (a 28-byte struct offset from NULL), triggering SIGSEGV.
+  The malformed stream is parsed by gf_ac4_raw_frame() and later reaches
+  AC-4 descriptor generation through ac4dmx_check_pid(). AddressSanitizer
+  reports a read of size 1 at odf/descriptors.c:1899, immediately after a
+  784-byte heap allocation created during raw AC-4 frame parsing.
 
-  AddressSanitizer reports a SEGV on unknown address 0x00000000001c caused by
-  a READ memory access at dump_isom_saps filedump.c:1743.
+  The issue was reproduced in GPAC version
+  2.5-DEV-rev1593-gfe88c3545-master at commit
+  fe88c3545aadd597b250ccf23271d5d3de50ccc8. GPAC closed the report with
+  commit e02d1fd24cdc26acb1b236ab38b3832cffcae21b, which fixes several
+  AC-4 fuzzing issues including this report.
 
 Impact:
-  Processing attacker-controlled input with the affected MP4Box command
-  causes an immediate process crash and denial of service. The faulting
-  access is a near-NULL read; no evidence of arbitrary code execution or
-  control-flow hijacking was observed.
+  A crafted AC-4 file processed by MP4Box can cause an application crash
+  and denial of service. The supplied AddressSanitizer trace demonstrates
+  an out-of-bounds read; arbitrary code execution was not demonstrated.
 
 Reproduction:
   Build GPAC with AddressSanitizer, then run:
 
-    ./MP4Box -dsap 1 57_dump_isom_saps_filedump_c_1743
+    ./MP4Box -info 44_gf_odf_ac4_cfg_alternative_info_odf_descriptors_c_1899
 
-ASan log excerpt at commit c9a31d0e1b649a30814c6d81c5461859ed63d075:
-  [iso file] Unknown box type sTsd in parent stbl
-  [iso file] Track with no sample description box !
-  AddressSanitizer:DEADLYSIGNAL
-  ==620767==ERROR: AddressSanitizer: SEGV on unknown address 0x00000000001c
-  (pc 0x563c09a0b677 bp 0x000000000001 sp 0x7ffe1b88e860 T0)
-  ==620767==The signal is caused by a READ memory access.
-  ==620767==Hint: address points to the zero page.
-      #0 0x563c09a0b677 in dump_isom_saps
-             applications/mp4box/filedump.c:1743
-      #1 0x563c099f6ec2 in mp4box_main
-             applications/mp4box/mp4box.c:6674
-      #2 0x7fd6ae633ca7 in __libc_start_call_main
-             ../sysdeps/nptl/libc_start_call_main.h:58
-      #3 0x7fd6ae633d64 in __libc_start_main_impl
-             ../csu/libc-start.c:360
-      #4 0x563c099d60c0 in _start
-             (MP4Box+0x4d0c0)
+  The reporter used the following debug build options:
 
-  SUMMARY: AddressSanitizer: SEGV
-    applications/mp4box/filedump.c:1743 in dump_isom_saps
+    --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0"
+
+ASan log excerpt:
+  ==1847116==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x518000000f90
+  READ of size 1 at 0x518000000f90 thread T0
+      #0 0x7f556dea1063 in gf_odf_ac4_cfg_alternative_info odf/descriptors.c:1899
+      #1 0x7f556dea43fa in gf_odf_ac4_cfg_presentation_v1_dsi odf/descriptors.c:2103
+      #2 0x7f556dea5b2c in gf_odf_ac4_cfg_dsi_v1 odf/descriptors.c:2233
+      #3 0x7f556dea6ae1 in gf_odf_ac4_cfg_write_bs odf/descriptors.c:2281
+      #4 0x7f556dea6ae1 in gf_odf_ac4_cfg_write odf/descriptors.c:2288
+      #5 0x7f556e8d1cb7 in ac4dmx_check_pid filters/reframe_ac4.c:238
+      #6 0x7f556e8d2b09 in ac4dmx_process filters/reframe_ac4.c:403
+      #7 0x7f556e5083c1 in gf_filter_process_task filter_core/filter.c:3187
+
+  0x518000000f90 is located 0 bytes after 784-byte region
+  [0x518000000c80,0x518000000f90)
+  allocated by thread T0 here:
+      #0 0x7f556f4f4c77 in malloc asan_malloc_linux.cpp:69
+      #1 0x7f556df93069 in gf_ac4_raw_frame media_tools/av_parsers.c:15916
+      #2 0x7f556df93069 in gf_ac4_parser_bs media_tools/av_parsers.c:16113
+
+  SUMMARY: AddressSanitizer: heap-buffer-overflow
+    odf/descriptors.c:1899 in gf_odf_ac4_cfg_alternative_info
 
 Fix:
   Update to a GPAC revision containing commit:
 
-    e6d01820d7bf3967d931fedb379ee5f209bc133b
+    e02d1fd24cdc26acb1b236ab38b3832cffcae21b
 
 PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/57/57_dump_isom_saps_filedump_c_1743
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/44/44_gf_odf_ac4_cfg_alternative_info_odf_descriptors_c_1899
 
 References:
-  https://github.com/gpac/gpac/issues/3321
-  https://github.com/gpac/gpac/commit/e6d01820d7bf3967d931fedb379ee5f209bc133b
-  https://www.cve.org/CVERecord?id=CVE-2025-55667
+  https://github.com/gpac/gpac/issues/3295
+  https://github.com/gpac/gpac/commit/e02d1fd24cdc26acb1b236ab38b3832cffcae21b
+  https://www.cve.org/CVERecord?id=CVE-2025-60480
+  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/60xxx/CVE-2025-60480.json
+  https://infosec.exchange/@sigdevel/117456490628466269
+  https://bdu.fstec.ru/vul/2025-08615
 
 
 ——
