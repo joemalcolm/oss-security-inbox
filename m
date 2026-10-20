@@ -1,60 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/38
-Message-ID: <2b3430c7-2ef1-4d8e-9a37-c2cfb91ff9b6@cpansec.org>
-Date: Tue, 20 Oct 2026 22:26:09 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/20/39
+Message-ID: <a002ed64-1b09-4779-8efa-4561d777e06d@cpansec.org>
+Date: Tue, 20 Oct 2026 22:30:03 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-111879: DBI versions before 1.656 for Perl hang on a later open of a DBD::DBM table because a failed open_data does not release the table's lock
+Subject: CVE-2026-85783: Crypt::Age versions before 0.004 for Perl allow CPU exhaustion via an unbounded number of recipient stanzas, each costing an X25519 scalar multiplication in unwrap_file_key
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-111879                                      CPAN Security Group
+CVE-2026-85783                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-111879
+         CVE ID:  CVE-2026-85783
 
-   Distribution:  DBI
-       Versions:  before 1.656
-       MetaCPAN: https://metacpan.org/dist/DBI
-       VCS Repo: https://github.com/perl5-dbi/dbi
+   Distribution:  Crypt-Age
+       Versions:  before 0.004
+       MetaCPAN: https://metacpan.org/dist/Crypt-Age
+       VCS Repo: https://github.com/Getty/p5-crypt-age
 
 
-DBI versions before 1.656 for Perl hang on a later open of a DBD::DBM
-table because a failed open_data does not release the table's lock
+Crypt::Age versions before 0.004 for Perl allow CPU exhaustion via an
+unbounded number of recipient stanzas, each costing an X25519 scalar
+multiplication in unwrap_file_key
 
 Description
 -----------
-DBI versions before 1.656 for Perl hang on a later open of a DBD::DBM
-table because a failed open_data does not release the table's lock.
+Crypt::Age versions before 0.004 for Perl allow CPU exhaustion via an
+unbounded number of recipient stanzas, each costing an X25519 scalar
+multiplication in unwrap_file_key.
 
-open_data creates the table's lock file and takes an exclusive flock on
-it for a CREATE, before the checks that can croak: a dbm_mldbm value
-that is not a module name, a failing tie, or a missing data file. The
-croak unwinds before the table object is blessed, so nothing releases
-the lock, and the meta data holding the open descriptor stays cached on
-the database handle.
+The header parser accepts any number of recipient stanzas, and
+unwrap_file_key tries every identity against every X25519 stanza. Each
+attempt runs a scalar multiplication, an HKDF and a ChaCha20-Poly1305
+open. The header MAC cannot be checked first, because its key comes
+from the file key, which only a successful unwrap produces.
 
-The dbm_mldbm and dbm_type values come from the DSN or the connect
-attributes, so a caller that chooses the serializer or the storage
-backend can trigger the failure.
-
-The flock has no timeout, so a later open of that table (even through a
-separate database handle) blocks for as long as the handle holding the
-stale lock lives, in the same process or any other.
+Each stanza is 98 bytes of attacker-chosen header and buys one scalar
+multiplication per identity held, and the file is rejected only after
+every one of them has run. A caller reaches this through decrypt,
+decrypt_file or decrypt_filehandle whenever it decrypts a file it did
+not write.
 
 Problem types
 -------------
-- CWE-667 Improper Locking
+- CWE-770 Allocation of Resources Without Limits or Throttling
+- CWE-405 Asymmetric Resource Consumption (Amplification)
 
 Solutions
 ---------
-Upgrade to DBI 1.656 or later.
+Upgrade to Crypt-Age 0.004 or later.
 
 References
 ----------
-https://github.com/perl5-dbi/dbi/security/advisories/GHSA-8cx8-9vj9-9x7j
-https://github.com/perl5-dbi/dbi/commit/99bbf2ab9d137e6f042a770bd3bbba3bc0b3a901.patch
-https://metacpan.org/release/HMBRAND/DBI-1.656/changes
+https://metacpan.org/release/GETTY/Crypt-Age-0.004/changes
 
 
 
