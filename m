@@ -1,36 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/20
-Message-ID: <7fc47827-1e28-83cb-6a01-819043561054@apache.org>
-Date: Wed, 21 Oct 2026 10:38:44 +0000
-From: Haonan Hou <haonan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/6
+Message-ID: <CAEKnhAENTs9-=FsuKz8ABQ9H84jfA-xsVYT56P-OhoKnBhNN7g@mail.gmail.com>
+Date: Wed, 21 Oct 2026 16:41:54 +0200
+From: Jakub Zelenka <bukka@....net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-58663: Apache IoTDB: Auth Bypass in pipeTransfer() interface 
+Subject: CVE-2026-109618: PHP 8.2–8.5 RCE via OOM corruption
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hello,
 
-Affected versions:
+The PHP security team announces a critical vulnerability in PHP core
+(php-src).
 
-- Apache IoTDB 2.0.0 before 2.0.11
+CVE: CVE-2026-109618
+Severity: Critical (CVSS v4.0: 9.2)
 
-Description:
+Affected versions are PHP 8.2 before 8.2.35, PHP 8.3 before 8.3.36, PHP 8.4
+before 8.4.27, and PHP 8.5 before 8.5.12.
 
-An authentication bypass vulnerability exists in Apache IoTDB's Thrift RPC service
+PHP uses longjmp() to abort request handling on out-of-memory (OOM) errors.
+An allocation failure can interrupt initialization while incomplete request
+state is already reachable. Request shutdown may then access this invalid
+state, potentially allowing remote code execution.
 
+Unauthenticated RCE has been demonstrated over HTTP against Apache mod_php,
+before application code executes. Source analysis also indicates FPM
+susceptibility, although a complete FPM exploit has not been demonstrated.
 
+Upgrade to PHP 8.2.35, 8.3.36, 8.4.27, or 8.5.12, or a later release in the
+corresponding branch. Updating is the only complete mitigation.
 
-This issue affects Apache IoTDB: from 2.0.0 before 2.0.11.
+Full technical details and mitigation guidance are available at:
+https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w
 
-
-
-Users are recommended to upgrade to version 2.0.11, which fixes the issue.
-
-Credit:
-
-Anurag Kumar (https://www.linkedin.com/in/anurag-kumar-8413a0197) (analyst)
-
-References:
-
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-58663
+Regards,
+Jakub Zelenka
+PHP security team
 
