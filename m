@@ -1,45 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/19
-Message-ID: <1439770f-ec3c-59ba-a2e2-62ca9428d2f2@apache.org>
-Date: Wed, 21 Oct 2026 10:55:10 +0000
-From: Haonan Hou <haonan@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-41114: Apache IoTDB JDBC driver: Large-scale Memory Exhaustion via BigDecimal toPlainString in JDBC Driver 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/28
+Message-ID: <ec530a86-60e0-4a43-a346-9e668e709cfb@cpansec.org>
+Date: Wed, 21 Oct 2026 22:24:40 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-94140: Rex versions through 1.16.1 for Perl accept an unknown SSH host key for remote rsync transfers because sync hardcodes StrictHostKeyChecking=no
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+========================================================================
+CVE-2026-94140                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-94140
 
-- Apache IoTDB JDBC driver (org.apache.iotdb:iotdb-jdbc) 1.3.3 before 2.0.11
-
-Description:
-
-Uncontrolled Resource Consumption vulnerability in Apache IoTDB JDBC driver.
-
-
-
-This issue affects Apache IoTDB JDBC driver: from 1.3.3 before 2.0.11.
+   Distribution:  Rex
+       Versions:  through 1.16.1
+       MetaCPAN: https://metacpan.org/dist/Rex
+       VCS Repo: https://github.com/RexOps/Rex
 
 
+Rex versions through 1.16.1 for Perl accept an unknown SSH host key for
+remote rsync transfers because sync hardcodes StrictHostKeyChecking=no
 
-Users are recommended to upgrade to version 2.0.11, which fixes the issue.
+Description
+-----------
+Rex versions through 1.16.1 for Perl accept an unknown SSH host key for
+remote rsync transfers because sync hardcodes StrictHostKeyChecking=no.
 
-Credit:
+Every remote branch of sync builds its ssh command with that option,
+for password authentication, for private-key authentication and for the
+fallback. The ssh options a caller sets through set_openssh_opt reach
+the OpenSSH transport but not this command, so there is no
+configuration that restores host key checking for the transfer.
 
-Ho1aAs (GitHub: @HolaAsuka) (finder)
-movonow (GitHub: @movonow) (finder)
-zhid889773 (GitHub: @zhid889773) (finder)
-WA-888 (GitHub: @WA-888) (finder)
-binghuangczc (Email: 572929574@...com) (finder)
-errors11 (Github: @errors11) (finder)
-Phoexina (Github: @Phoexina) (finder)
-skydiver-jay (Github: @skydiver-jay) (finder)
-V9d0g (Github: @V9d0g) (finder)
-FlyFish (Email: 2811469022@...com) (finder)
+An attacker who can redirect the connection before the real host key is
+known presents their own and the transfer proceeds: under password
+authentication sync sends the connection password to that server, an
+upload writes the selected local files to it, and a download writes
+what it returns to the local destination.
 
-References:
+Problem types
+-------------
+- CWE-322 Key Exchange without Entity Authentication
 
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-41114
+Solutions
+---------
+No fixed CPAN release is currently available.
+
+References
+----------
+https://metacpan.org/release/FERKI/Rex-1.16.1/source/lib/Rex/Commands/Rsync.pm
+
+Credits
+-------
+James Klein, finder
 
