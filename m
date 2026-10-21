@@ -1,62 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/30
-Message-ID: <6b6df831-5635-4683-a75a-30f524675e13@cpansec.org>
-Date: Wed, 21 Oct 2026 22:38:54 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/29
+Message-ID: <38cd471d-f5f7-4180-87c0-81ec6aef83a0@cpansec.org>
+Date: Wed, 21 Oct 2026 22:24:59 +0100
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-112921: Robots::Validate versions from 0.4.3 before 0.4.10 for Perl report clients as imposter robots when User-Agent matcher state carries over from a previous request
+Subject: CVE-2026-94423: Net::LibSSH versions before 0.004 for Perl authenticate to an unverified server because connect never checks the host key against known_hosts
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-112921                                      CPAN Security Group
+CVE-2026-94423                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-112921
+         CVE ID:  CVE-2026-94423
 
-   Distribution:  Robots-Validate
-       Versions:  from 0.4.3 before 0.4.10
-       MetaCPAN: https://metacpan.org/dist/Robots-Validate
-       VCS Repo: https://github.com/robrwo/Robots-Validate
+   Distribution:  Net-LibSSH
+       Versions:  before 0.004
+       MetaCPAN: https://metacpan.org/dist/Net-LibSSH
+       VCS Repo: https://github.com/Getty/p5-net-libssh
 
 
-Robots::Validate versions from 0.4.3 before 0.4.10 for Perl report
-clients as imposter robots when User-Agent matcher state carries over
-from a previous request
+Net::LibSSH versions before 0.004 for Perl authenticate to an
+unverified server because connect never checks the host key against
+known_hosts
 
 Description
 -----------
-Robots::Validate versions from 0.4.3 before 0.4.10 for Perl report
-clients as imposter robots when User-Agent matcher state carries over
-from a previous request.
+Net::LibSSH versions before 0.004 for Perl authenticate to an
+unverified server because connect never checks the host key against
+known_hosts.
 
-Each Robots::Validate object holds one pure-Perl Aho-Corasick search
-machine and feeds every User-Agent into it without resetting its state.
-A User-Agent that ends part-way through a robot name leaves the machine
-mid-match, so the next User-Agent checked by the same object can
-complete that name. That client's address is then checked against the
-robot's DNS rule, which it fails.
+connect reports success as soon as ssh_connect returns SSH_OK. libssh
+leaves the known-hosts check to the application, and this binding never
+makes it, so the strict_hostkeycheck and knownhosts options are set on
+the session and then decide nothing.
 
-A remote client can use this to make a site that blocks bad robots
-block other visitors where the prefix User-Agent string is a suffix of
-a robot being validated.
-
-Note that deployments with Algorithm::AhoCorasick::XS are also
-affected, since it was unused due to a different bug.
+Password, agent and public-key authentication, channel and SFTP
+operations all run on a session whose peer was never identified, so an
+attacker who can redirect the connection receives the password when
+password authentication is used, and commands and data sent over the
+session.
 
 Problem types
 -------------
-- CWE-488 Exposure of Data Element to Wrong Session
+- CWE-322 Key Exchange without Entity Authentication
 
 Solutions
 ---------
-Upgrade to Robots-Validate v0.4.10 or later.
-
-Deployments with Algorithm::AhoCorasick::XS should upgrade to v0.4.11,
-which fixed a bug with using that version.
+Upgrade to Net-LibSSH 0.004 or later.
 
 References
 ----------
-https://github.com/robrwo/Robots-Validate/commit/776a1456e6605492b7582ed25d3d5006ef384402.patch
-https://metacpan.org/release/RRWO/Robots-Validate-v0.4.10/changes
-https://metacpan.org/release/RRWO/Robots-Validate-v0.4.11/changes
+https://metacpan.org/release/GETTY/Net-LibSSH-0.004/changes
+https://github.com/Getty/p5-net-libssh/commit/29f509aacddb4b282ac9eb716d5ab326686d09a4.patch
+
+Credits
+-------
+James Klein, finder
 
