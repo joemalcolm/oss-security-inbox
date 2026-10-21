@@ -1,39 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/14
-Message-ID: <20261021091732.578858ca@hboeck.de>
-Date: Wed, 21 Oct 2026 09:17:32 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/23
+Message-ID: <CAFfBHfYhgRfN3A1JsfyUN-hPokfZnW_fHWTX_ypCZspZuHgFVw@mail.gmail.com>
+Date: Wed, 21 Oct 2026 12:29:01 -0500
+From: Aaron Rainbolt <arraybolt3@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: eMudhra Intermediates Compromise
+Subject: Re: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On Wed, Oct 21, 2026 at 10:24 AM Aaron Rainbolt <arraybolt3@...il.com> wrote:
 
-On Wed, 21 Oct 2026 08:58:41 +0200
-Solar Designer <solar@...nwall.com> wrote:
+...snip...
 
-> I guess all other keys corresponding to CA root and intermediate certs
-> will now be audited for having potentially weak private keys.
-> 
-> In fact, I'm surprised this wasn't the case already like it was for
-> many PGP RSA keys many years ago:
-> 
-> https://openwall.com/lists/oss-security/2016/05/11/11
-> 
-> or perhaps it was, just not covering all key types and known
-> weaknesses and/or not repeated often enough?  We need it automated,
-> not something done occasionally when someone is in the mood.
+> While not yet fully confirmed, the Fediverse is reporting that the fix
+> to at least PHP 8.5.12 may be incomplete:
+> https://fedi.katze.sh/@elise/117479383739450605
 
-I am definitely already doing that. That's what my badkeys project is
-all about. I do automatically scan all CCADB certs for known
-weaknesses. But, of course, the "all the known weaknesses" part is
-tricky if you don't know what to look for.
+According to a conversation in #security:ubuntu.com Matrix, Canonical
+asked php.org if the issue mentioned in this Mastodon thread was a
+real vulnerability or not, and was told that it's "unrelated and not a
+real issue". If someone from the PHP security team could reconfirm
+this here, that would be greatly appreciated.
 
-I had a suggestion that I shall look for small ecdsa keys. I hadn't
-implemented it. Will post the full story when I find time to write it
-up. But, what do they say? Hindsight is 20/20.
-
-
--- 
-Hanno Böck
-https://hboeck.de/
+--
+Aaron
