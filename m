@@ -1,48 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/10
-Message-ID: <dccf228a-84b4-4eb5-bbd5-665e3681257c@powerdns.com>
-Date: Wed, 21 Oct 2026 13:02:46 +0200
-From: Miod Vallat <miod.vallat@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/21
+Message-ID: <74d44ec7-b52a-e504-b265-5bffa12dff2f@apache.org>
+Date: Wed, 21 Oct 2026 11:10:36 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisory 2026-13: Crafted packet using compression pointers can lead to denial of service
+Subject: CVE-2026-59229: Apache IoTDB: Legacy Pipe Privilege Escalation 
 Content-Type: text/plain; charset=utf-8
 
-PowerDNS Security Advisory 2026-13: Crafted packet using compression 
-pointers can lead to denial of service
+Severity: important 
 
-   * CVE: CVE-2026-73206
-   * Date: 2026-10-21T00:00:00+01:00
-   * Discovery date: 2026-07-10T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.17,
-     5.0.7 and 5.1.4
-   * Not affected: PowerDNS Authoritative Server 4.9.18, 5.0.8 and 5.1.5
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: A crafted DNS packet can cause a denial of service
-     decompressing the DNS names in the packet
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version
-   * CWE: CWE-770
-   * CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-   * Last affected: 4.9.17,5.0.7,5.1.4
-   * First fixed: 4.9.18,5.0.8,5.1.5
-   * Internal ID: 537
-   * External Reporter: Yuheng Zhang et al.
+Affected versions:
 
-A malicious server can send a crafted reply that leads to high resource
-utilization decompression name pointers in DNS packets. This is a
-multi-vendor issue. Multiple DNS vendors are releasing fixed version of
-their products.
+- Apache IoTDB 2.0.0 before 2.0.11
 
-CVSS Score: 7.5
+Description:
 
-The remedy is: upgrade to a patched version. The patched version
-imposes limits on the number of decompression done for a single name
-and for a DNS packet as a whole.
+The Legacy Pipe receiver protocol (handshake / sendPipeData) uses a
+hardcoded SUPER_USER (root) identity when executing data loading and
+deletion operations. A user with only SYSTEM-level privileges (such as
+USE_PIPE or MAINTAIN) who does NOT have WRITE_DATA or DELETE_DATA
+permissions on target databases can send specially crafted PipeData
+messages through the Legacy Pipe API, resulting in data loading/deletion
+operations executed as root — effectively bypassing IoTDB's permission
+model entirely.
 
-We would like to thank Yuheng Zhang, Tsinghua University & Jingxian
-Technology Co., Ltd.; Zihan Zhang, Shanghai Jiao Tong University &
-Jingxian Technology Co., Ltd.; Jianjun Chen, Tsinghua University; Zihan
-Wang, Z.AI Co., Ltd.; and Kaiwen Shen, CloudItera for reporting this
-issue and coordinating release with other vendors.
+
+
+This issue affects Apache IoTDB: from 2.0.0 before 2.0.11.
+
+
+
+Users are recommended to upgrade to version 2.0.11, which fixes the issue.
+
+Credit:
+
+laodu (finder)
+
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-59229
 
