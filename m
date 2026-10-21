@@ -1,38 +1,87 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/8
-Message-ID: <b015e67b-5655-47b9-8d4e-a4786dd594bc@isc.org>
-Date: Wed, 21 Oct 2026 14:57:40 +0200
-From: Andoni Duarte Pintado <andoni@....org>
-To: oss-security@...ts.openwall.com
-Cc: security-officer@....org
-Subject: ISC has disclosed four vulnerabilities in BIND 9 (CVE-2026-19630, CVE-2026-94300, CVE-2026-96888, CVE-2026-97313)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/9
+Message-ID: <237664774.155074.1792573537020@appsuite.open-xchange.com>
+Date: Wed, 21 Oct 2026 11:05:37 +0200 (CEST)
+From: Otto Moerbeek <otto.moerbeek@...erdns.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: PowerDNS Security Advisory 2026-12 for PowerDNS Recursor: Multiple issues
 Content-Type: text/plain; charset=utf-8
 
-On 21 October 2026, Internet Systems Consortium disclosed four 
-vulnerabilities affecting our BIND 9 software:
+   Today we have released PowerDNS Recursor 5.3.12 and 5.4.8.
 
-- CVE-2026-19630:       Amplified resource exhaustion in inbound message 
-processing https://kb.isc.org/docs/cve-2026-19630
-- CVE-2026-94300:       Concurrent GSS-TSIG messages corrupt memory 
-https://kb.isc.org/docs/cve-2026-94300
-- CVE-2026-96888:       Named may terminate unexpectedly when a redirect 
-zone is used with strict QNAME minimization 
-https://kb.isc.org/docs/cve-2026-96888
-- CVE-2026-97313:       Specific RPZ configurations and query patterns 
-may result in an unexpected exit https://kb.isc.org/docs/cve-2026-97313
+   These releases provide fixes for PowerDNS Security Advisory
 
-New versions of BIND 9 are available:
+     * 2026-12 for PowerDNS Recursor: Multiple issues
 
-- https://downloads.isc.org/isc/bind9/9.20.30/
-- https://downloads.isc.org/isc/bind9/9.21.27/
+   There are several CVEs associated with this advisory, three with
+   severity High and the remaining with severity Medium or Low.
+     __________________________________________________________________
 
-For more information and other release formats, consult the ISC software 
-download page: https://www.isc.org/download/
+     * CVE-2026-73206: A crafted DNS packet can cause a denial of service
+       decompressing the DNS names in the packet
+     * CVE-2026-73205: A malicious client can cause too many TCP
+       connections in TIME_WAIT state
+     * CVE-2026-85555: DNSSEC validation bypass and cache poisoning in
+       PowerDNS Recursor via out-of-band NS resolution
+     * CVE-2026-85556: Missing OPT RR owner-name validation bypasses ECS
+       hardening
+     * CVE-2026-85557: Single web client not doing TLS handshake
+       monopolizes web access
+     * CVE-2026-85558: Recursor retains closed TCP client addresses until
+       process exit
+     * CVE-2026-85559: Out-of-bounds read in Recursor findScopeZero
 
-With the public announcement of these vulnerabilities, the embargo 
-period is ended and any updated software packages that have been 
-prepared may be released.
+   Please refer to the changelogs  ([1]5.3.12 and [2]5.4.8) and the full
+   [3]security advisory for additional details.
 
-Download attachment "OpenPGP_0xAC8CB67D23BB7510.asc" of type "application/pgp-keys" (665 bytes)
+   Please send us all feedback and issues you might have via
+   the [4]mailing list, or in case of a bug, via [5]GitHub.
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (237 bytes)
+   The tarballs ([6]5.3.12, [7]5.4.8) (with signature files [8]5.3.12,
+   [9]5.4.8) are available from our download [10]server and packages for
+   several distributions are available from our [11]repository.
+
+   We made changes to our Open Source End of Life policy. Older release
+   trains are now supported for one year after the following major
+   release. Consult the EOL [12]policy for more details.
+
+   We are grateful to the PowerDNS community for the reporting of bugs,
+   issues, feature requests, and especially to the submitters of fixes and
+   implementations of features.
+
+References
+
+   1. https://doc.powerdns.com/recursor/changelog/5.3.html#change-5.3.12
+   2. https://doc.powerdns.com/recursor/changelog/5.4.html#change-5.4.8
+   3. https://doc.powerdns.com/recursor/security-advisories/powerdns-advisory-2026-12.html
+   4. https://mailman.powerdns.com/mailman/listinfo/pdns-users
+   5. https://github.com/PowerDNS/pdns/issues/new/choose
+   6. https://downloads.powerdns.com/releases/pdns-recursor-5.3.12.tar.xz
+   7. https://downloads.powerdns.com/releases/pdns-recursor-5.4.8.tar.xz
+   8. https://downloads.powerdns.com/releases/pdns-recursor-5.3.12.tar.xz.sig
+   9. https://downloads.powerdns.com/releases/pdns-recursor-5.4.8.tar.xz.sig
+  10. https://downloads.powerdns.com/releases/
+  11. https://repo.powerdns.com/
+  12. https://docs.powerdns.com/recursor/appendices/EOL.html
+
+
+--
+
+kind regards,
+Otto Moerbeek
+Developer PowerDNS
+
+
+Phone: +49 2761 75252 00 Fax: +49 2761 75252 30
+Email: otto.moerbeek@...erdns.com
+
+
+-------------------------------------------------------------------------------------
+Open-Xchange AG, Hohenzollernring 72, 50672 Cologne, District Court Cologne HRB 95366
+Managing Board: Andreas Gauger, Dirk Valbert
+Chairman of the Board: Dr. Paul-Josef Patt
+
+PowerDNS.com B.V., Koninginnegracht 5, 2514 AA Den Haag, The Netherlands
+Managing Director: Robert Brandt
+-------------------------------------------------------------------------------------
+Download attachment "signature.asc" of type "application/pgp-signature" (486 bytes)
