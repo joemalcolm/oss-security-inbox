@@ -1,43 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/21
-Message-ID: <74d44ec7-b52a-e504-b265-5bffa12dff2f@apache.org>
-Date: Wed, 21 Oct 2026 11:10:36 +0000
-From: Haonan Hou <haonan@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/7
+Message-ID: <CAEKnhAH+MYHvVOujPDuwwFZmLfeVySqKbmP9=7YErtqU4RB0hA@mail.gmail.com>
+Date: Wed, 21 Oct 2026 16:44:06 +0200
+From: Jakub Zelenka <bukka@....net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-59229: Apache IoTDB: Legacy Pipe Privilege Escalation 
+Subject: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Hello,
 
-Affected versions:
+The PHP security team announces a critical vulnerability in PHP core
+(php-src).
 
-- Apache IoTDB 2.0.0 before 2.0.11
+CVE: CVE-2026-109619
+Severity: Critical (CVSS v4.0: 9.2)
 
-Description:
+Affected versions are PHP 8.2 before 8.2.35, PHP 8.3 before 8.3.36, PHP 8.4
+before 8.4.27, and PHP 8.5 before 8.5.12.
 
-The Legacy Pipe receiver protocol (handshake / sendPipeData) uses a
-hardcoded SUPER_USER (root) identity when executing data loading and
-deletion operations. A user with only SYSTEM-level privileges (such as
-USE_PIPE or MAINTAIN) who does NOT have WRITE_DATA or DELETE_DATA
-permissions on target databases can send specially crafted PipeData
-messages through the Legacy Pipe API, resulting in data loading/deletion
-operations executed as root — effectively bypassing IoTDB's permission
-model entirely.
+PHP maintains global state that temporarily points into request memory. In
+some scenarios, this state is not correctly reset, or is repopulated after
+being reset. Once the request memory is freed, a subsequent request handled
+by the same worker may access the stale state before normal initialization
+replaces it, causing a use-after-free and potentially allowing remote code
+execution.
 
+Unauthenticated RCE has been demonstrated against Apache mod_php and
+PHP-FPM. Exploitability depends on the affected state, configuration, and
+application behavior.
 
+Upgrade to PHP 8.2.35, 8.3.36, 8.4.27, or 8.5.12, or a later release in the
+corresponding branch. Updating is the only reliable mitigation; there is no
+complete generic configuration workaround.
 
-This issue affects Apache IoTDB: from 2.0.0 before 2.0.11.
+Full technical details and mitigation guidance are available at:
+https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp
 
-
-
-Users are recommended to upgrade to version 2.0.11, which fixes the issue.
-
-Credit:
-
-laodu (finder)
-
-References:
-
-https://iotdb.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-59229
+Regards,
+Jakub Zelenka
+PHP security team
 
