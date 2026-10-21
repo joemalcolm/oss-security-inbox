@@ -1,70 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/1
-Message-Id: <741EC44D-43E7-40F6-98C9-FA956E31FD22@stig.io>
-Date: Wed, 21 Oct 2026 00:39:38 +0200
-From: Stig Palmquist <stig@...g.io>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-112202: Imager::File::GIF versions before 1.006 for Perl allow out-of-bounds reads when consolidating GIF images
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/4
+Message-ID: <20261021055455.GA20935@openwall.com>
+Date: Wed, 21 Oct 2026 07:54:55 +0200
+From: Solar Designer <solar@...nwall.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: eMudhra Intermediates Compromise
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-112202                                      CPAN Security Group
-========================================================================
+On Tue, Oct 20, 2026 at 03:44:34PM -0400, Jeffrey Walton wrote:
+> On Tue, Oct 20, 2026 at 1:07 PM Valtteri Vuorikoski <vuori@...com.org> wrote:
+> > A test website is available at <https://emudhra.we-have-a-problem.com/> which
+> > also lists mitigation options for systems which do not receive CRL or equivalent
+> > revocation updates. Effectively: disable the root CAs "emSign ECC Root CA - G3"
+> > and "Comodo AAA Services root" in your operating system trust store, while being
+> > mindful of collateral damage. The Comodo root in particular has been widely used
+> > in the past.
+> 
+> It is probably worth noting the Comodo AAA Services Root removal is
+> not related to the eMudhra incident.
 
-        CVE ID:  CVE-2026-112202
+Are you sure?  Doesn't it cross-sign the compromised intermediates?
 
-  Distribution:  Imager-File-GIF
-      Versions:  before 1.006
-      MetaCPAN:  https://metacpan.org/dist/Imager-File-GIF
-      VCS Repo:  https://github.com/tonycoz/imager
+> The issue with Comodo AAA Services Root was the removal of the TLS
+> trust bit by browsers because the root is too old.  The current
+> CA/Browser (CA/B) Baseline Requirements (BR) policies say a root has a
+> maximum lifespan of 15 years from creation date.  Comodo AAA Services
+> Root was issued in 2004, so it violates current policy.  Also see
+> <https://cabforum.org/working-groups/server/baseline-requirements/>.
 
-  Distribution:  Imager
-      Versions:  before 1.040
-      MetaCPAN:  https://metacpan.org/dist/Imager
-      VCS Repo:  https://github.com/tonycoz/imager
+This may be right, but perhaps the urgency to remove it now is related
+to the eMudhra incident?
 
+Incidentally, it is not yet removed in NSS 3.131.1, which does remove
+the emSign certs.  An omission to fix in a further update urgently?
 
-Imager::File::GIF versions before 1.006 for Perl allow out-of-bounds
-reads when consolidating GIF images
-
-Description
------------
-Imager::File::GIF versions before 1.006 for Perl allow out-of-bounds
-reads when consolidating GIF images.
-
-With `gif_consolidate => 1`, palette indices from the image are used
-without checking the colour table's bounds. The i_readgif_low routine
-reads beyond the heap allocation and copies the bytes into output
-pixels. The default GIF reader is not affected.
-
-The same code ships bundled in the Imager distribution.
-
-An attacker supplying a crafted GIF can disclose adjacent heap memory
-through the decoded output and may crash the process.
-
-Problem types
--------------
-- CWE-125 Out-of-bounds Read
-
-Workarounds
------------
-Disable the gif_consolidate read option when processing untrusted GIF
-images.
-
-Solutions
----------
-Upgrade to Imager-File-GIF 1.006 or later, or to Imager 1.040 or later
-if the bundled copy is in use.
-
-References
-----------
-https://github.com/tonycoz/imager/commit/dec96f12b3d8a7fd94e86264953a5e4919dd6036.patch
-https://metacpan.org/release/TONYC/Imager-File-GIF-1.006/changes
-https://metacpan.org/release/TONYC/Imager-1.040/changes
-https://github.com/tonycoz/imager/security/advisories/GHSA-v4hp-5h6w-9897
-
-Credits
--------
-kumar-Prakash07, reporter
-
-
+Alexander
