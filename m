@@ -1,42 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/7
-Message-ID: <CAEKnhAH+MYHvVOujPDuwwFZmLfeVySqKbmP9=7YErtqU4RB0hA@mail.gmail.com>
-Date: Wed, 21 Oct 2026 16:44:06 +0200
-From: Jakub Zelenka <bukka@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/12
+Message-ID: <132fbfd8-e661-44df-b061-3cbf8ea01f26@selfisekai.rocks>
+Date: Wed, 21 Oct 2026 09:38:43 +0200
+From: LN Liberda <lauren@...fisekai.rocks>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
+Subject: Re: Bundled cert stores + eMudhra cert issue (nmap/ncat, texlive-infra)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Certain Rust codebases include a cert store inside their binaries, 
+coming from the crates webpki-root-certs or webpki-roots.
 
-The PHP security team announces a critical vulnerability in PHP core
-(php-src).
+https://crates.io/crates/webpki-root-certs
 
-CVE: CVE-2026-109619
-Severity: Critical (CVSS v4.0: 9.2)
+https://crates.io/crates/webpki-roots
 
-Affected versions are PHP 8.2 before 8.2.35, PHP 8.3 before 8.3.36, PHP 8.4
-before 8.4.27, and PHP 8.5 before 8.5.12.
+This includes:
 
-PHP maintains global state that temporarily points into request memory. In
-some scenarios, this state is not correctly reset, or is repopulated after
-being reset. Once the request memory is freed, a subsequent request handled
-by the same worker may access the stale state before normal initialization
-replaces it, causing a use-after-free and potentially allowing remote code
-execution.
+  * uv (used unless SSL_CERT_FILE or SSL_CERT_DIR are set),
+  * deno (used unless DENO_TLS_CA_STORE=system is set)
 
-Unauthenticated RCE has been demonstrated against Apache mod_php and
-PHP-FPM. Exploitability depends on the affected state, configuration, and
-application behavior.
+SBOM check at Alpine Linux edge: potentially affected 29 packages in 
+community, 41 in testing.
 
-Upgrade to PHP 8.2.35, 8.3.36, 8.4.27, or 8.5.12, or a later release in the
-corresponding branch. Updating is the only reliable mitigation; there is no
-complete generic configuration workaround.
+Alpine bug: https://gitlab.alpinelinux.org/alpine/aports/-/work_items/18515
 
-Full technical details and mitigation guidance are available at:
-https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp
-
-Regards,
-Jakub Zelenka
-PHP security team
+Op 21-10-2026 om 03:40 schreef Hanno Böck:
+> Hi,
+>
+> The recent eMudhra certificate compromise means that every software
+> that bundles its own root certificate store is potentially affected.
+>
+> I went through my systems and checked for installed .crt files in /usr:
+>
+> /usr/share/tlpkg/installer/curl/curl-ca-bundle.crt
+> Apparently belongs to the texlive-core package on Gentoo, which, in
+> turn, uses the file from an upstream package called texlive-infra.
+> Contains the affected "Comodo AAA Services root". In its git code, that
+> has been removed already:
+> https://github.com/TeX-Live/texlive-infra
+>
+> Distros may want to make sure they update that.
+>
+> /usr/share/ncat/ca-bundle.crt
+> Belongs to ncat, which is part of nmap. I've reported this to nmap's
+> developer.
+> Latest nmap 7.992 also contains "Comodo AAA Services root".
+>
+> I would like to encourage people to look for other places where
+> software ships its own root certificate store. Also, I'd like to
+> encourage these software projects to stop doing that and use the system
+> root store. It's much easier to fix such things in one place than in
+> countless places.
+>
+-- 
+LN Liberda
+it/she, het/zij, to [coś]/ona
+https://liberda.nl/
 
