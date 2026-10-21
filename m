@@ -1,53 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/11
-Message-ID: <ddaf4ff4-761d-4860-ad7f-05c024ebbe3c@nlnetlabs.nl>
-Date: Wed, 21 Oct 2026 11:06:11 +0200
-From: Yorgos Thessalonikefs <yorgos@...etlabs.nl>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/20
+Message-ID: <7fc47827-1e28-83cb-6a01-819043561054@apache.org>
+Date: Wed, 21 Oct 2026 10:38:44 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Unbound: 1.26.2 addresses multiple CVE items
+Subject: CVE-2026-58663: Apache IoTDB: Auth Bypass in pipeTransfer() interface 
 Content-Type: text/plain; charset=utf-8
 
-Hi there,
+Severity: important 
 
-(The official announcement can be found at:
-https://community.nlnetlabs.nl/t/unbound-1-26-2-released/3495)
+Affected versions:
 
-Several vulnerabilities were found in Unbound.
+- Apache IoTDB 2.0.0 before 2.0.11
 
-We are releasing 1.26.2 as a security release today (October 21) 
-including the relevant fixes.
+Description:
 
-The overview of the vulnerabilities with a brief description is:
-
-CVE-2026-97206 - severity: HIGH
-DoQ path-migration can lead to use-after-free on multi-threaded deployments.
-
-CVE-2026-50106 - severity: MEDIUM
-Possible insecure NXDOMAIN for non-existing records under a configured 
-island trust anchor underneath an insecure parent.
-
-CVE-2026-96405 - severity: MEDIUM
-Aggregate DNS name chained pointer decompression work leads to 
-degradation of service.
-
-CVE-2026-109125 - severity: MEDIUM
-Possible cache poisoning vulnerability via a cache side-channel exposed 
-by 'unwanted-reply-threshold'.
-
-CVE-2026-35501 - severity: LOW
-Bypass of a configured island trust anchor underneath an insecure parent 
-from an atacker-controlled NSEC record.
+An authentication bypass vulnerability exists in Apache IoTDB's Thrift RPC service
 
 
-More information about the vulnerabilities can be found at:
-https://nlnetlabs.nl/projects/unbound/security-advisories/
+
+This issue affects Apache IoTDB: from 2.0.0 before 2.0.11.
 
 
-Best regards,
--- Yorgos, on behalf of the Unbound team.
 
+Users are recommended to upgrade to version 2.0.11, which fixes the issue.
 
-** This email is signed. Keys of the NLnet Labs people are published on
-https://www.nlnetlabs.nl/people/ **
+Credit:
 
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
+Anurag Kumar (https://www.linkedin.com/in/anurag-kumar-8413a0197) (analyst)
+
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-58663
+
