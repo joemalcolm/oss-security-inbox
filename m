@@ -1,26 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/17
-Message-ID: <b350751a7a4a0d8faa100060a0b7c5c3e1ff5ff9.camel@debian.org>
-Date: Wed, 21 Oct 2026 17:41:56 +0200
-From: Yves-Alexis Perez <corsac@...ian.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/13
+Message-ID: <20261021091058.26ee8fd7@hboeck.de>
+Date: Wed, 21 Oct 2026 09:10:58 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
+Subject: Re: Bundled cert stores + eMudhra cert issue (nmap/ncat, texlive-infra)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 2026-10-21 at 10:24 -0500, Aaron Rainbolt wrote:
-> While not yet fully confirmed, the Fediverse is reporting that the fix
-> to at least PHP 8.5.12 may be incomplete:
-> https://fedi.katze.sh/@elise/117479383739450605
+And there are many more applications with bundled stores. The NixOS
+developers have collected lists of them:
 
-@elise also sayd it seems like a *different* vulnerability:
+https://github.com/NixOS/nixpkgs/issues/576475
 
-https://fedi.katze.sh/@elise/117478655339557825
+With sub-issues:
 
-> ok thinking more about this, there's no way this is the same vuln, this is
-> another one.
-> 
-> today is really a day for php.
+https://github.com/NixOS/nixpkgs/issues/576541
+Vendored PEM bundle
+
+https://github.com/NixOS/nixpkgs/issues/576542
+Bundle inside a wheel, jar or zip
+
+https://github.com/NixOS/nixpkgs/issues/576543
+Java keystore
+
+https://github.com/NixOS/nixpkgs/issues/576544
+Compiled into a binary
+
 -- 
-Yves-Alexis
-
-Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
