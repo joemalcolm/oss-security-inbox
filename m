@@ -1,25 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/23
-Message-ID: <CAFfBHfYhgRfN3A1JsfyUN-hPokfZnW_fHWTX_ypCZspZuHgFVw@mail.gmail.com>
-Date: Wed, 21 Oct 2026 12:29:01 -0500
-From: Aaron Rainbolt <arraybolt3@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/15
+Message-ID:  <SYDP300MB26667054F34F423B01008BB84EEE662@SYDP300MB266670.AUSP300.PROD.OUTLOOK.COM>
+Date: Wed, 21 Oct 2026 09:04:45 +0000
+From: Peter Gutmann <pgut001@...auckland.ac.nz>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: Dennis Jackson <djackson@...illa.com>
+Subject: Re: eMudhra Intermediates Compromise
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Oct 21, 2026 at 10:24 AM Aaron Rainbolt <arraybolt3@...il.com> wrote:
+Solar Designer <solar@...nwall.com> writes:
 
-...snip...
+>I guess all other keys corresponding to CA root and intermediate certs will
+>now be audited for having potentially weak private keys.
 
-> While not yet fully confirmed, the Fediverse is reporting that the fix
-> to at least PHP 8.5.12 may be incomplete:
-> https://fedi.katze.sh/@elise/117479383739450605
+Let's Encrypt has done this, at least for public keys, for awhile now, for
+example they apply Fermat's factorisation method to detect unsuitable keys
+with too-close p+q (I think it was L-E anyway, I found it when I was checking
+my own code which does the same thing).
 
-According to a conversation in #security:ubuntu.com Matrix, Canonical
-asked php.org if the issue mentioned in this Mastodon thread was a
-real vulnerability or not, and was told that it's "unrelated and not a
-real issue". If someone from the PHP security team could reconfirm
-this here, that would be greatly appreciated.
-
---
-Aaron
+Peter.
