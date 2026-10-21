@@ -1,58 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/18
-Message-ID: <20261021154307.GA4413@oevtugenva.nrevsny.pk>
-Date: Wed, 21 Oct 2026 11:43:08 -0400
-From: Rich Felker <dalias@...c.org>
-To: musl@...ts.openwall.com
-Cc: oss-security@...ts.openwall.com
-Subject: CVE-2026-107891: musl libc: multiple integer overflow in regcomp, possibly leading to incorrect allocation sizes and out-of-bounds heap writes
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/21/19
+Message-ID: <1439770f-ec3c-59ba-a2e2-62ca9428d2f2@apache.org>
+Date: Wed, 21 Oct 2026 10:55:10 +0000
+From: Haonan Hou <haonan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-41114: Apache IoTDB JDBC driver: Large-scale Memory Exhaustion via BigDecimal toPlainString in JDBC Driver 
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-107891: musl libc: multiple integer overflow in regcomp,
-possibly leading to incorrect allocation sizes and out-of-bounds heap
-writes
-
-
-Overview:
-
-The regcomp function in musl libc is affected by multiple integer
-overflow issues which can lead to incorrectly-sized allocations and
-possibly out-of-bounds heap writes. The conditions for overflow are
-triggered by the size and complexity of the regular expression passed
-to regcomp, not the data to be matched. In order to be vulnerable, an
-application must be processing regular expressions from an untrusted
-source using the libc regcomp function.
-
-
-Impact:
-
-At least denial-of-service in the form of a predictable crash is
-possible. Depending on the application and its use of objects on the
-heap and of concurrent execution, arbitrary code execution may be
-possible.
-
+Severity: low 
 
 Affected versions:
 
-The vulnerable code has been present since version 0.5.0.
+- Apache IoTDB JDBC driver (org.apache.iotdb:iotdb-jdbc) 1.3.3 before 2.0.11
 
-All subsequent versions up through 1.2.6 are affected.
+Description:
 
-
-Mitigation:
-
-All users should apply the attached patch, or upgrade to 1.2.7 once it
-becomes available.
-
-In contexts where patching is not an option, measures should be taken
-to prevent the processing of regular expressions from untrusted
-sources.
+Uncontrolled Resource Consumption vulnerability in Apache IoTDB JDBC driver.
 
 
-Credits:
 
-The first of these issues was reported in private by Julien Voisin.
-Subsequent analysis by Szabolcs Nagy and Rich Felker found a pattern
-of similar overflows.
+This issue affects Apache IoTDB JDBC driver: from 1.3.3 before 2.0.11.
 
-View attachment "0001-regex-avoid-int-overflow-in-regcomp.patch" of type "text/plain" (5943 bytes)
+
+
+Users are recommended to upgrade to version 2.0.11, which fixes the issue.
+
+Credit:
+
+Ho1aAs (GitHub: @HolaAsuka) (finder)
+movonow (GitHub: @movonow) (finder)
+zhid889773 (GitHub: @zhid889773) (finder)
+WA-888 (GitHub: @WA-888) (finder)
+binghuangczc (Email: 572929574@...com) (finder)
+errors11 (Github: @errors11) (finder)
+Phoexina (Github: @Phoexina) (finder)
+skydiver-jay (Github: @skydiver-jay) (finder)
+V9d0g (Github: @V9d0g) (finder)
+FlyFish (Email: 2811469022@...com) (finder)
+
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-41114
+
