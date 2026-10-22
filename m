@@ -1,44 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/31
-Message-ID: <atp4q8xisOfItlLM@donburi.himad.notcom.org>
-Date: Fri, 23 Oct 2026 00:07:04 +0300
-From: Valtteri Vuorikoski <vuori@...com.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/30
+Message-ID: <20261022205603.cm4E8k3s@steffen%sdaoden.eu>
+Date: Thu, 22 Oct 2026 22:56:03 +0200
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: Re: Information for Python users regarding eMudhra / emSign CA certificate security incident
+Subject: Re: Comodo AAA Services Root and S/MIME
 Content-Type: text/plain; charset=utf-8
 
-Having spent the day whacking this particular molehill, my strong opinion is
-that these packages (minus certifi) should stop vendoring roots immediately.
+Hanno Böck wrote in
+ <20261022131502.1fd3dc3d@...eck.de>:
+ ...
+ |My interest in S/MIME is limited, I'm probably not gonna investigate
+ |this much further. If anyone wants to look into this, the following
+ |questions may be a good starting point:
+ |
+ |* Are there other e-mail applications that source the NSS/Thunderbird
+ |  cert store as their trust anchor for S/MIME?
+ |
+ |* Do they properly check X.509 paths and validate everything, or are
+ |  there ones that would accept a web/TLS intermediate to sign an S/MIME
+ |  cert?
 
-Users should install their distro's ca-certificates package or similar. If that
-is completely impossible for whatever reason, offer an option to use certifi
-(which should be a dependency, not vendored) - but the system trust store should
-be the default source of truth.
+There are definitely code bases which do not do explicit
+X509_check_purpose() for neither X509_PURPOSE_SMIME_SIGN nor
+X509_PURPOSE_SMIME_ENCRYPT; the MUA i maintain, for example.
 
-This sort of easter egg hiding to serve users with broken installations reduces
-the security of everyone else.
+It here then is up to OpenSSL (NNS support was dropped, nothing
+new yet added) to verify certificate purposes.  PKCS7_verify()
+documents to verify the "smimesign purpose".  PKCS7_sign() (and
+PKCS7_encrypt()) document nothing.  (I will not take a walk in
+that jungle myself now.)
 
-(Missing from the quoted list: botocore also includes a vendored copy. I haven't
-checked how it's used.)
-
- -valtteri
-
-
-On Thu, Oct 22, 2026 at 01:43:08PM -0700, Alan Coopersmith wrote:
-> https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576
-> has this statement from Seth Michael Larson:
-> > A security incident affecting eMudhra intermediate certificates has
-> > required removing the emSign root CA certificate from CA bundles such
-> > as “certifi”. It’s important to immediately upgrade the software
-> > packages below to at least the versions specified and rebuild
-> > container images with layer caching disabled to fetch the latest
-> > system certificates. Failure to do so could result in
-> > monster-in-the-middle (MITM) attacks against TLS clients, including
-> > python.org and pypi.org .
-> > 
-> >     certifi 2026.10.19 (1)
-> >     pip 26.2.2
-> >     uv 0.13.4
-> >     sigstore 4.5.1
-> >     conda 26.9.4
-> >     pixi 0.82.1
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
