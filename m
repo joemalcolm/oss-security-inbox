@@ -1,30 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/11
-Message-ID: <atnaIUzVfQiBDonp@symphytum.spacehopper.org>
-Date: Thu, 22 Oct 2026 10:40:49 +0100
-From: Stuart Henderson <stu@...cehopper.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/10
+Message-ID: <1073cdd8-6e11-9807-7611-82ecf7932a8b@apache.org>
+Date: Thu, 22 Oct 2026 13:26:21 +0000
+From: Piotr Karwasz <pkarwasz@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: eMudhra Intermediates Compromise
+Subject: CVE-2026-113582: Apache Abdera: XML external entity expansion in Atom document parsing 
 Content-Type: text/plain; charset=utf-8
 
-On 2026/10/20 19:30, Valtteri Vuorikoski wrote:
-> A test website is available at <https://emudhra.we-have-a-problem.com/> which
-> also lists mitigation options for systems which do not receive CRL or equivalent
-> revocation updates. Effectively: disable the root CAs "emSign ECC Root CA - G3"
-> and "Comodo AAA Services root" in your operating system trust store, while being
-> mindful of collateral damage. The Comodo root in particular has been widely used
-> in the past.
+Severity: important 
+    CVSS 4.0: 8.7 (high) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N
+    CVSS 3.1: 7.5 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
 
-Collateral damage for "emSign ECC Root CA - G3" includes the various
-InCommon intermediate CAs:
+Affected versions:
 
-C=US, O=Internet2, CN=InCommon Intermediate CA - DVG3C
-C=US, O=Internet2, CN=InCommon Intermediate CA - EVG3C
-C=US, O=Internet2, CN=InCommon Intermediate CA - OVG3C
+- Apache Abdera: all versions
+- Apache Abdera: all versions
+- Apache Abdera cb5a3646fc8b2a620dba5bdde3a6b7a3753b1be2 or later
 
-as well as the eMudhra Technologies Limited ones.
+Description:
 
-(Unless you also remove the RSA root, like was done here for a bit,
-then it's a bit wider..
-https://github.com/certifi/python-certifi/commit/5cb238caeeb6c30ec1a7309ad3e16a5aa7b10ce8)
+UNSUPPORTED WHEN ASSIGNED Improper restriction of XML external entity references in Apache Abdera allows an attacker to access sensitive data or make server-side requests when an application parses attacker-controlled XML with Abdera.
+
+
+
+This issue affects Apache Abdera: all versions.
+
+
+
+Apache Abdera is retired and no longer supported, so we do not plan to release a version that fixes this issue. Users are recommended to migrate to a maintained alternative. Applications that cannot migrate should ensure that untrusted XML cannot reach the affected Abdera parser or JDBC adapter parsing paths. Actively maintained downstream products may still be impacted if they include an affected Abdera artifact.
+
+
+
+NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
+
+Credit:
+
+Fabian Foerg of Addepar, Inc. (finder)
+
+References:
+
+https://attic.apache.org/projects/abdera.html
+https://attic.apache.org/projects/abdera.html
+https://www.cve.org/CVERecord?id=CVE-2026-113582
+
+Timeline:
+
+2017-02-27: Apache Abdera was retired to the Apache Attic.
+2026-10-07: The vulnerability was reported to the Apache Security Team.
 
