@@ -1,42 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/12
-Message-ID: <20261022131502.1fd3dc3d@hboeck.de>
-Date: Thu, 22 Oct 2026 13:15:02 +0200
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/11
+Message-ID: <atnaIUzVfQiBDonp@symphytum.spacehopper.org>
+Date: Thu, 22 Oct 2026 10:40:49 +0100
+From: Stuart Henderson <stu@...cehopper.org>
 To: oss-security@...ts.openwall.com
-Subject: Comodo AAA Services Root and S/MIME
+Subject: Re: eMudhra Intermediates Compromise
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+On 2026/10/20 19:30, Valtteri Vuorikoski wrote:
+> A test website is available at <https://emudhra.we-have-a-problem.com/> which
+> also lists mitigation options for systems which do not receive CRL or equivalent
+> revocation updates. Effectively: disable the root CAs "emSign ECC Root CA - G3"
+> and "Comodo AAA Services root" in your operating system trust store, while being
+> mindful of collateral damage. The Comodo root in particular has been widely used
+> in the past.
 
-Deep in the eMudhra discussion thread, Solar Designer pointed out that
-the Comodo AAA Services Root, which cross-signed the vulnerable eMudhra
-certs, is still part of NSS:
-https://www.openwall.com/lists/oss-security/2026/10/21/4
-And Jakub pointed out that the web trust bit has been turned off:
-https://www.openwall.com/lists/oss-security/2026/10/21/31
+Collateral damage for "emSign ECC Root CA - G3" includes the various
+InCommon intermediate CAs:
 
+C=US, O=Internet2, CN=InCommon Intermediate CA - DVG3C
+C=US, O=Internet2, CN=InCommon Intermediate CA - EVG3C
+C=US, O=Internet2, CN=InCommon Intermediate CA - OVG3C
 
-I was unsure what exactly that means, and reached out to someone from
-Mozilla. Here's what I learned: It has "CKA_TRUST_EMAIL_PROTECTION" set,
-which means it is still trusted for S/MIME (in Thunderbird):
-https://searchfox.org/firefox-main/source/security/nss/lib/ckfw/builtins/certdata.txt#643
+as well as the eMudhra Technologies Limited ones.
 
-The eMudhra intermediates should not be able to sign S/MIME
-certificates. (They have an EKU extension for TLS server+client.) That
-is: if every S/MIME implementation out there properly checks that.
+(Unless you also remove the RSA root, like was done here for a bit,
+then it's a bit wider..
+https://github.com/certifi/python-certifi/commit/5cb238caeeb6c30ec1a7309ad3e16a5aa7b10ce8)
 
-My interest in S/MIME is limited, I'm probably not gonna investigate
-this much further. If anyone wants to look into this, the following
-questions may be a good starting point:
-
-* Are there other e-mail applications that source the NSS/Thunderbird
-  cert store as their trust anchor for S/MIME?
-
-* Do they properly check X.509 paths and validate everything, or are
-  there ones that would accept a web/TLS intermediate to sign an S/MIME
-  cert?
-
--- 
-Hanno Böck
-https://hboeck.de/
