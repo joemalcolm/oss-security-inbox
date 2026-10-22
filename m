@@ -1,33 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/3
-Message-ID: <20261022184450.71292dec@atlas-11>
-Date: Thu, 22 Oct 2026 18:44:50 +0100
-From: Denis Ovsienko <denis@...ienko.info>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/33
+Message-ID: <0e931e7e-5d38-471e-b46f-9173a8ce461b@oracle.com>
+Date: Thu, 22 Oct 2026 15:46:13 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: one more reason to update libpcap to at least 1.10.7
+Subject: CPython: [CVE-2026-114583] tarfile.tar_filter path traversal bypass allows writing outside the extraction directory
 Content-Type: text/plain; charset=utf-8
 
-To whom it may concern,
 
-libpcap 1.10.7, which was released more than a month ago, among other
-things has fixed CVE-2026-6554 (an infinite loop).  At the release time
-the only known attack vector was a rather uncommon configuration and
-the CVE scored CVSS 5.5 (medium).
 
-Later it turned out that another attack vector exists and can trigger
-the same vulnerability using a more common configuration.
-Specifically, when a vulnerable version of libpcap compiles a filter
-expression that uses the "protochain" primitive (support for which is
-conditional, but enabled by default), the resulting filter program can
-enter an infinite loop whilst processing a crafted packet from a
-network or a file.
 
-This is the same exact problem, so the new attack vector does not
-require a separate solution.  However, CVE-2026-6554 now scores CVSS 7.5
-(high), so package maintainers that have not yet updated libpcap have
-one more reason to do so.
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-114583] tarfile.tar_filter path traversal 
+bypass allows writing outside the extraction directory
+Date: 	Thu, 22 Oct 2026 21:35:28 +0100
+From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
+CC: 	Stan Ulbrych <stanulbrych@...il.com>
 
-Cheers.
+There is a MEDIUM severity vulnerability affecting CPython.
 
--- 
-    Denis Ovsienko
+tarfile.tar_filter could be bypassed using crafted link entries, including 
+symlinks with empty or directory-like names, to redirect later archive members 
+outside the intended extraction directory. This allowed a malicious tar archive 
+to cause tarfile.extractall() with filter="tar" to write files outside the 
+destination directory, subject to the permissions of the extracting process.
+
+This is the tarfile.tar_filter counterpart of CVE-2026-7774, which covered 
+tarfile.data_filter.
+
+Please see the linked CVE ID for the latest information on affected versions:
+
+* https://www.cve.org/CVERecord?id=CVE-2026-114583
+* https://github.com/python/cpython/pull/160098
+
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
