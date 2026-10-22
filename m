@@ -1,36 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/17
-Message-ID: <9e66b63e-aac0-4bb4-a77d-971e9c40fad9@u-bordeaux.fr>
-Date: Thu, 22 Oct 2026 10:49:23 +0200
-From: Emmanuel Fleury <emmanuel.fleury@...ordeaux.fr>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/16
+Message-ID: <CACC_My_Wa+93bv65Fj1G45M-8ad6iE-wnMVbKra==xxfEUf1Jw@mail.gmail.com>
+Date: Thu, 22 Oct 2026 10:11:56 +0200
+From: Lukas Tribus <lukas@...i.eu>
 To: oss-security@...ts.openwall.com
 Subject: Re: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
 Content-Type: text/plain; charset=utf-8
 
+Hello,
+
+On Thu, 22 Oct 2026 at 08:45, Christian Fischer
+<christian.fischer@...enbone.net> wrote:
+>
+> it might worth to mention that the subject as well as the text here
+> could imply / be interpreted that only PHP 8.2-8.5 are affected (and
+> older versions not).
+>
+> But at least https://www.php.net/archive/2026.php#2026-10-21-5 mentions
+> the availability for backports down to PHP 7.4 which implies that at
+> least versions down to 7.4 are affected as well:
+
+It's pubblically document in the writeup that everything from PHP 5.4
+is affected:
+
+https://www.wiz.io/blog/php2shell-php-rce
 
 
-On 10/21/26 17:41, Yves-Alexis Perez wrote:
-> On Wed, 2026-10-21 at 10:24 -0500, Aaron Rainbolt wrote:
->> While not yet fully confirmed, the Fediverse is reporting that the fix
->> to at least PHP 8.5.12 may be incomplete:
->> https://fedi.katze.sh/@elise/117479383739450605
-> 
-> @elise also sayd it seems like a *different* vulnerability:
-> 
-> https://fedi.katze.sh/@elise/117478655339557825
-
-Yes, CVE-2026-109618 and CVE-2026-109619 have been found together but seems to 
-be two different vulnerabilities (even if they are sharing a lot).
-
-Here is a technical description of the bugs and the finding process:
-
-https://calif.io/php2shell/
-
-Regards
--- 
-Emmanuel Fleury
-
-Univ. de Bordeaux, LaBRI,   | Associate Professor,
-351, Cours de la Libération | Email: emmanuel.fleury@...ordeaux.fr
-33405 Talence Cedex, France | Web: http://www.labri.fr/~fleury
-
+Lukas
