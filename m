@@ -1,69 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/1
-Message-ID: <a23855e2-239a-455c-af20-7ce12e5edfe0@oracle.com>
-Date: Wed, 21 Oct 2026 17:13:21 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/2
+Message-ID: <661f2a3a-9a70-4323-bea7-0bcec1299c94@greenbone.net>
+Date: Thu, 22 Oct 2026 08:45:47 +0200
+From: Christian Fischer <christian.fischer@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: Header Accordions: QPACK amplification attacks against HTTP/3 servers
+Subject: Re: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
 Content-Type: text/plain; charset=utf-8
 
-https://foxio.io/blog/header-accordions-qpack-amplification-attacks-against-http-3-servers
-reports:
-> A remote, unauthenticated client can force an HTTP/3 server to
-> allocate tens to thousands of times more memory than it sends.
-> One connection is enough to OOM or pin a default-configured server.
-> Seven of the ten implementations tested are vulnerable; several are
-> already fixed.
-> 
-> QPACK compresses HTTP/3 headers to minimize traffic sent over the wire.
-> Across the affected implementations, decoded-header limits are missing,
-> incomplete, or applied too late. A small HEADERS frame can therefore
-> expand into hundreds of thousands of header objects in memory.
-> Preventing that expansion from exhausting resources requires enforcing
-> a cumulative budget as fields are decoded and retained.
-> 
-> 
-> Patched as of October 20, 2026
-> ==============================
-> 
-> Library                 Fixed version           Advisory
-> -------                 -------------           --------
-> quic-go                 0.57.0                  CVE-2025-64702
-> 
-> Cloudflare quiche       0.29.3                  CVE-2026-12523
-> 
-> lsquic                  4.9.0                   no CVE
-> 
-> Wireshark               4.6.2 / 4.4.12          CVE-2025-13945
-> 
-> 
-> Unpatched as of October 20, 2026
-> ================================
-> 
-> Library
-> -------
-> Bun 1.4.3
-> 
-> h3 (hyperium)
-> 
-> aioquic / mitmproxy
-> 
-> 
-> Mitigations
-> ===========
-> 
-> Bun: Don't expose HTTP/3 servers
-> 
-> mitmproxy: disable HTTP/3 (pass --set http3=false)
-> 
-> h3 crate: set a reasonable max_field_section_size
-> 
-> Not affected: IIS, Envoy, ngtcp2/nghttp3
+Hello,
 
-https://foxio.io/blog/header-accordions-qpack-amplification-attacks-against-http-3-servers
-goes into much more detail after providing that summary.
+ > On 21.10.2026 16:44 CEST Jakub Zelenka <bukka@....net> wrote:
+ >
+ > Affected versions are PHP 8.2 before 8.2.35, PHP 8.3 before 8.3.36, 
+PHP 8.4
+ > before 8.4.27, and PHP 8.5 before 8.5.12.
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+it might worth to mention that the subject as well as the text here 
+could imply / be interpreted that only PHP 8.2-8.5 are affected (and 
+older versions not).
 
+But at least https://www.php.net/archive/2026.php#2026-10-21-5 mentions 
+the availability for backports down to PHP 7.4 which implies that at 
+least versions down to 7.4 are affected as well:
+
+ > Given the severity of these vulnerabilities, the PHP security team
+ > provided minimal source-backports for PHP 7.4, PHP 8.0, and PHP 8.1 to
+ > help people building from source or without access to an LTS vendor.
+
+Regards
