@@ -1,29 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/14
-Message-ID: <atnQRDzU7H2h5_w2@mars-attacks.org>
-Date: Thu, 22 Oct 2026 10:58:44 +0200
-From: Nicolas Vigier <boklm@...s-attacks.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/13
+Message-ID: <CAEHiSi=wrBz=UHt_9cs5u5DQNwgEz+TDwbQCfdP03hj7E9Wg5w@mail.gmail.com>
+Date: Thu, 22 Oct 2026 17:39:15 +0800
+From: 賴奇佑 <leon.lai@...ian.co.jp>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-109619: PHP 8.2–8.5 RCE via stale global state
+Subject: Unofficial backports for CVE-2026-109618 / CVE-2026-109619 to EOL PHP 7.3 (EL7) and 5.4/5.3 (Amazon Linux)
 Content-Type: text/plain; charset=utf-8
 
-On Wed, 21 Oct 2026, Aaron Rainbolt wrote:
+Hi,
 
-> On Wed, Oct 21, 2026 at 10:24 AM Aaron Rainbolt <arraybolt3@...il.com> wrote:
-> 
-> ...snip...
-> 
-> > While not yet fully confirmed, the Fediverse is reporting that the fix
-> > to at least PHP 8.5.12 may be incomplete:
-> > https://fedi.katze.sh/@elise/117479383739450605
-> 
-> According to a conversation in #security:ubuntu.com Matrix, Canonical
-> asked php.org if the issue mentioned in this Mastodon thread was a
-> real vulnerability or not, and was told that it's "unrelated and not a
-> real issue". If someone from the PHP security team could reconfirm
-> this here, that would be greatly appreciated.
+For anyone still running PHP on platforms that will not receive a vendor
+fix for CVE-2026-109618 / CVE-2026-109619 (unauthenticated RCE, CVSS 4.0
+9.2), I have published source backports of the upstream minimal mitigation
+(commit 712e60f9ed, "Avoid state corruption via bailout") for:
 
-https://codeberg.org/oerdnj/deb.sury.org/issues/145#issuecomment-26090654
+  - PHP 7.3.33 on CentOS/RHEL 7 (Remi php73 7.3.33-22)
+  - PHP 5.4.16 on Amazon Linux 2 (php-5.4.16-46.amzn2.0.7)
+  - PHP 5.3.29 on Amazon Linux 1 (php-5.3.29-1.8.amzn1)
 
-"The PHP team is aware of that report and there are no new plans as of
-now."
+https://github.com/leonlai-tw/php-eol-cve-2026-109618-109619
+
+Patches and Docker-based build scripts only, no binaries. The scripts
+verify the vendor SRPM signatures before patching. The 7.3 patch touches
+the same 17 files as Sury's independent port in php7.3 7.3.33-35, and the
+core changes are line-for-line identical.
+
+Note for Debian/Ubuntu users of the Sury PPA: php7.3 7.3.33-35, php7.4
+7.4.33-31, php8.0 8.0.30-25 and php8.1 8.1.34-9 already contain the fix,
+although their changelogs do not mention the CVEs.
+
+These are unofficial and come with no support commitment. Upgrading to a
+supported PHP release remains the real fix.
+
+Leon Lai
+
