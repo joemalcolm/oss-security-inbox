@@ -1,36 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/13
-Message-ID: <CAEHiSi=wrBz=UHt_9cs5u5DQNwgEz+TDwbQCfdP03hj7E9Wg5w@mail.gmail.com>
-Date: Thu, 22 Oct 2026 17:39:15 +0800
-From: 賴奇佑 <leon.lai@...ian.co.jp>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/22/12
+Message-ID: <20261022131502.1fd3dc3d@hboeck.de>
+Date: Thu, 22 Oct 2026 13:15:02 +0200
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: Unofficial backports for CVE-2026-109618 / CVE-2026-109619 to EOL PHP 7.3 (EL7) and 5.4/5.3 (Amazon Linux)
+Subject: Comodo AAA Services Root and S/MIME
 Content-Type: text/plain; charset=utf-8
 
 Hi,
 
-For anyone still running PHP on platforms that will not receive a vendor
-fix for CVE-2026-109618 / CVE-2026-109619 (unauthenticated RCE, CVSS 4.0
-9.2), I have published source backports of the upstream minimal mitigation
-(commit 712e60f9ed, "Avoid state corruption via bailout") for:
+Deep in the eMudhra discussion thread, Solar Designer pointed out that
+the Comodo AAA Services Root, which cross-signed the vulnerable eMudhra
+certs, is still part of NSS:
+https://www.openwall.com/lists/oss-security/2026/10/21/4
+And Jakub pointed out that the web trust bit has been turned off:
+https://www.openwall.com/lists/oss-security/2026/10/21/31
 
-  - PHP 7.3.33 on CentOS/RHEL 7 (Remi php73 7.3.33-22)
-  - PHP 5.4.16 on Amazon Linux 2 (php-5.4.16-46.amzn2.0.7)
-  - PHP 5.3.29 on Amazon Linux 1 (php-5.3.29-1.8.amzn1)
 
-https://github.com/leonlai-tw/php-eol-cve-2026-109618-109619
+I was unsure what exactly that means, and reached out to someone from
+Mozilla. Here's what I learned: It has "CKA_TRUST_EMAIL_PROTECTION" set,
+which means it is still trusted for S/MIME (in Thunderbird):
+https://searchfox.org/firefox-main/source/security/nss/lib/ckfw/builtins/certdata.txt#643
 
-Patches and Docker-based build scripts only, no binaries. The scripts
-verify the vendor SRPM signatures before patching. The 7.3 patch touches
-the same 17 files as Sury's independent port in php7.3 7.3.33-35, and the
-core changes are line-for-line identical.
+The eMudhra intermediates should not be able to sign S/MIME
+certificates. (They have an EKU extension for TLS server+client.) That
+is: if every S/MIME implementation out there properly checks that.
 
-Note for Debian/Ubuntu users of the Sury PPA: php7.3 7.3.33-35, php7.4
-7.4.33-31, php8.0 8.0.30-25 and php8.1 8.1.34-9 already contain the fix,
-although their changelogs do not mention the CVEs.
+My interest in S/MIME is limited, I'm probably not gonna investigate
+this much further. If anyone wants to look into this, the following
+questions may be a good starting point:
 
-These are unofficial and come with no support commitment. Upgrading to a
-supported PHP release remains the real fix.
+* Are there other e-mail applications that source the NSS/Thunderbird
+  cert store as their trust anchor for S/MIME?
 
-Leon Lai
+* Do they properly check X.509 paths and validate everything, or are
+  there ones that would accept a web/TLS intermediate to sign an S/MIME
+  cert?
 
+-- 
+Hanno Böck
+https://hboeck.de/
