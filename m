@@ -1,58 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/31
-Message-ID: <8e918b74ab86486a3ec0048cc5bea123@cpansec.org>
-Date: Fri, 23 Oct 2026 19:26:04 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-115936: IO::Compress::Brotli versions from 0.004001 before 0.023 for Perl bundle a brotli library with an out-of-bounds write in the decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/30
+Message-ID: <CAARiyJo0katbnSo0hbmyy8hJAOz6pGaf0LbBnR7XUizUZpvt4w@mail.gmail.com>
+Date: Fri, 23 Oct 2026 19:01:50 +0200
+From: Tomasz Kaye <tomasz.brain@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: Re: Godot 4.x: heap out-of-bounds read in OptimizedTranslation message lookup
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-115936                                      CPAN Security Group
-========================================================================
+Follow-up: the fix for this issue has been merged upstream.
 
-         CVE ID:  CVE-2026-115936
+PR #124701, "Fix out-of-bounds reads with corrupt OptimizedTranslation
+data", merged to master on 2026-10-20 (merge commit 9e0d5af850):
+https://github.com/godotengine/godot/pull/124701
+The patch validates bucket and string offsets in new _get_bucket and
+_get_string helpers, used by both get_message and
+get_translated_message_list, and adds input bounds checks to the
+bundled smaz decompressor.
 
-   Distribution:  IO-Compress-Brotli
-       Versions:  from 0.004001 before 0.023
-       MetaCPAN:  https://metacpan.org/dist/IO-Compress-Brotli
-       VCS Repo:  https://github.com/timlegge/perl-IO-Compress-Brotli
+The 3.x backport PR #124703 applies the same validation to
+PHashTranslation and merged on 2026-10-22.
 
-
-IO::Compress::Brotli versions from 0.004001 before 0.023 for Perl
-bundle a brotli library with an out-of-bounds write in the decoder
-
-Description
------------
-IO::Compress::Brotli versions from 0.004001 before 0.023 for Perl
-bundle a brotli library with an out-of-bounds write in the decoder.
-
-Affected versions compile a bundled brotli into the module rather than
-linking to the system library. The bundled copy, 1.0.4 through 1.2.0
-across the range, carries the decoder out-of-bounds write described in
-CVE-2026-111497. Version 0.023 updates it to brotli 1.2.1.
-
-Any caller that decompresses untrusted data with unbro or the
-decompress method reaches the bundled decoder. An attacker supplying a
-crafted brotli stream can corrupt decoder state, disclose memory, crash
-the process, or potentially execute arbitrary code. Upgrading the
-system brotli does not remediate this.
-
-Problem types
--------------
-- CWE-1395 Dependency on Vulnerable Third-Party Component
-
-Solutions
----------
-Upgrade to IO-Compress-Brotli 0.023 or later.
-
-References
-----------
-https://github.com/timlegge/perl-IO-Compress-Brotli/commit/39a62a44545810a60ff9e43713f8fd8fb95fc916.patch
-https://www.cve.org/CVERecord?id=CVE-2026-111497
-https://github.com/google/brotli/releases/tag/v1.2.1
-https://metacpan.org/release/TIMLEGGE/IO-Compress-Brotli-0.023/changes
-
-Timeline
---------
-- 2026-10-23: Version 0.023 released with fix.
+Tomasz Kaye
