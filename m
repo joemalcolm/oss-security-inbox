@@ -1,52 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/22
-Message-ID: <0705aca4172129de563482e18120c3d403d9b576.camel@sambull.org>
-Date: Fri, 23 Oct 2026 15:43:32 +0100
-From: Sam Bull <9m199i@...bull.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/21
+Message-ID: <5331b527-bb01-0239-c8c1-7f9c86aaebd2@apache.org>
+Date: Fri, 23 Oct 2026 13:14:25 +0000
+From: Thomas Wolf <twolf@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: Information for Python users regarding eMudhra / emSign CA certificate security incident
+Subject: CVE-2026-115748: Apache Vysper: Authorization bypass 
 Content-Type: text/plain; charset=utf-8
 
-The Python ecosystem is pushing towards using https://pypi.org/project/truststore/ rather
-than solutions like certifi. This incident will likely help increase the priority of that
-transition.
+Severity: important 
+    CVSS 3.1: 8.8 (high) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
 
-On Fri, 2026-10-23 at 00:07 +0300, Valtteri Vuorikoski wrote:
-> Having spent the day whacking this particular molehill, my strong opinion is
-> that these packages (minus certifi) should stop vendoring roots immediately.
-> 
-> Users should install their distro's ca-certificates package or similar. If that
-> is completely impossible for whatever reason, offer an option to use certifi
-> (which should be a dependency, not vendored) - but the system trust store should
-> be the default source of truth.
-> 
-> This sort of easter egg hiding to serve users with broken installations reduces
-> the security of everyone else.
-> 
-> (Missing from the quoted list: botocore also includes a vendored copy. I haven't
-> checked how it's used.)
-> 
->  -valtteri
-> 
-> 
-> On Thu, Oct 22, 2026 at 01:43:08PM -0700, Alan Coopersmith wrote:
-> > https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576
-> > has this statement from Seth Michael Larson:
-> > > A security incident affecting eMudhra intermediate certificates has
-> > > required removing the emSign root CA certificate from CA bundles such
-> > > as “certifi”. It’s important to immediately upgrade the software
-> > > packages below to at least the versions specified and rebuild
-> > > container images with layer caching disabled to fetch the latest
-> > > system certificates. Failure to do so could result in
-> > > monster-in-the-middle (MITM) attacks against TLS clients, including
-> > > python.org and pypi.org .
-> > > 
-> > >     certifi 2026.10.19 (1)
-> > >     pip 26.2.2
-> > >     uv 0.13.4
-> > >     sigstore 4.5.1
-> > >     conda 26.9.4
-> > >     pixi 0.82.1
+Affected versions:
+
+- Apache Vysper: all versions
+
+Description:
+
+**UNSUPPORTED WHEN ASSIGNED**  Authorization bypass in Apache Vysper, all versions.
 
 
-Download attachment "signature.asc" of type "application/pgp-signature" (196 bytes)
+
+
+Apache Vysper is an XMPP (Jabber) server library. Its XEP-0077 (In-Band Registration) implementation is missing an authentication check, allowing any authenticated user to compromise other accounts.
+
+
+
+
+As this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative.
+
+Credit:
+
+Ho1aAs <xxy010605@...il.com> (finder)
+
+References:
+
+https://mina.apache.org/vysper-project/
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-115748
+
