@@ -1,53 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/7
-Message-ID: <448e1a66-5113-7e45-093b-5d5c04b51eb9@apache.org>
-Date: Fri, 23 Oct 2026 07:41:15 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/6
+Message-ID: <15166cc4-7569-b573-43d2-3c155f97478f@apache.org>
+Date: Fri, 23 Oct 2026 07:42:06 +0000
 From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-94386: Apache Camel: Camel-OAuth Cross-Scope Token Reuse via an Under-Keyed JVM-Global Client Credentials Token Cache 
+Subject: CVE-2026-90885: Apache Camel: Camel-Saxon XML External Entity Processing - XQueryBuilder Parsed a Message Body That Was Already a javax.xml.transform.Source With Saxon's Default Parser Settings, so an External Entity Declared in That Body Was Resolved 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 3.1: 4.8 (medium) CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N
+    CVSS 3.1: 7.5 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-oauth) 4.19.0 before 4.22.2
+- Apache Camel (org.apache.camel:camel-saxon) 4.0.0 before 4.18.5
+- Apache Camel (org.apache.camel:camel-saxon) 4.19.0 before 4.22.2
 
 Description:
 
-Use of Cache Containing Sensitive Information vulnerability in Apache Camel Oauth component.
+Improper Restriction of XML External Entity Reference vulnerability in Apache Camel Saxon component.
 
 
 
-This issue affects Apache Camel: from 4.19.0 before 4.22.2.
+This issue affects Apache Camel: from 4.0.0 before 4.18.5, from 4.19.0 before 4.22.2.
 
 
 
-OAuthClientCredentialsTokenResolver obtains OAuth 2.0 bearer tokens through the client credentials grant on behalf of the components that authenticate their outbound calls with a named OAuth profile, such as camel-openai, camel-langchain4j-agent, camel-huggingface, camel-docling, camel-a2a, camel-spring-ai-chat and the IBM watsonx components, and of applications that call the OAuthClientAuthenticationFactory SPI directly. It kept the tokens it obtained in a static cache shared by every resolver instance and every CamelContext in the JVM, and keyed that cache on the token endpoint and the client ID only, although the token request also carries the client secret and the requested scope. Two profiles that share a token endpoint and a client ID but request different scopes, or authenticate with different client secrets, therefore mapped to the same cache entry: the profile that resolved a token first populated the entry, and the other profile was then handed that token, with no token request made under its own configuration, for as long as the token remained valid. Token caching is enabled by default, and pointing several profiles at one identity provider client is an ordinary use of the profile support rather than an opt-in to an insecure setting. The outcome is an outbound request that carries a token issued for another profile's scope, which can grant broader authority than the calling profile was configured for, or reach a service the token was not issued for; with identity providers that derive a token's audience from the requested scope, a different scope can mean a token for a different service altogether. A profile configured with a different client secret was likewise served the token obtained with the other secret, without authenticating with its own. The profiles are configured by the deployment, which is trusted, so no untrusted input reaches the cache: the party that gains is the service that receives a token it was not meant to receive, which, if hostile or compromised, can replay that token within its scope. Reaching the issue requires a deployment that defines more than one profile sharing a token endpoint and client ID while differing in scope or client secret.
+XQueryBuilder in camel-saxon, which evaluates expressions for the xquery language and the xquery component, built its default Saxon Configuration with parse options that set only a whitespace stripping rule, leaving the XML parser at its defaults, under which a DOCTYPE declaration is accepted and external entities are resolved. A message body of type String or byte[], or any body read as an InputStream, is first turned into a javax.xml.transform.Source by Camel's own XML type converters, which configure the parser against external entities, so those bodies were not affected. A body that was already a Source, however, was handed to Saxon unchanged, and when that Source still had to be parsed, as a stream-based Source does, Saxon parsed it with that Configuration, bypassing the protection applied to the other body types. Such a body arises, for example, after a route converts the message with convertBodyTo(Source.class), or when a component or processor earlier in the route sets the body to a stream-based Source. A DOCTYPE with an external subset, or an external entity, declared in that body was therefore resolved and expanded into the document the expression was evaluated against. An external sender whose XML reaches an XQuery expression or an xquery endpoint in that form could read files readable by the Camel process and cause the process to issue requests to hosts the document names. No non-default option is required, since the default Configuration is used whenever the route does not supply one of its own.
 
-Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. The 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, disable token caching on every OAuth profile that shares a token endpoint and client ID with another profile, by setting camel.oauth.NAME.cache-tokens=false for a named profile or camel.oauth.cache-tokens=false for the default one, so that each resolution requests a token with that profile’s own scope and client secret, at the cost of a token request on every resolution. Alternatively, register a separate client at the identity provider for each profile that needs a different scope or client secret, so that no two such profiles share a client ID.
+
+
+Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. The 4.14.x releases stream and earlier, as well as the 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines, reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, do not evaluate XQuery over a message body that is already a javax.xml.transform.Source when that body carries XML from an untrusted sender, or set the configuration option of the xquery endpoint or language to a Saxon Configuration whose parse options refuse a DOCTYPE declaration and disable external entities and external DTD loading, which is what the fixed releases now apply by default.
 
 Solution:
 
-Upgrade to Apache Camel 4.23.0, which fixes the issue. Users on the 4.22.x stream should upgrade to 4.22.2. The 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. The token cache is now keyed on every input of the token request: the token endpoint, the client ID, a SHA-256 fingerprint of the client secret, so that the raw secret is not kept in the cache, and the requested scope, so profiles that differ in credentials or scope obtain separate tokens while equivalent profiles still share one. The 4.18.x line and earlier never carried the client credentials token resolver and are not affected.
+Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. XQueryBuilder now builds its default Saxon Configuration with parse options that refuse a DOCTYPE declaration and disable external general entities, external parameter entities and external DTD loading, aligning a body that is already a javax.xml.transform.Source with the hardened parser configuration that Camel's XmlConverter applies to String, byte[] and InputStream bodies. A body that reaches XQuery as an already-built Source and carries a DOCTYPE declaration is now rejected with a parse error. A Configuration supplied through the configuration option of the xquery endpoint or language is used as is and is not modified. The 4.14.x releases stream and earlier, as well as the 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines, reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release.
 
 Work Arounds:
 
-Disable token caching on every OAuth profile that shares a token endpoint and client ID with another profile, by setting camel.oauth.NAME.cache-tokens=false for a named profile or camel.oauth.cache-tokens=false for the default one, so that each resolution requests a token with that profile's own scope and client secret, at the cost of a token request on every resolution. Alternatively, register a separate client at the identity provider for each profile that needs a different scope or client secret, so that no two such profiles share a client ID.
+For deployments that cannot upgrade immediately, do not evaluate XQuery over a message body that is already a javax.xml.transform.Source when that body carries XML from an untrusted sender. Alternatively, set the configuration option of the xquery endpoint or language to a Saxon Configuration whose parse options refuse a DOCTYPE declaration and disable external entities and external DTD loading, which is what the fixed releases now apply by default.
 
 Credit:
 
-Andrea Cosentino from Apache Software Foundation (finder)
-Andrea Cosentino from Apache Software Foundation (remediation developer)
+Leon Zlobecki (finder)
+Andrea Cosentino (remediation developer)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-94386.html
-https://issues.apache.org/jira/browse/CAMEL-24872
-https://github.com/apache/camel/pull/26681
-https://github.com/apache/camel/pull/27779
-https://camel.apache.org/security/CVE-2026-85317.html
+https://camel.apache.org/security/CVE-2026-90885.html
+https://issues.apache.org/jira/browse/CAMEL-24691
+https://github.com/apache/camel/pull/26344
+https://github.com/apache/camel/pull/26728
+https://github.com/apache/camel/pull/26730
+https://camel.apache.org/security/CVE-2026-85250.html
 https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-94386
+https://www.cve.org/CVERecord?id=CVE-2026-90885
 
