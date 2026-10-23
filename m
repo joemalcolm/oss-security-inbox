@@ -1,58 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/8
-Message-ID: <4e745ebe-9a28-3ae3-2ce2-6a07fa196f21@apache.org>
-Date: Fri, 23 Oct 2026 07:36:09 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/7
+Message-ID: <448e1a66-5113-7e45-093b-5d5c04b51eb9@apache.org>
+Date: Fri, 23 Oct 2026 07:41:15 +0000
 From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-95628: Apache Camel: Camel-Docling Custom CLI Argument Path Validation Does Not Reject Absolute Paths (Incomplete Fix of CVE-2026-40047) 
+Subject: CVE-2026-94386: Apache Camel: Camel-OAuth Cross-Scope Token Reuse via an Under-Keyed JVM-Global Client Credentials Token Cache 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 3.1: 5.4 (medium) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L
+    CVSS 3.1: 4.8 (medium) CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-docling) 4.15.0 before 4.18.5
-- Apache Camel (org.apache.camel:camel-docling) 4.19.0 before 4.22.2
+- Apache Camel (org.apache.camel:camel-oauth) 4.19.0 before 4.22.2
 
 Description:
 
-Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Apache Camel Docling component.
+Use of Cache Containing Sensitive Information vulnerability in Apache Camel Oauth component.
 
 
 
-This issue affects Apache Camel: from 4.15.0 before 4.18.5, from 4.19.0 before 4.22.2.
+This issue affects Apache Camel: from 4.19.0 before 4.22.2.
 
 
 
-DoclingProducer builds the command line of the external docling tool and appends to it the custom arguments supplied in the CamelDoclingCustomArguments header, a list of strings whose flags the fix for CVE-2026-40047 restricted to an allowlist. That fix also introduced validatePathSafety to keep path-like argument values inside the intended directory, but the method only looked for relative traversal: it rejected a value containing a traversal sequence such as ../ and a value whose normalized form still held a .. element. It never checked whether a value was an absolute path, and an absolute path without traversal segments contains neither, so it passed unchanged. Every path-like value went through this check, whether it was a separate list element following its flag or was attached to the flag after an equals sign, so an absolute path was accepted in either form, for example as the directory given to the allowlisted --artifacts-path flag, which tells docling where to find its model artifacts. Such a value reached the docling command line as given, so a party able to choose the custom arguments could point the docling process at any directory the Camel process can access, outside the working directory that the check was meant to keep path values in, which is the outcome the CVE-2026-40047 fix set out to prevent. Only the CLI mode, which is the default, passes custom arguments to docling. The header belongs to the Camel header namespace, which consumers applying Camel's default header filtering, such as the JMS and Kafka consumers, remove from incoming messages, so the issue is reached where a route forwards externally influenced values into the header or where a consumer maps incoming headers without that filtering.
+OAuthClientCredentialsTokenResolver obtains OAuth 2.0 bearer tokens through the client credentials grant on behalf of the components that authenticate their outbound calls with a named OAuth profile, such as camel-openai, camel-langchain4j-agent, camel-huggingface, camel-docling, camel-a2a, camel-spring-ai-chat and the IBM watsonx components, and of applications that call the OAuthClientAuthenticationFactory SPI directly. It kept the tokens it obtained in a static cache shared by every resolver instance and every CamelContext in the JVM, and keyed that cache on the token endpoint and the client ID only, although the token request also carries the client secret and the requested scope. Two profiles that share a token endpoint and a client ID but request different scopes, or authenticate with different client secrets, therefore mapped to the same cache entry: the profile that resolved a token first populated the entry, and the other profile was then handed that token, with no token request made under its own configuration, for as long as the token remained valid. Token caching is enabled by default, and pointing several profiles at one identity provider client is an ordinary use of the profile support rather than an opt-in to an insecure setting. The outcome is an outbound request that carries a token issued for another profile's scope, which can grant broader authority than the calling profile was configured for, or reach a service the token was not issued for; with identity providers that derive a token's audience from the requested scope, a different scope can mean a token for a different service altogether. A profile configured with a different client secret was likewise served the token obtained with the other secret, without authenticating with its own. The profiles are configured by the deployment, which is trusted, so no untrusted input reaches the cache: the party that gains is the service that receives a token it was not meant to receive, which, if hostile or compromised, can replay that token within its scope. Reaching the issue requires a deployment that defines more than one profile sharing a token endpoint and client ID while differing in scope or client secret.
 
-
-
-Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. The 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, do not build the CamelDoclingCustomArguments header from values that originate outside the deployment, remove that header from messages that arrive from outside before they reach a docling endpoint, and make sure that consumers which map incoming message headers drop the Camel header namespace, so that only the route itself chooses the custom arguments.
+Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. The 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, disable token caching on every OAuth profile that shares a token endpoint and client ID with another profile, by setting camel.oauth.NAME.cache-tokens=false for a named profile or camel.oauth.cache-tokens=false for the default one, so that each resolution requests a token with that profile’s own scope and client secret, at the cost of a token request on every resolution. Alternatively, register a separate client at the identity provider for each profile that needs a different scope or client secret, so that no two such profiles share a client ID.
 
 Solution:
 
-Upgrade to Apache Camel 4.23.0, which fixes the issue. Users on the 4.22.x stream should upgrade to 4.22.2 and users on the 4.18.x stream should upgrade to 4.18.5. The validatePathSafety helper now also rejects a path-like custom-argument value that is an absolute path, whether it is given as a separate list element or attached to its flag, so every path-valued flag on the allowlist is covered; a relative value without traversal segments is still accepted. The 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release.
+Upgrade to Apache Camel 4.23.0, which fixes the issue. Users on the 4.22.x stream should upgrade to 4.22.2. The 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. The token cache is now keyed on every input of the token request: the token endpoint, the client ID, a SHA-256 fingerprint of the client secret, so that the raw secret is not kept in the cache, and the requested scope, so profiles that differ in credentials or scope obtain separate tokens while equivalent profiles still share one. The 4.18.x line and earlier never carried the client credentials token resolver and are not affected.
 
 Work Arounds:
 
-Do not build the CamelDoclingCustomArguments header from values that originate outside the deployment, remove that header from messages that arrive from outside before they reach a docling endpoint, and make sure that consumers which map incoming message headers drop the Camel header namespace, so that only the route itself chooses the custom arguments.
+Disable token caching on every OAuth profile that shares a token endpoint and client ID with another profile, by setting camel.oauth.NAME.cache-tokens=false for a named profile or camel.oauth.cache-tokens=false for the default one, so that each resolution requests a token with that profile's own scope and client secret, at the cost of a token request on every resolution. Alternatively, register a separate client at the identity provider for each profile that needs a different scope or client secret, so that no two such profiles share a client ID.
 
 Credit:
 
-Zhixi "Jace" Sun, independent security researcher (finder)
-Andrea Cosentino (remediation developer)
+Andrea Cosentino from Apache Software Foundation (finder)
+Andrea Cosentino from Apache Software Foundation (remediation developer)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-95628.html
-https://issues.apache.org/jira/browse/CAMEL-24893
-https://github.com/apache/camel/pull/26738
-https://github.com/apache/camel/pull/26743
-https://github.com/apache/camel/pull/26744
-https://camel.apache.org/security/CVE-2026-40047.html
-https://camel.apache.org/security/CVE-2026-78163.html
+https://camel.apache.org/security/CVE-2026-94386.html
+https://issues.apache.org/jira/browse/CAMEL-24872
+https://github.com/apache/camel/pull/26681
+https://github.com/apache/camel/pull/27779
+https://camel.apache.org/security/CVE-2026-85317.html
 https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-95628
+https://www.cve.org/CVERecord?id=CVE-2026-94386
 
