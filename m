@@ -1,22 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/28
-Message-ID: <CAARiyJpf-5ZKGHFDkiV=TfuwUsAGU5iRUuR-SpnE6Z8wj7A6Bg@mail.gmail.com>
-Date: Fri, 23 Oct 2026 19:01:09 +0200
-From: Tomasz Kaye <tomasz.brain@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Godot 4.x: heap out-of-bounds write in Radiance HDR image loader
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/27
+Message-ID: <dba32d7a-4308-45e3-a155-fba6f523c6ba@cpansec.org>
+Date: Fri, 23 Oct 2026 21:08:37 +0100
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-113877: HTTP::Headers::ActionPack versions before 0.10 for Perl allow CPU exhaustion via Accept-Language ranges matched as regular expressions
 Content-Type: text/plain; charset=utf-8
 
-Follow-up: the fix for this issue has been merged upstream.
+========================================================================
+CVE-2026-113877                                      CPAN Security Group
+========================================================================
 
-PR #124697, "Fix out-of-bounds write when loading corrupt HDR images",
-merged to master on 2026-10-20 (merge commit aef8e1f55a):
-https://github.com/godotengine/godot/pull/124697
-The patch rejects non-positive and oversized image dimensions and
-bounds each RLE run and dump against the remaining scanline width.
+         CVE ID:  CVE-2026-113877
 
-The PR body cites CVE-2026-110734 and states the vendor's position on
-the bug: "We don't consider it severe, but it's still a bug that
-should be fixed."
+   Distribution:  HTTP-Headers-ActionPack
+       Versions:  before 0.10
+       MetaCPAN: https://metacpan.org/dist/HTTP-Headers-ActionPack
+       VCS Repo: https://github.com/robrwo/perl-HTTP-Headers-ActionPack/
 
-Tomasz Kaye
+
+HTTP::Headers::ActionPack versions before 0.10 for Perl allow CPU
+exhaustion via Accept-Language ranges matched as regular expressions
+
+Description
+-----------
+HTTP::Headers::ActionPack versions before 0.10 for Perl allow CPU
+exhaustion via Accept-Language ranges matched as regular expressions.
+
+_language_match interpolates each Accept-Language range into the
+pattern `/^$range\-/i` without escaping it, so regular expression
+syntax in the header reaches the regex engine. A 12-byte range such as
+`(a?|b?){26}z` backtracks for seconds, and each increment of the
+quantifier doubles the time. An invalid range such as `(` fails to
+compile.
+
+A remote attacker can exhaust CPU, or make choose_language die, in any
+application that passes an untrusted Accept-Language header to it.
+
+Problem types
+-------------
+- CWE-624 Executable Regular Expression Error
+
+Solutions
+---------
+Upgrade to HTTP-Headers-ActionPack 0.10 or later.
+
+References
+----------
+https://metacpan.org/release/RRWO/HTTP-Headers-ActionPack-0.10/changes
+https://github.com/robrwo/perl-HTTP-Headers-ActionPack/commit/77f0deb23f3de872c2e64befd72750e0f0f4bec9.patch
+
