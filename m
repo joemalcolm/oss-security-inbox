@@ -1,57 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/6
-Message-ID: <15166cc4-7569-b573-43d2-3c155f97478f@apache.org>
-Date: Fri, 23 Oct 2026 07:42:06 +0000
-From: Andrea Cosentino <acosentino@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/5
+Message-ID: <0ddf72fd-ff55-44b6-a467-f30a5061f5af@greenbone.net>
+Date: Fri, 23 Oct 2026 08:47:48 +0200
+From: Christian Fischer <christian.fischer@...enbone.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90885: Apache Camel: Camel-Saxon XML External Entity Processing - XQueryBuilder Parsed a Message Body That Was Already a javax.xml.transform.Source With Saxon's Default Parser Settings, so an External Entity Declared in That Body Was Resolved 
+Subject: Re: CVE-2026-109618: PHP 8.2–8.5 RCE via OOM corruption
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
-    CVSS 3.1: 7.5 (high) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N
+Only for references on this:
 
-Affected versions:
+On 10/21/26 4:41 PM, Jakub Zelenka wrote:
+> Affected versions are PHP 8.2 before 8.2.35, PHP 8.3 before 8.3.36, PHP 8.4
+> before 8.4.27, and PHP 8.5 before 8.5.12.
+The [1] blog post claims the following affected version range for 
+CVE-2026-109618:
 
-- Apache Camel (org.apache.camel:camel-saxon) 4.0.0 before 4.18.5
-- Apache Camel (org.apache.camel:camel-saxon) 4.19.0 before 4.22.2
+ > The specific HashTable ordering behind CVE-2026-109618 was introduced
+ > by a performance optimization in October 2017 and first shipped in PHP
+ > 7.3.0 (December 2018).
 
-Description:
+[1] 
+https://www.crowdstrike.com/en-us/blog/crowdstrike-protects-customers-from-php-rce-zero-days/
 
-Improper Restriction of XML External Entity Reference vulnerability in Apache Camel Saxon component.
-
-
-
-This issue affects Apache Camel: from 4.0.0 before 4.18.5, from 4.19.0 before 4.22.2.
-
-
-
-XQueryBuilder in camel-saxon, which evaluates expressions for the xquery language and the xquery component, built its default Saxon Configuration with parse options that set only a whitespace stripping rule, leaving the XML parser at its defaults, under which a DOCTYPE declaration is accepted and external entities are resolved. A message body of type String or byte[], or any body read as an InputStream, is first turned into a javax.xml.transform.Source by Camel's own XML type converters, which configure the parser against external entities, so those bodies were not affected. A body that was already a Source, however, was handed to Saxon unchanged, and when that Source still had to be parsed, as a stream-based Source does, Saxon parsed it with that Configuration, bypassing the protection applied to the other body types. Such a body arises, for example, after a route converts the message with convertBodyTo(Source.class), or when a component or processor earlier in the route sets the body to a stream-based Source. A DOCTYPE with an external subset, or an external entity, declared in that body was therefore resolved and expanded into the document the expression was evaluated against. An external sender whose XML reaches an XQuery expression or an xquery endpoint in that form could read files readable by the Camel process and cause the process to issue requests to hosts the document names. No non-default option is required, since the default Configuration is used whenever the route does not supply one of its own.
-
-
-
-Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. The 4.14.x releases stream and earlier, as well as the 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines, reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, do not evaluate XQuery over a message body that is already a javax.xml.transform.Source when that body carries XML from an untrusted sender, or set the configuration option of the xquery endpoint or language to a Saxon Configuration whose parse options refuse a DOCTYPE declaration and disable external entities and external DTD loading, which is what the fixed releases now apply by default.
-
-Solution:
-
-Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. XQueryBuilder now builds its default Saxon Configuration with parse options that refuse a DOCTYPE declaration and disable external general entities, external parameter entities and external DTD loading, aligning a body that is already a javax.xml.transform.Source with the hardened parser configuration that Camel's XmlConverter applies to String, byte[] and InputStream bodies. A body that reaches XQuery as an already-built Source and carries a DOCTYPE declaration is now rejected with a parse error. A Configuration supplied through the configuration option of the xquery endpoint or language is used as is and is not modified. The 4.14.x releases stream and earlier, as well as the 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines, reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release.
-
-Work Arounds:
-
-For deployments that cannot upgrade immediately, do not evaluate XQuery over a message body that is already a javax.xml.transform.Source when that body carries XML from an untrusted sender. Alternatively, set the configuration option of the xquery endpoint or language to a Saxon Configuration whose parse options refuse a DOCTYPE declaration and disable external entities and external DTD loading, which is what the fixed releases now apply by default.
-
-Credit:
-
-Leon Zlobecki (finder)
-Andrea Cosentino (remediation developer)
-
-References:
-
-https://camel.apache.org/security/CVE-2026-90885.html
-https://issues.apache.org/jira/browse/CAMEL-24691
-https://github.com/apache/camel/pull/26344
-https://github.com/apache/camel/pull/26728
-https://github.com/apache/camel/pull/26730
-https://camel.apache.org/security/CVE-2026-85250.html
-https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-90885
-
+Regards
