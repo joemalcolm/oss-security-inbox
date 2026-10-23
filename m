@@ -1,58 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/10
-Message-ID: <fc68fd10-7e88-196e-0e64-8c607d1b6f3e@apache.org>
-Date: Fri, 23 Oct 2026 07:32:12 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/23/9
+Message-ID: <9db366fb-a573-ea45-e6b6-f271cf7e7be9@apache.org>
+Date: Fri, 23 Oct 2026 07:33:26 +0000
 From: Andrea Cosentino <acosentino@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-95663: Apache Camel: Camel-Keycloak Security Policy Accepts Expired Access Tokens Because Cached Token Introspection Results Are Not Bounded by the Token Expiry 
+Subject: CVE-2026-95629: Apache Camel: Camel-Docling Unvalidated Output Path Header Enables Writing Conversion Output to an Arbitrary Directory 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 3.1: 4.8 (medium) CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:N
+    CVSS 3.1: 5.4 (medium) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:L
 
 Affected versions:
 
-- Apache Camel (org.apache.camel:camel-keycloak) 4.16.0 before 4.18.5
-- Apache Camel (org.apache.camel:camel-keycloak) 4.19.0 before 4.22.2
+- Apache Camel (org.apache.camel:camel-docling) 4.15.0 before 4.18.5
+- Apache Camel (org.apache.camel:camel-docling) 4.19.0 before 4.22.2
 
 Description:
 
-Insufficient Session Expiration vulnerability in Apache Camel Keycloak component.
+Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') vulnerability in Apache Camel Docling component.
 
 
 
-This issue affects Apache Camel: from 4.16.0 before 4.18.5, from 4.19.0 before 4.22.2.
+This issue affects Apache Camel: from 4.15.0 before 4.18.5, from 4.19.0 before 4.22.2.
 
 
 
-When token introspection is enabled on the camel-keycloak KeycloakSecurityPolicy (useTokenIntrospection=true), the security processor validates the access token of a request by sending it to Keycloak's OAuth 2.0 token introspection endpoint, and accepts the token while the response reports it as active. The introspection endpoint reports a token as inactive once its exp (expiration) time has passed, so on this path the active flag is what enforces token expiry. Introspection results are cached by default (introspectionCacheEnabled=true, introspectionCacheTtl=60 seconds), and both cache implementations shipped with the component, ConcurrentMapTokenCache and CaffeineTokenCache, expired an entry a fixed time after it was inserted, without bounding that lifetime by the exp claim that the cached response already carried. KeycloakSecurityProcessor in turn checked only the active flag of the result, on every path that uses introspection, and never compared exp with the current time. A response cached shortly before the token expired was therefore served to later requests carrying the same token for up to the configured time-to-live after the token's expiry, and those requests were admitted with the roles and permissions the expired token had carried, although RFC 7662, which defines token introspection, states that a response containing exp must not be cached beyond that time. The access token is supplied by the caller with each request, typically as a bearer token in the Authorization header, so a caller holding a token that was valid moments earlier could keep using it after it expired, for as long as the cached entry lived. The window is bounded by introspectionCacheTtl, which is 60 seconds by default and 300 to 600 seconds where the documentation's recommendation for internal services was followed, and it opens only for a token that the same Camel process introspected and cached while the token was still active. The issue grants nothing beyond what the token already carried: it allows no token forgery and no privilege escalation, and token introspection is not enabled by default, which is why the severity is assessed medium. The local JWT verification path, used when introspection is disabled, is not affected by this issue.
+DoclingProducer runs the external docling tool in CLI mode, the default, and tells it where to write the converted document through the --output flag. When the CamelDoclingOutputFilePath header was set, addOutputDirectoryArguments handed its value to that flag verbatim: the value was not normalized, an absolute path or a path containing .. segments was accepted as given, and no endpoint option could confine it to a directory. The custom-argument validation added by the fix for CVE-2026-40047 refuses the --output and -o flags in the CamelDoclingCustomArguments header and tells callers to choose the output directory with this header instead, so the one value that decides where docling writes reached the command line without any of the checks applied to custom arguments. Docling writes the conversion result, as Markdown, HTML, JSON or text, into that directory, naming the file after the input file, and the producer afterwards removes only its own temporary directory, so the file is left in place. A party able to set the header could therefore have conversion output created in any directory the Camel process can write to. The content of such a file is the conversion of the document carried by the message, so it is shaped by whoever supplies that document without being written byte for byte, and when the document content arrives in the message body the producer stores it under a random temporary name, which the output file then carries. The header belongs to the Camel header namespace, which consumers applying Camel's default header filtering, such as the JMS and Kafka consumers, remove from incoming messages, so the issue is reached where a route forwards externally influenced values into the header or where a consumer maps incoming headers without that filtering. The docling-serve mode does not use the header.
 
 
 
-Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. The 4.16.x, 4.17.x and 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, set introspectionCacheEnabled=false on the KeycloakSecurityPolicy, so that every request is checked against the introspection endpoint, which reports an expired token as inactive, at the cost of one introspection call per request. Lowering introspectionCacheTtl only narrows the window and does not close it.
+Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. The fix adds an outputBaseDirectory endpoint option that is unset by default, so after upgrading, set it on every docling endpoint whose CamelDoclingOutputFilePath header can carry a value influenced from outside the deployment; without it the header is normalized but can still name any directory. The 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release. For deployments that cannot upgrade immediately, do not build the CamelDoclingOutputFilePath header from values that originate outside the deployment, remove that header from messages that arrive from outside before they reach a docling endpoint, and make sure that consumers which map incoming message headers drop the Camel header namespace, so that only the route itself chooses the output directory.
 
 Solution:
 
-Users are recommended to upgrade to version 4.23.0, which fixes the issue. If users are on the 4.22.x releases stream, then they are suggested to upgrade to 4.22.2. If users are on the 4.18.x releases stream, then they are suggested to upgrade to 4.18.5. Both cache implementations now bound the lifetime of each entry by the shorter of introspectionCacheTtl and the time remaining until the token's exp, a result whose token has already expired is never served from the cache, and KeycloakSecurityProcessor now rejects a token whose exp lies in the past on every path that uses introspection, so expiry is enforced on the introspection path as it is on the local JWT verification path. The 4.16.x, 4.17.x and 4.19.x to 4.21.x releases streams reached end of life before this issue was resolved and will not receive a fix, so deployments on those lines must move to a supported release.
+Upgrade to Apache Camel 4.23.0, which fixes the issue. Users on the 4.22.x stream should upgrade to 4.22.2 and users on the 4.18.x stream should upgrade to 4.18.5. The CamelDoclingOutputFilePath header is now normalized before it reaches docling, and a new outputBaseDirectory endpoint option confines it: when the option is set, a value that resolves outside that directory, including an absolute path, is rejected with an IOException before docling is started. The option is unset by default, so it must be set after upgrading wherever the header can carry a value influenced from outside the deployment; without it the header is normalized but can still name any directory. The 4.15.x to 4.17.x and 4.19.x to 4.21.x release lines reached end of life before this issue was resolved and will not receive a fix, so deployments on them must move to a supported release.
 
 Work Arounds:
 
-For deployments that cannot upgrade immediately, set introspectionCacheEnabled=false on the KeycloakSecurityPolicy, so that every request is checked against the introspection endpoint, which reports an expired token as inactive, at the cost of one introspection call per request. Lowering introspectionCacheTtl only narrows the window and does not close it.
+Do not build the CamelDoclingOutputFilePath header from values that originate outside the deployment, remove that header from messages that arrive from outside before they reach a docling endpoint, and make sure that consumers which map incoming message headers drop the Camel header namespace, so that only the route itself chooses the output directory.
 
 Credit:
 
-Andrea Cosentino from Apache Software Foundation (finder)
-Andrea Cosentino from Apache Software Foundation (remediation developer)
+Zhixi "Jace" Sun, independent security researcher (finder)
+Andrea Cosentino (remediation developer)
 
 References:
 
-https://camel.apache.org/security/CVE-2026-95663.html
-https://issues.apache.org/jira/browse/CAMEL-24902
-https://github.com/apache/camel/pull/26747
-https://github.com/apache/camel/pull/27182
-https://github.com/apache/camel/pull/27183
-https://camel.apache.org/security/CVE-2026-46455.html
-https://camel.apache.org/security/CVE-2026-85301.html
+https://camel.apache.org/security/CVE-2026-95629.html
+https://issues.apache.org/jira/browse/CAMEL-24894
+https://github.com/apache/camel/pull/26737
+https://github.com/apache/camel/pull/27365
+https://github.com/apache/camel/pull/27362
+https://camel.apache.org/security/CVE-2026-40047.html
+https://camel.apache.org/security/CVE-2026-78163.html
 https://camel.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-95663
+https://www.cve.org/CVERecord?id=CVE-2026-95629
 
