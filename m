@@ -1,44 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/24/6
-Message-ID: <beb09b69-5c48-4525-93e6-2d7812866650@oracle.com>
-Date: Sat, 24 Oct 2026 09:34:21 -0700
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/24/5
+Message-ID: <20095426-bfb6-495b-92a3-66f2fd439895@oracle.com>
+Date: Sat, 24 Oct 2026 09:13:12 -0700
 From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com, Jan Schaumann <jschauma@...meister.org>
-Subject: Re: Brotli CVE-2026-111497
+To: oss-security@...ts.openwall.com
+Subject: [CVE-2026-115557] Distrust compromised intermediate certificates in Python ssl module
 Content-Type: text/plain; charset=utf-8
 
-On 10/23/26 12:12, Jan Schaumann wrote:
-> Alan Coopersmith <alan.coopersmith@...cle.com> wrote:
->>> Node.js Brotli decoder out-of-bounds write permits remote code execution
->>> (CVE-2026-111497) - (high)
->>>
->>> A flaw in Node.js can cause Node.js Brotli decoder out-of-bounds write
->>> permits remote code execution.
->>>
->>> This vulnerability affects Node.js 26.x, 24.x, and 22.x.
-> 
-> It's not quite obvious from this advisory, but the
-> underlying problem is not restricted to Node.js alone,
-> but rather in Google brotli:
-> 
-> https://github.com/advisories/GHSA-9v8h-qqgm-4m35
-> 
-> This trickles down into any consumer, including, e.g.,
-> Envoy:
-> 
-> https://github.com/envoyproxy/envoy/security/advisories/GHSA-3wvj-j6qm-62mr
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-115557] Distrust compromised intermediate 
+certificates in ssl module
+Date: 	Sat, 24 Oct 2026 14:20:01 +0000
+From: 	Seth Larson <seth@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
 
-Yes, https://patchtheplanet.org/brotli reports this as well.
+Python has added a denylist for known compromised certificates to the "ssl" 
+module to ensure user safety even without certificate revocation configured. 
+Known compromised certificates on this denylist will automatically be rejected 
+regardless of the SSLContext policy configuration.
 
-https://github.com/google/brotli/releases/tag/v1.2.1 has been published for
-the library itself.
+Please see the linked CVE ID for more information:
 
-The patchtheplanet page lists releases from Node.js, Bun, Envoy Proxy, & Istio
-incorporating it and gives suggestions on what other software to check.
+* https://www.cve.org/CVERecord?id=CVE-2026-115557
+* https://github.com/python/cpython/pull/160042
 
-https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497
-adds the PyPi brotli packages to the list as well.
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
