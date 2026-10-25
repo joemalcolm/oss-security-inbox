@@ -1,54 +1,19 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/10
-Message-ID: <4cee5e32-eda3-4a65-a3b4-66dd12e41c16@cpansec.org>
-Date: Sun, 25 Oct 2026 16:56:52 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-115825: HTTP::Server::PSGI versions before 1.0056 for Perl allow a single request to crash the server by declaring a large Content-Length
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/9
+Message-ID: <332f640e-0ffa-4191-8c74-015c0db9bd56@gmail.com>
+Date: Sun, 25 Oct 2026 10:33:37 -0400
+From: Demi Marie Obenour <demiobenour@...il.com>
+To: oss-security@...ts.openwall.com, Roman Kuligin <romaka@...ox.lv>
+Subject: Re: PHP 5.4.23 (custom 5.4-5.6) backported patch for PHP2Shell OOM vulnerability (CVE-2026-109618)
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-115825                                      CPAN Security Group
-========================================================================
+On 10/24/26 15:56, Roman Kuligin wrote:
+> Hello, I have developed a backported .patch for EOL versions of PHP (specifically PHP 5.4, 5.5, and 5.6) to mitigate the critical PHP2Shell Out-of-Memory (OOM) vulnerability (CVE-2026-109618 / CVE-2026-109619). Since these legacy versions are no longer supported by the upstream PHP team, this patch updates the internal memory allocation model to prevent memory exhaustion and crashes during file upload progress tracking. The patch and instructions are publicly available on GitHub: https://github.com/akamor2800/php-5.4-cve-2026-php2shell-patch Best regards.
 
-         CVE ID:  CVE-2026-115825
-
-   Distribution:  Plack
-       Versions:  before 1.0056
-       MetaCPAN:  https://metacpan.org/dist/Plack
-       VCS Repo:  https://github.com/plack/Plack
+In light of the size of the upstream patch, would it be better to handle out of memory by crashing the process instead?
+-- 
+Sincerely,
+Demi Marie Obenour (she/her/hers)
 
 
-HTTP::Server::PSGI versions before 1.0056 for Perl allow a single
-request to crash the server by declaring a large Content-Length
-
-Description
------------
-HTTP::Server::PSGI versions before 1.0056 for Perl allow a single
-request to crash the server by declaring a large Content-Length.
-
-The request body is read with sysread() calls sized by the remaining
-Content-Length. Perl grows the read buffer to the requested length
-before any data arrives, so the server tries to allocate as much memory
-as the client declares.
-
-A remote attacker can send one request with a large Content-Length and
-a few body bytes, and perl exits with an out-of-memory error before the
-application is called. HTTP::Server::PSGI runs as a single process, so
-the server stays down until restarted.
-
-Problem types
--------------
-- CWE-789 Memory Allocation with Excessive Size Value
-
-Solutions
----------
-Upgrade to Plack 1.0057 or later.
-
-References
-----------
-https://github.com/plack/Plack/commit/11545871cadc5df1b744cebb429cfeb4ebc1069a.patch
-https://metacpan.org/release/MIYAGAWA/Plack-1.0056/changes
-
-
-
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (834 bytes)
