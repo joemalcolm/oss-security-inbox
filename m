@@ -1,10 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/6
-Message-ID: <997fa663-d85e-4888-8aff-6a8c17040bf2@gmail.com>
-Date: Sun, 25 Oct 2026 12:29:22 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/5
+Message-ID: <74d8252f-d31e-4f51-9c22-11e05eef02a3@gmail.com>
+Date: Sun, 25 Oct 2026 12:28:31 +0100
 From: Jonathan Brossard <endrazine@...il.com>
 To: bugtraq@...urityfocus.com, bugtraq@...traq.ai, oss-security@...ts.openwall.com
-Subject: CVE-2026-72705: Rocq guard checker accepts fixpoint passed as higher-order argument (0 = 1 demonstrated)
+Subject: CVE-2026-72704: Rocq guard checker trusts corrupted recursive tree after transport (0 = 1 demonstrated) — 0-day
 Content-Type: text/plain; charset=utf-8
 
 1. Summary
@@ -12,17 +12,18 @@ Content-Type: text/plain; charset=utf-8
 
 A soundness bug in the Rocq (formerly Coq) kernel's guard checker allows
 construction of a checked proof of False — and by extension, any
-proposition, including 0 = 1 — without axioms, tactics, plugins, or
-unsafe flags. Print Assumptions reports the proof as closed under the
-global context.
+proposition, including 0 = 1.
 
-The guard checker does not track recursive calls made through a
-fixpoint's own arguments. A fixpoint can pass itself to another
-fixpoint, which can apply it to a value that is not a structural
-subterm. Passing the function to a plain definition is correctly
-rejected, but passing it to a fixpoint is accepted. This admits a type
-that is definitionally equal to its own negation, and self-application
-yields False in purely definitional code.
+The guard checker does not recheck the recursive tree (rectree) for an
+inductive type parameter after a transport (rewrite via eq_rect/rew)
+changes that parameter. A fixpoint applies a rewrite along a type
+equality to its recursive argument; the checker accepts this because the
+inductive type is preserved, but the rectree is corrupted. A second
+fixpoint that calls the first inherits the corrupted tree without
+verification, so a non-structurally-decreasing call passes as
+terminating.
+
+This is a 0-day: no fix has been merged as of Rocq 9.2.0.
 
 2. Context
 ==========
@@ -38,9 +39,6 @@ Formally verified systems certified under Common Criteria (ISO 15408) or
 DO-178C (airborne software) derive their assurance from the correctness
 of the proof checker. A kernel-level bypass invalidates that assurance
 chain.
-
-This bug was discovered by Claude Opus 4.6 (Anthropic) during a
-fuzzing campaign.
 
 3. Impact
 =========
@@ -58,26 +56,23 @@ fuzzing campaign.
 
 A Docker-reproducible PoC is available:
 
-     git clone https://github.com/endrazine/rocq-cve-poc-21683
-     cd rocq-cve-poc-21683
-     docker build -t rocq-cve-poc-21683 .
-     docker run --rm rocq-cve-poc-21683
+     git clone https://github.com/endrazine/rocq-cve-poc-22024
+     cd rocq-cve-poc-22024
+     docker build -t rocq-cve-poc-22024 .
+     docker run --rm rocq-cve-poc-22024
 
-On a vulnerable version (Rocq <9.2.0, all Coq versions), the output
-confirms the proof of False with no axioms. On a patched version
-(≥9.2.0), the guard checker rejects the fixpoint.
+The PoC uses two axioms (e : nat = nat, and e1 : rew [fun T => T] e in
+0 = 1) that are consequences of univalence and are consistent with the
+Calculus of Inductive Constructions. The proof of 0 = 1 exploits the
+guard checker flaw, not the axioms.
 
 5. Root Cause
 =============
 
-The guard checker does not follow the flow of a fixpoint value when it
-is passed as an argument to another fixpoint. The receiving fixpoint can
-apply the passed function to an arbitrary value, bypassing the
-structural decrease requirement.
-
-This creates a type T that is definitionally equal to T -> False (its
-own negation). Self-application of a term of type T yields False,
-entirely through definitional reduction — no tactics are involved.
+The guard checker accepts a recursive call when the inductive type of
+the argument is preserved, but it does not re-derive the rectree after
+a transport (eq_rect / rew) changes the type parameter. The corrupted
+rectree is inherited by subsequent fixpoints without reverification.
 
 CWE-670: Always-Incorrect Control Flow Implementation.
 
@@ -96,45 +91,43 @@ CWE-670: Always-Incorrect Control Flow Implementation
 8. CVE
 ======
 
-CVE-2026-72705 (assigned by VulnCheck as CNA)
+CVE-2026-72704 (assigned by VulnCheck as CNA)
 
 9. Affected Versions
 ====================
 
-Rocq Prover <9.2.0 (all versions including Coq 8.x with the guard
-checker)
+Rocq Prover ≤ 9.2.0 (all versions including Coq 8.x)
 
-Fixed in: 9.2.0
+Fixed in: UNFIXED — PR #22027 proposed but not merged.
 
 10. Mitigation
 ==============
 
-- Upgrade to Rocq 9.2.0 or later.
-- Run coqchk on compiled .vo files as defense-in-depth.
+- No patched version is available.
+- Run coqchk on compiled .vo files — coqchk may catch the inconsistency.
+- Audit dependencies for use of transport (rew / eq_rect) in fixpoint
+   definitions with nested mutual recursion.
 
 11. References
 ==============
 
-Bug report:  https://github.com/rocq-prover/rocq/issues/21683
-Fix:         https://github.com/rocq-prover/rocq/pull/21684
-PoC:         https://github.com/endrazine/rocq-cve-poc-21683
+Bug report:  https://github.com/rocq-prover/rocq/issues/22024
+Fix (open):  https://github.com/rocq-prover/rocq/pull/22027
+PoC:         https://github.com/endrazine/rocq-cve-poc-22024
 VulnCheck: 
-https://www.vulncheck.com/advisories/rocq-prover-before-guard-checker-accepts-fixpoint-passed-as-a-higher-order-argument
-NVD:         https://nvd.nist.gov/vuln/detail/CVE-2026-72705
+https://www.vulncheck.com/advisories/rocq-prover-through-guard-checker-trusts-corrupted-recursive-tree-after-transport
+NVD:         https://nvd.nist.gov/vuln/detail/CVE-2026-72704
 
 12. Timeline
 ============
 
-2025        Bug found by Claude Opus 4.6 during fuzzing campaign
-2025        Bug reported (rocq-prover/rocq#21683)
-2025        Fix merged (PR #21684) in Rocq 9.2.0
-2026-08-24  CVE-2026-72705 published by VulnCheck
+2026        Bug reported by Yann Leray (rocq-prover/rocq#22024)
+2026        Fix proposed (PR #22027) — not yet merged
+2026-08-24  CVE-2026-72704 published by VulnCheck
 2026-08-24  Docker-reproducible PoC published
 
 13. Credit
 ==========
 
-Bug discovery:   Claude Opus 4.6 (Anthropic), Tristan Stérin
-                  (fuzzing campaign, based on pointers from Yannick Forster)
-Kernel fix:      PR #21684
+Bug discovery:   Yann Leray (@yannl35133)
 PoC packaging:   Jonathan Brossard (@endrazine) — MOABI / PSIRT.com
