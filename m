@@ -1,147 +1,59 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/2
-Message-ID: <9374a790-b0c0-4fd2-b81a-f8cd507dc8a1@gmail.com>
-Date: Sun, 25 Oct 2026 12:25:36 +0100
-From: Jonathan Brossard <endrazine@...il.com>
-To: bugtraq@...urityfocus.com, bugtraq@...traq.ai, oss-security@...ts.openwall.com
-Subject: CVE-2026-72844: Lean 4 kernel soundness bug — forging proofs via nested inductive projections (0 = 1 demonstrated)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/1
+Message-ID: <trinity-09328361-de72-42ba-aad3-5cd095979d88-1792918105711@trinity-msg-rest-gmx-gmx-live-5d6886bf55-cxkd7>
+Date: Sun, 25 Oct 2026 08:48:25 +0000
+From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2025-60477: GPAC/MP4Box: NULL Pointer Dereference in gf_filter_pid_resolve_file_template_ex on crafted MP4 with special metadata
 Content-Type: text/plain; charset=utf-8
 
-1. Summary
-==========
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (see References)
+CVE:       CVE-2025-60477
+CWE:       CWE-476 (NULL Pointer Dereference)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
-A soundness bug in the Lean 4 kernel allows construction of a checked
-proof of False — and by extension, any proposition, including 0 = 1 —
-without axioms, sorry, unsafeCast, or modified .olean files.
+Description:
+  The gf_filter_pid_resolve_file_template_ex function in filter_core/filter_pid.c
+  is responsible for resolving output file name templates during DASH segmentation
+  in MP4Box. When input file metadata contains excessively long URLs or HTML-like
+  special characters, the function reaches a strncmp() call at line 9045 without
+  first verifying that one of its pointer arguments is non-NULL.
 
-The kernel does not verify that the structure named in a projection
-expression matches the type of the value being projected. Additionally,
-environment::add_inductive in src/kernel/inductive.cpp did not type-check
-nested inductive applications, leaving their parameters unchecked. A
-metaprogram can register an ill-typed nested inductive and produce a
-proof of False at maximum kernel checking (--trust=0).
+  The NULL pointer is passed directly to strncmp(), causing a READ dereference at
+  address 0x000000000000, which terminates the process immediately. No arbitrary
+  code execution was observed; the impact is limited to Denial of Service.
 
-The proof of concept pads expressions to force hash collisions, defeating
-kernel caching. This is the means of reaching the flaw, not its cause.
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
-2. Context
-==========
+Reproduction:
+  -Build-opts: --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0" ;
+  -Command: ./MP4Box -dash 100 48_gf_filter_pid_resolve_file_template_ex_filter_core_filter_pid_c_9045
 
-Lean 4 is increasingly used as a foundation for formally verified
-software, proof-carrying code, and mathematical libraries. Its kernel is
-the trusted core: every theorem must pass kernel type-checking before it
-is accepted. A soundness bug in the kernel undermines the guarantees of
-any system built on top of it.
+Asan-log:
+==55159==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x7f665c8c1cf0 bp 0x7fff48a84ca0 sp 0x7fff48a84430 T0)
+==55159==The signal is caused by a READ memory access.
+    #0 0x7f665c8c1cf0 in strncmp ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors.inc:491
+    #1 0x7f665b891e64 in gf_filter_pid_resolve_file_template_ex filter_core/filter_pid.c:9045
+    #2 0x7f665b965c1e in dasher_setup_sources filters/dasher.c:4234
 
-Formally verified systems certified under Common Criteria (ISO 15408) or
-DO-178C (airborne software) derive their assurance from the correctness
-of the proof checker. A kernel-level bypass invalidates that assurance
-chain.
+Fix:
+  Update to a GPAC v26.07.0:
 
-Independent checkers such as Nanoda and lean4lean replay proofs against
-the same kernel rules and are therefore equally affected.
+    https://github.com/gpac/gpac/releases/tag/v26.07.0
+  
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/48/48_gf_filter_pid_resolve_file_template_ex_filter_core_filter_pid_c_9045
 
-3. Impact
-=========
+References:
+  https://github.com/gpac/gpac/issues/3301
+  https://nvd.nist.gov/vuln/detail/CVE-2025-60477
+  https://infosec.exchange/@sigdevel/116658486442433074
 
-- Formally verified software: any proposition can be "proved" and
-   kernel-checked, including safety properties of compilers, OS kernels,
-   and cryptographic libraries.
-- Proof-carrying code: a malicious Lake dependency could inject unsound
-   declarations that pass kernel checking.
-- Mathematical proof verification: results checked by the Lean kernel
-   cannot be trusted on affected versions.
 
-4. Proof of Concept
-===================
-
-A Docker-reproducible PoC is available:
-
-     git clone https://github.com/endrazine/lean-cve-poc
-     cd lean-cve-poc
-     docker build -t lean-cve-poc .
-     docker run --rm lean-cve-poc
-
-On a vulnerable version, the output reports:
-
-     zero_eq_one : 0 = 1
-     -- no axioms
-
-On a patched version, the kernel rejects the ill-typed inductive.
-
-5. Root Cause
-=============
-
-Two omissions in the kernel:
-
-(a) Projection validation: the kernel does not check that the structure
-     named in a projection matches the type of the value being projected.
-     CWE-843 (Type Confusion).
-
-(b) Nested inductive checking: environment::add_inductive does not
-     type-check nested inductive applications, so their parameters go
-     unchecked. CWE-20 (Improper Input Validation).
-
-Combined, these allow a metaprogram to register an ill-typed nested
-inductive that exploits the projection mismatch, producing a closed
-proof of False.
-
-6. Scoring
-==========
-
-CVSS 3.1: AV:L/AC:L/PR:N/UI:R/S:C/C:N/I:H/A:N — 7.1 (High)
-CVSS 4.0: AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N — 6.8 
-(Medium)
-
-7. CWE
-======
-
-CWE-843: Access of Resource Using Incompatible Type (Type Confusion)
-CWE-20: Improper Input Validation
-
-8. CVE
-======
-
-CVE-2026-72844 (assigned by VulnCheck as CNA)
-
-9. Affected Versions
-====================
-
-Lean 4 ≤ v4.31.0 / nightly ≤ 2026-07-27
-
-Fixed in: nightly 2026-07-29 and later; v4.32.2
-
-10. Mitigation
-==============
-
-- Upgrade to Lean 4 v4.32.2 or later.
-- No workaround exists for affected versions — the flaw is in the
-   kernel itself.
-
-11. References
-==============
-
-Bug report:  https://github.com/leanprover/lean4/issues/14576
-Fix:         https://github.com/leanprover/lean4/pull/14577
-PoC:         https://github.com/endrazine/lean-cve-poc
-VulnCheck: 
-https://www.vulncheck.com/advisories/lean-4-before-kernel-type-checking-bypass
-NVD:         https://nvd.nist.gov/vuln/detail/CVE-2026-72844
-
-12. Timeline
-============
-
-2026-07-27  Bug reported (leanprover/lean4#14576)
-2026-07-29  Kernel fix merged (PR #14577)
-2026-08-02  Advisory posted to oss-security
-2026-08-20  CVE-2026-72844 published by VulnCheck
-2026-08-24  Docker-reproducible PoC published
-
-13. Credit
-==========
-
-Bug discovery and minimal PoC: @kiranandcode
-Original CollatzLean exploit:  Ramana Kumar (@xrchz)
-Kernel fix:                    Leonardo de Moura
-PoC packaging:                 Jonathan Brossard (@endrazine) — MOABI / 
-PSIRT.com
+——
+Best regards, Alexander A. Shvedov
+@sigdevel
