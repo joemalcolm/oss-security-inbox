@@ -1,80 +1,86 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/4
-Message-ID: <4c3087fb-e79b-4740-b8ce-6d9ac36555c4@gmail.com>
-Date: Sun, 25 Oct 2026 12:27:21 +0100
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/3
+Message-ID: <c7290a16-635f-49be-96f8-3b83b3ca52c7@gmail.com>
+Date: Sun, 25 Oct 2026 12:26:36 +0100
 From: Jonathan Brossard <endrazine@...il.com>
 To: bugtraq@...urityfocus.com, bugtraq@...traq.ai, oss-security@...ts.openwall.com
-Subject: CVE-2026-72703: Rocq guard checker accepts non-terminating fixpoint via unchecked cross-calls (0 = 1 demonstrated)
+Subject: CVE-2026-72711: Lean 4 kernel soundness bug — inference cache poisoning via opaque declarations (0 = 1 demonstrated)
 Content-Type: text/plain; charset=utf-8
 
 1. Summary
 ==========
 
-A soundness bug in the Rocq (formerly Coq) kernel's guard checker allows
-construction of a checked proof of False — and by extension, any
-proposition, including 0 = 1 — without axioms, tactics, plugins, or
-unsafe flags. Print Assumptions reports the proof as closed under the
-global context.
+A soundness bug in the Lean 4 kernel allows construction of a checked
+proof of False — and by extension, any proposition, including 0 = 1 —
+without axioms, sorry, unsafeCast, debug.skipKernelTC, or modified
+.olean files. The proof passes the kernel at maximum checking (--trust=0).
 
-The guard checker treats all parameters of a nested mutual fixpoint as
-uniform without examining cross-calls between the fixpoint's bodies.
-A parameter that grows through a cross-call retains an incorrect subterm
-specification, and a recursive call on a non-structurally-decreasing
-argument is accepted. This admits a non-terminating definition from
-which False follows.
+The kernel's add_opaque path skips the closure check
+(check_no_metavar_no_fvar) that the definition and theorem paths
+perform. A stale entry in the type checker's inference cache can be
+reused after its local variable is gone, allowing a metaprogram to
+submit an opaque declaration whose value references an unbound free
+variable. The kernel then admits an opaque constant of type False.
 
 2. Context
 ==========
 
-Rocq (formerly Coq) is the reference implementation of the Calculus of
-Inductive Constructions and one of the most widely deployed proof
-assistants. Its kernel is the trusted core that checks every proof
-before acceptance. A soundness bug in the guard checker — the component
-that enforces termination of recursive definitions — undermines the
-guarantees of any system built on Rocq-checked proofs.
+Lean 4 is increasingly used as a foundation for formally verified
+software, proof-carrying code, and mathematical libraries. Its kernel is
+the trusted core: every theorem must pass kernel type-checking before it
+is accepted. A soundness bug in the kernel undermines the guarantees of
+any system built on top of it.
 
 Formally verified systems certified under Common Criteria (ISO 15408) or
 DO-178C (airborne software) derive their assurance from the correctness
 of the proof checker. A kernel-level bypass invalidates that assurance
 chain.
 
+Independent checkers such as Nanoda and lean4lean that replay proofs
+against the same kernel rules are equally affected by the missing
+closure check.
+
 3. Impact
 =========
 
-- Formally verified compilers (CompCert)
-- Verified OS kernels (CertiKOS)
-- Separation logic frameworks (Iris)
-- Mathematical libraries (MathComp)
-- Proof-carrying code: a malicious .v file in a dependency could
-   introduce unsound declarations
-- Verified smart contracts (ConCert)
+- Formally verified software: any proposition can be "proved" and
+   kernel-checked, including safety properties of compilers, OS kernels,
+   and cryptographic libraries.
+- Proof-carrying code: a malicious Lake dependency could inject unsound
+   opaque declarations that pass kernel checking.
+- Mathematical proof verification: results checked by the Lean kernel
+   cannot be trusted on affected versions.
 
 4. Proof of Concept
 ===================
 
 A Docker-reproducible PoC is available:
 
-     git clone https://github.com/endrazine/rocq-cve-poc-21682
-     cd rocq-cve-poc-21682
-     docker build -t rocq-cve-poc-21682 .
-     docker run --rm rocq-cve-poc-21682
+     git clone https://github.com/endrazine/lean-cve-poc-14484
+     cd lean-cve-poc-14484
+     docker build -t lean-cve-poc-14484 .
+     docker run --rm lean-cve-poc-14484
 
-On a vulnerable version (Rocq 8.20 – <9.2.0), the output confirms the
-proof of 0 = 1 with no axioms. On a patched version (≥9.2.0), the guard
-checker rejects the fixpoint.
+On a vulnerable version, the output reports the proof of 0 = 1 as
+axiom-free. On a patched version, the kernel rejects the opaque
+declaration.
 
 5. Root Cause
 =============
 
-find_uniform_parameters in kernel/inductive.ml only inspects
-self-recursive calls within each body of a mutual fixpoint. When no body
-contains a self-recursive call (all calls are cross-calls), every
-parameter is marked as uniform. A parameter that varies across
-cross-calls retains an incorrect subterm specification, allowing the
-guard checker to accept a recursive call on a non-structurally-
-decreasing argument.
+The function environment::add_opaque does not call
+check_no_metavar_no_fvar on the declaration's body, unlike the
+definition and theorem paths. This means:
 
-CWE-670: Always-Incorrect Control Flow Implementation.
+(a) A free variable (fvar) that existed in a now-discarded local context
+     is not detected. CWE-488 (Exposure of Data Element to Wrong Session).
+
+(b) The kernel accepts a body containing references to variables that
+     are no longer in scope. CWE-20 (Improper Input Validation).
+
+A metaprogram exploits this by caching a type-checking result for False
+against a temporary local, restoring the context, and submitting an
+opaque declaration referencing the stale cache entry.
 
 6. Scoring
 ==========
@@ -86,48 +92,49 @@ CVSS 4.0: AV:L/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:N/SC:N/SI:N/SA:N — 6.8
 7. CWE
 ======
 
-CWE-670: Always-Incorrect Control Flow Implementation
+CWE-488: Exposure of Data Element to Wrong Session
+CWE-20: Improper Input Validation
 
 8. CVE
 ======
 
-CVE-2026-72703 (assigned by VulnCheck as CNA)
+CVE-2026-72711 (assigned by VulnCheck as CNA)
 
 9. Affected Versions
 ====================
 
-Rocq Prover 8.20 – <9.2.0
+Lean 4 < v4.32.2 (all versions from initial release)
 
-Fixed in: 9.2.0
+Fixed in: v4.32.2, v4.33.0, nightly 2026-07-23 and later
 
 10. Mitigation
 ==============
 
-- Upgrade to Rocq 9.2.0 or later.
-- Run coqchk on compiled .vo files as defense-in-depth.
+- Upgrade to Lean 4 v4.32.2 or later.
+- No workaround exists for affected versions — the flaw is in the
+   kernel itself.
 
 11. References
 ==============
 
-Bug report:  https://github.com/rocq-prover/rocq/issues/21682
-Fix:         https://github.com/rocq-prover/rocq/pull/21684
-PoC:         https://github.com/endrazine/rocq-cve-poc-21682
+Bug report:  https://github.com/leanprover/lean4/issues/14484
+Fix:         https://github.com/leanprover/lean4/pull/14498
+PoC:         https://github.com/endrazine/lean-cve-poc-14484
 VulnCheck: 
-  https://www.vulncheck.com/advisories/rocq-prover-before-guard-checker-accepts-non-terminating-fixpoint-via-unchecked-cross-calls
-NVD:         https://nvd.nist.gov/vuln/detail/CVE-2026-72703
+https://www.vulncheck.com/advisories/lean-4-before-kernel-accepts-opaque-declaration-with-an-unbound-free-variable
+NVD:         https://nvd.nist.gov/vuln/detail/CVE-2026-72711
 
 12. Timeline
 ============
 
-2025        Bug reported (rocq-prover/rocq#21682)
-2025        Fix merged (PR #21684) in Rocq 9.2.0
-2026-08-24  CVE-2026-72703 published by VulnCheck
-2026-08-24  Docker-reproducible PoC published
+2026        Bug reported (leanprover/lean4#14484)
+2026        Kernel fix merged (PR #14498)
+2026-08-24  CVE-2026-72711 published by VulnCheck
+2026-08-24  Docker-reproducible PoC published
 
 13. Credit
 ==========
 
-Bug discovery:   Tristan Stérin, Claude Opus 4.6 (Anthropic)
-Kernel fix:      PR #21684
-PoC packaging:   Jonathan Brossard (@endrazine) — MOABI / PSIRT.com
-
+Bug discovery:   Patrick Hulin
+Kernel fix:      Joachim Breitner (PR #14498)
+PoC packaging:   Jonathan Brossard (@endrazine) — MOABI / PSIRT.com
