@@ -1,26 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/16
-Message-ID: <581d0c70-deb0-039e-2707-eafeb86737fa@iki.fi>
-Date: Mon, 26 Oct 2026 10:54:57 +0200 (EET)
-From: Harry Sintonen <sintonen@....fi>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/15
+Message-ID: <at6_RlAoIBuESprz@mertle>
+Date: Sun, 25 Oct 2026 22:47:38 -0400
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: Brotli CVE-2026-111497 and git-remote-https
+Cc: Roman Kuligin <romaka@...ox.lv>
+Subject: Re: PHP 5.4.23 (custom 5.4-5.6) backported patch for PHP2Shell OOM vulnerability (CVE-2026-109618)
 Content-Type: text/plain; charset=utf-8
 
-I haven't seen this mentioned here, yet: git https remote (git-remote-https) 
-is vulnerable to CVE-2026-111497, too, when libcurl has been built with 
-brotli support (generally this is the case for most distros).
+On 2026-10-25 10:33:37, Demi Marie Obenour wrote:
+> On 10/24/26 15:56, Roman Kuligin wrote:
+> > Hello, I have developed a backported .patch for EOL versions of PHP (specifically PHP 5.4, 5.5, and 5.6) to mitigate the critical PHP2Shell Out-of-Memory (OOM) vulnerability (CVE-2026-109618 / CVE-2026-109619). Since these legacy versions are no longer supported by the upstream PHP team, this patch updates the internal memory allocation model to prevent memory exhaustion and crashes during file upload progress tracking. The patch and instructions are publicly available on GitHub: https://github.com/akamor2800/php-5.4-cve-2026-php2shell-patch Best regards.
+> 
+> In light of the size of the upstream patch, would it be better to handle out of memory by crashing the process instead?
 
-When scanning for vulnerable apps using libcurl also check for 
-CURLOPT_ENCODING since this is an alias for CURLOPT_ACCEPT_ENCODING. Fair 
-bit of older code still uses this old option name. (*)
+Considering that PHP 5.x has been out of security support for ~8 years
+and out of active support for ~10, best of all would be to crash the
+process when it starts.
 
-*) 
-https://github.com/git/git/blob/7e34d8174dcda3435d1404c9a30bef46afe6c13e/http.c#L2284
+For many of those years, there existed no AI marketing departments to
+publicize individual vulnerabilities. No one knows how, but hundreds
+of vulnerabilities were nevertheless fixed during that time.
 
-
-   Regards,
--- 
-l=2001;main(i){float o,O,_,I,D;for(;O=I=l/571.-1.75,l;)for(putchar(--l%80?
-i:10),o=D=l%80*.05-2,i=31;_=O*O,O=2*o*O+I,o=o*o-_+D,o+_+_<4+D&i++<87;);puts
-("  Harry 'Piru' Sintonen <sintonen@....fi> https://www.iki.fi/sintonen");}
+Download attachment "signature.asc" of type "application/pgp-signature" (871 bytes)
