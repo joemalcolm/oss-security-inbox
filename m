@@ -1,51 +1,63 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/19
-Message-ID: <CAARiyJqHQQ-czmrU0Vonb9yj+gR0L7OkVC5cpBPmiEpXcUPXdA@mail.gmail.com>
-Date: Mon, 26 Oct 2026 21:37:25 +0100
-From: Tomasz Kaye <tomasz.brain@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/26/18
+Message-ID: <trinity-1869601d-7c9a-40f8-b586-d858af789d7c-1793043829042@trinity-msg-rest-gmx-gmx-live-674956c65c-lp6tz>
+Date: Mon, 26 Oct 2026 19:43:49 +0000
+From: "Alexander A. Shvedov" <sigdevel@...amail.com>
 To: oss-security@...ts.openwall.com
-Subject: Godot 4.x: arbitrary code execution via .po translation file Plural-Forms header
+Subject: CVE-2025-60467: GPAC/MP4Box: Use-After-Free in gf_filter_pid_inst_swap_delete_task on crafted MPEG-2 TS file
 Content-Type: text/plain; charset=utf-8
 
-A code-execution vulnerability in Godot 4.x translation loading was
-publicly disclosed on 2026-10-26 [1].
-
-Affected versions:
-Godot 4.1.0 through 4.7.2. Runtime-confirmed on the official 4.7-stable
-export. No equivalent path found in 3.5.
+Product:   GPAC (MP4Box)
+Affected:  gpac/gpac prior to fix commit (see References)
+CVE:       CVE-2025-60467
+CWE:       CWE-416 (Use After Free)
+CVSS 3.1:  4.3 MEDIUM (AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L)
+Reporter:  sigdevel <https://infosec.exchange/@sigdevel>
 
 Description:
-The .po loader stores the file's Plural-Forms header without validating it
-against the GNU gettext grammar (core/io/translation_loader_po.cpp:232). At
-the first plural lookup the header is evaluated with the engine's general
-Expression evaluator, which permits calls to registered utility functions
-(core/string/plural_rules.cpp:40-46). A crafted header calls
-bytes_to_var_with_objects() to deserialize a GDScript object whose
-script/source property is attacker-supplied; decoding compiles the script
-and runs its static initializer (modules/gdscript/gdscript.cpp:1013-1017).
+  The gf_filter_pid_inst_swap_delete_task() function in GPAC's filter
+  session core (filter_core/filter_pid.c:574) is a scheduled task that
+  deletes a GF_FilterPidInstance structure during filter PID teardown.
+  When MP4Box inspects a crafted MPEG-2 TS file that drives the filter
+  pipeline through PID reconfiguration and deletion,
+  gf_filter_pid_inst_swap_delete() at filter_core/filter_pid.c:544 frees
+  the pid_inst allocation before the scheduled delete task has executed.
 
-Impact:
-Attacker-chosen GDScript executes in the game process, with the game's
-privileges, when an exported game that loads community-supplied .po
-translations displays a pluralized string. Demonstrated on a stock 4.7
-export in two proofs, engine-expression execution setting the global RNG
-state and GDScript static-initializer execution, each 10/10 runs with clean
-controls.
+  The task callback subsequently performs a READ of 4 bytes at address
+  0x513000000e7c from the already-freed structure without verifying that
+  the instance is still valid, resulting in a heap-use-after-free and
+  process crash (Denial of Service).
+
+  Crash is reproducible on the current master branch at the time of
+  discovery. No authentication or special privileges required beyond
+  ability to provide a crafted file.
 
 Reproduction:
-https://github.com/bitbutter/godot-security-pocs/tree/main/2026-10-po-plural-forms-gdscript-execution
-(fixtures, verifier scripts, SHA256SUMS). Narrated video:
-https://youtu.be/LnNNx1F2aGo
+  -Build-opts: --static-build --static-bin --static-modules --enable-debug --extra-cflags="-g -O0" ;
+  -Command: ./MP4Box -info 37_gf_filter_pid_inst_swap_delete_task_filter_core_filter_pid_c_574
 
-Fix status:
-Unpatched as of 2026-10-26 (master, 4.7.2, 4.7.1, 4.7). Maintainer PRs
-#123130 and #123857 restrict the evaluator's function scope at this call
-site; neither is merged.
+Asan-log:
+==2014352==ERROR: AddressSanitizer: heap-use-after-free on address 0x513000000e7c at pc 0x7fd50dc51b7d bp 0x7ffe25104a20 sp 0x7ffe25104a18
+READ of size 4 at 0x513000000e7c thread T0
+    #0 0x7fd50dc51b7c in gf_filter_pid_inst_swap_delete_task filter_core/filter_pid.c:574
+    #1 0x7fd50dcc3465 in gf_fs_thread_proc filter_core/filter_session.c:2420
+    #2 0x7fd50dcc86c4 in gf_fs_run filter_core/filter_session.c:2727
 
-CVE status:
-Requested from MITRE's CNA-LR on 2026-10-26 (CAN-2026-2040826), filed after
-publication. This thread will be self-replied when the record publishes.
+Fix:
+  Update to a GPAC v26.07.0:
 
-[1]
-https://axeghost.offprint.app/a/3mysixmpap723-a-community-translation-can-run-attacker-chosen-code-in-an-exported-godot-game
+    https://github.com/gpac/gpac/releases/tag/v26.07.0
+  
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/37/37_gf_filter_pid_inst_swap_delete_task_filter_core_filter_pid_c_574
 
+References:
+  https://github.com/gpac/gpac/issues/3286
+  https://www.cve.org/CVERecord?id=CVE-2025-60467
+  https://infosec.exchange/@sigdevel/116780518074911144
+  https://github.com/gpac/gpac/commit/976dacf65cb6986a4e4f350fb8d3ed0a17dc3a77
+
+
+——
+Best regards, Alexander A. Shvedov
+@sigdevel
