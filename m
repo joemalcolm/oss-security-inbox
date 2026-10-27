@@ -1,118 +1,321 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/3
-Message-ID: <CAAnjWm+uz3azT4MEhO060eUcw5ZRu=Htn2ofrYh=3nu=UYZwAw@mail.gmail.com>
-Date: Tue, 27 Oct 2026 19:52:58 -0400
-From: Kevin Riggle <kevinr@...plexsystems.group>
-To: oss-security@...ts.openwall.com
-Subject: Re: Information for Python users regarding eMudhra / emSign CA certificate security incident
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/27/5
+Message-ID: <f42799c1-3fd6-42d2-94af-c0837e1d2b84@debian.org>
+Date: Tue, 27 Oct 2026 09:33:36 +0100
+From: Emilio Pozuelo Monfort <pochu@...ian.org>
+To: oss-security@...ts.openwall.com, Alan Coopersmith <alan.coopersmith@...cle.com>
+Subject: Re: Fwd: X.Org Security Advisory: multiple security issues in X.Org X client libraries
 Content-Type: text/plain; charset=utf-8
 
-> A comment on it from Christian Helms adds:
-> > Just to stress one point: users must update pip to >= 26.2.2.
-> >
-> > pip always loads the CA certificates from its vendored certifi in
-> > addition to the system trust store, and there is no supported way to
-> > disable this. REQUESTS_CA_BUNDLE / --cert only add CAs; truststore is
-> > used “in addition to certifi” by design. As a result, any pip < 26.2.2
-> > will keep trusting the compromised intermediate CAs regardless of the
-> > system trust store, so distrusting them at the OS level is not enough.
+Hi Alan,
 
-The discuss.python.org conversation on that issue has long since moved
-on, so asking here:
+On 16/10/2026 23:53, Alan Coopersmith wrote:
+> All five library releases are available now, see
+> https://lists.x.org/archives/xorg-announce/2026-October/thread.html
+> for links to their release announcements.
 
-The macOS remediation advice on the official vuln page at
-https://emudhra.we-have-a-problem.com/#macos-curl lists remediation
-instructions which it is claimed address this, with instructions to
-set a PIP_CERT environment variable in a sitecustomize.py file.
+Some of these (CVE-2026-109089, CVE-2026-109090, CVE-2026-109088) are still 
+marked as RESERVED in MITRE, with no information published (e.g. [1]). Do you 
+know why?
 
-> The built-in pip3, and the pip in virtual environments created from the built-in python3, use their own outdated copy of the roots instead. To make them use the fixed system file, run:
->
-> F="$(/usr/bin/python3 -c 'import sysconfig; print(sysconfig.get_path("stdlib"))')/sitecustomize.py" &&
-echo 'import os; os.environ.setdefault("PIP_CERT",
-"/etc/ssl/cert.pem")' | sudo tee -a "$F" > /dev/null &&
-sudo chmod 644 "$F"
+Cheers,
+Emilio
 
-I'm finding it a bit tricky to figure out a reproducible test case
-which would exercise this, so I haven't done more testing myself,
-but—does this actually work?  Or is upgrading `pip` to >= 26.2.2 the
-only solution?  (Or, now that `pip` > 26.2.2 is out, is upgrading the
-better solution, and I should go file a PR against the site to update
-its guidance.)
+[1] https://www.cve.org/CVERecord?id=CVE-2026-109090
 
-(Incidentally, the latest macOS updates do _NOT_ include an updated
-`/etc/ssl/cert.pem`, and do clobber any manual changes you or your IT
-department may have made to `/etc/ssl/cert.pem`, so any manual
-mitigations you have applied to remove the AAA Certificate Services
-and emSign ECC Root CA - G3 certs _DO_ need to be reapplied.)
+> -------- Forwarded Message --------
+> Subject: X.Org Security Advisory: multiple security issues in X.Org X client
+> libraries
+> Date: Fri, 16 Oct 2026 12:04:10 -0700
+> From: Alan Coopersmith <alan.coopersmith@...cle.com>
+> To: xorg-announce@...ts.x.org
+> CC: xorg@...ts.x.org
+> 
+> ======================================================================
+> X.Org Security Advisory: October 16, 2026
+> 
+> Issues in X.Org X client libraries prior to libX11 1.8.14,
+> libXi 1.8.4, libXpm 3.5.20, libXrender 0.9.13, libXtst 1.2.6
+> ======================================================================
+> 
+> Multiple issues have been found in the X client library implementations
+> published by X.Org for which we are releasing security fixes for in
+> * libX11 1.8.14
+> * libXi 1.8.4
+> * libXpm 3.5.20
+> * libXrender 0.9.13
+> * libXtst 1.2.6
+> 
+> 
+> ========================================================================
+> libX11 - 4 CVEs
+> ========================================================================
+> 
+> For those considering cherry-picking the fixes, note that libX11 1.8.14
+> also includes additional code hardening fixes without CVEs assigned
+> that you may also want to consider.
+> 
+> * CVE-2026-88806:
+>     Out-of-bounds write vulnerability in libX11's XKB (X Keyboard Extension)
+>     action parser.
+> 
+>     A malicious server could send a XkbGetMap reply with keycode values
+>     exceeding max_keycode + 1, causing a write past the end of the allocated
+>     array during reply handling.
+> 
+>     Fixed in: libX11 1.8.14
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/6d4432b13
+>     Found by: Adam Bedard working with TrendAI Zero Day Initiative (ZDI-CAN-32061)
+> 
+> * CVE-2026-94283:
+>     Out-of-bounds read vulnerability in libX11's XIM (X Input Method)
+>     attribute parser.
+> 
+>     A malicious or compromised XIM server can send a crafted XIM_OPEN_REPLY
+>     message with inconsistent nested attribute lengths, causing the client
+>     to read past the end of the received packet buffer during parsing.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+> 
+>     Fixed in: libX11 1.8.14
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/f263bbca2
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-15963)
+>     * CVE-2026-94284:
+>     Out-of-bounds read vulnerability in libX11's XIM trigger-key
+>     registration parser.
+> 
+>     A malicious XIM server can send a crafted XIM_REGISTER_TRIGGERKEYS
+>     message with oversized inner on-keys/off-keys length fields, causing the
+>     client to read past the received buffer during memcpy() and crash.
+> 
+>     CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 5.5 (MEDIUM)
+> 
+>     Fixed in: libX11 1.8.14
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/924fc91f0
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-16671)
+> 
+> * CVE-2026-94285:
+>     Out-of-bounds read in libX11's byte-oriented codeset parser.
+> 
+>     When the last byte of input is a valid lead byte for a multi-byte locale
+>     (e.g. GBK, Big5), byteM_parse_codeset() reads past the caller-provided
+>     buffer while matching the second byte range.
+> 
+>     CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:L — 5.3 (MEDIUM)
+> 
+>     Fixed in: libX11 1.8.14
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libx11/-/commit/797eaf0bd
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-16718)
+> 
+> ========================================================================
+> libXi - 9 CVEs
+> ========================================================================
+> 
+> For those considering cherry-picking the fixes, note that libXi 1.8.4
+> also includes additional code hardening fixes without CVEs assigned
+> that you may also want to consider.
+> 
+> * CVE-2026-93541:
+>     Out-of-bounds read in libXi's XQueryDeviceState().
+> 
+>     XQueryDeviceState() trusts the num_valuators value from a
+>     ValuatorClass reply without checking it fits in the declared class
+>     length, enabling an OOB read and client crash via a forged reply.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/9a5f8636b
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-13253)
+> 
+> * CVE-2026-93542:
+>     Out-of-bounds read in libXi's XI2 class parsing via size_classes()
+>     and copy_classes().
+> 
+>     Malicious XIQueryDevice replies or XI_DeviceChanged events with
+>     inconsistent class lengths can drive the parser past the received
+>     buffer and crash the client.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/59f8dece8
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-13600)
+> 
+> * CVE-2026-93543:
+>     Out-of-bounds read in libXi's XI2 class parser.
+> 
+>     A malicious X server can send forged XI_DeviceChanged events
+>     (or XIQueryDevice replies) with inconsistent class metadata.
+>     An overlong num_classes, zero or oversized per-class length,
+>     or button/key counts exceeding the class bytes causing the
+>     size_classes() and copy_classes() to walk past the event/reply
+>     buffer and crash the client.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 5.9 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/f885619bb
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-13717)
+> 
+> * CVE-2026-93544:
+>     Out-of-bounds read in libXi's XI2 XIQueryDevice reply parsing.
+> 
+>     Class parsing helpers size_classes()/copy_classes() and the
+>     XIQueryDevice() caller walk wire data using data provided by the
+>     Xserver (length, num_buttons and num_keycodes) without bounds
+>     checking, enabling OOB reads and client crashes via malformed
+>     replies.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H — 6.5 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/e2ec4a1c8
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14043)
+> 
+> * CVE-2026-93545:
+>     Out-of-bounds read in libXi's XListInputDevices()
+> 
+>     A malicious server can set a name length byte that exceeds the
+>     remaining reply bytes, causing memcpy() to read past the buffer
+>     when parsing device name strings from a ListInputDevices reply.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L — 5.4 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/2e5ecd187
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14711)
+> 
+> * CVE-2026-94281:
+>     Out-of-bounds read in libXi's XListInputDevices() class parsing.
+> 
+>     SizeClassInfo() validates each class record's length against the
+>     original buffer size but never decrements it, allowing a sequence
+>     of individually-valid class lengths to cumulatively advance past
+>     the buffer. ParseClassInfo() then walks the same records without
+>     any bounds checking.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:L — 5.4 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/1d5813ba0
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14718)
+> 
+> * CVE-2026-94282:
+>     Out-of-bounds read in libXi's XI2 enter/leave/focus cookie conversion.
+> 
+>     A malicious X server can send a crafted XI2 Enter, Leave, FocusIn,
+>     or FocusOut GenericEvent with a small outer length but an oversized
+>     buttons_len field, causing wireToEnterLeave() to copy data past the
+>     end of the received event buffer.
+> 
+>     CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H — 6.1 (MEDIUM)
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/8caed97a3
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-15083)
+> 
+> * CVE-2026-109089:
+>     libXi XGetDeviceControl Control Type Mismatch Heap Buffer Overflow
+> 
+>     XGetDeviceControl() sizes the client buffer from the server's
+>     d->control and fills it from the caller's control argument. A hostile
+>     server can answer DEVICE_RESOLUTION with a small fixed-size control
+>     type so allocation is tiny while the fill still walks an unbounded
+>     DEVICE_RESOLUTION valuator list, overflowing the heap.
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/f7836d0a0
+>     Found by: Adam Bedard, Security Researcher.
+> 
+> * CVE-2026-109090:
+>     libXi XGetDeviceControl DEVICE_ENABLE Heap Buffer Overflow
+> 
+>     DEVICE_ENABLE has a fill path in XGetDeviceControl() but no size arm,
+>     so allocation uses the wire length (8 bytes) while the fill writes a
+>     full XDeviceEnableState (12–16 bytes), overflowing the heap.
+> 
+>     Fixed in: libXi 1.8.4
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxi/-/commit/4eb9f70b6
+>     Found by: Adam Bedard, Security Researcher.
+> 
+> ========================================================================
+> libXpm - 1 CVE
+> ========================================================================
+> 
+> * CVE-2026-94287:
+>     Denial of service via unsigned underflow in libXpm's write path.
+> 
+>     A crafted 0x0 XPM passes the parser's dimension checks and, when
+>     serialized through WritePixels(), causes an unsigned underflow in the
+>     row loop bound (height - 1 wraps to UINT_MAX), resulting in prolonged
+>     CPU use and continuous output growth.
+> 
+>     CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H — 5.5 (MEDIUM)
+> 
+>     Fixed in: libXpm 3.5.20
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxpm/-/commit/58eb875b7
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-14424)
+> 
+> ========================================================================
+> libXrender - 1 CVE
+> ========================================================================
+> 
+> * CVE-2026-88807:
+>     Out-of-bounds read in libXrender's XRenderQueryFormat reply parser.
+> 
+>     A malicious server could reply to XRenderQueryFormat with a numSubpixels
+>     count greater than the number of screens, causing an OOB write into
+>     screen->subpixel which was allocated using numScreens.
+> 
+>     Fixed in: libXrender 0.9.13
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxrender/-/commit/0564bce54
+>     Found by: Adam Bedard working with TrendAI Zero Day Initiative (ZDI-CAN-32093)
+> 
+> ========================================================================
+> libXtst - 2 CVEs
+> ========================================================================
+> 
+> * CVE-2026-94286:
+>     Out-of-bounds read in libXtst's RECORD reply parser.
+> 
+>     A malicious Xserver can send a crafted RECORD reply where the inner
+>     element's datum_bytes exceeds the actual reply buffer size, causing
+>     the RECORD callback to receive a pointer/length pair that extends past
+>     the allocated buffer.
+>     When the callback reads the advertised payload, it triggers an out of
+>     bounds read that can crash the client or expose adjacent process memory.
+> 
+>     CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:H — 7.1 (HIGH)
+> 
+>     Fixed in: libXtst 1.2.6
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxtst/-/commit/b84737d84
+>     Found by: Aisle Research (AISLE-Report-PSIRTSUPT-16762)
+> 
+> * CVE-2026-109088:
+>     libXtst RECORD EnableContext Reply Endless Loop
+> 
+>     parse_reply_call_callback() advances through RECORD EnableContext
+>     reply elements by datum_bytes. A zero-sized XRecordFromClient
+>     (BIG-REQUESTS length 0) or an undefined category byte leaves
+>     datum_bytes at 0 while bytes remain, so the loop never terminates
+>     and the application callback is invoked forever with empty data.
+> 
+>     A malicious or compromised X server answering EnableContext can hang
+>     XRecordEnableContext() (sync) or livelock Xlib reply processing
+>     (async).
+> 
+>     Fixed in: libXtst 1.2.6
+>     Fix: https://gitlab.freedesktop.org/xorg/lib/libxtst/-/commit/ac60f5f47
+>     Found by: Kaya Emre Arikan.
+> 
+> ========================================================================
+> 
+> X.Org thanks all of those who reported and fixed these issues, and those
+> who helped with the review and release of this advisory and these fixes.
+> 
+> The X.Org security team would like to take this opportunity to remind X
+> client authors that current best practices suggest separating code that
+> requires privileges from the GUI, to reduce the risk of issues like these.
+> 
 
-Best,
-- Kevin
-
-On Thu, Oct 22, 2026 at 4:43 PM Alan Coopersmith
-<alan.coopersmith@...cle.com> wrote:
->
-> https://discuss.python.org/t/information-for-python-users-regarding-emudhra-emsign-ca-certificate-security-incident/109576
-> has this statement from Seth Michael Larson:
-> > A security incident affecting eMudhra intermediate certificates has
-> > required removing the emSign root CA certificate from CA bundles such
-> > as “certifi”. It’s important to immediately upgrade the software
-> > packages below to at least the versions specified and rebuild
-> > container images with layer caching disabled to fetch the latest
-> > system certificates. Failure to do so could result in
-> > monster-in-the-middle (MITM) attacks against TLS clients, including
-> > python.org and pypi.org .
-> >
-> >     certifi 2026.10.19 (1)
-> >     pip 26.2.2
-> >     uv 0.13.4
-> >     sigstore 4.5.1
-> >     conda 26.9.4
-> >     pixi 0.82.1
-> >
-> > (1): Advisory mentions 2026.10.18, but 2026.10.19 is recommended for
-> > compatibility with unaffected emSign root certificates.
-> >
-> > For all existing virtual environments on your system, please upgrade
-> > pip and uv to the latest versions. You can update pip securely by
-> > running the following command and then use this secure pip
-> > installation to upgrade certifi and uv:
-> >
-> > python -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"
-> >
-> > Note that the certifi CA bundle is included in the macOS installation
-> > of Python from python.org. To upgrade certificates for this
-> > installation and pip itself, run the command below like so:
-> >
-> > /Library/Frameworks/Python.framework/Versions/3.15/bin/python3.15 -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"
-> > /Library/Frameworks/Python.framework/Versions/3.15/bin/python3.15 -m pip install --upgrade certifi
-> > /Library/Frameworks/PythonT.framework/Versions/3.15/bin/python3.15t -m pip install "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70"
-> >
-> > This topic will be updated as more information is made available.
->
-> A comment on it from Christian Helms adds:
-> > Just to stress one point: users must update pip to >= 26.2.2.
-> >
-> > pip always loads the CA certificates from its vendored certifi in
-> > addition to the system trust store, and there is no supported way to
-> > disable this. REQUESTS_CA_BUNDLE / --cert only add CAs; truststore is
-> > used “in addition to certifi” by design. As a result, any pip < 26.2.2
-> > will keep trusting the compromised intermediate CAs regardless of the
-> > system trust store, so distrusting them at the OS level is not enough.
-> >
-> > uv users can block the bad certs in their system trust store and
-> > UV_SYSTEM_CERTS=true. That does not work with pip. Updating pip is the
-> > only reliable fix. See Switch to using truststore only by default
-> > (currently mixed certifi + truststore) · Issue #14374 · pypa/pip ·
-> > GitHub
-> >
-> > PS: The ‘security incident’ is a bad private key. An elliptic key with
-> > private key value d=4 is not secure… All 8 eMudhra CAs had private
-> > keys with d < 256.
->
->
-
-
--- 
-Kevin Riggle - Principal, Complex Systems Group LLC
-he/him • Brooklyn, NY, USA • Eastern Time
-https://complexsystems.group • https://calendly.com/kevinriggle/coffee
