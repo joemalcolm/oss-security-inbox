@@ -1,58 +1,233 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/27/8
-Message-ID: <CAARiyJrBX9Z8P918RfAmtFe0QCoJyYN6yQMoX_wmE9JY42DGNg@mail.gmail.com>
-Date: Tue, 27 Oct 2026 17:49:01 +0100
-From: Tomasz Kaye <tomasz.brain@...il.com>
-To: oss-security@...ts.openwall.com
-Subject: Godot 4.x: remote client crash via multiplayer spawn packet sync_len overflow
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/27/7
+Message-ID:  <PAXPR07MB8843E033C936D12D34D966BE91602@PAXPR07MB8843.eurprd07.prod.outlook.com>
+Date: Tue, 27 Oct 2026 16:36:51 +0000
+From: Robert Davies <rmd@...ger.ac.uk>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+CC: samtools <samtools@...ger.ac.uk>
+Subject: Multiple vulnerabilities in samtools <= 1.24
 Content-Type: text/plain; charset=utf-8
 
-A remote denial-of-service vulnerability in Godot 4.x multiplayer was
-publicly disclosed on 2026-10-27 [1].
+Multiple vulnerabilities, listed below, have been disclosed in the samtools
+package.  These have all been fixed in a new release 1.25 and have also been
+pack-ported to versions 1.24.1, 1.23.3, 1.22.4 and 1.21.3
 
-Affected versions:
-Godot 4.0.0 through 4.7.2 and current master (vulnerable check
-introduced in commit 32a62af648, 2022-10-03). Runtime-confirmed on the
-official 4.7-stable Windows binary.
+We do not yet have CVE numbers for these as our CVE assigning authority,
+GitHub, has a long backlog.  Therefore we are linking to the GitHub pages as
+these will be updated automatically once the CVEs have been assigned.
 
-Description:
-The spawn-packet bounds check in
-SceneReplicationInterface::on_spawn_receive
-(modules/multiplayer/scene_replication_interface.cpp:586) computes
-name_len + (sync_len * 4) in 32-bit unsigned arithmetic, with both
-values read from the packet (lines 582-584). A crafted sync_len of
-0x40000000 wraps the product to 0 and passes the check; the sync-ids
-loop (lines 588-591) then reads past the packet buffer until the
-process faults. decode_uint32 performs no bounds check of its own
-(core/io/marshalls.h:167).
+Contents
+========
 
-Impact:
-One crafted packet from a peer holding multiplayer spawn authority —
-the game server in the standard client-server setup, any peer in a
-mesh that grants peers spawning authority — crashes joining clients
-running an affected engine build, about one second after connecting.
-Demonstrated on a stock 4.7-stable binary in 5/5 runs with a clean
-control case (sync_len 0x10000000, no wrap, rejected; client exits
-normally). The demonstrated effect is a crash via out-of-bounds read;
-no code execution or information disclosure is claimed.
+* High severity:
+  - Stack write overflow in samtools mpileup read groups file reader
 
-Reproduction:
-https://github.com/bitbutter/godot-security-pocs/tree/main/2026-10-spawn-sync-len-oob
-(malicious WebSocket server, victim project, captured crash and
-control output, fuzz-found trigger variants, SHA-256 manifest)
+* Moderate severity:
+  - Use-after-free in samtools mpileup leading to an invalid read
+  - Out-of-bounds reads and NULL pointer dereferences due to failure to
+    validate data types
+  - SAMtools out-of-bounds read in fixmate subcommand
 
-Fix status:
-Unpatched as of 2026-10-27 (master, 4.7.2, 4.7.1, 4.7). Publicly
-reported as Godot issue #121640 on 2026-07-22 (ASan reproduction on
-4.4.1, 4.7 reproduction supplied the same day; issue open, labeled
-needs testing); independently found and privately reported to
-security@...otengine.org on 2026-10-07. PR #118043 (closed unmerged
-2026-07-06) guards a different overflow in the same check and would
-not have stopped this reproduction.
 
-CVE status:
-Requested from MITRE's CNA-LR on 2026-10-27 (CAN-2026-2040954), filed
-after publication. This thread will be self-replied when the record
-publishes.
+Stack write overflow in samtools mpileup read groups file reader
+================================================================
 
-[1] https://axeghost.offprint.app/a/3myukb53ww723-a-malicious-game-server-can-crash-the-godot-clients-that-join-it
+
+Description
+-----------
+
+SAMtools is a program for reading, manipulating and writing
+bioinformatics file formats. The mpileup command outputs DNA sequences
+that have been aligned against a known reference. One of the options
+to mpileup allows filtering of data against a list of "read groups"
+stored in a file. The data in this file was read into a fixed-size
+buffer on the stack using the C scanf() function without specifying
+the size of the destination. If an item in the file was long enough,
+user-controlled data would be written to memory beyond the end of the
+stack buffer.
+
+Impact
+------
+
+Exploiting this bug causes a stack write overflow. If a user opens a
+file crafted to exploit this issue, it could lead to the program
+crashing, or overwriting of data in ways not expected by the
+program. It may be possible to use this to obtain arbitrary code
+execution.
+
+Severity
+--------
+
+High: 7.1/10
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
+
+Patches
+-------
+
+Versions 1.21.3, 1.22.4, 1.23.3, 1.24.1 and 1.25 include fixes for this issue.
+
+Workarounds
+-----------
+
+There is no workaround for this issue.
+
+References
+----------
+
+https://github.com/samtools/samtools/security/advisories/GHSA-vh3p-9c59-j3hv
+
+
+Use-after-free in samtools mpileup leading to an invalid read
+=============================================================
+
+
+Description
+-----------
+
+SAMtools is a program for reading, manipulating and writing
+bioinformatics file formats. The mpileup command outputs DNA sequences
+that have been aligned against a known reference. On each output line
+it writes the reference position, optionally the reference DNA base at
+that position (obtained from a separate file) and all of the DNA bases
+that aligned to that position. As the output is ordered by position,
+reference data that is no longer needed is discarded once it has been
+printed out. Under certain conditions the data could be discarded too
+early, leading to an attempt to read from a pointer to freed
+memory. While previous fixes had attempted to address this problem, it
+unfortunately resurfaced following an update to try to reduce cache
+thrashing as some inputs broke assumptions on which references were
+still in use.
+
+Impact
+------
+
+This bug may allow information about program state to be leaked. It
+may also cause a program crash through an attempt to access invalid
+memory.
+
+Severity
+--------
+
+Moderate: 6.9/10
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
+
+Patches
+-------
+
+This bug is fixed in versions 1.23.3, 1.24.1 and 1.25.
+
+Workarounds
+-----------
+
+There is no workaround for this issue.
+
+References
+----------
+
+https://github.com/samtools/samtools/security/advisories/GHSA-xj7m-w8mc-xvf2
+
+Credits
+-------
+
+Thanks to James Smagala for reporting this issue
+
+
+Out-of-bounds reads and NULL pointer dereferences due to failure to validate data types
+=======================================================================================
+
+
+Description
+-----------
+
+SAMtools is a program for reading, manipulating and writing
+bioinformatics file formats. The DNA sequence alignment formats
+supported by SAMtools allow optional typed data to be stored for each
+record in the file. String-type data is stored as a keys and type code
+followed by a zero-terminated character array in the manner of C
+strings. In a number of places, the strings were accessed without
+proper validation of the type code for the stored data. Depending on
+where this happened, this could result in either a NULL pointer or an
+unterminated string being passed to C functions such as strcmp() or
+strdup(), leading to either a NULL pointer dereference, or a read past
+the end of the stored data.
+
+Impact
+------
+
+This bug may allow information about program state to be leaked. It
+may also cause a program crash through an attempt to access invalid
+memory.
+
+Severity
+--------
+
+Moderate: 6.9/10
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
+
+Patches
+-------
+
+Versions 1.21.3, 1.22.4, 1.23.3, 1.24.1 and 1.25 include fixes for this issue.
+
+Workarounds
+-----------
+
+There is no workaround for this issue.
+
+References
+----------
+
+https://github.com/samtools/samtools/security/advisories/GHSA-3j6q-r48h-wvm3
+
+
+SAMtools out-of-bounds read in fixmate subcommand
+=================================================
+
+Details
+-------
+
+SAMtools is a program for reading, manipulating and writing
+bioinformatics file formats. The sequence alignment formats allow
+information about DNA base modifications to be stored on alignment
+records in the form of MM, ML and MN tagged auxiliary data (See
+https://samtools.github.io/hts-specs/SAMtags.pdf#subsection.1.7). Due
+to a bug in the samtools fixmates sub-command, if the -M option was
+used, but some or all of the tags used to describe base modifications
+were not present, the program would incorrectly set a length
+parameter, and then attempt to write data from beyond the end of the
+buffer used to store the alignment data to its output file.
+
+Impact
+------
+
+This bug may allow information about program state to be leaked. It
+may also cause a program crash through an attempt to access invalid
+memory.
+
+Severity
+--------
+
+Moderate: 5.3/10
+
+CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
+
+Patches
+-------
+
+Versions 1.21.3, 1.22.4, 1.23.3, 1.24.1 and 1.25 include fixes for this issue.
+
+Workarounds
+-----------
+
+There is no workaround for this issue.
+
+References
+----------
+
+https://github.com/samtools/samtools/security/advisories/GHSA-f423-v554-fwqr
+
+----------------------------------------------------------------------
+The Wellcome Sanger Institute is operated by Genome Research Limited, a charity registered in England with number 1021457 and a company registered in England with number 2742969, whose registered office is Wellcome Sanger Institute, Wellcome Genome Campus, Hinxton, CB10 1SA.
