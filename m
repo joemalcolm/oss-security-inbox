@@ -1,63 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/27/10
-Message-ID: <27852fe1-a371-47d5-b1eb-8b1e27fa6531@oracle.com>
-Date: Tue, 27 Oct 2026 14:53:23 -0700
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/27/3
+Message-ID: <ad8263c0-25fd-4d01-bd3c-466dabf0ad37@suse.de>
+Date: Tue, 27 Oct 2026 12:57:23 +0100
+From: Ricardo Branco <rbranco@...e.de>
 To: oss-security@...ts.openwall.com
-Subject: Vulnerabilities in golang.org/x/net
+Subject: Seccomp denylist bypass via 32-bit syscall argument truncation
 Content-Type: text/plain; charset=utf-8
 
--------- Forwarded Message --------
-Subject: 	[security] Vulnerabilities in golang.org/x/net
-Date: 	Tue, 27 Oct 2026 19:53:49 +0000
-From: 	announce@...ang.org
-To: 	golang-nuts@...glegroups.com
+Hello,
+
+I am writing to share details regarding a seccomp filter bypass pattern
+affecting several projects (including containerd, Podman, systemd, and
+QEMU) that rely on denylists for system call argument inspection.
+
+The issue stems from an evaluation mismatch between seccomp-bpf and the
+Linux kernel when 32-bit integer arguments are passed via 64-bit CPU
+registers on 64-bit architectures.
 
 
-Hello gophers,
+Vulnerability Details
+=====================
 
-We have tagged version v0.62.0 of golang.org/x/net in order to address the 
-following security issues:
+Many system calls accept 32-bit integers as arguments. For example, the
+first argument to socket(2) (the address family/domain) is an 'int'. On
+64-bit architectures, this argument is loaded into a 64-bit register.
 
-   * html: avoid quadratic complexity when coalescing text nodes
+When handling the system call, the kernel implicitly ignores or
+truncates the upper 32 bits. However, seccomp filters inspect the full
+64-bit register value unless an explicit mask is applied.
 
-     When coalescing adjacent text nodes in addText and fosterParent,
-     appending to an existing TextNode's Data via string concatenation
-     (n.Data += text) reallocated and copied the accumulated string on every
-     token. Inputs containing many short text runs separated by ignored end
-     tags (such as "a") caused O(n^2) allocations and byte copies.
+When a seccomp profile implements a denylist for a specific argument
+value, an attacker can bypass the filter by setting non-zero bits in
+the upper 32 bits of the register:
 
-     Accumulate coalesced text in per-node byte slices during parsing and
-     materialize Data strings once at the end of parse.
+1. A seccomp rule attempts to block socket creation for AF_VSOCK (0x28)
+    by matching on (arg0 == 0x28).
+2. The caller passes 0x100000028 in the corresponding 64-bit register.
+3. Seccomp evaluates (0x100000028 == 0x28), which evaluates to false.
+    The denylist rule is not triggered, and seccomp allows the syscall.
+4. The kernel receives the syscall, casts/truncates the argument to a
+    32-bit int (0x28), and creates the AF_VSOCK socket.
 
-     Thanks to Markus Magnuson for reporting this issue.
+Impact
+======
 
-     This is CVE-2026-78661 and Go issue <https://go.dev/issue/82224>.
+Among the projects reviewed, systemd was the most significantly
+affected (see issue #44134). While RestrictAddressFamilies= allowed
+bypassing socket family restrictions, the impact on RestrictNamespaces=
+is particularly critical.
 
-   * html: check all ancestor namespace transitions when rendering raw text
+RestrictNamespaces= relies on seccomp to prevent services from creating
+or joining namespaces via unshare(2), clone(2), and setns(2). Because
+32-bit flag arguments were matched without masking upper register bits,
+denylist configurations could be bypassed.
 
-     In childTextNodesAreLiteral, walking up the tree previously stopped at
-     the nearest foreign ancestor once an HTML integration point was found.
-     However, that integration point may itself be a descendant of an element
-     that was foster-parented into a foreign namespace (such as or
-     fostered under ), causing a parser to resolve the
-     subtree in a different foreign namespace upon re-parsing the rendered
-     output.
 
-     Continue walking the full ancestor chain and verify that every
-     transition from a non-empty namespace occurs at an HTML integration
-     point before emitting literal text.
+Remediation
+===========
 
-     Thanks to Ali Sherif (<https://www.linkedin.com/in/ali-sherif-13812b276>)
-     for reporting this issue.
+To prevent this bypass:
 
-     This is CVE-2026-97045 and Go issue <https://go.dev/issue/82622>.
+1. Argument Masking:
+    Filters must mask 32-bit arguments to their low 32 bits before
+    evaluating them (e.g., using SCMP_CMP_MASKED_EQ in libseccomp).
 
-Cheers,
-Go Security team
+2. Allowlists over Denylists:
+    Avoid denylists for system call arguments. Enforcing a strict
+    default-deny policy with an allowlist of valid 64-bit values
+    inherently prevents unexpected upper-bit payloads.
 
--- 
-You received this message because you are subscribed to the Google Groups 
-"golang-announce" group.
-To view this discussion visit 
-https://groups.google.com/d/msgid/golang-announce/01d2301f.CAAACabVFtIAAAAAAAAAA-p9MGAAAYKKSQYAAAAAADE8OwBq4QFN%40mailjet.com
+Documentation patches addressing this pitfall have been submitted across
+the libseccomp C, Go, and Rust bindings.
+
+
+Background and Tooling
+======================
+
+This behavior was identified during seccomp profile analysis using
+seccat (a tool converting seccomp JSON to/from a compact DSL) and
+secprobe (a non-destructive rule testing utility leveraging
+seccomp_unotify(2) to inspect syscalls without executing them).
+
+https://github.com/ricardobranco777/seccat
+
+An improvement to seccomp-tools was suggested:
+   https://github.com/david942j/seccomp-tools/issues/407
+
+
+Affected Projects and References
+================================
+
+- containerd:
+https://github.com/containerd/containerd/issues/14348
+
+- Podman (container-libs):
+https://github.com/podman-container-tools/container-libs/issues/1248
+
+- QEMU:
+   https://gitlab.com/qemu-project/qemu/-/work_items/4671
+
+- systemd:
+   https://github.com/systemd/systemd/issues/44134
+   https://github.com/systemd/systemd/issues/44148
+
+
+
+Best regards,
+Ricardo Branco
