@@ -1,43 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/22
-Message-ID: <6ff98b4c-c1fd-dbd3-2d31-ecfeee606a24@apache.org>
-Date: Wed, 28 Oct 2026 20:20:12 +0000
-From: Andrew Stitcher <astitcher@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/7
+Message-ID: <CAMVt_Aw3vPSeE7uPGUTEeSM-_kdb95=oUjk++Z2wAQBU0PtHQw@mail.gmail.com>
+Date: Wed, 28 Oct 2026 21:45:07 +0530
+From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-105031: Apache Qpid Proton C: The OpenSSL TLS implementation adds a locally trusted certificate authority to the existing trusted system trust anchors. 
+Subject: CVE-2026-83525: Apache Kafka: Incorrect boolean operator in FetchSnapshot RPC handler allows authenticated network clients to crash the KRaft controller via a malformed request.
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low
 
 Affected versions:
 
-- Apache Qpid Proton C through 0.40.0
+- Apache Kafka 2.8.0 before 4.2.2
+- Apache Kafka 4.3.0 before 4.3.2
 
 Description:
 
-When using the OpenSSL TLS implementation, both the pn_ssl_domain_set_trusted_ca_db() & pn_tls_config_set_trusted_certs() APIs added to rather than replaced the default system trust anchors. Leading to potentially trusting unexpected peer certificates.
+Incorrect operator (CWE-480) in the FetchSnapshot RPC handler
+in Apache Kafka from 2.8.0 before 4.2.2, and from 4.3.0 before 4.3.2
+on all platforms allows an authenticated attacker with
+CLUSTER_ACTION privilege to cause a denial of service
+(controller process termination) via a crafted
+FetchSnapshotRequest with an empty topics array or a topic
+with no partitions.
 
+Users are recommended to upgrade to version 4.2.2, 4.3.2, or
+4.4.0, which fix this issue. Users on unsupported branches
+(4.1.x and earlier) should upgrade to 4.2.2 or later.
 
+Credit:
 
-This can be worked around by setting the SSL_CERT_FILE environment variable for the application to /dev/null.
-
-
-
-This issue does not affect the Win32 SChannel TLS implementation.
-
-
-
-This issue affects Apache Qpid Proton C: through 0.40.0.
-
-
-
-Users are recommended to upgrade to version 0.41.1, which fixes the issue.
-
-This issue is being tracked as PROTON-2976 
+Mike Read (GitHub: Michael-JRead) (reporter)
+Kevin Wu <kwu@...fluent.io> (remediation developer)
 
 References:
 
-https://qpid.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-105031
-https://issues.apache.org/jira/browse/PROTON-2976
-
+https://kafka.apache.org/cve-list
+https://www.cve.org/CVERecord?id=CVE-2026-83525
