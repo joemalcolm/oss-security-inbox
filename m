@@ -1,485 +1,65 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/21
-Message-ID: <5ddb3c9b-990a-4418-8783-4ea851219ded@cpansec.org>
-Date: Wed, 28 Oct 2026 17:43:36 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/12
+Message-ID: <CAMVt_Aw2O6c-gZLX8Q8Nj5S8g4FwwWT+VwRoNx8Rmi4-WA4uRg@mail.gmail.com>
+Date: Wed, 28 Oct 2026 21:53:12 +0530
+From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: MIME-tools versions before 5.521 for Perl (10 CVEs)
+Subject: CVE-2026-111115: Apache Kafka: Broker OutOfMemoryError via tagged-field allocation amplification in flexible protocol request parsing
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-116264
-   MIME::Field::ParamVal versions before 5.521 for Perl allow one
-   invalid Content-Type parameter to hide the parameters after it,
-   including the multipart boundary
-
-CVE-2026-116265
-   MIME::Field::ParamVal versions before 5.521 for Perl do not flag an
-   ambiguous multipart boundary written as RFC 2231 continuations
-
-CVE-2026-116266
-   MIME::Head versions from 5.518 before 5.521 for Perl decode a partly
-   encoded multipart boundary without flagging the parse as ambiguous
-
-CVE-2026-116267
-   MIME::Parser versions before 5.521 for Perl allow memory exhaustion
-   via indented error messages from a truncated, deeply nested message
-
-CVE-2026-116268
-   MIME::Field::ParamVal versions before 5.521 for Perl allow CPU
-   exhaustion via unclosed comments in header parameters
-
-CVE-2026-116269
-   MIME::Field::ParamVal versions before 5.521 for Perl turn an RFC 2231
-   filename with a hyphenated language tag into an empty recommended
-   filename
-
-CVE-2026-116270
-   MIME::Words versions before 5.521 for Perl allow memory exhaustion
-   via repeated "=?" sequences in decode_mimewords
-
-CVE-2026-116271
-   MIME::Parser::FileUnder versions before 5.521 for Perl reuse a
-   pre-created output directory and follow symlinks in it, letting local
-   users redirect attachment writes
-
-CVE-2026-116272
-   MIME::Field::ParamVal versions before 5.521 for Perl do not flag a
-   duplicate boundary parameter whose name contains a nested comment
-
-CVE-2026-116273
-   MIME::Parser versions before 5.521 for Perl set no limit on the
-   number of message parts by default, allowing memory exhaustion
-
-
-========================================================================
-CVE-2026-116264                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116264
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Field::ParamVal versions before 5.521 for Perl allow one invalid
-Content-Type parameter to hide the parameters after it, including the
-multipart boundary
-
-Description
------------
-MIME::Field::ParamVal versions before 5.521 for Perl allow one invalid
-Content-Type parameter to hide the parameters after it, including the
-multipart boundary.
-
-Parameter parsing stops at the first parameter whose name it cannot
-read, such as x:y=1 or a name containing an 8-bit byte, and drops every
-parameter after it. When the boundary is among them, MIME::Parser keeps
-the multipart body as a single undecoded part without marking the parse
-as ambiguous.
-
-Mail readers that skip the invalid parameter still find the boundary. A
-remote sender can hide an attachment from a filter that relies on
-ambiguous_content() while the recipient's mail client shows it.
-
-Problem types
--------------
-- CWE-436 Interpretation Conflict
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116265                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116265
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Field::ParamVal versions before 5.521 for Perl do not flag an
-ambiguous multipart boundary written as RFC 2231 continuations
-
-Description
------------
-MIME::Field::ParamVal versions before 5.521 for Perl do not flag an
-ambiguous multipart boundary written as RFC 2231 continuations.
-
-The boundary ambiguity checks look only at a plain boundary= parameter,
-and a boundary split into RFC 2231 sections (boundary*0=, boundary*1=
-and so on) is joined after they have run. A repeated section number is
-concatenated rather than reported as a duplicate. From version 5.518,
-an encoded word or trailing whitespace in such a boundary also goes
-unflagged, although multipart_boundary() decodes or strips it.
-
-A remote sender can make MIME::Parser split a message on a different
-boundary than other mail readers, hiding an attachment from a filter
-that relies on ambiguous_content() while the recipient's mail client
-shows it.
-
-Problem types
--------------
-- CWE-436 Interpretation Conflict
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116266                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116266
-
-   Distribution:  MIME-tools
-       Versions:  from 5.518 before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Head versions from 5.518 before 5.521 for Perl decode a partly
-encoded multipart boundary without flagging the parse as ambiguous
-
-Description
------------
-MIME::Head versions from 5.518 before 5.521 for Perl decode a partly
-encoded multipart boundary without flagging the parse as ambiguous.
-
-The multipart_boundary() method decodes RFC 2047 encoded words anywhere
-in the boundary, but the ambiguity check only fires when the whole
-value is one encoded word. A boundary such as abc=?us-ascii?Q?def?= is
-used as abcdef, and ambiguous_content() returns false.
-
-Encoded words are not allowed in parameters, so other mail readers
-split the message on the literal value. A remote sender can hide an
-attachment from a filter that relies on ambiguous_content() while the
-recipient's mail client shows it.
-
-Problem types
--------------
-- CWE-436 Interpretation Conflict
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116267                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116267
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Parser versions before 5.521 for Perl allow memory exhaustion via
-indented error messages from a truncated, deeply nested message
-
-Description
------------
-MIME::Parser versions before 5.521 for Perl allow memory exhaustion via
-indented error messages from a truncated, deeply nested message.
-
-Each stored parser diagnostic is indented by three spaces per nesting
-level. When a message nested N levels deep ends without its closing
-boundaries, every level logs an error at its own depth, so the stored
-diagnostics grow with the square of N. The defaults place no limit on
-nesting depth.
-
-Problem types
--------------
-- CWE-407 Inefficient Algorithmic Complexity
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116268                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116268
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Field::ParamVal versions before 5.521 for Perl allow CPU
-exhaustion via unclosed comments in header parameters
-
-Description
------------
-MIME::Field::ParamVal versions before 5.521 for Perl allow CPU
-exhaustion via unclosed comments in header parameters.
-
-The comment pattern used to parse Content-Type and Content-Disposition
-parameters scans from each "(" to the next ")". In a field with no ")",
-every "(" scans to the end of the header and fails, so parsing takes
-time quadratic in the header length. The field is parsed again on each
-attribute lookup, several times per MIME entity.
-
-A 40 KB header takes about 7 seconds to parse once.
-
-Problem types
--------------
-- CWE-1333 Inefficient Regular Expression Complexity
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116269                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116269
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Field::ParamVal versions before 5.521 for Perl turn an RFC 2231
-filename with a hyphenated language tag into an empty recommended
-filename
-
-Description
------------
-MIME::Field::ParamVal versions before 5.521 for Perl turn an RFC 2231
-filename with a hyphenated language tag into an empty recommended
-filename.
-
-A parameter such as filename*=utf-8'en-US'payload.exe is converted to
-an encoded word with the language tag appended to the charset. The
-decoder strips the language suffix only when it is a single word, so it
-cannot resolve the charset UTF-8*EN-US and returns an empty string. The
-recommended_filename() method returns that empty string rather than
-falling back to the name parameter.
-
-Other mail readers return payload.exe. A remote sender can get an
-attachment past a policy that checks file extensions on the recommended
-filename.
-
-Problem types
--------------
-- CWE-436 Interpretation Conflict
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116270                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116270
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Words versions before 5.521 for Perl allow memory exhaustion via
-repeated "=?" sequences in decode_mimewords
-
-Description
------------
-MIME::Words versions before 5.521 for Perl allow memory exhaustion via
-repeated "=?" sequences in decode_mimewords.
-
-For each "=?" that does not start a complete encoded word,
-decode_mimewords appends an error message containing the whole input
-string to $@. A boundary of 8,000 "=?" pairs (16,000 bytes) adds 8,000
-copies of itself to $@, about 128 MB.
-
- From version 5.518, MIME::Parser decodes every multipart boundary this
-way, so a remote sender can exhaust the memory of the parsing process
-with one Content-Type header.
-
-Problem types
--------------
-- CWE-407 Inefficient Algorithmic Complexity
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116271                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116271
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Parser::FileUnder versions before 5.521 for Perl reuse a
-pre-created output directory and follow symlinks in it, letting local
-users redirect attachment writes
-
-Description
------------
-MIME::Parser::FileUnder versions before 5.521 for Perl reuse a
-pre-created output directory and follow symlinks in it, letting local
-users redirect attachment writes.
-
-Each message is written to a directory named msg-<time>-<pid>-<n> under
-the output base, and an existing directory of that name is used as is.
-A file name counts as unused when nothing exists at that path, which
-holds for a dangling symlink, and the body file is then opened in a way
-that follows the link.
-
-When the output base is writable by other users, as with
-output_under("/tmp"), a local user can pre-create the directory with a
-symlink named like an attachment. The parser then writes the attachment
-to the link target with the privileges of the parsing process.
-
-Problem types
--------------
-- CWE-59 Improper Link Resolution Before File Access ('Link Following')
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116272                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116272
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Field::ParamVal versions before 5.521 for Perl do not flag a
-duplicate boundary parameter whose name contains a nested comment
-
-Description
------------
-MIME::Field::ParamVal versions before 5.521 for Perl do not flag a
-duplicate boundary parameter whose name contains a nested comment.
-
-A parameter written boundary((c))="A" or boundary(\))="A" is stored
-under that literal name rather than as boundary. A second boundary
-parameter is then not reported as a duplicate, and MIME::Parser splits
-the message on it.
-
-Readers that skip comments as RFC 5322 allows take the first boundary
-instead. A remote sender can hide an attachment from a filter that
-relies on ambiguous_content() while the recipient's mail client shows
-it.
-
-Problem types
--------------
-- CWE-436 Interpretation Conflict
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-========================================================================
-CVE-2026-116273                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-116273
-
-   Distribution:  MIME-tools
-       Versions:  before 5.521
-       MetaCPAN:  https://metacpan.org/dist/MIME-tools
-       VCS Repo:  https://salsa.debian.org/dskoll/mime-tools
-
-
-MIME::Parser versions before 5.521 for Perl set no limit on the number
-of message parts by default, allowing memory exhaustion
-
-Description
------------
-MIME::Parser versions before 5.521 for Perl set no limit on the number
-of message parts by default, allowing memory exhaustion.
-
-The max_parts option defaulted to -1, which disables the limit, so a
-parser created with default settings builds an entity for every part
-however many a message has.
-
-Version 5.521 sets max_parts to 1000 and max_depth to 64 by default.
-Setting either to -1 still removes the limit.
-
-Problem types
--------------
-- CWE-1188 Initialization of a Resource with an Insecure Default
-- CWE-770 Allocation of Resources Without Limits or Throttling
-
-Solutions
----------
-Upgrade to MIME-tools 5.521 or later.
-
-References
-----------
-https://metacpan.org/release/DSKOLL/MIME-tools-5.521/changes
-
-
-
+Severity: important
+
+Affected versions:
+
+- Apache Kafka 2.4.0 through 4.1.2
+- Apache Kafka 4.2.0 through 4.2.1
+- Apache Kafka 4.3.0 through 4.3.1
+
+Description:
+
+Apache Kafka's code-generated readers for flexible protocol versions
+read a tagged-field count declared by the sender and retain a
+RawTaggedField object for each unknown field. That count was bounded
+only by the outer request frame size (socket.request.max.bytes); it
+was not checked against the remaining buffer bytes or capped. Because
+each entry can be encoded in as little as two bytes (unknown tag 0,
+size 0), a modest request can declare tens of millions of tagged
+fields and force one object allocation per declared field. Flexible
+request headers (header version 2, used by flexible APIs such as
+ApiVersions v3) are parsed this way, so the amplification applies to
+the request header itself.
+
+
+Impact:
+The flexible request header is parsed on the network thread before
+authorization, request dispatch, and request-time quota accounting. A
+client can send a request of a few tens of megabytes whose header
+declares about 20 million tagged fields, forcing roughly that many
+RawTaggedField allocations and exhausting broker heap or inducing
+process-wide GC stalls, denying broker service. Because the header is
+parsed for pre-authentication APIs such as ApiVersions (v3), the
+allocation can occur before authentication; no Kafka resource ACL or
+quota is required.
+
+Mitigation:
+Upgrade to Apache Kafka 4.2.2, 4.3.2, or 4.4.0. Until then, lowering
+socket.request.max.bytes and restricting network access to broker
+listeners reduces, but does not remove, exposure.
+
+Resolution:
+>From Apache Kafka 4.2.2, 4.3.2, and 4.4.0: generated readers
+bounds-check the tagged-field count for flexible-versioned messages,
+rejecting a negative count, a count exceeding the remaining buffer
+bytes, or a count exceeding a fixed maximum (10,000), before any
+per-field allocation.
+
+Credit:
+
+Mufeed VH  <mufeed@...func.com> (finder)
+Vivek R <vivek@...func.com> (finder)
+Shay Elkin <selkin@...fluent.io> (remediation developer)
+
+References:
+
+https://kafka.apache.org/cve-list
+https://www.cve.org/CVERecord?id=CVE-2026-111115
