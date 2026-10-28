@@ -1,74 +1,70 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/8
-Message-ID: <CAMVt_AxvXqHZoNWsLj1NjGs5LLLMAn99qNPbhusq18PC_P_fnQ@mail.gmail.com>
-Date: Wed, 28 Oct 2026 21:47:45 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/15
+Message-ID: <CAMVt_AxqL3AKtXqXbReptDaXAMmVPusMJNDFyEJa-SQ1_zP8NA@mail.gmail.com>
+Date: Wed, 28 Oct 2026 21:55:55 +0530
 From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-110952: Apache Kafka: Broker does not enforce JWT issuer and audience validation for SASL/OAUTHBEARER by default
+Subject: CVE-2026-115644: Apache Kafka: Connect Admin REST API Authentication Bypass via Unapplied REST Extensions
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: low
 
 Affected versions:
 
-- Apache Kafka 3.1.0 before 4.4.0
+- Apache Kafka 2.4.0 before 4.2.2
+- Apache Kafka 4.3.0 before 4.3.2
 
 Description:
 
-A Kafka broker that authenticates clients with SASL/OAUTHBEARER using
-the bundled JWKS-backed validator always verifies the JWT signature,
-but two further checks are only performed when explicitly configured:
+Apache Kafka Connect contains an authentication bypass vulnerability
+affecting the admin REST API when admin.listeners is configured with a
+separate listener from the main listeners property.
 
-- The issuer (iss) claim is verified only when
-sasl.oauthbearer.expected.issuer is set. When it is unset, a
-validly-signed token carrying the expected audience is accepted
-regardless of which issuer minted it.
-- An audience (aud) claim is required only when
-sasl.oauthbearer.expected.audience is set. When it is unset, a
-validly-signed token that omits the aud claim is accepted. (A token
-that carries an aud claim is
-  still rejected when no expected audience is configured.)
+When operators isolate the admin REST API by explicitly configuring
+the "admin.listeners" property, REST extensions specified via
+rest.extension.classes (such as BasicAuthSecurityRestExtension) are
+not registered or applied to the admin resource configuration.
 
-Both options default to unset and have been documented as optional
-(Importance LOW) since KIP-768 (3.1.0).
+While the primary REST API listener (configured via listeners)
+enforces configured authentication and authorization filters,
+endpoints mounted under the separate admin listener (/admin/loggers)
+fail to inherit or instantiate these extension filters. As a result,
+the admin logger endpoint accepts unauthenticated read and write
+requests even when security extensions are active on the main
+listener.
 
 Impact:
-  The exposure is realizable mainly in deployments whose JWKS endpoint
-serves signing keys for more than one issuer (a multi-tenant identity
-provider, an aggregated/shared JWKS, or shared signing keys): a token
-  minted for a different issuer, or a token lacking an audience, may
-be accepted to authenticate — potentially as a higher-privileged
-principal. In a single-issuer deployment where the provider controls
-the iss
-  claim and issues audience-scoped tokens, exposure is limited. The
-signature trust anchor remains enforced in all cases. This is distinct
-from CVE-2026-33557 (acceptance of unsigned/unvalidated tokens); here
-the
-  signature is validated and only the issuer/audience checks are not
-enforced by default.
 
-Mitigation (all affected versions, no upgrade required):
-  Set both sasl.oauthbearer.expected.issuer (to your provider's exact
-iss value) and sasl.oauthbearer.expected.audience (to the audience(s)
-your brokers expect), per listener. Brokers that set these perform
-  exact-match issuer/audience checks and are not affected. Both have
-been available since 3.1.0.
+An unauthenticated attacker with network access to the admin listener can:
+
+  1. Read the complete set of logger names and levels, disclosing
+loaded class names and which security extensions are in use.
+  2. Write logger levels, including with scope=cluster which
+propagates the change to all workers in the Connect cluster. This can
+be used to suppress
+     logging (setting root to OFF) or generate excessive log output
+(setting root to TRACE), potentially impacting availability and
+observability.
+
+Mitigation:
+
+  Users who cannot upgrade immediately can remove the admin.listeners
+configuration (or leave it unset). When unset, admin resources share
+the regular listener and inherit its security extensions.
 
 Resolution:
-  From Apache Kafka 4.4.0: a broker configured with a JWKS endpoint
-fails to start unless both sasl.oauthbearer.expected.issuer and
-sasl.oauthbearer.expected.audience are set (secure by default).
-Deployments that
-  intentionally do not restrict the issuer and/or audience may opt out
-per axis with sasl.oauthbearer.allow.unverified.issuer=true and/or
-sasl.oauthbearer.allow.unverified.audience=true.
+
+
+>From Apache Kafka 4.2.2, 4.3.2, and 4.4.0, we make sure the REST
+extensions specified via "rest.extension.classes" will also apply to
+"admin.listeners".
 
 Credit:
 
-Kai Aizen <kai.aizen.dev@...il.com>, SnailSploit (reporter)
-Evan Zhou <ezhou@...fluent.io> (remediation developer)
+Bartłomiej Dmitruk <bartek@...iga.ai>, Striga (reporter)
+Mickael Maison <mickael.maison@...il.com> (remediation developer)
 
 References:
 
 https://kafka.apache.org/cve-list
-https://www.cve.org/CVERecord?id=CVE-2026-110952
+https://www.cve.org/CVERecord?id=CVE-2026-115644
