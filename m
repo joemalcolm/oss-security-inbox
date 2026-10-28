@@ -1,70 +1,91 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/15
-Message-ID: <CAMVt_AxqL3AKtXqXbReptDaXAMmVPusMJNDFyEJa-SQ1_zP8NA@mail.gmail.com>
-Date: Wed, 28 Oct 2026 21:55:55 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/18
+Message-ID: <CAMVt_Ay9RnjRM5TVQKmQH_a-eX+tg3qJZrrJbAmbRibH_o6u7g@mail.gmail.com>
+Date: Wed, 28 Oct 2026 21:58:10 +0530
 From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-115644: Apache Kafka: Connect Admin REST API Authentication Bypass via Unapplied REST Extensions
+Subject: CVE-2026-114349: Apache Kafka: Denial of service via unbounded memory allocation when decoding compressed record batches
 Content-Type: text/plain; charset=utf-8
 
-Severity: low
+Severity: important
 
 Affected versions:
 
-- Apache Kafka 2.4.0 before 4.2.2
-- Apache Kafka 4.3.0 before 4.3.2
+- Apache Kafka 0.11.0.0 through 4.1.2
+- Apache Kafka 4.2.0 through 4.2.1
+- Apache Kafka 4.3.0 through 4.3.1
 
 Description:
 
-Apache Kafka Connect contains an authentication bypass vulnerability
-affecting the admin REST API when admin.listeners is configured with a
-separate listener from the main listeners property.
+When a broker decodes a compressed record batch, the per-record
+decoder reads a declared body size from the decompressed stream and
+allocates a buffer of that size before validating it against the bytes
+available or any configured limit. The size is attacker-controlled,
+and the batch CRC does not constrain it, so a small (around 90-byte),
+CRC-valid compressed produce request can declare a body size of up to
+about 2 GiB and force the broker to attempt that allocation, raising
+OutOfMemoryError. The record size limit (max.message.bytes), the
+request size limit, and client/broker quotas bound only the compressed
+wire size, not the declared decompressed size.
 
-When operators isolate the admin REST API by explicitly configuring
-the "admin.listeners" property, REST extensions specified via
-rest.extension.classes (such as BasicAuthSecurityRestExtension) are
-not registered or applied to the admin resource configuration.
-
-While the primary REST API listener (configured via listeners)
-enforces configured authentication and authorization filters,
-endpoints mounted under the separate admin listener (/admin/loggers)
-fail to inherit or instantiate these extension filters. As a result,
-the admin logger endpoint accepts unauthenticated read and write
-requests even when security extensions are active on the main
-listener.
 
 Impact:
 
-An unauthenticated attacker with network access to the admin listener can:
+An authenticated principal with Write on a topic can crash broker
+request-handler threads (reached when a batch's codec differs from the
+topic's compression.type and records are re-encoded) and any consumer
+that fetches the record, denying service. On brokers started with
+-XX:+ExitOnOutOfMemoryError, a common hardening, a single crafted
+request terminates the broker JVM. More seriously, a crafted record
+is accepted at ingest and written to disk; when the log-cleaner later
+reads it on a compacted topic, the OutOfMemoryError (an Error, not an
+Exception) terminates the cleaner thread, which is not restarted. With
+the default of a single cleaner thread, log compaction then stops for
+the entire broker, including the internal __consumer_offsets and
+__transaction_state topics, and the condition persists across restarts
+until the offending record is removed. The impact is availability
+only; no data is disclosed or altered.
 
-  1. Read the complete set of logger names and levels, disclosing
-loaded class names and which security extensions are in use.
-  2. Write logger levels, including with scope=cluster which
-propagates the change to all workers in the Connect cluster. This can
-be used to suppress
-     logging (setting root to OFF) or generate excessive log output
-(setting root to TRACE), potentially impacting availability and
-observability.
 
 Mitigation:
 
-  Users who cannot upgrade immediately can remove the admin.listeners
-configuration (or leave it unset). When unset, admin resources share
-the regular listener and inherit its security extensions.
+Upgrade to Apache Kafka 4.2.2, 4.3.2, or 4.4.0, and set
+max.decompressed.message.bytes (at the broker and/or topic level) to a
+bounded value appropriate for your workload. Upgrading alone is not
+sufficient: for backward compatibility this configuration defaults to
+an effectively unlimited value (about 2 GiB), so a broker remains
+exposed until the limit is set. Choose a value at or slightly above
+the largest legitimate decompressed record your applications produce,
+and comfortably below the broker heap divided by the number of
+request-handler and cleaner threads. Until you can upgrade and
+configure the limit, restrict Write access to trusted producers;
+quotas and max.message.bytes do not mitigate this issue.
+
 
 Resolution:
 
-
->From Apache Kafka 4.2.2, 4.3.2, and 4.4.0, we make sure the REST
-extensions specified via "rest.extension.classes" will also apply to
-"admin.listeners".
+>From Apache Kafka 4.2.2, 4.3.2, and 4.4.0: the broker validates a
+record's declared decompressed body size against
+max.decompressed.message.bytes before allocating, on the
+produce-validation, log-compaction, and timestamp-lookup paths, and
+rejects oversized or negative sizes with InvalidRecordException.
+Operators must set this configuration to a bounded value to be
+protected, as its default is effectively unlimited.
 
 Credit:
 
+Peyton Kennedy <pkennedy@...or.ai> (reporter)
+Trung Nguyen <trungnh@...tack.net>, CyStack (reporter)
 Bartłomiej Dmitruk <bartek@...iga.ai>, Striga (reporter)
-Mickael Maison <mickael.maison@...il.com> (remediation developer)
+임성민 <at_haemil@...er.com> (reporter)
+Mike Read (GitHub: Michael-JRead) (reporter)
+Salman Aljardan <salman1aljardan@...il.com> (reporter)
+Yuchao Zhang <ndaugoing@...il.com> (reporter)
+Yu Bao <yubao@...pal.com>, PayPal Cyber Security Team (reporter)
+Vamsi K <xh081ix@...il.com> (reporter)
+Srinivas Akhil Mallela <srinivasakhil@...il.com> (remediation developer)
 
 References:
 
 https://kafka.apache.org/cve-list
-https://www.cve.org/CVERecord?id=CVE-2026-115644
+https://www.cve.org/CVERecord?id=CVE-2026-114349
