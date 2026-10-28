@@ -1,75 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/17
-Message-ID: <CAMVt_Aykhtq=deu+LztT6h-toCu0BtO12mNY_0fLVqUy0u61OA@mail.gmail.com>
-Date: Wed, 28 Oct 2026 21:57:40 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/10
+Message-ID: <CAMVt_Aycy3KsqVW2MkYmoZEp4kXO72cUfNE4EfhP+0mcbvDmXw@mail.gmail.com>
+Date: Wed, 28 Oct 2026 21:51:19 +0530
 From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-112375: Apache Kafka: Unauthorized principal can read arbitrary broker files via IncrementalAlterConfigs
+Subject: CVE-2026-111108: Apache Kafka: Broker OutOfMemoryError via array allocation amplification in code-generated protocol readers
 Content-Type: text/plain; charset=utf-8
 
 Severity: important
 
 Affected versions:
 
-- Apache Kafka 3.2.0 through 4.1.2
+- Apache Kafka 3.3.0 through 4.1.2
 - Apache Kafka 4.2.0 through 4.2.1
 - Apache Kafka 4.3.0 through 4.3.1
 
 Description:
 
-An authenticated Kafka principal with no authorization grants (not
-even ALTER_CONFIGS) can make a broker read a file or an environment
-variable from the broker host and return its contents. An
-IncrementalAlterConfigs (or AlterConfigs) request targeting a BROKER
-resource reaches the broker's configuration validation before any
-authorization check is applied to that path. Validation resolves
-configuration variables such as ${file:/path:key} or ${env:VAR} using
-a ConfigProvider named in the request, and this resolution bypasses
-the org.apache.kafka.automatic.config.providers allowlist that was
-added as the mitigation for CVE-2024-31141. An arbitrary
-ConfigProvider (for example FileConfigProvider or
-EnvVarConfigProvider) is therefore instantiated and the referenced
-file or environment variable is read, and a type-validation error
-returns the resolved content to the caller.
+Apache Kafka's code-generated protocol readers pre-size an array's
+collection from the element count declared by the sender. That count
+is checked only against the bytes remaining in the request buffer,
+which assumes about one byte per element; because most elements need
+several bytes, a request can declare far more elements than the buffer
+holds and still pass. For a keyed array the reader then allocates an
+ImplicitLinkedHashCollection of capacity (2 * count +1), so a request
+of a few tens of megabytes can force a heap allocation several times
+larger before any element is read. The pattern is emitted into every
+generated reader, so it affects all Kafka API types with an array
+field.
 
 
 Impact:
 
-On a cluster with an authorizer enabled, an authenticated principal
-with no authorization grants can read the contents of files accessible
-to the broker process, and the broker's environment variables,
-exposing credentials, keystores, or other secrets, defeating the
-CVE-2024-31141 allowlist. The read is bounded by the broker process's
-file permissions. The brokers and the cluster remain available; the
-issue is disclosure of file and environment- variable contents.
-Clusters with no authorizer configured are not affected in practice,
-because every principal already holds ALTER_CONFIGS there.
+Request parsing happens before any authorization check. On a listener
+that does not require authentication (for example PLAINTEXT), an
+unauthenticated attacker can send a few concurrent requests that each
+declare a very large=
+
+array length and allocate many times their wire size in broker heap,
+crashing the broker with an OutOfMemoryError. The reporter
+demonstrated three concurrent ~90 MB ProduceRequest (v3) connections
+exhausting a 1 GB heap (~8x amplification). On listeners that require
+authentication, the attacker needs valid credentials but no specific
+ACL, since parsing precedes authorization..
 
 
 Mitigation:
 
-Upgrade to Apache Kafka 4.2.2, 4.3.2, or 4.4.0. As defense in depth,
-run brokers under a least-privileged operating-system account so that
-sensitive files are not readable by the broker process.
+Upgrade to Apache Kafka 4.2.2, 4.3.2, or 4.4.0. Until then, lowering
+socket.request.max.bytes and restricting network access to broker
+listeners reduces, but does not remove, exposure.
 
 
 Resolution:
 
->From Apache Kafka 4.2.2, 4.3.2, and 4.4.0: broker configuration
-changes are authorized (ALTER_CONFIGS on the cluster) before the
-configuration is validated, and configuration- variable resolution
-enforces the config-providers allowlist.
+>From Apache Kafka 4.2.2, 4.3.2, and 4.4.0: generated readers cap the
+initial array pre-allocation at
+MessageUtil.MAX_PREALLOCATED_ARRAY_CAPACITY (1000) and grow it on
+demand, and reject a declared array length above
+MessageUtil.MAX_ARRAY_LENGTH (1,000,000).
 
 Credit:
 
-Arthur Chan <arthur.chan@...logics.com>, Ada Logics and Anthropic
-Research (reporter)
-OpenAI Codex Security - Amy Burnett and Khai Tran (reporter)
-Mickael Maison <mickael.maison@...il.com> (remediation developer)
-Manikumar Reddy <manikumar.reddy@...il.com> (remediation developer)
-Chia-Ping Tsai <chia7712@...il.com> (remediation developer)
+Mike Read (GitHub: Michael-JRead) (reporter)
+Izzy Harker <iharker@...fluent.io> (remediation developer)
+Alyssa Huang <ahuang@...fluent.io> (remediation developer)
+Truc Nguyen  <trnguyen@...fluent.io> (remediation developer)
 
 References:
 
 https://kafka.apache.org/cve-list
-https://www.cve.org/CVERecord?id=CVE-2026-112375
+https://www.cve.org/CVERecord?id=CVE-2026-111108
