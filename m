@@ -1,233 +1,89 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/27/7
-Message-ID:  <PAXPR07MB8843E033C936D12D34D966BE91602@PAXPR07MB8843.eurprd07.prod.outlook.com>
-Date: Tue, 27 Oct 2026 16:36:51 +0000
-From: Robert Davies <rmd@...ger.ac.uk>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-CC: samtools <samtools@...ger.ac.uk>
-Subject: Multiple vulnerabilities in samtools <= 1.24
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/1
+Message-ID: <5bc3b155-a835-46f0-a5c4-301c50a23277@oracle.com>
+Date: Tue, 27 Oct 2026 17:17:41 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
+To: oss-security@...ts.openwall.com
+Subject: Three TLS Bugs in GoAhead web server prior to 6.1.1
 Content-Type: text/plain; charset=utf-8
 
-Multiple vulnerabilities, listed below, have been disclosed in the samtools
-package.  These have all been fixed in a new release 1.25 and have also been
-pack-ported to versions 1.24.1, 1.23.3, 1.22.4 and 1.21.3
-
-We do not yet have CVE numbers for these as our CVE assigning authority,
-GitHub, has a long backlog.  Therefore we are linking to the GitHub pages as
-these will be updated automatically once the CVEs have been assigned.
-
-Contents
-========
-
-* High severity:
-  - Stack write overflow in samtools mpileup read groups file reader
-
-* Moderate severity:
-  - Use-after-free in samtools mpileup leading to an invalid read
-  - Out-of-bounds reads and NULL pointer dereferences due to failure to
-    validate data types
-  - SAMtools out-of-bounds read in fixmate subcommand
-
-
-Stack write overflow in samtools mpileup read groups file reader
-================================================================
-
-
-Description
------------
-
-SAMtools is a program for reading, manipulating and writing
-bioinformatics file formats. The mpileup command outputs DNA sequences
-that have been aligned against a known reference. One of the options
-to mpileup allows filtering of data against a list of "read groups"
-stored in a file. The data in this file was read into a fixed-size
-buffer on the stack using the C scanf() function without specifying
-the size of the destination. If an item in the file was long enough,
-user-controlled data would be written to memory beyond the end of the
-stack buffer.
-
-Impact
-------
-
-Exploiting this bug causes a stack write overflow. If a user opens a
-file crafted to exploit this issue, it could lead to the program
-crashing, or overwriting of data in ways not expected by the
-program. It may be possible to use this to obtain arbitrary code
-execution.
-
-Severity
---------
-
-High: 7.1/10
-
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:N/VI:H/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-
-Versions 1.21.3, 1.22.4, 1.23.3, 1.24.1 and 1.25 include fixes for this issue.
-
-Workarounds
------------
-
-There is no workaround for this issue.
-
-References
-----------
-
-https://github.com/samtools/samtools/security/advisories/GHSA-vh3p-9c59-j3hv
-
-
-Use-after-free in samtools mpileup leading to an invalid read
-=============================================================
-
-
-Description
------------
-
-SAMtools is a program for reading, manipulating and writing
-bioinformatics file formats. The mpileup command outputs DNA sequences
-that have been aligned against a known reference. On each output line
-it writes the reference position, optionally the reference DNA base at
-that position (obtained from a separate file) and all of the DNA bases
-that aligned to that position. As the output is ordered by position,
-reference data that is no longer needed is discarded once it has been
-printed out. Under certain conditions the data could be discarded too
-early, leading to an attempt to read from a pointer to freed
-memory. While previous fixes had attempted to address this problem, it
-unfortunately resurfaced following an update to try to reduce cache
-thrashing as some inputs broke assumptions on which references were
-still in use.
-
-Impact
-------
-
-This bug may allow information about program state to be leaked. It
-may also cause a program crash through an attempt to access invalid
-memory.
-
-Severity
---------
-
-Moderate: 6.9/10
-
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-
-This bug is fixed in versions 1.23.3, 1.24.1 and 1.25.
-
-Workarounds
------------
-
-There is no workaround for this issue.
-
-References
-----------
-
-https://github.com/samtools/samtools/security/advisories/GHSA-xj7m-w8mc-xvf2
-
-Credits
--------
-
-Thanks to James Smagala for reporting this issue
-
-
-Out-of-bounds reads and NULL pointer dereferences due to failure to validate data types
-=======================================================================================
-
-
-Description
------------
-
-SAMtools is a program for reading, manipulating and writing
-bioinformatics file formats. The DNA sequence alignment formats
-supported by SAMtools allow optional typed data to be stored for each
-record in the file. String-type data is stored as a keys and type code
-followed by a zero-terminated character array in the manner of C
-strings. In a number of places, the strings were accessed without
-proper validation of the type code for the stored data. Depending on
-where this happened, this could result in either a NULL pointer or an
-unterminated string being passed to C functions such as strcmp() or
-strdup(), leading to either a NULL pointer dereference, or a read past
-the end of the stored data.
-
-Impact
-------
-
-This bug may allow information about program state to be leaked. It
-may also cause a program crash through an attempt to access invalid
-memory.
-
-Severity
---------
-
-Moderate: 6.9/10
-
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-
-Versions 1.21.3, 1.22.4, 1.23.3, 1.24.1 and 1.25 include fixes for this issue.
-
-Workarounds
------------
-
-There is no workaround for this issue.
-
-References
-----------
-
-https://github.com/samtools/samtools/security/advisories/GHSA-3j6q-r48h-wvm3
-
-
-SAMtools out-of-bounds read in fixmate subcommand
-=================================================
-
-Details
--------
-
-SAMtools is a program for reading, manipulating and writing
-bioinformatics file formats. The sequence alignment formats allow
-information about DNA base modifications to be stored on alignment
-records in the form of MM, ML and MN tagged auxiliary data (See
-https://samtools.github.io/hts-specs/SAMtags.pdf#subsection.1.7). Due
-to a bug in the samtools fixmates sub-command, if the -M option was
-used, but some or all of the tags used to describe base modifications
-were not present, the program would incorrectly set a length
-parameter, and then attempt to write data from beyond the end of the
-buffer used to store the alignment data to its output file.
-
-Impact
-------
-
-This bug may allow information about program state to be leaked. It
-may also cause a program crash through an attempt to access invalid
-memory.
-
-Severity
---------
-
-Moderate: 5.3/10
-
-CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:P/VC:L/VI:N/VA:L/SC:N/SI:N/SA:N
-
-Patches
--------
-
-Versions 1.21.3, 1.22.4, 1.23.3, 1.24.1 and 1.25 include fixes for this issue.
-
-Workarounds
------------
-
-There is no workaround for this issue.
-
-References
-----------
-
-https://github.com/samtools/samtools/security/advisories/GHSA-f423-v554-fwqr
-
-----------------------------------------------------------------------
-The Wellcome Sanger Institute is operated by Genome Research Limited, a charity registered in England with number 1021457 and a company registered in England with number 2742969, whose registered office is Wellcome Sanger Institute, Wellcome Genome Campus, Hinxton, CB10 1SA.
+EmbedThis GoAhead is an embeddable web server available under GPL or
+commercial license (see https://github.com/embedthis/goahead ).
+
+It can be compiled against a choice of TLS backends.
+
+https://foxio.io/blog/choose-your-backend-three-tls-bugs-in-goahead
+discloses vulnerabilities in the GoAhead code for three of those
+backends: OpenSSL, LibreSSL, and Mbed TLS.
+
+The TLDR section on that page says:
+> GoAhead is used in hundreds of millions of IoT, Firewall, OT, and
+> Military devices including those from Palo Alto Networks, Comcast,
+> D-Link, HP, Canon, Honeywell, GE, Oracle, Siemens, Rockwell, Digi,
+> Lockheed Martin, Boeing, and more.
+> 
+> Three independent bugs in GoAhead's TLS integrations can leave revoked
+> client certificates accepted, encrypted sessions recoverable to an
+> observer or a configured chain-depth limit unenforced. Exposure
+> depends on the TLS library and the verification settings built into
+> the device:
+> 
+> * OpenSSL-compatible backend - Critical, CVSS 9.1 - CRL loaded but not
+>   enforced, revoked client certificates are silently accepted.
+>   GOAHEAD-SA-2026-0006.
+> 
+> * LibreSSL legacy verifier - High, CVSS 7.4 - An over-depth client chain
+>   is accepted when client certificates are required but issuer checking
+>   is disabled. This bypasses the chain-depth restriction.
+>   GOAHEAD-SA-2026-0004.
+> 
+> * Mbed TLS - Medium, CVSS 5.9 - A buffer-length typo reduces a 2048-bit
+>   DH modulus to one byte. TLS 1.2 DHE_RSA sessions are decryptable when
+>   the client accepts the broken parameters. GOAHEAD-SA-2026-0005.
+> 
+> 
+> TLS build:                      OpenSSL-compatible backend
+> GoAhead versions:               >= 3.4.5, <= 6.1.0
+> Required configuration:         mTLS enabled with a CRL configured. Revoked
+>                                 client certificates remain accepted even with
+>                                 issuer verification enabled.
+> Fix or mitigation:              Upgrade to 6.1.1 or later.
+> 
+> 
+> TLS build:                      Mbed TLS backend
+> GoAhead versions:               >= 4.0.2, <= 6.1.0
+> Required configuration:         TLS 1.2 DHE_RSA negotiated with a client
+>                                 that accepts the broken DH parameters.
+> Fix or mitigation:              Upgrade to 6.1.1 or later, disable finite-field
+>                                 DHE suites, or use the OpenSSL backend.
+> 
+> 
+> TLS build:                      LibreSSL legacy verifier — 3.2.x or 3.3.2–3.3.6
+> GoAhead versions:               <= 6.1.0
+> Required configuration:         VERIFY_PEER=1 and VERIFY_ISSUER=0.
+>                                 An over-depth client chain is accepted.
+> Fix or mitigation:              Enable VERIFY_ISSUER=1 with a trusted CA bundle,
+>                                 or use OpenSSL / LibreSSL 4.x.
+
+
+
+The web page then goes into much further detail I've not included here.
+
+These seem to correspond to these GHSA advisories in their repo:
+
+https://github.com/embedthis/goahead/security/advisories/GHSA-5m75-xq69-c3c5
+  OpenSSL CRL loaded but not enforced in GoAhead sslOpen() (src/openssl.c):
+  revoked client certificates are silently accepted
+
+https://github.com/embedthis/goahead/security/advisories/GHSA-fmvx-2xfx-2gq4
+  MbedTLS DH parameter truncation destroys forward secrecy: a length typo in
+  sslOpen() (src/mbedtls.c) transmits a 1-byte DH modulus on TLS 1.2 DHE-RSA
+  handshakes
+
+https://github.com/embedthis/goahead/security/advisories/GHSA-r392-vqwx-3r4g
+  mTLS client-certificate bypass: GoAhead's verifyClientCertificate() depth
+  guard is skipped when the verifier reports a prior error, accepting an
+  over-depth client chain on LibreSSL legacy-verifier builds
+
+https://github.com/embedthis/goahead/security lists additional vulnerabilities
+fixed in their 6.1.1 release.
