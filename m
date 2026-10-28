@@ -1,91 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/18
-Message-ID: <CAMVt_Ay9RnjRM5TVQKmQH_a-eX+tg3qJZrrJbAmbRibH_o6u7g@mail.gmail.com>
-Date: Wed, 28 Oct 2026 21:58:10 +0530
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/28/17
+Message-ID: <CAMVt_Aykhtq=deu+LztT6h-toCu0BtO12mNY_0fLVqUy0u61OA@mail.gmail.com>
+Date: Wed, 28 Oct 2026 21:57:40 +0530
 From: Manikumar <manikumar@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-114349: Apache Kafka: Denial of service via unbounded memory allocation when decoding compressed record batches
+Subject: CVE-2026-112375: Apache Kafka: Unauthorized principal can read arbitrary broker files via IncrementalAlterConfigs
 Content-Type: text/plain; charset=utf-8
 
 Severity: important
 
 Affected versions:
 
-- Apache Kafka 0.11.0.0 through 4.1.2
+- Apache Kafka 3.2.0 through 4.1.2
 - Apache Kafka 4.2.0 through 4.2.1
 - Apache Kafka 4.3.0 through 4.3.1
 
 Description:
 
-When a broker decodes a compressed record batch, the per-record
-decoder reads a declared body size from the decompressed stream and
-allocates a buffer of that size before validating it against the bytes
-available or any configured limit. The size is attacker-controlled,
-and the batch CRC does not constrain it, so a small (around 90-byte),
-CRC-valid compressed produce request can declare a body size of up to
-about 2 GiB and force the broker to attempt that allocation, raising
-OutOfMemoryError. The record size limit (max.message.bytes), the
-request size limit, and client/broker quotas bound only the compressed
-wire size, not the declared decompressed size.
+An authenticated Kafka principal with no authorization grants (not
+even ALTER_CONFIGS) can make a broker read a file or an environment
+variable from the broker host and return its contents. An
+IncrementalAlterConfigs (or AlterConfigs) request targeting a BROKER
+resource reaches the broker's configuration validation before any
+authorization check is applied to that path. Validation resolves
+configuration variables such as ${file:/path:key} or ${env:VAR} using
+a ConfigProvider named in the request, and this resolution bypasses
+the org.apache.kafka.automatic.config.providers allowlist that was
+added as the mitigation for CVE-2024-31141. An arbitrary
+ConfigProvider (for example FileConfigProvider or
+EnvVarConfigProvider) is therefore instantiated and the referenced
+file or environment variable is read, and a type-validation error
+returns the resolved content to the caller.
 
 
 Impact:
 
-An authenticated principal with Write on a topic can crash broker
-request-handler threads (reached when a batch's codec differs from the
-topic's compression.type and records are re-encoded) and any consumer
-that fetches the record, denying service. On brokers started with
--XX:+ExitOnOutOfMemoryError, a common hardening, a single crafted
-request terminates the broker JVM. More seriously, a crafted record
-is accepted at ingest and written to disk; when the log-cleaner later
-reads it on a compacted topic, the OutOfMemoryError (an Error, not an
-Exception) terminates the cleaner thread, which is not restarted. With
-the default of a single cleaner thread, log compaction then stops for
-the entire broker, including the internal __consumer_offsets and
-__transaction_state topics, and the condition persists across restarts
-until the offending record is removed. The impact is availability
-only; no data is disclosed or altered.
+On a cluster with an authorizer enabled, an authenticated principal
+with no authorization grants can read the contents of files accessible
+to the broker process, and the broker's environment variables,
+exposing credentials, keystores, or other secrets, defeating the
+CVE-2024-31141 allowlist. The read is bounded by the broker process's
+file permissions. The brokers and the cluster remain available; the
+issue is disclosure of file and environment- variable contents.
+Clusters with no authorizer configured are not affected in practice,
+because every principal already holds ALTER_CONFIGS there.
 
 
 Mitigation:
 
-Upgrade to Apache Kafka 4.2.2, 4.3.2, or 4.4.0, and set
-max.decompressed.message.bytes (at the broker and/or topic level) to a
-bounded value appropriate for your workload. Upgrading alone is not
-sufficient: for backward compatibility this configuration defaults to
-an effectively unlimited value (about 2 GiB), so a broker remains
-exposed until the limit is set. Choose a value at or slightly above
-the largest legitimate decompressed record your applications produce,
-and comfortably below the broker heap divided by the number of
-request-handler and cleaner threads. Until you can upgrade and
-configure the limit, restrict Write access to trusted producers;
-quotas and max.message.bytes do not mitigate this issue.
+Upgrade to Apache Kafka 4.2.2, 4.3.2, or 4.4.0. As defense in depth,
+run brokers under a least-privileged operating-system account so that
+sensitive files are not readable by the broker process.
 
 
 Resolution:
 
->From Apache Kafka 4.2.2, 4.3.2, and 4.4.0: the broker validates a
-record's declared decompressed body size against
-max.decompressed.message.bytes before allocating, on the
-produce-validation, log-compaction, and timestamp-lookup paths, and
-rejects oversized or negative sizes with InvalidRecordException.
-Operators must set this configuration to a bounded value to be
-protected, as its default is effectively unlimited.
+>From Apache Kafka 4.2.2, 4.3.2, and 4.4.0: broker configuration
+changes are authorized (ALTER_CONFIGS on the cluster) before the
+configuration is validated, and configuration- variable resolution
+enforces the config-providers allowlist.
 
 Credit:
 
-Peyton Kennedy <pkennedy@...or.ai> (reporter)
-Trung Nguyen <trungnh@...tack.net>, CyStack (reporter)
-Bartłomiej Dmitruk <bartek@...iga.ai>, Striga (reporter)
-임성민 <at_haemil@...er.com> (reporter)
-Mike Read (GitHub: Michael-JRead) (reporter)
-Salman Aljardan <salman1aljardan@...il.com> (reporter)
-Yuchao Zhang <ndaugoing@...il.com> (reporter)
-Yu Bao <yubao@...pal.com>, PayPal Cyber Security Team (reporter)
-Vamsi K <xh081ix@...il.com> (reporter)
-Srinivas Akhil Mallela <srinivasakhil@...il.com> (remediation developer)
+Arthur Chan <arthur.chan@...logics.com>, Ada Logics and Anthropic
+Research (reporter)
+OpenAI Codex Security - Amy Burnett and Khai Tran (reporter)
+Mickael Maison <mickael.maison@...il.com> (remediation developer)
+Manikumar Reddy <manikumar.reddy@...il.com> (remediation developer)
+Chia-Ping Tsai <chia7712@...il.com> (remediation developer)
 
 References:
 
 https://kafka.apache.org/cve-list
-https://www.cve.org/CVERecord?id=CVE-2026-114349
+https://www.cve.org/CVERecord?id=CVE-2026-112375
