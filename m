@@ -1,30 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/4
-Message-ID: <613be1da-2e8d-e5d9-037e-983f8719f4d2@apache.org>
-Date: Fri, 30 Oct 2026 01:39:58 +0000
-From: Terence Monteiro <terencemo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-64618: Apache Fineract: SQL injection vulnerability in Search API 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/3
+Message-Id: <5F1F040A-77D9-45A8-B973-01F169D456DE@stig.io>
+Date: Thu, 29 Oct 2026 22:39:10 +0100
+From: Stig Palmquist <stig@...g.io>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-115943: Spreadsheet::XLSX versions before 0.19 for Perl allow code execution via string eval of number format conditions in ExcelFmt
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+========================================================================
+CVE-2026-115943                                      CPAN Security Group
+========================================================================
 
-Affected versions:
+        CVE ID:  CVE-2026-115943
 
-- Apache Fineract through 1.15.0
+  Distribution:  Spreadsheet-XLSX
+      Versions:  before 0.19
+      MetaCPAN:  https://metacpan.org/dist/Spreadsheet-XLSX
+      VCS Repo:  https://github.com/asb-capfan/Spreadsheet-XLSX
 
-Description:
 
-Improper Neutralization of Special Elements used in an SQL Command ("SQL Injection") vulnerability exists in Apache Fineract (through version 1.15.0). The vulnerability affects the outStandingAmountPercentageCondition parameter of the /fineract-provider/api/v1/search/advance HTTP API endpoint, allowing SQL injection due to insufficient input neutralization. Users are recommended to upgrade to version 1.16.1, which will fix the issue.
+Spreadsheet::XLSX versions before 0.19 for Perl allow code execution
+via string eval of number format conditions in ExcelFmt
 
-Credit:
+Description
+-----------
+Spreadsheet::XLSX versions before 0.19 for Perl allow code execution
+via string eval of number format conditions in ExcelFmt.
 
-thiscodecc of MoyunSec Vlab and Bing (finder)
-Adam Saghy (@adamsaghy) (remediation developer)
+When a number format has a condition such as [>100], ExcelFmt chooses
+the format section by passing the condition and the cell value to a
+string eval. Both come from the workbook, and the eval runs while
+Spreadsheet::XLSX->new parses it.
 
-References:
+An attacker who supplies an XLSX file can run arbitrary Perl code.
 
-https://github.com/apache/fineract/pull/6153
-https://fineract.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-64618
+Problem types
+-------------
+- CWE-95 Improper Neutralization of Directives in Dynamically Evaluated
+  Code ('Eval Injection')
+
+Solutions
+---------
+Upgrade to Spreadsheet-XLSX 0.19 or later.
+
+References
+----------
+https://metacpan.org/release/ASB/Spreadsheet-XLSX-0.19/changes
+
+Credits
+-------
+Allen Jeanine, reporter
+
 
