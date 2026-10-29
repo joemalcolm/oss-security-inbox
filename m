@@ -1,54 +1,33 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/29/2
-Message-ID: <auNclk4pLguynoUW@yuggoth.org>
-Date: Thu, 29 Oct 2026 14:47:50 +0000
-From: Jeremy Stanley <fungi@...goth.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/29/4
+Message-ID: <92073589-e413-4692-850a-c5b76fac5ae7@oracle.com>
+Date: Thu, 29 Oct 2026 10:56:51 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-050] OpenStack keystonemiddleware: access_rules bypass via X-Service-Token (CVE-2026-115642)
+Subject: CPython [CVE-2026-116566] socket.getaddrinfo() accepts embedded null bytes in host and port
 Content-Type: text/plain; charset=utf-8
 
-=========================================================================
-OSSA-2026-050: keystonemiddleware access_rules bypass via X-Service-Token
-=========================================================================
 
-:Date: October 29, 2026
-:CVE: CVE-2026-115642
 
-Affects
-~~~~~~~
-- Keystonemiddleware: 
-   <10.9.2, >=10.10.0 <10.12.2, >=11.0.0 <12.0.1, >=13.0.0 <13.0.2
 
-Description
-~~~~~~~~~~~
-Nassim Abbaoui with OVHcloud reported a vulnerability in 
-keystonemiddleware application credential access_rules enforcement. 
-By supplying a custom X-Service-Token header in a request, anyone in 
-posession of an access-restricted application credential may bypass 
-those restrictions resulting in elevation of privileges. Deployments 
-that use application credential access_rules, or that enforce token 
-binding, are affected.
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-116566] socket.getaddrinfo() accepts 
+embedded null bytes in host and port
+Date: 	Thu, 29 Oct 2026 17:46:30 +0000
+From: 	Seth Larson <seth@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
 
-Patches
-~~~~~~~
-- https://review.opendev.org/1012874 (2025.1/epoxy)
-- https://review.opendev.org/1012873 (2025.2/flamingo)
-- https://review.opendev.org/1012872 (2026.1/gazpacho)
-- https://review.opendev.org/1012871 (2026.2/hibiscus)
-- https://review.opendev.org/1012869 (2027.1/indri (development))
+There is a MEDIUM severity vulnerability affecting CPython.
 
-Credits
-~~~~~~~
-- Nassim Abbaoui from OVHcloud (CVE-2026-115642)
+socket.getaddrinfo() previously accepted null bytes within *host* and *port* 
+parameters which can cause the values to be silently truncated.
 
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2162748
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-115642
+Please see the linked CVE ID for the latest information on affected versions:
 
--- 
-Jeremy Stanley
-OpenStack Vulnerability Management Team
-https://security.openstack.org/vmt.html
+* https://www.cve.org/CVERecord?id=CVE-2026-116566
+* https://github.com/python/cpython/pull/160899
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
 
-Download attachment "signature.asc" of type "application/pgp-signature" (964 bytes)
