@@ -1,58 +1,196 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/14
-Message-ID: <0f165efa-39eb-449b-bdf9-e883459e3c02@cpansec.org>
-Date: Fri, 30 Oct 2026 13:00:21 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/13
+Message-ID: <0b9acc77-4268-49fa-a07b-ceb511e4a2bb@cpansec.org>
+Date: Fri, 30 Oct 2026 12:51:33 +0000
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: oss-security@...ts.openwall.com
-Subject: Business::GoCardless versions before 1.01 for Perl (3 CVEs)
+Subject: Starlet versions before 0.33 for Perl (4 CVEs)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-119036
-   Business::GoCardless versions before 1.01 for Perl allow memory
-   exhaustion by flattening legacy webhook payloads before checking
-   their signature
+CVE-2026-115865
+   Starlet versions before 0.33 for Perl allow a request declaring a
+   large Content-Length to kill a worker by exhausting memory
 
-CVE-2026-119037
-   Business::GoCardless versions before 1.01 for Perl accept forged
-   webhooks when a configured webhook secret is undef or empty
+CVE-2026-115866
+   Starlet versions from 0.20 before 0.33 for Perl allow CPU exhaustion
+   via regular expression backtracking when decoding chunked request
+   bodies
 
-CVE-2026-119038
-   Business::GoCardless versions before 1.01 for Perl complete redirect
-   flows without checking the session token, letting a leaked redirect
-   flow ID create payments against another customer's mandate
+CVE-2026-116127
+   Starlet versions before 0.33 for Perl send a body in responses to
+   HEAD requests, corrupting the next response on a persistent or
+   pipelined connection
+
+CVE-2026-116128
+   Starlet versions from 0.20 before 0.33 for Perl allow memory
+   exhaustion via unbounded buffering when decoding chunked request
+   bodies
 
 
 ========================================================================
-CVE-2026-119036                                      CPAN Security Group
+CVE-2026-115865                                      CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-119036
+         CVE ID:  CVE-2026-115865
 
-   Distribution:  Business-GoCardless
-       Versions:  before 1.01
-       MetaCPAN:  https://metacpan.org/dist/Business-GoCardless
-       VCS Repo:  https://github.com/payprop/business-gocardless
+   Distribution:  Starlet
+       Versions:  before 0.33
+       MetaCPAN:  https://metacpan.org/dist/Starlet
+       VCS Repo:  https://github.com/kazuho/Starlet
 
 
-Business::GoCardless versions before 1.01 for Perl allow memory
-exhaustion by flattening legacy webhook payloads before checking their
-signature
+Starlet versions before 0.33 for Perl allow a request declaring a large
+Content-Length to kill a worker by exhausting memory
 
 Description
 -----------
-Business::GoCardless versions before 1.01 for Perl allow memory
-exhaustion by flattening legacy webhook payloads before checking their
-signature.
+Starlet versions before 0.33 for Perl allow a request declaring a large
+Content-Length to kill a worker by exhausting memory.
 
-A webhook body with a top-level "payload" key is verified as a legacy
-webhook. To rebuild the signed string, the payload is flattened into
-one key and value pair per leaf, each key carrying the full path to
-that leaf, and the pairs are then encoded, sorted and joined. A long
-key holding a long array costs memory proportional to the key length
-times the array length.
+The request body is read in a loop that asks sysread for all of the
+remaining declared length at once. Perl grows the read buffer to that
+size before any data arrives, so a length larger than available memory
+makes the worker exit with an uncatchable out of memory error before
+the application is called.
 
-A remote attacker can exhaust memory in the process receiving webhooks
-with a single request that carries no valid signature.
+A remote attacker can force a worker restart with each request of a few
+bytes.
+
+Problem types
+-------------
+- CWE-789 Memory Allocation with Excessive Size Value
+
+Solutions
+---------
+Upgrade to Starlet 0.33 or later.
+
+References
+----------
+https://github.com/kazuho/Starlet/commit/598947ac620fd31b390335c683d79fa244770782.patch
+https://metacpan.org/release/KAZUHO/Starlet-0.33/changes
+
+
+========================================================================
+CVE-2026-115866                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-115866
+
+   Distribution:  Starlet
+       Versions:  from 0.20 before 0.33
+       MetaCPAN:  https://metacpan.org/dist/Starlet
+       VCS Repo:  https://github.com/kazuho/Starlet
+
+
+Starlet versions from 0.20 before 0.33 for Perl allow CPU exhaustion
+via regular expression backtracking when decoding chunked request
+bodies
+
+Description
+-----------
+Starlet versions from 0.20 before 0.33 for Perl allow CPU exhaustion
+via regular expression backtracking when decoding chunked request
+bodies.
+
+A chunk-size line is matched as a run of hex digits, then .* and a
+CRLF. A run followed by a bare LF and then a CRLF can never match, and
+the engine retries the match once for each digit, so the time taken
+grows with the square of the run length. Nothing limits the length of
+the run, which can span several reads.
+
+A remote attacker can occupy a worker for about a minute of CPU time
+with one 128 KiB request, before the application is called.
+
+Problem types
+-------------
+- CWE-1333 Inefficient Regular Expression Complexity
+
+Solutions
+---------
+Upgrade to Starlet 0.33 or later.
+
+References
+----------
+https://github.com/kazuho/Starlet/commit/229ea56b3b50028e2a644156317e8d0e7cf68a1f.patch
+https://metacpan.org/release/KAZUHO/Starlet-0.33/changes
+
+
+========================================================================
+CVE-2026-116127                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-116127
+
+   Distribution:  Starlet
+       Versions:  before 0.33
+       MetaCPAN:  https://metacpan.org/dist/Starlet
+       VCS Repo:  https://github.com/kazuho/Starlet
+
+
+Starlet versions before 0.33 for Perl send a body in responses to HEAD
+requests, corrupting the next response on a persistent or pipelined
+connection
+
+Description
+-----------
+Starlet versions before 0.33 for Perl send a body in responses to HEAD
+requests, corrupting the next response on a persistent or pipelined
+connection.
+
+The request method is not passed to the response writer, so whatever
+body the application returns for a HEAD request is sent. With
+Plack::Middleware::Head the body is empty, but an HTTP/1.1 response
+without a Content-Length header still gets the chunked encoding
+terminator. Responses with status 204 or 304 are also sent with their
+body.
+
+Pipelined GET and HEAD requests keep the connection open even when
+keep-alive is disabled, which is the default. A client or proxy reading
+the connection takes the extra bytes as the start of the next response,
+which may desynchronize a proxy that shares the connection across
+clients.
+
+Problem types
+-------------
+- CWE-444 Inconsistent Interpretation of HTTP Requests
+
+Solutions
+---------
+Upgrade to Starlet 0.33 or later.
+
+References
+----------
+https://github.com/kazuho/Starlet/commit/859e0c9572cdbed4bb45706d3957b3c025dc0ede.patch
+https://metacpan.org/release/KAZUHO/Starlet-0.33/changes
+
+
+========================================================================
+CVE-2026-116128                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-116128
+
+   Distribution:  Starlet
+       Versions:  from 0.20 before 0.33
+       MetaCPAN:  https://metacpan.org/dist/Starlet
+       VCS Repo:  https://github.com/kazuho/Starlet
+
+
+Starlet versions from 0.20 before 0.33 for Perl allow memory exhaustion
+via unbounded buffering when decoding chunked request bodies
+
+Description
+-----------
+Starlet versions from 0.20 before 0.33 for Perl allow memory exhaustion
+via unbounded buffering when decoding chunked request bodies.
+
+The decoder adds each read to one buffer of unconsumed input. Nothing
+limits the length of a chunk-size line, so a line without a CRLF grows
+the buffer for as long as the client keeps sending, and the read
+timeout restarts after every read. The data of a large chunk is also
+held in the buffer until the whole chunk has arrived.
+
+A remote attacker can exhaust a worker's memory with a single request.
 
 Problem types
 -------------
@@ -60,98 +198,10 @@ Problem types
 
 Solutions
 ---------
-Upgrade to Business-GoCardless 1.01 or later.
+Upgrade to Starlet 0.33 or later.
 
 References
 ----------
-https://metacpan.org/release/LEEJO/Business-GoCardless-1.01/changes
-
-
-========================================================================
-CVE-2026-119037                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-119037
-
-   Distribution:  Business-GoCardless
-       Versions:  before 1.01
-       MetaCPAN:  https://metacpan.org/dist/Business-GoCardless
-       VCS Repo:  https://github.com/payprop/business-gocardless
-
-
-Business::GoCardless versions before 1.01 for Perl accept forged
-webhooks when a configured webhook secret is undef or empty
-
-Description
------------
-Business::GoCardless versions before 1.01 for Perl accept forged
-webhooks when a configured webhook secret is undef or empty.
-
-signature_valid uses each configured secret as the HMAC key, and
-nothing rejects undef or an empty string, both of which Digest::SHA
-treats as an empty key. A secret read from an unset environment
-variable, or an empty entry in a list of rotated secrets, is used as
-is.
-
-A remote attacker can sign a forged webhook with an empty key and have
-it accepted as sent by GoCardless.
-
-Problem types
--------------
-- CWE-347 Improper Verification of Cryptographic Signature
-
-Solutions
----------
-Upgrade to Business-GoCardless 1.01 or later.
-
-References
-----------
-https://metacpan.org/release/LEEJO/Business-GoCardless-1.01/changes
-
-
-========================================================================
-CVE-2026-119038                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-119038
-
-   Distribution:  Business-GoCardless
-       Versions:  before 1.01
-       MetaCPAN:  https://metacpan.org/dist/Business-GoCardless
-       VCS Repo:  https://github.com/payprop/business-gocardless
-
-
-Business::GoCardless versions before 1.01 for Perl complete redirect
-flows without checking the session token, letting a leaked redirect
-flow ID create payments against another customer's mandate
-
-Description
------------
-Business::GoCardless versions before 1.01 for Perl complete redirect
-flows without checking the session token, letting a leaked redirect
-flow ID create payments against another customer's mandate.
-
-confirm_resource takes no session token from the caller. It reads the
-redirect flow back from the GoCardless API and completes it with the
-token from that response, so the check that the flow is completed by
-the session that started it always passes. It then creates the
-requested payment or subscription against the flow's mandate. Since
-version 1.00, a flow that already has a mandate is returned as
-confirmed without being completed again, so the same ID creates a new
-payment on every call.
-
-A remote attacker who obtains another customer's redirect flow ID can
-create payments or subscriptions against that customer's mandate.
-
-Problem types
--------------
-- CWE-639 Authorization Bypass Through User-Controlled Key
-
-Solutions
----------
-Upgrade to Business-GoCardless 1.01 or later.
-
-References
-----------
-https://metacpan.org/release/LEEJO/Business-GoCardless-1.01/changes
+https://github.com/kazuho/Starlet/commit/f3472712fff64329a43d86368768d80b61714106.patch
+https://metacpan.org/release/KAZUHO/Starlet-0.33/changes
 
