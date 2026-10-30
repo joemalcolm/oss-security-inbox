@@ -1,58 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/8
-Message-ID: <trinity-e15c9bf2-bb19-4514-a456-ced9f87b3f7a-1793362509998@trinity-msg-rest-gmx-gmx-live-5bfddcf4fc-sr4wl>
-Date: Fri, 30 Oct 2026 12:15:10 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2025-70102: dhcpcd: NULL Pointer Dereference in Configuration Option Parsing
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/11
+Message-ID: <19d123bc-8603-4d6a-b57a-b0f94d9bb6cf@cpansec.org>
+Date: Fri, 30 Oct 2026 12:35:42 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-118988: CallBackery versions before 0.60.1 for Perl let unauthenticated clients read the POD of any file via path traversal in the /doc route
 Content-Type: text/plain; charset=utf-8
 
- Product:   dhcpcd
-Affected:  10.3.0 as identified in the CVE description; reproduced at commit
-           2de751b3691642151a4fdc49e444d6b4dc364e98
-CWE:       CWE-476 (NULL Pointer Dereference)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+========================================================================
+CVE-2026-118988                                      CPAN Security Group
+========================================================================
 
-Description:
-  While processing crafted configuration input, parse_option() in
-  src/if-options.c accesses members of a NULL struct dhcp_opt pointer.
-  The affected branch tests ldop, a pointer to the option pointer, rather
-  than *ldop. Consequently, the branch can be entered when *ldop is NULL,
-  and the code accesses (*ldop)->embopts and (*ldop)->embopts_len at
-  lines 1886 and 1887 of the tested revision.
+         CVE ID:  CVE-2026-118988
 
-Impact and attack conditions:
-  The observed result is undefined behavior and termination of the
-  instrumented configuration-parser fuzzing process, providing a
-  denial-of-service condition in that test environment.
+   Distribution:  CallBackery
+       Versions:  before 0.60.1
+       MetaCPAN:  https://metacpan.org/dist/CallBackery
+       VCS Repo:  https://github.com/oetiker/callbackery
 
-  Triggering the demonstrated path requires supplying crafted input to
-  the configuration reader, for example by influencing the configuration
-  file that is parsed. The available reproduction does not establish
-  reachability through incoming DHCP packets, a crash in an uninstrumented
-  production daemon, or arbitrary code execution.
 
-Reproduction details:
-  The supplied PoC was processed by a configuration-reader fuzzing harness
-  using Clang 19.1.7 on x86_64 Kali Linux, kernel 6.12.25-1kali1.
-  Build flags: -g -O1 -fno-omit-frame-pointer -fsanitize=address,undefined
+CallBackery versions before 0.60.1 for Perl let unauthenticated clients
+read the POD of any file via path traversal in the /doc route
 
-  UBSan diagnostic (source paths shortened):
-    src/if-options.c:1886:21: runtime error: member access within null
-    pointer of type 'struct dhcp_opt'
-      #0 parse_option              src/if-options.c:1886:21
-      #1 read_config               src/if-options.c:2940:3
-      #2 LLVMFuzzerTestOneInput     fuzz_dhcpcd_conf_read.c:35:30
+Description
+-----------
+CallBackery versions before 0.60.1 for Perl let unauthenticated clients
+read the POD of any file via path traversal in the /doc route.
 
-Fix:
-  https://github.com/NetworkConfiguration/dhcpcd/commit/117742d755b591764036dd4218f314f748a3d2b7
-  
-References:
-  https://www.cve.org/CVERecord?id=CVE-2025-70102
-  https://github.com/NetworkConfiguration/dhcpcd/issues/567
-  https://github.com/sigdevel/pocs/blob/main/res/dhcpcd/1/if-options_c_1886/if-options_c_1886
-  https://github.com/NetworkConfiguration/dhcpcd/commit/117742d755b591764036dd4218f314f748a3d2b7
+Every CallBackery application mounts its documentation plugin at /doc,
+ahead of any session check. The route passes the requested name to
+Pod::Simple::Search->find without validation. find splits the name on
+"::" and joins the parts into a file path, so a name such as
+"..::..::..::etc::motd" escapes @INC.
 
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+Any file the server process can read is reachable. Only POD is
+rendered, but a file with a POD directive and no "=cut" is POD to the
+end of the file.
+
+Problem types
+-------------
+- CWE-22 Improper Limitation of a Pathname to a Restricted Directory
+   ('Path Traversal')
+
+Solutions
+---------
+Upgrade to CallBackery 0.60.1 or later.
+
+References
+----------
+https://metacpan.org/release/OETIKER/CallBackery-0.60.1/source/CHANGES
+https://github.com/oetiker/callbackery/commit/128efe804fde41bba9633fe00dc94e30f12087fb.patch
+
