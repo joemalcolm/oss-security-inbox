@@ -1,10 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/5
-Message-ID: <3c3aa81f-e99a-b977-0e61-de5219766cf7@apache.org>
-Date: Fri, 30 Oct 2026 01:45:10 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/4
+Message-ID: <613be1da-2e8d-e5d9-037e-983f8719f4d2@apache.org>
+Date: Fri, 30 Oct 2026 01:39:58 +0000
 From: Terence Monteiro <terencemo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-65874: Apache Fineract: SQL injection via ORDER BY parameters in the Center and datatables endpoints 
+Subject: CVE-2026-64618: Apache Fineract: SQL injection vulnerability in Search API 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
@@ -15,21 +15,16 @@ Affected versions:
 
 Description:
 
-This issue affects Apache Fineract versions up to and including 1.15.0. The Center read endpoint (GET /api/v1/centers) and the datatable entry read endpoints (GET /api/v1/datatables/{datatable}/{apptableId} and GET /api/v1/datatables/{datatable}/{apptableId}/{datatableId}) concatenate caller-supplied ordering parameters (orderBy, sortOrder, order) directly into the SQL ORDER BY clause. The existing regex-based input validation can be bypassed, allowing time-based blind SQL injection by any authenticated user with read access to centers or to the targeted datatable.
-
-Users are recommended to upgrade to 1.16.1 which fixes the issue.
+Improper Neutralization of Special Elements used in an SQL Command ("SQL Injection") vulnerability exists in Apache Fineract (through version 1.15.0). The vulnerability affects the outStandingAmountPercentageCondition parameter of the /fineract-provider/api/v1/search/advance HTTP API endpoint, allowing SQL injection due to insufficient input neutralization. Users are recommended to upgrade to version 1.16.1, which will fix the issue.
 
 Credit:
 
-Abdullah Kareem @cyberkareem (finder)
-Louis Van der Walt of Lateran Technologies @SuperUserDone (reporter)
-Terence Monteiro @terencemo (remediation developer)
-Victor Romero @iohacker (remediation reviewer)
+thiscodecc of MoyunSec Vlab and Bing (finder)
+Adam Saghy (@adamsaghy) (remediation developer)
 
 References:
 
-https://github.com/apache/fineract/pull/6230
-https://github.com/apache/fineract/pull/6277
+https://github.com/apache/fineract/pull/6153
 https://fineract.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-65874
+https://www.cve.org/CVERecord?id=CVE-2026-64618
 
