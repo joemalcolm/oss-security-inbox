@@ -1,37 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/31/2
-Message-ID: <76a9dd7e-7b19-fa3d-e838-ade13d9ea074@apache.org>
-Date: Fri, 30 Oct 2026 23:13:23 +0000
-From: Jens Geyer <jensg@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/31/3
+Message-ID: <02205151-0b85-ad46-5e72-e81f1dbf69ea@apache.org>
+Date: Sat, 31 Oct 2026 08:01:38 +0000
+From: Emmanuel Lécharny <elecharny@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-120135: Apache Thrift: Java TProtocolUtil.skip() does not limit the recursion depth by default 
+Subject: CVE-2026-118636: Apache MINA: Unsafe Deserialization (CWE-502) in JavaNativeMessageDecoder 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
-    CVSS 4.0: 8.2 (high) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N
+Severity: critical 
+    CVSS 3.1: 9.8 (critical) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
 Affected versions:
 
-- Apache Thrift (org.apache.thrift:libthrift) before 0.24.0
+- Apache MINA 3.0.0 through 3.0.0-M2
 
 Description:
 
-Uncontrolled Recursion vulnerability in Apache Thrift Java bindings.
+**UNSUPPORTED WHEN ASSIGNED** 
 
+JavaNativeMessageDecoder in the MINA 3.0 codec module calls ObjectInputStream.readObject() on frame bytes with no class filter, so an
+application that puts it in front of an untrusted peer is open to gadget-chain RCE.
 
+As the 3.0.0 branch is inactive, we do not plan to release a version that fixes this issue. 
 
-This issue affects Apache Thrift: before 0.24.0.
-
-
-
-Users are recommended to upgrade to version 0.24.0, which fixes the issue.
+Users are recommended to use the latest Apache MINA 2.2.X branch.
 
 Credit:
 
-Yu Bao – yubao@...pal.com, who works for paypal.com (finder)
+Nguyen Cuong (cuongbeo090704@...il.com) (reporter)
 
 References:
 
-https://thrift.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-120135
+https://www.cve.org/CVERecord?id=CVE-2026-118636
+https://mina.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-118636
 
