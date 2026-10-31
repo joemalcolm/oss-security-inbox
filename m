@@ -1,37 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/31/3
-Message-ID: <02205151-0b85-ad46-5e72-e81f1dbf69ea@apache.org>
-Date: Sat, 31 Oct 2026 08:01:38 +0000
-From: Emmanuel Lécharny <elecharny@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/31/5
+Message-Id: <0J4SNT.N5MKB0NB35Z81@yandex.com>
+Date: Sat, 31 Oct 2026 16:01:47 +0000
+From: Rui Sousa <c3srm@...dex.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-118636: Apache MINA: Unsafe Deserialization (CWE-502) in JavaNativeMessageDecoder 
+Subject: CVE-2026-98432: init_on_free=1 as an additional interim mitigation
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
-    CVSS 3.1: 9.8 (critical) CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
+Hello,
 
-Affected versions:
+An additional hardening option for CVE-2026-98432 (the IPv4 TCP inet_opt
+use-after-free), for systems that cannot take a fixed kernel yet.
 
-- Apache MINA 3.0.0 through 3.0.0-M2
+The interim mitigations published so far (for example AlmaLinux's, at
+<https://almalinux.org/blog/2026-10-30-cve-2026-98432/>) are an nftables
+rule dropping inbound TCP that carries IPv4 options and disabling MPTCP.
+They do not mention the init_on_free=1 kernel boot parameter.
 
-Description:
+init_on_free=1 (mainline since 5.3) zeroes slab objects and pages when
+they are freed. It does not fix this bug: the stale pointer is still
+dereferenced. But a use-after-free read of the freed object then returns
+zeroes instead of its previous contents, which narrows what an attacker
+can learn through it.
 
-**UNSUPPORTED WHEN ASSIGNED** 
+It is off by default in the EL kernels we checked: AlmaLinux 9
+(5.14.0-687.x.el9_8) and AlmaLinux 10 (6.12.0-211.x.el10_2) both ship
+without CONFIG_INIT_ON_FREE_DEFAULT_ON. Enabling it:
 
-JavaNativeMessageDecoder in the MINA 3.0 codec module calls ObjectInputStream.readObject() on frame bytes with no class filter, so an
-application that puts it in front of an untrusted peer is open to gadget-chain RCE.
+    grubby --update-kernel=ALL --args="init_on_free=1"
+    reboot
+    grep -o init_on_free=1 /proc/cmdline
 
-As the 3.0.0 branch is inactive, we do not plan to release a version that fixes this issue. 
+The commonly cited cost is roughly 1-5% on workloads heavy in memory
+frees; measure on yours. We have it running alongside the nftables rule
+on a handful of AlmaLinux 9 and 10 hosts with no problems so far.
 
-Users are recommended to use the latest Apache MINA 2.2.X branch.
+It complements the packet filter (which can be bypassed by traffic
+between containers on the same host) and is not a substitute for the
+fixed kernel.
 
-Credit:
+Regards,
+Rui Sousa
 
-Nguyen Cuong (cuongbeo090704@...il.com) (reporter)
 
-References:
 
-https://www.cve.org/CVERecord?id=CVE-2026-118636
-https://mina.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-118636
 
