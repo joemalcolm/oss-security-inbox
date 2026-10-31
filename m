@@ -1,103 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/30/18
-Message-ID: <179338396200.54632.11748087002055003897@gmail.com>
-Date: Fri, 30 Oct 2026 11:12:42 -0700
-From: Abhinav Agarwal <abhinavagarwal1996@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/10/31/1
+Message-ID: <f5db7c46-026f-4ce8-8d8a-9e9cc1990e81@oracle.com>
+Date: Fri, 30 Oct 2026 17:23:45 -0700
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-102508: Apache PLC4X: OPC UA secure channel: integrity bypass, unverifiable server certificate, and silent downgrade
+Subject: Fwd: GNU mtools 4.0.50 released, fixes CVE-2026-118384
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+https://www.cve.org/CVERecord?id=CVE-2026-118384 says
+"GNU mtools through 4.0.49 has an out-of-bounds write in parse_vses in vfat.c."
 
-I reported the findings behind CVE-2026-102508 and CVE-2026-102509 [1][2]. This follow-up gives the mechanisms and triggers for both. Both are fixed in PLC4X 1.0.0; there is no fixed 0.13.x. PLC4X is a client library, so the attacker is a malicious or impersonated server, or someone on the network path.
+https://lists.gnu.org/archive/html/info-mtools/2026-10/msg00002.html
+appears to be the bug report.
 
+-------- Forwarded Message --------
+Subject: 	GNU mtools 4.0.50 released
+Date: 	Fri, 30 Oct 2026 23:31:00 +0100
+From: 	Alain Knaff <alain@...ff.lu>
+To: 	info-gnu@....org, info-mtools@....org
 
-CVE-2026-102508 (0.9.0 - 0.13.1)
---------------------------------
+Hello,
 
-Two defects in the OPC UA asymmetric receive path (0.12.0 - 0.13.1).
+I am pleased to announce the release of GNU mtools version 4.0.50
 
-Bug 1, AsymmetricEncryptionHandler.verify(): the branch sense is inverted.
+GNU mtools is available for download from
+http://ftp.gnu.org/gnu/mtools and the mirror sites worldwide (see
+http://www.gnu.org/prep/ftp.html for the list of those).
 
-    signature.update(message);
-    if (signature.verify(signatureData)) {        // missing negation
-        throw new IllegalArgumentException("Invalid signature");
-    }
+The sources can be obtained from ftp.gnu.org and its world-wide mirrors:
 
-Bug 2, BaseEncryptionHandler.decodeMessage(): the chunk is decrypted, then verified against the original on-the-wire length.
+    http://ftp.gnu.org/gnu/mtools/mtools-4.0.50.tar.gz    (541K)
+    SHA-1: d8aab5f83964b1e2158dd95298ee69f0ef525c3a
 
-    if (chunk.isEncrypted()) {
-        bodySize = decrypt(chunkBuffer, chunk, messageLength);  // new size
-    }
-    if (chunk.isSigned()) {
-        verify(chunkBuffer, chunk, messageLength);              // discarded
-    }
+    http://ftp.gnu.org/gnu/mtools/mtools-4.0.50.tar.bz2   (455K)
+    SHA-1: eb0cdb3ddfeb048b1fd62d273fd0b0931ee685b5
 
-verify() takes signatureStart = messageLength - signatureSize. Basic256Sha256 uses RSA/ECB/OAEPWithSHA-1AndMGF1Padding, so with a 2048-bit key each 256-byte ciphertext block decrypts to at most 214 bytes (OAEP overhead 2*hLen + 2 = 42); the two-block OPN response I used shrank by 84 bytes. The slice read as the signature is the tail of the real signature followed by stale post-decryption bytes.
-
-Composed: bug 2 normally hands verify() bytes that do not validate, and bug 1 treats that as success. Zeros, random bytes and a correctly computed signature are all accepted; only a signature crafted to validate over the misaligned range is rejected. Fixing the negation alone would reject legitimate OPN responses.
-
-The bypass covers OPN only: MSG/CLO chunks go through SymmetricEncryptionHandler, whose HMAC check is fail-closed. On its own it gives an on-path attacker no channel keys, since those derive from a client nonce encrypted to the server certificate the client trusts. The certificate default closes that gap: with no trust-store-file, OpcuaDriverContext used a permissive verifier and took the server certificate from the unauthenticated GetEndpoints response (discovery=true is the default). That certificate encrypts the OPN request, client nonce included, and the user's password.
-
-Downgrade: security-policy defaults to None, and from 0.12.0 SecureChannel skips an endpoint only when policy and mode both mismatch, so a weaker policy with a matching mode is admitted:
-
-    if (!policyMatch && !msgSecurityMatch) {
-        continue;
-    }
-
->>From 0.13.0 the admitted candidates are sorted by ascending securityLevel, so the weakest survivor is preferred.
-
-0.9.0 - 0.11.0 fail differently: EncryptionHandler logs a failed check at INFO and continues; checkSignature() digests the buffer including the signature, then reads the expected signature from the start of the buffer rather than the end; and there is no trust-anchor mechanism.
-
-Reconstruction (Basic256Sha256, SignAndEncrypt, discovery=true, no trust store): a relay answers GetEndpoints with its own certificate; decrypts the client's OPN request and reads the client nonce; answers OPN with its own nonce, encrypted to the client certificate, under a signature that need not validate; derives the symmetric keys; then reads and authors correctly MACed MSG traffic, including ActivateSession with the password encrypted to the relay. In my testing (2048-bit keys) this captured the test credentials and changed a write from 100.0 to 999.0, confirmed on the real server by an independent observer, with no error at the client. The client was pointed directly at the relay; the relay's upstream leg used SecurityPolicy.None.
+    http://ftp.gnu.org/gnu/mtools/mtools-4.0.50.tar.lz    (391K)
+    SHA-1: 319b076eb55677d086cd32b5e93b30f797f6fde3
 
 
-CVE-2026-102509 (0.10.0 - 0.13.1)
----------------------------------
+The same directory also contains pre-compiled Debian packages.
 
-Three defects reached during secure-channel and session setup, before user authentication. The CVE also covers two defects found during remediation: collections pre-sized from server-supplied element counts, and recursive mspec types with no depth limit (Go counterpart: CVE-2026-102510).
+Mtools is a collection of utilities to access MS-DOS disks from GNU
+and Unix without mounting them, to change FAT-specific file attributes
+(hidden, archive, system), and to format FAT media.
 
-1. Byte strings (0.10.0 - 0.13.1). PascalByteString.staticParse() reads a signed int32 length, and ReadBufferByteBased.readByteArray() runs "new byte[numberOfBytes]" before checking the bytes exist. Trigger: after HEL/ACK and the client's OPN, answer with an 88-byte OPNF: the 12-byte message header (OPN, F, 4-byte size, 4-byte channel id), then securityPolicyUri (PascalString), senderCertificate and receiverCertificateThumbprint (PascalByteString). Set senderCertificate.stringLength to FF FF FF 7F: bytes 63-66 with the 47-byte SecurityPolicy#None URI, or from byte 73 with Basic256Sha256. This header is parsed before any certificate or signature check.
+Mtools supports W32 style long file names, FAT32, OS/2 Xdf disks and
+2m disks (store up to 1992k on a high density 3 1/2 disk). Mtools also
+includes mpartition, a simple partitioning programing. It is also a
+convenient tool to work with disk image files (thanks to the -i flag).
 
-2. Array counts (0.10.0 - 0.13.1). FieldReaderArray.readFieldCount() bounds the wire count only against Integer.MAX_VALUE, then calls "new ArrayList<>(itemCount)", allocating the backing Object[] before any element is read. Exactly 0x7FFFFFFF fails fast ("Requested array size exceeds VM limit"); somewhat smaller counts attempt a multi-gigabyte allocation. Parser-level trigger: the Variant prefix 86 FF FF FF 7F (Int32 with the array bit set, then the count). On the wire: noOfServerEndpoints and noOfServerSoftwareCertificates in CreateSessionResponse, parsed in SecureChannel before ActivateSession.
+For more information on mtools, including links to file downloads,
+please see the mtools web page: http://www.gnu.org/software/mtools
 
-3. Chunk accumulation (0.12.0 - 0.13.1). Conversation negotiates maxChunkCount and maxMessageSize but never checks them on receive. Trigger: after OPN and the client's CreateSessionRequest, stream MSG chunks flagged 'C' (continue) with the expected channel and token ids and increasing sequence numbers, never sending 'F' (final). I used 2,000 chunks of 61,440 bytes, roughly 120 MB.
+Please email bugs or suggestions to <info-mtools@....org>.
 
-Triggers 2 and 3 pass per-chunk symmetric decoding: under the default None policy they need no keys; under a secure policy the sender must be a server the client accepted. Cases 1 and 3 were driven over a socket, case 2 at parser level with its network route traced in source. The effect is loss of the client's OPC UA function: case 1 throws OutOfMemoryError repeatedly on the Netty thread while the client retries; case 3 exits the JVM only with -XX:+ExitOnOutOfMemoryError.
+Improvements since the 4.0.49 release are:
+	- Fix CVE-2026-118384
 
-The array reader is in the shared plc4j-spi. OPC UA and ADS use 32-bit counts and lengths; Modbus and S7 use 8- or 16-bit ones.
-
-
-Fixes
------
-
-- a2dbb6bfc0 (2026-07-10): negation restored, post-decrypt length passed to verify(), certificate verifier fails closed by default.
-- 5a4d5bdb4c (2026-07-10): chunk count and message size limits enforced; array initial capacity capped at 1024.
-- 372501287d (2026-06-12): SPI rewrite; the read buffer checks availability before allocating. Predates the report but first shipped in 1.0.0.
-
-1.0.0 also defaults to Basic256Sha256 with SignAndEncrypt, rejects an unverifiable server certificate unless tls.verify=false, and fails the connection if the negotiated policy is weaker than configured. Until upgrading, a trust-store-file blocks the impersonating certificate (nothing was captured in my testing) but leaves the OPN check broken and does not stop trigger 1.
-
-
-Downstream
-----------
-
-Almost every PLC4J consumer I checked pins a pre-1.0.0 release. CVE-2026-102508 needs plc4j-driver-opcua, which plc4j-driver-all includes.
-
-- Apache Camel camel-plc4x: 0.13.1 in 4.23.0 (latest) and LTS 4.22.2 and 4.18.5; 0.13.0 in 4.14.9 (LTS); 0.12.0 in 4.10.0 and 4.8.0. Bundles the OPC UA driver, so both CVEs; the Spring Boot starter and Karaf feature inherit it. Camel main moved to 1.0.0 (CAMEL-25617, 2026-10-27) but has not released it.
-- PLC4X's own integrations on the old org.apache.plc4x coordinates (NiFi NARs, Kafka Connect, Calcite, plc4x-opcua-server): 0.13.1 via plc4j-driver-all, so both CVEs. They are republished at 1.0.0 under org.apache.plc4x.extras.
-- Apache StreamPipes 0.98.0: 0.13.1, plc4j-driver-all with opcua excluded (its OPC UA adapter uses Eclipse Milo). SPI defects only, with ADS among the shipped drivers.
-- Apache HertzBeat 1.8.0 and 1.9.0: 0.12.0, Modbus and S7 drivers only. SPI defects only, bounded by those protocols' field widths.
-
-Roughly a dozen smaller OT gateways and PLC bridges pin 0.9.0 - 0.13.1; json-scada is already on 1.0.0. openHAB, NiFi, IoTDB, Ditto and Node-RED do not depend on PLC4X.
-
-Against a Camel route reading an OPC UA endpoint, a rogue or impersonated server can harvest the route's OPC UA credentials and alter the values it carries, so falsified data reaches the historian, database or topic downstream with no error at the Camel end.
-
-Full write-up: https://abhinavagarwal07.github.io/posts/apache-plc4x-opcua-signature-bypass-preauth-dos/
-
-Timeline: reported to security@...che.org 2026-07-09; routed to the PLC4X team and fixes committed to develop 2026-07-10; CERT/CC case VU#108987 opened 2026-07-25; 1.0.0 released 2026-09-07; CVEs published 2026-09-30.
-
-[1] https://www.openwall.com/lists/oss-security/2026/09/30/4
-[2] https://www.openwall.com/lists/oss-security/2026/09/30/5
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
 
 Regards,
-Abhinav Agarwal
+
+Alain
+
