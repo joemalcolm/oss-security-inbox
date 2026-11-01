@@ -1,124 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/01/3
-Message-ID: <e83f836b-af96-4256-af32-c28efe306dfb@cpansec.org>
-Date: Sun, 1 Nov 2026 16:48:27 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/01/2
+Message-ID: <57c6917e-7db9-49c1-8dda-c4905cc73c3a@cpansec.org>
+Date: Sun, 1 Nov 2026 10:48:56 +0000
 From: Robert Rothenberg <rrwo@...nsec.org>
-To: oss-security@...ts.openwall.com
-Subject: Google::Auth for Perl (2 CVEs)
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-13575: HTTP::Session versions before 0.54 for Perl allow memcached command injection via unfiltered session ids in HTTP::Session::Store::CHI
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-74759
-   Google::Auth versions 0.12 for Perl allow server side request forgery
-   via unvalidated credential_source URLs in AWS external account
-   credentials
-
-CVE-2026-74760
-   Google::Auth versions from 0.11 through 0.12 for Perl accept an
-   authorization code from any local process because the gcloud-auth
-   login callback does not check the OAuth state
-
-
 ========================================================================
-CVE-2026-74759                                       CPAN Security Group
+CVE-2026-13575                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-74759
+         CVE ID:  CVE-2026-13575
 
-   Distribution:  Google-Auth
-       Versions:  0.12
-       MetaCPAN:  https://metacpan.org/dist/Google-Auth
-       VCS Repo: 
-https://github.com/GoogleCloudPlatform/google-auth-library-perl
+   Distribution:  http-session
+       Versions:  before 0.54
+       MetaCPAN:  https://metacpan.org/dist/http-session
+       VCS Repo:  https://github.com/tokuhirom/http-session
 
 
-Google::Auth versions 0.12 for Perl allow server side request forgery
-via unvalidated credential_source URLs in AWS external account
-credentials
+HTTP::Session versions before 0.54 for Perl allow memcached command
+injection via unfiltered session ids in HTTP::Session::Store::CHI
 
 Description
 -----------
-Google::Auth versions 0.12 for Perl allow server side request forgery
-via unvalidated credential_source URLs in AWS external account
-credentials.
+HTTP::Session versions before 0.54 for Perl allow memcached command
+injection via unfiltered session ids in HTTP::Session::Store::CHI.
 
-An external_account configuration with the AWS subject token type
-selects Google::Auth::ExternalAccountCredentials::Aws. Its
-retrieve_subject_token sends requests to the imdsv2_session_token_url,
-url and region_url fields of credential_source without the host check
-that the other credential classes apply.
+The session id from the client's cookie reaches the CHI cache
+unchanged. The sibling HTTP::Session::Store::Memcached rejects ids that
+contain control characters, but the CHI store has no such check, and
+CHI does not escape keys for its memcached drivers.
 
-Any caller that builds credentials from a configuration it does not
-fully control issues GET and PUT requests to hosts the configuration
-names, including internal services and link-local metadata endpoints.
+With a memcached driver, a CR and LF in the session id end the cache
+command early, and the server reads the bytes after them as further
+commands.
 
 Problem types
 -------------
-- CWE-918 Server-Side Request Forgery (SSRF)
-
-Workarounds
------------
-Ensure that every credentials configuration reaching the Application
-Default Credentials flow comes from a trusted source.
+- CWE-93 Improper Neutralization of CRLF Sequences
 
 Solutions
 ---------
-Upgrade to a future Google-Auth release.
+Upgrade to http-session 0.54 or later.
 
 References
 ----------
-https://metacpan.org/release/CJCOLLIER/Google-Auth-0.12/source/lib/Google/Auth/ExternalAccountCredentials/Aws.pm
-
-
-========================================================================
-CVE-2026-74760                                       CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-74760
-
-   Distribution:  Google-Auth
-       Versions:  from 0.11 through 0.12
-       MetaCPAN:  https://metacpan.org/dist/Google-Auth
-       VCS Repo: 
-https://github.com/GoogleCloudPlatform/google-auth-library-perl
-
-
-Google::Auth versions from 0.11 through 0.12 for Perl accept an
-authorization code from any local process because the gcloud-auth login
-callback does not check the OAuth state
-
-Description
------------
-Google::Auth versions from 0.11 through 0.12 for Perl accept an
-authorization code from any local process because the gcloud-auth login
-callback does not check the OAuth state.
-
-The gcloud-auth login and application-default login commands send a
-state parameter with the authorization request, then take the code from
-the first request to reach their loopback listener without comparing
-the returned state.
-
-A local attacker can submit an authorization code for their own Google
-account. The CLI exchanges it and stores the refresh token as the
-user's credentials, so the user's tools then act as the attacker's
-account.
-
-Problem types
--------------
-- CWE-346 Origin Validation Error
-
-Workarounds
------------
-Run gcloud-auth login and gcloud-auth application-default login with
---no-browser, which uses the out-of-band flow without a loopback
-listener.
-
-Solutions
----------
-Upgrade to a future Google-Auth release.
-
-References
-----------
-https://metacpan.org/release/CJCOLLIER/Google-Auth-0.12/source/bin/gcloud-auth.pl
+https://metacpan.org/release/KTAT/http-session-0.53/source/lib/HTTP/Session/Store/CHI.pm
+https://github.com/tokuhirom/http-session/commit/58288cbf941da6d2aad4ff5c0c79e523d9e583b4.patch
+https://metacpan.org/release/TOKUHIROM/http-session-0.54/changes
 
 
 
