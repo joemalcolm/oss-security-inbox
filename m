@@ -1,58 +1,124 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/01/1
-Message-ID: <d1d64c1836b0c3a933e308d494b3b42b@cpansec.org>
-Date: Sat, 31 Oct 2026 20:54:20 -0300
-From: Timothy Legge <timlegge@...nsec.org>
-To: Cve Announce <cve-announce@...urity.metacpan.org>, Oss Security <oss-security@...ts.openwall.com>
-Subject: CVE-2026-115946: XS::ibbrotli versions before 1.2.1.0 for Perl bundle a brotli library with an out-of-bounds write in the decoder
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/01/3
+Message-ID: <e83f836b-af96-4256-af32-c28efe306dfb@cpansec.org>
+Date: Sun, 1 Nov 2026 16:48:27 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: oss-security@...ts.openwall.com
+Subject: Google::Auth for Perl (2 CVEs)
 Content-Type: text/plain; charset=utf-8
 
+CVE-2026-74759
+   Google::Auth versions 0.12 for Perl allow server side request forgery
+   via unvalidated credential_source URLs in AWS external account
+   credentials
+
+CVE-2026-74760
+   Google::Auth versions from 0.11 through 0.12 for Perl accept an
+   authorization code from any local process because the gcloud-auth
+   login callback does not check the OAuth state
+
+
 ========================================================================
-CVE-2026-115946                                      CPAN Security Group
+CVE-2026-74759                                       CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-115946
+         CVE ID:  CVE-2026-74759
 
-   Distribution:  XS-libbrotli
-       Versions:  before 1.2.1.0
-       MetaCPAN:  https://metacpan.org/dist/XS-libbrotli
+   Distribution:  Google-Auth
+       Versions:  0.12
+       MetaCPAN:  https://metacpan.org/dist/Google-Auth
+       VCS Repo: 
+https://github.com/GoogleCloudPlatform/google-auth-library-perl
 
 
-XS::libbrotli versions before 1.2.1.0 for Perl bundle a brotli library
-with an out-of-bounds write in the decoder
+Google::Auth versions 0.12 for Perl allow server side request forgery
+via unvalidated credential_source URLs in AWS external account
+credentials
 
 Description
 -----------
-XS::libbrotli versions before 1.2.1.0 for Perl bundle a brotli library
-with an out-of-bounds write in the decoder.
+Google::Auth versions 0.12 for Perl allow server side request forgery
+via unvalidated credential_source URLs in AWS external account
+credentials.
 
-Affected versions compile a bundled brotli into static archives that
-dependent XS modules link against at build time, rather than using the
-system library. The bundled copy, 1.0.7 or 1.1.0 across the range,
-carries the decoder out-of-bounds write described in CVE-2026-111497.
-Version 1.2.1.0 updates it to brotli 1.2.1.
+An external_account configuration with the AWS subject token type
+selects Google::Auth::ExternalAccountCredentials::Aws. Its
+retrieve_subject_token sends requests to the imdsv2_session_token_url,
+url and region_url fields of credential_source without the host check
+that the other credential classes apply.
 
-XS::libbrotli has no Perl interface, so the decoder is reached through
-any dependent module that decompresses untrusted data with it. An
-attacker supplying a crafted brotli stream can corrupt decoder state,
-disclose memory, crash the process, or potentially execute arbitrary
-code. Upgrading the system brotli does not remediate this.
+Any caller that builds credentials from a configuration it does not
+fully control issues GET and PUT requests to hosts the configuration
+names, including internal services and link-local metadata endpoints.
 
 Problem types
 -------------
-- CWE-1395 Dependency on Vulnerable Third-Party Component
+- CWE-918 Server-Side Request Forgery (SSRF)
+
+Workarounds
+-----------
+Ensure that every credentials configuration reaching the Application
+Default Credentials flow comes from a trusted source.
 
 Solutions
 ---------
-Upgrade to XS-libbrotli 1.2.1.0 or later and reinstall every XS module
-built against it.
+Upgrade to a future Google-Auth release.
 
 References
 ----------
-https://www.cve.org/CVERecord?id=CVE-2026-111497
-https://github.com/google/brotli/releases/tag/v1.2.1
-https://metacpan.org/release/SYBER/XS-libbrotli-1.2.1.0/changes
+https://metacpan.org/release/CJCOLLIER/Google-Auth-0.12/source/lib/Google/Auth/ExternalAccountCredentials/Aws.pm
 
-Timeline
---------
-- 2026-10-29: Version 1.2.1.0 released with fix.
+
+========================================================================
+CVE-2026-74760                                       CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-74760
+
+   Distribution:  Google-Auth
+       Versions:  from 0.11 through 0.12
+       MetaCPAN:  https://metacpan.org/dist/Google-Auth
+       VCS Repo: 
+https://github.com/GoogleCloudPlatform/google-auth-library-perl
+
+
+Google::Auth versions from 0.11 through 0.12 for Perl accept an
+authorization code from any local process because the gcloud-auth login
+callback does not check the OAuth state
+
+Description
+-----------
+Google::Auth versions from 0.11 through 0.12 for Perl accept an
+authorization code from any local process because the gcloud-auth login
+callback does not check the OAuth state.
+
+The gcloud-auth login and application-default login commands send a
+state parameter with the authorization request, then take the code from
+the first request to reach their loopback listener without comparing
+the returned state.
+
+A local attacker can submit an authorization code for their own Google
+account. The CLI exchanges it and stores the refresh token as the
+user's credentials, so the user's tools then act as the attacker's
+account.
+
+Problem types
+-------------
+- CWE-346 Origin Validation Error
+
+Workarounds
+-----------
+Run gcloud-auth login and gcloud-auth application-default login with
+--no-browser, which uses the out-of-band flow without a loopback
+listener.
+
+Solutions
+---------
+Upgrade to a future Google-Auth release.
+
+References
+----------
+https://metacpan.org/release/CJCOLLIER/Google-Auth-0.12/source/bin/gcloud-auth.pl
+
+
+
