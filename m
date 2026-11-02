@@ -1,40 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/02/2
-Message-ID: <812cded6-0ff3-663d-db21-aa432c1826a1@apache.org>
-Date: Mon, 02 Nov 2026 11:06:44 +0000
-From: Jeffrey Vo <jeffreyvo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-111959: Apache Arrow Rust: Improper validation of RunEndEncoded arrays allows out of bounds reads 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/02/5
+Message-ID: <e4a1cce4-fd3f-41ce-8310-922db2beffb5@cpansec.org>
+Date: Mon, 2 Nov 2026 17:02:41 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-65059: Furl versions through 3.15 for Perl allow memory exhaustion via unbounded decompression of HTTP responses
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+========================================================================
+CVE-2026-65059                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-65059
 
-- Apache Arrow Rust 60.0.0 before 60.1.0
-- Apache Arrow Rust 59.0.0 through 59.3.1
-- Apache Arrow Rust 58.0.0 through 58.4.0
-- Apache Arrow Rust 33.0.0 through 57.3.1
-
-Description:
-
-Out-of-bounds read vulnerability in Apache Arrow Rust (`arrow` crate), from version 33.0.0 through to versions 57.3.1, 58.4.0, 59.3.1 and 60.0.0.
+   Distribution:  Furl
+       Versions:  through 3.15
+       MetaCPAN:  https://metacpan.org/dist/Furl
+       VCS Repo:  https://github.com/tokuhirom/Furl
 
 
+Furl versions through 3.15 for Perl allow memory exhaustion via
+unbounded decompression of HTTP responses
 
-Improper validation of RunEndEncoded arrays in the ArrayData interface can allow reading data beyond the bounds of the child values array.
+Description
+-----------
+Furl versions through 3.15 for Perl allow memory exhaustion via
+unbounded decompression of HTTP responses.
 
+Furl inflates a response body sent with a gzip, x-gzip or deflate
+Content-Encoding and appends the output to the response string with no
+size limit. It does this whether or not the request asked for
+compression, and no option caps the decompressed size. Responses read
+with write_file or write_code are streamed rather than held in memory.
 
+A malicious server, or an attacker on a plain HTTP connection, can send
+a small compressed response that expands to exhaust the client's memory
+and end the process.
 
-Users are recommended to upgrade to versions 60.1.0, 59.3.2, 58.4.1, 57.3.2 which fixes the issue.
+Problem types
+-------------
+- CWE-409 Improper Handling of Highly Compressed Data (Data
+   Amplification)
 
-Credit:
+Solutions
+---------
+No fixed CPAN release is currently available.
 
-Adam Korczynski of Ada Logics (reporter)
-Anthropic (finder)
-
-References:
-
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-111959
+References
+----------
+https://metacpan.org/release/SYOHEX/Furl-3.15/source/lib/Furl/ZlibStream.pm
+https://github.com/tokuhirom/Furl/pull/139
 
