@@ -1,29 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/26
-Message-ID: <a001186e-513b-a0b6-6d10-8a167c7bc2ce@apache.org>
-Date: Tue, 03 Nov 2026 20:36:24 +0000
-From: Arrigo Marchiori <ardovm@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/16
+Message-ID: <3e261c48-1447-f163-0836-49b80c80e9d4@apache.org>
+Date: Tue, 03 Nov 2026 16:10:05 +0000
+From: Matt Pavlovich <mattrpav@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90626: Apache OpenOffice: Out-of-bounds write when importing encrypted PDF files 
+Subject: CVE-2026-108500: Apache ActiveMQ: LDAPAuthorizationMap allows authorization bypass via DN injection 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: Moderate 
 
 Affected versions:
 
-- Apache OpenOffice through 4.1.16
+- Apache ActiveMQ 6.3.0 before 6.3.3
+- Apache ActiveMQ 5.19.0 before 5.19.12
+- Apache ActiveMQ 6.4.0 unaffected
 
 Description:
 
-An uncontrolled memory access in the PDF import code of Apache OpenOffice versions through 4.1.16 allows a crafted PDF to cause an out-of-bounds memory write, causing program crash or memory corruption.
-Users are recommended to upgrade to version 4.1.17, which fixes this issue.
+Input validation vulnerability in Apache ActiveMQ configured to use the LDAPAuthorizationMapPlugin allows an authenticated attacker to create or address a destination with a crafted name containing LDAP DN special characters (such as comma, plus, equals, backslash) can manipulate the LDAP search base used for ACL lookups.
+
+
+
+This issue affects Apache ActiveMQ: from 6.3.0 before 6.3.3, from 5.19.0 before 5.19.12.
+
+
+
+Users are recommended to upgrade to version 6.4.0, 6.3.3 or 5.19.12, which fixes the issue.
 
 Credit:
 
-Anthropic and Ada Logics (finder)
+Rishabh Soni (Azmendus) <rishabhv704@...il.com> (finder)
 
 References:
 
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-90626
+https://activemq.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-108500
 
