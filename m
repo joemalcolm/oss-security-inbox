@@ -1,36 +1,54 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/13
-Message-ID: <74215235-1c57-28de-58bd-52cebef41513@apache.org>
-Date: Tue, 03 Nov 2026 16:41:23 +0000
-From: Andor Molnar <andor@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-115448: Apache ZooKeeper: Unbounded recursion in snapshot serialization allows a client to render the server unrecoverable 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/3
+Message-ID: <8cf59a09-8464-4f28-83df-7b17b66104ef@cpansec.org>
+Date: Tue, 3 Nov 2026 07:52:19 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-74846: Catalyst::Plugin::Authentication versions before 0.10029 for Perl allow timing attacks on stored passwords via eq comparisons in the legacy password verifier
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
-    CVSS 4.0: 8.7 (high) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N
+========================================================================
+CVE-2026-74846                                       CPAN Security Group
+========================================================================
 
-Affected versions:
+         CVE ID:  CVE-2026-74846
 
-- Apache ZooKeeper 3.9.0 through 3.9.7
-- Apache ZooKeeper 3.8.0 through 3.8.8
+   Distribution:  Catalyst-Plugin-Authentication
+       Versions:  before 0.10029
+       MetaCPAN: https://metacpan.org/dist/Catalyst-Plugin-Authentication
+       VCS Repo: 
+https://github.com/perl-catalyst/Catalyst-Plugin-Authentication
 
-Description:
 
-Uncontrolled recursion in Apache ZooKeeper. The server serializes its data tree to a snapshot by recursing one stack frame per znode level, with no depth bound. A client permitted to create znodes (the default root ACL is open) can build a chain of nested znodes deep enough that taking a snapshot exhausts the JVM stack and kills the snapshot thread; sizes stay within jute.maxbuffer, so existing limits do not prevent it. This is a denial of service that becomes persistent: on restart the server rebuilds the deep tree from its transaction log and fails again while taking the startup snapshot, so it does not return to service, and recovery can entail data loss. The same log affects a leader and its followers, so it can spread across an ensemble.
+Catalyst::Plugin::Authentication versions before 0.10029 for Perl allow
+timing attacks on stored passwords via eq comparisons in the legacy
+password verifier
 
-This issue affects Apache ZooKeeper 3.8.0 through 3.8.7 and 3.9.0 through 3.9.6. Users are recommended to upgrade to 3.8.8 or 3.9.7, which fix the issue. As a workaround, use ACLs and authentication to restrict znode creation rather than relying on the default open root ACL.
+Description
+-----------
+Catalyst::Plugin::Authentication versions before 0.10029 for Perl allow
+timing attacks on stored passwords via eq comparisons in the legacy
+password verifier.
 
-This issue is being tracked as ZOOKEEPER-5097 
+CVE-2026-5091 was fixed in the realm-based verifier. The legacy
+verifier, used by the deprecated login method, compares clear-text
+passwords, crypt hashes and base64 digests with eq, so the comparison
+time depends on how many leading bytes match.
 
-Credit:
+A remote attacker can use response-time differences to guess the stored
+password or hash.
 
-Sai Sreewathsa Kovalluri, Shon Babu, and Kannan K of Innspark Solutions (https://innspark.in/) (reporter)
-Prasath Jayasundar & PayPal Cyber Security Team (reporter)
+Problem types
+-------------
+- CWE-208 Observable Timing Discrepancy
 
-References:
+Solutions
+---------
+Upgrade to Catalyst-Plugin-Authentication 0.10029 or later.
 
-https://zookeeper.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-115448
-https://issues.apache.org/jira/browse/ZOOKEEPER-5097
+References
+----------
+https://metacpan.org/release/ETHER/Catalyst-Plugin-Authentication-0.10029/changes
+https://github.com/perl-catalyst/Catalyst-Plugin-Authentication/commit/ba4435f1fa6b641e6c8793c88b5433afa83ceafa.patch
+https://www.cve.org/CVERecord?id=CVE-2026-5091
 
