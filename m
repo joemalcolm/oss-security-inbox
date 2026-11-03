@@ -1,38 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/16
-Message-ID: <3e261c48-1447-f163-0836-49b80c80e9d4@apache.org>
-Date: Tue, 03 Nov 2026 16:10:05 +0000
-From: Matt Pavlovich <mattrpav@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/27
+Message-ID: <1d8c8c1c-a9a1-7a85-d7d2-0b12c102cb38@apache.org>
+Date: Tue, 03 Nov 2026 20:36:48 +0000
+From: Arrigo Marchiori <ardovm@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-108500: Apache ActiveMQ: LDAPAuthorizationMap allows authorization bypass via DN injection 
+Subject: CVE-2026-90627: Apache OpenOffice: Local file inclusion via SQL provider and flat file database references 
 Content-Type: text/plain; charset=utf-8
 
-Severity: Moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache ActiveMQ 6.3.0 before 6.3.3
-- Apache ActiveMQ 5.19.0 before 5.19.12
-- Apache ActiveMQ 6.4.0 unaffected
+- Apache OpenOffice through 4.1.16
 
 Description:
 
-Input validation vulnerability in Apache ActiveMQ configured to use the LDAPAuthorizationMapPlugin allows an authenticated attacker to create or address a destination with a crafted name containing LDAP DN special characters (such as comma, plus, equals, backslash) can manipulate the LDAP search base used for ACL lookups.
-
-
-
-This issue affects Apache ActiveMQ: from 6.3.0 before 6.3.3, from 5.19.0 before 5.19.12.
-
-
-
-Users are recommended to upgrade to version 6.4.0, 6.3.3 or 5.19.12, which fixes the issue.
+The flat file database driver in Apache Openoffice versions through 4.1.16 allows a crafted document to read the contents of any local file without asking the user.
+Users are recommended to upgrade to version 4.1.17, which fixes this issue.
 
 Credit:
 
-Rishabh Soni (Azmendus) <rishabhv704@...il.com> (finder)
+Edoardo Geraci and Thomas Rinsma of Codean Labs (finder)
 
 References:
 
-https://activemq.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-108500
+https://openoffice.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-90627
 
