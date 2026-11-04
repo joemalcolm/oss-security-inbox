@@ -1,66 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/04/11
-Message-ID: <CAARiyJpgtx8EQePEKPjCf4yFvuPDhLnekxZbgNhrv-mOh_f+4w@mail.gmail.com>
-Date: Wed, 4 Nov 2026 19:37:49 +0100
-From: Tomasz Kaye <tomasz.brain@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/04/10
+Message-ID: <f1a15e19-36ba-4dd5-8187-0b2f94c868ae@redhat.com>
+Date: Wed, 4 Nov 2026 12:01:04 -0500
+From: Carlos O'Donell <carlos@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: GodotSteam 4.17 through 4.23.2: any multiplayer peer can claim the server's peer ID
+Subject: The GNU C Library security advisories update for 2026-11-04
 Content-Type: text/plain; charset=utf-8
 
-GodotSteam lets any player in a session claim to be the server. Godot
-names players by a peer ID, and ID 1 means the server. Steam verifies
-the account behind each connection, but GodotSteam accepts whatever
-peer ID the sender writes into its first packet and never compares the
-two. A player who writes 1 is treated as the server and can issue the
-commands a server issues. I published this on 2026-11-04 [1].
+The following security advisories have been published:
 
-Affected versions:
-GodotSteam v4.17 (2025-12-10) through v4.23.2 (current). The retired
-addon godotsteam/multiplayerpeer has the same flaw from v4.11-mp
-(2024-09-27) through v4.16.2 (2025-11-10); its first two tags use a
-different packet format.
+GLIBC-SA-2026-0026:
+===================
+BIG-HKSCS decoding hang on crafted input
 
-The flaw:
-A new connection's first packet carries a four-byte peer ID that the
-sender picks. The plugin checks the packet's size and nothing else. It
-stores the number as the connection's identity, then installs the peer
-in its peer table under that number. A duplicate number silently
-overwrites the existing entry.
+Converting crafted BIG-HKSCS input to UCS-4 or the internal wide
+character encoding, for example with iconv, in the GNU C Library version
+2.18 through 2.31 may result in the converter making no progress,
+causing the calling application to hang.
 
-Impact:
-Godot compares the sender's peer ID, as the transport reports it, with
-the node's authority. Authority is a per-node setting that starts at
-1, the server.
+When decoding input in the BIG5-HKSCS character set, four double-byte
+sequences map to two Unicode code points each (for example, 0x88 0x62
+maps to U+00CA U+0304).  The BIG5-HKSCS gconv step emits the first code
+point and saves the second one in the converter state, to be emitted on
+the following call.  After emitting the saved second code point the step
+failed to clear the converter state.  As a result, when such a sequence
+is decoded, subsequent calls repeatedly re-emit the saved second code
+point and consume no input.  The converter then keeps emitting the
+pending character without consuming further input, so an application
+that retries the conversion loops forever.  The input and encoding must
+be attacker controlled.
 
-Against a client, a co-player takes the server's place and receives
-the traffic that client sends to the server. That shape is from
-source; I did not run it.
+CVE-Id: CVE-2026-122054
+Public-Date: 2020-03-27
+Vulnerable-Commit: f22bc486c1ce5e92380a0d06b98fbba639d170e4 (2.17.90-786)
+Fix-Commit: c580e6466d6da8262820cdbad19f32c5546226cf (2.32)
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H - 5.9
+Reported-By: Tom Honermann
 
-Against a host or dedicated server, a client claiming 1 fills the
-empty ID-1 slot. The host then runs that client's authority-gated
-RPCs.
-
-I demonstrated the second shape on 2026-11-04 with two computers and
-two Steam accounts. A stock Godot 4.7.2 / GodotSteam 4.23.2 host ran
-the attacker's forged grant_gold(1000000) as peer 1. No memory
-corruption or code execution is claimed.
-
-Reproduction:
-https://github.com/bitbutter/godot-security-pocs/tree/main/2026-11-godotsteam-peer-id-claim
-Source: godotsteam v4.23.2, src/steam_packet_peer.cpp and
-src/godotsteam_multiplayer_peer.cpp.
-
-Fix status:
-Unpatched as of 2026-11-04: v4.23.2 is the newest tag, and the only
-commit since it, on the release branch, changes
-godotsteam.gdextension. Reported privately to security@...otsteam.com
-on 2026-10-21; no reply received as of 2026-11-04. The report proposed
-three fixes: reject a claim of 1 on servers, check a client's claim of
-1 against the connected server's Steam account, or let the server
-assign peer IDs.
-
-CVE status:
-Requested from MITRE's CNA-LR on 2026-11-04 (CAN-2026-2042189). This
-thread will be self-replied when the record publishes.
-
-[1] https://axeghost.offprint.app/a/3mzhxoqpnh423-any-networked-co-player-can-act-as-the-server-in-a-godotsteam-game
