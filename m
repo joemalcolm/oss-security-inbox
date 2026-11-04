@@ -1,30 +1,14 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/03/25
-Message-ID: <978363c1-e99e-10f6-4155-7836e490b06e@apache.org>
-Date: Tue, 03 Nov 2026 20:36:04 +0000
-From: Arrigo Marchiori <ardovm@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/04/3
+Message-Id: <013D9442-C06A-4C02-BE2B-D005A4CE920C@gmail.com>
+Date: Wed, 4 Nov 2026 10:18:42 +0100
+From: Antoine du Hamel <duhamelantoine1995@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90624: Apache OpenOffice: PDF File Parsing Heap based Buffer-Overflow-Remote Code Execution Vulnerability 
+Subject: Node.js security release pre-alert
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+We will release new versions of Node.js 22, 24, and 26 release lines on or shortly
+after 2026-11-11 in order to address security vulnerabilities.
+The highest severity issue fixed in this release is HIGH.
 
-Affected versions:
-
-- Apache OpenOffice through 4.1.16
-
-Description:
-
-An unchecked memory access in the PDF import code of Apache OpenOffice versions through 4.1.16 on allows a crafted PDF to execute an out-of-bounds memory write. This could crash the program or cause memory corruption.
-Users are recommended to upgrade to version 4.1.17, which fixes this issue.
-
-Credit:
-
-Anonymous working with TrendAI Zero Day Initiative (finder)
-Anthropic and Ada Logics (finder)
-
-References:
-
-https://openoffice.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-90624
-
+https://nodejs.org/en/blog/vulnerability/november-2026-security-releases
