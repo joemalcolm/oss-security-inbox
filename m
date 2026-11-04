@@ -1,92 +1,58 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/04/9
-Message-ID: <CAEvdU_2iBxNTR=q0qJHtMbJn4mjtmLrXJ7XzdpYvgFvd6p1FhQ@mail.gmail.com>
-Date: Wed, 4 Nov 2026 17:12:59 +0100
-From: Jacopo Cappellato <jacopoc@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: Apache OFBiz: CVE Announcements
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/04/8
+Message-ID: <P5bGsSq--J-9@londal.co>
+Date: Wed, 4 Nov 2026 16:57:40 +0100 (CET)
+From: nick@...dal.co
+To: Oss Security <oss-security@...ts.openwall.com>
+Subject: libtar: incomplete fix for CVE-2021-33643/CVE-2021-33644 (heap out-of-bounds read)
 Content-Type: text/plain; charset=utf-8
 
-Multiple security vulnerabilities have been identified in Apache
-OFBiz, including some critical issues.
+Hello,
 
-Affected versions: All versions prior to 24.09.08.
+libtar's fix for CVE-2021-33643 and CVE-2021-33644 is incomplete. A crafted tar archive can still cause a heap out-of-bounds read, including on distro builds that carry that fix (confirmed on Debian 1.2.20-8+deb12u1).
 
-Mitigation:
-Users are advised to upgrade to Apache OFBiz 24.09.08, which addresses
-these vulnerabilities.
+libtar appears to be unmaintained. I reported this to the Debian security team on 2026-11-02, and they cleared it for publication on 2026-11-03. A CVE ID has been requested from MITRE and is pending.
 
-Vulnerabilities:
-CVE-2026-66903: Authenticated Path Traversal in Catalog Image Management
-CVE-2026-68524: Pre-Authentication Remote Code Execution via
-Attacker-Controlled Screen Definition Loading
-CVE-2026-71901: Dispatch arbitrary internal services on SFA component
-CVE-2026-73577: Unauthenticated path-suffix view authorization bypass
-CVE-2026-73578: Unauthenticated saved-view authorization bypass with RCE impact
-CVE-2026-73580: Unauthenticated HR organization and employee disclosure
-CVE-2026-74841: Denial of Service via unauthenticated userTenantId in
-multitenant mode
-CVE-2026-76150: Authenticated path traversal and missing authorization
-check in replaceImageToExistImage
-CVE-2026-76152: Authenticated path traversal and missing authorization
-check in imageCrop and imageRotate services
-CVE-2026-81734: Missing authorization - catalog quick-admin product writes
-CVE-2026-81744: Authorization bypass - self-grant content OWNER
-CVE-2026-81808: Missing authorization - search-result bulk catalog mutation
-CVE-2026-81815: SQL injection - performFind ignore-case values, MySQL/MariaDB
-CVE-2026-81816: XML external entity injection (XXE)
-CVE-2026-81828: Server-side request forgery in SurveyWrapper
-CVE-2026-82894: Content renderer runs a service name stored on the row
-CVE-2026-82902: Unfiltered server-side URL fetch in webtools viewdatafile
-CVE-2026-82904: Unbounded multi-form row count from a parameter name
-CVE-2026-82907: externalLoginKey honoured pre-auth, reusable and unbound
-CVE-2026-82910: renderLink compiles link parameters as FreeMarker source
-CVE-2026-82912: Unsandboxed Groovy compiled from a service parameter
-CVE-2026-82916: webtools xmldsdump exports any entity to any path
-CVE-2026-82960: Widget use-when Expression Injection Bypasses Groovy
-Sandbox for authenticated RCE
-CVE-2026-83538: Unauthenticated disclosure through HR, Catalog, and
-Order Manager helpers
-CVE-2026-83542: Unauthenticated RCE via login-page widget injection
-CVE-2026-84183: Content Manager VIEW-only RCE in updateLayout
-CVE-2026-84728: Cross-tenant authorization bypass in mapped-domain login
-CVE-2026-85627: Authenticated Code Execution Vulnerability
-CVE-2026-92887: REST API authentication bypassed by default when the
-auth attribute is omitted from a .rest.xml operation
-CVE-2026-97355: Hard-coded Credentials in AdminServer Enable
-Unauthenticated Denial of Service
-CVE-2026-97356: Insufficiently Protected Credentials in ViewFile
-Enable Authentication Bypass
-CVE-2026-100168: Missing Authorization vulnerability
-CVE-2026-100228: Improper Input Validation in Order Returns Enables
-Unauthorized Refund Price Manipulation
-CVE-2026-105325: Missing authorization in payment application services
-allows view-only users to modify payment allocations
-CVE-2026-105330: Use of Hard-coded Cryptographic Key in JWT Token
-Authentication Enables Unauthenticated Administrative Access
-CVE-2026-105461: Missing authorization in updateOrderItems allows
-view-only users to modify order prices and quantities
-CVE-2026-109129: Authorization Bypass Through User-Controlled Key in
-OrderServices Enables Unauthorized Payment Preference Modification
-CVE-2026-109837: Authorization Bypass Through User-Controlled Key in
-Order Returns Enables Cross-Party OrderItem Association
-CVE-2026-109856: Missing Authorization in Financial Account Services
-Enables Unauthorized Balance Manipulation
-CVE-2026-109928: Incorrect Authentication Algorithm Implementation in
-Password Reset Enables Full Account Takeover
-CVE-2026-114229: Reflected Cross-site Scripting in Catalog Image
-Viewer Enables Script Execution in a User Session
-CVE-2026-114233: Incorrect Privilege Assignment in Order Manager
-Enables Unauthorized Modification of Approved Orders
-CVE-2026-114235: Direct Request in Order Manager Enables Unauthorized
-Tracking Number Modification
-CVE-2026-114271: Authorization Bypass Through User-Controlled Key in
-Shopping Lists Enables Cross-Party Shopping List Modification
-CVE-2026-114272: Authorization Bypass Through User-Controlled Key in
-Content Viewing Enables Unauthorized Content Disclosure
-CVE-2026-114277: Janrain Engage Social Login Improperly Binds External
-Identities to Local Accounts
+Details
 
-References:
-- Apache OFBiz: https://ofbiz.apache.org/
-- CVE details: https://www.cve.org/
+The existing fix rejects a GNU long-name or long-link record with a size of zero, but doesn't guarantee that the buffer is NUL-terminated. th_read() in lib/block.c allocates exactly blocks * 512 bytes and fills every byte from the archive:
+
+    t->th_buf.gnu_longname = (char *)malloc(blocks * T_BLOCKSIZE);
+    for (j = 0, ptr = t->th_buf.gnu_longname; j < blocks; j++, ptr += T_BLOCKSIZE)
+        tar_block_read(t, ptr);
+
+If the size is a positive multiple of 512 and the data contains no NUL bytes, the buffer is left unterminated. safer_name_suffix() in lib/decode.c then treats it as a C string and reads past the end of the allocation. It is reachable with default options through tar_open(), th_read(), and th_get_pathname() or th_get_linkname().
+
+Reproducing
+
+1. GNU long-name header: typeflag 'L', size 512, valid checksum
+2. One 512-byte data block with no NUL bytes
+3. A normal file header and trailing zero blocks
+
+AddressSanitizer reports:
+
+    ERROR: AddressSanitizer: heap-buffer-overflow ... READ of size 1
+        #0 safer_name_suffix   lib/decode.c:39
+        #1 th_get_pathname     lib/decode.c:60
+    0x... is located 0 bytes after 512-byte region
+      allocated by:
+        #1 th_read             lib/block.c:192
+
+Impact
+
+A crash when processing an untrusted archive, and possibly adjacent heap data being exposed through the returned path. I haven't found an out-of-bounds write.
+
+Fix
+
+Allocate one extra byte and NUL-terminate the buffer after reading, for both gnu_longname and gnu_longlink:
+
+    t->th_buf.gnu_longname = malloc(blocks * T_BLOCKSIZE + 1);
+    ...
+    t->th_buf.gnu_longname[blocks * T_BLOCKSIZE] = '\0';
+
+The full advisory, patch and PoC are here:
+https://github.com/nilondal/libtar-CVE-2021-33644-followup
+
+Nicholas Londal
+nick@...dal.co
+
