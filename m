@@ -1,125 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/2
-Message-ID: <9392afe31c13e88b@cvs.openbsd.org>
-Date: Thu, 5 Nov 2026 03:01:24 -0600 (CST)
-From: Damien Miller <djm@....openbsd.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/11
+Message-ID: <80e7c5cb-35c0-4b88-9f97-8b6cf35139d2@oracle.com>
+Date: Thu, 5 Nov 2026 12:07:03 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Announce: Portable OpenSSH 10.6p2 released
+Subject: CPython sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-Portable OpenSSH 10.6p2 has just been released. It will be available
-from the mirrors listed at https://www.openssh.com/ shortly.
+https://www.runsybil.com/blog/cpython-0-day-vulnerabilities-threaten-the-ai-supply-chain
+reports on a sandbox escape it found in CPython:
+> The bug we discovered abuses CPython's handling of generic types to
+> accomplish a breakout. We exploited it using objects that sandboxes
+> make available in every template, even in empty sandbox contexts.
 
-OpenSSH is a 100% complete SSH protocol 2.0 implementation and
-includes sftp client and server support.
+(See the above URL for full details.)
 
-Recently the OpenSSH team have received a large number of security
-bug reports, many of which are findings from AI models or made with
-AI assistance. While many AI reports are determined not to have
-security impact when considered in the context of a realistic
-threat model, we very much welcome these reports, especially when
-combined with human triage, analysis, test-cases and particularly
-when accompanied by proposed fixes.
+They were not successful in reporting it as a security vulnerability:
+> CPython’s stance on our memory bugs is documented, and was reiterated to us:
+> 
+>   > CPython does not support sandboxing untrusted Python code as a security
+>   > boundary, so escapes from such a sandbox are not vulnerabilities in
+>   > Python and should be reported to the sandbox’s developers instead.
+> 
+> The maintainers of Jinja provided a response at odds with CPython’s guidance:
+> 
+>   > Report this to cpython. It's problem with cpython, not with Jinja.
 
-** We have seen a number of cases where a security bug identified
-** by AI tools is subsequently independently discovered by a
-** different researcher. This suggests that adversaries who do not
-** report bugs to OSS projects are likely to be able to discover
-** these bugs too. Given this, the OpenSSH team will, for now, be
-** making more frequent releases to get bugfixes into users' hands
-** more quickly rather than batching them until the next planned
-** release.
+Instead they submitted a fix as https://github.com/python/cpython/pull/155761
+but note that upstream is not backporting it to security releases.
 
-Once again, we would like to thank the OpenSSH community for their
-continued support of the project, especially those who contributed
-code or patches, reported bugs, tested snapshots or donated to the
-project. More information on donations may be found at:
-https://www.openssh.com/donations.html
-
-Future deprecation notice
--------------------------
-
- * scp(1): begin deprecating the -R flag, which is used to perform a
-   remote-to-remote copy by executing scp on a remote host. This
-   option is a fragile optimisation that is difficult to use because
-   it requires credentials on the remote host. It also creates
-   security risks if the shell quoting rules on the remote system
-   where the copy is performed differ from the client's expectations.
-
-   From OpenSSH 10.6, this option will continue to work but will
-   cause a deprecation warning to be emitted to standard error. In
-   a future release, the option will be ignored and will leave in
-   place the default remote-to-remote copy behaviour (copy via the
-   host running scp).
-
- * sshd(8): support for platforms that do not allow file descriptor
-   passing and that also require root privilege for PTY allocation
-   will be removed in a future release. Affected platforms are known
-   to include SCO OpenServer 5 and QNX 6 but may include other
-   similarly old operating systems. This deprecation can be avoided
-   if the user community for these platforms is able to assist us in
-   building alternatives, such as avoiding the need for root in PTY
-   allocation.
-
-Changes since OpenSSH 10.6p1
-============================
-
-This release contains a critical security workaround that affects
-Linux systems that use the musl libc and PAM disabled.
-
-This release also includes a number of bugfixes that had already
-been committed on the portable OpenSSH V_10_6 stable branch.
-
-Security
-========
-
- * sshd(8): avoid password authentication bypass that is exploitable
-   through sshd(8) that affects some Linux systems when built and run
-   with PAM support disabled. We consider the root cause of this bug
-   to be outside sshd, but it is exploitable via sshd and can be
-   avoided there.
-
-   This bug was reported by Özgün Kültekin of Wakefield
-   (wakefield.co)
-
-Bugfixes
---------
-
- * sshd(8), ssh(1): enable the post-quantum hybris signature scheme
-   ssh-mldsa44-ed25519 as an allowed CA signature algorithm.
-
- * ssh(1), sshd(8): fix <1 second CPU spin if ChannelTimeout was in
-   use.
-
-Portability
------------
-
- * sshd(8): fix compilation on (old) platforms that set SKIP_PRIVDROP
-
- * ssh(1), sshd(8): fix detection of Azerbaijani locales
-
- * sshd(8), ssh-agent(1): fix creation of agent sockets on platforms
-   without the openat(2) syscall.
-
- * ssh(1), ssh-add(1), ssh-keygen(1): fix some strange behaviour if
-   SIGINT/SIGQUIT was received while reading a passphrase.
-
- * sshd(8): allow restart_syscall(2) in seccomp sandbox; bz4036
-
-Checksums:
-==========
-
-- SHA1 (openssh-10.6p2.tar.gz) = c91a0b7860c80f29db874044af4d1a6f906231d9
-- SHA256 (openssh-10.6p2.tar.gz) = muRIcgkM8vBrPPn/FH5/FvMJZxNAdj7S+ZJIOYrinVs=
-
-Please note that the SHA256 signatures are base64 encoded and not
-hexadecimal (which is the default for most checksum tools). The PGP
-key used to sign the releases is available from the mirror sites:
-https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
-
-Reporting Bugs:
-===============
-
-- Please read https://www.openssh.com/report.html
-  Security bugs should be reported directly to openssh@...nssh.com
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
