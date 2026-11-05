@@ -1,49 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/3
-Message-ID: <auyPS6sHrxJcoiC_@netmeister.org>
-Date: Thu, 5 Nov 2026 09:14:35 -0500
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/7
+Message-ID: <d21b2c9b-60e2-0e50-17a5-85c3b5d48976@apache.org>
+Date: Thu, 05 Nov 2026 12:23:25 +0000
+From: Joerg Hoh <joerghoh@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: "sshole": password authentication bypass: OpenSSH + musl libc
+Subject: CVE-2026-103864: Apache Sling Engine: Request-derived values reach log sinks without CR/LF neutralization 
 Content-Type: text/plain; charset=utf-8
 
-OpenSSH just published OpenSSH 10.6p2 with a critical
-fix for a password authentication bypass on systems
-that use musl libc and have PAM disabled.  Alpine
-Linux has been called out as one such affected
-system:
+Severity: low 
 
-https://www.openssh.org/releasenotes.html#10.6p2
+Affected versions:
 
->  * sshd(8): avoid password authentication bypass
->  that is exploitable through sshd(8) that affects
->  some Linux systems when built and run with PAM
->  support disabled. We consider the root cause of
->  this bug to be outside sshd, but it is exploitable
->  via sshd and can be avoided there.
->
->   This bug was reported by Özgün Kültekin of
->   Wakefield (wakefield.co)
+- Apache Sling Engine before 3.0.4
+
+Description:
+
+Improper output neutralization for logs in Apache Sling Engine.
 
 
-The vulnerability itself is described here:
 
-https://sshhole.com/
-
-(The history of how we got here is actually fun.)
-
-That is, for any account that has an invalid password
-hash field of '*', you can log in by entering a
-password >257 characters, which will cause crypt(3) in
-musl libc to return '*'.
+This issue affects Apache Sling Engine: before 3.0.4.
 
 
-The code fix (checking for MIN_PASSWORD_HASH_LEN
-instead of using musl crypt(3)'s default "*") is
-here:
-https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482
 
-Setting `PasswordAuthentication no` in
-/etc/ssh/sshd_config mitigates the problem (at the
-obvious cost of not being able to do password auth).
+Users are recommended to upgrade to version 3.0.4, which fixes the issue.
+
+This issue is being tracked as SLING-13360 SLING-13361 
+
+Credit:
+
+The Apache Software Foundation (finder)
+Claude Code (tool)
+
+References:
+
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-103864
+https://issues.apache.org/jira/browse/SLING-13360
+https://issues.apache.org/jira/browse/SLING-13361
 
