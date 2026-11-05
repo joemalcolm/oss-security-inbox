@@ -1,39 +1,21 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/12
-Message-ID: <8733tfvw1a.fsf@gentoo.org>
-Date: Thu, 05 Nov 2026 20:54:41 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/5
+Message-ID: <CAARiyJovNGa-OpHo_NnckzvHJGYY6_ejTO895OotLL9SKgXRHw@mail.gmail.com>
+Date: Thu, 5 Nov 2026 11:05:18 +0100
+From: Tomasz Kaye <tomasz.brain@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CPython sandbox escape
+Subject: Re: GodotSteam 4.17 through 4.23.2: any multiplayer peer can claim the server's peer ID
 Content-Type: text/plain; charset=utf-8
 
-Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+CVE-2026-123017 was assigned on 2026-11-05 and is published:
+https://www.cve.org/CVERecord?id=CVE-2026-123017
 
-> https://www.runsybil.com/blog/cpython-0-day-vulnerabilities-threaten-the-ai-supply-chain
-> reports on a sandbox escape it found in CPython:
->> The bug we discovered abuses CPython's handling of generic types to
->> accomplish a breakout. We exploited it using objects that sandboxes
->> make available in every template, even in empty sandbox contexts.
->
-> (See the above URL for full details.)
->
-> They were not successful in reporting it as a security vulnerability:
->> CPython’s stance on our memory bugs is documented, and was reiterated to us:
->>   > CPython does not support sandboxing untrusted Python code as a
->> security
->>   > boundary, so escapes from such a sandbox are not vulnerabilities in
->>   > Python and should be reported to the sandbox’s developers instead.
->> The maintainers of Jinja provided a response at odds with CPython’s
->> guidance:
->>   > Report this to cpython. It's problem with cpython, not with
->> Jinja.
+The published record scores it 6.5, with Integrity Low. I have asked
+MITRE's CNA-LR desk to raise Integrity to High - that gives 8.2 -
+Because the stock host refused the forged command from the attacker's
+own peer ID and ran it once the handshake claimed 1.
 
-https://lwn.net/Articles/574215/
-
->
-> Instead they submitted a fix as https://github.com/python/cpython/pull/155761
-> but note that upstream is not backporting it to security releases.
-
-sam
-
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+A correction to the original post. The two source paths carry a src/
+prefix that the repository does not have. Both files sit at the
+repository root at v4.23.2: godotsteam_multiplayer_peer.cpp and
+steam_packet_peer.cpp.
