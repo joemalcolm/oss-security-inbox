@@ -1,28 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/14
-Message-ID: <20261105225000.GD498269@qaa.vinc17.org>
-Date: Thu, 5 Nov 2026 23:50:00 +0100
-From: Vincent Lefevre <vincent@...c17.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/13
+Message-ID: <03bc7bfa-5832-4582-a5f4-47fd06d1b45a@oracle.com>
+Date: Thu, 5 Nov 2026 14:27:23 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
+Subject: Fwd: Go 1.27.4 and Go 1.26.11 pre-announcement
 Content-Type: text/plain; charset=utf-8
 
-On 2026-11-05 23:38:51 +0400, Loganaden Velvindron wrote:
-> It's unfortunate that some people are writing misleading statements
-> about a security problem in OpenSSH, especially on linkedin, despite
-> djm@ explaining that this is a WORKAROUND.
 
-This is not clear. Under Debian, the crypt(3) man page says:
 
-  Upon error, crypt_r, crypt_rn, and crypt_ra write an invalid hash
-  to  the  output field of their data argument, and crypt writes an
-  invalid hash to its static storage area.   This  string  will  be
-  shorter  than  13 characters, will begin with a ‘*’, and will not
-  compare equal to setting.
 
-So it seems that "*" could be a valid result in case of error.
+-------- Forwarded Message --------
+Subject: 	[security] Go 1.27.4 and Go 1.26.11 pre-announcement
+Date: 	Thu, 5 Nov 2026 22:10:14 +0000
+From: 	announce@...ang.org
+To: 	golang-nuts@...glegroups.com
+
+
+Hello gophers,
+
+We plan to issue Go 1.27.4 and Go 1.26.11 during US business hours on Tuesday, 
+November 10.
+
+These minor releases include PRIVATE security fixes to the standard library and 
+the toolchain, covering the following CVEs:
+
+   * CVE-2026-97033
+   * CVE-2026-97034
+   * CVE-2026-97035
+   * CVE-2026-97036
+   * CVE-2026-97037
+   * CVE-2026-97038
+   * CVE-2026-97039
+   * CVE-2026-97040
+   * CVE-2026-97041
+   * CVE-2026-97042
+   * CVE-2026-97043
+   * CVE-2026-97054
+
+Following our security policy, this is the pre-announcement of those releases.
+
+Thanks,
+Michael and Cherry for the Go team
 
 -- 
-Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
-100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
-Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
+You received this message because you are subscribed to the Google Groups 
+"golang-announce" group.
+To view this discussion visit 
+https://groups.google.com/d/msgid/golang-announce/e10c2e21.CAAACbsgFBkAAAAAAAAAA-p9MGAAAYKKSQYAAAAAADE8OwBq7P7G%40mailjet.com 
+
