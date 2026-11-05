@@ -1,21 +1,42 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/5
-Message-ID: <CAARiyJovNGa-OpHo_NnckzvHJGYY6_ejTO895OotLL9SKgXRHw@mail.gmail.com>
-Date: Thu, 5 Nov 2026 11:05:18 +0100
-From: Tomasz Kaye <tomasz.brain@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/8
+Message-ID: <8e2efbca-350b-6a26-023b-28aec38f2e12@apache.org>
+Date: Thu, 05 Nov 2026 12:23:34 +0000
+From: Joerg Hoh <joerghoh@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: GodotSteam 4.17 through 4.23.2: any multiplayer peer can claim the server's peer ID
+Subject: CVE-2026-103866: Apache Sling Engine: Hand-rolled parameter parser diverges from RFC/container parsing, enabling smuggling 
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-123017 was assigned on 2026-11-05 and is published:
-https://www.cve.org/CVERecord?id=CVE-2026-123017
+Severity: low 
 
-The published record scores it 6.5, with Integrity Low. I have asked
-MITRE's CNA-LR desk to raise Integrity to High - that gives 8.2 -
-Because the stock host refused the forged command from the attacker's
-own peer ID and ran it once the handshake claimed 1.
+Affected versions:
 
-A correction to the original post. The two source paths carry a src/
-prefix that the repository does not have. Both files sit at the
-repository root at v4.23.2: godotsteam_multiplayer_peer.cpp and
-steam_packet_peer.cpp.
+- Apache Sling Engine before 3.0.4
+
+Description:
+
+Inconsistent interpretation of HTTP requests ('HTTP Request/Response smuggling') vulnerability in Apache Sling Engine. The engine's query/form parser accepts non-standard percent-escapes, wrong charsets, and continues request processing on such errors.
+
+
+
+This issue affects Apache Sling Engine: before 3.0.4.
+
+
+
+Users are recommended to upgrade to version 3.0.4, which fixes the issue.
+
+This issue is being tracked as SLING-13362 SLING-13364 SLING-13365 
+
+Credit:
+
+The Apache Software Foundation (finder)
+Claude Code (tool)
+
+References:
+
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-103866
+https://issues.apache.org/jira/browse/SLING-13362
+https://issues.apache.org/jira/browse/SLING-13364
+https://issues.apache.org/jira/browse/SLING-13365
+
