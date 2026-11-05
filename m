@@ -1,37 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/9
-Message-ID: <CAOp4FwRgN-hQPHsCXzXbBhnHAJxWfTmQ61+61taGkFG1JjTgWA@mail.gmail.com>
-Date: Thu, 5 Nov 2026 23:38:51 +0400
-From: Loganaden Velvindron <loganaden@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/12
+Message-ID: <8733tfvw1a.fsf@gentoo.org>
+Date: Thu, 05 Nov 2026 20:54:41 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
+Subject: Re: CPython sandbox escape
 Content-Type: text/plain; charset=utf-8
 
-On Thu, 5 Nov 2026 at 23:14, Jan Schaumann <jschauma@...meister.org> wrote:
+Alan Coopersmith <alan.coopersmith@...cle.com> writes:
+
+> https://www.runsybil.com/blog/cpython-0-day-vulnerabilities-threaten-the-ai-supply-chain
+> reports on a sandbox escape it found in CPython:
+>> The bug we discovered abuses CPython's handling of generic types to
+>> accomplish a breakout. We exploited it using objects that sandboxes
+>> make available in every template, even in empty sandbox contexts.
 >
-> OpenSSH just published OpenSSH 10.6p2 with a critical
-> fix for a password authentication bypass on systems
-> that use musl libc and have PAM disabled.  Alpine
-> Linux has been called out as one such affected
-> system:
+> (See the above URL for full details.)
 >
-> https://www.openssh.org/releasenotes.html#10.6p2
+> They were not successful in reporting it as a security vulnerability:
+>> CPython’s stance on our memory bugs is documented, and was reiterated to us:
+>>   > CPython does not support sandboxing untrusted Python code as a
+>> security
+>>   > boundary, so escapes from such a sandbox are not vulnerabilities in
+>>   > Python and should be reported to the sandbox’s developers instead.
+>> The maintainers of Jinja provided a response at odds with CPython’s
+>> guidance:
+>>   > Report this to cpython. It's problem with cpython, not with
+>> Jinja.
+
+https://lwn.net/Articles/574215/
+
 >
-> >  * sshd(8): avoid password authentication bypass
-> >  that is exploitable through sshd(8) that affects
-> >  some Linux systems when built and run with PAM
-> >  support disabled. We consider the root cause of
-> >  this bug to be outside sshd, but it is exploitable
-> >  via sshd and can be avoided there.
-> >
-> >   This bug was reported by Özgün Kültekin of
-> >   Wakefield (wakefield.co)
->
->
-> The vulnerability itself is described here:
->
-> https://sshhole.com/
-It's unfortunate that some people are writing misleading statements
-about a security
-problem in OpenSSH, especially on linkedin, despite djm@ explaining
-that this is a WORKAROUND.
+> Instead they submitted a fix as https://github.com/python/cpython/pull/155761
+> but note that upstream is not backporting it to security releases.
+
+sam
+
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
