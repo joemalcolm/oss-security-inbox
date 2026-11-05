@@ -1,51 +1,125 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/10
-Message-ID: <6bd62fa3-d4ec-4347-b396-54ca240977bd@oracle.com>
-Date: Thu, 5 Nov 2026 11:44:25 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/05/2
+Message-ID: <9392afe31c13e88b@cvs.openbsd.org>
+Date: Thu, 5 Nov 2026 03:01:24 -0600 (CST)
+From: Damien Miller <djm@....openbsd.org>
 To: oss-security@...ts.openwall.com
-Subject: zlib 1.4 released with security fixes
+Subject: Announce: Portable OpenSSH 10.6p2 released
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/madler/zlib/releases/tag/v1.4 lists these security fixes:
-> * Non-blocking gzwrite() had a buffer overflow; CVE-2026-85091 (reported by
->   mat-mo; also TOB-ZLIB-003).
-> * inflateGetDictionary() could write up to 8 MB past the caller's 32K buffer
->   (Theorem THM-ZLIB-001). This took a zlib header with an invalid window size,
->   then inflateReset() or inflateSync(). Affects 1.3.1 and 1.3.2.
-> * inflateSync() before the window size was known allocated a one-byte window
->   that could later be overrun (TOB-ZLIB-004).
-> * inflatePrime() could lead inflate() to read before the start of the input
->   (TOB-ZLIB-014).
-> * Repeated deflatePrime() calls could write past the pending buffer
->   (TOB-ZLIB-013).
-> * inflateBack() failed to detect distances too far back, and copied
->   uninitialized memory to the output (reported by Kornel Lesiński).
-> * gzseek() forward before any data was written could write uninitialized
->   memory to the gzip output (found by Claude Opus 5.5).
-> * deflateResetKeep() used mid-stream could read outside the window (reported
->   by Jason Gross).
-> * gzdopen() now sets close-on-exec with the correct flag (TOB-ZLIB-008).
-> 
-> * minizip:
-> 
->   * A double free in block_central_name() (reported by Oculytic), and a NULL
->     dereference on repeated zipAlreadyThere() calls after a bad central
->     directory (reported by Naveed Khan).
->   * Validation of extra-field sizes, plus portable, alignment-safe reading,
->     in zipRemoveExtraInfoBlock() (reported by Naveed Khan and jmestwa-coder).
->   * unzip no longer reads Zip64 values from outside their extra-field record
->     (reported by Mohamed Elnady). It also uses only the Zip64 locator
->     immediately before the end of central directory record (reported by
->     snajafov). Crafted archives could make minizip report different entries
->     than other readers.
->   * miniunz could create directories outside the extraction directory
->     (reported by Naveed Khan), and on Windows write files anywhere (reported
->     by Trail of Bits). Fixed by Naveed Khan. Path names are now processed by
->     component.
-> 
-> * contrib/infback9: removed out-of-bounds pointer arithmetic in inftree9.c;
->   CVE-2026-4738 (fix by npt-1707, submitted by CrossVR). The pointers return
->   in bounds before use and no known compiler mishandles this, so the critical
->   rating overstates it, though it could trap on capability hardware such as
->   CHERI.
+Portable OpenSSH 10.6p2 has just been released. It will be available
+from the mirrors listed at https://www.openssh.com/ shortly.
+
+OpenSSH is a 100% complete SSH protocol 2.0 implementation and
+includes sftp client and server support.
+
+Recently the OpenSSH team have received a large number of security
+bug reports, many of which are findings from AI models or made with
+AI assistance. While many AI reports are determined not to have
+security impact when considered in the context of a realistic
+threat model, we very much welcome these reports, especially when
+combined with human triage, analysis, test-cases and particularly
+when accompanied by proposed fixes.
+
+** We have seen a number of cases where a security bug identified
+** by AI tools is subsequently independently discovered by a
+** different researcher. This suggests that adversaries who do not
+** report bugs to OSS projects are likely to be able to discover
+** these bugs too. Given this, the OpenSSH team will, for now, be
+** making more frequent releases to get bugfixes into users' hands
+** more quickly rather than batching them until the next planned
+** release.
+
+Once again, we would like to thank the OpenSSH community for their
+continued support of the project, especially those who contributed
+code or patches, reported bugs, tested snapshots or donated to the
+project. More information on donations may be found at:
+https://www.openssh.com/donations.html
+
+Future deprecation notice
+-------------------------
+
+ * scp(1): begin deprecating the -R flag, which is used to perform a
+   remote-to-remote copy by executing scp on a remote host. This
+   option is a fragile optimisation that is difficult to use because
+   it requires credentials on the remote host. It also creates
+   security risks if the shell quoting rules on the remote system
+   where the copy is performed differ from the client's expectations.
+
+   From OpenSSH 10.6, this option will continue to work but will
+   cause a deprecation warning to be emitted to standard error. In
+   a future release, the option will be ignored and will leave in
+   place the default remote-to-remote copy behaviour (copy via the
+   host running scp).
+
+ * sshd(8): support for platforms that do not allow file descriptor
+   passing and that also require root privilege for PTY allocation
+   will be removed in a future release. Affected platforms are known
+   to include SCO OpenServer 5 and QNX 6 but may include other
+   similarly old operating systems. This deprecation can be avoided
+   if the user community for these platforms is able to assist us in
+   building alternatives, such as avoiding the need for root in PTY
+   allocation.
+
+Changes since OpenSSH 10.6p1
+============================
+
+This release contains a critical security workaround that affects
+Linux systems that use the musl libc and PAM disabled.
+
+This release also includes a number of bugfixes that had already
+been committed on the portable OpenSSH V_10_6 stable branch.
+
+Security
+========
+
+ * sshd(8): avoid password authentication bypass that is exploitable
+   through sshd(8) that affects some Linux systems when built and run
+   with PAM support disabled. We consider the root cause of this bug
+   to be outside sshd, but it is exploitable via sshd and can be
+   avoided there.
+
+   This bug was reported by Özgün Kültekin of Wakefield
+   (wakefield.co)
+
+Bugfixes
+--------
+
+ * sshd(8), ssh(1): enable the post-quantum hybris signature scheme
+   ssh-mldsa44-ed25519 as an allowed CA signature algorithm.
+
+ * ssh(1), sshd(8): fix <1 second CPU spin if ChannelTimeout was in
+   use.
+
+Portability
+-----------
+
+ * sshd(8): fix compilation on (old) platforms that set SKIP_PRIVDROP
+
+ * ssh(1), sshd(8): fix detection of Azerbaijani locales
+
+ * sshd(8), ssh-agent(1): fix creation of agent sockets on platforms
+   without the openat(2) syscall.
+
+ * ssh(1), ssh-add(1), ssh-keygen(1): fix some strange behaviour if
+   SIGINT/SIGQUIT was received while reading a passphrase.
+
+ * sshd(8): allow restart_syscall(2) in seccomp sandbox; bz4036
+
+Checksums:
+==========
+
+- SHA1 (openssh-10.6p2.tar.gz) = c91a0b7860c80f29db874044af4d1a6f906231d9
+- SHA256 (openssh-10.6p2.tar.gz) = muRIcgkM8vBrPPn/FH5/FvMJZxNAdj7S+ZJIOYrinVs=
+
+Please note that the SHA256 signatures are base64 encoded and not
+hexadecimal (which is the default for most checksum tools). The PGP
+key used to sign the releases is available from the mirror sites:
+https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/RELEASE_KEY.asc
+
+Reporting Bugs:
+===============
+
+- Please read https://www.openssh.com/report.html
+  Security bugs should be reported directly to openssh@...nssh.com
+
