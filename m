@@ -1,86 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/10
-Message-Id: <E1xPLfe-0000000A5tc-0wMP@xenbits.xenproject.org>
-Date: Fri, 06 Nov 2026 15:16:02 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 527 v1 (CVE-2026-100081) - Linux xen-netback: guest can trigger use-after-free for reading multicast data
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/20
+Message-ID: <lAcUgmfSTD6YfF29yvDOHQ@lichtvoll.de>
+Date: Fri, 06 Nov 2026 18:03:49 +0100
+From: Martin Steigerwald <martin@...htvoll.de>
+To: oss-security@...ts.openwall.com
+Subject:  Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Greetings.
 
-           Xen Security Advisory CVE-2026-100081 / XSA-527
+Matt Johnston - 06.11.26, 03:05:13 CET:
+> Prior to ~2019 when the OpenSSH change was made, Debian
+> would have shown a different manpage that only documents
+> NULL for error [1].
+> Changing system APIs is problematic!
 
- Linux xen-netback: guest can trigger use-after-free for reading multicast data
+That.
 
-ISSUE DESCRIPTION
-=================
+If applications do not check for a NULL pointer:
 
-Multicast handling in the driver is implemented as a lookup early on the
-transmit (guest receive) path.  The respective function can be invoked in
-parallel with teardown of a device.  Thus the lookup may access data which
-was already freed, with that memory perhaps already being in new use
-elsewhere.
+Let them crash!
 
-IMPACT
-======
+Really.
 
-The most likely outcome is a driver crash, possibly escalated to a host
-crash.  This then is a Denial of Service (DoS) affecting the entire host.
-Information leaks and, with very low likelihood, privilege escalation
-cannot be ruled out.
+Am I the only one thinking that the work-around in OpenSSH will not be 
+enough to truly address this issue? Do we really know whether this 
+behavior can not cause security havoc anywhere else?
 
-VULNERABLE SYSTEMS
-==================
+The work-around in OpenSSH is important. Thanks!
 
-Linux versions 4.3 and newer are vulnerable.
+But is it sufficient?
 
-MITIGATION
-==========
+> https://www.man7.org/linux/man-pages/man3/crypt.3.html#RETURN_VALUE
+> 
+>    On success, a pointer to the hashed password is returned.  On
+>    error, NULL is returned.
 
-Using a userspace PV network backend (e.g. the qemu based "qnic" backend)
-will mitigate the problem.
+Best,
+-- 
+Martin
 
-Using a dedicated network driver domain per guest will mitigate the
-problem.
 
-CREDITS
-=======
-
-This issue was discovered by kerhunt.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa527-linux.patch           Linux 7.4-rc - 5.5
-
-$ sha256sum xsa527*
-f68ebd9c262ac005043c9832bc8f73d70f5e083d1c9435b55d4dccadbb3e40df  xsa527-linux.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-A closely related issue was disclosed in public.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrt7s4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZeNAH/j1BrfAQ6QeYh/fzh1ql5EG2e2hE3m3cP6k84uBh
-ZIVNAcqat+6UsxF/jaHRyTV49cts4HVHDBu9mpoi1vWkLhoSK7kkLl37oh0ar71P
-XpCtLfgqzCPd/0F19at2l5sigXwZA/GvRbn4aEVp4s+dC5U/a67IZJtj/xMvTGVB
-oOeIEenbIQHrWMCQmXaLHa2Ht2qCgJyyt0LzAFZf2pTbcl6tnCt8yQFVHh2ABa7e
-5rXgH3bJRp6AOod3nsAkL+al2l8ShAx/TTIvDUxZw+qD6bELMDBwGYWSTMCRogAH
-JcqEMRgZWL87gx2ubKJkG57pGuoXv8ydhD2o0/9WrBPRbzs=
-=dUnZ
------END PGP SIGNATURE-----
-
-Download attachment "xsa527-linux.patch" of type "application/octet-stream" (1425 bytes)
