@@ -1,32 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/19
-Message-ID: <216f0722-06e5-010e-a42c-6889155da8de@apache.org>
-Date: Fri, 06 Nov 2026 11:14:23 +0000
-From: Benoit Tellier <btellier@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/7
+Message-ID: <20261106094111.GF498269@qaa.vinc17.org>
+Date: Fri, 6 Nov 2026 10:41:11 +0100
+From: Vincent Lefevre <vincent@...c17.net>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-85111: Apache James: Denial of service upon MIME parsing 
+Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
-Severity: 
-    CVSS 4.0: 8.7 (high) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N
+On 2026-11-06 10:05:13 +0800, Matt Johnston wrote:
+> On Thu, Nov 05, 2026 at 11:50:00PM +0100, Vincent Lefevre wrote:
+> > This is not clear. Under Debian, the crypt(3) man page says:
+> > 
+> >   Upon error, crypt_r, crypt_rn, and crypt_ra write an invalid hash
+> >   to  the  output field of their data argument, and crypt writes an
+> >   invalid hash to its static storage area.   This  string  will  be
+> >   shorter  than  13 characters, will begin with a ‘*’, and will not
+> >   compare equal to setting.
+> > 
+> > So it seems that "*" could be a valid result in case of error.
+> 
+> Prior to ~2019 when the OpenSSH change was made, Debian
+> would have shown a different manpage that only documents
+> NULL for error [1]. 
+> Changing system APIs is problematic!
+> 
+> https://www.man7.org/linux/man-pages/man3/crypt.3.html#RETURN_VALUE
+> 
+>    On success, a pointer to the hashed password is returned.  On
+>    error, NULL is returned.
 
-Affected versions:
+But note that
+https://www.man7.org/linux/man-pages/man3/crypt.3.html#DESCRIPTION
+also specifies:
 
-- Apache James before 3.9.1
+  salt is a two-character string chosen from the set [a-zA-Z0-9./].
 
-Description:
+with an EINVAL error in this case.
 
-Allocation of Resources Without Limits or Throttling in Apache James Mime4J library prior version 0.8.15 allows Denial of Service upon parsing Mime messages.
-Users are recommended to upgrade to Apache James server 3.9.1 that relies on fixed MIME4J 0.8.15 which addresses the issue.
+And according to <https://sshhole.com/>, the $ character is used
+in salt. So this usage is out of scope of the spec (and the man
+page was apparently obsolete, because an error would have always
+been expected with a $ in salt).
 
-See CVE-2026-85108 in Apache James MIME4J library.
+POSIX.1-2008 (referenced by the above man page), and still in the
+2024 edition, is even stricter, with a "shall":
 
-Credit:
+  The salt argument shall be a string of at least two bytes in length
+  not including the null character chosen from the set: [same set]
 
-Mike Read (finder)
+https://pubs.opengroup.org/onlinepubs/9699919799.2008edition/functions/crypt.html
+https://pubs.opengroup.org/onlinepubs/9799919799/functions/crypt.html
 
-References:
+(An implementation could specify what happens when other characters
+are used, but other implementations may behave differently.)
 
-https://james.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-85111
-
+-- 
+Vincent Lefèvre <vincent@...c17.net> - Web: <https://www.vinc17.net/>
+100% accessible validated (X)HTML - Blog: <https://www.vinc17.net/blog/>
+Work: CR INRIA - computer arithmetic / Pascaline project (LIP, ENS-Lyon)
