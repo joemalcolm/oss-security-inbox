@@ -1,65 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/5
-Message-ID: <CAH8yC8k6PQAmAzHNhTk2QXfqPFmvuLtDQNNZpBhh5rZYQ=ma3Q@mail.gmail.com>
-Date: Thu, 5 Nov 2026 23:57:07 -0500
-From: Jeffrey Walton <noloader@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/2
+Message-ID: <au0lKlhZiS3YrSNd@mertle>
+Date: Thu, 5 Nov 2026 19:54:02 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
 Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 5, 2026 at 2:15 PM Jan Schaumann <jschauma@...meister.org> wrote:
->
-> OpenSSH just published OpenSSH 10.6p2 with a critical
-> fix for a password authentication bypass on systems
-> that use musl libc and have PAM disabled.  Alpine
-> Linux has been called out as one such affected
-> system:
->
-> https://www.openssh.org/releasenotes.html#10.6p2
->
-> >  * sshd(8): avoid password authentication bypass
-> >  that is exploitable through sshd(8) that affects
-> >  some Linux systems when built and run with PAM
-> >  support disabled. We consider the root cause of
-> >  this bug to be outside sshd, but it is exploitable
-> >  via sshd and can be avoided there.
-> >
-> >   This bug was reported by Özgün Kültekin of
-> >   Wakefield (wakefield.co)
->
->
-> The vulnerability itself is described here:
->
-> https://sshhole.com/
->
-> (The history of how we got here is actually fun.)
->
-> That is, for any account that has an invalid password
-> hash field of '*', you can log in by entering a
-> password >257 characters, which will cause crypt(3) in
-> musl libc to return '*'.
->
-> The code fix (checking for MIN_PASSWORD_HASH_LEN
-> instead of using musl crypt(3)'s default "*") is
-> here:
-> https://github.com/openssh/openssh-portable/commit/4353fdc43ef646c43a8dda7025cc1a898caf1482
->
-> Setting `PasswordAuthentication no` in
-> /etc/ssh/sshd_config mitigates the problem (at the
-> obvious cost of not being able to do password auth).
+On 2026-11-05 23:50:00, Vincent Lefevre wrote:
+> 
+> This is not clear. Under Debian, the crypt(3) man page says...
+> So it seems that "*" could be a valid result in case of error.
 
-One general comment that does not fit well into most of the
-discussions around sshole...  The practice of using a single character
-"*", or a shorter string of random characters so hashes do not match,
-likely provides the conditions for a side channel or timing attack.
-Usually, the crypto routines should be near-constant time as
-possible.*  Short-circuiting due to mismatched string lengths
-certainly provides the side channel.
+The PORTABILITY NOTES go on to say,
 
-Whether the side-channel provides for an actual vulnerability is
-another discussion.
+  The behavior of crypt on errors isn't well standardized. Some
+  implementations simply can't fail (except by crashing the program),
+  others return a null pointer or a fixed string. Most implementations
+  don't set errno, but some do. POSIX specifies returning a null
+  pointer and setting errno, but it defines only one possible error,
+  ENOSYS, in the case where crypt is not supported at all. Some older
+  applications are not prepared to handle null pointers returned by
+  crypt. The behavior described above for this implementation, setting
+  errno and returning an invalid hash different from setting, is
+  chosen to make these applications fail closed when an error occurs.
 
-[*] With lots of hand-waiving about what it means to be constant time
-or near-constant time on modern cpu architectures.
+The linux man-pages have a glibc bias, but of course musl has no
+documentation at all. If you turn to POSIX for help, it's vague to the
+point of being useless, and somehow still manages to mischaracterize
+the status quo. Having tried to portably accomodate crypt(3),
+iconv(3), and the gettext(3) family recently, this situation is more
+common than you might think. In the end I gave up on crypt(3)
+entirely, as the musl implementation in Gentoo is easy to replace with
+libxcrypt's. Of course, libxcrypt ALSO uses "failure tokens" if you
+are not careful to disable them.
 
-Jeff
+Anyway, my point is, no one knows what the output from crypt(3) will
+be, so doing a strcmp on it to authenticate logins is... optimistic.
