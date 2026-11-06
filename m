@@ -1,40 +1,24 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/4
-Message-ID: <5008977C-5D0C-4F34-AD00-3D08A857593C.1@smtp-inbound1.duck.com>
-Date: Thu, 05 Nov 2026 23:45:11 -0500
-From: theknell@...k.com
-To: oss-security@...ts.openwall.com
-Subject: Open WebUI: the Windows installer mints the master key from the install second — CVE-2025-15603 was rejected; here is the measurement
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/6
+Message-ID:  <SY9P300MB881477FE900FABB5714AE1047AEE762@SY9P300MB881477.AUSP300.PROD.OUTLOOK.COM>
+Date: Fri, 6 Nov 2026 06:35:11 +0000
+From: Peter Gutmann <pgut001@...auckland.ac.nz>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
-Open WebUI's Windows installer (start_windows.bat) generates
-WEBUI_SECRET_KEY — the master secret that signs every session token —
-from the C library's rand(), a linear congruential generator seeded
-once with the current time in seconds. The key's entire entropy is
-the second in which the software was installed.
+Jeffrey Walton <noloader@...il.com> writes:
 
-From any ordinary user's own token, the master key is recoverable
-blind in ~2.1 seconds across a ±1-day window. With it, a full
-administrator token can be forged and is accepted by the official
-release. All 178 release tags ship the construction. On the newest
-tags (v0.12.0+) a per-account session stamp blocks cross-account
-forgery; the key recovery itself is total on every tag, and 171 of
-178 tags have no stamp at all.
+>One general comment that does not fit well into most of the discussions around
+>sshole...
 
-This issue was reported before. It became CVE-2025-15603, was
-disputed by the vendor, and the CVE was rejected in June 2026. The
-vendor's guidance was: no action required.
+Another contributing factor, "sshd borrows bob's salt" and the derived
+changes, was the quaint 1970s notion that no-one would ever be able to guess
+that there exist account names like root, daemon, ldap, postfix, apache,
+mysql, sshd, and rumpelstiltskin, so we'll add a kludge to make invalid
+accounts take the same time as valid ones.  Attackers don't even notice this
+because they start with a pregenerated list of known and probable accounts,
+but it does help to add vulnerabilities to the password-checking process as
+this CVE shows.
 
-The paper replaces that judgment with a measurement. It is
-clear-signed, and a timestamped copy is held at archive.org:
-
-Paper: https://archive.org/details/knell-one-second
-Mirror: https://github.com/the-knell/one-second
-Key: 133883AB9F6EDE5B9BA6B82E27BEDAF0CE152F25 (knell)
-
-Verify: gpg --import knell-public.asc, then
-gpg --verify whitepaper-openwebui-FINAL-2026-11-04.md.asc
-
-— knell
-
-More, signed and timestamped: https://github.com/the-knell
+Peter.
