@@ -1,84 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/9
-Message-Id: <E1xPLfb-0000000A5rj-1W0D@xenbits.xenproject.org>
-Date: Fri, 06 Nov 2026 15:15:59 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 526 v1 (CVE-2026-100080) - Linux xen-netback: guest can trigger use-after-free for
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/29
+Message-ID: <E33D88AA-DB07-460E-AEAB-88917844F9EB.1@smtp-inbound1.duck.com>
+Date: Fri, 06 Nov 2026 13:14:32 -0500
+From: theknell@...k.com
+To: oss-security@...ts.openwall.com
+Subject: InfiniteWP Client: the NOSSL signing key has 31 bits of secret — recovered live in 291.9 seconds
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+InfiniteWP Client 1.13.10 — a WordPress management plugin on roughly
+200,000 installs — speaks to its management panel through two
+authentication branches. The strong branch verifies an RSA
+signature. The other, NOSSL, is selected by the enrolling panel
+setting one request parameter, on hosts fully capable of RSA. Once
+its key is stored, the selection is permanent and the RSA branch is
+unreachable.
 
-           Xen Security Advisory CVE-2026-100080 / XSA-526
+The stored key is generated as:
 
-          Linux xen-netback: guest can trigger use-after-free for
-                        network statistics reads
+md5(base64_encode(panel_public_key) . rand(0, getrandmax()))
 
-ISSUE DESCRIPTION
-=================
+The public key is public. The secret is a single rand() result: at
+most 2^31 values. The authentication value signs only the action
+and message ID — parameters are never signed — and message-ID
+ordering is enforced only on the auto_login path, so a captured
+request replays with altered parameters.
 
-The network statistic data in the driver is protected by RCU.
-Unfortunately when tearing down the queues after an error during
-connecting to the frontend (e.g. due to illegal Xenstore data filled
-in by the guest), the statistic data is being freed without
-synchronizing the RCU state.  In case the data is being read via sysfs
-in this phase, access to already freed memory or memory being in new
-use is possible.
+Live proof, against our own instance only: from one captured
+get_stats request and the panel's public key, the key was recovered
+offline in 291.9 seconds (~7.36M candidates/sec), byte-identical to
+the site-issued key. A forged maintain_site command signed with the
+recovered key was accepted and wrote database options that had not
+existed before. The key never rotates: recover it once, forge
+forever.
 
-IMPACT
-======
+Scope, stated plainly: every shipped copy carries the construction;
+exploitation requires a NOSSL-enrolled site. The NOSSL-enrolled
+share of the 200,000 installs is not externally measurable and is
+not claimed here.
 
-The most likely outcome is a driver crash, possibly escalated to a host
-crash.  This then is a Denial of Service (DoS) affecting the entire host.
+Paper: https://archive.org/details/knell-thirty-one-bits
+Mirror: https://github.com/the-knell/Thirty-One-Bits
+Key: 133883AB9F6EDE5B9BA6B82E27BEDAF0CE152F25 (knell)
 
-Information leaks cannot be ruled out.
+Verify: gpg --import knell-public.asc, then
+gpg --verify paper-infinitewp-FINAL-2026-11-04.md.asc
 
-VULNERABLE SYSTEMS
-==================
+— knell
 
-Linux versions 4.11 and newer are vulnerable.
-
-MITIGATION
-==========
-
-Using a userspace PV network backend (e.g. the qemu based "qnic" backend)
-will mitigate the problem.
-
-Using a dedicated network driver domain per guest will mitigate the
-problem.
-
-CREDITS
-=======
-
-This issue was discovered by Yehyeong Lee of Hyundai Mobis.
-
-RESOLUTION
-==========
-
-Applying the attached patch resolves this issue.
-
-xsa526-linux.patch           Linux
-
-$ sha256sum xsa526*
-88dd41b89b43fa1b14e68c1a40aa69a22309e0c57a1b5543168949a273627ca8  xsa526-linux.patch
-$
-
-NOTE REGARDING LACK OF EMBARGO
-==============================
-
-This issue was disclosed in public.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrt7ssMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZq84H/02MP77ou0FS+9nAF8CWbGl79KfiUWO2xjXPEdKB
-Mgyzk0Gtq+Q0/oTaxPC59f9Pxc4yiCnGuIjpVM2qPOfaHZD0uEnzzGEROxVNCABq
-7wCxZ/9Uu3MXO+1rcMgVqUNoHEqYLxgSp3OZ7O48DFQtkulP6fp4EgR0xTUIgPwn
-oKlWoSKORAXOkULt5Qn5xI0+YN0OgDMdHKj/BPkRIGeeqOHPRcUmeZU9VRnOiATh
-v1lR6erAWEx/dwr5Yq6ZReA6GFgDNRRk7ersnc5mwxxUyDtJtNXPHUCmE8AZ/q4C
-H2I/1SLzm6oa+v+0fngSasn9+lMZC6fzy0SxRJF3clRui+A=
-=uEqL
------END PGP SIGNATURE-----
-
-Download attachment "xsa526-linux.patch" of type "application/octet-stream" (1472 bytes)
+More, signed and timestamped: https://github.com/the-knell
