@@ -1,30 +1,49 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/22
-Message-ID: <6fb8ec77-4105-2316-1de7-7d75ac71b6cb@apache.org>
-Date: Fri, 06 Nov 2026 17:15:41 +0000
-From: Robert Lazarski <robertlazarski@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/21
+Message-ID: <20261106173150.LJYh8Oen@steffen%sdaoden.eu>
+Date: Fri, 06 Nov 2026 18:31:50 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-120761: Apache Axis2/Java: XML External Entity (XXE) injection via imported WSDL/XSD documents 
+Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Martin Steigerwald wrote in
+ <lAcUgmfSTD6YfF29yvDOHQ@...htvoll.de>:
+ |Greetings.
+ |
+ |Matt Johnston - 06.11.26, 03:05:13 CET:
+ |> Prior to ~2019 when the OpenSSH change was made, Debian
+ |> would have shown a different manpage that only documents
+ |> NULL for error [1].
+ |> Changing system APIs is problematic!
+ |
+ |That.
+ |
+ |If applications do not check for a NULL pointer:
+ |
+ |Let them crash!
+ |
+ |Really.
 
-Affected versions:
+Yet this all is SysV / BSD a.k.a. UNIX.
 
-- Apache Axis2/Java before 2.0.2
+  #?0|lecce:ucb-csrg-bsd$ git lo master -- lib/libc/gen/crypt.c | tail -n1
+  701ef780846a72969d45e56612122f4c8a0ddb47 date and time created 80/12/21 16:39:32 by wnj
 
-Description:
+  #?0|lecce:unix-hist$ git grep -F 'crypt(' Research-V3 | head -n1
+  Research-V3:man/man0/index:        crypt(III): encrypt  according to a keyword
 
-Improper Restriction of XML External Entity Reference vulnerability in Apache Axis2/Java. When a client built an AxisService from a WSDL URL, through ServiceClient or AxisService.createClientSideAxisService, wsdl4j import resolution was enabled and the documents named by wsdl:import and xsd:import were parsed by wsdl4j's own XML parser, which processes DOCTYPE declarations and external entities. An attacker who controls a WSDL, or a document it imports, could therefore read local files or make the JVM issue network requests. This issue affects Apache Axis2/Java: through 2.0.1. Users are recommended to upgrade to version 2.0.2, which fixes the issue.
+  #?0|lecce:unix-hist$ gl1 Research-V3 | grep ^Commit
+  Commit:     Ken Thompson <ken@...earch.uucp>
+  CommitDate: 1973-08-30 19:34:53 -0500
 
-Credit:
+POSIX example does not test for NULL.
 
-Chinmohan Nayak (finder)
+  ...
 
-References:
-
-https://github.com/apache/axis-axis2-java-core/commit/1d3457d12399c7721ed3f52e7031d1d24d169460
-https://axis.apache.org/axis2/java/core/release-notes/2.0.2.html
-https://axis.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-120761
-
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
