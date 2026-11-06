@@ -1,29 +1,80 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/17
-Message-ID: <072d7c66-e881-d08c-c57c-df10c353b8dc@apache.org>
-Date: Fri, 06 Nov 2026 11:13:05 +0000
-From: Benoit Tellier <btellier@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76171: Apache James: SSRF filter bypass in the JMAP PushSubscription web-push client 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/11
+Message-Id: <E1xPLfh-0000000A5vb-11J3@xenbits.xenproject.org>
+Date: Fri, 06 Nov 2026 15:16:05 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 528 v1 (CVE-2026-100082) - Linux xen-blkback: guest can trigger use-after-free for reading statistic data
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Affected versions:
+           Xen Security Advisory CVE-2026-100082 / XSA-528
 
-- Apache James 3.9.0 before 3.9.1
+ Linux xen-blkback: guest can trigger use-after-free for reading statistic data
 
-Description:
+ISSUE DESCRIPTION
+=================
 
-In Apache James server prior version 3.9.1 improper validation in JMAP webPush SSRF validation did lead to the possibility to reach internal addresses.
-Users are recommended to upgrade to version 3.9.1 which fixes this issue.
+he driver does not serialise reads of the device I/O statistics
+against the freeing of the memory that holds them. This leads to a
+use-after-free when reading statistical counters while the device is
+being torn down.
 
-Credit:
+IMPACT
+======
 
-n0mi1k (finder)
+This most likely crashes the driver, and possibly the host, causing a
+Denial of Service (DoS) for the entire host.
 
-References:
+Information leaks cannot be ruled out.
 
-https://james.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76171
+VULNERABLE SYSTEMS
+==================
 
+Linux versions 4.5 and newer are vulnerable.
+
+MITIGATION
+==========
+
+Using a userspace PV block backend (e.g. the qemu based "qdisk" backend)
+will mitigate the problem.
+
+Using a dedicated block driver domain per guest will mitigate the
+problem.
+
+CREDITS
+=======
+
+This issue was discovered by Yehyeong Lee of Hyundai Mobis.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa528-linux.patch           Linux
+
+$ sha256sum xsa528*
+848d5cc56a7b31e84399ac00d616c36bd2b5efdcc0f23017a7590b1b58900c19  xsa528-linux.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+A very similar issue was disclosed in public.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrt7tAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZTFkH/jRhPRPUnQb/2KV42fKAPvQtffdEIWr72wc5ogYm
+d6rTBU81hLdZAyq+Zo2jwhgggjXNeurD84z1Lnr8X6YgnRBAHfWhOd28V583K83j
+BzmWsbFeUsMLjiaWuftzdr1RdpqB1ajk6NRAnR5Eb4jrWltIOekDgSviJupMfbRs
+iq9pM0J/zbFBcIu21Lor4R5F8wYLx3cbzE0LuSq0j+D5uCMFIAhkea+7ReadQYxr
++L3LbEJIdcGpfZlcf9SRgJ8KKJr6d3JlHAVx2fpq8w/buwRFv3M87VL64MPUk7Tr
+kJ/Wpl+hpvnTNE0m88eF1x3pMkdco6fwzz/xg7lvxm1k2Ho=
+=CcMW
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa528-linux.patch" of type "application/octet-stream" (4065 bytes)
