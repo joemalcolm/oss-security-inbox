@@ -1,24 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/6
-Message-ID:  <SY9P300MB881477FE900FABB5714AE1047AEE762@SY9P300MB881477.AUSP300.PROD.OUTLOOK.COM>
-Date: Fri, 6 Nov 2026 06:35:11 +0000
-From: Peter Gutmann <pgut001@...auckland.ac.nz>
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/23
+Message-ID: <f466e65d-2507-b8e9-e9c8-735e480f1c7c@apache.org>
+Date: Fri, 06 Nov 2026 17:24:18 +0000
+From: Robert Lazarski <robertlazarski@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-123753: Apache Axis2/Java: SSRF via WS-Addressing ReplyTo and FaultTo endpoints 
 Content-Type: text/plain; charset=utf-8
 
-Jeffrey Walton <noloader@...il.com> writes:
+Severity: important 
 
->One general comment that does not fit well into most of the discussions around
->sshole...
+Affected versions:
 
-Another contributing factor, "sshd borrows bob's salt" and the derived
-changes, was the quaint 1970s notion that no-one would ever be able to guess
-that there exist account names like root, daemon, ldap, postfix, apache,
-mysql, sshd, and rumpelstiltskin, so we'll add a kludge to make invalid
-accounts take the same time as valid ones.  Attackers don't even notice this
-because they start with a pregenerated list of known and probable accounts,
-but it does help to add vulnerabilities to the password-checking process as
-this CVE shows.
+- Apache Axis2/Java before 2.0.2
 
-Peter.
+Description:
+
+Server-Side Request Forgery (SSRF) vulnerability in Apache Axis2/Java. An unauthenticated caller could supply a non-anonymous WS-Addressing wsa:ReplyTo or wsa:FaultTo address, and Axis2 would open a connection to that address to deliver the response or fault, allowing requests to internal hosts and delivery of response content to a host of the caller's choosing. From 2.0.2, decoupled responses are refused unless allowNonAnonymousResponseEndpoints is enabled, and enabled endpoints are restricted by scheme and screened at both the header-parsing and transport-selection layers. This issue affects Apache Axis2/Java: through 2.0.1. Users are recommended to upgrade to version 2.0.2, which fixes the issue.
+
+Credit:
+
+n0mi1k (finder)
+
+References:
+
+https://axis.apache.org/axis2/java/core/release-notes/2.0.2.html
+https://github.com/apache/axis-axis2-java-core/commit/1671a68660df39459bf22f7b00309e2a8e782117
+https://github.com/apache/axis-axis2-java-core/commit/1b6856b4d7903780786c79327bed1b53ea051a15
+https://axis.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-123753
+
