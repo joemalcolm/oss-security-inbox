@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/21
-Message-ID: <20261106173150.LJYh8Oen@steffen%sdaoden.eu>
-Date: Fri, 06 Nov 2026 18:31:50 +0100
-From: Steffen Nurpmeso <steffen@...oden.eu>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/30
+Message-ID: <6a17e5e2-a538-4af7-80e2-728968bf2a56@oracle.com>
+Date: Fri, 6 Nov 2026 13:39:29 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
+Subject: [CVE-2026-119170] Regression in FIPS enforcement of hash algorithms affecting only Python 3.14.10
 Content-Type: text/plain; charset=utf-8
 
-Martin Steigerwald wrote in
- <lAcUgmfSTD6YfF29yvDOHQ@...htvoll.de>:
- |Greetings.
- |
- |Matt Johnston - 06.11.26, 03:05:13 CET:
- |> Prior to ~2019 when the OpenSSH change was made, Debian
- |> would have shown a different manpage that only documents
- |> NULL for error [1].
- |> Changing system APIs is problematic!
- |
- |That.
- |
- |If applications do not check for a NULL pointer:
- |
- |Let them crash!
- |
- |Really.
 
-Yet this all is SysV / BSD a.k.a. UNIX.
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-119170] Regression in FIPS enforcement of 
+hash algorithms affecting only Python 3.14.10
+Date: 	Fri, 6 Nov 2026 14:45:25 +0000
+From: 	Seth Larson <seth@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
 
-  #?0|lecce:ucb-csrg-bsd$ git lo master -- lib/libc/gen/crypt.c | tail -n1
-  701ef780846a72969d45e56612122f4c8a0ddb47 date and time created 80/12/21 16:39:32 by wnj
+There is a HIGH severity vulnerability affecting CPython.
 
-  #?0|lecce:unix-hist$ git grep -F 'crypt(' Research-V3 | head -n1
-  Research-V3:man/man0/index:        crypt(III): encrypt  according to a keyword
+There was a regression in how FIPS algorithms were enforced for the hashlib 
+module. Only users that are using OpenSSL in FIPS mode are affected. Only Python 
+3.14.10 is affected, all other Python versions are unaffected.
 
-  #?0|lecce:unix-hist$ gl1 Research-V3 | grep ^Commit
-  Commit:     Ken Thompson <ken@...earch.uucp>
-  CommitDate: 1973-08-30 19:34:53 -0500
+Please see the linked CVE ID for the latest information on affected versions:
 
-POSIX example does not test for NULL.
+* https://www.cve.org/CVERecord?id=CVE-2026-119170
+* https://github.com/python/cpython/pull/160984
 
-  ...
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
 
---steffen
-|
-|Der Kragenbaer,                The moon bear,
-|der holt sich munter           he cheerfully and one by one
-|einen nach dem anderen runter  wa.ks himself off
-|(By Robert Gernhardt)
+
