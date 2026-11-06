@@ -1,30 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/26
-Message-ID: <2bcc452a-4d0b-194d-f2f9-9907649a6662@apache.org>
-Date: Fri, 06 Nov 2026 17:52:48 +0000
-From: Robert Lazarski <robertlazarski@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/17
+Message-ID: <072d7c66-e881-d08c-c57c-df10c353b8dc@apache.org>
+Date: Fri, 06 Nov 2026 11:13:05 +0000
+From: Benoit Tellier <btellier@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-120367: Apache Axis2/Java: unbounded JSON request body buffering 
+Subject: CVE-2026-76171: Apache James: SSRF filter bypass in the JMAP PushSubscription web-push client 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low 
 
 Affected versions:
 
-- Apache Axis2/Java before 2.0.2
+- Apache James 3.9.0 before 3.9.1
 
 Description:
 
-Allocation of Resources Without Limits or Throttling vulnerability in Apache Axis2/Java. The JSON message builders, including the Gson, Moshi and HTTP/2 variants, buffered the entire request body with no size limit, so an unauthenticated caller could exhaust server memory with a large JSON request. Version 2.0.2 bounds JSON request bodies with the configurable jsonMaxRequestSize parameter. This issue affects Apache Axis2/Java: through 2.0.1. Users are recommended to upgrade to version 2.0.2, which fixes the issue.
+In Apache James server prior version 3.9.1 improper validation in JMAP webPush SSRF validation did lead to the possibility to reach internal addresses.
+Users are recommended to upgrade to version 3.9.1 which fixes this issue.
 
 Credit:
 
-MopMonk-AI (finder)
+n0mi1k (finder)
 
 References:
 
-https://axis.apache.org/axis2/java/core/release-notes/2.0.2.html
-https://github.com/apache/axis-axis2-java-core/commit/aea2671e3c5ebd8638d37db30d69639223366d5d
-https://axis.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-120367
+https://james.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-76171
 
