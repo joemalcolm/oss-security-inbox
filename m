@@ -1,52 +1,84 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/8
-Message-ID: <47d7da36-ea87-4550-938e-d7ff3831116a@cpansec.org>
-Date: Fri, 6 Nov 2026 07:48:22 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-121006: HTTP::Body versions before 1.24_02 for Perl parse the trailer in quadratic time
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/9
+Message-Id: <E1xPLfb-0000000A5rj-1W0D@xenbits.xenproject.org>
+Date: Fri, 06 Nov 2026 15:15:59 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 526 v1 (CVE-2026-100080) - Linux xen-netback: guest can trigger use-after-free for
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-121006                                      CPAN Security Group
-========================================================================
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-         CVE ID:  CVE-2026-121006
+           Xen Security Advisory CVE-2026-100080 / XSA-526
 
-   Distribution:  HTTP-Body
-       Versions:  before 1.24_02
-       MetaCPAN:  https://metacpan.org/dist/HTTP-Body
-       VCS Repo:  https://github.com/libwww-perl/HTTP-Body
+          Linux xen-netback: guest can trigger use-after-free for
+                        network statistics reads
 
+ISSUE DESCRIPTION
+=================
 
-HTTP::Body versions before 1.24_02 for Perl parse the trailer in
-quadratic time
+The network statistic data in the driver is protected by RCU.
+Unfortunately when tearing down the queues after an error during
+connecting to the frontend (e.g. due to illegal Xenstore data filled
+in by the guest), the statistic data is being freed without
+synchronizing the RCU state.  In case the data is being read via sysfs
+in this phase, access to already freed memory or memory being in new
+use is possible.
 
-Description
------------
-HTTP::Body versions before 1.24_02 for Perl parse the trailer in
-quadratic time.
+IMPACT
+======
 
-Everything after the last chunk in the same call to add() is parsed
-with HTTP::Headers, which takes time quadratic in the number of fields
-of one name.  For example, it takes several seconds to parse 16 KiB of
-"a:" lines.
+The most likely outcome is a driver crash, possibly escalated to a host
+crash.  This then is a Denial of Service (DoS) affecting the entire host.
 
-A remote attackercan exhause the CPU with a single request.
+Information leaks cannot be ruled out.
 
-HTTP::Body version 1.25 limits the size and number of lines in the
-trailer.
+VULNERABLE SYSTEMS
+==================
 
-Problem types
--------------
-- CWE-770 Allocation of Resources Without Limits or Throttling
+Linux versions 4.11 and newer are vulnerable.
 
-Solutions
----------
-Upgrade to HTTP::Body version 1.24_02 or later.
+MITIGATION
+==========
 
-References
-----------
-https://metacpan.org/release/GETTY/HTTP-Body-1.24_02/changes
-https://github.com/libwww-perl/HTTP-Body/commit/983dd4ca3b863ab513240b02c91c3114fb299389.patch
+Using a userspace PV network backend (e.g. the qemu based "qnic" backend)
+will mitigate the problem.
 
+Using a dedicated network driver domain per guest will mitigate the
+problem.
+
+CREDITS
+=======
+
+This issue was discovered by Yehyeong Lee of Hyundai Mobis.
+
+RESOLUTION
+==========
+
+Applying the attached patch resolves this issue.
+
+xsa526-linux.patch           Linux
+
+$ sha256sum xsa526*
+88dd41b89b43fa1b14e68c1a40aa69a22309e0c57a1b5543168949a273627ca8  xsa526-linux.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+This issue was disclosed in public.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrt7ssMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZq84H/02MP77ou0FS+9nAF8CWbGl79KfiUWO2xjXPEdKB
+Mgyzk0Gtq+Q0/oTaxPC59f9Pxc4yiCnGuIjpVM2qPOfaHZD0uEnzzGEROxVNCABq
+7wCxZ/9Uu3MXO+1rcMgVqUNoHEqYLxgSp3OZ7O48DFQtkulP6fp4EgR0xTUIgPwn
+oKlWoSKORAXOkULt5Qn5xI0+YN0OgDMdHKj/BPkRIGeeqOHPRcUmeZU9VRnOiATh
+v1lR6erAWEx/dwr5Yq6ZReA6GFgDNRRk7ersnc5mwxxUyDtJtNXPHUCmE8AZ/q4C
+H2I/1SLzm6oa+v+0fngSasn9+lMZC6fzy0SxRJF3clRui+A=
+=uEqL
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa526-linux.patch" of type "application/octet-stream" (1472 bytes)
