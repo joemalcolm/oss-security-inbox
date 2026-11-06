@@ -1,35 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/12
-Message-ID: <2dcb607b-c04b-2d18-7433-c744b4549045@apache.org>
-Date: Fri, 06 Nov 2026 15:32:01 +0000
-From: Robert Lazarski <robertlazarski@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/06/16
+Message-ID: <a7c0a35d-bbd4-2459-902a-932e0c560dc5@apache.org>
+Date: Fri, 06 Nov 2026 11:13:03 +0000
+From: Benoit Tellier <btellier@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-90436: Apache Axis 1.x (EOL): unauthenticated remote class instantiation via SOAP fault exceptionName 
+Subject: CVE-2026-76168: Apache James: ManageSieve file implementation cross-user path traversal 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: important 
 
 Affected versions:
 
-- Apache Axis 1.x (EOL) through 1.4
-- Apache Axis 1.x (EOL) through 1.4
-- Apache Axis 1.x (EOL) aac718c6035435d96b39d6aebb9c078a13af7cc8 before 41f3b4e8d04e310ca81f86b92630ab2c11d608bd
+- Apache James before 3.9.1
 
 Description:
 
-** UNSUPPORTED WHEN ASSIGNED ** Deserialization of an inbound SOAP fault in Apache Axis 1.x allows unauthenticated remote class instantiation. When a SOAP <Fault> carries a <detail><exceptionName> element, Axis loads the named class and, if a String <data> element is also present, instantiates it through its String constructor before checking that it is an AxisFault. Loading alone runs the class's static initializer. With a suitable class on the application's classpath this leads to remote code execution. The fault is parsed while the engine resolves the target service, before any per-service handler chain runs, so authentication handlers configured on a service do not protect against it. This affects all Apache Axis 1.x versions through 1.4.
-
-
-
-As Axis 1 has been EOL we recommend you migrate to a different SOAP engine, such as Apache Axis 2/Java. Alternatively you could use a build of Axis with the patch from https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd applied. The Apache Axis project does not expect to create an Axis 1.x release fixing this problem.
+In Apache James server prior version 3.9.1 relying on the SieveFileRepository incorect validation of file paths can result in path transversal, allowing to set arbitrary SIEVE scripts for other users.
+This allows a logged in attacker  to set arbitrary SIEVE scripts for other users, resulting in denial of service or even traffic capture.
+Users are recommended to upgrade to version 3.9.1 which fixes this issue.
 
 Credit:
 
-José Apari-Pantigozo from OKIOK (finder)
+n0mi1k Security (finder)
 
 References:
 
-https://github.com/apache/axis-axis1-java/commit/41f3b4e8d04e310ca81f86b92630ab2c11d608bd
-https://axis.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-90436
+https://james.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-76168
 
