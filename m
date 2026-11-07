@@ -1,36 +1,17 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/07/1
-Message-ID: <dc364c27-93a2-490f-af9e-41cfee2937da@brondsema.net>
-Date: Fri, 6 Nov 2026 13:34:48 -0500
-From: Dave Brondsema <dave@...ndsema.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/07/3
+Message-ID: <au6GINIUhkK5eodz@mertle>
+Date: Fri, 6 Nov 2026 21:00:00 -0500
+From: Michael Orlitzky <michael@...itzky.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-118196: Apache Allura: OAuth1 rebinding
+Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical
+On 2026-11-06 23:57:43, Loganaden Velvindron wrote:
+> I think it's time for musl libc to revisit the idea and return NULL on
+> failure and see which software is still breaking.
 
-Affected versions:
+It was easy to lose in the noise, but musl is not the only one doing
+this:
 
-- Apache Allura through 1.22.0
-
-Description:
-
-OAuth 1 rebinding vulnerability in Apache Allura.
-
-
-
-This issue affects Apache Allura: through 1.22.0.
-
-
-
-Users are recommended to upgrade to version 1.22.1, which fixes the issue.
-
-Credit:
-
-hataehoon (reporter)
-
-References:
-
-https://allura.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-118196
-
+  https://github.com/besser82/libxcrypt/blob/develop/configure.ac#L322
