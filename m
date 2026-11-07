@@ -1,64 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/07/10
-Message-ID: <74ed9272-58ca-4d1e-a4ed-a25c412d7f9a@cpansec.org>
-Date: Sat, 7 Nov 2026 11:18:32 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/07/11
+Message-ID: <f520898a-d327-4deb-ac95-d9ebc02560e2@cpansec.org>
+Date: Sat, 7 Nov 2026 11:52:04 +0000
 From: Robert Rothenberg <rrwo@...nsec.org>
 To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-121265: SQL::Abstract versions before 2.000003 for Perl allow SQL injection via an arrayref column value in insert and update
+Subject: CVE-2026-123776: RRD::CGI::Image versions through 0.01 for Perl pass CGI query parameters containting "tz" to tzset(), , so a FIFO or device path blocks the CGI process
 Content-Type: text/plain; charset=utf-8
 
 ========================================================================
-CVE-2026-121265                                      CPAN Security Group
+CVE-2026-123776                                      CPAN Security Group
 ========================================================================
 
-         CVE ID:  CVE-2026-121265
+         CVE ID:  CVE-2026-123776
 
-   Distribution:  SQL-Abstract
-       Versions:  before 2.000003
-       MetaCPAN:  https://metacpan.org/dist/SQL-Abstract
-       VCS Repo:  https://github.com/dbsrgits/sql-abstract
+   Distribution:  RRD-CGI-Image
+       Versions:  through 0.01
+       MetaCPAN:  https://metacpan.org/dist/RRD-CGI-Image
 
 
-SQL::Abstract versions before 2.000003 for Perl allow SQL injection via
-an arrayref column value in insert and update
+RRD::CGI::Image versions through 0.01 for Perl pass CGI query
+parameters containting "tz" to tzset(), , so a FIFO or device path
+blocks the CGI process
 
 Description
 -----------
-SQL::Abstract versions before 2.000003 for Perl allow SQL injection via
-an arrayref column value in insert and update.
+RRD::CGI::Image versions through 0.01 for Perl pass CGI query
+parameters containting "tz" to tzset(), , so a FIFO or device path
+blocks the CGI process.
 
-With the array_datatypes option off, which is the default, insert(),
-update() and values() treat an arrayref column value as literal SQL.
-Its first element goes into the SQL text unescaped and the rest become
-bind values. A JSON array, or a repeated form field decoded as an
-arrayref, is such a value.
-
-An application that passes request data as column values to insert or
-update with the default options allows SQL injection.
-
-Releases before 2.000003 also treat an arrayref in generate() as
-literal SQL, including through AUTOLOAD when allow_autoload is on,
-whatever array_datatypes is set to.
+The normalize_params method sends any query key matching /tz/i to tz(),
+which sets $ENV{TZ} to that value, with no validation. It then calls
+tzset(). glibc treats a TZ value starting with / or : as a file path
+and opens it, so a value naming a FIFO or a blocking device stalls the
+process inside tzset().
 
 Problem types
 -------------
-- CWE-89 Improper Neutralization of Special Elements used in an SQL
-   Command ('SQL Injection')
+- CWE-1287 Improper Validation of Specified Type of Input
 
 Solutions
 ---------
-Upgrade to SQL-Abstract 2.000003 or later.
+Apply the patch.
 
 References
 ----------
-https://metacpan.org/release/GETTY/SQL-Abstract-2.000003/changes
-https://metacpan.org/release/GETTY/SQL-Abstract-2.000003/diff/GETTY/SQL-Abstract-2.000001_04
-
-Timeline
---------
-- 2026-11-03: SQL::Abstract version 2.000001_05 was released with an
-   incomplete fix for this issue.
-- 2026-11-05: SQL::Abstract version 2.000002 was released based on
-   version 2.000001_05.
-- 2026-11-06: SQL::Abstract version 2.000003 was released.
+https://rt.cpan.org/Ticket/Display.html?id=182627
+https://man7.org/linux/man-pages/man3/tzset.3.html
+https://security.metacpan.org/patches/R/RRD-CGI-Image/0.01/CVE-2026-123776-r1.patch
 
