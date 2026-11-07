@@ -1,61 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/07/9
-Message-ID: <8DCC4DAD-F664-466D-BEAB-47C577F0D31C.1@smtp-inbound1.duck.com>
-Date: Sat, 07 Nov 2026 11:23:35 -0500
-From: theknell@...k.com
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/07/10
+Message-ID: <74ed9272-58ca-4d1e-a4ed-a25c412d7f9a@cpansec.org>
+Date: Sat, 7 Nov 2026 11:18:32 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2026-121265: SQL::Abstract versions before 2.000003 for Perl allow SQL injection via an arrayref column value in insert and update
 Content-Type: text/plain; charset=utf-8
 
-Following up on my measurements post from last night. The question
-of whether those numbers were actually measured has come up since
-— privately, mostly — so the full raw log is public now:
+========================================================================
+CVE-2026-121265                                      CPAN Security Group
+========================================================================
 
-https://archive.org/details/knell-sshole-receipts
+         CVE ID:  CVE-2026-121265
 
-82,236 lines: the crypt() census output, the end-to-end sshd timing
-runs on both rigs (mixed accounts and the all-locked box), every
-data file with its timestamp and SHA-256, and the harness sources
-that produced them. Bundle sha256:
-c8ccfb5a23403838dc4de24d293a597ddac96410b6f3797eef175af3363c475b
-
-The headline numbers check straight out of the CSVs: musl
-sha-crypt failing at a 257-char candidate (256 works), locked
-spellings at 0.06 µs against 34.84 ms for a live yescrypt check,
-and on a box with no valid password hashes at all, a nonexistent
-user landing inside the locked spread — 1.7 ms across all six
-classes, 360 samples per rig, zero errors.
-
-If a number's wrong, the data's right there. Point at the line.
-
-— knell
+   Distribution:  SQL-Abstract
+       Versions:  before 2.000003
+       MetaCPAN:  https://metacpan.org/dist/SQL-Abstract
+       VCS Repo:  https://github.com/dbsrgits/sql-abstract
 
 
-Sent from Proton Mail for Android.
+SQL::Abstract versions before 2.000003 for Perl allow SQL injection via
+an arrayref column value in insert and update
 
--------- Original Message --------
-On Friday, 11/06/26 at 22:23 Matt Johnston <matt_at_ucc.asn.au_theknell@...k.com> wrote:
-On Fri, Nov 06, 2026 at 06:35:11AM +0000, Peter Gutmann wrote:
->
-> Another contributing factor, "sshd borrows bob's salt" and the derived
-> changes, was the quaint 1970s notion that no-one would ever be able to guess
-> that there exist account names like root, daemon, ldap, postfix, apache,
-> mysql, sshd, and rumpelstiltskin, so we'll add a kludge to make invalid
-> accounts take the same time as valid ones.  Attackers don't even notice this
-> because they start with a pregenerated list of known and probable accounts,
-> but it does help to add vulnerabilities to the password-checking process as
-> this CVE shows.
+Description
+-----------
+SQL::Abstract versions before 2.000003 for Perl allow SQL injection via
+an arrayref column value in insert and update.
 
-I view avoiding account existence exposure as more of a
-privacy feature than security.
-If you iterate all the internet's ipv4 sshds (not hard) for
-ones that accept say "pgut001", then you've found someone's
-IP. Maybe that's already exposed in other ways, but maybe not.
+With the array_datatypes option off, which is the default, insert(),
+update() and values() treat an arrayref column value as literal SQL.
+Its first element goes into the SQL text unescaped and the rest become
+bind values. A JSON array, or a repeated form field decoded as an
+arrayref, is such a value.
 
-As purely a security feature I agree the added complexity
-isn't worth it.
+An application that passes request data as column values to insert or
+update with the default options allows SQL injection.
 
-Cheers,
-Matt
+Releases before 2.000003 also treat an arrayref in generate() as
+literal SQL, including through AUTOLOAD when allow_autoload is on,
+whatever array_datatypes is set to.
 
+Problem types
+-------------
+- CWE-89 Improper Neutralization of Special Elements used in an SQL
+   Command ('SQL Injection')
+
+Solutions
+---------
+Upgrade to SQL-Abstract 2.000003 or later.
+
+References
+----------
+https://metacpan.org/release/GETTY/SQL-Abstract-2.000003/changes
+https://metacpan.org/release/GETTY/SQL-Abstract-2.000003/diff/GETTY/SQL-Abstract-2.000001_04
+
+Timeline
+--------
+- 2026-11-03: SQL::Abstract version 2.000001_05 was released with an
+   incomplete fix for this issue.
+- 2026-11-05: SQL::Abstract version 2.000002 was released based on
+   version 2.000001_05.
+- 2026-11-06: SQL::Abstract version 2.000003 was released.
 
