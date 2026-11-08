@@ -1,51 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/2
-Message-ID: <3735f7c6-bed3-edd8-2304-a6932c84ff0f@apache.org>
-Date: Mon, 09 Nov 2026 05:03:13 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/08/4
+Message-ID: <avDZp5byq7MFFZaM@256bit.org>
+Date: Sun, 8 Nov 2026 21:20:55 +0100
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82440: Apache Storm Nimbus: Submitter-Controlled Class Instantiation in Nimbus via a Fail-Open Scheduler Strategy Allowlist 
+Subject: [vim-security] Insecure Socket Directory in Vim < 9.2.1308
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Insecure Socket Directory in Vim < 9.2.1308
+===========================================
+Date: 08.11.2026
+Severity: Medium
+CVE: *requested, not yet assigned*
+CWE: Unverified Ownership (CWE-283), Incorrect Default Permissions (CWE-276)
 
-Affected versions:
+## Summary
+When using the socketserver backend of the clientserver feature, Vim places
+its socket in a per-user directory such as `/tmp/vim-<uid>`.  An existing
+directory was used without checking its owner or permissions, and the socket
+was created with the user's umask.  A local attacker can pre-create this
+directory and then connect to or replace the victim's server socket, which
+allows evaluating arbitrary Vim expressions in the victim's Vim.
 
-- Apache Storm Nimbus (org.apache.storm:storm-client) 3.0.0 before 3.1.0
+## Description
+`socketserver_get_path()` creates the socket directory
+`$XDG_RUNTIME_DIR/vim` or `$TMPDIR/vim-<uid>` (`/tmp` if `$TMPDIR` is unset)
+using:
 
-Description:
+    if (vim_mkdir(buf, 0700) == -1 && errno != EEXIST)
+        continue;
 
-Description
+If the directory already exists, it is used as-is.  Since `/tmp` is
+world-writable, another user can create `/tmp/vim-<uid>` for the victim's
+uid beforehand, owned by the attacker and with permissive mode.
+`channel_listen_unix()` then binds the server socket inside that directory
+with permissions `0777 & ~umask`.  The socketserver does not authenticate
+connecting clients and evaluates "expr" messages using
+`eval_client_expr_to_string()`, and "keystrokes" messages are inserted into
+the input buffer.
 
-Nimbus instantiates the class named by a topology's `topology.scheduler.strategy` when scheduling it. The
-allowlist intended to constrain that choice, `nimbus.scheduler.strategy.class.whitelist`, was treated as
-"allow any class" when unset, and it had no entry in the shipped `defaults.yaml`, so unset was the shipped
-state. An authenticated submitter could therefore cause Nimbus to instantiate any class on the Nimbus
-classpath that has a no-argument constructor.
+With a permissive umask (e.g. `002` or `000`) the attacker can connect to the
+socket directly.  With the common umask `022` a direct connect fails, but
+since the attacker owns the directory, they can still remove or replace the
+socket and impersonate the server towards clients.
 
-Storm's own production artifacts contain classes with side effects suitable for this: instantiating
-`org.apache.storm.testing.InProcessZookeeper` starts a ZooKeeper server with its own threads and sockets
-and nothing closes it, and `org.apache.storm.LocalCluster` behaves similarly. Repeated submissions
-therefore consume threads, sockets and memory in the most privileged daemon in the cluster.
+## Impact
+Arbitrary Vim expression evaluation, and therefore arbitrary shell command
+execution, in the context of the user running Vim, on multi-user systems.
 
-Mitigation
+Exploitation requires:
 
-Upgrade to 3.1.0, where an unset allowlist means the strategies shipped with Storm rather than any class.
+* a Vim build with the `+socketserver` feature, used as server (e.g. using
+  `--servername` or with `+autoservername`),
+* the attacker having a local account on the same system,
+* the socket directory being located in a shared directory such as `/tmp`
+  (`$XDG_RUNTIME_DIR` is not affected, since it is only accessible by the
+  user),
+* for direct code execution: a umask that makes the socket accessible by
+  the attacker.
 
-Note that this is a behaviour change: a cluster running an out-of-tree scheduler strategy without an
-explicit allowlist will have those topologies refused until the class is added to
-`nimbus.scheduler.strategy.class.whitelist`. The rejection message names the refused class and the
-configuration key.
+## Acknowledgements
+The Vim project would like to thank Calif.io and 360AlphaLab for independently
+reporting the issue.
 
-Users who cannot upgrade immediately should set `nimbus.scheduler.strategy.class.whitelist` explicitly to
-the strategies they intend to permit.
+## References
+The issue has been fixed as of Vim patch [v9.2.1308](https://github.com/vim/vim/releases/tag/v9.2.1308).
 
-Credit:
+- [Commit](https://github.com/vim/vim/commit/a448e0c6bc459d7dbeab581bcb76a0d)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-p99j-mfjp-r4cg)
 
-The ASF using Claude Agents (finder)
 
-References:
-
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82440
-
+Thanks,
+Christian
+-- 
+Das Glück kann nicht wie ein mathematischer Lehrsatz bewiesen werden,
+es muß empfunden werden, wenn es da sein soll.
+		-- Heinrich von Kleist
