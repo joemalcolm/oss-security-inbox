@@ -1,30 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/15
-Message-ID: <3a514622-99c9-b93d-ca2d-7cc8f29b5353@apache.org>
-Date: Mon, 09 Nov 2026 06:10:37 +0000
-From: Rahul Vats <rahulvats@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/21
+Message-ID: <trinity-0d9c59f6-dd14-49a2-8fa4-37383accca6d-1794218352740@trinity-msg-rest-gmx-gmx-live-787976c89c-9gnf9>
+Date: Mon, 9 Nov 2026 09:59:12 +0000
+From: "Alexander A. Shvedov" <sigdevel@...amail.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-111452: Apache Airflow: Secrets masker: camelCase key names (privateKey, connectionString, webhookUrl) not matched against the sensitive-field list 
+Subject: CVE-2026-124307: VVdeC/vvdecapp: Heap Use-After-Free in AdaptiveLoopFilter::reconstructCoeff via ALF APS Redefinition
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
 
-Affected versions:
-
-- Apache Airflow before 3.4.0
+Product:   VVdeC (vvdecapp)
+Affected:  Versions before 3.2.1
+           Reproduced build: 3.3.0-dev
+           Commit e493ce51f13a2dea72cd58354652ed4e0f509a0e
+Fixed:     1eddb30c4b8e02f3d13ba24aa7e52f1aa7b08c01
+CVE:       CVE-2026-124307
+CWE:       CWE-416 (Use After Free)
+CVSS 3.1:  5.8 MEDIUM (AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:H)
+Reporter:  Alexander A. Shvedov (@sigdevel)
 
 Description:
+  A crafted VVC bitstream can redefine an ALF adaptation parameter set (APS)
+  id while a decoder worker still uses the previous APS.
+  ParameterSetMap::storePS() replaces the owning shared_ptr and frees the
+  old object. AdaptiveLoopFilter::reconstructCoeff() then reads the freed
+  APS while rebuilding filter coefficients at
+  CommonLib/AdaptiveLoopFilter.cpp:894. The reported allocation is 8040
+  bytes.
 
-Apache Airflow's secrets masker matched sensitive key names only in their snake_case form, so values stored under camelCase keys such as `privateKey`, `connectionString`, `webhookUrl` or `accessKey` — for example in a Connection's extra or a Variable — were not redacted in task logs, rendered template fields or API responses. A user who can read task logs or rendered templates, but is not meant to see those credentials, could read them in cleartext. Users are advised to upgrade to apache-airflow 3.4.0 or later.
+  This is the same APS lifetime defect as the CABACReader::readAlf() read
+  site in local bug 2 (upstream issue #391), covered by the same CVE.
+  Reproduction is timing-dependent and uses multithreaded decoding.
 
-Credit:
+Impact:
+  Processing an attacker-controlled VVC bitstream can crash vvdecapp or an
+  application using the VVdeC library, causing denial of service. The use-
+  after-free is a memory-safety violation; arbitrary code execution was not
+  demonstrated in the supplied evidence.
 
-Anass Bali / 0xbaas (finder)
-Jarek Potiuk (remediation developer)
+Reproduction:
+  Build VVdeC with AddressSanitizer (VVDEC_USE_ADDRESS_SANITIZER=ON,
+  VVDEC_FUZZING_BUILD=ON), then run with the linked sample:
+
+    ./vvdecapp -b ./1_reconstructCoeff_CommonLib_AdaptiveLoopFilter_cpp_894 -t 3
+
+ASan log excerpt (abbreviated):
+  ==504830==ERROR: AddressSanitizer: heap-use-after-free on address 0x7e03437e7f6d
+  READ of size 1 at 0x7e03437e7f6d thread T3
+    #0 in vvdec::AdaptiveLoopFilter::reconstructCoeff CommonLib/AdaptiveLoopFilter.cpp:894:42
+    #1 in vvdec::AdaptiveLoopFilter::reconstructCoeffAPSs CommonLib/AdaptiveLoopFilter.cpp:870:7
+    #2 in vvdec::DecSlice::parseSlice DecoderLib/DecSlice.cpp:88:3
+
+Fix:
+  Update to VVdeC 3.2.1 or apply the upstream fix referenced below.
+
+    https://github.com/fraunhoferhhi/vvdec/releases/tag/v3.2.1
+
+    https://github.com/fraunhoferhhi/vvdec/commit/1eddb30c4b8e02f3d13ba24aa7e52f1aa7b08c01
+
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/vvdec/vvdecapp/1/1_reconstructCoeff_CommonLib_AdaptiveLoopFilter_cpp_894
 
 References:
+  https://github.com/fraunhoferhhi/vvdec/issues/391
+  https://github.com/fraunhoferhhi/vvdec/issues/390
+  https://github.com/fraunhoferhhi/vvdec/commit/1eddb30c4b8e02f3d13ba24aa7e52f1aa7b08c01
+  https://www.vulncheck.com/advisories/fraunhofer-hhi-vvdec-before-3.2.1-heap-use-after-free-via-alf-aps-redefinition
+  https://www.cve.org/CVERecord?id=CVE-2026-124307
+  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/124xxx/CVE-2026-124307.json
 
-https://github.com/apache/airflow/pull/74840
-https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-111452
-
+——
+Best regards, Alexander A. Shvedov
+@sigdevel
