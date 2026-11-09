@@ -1,78 +1,50 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/08/4
-Message-ID: <avDZp5byq7MFFZaM@256bit.org>
-Date: Sun, 8 Nov 2026 21:20:55 +0100
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/1
+Message-ID: <564e8b47-c722-48a7-e8d3-6feac92f2ed8@apache.org>
+Date: Mon, 09 Nov 2026 05:02:05 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [vim-security] Insecure Socket Directory in Vim < 9.2.1308
+Subject: CVE-2026-82436: Apache Storm Client: Deserialization of Untrusted Data from the State Store 
 Content-Type: text/plain; charset=utf-8
 
-Insecure Socket Directory in Vim < 9.2.1308
-===========================================
-Date: 08.11.2026
-Severity: Medium
-CVE: *requested, not yet assigned*
-CWE: Unverified Ownership (CWE-283), Incorrect Default Permissions (CWE-276)
+Severity: important 
 
-## Summary
-When using the socketserver backend of the clientserver feature, Vim places
-its socket in a per-user directory such as `/tmp/vim-<uid>`.  An existing
-directory was used without checking its owner or permissions, and the socket
-was created with the user's umask.  A local attacker can pre-create this
-directory and then connect to or replace the victim's server socket, which
-allows evaluating arbitrary Vim expressions in the victim's Vim.
+Affected versions:
 
-## Description
-`socketserver_get_path()` creates the socket directory
-`$XDG_RUNTIME_DIR/vim` or `$TMPDIR/vim-<uid>` (`/tmp` if `$TMPDIR` is unset)
-using:
+- Apache Storm Client (org.apache.storm:storm-client) 3.0.0 before 3.1.0
 
-    if (vim_mkdir(buf, 0700) == -1 && errno != EEXIST)
-        continue;
+Description:
 
-If the directory already exists, it is used as-is.  Since `/tmp` is
-world-writable, another user can create `/tmp/vim-<uid>` for the victim's
-uid beforehand, owned by the attacker and with permissive mode.
-`channel_listen_unix()` then binds the server socket inside that directory
-with permissions `0777 & ~umask`.  The socketserver does not authenticate
-connecting clients and evaluates "expr" messages using
-`eval_client_expr_to_string()`, and "keystrokes" messages are inserted into
-the input buffer.
+Description
 
-With a permissive umask (e.g. `002` or `000`) the attacker can connect to the
-socket directly.  With the common umask `022` a direct connect fails, but
-since the attacker owns the directory, they can still remove or replace the
-socket and impersonate the server towards clients.
+`DefaultStateSerializer`, used to persist and restore stateful bolt checkpoints, configured Kryo with class
+registration disabled and an instantiation strategy that constructs objects without invoking their
+constructors, then deserialized whatever bytes the state store returned. A party able to write to the
+topology's keyspace in the state store, for example a co-tenant of a shared Redis instance or anyone with
+network access to it, could therefore place a serialized object graph that executes code inside the worker
+JVM when the state is restored.
 
-## Impact
-Arbitrary Vim expression evaluation, and therefore arbitrary shell command
-execution, in the context of the user running Vim, on multi-user systems.
+This requires the Redis-backed state provider, which is not the default. Write access to a state-store key
+is a data-plane privilege; code execution in the worker JVM is not, so the two are not equivalent.
 
-Exploitation requires:
+Mitigation
 
-* a Vim build with the `+socketserver` feature, used as server (e.g. using
-  `--servername` or with `+autoservername`),
-* the attacker having a local account on the same system,
-* the socket directory being located in a shared directory such as `/tmp`
-  (`$XDG_RUNTIME_DIR` is not affected, since it is only accessible by the
-  user),
-* for direct code execution: a umask that makes the socket accessible by
-  the attacker.
+Upgrade to 3.1.0, where the state serializer requires registered classes.
 
-## Acknowledgements
-The Vim project would like to thank Calif.io and 360AlphaLab for independently
-reporting the issue.
+Note that this is a behaviour change for existing state: checkpoints written by an affected version may fail
+to restore, and a migration step may be required. Users who cannot upgrade immediately should restrict
+network and credential access to the state store to the cluster itself.
 
-## References
-The issue has been fixed as of Vim patch [v9.2.1308](https://github.com/vim/vim/releases/tag/v9.2.1308).
+Credit
 
-- [Commit](https://github.com/vim/vim/commit/a448e0c6bc459d7dbeab581bcb76a0d)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-p99j-mfjp-r4cg)
+The ASF -- found using Claude agents to study the security of open-source projects, validated and reported by Apache Storm.
 
+Credit:
 
-Thanks,
-Christian
--- 
-Das Glück kann nicht wie ein mathematischer Lehrsatz bewiesen werden,
-es muß empfunden werden, wenn es da sein soll.
-		-- Heinrich von Kleist
+The ASF using Claude Agents (finder)
+
+References:
+
+https://storm.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-82436
+
