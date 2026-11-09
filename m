@@ -1,76 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/1
-Message-ID: <B19AB208-1D60-4C65-8B54-7FE40C3D6474.1@smtp-inbound1.duck.com>
-Date: Mon, 09 Nov 2026 19:24:44 -0500
-From: theknell@...k.com
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Home Assistant: the password is not the key — token secrets in cleartext, two token classes never expire, password change revokes none (2026.11.0, live-proven)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/30
+Message-ID: <0739fe43-8d92-a64a-080a-d4b20d6de8ff@apache.org>
+Date: Mon, 09 Nov 2026 20:06:41 +0000
+From: "Gary D. Gregory" <ggregory@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-124077: Apache Commons Codec: NUL bytes in tree entry names cause Git/SWHID identifier collisions (GitIdentifiers class) 
 Content-Type: text/plain; charset=utf-8
 
-Brian —
+Severity: low 
 
-Yours is the first reply that argues with the finding instead of the
-disclosure, so it gets an answer.
+Affected versions:
 
-"If you can access the config directory you already have everything"
-assumes the read happens on the live box. The precondition the paper
-states is a read of the config OR a backup, and backups do not live on
-the live box. They live on NAS shares and cloud drives, on USB sticks
-and old laptops, in support bundles uploaded to get help. Home
-Assistant's own position is that this exposure is real: it made
-backups encrypted by default in 2025.1 precisely because backups carry
-credentials. What the paper adds is everything that encrypting the
-copy does not fix — the live store is cleartext, the automatic-backup
-password is stored in plaintext in .storage/backup, inside the
-directory the backups archive, and a restore resurrects backup-era
-tokens.
+- Apache Commons Codec 1.22.0 before 1.23.0
+- Apache Commons Codec 387120c901f4a75c3112dfdf8877dcdec7ae685d before 87f6aa2818836998528ff4b0d1ea35545a800ee5
 
-This month the vendor also shipped an update for a Pwn2Own finding
-whose stated flaw was user account tokens stored in plaintext — on
-one product. The construction the paper measures is in core, in the
-current release, and it is unchanged.
+Description:
 
-And the claim was never the read. It is what survives it. Change the
-password — the remediation every user reaches for first — and a
-refresh token copied beforehand still mints fresh access, and a
-ten-year long-lived token still authenticates. Both live-proven after
-a real, verified password change. "Already have everything" is true
-for an afternoon. The paper is about the years after.
-
-On the rest of the thread: the policy Kevin says does not exist was
-stated in the message he is replying to, and it has been the practice
-on every knell paper since the first — published day-of, without
-advance notice. It will not change because it is disliked. As for
-summoning a creator: the work is signed. Verify the signature, run
-the proof, name a wrong line and it will be corrected in public. That
-is the accountability on offer, and it has not moved.
-
-— knell
+The GitIdentifiers class in Apache Commons Codec did not reject NUL bytes in tree entry names. Because Git uses a NUL byte to mark the end of each entry name in a tree object, a crafted name could make one tree serialize to the same bytes as a different tree. Two different directory trees could then receive the same Git tree identifier or SWHID.
 
 
-Sent from Proton Mail for Android.
 
--------- Original Message --------
-On Monday, 11/09/26 at 17:38 Brian May <brian_at_linuxpenguins.xyz_theknell@...k.com> wrote:
-DuckDuckGo was unable to verify sender identity
+The impact is limited: common file systems do not allow NUL bytes in file names, so trees built by walking a file system are not affected. Only applications that build trees from names supplied by other sources, such as entries of archive formats that permit NUL bytes in names (e.g. ZIP) or names passed directly to the API, are exposed.
 
-"Gregory Mullen" <oss-security@...ht> writes:
 
-> Are there list policies published anywhere? I've been operating under the
-> assumption that this list wouldn't help participate in malicious disclosure
-> behavior like this, but if it does, I feel I'd need to unsubscribe for ethical
-> reasons.
 
-Is there an actual security issue here? I read it as "if you can access
-the config directory or backups diretory then you can get a token that
-can't be revoked easily."
+This issue affects Apache Commons Codec: from 1.22.0 before 1.23.0.
 
-Sure maybe room for improvement - which should be discussed with
-home-assistant maintainers first not here. Not convinced it is a
-security issue though. If you have access to the config directory
-chances are you already have access to everything already. And hopefully
-people are being careful with backups.
---
-Brian May @ Linux Penguins
 
+
+Users are recommended to upgrade to version 1.23.0, which fixes the issue.
+
+Credit:
+
+Claude Security (tool)
+Gary D. Gregory (remediation developer)
+
+References:
+
+https://github.com/apache/commons-codec/commit/87f6aa2818836998528ff4b0d1ea35545a800ee5.patch
+https://commons.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-124077
 
