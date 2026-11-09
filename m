@@ -1,10 +1,10 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/8
-Message-ID: <84b0901f-132a-7b01-b926-fe268764dab4@apache.org>
-Date: Mon, 09 Nov 2026 06:03:00 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/15
+Message-ID: <3a514622-99c9-b93d-ca2d-7cc8f29b5353@apache.org>
+Date: Mon, 09 Nov 2026 06:10:37 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86468: Apache Airflow: CLI argv masking misses Variable values and --conn-extra, persisting secrets in audit logs 
+Subject: CVE-2026-111452: Apache Airflow: Secrets masker: camelCase key names (privateKey, connectionString, webhookUrl) not matched against the sensitive-field list 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low 
@@ -15,20 +15,16 @@ Affected versions:
 
 Description:
 
-Apache Airflow's CLI records its arguments in the audit log but masks secrets by argument position, so some supported command shapes leave secrets in cleartext, for example a trailing `--description` on Variable commands, `--conn-extra`, and the inline `--password` of `airflow keycloak-auth-manager` commands. A user who can read audit events but is denied Variable and Connection access can retrieve those values through the event-log API.
-
-Users of apache-airflow are recommended to upgrade to 3.4.0 or later. Audit-log entries written before the upgrade keep the cleartext values: purge the affected entries and rotate the secrets they contain.
+Apache Airflow's secrets masker matched sensitive key names only in their snake_case form, so values stored under camelCase keys such as `privateKey`, `connectionString`, `webhookUrl` or `accessKey` — for example in a Connection's extra or a Variable — were not redacted in task logs, rendered template fields or API responses. A user who can read task logs or rendered templates, but is not meant to see those credentials, could read them in cleartext. Users are advised to upgrade to apache-airflow 3.4.0 or later.
 
 Credit:
 
-OpenSec Intelligence (finder)
-hothaot (finder)
+Anass Bali / 0xbaas (finder)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/72650
-https://www.cve.org/CVERecord?id=CVE-2026-50204
+https://github.com/apache/airflow/pull/74840
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86468
+https://www.cve.org/CVERecord?id=CVE-2026-111452
 
