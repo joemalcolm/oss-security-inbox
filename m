@@ -1,64 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/08/5
-Message-ID: <avDwqaDCJthZMrYD@256bit.org>
-Date: Sun, 8 Nov 2026 22:59:05 +0100
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/3
+Message-ID: <b5092432-5974-67ba-5e87-67edacedf8b2@apache.org>
+Date: Mon, 09 Nov 2026 05:51:05 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: [vim-security]: Heap Buffer Overflow with Crafted Spell File in Vim < 9.2.1309
+Subject: CVE-2026-40913: Apache Airflow: Import Errors API Leaks Unauthorized DAG Stack Traces via Incomplete Per-File RBAC Enforcement 
 Content-Type: text/plain; charset=utf-8
 
-Heap Buffer Overflow with Crafted Spell File in Vim < 9.2.1309
-==============================================================
-Date: 08.11.2026
-Severity: Low
-CVE: *requested, not yet assigned*
-CWE: Access of Resource Using Incompatible Type (CWE-843), Out-of-bounds Read
-(CWE-125)
+Severity: low 
 
-## Summary
-A crafted spell file (`.spl`) containing two SN_SOFO sections causes Vim to
-free the soundfolding items of the first section as if they were SN_SAL
-items, reading beyond the allocated memory.  The spell file can be loaded by
-a modeline, so opening a file is enough to trigger the issue.
+Affected versions:
 
-## Description
-The SN_SAL and SN_SOFO sections of a spell file both store their
-soundfolding information in `sl_sal`.  For an SN_SOFO section, `set_sofo()`
-uses `sl_sal` as an array of 256 `int *` pointers.  Before doing so, it calls
-`free_sal_items()` to free any previous contents, which treats the array as
-`salitem_T` entries.
+- Apache Airflow before 3.4.0
 
-Vim only writes either an SN_SAL or an SN_SOFO section, but the spell file
-reader accepted any number of them.  When a second SN_SOFO section follows
-the first one, `free_sal_items()` interprets the `int *` array as
-`salitem_T` entries, reading beyond the end of the allocation and passing
-the read values to `vim_free()`.
+Description:
 
-Since `'spelllang'` accepts the name of a `.spl` file and can be set from a
-modeline together with `'spell'`, a crafted spell file is loaded when a file
-containing such a modeline is opened.
+Apache Airflow's public Import Errors API returns the raw parse-failure stack trace to any user with the `ImportError.can_read` permission when the failing file has no registered DAG. This happens when a file fails to parse before any DAG is defined, or when all of its previously registered DAGs are removed but the parse error remains. Users who should not see that file's details can read stack traces that may expose file paths and code.
 
-## Impact
-A heap out-of-bounds read, resulting in a crash of Vim.  An invalid free has
-not been demonstrated but cannot be ruled out.
+Users are advised to upgrade to Apache Airflow 3.4.0 or later, which restricts these stack traces to users with the new `IMPORT_ERRORS_ALL` permission.
 
-Exploitation requires:
+Credit:
 
-* the crafted `.spl` file and a file with a modeline setting `'spell'` and
-  `'spelllang'` to it, e.g. in a cloned repository or an extracted archive,
-* `'modeline'` being enabled
-* a multi-byte `'encoding'` such as utf-8 (the default in most environments).
+se1en (finder)
+Jarek Potiuk (remediation developer)
 
-## Acknowledgements
-The Vim project would like to thank pangflame for reporting the issue.
+References:
 
-## References
-The issue has been fixed as of Vim patch [v9.2.1309](https://github.com/vim/vim/releases/tag/v9.2.1309).
+https://github.com/apache/airflow/pull/69790
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-40913
 
-- [Commit](https://github.com/vim/vim/commit/bdcb63d47fa5e86406a7b04a0ab62638018fb6b5)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-26qr-jvfj-hcwm)
-
-Thanks,
-Christian
--- 
-Fenster verschmutzen viel weniger, wenn man die Scheiben herausnimmt.
