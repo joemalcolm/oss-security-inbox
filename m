@@ -1,31 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/16
-Message-ID: <ad46eaed-8187-400b-12fa-ba767b5300db@apache.org>
-Date: Mon, 09 Nov 2026 06:10:57 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/17
+Message-ID: <97507d67-aabe-dc16-ce50-39297381dc6e@apache.org>
+Date: Mon, 09 Nov 2026 06:11:29 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-111453: Apache Airflow: API: asset queuedEvents DELETE checks Dag edit on a ?dag_id query value but deletes rows for every readable Dag 
+Subject: CVE-2026-111454: Apache Airflow: API: asset endpoints return scheduled/producing/consuming Dag IDs the caller cannot read 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low 
 
 Affected versions:
 
-- Apache Airflow 3.3.2 before 3.4.0
+- Apache Airflow before 3.4.0
 
 Description:
 
-Apache Airflow's API endpoint for deleting an asset's queued events checked Dag edit permission against the `dag_id` query parameter, but deleted the queued events of every Dag the caller could read. An authenticated user with edit permission on one Dag and read access to others could suppress asset-triggered runs of Dags they cannot edit. This is an incomplete fix for CVE-2026-75157: users who upgraded to apache-airflow 3.3.2 for that fix are still affected and should upgrade to apache-airflow 3.4.0 or later.
+Apache Airflow's asset API endpoints returned the IDs of Dags that are scheduled on, produce, or consume an asset without checking whether the caller may read those Dags. An authenticated user with asset read access could learn the IDs of Dags they are not authorized to see. Users are advised to upgrade to apache-airflow 3.4.0 or later.
 
 Credit:
 
-hataehoon (finder)
+Zhixi "Jace" Sun, independent security researcher (finder)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/74839
-https://www.cve.org/CVERecord?id=CVE-2026-75157
+https://github.com/apache/airflow/pull/74836
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-111453
+https://www.cve.org/CVERecord?id=CVE-2026-111454
 
