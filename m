@@ -1,73 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/21
-Message-ID: <trinity-0d9c59f6-dd14-49a2-8fa4-37383accca6d-1794218352740@trinity-msg-rest-gmx-gmx-live-787976c89c-9gnf9>
-Date: Mon, 9 Nov 2026 09:59:12 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/26
+Message-ID: <CAOp4FwRmEMwxWdOC3O5W4ZG5nTFQZaYKy+hW37S7EhqqD7oztg@mail.gmail.com>
+Date: Mon, 9 Nov 2026 22:43:38 +0400
+From: Loganaden Velvindron <loganaden@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124307: VVdeC/vvdecapp: Heap Use-After-Free in AdaptiveLoopFilter::reconstructCoeff via ALF APS Redefinition
+Cc: musl@...ts.openwall.com
+Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
+On Fri, 6 Nov 2026 at 21:17, Martin Steigerwald <martin@...htvoll.de> wrote:
+>
+> Greetings.
+>
+> Matt Johnston - 06.11.26, 03:05:13 CET:
+> > Prior to ~2019 when the OpenSSH change was made, Debian
+> > would have shown a different manpage that only documents
+> > NULL for error [1].
 
-Product:   VVdeC (vvdecapp)
-Affected:  Versions before 3.2.1
-           Reproduced build: 3.3.0-dev
-           Commit e493ce51f13a2dea72cd58354652ed4e0f509a0e
-Fixed:     1eddb30c4b8e02f3d13ba24aa7e52f1aa7b08c01
-CVE:       CVE-2026-124307
-CWE:       CWE-416 (Use After Free)
-CVSS 3.1:  5.8 MEDIUM (AV:L/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+This is the approach I'm taking on my build of Alpine Linux.
 
-Description:
-  A crafted VVC bitstream can redefine an ALF adaptation parameter set (APS)
-  id while a decoder worker still uses the previous APS.
-  ParameterSetMap::storePS() replaces the owning shared_ptr and frees the
-  old object. AdaptiveLoopFilter::reconstructCoeff() then reads the freed
-  APS while rebuilding filter coefficients at
-  CommonLib/AdaptiveLoopFilter.cpp:894. The reported allocation is 8040
-  bytes.
-
-  This is the same APS lifetime defect as the CABACReader::readAlf() read
-  site in local bug 2 (upstream issue #391), covered by the same CVE.
-  Reproduction is timing-dependent and uses multithreaded decoding.
-
-Impact:
-  Processing an attacker-controlled VVC bitstream can crash vvdecapp or an
-  application using the VVdeC library, causing denial of service. The use-
-  after-free is a memory-safety violation; arbitrary code execution was not
-  demonstrated in the supplied evidence.
-
-Reproduction:
-  Build VVdeC with AddressSanitizer (VVDEC_USE_ADDRESS_SANITIZER=ON,
-  VVDEC_FUZZING_BUILD=ON), then run with the linked sample:
-
-    ./vvdecapp -b ./1_reconstructCoeff_CommonLib_AdaptiveLoopFilter_cpp_894 -t 3
-
-ASan log excerpt (abbreviated):
-  ==504830==ERROR: AddressSanitizer: heap-use-after-free on address 0x7e03437e7f6d
-  READ of size 1 at 0x7e03437e7f6d thread T3
-    #0 in vvdec::AdaptiveLoopFilter::reconstructCoeff CommonLib/AdaptiveLoopFilter.cpp:894:42
-    #1 in vvdec::AdaptiveLoopFilter::reconstructCoeffAPSs CommonLib/AdaptiveLoopFilter.cpp:870:7
-    #2 in vvdec::DecSlice::parseSlice DecoderLib/DecSlice.cpp:88:3
-
-Fix:
-  Update to VVdeC 3.2.1 or apply the upstream fix referenced below.
-
-    https://github.com/fraunhoferhhi/vvdec/releases/tag/v3.2.1
-
-    https://github.com/fraunhoferhhi/vvdec/commit/1eddb30c4b8e02f3d13ba24aa7e52f1aa7b08c01
-
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/vvdec/vvdecapp/1/1_reconstructCoeff_CommonLib_AdaptiveLoopFilter_cpp_894
-
-References:
-  https://github.com/fraunhoferhhi/vvdec/issues/391
-  https://github.com/fraunhoferhhi/vvdec/issues/390
-  https://github.com/fraunhoferhhi/vvdec/commit/1eddb30c4b8e02f3d13ba24aa7e52f1aa7b08c01
-  https://www.vulncheck.com/advisories/fraunhofer-hhi-vvdec-before-3.2.1-heap-use-after-free-via-alf-aps-redefinition
-  https://www.cve.org/CVERecord?id=CVE-2026-124307
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/124xxx/CVE-2026-124307.json
-
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+I would like to also submit a patch to musl to have this as a build option.
+@musl, any interest in having this as a build option ?
