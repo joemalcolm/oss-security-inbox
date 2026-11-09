@@ -1,51 +1,27 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/32
-Message-ID: <c9493162-93ae-4a69-a994-306e990d4d47@cpansec.org>
-Date: Mon, 9 Nov 2026 21:17:20 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-115864: Monoceros versions before 0.30 for Perl allow a request declaring a large Content-Length to kill a worker by exhausting memory
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/35
+Message-ID: <87pkwdzkj1.fsf@linuxpenguins.xyz>
+Date: Tue, 10 Nov 2026 09:50:58 +1100
+From: Brian May <brian@...uxpenguins.xyz>
+To: oss-security@...ts.openwall.com
+Subject: Re: Home Assistant: the password is not the key — token secrets in cleartext, two token classes never expire, password change revokes none (2026.11.0, live-proven)
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-115864                                      CPAN Security Group
-========================================================================
+"Gregory Mullen" <oss-security@...ht> writes:
 
-         CVE ID:  CVE-2026-115864
+> Are there list policies published anywhere? I've been operating under the
+> assumption that this list wouldn't help participate in malicious disclosure
+> behavior like this, but if it does, I feel I'd need to unsubscribe for ethical
+> reasons. 
 
-   Distribution:  Monoceros
-       Versions:  before 0.30
-       MetaCPAN:  https://metacpan.org/dist/Monoceros
-       VCS Repo:  https://github.com/kazeburo/Monoceros
+Is there an actual security issue here? I read it as "if you can access
+the config directory or backups diretory then you can get a token that
+can't be revoked easily."
 
-
-Monoceros versions before 0.30 for Perl allow a request declaring a
-large Content-Length to kill a worker by exhausting memory
-
-Description
------------
-Monoceros versions before 0.30 for Perl allow a request declaring a
-large Content-Length to kill a worker by exhausting memory.
-
-The request body is read in a loop that asks sysread for all of the
-remaining declared length at once. Perl grows the read buffer to that
-size before any data arrives, so a length larger than available memory
-makes the worker exit with an uncatchable out of memory error before
-the application is called.
-
-A remote attacker can force a worker restart with each request of a few
-bytes.
-
-Problem types
--------------
-- CWE-789 Memory Allocation with Excessive Size Value
-
-Solutions
----------
-Upgrade to Monoceros 0.30 or later.
-
-References
-----------
-https://github.com/kazeburo/Monoceros/commit/897a4a9624329fc0a4b2352d387bdac6d37848e2.patch
-https://metacpan.org/release/KAZEBURO/Monoceros-0.30/changes
-
+Sure maybe room for improvement - which should be discussed with
+home-assistant maintainers first not here. Not convinced it is a
+security issue though. If you have access to the config directory
+chances are you already have access to everything already. And hopefully
+people are being careful with backups.
+-- 
+Brian May @ Linux Penguins
