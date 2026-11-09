@@ -1,32 +1,32 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/10
-Message-ID: <ae682bb5-d063-7a11-30f3-3763207ee6a2@apache.org>
-Date: Mon, 09 Nov 2026 06:03:39 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/20
+Message-ID: <6e197391-a0ee-ad00-a7c3-f9cd33d175c2@apache.org>
+Date: Mon, 09 Nov 2026 06:04:38 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-96285: Apache Airflow: Scheduler: next_kwargs deserialized before the dict check, so resume data still invokes constructors 
+Subject: CVE-2026-113508: Apache Airflow: Logout token revocation fails open; errors silently swallowed 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: low 
 
 Affected versions:
 
-- Apache Airflow 3.3.0 before 3.4.0
+- Apache Airflow before 3.4.0
 
 Description:
 
-Apache Airflow 3.3.1 shipped a fix for CVE-2026-67260 that checks the scheduler's decoded `next_kwargs` value is a dictionary, but performs that check only after deserializing the whole stored payload. Deserialization reconstructs nested objects of classes permitted by the deserialization allow-list — which by default includes Airflow's own classes — and runs their constructors inside the scheduler process before the check can reject the value. A Dag author, who controls a task's `next_kwargs` through the task execution API, can therefore still trigger constructor execution in the scheduler when the `awaiting_input` timeout sweep processes the task, and in the API server when the task instance is served to a worker using an older Execution API version; no non-default configuration is required. Versions before 3.3.0 are not affected. This is an incomplete fix for CVE-2026-67260: deployments that upgraded to 3.3.1 for that issue must also upgrade to apache-airflow 3.4.0 or later.
+Apache Airflow's logout endpoint attempted to revoke the presented token on the server, but any failure during revocation was silently ignored and logout still reported success. When the auth manager redirects logout to an external logout URL (for example the FAB or Keycloak auth managers), server-side revocation is the only thing that invalidates the Airflow token; it failed on database errors and, reliably, for tokens from an external issuer accepted via `[api_auth] trusted_jwks_url` whose token identifier is longer than 32 characters. Anyone holding a copy of a user's token from before logout could keep using it against the Airflow API until it expired. Users are advised to upgrade to apache-airflow 3.4.0 or later.
 
 Credit:
 
-Andrew Rukin (Arenadata) (finder)
+Claude Security Scans (tool)
+Pierre Jeambrun (remediation developer)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/73576
-https://github.com/apache/airflow/pull/73577
-https://www.cve.org/CVERecord?id=CVE-2026-67260
+https://github.com/apache/airflow/pull/73562
+https://github.com/apache/airflow/pull/73788
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-96285
+https://www.cve.org/CVERecord?id=CVE-2026-113508
 
