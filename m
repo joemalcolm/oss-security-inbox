@@ -1,14 +1,31 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/08/2
-Message-ID: <CAARiyJpVi2O62=KoVgCs3u9nnQh+YHxCQn+PS07tPKOLtCcanA@mail.gmail.com>
-Date: Sun, 8 Nov 2026 15:18:23 +0100
-From: Tomasz Kaye <tomasz.brain@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/4
+Message-ID: <70552d1d-808b-7489-86e9-a69e10fcf0fc@apache.org>
+Date: Mon, 09 Nov 2026 05:54:27 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: GodotSteam 4.17 through 4.23.2: any multiplayer peer can claim the server's peer ID
+Subject: CVE-2026-50204: Apache Airflow: Audit-log secrets masker redacts by key name only, persisting connection and Variable secrets in cleartext 
 Content-Type: text/plain; charset=utf-8
 
-A fix for this issue has been merged upstream.
+Severity: moderate 
 
-PR #923, "Peer ID Claim Fix", merged into the godot4 branch on
-2026-11-05 (merge commit 945529af15):
-https://codeberg.org/godotsteam/godotsteam/pulls/923
+Affected versions:
+
+- Apache Airflow before 3.4.0
+
+Description:
+
+Apache Airflow's audit log stored Connection and Variable secret values in cleartext in the `Log.extra` column because the secrets masker matched only on configured sensitive key names. An authenticated low-privilege user with read access to the event-log / audit API — with no prior access to the affected connection or variable — could read those rows and recover the credentials verbatim. Users should upgrade to apache-airflow 3.4.0 or later, which masks these values and restricts the affected audit rows to authorized users.
+
+Credit:
+
+Eunho Kim (finder)
+Jarek Potiuk (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/68049
+https://github.com/apache/airflow/pull/70759
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-50204
+
