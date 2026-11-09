@@ -1,36 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/7
-Message-ID: <eca91284-2736-e142-5e65-c3e28e2731c9@apache.org>
-Date: Mon, 09 Nov 2026 06:00:08 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/14
+Message-ID: <3eb4b638-b3db-617c-aec2-a84ee222e0e0@apache.org>
+Date: Mon, 09 Nov 2026 06:10:05 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82337: Apache Airflow: DeadlineAlert fields bypass plugin-registration gate for scheduler-side deserialization 
+Subject: CVE-2026-111421: Apache Airflow: Execution API: set_xcom skips the reserved-key check, so task-written XComs instantiate airflow.* classes on the API server 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Airflow before 3.4.0
+- Apache Airflow 3.0.0 before 3.4.0
 
 Description:
 
-Apache Airflow rebuilt deadline alert fields through generic deserialization, which imports and instantiates the class named in the serialized Dag, in the scheduler and API server. A Dag author could cause classes within Airflow's deserialization allow list to be constructed in those processes with arguments they control. Deployments whose Dags use deadline alerts are affected.
-
-This is an incomplete fix of CVE-2026-45360, which only hardened the `reference` field; deployments that applied that fix remain affected through the `callback` and `interval` fields.
-
-Users of apache-airflow are recommended to upgrade to 3.4.0 or later.
+Apache Airflow's Task Execution API stored XCom values written by a task without the reserved-key check applied elsewhere, so a Dag author's task could write an XCom that, when a user later viewed it through the API with deserialization enabled, made the API server instantiate classes from the `airflow.*` namespace with arguments the Dag author chose. This is an incomplete fix for CVE-2026-59242: users who applied that fix in apache-airflow 3.3.1 remain affected through this route and should upgrade to apache-airflow 3.4.0 or later.
 
 Credit:
 
-Claude Security Scans (tool)
+Qi Qin of depthfirst (finder)
+Hama1cco (finder)
+Zhixi "Jace" Sun, independent security researcher (finder)
+Michael Lip (theluckystrike) (finder)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/72651
-https://github.com/apache/airflow/pull/74830
-https://www.cve.org/CVERecord?id=CVE-2026-45360
+https://github.com/apache/airflow/pull/72718
+https://github.com/apache/airflow/pull/74829
+https://www.cve.org/CVERecord?id=CVE-2026-59242
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-82337
+https://www.cve.org/CVERecord?id=CVE-2026-111421
 
