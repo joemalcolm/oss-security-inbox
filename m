@@ -1,32 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/6
-Message-ID: <76ec400e-7377-6c51-cb1c-597da5456bc8@apache.org>
-Date: Mon, 09 Nov 2026 05:56:26 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/8
+Message-ID: <84b0901f-132a-7b01-b926-fe268764dab4@apache.org>
+Date: Mon, 09 Nov 2026 06:03:00 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-76185: Apache Airflow Task SDK: Task SDK SecretCache: non-injective team cache key enables cross-team secret disclosure in multi-team mode 
+Subject: CVE-2026-86468: Apache Airflow: CLI argv masking misses Variable values and --conn-extra, persisting secrets in audit logs 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: low 
 
 Affected versions:
 
-- Apache Airflow Task SDK 1.2.0 before 1.4.0
+- Apache Airflow before 3.4.0
 
 Description:
 
-Apache Airflow's Task SDK secret cache built its keys from the team name and secret id with unescaped `_` delimiters, so different (team, secret id) pairs could collide. In multi-team deployments a Dag author could read another team's Variable or Connection value by crafting a colliding secret id. Only deployments with both `core.multi_team = True` and `secrets.use_cache = True` are affected.
+Apache Airflow's CLI records its arguments in the audit log but masks secrets by argument position, so some supported command shapes leave secrets in cleartext, for example a trailing `--description` on Variable commands, `--conn-extra`, and the inline `--password` of `airflow keycloak-auth-manager` commands. A user who can read audit events but is denied Variable and Connection access can retrieve those values through the event-log API.
 
-Users are advised to upgrade to apache-airflow 3.4.0 or later. Deployments that cannot upgrade can set `secrets.use_cache = False`.
+Users of apache-airflow are recommended to upgrade to 3.4.0 or later. Audit-log entries written before the upgrade keep the cleartext values: purge the affected entries and rotate the secrets they contain.
 
 Credit:
 
-Nurmuhammad Davronbekov (finder)
+OpenSec Intelligence (finder)
+hothaot (finder)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/72201
+https://github.com/apache/airflow/pull/72650
+https://www.cve.org/CVERecord?id=CVE-2026-50204
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-76185
+https://www.cve.org/CVERecord?id=CVE-2026-86468
 
