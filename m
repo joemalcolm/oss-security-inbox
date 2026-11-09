@@ -1,13 +1,13 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/17
-Message-ID: <97507d67-aabe-dc16-ce50-39297381dc6e@apache.org>
-Date: Mon, 09 Nov 2026 06:11:29 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/7
+Message-ID: <eca91284-2736-e142-5e65-c3e28e2731c9@apache.org>
+Date: Mon, 09 Nov 2026 06:00:08 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-111454: Apache Airflow: API: asset endpoints return scheduled/producing/consuming Dag IDs the caller cannot read 
+Subject: CVE-2026-82337: Apache Airflow: DeadlineAlert fields bypass plugin-registration gate for scheduler-side deserialization 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
@@ -15,16 +15,22 @@ Affected versions:
 
 Description:
 
-Apache Airflow's asset API endpoints returned the IDs of Dags that are scheduled on, produce, or consume an asset without checking whether the caller may read those Dags. An authenticated user with asset read access could learn the IDs of Dags they are not authorized to see. Users are advised to upgrade to apache-airflow 3.4.0 or later.
+Apache Airflow rebuilt deadline alert fields through generic deserialization, which imports and instantiates the class named in the serialized Dag, in the scheduler and API server. A Dag author could cause classes within Airflow's deserialization allow list to be constructed in those processes with arguments they control. Deployments whose Dags use deadline alerts are affected.
+
+This is an incomplete fix of CVE-2026-45360, which only hardened the `reference` field; deployments that applied that fix remain affected through the `callback` and `interval` fields.
+
+Users of apache-airflow are recommended to upgrade to 3.4.0 or later.
 
 Credit:
 
-Zhixi "Jace" Sun, independent security researcher (finder)
+Claude Security Scans (tool)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/74836
+https://github.com/apache/airflow/pull/72651
+https://github.com/apache/airflow/pull/74830
+https://www.cve.org/CVERecord?id=CVE-2026-45360
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-111454
+https://www.cve.org/CVERecord?id=CVE-2026-82337
 
