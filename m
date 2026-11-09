@@ -1,30 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/18
-Message-ID: <fe1ff02c-c7cc-4e2b-fb52-8d2d0b601fbb@apache.org>
-Date: Mon, 09 Nov 2026 06:12:16 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/13
+Message-ID: <ebbb03b9-91e4-78f6-492b-b74986516762@apache.org>
+Date: Mon, 09 Nov 2026 06:08:27 +0000
 From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-111455: Apache Airflow: Connections API: async connection test authorizes create at enqueue but overwrites a later-created connection at commit 
+Subject: CVE-2026-111395: Apache Airflow: Reserved serialization keys in Dag run conf crash the scheduler or are rebuilt as objects in the Triggerer via deadline callbacks 
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Airflow 3.3.0 before 3.4.0
+- Apache Airflow 3.2.0 before 3.4.0
 
 Description:
 
-Apache Airflow's asynchronous connection test checked permissions when the test was queued — only create permission when the connection ID did not exist yet — but, when the test completed with `commit_on_success`, wrote the tested connection under that ID. A user allowed to create but not edit connections could overwrite a connection someone else had created in the meantime. Only deployments that enable the non-default `[core] test_connection` setting are affected. Users are advised to upgrade to apache-airflow 3.4.0 or later.
+Apache Airflow did not reject reserved serialization keys inside a Dag run's `conf`. A user allowed to trigger a Dag that uses a deadline alert with an asynchronous callback could pass a `conf` that, once the deadline was missed, either crashed the scheduler repeatedly or was rebuilt into objects inside the Triggerer. Users are advised to upgrade to apache-airflow 3.4.0 or later.
 
 Credit:
 
-Evan Ricafort (@evanricafort) of Invalid Web Security (finder)
+Jarek Potiuk (finder)
 Jarek Potiuk (remediation developer)
 
 References:
 
-https://github.com/apache/airflow/pull/74837
+https://github.com/apache/airflow/pull/74834
 https://airflow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-111455
+https://www.cve.org/CVERecord?id=CVE-2026-111395
 
