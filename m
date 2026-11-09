@@ -1,68 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/08/3
-Message-ID: <55E017B3-0161-46C1-9731-8557A9F15114.1@smtp-inbound1.duck.com>
-Date: Sun, 08 Nov 2026 11:01:40 -0500
-From: theknell@...k.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/9
+Message-ID: <fc8cac2d-aded-1f28-ff7d-a38ab438c762@apache.org>
+Date: Mon, 09 Nov 2026 05:57:58 +0000
+From: Rahul Vats <rahulvats@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Home Assistant: the password is not the key — token secrets in cleartext, two token classes never expire, password change revokes none (2026.11.0, live-proven)
+Subject: CVE-2026-86829: Apache Airflow: Deserialization of task-controlled XCom values in the Scheduler during dependency evaluation 
 Content-Type: text/plain; charset=utf-8
 
-Home Assistant's documentation tells users: "Your password is the key
-to your home, so choose a strong, unique one." Home Assistant is
-installed in two million homes by the vendor's own published count,
-and in those homes it holds the locks, the alarm, the garage, the
-cameras, and the record of who is home.
+Severity: important 
 
-The password is not the key. Tested against home-assistant/core
-2026.11.0 (frontend 20261028.4, hass-nabucasa 2.8.1):
+Affected versions:
 
-1. Every refresh token's secret and its per-token JWT signing key,
-for every user, is serialized in cleartext in one file:
-config/.storage/auth. Passwords in the neighbouring store are
-bcrypt-hashed; token secrets are not hashed at all — validation
-is a direct string comparison against the stored value.
+- Apache Airflow before 3.4.0
 
-2. Two of the three token classes never expire. Long-lived and
-system refresh tokens are created with expire_at = None; the
-long-lived access tokens the documentation recommends for scripts
-are valid for ten years, and the core API accepts a caller-supplied
-lifespan in days with no upper bound.
+Description:
 
-3. Changing the password revokes none of them. All four
-password-change entry points — self-service, administrator,
-Supervisor reset, command line — rehash the password record and
-make no token call.
+Apache Airflow's scheduler fully deserializes XCom values written by task code while evaluating task dependencies. A Dag author, who controls what a task writes to XCom, therefore controls data that is deserialized inside the scheduler process - a context the Airflow security model reserves for code installed by the Deployment Manager, above the worker-scoped execution capability a Dag author is documented to have. Deployments that treat Dag authors as less trusted than Deployment Managers are affected, and the scheduler must be evaluating a task dependency that reads a task-written XCom value. Users of apache-airflow are recommended to upgrade to version 3.4.0 or later, which restricts dependency evaluation to primitive XCom values.
 
-4. The automatic-backup password is persisted in plaintext in
-.storage/backup, in the same directory every backup archives —
-and every settings backup carries .storage/auth inside it, so a
-restore resurrects backup-era tokens.
+Credit:
 
-Live proof, against our own instance only: after a real, verified
-password change, a refresh token copied from .storage/auth beforehand
-still minted fresh access, and a ten-year long-lived token minted
-beforehand still authenticated.
+Claude Security Scans (tool)
+Jarek Potiuk (remediation developer)
 
-Scope, stated plainly: this is not an unauthenticated network break.
-It begins with a read of the config directory or a backup. What it
-shows is that any such read — a backup file shared for support, a
-config folder synced somewhere it should not be, one file disclosure
-anywhere in the stack — becomes durable, password-change-resistant
-access to the home, and the one remediation every user reaches for
-first, changing the password, does nothing.
+References:
 
-Eleven documented claims were checked: 3 hold, 5 hold with a bound,
-3 fall. What is sound is credited in the paper at the same weight:
-the token generation entropy is impeccable, and access tokens live
-thirty minutes.
+https://github.com/apache/airflow/pull/72718
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-86829
 
-Paper: https://archive.org/details/knell-not-the-key
-Mirror: https://github.com/the-knell/not-the-key
-Key: 133883AB9F6EDE5B9BA6B82E27BEDAF0CE152F25 (knell)
-
-Verify: gpg --import knell-public.asc, then
-gpg --verify paper-ha-FINAL-2026-11-04.md.asc
-
-— knell
-
-More, signed and timestamped: https://github.com/the-knell
