@@ -1,28 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/4
-Message-ID: <33cefc56-be44-1a91-f673-9354ac3ec3ca@apache.org>
-Date: Wed, 11 Nov 2026 02:08:31 +0000
-From: Rui Abreu <rabreu@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/30
+Message-ID: <f1926722-12d0-471c-b83c-4026dee0adb2@oracle.com>
+Date: Tue, 10 Nov 2026 14:30:25 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124495: Apache Storm: Logviewer follows worker symlinks across topology ACLs 
+Subject: CPython: [CVE-2026-115791] Prevent shadowing stdlib in gzip/tarfile/zipfile CLI
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
 
-Affected versions:
 
-- Apache Storm (org.apache.storm:storm-webapp) 3.0.0 before 3.2.0
 
-Description:
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-115791] Prevent shadowing stdlib in gzip/tarfile/zipfile CLI
+Date: 	Tue, 10 Nov 2026 17:00:26 +0100
+From: 	Victor Stinner <vstinner@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
 
-When workers run as the topology owner, the Logviewer serves files that a worker has placed in its own log directory as links to other files. A user who is allowed to submit topologies can read the worker logs of other users' topologies, and other files the Logviewer process can read. Users are recommended to upgrade to version 3.2.0, which fixes the issue.
 
-Credit:
+There is a MEDIUM severity vulnerability affecting CPython.
 
-Javier García Herrera (finder)
+When tarfile or zipfile command line interface (CLI) is used to
+decompress an archive, a Python script shadowing the stdlib can be
+created. Then if an error occurs during decompressing the next file,
+the newly created Python script is executed. This is especially true
+if the created Python is called traceback.py. The problem is that
+Python adds the current directory to sys.path when python -m MODULE is
+run, and the archive is also decompressed in the current directory.
 
-References:
+The fix removes sys.path[0] in gzip, tarfile and zipfile command line
+interface to prevent shadowing standard library modules from extracted
+files.
 
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-124495
+Please see the linked CVE ID for the latest information on affected versions:
+
+* https://www.cve.org/CVERecord?id=CVE-2026-115791
+* https://github.com/python/cpython/issues/161705
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
+
 
