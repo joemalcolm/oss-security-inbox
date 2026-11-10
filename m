@@ -1,316 +1,132 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/28
-Message-ID: <d9fc34bc-08a3-4085-9ac2-afe1bec80fcb@oracle.com>
-Date: Tue, 10 Nov 2026 12:15:36 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/13
+Message-ID: <CAP=2yyT1weVP-P=G1Hp6iWv07B3uvLP4jcrzEDxi_nNk3YbUgQ@mail.gmail.com>
+Date: Tue, 10 Nov 2026 16:00:12 +0100
+From: Olivier Fourdan <ofourdan@...hat.com>
 To: oss-security@...ts.openwall.com
-Subject: Go 1.27.4 and Go 1.26.11 are released with 12 security fixes
+Subject: Fwd: X.Org Security Advisory: multiple security issues in X.Org X server
 Content-Type: text/plain; charset=utf-8
 
+---------- Forwarded message ---------
+From: Olivier Fourdan <ofourdan@...hat.com>
+Date: Tue, Nov 10, 2026 at 2:43 PM
+Subject: X.Org Security Advisory: multiple security issues in X.Org X server
+To: <xorg-announce@...ts.x.org>, xorg <xorg@...ts.x.org>, xorg-devel
+<xorg-devel@...ts.x.org>
+Cc: Eun0us / Espilon <eun0us@...ilon.net>, Acts1631
+<acts1631kjv@...ton.me>, Tristan <TristanInSec@...il.com>
+
+
+========================================================================
+X.Org Security Advisory: November 10, 2026
+
+Issues in X.Org X server prior to xorg-server-21.1.26 and Xwayland
+prior to xwayland-24.1.15
+========================================================================
+
+* CVE-2026-109091:
+  X.Org Server EDID DS_RANGES Out-Of-Bounds Write
+
+  The Xorg server records EDID Display-Range (DS_RANGES) descriptors
+  into fixed-size MonRec hsync[] / vrefresh[] arrays without checking
+  against MAX_HSYNC / MAX_VREFRESH. A malicious monitor or crafted EDID
+  can supply extra descriptors that overrun those arrays and clobber
+  adjacent MonRec fields (Modes, Last, DDC), causing an out-of-bounds
+  write that can crash the server or corrupt memory.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/95cf222d
+  Found by:  Eun0us / Espilon <eun0us@...ilon.net>
+
+* CVE-2026-109092:
+  X.Org Server XvShmPutImage Shared-Memory Bounds Overflow
+
+  ProcXvShmPutImage checked (size_needed + offset) against the SHM
+  segment size. A negative size_needed from the DDX plus a crafted
+  offset wraps that addition so the bounds check passes and an invalid
+  source pointer is passed to PutImage, enabling an out-of-bounds
+  read or write in the X server.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/71cba5e4
+  Found by:  Acts1631 <acts1631kjv@...ton.me>
+
+* CVE-2026-109093:
+  X.Org Server XTestFakeInput Valuator Stack Out-Of-Bounds Write
+
+  ProcXTestFakeInput copied DeviceValuator fields into a fixed stack
+  array (MAX_VALUATORS) before checking that the valuator range fits.
+  Enough DeviceValuator events write past that array, which can crash
+  the server or corrupt stack memory.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/43b4064a
+  Found by: Acts1631 <acts1631kjv@...ton.me>
+
+* CVE-2026-109904:
+  X.Org Server XRes QueryClientIds Request Size Overflow
+
+  Proc/SProcXResQueryClientIds multiply numSpecs by the spec size
+  before REQUEST_FIXED_SIZE without an overflow check. On 32-bit
+  servers a large numSpecs wraps so a short request passes length
+  validation and the handler reads past the request buffer, which can
+  crash the server or leak/process unintended memory.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/6330d2f8
+  Found by: Acts1631 <acts1631kjv@...ton.me>
+
+* CVE-2026-109094:
+  X.Org Server XRes QueryResourceBytes Swap Path Size Overflow
+
+  SProcXResQueryResourceBytes multiplied numSpecs by the spec size
+  before REQUEST_FIXED_SIZE without an overflow check. On 32-bit
+  servers a large numSpecs wraps and the swap loop walks past the
+  request buffer, which can crash the server or corrupt memory.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/a77de309
+
+* CVE-2026-109095:
+  X.Org Server glamor Xv Image Size Integer Overflow
+
+  glamor_xv_query_image_attributes() computed NV12 / YV12 image sizes
+  with 32-bit ints. Large width/height values wrap to a small positive
+  size, so protocol length checks can accept PutImage / ShmPutImage
+  requests that lack the claimed payload, leading to out-of-bounds
+  reads in the X server.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/1a84c543
+  Found by: Tristan Madani (Talence Security)
+
+* CVE-2026-109096:
+  X.Org Server XvPutImage Negative Image Size Length Bypass
+
+  When ddQueryImageAttributes() returns a negative size, ProcXvPutImage
+  adds it to the header size so the length check can accept a request
+  with no image payload, causing the server to process missing image
+  data and potentially crash or misbehave.
+
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/59bef993
+  Found by: Tristan Madani (Talence Security)
 
+* CVE-2026-109903:
+  X.Org Server XvQueryImageAttributes Negative Size Reply
 
+  When ddQueryImageAttributes() returns a negative size,
+  ProcXvQueryImageAttributes still replies with that value cast to
+  CARD32, advertising a bogus data_size instead of returning an error.
+  Clients may then allocate or use the wrong buffer size based on that
+  reply.
 
--------- Forwarded Message --------
-Subject: 	[security] Go 1.27.4 and Go 1.26.11 are released
-Date: 	Tue, 10 Nov 2026 17:14:54 +0000
-From: 	announce@...ang.org
-To: 	golang-nuts@...glegroups.com
+  Fixed in: xorg-server-21.1.26 and xwayland-24.1.15
+  Fix: https://gitlab.freedesktop.org/xorg/xserver/-/commit/bddd1a6a
+  Found by: Tristan Madani (Talence Security)
 
-Hello gophers,
+========================================================================
 
-We have just released Go versions 1.27.4 and 1.26.11, minor point releases.
+X.Org thanks all of those who reported and fixed these issues, and those
+who helped review and release this advisory and these fixes.
 
-These releases include 12 security fixes following the security policy <https://go.dev/doc/security/policy>:
-
-   * net/http: HTTP/1 server crash due to MaxBytesReader header race
-
-     For HTTP/1 servers, when MaxBytesReader's limit is exceeded,
-     "Connection: close" header is automatically set without synchronization,
-     which might race with another header being set explicitly in the server
-     handler. As a result, an HTTP/1 server that utilizes MaxBytesReader or
-     MaxBytesHandler can crash due to runtime panic if its handler reads the
-     request body concurrently with writing the response header.
-
-     Thanks to Jakub Ciolek (https://ciolek.dev <https://ciolek.dev>) for
-     reporting this issue.
-
-     This is CVE-2026-97054 and Go issue <https://go.dev/issue/82563>.
-
-   * cmd/go: unexpected code execution via --sysroot, -target, -isysroot,
-     -Wl,-syslibroot, and -x cgo flags
-
-     Building a malicious package that uses cgo could cause arbitrary code execution
-     at build time through several compiler and linker flags permitted in "#cgo"
-     directives.
-
-     Specifically, "--sysroot" in GCC and Clang relocates compiler subprograms, spec
-     files, and CRT startup objects to an attacker-controlled directory; "-target" in
-     Clang falls back to executing target helper tools from the current working
-     directory when not found in PATH; "-isysroot" and "-Wl,-syslibroot" can pass a
-     regular file on disk to GNU ld.bfd, which interprets it as a positional linker
-     script; and "-x" permitted specifying arbitrary compiler input languages beyond
-     those supported by cgo.
-
-     "--sysroot" and "-target" are now disallowed in "#cgo" flags, "-isysroot" and
-     "-Wl,-syslibroot" are verified not to point to regular files, and "-x" is
-     restricted to the C, C++, Objective-C, and assembler languages supported by cgo.
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97033 and Go issue <https://go.dev/issue/82577>.
-
-   * cmd/go: arbitrary command execution via GCC spec files in cgo linker search
-     directories
-
-     When using GCC, building a malicious package that uses cgo could cause arbitrary
-     command execution at link time via untrusted GCC spec files ("specs" or
-     "*.spec").
-
-     When linking with "-fopenmp", "-fopenacc", or "-fsanitize=" in "#cgo LDFLAGS",
-     GCC's built-in link spec evaluates "%:include(libgomp.spec)" or
-     "%:include(libsanitizer.spec)" and searches for spec files in "-L" and sysroot
-     directories (including subdirectories and multilib sibling directories such as
-     "../lib64"), as well as the working directory when "-fopenmp" or "-fopenacc" is
-     used or when "-fsanitize=" is combined with "-static" or "-static-lib*".
-
-     The go command now rejects "-L", "-isysroot", and "-Wl,-syslibroot" directories
-     (and the working and package directories when applicable) that contain GCC spec
-     files, and disallows "@" and "-" prefixes in "-fsanitize=" compiler flag values.
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97034 and Go issue <https://go.dev/issue/82576>.
-
-   * cmd/go: unexpected code execution and arbitrary file write via Clang -gen-*
-     and GCC -gnat* flags in cgo
-
-     When using Clang or GCC, building a malicious package that uses cgo could cause
-     unexpected code execution at build time or write files to arbitrary
-     directories via "-gen-/" or "-gnat/" flags in "#cgo" directives.
-
-     The "-g*" wildcard in the compiler and linker flag allowlists previously
-     matched Clang's two-argument "-gen-cdb-fragment-path " flag and GCC's
-     two-argument "-gnatO " flag, permitting compilation database fragments
-     and sidecar output files to be written to arbitrary directories and
-     desynchronizing flag argument parsing between the go command and the compiler
-     driver so that subsequent arguments could be passed as unvalidated positional
-     inputs to the linker.
-
-     "-gen-/" and "-gnat/" flags are now disallowed in "#cgo" compiler and linker
-     flags.
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97035 and Go issue <https://go.dev/issue/82575>.
-
-   * cmd/go: arbitrary code execution during build on darwin via "-l to_library"
-     in cgo
-
-     On Darwin, building a malicious package that uses cgo could cause arbitrary code
-     execution when using the Apple linker due to passing "-l to_library " in a
-     "#cgo LDFLAGS" directive.
-
-     The Apple linker recombines the separated arguments "-l" and "to_library" into
-     "-lto_library", which loads an arbitrary LTO plugin dynamic library at link
-     time.
-
-     The go command now disallows "-l" followed by "to_library" in "#cgo LDFLAGS",
-     rejects "-lazy_library", "-lazy_framework", "-load_hidden", "-library", and
-     "-library-path", and checks recombined "-l" arguments against disallowed linker
-     flags and patterns.
-
-     Thanks to Ali Sherif (<https://www.linkedin.com/in/ali-sherif-13812b276/>) for
-     reporting this issue.
-
-     This is CVE-2026-97036 and Go issue <https://go.dev/issue/82574>.
-
-   * cmd/go: linker script injection via split -Wl, flags and Darwin or symbol
-     linker flags in cgo
-
-     Building a malicious package that uses cgo could cause arbitrary code execution
-     at link time by passing linker script files to the host linker via "#cgo
-     LDFLAGS".
-
-     Split "-Wl," flags that consume a following argument (such as "-Wl,-rpath",
-     "-Wl,--just-symbols", and "-Wl,-undefined") previously accepted a bare second
-     argument without a "-Wl," prefix, which the compiler driver passes directly to
-     the linker as a positional input file. Additionally, when using GNU ld.bfd,
-     flags such as "-framework", "-Wl,-framework", "-Wl,-undefined",
-     "-Wl,--just-symbols", "-Wl,-R", "-Wl,-subsystem", and (on non-Darwin platforms)
-     "-Wl,-sectcreate" could cause ld.bfd to interpret their arguments as linker
-     scripts if they named a regular file on disk.
-
-     The go command now requires a "-Wl," prefix on the second token of split "-Wl,"
-     flags (except "-Wl,-R"), verifies that these flags do not reference linker
-     script files, and disallows bare "-Wl,--warn-backrefs-exclude".
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97037 and Go issue <https://go.dev/issue/82573>.
-
-   * cmd/go: arbitrary code execution via crafted .syso files and cgo linker
-     input files
-
-     Building a malicious package containing ".syso" files or cgo linker inputs could
-     inject arbitrary linker flags or execute arbitrary code at link time.
-
-     Linker input files—including ".syso" files, direct object or library inputs in
-     "#cgo LDFLAGS", and libraries in "-L" directories—were passed to the external
-     linker without validating their format or checking for embedded linker options.
-     Across platforms, this allowed executing GNU ld implicit linker scripts
-     disguised as libraries or ".syso" files (or loaded via "-l:" or "-l"
-     containing path separators), injecting unallowlisted linker flags via PE/COFF
-     ".drectve" sections on Windows or Mach-O "LC_LINKER_OPTION" load commands on
-     Darwin, or invoking LTO plugins via GCC or LLVM LTO intermediate representation
-     sections in ELF, PE/COFF, or Mach-O objects.
-
-     The go command now verifies that ".syso" files, direct linker inputs, and
-     libraries in "-L" directories are valid binary objects or archives that do not
-     contain unallowlisted ".drectve" directives, "LC_LINKER_OPTION" load commands,
-     or LTO IR sections, and disallows "-l:" and ":", "=", or path
-     separators in "-l" flags.
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97038 and Go issue <https://go.dev/issue/82572>.
-
-   * cmd/go: flag sanitization bypass via "#cgo pkg-config:" directives
-
-     Building a malicious package that uses "#cgo pkg-config:" directives could
-     load untrusted pkg-config ".pc" files or inject unvalidated compiler and linker
-     flags.
-
-     The pkg-config flag allowlist previously permitted "--with-path=" and
-     "--personality=", allowed "--define-variable=" values beginning with "=" or "$"
-     (which can rewrite paths in system ".pc" files into sysroot-prefixed "-L=" or
-     "-L$SYSROOT" linker search paths), and allowed package arguments ending in ".pc"
-     or containing path separators or "..", which caused pkg-config to load local
-     ".pc" files directly from the package directory. In addition, flags returned by
-     "pkg-config --cflags" in cgoCPPFLAGS were not checked when determining whether
-     internal linking is safe.
-
-     The go command now disallows "--with-path=", "--personality=", leading "=" or
-     "$" characters in "--define-variable=" values, and local ".pc" paths in
-     "#cgo pkg-config:" directives, and inspects cgoCPPFLAGS when checking internal
-     linking compatibility.
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97039 and Go issue <https://go.dev/issue/82571>.
-
-   * cmd/go, cmd/link: cgo directive injection via .syso files disguised as Go
-     object files
-
-     Building a package containing a crafted ".syso" file could bypass cgo flag
-     validation and inject arbitrary linker flags when linking.
-
-     When loading ".syso" entries from a package archive, the linker only checked for
-     recognized host object headers (ELF, Mach-O, PE, and XCOFF) before falling
-     through to Go object parsing. A ".syso" file beginning with a "go object" header
-     was parsed as a Go compiler object, allowing untrusted cgo metadata directives
-     (such as "cgo_ldflag" or "cgo_dynamic_linker") embedded in the ".syso" file to
-     be passed to the external linker without validation. Additionally, ".syso"
-     filenames longer than 16 bytes lost their ".syso" extension when truncated in
-     archive headers, and unrecognized ".syso" formats forced external linking in
-     pure-Go builds.
-
-     The linker now rejects ".syso" files that are not recognized host object
-     formats, and "cmd/go" and "cmd/pack" preserve the ".syso" suffix when truncating
-     long archive member names.
-
-     Thanks to RyotaK (<https://ryotak.net>) of GMO Flatt Security Inc. for reporting
-     this issue.
-
-     This is CVE-2026-97040 and Go issue <https://go.dev/issue/82570>.
-
-   * cmd/compile, cmd/link: host linker flag injection via //go:cgo_* directives
-
-     Building a malicious package containing "//go:cgo_*" compiler directives could
-     inject arbitrary flags into the external linker invocation on ELF platforms.
-
-     The compiler and linker did not reject commas in "//go:cgo_import_dynamic",
-     "//go:cgo_export_dynamic", "//go:cgo_export_static", "//go:cgo_import_static",
-     and "//go:cgo_dynamic_linker" directives, and the linker passed the dynamic
-     linker path using "-Wl,--dynamic-linker,". Furthermore, the two-argument
-     form of "//go:cgo_import_dynamic" (which is permitted in non-cgo Go source
-     files) could overwrite the external symbol name of a symbol already marked for
-     cgo export. A symbol name or dynamic linker path containing a comma or leading
-     "@" could split "-Wl,--export-dynamic-symbol=" or "-Wl,--dynamic-linker," into
-     arbitrary host linker flags or response file arguments.
-
-     The compiler and linker now reject commas in "//go:cgo_*" symbol and dynamic
-     linker directives, the linker passes "-Wl,--dynamic-linker=", and
-     "cgo_import_dynamic" no longer overwrites symbols exported via
-     "cgo_export_dynamic" or "cgo_export_static".
-
-     Thanks to RyotaK (<https://ryotak.net>) of GMO Flatt Security Inc. for reporting
-     this issue.
-
-     This is CVE-2026-97041 and Go issue <https://go.dev/issue/82569>.
-
-   * cmd/cgo, cmd/compile, cmd/link: linker flag injection via cgo_import_dynamic
-     and PE DLL names
-
-     Building a malicious package that uses "//go:cgo_import_dynamic" or links
-     against a crafted PE object on Windows could pass unsafe library arguments to
-     the external linker.
-
-     The compiler only checked the first character of the library name in
-     "//go:cgo_import_dynamic" directives and skipped validation in cgo-generated
-     files. In addition, on Windows, "cmd/cgo" and "cmd/link" did not validate
-     imported DLL names extracted from PE object files before emitting "-l"
-     flags for the external linker, allowing a crafted DLL name containing ".." path
-     traversal or special characters to reference arbitrary files on disk.
-
-     The compiler now validates every character of the library name in
-     "//go:cgo_import_dynamic" directives (including in cgo-generated files on
-     Windows) and rejects ".." path traversal, and "cmd/cgo" and "cmd/link" reject
-     PE imported DLL names containing path separators, "..", ":", or leading "-" or
-     "@".
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97042 and Go issue <https://go.dev/issue/82568>.
-
-   * cmd/go, cmd/compile: unexpected code execution via escaped quotes in
-     //go:cgo_ldflag
-
-     Building a malicious package that uses cgo could bypass "#cgo LDFLAGS"
-     validation and cause unexpected code execution at build time, or cause the go
-     command to panic, via crafted quoting in "//go:cgo_ldflag" directives.
-
-     When "cmd/cgo" generates "_cgo_gotypes.go", it quotes each "#cgo LDFLAGS"
-     argument with strconv.Quote in a "//go:cgo_ldflag" directive, but "cmd/compile"
-     and "cmd/go" parsed those directives by splitting on raw quote characters
-     without handling backslash escapes or unquoting the string. This mismatch
-     allowed disallowed linker flags or unvalidated linker search paths to be
-     smuggled past the go command's flag checks and passed to the external linker.
-     In addition, deduplicating LDFLAGS in the go command could panic with an
-     out-of-bounds slice index when a prefix of the flag list matched near the end
-     of the slice.
-
-     "cmd/compile" and "cmd/go" now properly handle backslash-escaped quotes and
-     unquote "//go:cgo_*" pragma strings with strconv.Unquote, and the slice bounds
-     check in processCgoOutputs has been fixed.
-
-     This issue was found by the Go Security Team during an internal audit.
-
-     This is CVE-2026-97043 and Go issue <https://go.dev/issue/82567>.
-
-View the release notes for more information:
-https://go.dev/doc/devel/release#go1.27.4
-
-You can download binary and source distributions from the Go website:
-https://go.dev/dl/
-
-To compile from source using a Git clone, update to the release with
-|git checkout go1.27.4| and build as usual.
-
-Thanks to everyone who contributed to the releases.
-
-Cheers,
-Cherry and Junyang for the Go team
-
--- 
-You received this message because you are subscribed to the Google Groups "golang-announce" group.
-To view this discussion visit https://groups.google.com/d/msgid/golang-announce/36b4ddac.BAAACcbRjpcAAAAAAAAAA-p9MGAAAYKKSQYAAAAAADE8OwBq81EO%40mailjet.com
