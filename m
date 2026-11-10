@@ -1,66 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/20
-Message-ID: <f589f5b9-140c-4962-895b-c0fbd2032896@oracle.com>
-Date: Tue, 10 Nov 2026 10:43:19 -0800
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/10
+Message-ID: <fd31b8a4-4c3f-41e9-bccb-2110a6383c4c@oracle.com>
+Date: Tue, 10 Nov 2026 09:39:21 -0800
 From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: sqlparse 0.6.1 fixes two vulnerabilities, announces EOL
+To: oss-security@...ts.openwall.com, Eun0us / Espilon <eun0us@...ilon.net>, security@...ian.org, security@...e.de, secalert@...hat.com
+Cc: eun0us@...ton.me
+Subject: Re: [Coordinated disclosure] sblim-sfcb: pre-auth remote DoS (and latent OOB NUL write) via unbounded quoted-attribute scan in CIM-XML parser (cimXmlParser.c getValue)
 Content-Type: text/plain; charset=utf-8
 
-https://github.com/andialbrecht/sqlparse/blob/master/CHANGELOG says:
-> Release 0.6.1 (Nov 01, 2026)
-> ----------------------------
-> 
-> End of Maintenance
-> 
-> Version 0.6.1 marks the final release of sqlparse.
-> 
-> After many years of maintaining this project, I have decided to end its
-> active development and maintenance. The increasing volume of security reports,
-> particularly those generated through automated vulnerability research, has made
-> the workload unsustainable for me as a sole volunteer maintainer.
-> 
-> No further releases, including security fixes, are planned.
-> The source code and existing releases will remain available.
-> 
-> I would like to thank everyone who has contributed to sqlparse over the years.
-> 
-> 
-> Notable Changes
-> 
-> * IMPORTANT: Dollar signs are now escaped in the `php` output format. PHP
->   interpolates `$var`, `${expr}` and `{$expr}` inside double-quoted strings,
->   so SQL text containing them could inject PHP code into the generated
->   snippet (CVE-2026-112307, pr937 by cve-zh00). See the security advisory
->   for details:
->   https://github.com/andialbrecht/sqlparse/security/advisories/GHSA-xmww-55xg-h3vc
->   The vulnerability was discovered by @iRevivalx, @Gares95, @manus-pi,
->   @president-xd, @arpitjain099 and @Tan-JunWei. Thanks for reporting!
-> * IMPORTANT: Fixes a potential denial of service attack (DOS) in `format()`,
->   which consumed CPU quadratically on statements containing many quotes
->   that are never closed. This affected `format()` with default options and
->   the `sqlformat` command. See the security advisory for details:
->   https://github.com/andialbrecht/sqlparse/security/advisories/GHSA-3r5h-5jcg-gmgg
->   The vulnerability was discovered by @LinFeng-1219 and @president-xd.
->   Thanks for reporting!
-> 
-> Bug Fixes
-> 
-> * Fix `IndexError` and `ValueError` in `format()` on some malformed
->   statements, e.g. `( as )` with `reindent=True` or a `CASE` without its
->   own `END` with `reindent_aligned=True`. Grouping no longer moves the
->   brackets of a parenthesis or the `CASE`/`END` keywords into an inner
->   group.
-> * `sqlformat` no longer empties the file given with `--in-place` or
->   `--outfile` when formatting fails, e.g. because a statement exceeds the
->   grouping limits. The output file is now only written after formatting
->   succeeded, and the error is reported like other CLI errors. Thanks to
->   @Joejiaojian, @president-xd, @hash3liZer and @eros938 for reporting!
+On 11/10/26 00:20, Eun0us / Espilon wrote:
+> To the MITRE CNA team and the sblim-sfcb distribution security teams,
 
-https://github.com/andialbrecht/sqlparse/discussions/945 discusses how the
-flood of incoming security reports impacted the decision to end the project.
+oss-security is *not* the MITRE CNA team, it's a public mailing list with public
+archives.
+
+> Espilon VR reports a remote, pre-authentication denial-of-service defect (with a latent,
+> weak out-of-bounds write side effect) in the CIM-XML request parser of SBLIM SFCB. Upstream
+> is abandoned (last release 1.4.9 in 2017), so we are requesting a CVE from MITRE and
+> notifying the distributions that still ship sfcb, which are the realistic remediation path.
+> A one-line fix accompanies this report. We propose a 90-day timeline expiring 2027-02-07,
+> adjustable. A 17-byte PoC and a faithful harness are available on request.
+
+Too late, by sending this mail to oss-security you publicly disclosed today,
+without any coordination.
 
 -- 
          -Alan Coopersmith-                 alan.coopersmith@...cle.com
           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
-
