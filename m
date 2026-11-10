@@ -1,28 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/3
-Message-ID: <306d96f0-e0eb-cb4a-96a4-633a71e14e10@apache.org>
-Date: Wed, 11 Nov 2026 02:08:18 +0000
-From: Rui Abreu <rabreu@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-94125: Apache Storm: Supervisor page discloses worker placement of other users' topologies 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/2
+Message-ID: <42872e0b-c2e4-433f-b8ec-4b2db3bab3c8@citrix.com>
+Date: Tue, 10 Nov 2026 23:51:08 +0000
+From: Andrew Cooper <andrew.cooper3@...rix.com>
+To: "Xen.org security team" <security@....org>, xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+Cc: Andrew Cooper <andrew.cooper3@...rix.com>, "Xen.org security team" <security-team-members@....org>
+Subject: Re: Xen Security Advisory 525 v1 (CVE-2024-36350,CVE-2024-36357,CVE-2026-0004) - x86: Transient Scheduler Attacks (update)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+On 10/11/2026 6:00 pm, Xen.org security team wrote:
+>  Xen Security Advisory CVE-2024-36350,CVE-2024-36357,CVE-2026-0004 /
+> XSA-525
+>
+>                x86: Transient Scheduler Attacks (update)
+>
+> ISSUE DESCRIPTION
+> =================
+>
+> AMD have discovered further properties of Transient Scheduler Attacks.
+>
+> The previously published XSA-471 dealt with two TSA variants, TSA-SQ
+> and TSA-L1 on Zen3 and Zen4 CPUs.  For details, see XSA-471.
+>
+> AMD had previously said that Zen5 CPUs were not vulnerable to TSA-SQ and
+> TSA-L1.  This statement has been corrected, and is being tracked as
+> AMD-SB-7073 using the existing CVE-2024-36350 and CVE-2024-36357.
+>
+> AMD have also disclosed a new TSA variant, TSA-Fill, which is being
+> tracked as AMD-SB-3031 and CVE-2026-0004.
+>
+> For more information, see:
+>   https://xenbits.xen.org/xsa/advisory-471.html
+>  
+> https://www.amd.com/content/dam/amd/en/documents/resources/bulletin/technical-guidance-for-mitigating-transient-scheduler-attacks.pdf
+>  
+> https://www.amd.com/en/resources/product-security/bulletin/amd-sb-7073.html
+>  
+> https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3031.html
 
-Affected versions:
+My apologies.  Both references to 3031 should have been 3055 instead.
 
-- Apache Storm (org.apache.storm:storm-server) 2.0.0 before 3.2.0
+https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3055.html
 
-Description:
-
-Nimbus returns the worker placement of every topology running on a supervisor, including the host, port, owner and resource assignment of topologies the caller is not authorized to read. In a multi-tenant cluster, an authenticated user who is allowed to access Nimbus can learn where the workers of other users' topologies run. Users are recommended to upgrade to version 3.2.0, which fixes the issue.
-
-Credit:
-
-kta1kri, independent researcher (finder)
-
-References:
-
-https://storm.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-94125
-
+~Andrew
