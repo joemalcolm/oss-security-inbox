@@ -1,173 +1,83 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/24
-Message-Id: <E1xQq9Y-00000003NMw-0W0f@xenbits.xenproject.org>
-Date: Tue, 10 Nov 2026 18:01:04 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/26
+Message-Id: <E1xQqqm-00000003kLo-0iQo@xenbits.xenproject.org>
+Date: Tue, 10 Nov 2026 18:45:44 +0000
 From: Xen.org security team <security@....org>
 To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
 CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 530 v2 (CVE-2026-102706,CVE-2026-102707,CVE-2026-102708,CVE-2026-119779,CVE-2026-119780) - XAPI: Multiple RBAC issues (update)
+Subject: Xen Security Advisory 532 v1 (CVE-2026-99287) - Linux xen-netback: guest can trigger double unmap of memory
 Content-Type: text/plain; charset=utf-8
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
- Xen Security Advisory CVE-2026-102706,CVE-2026-102707,CVE-2026-102708,CVE-2026-119779,CVE-2026-119780 / XSA-530
-                                                    version 2
+            Xen Security Advisory CVE-2026-99287 / XSA-532
 
-                  XAPI: Multiple RBAC issues (update)
-
-UPDATES IN VERSION 2
-====================
-
-Public release.
+      Linux xen-netback: guest can trigger double unmap of memory
 
 ISSUE DESCRIPTION
 =================
 
-XAPI can configure different users with different roles, using Role
-Based Access Control.  For more details, see:
-
-  https://docs.xenserver.com/us/en/xencenter/current-release/users/rbac-overview.html#rbac-roles
-
-The pool-admin role is fully privileged.  Notably, users with this role
-can also SSH into the host as root.
-
-Some other administrator roles are pool-operator, vm-power-admin and
-vm-admin, each of which are authorised to configure and manage various
-aspects of the system.
-
-XSA-489 identified some inadequately restricted settings, and introduced
-per-key restrictions. Additional API calls have been identified which
-were not covered.
-
- * CVE-2026-102706: Via a crafted VM.create, VM.clone or VM.import call
-   a vm-admin can set restricted VM.other_config, VM.platform,
-   VM.ha_restart_priority and VM.appliance fields.
-
- * CVE-2026-102707: Via a Network.create call a vm-admin can set
-   restricted Network.other_config and Network.bridge fields.
-
- * CVE-2026-102708: A vm-power-admin can use the PUT /messages API with
-   a crafted message body allowing for arbitrary dom0 symlink/mkdir as
-   root.
-
- * CVE-2026-119779: Any authenticated role can force-fail arbitary tasks
-   via the task_id parameter.
-
- * CVE-2026-119780: A pool-operator can use a crafted
-   repository_proxy_url to inject arbitrary yum/dnf .repo directives,
-   potentially allowing for a bypass of repository GPG checking.
+When xen-netback is setting up the connection to a frontend, it is
+mapping the ring pages and then validating the ring pages' contents.
+In case the ring index values are illegal, xen-netback tries to unmap
+all allocated resources of the connection.  Due to a missing test for
+already unmapped memory, the unmap can happen twice, resulting in a
+potential unmap of another guest's memory page.
 
 IMPACT
 ======
 
-An authenticated user already granted one of pool-operator,
-vm-power-admin or vm-admin can escalate their privilege to pool-admin.
+The most likely outcome is a driver crash, possibly escalated to a host
+crash.  This then is a Denial of Service (DoS) affecting the entire host.
 
-Any authenticated user, even with the read-only role, can cause tasks of
-more privileged roles to fail.
+Information leaks or privilege escalations cannot be ruled out.
 
 VULNERABLE SYSTEMS
 ==================
 
-Systems running all versions of XAPI are vulnerable.
-
-The vulnerability is only exposed if RBAC is configured for the pool,
-and certain users are assigned the not-fully-privileged administrator
-roles.
+Linux versions 5.5 and newer are vulnerable.
 
 MITIGATION
 ==========
 
-Disable any users (RBAC subjects) which have been configured with the
-read-only, vm-operator, vm-admin, vm-power-admin or pool-operator role.
+Using a userspace PV network backend (e.g. the qemu based "qnic" backend)
+will mitigate the problem.
+
+Using a dedicated network driver domain per guest will mitigate the
+problem.
 
 CREDITS
 =======
 
-CVE-2026-102706 and CVE-2026-102707 were discovered by Yuliang Xiao.
+This issue was discovered by Tu Dinh of Vates.
 
 RESOLUTION
 ==========
 
-Applying the appropriate set of attached patches resolves this issue.
+Applying the attached patch resolves this issue.
 
-xsa530/xsa530-??.patch           XAPI master
+xsa532-linux.patch           Linux
 
-$ sha256sum xsa530*/*
-9a9b493539a22e7eacea083ab89d82b0a65ecba39f6e277379b37c83ea0aeed1  xsa530/xsa530-01.patch
-b603422cbe93fa62dd632a43e8fce22b5b59380377a1675f35685d147ce33147  xsa530/xsa530-02.patch
-058d33af087e7737dfa22d19116d9713313dc1cce53c5815572928dca8e62f2d  xsa530/xsa530-03.patch
-b4448f3c11f43b1d6d7d51f5dae1293182bb2eaf42c5d1489cd5fe065b890420  xsa530/xsa530-04.patch
-e8b72b983f82f79b43cd74debf001dd3e937add5281a8f7820e031cb08ee7ff5  xsa530/xsa530-05.patch
-cef178c222be027a5a3cc003a894866e86e9c36ccdd977fc792d01d47e4bb96d  xsa530/xsa530-06.patch
-4968909dfd7ffedf338e2d51889215006b7ba004b5679683eee702b2488fe22b  xsa530/xsa530-07.patch
-aa05daecbff943b9b32955074c191c73fdcbe91e12f9d1288837f6ea85e0168f  xsa530/xsa530-08.patch
-8dafb535fa183574897dc2747604389c79f22ba8631833afdf7e7b984a4c7d46  xsa530/xsa530-09.patch
-5901dedff57d34aa8899c233fadd7be5077e97fdf0b65c91710365591aa982c7  xsa530/xsa530-10.patch
-0b280f976b353052568c143bfba3f99ff5f25493904539d90c77a9eff92a2c22  xsa530/xsa530-11.patch
-f16d4a157748b2536b28b93b48d2a3e09e3e4e1dea4e33a1e56c168b489db30c  xsa530/xsa530-12.patch
-801c99d73a314b5c5815df947ec0f4667d3cd38a292fb0164d7bb48642f3dac0  xsa530/xsa530-13.patch
+$ sha256sum xsa532*
+4d835bd07ca645ee9b9dadfffd1224bdfaa28d609c6af3666b38df54486bc9f6  xsa532-linux.patch
 $
 
-DEPLOYMENT DURING EMBARGO
-=========================
+NOTE REGARDING LACK OF EMBARGO
+==============================
 
-Deployment of the patches and/or mitigations described above (or
-others which are substantially similar) is permitted during the
-embargo, even on public-facing systems with untrusted guest users and
-administrators.
-
-But: Distribution of updated software is prohibited (except to other
-members of the predisclosure list).
-
-Predisclosure list members who wish to deploy significantly different
-patches and/or mitigations, please contact the Xen Project Security
-Team.
-
-
-(Note: this during-embargo deployment notice is retained in
-post-embargo publicly released Xen Project advisories, even though it
-is then no longer applicable.  This is to enable the community to have
-oversight of the Xen Project Security Team's decisionmaking.)
-
-For more information about permissible uses of embargoed information,
-consult the Xen Project community's agreed Security Policy:
-  http://www.xenproject.org/security-policy.html
+The issue is affecting the same driver as XSA-531, which has no
+embargo, too.
 -----BEGIN PGP SIGNATURE-----
 
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrzWp4MHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZrekH/RVskWYhSzcCEKskuttjW31mjdhWHNsuHKoTSDdD
-kvOe2Pbp27eDCcIYMZQX/uMXwUzmwuMkatq5a+50NslSTQTYBu2nV8ymXfmtwIx2
-kKfPu+pOC/Dd2PMBcB6cvTWM0TrY4uO7Zkta5U1RSA0GH2954lAkjQMX8/+CDiO5
-NA/DTwIYxTsF1WHcCJhWQMfbwJgmuaDkUz4WXIKOnhLB7FHj5ePTQlCTPTmozl6p
-raskKe844jxf3uou87MFzjcWJmxyJOTNhogojucjRg84tIupr0sVa3K2I19pcgBB
-hZGfbTIul4U9tLXD4fvYnEZXGUk5POnZttZ/taFtyYg0hBk=
-=csuF
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmrzZgcMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZwDEH/AyWeZ/6Ej8kaE1nqKU740uF2dPKn9zrcazgcNlW
+gkisqJn+RQm2b3SRoYrnxWMLQOTvWpPQTbKrJmVUk4ehPUr8OJrpyTwihX5iA7zs
+q995XWsDraOAGL6vw3msrPJBqERB2JFmJG2XcqxlqFpSdhAXpb7nSM2YBm3EhjQp
+xJnZ6t8dBEaB+lOsP5sD3KtXUIlui7crrwkuwFQmosWkGfbAIHoyvYVLqWedA8yy
+Dm+9Wtze82oPy9dvn8qLF2Q9xsehkOw3o9A6lROWJk73ExlA0xHLwhuns8Q/86y/
+bRKjybJ7wZXX3Rjtzupjs6/68nzGNyN/1aAmwCFOo+eP9UQ=
+=O99r
 -----END PGP SIGNATURE-----
 
-Download attachment "xsa530/xsa530-01.patch" of type "application/octet-stream" (8251 bytes)
-
-Download attachment "xsa530/xsa530-02.patch" of type "application/octet-stream" (17106 bytes)
-
-Download attachment "xsa530/xsa530-03.patch" of type "application/octet-stream" (5701 bytes)
-
-Download attachment "xsa530/xsa530-04.patch" of type "application/octet-stream" (12656 bytes)
-
-Download attachment "xsa530/xsa530-05.patch" of type "application/octet-stream" (4020 bytes)
-
-Download attachment "xsa530/xsa530-06.patch" of type "application/octet-stream" (1324 bytes)
-
-Download attachment "xsa530/xsa530-07.patch" of type "application/octet-stream" (11016 bytes)
-
-Download attachment "xsa530/xsa530-08.patch" of type "application/octet-stream" (4157 bytes)
-
-Download attachment "xsa530/xsa530-09.patch" of type "application/octet-stream" (9067 bytes)
-
-Download attachment "xsa530/xsa530-10.patch" of type "application/octet-stream" (7749 bytes)
-
-Download attachment "xsa530/xsa530-11.patch" of type "application/octet-stream" (17534 bytes)
-
-Download attachment "xsa530/xsa530-12.patch" of type "application/octet-stream" (3472 bytes)
-
-Download attachment "xsa530/xsa530-13.patch" of type "application/octet-stream" (7926 bytes)
+Download attachment "xsa532-linux.patch" of type "application/octet-stream" (1634 bytes)
