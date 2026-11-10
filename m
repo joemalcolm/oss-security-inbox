@@ -1,106 +1,182 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/3
-Message-ID: <20261110045440.GA8897@openwall.com>
-Date: Tue, 10 Nov 2026 05:54:40 +0100
-From: Solar Designer <solar@...nwall.com>
-To: oss-security@...ts.openwall.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/6
+Message-Id: <DMRBZE6PVJQM.9QLC0FIVR6UO@gr.ht>
+Date: Mon, 09 Nov 2026 22:52:40 -0800
+From: "Gregory Mullen" <oss-security@...ht>
+To: <oss-security@...ts.openwall.com>
 Subject: Re: Home Assistant: the password is not the key — token secrets in cleartext, two token classes never expire, password change revokes none (2026.11.0, live-proven)
 Content-Type: text/plain; charset=utf-8
 
-On Mon, Nov 09, 2026 at 02:00:35PM -0800, Gregory Mullen wrote:
-> > Coordination: none, and that is not an oversight you caught. [name]
-> > publishes day-of, without advance notice, as a stated policy. You may
-> > dislike the policy; it is not hidden, and it is not a secret.
-> 
-> Are there list policies published anywhere?
+On Mon Nov 9, 2026 at 8:54 PM PST, Solar Designer wrote:
+> Yes, here:
 
-Yes, here:
+Admittedly, I went looking for that as soon as I hit send. (Wrong order, I know,
+sorry :D ) Was a bit relieved that I didn't miss some obvious ruleset. I agree
+there's doesn't seem to be a clear policy, and for the reasons you mentioned
+[cont below]
 
-https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
+> While it's typical that issues disclosed on oss-security had been
+> communicated to the vendors first, there are currently no "responsible
+> disclosure" requirements here, and have never been.  If someone wants to
+> post a 0-day, they generally can.  It'd take extreme circumstances for
+> the moderators to decide differently, and this would require a public
+> explanation later.
+>
+> Posting a 0-day is not necessarily malicious.  The "full" vs.
+> "responsible" disclosure debate existed for decades and there isn't a
+> universally accepted right or wrong.  Cases and opinions still vary.
 
-> I've been operating under the
-> assumption that this list wouldn't help participate in malicious disclosure
-> behavior like this, but if it does, I feel I'd need to unsubscribe for ethical
-> reasons.
+...I actually completely agree that a moratorium would likely cause more harm
+than good. I didn't mean for my comments to sound quite as close as I'm now
+afraid they did. I wish I had said that I object less to 0-days, and more to the
+callous disregard of this author. I don't think a drastic change is needed, and
+I think you should keep the ruleset that you or any of the list moderators think
+is best for this list, even if they conflict with my previous comments in this
+thread.
 
-While it's typical that issues disclosed on oss-security had been
-communicated to the vendors first, there are currently no "responsible
-disclosure" requirements here, and have never been.  If someone wants to
-post a 0-day, they generally can.  It'd take extreme circumstances for
-the moderators to decide differently, and this would require a public
-explanation later.
+(Here's where I get to take the chance to thank you for all the work and effort
+I consistently see you putting into this list to make it, or keep it sane, and
+high signal for the rest of us! Genuinely, **thank you!**)
 
-Posting a 0-day is not necessarily malicious.  The "full" vs.
-"responsible" disclosure debate existed for decades and there isn't a
-universally accepted right or wrong.  Cases and opinions still vary.
+I would also object (admittedly, that objection would have been silently) to a
+ban on people posting 0-days to this list. But infosec wide, I do feel like,
+there's a shift from people who are here because they are "motivated by harm
+reduction" and more towards people looking for attention and fame. Neither is
+right, but filtering out the most annoying class of bot, is a price I would
+gladly pay. And, I might be wrong in suggesting it.
 
-However:
+To me, it feels like there's a clear difference between knowingly publishing a
+0day, and allowing your automated scanner to collate and share exploits to
+everyone. (Which is a point you already made). My original email was motivated
+by the observation that malicious disclosures such as these **used** to be rare.
+And while many times I didn't agree, at least I understood the rational of the
+author. These days, they're common, and the rational is complete nonsense. The
+nonsense rational is the only difference introduced by LLMs, in addition to the
+bug discovery.
 
-> Behavior like this isn't ok, and it shouldn't be rewarded with attention.
+> However:
+>
+> I see other signs of malicious behavior here, and policies we could want
+> to add to deal with it in this age of LLMs.  This list is by and for
+> people, not machines. When we want to interact with a machine, we can,
+> but we may not want such interactions pushed to us via a mailing list,
+> or at least not via this one.
 
-I see other signs of malicious behavior here, and policies we could want
-to add to deal with it in this age of LLMs.  This list is by and for
-people, not machines.  When we want to interact with a machine, we can,
-but we may not want such interactions pushed to us via a mailing list,
-or at least not via this one.
+> It is going to be increasingly difficult to determine whether and to
+> what extent is a posting generated by a machine.  The quality of
+> machine-generated content will be increasing, so frankly for purposes of
+> awareness of and dealing with each one security issue it could become no
+> worse than human-created.  The problem is its sheer volume and lower
+> average importance. 
 
-It is going to be increasingly difficult to determine whether and to
-what extent is a posting generated by a machine.  The quality of
-machine-generated content will be increasing, so frankly for purposes of
-awareness of and dealing with each one security issue it could become no
-worse than human-created.  The problem is its sheer volume and lower
-average importance.  Content too cheap to create may explore issues that
-were not worth a human's time to write about, and so may not be worth a
-human's time to read.
+> I agree that machine-generated postings here shouldn't be rewarded with
+> attention, if accepted at all... unless they're about important issues?
+> However, I don't see a good way for the moderators to enforce this.
+> "Is this posting human-written or at least important?" isn't a question
+> that can be answered quickly and reliably during pre-moderation.
 
-I agree that machine-generated postings here shouldn't be rewarded with
-attention, if accepted at all... unless they're about important issues?
-However, I don't see a good way for the moderators to enforce this.
-"Is this posting human-written or at least important?" isn't a question
-that can be answered quickly and reliably during pre-moderation.
+> Now that we know this specific sender that side-steps direct questions
+> about human involvement (and instead keeps writing about the content
+> being signed, which is irrelevant), we can start rejecting that sender's
+> postings irrespective of content.  Should we?  If you (any subscriber
+> here) have either preference on this, please let me know off-list.
+> Please take the time to review all postings by this sender first - not
+> only in this thread.  There have been a few in several threads in the
+> last few days, starting with the sshole thread.
 
-Now that we know this specific sender that side-steps direct questions
-about human involvement (and instead keeps writing about the content
-being signed, which is irrelevant), we can start rejecting that sender's
-postings irrespective of content.  Should we?  If you (any subscriber
-here) have either preference on this, please let me know off-list.
-Please take the time to review all postings by this sender first - not
-only in this thread.  There have been a few in several threads in the
-last few days, starting with the sshole thread.
+Yes, please ban this class of message. This thread is a clear demonstration of
+either bad faith, or inability to reason correctly about their actions. Neither
+of which should be rewarded, with the attention of people trying to make things
+better. I'm not afraid of deferring to the judgment of list moderators. The
+schizophrenic sentence structure, the creation of a fresh github account, and
+then publishing pdfs [wtf] via free hosting sites, are... LLM like. A number of
+us (who aren't moderators, and thus likely have a bit more time for said types
+of recon), saw the signs. I think the current stance, to err on the side of
+disclosure is the right one. But I also think it's fine to be more strict around
+the various expectations for identities that have 0 longevity. 
 
-On Mon, Nov 09, 2026 at 03:49:22PM -0800, Gregory Mullen wrote:
-> With the number of LLM generated/assisted exploits being disclosed
-> irresponsibly. I feel it's important to draw a line in the sand, and not just
-> allow malicious disclosures to become the new normal. This report isn't
-> critically important, but I *strongly* feel that rejecting behavior like this is
-> important.
-> 
-> I suspect the people who use LLMs to find exploits for them also aren't smart
-> enough to understand the risks they could expose people to. Those who don't
-> need an LLM to understand, need to be careful we don't forget it either. It's a
-> game, until it isn't.
+As you mentioned, I only now noticed the specifics I believe you're referring
+to, and would have to give them more thought before I would come up with
+anything I feel worth sharing, (and if so, will email off list). But I would
+like to ask for people more actively involved than me, (people with more than
+barely 3 messages) to take a stance, or explicitly express the expectation that
+people who wish to post to this list, at least be able to plausibly represent
+good faith. Then, as it relates to my above: then a simple. "Yes, it was
+borderline, so mods allowed it to be posted" would be more than enough to make
+me happy.
 
-Some others in this community argued that LLMs are a reason to move away
-from embargoes, or from "responsible" to "full" or rather more immediate
-disclosure, at least for issues discovered by LLMs.  That's because with
-LLMs someone else, even someone not otherwise "smart enough", could
-rediscover the issue and use it irresponsibly during what would
-otherwise be our embargo period.
+> Some others in this community argued that LLMs are a reason to move away
+> from embargoes, or from "responsible" to "full" or rather more immediate
+> disclosure, at least for issues discovered by LLMs.  That's because with
+> LLMs someone else, even someone not otherwise "smart enough", could
+> rediscover the issue and use it irresponsibly during what would
+> otherwise be our embargo period.
+>
+> If someone or their machine sends some important 0-day disclosure in
+> here, what would we achieve by not letting it through to subscribers?
+> We would discourage such behavior, but at the same time we'd deprive the
+> subscribers from this knowledge while letting others rediscover and
+> exploit the issue possibly maliciously.
+>
+> Further, the information would have already passed through the Internet
+> to the list server and from there to the moderators.  There's risk of
+> this being seen by third-parties.  Again, we'd deprive the subscribers
+> from the info while letting potential adversaries have it.  For issues
+> sent to the (linux-)distros list we mitigate this by keeping track of
+> them and enforcing the maximum embargo duration, but we don't have
+> anything like that for oss-security postings rejected in moderation.
 
-If someone or their machine sends some important 0-day disclosure in
-here, what would we achieve by not letting it through to subscribers?
-We would discourage such behavior, but at the same time we'd deprive the
-subscribers from this knowledge while letting others rediscover and
-exploit the issue possibly maliciously.
+I've seen these arguments, and bluntly: They're stupid arguments. It's the same
+logic that attempts to claim making something illegal is pointless, because
+criminals will just break the law. Just because bad guys will do the bad thing,
+doesn't mean that should be the new normal. Hell, even a CC: security@...dor.org
+is better than nothing at all, if people feel strongly that disclosure is better
+than secrecy. (I'm still probably one of those people too?)
 
-Further, the information would have already passed through the Internet
-to the list server and from there to the moderators.  There's risk of
-this being seen by third-parties.  Again, we'd deprive the subscribers
-from the info while letting potential adversaries have it.  For issues
-sent to the (linux-)distros list we mitigate this by keeping track of
-them and enforcing the maximum embargo duration, but we don't have
-anything like that for oss-security postings rejected in moderation.
+But even without my personal desire to consider ethics as important. Logically
+it also makes little sense. Either LLMs are so good, that they can find
+anything, in which case, any disclosure is pointless, because everyone already
+knows, (they just haven't sent the email yet). Or they need a hint, and some
+level of secrecy can give the fixes a chance to spread faster than the shell
+code. Admittedly, I do have a hard standing by that specific claim, because I'm
+well aware, the only thing worse than a secret getting leaked, is when you don't
+even know it's leaked. To me, Responsible is some kind of heads up, not a 90 day
+strict embargo. The php cluster was unfortunate but not bad faith. (IMHO)
 
-In summary, I agree there are problems, but I don't see good solutions.
+But, either way, if you believe that they are a powerful security tool, that's a
+tool that everyone has, which isn't *that* much different than they way it's
+always been, because 'everyone' has access to them. So the power disparity still
+hasn't changed, any embargo would give the fixers LLM more time. I feel this one
+is the more foundational observation. And if it is indeed true that the playing
+field has been leveled. Then **still** the only thing that's different is the
+level of effort people are willing to put in. That's always been metered by the
+amount of fscks any one person is willing to give. In that case, the people who
+care, aren't enjoying the perceived apathy from LLM assisted messages. Like you
+said, this list is for humans. (You can assert it, I can merely hope)
 
-Alexander
+There's nuance and complexity, and given how rapidly everyone is convinced
+things are changing (I'm still unconvinced, but I do see the writing on the wall
+too), I would like to make the argument that, everyone should continue to act in
+good faith, and deny those without it, the negative attention I'm personally
+convinced is all they're looking for. Because I believe incentives matter much
+more than they're given credit for.
+
+> In summary, I agree there are problems, but I don't see good solutions.
+>
+> Alexander
+
+All of the suggestions, or requests I would make would be extra work on
+moderators. So I'm going to hold off on any that include asking anyone to
+volunteer more time until I do so myself. Until then I will make one request.
+And hopefully someone can add something to the list of policies and expectations
+that a good faith attempt responsible disclosure is expected, but not required
+at the sole judgment of list moderators, and that newer accounts should expect
+to be held to a higher standard. Because I do think suspicious emails or a
+series of them do warrant asking for some evidence you tried to report the bug
+to upstream before "signing" your name to the public email. Which never get's
+sent upstream.
+
+And another thank you. This time to Sam, I went looking on github for the report
+there saw nothing and (wrongly) assumed to myself. It must be a private issue,
+because there's no chance, *this* would be our reality. I'm Glad you're paying
+better attention than I was!
