@@ -1,211 +1,101 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/11
-Message-ID: <F47D7E2A-010D-4C85-AE4C-CB57EB9FA147.1@smtp-inbound1.duck.com>
-Date: Tue, 10 Nov 2026 04:46:30 -0500
-From: theknell@...k.com
-To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
-Subject: Re: Rooting ISPs and Hosting Providers with Hyperglass
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/18
+Message-ID: <43748fab-e64a-40a4-a4c1-77a18e6a3da4@h.wer.ee>
+Date: Tue, 10 Nov 2026 04:58:14 -0800
+From: h <h@...er.ee>
+To: oss-security@...ts.openwall.com
+Cc: eun0us@...ilon.net, security@...ian.org, security@...e.de
+Subject: Re: [Coordinated disclosure] sblim-sfcb: pre-auth remote DoS (and latent OOB NUL write) via unbounded quoted-attribute scan in CIM-XML parser (cimXmlParser.c getValue)
 Content-Type: text/plain; charset=utf-8
 
-The BIRD IPv6 path is unauthenticated command execution.
-The rest of the write-up would be stronger with the bounds stated.
+On 11/10/26 12:20 AM, Eun0us / Espilon wrote:
+> To the MITRE CNA team and the sblim-sfcb distribution security teams,
+> 
+> Espilon VR reports a remote, pre-authentication denial-of-service defect (with a latent,
+> weak out-of-bounds write side effect) in the CIM-XML request parser of SBLIM SFCB. Upstream
+> is abandoned (last release 1.4.9 in 2017), so we are requesting a CVE from MITRE and
+> notifying the distributions that still ship sfcb, which are the realistic remediation path.
+> A one-line fix accompanies this report. We propose a 90-day timeline expiring 2027-02-07,
+> adjustable. A 17-byte PoC and a faithful harness are available on request.
+> 
+> Important: this is DISTINCT from the recent CVE-2026-73583 (sfcb OOB read in the
+> provider-manager IPC OperationHdr path). Our sink is the CIM-XML request parser getValue(),
+> a different function and code path. Please re-confirm the getValue loop against the exact
+> packaged source before closing, since the sfcb package was recently touched for
+> CVE-2026-73583.
+> 
+> Full report follows inline.
+> 
+> === FULL REPORT ===
+> 
+> Title: sblim-sfcb unbounded quoted-attribute scan in the CIM-XML parser (getValue),
+> pre-auth remote DoS plus latent OOB NUL write.
+> Component: SBLIM SFCB (Small-Footprint CIM Broker, a WBEM server), cimXmlParser.c,
+> function getValue() (quoted attribute-value reader). Entry: scanCimXmlRequest() from the
+> httpAdapter.c CIM-XML request handler, TCP/5988 (WBEM) and TLS/5989.
+> Designated target / HEAD: github.com/kkaempf/sblim-sfcb HEAD
+> 3190102b9250700b0561245b84f0b205238aed90 (default branch sles11_sp1). The same unbounded
+> loop is present on every branch/tag checked (master, kkaempf, master_1.3, kkaempf_1.3,
+> sles11_sp1/sp2, cimrs, v1.3.11/12/13) and in the SourceForge 1.4.9 lineage packaged by
+> distributions. Upstream effectively abandoned (last commit 2017-11-29, last release 1.4.9
+> 2017-01).
+> Weakness: CWE-125 (Out-of-bounds Read, primary, proven) and CWE-787 (Out-of-bounds Write,
+> a single 0x00 byte, reachable but weak). Root cause: a missing bound check against the
+> buffer-end pointer xb->last in the attribute-value scan loop; sibling readers skipWS,
+> skipTag, getContent all check xb->last, getValue does not.
+> 
+> Abstract: SFCB tokenizes an inbound CIM-XML operation element-by-element. The request body
+> is duplicated into a heap buffer sized exactly to the body length. The attribute-value
+> reader, on seeing an opening quote delimiter, records the start and advances a cursor until
+> it finds a matching closing delimiter, but never checks the cursor against the end-of-buffer
+> pointer. A CIM-XML operation whose first attribute value is opened with a quote (" or ')
+> but never closed makes the cursor advance one byte at a time past the end of the allocation.
+> It stops only when it (a) reaches an unmapped page -> worker crash (proven, reliable DoS),
+> or (b) hits an adjacent heap byte equal to the opening delimiter -> the code writes a single
+> 0x00 at that out-of-bounds address. In the default build (SFCB_CONF_DOBASICAUTH=false) the
+> body is parsed before any authentication, so the condition is reachable pre-auth over the
+> network. The condition is shallow (first element of any operation); a fuzzer rediscovered
+> the same crash from a protocol seed within a handful of executions.
+> 
+> Root cause (sink): the getValue scan loop, "while (*xb->cur != dlm) xb->cur++;", with no
+> "xb->cur < xb->last" bound; then "*xb->cur = 0;". ASan heap-buffer-overflow READ at
+> cimXmlParser.c:313, stack getValue -> attrsOk -> procCim -> yyparse -> scanCimXmlRequest.
+> 
+> Impact (honest): proven remote pre-auth (default config) DoS, broker worker crash,
+> reproducible. The OOB write is present and reachable but weak: fixed value (NUL),
+> heap-layout-dependent offset, no attacker-controlled target, no leak-back channel. It is
+> NOT demonstrated as a path to RCE or information disclosure; marked NEEDS-LEAK. Net: a
+> pre-auth DoS with a latent weak heap-corruption side effect.
+> 
+> CVSS 3.1: default build CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H = 7.5 (High); with
+> basic auth enabled PR:L -> 6.5 (Medium). The OOB NUL write is not scored into the headline.
+> 
+> Reproduction: printf '<CIM CIMVERSION="' > poc_min.xml (17 bytes), then run the harness on
+> it; deterministic. poc_getvalue.xml (20 bytes) is a second trigger.
+> 
+> Suggested fix (one line, drop-in): bound the scan loop against xb->last and treat an
+> unterminated value as a parse error:
+>    while (xb->cur < xb->last && *xb->cur != dlm) xb->cur++;
+>    if (xb->cur >= xb->last) return NULL;   /* malformed request */
+>    *xb->cur = 0; xb->cur++;
+> This removes both the over-read and the stray NUL write while preserving behaviour on
+> well-formed input.
+> 
+> Deduplication: no advisory references cimXmlParser.c, getValue, or CIM-XML attribute
+> parsing. CVE-2026-73583 (OOB read, provider-manager IPC OperationHdr, fixed Fedora
+> 1.4.9-40) and CVE-2026-73584 (insecure temp file) are DISTINCT sinks. Historical sfcb CVEs
+> (CVE-2010-1937 / CVE-2010-2054 httpAdapter getPayload; CVE-2015-5185 providerMgr
+> lookupProviders) are different sinks. No OSS-Fuzz project.
+> 
+> Credit: Espilon VR. Prepared for coordinated disclosure; PoC on request.
+> 
+> === END REPORT ===
+> 
+> We will coordinate on timing and are glad to help validate any distro backport. Thank you.
+> 
+> Regards,
+> Espilon VR (reply: eun0us@...ilon.net)
 
-Verified from the 1.0.4 sdist:
-
-  command.format(target=self.target, ...)
-  POST /api/query/ has no auth dependency.
-  linux_ssh → shell.
-  Default ping -6 template is unquoted.
-
-  fe80::1%;id passes ipaddress, passes the reserved checks,
-  lands unquoted, and executes as the service user.
-  Local canary: touch /tmp/pwned_hg.
-
-That vector is real and default. It is the report.
-
-Two concrete outputs are published:
-
-  uid=1001(hyperglass) on Pombonet
-  uid=1000(hyperglass) on SolNet
-
-Those are the service account. If root or root-equivalent was
-reached on any of the 11 hosts, the privilege-escalation step
-is not shown. Stating that bound would make the count usable.
-
-The FRR AS-path payloads are rejected by the default regex.
-If they succeeded, it was against an operator-modified pattern.
-Labeling that case would remove the contradiction.
-
-Cisco newline is already marked emulator-only. Keeping that
-label is correct.
-
-The issue has been open since July. The fix is three lines.
-The live path above is sufficient.
-
-— knell
-
-
-Sent from Proton Mail for Android.
-
--------- Original Message --------
-On Tuesday, 11/10/26 at 02:34 Solar Designer <solar_at_openwall.com_theknell@...k.com> wrote:
-On Tue, Nov 10, 2026 at 07:59:20AM -0000, factoid@...ke.ru wrote:
-> https://hyperpwn.xyz/
->
-> Note: All the research, from hunting to exploitation was done by DS. All I
-> did was validate. Posting this on LET first, hopefully it spreads.
-
-Where DS is DeepSeek.
-
-> TLDR; hyperglass has OS code exec vulns which you can trivially turn into
-> pre-auth RCE. Many ISPs and hosting providers are vulnerable to it because
-> they expose their hyperglass instance to the internet
-
-We want actual content in list postings, not only a link and summary.
-Here's some copy-paste from the above website:
-
-> hyperglass is a looking-glass front end. You give it a target, it drops that target into a router command and hands the result to Netmiko. The target goes in with a bare str.format() and is never shell-escaped. On any platform where the command ends up in a Linux shell, the target stops being data.
->
-> A sweep of PeeringDB and Shodan for exposed hyperglass instances produced 36 hosts with command execution across 20 ASNs, 11 of them root or root-equivalent. Almost all are collectors and edge VMs, not core forwarding routers. None is a whole-AS compromise — but a lot of this is real infrastructure with reusable credentials behind it.
->
-> What was reachable
->
-> The short version, before the details:
->
->     lg.biztelecom.ro — root on a Proxmox node, 42 guests, Ceph admin, PBS backups
->     Citra rs-core — 27 iBGP peers and 2.04M routes, core route reflector
->     Ssmidge — root on a border host plus camtr0, paths toward K-root/AS25152
->     Netecom — root with FRR full table, routinator and Redis
->     SolNet — 16 BGP sessions and 2.96M routes
->     AMO — NOPASSWD birdc
->     Plus 29 more hosts across 20 ASNs, 11 root/root-equivalent in total
-
-> The bug
->
-> # hyperglass/execution/drivers/_construct.py:113
-> return command.format(target=self.target, mask=mask, **attrs)
->
-> The command templates look like this:
->
-> vtysh -c "show bgp ipv4 unicast regexp {target}"
->
-> The AS-path and community rules validate with a wildcard, so almost any string passes. Netmiko ships it to linux_ssh, and bash expands it.
->
-> Three ways it lands:
->
-> 1. FRR AS-path injection. A quote closes the intended argument and $() or ; runs in the shell. Unauthenticated, this returns uid=1001(hyperglass) on Pombonet.
->
-> 2. BIRD IPv6 scope-ID injection. Python's ipaddress accepts arbitrary text after the % of an IPv6 address, so fe80::1%;id passes validation as a scoped address. The original string is then inserted unquoted into ping -6 ... {target}, and bash reads the semicolon as a separator. Unauthenticated, this returns uid=1000(hyperglass) on SolNet.
->
-> 3. Cisco IOS newline injection. An internal newline survives validation and the unquoted BGP community command turns into two CLI lines. The second line goes to the router inside the already-authenticated SSH session, so 1.1.1.1\nclear ip bgp * shows the route and then clears BGP. This one is proven against an IOS emulator, not a live public target.
->
-> A second, independent reproduction against a clean revision pointing at a real OpenSSH shell returned the service UID and created a file via touch /tmp/pwned_hg. It is tracked upstream in #383 / PR #382, and has been open on the public repository for four months.
-> The scan
->
->     3,693 PeeringDB looking-glass URLs, plus Shodan queries
->     388 live hyperglass instances
->     36 confirmed hosts with command execution
->     11 root or root-equivalent
->     20 ASNs with writable routing state
->     Mostly collectors; none is a forwarding core
-
-> What it can actually do
->
->     Inject, withdraw or blackhole routes on 20 ASNs
->     Reset BGP sessions and poison route-reflector state that then propagates over iBGP
->     Shift paths toward K-root and transit peers
->     Read and clone guest disks and backups on BizTelecom
->     Reuse SSH keys and service passwords across hosts
->     Pull full tables and MRT from three Tier-1 collectors
->     Deploy proxies, containers, tunnels and persistence
->
-> Severity and urgency
->
-> Critical — both.
->
-> Eleven root or root-equivalent hosts, 20 ASNs with writable routing state, and a Proxmox cluster with 42 guests and its backups all sit behind a single unauthenticated endpoint. The access is credential-based, survives reboots, and stays quiet. Nothing gets rotated unless someone notices, so the footholds remain live and reusable indefinitely.
->
-> The only thing capping this below a national outage is that the hosts are collectors and edge nodes, not forwarding cores. Everything above that — host control, backup access, route injection, blackholing, session resets, RPKI poisoning — is in scope and chained across dozens of independent networks.
->
-> Urgency: act now. One unauthenticated POST reaches all of it. Rotate what can be rotated and rebuild what cannot, before the credentials age out or quietly get shared.
->
-> The list above is a floor, not a ceiling. 388 live instances turned up from a few thousand URLs, and only the reachable ones were followed up. The same three input paths exist on every unpatched deployment, so the real number of pwnable targets is almost certainly far higher. It has to be patched as soon as possible.
->
-> Caveats
->
->     No whole-AS compromise
->     No core router root
->     Collectors are leaf nodes, not the dataplane
->     Payment, SaaS and customer data are out of scope here
->     The Cisco newline variant is emulator-tested, not live-proven
->
-> Closing
->
-> The bug is boring: one unescaped format call, a wildcard validator, and a shell underneath. The result is not. hyperglass is common, the directive ships built in, and /api/query is unauthenticated by default. Swap the target for $(id) and a looking glass becomes a shell.
->
-> This research was autonomously found by a swarm of agents running DeepSeek V4.1 Flash.
-
-It also links to:
-
-https://github.com/thatmattlove/hyperglass/issues/383
-
-which was opened on July 15 and says:
-
-> ### Summary
->
-> The builtin directive templates for the shell-backed platforms interpolate the **unauthenticated** query target into a command string that is executed by a POSIX shell. A shell metacharacter in the query target breaks out of the intended argument, so a single unauthenticated `POST /api/query` can run arbitrary OS commands on the managed router as the SSH login user.
->
-> ### Version
->
-> v2.0.0 through current `main` (v2.0.4).
->
-> ### Affected platforms
->
-> Backends whose command string is parsed by a shell:
->
-> - **FRR, BIRD, OpenBGPD** — mapped to `device_type="linux_ssh"`, so netmiko delivers the command to a host **bash** shell.
-> - **TNSR** — the directive runs `dataplane shell sudo vtysh -c "..."`, which drops to a host shell.
->
-> The non-shell NOS platforms (Cisco/Arista/Juniper/Nokia/Huawei/MikroTik/VyOS) are not shell-injectable, but an embedded newline in the target survives netmiko's `rstrip`-only `normalize_cmd` and is executed as a second CLI line.
->
-> ### Root cause
->
-> Two things combine:
->
-> 1. `Construct.format()` substitutes the target with a bare `str.format()` — no shell escaping:
->    ```python
->    # hyperglass/execution/drivers/_construct.py
->    return command.format(target=self.target, mask=mask, **attrs)
->    ```
->    with templates like `'vtysh -c "show bgp ipv4 unicast regexp {target}"'`.
-> 2. The default `condition="*"` rule compiles to `re.compile(".+").match()` (`hyperglass/models/directive.py`), which is start-anchored and matches any non-empty string, so no shell metacharacter is rejected.
->
-> A `"` in the target closes the quote and a following `;` / `` ` `` / `$(...)` reaches bash. OpenBGPD's template (`bgpctl show rib inet as {target}`) is unquoted, so a bare `;` injects directly.
->
-> ### Steps to Reproduce
->
-> 1. Deploy hyperglass with an FRR (or BIRD/OpenBGPD/TNSR) device — the default builtin `BGP AS Path` directive.
-> 2. Send an unauthenticated query whose target contains a shell metacharacter, e.g. a `queryTarget` of:
->    ```
->    _65000"; id; echo "
->    ```
-> 3. The constructed command becomes `vtysh -c "show bgp ipv4 unicast regexp _65000"; id; echo ""`, and bash executes the injected `id`.
->
-> ### Expected Behavior
->
-> The query target should be treated as a single, literal argument to the device command; shell metacharacters in it should have no effect beyond (at most) failing to match.
->
-> ### Observed Behavior
->
-> The injected command executes on the router host. The HTTP response still returns the legitimate `show bgp` output, so the injection is not visible in the query result.
->
-> ### Fix
->
-> Proposed in #382 — shell-quote the target at construction for shell-backed platforms, and reject ASCII control characters at the query model (for the newline vector on non-shell platforms).
-
-and has some comments about a fork of the project and notifying the
-affected providers (which were apparently not notified until today).
-
-Alexander
-
-
+Just so you are aware, this was posted to a public email list meant for 
+public disclosure of software vulnerabilities (oss-security) and, if not 
+LLM-generated nonsense, should now be considered public information.
