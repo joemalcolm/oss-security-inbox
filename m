@@ -1,40 +1,137 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/09/24
-Message-ID: <29875fd2-3c34-47ea-9f01-3d2f6eb00135@oracle.com>
-Date: Mon, 9 Nov 2026 11:01:59 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: CPython: [CVE-2026-124249] http.cookiejar deletes cookies of other domains via expired Set-Cookie
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/10/4
+Message-ID: <7166BFEA-67EE-45C4-87B7-FABFCF9A90B5.1@smtp-inbound1.duck.com>
+Date: Tue, 10 Nov 2026 00:11:12 -0500
+From: theknell@...k.com
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: Home Assistant: the password is not the key — token secrets in cleartext, two token classes never expire, password change revokes none (2026.11.0, live-proven)
 Content-Type: text/plain; charset=utf-8
 
+Alexander,
+
+On the policy question, thank you for stating the list's position
+plainly. Nothing further from me on that.
+
+On the other question — that this sender side-steps direct questions
+about human involvement — here is the direct answer. knell is a
+pseudonym, openly. Questions about the content of any posting get
+answered in-thread, on the record; the scope challenge in this thread
+was answered with preconditions, not deflected. The question I do not
+answer is who stands behind the name. That is not an evasion
+discovered after the fact; it is what a pseudonym is, and it was the
+deal from the first posting.
+
+Judge the postings by the test you proposed: are they real, and are
+they important? Each posting is one finding, with its evidence
+attached and its proof steps written so anyone can check them. In
+these threads, no one has named a technical error in any of them. If
+a posting of mine is wrong, or not worth the list's time, reject it
+for that and I will have no complaint. A standard applied to
+content, I can work under.
+
+— knell
 
 
+Sent from Proton Mail for Android.
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-124249] http.cookiejar deletes cookies of 
-other domains via expired Set-Cookie
-Date: 	Sat, 7 Nov 2026 21:58:22 +0200
-From: 	Kirill Podoprigora via Security-announce <security-announce@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
-CC: 	Kirill Podoprigora <kirill.bast@...il.com>
+-------- Original Message --------
+On Monday, 11/09/26 at 22:56 Solar Designer <solar_at_openwall.com_theknell@...k.com> wrote:
+On Mon, Nov 09, 2026 at 02:00:35PM -0800, Gregory Mullen wrote:
+> > Coordination: none, and that is not an oversight you caught. [name]
+> > publishes day-of, without advance notice, as a stated policy. You may
+> > dislike the policy; it is not hidden, and it is not a secret.
+>
+> Are there list policies published anywhere?
 
-There is a MEDIUM severity vulnerability affecting CPython.
+Yes, here:
 
-http.cookiejar.CookieJar deleted a stored cookie when a response carried an 
-already expired Set-Cookie header for it, using the Domain and Path attributes 
-from the header without consulting the cookie policy. A server could therefore 
-delete cookies belonging to other domains from a shared
-cookie jar, such as the one used by urllib's HTTPCookieProcessor. The fix 
-consults the cookie policy before an expired cookie may delete an existing one, 
-as required by RFC 6265 section 5.3.
+https://oss-security.openwall.org/wiki/mailing-lists/oss-security#list-content-guidelines
 
-Please see the linked CVE ID for the latest information on affected versions:
+> I've been operating under the
+> assumption that this list wouldn't help participate in malicious disclosure
+> behavior like this, but if it does, I feel I'd need to unsubscribe for ethical
+> reasons.
 
-* https://www.cve.org/CVERecord?id=CVE-2026-124249
-* https://github.com/python/cpython/pull/161570
+While it's typical that issues disclosed on oss-security had been
+communicated to the vendors first, there are currently no "responsible
+disclosure" requirements here, and have never been.  If someone wants to
+post a 0-day, they generally can.  It'd take extreme circumstances for
+the moderators to decide differently, and this would require a public
+explanation later.
 
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
+Posting a 0-day is not necessarily malicious.  The "full" vs.
+"responsible" disclosure debate existed for decades and there isn't a
+universally accepted right or wrong.  Cases and opinions still vary.
+
+However:
+
+> Behavior like this isn't ok, and it shouldn't be rewarded with attention.
+
+I see other signs of malicious behavior here, and policies we could want
+to add to deal with it in this age of LLMs.  This list is by and for
+people, not machines.  When we want to interact with a machine, we can,
+but we may not want such interactions pushed to us via a mailing list,
+or at least not via this one.
+
+It is going to be increasingly difficult to determine whether and to
+what extent is a posting generated by a machine.  The quality of
+machine-generated content will be increasing, so frankly for purposes of
+awareness of and dealing with each one security issue it could become no
+worse than human-created.  The problem is its sheer volume and lower
+average importance.  Content too cheap to create may explore issues that
+were not worth a human's time to write about, and so may not be worth a
+human's time to read.
+
+I agree that machine-generated postings here shouldn't be rewarded with
+attention, if accepted at all... unless they're about important issues?
+However, I don't see a good way for the moderators to enforce this.
+"Is this posting human-written or at least important?" isn't a question
+that can be answered quickly and reliably during pre-moderation.
+
+Now that we know this specific sender that side-steps direct questions
+about human involvement (and instead keeps writing about the content
+being signed, which is irrelevant), we can start rejecting that sender's
+postings irrespective of content.  Should we?  If you (any subscriber
+here) have either preference on this, please let me know off-list.
+Please take the time to review all postings by this sender first - not
+only in this thread.  There have been a few in several threads in the
+last few days, starting with the sshole thread.
+
+On Mon, Nov 09, 2026 at 03:49:22PM -0800, Gregory Mullen wrote:
+> With the number of LLM generated/assisted exploits being disclosed
+> irresponsibly. I feel it's important to draw a line in the sand, and not just
+> allow malicious disclosures to become the new normal. This report isn't
+> critically important, but I *strongly* feel that rejecting behavior like this is
+> important.
+>
+> I suspect the people who use LLMs to find exploits for them also aren't smart
+> enough to understand the risks they could expose people to. Those who don't
+> need an LLM to understand, need to be careful we don't forget it either. It's a
+> game, until it isn't.
+
+Some others in this community argued that LLMs are a reason to move away
+from embargoes, or from "responsible" to "full" or rather more immediate
+disclosure, at least for issues discovered by LLMs.  That's because with
+LLMs someone else, even someone not otherwise "smart enough", could
+rediscover the issue and use it irresponsibly during what would
+otherwise be our embargo period.
+
+If someone or their machine sends some important 0-day disclosure in
+here, what would we achieve by not letting it through to subscribers?
+We would discourage such behavior, but at the same time we'd deprive the
+subscribers from this knowledge while letting others rediscover and
+exploit the issue possibly maliciously.
+
+Further, the information would have already passed through the Internet
+to the list server and from there to the moderators.  There's risk of
+this being seen by third-parties.  Again, we'd deprive the subscribers
+from the info while letting potential adversaries have it.  For issues
+sent to the (linux-)distros list we mitigate this by keeping track of
+them and enforcing the maximum embargo duration, but we don't have
+anything like that for oss-security postings rejected in moderation.
+
+In summary, I agree there are problems, but I don't see good solutions.
+
+Alexander
+
 
