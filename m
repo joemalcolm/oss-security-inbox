@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/17
-Message-ID: <ca8eae84-5cd2-9a54-a4e2-8518bf25aa0f@apache.org>
-Date: Wed, 11 Nov 2026 08:20:02 +0000
-From: Simon Steiner <ssteiner@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/12
+Message-ID: <2ae9ca9c-6e59-b44e-29ad-9e630daf555f@apache.org>
+Date: Wed, 11 Nov 2026 12:19:56 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-44929: SSRF Vulnerability in Apache Batik 
+Subject: CVE-2026-109163: Apache HTTP Server: mod_vhost_alias 1 byte stack buffer overwrite (after CVE-2026-63292) 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: low 
 
 Affected versions:
 
-- Apache XML Graphics Batik 1.19
+- Apache HTTP Server 2.4.69 through 2.4.70
 
 Description:
 
-A vulnerability in Apache XML Graphics Batik.
+Stack-based buffer overflow vulnerability in Apache HTTP Server's mod_vhost_alias (after CVE-2026-63292)
 
 
 
-This issue affects Apache XML Graphics Batik: 1.19.
+This issue affects Apache HTTP Server: 2.4.69.
 
+Credit:
 
-
-Users are recommended to upgrade to version 1.20, which fixes the issue.
-
-This issue is being tracked as BATIK-1393 
+Gustavo Aiello (finder)
+Charles Vosburgh (the-vibe-dev) (finder)
+Wojciech Tatarski (CloudLinux / TuxCare) (finder)
+Oz Kaiser (@tatikoma) (finder)
+Daisuke Hatakeyama (SYZD Research) (finder)
 
 References:
 
-https://xmlgraphics.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-44929
-https://issues.apache.org/jira/browse/BATIK-1393
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-109163
+
+Timeline:
+
+2026-10-05: reported
 
