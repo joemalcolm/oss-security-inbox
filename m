@@ -1,37 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/13
-Message-ID: <2df72d8d-1eb3-9b55-74bd-f4cb1af17a87@apache.org>
-Date: Wed, 11 Nov 2026 12:19:30 +0000
-From: Eric Covener <covener@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/14
+Message-ID: <e926b998-5573-3620-f991-b7f491121492@apache.org>
+Date: Wed, 11 Nov 2026 08:34:07 +0000
+From: Simon Steiner <ssteiner@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-119618: Apache HTTP Server: mod_http2: heap corruption and RCE in assign_headers 
+Subject: CVE-2026-111792: Apache XML Graphics Batik: Denial of Service via SVG Element Reference Resolution 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: moderate 
 
 Affected versions:
 
-- Apache HTTP Server 2.4.55 through 2.4.70
+- Apache XML Graphics Batik 1.20
 
 Description:
 
-Concurrent Execution using Shared Resource with Improper Synchronization vulnerability in Apache HTTP Server's mod_http2 in assign_headers() can lead to RCE.
+This issue affects Apache XML Graphics Batik: 1.19.
 
-This issue affects Apache HTTP Server: from 2.4.55 through 2.4.70.
-Affected releases of mod_h2 from GitHub: from 2.0.8 through 2.0.42.
+
+
+Users are recommended to upgrade to version 1.20, which fixes the issue.
+
+This issue is being tracked as https://issues.apache.org/jira/browse/BATIK-1397 
 
 Credit:
 
-Anthropic's OSS Scanner, as vulnerability ANT-2026-MAPKT6MZ (finder)
-Anthony Weems and Simon Scannell of the Google Cloud Vulnerability Research (finder)
+MopMonk-AI (finder)
 
 References:
 
-https://httpd.apache.org/security/vulnerabilities_24.html
-https://httpd.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-119618
-
-Timeline:
-
-2026-10-26: reported
+https://xmlgraphics.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-111792
+https://issues.apache.org/jira/browse/https://issues.apache.org/jira/browse/BATIK-1397
 
