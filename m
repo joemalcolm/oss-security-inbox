@@ -1,35 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/19
-Message-ID: <9f1006af-142a-6924-36c5-21f6eda7d971@apache.org>
-Date: Wed, 11 Nov 2026 08:21:07 +0000
-From: Simon Steiner <ssteiner@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/13
+Message-ID: <2df72d8d-1eb3-9b55-74bd-f4cb1af17a87@apache.org>
+Date: Wed, 11 Nov 2026 12:19:30 +0000
+From: Eric Covener <covener@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-71395: Apache XML Graphics FOP: CWE-502 unsafe deserialization in hyphenation loading 
+Subject: CVE-2026-119618: Apache HTTP Server: mod_http2: heap corruption and RCE in assign_headers 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: critical 
 
 Affected versions:
 
-- Apache XML Graphics FOP 2.11
+- Apache HTTP Server 2.4.55 through 2.4.70
 
 Description:
 
-A vulnerability in Apache XML Graphics FOP.
+Concurrent Execution using Shared Resource with Improper Synchronization vulnerability in Apache HTTP Server's mod_http2 in assign_headers() can lead to RCE.
 
+This issue affects Apache HTTP Server: from 2.4.55 through 2.4.70.
+Affected releases of mod_h2 from GitHub: from 2.0.8 through 2.0.42.
 
+Credit:
 
-This issue affects Apache XML Graphics FOP: 2.11.
-
-
-
-Users are recommended to upgrade to version 2.12, which fixes the issue.
-
-This issue is being tracked as FOP-3332 
+Anthropic's OSS Scanner, as vulnerability ANT-2026-MAPKT6MZ (finder)
+Anthony Weems and Simon Scannell of the Google Cloud Vulnerability Research (finder)
 
 References:
 
-https://xmlgraphics.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-71395
-https://issues.apache.org/jira/browse/FOP-3332
+https://httpd.apache.org/security/vulnerabilities_24.html
+https://httpd.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-119618
+
+Timeline:
+
+2026-10-26: reported
 
