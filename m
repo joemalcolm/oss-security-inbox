@@ -1,35 +1,39 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/15
-Message-ID: <822e0839-2ad4-70ae-dd42-9a29b8ca5ce7@apache.org>
-Date: Wed, 11 Nov 2026 08:40:46 +0000
-From: Simon Steiner <ssteiner@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/11/22
+Message-ID: <b214dfe7-349a-0f04-affb-5691bd5b91cb@apache.org>
+Date: Wed, 11 Nov 2026 09:53:10 +0000
+From: Joerg Hoh <joerghoh@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-126627: Apache XML Graphics FOP: TemporaryFolder on unix-like systems does not limitaccess to created files 
+Subject: CVE-2026-123765: Apache Sling XSS: SLING-13406 
 Content-Type: text/plain; charset=utf-8
 
 Severity: low 
 
 Affected versions:
 
-- Apache XML Graphics FOP 2.11
+- Apache Sling XSS before 2.4.14
 
 Description:
 
-A vulnerability in Apache XML Graphics FOP.
+Improper neutralization of input during web page generation ('cross-site scripting') vulnerability in Apache Sling XSS. xssAPI.getStyleToken() accepts markup in unquoted urls.
 
 
 
-This issue affects Apache XML Graphics FOP: 2.11.
+This issue affects Apache Sling XSS: before 2.4.14.
 
 
 
-Users are recommended to upgrade to version 2.12, which fixes the issue.
+Users are recommended to upgrade to version 2.4.14, which fixes the issue.
 
-This issue is being tracked as FOP-3284 
+This issue is being tracked as SLING-13406 
+
+Credit:
+
+Github user @dpfkdlemtp (reporter)
 
 References:
 
-https://xmlgraphics.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-126627
-https://issues.apache.org/jira/browse/FOP-3284
+https://sling.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-123765
+https://issues.apache.org/jira/browse/SLING-13406
 
