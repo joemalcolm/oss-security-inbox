@@ -1,65 +1,62 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/12/8
-Message-ID: <20261112224654.1c2b2d0a@hboeck.de>
-Date: Thu, 12 Nov 2026 22:46:54 +0100
-From: Hanno Böck <hanno@...eck.de>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/12/7
+Message-ID: <avYh8eF//6SfAo+K@256bit.org>
+Date: Thu, 12 Nov 2026 21:30:41 +0100
+From: Christian Brabandt <cb@...bit.org>
 To: oss-security@...ts.openwall.com
-Subject: Fw: New cabextract 1.12 and libmspack 0.12alpha release
+Subject: [vim-security] Command Execution via CSS Omni-Completion in Vim < 9.2.1342
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+Command Execution via CSS Omni-Completion in Vim < 9.2.1342
+===========================================================
+Date: 12.11.2026
+Severity: Low
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Special Elements used in an OS Command
+     (CWE-78)
 
-Forwarding this, various security issues fixed in cabextract and
-libmspack.
+## Summary
+The CSS omni-completion script in `runtime/autoload/csscomplete.vim` passes
+the file name after an `@...ort` rule from the buffer to `glob()` without
+escaping it.  On Unix, `glob()` hands a pattern containing backticks to the
+shell, which allows arbitrary command execution when the user completes an
+`@...ort` file name in a crafted CSS file.
 
-Begin forwarded message:
+## Description
+When completing after `@...ort "` or `@...ort url(`,
+`csscomplete#CompleteCSS()` takes the text typed so far and calls
+`glob(filestart . '*')` to find matching files.  The text is taken directly
+from the current line and not escaped.
 
-Date: Thu, 12 Nov 2026 10:18:43 +0000
-Subject: New cabextract 1.12 and libmspack 0.12alpha release
+If it contains backticks, `glob()` uses the shell for the expansion
+and the text between the backticks is executed as a shell command.
 
-[...]
+## Impact
+Arbitrary command execution in the context of the user running Vim, when the
+user uses omni completion (`CTRL-X CTRL-O`) on a crafted `@...ort` line in a
+CSS file.
 
-cabextract 1.12 and libmspack 0.12alpha have been released. This 
-corrects security issues and bugs reported recently, mainly:
+Exploitation requires:
+- a Unix-like system (on Windows `glob()` does not invoke the shell),
+- filetype plugins enabled, so that 'omnifunc' is set for CSS files,
+- the victim opening a crafted CSS file and using omni completion with the
+  cursor after the crafted `@...ort` value.
 
-- An LZX uncompressed block header with invalid R0/R1/R2 values
-  followed by a verbatim/aligned block referencing them can make
-  libmspack write up to 2GB past the end of its history window
-- CHM PMGL/PMGI lookups can have cycles, leading to infinite loops
-- CAB sets where the first mergeable file has an invalid filename
-  (blank or over 256 chars), and salvage mode is enabled, causes 
-cabd_can_merge_folders to read already-freed memory
-- CHM files with undersized ControlData/ResetTable files or invalid
-  PMGI entry counts can make chminfo overread or underread its buffers
-- CAB MS-ZIP and Quantum match offsets greater than the number of bytes 
-already decoded makes libmspack read uninitialised memory from its 
-history window and write it as output
-- CAB files can "hide" entries (which other tools might see) using an 
-atypical FileOffset value. libmspack warns on finding this discrepancy 
-and salvage mode finds the "hidden" entries
+The severity is rated Low because, unlike opening the file alone, the user
+must explicitly invoke omni completion on a crafted suspicious line.
 
-For more details, see the ChangeLog in each tarball.
+## Acknowledgements
+The Vim project would like to thank Github user Magashwarahan for reporting the
+issue.
 
-cabextract can be downloaded from https://www.cabextract.org.uk/
-libmspack can be downloaded from 
-https://www.cabextract.org.uk/libmspack/
-
-SHA256 sums:
-
-ef9819bafb09bb125c446606150abdcbe6987f4a44f7663dced8e8bafab3876d  
-cabextract-1.12-1.src.rpm
-1b141240dd7b1be4d16f7b1d118418bc786ae50da6b432d3072ed5a8d81ce9a6  
-cabextract-1.12-1.x86_64.rpm
-8f39ad5f9c076b9c62c67dea4f8649e75dcc16899a2d8122ca32ba68262cb713  
-cabextract-1.12.tar.gz
-1834d1079a6e8db9546fa95d3a1fc2cf676124a8a60bbdd7f30b2db4eb4ad683  
-libmspack-0.12alpha.tar.gz
-
-Regards
-Stuart
+## References
+The issue has been fixed as of Vim patch [v9.2.1342](https://github.com/vim/vim/releases/tag/v9.2.1342).
+- [Commit](https://github.com/vim/vim/commit/cd50664ab086a37839e3d12754040dbc324dbfa7)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-pp46-p33v-78rf)
 
 
-
+Best,
+Christian
 -- 
-Hanno Böck
-https://hboeck.de/
+Wie man sein Kind nicht nennen sollte: 
+  Sam A. Riter 
