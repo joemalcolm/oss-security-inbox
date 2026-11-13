@@ -1,74 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/13/3
-Message-ID: <trinity-2f274b3f-047b-4a88-b888-07a69be035b6-1794580313258@trinity-msg-rest-gmx-gmx-live-6b6d8476df-5sw62>
-Date: Fri, 13 Nov 2026 14:31:53 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/13/4
+Message-ID: <316D307A-0F82-4F1D-89B2-E02B957EE48A.1@smtp-inbound1.duck.com>
+Date: Fri, 13 Nov 2026 14:38:21 -0500
+From: theknell@...k.com
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-128239: GPAC/MP4Box: NULL Pointer Dereference in MPEG-4 Form Handlers via Crafted XMT Input
+Subject: Dropbear: the restriction names an address — permitopen/permitlisten not enforced for unix-socket forwarding, docker.sock reachable (HEAD 99baf182, live-proven)
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  Through 26.07.0 (per the published CVE record)
-           Reproduced on 26.08-DEV-rev263-g3f056542b-master
-           Commit 3f056542b377cc73677d19490bfe1b46c52c9be7
-Fixed:     bc416b997622e43de65afab3bae9b7d05d72f2b0
-CVE:       CVE-2026-128239
-CWE:       CWE-476 (NULL Pointer Dereference)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+Dropbear is the SSH server that ships where OpenSSH is too big: routers,
+embedded systems, rescue images, appliances — anywhere a small, hardened
+sshd is wanted. It has been fuzzed and audited for two decades, and its
+handling of restricted keys is one of the reasons administrators trust it
+with narrow jobs. A key in authorized_keys can carry permitopen="host:port"
+and permitlisten="host:port": this key may forward to that destination,
+and to no other. Backup keys, tunnel keys, CI keys are handed out on the
+strength of that line.
 
-Description:
-  During chapter import from a crafted XMT scene, the MPEG-4 compositor
-  processes a Form node whose layout constraints reference an uninitialised
-  group. The ab_apply() handler for the AB (Align Bottom) constraint uses
-  the result of form_get_group() without checking for NULL before accessing
-  the group bounds. This causes a NULL pointer dereference at
-  compositor/mpeg4_form.c:627 and terminates MP4Box with SIGSEGV.
+The restriction names an address. A unix socket is not an address, and on
+the socket path the restriction is never consulted. Tested against
+mkj/dropbear at commit 99baf1828c13e88de048e641d03694bfe8923251
+(2026-11-11), built from source, full history reviewed:
 
-  The same missing validation affects the ar_apply(), sh_apply(),
-  al_apply(), and at_apply() spatial-constraint handlers. The accepted patch
-  adds checks for missing groups before their bounds are accessed.
+1. TCP forwarding enforces the per-destination restrictions. Local TCP
+   (direct-tcpip) calls svr_pubkey_allows_local_tcpfwd(desthost, destport)
+   at src/svr-tcpfwd.c:202, which walks the key's permitopen list
+   (src/svr-authpubkeyoptions.c:98-118). Remote TCP calls
+   svr_pubkey_allows_remote_tcpfwd() at src/svr-tcpfwd.c:99, which walks
+   the permitlisten list (:123-145). A destination that is not listed is
+   administratively prohibited.
 
-  The issue was reproduced in GPAC version
-  26.08-DEV-rev263-g3f056542b-master at commit
-  3f056542b377cc73677d19490bfe1b46c52c9be7.
+2. Unix-socket forwarding — direct-streamlocal@...nssh.com and
+   streamlocal-forward@...nssh.com — checks only the coarse flag. The
+   local path (newstreamlocal, src/svr-streamfwd.c:294) tests
+   svr_opts.nolocaltcp and svr_pubkey_allows_tcpfwd(); the remote path
+   (svr_remotestreamlocalreq, src/svr-streamfwd.c:219) tests
+   svr_opts.noremotefwd and the same function. svr_pubkey_allows_tcpfwd()
+   (src/svr-authpubkeyoptions.c:65-72) knows only the no-port-forwarding
+   flag. Neither streamlocal path calls either per-destination function,
+   and a search of the tree confirms those two functions are referenced
+   only from src/svr-tcpfwd.c — never from src/svr-streamfwd.c.
 
-Impact:
-  Importing attacker-controlled XMT input can crash MP4Box and cause denial
-  of service. Arbitrary code execution was not demonstrated in the supplied
-  report.
+3. The socket paths are on by default: src/default_options.h:76-77 sets
+   DROPBEAR_SVR_LOCALSTREAMFWD and DROPBEAR_SVR_REMOTESTREAMFWD to 1,
+   and the channel is registered at src/svr-session.c:80.
 
-Reproduction:
-  The supplied report used a static debug build on Kali GNU/Linux, kernel
-  7.1.5+kali-amd64, x86_64, built with GCC 15.3.0-2. Run:
+4. This is an incomplete fix, in the vendor's own words. Commit 796a89ef
+   (2024-04-03), "Apply tcp forwarding restrictions to unix sockets too",
+   added the coarse gate to newstreamlocal() and updated the manpage to
+   say no-port-forwarding covers unix streams. The per-destination
+   restrictions — the other half of what that title announces — were not
+   applied. The author notes the absence himself at
+   src/svr-streamfwd.c:213-214: the check could be relaxed if a
+   permitlisten equivalent were added for streamlocal. It has not been,
+   on any branch, as of the tested commit. A sibling fix (00cfa132)
+   applied a different per-key restriction to the same path, so the path
+   is not one the author considers outside the restriction model.
 
-    ./MP4Box -chap ./221_ab_apply_compositor_mpeg4_form_c_627.xmt /tmp/1 -out /dev/null
+Live proof, against our own rig only (server built from the pinned
+source, localhost): a test account's only key carried
+permitopen="127.0.0.1:1",no-pty, and a unix echo server listened at
+/tmp/target.sock. The permitted TCP destination (127.0.0.1:1) passed the
+permitopen check and failed only on connect — the restriction parsed and
+active. The non-permitted TCP destination (127.0.0.1:22) was refused:
+"Administratively prohibited" — permitopen enforced, same key, same
+session. The streamlocal channel to /tmp/target.sock was accepted, and
+returned the echo server's banner, UNIX-SOCKET-REACHED. The list was
+never consulted. Replicated once from a clean build. Harness and raw log
+accompany this paper.
 
-GDB log excerpt:
-  Program received signal SIGSEGV, Segmentation fault.
-  #0  ab_apply (st=0x197c230, space=-1, group_idx=group_idx@...ry=0x7fffffffb780, count=count@...ry=2) at compositor/mpeg4_form.c:627
-  #1  0x00000000010f9e16 in form_apply (st=0x197c230, constraint=0x1985000 "AB", group_idx=0x7fffffffb780, count=2) at compositor/mpeg4_form.c:180
-  #2  TraverseForm (n=0x1984f30, rs=0x19ceb00, is_destroy=<optimized out>) at compositor/mpeg4_form.c:309
+The escalation was fired the same way. The test account was placed in
+the docker group — the normal condition for the CI and deploy accounts
+that receive restricted keys — and the same key opened a
+direct-streamlocal channel to /var/run/docker.sock and issued a Docker
+API request over it: HTTP/1.1 200 OK, Api-Version 1.56, the real daemon.
+TCP to a non-permitted destination stayed prohibited in the same
+session. The Docker socket is host-root-equivalent; the daemon will run
+a container with the host filesystem mounted, as root.
 
-Fix:
-  Use a GPAC build containing the following merged fix, or apply the patch.
-  It adds NULL checks around form_get_group() results in the affected Form
-  constraint handlers.
+Scope, stated plainly: this is not unauthenticated, and it is not a
+10.0. The attacker holds a valid key — a key the administrator
+deliberately restricted to one destination. Post-bypass reach is
+bounded by the sockets that account's OS identity can touch: the Docker
+socket, database sockets (/run/mysqld/mysqld.sock,
+/run/postgresql/.s.PGSQL.5432), agent and service sockets, and, in the
+permitlisten direction, the ability to make the server listen on an
+arbitrary writable unix path and shadow a service socket. That bound is
+not the boundary under discussion. permitopen exists for accounts that
+are not trusted with general reach; for those accounts, streamlocal is
+reach the administrator explicitly withheld. Scored as a range for
+exactly that reason: 9.9 (AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H) when the
+account can reach the Docker daemon or a database socket, ~7 when it
+can reach only its own sockets.
 
-    https://github.com/gpac/gpac/commit/bc416b997622e43de65afab3bae9b7d05d72f2b0
+What held is credited at the same weight. The pre-authentication
+surface was audited and exercised in the same pass and nothing is
+claimed there: the post-quantum hybrid KEX bounds-checks every read and
+asserts full input consumption, its length constants match the
+reference implementations, strict-KEX handling is correct, and the
+recent pre-auth-adjacent fixes are properly applied. The neighbouring
+fixes in the forwarding family were likewise verified in place —
+the ssh-askpass write, the long authorized_keys line split, the
+curve25519 canonicality checks, the streamfwd drop-privileges error.
+The vendor's own fuzz targets, built from the pinned source, ran clean
+on seed inputs. This is a logic gap, the class a fuzzer cannot see:
+the check exists, is correct, and is wired to only half the doors.
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/221/221_ab_apply_compositor_mpeg4_form_c_627.xmt
+The fix is not complicated. Until a path-based equivalent exists, a key
+carrying any per-destination restriction should be refused streamlocal
+channels outright; the complete fix is a path-based option enforced in
+svr-streamfwd.c with the same list walk the TCP path uses.
 
-References:
-  https://github.com/gpac/gpac/issues/4029
-  https://github.com/gpac/gpac/pull/4039
-  https://github.com/gpac/gpac/commit/bc416b997622e43de65afab3bae9b7d05d72f2b0
-  https://www.cve.org/CVERecord?id=CVE-2026-128239
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/128xxx/CVE-2026-128239.json
-  https://www.vulncheck.com/advisories/gpac-through-26.07.0-null-pointer-dereference-via-mpeg-4-form-handlers
+The restriction was applied to unix sockets in April 2024. The half of
+it that names destinations is the half that was left behind.
 
+Paper: https://archive.org/details/knell-not-an-address
 
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+Key: 133883AB9F6EDE5B9BA6B82E27BEDAF0CE152F25 (knell)
+
+Verify: gpg --import knell-public.asc, then
+gpg --verify paper-dropbear-FINAL-2026-11-13.md.asc
+
+— knell
+
+More, signed and timestamped:
+https://github.com/the-knell
+
+Sent from [Proton Mail](https://proton.me/mail/home) for Android.
