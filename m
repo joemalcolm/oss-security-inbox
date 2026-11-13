@@ -1,32 +1,28 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/13/7
-Message-ID: <7a2fcf15-5fd0-817a-69c5-55ac08d19ada@apache.org>
-Date: Fri, 13 Nov 2026 15:50:36 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/13/9
+Message-ID: <84d97a66-08e2-6bc1-abec-ce2cfaf546b1@apache.org>
+Date: Fri, 13 Nov 2026 15:50:34 +0000
 From: Abhishek Choudhary <shreemaanabhishek@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124680: Apache APISIX: Route-level authentication bypass via path normalization mismatch between routing and upstream forwarding 
+Subject: CVE-2026-124719: Apache APISIX: identity spoofing in openapi-to-mcp 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 4.0: 7.0 (high) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:H/SA:N
+    CVSS 4.0: 2.3 (low) CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N
 
 Affected versions:
 
-- Apache APISIX 0.9 through 3.19.0
+- Apache APISIX 3.19.0 before 3.20.0
 
 Description:
 
-Interpretation Conflict, resulting in (Incorrect Authorization) vulnerability in Apache APISIX.
+Authentication bypass by spoofing vulnerability in Apache APISIX.
 
 
 
-An unauthenticated client can reach upstream paths protected
-by a route-level auth plugin when a route without auth exists on the
-same upstream and the upstream does not collapse encoded dot segments.
-
-
-
-This issue affects Apache APISIX: from 0.9 through 3.19.0.
+When a Route's configured headers carry a caller identity and the OpenAPI document declares
+the same header, a caller can act as another identity against the
+upstream API. This issue affects Apache APISIX: from 3.19.0 before 3.20.0.
 
 
 
@@ -34,12 +30,11 @@ Users are recommended to upgrade to version 3.20.0, which fixes the issue.
 
 Credit:
 
-Uttej Badwane (reporter)
+Kai (GitHub: ha2fde) (reporter)
 shreemaan-abhishek (coordinator)
-shreemaan-abhishek (remediation developer)
 
 References:
 
 https://apisix.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-124680
+https://www.cve.org/CVERecord?id=CVE-2026-124719
 
