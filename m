@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/4
-Message-ID: <08eb4ed6-f13c-96fd-db9c-fe2b0d81314a@apache.org>
-Date: Sat, 14 Nov 2026 04:40:32 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/8
+Message-ID: <af077b17-192d-56bd-481d-32011d14e815@apache.org>
+Date: Sat, 14 Nov 2026 05:37:47 +0000
 From: Lenny Primak <lprimak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-74763: Apache Shiro: Authorization annotations not always enforced, depending on where they are placed 
+Subject: CVE-2026-129349: Apache Shiro: DefaultLdapRealm accepts any password when authentication caching is enabled 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 4.0: 6.3 (medium) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/S:N/AU:N/V:D/RE:L/U:Amber
+    CVSS 4.0: 9.1 (critical) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:N/SC:N/SI:N/SA:N/S:N/AU:Y/R:U/V:C/RE:L/U:Red
 
 Affected versions:
 
-- Apache Shiro (org.apache.shiro:shiro-guice) before 3.0.2
-- Apache Shiro (org.apache.shiro:shiro-aspectj) before 3.0.2
-- Apache Shiro (org.apache.shiro:shiro-cdi) 2.0.0-alpha-0 before 3.0.2
-- Apache Shiro (org.apache.shiro:shiro-jakarta-ee) 2.0.0-alpha-0 before 3.0.2
+- Apache Shiro (org.apache.shiro:shiro-core) before 3.0.1
 
 Description:
 
-Authorization annotations, such as @RequiresRoles and @RequiresPermissions, are not always enforced in some class or interface hierarchies.
-Annotations declared on an interface were not enforced when using the shiro-guice, shiro-aspectj, shiro-cdi or shiro-jakarta-ee modules.
-In addition, annotations declared on a class or a superclass were not always enforced when using shiro-guice or shiro-aspectj, allowing an unauthorized caller to invoke methods that should be protected.
-This issue affects all Apache Shiro versions through 3.0.1, with impact depending on module and where annotations are declared.
+When authentication caching is enabled on DefaultLdapRealm, after a user logs in successfully once, subsequent logins for that user succeed with any password.
+A cached authentication skips the LDAP bind, and the AllowAllCredentialsMatcher installed by default in DefaultLdapRealm accepts any credentials, allowing an attacker who knows a valid username to authenticate as that user.
+This issue affects all Apache Shiro versions through 3.0.0, only when using DefaultLdapRealm (or JndiLdapRealm) with authenticationCachingEnabled set to true, which is not the default.
 
-Mitigation: Upgrade to version 3.0.2 or later, which fixes the issue. The annotation closest to the invoked method now takes precedence.
-Alternatively, declare authorization annotations directly on each protected implementing method.
+Mitigation: Upgrade to version 3.0.1 or later, which fixes the issue by no longer installing AllowAllCredentialsMatcher by default.
+Alternatively, disable authentication caching on the LDAP realm (this is the default), or configure a credentials matcher, such as SimpleCredentialsMatcher, that verifies credentials against the cached authentication info.
 
 Credit:
 
-n0mi1k (finder)
 Joshua Rogers (finder)
-Wentao He (finder)
 Lenny Primak <lenny@...wlogix.com> (remediation developer)
 
 References:
 
 https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-74763
+https://www.cve.org/CVERecord?id=CVE-2026-129349
 
