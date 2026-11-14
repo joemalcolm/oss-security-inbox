@@ -1,78 +1,382 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/16
-Message-ID: <CAMUkMVUifCWmicbGJ5Hqg2sWWirXvDqoRScRqAsZHAYLYn5G2g@mail.gmail.com>
-Date: Sat, 14 Nov 2026 15:12:36 -0600
-From: "Osvaldo J. Filho" <janeri@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/9
+Message-ID: <699e865e-7822-4757-ad7d-5f23619237dc@cpansec.org>
+Date: Sat, 14 Nov 2026 12:05:13 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
 To: oss-security@...ts.openwall.com
-Subject: libdca (VideoLAN DTS decoder, unmaintained): out-of-bounds read in scale-factor parsing
+Subject: JSON-XS versions before 4.05 for Perl (7 CVEs)
 Content-Type: text/plain; charset=utf-8
 
-Hi,
+CVE-2026-124536
+   JSON::XS versions before 4.05 for Perl allow memory exhaustion by
+   buffering incremental input past max_size after a NUL byte in
+   incr_parse
 
-libdca is VideoLAN's DTS Coherent Acoustics decoder. It's effectively
-unmaintained (VideoLAN confirmed to me it's abandoned and it was dropped
-from VLC 4.0), but several distros still ship it as a library, so I'm
-reporting here.
+CVE-2026-124539
+   JSON::XS versions before 4.05 for Perl leak the decoded key of an
+   object rejected for a missing colon in decode_hv
 
-There's an out-of-bounds read in the scale-factor parser, reachable from a
-crafted DTS frame. I verified it against the current tree at
-https://www.google.com/url?q=https://code.videolan.org/videolan/libdca&source=gmail&ust=1794777156181000&sa=E
-(HEAD 95c4bd8).
+CVE-2026-124540
+   JSON::XS versions before 4.05 for Perl allow stack exhaustion via
+   nested tagged values under allow_tags in decode_tag
 
-In parse.c, dca_subframe_header() decodes scale factors like this:
+CVE-2026-124541
+   JSON::XS versions before 4.05 for Perl leak the decoded part of a
+   rejected long string in decode_str
 
-if (state->scalefactor_huffman[j] == 6)
-scale_table = scale_factor_quant7; /* 128 entries */
-else
-scale_table = scale_factor_quant6; /* 64 entries, indices 0..63 */
+CVE-2026-129113
+   JSON::XS versions from 4.0_00 before 4.05 for Perl corrupt the
+   incremental buffer length by chopping past its end in incr_skip after
+   a top-level number
 
-scale_sum = 0;
-for (k = 0; k < state->subband_activity[j]; k++) {
-if (k >= state->vq_start_subband[j] || state->bitalloc[j][k] > 0) {
-if (state->scalefactor_huffman[j] < 5)
-scale_sum += InverseQ(state, scales_129[state->scalefactor_huffman[j]]);
-else if (state->scalefactor_huffman[j] == 5)
-scale_sum = bitstream_get(state, 6);
-else if (state->scalefactor_huffman[j] == 6)
-scale_sum = bitstream_get(state, 7);
+CVE-2026-129114
+   JSON::XS versions from 3.04 before 4.05 for Perl write one byte past
+   a heap buffer when appending a one-byte chunk in incr_parse
 
-state->scale_factor[j][k][0] = scale_table[scale_sum]; /* <-- */
-}
-/* the transition_mode branch repeats the same accumulation */
-}
+CVE-2026-129115
+   JSON::XS versions from 3.0 before 4.05 for Perl read freed stack
+   memory when a FREEZE result's serialisation grows the Perl stack
+   under allow_tags in encode_rv
 
-For scalefactor_huffman modes 0..4, scale_sum is a running total of
-InverseQ() deltas and scale_table is scale_factor_quant6 (64 entries).
-Nothing clamps scale_sum before it indexes the table.
 
-InverseQ() returns the Huffman entry's value field, and for mode 0
-(scales_a_129) that value goes from -64 to +64, for example:
+========================================================================
+CVE-2026-124536                                      CPAN Security Group
+========================================================================
 
-{ 16, 57173, 64 },
-{ 16, 57172, -64 },
+         CVE ID:  CVE-2026-124536
 
-So a single scale-factor delta of +64 makes scale_sum == 64 and reads
-scale_factor_quant6[64], one past the end. A single negative delta gives a
-negative index. subband_activity is up to 32, and the transition_mode
-branch accumulates again, so scale_sum can reach a few thousand either side
-of the valid range.
+   Distribution:  JSON-XS
+       Versions:  before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
 
-The modes that use absolute values are fine: mode 5 reads bitstream_get(6)
-(0..63 into the 64-entry table) and mode 6 reads bitstream_get(7) (0..127
-into the 128-entry table). Only the differential modes 0..4 are affected.
 
-Impact is an out-of-bounds int read whose result is used as an audio scale
-factor: a crash if the index lands on an unmapped page, otherwise a limited
-info leak into the decoded output. It's a decoder-side parser bug, so any
-caller that decodes untrusted DTS data is exposed. Not memory-corrupting
-beyond the read.
+JSON::XS versions before 4.05 for Perl allow memory exhaustion by
+buffering incremental input past max_size after a NUL byte in
+incr_parse
 
-A fix is a bounds check before the table lookup, e.g. reject the frame if
-scale_sum is outside [0, 63] (or [0, 127] for quant7).
+Description
+-----------
+JSON::XS versions before 4.05 for Perl allow memory exhaustion by
+buffering incremental input past max_size after a NUL byte in
+incr_parse.
 
-I've requested a CVE for this from MITRE's CNA-LR (pending assignment).
-Happy to provide a crafted sample that triggers it under AddressSanitizer
-if that's useful.
+The parser appends each chunk to its buffer and compares max_size with
+how far it has progressed, not with the buffer length. It treats a NUL
+byte as the end of the input, so a NUL within the first max_size bytes
+keeps it short of the limit. The buffer keeps growing, and incr_skip
+cannot remove the NUL.
 
-Osvaldo
+A peer streaming data to an incr_parse consumer can exhaust process
+memory regardless of max_size.
+
+Problem types
+-------------
+- CWE-770 Allocation of Resources Without Limits or Throttling
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+
+========================================================================
+CVE-2026-124539                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-124539
+
+   Distribution:  JSON-XS
+       Versions:  before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+
+
+JSON::XS versions before 4.05 for Perl leak the decoded key of an
+object rejected for a missing colon in decode_hv
+
+Description
+-----------
+JSON::XS versions before 4.05 for Perl leak the decoded key of an
+object rejected for a missing colon in decode_hv.
+
+Unless it is short plain ASCII, a quoted key is decoded into a new
+scalar. Nothing frees that scalar when the object is rejected for a
+missing ':' after the key.
+
+A process that keeps running after a failed decode retains one key per
+rejected document, with its size chosen by the sender. Repeated
+requests exhaust process memory.
+
+Problem types
+-------------
+- CWE-401 Missing Release of Memory after Effective Lifetime
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+
+========================================================================
+CVE-2026-124540                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-124540
+
+   Distribution:  JSON-XS
+       Versions:  before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+
+
+JSON::XS versions before 4.05 for Perl allow stack exhaustion via
+nested tagged values under allow_tags in decode_tag
+
+Description
+-----------
+JSON::XS versions before 4.05 for Perl allow stack exhaustion via
+nested tagged values under allow_tags in decode_tag.
+
+With allow_tags, "(" starts a tagged value. Its tag and value are
+decoded recursively, and each can start another tagged value. Unlike
+arrays and objects, this nesting is not counted against max_depth.
+
+A run of "(" bytes exhausts the C stack and triggers an uncatchable
+segmentation fault regardless of max_depth.
+
+Problem types
+-------------
+- CWE-674 Uncontrolled Recursion
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+
+========================================================================
+CVE-2026-124541                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-124541
+
+   Distribution:  JSON-XS
+       Versions:  before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+
+
+JSON::XS versions before 4.05 for Perl leak the decoded part of a
+rejected long string in decode_str
+
+Description
+-----------
+JSON::XS versions before 4.05 for Perl leak the decoded part of a
+rejected long string in decode_str.
+
+A string is decoded through a fixed-size buffer (16 KiB in 4.04), and
+each time the buffer fills its contents move into a new scalar. Nothing
+frees that scalar when the string is then rejected for a control
+character, an invalid escape, malformed UTF-8 or the end of the input.
+
+A process that keeps running after a failed decode retains the decoded
+part of each rejected string, with its size chosen by the sender.
+Repeated requests exhaust process memory.
+
+Problem types
+-------------
+- CWE-401 Missing Release of Memory after Effective Lifetime
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+
+========================================================================
+CVE-2026-129113                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-129113
+
+   Distribution:  JSON-XS
+       Versions:  from 4.0_00 before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+
+
+JSON::XS versions from 4.0_00 before 4.05 for Perl corrupt the
+incremental buffer length by chopping past its end in incr_skip after a
+top-level number
+
+Description
+-----------
+JSON::XS versions from 4.0_00 before 4.05 for Perl corrupt the
+incremental buffer length by chopping past its end in incr_skip after a
+top-level number.
+
+The incremental parser scans any run of digits, signs, dots and
+exponent markers as one number, but the decoder stops at the end of a
+valid number, so the parser keeps an offset into bytes it has not
+decoded. It then empties the buffer without clearing those bytes, and a
+later incr_parse call without new input reads them again and moves the
+offset past the end of the buffer. incr_skip, the documented recovery
+after an error, removes that many bytes and the buffer length wraps.
+
+A peer sending input such as "1-2" to an incr_parse consumer can make
+the next read of incr_text exit the process through perl's uncatchable
+out-of-memory path.
+
+Problem types
+-------------
+- CWE-191 Integer Underflow (Wrap or Wraparound)
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+Credits
+-------
+Albert Gierlach (rivit), reporter
+
+
+========================================================================
+CVE-2026-129114                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-129114
+
+   Distribution:  JSON-XS
+       Versions:  from 3.04 before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+
+
+JSON::XS versions from 3.04 before 4.05 for Perl write one byte past a
+heap buffer when appending a one-byte chunk in incr_parse
+
+Description
+-----------
+JSON::XS versions from 3.04 before 4.05 for Perl write one byte past a
+heap buffer when appending a one-byte chunk in incr_parse.
+
+The incremental buffer grows to one and a half times the length it must
+hold, with no room reserved for the terminating NUL. For an empty
+buffer and a one-byte chunk that request is one byte, which a buffer
+whose front was removed by earlier decodes can already have, so nothing
+is reallocated and the NUL lands one byte past the allocation.
+
+A peer streaming data to an incr_parse consumer, choosing how the input
+is split into reads, can cause a one-byte heap out-of-bounds write.
+
+Problem types
+-------------
+- CWE-193 Off-by-one Error
+- CWE-122 Heap-based Buffer Overflow
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+Credits
+-------
+Albert Gierlach (rivit), reporter
+
+
+========================================================================
+CVE-2026-129115                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-129115
+
+   Distribution:  JSON-XS
+       Versions:  from 3.0 before 4.05
+       MetaCPAN:  https://metacpan.org/dist/JSON-XS
+       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
+
+
+JSON::XS versions from 3.0 before 4.05 for Perl read freed stack memory
+when a FREEZE result's serialisation grows the Perl stack under
+allow_tags in encode_rv
+
+Description
+-----------
+JSON::XS versions from 3.0 before 4.05 for Perl read freed stack memory
+when a FREEZE result's serialisation grows the Perl stack under
+allow_tags in encode_rv.
+
+With allow_tags, an object's FREEZE method is called in list context
+and each returned value is encoded through a saved Perl stack pointer.
+When encoding a returned value calls back into Perl, through TO_JSON
+under convert_blessed or another FREEZE, and that callback grows the
+stack, the stack is reallocated while the saved pointer still refers to
+the freed block.
+
+Encoding such objects reads freed memory, and encode can return undef
+without an error.
+
+Problem types
+-------------
+- CWE-416 Use After Free
+
+Solutions
+---------
+Upgrade to JSON-XS 4.05 or later.
+
+References
+----------
+https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
+
+Timeline
+--------
+- 2026-11-13: Version 4.05 released with fix.
+
+Credits
+-------
+Albert Gierlach (rivit), reporter
 
