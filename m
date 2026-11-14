@@ -1,382 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/9
-Message-ID: <699e865e-7822-4757-ad7d-5f23619237dc@cpansec.org>
-Date: Sat, 14 Nov 2026 12:05:13 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/12
+Message-ID: <trinity-5eaf069a-a223-4cc1-8838-5143ac57b23e-1794668612258@trinity-msg-rest-gmx-gmx-live-6b6d8476df-rcxhl>
+Date: Sat, 14 Nov 2026 15:03:32 +0000
+From: "Alexander A. Shvedov" <sigdevel@...amail.com>
 To: oss-security@...ts.openwall.com
-Subject: JSON-XS versions before 4.05 for Perl (7 CVEs)
+Subject: CVE-2026-124030: GPAC/MP4Box: Type Confusion in XMT Field-Replace Commands
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-124536
-   JSON::XS versions before 4.05 for Perl allow memory exhaustion by
-   buffering incremental input past max_size after a NUL byte in
-   incr_parse
-
-CVE-2026-124539
-   JSON::XS versions before 4.05 for Perl leak the decoded key of an
-   object rejected for a missing colon in decode_hv
-
-CVE-2026-124540
-   JSON::XS versions before 4.05 for Perl allow stack exhaustion via
-   nested tagged values under allow_tags in decode_tag
-
-CVE-2026-124541
-   JSON::XS versions before 4.05 for Perl leak the decoded part of a
-   rejected long string in decode_str
-
-CVE-2026-129113
-   JSON::XS versions from 4.0_00 before 4.05 for Perl corrupt the
-   incremental buffer length by chopping past its end in incr_skip after
-   a top-level number
-
-CVE-2026-129114
-   JSON::XS versions from 3.04 before 4.05 for Perl write one byte past
-   a heap buffer when appending a one-byte chunk in incr_parse
-
-CVE-2026-129115
-   JSON::XS versions from 3.0 before 4.05 for Perl read freed stack
-   memory when a FREEZE result's serialisation grows the Perl stack
-   under allow_tags in encode_rv
-
-
-========================================================================
-CVE-2026-124536                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-124536
-
-   Distribution:  JSON-XS
-       Versions:  before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions before 4.05 for Perl allow memory exhaustion by
-buffering incremental input past max_size after a NUL byte in
-incr_parse
-
-Description
------------
-JSON::XS versions before 4.05 for Perl allow memory exhaustion by
-buffering incremental input past max_size after a NUL byte in
-incr_parse.
-
-The parser appends each chunk to its buffer and compares max_size with
-how far it has progressed, not with the buffer length. It treats a NUL
-byte as the end of the input, so a NUL within the first max_size bytes
-keeps it short of the limit. The buffer keeps growing, and incr_skip
-cannot remove the NUL.
-
-A peer streaming data to an incr_parse consumer can exhaust process
-memory regardless of max_size.
-
-Problem types
--------------
-- CWE-770 Allocation of Resources Without Limits or Throttling
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-
-========================================================================
-CVE-2026-124539                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-124539
-
-   Distribution:  JSON-XS
-       Versions:  before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions before 4.05 for Perl leak the decoded key of an
-object rejected for a missing colon in decode_hv
-
-Description
------------
-JSON::XS versions before 4.05 for Perl leak the decoded key of an
-object rejected for a missing colon in decode_hv.
-
-Unless it is short plain ASCII, a quoted key is decoded into a new
-scalar. Nothing frees that scalar when the object is rejected for a
-missing ':' after the key.
-
-A process that keeps running after a failed decode retains one key per
-rejected document, with its size chosen by the sender. Repeated
-requests exhaust process memory.
-
-Problem types
--------------
-- CWE-401 Missing Release of Memory after Effective Lifetime
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-
-========================================================================
-CVE-2026-124540                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-124540
-
-   Distribution:  JSON-XS
-       Versions:  before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions before 4.05 for Perl allow stack exhaustion via
-nested tagged values under allow_tags in decode_tag
-
-Description
------------
-JSON::XS versions before 4.05 for Perl allow stack exhaustion via
-nested tagged values under allow_tags in decode_tag.
-
-With allow_tags, "(" starts a tagged value. Its tag and value are
-decoded recursively, and each can start another tagged value. Unlike
-arrays and objects, this nesting is not counted against max_depth.
-
-A run of "(" bytes exhausts the C stack and triggers an uncatchable
-segmentation fault regardless of max_depth.
-
-Problem types
--------------
-- CWE-674 Uncontrolled Recursion
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-
-========================================================================
-CVE-2026-124541                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-124541
-
-   Distribution:  JSON-XS
-       Versions:  before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions before 4.05 for Perl leak the decoded part of a
-rejected long string in decode_str
-
-Description
------------
-JSON::XS versions before 4.05 for Perl leak the decoded part of a
-rejected long string in decode_str.
-
-A string is decoded through a fixed-size buffer (16 KiB in 4.04), and
-each time the buffer fills its contents move into a new scalar. Nothing
-frees that scalar when the string is then rejected for a control
-character, an invalid escape, malformed UTF-8 or the end of the input.
-
-A process that keeps running after a failed decode retains the decoded
-part of each rejected string, with its size chosen by the sender.
-Repeated requests exhaust process memory.
-
-Problem types
--------------
-- CWE-401 Missing Release of Memory after Effective Lifetime
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-
-========================================================================
-CVE-2026-129113                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-129113
-
-   Distribution:  JSON-XS
-       Versions:  from 4.0_00 before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions from 4.0_00 before 4.05 for Perl corrupt the
-incremental buffer length by chopping past its end in incr_skip after a
-top-level number
-
-Description
------------
-JSON::XS versions from 4.0_00 before 4.05 for Perl corrupt the
-incremental buffer length by chopping past its end in incr_skip after a
-top-level number.
-
-The incremental parser scans any run of digits, signs, dots and
-exponent markers as one number, but the decoder stops at the end of a
-valid number, so the parser keeps an offset into bytes it has not
-decoded. It then empties the buffer without clearing those bytes, and a
-later incr_parse call without new input reads them again and moves the
-offset past the end of the buffer. incr_skip, the documented recovery
-after an error, removes that many bytes and the buffer length wraps.
-
-A peer sending input such as "1-2" to an incr_parse consumer can make
-the next read of incr_text exit the process through perl's uncatchable
-out-of-memory path.
-
-Problem types
--------------
-- CWE-191 Integer Underflow (Wrap or Wraparound)
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-Credits
--------
-Albert Gierlach (rivit), reporter
-
-
-========================================================================
-CVE-2026-129114                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-129114
-
-   Distribution:  JSON-XS
-       Versions:  from 3.04 before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions from 3.04 before 4.05 for Perl write one byte past a
-heap buffer when appending a one-byte chunk in incr_parse
-
-Description
------------
-JSON::XS versions from 3.04 before 4.05 for Perl write one byte past a
-heap buffer when appending a one-byte chunk in incr_parse.
-
-The incremental buffer grows to one and a half times the length it must
-hold, with no room reserved for the terminating NUL. For an empty
-buffer and a one-byte chunk that request is one byte, which a buffer
-whose front was removed by earlier decodes can already have, so nothing
-is reallocated and the NUL lands one byte past the allocation.
-
-A peer streaming data to an incr_parse consumer, choosing how the input
-is split into reads, can cause a one-byte heap out-of-bounds write.
-
-Problem types
--------------
-- CWE-193 Off-by-one Error
-- CWE-122 Heap-based Buffer Overflow
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-Credits
--------
-Albert Gierlach (rivit), reporter
-
-
-========================================================================
-CVE-2026-129115                                      CPAN Security Group
-========================================================================
-
-         CVE ID:  CVE-2026-129115
-
-   Distribution:  JSON-XS
-       Versions:  from 3.0 before 4.05
-       MetaCPAN:  https://metacpan.org/dist/JSON-XS
-       VCS Repo:  https://cvs.schmorp.de/JSON-XS/
-
-
-JSON::XS versions from 3.0 before 4.05 for Perl read freed stack memory
-when a FREEZE result's serialisation grows the Perl stack under
-allow_tags in encode_rv
-
-Description
------------
-JSON::XS versions from 3.0 before 4.05 for Perl read freed stack memory
-when a FREEZE result's serialisation grows the Perl stack under
-allow_tags in encode_rv.
-
-With allow_tags, an object's FREEZE method is called in list context
-and each returned value is encoded through a saved Perl stack pointer.
-When encoding a returned value calls back into Perl, through TO_JSON
-under convert_blessed or another FREEZE, and that callback grows the
-stack, the stack is reallocated while the saved pointer still refers to
-the freed block.
-
-Encoding such objects reads freed memory, and encode can return undef
-without an error.
-
-Problem types
--------------
-- CWE-416 Use After Free
-
-Solutions
----------
-Upgrade to JSON-XS 4.05 or later.
-
-References
-----------
-https://metacpan.org/release/MLEHMANN/JSON-XS-4.05/changes
-
-Timeline
---------
-- 2026-11-13: Version 4.05 released with fix.
-
-Credits
--------
-Albert Gierlach (rivit), reporter
-
+Product:   GPAC (MP4Box)
+Affected:  Through 26.07.0 (per the published CVE record)
+           Reproduced on 26.08-DEV-rev263-g3f056542b-master
+           Commit 3f056542b377cc73677d19490bfe1b46c52c9be7
+Fixed:     1359c4da9329cedceeb8fcfeab6d97e0927236e1
+CVE:       CVE-2026-124030
+CWE:       CWE-843 (Type Confusion)
+CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
+Reporter:  Alexander A. Shvedov (@sigdevel)
+
+Description:
+  While applying BIFS field-replacement commands from a crafted XMT scene,
+  gf_sg_command_apply() fails to check that the stored command-field type
+  matches the actual target node field type. A single-value allocation, such
+  as SFVec2f, can consequently be interpreted as a multi-value field
+  structure such as MFVec2f.
+
+  gf_sg_vrml_field_clone() then uses invalid array pointers or a size
+  derived from the incompatible layout when copying memory. The supplied
+  trace shows SIGSEGV in memmove(), reached from gf_sg_command_apply() at
+  scenegraph/commands.c:346. The original report describes the crash as a
+  NULL pointer dereference; the published CVE and fix classify the root
+  cause as type confusion.
+
+  The issue was reproduced in GPAC version
+  26.08-DEV-rev263-g3f056542b-master at commit
+  3f056542b377cc73677d19490bfe1b46c52c9be7.
+
+Impact:
+  Importing attacker-controlled XMT input can crash MP4Box and cause denial
+  of service. Arbitrary code execution was not demonstrated in the supplied
+  report.
+
+Reproduction:
+  The supplied report used a static debug build on Kali GNU/Linux, kernel
+  7.1.5+kali-amd64, x86_64, built with GCC 15.3.0-2. Run:
+
+    ./MP4Box -chap ./224_gf_sg_command_apply_scenegraph_commands_c_346.xmt /tmp/1 -out /dev/null
+
+GDB log excerpt:
+  Program received signal SIGSEGV, Segmentation fault.
+  #0  0x0000000001275da8 in __memmove_avx_unaligned_erms_rtm ()
+  #1  0x000000000051f681 in gf_sg_command_apply (graph=<optimized out>, com=com@...ry=0x19a6280, time_offset=0) at scenegraph/commands.c:346
+  #2  0x0000000000b7f7bd in ctxload_process (filter=0x1992c20) at filters/load_bt_xmt.c:646
+
+Fix:
+  Use a GPAC build containing the following fix, or apply the patch. It
+  rejects mismatched command-field types in the affected replacement path
+  and adds checks when resetting and copying multi-value fields.
+
+    https://github.com/gpac/gpac/commit/1359c4da9329cedceeb8fcfeab6d97e0927236e1
+
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/224/224_gf_sg_command_apply_scenegraph_commands_c_346.xmt
+
+References:
+  https://github.com/gpac/gpac/issues/4032
+  https://github.com/gpac/gpac/commit/1359c4da9329cedceeb8fcfeab6d97e0927236e1
+  https://www.cve.org/CVERecord?id=CVE-2026-124030
+  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/124xxx/CVE-2026-124030.json
+  https://www.vulncheck.com/advisories/gpac-through-26.07.0-type-confusion-via-gf-sg-command-apply-xmt-field-replace
+
+
+——
+Best regards, Alexander A. Shvedov
+@sigdevel
