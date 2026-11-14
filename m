@@ -1,79 +1,78 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/14
-Message-ID: <trinity-59d6f532-9915-4365-a29e-4c82bd78de65-1794668550016@trinity-msg-rest-gmx-gmx-live-6b6d8476df-2872k>
-Date: Sat, 14 Nov 2026 15:02:30 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/16
+Message-ID: <CAMUkMVUifCWmicbGJ5Hqg2sWWirXvDqoRScRqAsZHAYLYn5G2g@mail.gmail.com>
+Date: Sat, 14 Nov 2026 15:12:36 -0600
+From: "Osvaldo J. Filho" <janeri@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-128240: GPAC/MP4Box: Use-After-Free in gf_sg_proto_del During XMT Scene Teardown
+Subject: libdca (VideoLAN DTS decoder, unmaintained): out-of-bounds read in scale-factor parsing
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  Through 26.07.0 (per the published CVE record)
-           Reproduced on 26.08-DEV-rev263-g3f056542b-master
-           Commit 3f056542b377cc73677d19490bfe1b46c52c9be7
-Fixed:     a2e5c62c213b5329a4572fe8e7c333e1ca26d028
-CVE:       CVE-2026-128240
-CWE:       CWE-416 (Use After Free)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+Hi,
 
-Description:
-  After importing a crafted XMT scene as chapter input, MP4Box tears down
-  the scene-loading filter. gf_sg_reset() frees unregistered prototypes even
-  though the commands that declared them still hold references in
-  new_proto_list.
+libdca is VideoLAN's DTS Coherent Acoustics decoder. It's effectively
+unmaintained (VideoLAN confirmed to me it's abandoned and it was dropped
+from VLC 4.0), but several distros still ship it as a library, so I'm
+reporting here.
 
-  Later command cleanup reaches gf_sg_proto_del() through
-  gf_sg_command_del() and accesses an already freed prototype. The supplied
-  GDB trace shows SIGSEGV in gf_list_find(), called from gf_sg_proto_del()
-  at scenegraph/vrml_proto.c:108. Although the original report title
-  describes a NULL pointer dereference, the accepted fix and published CVE
-  identify a use-after-free caused by incorrect prototype ownership during
-  teardown.
+There's an out-of-bounds read in the scale-factor parser, reachable from a
+crafted DTS frame. I verified it against the current tree at
+https://www.google.com/url?q=https://code.videolan.org/videolan/libdca&source=gmail&ust=1794777156181000&sa=E
+(HEAD 95c4bd8).
 
-  The issue was reproduced in GPAC version
-  26.08-DEV-rev263-g3f056542b-master at commit
-  3f056542b377cc73677d19490bfe1b46c52c9be7.
+In parse.c, dca_subframe_header() decodes scale factors like this:
 
-Impact:
-  Importing attacker-controlled XMT input can crash MP4Box and cause denial
-  of service. Arbitrary code execution was not demonstrated in the supplied
-  report.
+if (state->scalefactor_huffman[j] == 6)
+scale_table = scale_factor_quant7; /* 128 entries */
+else
+scale_table = scale_factor_quant6; /* 64 entries, indices 0..63 */
 
-Reproduction:
-  The supplied report used a static debug build on Kali GNU/Linux, kernel
-  7.1.5+kali-amd64, x86_64, built with GCC 15.3.0-2. Run:
+scale_sum = 0;
+for (k = 0; k < state->subband_activity[j]; k++) {
+if (k >= state->vq_start_subband[j] || state->bitalloc[j][k] > 0) {
+if (state->scalefactor_huffman[j] < 5)
+scale_sum += InverseQ(state, scales_129[state->scalefactor_huffman[j]]);
+else if (state->scalefactor_huffman[j] == 5)
+scale_sum = bitstream_get(state, 6);
+else if (state->scalefactor_huffman[j] == 6)
+scale_sum = bitstream_get(state, 7);
 
-    ./MP4Box -chap ./223_gf_sg_proto_del_scenegraph_vrml_proto_c.xmt /tmp/1 -out /dev/null
+state->scale_factor[j][k][0] = scale_table[scale_sum]; /* <-- */
+}
+/* the transition_mode branch repeats the same accumulation */
+}
 
-GDB log excerpt:
-  Program received signal SIGSEGV, Segmentation fault.
-  #0  gf_list_find (ptr=0x19af880, item=<optimized out>) at utils/list.c:738
-  #1  gf_list_del_item (ptr=0x19af880, item=item@...ry=0x19938c0) at utils/list.c:746
-  #2  0x000000000057c104 in gf_sg_proto_del (proto=0x19938c0) at scenegraph/vrml_proto.c:108
-  #3  0x000000000051e9bd in gf_sg_command_del (com=0x1a50d30) at scenegraph/commands.c:131
-  #4  0x00000000008bf103 in gf_sm_au_del (sc=0x1990d70, au=0x1a50df0) at scene_manager/scene_manager.c:113
+For scalefactor_huffman modes 0..4, scale_sum is a running total of
+InverseQ() deltas and scale_table is scale_factor_quant6 (64 entries).
+Nothing clamps scale_sum before it indexes the table.
 
-Fix:
-  Use a GPAC build containing the following merged fix, or apply the patch.
-  It leaves unregistered prototypes owned by their declaring commands,
-  clears parent_graph when the scene graph is reset, and guards accesses to
-  parent_graph in gf_sg_proto_del().
+InverseQ() returns the Huffman entry's value field, and for mode 0
+(scales_a_129) that value goes from -64 to +64, for example:
 
-    https://github.com/gpac/gpac/commit/a2e5c62c213b5329a4572fe8e7c333e1ca26d028
+{ 16, 57173, 64 },
+{ 16, 57172, -64 },
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/223/223_gf_sg_proto_del_scenegraph_vrml_proto_c.xmt
+So a single scale-factor delta of +64 makes scale_sum == 64 and reads
+scale_factor_quant6[64], one past the end. A single negative delta gives a
+negative index. subband_activity is up to 32, and the transition_mode
+branch accumulates again, so scale_sum can reach a few thousand either side
+of the valid range.
 
-References:
-  https://github.com/gpac/gpac/issues/4031
-  https://github.com/gpac/gpac/pull/4037
-  https://github.com/gpac/gpac/commit/a2e5c62c213b5329a4572fe8e7c333e1ca26d028
-  https://www.cve.org/CVERecord?id=CVE-2026-128240
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/128xxx/CVE-2026-128240.json
-  https://www.vulncheck.com/advisories/gpac-through-26.07.0-use-after-free-in-gf-sg-proto-del-during-scene-teardown
+The modes that use absolute values are fine: mode 5 reads bitstream_get(6)
+(0..63 into the 64-entry table) and mode 6 reads bitstream_get(7) (0..127
+into the 128-entry table). Only the differential modes 0..4 are affected.
 
+Impact is an out-of-bounds int read whose result is used as an audio scale
+factor: a crash if the index lands on an unmapped page, otherwise a limited
+info leak into the decoded output. It's a decoder-side parser bug, so any
+caller that decodes untrusted DTS data is exposed. Not memory-corrupting
+beyond the read.
 
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+A fix is a bounds check before the table lookup, e.g. reject the frame if
+scale_sum is outside [0, 63] (or [0, 127] for quant7).
+
+I've requested a CVE for this from MITRE's CNA-LR (pending assignment).
+Happy to provide a crafted sample that triggers it under AddressSanitizer
+if that's useful.
+
+Osvaldo
+
