@@ -1,35 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/1
-Message-ID: <57792ad7-e08c-d698-3180-b5d141f08bec@apache.org>
-Date: Fri, 13 Nov 2026 23:28:57 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/4
+Message-ID: <08eb4ed6-f13c-96fd-db9c-fe2b0d81314a@apache.org>
+Date: Sat, 14 Nov 2026 04:40:32 +0000
 From: Lenny Primak <lprimak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-114737: Apache Shiro: Incorrect default for case-insensitive path matching in ShiroFilterFactoryBean allows auth bypass for static files 
+Subject: CVE-2026-74763: Apache Shiro: Authorization annotations not always enforced, depending on where they are placed 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 4.0: 2.3 (low) CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/S:P/AU:Y/V:D/RE:L/U:Green
+    CVSS 4.0: 6.3 (medium) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:L/VA:N/SC:N/SI:N/SA:N/S:N/AU:N/V:D/RE:L/U:Amber
 
 Affected versions:
 
-- Apache Shiro (org.apache.shiro:shiro-spring) 3.0.1 before 3.0.2
+- Apache Shiro (org.apache.shiro:shiro-guice) before 3.0.2
+- Apache Shiro (org.apache.shiro:shiro-aspectj) before 3.0.2
+- Apache Shiro (org.apache.shiro:shiro-cdi) 2.0.0-alpha-0 before 3.0.2
+- Apache Shiro (org.apache.shiro:shiro-jakarta-ee) 2.0.0-alpha-0 before 3.0.2
 
 Description:
 
-The fix for  CVE-2026-23903 https://shiro.apache.org/security-reports.html#cve_2026_23903  was incomplete for manually-created ShiroFilterFactoryBean, which still matched paths case-sensitively by default.
-This issue affects Apache Shiro version 3.0.1, only when ShiroFilterFactoryBean is created manually by the application and static files are served from a case-insensitive filesystem.
-Applications that let Shiro Spring (Boot) Starter create the bean are not affected.
+Authorization annotations, such as @RequiresRoles and @RequiresPermissions, are not always enforced in some class or interface hierarchies.
+Annotations declared on an interface were not enforced when using the shiro-guice, shiro-aspectj, shiro-cdi or shiro-jakarta-ee modules.
+In addition, annotations declared on a class or a superclass were not always enforced when using shiro-guice or shiro-aspectj, allowing an unauthorized caller to invoke methods that should be protected.
+This issue affects all Apache Shiro versions through 3.0.1, with impact depending on module and where annotations are declared.
 
-Mitigation: Upgrade to version 3.0.2 or later, which fixes the issue.
-Alternatively, call setCaseInsensitive(true) on the ShiroFilterFactoryBean.
+Mitigation: Upgrade to version 3.0.2 or later, which fixes the issue. The annotation closest to the invoked method now takes precedence.
+Alternatively, declare authorization annotations directly on each protected implementing method.
 
 Credit:
 
-Shinya Murakami (@4n86rakam1) (finder)
+n0mi1k (finder)
+Joshua Rogers (finder)
+Wentao He (finder)
 Lenny Primak <lenny@...wlogix.com> (remediation developer)
 
 References:
 
 https://shiro.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-114737
+https://www.cve.org/CVERecord?id=CVE-2026-74763
 
