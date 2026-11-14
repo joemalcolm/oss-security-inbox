@@ -1,75 +1,66 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/12
-Message-ID: <trinity-5eaf069a-a223-4cc1-8838-5143ac57b23e-1794668612258@trinity-msg-rest-gmx-gmx-live-6b6d8476df-rcxhl>
-Date: Sat, 14 Nov 2026 15:03:32 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124030: GPAC/MP4Box: Type Confusion in XMT Field-Replace Commands
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/15
+Message-ID: <aa2122cf-94f7-47b3-bec1-ddd015b874b8@cpansec.org>
+Date: Sat, 14 Nov 2026 20:13:02 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
+To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
+Subject: CVE-2015-10149: Dancer versions before 1.3400 for Perl pass unvalidated session ids from the session cookie to the session engine
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  Through 26.07.0 (per the published CVE record)
-           Reproduced on 26.08-DEV-rev263-g3f056542b-master
-           Commit 3f056542b377cc73677d19490bfe1b46c52c9be7
-Fixed:     1359c4da9329cedceeb8fcfeab6d97e0927236e1
-CVE:       CVE-2026-124030
-CWE:       CWE-843 (Type Confusion)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+========================================================================
+CVE-2015-10149                                       CPAN Security Group
+========================================================================
 
-Description:
-  While applying BIFS field-replacement commands from a crafted XMT scene,
-  gf_sg_command_apply() fails to check that the stored command-field type
-  matches the actual target node field type. A single-value allocation, such
-  as SFVec2f, can consequently be interpreted as a multi-value field
-  structure such as MFVec2f.
+         CVE ID:  CVE-2015-10149
 
-  gf_sg_vrml_field_clone() then uses invalid array pointers or a size
-  derived from the incompatible layout when copying memory. The supplied
-  trace shows SIGSEGV in memmove(), reached from gf_sg_command_apply() at
-  scenegraph/commands.c:346. The original report describes the crash as a
-  NULL pointer dereference; the published CVE and fix classify the root
-  cause as type confusion.
-
-  The issue was reproduced in GPAC version
-  26.08-DEV-rev263-g3f056542b-master at commit
-  3f056542b377cc73677d19490bfe1b46c52c9be7.
-
-Impact:
-  Importing attacker-controlled XMT input can crash MP4Box and cause denial
-  of service. Arbitrary code execution was not demonstrated in the supplied
-  report.
-
-Reproduction:
-  The supplied report used a static debug build on Kali GNU/Linux, kernel
-  7.1.5+kali-amd64, x86_64, built with GCC 15.3.0-2. Run:
-
-    ./MP4Box -chap ./224_gf_sg_command_apply_scenegraph_commands_c_346.xmt /tmp/1 -out /dev/null
-
-GDB log excerpt:
-  Program received signal SIGSEGV, Segmentation fault.
-  #0  0x0000000001275da8 in __memmove_avx_unaligned_erms_rtm ()
-  #1  0x000000000051f681 in gf_sg_command_apply (graph=<optimized out>, com=com@...ry=0x19a6280, time_offset=0) at scenegraph/commands.c:346
-  #2  0x0000000000b7f7bd in ctxload_process (filter=0x1992c20) at filters/load_bt_xmt.c:646
-
-Fix:
-  Use a GPAC build containing the following fix, or apply the patch. It
-  rejects mismatched command-field types in the affected replacement path
-  and adds checks when resetting and copying multi-value fields.
-
-    https://github.com/gpac/gpac/commit/1359c4da9329cedceeb8fcfeab6d97e0927236e1
-
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/224/224_gf_sg_command_apply_scenegraph_commands_c_346.xmt
-
-References:
-  https://github.com/gpac/gpac/issues/4032
-  https://github.com/gpac/gpac/commit/1359c4da9329cedceeb8fcfeab6d97e0927236e1
-  https://www.cve.org/CVERecord?id=CVE-2026-124030
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/124xxx/CVE-2026-124030.json
-  https://www.vulncheck.com/advisories/gpac-through-26.07.0-type-confusion-via-gf-sg-command-apply-xmt-field-replace
+   Distribution:  Dancer
+       Versions:  before 1.3400
+       MetaCPAN: https://metacpan.org/dist/Dancer
+       VCS Repo: https://github.com/PerlDancer/Dancer
 
 
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+Dancer versions before 1.3400 for Perl pass unvalidated session ids
+from the session cookie to the session engine
+
+Description
+-----------
+Dancer versions before 1.3400 for Perl pass unvalidated session ids
+from the session cookie to the session engine.
+
+read_session_id returns the cookie value as the session id without
+checking its characters, and Dancer hands it to the session engine to
+load the session.
+
+A remote attacker may cause path traversal or injection in a session
+engine that uses the id in a file path, cache command or query without
+checking it.
+
+Problem types
+-------------
+- CWE-1286 Improper Validation of Syntactic Correctness of Input
+
+Solutions
+---------
+Upgrade to Dancer 1.3400 or later.
+
+References
+----------
+https://github.com/PerlDancer/Dancer/commit/5a68fddbaef903fd3bd58517ce585cde986716e4.patch
+https://github.com/PerlDancer/Dancer/issues/1117
+https://github.com/PerlDancer/Dancer/issues/1118
+https://github.com/PerlDancer/Dancer/pull/1172
+https://metacpan.org/release/BIGPRESH/Dancer-1.3400/changes
+
+Timeline
+--------
+- 2015-06-03: Session id validation vulnerability first reported in
+   issue 1117.
+- 2016-02-15: Dancer version 1.3300 adds session id validation.
+- 2016-02-16: Dancer version 1.3301 reverts session id changes that
+   broke Dancer::Session::Cookie.
+- 2018-02-04: Pull request 1172 with session id validation created,
+- 2018-05-20: Dancer version 1.3203 released with session id
+   validation.
+- 2018-06-15: Dancer version 1.3400 released that promotes previous
+   trial releases to stable release.
+
