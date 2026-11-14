@@ -1,41 +1,35 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/13/11
-Message-ID: <28721e98-b23e-f84c-0bcb-d1c4eec677d9@apache.org>
-Date: Fri, 13 Nov 2026 15:50:32 +0000
-From: Abhishek Choudhary <shreemaanabhishek@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/2
+Message-ID: <fada557e-58fc-380a-eb3f-4d3c15c44b7b@apache.org>
+Date: Sat, 14 Nov 2026 00:03:39 +0000
+From: Lenny Primak <lprimak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124726: Apache APISIX: openapi-to-mcp tool call can reach an API path the document does not declare 
+Subject: CVE-2026-129320: Apache Shiro: Principal tags in Jakarta Pages and Jakarta Faces do not escape output, allowing cross-site scripting 
 Content-Type: text/plain; charset=utf-8
 
 Severity: 
-    CVSS 4.0: 6.9 (medium) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:N/VI:N/VA:N/SC:H/SI:L/SA:N
+    CVSS 4.0: 2.1 (low) CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:P/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N/S:N/AU:N/V:D/RE:L/U:Green
 
 Affected versions:
 
-- Apache APISIX 3.19.0 before 3.20.0
+- Apache Shiro (org.apache.shiro:shiro-web) before 3.0.2
+- Apache Shiro (org.apache.shiro:shiro-jakarta-ee) 2.0.0-alpha-0 before 3.0.2
 
 Description:
 
-Relative Path Traversal, with Unintended Proxy vulnerability in Apache APISIX.
+The shiro:principal tags in shiro-web (Jakarta Pages) and shiro-jakarta-ee (Jakarta Faces) did not escape their output, which could allow cross-site scripting when a principal value is not fully trusted.
+This issue affects all Apache Shiro versions through 3.0.1, only when the principal tag is used.
 
-
-
-A caller of the MCP endpoint can invoke endpoints the OpenAPI document
-never declared, under the declared tool's HTTP method, using the credentials the
-Route adds. This issue affects Apache APISIX: from 3.19.0 before 3.20.0.
-
-
-
-Users are recommended to upgrade to version 3.20.0, which fixes the issue.
+Mitigation: Upgrade to version 3.0.2 or later, which escapes the output.
+Alternatively, validate principal values on input.
 
 Credit:
 
-Javier García Herrera (reporter)
-shreemaan-abhishek (coordinator)
-shreemaan-abhishek (remediation developer)
+The ASF, found using Claude agents to study the security of open-source projects, validated and reported by Apache Shiro (finder)
+Lenny Primak <lenny@...wlogix.com> (remediation developer)
 
 References:
 
-https://apisix.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-124726
+https://shiro.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-129320
 
