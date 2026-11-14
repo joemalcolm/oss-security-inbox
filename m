@@ -1,65 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/10
-Message-ID: <4ae5f31b-2f54-4ed1-a7ce-b981999177f7@cpansec.org>
-Date: Sat, 14 Nov 2026 13:57:16 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2011-10042: HTTP::Session versions before 0.43 for Perl allow memcached command injection via unfiltered session ids in HTTP::Session::Store::Memcached
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/11
+Message-ID: <avipWZHBB4GQhIYq@256bit.org>
+Date: Sat, 14 Nov 2026 19:32:57 +0100
+From: Christian Brabandt <cb@...bit.org>
+To: oss-security@...ts.openwall.com
+Subject: [vim-security] Command Execution via PowerShell Keyword Lookup in Vim < 9.2.1346
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2011-10042                                       CPAN Security Group
-========================================================================
+Command Execution via PowerShell Keyword Lookup in Vim < 9.2.1346
+=================================================================
 
-         CVE ID:  CVE-2011-10042
+Date: 14.11.2026
+Severity: Low
+CVE: *requested, not yet assigned*
+CWE: Improper Neutralization of Special Elements used in an OS Command
+     (CWE-78)
 
-   Distribution:  http-session
-       Versions:  before 0.43
-       MetaCPAN:  https://metacpan.org/dist/http-session
-       VCS Repo:  https://github.com/tokuhirom/http-session
+## Summary
+
+The fix for [GHSA-r5v6-q6j8-8qw2](https://github.com/vim/vim/security/advisories/GHSA-r5v6-q6j8-8qw2)
+in `runtime/ftplugin/ps1.vim` quotes the argument of `K` for PowerShell by
+doubling ASCII single quotes.  PowerShell also treats the typographic quotes
+U+2018, U+2019, U+201A and U+201B as single quotes, which were not doubled.  A
+crafted line in a PowerShell script can therefore still execute arbitrary
+commands when the user selects it and presses `K`.
+
+## Description
+
+The PowerShell filetype plugin defines a `:GetHelp` command and sets
+`keywordprg` to it.  The command passes the argument of `K` to PowerShell
+as `Get-Help -Full '<arg>'` via `-Command`, doubling every `'` in the
+argument to keep it inside the single-quoted string.
+
+The PowerShell language accepts `'`, `‘`, `’`, `‚` and `‛` as
+single-quote characters.  A typographic quote in the argument therefore
+terminates the string, and the text following it is executed as PowerShell
+code, e.g. for the line:
+
+    x’;./hook.ps1;’
+
+## Impact
+
+Arbitrary command execution in the context of the user running Vim.
+Exploitation requires:
+
+- Vim with filetype plugins enabled and PowerShell (`pwsh` or
+  `powershell.exe`) installed
+- the victim opening a crafted PowerShell script, selecting the crafted
+  line in Visual mode and invoking the keyword lookup with `K`.
+
+The severity is rated Low because Normal-mode `K` is not affected and
+exploitation requires the victim to deliberately select the crafted text in
+Visual mode and invoke the keyword lookup.
+
+## Acknowledgements
+
+The Vim project would like to thank Zachariah Mithani for reporting the issue.
+
+## References
+
+The issue has been fixed as of Vim patch [v9.2.1346](https://github.com/vim/vim/releases/tag/v9.2.1346).
+
+- [Commit](https://github.com/vim/vim/commit/188a790b05a282926b311503245f5119a5f6f3ed)
+- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-XXXX)
+- [Previous advisory](https://github.com/vim/vim/security/advisories/GHSA-r5v6-q6j8-8qw2)
 
 
-HTTP::Session versions before 0.43 for Perl allow memcached command
-injection via unfiltered session ids in HTTP::Session::Store::Memcached
 
-Description
------------
-HTTP::Session versions before 0.43 for Perl allow memcached command
-injection via unfiltered session ids in
-HTTP::Session::Store::Memcached.
-
-The session id from the client's cookie reaches memcached unchanged as
-the cache key.
-
-A CR and LF in the session id end the cache command early, and the
-server reads the bytes after them as further commands.
-
-Problem types
--------------
-- CWE-93 Improper Neutralization of CRLF Sequences
-
-Solutions
----------
-Upgrade to HTTP::Session 0.43 or later.
-
-Note that HTTP::Session 0.54 includes additional security fixes, but
-has been marked as deprecated.    Users should migrate to an alternative
-such as Plack::Middleware::Session.
-
-References
-----------
-https://github.com/tokuhirom/http-session/commit/039345db9bc9311868019fde67b89c355114a3d3.patch
-https://metacpan.org/release/TOKUHIROM/HTTP-Session-0.42/changes
-
-Timeline
---------
-- 2011-02-20: HTTP::Session version 0.42 released.
-- 2011-02-20: HTTP::Session version 0.43 released with improved
-   protections against memcached injection
-- 2026-06-27: HTTP::Session version 0.54 released, with the
-   distribution marked as deprecated.
-
-Credits
--------
-Masahiro Nagano (kazeburo), reporter
-
+Best,
+Christian
+-- 
+Wie man sein Kind nicht nennen sollte: 
+  Claire Grube 
