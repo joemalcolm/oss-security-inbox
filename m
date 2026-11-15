@@ -1,76 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/14/13
-Message-ID: <trinity-2d0663da-526e-4108-9077-a05e7ae03d40-1794668473883@trinity-msg-rest-gmx-gmx-live-6b6d8476df-sxgx2>
-Date: Sat, 14 Nov 2026 15:01:13 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/15/1
+Message-ID: <CAMUkMVWGaq2sKvVagvPc9SkLQJTjqYgn44nAUnhm-6k6KkJ3HA@mail.gmail.com>
+Date: Sun, 15 Nov 2026 00:58:37 +0000
+From: "Osvaldo J. Filho" <janeri@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124031: GPAC/MP4Box: Type Confusion in Appearance Handling via Crafted XMT Input
+Subject: Re: libdca (VideoLAN DTS decoder, unmaintained): out-of-bounds read in scale-factor parsing
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  Through 26.07.0 (per the published CVE record)
-           Reproduced on 26.08-DEV-rev263-g3f056542b-master
-           Commit 3f056542b377cc73677d19490bfe1b46c52c9be7
-Fixed:     43a8329a90ae2907716b593cc3746458516c7c39
-CVE:       CVE-2026-124031
-CWE:       CWE-843 (Type Confusion)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+Following up on the scale-factor OOB read -- there's a second out-of-bounds
+read in the same decoder, in the bitstream reader.
 
-Description:
-  During chapter import from a crafted XMT scene, a Shape node can reference
-  a node of an incompatible type, such as Conditional, in its appearance
-  field. drawable_get_aspect_2d_mpeg4() and TraverseShape() cast that node
-  to M_Appearance without first validating its node tag.
+bitstream_fill_current() in bitstream.c reads a word and advances the
+pointer with no end-of-buffer check:
 
-  The incompatible structure layout causes a non-node value to be read as
-  the texture pointer. In the supplied trace, gf_sc_texture_get_handler() at
-  compositor/texturing.c:370 passes the address of CTXLoad_OnActivate() to
-  gf_node_get_tag(). Accessing p->sgprivate->tag at
-  scenegraph/base_scenegraph.c:1345 then faults with SIGSEGV. The original
-  report describes the crash as a NULL pointer dereference; the published
-  CVE and fix identify the root cause as type confusion.
+static inline void bitstream_fill_current (dca_state_t * state) {
+uint32_t tmp;
+tmp = *(state->buffer_start++); /* no bounds check */
+...
+}
 
-  The issue was reproduced in GPAC version
-  26.08-DEV-rev263-g3f056542b-master at commit
-  3f056542b377cc73677d19490bfe1b46c52c9be7.
+The decoder state (dca_internal.h) has no buffer_end field at all, so the
+reader trusts the frame to be well-formed. A crafted frame whose header
+fields ask for more bits than the frame holds walks buffer_start past the
+end of the input buffer. Confirmed with AddressSanitizer on a 96-byte
+crafted frame decoded through the normal dca_syncinfo / dca_frame /
+dca_block path:
 
-Impact:
-  Importing attacker-controlled XMT input can crash MP4Box and cause denial
-  of service. Arbitrary code execution was not demonstrated in the supplied
-  report.
+heap-buffer-overflow READ of size 4
+#0 bitstream_fill_current bitstream.c:55
+#1 dca_bitstream_get_bh bitstream.c:95
+#2 bitstream_get bitstream.h:69
+#3 dca_subframe_header parse.c:494
+#4 dca_block parse.c:1083
+0 bytes after 96-byte region
 
-Reproduction:
-  The supplied report used a static debug build on Kali GNU/Linux, kernel
-  7.1.5+kali-amd64, x86_64, built with GCC 15.3.0-2. Run:
+Same class as the first: crash / bounded over-read on untrusted DTS input,
+read-only. The fix is to track the end of the input buffer in dca_state_t
+and stop before reading past it.
 
-    ./MP4Box -chap ./222_gf_node_get_tag_compositor_texturing_c_370.xmt /tmp/1 -out /dev/null
+Crafted sample available on request. Verified against
+https://www.google.com/url?q=http://code.videolan.org/videolan/libdca&source=gmail&ust=1794790717387000&sa=E
+HEAD 95c4bd8.
 
-GDB log excerpt:
-  Program received signal SIGSEGV, Segmentation fault.
-  #0  0x000000000051857e in gf_node_get_tag (p=0xb7d210 <CTXLoad_OnActivate>) at scenegraph/base_scenegraph.c:1345
-  #1  0x000000000113b40b in gf_sc_texture_get_handler (n=0xb7d210 <CTXLoad_OnActivate>) at compositor/texturing.c:370
-  #2  0x00000000010dd542 in drawable_get_aspect_2d_mpeg4 (node=0x1985be0, asp=asp@...ry=0x19e1d40, tr_state=tr_state@...ry=0x19ceb00) at compositor/drawable.c:565
-  #3  0x00000000010e0c83 in drawable_init_context_mpeg4 (drawable=drawable@...ry=0x1985c50, tr_state=tr_state@...ry=0x19ceb00) at compositor/drawable.c:806
-  #4  0x00000000010fe659 in TraverseCurve2D (node=0x1985be0, rs=0x19ceb00, is_destroy=GF_FALSE) at compositor/mpeg4_geometry_2d.c:643
+Osvaldo
 
-Fix:
-  Use a GPAC build containing the following fix, or apply the patch. It
-  validates the appearance node tag before M_Appearance fields are accessed.
+On Sat, Nov 14, 2026 06:12 PM, "Osvaldo J. Filho" <janeri@...il.com> wrote:
 
-    https://github.com/gpac/gpac/commit/43a8329a90ae2907716b593cc3746458516c7c39
+> Hi,
+>
+> libdca is VideoLAN's DTS Coherent Acoustics decoder. It's effectively
+> unmaintained (VideoLAN confirmed to me it's abandoned and it was dropped
+> from VLC 4.0), but several distros still ship it as a library, so I'm
+> reporting here.
+>
+> There's an out-of-bounds read in the scale-factor parser, reachable from a
+> crafted DTS frame. I verified it against the current tree at
+> https://www.google.com/url?q=https://code.videolan.org/
+> videolan/libdca&source=gmail&ust=1794777156181000&sa=E (HEAD 95c4bd8).
+>
+> In parse.c, dca_subframe_header() decodes scale factors like this:
+>
+> if (state->scalefactor_huffman[j] == 6)
+> scale_table = scale_factor_quant7; /* 128 entries */
+> else
+> scale_table = scale_factor_quant6; /* 64 entries, indices 0..63 */
+>
+> scale_sum = 0;
+> for (k = 0; k < state->subband_activity[j]; k++) {
+> if (k >= state->vq_start_subband[j] || state->bitalloc[j][k] > 0) {
+> if (state->scalefactor_huffman[j] < 5)
+> scale_sum += InverseQ(state, scales_129[state->scalefactor_huffman[j]]);
+> else if (state->scalefactor_huffman[j] == 5)
+> scale_sum = bitstream_get(state, 6);
+> else if (state->scalefactor_huffman[j] == 6)
+> scale_sum = bitstream_get(state, 7);
+>
+> state->scale_factor[j][k][0] = scale_table[scale_sum]; /* <-- */
+> }
+> /* the transition_mode branch repeats the same accumulation */
+> }
+>
+> For scalefactor_huffman modes 0..4, scale_sum is a running total of
+> InverseQ() deltas and scale_table is scale_factor_quant6 (64 entries).
+> Nothing clamps scale_sum before it indexes the table.
+>
+> InverseQ() returns the Huffman entry's value field, and for mode 0
+> (scales_a_129) that value goes from -64 to +64, for example:
+>
+> { 16, 57173, 64 },
+> { 16, 57172, -64 },
+>
+> So a single scale-factor delta of +64 makes scale_sum == 64 and reads
+> scale_factor_quant6[64], one past the end. A single negative delta gives a
+> negative index. subband_activity is up to 32, and the transition_mode
+> branch accumulates again, so scale_sum can reach a few thousand either side
+> of the valid range.
+>
+> The modes that use absolute values are fine: mode 5 reads bitstream_get(6)
+> (0..63 into the 64-entry table) and mode 6 reads bitstream_get(7) (0..127
+> into the 128-entry table). Only the differential modes 0..4 are affected.
+>
+> Impact is an out-of-bounds int read whose result is used as an audio scale
+> factor: a crash if the index lands on an unmapped page, otherwise a limited
+> info leak into the decoded output. It's a decoder-side parser bug, so any
+> caller that decodes untrusted DTS data is exposed. Not memory-corrupting
+> beyond the read.
+>
+> A fix is a bounds check before the table lookup, e.g. reject the frame if
+> scale_sum is outside [0, 63] (or [0, 127] for quant7).
+>
+> I've requested a CVE for this from MITRE's CNA-LR (pending assignment).
+> Happy to provide a crafted sample that triggers it under AddressSanitizer
+> if that's useful.
+>
+> Osvaldo
+>
 
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/222/222_gf_node_get_tag_compositor_texturing_c_370.xmt
-
-References:
-  https://github.com/gpac/gpac/issues/4030
-  https://github.com/gpac/gpac/commit/43a8329a90ae2907716b593cc3746458516c7c39
-  https://www.cve.org/CVERecord?id=CVE-2026-124031
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/124xxx/CVE-2026-124031.json
-  https://www.vulncheck.com/advisories/gpac-through-26.07.0-type-confusion-via-drawable-get-aspect-2d-mpeg4
-
-
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
