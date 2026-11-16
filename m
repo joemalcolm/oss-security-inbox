@@ -1,67 +1,75 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/16/8
-Message-ID: <trinity-da32ae64-d4da-44e1-8ff2-14b070045760-1794850881011@trinity-msg-rest-gmx-gmx-live-6b6d8476df-bxtdv>
-Date: Mon, 16 Nov 2026 17:41:21 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/16/2
+Message-ID: <20261116144335.BLhGlopc@steffen%sdaoden.eu>
+Date: Mon, 16 Nov 2026 15:43:35 +0100
+From: Steffen Nurpmeso <steffen@...oden.eu>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-71467: GPAC/MP4Box: NULL Pointer Dereference in gf_node_get_field_by_name via Crafted XMT Input
+Subject: Re: "sshole": password authentication bypass: OpenSSH + musl libc
 Content-Type: text/plain; charset=utf-8
 
- Product:   GPAC (MP4Box)
-Affected:  Versions before 26.02.0
-           Reproduced on 2.5-DEV-rev1552-gbb16baf3d-master
-           Commit bb16baf3d48737dfbc3ccdb6796e2951c280a1e5
-Fixed:     62714f27c64a3d1eb7e880f9eed2d38673cb43ce
-CVE:       CVE-2025-71467
-CWE:       CWE-476 (NULL Pointer Dereference)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+Solar Designer wrote in
+ <20261116073443.GA14465@...nwall.com>:
+ |I'm sorry I'm late to comment in this thread, but I feel a few aspects
+ |are still misunderstood by a lot of people here.
+ |
+ |On Thu, Nov 05, 2026 at 09:14:35AM -0500, Jan Schaumann wrote:
+ ...
+ |> That is, for any account that has an invalid password
+ |> hash field of '*', you can log in by entering a
+ |> password >257 characters, which will cause crypt(3) in
+ |> musl libc to return '*'.
+ |
+ |Kind of, and that's indeed embarrassing, but it misses important detail.
+ |
+ |musl's crypt(3) only returns "*" when the setting (aka salt) string
+ |passed to it is not "*", so it reasonably expected the caller doing the
+ |typical strcmp() would see no match.  What OpenSSH did was authenticate
+ |one user while taking the password hash field from another user.  That
+ |could be a reasonable way to mitigate timing leaks as long as
+ |authentication result is discarded.  The problem is it wasn't.  Such
+ |fake yet real authentication against another user's password hash was
+ |unexpected by musl developers.
+ ..
+ |My original design in crypt_blowfish used two different failure tokens,
+ |"*0" and "*1".  This is what libxcrypt inherited, unless it's configured
+ |with --disable-failure-tokens, in which case it returns NULL.
+ ...
+ |Some distros that use libxcrypt already --disable-failure-tokens for
+ |quite a while.
+ |
+ |musl is likely going to start returning NULL in a future release, but
+ |for now will likely move to the same "*0" and "*1" failure tokens that
+ |libxcrypt uses.
+ |
+ |Besides the risk of crashes on NULL dereference, I also worry that in
+ |some wrappers and scripting languages NULL may be mapped to an empty
+ |string or (more reasonably) to a non-object.  I am seeing the latter
+ ...
+ |Overall, I am not sure NULL is actually safer than "*0" and "*1".
+ ...
+ |OpenBSD bcrypt used to return ":" on error until 2015, but switched to
+ |returning NULL since.  As I recall, OpenBSD's own passwd(1) program was
+ ...
+ |Finally, I include below two postings by Rich Felker to the musl list.
 
-Description:
-  MP4Box dereferences a NULL pointer in gf_node_get_field_by_name()
-  at scenegraph/base_scenegraph.c:2088 while parsing a crafted MPEG-4
-  XMT scene. Field-name resolution can reach this function with a node
-  that was never created. The function accesses node->sgprivate->tag
-  without first checking node and node->sgprivate, causing a NULL read.
+There was also on the dropbear list, before Matt Johnston posted
+here.
 
-  The issue was reproduced in GPAC version
-  2.5-DEV-rev1552-gbb16baf3d-master, recorded at commit
-  bb16baf3d48737dfbc3ccdb6796e2951c280a1e5.
+Given the above, which is all hacky in one way or another, and the
+50+ year history of this function, to me a new function entry
+point with clearly from-scratch defined semantics appear the most
+attractive.
 
-Impact:
-  Parsing attacker-controlled XMT input causes an immediate MP4Box crash
-  and denial of service. Other GPAC applications using the same scene
-  graph code may also be affected. The observed fault is a NULL read;
-  arbitrary code execution was not demonstrated.
+Hypothetically, how would a (posix_)crypt(3) would need to be
+defined in order to be an almost drop-in replacement, but with
+NULL error return and an errno(3) list that makes sense?
 
-Reproduction:
-  Build GPAC with AddressSanitizer, then run:
+  ..
+ --End of <20261116073443.GA14465@...nwall.com>
 
-    ./MP4Box -info 27_gf_node_get_field_by_name_scenegraph_base_scenegraph_c_2088
-
-ASan log excerpt:
-  ==418151==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000
-  ==418151==The signal is caused by a READ memory access.
-  ==418151==Hint: address points to the zero page.
-      #0 in gf_node_get_field_by_name scenegraph/base_scenegraph.c:2088
-      #1 in xmt_parse_element scene_manager/loader_xmt.c:1916
-      #2 in xmt_node_start scene_manager/loader_xmt.c:2681
-
-Fix:
-  Update to GPAC v26.02.0 or later, or apply the fix commit listed above.
-  The fix rejects a NULL node or NULL node private data before field lookup.
-
-    https://github.com/gpac/gpac/releases/tag/v26.02.0
-
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/27/27_gf_node_get_field_by_name_scenegraph_base_scenegraph_c_2088
-
-References:
-  https://github.com/gpac/gpac/issues/3268
-  https://github.com/gpac/gpac/commit/62714f27c64a3d1eb7e880f9eed2d38673cb43ce
-  https://www.cve.org/CVERecord?id=CVE-2025-71467
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/71xxx/CVE-2025-71467.json
-
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+--steffen
+|
+|Der Kragenbaer,                The moon bear,
+|der holt sich munter           he cheerfully and one by one
+|einen nach dem anderen runter  wa.ks himself off
+|(By Robert Gernhardt)
