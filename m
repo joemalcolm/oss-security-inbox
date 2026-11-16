@@ -1,109 +1,79 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/15/2
-Message-ID: <avnXBHKfNKnqmDij@v4bel>
-Date: Mon, 16 Nov 2026 01:00:04 +0900
-From: Hyunwoo Kim <imv4bel@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/16/9
+Message-ID: <trinity-4464dde2-d743-4d63-ae3c-fe499f0c1588-1794850947814@trinity-msg-rest-gmx-gmx-live-6b6d8476df-p9jjn>
+Date: Mon, 16 Nov 2026 17:42:27 +0000
+From: "Alexander A. Shvedov" <sigdevel@...amail.com>
 To: oss-security@...ts.openwall.com
-Cc: imv4bel@...il.com
-Subject: NoisyTCP: Linux Kernel TCP Pre-auth Remote Corruption (CVE-2026-99288)
+Subject: CVE-2025-71470: MicroQuickJS: Out-of-Bounds Read in build_backtrace via Crafted JavaScript Input
 Content-Type: text/plain; charset=utf-8
 
-The embargo agreed with the maintainers of
-linux-distros@...openwall.org has expired, so I am posting this report.
+Product:   MicroQuickJS (mquickjs, mqjs)
+Affected:  Revisions before commit 99eed3f94cb66ea7e02fd3472ca7374dee31bb89
+           Reproduced at commit 27a2391cc5a54bf8fa683979be56b266523a1374
+Fixed:     99eed3f94cb66ea7e02fd3472ca7374dee31bb89
+CVE:       CVE-2025-71470
+CWE:       CWE-125 (Out-of-bounds Read)
+CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
+Reporter:  Alexander A. Shvedov (@sigdevel)
 
-# Abstract
+Description:
+  MicroQuickJS crashes in build_backtrace() at mquickjs.c:3981 while
+  executing crafted JavaScript. During function-call setup, JS_Call()
+  can raise an exception without synchronizing ctx->sp and ctx->fp with
+  the current stack and frame pointers. In particular, attempting to call
+  a non-function value reaches this path. Backtrace construction then
+  follows stale frame metadata and performs an out-of-bounds read.
 
-This report is a security advisory for NoisyTCP (CVE-2026-99288), the
-Linux Kernel TCP Pre-auth Remote Corruption vulnerability reported
-and patched by Hyunwoo Kim (@v4bel).
+  In the supplied ASan/UBSan run, UBSan reports misaligned JSValue loads
+  at mquickjs.c:3981 and mquickjs.c:4009, followed by an ASan read SEGV
+  in build_backtrace(). JSValue requires 8-byte alignment on the tested
+  x86_64 build. The issue was reproduced at commit
+  27a2391cc5a54bf8fa683979be56b266523a1374.
 
-To trigger this vulnerability, a stale ehash lookup and the freeing and
-reallocation of an existing request socket must proceed concurrently in
-different RX contexts. Packet processing has to be spread out by using
-the difference in receive hash between IPv4 fragments and regular TCP
-packets, so it can be triggered against servers that have two or more
-RX queues, or where RPS distributes packets across multiple CPUs.
+Impact:
+  Executing attacker-controlled JavaScript causes an mqjs process crash
+  and denial of service. Applications embedding the affected engine may
+  also be affected when they execute such input. The supplied evidence
+  demonstrates an invalid read and process termination; information
+  disclosure and arbitrary code execution were not demonstrated.
 
-That is, since this vulnerability can be triggered against "plain"
-TCP listeners, it can be triggered pre-auth and remotely against
-servers that TCP packets sent by an attacker can reach directly, such
-as Nginx, Apache, and SSH servers running with their "default"
-configuration.
+Reproduction:
+  Build MicroQuickJS with AddressSanitizer and UndefinedBehaviorSanitizer
+  using the following compiler flags:
 
-# Trigger Flows
+    -g -O1 -fno-omit-frame-pointer -fsanitize=address,undefined
 
-There are two trigger flows for this vulnerability, and an attacker
-can arbitrarily choose either one to trigger it.
+  Run the supplied JavaScript sample with the instrumented mqjs binary:
 
-## 1. request_sock Reuse ABA Race
+    ./mqjs mquickjs_c_3981
 
-While a stale lookup has found an existing request socket, another RX
-context frees it and reallocates a SYN cookie request with the same
-tuple at the same slab address.
+ASan/UBSan log excerpt:
+  mquickjs.c:3981:19: runtime error: load of misaligned address 0x7fb3a49ff81d for type 'JSValue', which requires 8 byte alignment
+  mquickjs.c:4009:14: runtime error: load of misaligned address 0x7fb3a49ff805 for type 'JSValue', which requires 8 byte alignment
+  ==1243892==ERROR: AddressSanitizer: SEGV on unknown address 0x7fb37c9ff857
+  ==1243892==The signal is caused by a READ memory access.
+      #0 in build_backtrace mquickjs.c:3981
+      #1 in JS_ThrowError mquickjs.c:933
+      #2 in JS_Call mquickjs.c:5507
+      #3 in JS_Run mquickjs.c:11765
 
-The stale lookup acquires a refcount on the new object and then even
-passes the tuple recheck, but the new request has no listener attached
-to it. After that, the TCP receive path dereferences the NULL listener,
-which causes a kernel panic.
+Fix:
+  Update to a MicroQuickJS revision containing commit
+  99eed3f94cb66ea7e02fd3472ca7374dee31bb89 or apply that patch.
+  The fix saves the current stack/frame pointers before raising call-setup
+  exceptions and corrects the corresponding exception-handling paths.
 
-In the end, a remote DoS can be triggered.
+    https://github.com/bellard/mquickjs/commit/99eed3f94cb66ea7e02fd3472ca7374dee31bb89
 
-Because this is a Linux kernel TCP vulnerability, if the DoS is
-triggered against a web server running in a container, it takes down
-not only the web server application but the entire host.
+PoC:
+  https://github.com/sigdevel/pocs/blob/main/res/mquickjs/1/mquickjs_c_3981
 
-## 2. Full child socket ABA Race
+References:
+  https://github.com/bellard/mquickjs/issues/24
+  https://github.com/bellard/mquickjs/commit/99eed3f94cb66ea7e02fd3472ca7374dee31bb89
+  https://www.cve.org/CVERecord?id=CVE-2025-71470
+  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/71xxx/CVE-2025-71470.json
 
-This path can trigger a remote use-after-free, but since complex race
-scenarios have to succeed in a nested way, it is generally hard to
-trigger without using special techniques.
-
-# Trigger Characteristics
-
-To trigger this vulnerability, another RX context has to get in
-between the first tuple check and the refcount acquisition. Because of
-this, against bare-metal servers, especially quiet servers with little
-execution variance and contention, triggering the race can take a long
-time.
-
-Against Nginx, Apache, and SSH servers running with their default
-configuration on VMs such as QEMU/KVM, where vCPU preemption can occur,
-it took about 5 seconds to 2 minutes to trigger.
-
-Against Nginx running with its default configuration on a quiet
-bare-metal server (8 RX queues), it took about 14 hours to trigger,
-even though a PoC with race timing carefully tuned for the target
-environment was used.
-
-# Affected Versions
-
-The affected range of NoisyTCP (CVE-2026-99288) is as follows.
-
-Introduced: 079096f103fa (2015-10-03)
-Fixed: 4e2b3ef19e0e (2026-11-03)
-
-That is, this vulnerability had been latent in the Linux kernel for
-about "11 years" and affects almost all Linux distributions.
-
-# Mitigations
-
-Applying the 4e2b3ef19e0e patch is the priority, but if it is difficult
-to apply it immediately, one of the following temporary mitigations can
-be used.
-
-## 1. Disable SYN cookies
-
-This blocks the path where a request socket is reconstructed through a
-SYN cookie.
-
-  sudo sysctl -w net.ipv4.tcp_syncookies=0
-
-This setting is managed per network namespace. It has to be applied to
-"each" container that uses a separate network namespace. Disabling it
-lowers the protection against SYN floods.
-
-## 2. Serialize to a single RX queue
-
-This vulnerability requires different RX contexts to race
-concurrently. Reducing the RX queues of the interface where external
-packets come in to one and disabling RPS and RFS can block the race.
+——
+Best regards, Alexander A. Shvedov
+@sigdevel
