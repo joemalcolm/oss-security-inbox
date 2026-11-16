@@ -1,79 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/16/9
-Message-ID: <trinity-4464dde2-d743-4d63-ae3c-fe499f0c1588-1794850947814@trinity-msg-rest-gmx-gmx-live-6b6d8476df-p9jjn>
-Date: Mon, 16 Nov 2026 17:42:27 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/16/4
+Message-ID: <adf475e1-330e-b057-5188-892fe58b8a6e@apache.org>
+Date: Mon, 16 Nov 2026 09:48:38 +0000
+From: Colm O hEigeartaigh <coheigea@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-71470: MicroQuickJS: Out-of-Bounds Read in build_backtrace via Crafted JavaScript Input
+Subject: CVE-2026-115690: Apache WSS4J: Replay protection bypassed by concurrent copies of a message 
 Content-Type: text/plain; charset=utf-8
 
-Product:   MicroQuickJS (mquickjs, mqjs)
-Affected:  Revisions before commit 99eed3f94cb66ea7e02fd3472ca7374dee31bb89
-           Reproduced at commit 27a2391cc5a54bf8fa683979be56b266523a1374
-Fixed:     99eed3f94cb66ea7e02fd3472ca7374dee31bb89
-CVE:       CVE-2025-71470
-CWE:       CWE-125 (Out-of-bounds Read)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+Severity: moderate 
+
+Affected versions:
+
+- Apache WSS4J 4.0.0 before 4.0.3
+- Apache WSS4J 3.0.0 before 3.0.7
+- Apache WSS4J before 2.4.5
 
 Description:
-  MicroQuickJS crashes in build_backtrace() at mquickjs.c:3981 while
-  executing crafted JavaScript. During function-call setup, JS_Call()
-  can raise an exception without synchronizing ctx->sp and ctx->fp with
-  the current stack and frame pointers. In particular, attempting to call
-  a non-function value reaches this path. Backtrace construction then
-  follows stale frame metadata and performs an out-of-bounds read.
 
-  In the supplied ASan/UBSan run, UBSan reports misaligned JSValue loads
-  at mquickjs.c:3981 and mquickjs.c:4009, followed by an ASan read SEGV
-  in build_backtrace(). JSValue requires 8-byte alignment on the tested
-  x86_64 build. The issue was reproduced at commit
-  27a2391cc5a54bf8fa683979be56b266523a1374.
+Apache WSS4J remembers the UsernameToken Nonce, the Timestamp and signature of a signed message, and the ID of a SAML 2.0 "OneTimeUse" assertion, so that a captured message cannot be accepted twice. It checked whether a value had already been seen, validated the message, and only then remembered the value, as two separate steps. If several copies of the same message were processed at the same time, they could all pass the check before any of them was remembered, and all be accepted. An attacker who obtained a valid message before the recipient first processed it could send several copies at once, so that the same authenticated request was executed more than once. Where a UsernameToken is not bound to the message by a signature, the copies could carry different message bodies. The attacker needs to obtain the message while it is still in transit; a message captured after it has been accepted cannot be replayed. Affects deployments with a replay cache configured, as Apache CXF has by default. The value is now checked and remembered in a single atomic step. Custom ReplayCache implementations should override the new ReplayCache.addIfAbsent method with an operation that is atomic in their underlying store. Users are recommended to upgrade to versions 4.0.3 or 3.0.7 or 2.4.5, which fix this issue.
 
-Impact:
-  Executing attacker-controlled JavaScript causes an mqjs process crash
-  and denial of service. Applications embedding the affected engine may
-  also be affected when they execute such input. The supplied evidence
-  demonstrates an invalid read and process termination; information
-  disclosure and arbitrary code execution were not demonstrated.
+Credit:
 
-Reproduction:
-  Build MicroQuickJS with AddressSanitizer and UndefinedBehaviorSanitizer
-  using the following compiler flags:
-
-    -g -O1 -fno-omit-frame-pointer -fsanitize=address,undefined
-
-  Run the supplied JavaScript sample with the instrumented mqjs binary:
-
-    ./mqjs mquickjs_c_3981
-
-ASan/UBSan log excerpt:
-  mquickjs.c:3981:19: runtime error: load of misaligned address 0x7fb3a49ff81d for type 'JSValue', which requires 8 byte alignment
-  mquickjs.c:4009:14: runtime error: load of misaligned address 0x7fb3a49ff805 for type 'JSValue', which requires 8 byte alignment
-  ==1243892==ERROR: AddressSanitizer: SEGV on unknown address 0x7fb37c9ff857
-  ==1243892==The signal is caused by a READ memory access.
-      #0 in build_backtrace mquickjs.c:3981
-      #1 in JS_ThrowError mquickjs.c:933
-      #2 in JS_Call mquickjs.c:5507
-      #3 in JS_Run mquickjs.c:11765
-
-Fix:
-  Update to a MicroQuickJS revision containing commit
-  99eed3f94cb66ea7e02fd3472ca7374dee31bb89 or apply that patch.
-  The fix saves the current stack/frame pointers before raising call-setup
-  exceptions and corrects the corresponding exception-handling paths.
-
-    https://github.com/bellard/mquickjs/commit/99eed3f94cb66ea7e02fd3472ca7374dee31bb89
-
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/mquickjs/1/mquickjs_c_3981
+This issue was reported independently by Wanxin Yin (MegaVector / yaklang.io) and hataehoon (GitHub: @dpfkdlemtp). (finder)
 
 References:
-  https://github.com/bellard/mquickjs/issues/24
-  https://github.com/bellard/mquickjs/commit/99eed3f94cb66ea7e02fd3472ca7374dee31bb89
-  https://www.cve.org/CVERecord?id=CVE-2025-71470
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/71xxx/CVE-2025-71470.json
 
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
+https://ws.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-115690
+
