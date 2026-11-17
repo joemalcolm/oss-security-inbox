@@ -1,54 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/26
-Message-ID: <CADk+mPDzoYzbYc-tkfDj+ok0jjheZOZtaNiiJ=36Le3NhAXdrw@mail.gmail.com>
-Date: Tue, 17 Nov 2026 19:51:00 +0100
-From: Rainer Gerhards <rgerhards@...scon.com>
-To: oss-security@...ts.openwall.com
-Subject: rsyslog imuxsock TAG parser out-of-bounds read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/2
+Message-Id: <E1xTL62-0000000Cr98-21cp@xenbits.xenproject.org>
+Date: Tue, 17 Nov 2026 15:27:46 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 524 v2 (CVE-2024-21963) - AMD IOMMU Out-of-Bounds Device Table Read
 Content-Type: text/plain; charset=utf-8
 
-Credit: Discovered during rsyslog's internal security review.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-rsyslog's imuxsock input has an out-of-bounds read in TAG parsing when
-the special parser uses the system timestamp. An accepted short
-timestamp can leave the TAG cursor and remaining length referring to
-different positions in the raw message. A local sender able to write
-to a directly accessible imuxsock Unix datagram socket can use a valid
-PRI and long nonspace TAG suffix to drive the scanner one byte past
-the allocated message.
+            Xen Security Advisory CVE-2024-21963 / XSA-524
+                               version 2
 
-This is separate from GHSA-xrxr-7942-54fr, the reported out-of-bounds
-timestamp write. The demonstrated TAG input has valid PRI and an
-in-bounds timestamp write. A real rsyslogd built with ASan reported a
-one-byte heap out-of-bounds read. In an ordinary build, we observed
-malformed TAG/body output with NUL bytes and no crash. We have not
-demonstrated disclosure of adjacent nonzero bytes to an attacker,
-sustained denial of service, or an ordinary-build crash. The
-advisory's severity is provisionally Low; no numeric CVSS vector is
-assigned pending a demonstrated confidentiality path.
+               AMD IOMMU Out-of-Bounds Device Table Read
 
-CVE: CVE-2026-129830.
+UPDATES IN VERSION 2
+====================
 
-Affected configuration: imuxsock's special parser with system
-timestamp on a directly accessible raw Unix socket. The checked
-supported-v8 affected range is >= 8.1.0. Historical v5.9.5 and v6.3.7
-contain the relevant mismatch-introduction commit, but other old
-release branches require semantic confirmation. The fixed-version
-label is 2026-11-17 daily stable; verify actual package availability
-before stating a binary is fixed.
+Original (buggy) patch updated and new incremental patch added.
 
-The attached TAG source-only patch applies after the separate
-GHSA-xrxr-7942-54fr source patch on the checked baseline. The full
-upstream fix also includes regression tests and documentation. The TAG
-advisory is at https://github.com/rsyslog/rsyslog/security/advisories/GHSA-jcrj-xmp8-8hqf.
-Check both advisories and the public rsyslog/rsyslog PRs for
-release-specific commits and backport guidance.
+ISSUE DESCRIPTION
+=================
 
-Coordinated disclosure: 2026-11-17 16:00 UTC (17:00 CET). Planned
-fixed-version label: 2026-11-17 daily stable. Actual binary package
-availability must be verified separately.
+With AMD IOMMUs, the OS or Hypervisor chooses the position and size of
+the Device Table, which holds the main configuration information for
+devices.
 
-Patch (source only): see the attached .patch file (preserved without
-line wrapping).
+AMD have disclosed a vulnerability in some IOMMUs, whereby under
+specific circumstances they read beyond the size chosen by the OS or
+Hypervisor.  This gets interpreted as valid configuration data for
+certain devices.
 
-Download attachment "GHSA-jcrj-xmp8-8hqf.patch" of type "application/x-patch" (1903 bytes)
+For more information, see:
+  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3060.html
+
+IMPACT
+======
+
+Depending on platform and system configuration, a domain might be able
+to control the IOMMU configuration for a device.
+
+If a domain can exercise such control, it can modify arbitrary host
+memory and escalate it's privilege to that of Xen.
+
+VULNERABLE SYSTEMS
+==================
+
+Systems running all versions of Xen are affected.
+
+Only certain AMD systems are believed to be vulnerable.  Systems from
+other manufacturers are not known to be affected.
+
+A particular system is potentially vulnerable if:
+
+ 1) Any of the IOMMUs in the system have a Device Table size less than
+    2MB.  i.e. the system's IVRS table describes that particular IOMMU
+    as not covering a full PCI bus, and
+ 2) There is either:
+    a) A real device behind the IOMMU which is the first function not
+       covered by the IVRS description, or
+    b) Any device behind the IOMMU which can be configured to use the
+       initiator ID of the first function not covered by the IVRS
+       description.
+
+If the above situation holds, the IOMMU will read out of bounds from the
+next sequential page in physical memory, and interpret it as valid
+configuration data for the device.  This page may belong to a guest.
+
+MITIGATION
+==========
+
+There are no mitigations.
+
+RESOLUTION
+==========
+
+Applying the first of the attached patches to a tree not previously
+patched for this XSA resolves this issue.  Applying the second of the
+attached patches on top of the originally distributed one, which was
+meanwhile also committed to the respective git branches, also
+resolves this issue.
+
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
+
+xsa524.patch           xen-unstable - Xen 4.17.x
+xsa524-fix.patch       xen-unstable - Xen 4.17.x
+
+$ sha256sum xsa524*
+74d593768da3b9303b984d3f65439510138c8d1ccd2ed84b9abc2867881dfee5  xsa524.patch
+8ca9e4ea59b17ad6003dc6f512c049840c722f78cc379f32337c8a698b779bd2  xsa524-fix.patch
+$
+
+NOTE CONCERNING CVE
+===================
+
+The use of a 2024 CVE on a 2026 disclosure was queried with AMD, and
+confirmed to be correct.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmr8clAMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZKwIH/itoSkHwzCASmVBAdsxVJ7PrziOBOs3CI2dkTfqn
+zqLzrx6PwgjnPCGUvhUinTrjR9W68DNFnwi4fSUHOvpErXVq9OPj/XFEahDQ90fZ
+Rsjff4+XwhZUk4SWjsamFwrPTyKId/fGESWI53jMDlVMjfh5qHSuXcIbF1F/PIgO
+5WKZiX6mIL1T/pzMg7Q7prQSpEhWz+kKSvPEUy2CgYGJzIIkANxcls2sdDAj6FSW
+FXWHlNLNnRD9n3LbWHktZktkgnz4cTwxL0Z62vB8viWMtN+SC1vN6lftCWVhTXeI
+mwtKAR56TYZaJ8vw/LKKCQmu0PFNYyOcvEKw+1bxokBPyZs=
+=TFmn
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa524.patch" of type "application/octet-stream" (4556 bytes)
+
+Download attachment "xsa524-fix.patch" of type "application/octet-stream" (1218 bytes)
