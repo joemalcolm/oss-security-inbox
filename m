@@ -1,54 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/25
-Message-ID: <CADk+mPBLkTxve6zwDjhDF4k91FWCziK9m11TZ_4coi_kDZcbNg@mail.gmail.com>
-Date: Tue, 17 Nov 2026 19:50:00 +0100
-From: Rainer Gerhards <rgerhards@...scon.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/30
+Message-ID: <bde2660b-8569-4b82-893e-cebd27e42540@apache.org>
+Date: Tue, 17 Nov 2026 21:41:08 +0000
+From: Niko Oliveira <onikolas@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: rsyslog imuxsock system-timestamp out-of-bounds write
+Subject: CVE-2026-129509: Apache Airflow Microsoft Azure provider: S3ToAzureBlobStorageOperator disables S3 TLS verification by default 
 Content-Type: text/plain; charset=utf-8
 
-Credit: Reported by @karimabisaad.
+Severity: low 
 
-rsyslog's imuxsock special parser can write beyond a received
-message's raw buffer when replacing the message timestamp with the
-system timestamp. A local sender able to write to a directly
-accessible imuxsock Unix datagram socket can combine an overlong
-invalid PRI with a short timestamp accepted by the permissive RFC3164
-parser. The fixed 16-byte in-place rewrite then has insufficient
-remaining capacity.
+Affected versions:
 
-Direct code inspection establishes the out-of-bounds write. The
-overwritten bytes derive from the daemon's current local time and a
-space, limiting attacker control over the values. A reliable crash or
-sustained denial of service in an ordinary, non-sanitized rsyslogd
-build has not been demonstrated. The provisional rating is Medium,
-CVSS 3.1 5.5 (CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H). CVE:
-CVE-2026-129829.
+- Apache Airflow Microsoft Azure provider 10.2.0 before 15.3.1
 
-Affected configuration: imuxsock's special parser with UseSysTimeStamp
-on a directly accessible raw Unix socket. The checked supported-v8
-affected range is >= 8.1.0. Older v5-v7 releases are not implied safe;
-historical branches need specific validation. The planned fixed
-version is 2026-11-17 daily stable. Verify actual package availability
-separately before stating that a binary release contains the fix.
+Description:
 
-The attached source-only patch addresses this reported write on the
-checked baseline. The full upstream fix includes regression tests and
-documentation. Apply or backport it against the exact source version
-you maintain. The patch and advisory are available at
-https://github.com/rsyslog/rsyslog/security/advisories/GHSA-xrxr-7942-54fr;
-check that page and the public rsyslog/rsyslog pull request for
-release-specific commits and status.
+In the Apache Airflow Microsoft Azure provider 10.2.0 through 15.3.0, `S3ToAzureBlobStorageOperator` turned off TLS certificate verification for its connection to Amazon S3 by default (`s3_verify=False`), whatever the AWS connection's own verification settings were. An attacker positioned on the network between an Airflow worker and S3 could intercept that traffic, read the signed requests and alter the listed object keys and the copied file contents. Deployments are affected when a Dag uses `S3ToAzureBlobStorageOperator` without setting `s3_verify`. Users are advised to upgrade to apache-airflow-providers-microsoft-azure 15.3.1 or later, which uses the AWS connection's verification settings by default.
 
-The timestamp-write source patch is standalone against the checked
-baseline. The separate TAG patch must be applied after this patch; the
-separate PRI digit hardening patch is not required for this fix.
+Credit:
 
-Coordinated disclosure: 2026-11-17 16:00 UTC (17:00 CET). Planned
-fixed-version label: 2026-11-17 daily stable. Actual binary package
-availability must be verified separately.
+Claude Security Scans (tool)
+Jarek Potiuk (remediation developer)
 
-Patch (source only): see the attached .patch file (preserved without
-line wrapping).
+References:
 
-Download attachment "GHSA-xrxr-7942-54fr.patch" of type "application/x-patch" (3194 bytes)
+https://github.com/apache/airflow/pull/76222
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-129509
+
