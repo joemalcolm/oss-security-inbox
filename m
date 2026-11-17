@@ -1,105 +1,88 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/18/1
-Message-ID: <avz565ILX4cWK0HL@frog>
-Date: Wed, 18 Nov 2026 11:06:22 +1000
-From: Peter Hutterer <peter.hutterer@...-t.net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/32
+Message-ID: <CAAHN_R3ru4aOYCXrTA=ZGzRS2Ku-qR20s2EesbuKJJ2uWbb=ZQ@mail.gmail.com>
+Date: Tue, 17 Nov 2026 17:39:07 -0500
+From: Siddhesh Poyarekar <siddhesh.poyarekar@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: FW: X.Org Security Advisory: Issues in X.Org libFontenc and libXfont
+Subject: The GNU C Library security advisories update for 2026-11-17
 Content-Type: text/plain; charset=utf-8
 
-======================================================================
-X.Org Security Advisory: November 18, 2026 
+The following security advisories have been published:
 
-Issues in libFontenc prior to libfontenc-1.1.10 and libXfont prior to libXfont2-2.0.10
-======================================================================
+GLIBC-SA-2026-0029:
+===================
+CP949 decoder may read past input
 
-1) CVE-2026-109908: X.Org libfontenc File Parsing Validation Failure
+Converting crafted CP949 input to UTF-8 character encoding and ignoring
+invalid characters, in the GNU C Library version 2.1 or later may result
+in the converter reading past the end of the input buffer, causing the
+calling application to crash.
 
-libfontenc's .enc encoding-file parser contains a heap out-of-bounds write
-in setCode() (src/encparse.c). The destination index is computed as (from
->> 8) * row_size + (from & 0xFF), where row_size is taken straight from the
-SIZE line of the encoding file and is never bounded, while the destination
-buffer is allocated at a constant cap of 0x10000 entries.
+When the CP949 decoder encounters an invalid input byte sequence like
+'\xa2\xe8' it ends up advancing the pointer tracking the read buffer
+position twice.  If //IGNORE is set on the destination encoding and this
+sequence is at the end of the input buffer, the decoder may then end up
+reading past the bounds of the input buffer.  To exploit this, the
+target iconv function needs to set //IGNORE on the destination of the
+conversion and the input and encoding needs to be attacker controlled.
 
-A crafted .enc file makes the index exceed the allocation and writes past
-it. The Xorg/Xwayland X server links libfontenc via libXfont2 and parses
-.enc files in its own process during font rasterization.
+CVE-Id: CVE-2026-121757
+Public-Date: 2020-11-17
+Vulnerable-Commit: 918b9d72a9980efd4622bd25506da9531a952dbe (2.0.92-117)
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H - 5.9
+Reported-By: Dickson Wu (SEAL & CertiK)
 
-Where the X server runs as root, a local user that places a font file and
-an encoding file on a server-read font path can trigger the OOB write,
-triggering potential local privilege escalation.
 
-Fixed in: libfontenc-1.1.10
-Fixes:
-  - https://gitlab.freedesktop.org/xorg/lib/libfontenc/-/commit/5920c6ee144fffff84b62f5b479171f734f15316
+GLIBC-SA-2026-0030:
+===================
+ISO-2022-CN-EXT decoder may read past input
 
-Acknowledgements:
-    Adam Bedard working with TrendAI Zero Day Initiative
+Converting crafted ISO-2022-CN-EXT input to UTF-8 character encoding, in
+the GNU C Library version 2.2 through 2.44 may result in the converter
+reading past the end of the input buffer, causing the calling
+application to crash.
 
-2) CVE-2026-109909: PCF Font Parsing Negative Skip Out-Of-Bounds Read
+When the ISO-2022-CN-EXT decoder encounters an invalid input byte
+sequence like '\x0e' it ends up advancing the pointer tracking the read
+buffer position twice.  If this sequence is at the end of the input
+buffer, the decoder may then end up reading past the bounds of the input
+buffer.  To exploit this, the input and encoding needs to be attacker
+controlled.
 
-BufFileRawSkip() in libXfont accepts a signed int count parameter but
-does not validate it for negative values. A crafted PCF font file can
-supply a table offset that, when subtracted from the current file
-position in pcfSeekToType(), wraps to a negative value due to unsigned
-to signed integer conversion. The negative count passes the in-buffer
-bounds check in BufFileRawSkip() (curoff + count <= fileoff is trivially
-true when count is negative) and advances the buffer pointer backward
-past the buffer start. Subsequent FontFileGetc() calls then dereference
-the corrupted buffer pointer, reading from invalid heap memory or
-unmapped pages.
+CVE-Id: CVE-2026-121758
+Public-Date: 2020-10-21
+Vulnerable-Commit: c0d99958f9f329400d25040b3d422fa937522b65 (2.1.93-124)
+Fix-Commit: 170ee485fa89b95c3bb7d5606c9812c6c100c9be (2.45)
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H - 5.9
+Reported-By: Ksawery Radziwiłowicz
 
-An attacker who can cause the X server or any application using
-libXfont to load a malicious PCF font file can trigger an
-out-of-bounds heap read, potentially leaking sensitive information
-from the process memory space via QueryFont responses, or crash the
-process via a segmentation fault.
 
-Fixed in: libXfont2-2.0.10
-Fixes:
-  - https://gitlab.freedesktop.org/xorg/lib/libxfont/-/commit/dc6c313071c8b2929b1bc165e40c8ba62737b576
+GLIBC-SA-2026-0031:
+===================
+IBM1390/IBM1399 encoders may read past input
 
-Acknowledgements:
-    Elias Myllymäki working with TrendAI Zero Day Initiative
+Converting crafted input from UCS-4 to IBM1390 or IBM1399 character
+encoding, in the GNU C Library version 2.3.3 and later may result in
+the converter reading past the end of the input buffer, causing the
+calling application to crash.
 
-3) CVE-2026-109920: libXfont2 FreeType backend uninitialised strike_index out-of-bounds read
+When converting from UCS-4, these encoders may encounter a combining
+base such as U+00E6 and jump ahead by 4 bytes to check the next UCS-4
+code point.  The check for end of buffer however does not account for
+this, which may result in a buffer overread if the following code point
+has less than 4 bytes remaining.  Exploitation of this bug not only
+requires attacker control of input and encoding, but also strict control
+over layout of the input in memory.
 
-FreeTypeOpenInstance() allocates FTInstanceRec with a bare malloc() and
-then assigns instance->strike_index only inside an
-"if (FT_IS_SFNT(face->face))" block.  There is no else branch.
+CVE-Id: CVE-2026-124024
+Public-Date: 2020-10-29
+Vulnerable-Commit: 0ecb606cb6cf65de1d9fc8a919bceb4be476c602 (2.3.3-1501)
+CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H - 5.9
+Reported-By: slaythemole
 
-A non-SFNT face -- any bitmap font that FreeType's own bitmap driver
-claims, which libXfont2 reaches whenever such a file carries a FreeType
-renderer suffix such as .pfb -- leaves the field holding raw heap bytes.
 
-The field is then passed unchecked to FT_Do_SBit_Metrics() and used
-directly as a 64-bit array subscript:
+Notes:
+======
 
-    FT_Bitmap_Size*  sz = &ft_face->available_sizes[strike_index];
-
-The 0xFFFFU sentinel check on the previous line is not a bounds check:
-it filters exactly one value out of 2^64, so a raw heap word almost
-always passes it.  With num_fixed_sizes == 1 the only in-bounds
-subscript is 0; any other value causes an out-of-bounds read that
-crashes the X server.
-
-A local client can reach this path with ordinary core protocol requests:
-spray the server heap with ChangeProperty, point the font path at a
-directory it controls with SetFontPath, then OpenFont.  The font file
-does not need to be crafted -- an unmodified vendor-shipped .pcf font
-renamed to .pfb is sufficient.
-
-CWE-457 (use of uninitialised variable) leading to CWE-125
-(out-of-bounds read).
-
-Fixed in: libXfont2-2.0.10
-Fixes:
-  - https://gitlab.freedesktop.org/xorg/lib/libxfont/-/commit/539f716dabe0137097ed6b8492cae1c3321c4d69
-
-Acknowledgements:
-    Apex Security Research (apex-security-research@...ton.me)
-------------------------------------------------------------------------
-
-X.Org thanks all of those who reported and fixed these issues, and those
-who helped with the review and release of this advisory and these fixes.
-
+Published advisories are available directly in the project git repository:
+https://sourceware.org/git/?p=glibc.git;a=tree;f=advisories;hb=HEAD
