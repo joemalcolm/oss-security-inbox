@@ -1,64 +1,44 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/3
-Message-ID: <cdac64dc-04e5-44d4-99fe-52a41fa088f0@gmail.com>
-Date: Tue, 17 Nov 2026 08:10:15 -0500
-From: Brian Rosmaita <rosmaita.fossdev@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/7
+Message-ID: <CADk+mPD_i3kRqud=XBWLBSXqtNLiEhajJScqTPG3u93vXTp-kw@mail.gmail.com>
+Date: Tue, 17 Nov 2026 17:00:00 +0100
+From: Rainer Gerhards <rgerhards@...scon.com>
 To: oss-security@...ts.openwall.com
-Subject: [OSSA-2026-051] Cinder: Local Privilege Escalation in LIO iSCSI driver (CVE-2026-pending)
+Subject: rsyslog GHSA-cg8j-rwxh-vrg3: malformed JSON from option.json templates
 Content-Type: text/plain; charset=utf-8
 
-====================================================================
-OSSA-2026-051: Local Privilege Escalation in Cinder LIO iSCSI driver
-====================================================================
+A JSON escaping defect in rsyslog string/list templates with
+option.json="on" affects releases beginning with v8.23.0. When a field
+value consists only of double quotes and/or backslashes,
+runtime/template.c can return from its JSON precheck without escaping
+it. A template that inserts the field into a JSON string can then emit
+malformed JSON. A sender must control a field used by an affected
+template; remote unauthenticated access is deployment dependent.
 
-:Date: November 17, 2026
-:CVE: CVE-2026-pending
+The reproduced effect is malformed output and rejection of the
+affected record by a strict JSON parser. We have not established
+injection, neighboring-record loss, or batch dropping by a named
+downstream service. The separate property format="json" path was a
+control and was not affected in our test.
 
+Advisory: https://github.com/rsyslog/rsyslog/security/advisories/GHSA-cg8j-rwxh-vrg3
+Severity: Medium, CVSS 3.1 5.3 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N)
+CWE: CWE-116
+Affected upstream versions: >= 8.23.0
+Fixed upstream version: 2026-11-17 daily stable
+CVE: CVE-2026-129839
+Credit: Manyo9
 
-Affects
-~~~~~~~
-- Cinder: <27.1.1, >=28.0.0 <28.1.1, >=29.0.0 <29.1.1
+The source fix changes the JSON precheck in runtime/template.c so that
+it stops at the first quote or backslash and lets the existing
+replacement loop escape the value.
 
+The source-only patch is attached as source-only-candidate-e422479031.patch.
+Patch SHA-256: 32e5deb04929d7c5d014cf8d5aa9cd0a9a4dbc93f02229a703ab8e8a93708c21.
 
-Description
-~~~~~~~~~~~
-Sami Yessou, cloud engineer at switch.ch, reported a vulnerability
-in Cinder.  By making an os-initialize_connection request with an
-IQN that includes a path traversal as part of the connector's
-initiator element, an authenticated user with a 'member' role may
-create or overwrite files in the volume host filesystem.  Only
-cinder-volume hosts using the LIO iSCSI target driver are affected.
-This target driver is typically used with the LVM volume driver.
+Disclosure: 2026-11-17 16:00 UTC / 17:00 CET / 11:00 EST.
 
+Rainer Gerhards
+rsyslog lead maintainer
 
-
-Patches
-~~~~~~~
-- https://review.opendev.org/1015676 (2025.1/epoxy (unmaintained))
-- https://review.opendev.org/1015654 (2025.2/flamingo)
-- https://review.opendev.org/1015486 (2026.1/gazpacho)
-- https://review.opendev.org/1015485 (2026.2/hibiscus)
-- https://review.opendev.org/1015478 (2027.1/indri (development))
-
-
-Credits
-~~~~~~~
-- Sami Yessou from switch.ch
-
-
-References
-~~~~~~~~~~
-- https://launchpad.net/bugs/2163562
-- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-pending
-
-
-Notes
-~~~~~
-- A patch is available for the unmaintained/2025.1 branch as a courtesy.
-   Unmaintained branches do not receive updated releases.
-- A CVE identifier was requested from MITRE for this vulnerability on
-   2026-11-12. The CVE will be added to this advisory by errata once
-   assigned.
-
-
-Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (237 bytes)
+Download attachment "source-only-candidate-e422479031.patch" of type "application/x-patch" (682 bytes)
