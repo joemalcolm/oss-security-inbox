@@ -1,118 +1,53 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/2
-Message-Id: <E1xTL62-0000000Cr98-21cp@xenbits.xenproject.org>
-Date: Tue, 17 Nov 2026 15:27:46 +0000
-From: Xen.org security team <security@....org>
-To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
-CC: Xen.org security team <security-team-members@....org>
-Subject: Xen Security Advisory 524 v2 (CVE-2024-21963) - AMD IOMMU Out-of-Bounds Device Table Read
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/17/11
+Message-ID: <CADk+mPC0DS15FJKJZaz1j8fpXV14nn7X98oADq6Bdmsrdb-Gkw@mail.gmail.com>
+Date: Tue, 17 Nov 2026 08:39:07 -0800
+From: Rainer Gerhards <rgerhards@...scon.com>
+To: oss-security@...ts.openwall.com
+Subject: rsyslog GHSA-f9hg-rj32-693x: mmanon stack buffer overflow
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+rsyslog GHSA-f9hg-rj32-693x: mmanon stack buffer overflow in embedded
+IPv4-in-IPv6 anonymization
 
-            Xen Security Advisory CVE-2024-21963 / XSA-524
-                               version 2
+GHSA-f9hg-rj32-693x concerns a stack buffer overflow in rsyslog mmanon
+while anonymizing an embedded IPv4-in-IPv6 token. A malformed log
+message must reach a configured mmanon action with embedded IPv4
+anonymization enabled. An exposed unauthenticated network input
+feeding that action permits a network attacker to trigger the
+vulnerable path. An assert-enabled build aborts; an NDEBUG build under
+AddressSanitizer reports an out-of-bounds stack write. The
+demonstrated security impact is loss of logging availability. Code
+execution and confidentiality or integrity impacts have not been
+established.
 
-               AMD IOMMU Out-of-Bounds Device Table Read
+CVE: CVE-2026-129833
+Severity: High, CVSS 3.1 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H)
+CWE: CWE-121
+Affected upstream versions: rsyslog >= 8.31.0, including v8.2610.0
+Fixed version: 2026-11-17 daily stable
+Reporter credit: Manyo9
 
-UPDATES IN VERSION 2
-====================
+Advisory:
+https://github.com/rsyslog/rsyslog/security/advisories/GHSA-f9hg-rj32-693x
 
-Original (buggy) patch updated and new incremental patch added.
+Public fix PR:
+https://github.com/rsyslog/rsyslog/pull/8020
 
-ISSUE DESCRIPTION
-=================
+The attached source-only patch applies to current public main. It
+rejects overlong embedded IPv6 groups and guards the complete token
+length before copying. Malformed tokens remain unchanged.
 
-With AMD IOMMUs, the OS or Hypervisor chooses the position and size of
-the Device Table, which holds the main configuration information for
-devices.
+Patch: GHSA-f9hg-rj32-693x-source-only-4d9c2e613.patch
+SHA-256: 797865b29ede6f0a00728836a538ad96e72c6900cb1bbecca12441f7c08afec6
 
-AMD have disclosed a vulnerability in some IOMMUs, whereby under
-specific circumstances they read beyond the size chosen by the OS or
-Hypervisor.  This gets interpreted as valid configuration data for
-certain devices.
+Workaround: prevent untrusted log text from reaching the affected
+mmanon action. Where operationally acceptable, set
+embeddedipv4.enable="off" on that action or restrict the inputs and
+senders that can reach it. Disabling embedded anonymization changes
+logging behavior.
 
-For more information, see:
-  https://www.amd.com/en/resources/product-security/bulletin/amd-sb-3060.html
+Source merge, tag and binary package availability must be checked
+separately; none is implied by this notice.
 
-IMPACT
-======
-
-Depending on platform and system configuration, a domain might be able
-to control the IOMMU configuration for a device.
-
-If a domain can exercise such control, it can modify arbitrary host
-memory and escalate it's privilege to that of Xen.
-
-VULNERABLE SYSTEMS
-==================
-
-Systems running all versions of Xen are affected.
-
-Only certain AMD systems are believed to be vulnerable.  Systems from
-other manufacturers are not known to be affected.
-
-A particular system is potentially vulnerable if:
-
- 1) Any of the IOMMUs in the system have a Device Table size less than
-    2MB.  i.e. the system's IVRS table describes that particular IOMMU
-    as not covering a full PCI bus, and
- 2) There is either:
-    a) A real device behind the IOMMU which is the first function not
-       covered by the IVRS description, or
-    b) Any device behind the IOMMU which can be configured to use the
-       initiator ID of the first function not covered by the IVRS
-       description.
-
-If the above situation holds, the IOMMU will read out of bounds from the
-next sequential page in physical memory, and interpret it as valid
-configuration data for the device.  This page may belong to a guest.
-
-MITIGATION
-==========
-
-There are no mitigations.
-
-RESOLUTION
-==========
-
-Applying the first of the attached patches to a tree not previously
-patched for this XSA resolves this issue.  Applying the second of the
-attached patches on top of the originally distributed one, which was
-meanwhile also committed to the respective git branches, also
-resolves this issue.
-
-Note that patches for released versions are generally prepared to
-apply to the stable branches, and may not apply cleanly to the most
-recent release tarball.  Downstreams are encouraged to update to the
-tip of the stable branch before applying these patches.
-
-xsa524.patch           xen-unstable - Xen 4.17.x
-xsa524-fix.patch       xen-unstable - Xen 4.17.x
-
-$ sha256sum xsa524*
-74d593768da3b9303b984d3f65439510138c8d1ccd2ed84b9abc2867881dfee5  xsa524.patch
-8ca9e4ea59b17ad6003dc6f512c049840c722f78cc379f32337c8a698b779bd2  xsa524-fix.patch
-$
-
-NOTE CONCERNING CVE
-===================
-
-The use of a 2024 CVE on a 2026 disclosure was queried with AMD, and
-confirmed to be correct.
------BEGIN PGP SIGNATURE-----
-
-iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmr8clAMHHBncEB4ZW4u
-b3JnAAoJEIP+FMlX6CvZKwIH/itoSkHwzCASmVBAdsxVJ7PrziOBOs3CI2dkTfqn
-zqLzrx6PwgjnPCGUvhUinTrjR9W68DNFnwi4fSUHOvpErXVq9OPj/XFEahDQ90fZ
-Rsjff4+XwhZUk4SWjsamFwrPTyKId/fGESWI53jMDlVMjfh5qHSuXcIbF1F/PIgO
-5WKZiX6mIL1T/pzMg7Q7prQSpEhWz+kKSvPEUy2CgYGJzIIkANxcls2sdDAj6FSW
-FXWHlNLNnRD9n3LbWHktZktkgnz4cTwxL0Z62vB8viWMtN+SC1vN6lftCWVhTXeI
-mwtKAR56TYZaJ8vw/LKKCQmu0PFNYyOcvEKw+1bxokBPyZs=
-=TFmn
------END PGP SIGNATURE-----
-
-Download attachment "xsa524.patch" of type "application/octet-stream" (4556 bytes)
-
-Download attachment "xsa524-fix.patch" of type "application/octet-stream" (1218 bytes)
+Download attachment "GHSA-f9hg-rj32-693x-source-only-4d9c2e613.patch" of type "application/octet-stream" (1123 bytes)
