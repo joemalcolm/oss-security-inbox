@@ -1,106 +1,74 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/18/16
-Message-ID: <av4MKXBseGwe-Upp@netmeister.org>
-Date: Wed, 18 Nov 2026 15:35:53 -0500
-From: Jan Schaumann <jschauma@...meister.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/18/7
+Message-ID: <av15byrNyiZ-BjPA@donburi.himad.notcom.org>
+Date: Wed, 18 Nov 2026 12:20:34 +0200
+From: Valtteri Vuorikoski <vuori@...com.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-123633, CVE-2026-123007: nginx RCE via HTTP/2
+Subject: Roundcube webmail: multiple vulnerabilities prior to 1.6.21 / 1.7.6
 Content-Type: text/plain; charset=utf-8
 
-Wiz.io published two RCE vulnerabilities in nginx's
-HTTP/2 handling:
+Roundcube, a webmail frontend, released versions 1.6.21 (LTS) and 1.7.6
+with fixes to numerous CSRF, SSRF, injection and other vulnerabilities
+on Nov 9.
 
-https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities
+>From the announcement <https://roundcube.net/news/2026/11/09/security-updates-1.6.21-and-1.7.6>:
 
-CVE-2026-123633, HTTP/2 connection use-after-free
-CVE-2026-123007 HTTP/2 send_window integer underflow
+  * Fix open redirect via IMAP error recovery on attachment get,
+reported by Santhoshkumar S.
 
-F5's security advisory is at
-https://my.f5.com/manage/s/article/K000164058
-https://my.f5.com/manage/s/article/K000163928
-https://my.f5.com/manage/s/article/K000163926
+  * Fix so Received: header includes only trusted hostname and forwarded
+IP from a trusted proxy, reported by Squirt1e, Atum, N0b0dy, Gh0u1L5.
 
-The main F5 advisory includes a few additional
-vulnerabilities, but the two RCEs are making the
-internet hype cycle rounds today under the (*eyeroll*)
-names "nginx2shell" and/or "nginx2root"
-(https://nginx2root.com/).
+  * Fix bug where some managesieve destructive actions could have been
+triggered cross-site via GET, reported by Squirt1e, Atum, N0b0dy,
+Gh0u1L5.
 
-(The "2root" moniker is particularly annoying because
-it relies on an independent LPE, which, well, sure, if
-you assume that you have an LPE, then _any_ RCE is a
-remote root, but ok.)
+  * Fix Sieve script injection via a rule operator, reported by
+Squirt1e, Atum, N0b0dy, Gh0u1L5.
 
-Both RCEs require HTTP/2 to be enabled, so turning
-that off (`http2 off`) is an effective mitigation.
+  * Fix Sieve script injection via set/include modifiers, reported by
+Squirt1e, Atum, N0b0dy, Gh0u1L5.
 
+  * Fix bug where resolve_url() ignored trusted host setting, reported
+by Squirt1e, Atum, N0b0dy, Gh0u1L5.
 
-nginx.org says
+  * Fix mail header injection via a MDN subject, reported by Squirt1e,
+Atum, N0b0dy, Gh0u1L5
 
-"nginx-1.30.7 stable and nginx-1.31.9 mainline
-versions have been released, with vulnerability fixes
-for use-after-free in resolver (CVE-2026-123634),
-memory corruption in HTTP/2 flow control
-(CVE-2026-123007), use-after-free in HTTP/3
-(CVE-2026-121810), use-after-free in HTTP/2
-(CVE-2026-123633), infinite loop while reading client
-request body over TLS 1.3 (CVE-2026-118899),
-use-after-free in mail proxy module (CVE-2026-113425),
-NULL pointer dereference when using PROXY protocol
-version 2 (CVE-2026-120993), buffer overflow when
-using alias with try_files (CVE-2026-125283), SNI
-bypass in client certificate validation in stream
-module (CVE-2026-120967), and insufficient validation
-in stream ssl_preread module (CVE-2026-123640).
+  * Fix HTTP request injection via the spellcheck ATD backend, reported
+by Squirt1e, Atum, N0b0dy, Gh0u1L5.
 
-https://nginx.org/en/security_advisories.html
+  * Fix IMAP command injection via CRLF in _uid parameter with
+messages_cache enabled, reported by dexx-tech.
 
-(I'll note again that I find it suboptimal to have a
-single page for all CVEs with no clear identification
-of what date they were announced; I also see no good
-way of keeping up to date with nginx security
-announcements as the project does not seem to maintain
-mailing lists any longer (e.g.,
-http://mailman.nginx.org/pipermail/nginx-announce/).)
+  * Fix SSRF in CSS proxy via incomplete is_local_url() nip.io/sslip.io
+bypass, reported by blacksw0rd.
 
-The latest open source release is here:
-https://github.com/nginx/nginx/releases/tag/release-1.31.9
+  * Fix CSRF validation bypass for file-only POST requests, reported by
+skad00sh.
 
-Full set of changes from previous release:
-https://github.com/nginx/nginx/compare/release-1.31.8...release-1.31.9
+  * Fix disabled_actions restriction bypass by writing ‘_’ instead of
+‘-‘ in the action name, reported by skad00sh.
 
+  * Fix CSRF validation bypass for mail purge/expunge commands, reported
+by threalwinky.
 
+  * Fix passing potentally unsafe attachment content into ImageMagick on
+image type conversion, reported by José Luis Sánchez Pérez -
+Cybersecurity Blue & Red Team.
 
-Cribbing from the Wiz.io advisory:
+  * Fix Unbounded CPU loop/DoS in rcube_session::unserialize() via a
+negative length token, reported by Guang.
 
-" Both vulnerabilities require HTTP/2 to be enabled,
-but their additional requirements differ.
-CVE-2026-123633 affects reverse-proxy processing when
-available connection slots run low. CVE-2026-123007
-can also affect NGINX serving content directly, as
-demonstrated in our testing over HTTPS on 64-bit
-systems. Typical memory safety mitigations such as
-ASLR do not protect against these issues, as attackers
-can use either vulnerabilities for memory read access
-prior to code execution.
+  * Fix SSRF filter (is_local_url()) bypass via 6to4 (2002::/16)
+addresses, reported by wyx98765.
 
-[...]
+  * Fix so IMAP host input is validated more strictly, reported by
+Mohamed Elgzouli.
 
-Any exploit assumes the attacker is able to
-communicate directly with the affected NGINX server.
-CDNs and WAFs that terminate HTTP/2 may mitigate parts
-of the exploit by not reflecting the exact payload
-back to the underlying NGINX server. This depends on
-implementation.
+No CVEs or other indicators were provided. Additionally the announcement
+notes that the 1.6 (LTS) branch will end support in the near future due
+to the effort of backporting patches.
 
-Specifically, CVE-2026-123007 requires the attacker to
-send a large number of WINDOW_UPDATE records to
-increase it to an arbitrary value. Detection rules
-covering long standing HTTP/2 connections sending
-large amounts of data may hint at an attack associated
-with this vulnerability. CVE-2026-123633 has different
-exploitation constraints and is more likely to be
-exploited when NGINX is configured in proxy
-configuration."
-
-
+ -valtteri
+ 
