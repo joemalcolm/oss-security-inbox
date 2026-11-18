@@ -1,39 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/18/17
-Message-ID: <2a26dd0c-91e0-4e8b-84be-7562f769598e@oracle.com>
-Date: Wed, 18 Nov 2026 13:05:59 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/18/10
+Message-ID: <5d0130f6-1db4-4ae9-9a1c-6de618f432b0@gmail.com>
+Date: Wed, 18 Nov 2026 13:17:50 -0500
+From: Brian Rosmaita <rosmaita.fossdev@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: fontconfig 2.18.4 released with security fix
+Subject: [OSSA-2026-051] Cinder: Local Privilege Escalation in LIO iSCSI driver (CVE-2026-131920) Errata 1
 Content-Type: text/plain; charset=utf-8
 
-I don't see a CVE id assigned for it yet, but
-https://gitlab.freedesktop.org/fontconfig/fontconfig/-/releases/2.18.4
-identifies the included security fix as:
+====================================================================
+OSSA-2026-051: Local Privilege Escalation in Cinder LIO iSCSI driver
+====================================================================
 
-Fix out-of-bounds access in FcCharSetMerge when merging page 0xffff
-https://gitlab.freedesktop.org/fontconfig/fontconfig/-/commit/16aa5c1a372093045ad02736b0ab99e3cfd94f32
+:Date: November 17, 2026
+:CVE: CVE-2026-131920
 
-which fixes the bug reported as:
-https://gitlab.freedesktop.org/fontconfig/fontconfig/-/work_items/577
 
--------- Forwarded Message --------
-Subject: 	2.18.4 released
-Date: 	Wed, 18 Nov 2026 21:57:24 +0900
-From: 	Akira TAGOH <akira@...oh.org>
-To: 	fontconfig@...ts.freedesktop.org
+Affects
+~~~~~~~
+- Cinder: <27.1.1, >=28.0.0 <28.1.1, >=29.0.0 <29.1.1
 
-Hi,
 
-2.18.4 has been released with some bug fixes and a security fix.
-Please check out
-https://gitlab.freedesktop.org/fontconfig/fontconfig/-/releases/2.18.4
-for more details and the download link.
+Description
+~~~~~~~~~~~
+Sami Yessou, cloud engineer at switch.ch, reported a vulnerability
+in Cinder.  By making an os-initialize_connection request with an
+IQN that includes a path traversal as part of the connector's
+initiator element, an authenticated user with a 'member' role may
+create or overwrite files in the volume host filesystem.  Only
+cinder-volume hosts using the LIO iSCSI target driver are affected.
+This target driver is typically used with the LVM volume driver.
 
-If there are any issues you found in this release, please submit an
-issue to https://gitlab.freedesktop.org/fontconfig/fontconfig/-/work_items/new
 
-Regards,
--- 
-Akira TAGOH
 
+Errata
+~~~~~~
+MITRE assigned CVE-2026-131920 after initial publication.
+
+
+
+Patches
+~~~~~~~
+- https://review.opendev.org/1015676 (2025.1/epoxy (unmaintained))
+- https://review.opendev.org/1015654 (2025.2/flamingo)
+- https://review.opendev.org/1015486 (2026.1/gazpacho)
+- https://review.opendev.org/1015485 (2026.2/hibiscus)
+- https://review.opendev.org/1015478 (2027.1/indri (development))
+
+
+Credits
+~~~~~~~
+- Sami Yessou from switch.ch (CVE-2026-131920)
+
+
+References
+~~~~~~~~~~
+- https://launchpad.net/bugs/2163562
+- http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-131920
+
+
+Notes
+~~~~~
+- A patch is available for the unmaintained/2025.1 branch as a courtesy.
+   Unmaintained branches do not receive updated releases.
+
+
+OSSA History
+~~~~~~~~~~~~
+- 2026-11-18 - Errata 1
+- 2026-11-17 - Original Version
+
+
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (237 bytes)
