@@ -1,61 +1,64 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/20/9
-Message-ID: <trinity-b5eb9e94-0778-4fd2-b423-eee6990966fe-1795091705005@trinity-msg-rest-gmx-gmx-live-668fc4788c-mpsjz>
-Date: Thu, 19 Nov 2026 12:35:05 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/20/7
+Message-ID: <trinity-765d714d-553c-40fb-83fd-2ef872d95a84-1795091539273@trinity-msg-rest-gmx-gmx-live-668fc4788c-9mt4z>
+Date: Thu, 19 Nov 2026 12:32:19 +0000
 From: "Alexander A. Shvedov" <sigdevel@...amail.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-130793: GPAC/MP4Box: Stack Buffer Overflow in gf_filter_pid_resolve_file_template_ex via Crafted NHML Input
+Subject: CVE-2026-130632: GPAC/MP4Box: Out-of-Bounds Read in m2tsdmx_send_packet via Crafted MPEG-2 TS VC-1 Input
 Content-Type: text/plain; charset=utf-8
 
 Product:   GPAC (MP4Box)
-Affected:  GPAC < 26.07.0
-           Reproduced on 26.03-DEV-rev309-g6aef013b4-master
-           Commit 6aef013b43d25a05730aac3fff04248e54f65aac
-Fixed:     5439b94d091e764742a6b108509516d3810bd034
-CVE:       CVE-2026-130793
-CWE:       CWE-121 (Stack-based Buffer Overflow)
-CVSS 3.1:  6.6 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:H)
+Affected:  GPAC < 26.02.0
+           Reproduced on 2.5-DEV-rev2190-g106f08dce-master
+           Commit 106f08dce61f3f48a784345797325f36082191fb
+Fixed:     d65d699012bd82a0839e8af6747bca438e26938a
+CVE:       CVE-2026-130632
+CWE:       CWE-125 (Out-of-bounds Read)
+CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
 Reporter:  Alexander A. Shvedov (@sigdevel)
 
 Description:
-  A crafted NHML file references an excessively long media filename. When
-  DASH segmentation constructs an output filename,
-  gf_filter_pid_resolve_file_template_ex() expands this name beyond a fixed
-  GF_MAX_PATH stack buffer. The supplied ASan trace identifies a one-byte
-  write past szDASHTemplate at filter_core/filter_pid.c:9366, reached from
-  dasher_setup_sources().
+  The VC-1 packet path in m2tsdmx_send_packet() applies a start-code offset
+  twice. A crafted MPEG-2 TS stream can therefore underflow the remaining
+  payload length passed to memcpy(), causing an oversized read at
+  filters/dmx_m2ts.c:936.
+
+  The supplied ASan run labels the access heap-use-after-free and reports a
+  read of 4294967202 bytes. The published CVE classifies the underlying
+  packet-length error as an out-of-bounds read (CWE-125).
 
 Impact:
   Processing attacker-controlled input can terminate MP4Box and cause denial
-  of service. The issue also affects memory safety; arbitrary code execution
-  was not demonstrated.
+  of service. Arbitrary code execution was not demonstrated.
 
 Reproduction:
   Build GPAC with AddressSanitizer, then run:
 
-    ./MP4Box -dash 1000 78_filter_core_filter_pid_c_9366_gf_filter_pid_resolve_file_template_ex
+    ./MP4Box -add 74_m2tsdmx_send_packet -new /dev/null
 
 ASan log excerpt:
-  ==384758==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7b69d35f93a0 at pc 0x7f69d66f12d3 bp 0x7ffd25eb9660 sp 0x7ffd25eb9658
-  WRITE of size 1 at 0x7b69d35f93a0 thread T0
-      #0 0x7f69d66f12d2 in gf_filter_pid_resolve_file_template_ex filter_core/filter_pid.c:9366
-      #1 0x7f69d67bd2fd in dasher_setup_sources filters/dasher.c:4524
-      #2 0x7f69d67cb6d1 in dasher_setup_period filters/dasher.c:8018
+  ==3492692==ERROR: AddressSanitizer: heap-use-after-free on address 0x50d0000002c5 at pc 0x7fa54c2f2936 bp 0x7ffd84102390 sp 0x7ffd84101b50
+  READ of size 4294967202 at 0x50d0000002c5 thread T0
+      #0 0x7fa54c2f2935 in memcpy ../../../../src/libsanitizer/sanitizer_common/sanitizer_common_interceptors_memintrinsics.inc:115
+      #1 0x7fa54b466d58 in m2tsdmx_send_packet filters/dmx_m2ts.c:936
+      #2 0x7fa54b466d58 in m2tsdmx_on_event filters/dmx_m2ts.c:1184
+      #3 0x7fa54addc021 in gf_m2ts_reframe_default media_tools/mpegts.c:136
+      #4 0x7fa54ade52c1 in gf_m2ts_flush_pes media_tools/mpegts.c:2311
 
 Fix:
-  Update to GPAC v26.07.0 or a later release containing the fix:
+  Update to GPAC v26.02.0 or a later release containing the fix:
 
-    https://github.com/gpac/gpac/releases/tag/v26.07.0
+    https://github.com/gpac/gpac/releases/tag/v26.02.0
 
 PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/78/78_filter_core_filter_pid_c_9366_gf_filter_pid_resolve_file_template_ex
+  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/74/74_m2tsdmx_send_packet
 
 References:
-  https://github.com/gpac/gpac/issues/3586
-  https://github.com/gpac/gpac/commit/5439b94d091e764742a6b108509516d3810bd034
-  https://www.cve.org/CVERecord?id=CVE-2026-130793
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/130xxx/CVE-2026-130793.json
-  https://www.vulncheck.com/advisories/gpac-before-26.07.0-stack-based-buffer-overflow-via-gf-filter-pid-resolve-file-template-ex
+  https://github.com/gpac/gpac/issues/3442
+  https://github.com/gpac/gpac/commit/d65d699012bd82a0839e8af6747bca438e26938a
+  https://www.cve.org/CVERecord?id=CVE-2026-130632
+  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2026/130xxx/CVE-2026-130632.json
+  https://www.vulncheck.com/advisories/gpac-before-26.02.0-out-of-bounds-read-via-m2tsdmx-send-packet
 
 
 ——
