@@ -1,60 +1,123 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/18/12
-Message-ID: <trinity-2b0834a7-2e12-49e9-bf8a-895248eff88d-1794992627576@trinity-msg-rest-gmx-gmx-live-868fdc48d9-lkwzj>
-Date: Wed, 18 Nov 2026 09:03:47 +0000
-From: "Alexander A. Shvedov" <sigdevel@...amail.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/1
+Message-ID: <5335b6c5-16e4-4c75-a752-1f558f0e7777@oracle.com>
+Date: Wed, 18 Nov 2026 17:03:47 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2025-71471: GPAC/MP4Box: Use of Uninitialized Memory in stbl_AddCTS via Crafted MP4 Input
+Subject: Ruby: multiple vulnerabilities in Regexp and String case conversion
 Content-Type: text/plain; charset=utf-8
 
-Product:   GPAC (MP4Box)
-Affected:  GPAC < 26.02.0
-           Reproduced on 2.5-DEV-rev2077-g1aeceb11e-master
-           Commit 1aeceb11e15d4e04fda73a36a36aa33d43b089e5
-Fixed:     a8c83bd36ca074b81c39ae5ccc0c8580d098072a
-CVE:       CVE-2025-71471
-CWE:       CWE-908 (Use of Uninitialized Resource)
-CVSS 3.1:  5.5 MEDIUM (AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H)
-Reporter:  Alexander A. Shvedov (@sigdevel)
+https://www.ruby-lang.org/en/news/2026/11/18/multiple-vulnerabilities-in-regexp-and-string/
+advises:
+> Security advisories: multiple vulnerabilities in Regexp and String case
+> conversion
+> 
+> Posted by mame on 18 Nov 2026
+> 
+> Seven vulnerabilities have been discovered in Ruby’s regular
+> expression engine and in the case conversion of strings. We are aware
+> of PoCs that prove some of them can be used to trigger remote code
+> execution. We have released Ruby 4.0.10, 3.4.13 and 3.3.14 to fix
+> them. We strongly recommend upgrading.
+> 
+> CVE identifiers have been requested for these vulnerabilities but have
+> not been assigned yet, so this advisory refers to them by their GitHub
+> Security Advisory (GHSA) identifiers.
+> 
+> 
+> GHSA-34m4-m9fh-gqp5: Heap buffer overflow in case conversion of strings
+> https://github.com/ruby/ruby/security/advisories/GHSA-34m4-m9fh-gqp5
+> 
+> Ruby has a one-byte heap-based buffer overflow in the case conversion
+> of strings. Changing the case of a crafted string may allow remote
+> code execution. We are aware of PoCs that prove this flaw can be used
+> to trigger RCE in some scenarios.
+> 
+> 
+> GHSA-7x2q-68qv-6p8x: Double free in regular expression compilation
+> https://github.com/ruby/ruby/security/advisories/GHSA-7x2q-68qv-6p8x
+> 
+> Ruby has a double free in its regular expression engine. Compiling a
+> crafted regular expression pattern may allow remote code execution in
+> applications that compile attacker-controlled patterns. We are aware
+> of PoCs that prove this flaw can be used to trigger RCE in some
+> scenarios.
+> 
+> 
+> GHSA-87fm-7w84-j2px: Integer overflow in case conversion of strings
+> https://github.com/ruby/ruby/security/advisories/GHSA-87fm-7w84-j2px
+> 
+> Ruby has an integer overflow in the case conversion of strings, which
+> causes a heap-based buffer overflow. Changing the case of a crafted
+> string may allow remote code execution. We are aware of PoCs that
+> prove this flaw can be used to trigger RCE in some scenarios.
+> 
+> 
+> GHSA-wpqw-5qxg-m68r: Out-of-bounds read in case-insensitive regular
+> expression matching
+> https://github.com/ruby/ruby/security/advisories/GHSA-wpqw-5qxg-m68r
+> 
+> Ruby has an out-of-bounds read in its regular expression engine.
+> Matching against a crafted regular expression pattern may allow remote
+> code execution in applications that use attacker-controlled patterns.
+> We are aware of PoCs that prove this flaw can lead to memory corruption
+> in an attacker-controlled way.
+> 
+> 
+> GHSA-3p8q-wmhx-vm2w: Heap buffer overflow in regular expression compilation
+> https://github.com/ruby/ruby/security/advisories/GHSA-3p8q-wmhx-vm2w
+> 
+> Ruby has an integer overflow in its regular expression engine, which
+> causes a heap-based buffer overflow. Compiling a crafted regular
+> expression pattern may allow remote code execution in applications
+> that compile attacker-controlled patterns. We are aware of PoCs that
+> prove this flaw can be used to trigger RCE in some scenarios.
+> 
+> 
+> GHSA-7whj-cfh7-xgm4: Heap buffer overflow in Regexp#to_s
+> https://github.com/ruby/ruby/security/advisories/GHSA-7whj-cfh7-xgm4
+> 
+> Ruby has a heap-based buffer overflow in Regexp#to_s. Converting a
+> crafted regular expression to a string may allow information
+> disclosure or remote code execution in applications that compile
+> attacker-controlled patterns. We are aware of PoCs that prove this
+> flaw can be used to trigger RCE in some scenarios.
+> 
+> GHSA-pvgc-g7gj-pv6h: Out-of-bounds read in case-insensitive backreference matching
+> https://github.com/ruby/ruby/security/advisories/GHSA-pvgc-g7gj-pv6h
+> 
+> Ruby has an out-of-bounds read in its regular expression engine.
+> Matching a crafted string may disclose memory contents or crash the process.
+> 
+> 
+> Affected versions
+> 
+>     Ruby 3.3.13 and earlier
+>     Ruby 3.4.0 through 3.4.12
+>     Ruby 4.0.0 through 4.0.9
+> 
+> Recommended action
+> 
+> We strongly recommend upgrading to Ruby 4.0.10, 3.4.13 or 3.3.14.
+> 
+> Ruby 3.3 is in the security maintenance phase. Ruby 3.2 and earlier have
+> reached their end of life and will not receive these fixes.
+> 
+> Credits
+> 
+>     GHSA-34m4-m9fh-gqp5: Stephan Lipp (Ada Logics) and Anthropic
+>     GHSA-7x2q-68qv-6p8x: Stephan Lipp (Ada Logics) and Anthropic
+>     GHSA-87fm-7w84-j2px: baba__yaga
+>     GHSA-wpqw-5qxg-m68r: Stephan Lipp (Ada Logics) and Anthropic
+>     GHSA-3p8q-wmhx-vm2w: aphantom
+>     GHSA-7whj-cfh7-xgm4: Stephan Lipp (Ada Logics) and Anthropic
+>     GHSA-pvgc-g7gj-pv6h: Hiroya Fujinami and Hiroshi SHIBATA
+> 
+> History
+> 
+>     Originally published at 2026-11-19 00:00:00 (UTC)
 
-Description:
-  Out-of-order composition time offsets in a crafted MP4 expose
-  uninitialized sample-table state in stbl_AddCTS(). Import subsequently
-  reaches Media_GetSampleDesc() with an inconsistent sample-description list
-  and crashes at ptr->slots[itemNumber] in gf_list_get(), utils/list.c:672.
+-- 
+         -Alan Coopersmith-                 alan.coopersmith@...cle.com
+          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-Impact:
-  Processing attacker-controlled input can terminate MP4Box and cause denial
-  of service. Arbitrary code execution was not demonstrated.
-
-Reproduction:
-  Run the tested GPAC build under GDB:
-
-    ./MP4Box -add 69_utils_list_c_672 -new /dev/null
-
-GDB backtrace excerpt:
-  Program terminated with signal SIGSEGV, Segmentation fault.
-  #0 in gf_list_get utils/list.c:672
-  672             return ptr->slots[itemNumber];
-  #1 in Media_GetSampleDesc isomedia/media.c:43
-  #2 in Media_GetSample isomedia/media.c:557
-
-Fix:
-  Update to GPAC v26.02.0 or a later release containing the fix:
-
-    https://github.com/gpac/gpac/releases/tag/v26.02.0
-
-PoC:
-  https://github.com/sigdevel/pocs/blob/main/res/gpac/MP4Box/69/69_utils_list_c_672
-
-References:
-  https://github.com/gpac/gpac/issues/3412
-  https://github.com/gpac/gpac/commit/a8c83bd36ca074b81c39ae5ccc0c8580d098072a
-  https://www.cve.org/CVERecord?id=CVE-2025-71471
-  https://raw.githubusercontent.com/CVEProject/cvelistV5/main/cves/2025/71xxx/CVE-2025-71471.json
-  https://www.vulncheck.com/advisories/gpac-before-26.02.0-uninitialized-memory-use-in-stbl-addcts
-
-
-——
-Best regards, Alexander A. Shvedov
-@sigdevel
