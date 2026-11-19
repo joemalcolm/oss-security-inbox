@@ -1,87 +1,221 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/5
-Message-ID: <20261119075006.GA2914@openwall.com>
-Date: Thu, 19 Nov 2026 08:50:06 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/3
+Message-ID: <00f30061-033a-49c5-83fe-a5c3fa234832@oracle.com>
+Date: Wed, 18 Nov 2026 18:07:08 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-114938: OpenJDK pre-auth RCE via memory-corruption in Base64 decoder
+Subject: Fwd: gnutls 3.8.14 released with 3 CVE fixes
 Content-Type: text/plain; charset=utf-8
 
-On Tue, Nov 17, 2026 at 04:53:52PM -0500, Jan Schaumann wrote:
-> Today's internet hyped vulnerability appears to be
-> CVE-2026-114938, obligatorily named
-> "<something>[2|4]shell".
-> 
-> In this case, it's Java, specifically a
-> memory-corruption vulnerability in OpenJDK's Base64
-> decoder on x86-64 processors with AVX-512 VBMI
-> support leading to memory disclosure and RCE.
-> 
-> 
-> Calif.io set their priorities on publicity-maxxing, it
-> seems:
-> 
-> "After we disclosed PHP2Shell, we realized many people
-> didn't know what PHP was. So we decided to go after
-> something a little more familiar: Java."
-> 
-> Anyway, full details here:
-> https://calif.io/java4shell/
-> 
-> OpenJDK advisory (without any technical details) here:
-> https://openjdk.org/groups/vulnerability/advisories/2026-11-17
-> 
-> Oracle JDK release notes here:
-> https://www.oracle.com/security-alerts/cspunov2026.html
-> 
-> I haven't yet seen a link to the actual source code
-> fixes.
 
-The fix merged just in time for this disclosure (but prepared earlier):
 
-https://github.com/openjdk/jdk/commit/5177a70b385c16f26ede191fdac7aaba0bed0f8b
 
->From 5177a70b385c16f26ede191fdac7aaba0bed0f8b Mon Sep 17 00:00:00 2001
-From: Tobias Hartmann <thartmann@...njdk.org>
-Date: Tue, 13 Oct 2026 09:27:30 +0000
-Subject: [PATCH] 8393212: Base64 optimization improvements
+-------- Forwarded Message --------
+Subject: 	gnutls 3.8.14
+Date: 	Wed, 18 Nov 2026 23:40:00 +0100
+From: 	Alexander Sosedkin <monk@...oiled.info>
+To: 	gnutls-help@...ts.gnutls.org
+CC: 	info-gnu@....org
 
-Co-authored-by: Albert Mingkun Yang <ayang@...njdk.org>
-Reviewed-by: rhalade, mschoene, chagedorn, rcastanedalo
----
- src/hotspot/cpu/x86/stubGenerator_x86_64.cpp | 4 ++++
- 1 file changed, 4 insertions(+)
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
-diff --git a/src/hotspot/cpu/x86/stubGenerator_x86_64.cpp b/src/hotspot/cpu/x86/stubGenerator_x86_64.cpp
-index d6c5ca188b34..d14929b77735 100644
---- a/src/hotspot/cpu/x86/stubGenerator_x86_64.cpp
-+++ b/src/hotspot/cpu/x86/stubGenerator_x86_64.cpp
-@@ -3395,6 +3395,10 @@ address StubGenerator::generate_base64_decodeBlock() {
-     __ BIND(L_finalBit);
-     // Now have 1 to 63 bytes left to decode
- 
-+    // A padded Base64 tail shorter than one complete block is handled by Java.
-+    __ cmpl(length, 4);
-+    __ jcc(Assembler::less, L_bruteForce);
-+
-     // I was going to let Java take care of the final fragment
-     // however it will repeatedly call this routine for every 4 bytes
-     // of input data, so handle the rest here.
+Hello,
 
-PR with the same fix submitted and closed without merging 3 months earlier:
+We have just released gnutls-3.8.14. This is a bug fix, security and
+enhancement release on the 3.8.x branch.
 
-https://github.com/openjdk/jdk/pull/32781
+This is the first release with the GnuTLS Project acting as a CNA:
+https://www.cve.org/Media/News/item/news/2026/10/13/GnuTLS-Project-Added-as-CNA
 
-Third-party "CVE-2026-114938 Runtime Patch (Temporary Patch Provided by Xint)":
+This release does not contain fixes for all the reported issues.
+Moreover, it intentionally only addresses vulnerabilities of low severity.
 
-https://github.com/theori-io/java4shell-runtime-patch-CVE-2026-114938
+We would like to thank everyone who contributed in this release:
+Alejandro Pacheco, Alexander Sosedkin, Andreas Metzler, Angel Yankov,
+Brad Smith, Christian Häggström, Daiki Ueno, Daniel P. Berrangé,
+David Dudas, Ghadi Elie Rahme, Mohammadreza Khellat, Ryan Carsten Schmidt,
+Sahana Prasad, Simon Josefsson, Stanislav Zidek, Tim Rühsen, Xuqing Yang,
+Zoltán Fridrich.
 
-Writeup on independent rediscovery of the same issue:
+The detailed list of changes follows:
 
-https://www.chainguard.dev/unchained/java4shell-how-a-malformed-base64-string-breaks-the-jvm-on-avx-512
+* Version 3.8.14 (released 2026-11-18)
 
-about this rediscovery Dan Lorenc writes on Twitter: "I double checked
-mine after and it was found through fuzzing. I only saw that issue when
-cleaning things up after."
+** libgnutls: Fix crash on certificate list memory allocation failure
+     On allocation failure, the certificate list pointer and count could
+     get out of sync, causing a NULL deref or double-free during session cleanup.
+     Both fields are now zeroized before the allocation.
+     Reported by Joshua Rogers of AISLE Research Team.
+     [GNUTLS-SA-2026-11-18-1, severity: low] [CVE-2026-127039]
 
-Alexander
+** libgnutls: Fix crash in RSA-PSK username copy memory allocation failure
+     A missing return on a failed username copy could crash the handshake
+     when memory allocation fails.
+     The error is now propagated, aborting the handshake.
+     Reported by Joshua Rogers of AISLE Research Team.
+     [GNUTLS-SA-2026-11-18-2, severity: low] [CVE-2026-127040]
+
+** libgnutls: Make name constraints deinitialization idempotent
+     If reinitializing the name constraints were to fail due to memory pressure,
+     the verification context cleanup
+     could have freed the same internal lists a second time,
+     crashing the application.
+     The deinitialization functions now clear the pointers after freeing.
+     Reported by Xuqing Yang.
+     [GNUTLS-SA-2026-11-18-3, severity: low] [CVE-2026-127231]
+
+** libgnutls: Fix buffer overrun in deterministic DSA signing
+     A malformed DSA private key with a q value exceeding 512 bits
+     could overrun a fixed-size buffer when signing in reproducible mode.
+     Such keys are now rejected with GNUTLS_E_INVALID_REQUEST (#1857).
+     Reported by Joshua Rogers of AISLE Research Team.
+
+** libgnutls: Fix CRL distribution points leak in certificate printing
+     Printing certificates with gnutls_x509_crt_print() could leak memory
+     if enumerating CRL distribution points failed (#1866).
+     Reported by Joshua Rogers of AISLE Research Team.
+
+** libgnutls: Fix HCRYPTHASH handle leak in CAPI signing on allocation failure
+     The HCRYPTHASH handle created in capi_sign() was not destroyed
+     when the memory allocation for the signature buffer failed.
+     It is now released on all exit paths (#1867).
+     Reported by Joshua Rogers of AISLE Research Team.
+
+** libgnutls: Fix memory leak in kTLS key setup on FreeBSD
+     The iv and cipher_key buffers allocated for the tls_enable structure
+     were not freed after setsockopt. They're now freed on all exit paths (#1865).
+     Reported by Joshua Rogers of AISLE Research Team.
+
+** libgnutls: Fix stale params reuse in PKCS#11 AEAD/MAC wrappers
+     The AEAD encrypt/decrypt and MAC wrappers of the PKCS#11 back-end
+     discarded the return value of the per-call params/nonce setter
+     and proceeded with whatever stale state remained.
+     If the setter failed, the previous call's IV/AAD/tag (AEAD)
+     or nonce/key (MAC) were subsequently reused.
+     The error from set_params/set_nonce/set_key is now propagated (#1856, #1872).
+     Reported by Joshua Rogers of AISLE Research Team.
+
+** libgnutls: Initialize reasons in CRL DistributionPoint parsing
+     The CRL reasons bitmap was read into an uninitialized buffer,
+     which could result in incorrect reason flags returned to the caller (#1925).
+     GnuTLS itself does not act on those flags.
+     Reported by Huzaifa Sidhpurwala, Red Hat Product Security.
+
+** libgnutls: Fix cross-family IP name constraints
+     An IPv6 permitted name constraint did not preclude matching IPv4 SAN
+     and vice versa.
+     Addresses from a family not covered by a permitted name constraint
+     are now rejected (#1920).
+     Reported by Huzaifa Sidhpurwala, Red Hat Product Security.
+
+** libgnutls: Reject on unsupported permitted name constraint types
+     Permitted subtrees of constraint types GnuTLS does not match (notably URI)
+     were parsed but ignored.
+     A leaf carrying a SAN of the matching type
+     is now rejected with GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE.
+     Previously accepted certificate chains
+     featuring intermediate CAs carrying such constraint types
+     may be rejected now (#1836, #1851, #1894, #1895).
+     Reported by Zou Dikai, Joshua Rogers of AISLE Research Team,
+     Mitchell Benjamin of Revamp Studio, and Corban Villa of UC Berkeley.
+
+** libgnutls: Check all SAN types against name constraints
+     Chain verification only consulted name constraints of
+     DNS, e-mail, directoryName, URI and IP address SAN types.
+     Other types, notably UPN, were not checked at all,
+     so an excludedSubtree for UPN did not reject the chain.
+     All SAN types GnuTLS is aware of are now checked uniformly;
+     types for which no matching is implemented are rejected
+     when any constraint of the corresponding type is present (#1875).
+     Reported by Yu-Fu Fu.
+
+** libgnutls: Count subject as name for DN constraint validation
+     An excludedSubtree of that type used to reject any certificate,
+     while a permittedSubtree was ignored entirely.
+     The check now rejects a certificate featuring a DN
+     (in a subjectAltName or as a non-empty subject)
+     in the presence of any directoryName constraint.
+     GnuTLS does not implement matching DNs against the constraint,
+     so even valid DNs that a permittedSubtree constraint
+     would have previously allowed are now rejected (#1890).
+     Reported by Jack Lloyd.
+
+** libgnutls: Add gnutls_pubkey_{import,export}_mldsa_raw()
+     These functions obtain and restore
+     the raw FIPS 204 ML-DSA public key octet string.
+     This is needed by applications such as DNSSEC
+     that cannot use SubjectPublicKeyInfo alone (#1917).
+
+** libgnutls: Add --enable-tls11-support configure option
+     It is now possible to compile out support
+     for TLS 1.0, TLS 1.1, and DTLS 1.0 (RFC 8996) (!2151).
+     These protocols are currently enabled by default.
+     A future release will disable them by default.
+
+** build: Remove --with-nettle-mini configure option
+     GnuTLS builds must now link against GMP.
+     Mini-GMP lacks relevant optimizations and side-channel protections (#1946).
+
+** minitasn1: Remove the internal copy of libtasn1
+     The ./configure --with-included-libtasn1 parameter is also removed.
+     If you are building GnuTLS in an environment without libtasn1,
+     please modify your scripts to also build and install libtasn1 first.
+     This decision is made to reduce maintenance in the long-term,
+     as we no longer have to keep track of minitasn1-related issues (!1938).
+
+** API and ABI modifications:
+gnutls_hpke_import_pubkey: New function
+gnutls_hpke_export_pubkey: New function
+gnutls_pubkey_export_mldsa_raw: New function
+gnutls_pubkey_import_mldsa_raw: New function
+GNUTLS_SAN_MIN: New enum member of gnutls_x509_subject_alt_name_t
+GNUTLS_SAN_OTHERNAME_MIN: New enum member of gnutls_x509_subject_alt_name_t
+GNUTLS_SAN_OTHERNAME_MAX: New enum member of gnutls_x509_subject_alt_name_t
+
+
+Getting the Software
+================
+
+GnuTLS may be downloaded directly from
+https://www.gnupg.org/ftp/gcrypt/
+A list of GnuTLS mirrors can be found at
+http://www.gnutls.org/download.html
+
+Here are the XZ compressed sources:
+https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.14.tar.xz
+
+Here are OpenPGP detached signatures signed using the key:
+E987AB7F7E89667776D05B3BB0E9DD20B29F1432
+https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.14.tar.xz.sig
+
+Note that it has been signed with the following openpgp key:
+
+pub   rsa4096 2016-09-27 [SC]
+        E987AB7F7E89667776D05B3BB0E9DD20B29F1432
+uid           [ultimate] Alexander Sosedkin <monk@...oiled.info>
+sub   rsa4096 2021-08-21 [A]
+sub   rsa4096 2016-09-27 [E]
+sub   rsa4096 2016-09-27 [S]
+
+
+Regards,
+Alexander Sosedkin
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEpqtToB0jepT57sTQQSdIpAr8wvsFAmr+LEsACgkQQSdIpAr8
+wvuvKBAAibjQ+l0m41sMrUwtzGCvBEDgcPH7bW9jrjucHJp8zcs9x2pfAFp61U+4
+P61eVBbFwaD4wNbvrE+Mxbma7Xr8qgxMUgXv+qcnL7kM+/9WxNaZ37TpGbiyRezd
+I0nP0i86/uiKSF02K/KPfG3BifPXDxfXisoJpH6MXKtZ/K8IAh18K3FrLAEtiydH
+V3E6n2+xkdjKY1gzqtEgr2hpVViENKZ5LEy8fLyO1xGeT7cfjBhica+FQJg+14/u
+PfKgXx1WgcqQcAxZ8Fdk+0ohXizHdg/VNdoScuXzWhh+lh6q8KM55D58AqzbCJaR
+ZvUuChhg2DwVTRze7/8YwaajQWO5Jnz1VYU5JGNE7Iid0/xcWguIACiwHhJedclV
+QM4ceOhvlvPJDClqWxuZFBHPo0WTttds714XNHIo3S4c18bRsTt+lzq0AZHPb48O
+I4RvHS8vO/fUG0YQpNR1N5hMGmQzbLyv22EGVlf28gcOUS0VK6U2QiR/9AU1bTW1
+jExRn4F/g+qjb/5KYMp5duT4AEDyxkEB9bITSMKuZIenjEiaZzmCiyGJOnc636lE
+Z8mnsAKzd7rLTXzcmvzWhEMc0jRv5kVUZhPamK0y72hFlbKU9jyXPoIlUBNBIb/V
+vpMuP6Vm5K0VYkDs476npa1AaQ+O368LgOeDFM5lKnnWv5tlSoY=
+=onvP
+-----END PGP SIGNATURE-----
+
