@@ -1,36 +1,22 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/9
-Message-ID: <32446be3-2e88-41d3-93b2-924c94bf1530@linaro.org>
-Date: Thu, 19 Nov 2026 15:03:46 -0300
-From: Adhemerval Zanella Netto <adhemerval.zanella@...aro.org>
-To: libc-announce@...rceware.org, oss-security@...ts.openwall.com
-Subject: The GNU C Library security advisories update for 2026-11-19
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/10
+Message-ID:  <MA9PR08MB78625415E68AF380D88E3A8B91D2792@MA9PR08MB786254.eurprd08.prod.outlook.com>
+Date: Thu, 19 Nov 2026 15:21:39 +0000
+From: Jo Goossens <jo.goossens@...ted-power.com>
+To: "oss-security@...ts.openwall.com" <oss-security@...ts.openwall.com>
+Subject: Re: CVE-2026-123633, CVE-2026-123007: nginx RCE via HTTP/2
 Content-Type: text/plain; charset=utf-8
 
-The following security advisories have been published:
+Distribution status as of 19 Nov: Debian fixed trixie (DSA-6642-1,
+1.26.3-3+deb13u11); bookworm is still vulnerable. Red Hat lists RHEL 8
+(nginx:1.24), RHEL 9 (default, 1.24, 1.26) and RHEL 10 as affected;
+AlmaLinux has shipped fixes (ALSA-2026-A024/A025). CentOS 7/8 and Debian
+8-11 receive no updates.
 
-GLIBC-SA-2026-0032:
-===================
+For those, unofficial backports of the distributions' own packages are
+available at https://github.com/HOSTED-POWER/nginx2root-patches
+(disclosure: my company).
 
-Double free after allocation failure in glob
-
-The glob functions in the GNU C Library versions 2.44 and earlier may
-free the same heap block twice when a memory allocation fails while
-glob prepends the directory name to the names it matched.  The names
-already rewritten are freed, but their pointers stay in the result
-vector, and the error path frees them again with globfree.
-
-The allocation must fail after at least one name has been rewritten,
-so the issue can only be reached when the process is already close to
-its memory limit, for example under an address space limit (RLIMIT_AS)
-or on a 32-bit system.  The attacker needs control to make the result
-large enough to make the program or service run out of memory, either
-by controlling the glob pattern and having knowledge of the filesystem
-layout or through other means.  This issue affects all architectures
-and ABIs supported by the GNU C Library.
-
-CVE-Id: CVE-2026-126765
-Public-Date: 2026-11-11
-Vulnerable-Commit: 28f540f45bbacd939bfd07f213bcad2bf730b1bf (1.09)
-Reported-By: Jack Doan <me@...kdoan.com>
-CVSS: CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L - 3.7
+--
+Jo Goossens
+Hosted Power
