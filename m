@@ -1,29 +1,23 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/6
-Message-ID: <3939d037-a0b9-b287-a2c5-9f8dcaf522b3@apache.org>
-Date: Thu, 19 Nov 2026 08:11:59 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/4
+Message-ID: <b08bb02700e6a9cd9ebeb52312febaf2d14b6538.camel@debian.org>
+Date: Thu, 19 Nov 2026 08:30:13 +0100
+From: Yves-Alexis Perez <corsac@...ian.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-120404: Apache OpenNLP: Denial of service via inefficient regular expression in the coordinate name finder 
+Cc: Hanno Böck <hanno@...eck.de>
+Subject: Re: Local Privilege Escalation in Debian with LightDM and GTK greeters
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+On Tue, 2026-11-17 at 19:39 +0100, Sebastian Pipping wrote:
+> 
+> - that forky/testing is still vulnerable today (see
+>    https://security-tracker.debian.org/tracker/source-package/lightdm)
 
-Affected versions:
+Not sure testing really matters but since it was mentioned: LightDM 1.33.1-5
+with the problematic patch disabled just migrated to Forky.
 
-- Apache OpenNLP (org.apache.opennlp:opennlp-tools) 2.0.0 before 2.5.13
-- Apache OpenNLP (org.apache.opennlp:opennlp-runtime) 3.0.0-M1 before 3.0.0
+Regards,
+-- 
+Yves-Alexis
 
-Description:
-
-The built-in regular expression name finder for latitude and longitude coordinates uses a pattern that is vulnerable to excessive backtracking. An attacker who can supply text that an application analyzes with this name finder can cause high CPU consumption, leading to denial of service. Users are recommended to upgrade to version 2.5.13 or 3.0.0, which fix the issue.
-
-Credit:
-
-Alex Palinkash / https://github.com/alex-sc (finder)
-
-References:
-
-https://opennlp.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-120404
-
+Download attachment "signature.asc" of type "application/pgp-signature" (489 bytes)
