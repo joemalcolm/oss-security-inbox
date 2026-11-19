@@ -1,221 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/3
-Message-ID: <00f30061-033a-49c5-83fe-a5c3fa234832@oracle.com>
-Date: Wed, 18 Nov 2026 18:07:08 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/19/2
+Message-ID: <CAH8yC8mN3S5iWs9aZvG0Z7TFaMqa+CiFF_m-TQPXFMj1sPMNrg@mail.gmail.com>
+Date: Wed, 18 Nov 2026 21:11:38 -0500
+From: Jeffrey Walton <noloader@...il.com>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: gnutls 3.8.14 released with 3 CVE fixes
+Subject: Re: Another (?) Linux kernel SCTP vuln undisclosed
 Content-Type: text/plain; charset=utf-8
 
+On Wed, Nov 18, 2026 at 6:57 PM Rich Felker <dalias@...c.org> wrote:
 
+> The nginx2root thing is not itself a root vuln, but relies on an
+> undisclosed LPE vuln in the Linux kernel to get root. According to the
+> vuln website (https://nginx2root.com/),
+>
+>     "The host-root stage uses a separate Linux SCTP kernel
+>     vulnerability and must be assessed separately."
+>
+>     ....
+>
+>     "The kernel bug is a separate local privilege escalation
+>     vulnerability and needs its own patch, which will be released in
+>     the coming weeks."
+>
+> It's not 100% clear that this is new, but anyone not needing SCTP
+> should probably block loading of the module via modprobe.d
+>
+> I'm posting this here because it does not seem to have been announced
+> outside of the nginx2root website.
+>
 
+I think one of the problems at the moment is, the kernel has not patched
+the underlying SCTP vulnerability.[0,1]
 
--------- Forwarded Message --------
-Subject: 	gnutls 3.8.14
-Date: 	Wed, 18 Nov 2026 23:40:00 +0100
-From: 	Alexander Sosedkin <monk@...oiled.info>
-To: 	gnutls-help@...ts.gnutls.org
-CC: 	info-gnu@....org
+Xint posted recommended mitigations until all the patches are available at
+[2].  From [2]:
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA512
+    ... disabling HTTP/2 addresses only two of the five nginx
+vulnerabilities.
 
-Hello,
+[0] <https://xint.io/blog/nginx2root-remote-code-execution>
+[1] <https://lwn.net/Articles/1108362/>
+[2] <
+https://xint.io/blog/nginx2root-remote-code-execution#33-emergency-mitigations-before-patching-14
+>
 
-We have just released gnutls-3.8.14. This is a bug fix, security and
-enhancement release on the 3.8.x branch.
-
-This is the first release with the GnuTLS Project acting as a CNA:
-https://www.cve.org/Media/News/item/news/2026/10/13/GnuTLS-Project-Added-as-CNA
-
-This release does not contain fixes for all the reported issues.
-Moreover, it intentionally only addresses vulnerabilities of low severity.
-
-We would like to thank everyone who contributed in this release:
-Alejandro Pacheco, Alexander Sosedkin, Andreas Metzler, Angel Yankov,
-Brad Smith, Christian Häggström, Daiki Ueno, Daniel P. Berrangé,
-David Dudas, Ghadi Elie Rahme, Mohammadreza Khellat, Ryan Carsten Schmidt,
-Sahana Prasad, Simon Josefsson, Stanislav Zidek, Tim Rühsen, Xuqing Yang,
-Zoltán Fridrich.
-
-The detailed list of changes follows:
-
-* Version 3.8.14 (released 2026-11-18)
-
-** libgnutls: Fix crash on certificate list memory allocation failure
-     On allocation failure, the certificate list pointer and count could
-     get out of sync, causing a NULL deref or double-free during session cleanup.
-     Both fields are now zeroized before the allocation.
-     Reported by Joshua Rogers of AISLE Research Team.
-     [GNUTLS-SA-2026-11-18-1, severity: low] [CVE-2026-127039]
-
-** libgnutls: Fix crash in RSA-PSK username copy memory allocation failure
-     A missing return on a failed username copy could crash the handshake
-     when memory allocation fails.
-     The error is now propagated, aborting the handshake.
-     Reported by Joshua Rogers of AISLE Research Team.
-     [GNUTLS-SA-2026-11-18-2, severity: low] [CVE-2026-127040]
-
-** libgnutls: Make name constraints deinitialization idempotent
-     If reinitializing the name constraints were to fail due to memory pressure,
-     the verification context cleanup
-     could have freed the same internal lists a second time,
-     crashing the application.
-     The deinitialization functions now clear the pointers after freeing.
-     Reported by Xuqing Yang.
-     [GNUTLS-SA-2026-11-18-3, severity: low] [CVE-2026-127231]
-
-** libgnutls: Fix buffer overrun in deterministic DSA signing
-     A malformed DSA private key with a q value exceeding 512 bits
-     could overrun a fixed-size buffer when signing in reproducible mode.
-     Such keys are now rejected with GNUTLS_E_INVALID_REQUEST (#1857).
-     Reported by Joshua Rogers of AISLE Research Team.
-
-** libgnutls: Fix CRL distribution points leak in certificate printing
-     Printing certificates with gnutls_x509_crt_print() could leak memory
-     if enumerating CRL distribution points failed (#1866).
-     Reported by Joshua Rogers of AISLE Research Team.
-
-** libgnutls: Fix HCRYPTHASH handle leak in CAPI signing on allocation failure
-     The HCRYPTHASH handle created in capi_sign() was not destroyed
-     when the memory allocation for the signature buffer failed.
-     It is now released on all exit paths (#1867).
-     Reported by Joshua Rogers of AISLE Research Team.
-
-** libgnutls: Fix memory leak in kTLS key setup on FreeBSD
-     The iv and cipher_key buffers allocated for the tls_enable structure
-     were not freed after setsockopt. They're now freed on all exit paths (#1865).
-     Reported by Joshua Rogers of AISLE Research Team.
-
-** libgnutls: Fix stale params reuse in PKCS#11 AEAD/MAC wrappers
-     The AEAD encrypt/decrypt and MAC wrappers of the PKCS#11 back-end
-     discarded the return value of the per-call params/nonce setter
-     and proceeded with whatever stale state remained.
-     If the setter failed, the previous call's IV/AAD/tag (AEAD)
-     or nonce/key (MAC) were subsequently reused.
-     The error from set_params/set_nonce/set_key is now propagated (#1856, #1872).
-     Reported by Joshua Rogers of AISLE Research Team.
-
-** libgnutls: Initialize reasons in CRL DistributionPoint parsing
-     The CRL reasons bitmap was read into an uninitialized buffer,
-     which could result in incorrect reason flags returned to the caller (#1925).
-     GnuTLS itself does not act on those flags.
-     Reported by Huzaifa Sidhpurwala, Red Hat Product Security.
-
-** libgnutls: Fix cross-family IP name constraints
-     An IPv6 permitted name constraint did not preclude matching IPv4 SAN
-     and vice versa.
-     Addresses from a family not covered by a permitted name constraint
-     are now rejected (#1920).
-     Reported by Huzaifa Sidhpurwala, Red Hat Product Security.
-
-** libgnutls: Reject on unsupported permitted name constraint types
-     Permitted subtrees of constraint types GnuTLS does not match (notably URI)
-     were parsed but ignored.
-     A leaf carrying a SAN of the matching type
-     is now rejected with GNUTLS_CERT_SIGNER_CONSTRAINTS_FAILURE.
-     Previously accepted certificate chains
-     featuring intermediate CAs carrying such constraint types
-     may be rejected now (#1836, #1851, #1894, #1895).
-     Reported by Zou Dikai, Joshua Rogers of AISLE Research Team,
-     Mitchell Benjamin of Revamp Studio, and Corban Villa of UC Berkeley.
-
-** libgnutls: Check all SAN types against name constraints
-     Chain verification only consulted name constraints of
-     DNS, e-mail, directoryName, URI and IP address SAN types.
-     Other types, notably UPN, were not checked at all,
-     so an excludedSubtree for UPN did not reject the chain.
-     All SAN types GnuTLS is aware of are now checked uniformly;
-     types for which no matching is implemented are rejected
-     when any constraint of the corresponding type is present (#1875).
-     Reported by Yu-Fu Fu.
-
-** libgnutls: Count subject as name for DN constraint validation
-     An excludedSubtree of that type used to reject any certificate,
-     while a permittedSubtree was ignored entirely.
-     The check now rejects a certificate featuring a DN
-     (in a subjectAltName or as a non-empty subject)
-     in the presence of any directoryName constraint.
-     GnuTLS does not implement matching DNs against the constraint,
-     so even valid DNs that a permittedSubtree constraint
-     would have previously allowed are now rejected (#1890).
-     Reported by Jack Lloyd.
-
-** libgnutls: Add gnutls_pubkey_{import,export}_mldsa_raw()
-     These functions obtain and restore
-     the raw FIPS 204 ML-DSA public key octet string.
-     This is needed by applications such as DNSSEC
-     that cannot use SubjectPublicKeyInfo alone (#1917).
-
-** libgnutls: Add --enable-tls11-support configure option
-     It is now possible to compile out support
-     for TLS 1.0, TLS 1.1, and DTLS 1.0 (RFC 8996) (!2151).
-     These protocols are currently enabled by default.
-     A future release will disable them by default.
-
-** build: Remove --with-nettle-mini configure option
-     GnuTLS builds must now link against GMP.
-     Mini-GMP lacks relevant optimizations and side-channel protections (#1946).
-
-** minitasn1: Remove the internal copy of libtasn1
-     The ./configure --with-included-libtasn1 parameter is also removed.
-     If you are building GnuTLS in an environment without libtasn1,
-     please modify your scripts to also build and install libtasn1 first.
-     This decision is made to reduce maintenance in the long-term,
-     as we no longer have to keep track of minitasn1-related issues (!1938).
-
-** API and ABI modifications:
-gnutls_hpke_import_pubkey: New function
-gnutls_hpke_export_pubkey: New function
-gnutls_pubkey_export_mldsa_raw: New function
-gnutls_pubkey_import_mldsa_raw: New function
-GNUTLS_SAN_MIN: New enum member of gnutls_x509_subject_alt_name_t
-GNUTLS_SAN_OTHERNAME_MIN: New enum member of gnutls_x509_subject_alt_name_t
-GNUTLS_SAN_OTHERNAME_MAX: New enum member of gnutls_x509_subject_alt_name_t
-
-
-Getting the Software
-================
-
-GnuTLS may be downloaded directly from
-https://www.gnupg.org/ftp/gcrypt/
-A list of GnuTLS mirrors can be found at
-http://www.gnutls.org/download.html
-
-Here are the XZ compressed sources:
-https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.14.tar.xz
-
-Here are OpenPGP detached signatures signed using the key:
-E987AB7F7E89667776D05B3BB0E9DD20B29F1432
-https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-3.8.14.tar.xz.sig
-
-Note that it has been signed with the following openpgp key:
-
-pub   rsa4096 2016-09-27 [SC]
-        E987AB7F7E89667776D05B3BB0E9DD20B29F1432
-uid           [ultimate] Alexander Sosedkin <monk@...oiled.info>
-sub   rsa4096 2021-08-21 [A]
-sub   rsa4096 2016-09-27 [E]
-sub   rsa4096 2016-09-27 [S]
-
-
-Regards,
-Alexander Sosedkin
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEpqtToB0jepT57sTQQSdIpAr8wvsFAmr+LEsACgkQQSdIpAr8
-wvuvKBAAibjQ+l0m41sMrUwtzGCvBEDgcPH7bW9jrjucHJp8zcs9x2pfAFp61U+4
-P61eVBbFwaD4wNbvrE+Mxbma7Xr8qgxMUgXv+qcnL7kM+/9WxNaZ37TpGbiyRezd
-I0nP0i86/uiKSF02K/KPfG3BifPXDxfXisoJpH6MXKtZ/K8IAh18K3FrLAEtiydH
-V3E6n2+xkdjKY1gzqtEgr2hpVViENKZ5LEy8fLyO1xGeT7cfjBhica+FQJg+14/u
-PfKgXx1WgcqQcAxZ8Fdk+0ohXizHdg/VNdoScuXzWhh+lh6q8KM55D58AqzbCJaR
-ZvUuChhg2DwVTRze7/8YwaajQWO5Jnz1VYU5JGNE7Iid0/xcWguIACiwHhJedclV
-QM4ceOhvlvPJDClqWxuZFBHPo0WTttds714XNHIo3S4c18bRsTt+lzq0AZHPb48O
-I4RvHS8vO/fUG0YQpNR1N5hMGmQzbLyv22EGVlf28gcOUS0VK6U2QiR/9AU1bTW1
-jExRn4F/g+qjb/5KYMp5duT4AEDyxkEB9bITSMKuZIenjEiaZzmCiyGJOnc636lE
-Z8mnsAKzd7rLTXzcmvzWhEMc0jRv5kVUZhPamK0y72hFlbKU9jyXPoIlUBNBIb/V
-vpMuP6Vm5K0VYkDs476npa1AaQ+O368LgOeDFM5lKnnWv5tlSoY=
-=onvP
------END PGP SIGNATURE-----
+Jeff
 
