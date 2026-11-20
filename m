@@ -1,38 +1,60 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/20/3
-Message-ID: <av-YIntXr75-vmym@codewreck.org>
-Date: Fri, 20 Nov 2026 09:45:22 +0900
-From: Dominique Martinet <asmadeus@...ewreck.org>
-To: Jose R Rodriguez <jose.r.r@...ztli.com>, oss-security@...ts.openwall.com
-Cc: Greg KH <greg@...ah.com>, Edward Shishkin <edward.shishkin@...il.com>, Reiserfs Devel <reiserfs-devel@...r.kernel.org>
-Subject: Re: NoisyTCP — CVE-2026-99288 (Was Re:  Backports available - cBPF JIT spray hardening)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/20/11
+Message-ID: <CANJvGMF5XH6OJdDA3obNmQsMt2B01XE+0uLndoXw4o94t-AvBQ@mail.gmail.com>
+Date: Fri, 20 Nov 2026 06:28:59 -0800
+From: Randall Hand <randall.hand@...il.com>
+To: oss-security@...ts.openwall.com
+Subject: ytnef 2.1.3: heap overflow and OOB reads in libytnef DecompressRTF (GHSA-jhg4-xcxm-cfg6)
 Content-Type: text/plain; charset=utf-8
 
-Hi Jose,
+Hello,
 
-(not sure why this comes as a reply to the bpf hardening CVE..)
+I maintain ytnef/libytnef (https://github.com/Yeraze/ytnef). You are
+receiving this because you package or depend on it. ytnef 2.1.3,
+released today, fixes several memory-safety bugs in libytnef's TNEF
+(winmail.dat) parsing. A crafted attachment can trigger them, so any
+email sender can reach them in software that parses TNEF with
+libytnef, for example Evolution, Geary and the Claws Mail TNEF plugin.
 
-Jose R Rodriguez wrote on Thu, Nov 19, 2026 at 03:25:25PM -0800:
-> Since the time of your comment I have been keeping up with reiser4 -enhanced
-> 5.15 LTS build iterations -- with the latest being 5.15.224.
-> Notwithstanding, 'NoisyTCP — CVE-2026-99288' came along and the latest
-> 5.15.225 LTS iteration did not address the critical vulnerability. I have
-> the 5.15 LTS kernel(s) deployed online and I got spooked. Accordingly, on a
-> best effort basis, I backported the patch from upstream:
+  Release:   https://github.com/Yeraze/ytnef/releases/tag/v2.1.3
+  Advisory:  https://github.com/Yeraze/ytnef/security/advisories/GHSA-jhg4-xcxm-cfg6
+  Affected:  all versions up to and including 2.1.2
+  Fixed in:  2.1.3
+  Severity:  High
 
-The patch "inet: reject unhashed sockets during established lookups"
-marked as fixing this CVE already has been backported to older trees,
-including 5.15 already and is in the 5.15.226-rc1 (which will likely be
-released today (11/20) or tomorrow)
+Summary:
 
-You can already pull the patch from
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-if you want to rebuild your own kernel early
+  1. Heap buffer overflow (write) in DecompressRTF(), compressed
+(LZFu) stream. The INT_MAX check on the stream-supplied
+uncompressedSize (added in 2017 for CVE-2017-6302) is evaluated in
+unsigned arithmetic and can be bypassed. The allocation then wraps,
+and the 207-byte RTF prebuffer overruns it by 1 to 207 bytes. The
+written bytes are fixed; the attacker chooses the overrun length.
+CWE-190 / CWE-122.
+  2. Heap out-of-bounds read in DecompressRTF(), uncompressed (MELA)
+stream. uncompressedSize is not checked against the property size.
+CWE-125.
+  3. NULL pointer dereference on a partly parsed property in
+TNEFFillMapi(), IsCompressedRTF() and DecompressRTF(). CWE-476.
 
+The release also fixes the out-of-bounds reads reported in public
+issue #112, including CVE-2026-111145 and CVE-2026-111146 (assigned by
+VulnCheck), and several related NUL-termination and leak issues. The
+`ytnefprocess` procmail hook reaches issues 1 and 2 on delivery
+through calendar items (ytnef/vcal.c), with no user action.
 
-OTOH if you want quick fixes it's best to upgrade to a newer release if
-possible - except for embedded or platforms with specific hardware it's
-generally not too hard to switch to the latest LTS.
+A CVE ID for the overflow write has been requested through the GitHub
+advisory and is still pending. I will add it to the advisory when it
+is assigned.
 
--- 
-Dominique Martinet | Asmadeus
+The fix is self-contained in lib/ytnef.c and ytnef/main.c and
+backports cleanly. The 2.1.3 commits are listed in the release. New
+regression tests are in test-data/test_decompress_rtf.c, run by `make
+check`. If you package an older branch and want help with a backport,
+please reply.
+
+Credit: Deepak Jain (AiNET), with an independent report by Jan Twrsnik.
+
+Thank you,
+Randall Hand
+ytnef maintainer
