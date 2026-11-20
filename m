@@ -1,63 +1,403 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/20/2
-Message-ID: <6b81d4b9-cb61-4f5f-8c31-8a8f95e2ac4b@oracle.com>
-Date: Thu, 19 Nov 2026 16:59:31 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
-To: oss-security@...ts.openwall.com
-Subject: Re: Upcoming Critical PHP Security Release
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/20/6
+Message-ID: <daae47ef01065c611c9fd109d2245756@cpansec.org>
+Date: Thu, 19 Nov 2026 22:09:52 -0400
+From: Timothy Legge <timlegge@...nsec.org>
+To: Oss Security <oss-security@...ts.openwall.com>
+Subject: Convert-ASN1 versions before 0.37 for Perl (8 CVEs)
 Content-Type: text/plain; charset=utf-8
 
-PHP 8.6.0, 8.5.13, 8.4.28, 8.3.37, and 8.2.36 were released today with these fixes:
+CVE-2026-126540
+   Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+   quadratic bigint loop in os2ip
 
-CGI:
+CVE-2026-126568
+   Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion
+   via unbounded MSG_PEEK buffer doubling in asn_recv
 
-   * Fixed GHSA-5j3f-64r7-f564 (PHP-CGI out-of-bounds read and write during PATH_INFO correction). (CVE-2026-129538) [8.2, 8.3, 8.4, 8.5, 8.6]
+CVE-2026-126576
+   Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+   unchecked exponent length in binary REAL decoding
 
-Core:
-   * Fixed GHSA-8mjj-2r7p-4hg2 (Use-after-free in magic method backtraces can lead to remote code execution). (CVE-2026-129474) [8.5, 8.6]
-   * Fixed GHSA-2fjv-p558-g82m (Use-after-free via repopulation of last_fatal_error_backtrace global after shutdown). (CVE-2026-129182) [8.5, 8.6]
+CVE-2026-126682
+   Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+   exponent-notation string in INTEGER encoding
 
-Date:
+CVE-2026-126819
+   Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion
+   via zero-length BIT STRING content
 
-   * Fixed GHSA-gr4f-wgx5-jpfv (Timezone cache use-after-free can lead to remote code execution). (CVE-2026-129496) [8.2, 8.3, 8.4, 8.5, 8.6]
+CVE-2026-126956
+   Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion
+   via unlimited recursion depth in constructed-form string decoding
 
-DOM:
+CVE-2026-131868
+   Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion
+   via a declared element length passed unchecked to sysread in asn_read
+   and asn_get
 
-   * Fixed GHSA-x8r7-mg3g-74hg (Double free during DOM XML serialization). (CVE-2026-129501) [8.4, 8.5, 8.6]
+CVE-2026-131877
+   Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+   unbounded arc length in OBJECT IDENTIFIER decoding and encoding
 
-FPM:
 
-   * Fixed GHSA-qc49-hpvq-g2w6 (PHP-FPM request smuggling through an unread HTTP request body). (CVE-2026-129289) [8.2, 8.3, 8.4, 8.5, 8.6]
-   * Fixed GHSA-3mg3-cr28-46gc (PHP-FPM status endpoint XSS via unescaped user and script fields). (CVE-2026-129292) [8.2, 8.3, 8.4, 8.5, 8.6]
-   * Fixed GHSA-jm4m-qfqx-967m (PHP-FPM epoll use-after-free can lead to local privilege escalation). (CVE-2026-129291) [8.2, 8.3, 8.4, 8.5, 8.6]
+========================================================================
+CVE-2026-126540                                      CPAN Security Group
+========================================================================
 
-Phar:
+         CVE ID:  CVE-2026-126540
 
-   * Fixed GHSA-68fq-fh7h-f8gr (PHAR OpenSSL signature bypass via algorithm downgrade). (CVE-2026-128090) [8.2, 8.3, 8.4, 8.5, 8.6]
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
 
-Session:
 
-   * Fixed GHSA-fm2m-fjf5-v3cp (Partially overwritten session files can lead to remote code execution). (CVE-2026-126714) [8.2, 8.3, 8.4, 8.5, 8.6]
-   * Fixed GHSA-658j-r8rw-q6mx (Session serializer mismatch can lead to remote code execution). (CVE-2026-115560) [8.2, 8.3, 8.4, 8.5, 8.6]
-   * Fixed GHSA-g3vh-838c-65v7 (Use-after-free after interrupted session shutdown). (CVE-2026-129481) [8.3, 8.4, 8.5, 8.6]
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+quadratic bigint loop in os2ip
 
-SOAP:
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+quadratic bigint loop in os2ip.
 
-   * Fixed GHSA-q23r-hr55-xmpg (SOAP information disclosure through malformed array dimensions). (CVE-2026-15353) [8.2, 8.3, 8.4, 8.5, 8.6]
-   * Fixed GHSA-4646-p932-gw34 (SOAP use-after-free when processing DTD entity references). (CVE-2026-129506) [8.2, 8.3, 8.4, 8.5, 8.6]
+Every INTEGER or ENUMERATED longer than four content octets reaches
+os2ip, which iterates over each content octet with $result = ($result *
+256) + $octet. Each multiplication operates on a bigint that grows by
+one octet per step, so decoding an n-octet value takes O(n^2) bigint
+work. Nothing limits content length before this loop runs.
 
-Standard:
+An attacker who controls the decoded data can exhaust CPU with a single
+oversized INTEGER or ENUMERATED value.
 
-   * Fixed GHSA-f6gg-rchx-xw8j (Mixed-case HTTPS and FTPS URLs can expose data in plaintext). (CVE-2026-128064) [8.2, 8.3, 8.4, 8.5, 8.6]
-   * Fixed GHSA-mmf9-xm3v-hg2x (Denial of service through folded HTTP response headers). (CVE-2026-127960) [8.2, 8.3, 8.4, 8.5, 8.6]
+Problem types
+-------------
+- CWE-407 Inefficient Algorithmic Complexity
 
-URI:
-   * Upgrade to uriparser 1.0.3. (CVE-2026-48841) [8.5, 8.6]
-   * Fixed GHSA-mg3p-mxj9-g2mm  [8.5, 8.6]
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
 
-See https://github.com/php/php-src/security/advisories for each GHSA advisory.
-See https://www.php.net/ for download links and full ChangeLogs for each release.
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/49b362c527e0af05fca9be1e97e4a340d95afa75.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
 
--- 
-         -Alan Coopersmith-                 alan.coopersmith@...cle.com
-          Oracle Solaris Engineering - https://blogs.oracle.com/solaris
+
+========================================================================
+CVE-2026-126568                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-126568
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+unbounded MSG_PEEK buffer doubling in asn_recv
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+unbounded MSG_PEEK buffer doubling in asn_recv.
+
+asn_recv peeks the socket in a loop, doubling the buffer size on each
+pass until a tag and length can be decoded. An inverted boolean guard
+($tb || rather than $tb &&) prevents the need-more-data exit from
+firing once a tag byte has been decoded. When asn_decode_length returns
+no value because the length is absent or incomplete, no exit fires for
+that case either. MSG_PEEK leaves socket data unconsumed, so each
+re-peek returns at once while the buffer size doubles.
+
+A single truncated BER header sent to a process calling asn_recv
+doubles the peek buffer until memory is exhausted. Perl's realloc
+failure is fatal and not catchable with eval.
+
+Problem types
+-------------
+- CWE-835 Loop with Unreachable Exit Condition
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/a30eae1dc6a977716b76f79f228fa0432e28bc5a.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
+
+
+========================================================================
+CVE-2026-126576                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-126576
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+unchecked exponent length in binary REAL decoding
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+unchecked exponent length in binary REAL decoding.
+
+Binary REAL decoding never bounds-checks the exponent length against
+the available content. For a minimal one-byte binary REAL, the exponent
+byte is read from outside the element, making the mantissa length -1.
+Perl reads a negative length as an offset from the end of the string,
+so the mantissa is nearly all of the input that follows the element.
+The long-form exponent path also omits the extra length octet when
+sizing the mantissa.
+
+An attacker who controls the decoded data can exhaust CPU with a list
+of such values, as each mantissa loop iterates over the remaining
+input. The decoded values are also computed from bytes outside each
+element.
+
+Problem types
+-------------
+- CWE-130 Improper Handling of Length Parameter Inconsistency
+- CWE-407 Inefficient Algorithmic Complexity
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/6158dbb33cc3d248a95b4ab4948a135e18141b51.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
+
+
+========================================================================
+CVE-2026-126682                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-126682
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+exponent-notation string in INTEGER encoding
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+exponent-notation string in INTEGER encoding.
+
+The encoder routes any value with abs >= 2**31 to i2osp without
+validating that it is an integer. A string in exponent notation such as
+"1e8000" passes that threshold. Math::BigInt expands it to an
+8001-digit integer, and i2osp's per-octet conversion loop is quadratic
+in that size.
+
+An attacker who controls encoded INTEGER values can exhaust CPU with a
+short exponent-notation string.
+
+Problem types
+-------------
+- CWE-407 Inefficient Algorithmic Complexity
+- CWE-1284 Improper Validation of Specified Quantity in Input
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/f259213110a90f38cfd1c7e7ff6789178ce9105f.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
+
+
+========================================================================
+CVE-2026-126819                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-126819
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+zero-length BIT STRING content
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+zero-length BIT STRING content.
+
+A BIT STRING with zero content octets passes -1 to substr as the
+length. Perl reads a negative length as an offset from the end of the
+string, so the decoded value is nearly all of the input that follows
+the element. In the constructed form each zero-length segment copies
+the rest of the input again, so memory grows with the square of the
+input size.
+
+An attacker who controls the decoded data can exhaust memory with a
+short constructed BIT STRING. The resulting value also contains bytes
+from adjacent input.
+
+Problem types
+-------------
+- CWE-1284 Improper Validation of Specified Quantity in Input
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/a369bb1c39061d67454216a6a1d0eae11932806e.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
+
+
+========================================================================
+CVE-2026-126956                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-126956
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+unlimited recursion depth in constructed-form string decoding
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+unlimited recursion depth in constructed-form string decoding.
+
+Any constructed-form string element causes the decoder to recurse on
+the element's contents. The BER encoding controls nesting depth at four
+bytes per level, with no bound checked. Perl recursion is
+heap-allocated, so the process grows without a stack crash.
+
+An attacker who controls the decoded data can exhaust memory with a
+small deeply nested constructed string.
+
+Problem types
+-------------
+- CWE-674 Uncontrolled Recursion
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/99a96139a322ba0a5183c7e40a8857f3550daace.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
+
+
+========================================================================
+CVE-2026-131868                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-131868
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+a declared element length passed unchecked to sysread in asn_read and
+asn_get
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow memory exhaustion via
+a declared element length passed unchecked to sysread in asn_read and
+asn_get.
+
+The length an element declares in its BER header is passed to sysread
+as the read size. Perl grows the target buffer to that size before
+reading, so memory is allocated from the declared length, not from the
+data received. A 6-byte header can declare a length of up to 4GB.
+
+A single header makes the reading process allocate the declared size.
+Where the allocation fails, perl exits with "Out of memory", which eval
+cannot catch.
+
+Problem types
+-------------
+- CWE-789 Memory Allocation with Excessive Size Value
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/88bd86b5a3ce3430ebb8b78fe5307f234198bf16.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+
+
+========================================================================
+CVE-2026-131877                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-131877
+
+   Distribution:  Convert-ASN1
+       Versions:  before 0.37
+       MetaCPAN:  https://metacpan.org/dist/Convert-ASN1
+       VCS Repo:  https://github.com/cpan-authors/perl-Convert-ASN1
+
+
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+unbounded arc length in OBJECT IDENTIFIER decoding and encoding
+
+Description
+-----------
+Convert::ASN1 versions before 0.37 for Perl allow CPU exhaustion via
+unbounded arc length in OBJECT IDENTIFIER decoding and encoding.
+
+The content of an OBJECT IDENTIFIER or RELATIVE-OID element is passed
+to unpack "w*" on decode, and the arcs of an OID string to pack "w*" on
+encode. Perl converts each arc to or from its decimal string in time
+quadratic in the arc's length, and nothing limits that length.
+
+An attacker who controls the decoded data, or an OID string passed to
+encode, can exhaust CPU with a single oversized arc.
+
+Problem types
+-------------
+- CWE-407 Inefficient Algorithmic Complexity
+
+Solutions
+---------
+Upgrade to Convert-ASN1 0.37 or later.
+
+References
+----------
+https://github.com/cpan-authors/perl-Convert-ASN1/commit/805a7ee7d6c01a7dd6e0479fabcaadd7f9116e70.patch
+https://metacpan.org/release/TIMLEGGE/Convert-ASN1-0.37/changes
+https://github.com/cpan-authors/perl-Convert-ASN1/issues
