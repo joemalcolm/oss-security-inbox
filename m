@@ -1,82 +1,57 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/21/1
-Message-ID: <87pkvyscu2.fsf@gentoo.org>
-Date: Sat, 21 Nov 2026 10:23:01 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/21/3
+Message-ID: <16FBC1BC-D5CB-4FDE-AA60-2E1B8C42908B.1@smtp-inbound1.duck.com>
+Date: Sat, 21 Nov 2026 13:40:34 -0500
+From: theknell@...k.com
 To: oss-security@...ts.openwall.com
-Cc: Jiri Kucera <sanczes@...il.com>, Werner Koch <wk@...pg.org>
-Subject: Fwd: Re: [Announce] GnuPG Security Advisory for GPGME (T8557,CVE-2026-129975)
+Subject: Dokploy: the fix checks the characters, never the first word — a member's compose command and raw compose file both reach host root, 9.9 each (v0.31.2, live-proven)
 Content-Type: text/plain; charset=utf-8
 
-Todd Zullinger points out something unfortunate: RH had this patched
-downstream years ago.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Werner, I assume that was never sent to you?
+Two doors, same room.
 
--------------------- Start of forwarded message --------------------
-Date: Fri, 20 Nov 2026 20:06:51 -0500
-To: Bernhard Reiter <bernhard@...evation.de>
-Cc: gnupg-devel@...pg.org
-Subject: Re: [Announce] GnuPG Security Advisory for GPGME
- (T8557,CVE-2026-129975)
-From: Todd Zullinger via Gnupg-devel <gnupg-devel@...pg.org>
+Dokploy's compose feature gives a member two ways to describe a deployment: type a custom command, or supply the compose file raw. The vendor hardened this feature in the 2026 disclosure rounds — the command field got a validator, the structured service definition got a privilege guard. Both hardenings are real. Neither one covers the path it was attached to.
 
+The precondition for both: a non-owner, non-admin organisation member with service:create (the canCreateServices flag, or a custom role granting it) and access to one compose service — the vendor's own member class, scored 9.9 by them in CVE-2026-72867 and CVE-2026-72865, and 8.7 for the metacharacter mechanism in this feature.
 
-Bernhard Reiter via Gnupg-devel wrote:
-> Am Freitag 20 November 2026 19:01:51 schrieb Werner Koch via Gnupg-announce:
->> We are pleased to announce the availability of a new GPGME release:
->> version 2.3.1.  This version fixes a *critical security bug* found in
->> all prior versions.  We also release a new Gpg4win versions and and
->> GnuPG Desktop and GnuPG VS-Desktop versions which all make use of GPGME.
-> 
->> If for some reasons GPGME can't be updated, you may patch your GPGME
->> version using the attached patch which likley applies cleanly even to
->> very old versions.
-> 
-> seems the patch did not make the announcement mail.
+Tested against Dokploy v0.31.2, commit a16cf89389f1bcb6fb5b9a78f7e8a28150c5efaa, full history.
 
-You're lucky, I didn't even see the announcement mail. :)
+Door one — the first word:
 
-> (And also I had a bad signature on this email, but this sometimes happens when 
-> Mailman folds some long attachment header lines.)
-> 
-> The git mirror at  https://github.com/gpg/gpgme/commits/master/ does 
-> not seem to have the patch yet. 
+1. The compose service command field is free text: z.string().optional() (packages/server/src/db/schema/compose.ts:200, :283). createCommand returns it with no compose prefix (packages/server/src/utils/builders/compose.ts:127-128).
+2. The validator, sanitizeCommand (compose.ts:84-123) — added by commit d48037a80 as the fix for CVE-2026-72884, its comment stating it stops a member breaking out "into arbitrary host commands" — rejects shell control characters and requires &&-chained segments after the first to start with "docker compose ". It never validates the first token.
+3. getBuildComposeCommand interpolates the result directly: docker ${command} (compose.ts:65). The deploy sinks execute it via /bin/sh -c or SSH (packages/server/src/services/compose.ts:302, :418). The server runs as root and drives the host daemon at /var/run/docker.sock.
+4. So no metacharacter is needed. The command "run --rm -v /:/hostfs alpine touch /hostfs/tmp/canary" passes the validator verbatim and executes as docker run with the host's root filesystem mounted read-write. An incomplete fix of CVE-2026-72884.
 
-I think the one you're looking for is:
+Door two — the raw file:
 
-    https://github.com/gpg/gpgme/commit/14499348b966cd7b3d72afee15a5cd51cdd0a727
+5. compose.loadRawCompose and compose.getConvertedCompose (packages/server/src/routers/compose.ts:1256, :1131) feed createComposeFileRaw (packages/server/src/utils/builders/compose.ts:230-276), which checks only structure and writes the parsed YAML to docker-compose.yml essentially verbatim.
+6. A full-tree search of the server source for privileged, cap_add, pid:, ipc:, network_mode returns no matches — there is no guard to bypass. The control is inside the same product: updateComposeFile (packages/server/src/services/compose.ts:1018) rejects privileged: true on the structured path. The vendor gates this capability on one door and not the other.
 
-which may not have been there when you sent your message.
-And a pox on all the AI scrapers (and the investors driving
-this madness) for keeping dev.gnupg.org inaccessible to most
-people.
+Live proof, against our own rig only:
 
-Related, but sad:  Red Hat Enterprise Linux 9 seems to have
-patched the double-free *5 years ago* when it was noticed by
-a Coverity scan:
+- - Control: the vendor's own regression suite for the CVE-2026-72884 fix rejects every metacharacter payload — 13 of 13. The fix holds against the attack it imagined.
+- - Door one: the real createCommand accepts the docker run payload verbatim (3 of 3); the builder emits the deploy script containing it (2 of 3 checks, 2 of 2 runs); a verbatim standalone harness agrees (6 of 6); a recording docker shim on PATH received the exact argv from the shell.
+- - Door two: a raw file carrying privileged: true, /:/host_root:rw, and cap_add SYS_ADMIN round-trips into the emitted specification with every field intact (2 of 2).
+- - Final hop, executed against a real Docker daemon on our own rig: a root-owned canary written to the daemon host's root filesystem; a read-only variant returned the daemon host's /etc/hostname.
 
-    https://gitlab.com/redhat/centos-stream/rpms/gpgme/-/blob/c9s/gpgme-1.15.1-covscan.patch?ref_type=heads#L290-339
+Severity: each door independently 9.9 — CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H. Not 10.0; every path is authenticated, stated rather than rounded up.
 
-That is included in RHEL 9 but not previous or subsequent
-releases.  If only they'd have submitted this upstream, the
-issue could have been resolved long ago. :(
+Scope, stated plainly: door one is an incomplete fix of CVE-2026-72884, present in v0.31.2, the release line that shipped the fix. The metacharacter fix and the structured-path guard both hold and are credited as holding. A third condition on legacy installs — a documented default authentication secret the vendor warns about in their own code — is not claimed here. No third-party or production system was touched.
 
-Instead, they didn't even share it with Fedora where it
-would have made it into future RHEL releases.
+Paper: https://archive.org/details/knell-two-doors
+Key: 133883AB9F6EDE5B9BA6B82E27BEDAF0CE152F25 (knell)
 
--- 
-Todd
+Verify: gpg --import knell-public.asc, then
+gpg --verify paper-dokploy-FINAL-2026-11-21.md.asc
 
-Download attachment "signature.asc" of type "application/pgp-signature" (228 bytes)
+— knell
+-----BEGIN PGP SIGNATURE-----
 
-_______________________________________________
-Gnupg-devel mailing list
-Gnupg-devel@...pg.org
-https://lists.gnupg.org/mailman/listinfo/gnupg-devel
-
-
--------------------- End of forwarded message --------------------
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+wnUEARYIAB0FgmsB5XIWIQQTOIOrn27eW5umuC4nvtrwzhUvJQAKCRAnvtrwzhUv
+JfkjAQCMvtBE1h6A1ZC66t5n4Pn3h43439k2nZgTDBgA3FwzcAD+KY9++vg9qHBM
+5k7gqZ+b880zWavm3SMevuInYtoxLAg=
+=UToJ
+-----END PGP SIGNATURE-----
