@@ -1,42 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/1
-Message-ID: <20261123004552.GA25464@openwall.com>
-Date: Mon, 23 Nov 2026 01:45:52 +0100
-From: Solar Designer <solar@...nwall.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/7
+Message-ID: <awK7YTFFtLlowHqu@donburi.himad.notcom.org>
+Date: Sun, 22 Nov 2026 12:23:44 +0200
+From: Valtteri Vuorikoski <vuori@...com.org>
 To: oss-security@...ts.openwall.com
 Subject: Re: Dokploy: the validator allows the backtick — a member's database password change is host RCE, 9.9 on the vendor's own vector (v0.31.0, live-proven)
 Content-Type: text/plain; charset=utf-8
 
-Hi all,
+On Sun, Nov 22, 2026 at 06:00:04AM +0100, Solar Designer wrote:
+> Blindly rejecting valid reports just because they came from a bot does
+> not feel right at this time - there are not too many yet.  Sure they are
+> not worth most subscribers' time, but then most reports by people aren't
+> either.  One of my concerns is what would happen to possible rejected
+> reports - they may end up in the wrong hands only.  If the volume of
+> automated reports increases yet we're still able to distinguish them
+> from those sent by people, we may need to start redirecting them to
+> another list... which would require changes to list moderation setup.
 
-OK, I've just blocked knell.  As to what I let through so far and the
-discussion we had, it could be seen as noise, trolling, and a waste of
-time, but it also could have been a needed step towards well-reasoned
-decision-making for handling further challenges like this.
+How about a policy with something like: if report is LLM-generated, it _must_
+start with a max-three-sentence summary containing the basic facts: what
+product, what effect (RCE, SSRF, etc.), what vector (network, local,
+auth/unauth), any CVE/GHSA/etc already assigned. Ideally written by the reporter
+themselves, but if an LLM must be used, prompt it to generate human-readable
+text ("write like wikipedia" or whatever). And especially don't start with
+quips like "half a fix".
 
-Regarding my concern about the potentially useful reports then staying
-available to the wrong people only, luckily knell also adds the reports
-to archive.org, so I suppose anyone who cares can check what new may
-have appeared in there.  This may not be the case with future bots, so
-it's not a general solution.
+Wading through screenfuls of the default Claude voice with its pretentious word
+choices and weirdly complicated almost-rhyming sentence patterns to find out
+what the thing is about is painful, even if the content is valid. I took my
+chances and killfiled knell at the mark-read-by-default level.
 
-On Sun, Nov 22, 2026 at 01:52:54PM -0800, Gregory Mullen wrote:
-> But you decided to ignore all of that and approve it anyways?
+(While I think this structure would be fine for every report, the quantity and
+dubious quality of bot prose makes it more imperative for those, and could be
+enforced with some solid measures for the more verbose bot-posters IMO.)
 
-I didn't ignore feedback.  Not following preference of the majority, or
-not doing so blindly and right away, isn't the same as ignoring it.
-
-> Yeah, that's how death by a thousand cuts usually go... [almost] no one
-> complains about the first few, because who cares, it's not too many... yet.
-
-Yes, but it's not the case here.  We got plenty of complaints.  We also
-have a counter-example: the approach with not blocking the numerous
-one-vulnerability-per-posting disclosures by Apache projects, Perl CPAN,
-etc. early on, but encouraging them to group disclosures into fewer
-postings and then gradually starting to enforce this seems to work.
-
-Of course, it may be that people behind these bots are malicious, in
-which case encouraging them to change won't work and feeding them may
-make it harder to enforce change later.
-
-Alexander
+ -valtteri
+ 
