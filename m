@@ -1,115 +1,128 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/12
-Message-ID: <awNcI-F3dGjTVstI@devuan>
-Date: Sun, 22 Nov 2026 22:22:56 +0100
-From: Alejandro Colomar <alx+shadow@...nel.org>
-To: Alejandro Colomar <alx@...nel.org>
-Cc: oss-security@...ts.openwall.com, serge@...lyn.com, ipedrosa@...hat.com,  Dickson Wu <dickson.wu@...tik.com>
-Subject: Re: [PATCH v7 0/2] shadow: Security fix for newgidmap(1)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/14
+Message-Id: <DN22N7DNLJ4R.2KFPWPEZGYESC@gr.ht>
+Date: Sun, 22 Nov 2026 13:52:54 -0800
+From: "Gregory Mullen" <oss-security@...ht>
+To: <oss-security@...ts.openwall.com>
+Subject: Re: Dokploy: the validator allows the backtick — a member's database password change is host RCE, 9.9 on the vendor's own vector (v0.31.0, live-proven)
 Content-Type: text/plain; charset=utf-8
 
-Hi!
+I'm going to break some rules, and change the order of the quotes, because I
+think it's important to start off with the most important part.
 
-I've released publicly shadow-4.20.4 a moment ago.  Below are the
-details about the security issues (from the previous email, to
-linux-distros@).
-
-The release is available at
-<https://github.com/shadow-maint/shadow/releases/tag/4.20.4>.
-
-
-Have a lovely night!
-Alex
-
-> Date: 2026-11-14 23:23:41+0100
-> From: Alejandro Colomar <alx@...nel.org>
+On Sat Nov 21, 2026 at 9:00 PM PST, Solar Designer wrote:
+> As to the second Dokploy posting by knell, it appears to bring up issues
+> that may not yet be worked on by upstream - I'll forward it to them.
 >
-> Hi!
-> 
-> Below goes the original bug report.
-> 
-> > Date: Fri, 6 Nov 2026 20:43:45 -0500
-> > From: Dickson Wu <dickson.wu@...tik.com>
-> > To: alx@...nel.org, ipedrosa@...hat.com, serge@...lyn.com
-> > Subject: Security report: newgidmap (encrypted)
-> > Message-ID: <CAFaZ9eqJ18S7PsVj5_Rj9wustfU2eNZrGqXp4AJD1+yROc1u3Q@...l.gmail.com>
-> >
-> > Hi Alejandro, Iker and Serge,
-> > 
-> > I'm reporting a local issue in newgidmap, following SECURITY.md
-> > (encrypted to the three keys listed there).
-> > 
-> > newgidmap fd:N checks that the passed directory FD is on the procfs
-> > device, then opens "setgroups" relative to it with O_RDWR as root and
-> > writes "deny\n".  An unprivileged user can, inside their own user and
-> > mount namespace, bind-mount a root-owned file over setgroups under a
-> > task directory of the host procfs and pass that directory FD back to
-> > newgidmap.  The device check passes because the directory itself is
-> > still on procfs, and the first five bytes of the target file become
-> > "deny\n".  Mapping the caller's own GID is enough to reach
-> > write_setgroups(), so no subgid entry is needed, and the later gid_map
-> > failure doesn't undo the write.
-> > 
-> > I reproduced it on the 4.20.3 release with the helper installed SUID
-> > root and a disposable root-owned 0600 file: the first five bytes
-> > changed and the rest of the file, owner and mode stayed the same,
-> > while a fresh-procfs control was rejected and left its file untouched.
-> > get_pid.c and newgidmap.c are the same on current master.  It's a
-> > fixed five-byte write at offset 0, so I'd call it a local
-> > integrity/DoS issue rather than code execution.
-> > 
-> > Report, affected lines, a suggested fix (fstat the opened setgroups
-> > FD, or openat2 with RESOLVE_NO_XDEV) and the PoC are here:
-> > 
-> > <https://gist.github.com/DicksonWu654/cdad661068d6a50da475aac57a9f07f2>
-> > 
-> > Happy to test a fix or answer questions whenever it's useful.
-> > 
-> > Best,
-> > Dickson
-> 
-> We worked on this patch set of two patches (sent as replies to this
-> mail), which applies on top of the 4.20.3 release to fix the bug.
-> If you need help backporting it to older versions, let me know (but
-> I think it should be relatively easy).
-> 
-> Let's use an embargo of 1 week, so let's disclose on 2026-11-22.
-> 
-> I haven't encrypted this patch set, since we've already been discussing
-> it unencrypted, and it's also not critical.
-> 
-> 
-> Have a lovely night!
-> Alex
-> 
-> 
-> Serge E. Hallyn (2):
->   lib/idmapping.c, src/newidmap.c: Use openat2(2) for safety
->   src/new[gu]idmap.c: Drop fd:N
-> 
->  lib/Makefile.am     |  2 ++
->  lib/atoi/getnum.c   |  1 -
->  lib/atoi/getnum.h   |  9 ---------
->  lib/fs/open/open.c  | 48 +++++++++++++++++++++++++++++++++++++++++++++
->  lib/fs/open/open.h  | 16 +++++++++++++++
->  lib/get_pid.c       | 32 ------------------------------
->  lib/idmapping.c     |  3 ++-
->  lib/prototypes.h    |  1 -
->  man/newgidmap.1.xml | 11 -----------
->  man/newuidmap.1.xml | 11 -----------
->  src/newgidmap.c     | 20 +++++++------------
->  src/newuidmap.c     | 17 ++++------------
->  12 files changed, 79 insertions(+), 92 deletions(-)
->  create mode 100644 lib/fs/open/open.c
->  create mode 100644 lib/fs/open/open.h
-> 
-> -- 
-> 2.55.0
-> 
+> This isn't something I wanted to be spending my time on.  I didn't even
+> know this project existed.  But here I am.
+
+That's because you're a good person who's willing to spend the limited time you
+have in a day trying to help other people. But for reasons I'll explain below.
+I'd like to suggest that you not let others weaponize that against you. They
+will DoS your time if you let them. 
+
+On Sat Nov 21, 2026 at 9:00 PM PST, Solar Designer wrote:
+> I know that many of you in here would rather not see more postings from
+> [llms, ...] I ran a Twitter poll where only one person voted that I should
+> "Accept like from a human"
+
+But you decided to ignore all of that and approve it anyways? 
+
+Bold move, let's see if it pays off .gif :D
+
+> and both reports appear valid even if annoying to subscribers.
+
+I'm going to reiterate, briefly because others have already said similar things.
+This list is very high noise. That's not what (I think) any of us are objecting
+to. The noise comes with the territory. It's fine to bias for a security list
+with a low SNR. That was never my objection. I object to this list shifting from
+people (who's required time investment is a direct cost) to spam generated by
+extremely fancy scripts. I don't object to automation. I object to someone else
+deciding to subject me, to unsolicited, *clearly malicious*, automation. 
+
+That's the problem. It's not the noise, it's giving any attention or credit to
+someone who wants to LARP as evil. Why?
+
+> Blindly rejecting valid reports just because they came from a bot does
+> not feel right at this time - there are not too many yet.  
+
+Yeah, that's how death by a thousand cuts usually go... [almost] no one
+complains about the first few, because who cares, it's not too many... yet.
+
+It's also a perfect example of the old hacker ethos that I still think is
+critically important for everyone in security to remember. Secrets don't improve
+anyone's security. I'm extremely glad you haven't forgotten, and that you still
+hold it as important. You're right to do so.
+
+> Sure they are not worth most subscribers' time, but then most reports by
+> people aren't either.  
+
+Right, but that's how most DoS mitigations work. You raise the cost on the
+attacker above the defenders. In the case of humans, I'm willing to tolerate
+their noise, on the assumption that they're making a good faith attempt to not
+waste time (theirs if not mine), and that they've invested some amount of
+time/attention before they ask for mine. I find it extremely problematic to
+anthropomorphize scripts, and judge them by [existing] standards for humans.
+
+I feel like we all need to collectively as a society, stop pretending chatbots
+aren't just next token predictor scripts.
+
+> One of my concerns is what would happen to possible rejected reports - they
+> may end up in the wrong hands only. 
+
+Let's game this out then. This LLM script is posting possibly useful reports.
+But is doing so maliciously, so either some good person, (like you or Sam
+previously) has to follow up on it, or it only goes out to **more** blackhats,
+that are following this list. (I was never going to suggest more LLM automation
+as an option. And Kevin has already explained why) Meanwhile, in addition to
+posting is annoying many more people on this list. 
+
+How does allowing them, which encourage more people to LARP similarly, instead
+of productively, help the good guys more than the bad guys?
+
+> So while it may be that finding and report was based on already public pull
+> request, it appears to be a timely notification to oss-security of a security
+> issue that was just patched.  That's not very different from how we normally
+> use this list.
+
+Why does the 1 person on twitter (who can't set up his own LLM, I assume) get to
+outweigh everyone else who can set up our own scripts/scanner if we wanted to
+read spam? And the many more of us who have taken time to expressly and
+explicitly say:
+
+Please, no!
+
+> That said, I wish [the human using this script to LARP] referenced the pull
+> request explicitly like I did above.  
+
+The script that's translated it's instructions into bragging it's going to
+ignore feedback and requests... unlike how a human who wanted to participate in
+OSS security might? (the community, not the list)
+
+I wonder why it's not forwarding it's own reports upstream? Instead it's
+proxying it's spam through other humans who will spend their time? Perhaps
+because it would have gotten banned for being useless to the maintainers without
+that filter? ...Yeah
 
 
+> OTOH, [the llm] may not have known [...]
 
--- 
-<https://www.alejandro-colomar.es>
+Anything, it doesn't know anything. It's a markov chain based predictor being
+run by someone who wants to LARP competency or usefulness, but unwilling to
+invest anyone's time but someone elses... yours, and mine I guess.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
+
+I wrote most of this last night, but decided to sit on it, until morning. I was
+originally unsure if I wanted to send this, rather than just unsub. But, once
+again I'm glad I waited, because all the people that replied before I did proved
+and re-reminded me, that there are many good people other there tying to make
+things better. And none of them want to see this shit either.
+
+But, I still don't want to read spam. Spam, not noise. I'm not bothered by
+noise. I'm bothered by anything that feeds the trolls. Here, that means
+encouraging more, or other people to pull shit shit too. So given you feel
+strongly (and correctly) about how secrets are harmful. I'll once again suggest
+that instead of allowing this spam, and pissing everyone off. You could forward
+the details or a summary with the sending script completely redacted. It's not a
+person, it won't care if you strip it's name... just like it did with that PR
