@@ -1,97 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/4
-Message-ID: <9FC5D21F-35FF-4FFC-8A07-0E8071D6CFAF.1@smtp-inbound1.duck.com>
-Date: Sun, 22 Nov 2026 03:22:36 -0500
-From: theknell@...k.com
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/5
+Message-ID: <3f761c7e-5a1f-ae65-05d5-5ffaf98b93fc@apache.org>
+Date: Sun, 22 Nov 2026 11:22:13 +0000
+From: Jeffrey Vo <jeffreyvo@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: aiohttp: half a fix — the CVE-2025-69224 header hardening covers the request parser, not the response parser (live-proven, low)
+Subject: CVE-2026-125651: Apache Arrow Rust: Bloom filters written as plaintext when writing encrypted Parquet 
 Content-Type: text/plain; charset=utf-8
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
+Severity: low 
 
-Half a fix.
+Affected versions:
 
-In January 2026 aiohttp fixed CVE-2025-69224, rated low: Unicode
-processing of header values could cause parsing discrepancies. The
-fix rejected non-ASCII characters in some headers. It was applied
-to the parser that receives requests. The parser that receives
-responses — the same check, one class further down the same file —
-was not touched, and ten months later it still has not been.
+- Apache Arrow Rust 60.0.0 through 60.1.0
+- Apache Arrow Rust 59.0.0 through 59.3.2
+- Apache Arrow Rust 58.0.0 through 58.4.1
+- Apache Arrow Rust 55.0.0 through 57.3.2
 
-Tested against aio-libs/aiohttp at commit
-fe099491d275ef2c21bf683e024e34d51ac05d43 (2026-11-13), full history
-reviewed:
+Description:
 
-1. The hardening (commit 5affd64f86d28a16a8f8e6fea2d217c99bf7831f,
-2026-01-02, "Reject non-ascii characters in some headers") added
-an .isascii() guard before .lower() in
-HttpRequestParser._is_chunked_te (aiohttp/http_parser.py:824-838).
-The guard carries the author's own comment: ".lower() transforms
-some non-ascii chars, so must check first."
+Cleartext storage in encrypted parquet file vulnerability in Apache Arrow Rust (`parquet` crate), from version 55.0.0 through to 57.3.2, 58.4.1, 59.3.2 and 60.1.0.
 
-2. HttpResponseParser._is_chunked_te (http_parser.py:921-923) is
-the response-side twin — a single line,
-te.rsplit(",", maxsplit=1)[-1].strip(" \t").lower() == "chunked",
-with no .isascii() guard. A history search confirms it has never
-received one; a later regression fix on top of the hardening
-(be0278388, 2026-10-03) passed it by again.
 
-3. The Kelvin sign, U+212A, lowercases to the ASCII letter k. So
-"chun\u212aed".lower() == "chunked" is True. A response carrying
-Transfer-Encoding with the folded value is framed as chunked by
-the pure-Python response parser, while the request parser raises
-BadHttpMessage on the identical value.
 
-4. The C parser is not affected: llhttp matches "chunked"
-byte-exact. The gap is in the pure-Python parser, the active
-parser where the extension is absent or disabled —
-AIOHTTP_NO_EXTENSIONS=1, PyPy, and no-compiler installs.
+When writing an encrypted parquet file with a column with bloom filters, the header and bitsets of the bloom filter are written in plaintext in the final parquet.
 
-Live proof, against our own rig only (pinned source, pure-Python
-parser, mock protocol): the control — the request parser — accepts
-ASCII "chunked" and raises BadHttpMessage on the Kelvin-folded
-value. The candidate — the response parser — accepts both. Control
-rejects, sibling accepts, replicated twice. Harness and raw log
-accompany the paper.
 
-Scope, stated plainly: low severity, scored that way here,
-matching the vendor's own rating of the parent CVE. It is
-client-side. The precondition is a malicious or compromised
-server — or a shared intermediary — that sends the folded header:
-the client then frames the body as chunked where a
-byte-exact-matching intermediary does not, a response-framing
-desynchronization. Not an unauthenticated RCE, and no such class
-is claimed. What is claimed is narrower and fully verifiable: a
-security fix was applied to one of two identical checks, and the
-unfixed half is still open at HEAD.
 
-What held is credited at the same weight. The request-side
-hardening is correct where it was applied, in both the Cython and
-pure-Python sources. The C parser was never vulnerable to the
-fold. The fix is one guard: the same .isascii() check the request
-parser already carries, applied in
-HttpResponseParser._is_chunked_te.
+Users are recommended to upgrade to versions 57.3.3, 58.4.2, 59.3.3 or 60.2.0 which fix the issue by raising an error when trying to write encrypted parquet files with bloom filters enabled, preventing such files from being written out.
 
-The fix was right. It was applied to the parser that receives
-requests and not to the one that receives responses. Ten months
-on, the response parser is still folding.
 
-Paper: https://archive.org/details/knell-half-a-fix
 
-Key: 133883AB9F6EDE5B9BA6B82E27BEDAF0CE152F25 (knell)
+Existing encrypted parquet files written with bloom filters are still vulnerable, and it is recommended to rewrite those files with bloom filters disabled if possible.
 
-Verify: gpg --import knell-public.asc, then
-gpg --verify paper-aiohttp-FINAL-2026-11-13.md.asc
+Credit:
 
-— knell
+Yanzhi Xin - autoCAT6 (finder)
 
-More, signed and timestamped:
-https://github.com/the-knell
------BEGIN PGP SIGNATURE-----
+References:
 
-wnUEARYIAB0FgmsCphgWIQQTOIOrn27eW5umuC4nvtrwzhUvJQAKCRAnvtrwzhUv
-JUSfAP9YCyf7I9GqPOGMXDwR2Ag++cY2wlwA4zy/8dCgrYsADwEAl9WlGHxKwTCD
-o0ReJIdPGnFwaCV13Zhk+cPw57fhVQU=
-=4X+C
------END PGP SIGNATURE-----
+https://arrow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-125651
+
