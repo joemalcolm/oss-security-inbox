@@ -1,25 +1,25 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/4
-Message-ID: <fb2ca295-a75b-74e8-d35e-e65440f771e1@apache.org>
-Date: Sun, 22 Nov 2026 21:09:29 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/2
+Message-ID: <03901dde-c551-e9f8-d271-84e53c446a90@apache.org>
+Date: Sun, 22 Nov 2026 21:08:48 +0000
 From: Steve Hay <stevehay@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-116032: Apache Perl: Stack buffer overflow in Apache2::Module::loaded() 
+Subject: CVE-2026-116001: Apache Perl: NULL pointer dereference under memory allocation failure conditions 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Perl 1.99_01 through 2.0.13
+- Apache Perl 1.99_04 through 2.0.13
 
 Description:
 
-Stack buffer overflow vulnerability in Apache Perl.
+NULL pointer dereference vulnerability in Apache Perl.
 
 
 
-This issue affects Apache Perl: from 1.99_01 through 2.0.13.
+This issue affects Apache Perl: from 1.99_04 through 2.0.13.
 
 
 
@@ -32,5 +32,5 @@ Satoru Yano (finder)
 References:
 
 https://perl.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-116032
+https://www.cve.org/CVERecord?id=CVE-2026-116001
 
