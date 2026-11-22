@@ -1,43 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/5
-Message-ID: <3f761c7e-5a1f-ae65-05d5-5ffaf98b93fc@apache.org>
-Date: Sun, 22 Nov 2026 11:22:13 +0000
-From: Jeffrey Vo <jeffreyvo@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-125651: Apache Arrow Rust: Bloom filters written as plaintext when writing encrypted Parquet 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/22/6
+Message-ID: <871p8c4yt0.fsf@jacob.g10code.de>
+Date: Sun, 22 Nov 2026 17:26:51 +0100
+From: Werner Koch <wk@...pg.org>
+To: Sam James <sam@...too.org>
+Cc: oss-security@...ts.openwall.com,  Jiri Kucera <sanczes@...il.com>
+Subject: Re: Fwd: Re: [Announce] GnuPG Security Advisory for GPGME (T8557,CVE-2026-129975)
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+On Sat, 21 Nov 2026 10:23, Sam James said:
+> Todd Zullinger points out something unfortunate: RH had this patched
+> downstream years ago.
+>
+> Werner, I assume that was never sent to you?
 
-Affected versions:
+Not that I can remember.
 
-- Apache Arrow Rust 60.0.0 through 60.1.0
-- Apache Arrow Rust 59.0.0 through 59.3.2
-- Apache Arrow Rust 58.0.0 through 58.4.1
-- Apache Arrow Rust 55.0.0 through 57.3.2
+We regularly received results from Coverity scans via Redhat.
+Fortunately they had already filtered them on plausibility and thus the
+mentioned one might have slipped through.  In particular because it was
+mostly about memory leakage in error paths.
 
-Description:
+It is a bit strange that this was a one-off patch and never re-applied
+to newer releases.  That part of the code did not receive any serious
+updated in the last decades.
 
-Cleartext storage in encrypted parquet file vulnerability in Apache Arrow Rust (`parquet` crate), from version 55.0.0 through to 57.3.2, 58.4.1, 59.3.2 and 60.1.0.
-
-
-
-When writing an encrypted parquet file with a column with bloom filters, the header and bitsets of the bloom filter are written in plaintext in the final parquet.
-
-
-
-Users are recommended to upgrade to versions 57.3.3, 58.4.2, 59.3.3 or 60.2.0 which fix the issue by raising an error when trying to write encrypted parquet files with bloom filters enabled, preventing such files from being written out.
+FWIW: I recall that Coverity once offered us free scans but we would
+have had to sign an NDA with the requirement to immediately apply fixes
+only with the consent of Coverity :-(
 
 
+Shalom-Salam,
 
-Existing encrypted parquet files written with bloom filters are still vulnerable, and it is recommended to rewrite those files with bloom filters disabled if possible.
+   Werner
 
-Credit:
+-- 
+The pioneers of a warless world are the youth that
+refuse military service.             - A. Einstein
 
-Yanzhi Xin - autoCAT6 (finder)
-
-References:
-
-https://arrow.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-125651
-
+Download attachment "openpgp-digital-signature.asc" of type "application/pgp-signature" (285 bytes)
