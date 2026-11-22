@@ -1,55 +1,43 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/15
-Message-ID: <87o6bfc0to.fsf@gentoo.org>
-Date: Mon, 23 Nov 2026 10:13:39 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/9
+Message-ID: <9bd591b3-8ab2-60b1-4a68-b7d7f62b5efe@apache.org>
+Date: Sun, 22 Nov 2026 23:22:42 +0000
+From: Jan Høydahl <janhoy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Fwd: Anope services security releases
+Subject: CVE-2026-86312: Apache Solr: Ping health-check endpoint could trigger unintended functionality 
 Content-Type: text/plain; charset=utf-8
 
+Severity: 
+    CVSS 3.1: 8.8 (high) CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H
 
--------------------- Start of forwarded message --------------------
-Date: Sun, 22 Nov 2026 18:55:42 +0100
-Subject: Anope services security releases
-To: UnrealIRCd Release Announcements <unreal-notify@...ts.sourceforge.net>
-From: Bram Matthys via Unreal-notify <unreal-notify@...ts.sourceforge.net>
+Affected versions:
 
+- Apache Solr (org.apache.solr:solr-core) 9.0.0 before 9.11.0
+- Apache Solr (org.apache.solr:solr-core) 10.0.0 before 10.1.0
 
-Hi everyone,
+Description:
 
-I know, this is the UnrealIRCd releases mailing list... but I wanted to 
-send out this warning, as many UnrealIRCd networks use Anope.
-
-Following the security audit of UnrealIRCd, I have been auditing a few 
-other IRC projects (with AI) and reporting my findings to these 
-projects. Anope is one of those.
-
-Anope has just put out 2.0.21 
-<https://www.anope.org/news/2026/anope-2021-release.html> and 2.1.28 
-<https://www.anope.org/news/2026/anope-2128-release.html> which fixes 
-10+ security issues. The issues consist of: crashes, hangs, account 
-takeover, and command injection under certain conditions (similar to our 
-critical UnrealIRCd issue from Nov 7).
-
-If you are running Anope then we suggest you to upgrade ASAP.
-
-Big thanks to Sadie, who fixed all of this within a week of my report.
-
-Best regards,
-
-Bram Matthys (Syzop)
+Under some configurations a request to the ping endpoint could carry out more than a simple health check. In deployments that rely on Solr's rule-based authorization, a client granted only the low-privilege health permission could thereby trigger behavior that should require higher privileges; where the shipped security.json template leaves the health permission unauthenticated, no credentials are required at all. 
 
 
-Content of type "text/html" skipped
+This issue affects Apache Solr from 9.0.0 through the releases preceding the fixed versions. Users are recommended to upgrade to version 9.11.0 or 10.1.0, which resolve the issue.
 
 
-_______________________________________________
-Unreal-notify mailing list
-Unreal-notify@...ts.sourceforge.net
-https://lists.sourceforge.net/lists/listinfo/unreal-notify
 
 
--------------------- End of forwarded message --------------------
+You are affected if you run an affected version and allow the /admin/ping endpoint to be reached with only the health permission. This includes the default sample security configuration installed by the bin/solr CLI, where that endpoint is unauthenticated.
 
+Users who cannot upgrade immediately should restrict access to the /admin/ping endpoint in their authorization configuration — for example by requiring a trusted role for that path — and ensure Solr is not reachable from untrusted clients or networks, as recommended for all Solr deployments.
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+Credit:
+
+Andrew Rukin (Arenadata) (finder)
+Zhang Yilin (finder)
+Calif.io, in collaboration with Anthropic (finder)
+
+References:
+
+https://github.com/apache/solr/pull/4890
+https://solr.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-86312
+
