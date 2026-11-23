@@ -1,45 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/30
-Message-ID: <7f386597-9ec2-2b71-3c74-8b9bcda05e5b@apache.org>
-Date: Mon, 23 Nov 2026 21:30:09 +0000
-From: Ian Maxon <imaxon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/23
+Message-ID: <2f5e9a9b-57f6-3ff0-5b61-c3937d633f0c@apache.org>
+Date: Mon, 23 Nov 2026 18:09:20 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-108765: Apache Texera: Users can export results from workflows for which they do not otherwise have permissions for 
+Subject: CVE-2026-82445: Apache StormCrawler: Crawled Content Injects Crawler Control Metadata via the SQL Status Store 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
 
 Affected versions:
 
-- Apache Texera 1.1.0-incubating before 1.3.0-incubating
+- Apache StormCrawler (org.apache.stormcrawler:stormcrawler-sql) 3.0.0 before 4.0.0
 
 Description:
 
-Missing authorization in the workflow export service of Apache
+Description
 
-Texera allows a logged-in user to potentially read the result
+The SQL status backend serialises per-URL metadata into a single column by concatenating a tabulation,
+the key, an equals sign and the value, with no escaping. On read-back the string is split on the same
+two characters, so the round trip is not injective: a value that contains a tabulation returns as one
+or more additional keys that were never written.
 
-of a workflow for which they do not otherwise have permission for
+Values on that path are supplied by crawled servers. `FetcherBolt` records the raw `Location` header of
+a redirect as `_redirTo`, and `_redirTo` is part of the default `metadata.persist` set, so a redirect
+whose `Location` contains a tabulation followed by `key=value` pairs introduces those keys into the
+crawler's own control metadata on the next scheduling cycle. Several control keys are read without a
+prefix, so the injected keys are live: `http.proxy.host`, `http.proxy.port`, `http.proxy.user` and
+`http.proxy.pass` among them, as well as scheduling and request-shaping keys such as `depth`,
+`max.depth`, `crawl.delay`, `http.content.limit` and `isSitemap`.
 
+Where a proxy manager is configured, the consequence is not limited to corrupted scheduling data.
+`SingleProxyManager.getProxy(Metadata)` consults the per-URL metadata first and returns what it finds,
+so an injected proxy host and port take precedence over the operator's configured proxy and subsequent
+fetches, together with any configured `Authorization` header, are routed through a host the crawled
+content chose. A related defect in `AbstractStatusUpdaterBolt` compounds this: an injected
+`status.store.as.is.with.nextfetchdate` that is not a valid instant escapes the enclosing try/catch and
+stops the bolt, and because the stored row is replayed the failure repeats.
 
+Deployments using the OpenSearch or Solr status backends are unaffected, because those serialise
+metadata structurally.
 
+Mitigation
 
-This issue affects Apache Texera: from 1.1.0-incubating
+Upgrade to 4.0.0, where the metadata column is written in an escaped form behind a format marker, rows
+written by earlier versions are still decoded unchanged, and the stored next-fetch-date is parsed
+defensively.
 
-before 1.3.0-incubating.
+The fix does not repair rows written before the upgrade. Operators using the SQL status backend should
+inspect the metadata column of an existing status table for tabulation characters and remove the
+affected rows, and should assume any proxy credentials configured for the crawl may have been exercised
+through an attacker-chosen proxy and rotate them. Users who cannot upgrade immediately can remove
+`_redirTo` from `metadata.persist` to close the demonstrated path, though other crawled values reaching
+persisted metadata remain.
 
+Credit
 
+Independently reported to the Apache StormCrawler PMC by n0mi1k, with a proof of concept.
 
-Users are recommended to upgrade to version 1.3.0-incubating, which
-
-fixes the issue
+Also found by the ASF -- using Claude agents to study the security of open-source projects, validated
+and reported by Apache StormCrawler.
 
 Credit:
 
 n0mi1k (finder)
+The ASF using Claude Agents (finder)
 
 References:
 
-https://texera.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-108765
+https://stormcrawler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-82445
 
