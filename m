@@ -1,40 +1,47 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/20
-Message-ID: <65025e31-7fa0-0d8e-d14f-783bd77425fb@apache.org>
-Date: Mon, 23 Nov 2026 18:33:33 +0000
-From: Ali Risheh <aicam@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/2
+Message-ID: <87h5h79l50.fsf@gentoo.org>
+Date: Mon, 23 Nov 2026 23:35:23 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-112788: Apache Texera: Missing authentication on the Python virtual environment endpoints in non-Kubernetes deployments 
+Subject: Re: libexpat 2.11.0 fixes three vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: low 
+Sebastian Pipping <sebastian@...ping.org> writes:
 
-Affected versions:
+> [...]
+>   #1495  Restore and document `-fno-strict-aliasing` for security
+>            with both GCC and Clang >=20.
 
-- Apache Texera 1.1.0-incubating before 1.3.0-incubating
+Why Clang >= 20? Clang has supported this flag since forever.
 
-Description:
+>            libexpat continues to be `-Wstrict-aliasing=3` clean and
+>            to reject violations via CI but there are multiple known
+>            strict aliasing violations within libexpat that despite
+>            `-Wstrict-aliasing=3` are not detected by GCC and which
 
-Missing Authentication for Critical Function in Apache Texera (incubating).
+Note that -Wstrict-aliasing=1 is the most aggressive level [0]. Anyway,
+in terms of detection, Clang has TypeSanitizer (-fsanitize=type) but it
+has some issues still. Someone has proposed it for GCC now too.
 
+[0] https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstrict-aliasing
 
+>            are hard to impossible to resolve without a mess. These and
 
-The Python virtual environment (PVE) management endpoints of a computing unit are not authenticated by the application itself. In the local JVM and single-node Docker Compose deployments, which place no authenticating gateway in front of the services, these endpoints are reachable without credentials. The Kubernetes deployment gates them at the gateway, so only the Kubernetes deployment provides the full security model described in SECURITY.md.
+Why are they so hard to resolve here exactly? In general, just memcpy
+and move on.
 
+>            potentially other cases run the risk of miscompilation(!)
+>            with `-O2/-O3/Os` without explicit `-fno-strict-aliasing`.
+>            Hence `-fno-strict-aliasing` is brought back to both build
+>            systems and is recommended to everyone embedding libexpat
+>            in particular (but not only) to avoid surprises from
+>            potential miscompilation. If curious, for the 2016 article
+>            by John Regehr that motivated this move please see:
+>            https://blog.regehr.org/archives/1307 .
+>
+> [...]
 
+sam
 
-This issue affects Apache Texera (incubating): from 1.1.0 through 1.2.0.
-
-
-
-Users are recommended to use the Kubernetes deployment, which enforces the full security model, and to upgrade to 1.3.0-incubating, which documents that the local JVM and single-node Docker Compose deployments do not provide the full security model and should only be used by trusted users.
-
-Credit:
-
-Aleksandar Djordjevic (finder)
-
-References:
-
-https://texera.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-112788
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
