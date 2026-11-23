@@ -1,73 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/23
-Message-ID: <2f5e9a9b-57f6-3ff0-5b61-c3937d633f0c@apache.org>
-Date: Mon, 23 Nov 2026 18:09:20 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/34
+Message-ID: <0207ba0e-cb93-c3da-b716-f9483196e5c9@apache.org>
+Date: Mon, 23 Nov 2026 22:05:38 +0000
+From: Andy Seaborne <andy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82445: Apache StormCrawler: Crawled Content Injects Crawler Control Metadata via the SQL Status Store 
+Subject: CVE-2026-97893: Apache Jena: SPARQL Property Path optimisation can lead to excessive memory consumption. 
 Content-Type: text/plain; charset=utf-8
 
 Severity: important 
+    CVSS 4.0: 6.6 (medium) CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U/S:N/AU:Y/R:U/V:D/RE:M/U:Red
 
 Affected versions:
 
-- Apache StormCrawler (org.apache.stormcrawler:stormcrawler-sql) 3.0.0 before 4.0.0
+- Apache Jena through 6.2.0
 
 Description:
 
-Description
+A Denial of Service (DoS) vulnerability exists in the ARQ SPARQL Query Optimiser in Apache Jena ARQ prior to version 6.3.0 that allows a SPARQL query to use that cause excessive memory usage.
+Users are recommended to upgrade to version 6.3.0, which fixes this issue.
 
-The SQL status backend serialises per-URL metadata into a single column by concatenating a tabulation,
-the key, an equals sign and the value, with no escaping. On read-back the string is split on the same
-two characters, so the round trip is not injective: a value that contains a tabulation returns as one
-or more additional keys that were never written.
 
-Values on that path are supplied by crawled servers. `FetcherBolt` records the raw `Location` header of
-a redirect as `_redirTo`, and `_redirTo` is part of the default `metadata.persist` set, so a redirect
-whose `Location` contains a tabulation followed by `key=value` pairs introduces those keys into the
-crawler's own control metadata on the next scheduling cycle. Several control keys are read without a
-prefix, so the injected keys are live: `http.proxy.host`, `http.proxy.port`, `http.proxy.user` and
-`http.proxy.pass` among them, as well as scheduling and request-shaping keys such as `depth`,
-`max.depth`, `crawl.delay`, `http.content.limit` and `isSitemap`.
 
-Where a proxy manager is configured, the consequence is not limited to corrupted scheduling data.
-`SingleProxyManager.getProxy(Metadata)` consults the per-URL metadata first and returns what it finds,
-so an injected proxy host and port take precedence over the operator's configured proxy and subsequent
-fetches, together with any configured `Authorization` header, are routed through a host the crawled
-content chose. A related defect in `AbstractStatusUpdaterBolt` compounds this: an injected
-`status.store.as.is.with.nextfetchdate` that is not a valid instant escapes the enclosing try/catch and
-stops the bolt, and because the stored row is replayed the failure repeats.
 
-Deployments using the OpenSearch or Solr status backends are unaffected, because those serialise
-metadata structurally.
 
-Mitigation
 
-Upgrade to 4.0.0, where the metadata column is written in an escaped form behind a format marker, rows
-written by earlier versions are still decoded unchanged, and the stored next-fetch-date is parsed
-defensively.
-
-The fix does not repair rows written before the upgrade. Operators using the SQL status backend should
-inspect the metadata column of an existing status table for tabulation characters and remove the
-affected rows, and should assume any proxy credentials configured for the crawl may have been exercised
-through an attacker-chosen proxy and rotate them. Users who cannot upgrade immediately can remove
-`_redirTo` from `metadata.persist` to close the demonstrated path, though other crawled values reaching
-persisted metadata remain.
-
-Credit
-
-Independently reported to the Apache StormCrawler PMC by n0mi1k, with a proof of concept.
-
-Also found by the ASF -- using Claude agents to study the security of open-source projects, validated
-and reported by Apache StormCrawler.
+Users who are unable to upgrade immediately, especially those who operate a public facing SPARQL service/application backed by Apache Jena are recommended to configure the ARQ symbol arq:optPathFlatten=false in their SPARQL execution context which disables the problematic optimisation.
 
 Credit:
 
-n0mi1k (finder)
-The ASF using Claude Agents (finder)
+The ASF (reporter)
 
 References:
 
-https://stormcrawler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-82445
+https://jena.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-97893
 
