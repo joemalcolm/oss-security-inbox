@@ -1,36 +1,41 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/31
-Message-ID: <5a85ee00-d07b-0159-5ffb-a3deedb870b0@apache.org>
-Date: Mon, 23 Nov 2026 22:02:11 +0000
-From: Andy Seaborne <andy@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/38
+Message-ID: <CAO85k6X4vMvFOwZ+EV28GvYCtuOx8HjVzQBM=yQ8VOfNJ-QhHA@mail.gmail.com>
+Date: Mon, 23 Nov 2026 14:31:20 -0800
+From: xiangfu@...che.org
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86154: Apache Jena: Nested structures can lead to stack overflow in Turtle language syntax parsers 
+Subject: CVE-2026-134858: Apache Pinot: Controller local file disclosure during URI ingestion
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate
 
 Affected versions:
 
-- Apache Jena through 6.2.0
+- Apache Pinot 0.7.1 before 1.6.0
 
 Description:
 
-A vulnerability in Apache Jena allows arbitrary stack usage when parsing RDF Turtle-family languages.
+In Apache Pinot 0.7.1 through 1.5.1, a caller who can submit URI
+ingestion jobs can select local files readable by the controller
+process. If the file can be ingested using the destination table’s
+schema and input format, users with query access to that table can
+read its contents.
 
+Upgrade to Apache Pinot 1.6.0 and keep
+controller.ingestFromURI.allowLocalFileSystem at its default value of
+false on every controller. Until you can upgrade, block the URI
+ingestion endpoint if it is unused or restrict it to trusted
+operators.
 
-
-This issue affects Apache Jena: through 6.2.0.
-
-
-
-Users are recommended to upgrade to version 6.3.0, which fixes the issue.
+This issue is being tracked as ZDI-CAN-28625.
 
 Credit:
 
-n0milk (finder)
+pl4tyz working with TrendAI Zero Day Initiative (reporter)
 
 References:
 
-https://jena.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86154
-
+https://github.com/apache/pinot/pull/18660
+https://github.com/apache/pinot/pull/19238
+https://pinot.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-134858
