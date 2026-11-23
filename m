@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/18
-Message-ID: <d452a84c-0ff7-49b8-b3cd-592a5403b161@oracle.com>
-Date: Mon, 23 Nov 2026 10:09:24 -0800
-From: Alan Coopersmith <alan.coopersmith@...cle.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/36
+Message-ID: <2fc97292-884d-53cd-943a-3333ba14d1ab@apache.org>
+Date: Mon, 23 Nov 2026 22:08:17 +0000
+From: Andy Seaborne <andy@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CPython [CVE-2026-107784] tarfile extraction filters accept drive-relative paths on Windows
+Subject: CVE-2026-120502: Apache Jena: Excess memory allocation from malicious Thrift data 
 Content-Type: text/plain; charset=utf-8
 
+Severity: important 
+
+Affected versions:
+
+- Apache Jena through 6.2.0
+
+Description:
+
+A vulnerability in Apache Jena can cause excess memory allocation from malicious Thrift data.
 
 
 
--------- Forwarded Message --------
-Subject: 	[Security-announce][CVE-2026-107784] tarfile extraction filters accept 
-drive-relative paths on Windows
-Date: 	Mon, 23 Nov 2026 12:40:09 +0000
-From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
-Reply-To: 	security-sig@...hon.org
-To: 	security-announce@...hon.org
-CC: 	Stan Ulbrych <stanulbrych@...il.com>
+This issue affects Apache Jena: through 6.2.0.
 
-There is a MEDIUM severity vulnerability affecting CPython.
 
-On Windows, the tarfile "tar" and "data" extraction filters did not reject
-member names or link targets that have a drive but no root, such as "C:foo".
-When extracting to a relative destination, such a member was written to the
-current working directory of that drive instead of the destination, and a
-symbolic link with such a target pointed outside the destination.
-The filters now refuse these member names and link targets with
-AbsolutePathError and AbsoluteLinkError.
 
-Please see the linked CVE ID for the latest information on affected versions:
+Users are recommended to upgrade to version 6.3.0, which fixes the issue.
 
-* https://www.cve.org/CVERecord?id=CVE-2026-107784
-* https://github.com/python/cpython/pull/161334
+Credit:
 
-_______________________________________________
-Security-announce mailing list -- security-announce@...hon.org
-https://mail.python.org/mailman3//lists/security-announce.python.org
+Noriaki Iwasaki (finder)
+
+References:
+
+https://jena.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-120502
 
