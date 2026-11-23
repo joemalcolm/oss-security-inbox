@@ -1,187 +1,30 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/16
-Message-ID: <87fqwrc0se.fsf@gentoo.org>
-Date: Mon, 23 Nov 2026 10:14:25 +0000
-From: Sam James <sam@...too.org>
-To: oss-security@...ts.openwall.com
-Subject: Fwd: UnrealIRCd 6.2.7.1 released & hot-patch to fix 9 security issues, including one CRITICAL (CVE-2026-114713)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/14
+Message-ID: <87wlq33osa.fsf@jacob.g10code.de>
+Date: Mon, 23 Nov 2026 10:00:53 +0100
+From: Werner Koch <wk@...pg.org>
+To: Aaron Rainbolt <arraybolt3@...il.com>
+Cc: oss-security@...ts.openwall.com,  Sam James <sam@...too.org>,  Jiri Kucera <sanczes@...il.com>
+Subject: Re: Fwd: Re: [Announce] GnuPG Security Advisory for GPGME (T8557,CVE-2026-129975)
 Content-Type: text/plain; charset=utf-8
 
+On Sun, 22 Nov 2026 14:50, Aaron Rainbolt said:
 
--------------------- Start of forwarded message --------------------
-Date: Sat, 7 Nov 2026 15:57:09 +0100
-Subject: UnrealIRCd 6.2.7.1 released & hot-patch to fix 9 security issues,
- including one CRITICAL (CVE-2026-114713)
-To: UnrealIRCd Release Announcements <unreal-notify@...ts.sourceforge.net>
-From: Bram Matthys via Unreal-notify <unreal-notify@...ts.sourceforge.net>
+> raw analysis results with others), but fixing issues whenever you want
+> without explicit consent is fine, and I didn't have to file an NDA to
+> use it. See https://scan.coverity.com/policy.
 
-
-Hi everyone,
-
-During an internal audit, with the help of AI, several important 
-security issues were found in UnrealIRCd.
-
-The critical issue (CVE-2026-114713) allows normal users to execute 
-commands with server/IRCOp authority. This means any ordinary user can 
-KILL, GLINE, and do many more bad things. This is the most critical 
-issue found in UnrealIRCd in the past 15 years. The other security 
-issues are crashes, hangs, DoS and there is also an issue fixed which 
-allows any ordinary user to "decloak" a user (reveal the IP address of 
-the victim).
-
-As promised, on almost all UnrealIRCd 6 networks all these security 
-issues can be hot-patched without restart (no downtime).
-
-If you are running UnrealIRCd versions that are end of life: UnrealIRCd 
-3.2.x, 4 or 5 then see the section near the end.
-
-_IMPORTANT: Please do *step 1 first*, it gives you some protection right 
-away. Then proceed to step 2a or 2b._
-
-*Step 1: First, apply the workaround right now*
-
-Before you do anything, run the following as an IRCOp on the network:
-
-/SPAMFILTER add -regex T block - Invalid_label ^label=(?![^\r\n;\x20]*\z)
-
-This protects all linked servers on the IRC network against the critical 
-issue, but only if all your servers are on 6.0.4 or newer. Even so, you 
-still need to fix the other 8 security issues, so don't just stop here, 
-see next.
-
-Now go to step 2a (hot-patch) or if that is not for you then use step 2b 
-(upgrade to 6.2.7.1) instead.
-
-*Step 2a: Fix the issues without restart*
-
-If you are on Windows, or you are on *NIX but hot-patching below fails, 
-then go to step 2b (upgrade).
-
-Run the following command on every UnrealIRCd server. This works on 
-UnrealIRCd 6.0.0 - 6.2.7:
-
-./unrealircd hot-patch bundle-20261107
-
-When you run that command, the last sentence you should see on that 
-screen should be "Patch installed and server rehashed correctly. All 
-should be good now!" or in older versions "Done! All should be good now".
-
-If something went wrong (you did not get that output) then please check 
-out FAQ: Hot-patching failed 
-<https://www.unrealircd.org/docs/FAQ#hot-patch-failed>. It contains 
-answers for several scenarios, including a distro upgrade case which can 
-break the build.
-
-Now, you still want to verify that you are really patched. To do so, you 
-can run this on the same shell (this only works on 6.0.2 and later):
-
-./unrealircd module-status|grep labeled-response
-
-Then check the output:
-
-  * This means the hot-patch is properly installed (server is safe):
-    labeled-response *5.0-hot-patch-bundle-20261107*
-  * If it says 6.2.7.1 then the server was not hot-patched but is
-    running the fixed version 6.2.7.1 (server is also safe)
-  * If it says only 5.0 (without the patch bundle) then the hot-patch
-    was NOT applied.
-  * If you get no output at all then try the IRC method, see next.
-
-You can check the same on IRC through "MODULE -all" as an IRCOp and then 
-CTRL+F on labeled-response
-You can also check remote IRC servers (again, as IRCOp), through: MODULE 
--all remote.server.name
-
-If the verification failed, check out the FAQ: Hot-patching failed 
-<https://www.unrealircd.org/docs/FAQ#hot-patch-failed> or simply do step 
-2b (upgrade instead).
-
-*Step 2b: OR, upgrade to 6.2.7.1 (with restart)*
-
-If using the hot-patch is not possible or didn't work, then upgrade to 
-6.2.7.1:
-
-On *NIX you can simply run: ./unrealircd upgrade
-And after that, restart the IRC server.
-
-Windows users, or anyone else who prefers doing so, can also download 
-the 6.2.7.1 release from www.unrealircd.org <https://www.unrealircd.org/>.
-
-*Full list of fixed issues*
-
-For completeness, here are the 9 issues that are fixed through the 
-hot-patch and in 6.2.7.1:
-
- 1. A CRITICAL issue that can be abused by any normal user to execute
-    commands with server or IRCOp authority. This means any ordinary
-    user can KILL, GLINE, and do many more bad things. (CVE-2026-114713)
- 2. A normal user could "decloak" another user, revealing the IP address
-    of the victim.
- 3. Another leak of the IP address
- 4. Blacklist recheck could hang the server
- 5. Crash on CHGIDENT from Services, which a normal user can trigger
- 6. Counting error which could cause a "This server is full" message to
-    every new connect, until the server is restarted.
- 7. Limit the number of bans Services can set, to 2x set::maxbans
- 8. Potential flood issue with TLS renegotiations
- 9. Possible crash on whowasdb
-
-*Note to UnrealIRCd 5 and other EOL versions*
-
-UnrealIRCd 5 is similarly affected by the critical issue (so any regular 
-user can execute commands as server/IRCOp). Note that UnrealIRCd 5 has 
-been End of Life since 2023-07-01. Nobody should be running this version.
-If you do use UnrealIRCd 5, the workaround is adding this to your 
-configuration file on all your servers AND restarting them (NOT rehash): 
-blacklist-module "labeled-response";
-
-Other End of Life UnrealIRCd versions have not been checked. It is 
-likely that several bugs that are fixed in 6.2.7.1 go all the way back 
-to 3.2.x.
-
-Please read the next section as well, as you are _not safe_ if you run 
-an EOL version. You are not safe at all.
-
-*Final words: the danger of AI is real*
-
-I have been doing security audits on UnrealIRCd for decades now. Back in 
-2001 I was using static code analyzer tools and found a bunch of 
-crashes. Later on in the 2010's fuzzing was the new big thing and when I 
-used it on UnrealIRCd it found lots of issues again. Then AI came. First 
-the quality of AI was not so good but things improved and improved. 
-Since Feb 2026 I have spent about 100 hours with AI doing security 
-audits and to improve the quality of the codebase. Especially the last 
-month things have been wild. The things AI can find nowadays are amazing.
-
-I genuinely think that, if you are running any network daemon that has 
-not seen any major security fixes in the past couple of months, then 
-nobody has been poking at that daemon with AI. Or some bad guy did but 
-did not report back. This is also true for people running End of Life 
-UnrealIRCd releases: you think your 3.2.x has no vulnerabilities? It is 
-only because bad guys haven't been looking at exploiting your servers. 
-You should not be running EOL software. Upgrade to UnrealIRCd 6. It's a 
-modern IRC server, it's worth it.
-
-*Updates*
-
-Any updates to this advisory will be posted in this thread on the forums 
-<https://forums.unrealircd.org/viewtopic.php?t=9487>.
-
-Best regards and thank you for using UnrealIRCd,
-
-Bram Matthys
+That might be the case today but many years ago (~20 years) things were
+different and this is why I was glad that RedHat offered us to forward
+their findings
 
 
-Content of type "text/html" skipped
+Salam-Shalom,
 
+   Werner
 
-_______________________________________________
-Unreal-notify mailing list
-Unreal-notify@...ts.sourceforge.net
-https://lists.sourceforge.net/lists/listinfo/unreal-notify
+-- 
+The pioneers of a warless world are the youth that
+refuse military service.             - A. Einstein
 
-
--------------------- End of forwarded message --------------------
-
-
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+Download attachment "openpgp-digital-signature.asc" of type "application/pgp-signature" (285 bytes)
