@@ -1,41 +1,29 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/27
-Message-ID: <8c3af87a-69e4-86c0-bd49-de9df13712d5@apache.org>
-Date: Mon, 23 Nov 2026 21:28:05 +0000
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/26
+Message-ID: <f20c9b18-0e23-ab8a-1e6c-869199c224e2@apache.org>
+Date: Mon, 23 Nov 2026 21:27:17 +0000
 From: Ian Maxon <imaxon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-96353: Apache Texera: Missing authorization in the project API 
+Subject: CVE-2026-96298: Apache Texera: Missing authorization on the computing unit workflow websocket 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache Texera 1.1.0-incubating before 1.3.0-incubating
+- Apache Texera 1.1.0 through 1.2.0
 
 Description:
 
-Missing Authorization vulnerability in the project REST API of Apache Texera (incubating).
+Missing Authorization vulnerability in the computing unit workflow websocket of Apache Texera (incubating) allows an authenticated user to view workflow results, control workflow executions, and run code in a computing unit they have not been granted. In local JVM and single-node Docker Compose deployments this is possible directly; in Kubernetes deployments it is possible from code running inside another computing unit in the cluster.
 
 
 
-The project API did not check that the caller owns, or has been granted access to, the project being accessed. Any authenticated user with an approved account (the REGULAR or ADMIN role; new accounts need administrator approval by default) could view, modify or delete other users' projects, change which workflows those projects contain, and see the e-mail addresses of a project's owner and collaborators. The project feature is hidden in the web UI by default, but the API was reachable regardless of that setting.
+This issue affects Apache Texera : from 1.1.0 through 1.2.0.
 
 
 
-This issue affects Apache Texera: from 1.1.0-incubating before 1.3.0-incubating.
-
-
-
-Users are recommended to upgrade to version 1.3.0-incubating, which fixes the issue by removing the deprecated project feature and its data.
-
-
-
-If you cannot upgrade immediately, configure the reverse proxy in front of Texera to reject every request whose path starts with /api/project, /api/public/project or /api/access/project, and every request whose path contains ';', which the Texera server ignores when routing. Respond with 403 or 404, not 401: from 1.2.0-incubating the web UI treats a 401 as an expired session, and the workflow pages request the project list when they load. Unless an administrator has enabled the project feature, this does not affect other functionality; those project-list requests are simply rejected. Make sure the Texera server is reachable only through that proxy.
-
-
-
-Blocking and upgrading do not undo access obtained earlier. Before upgrading, review the project, project_user_access and workflow_of_project tables, which remain empty unless someone has used the feature, and remove rows you do not expect; the upgrade deletes these tables. Do not copy project grants into workflow_user_access without checking each one.
+Users are recommended to upgrade to version 1.3.0, which fixes the issue. Local JVM and Docker Compose deployments do not provide the full security model and should only be used by trusted users.
 
 Credit:
 
@@ -44,5 +32,5 @@ n0mi1k (finder)
 References:
 
 https://texera.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-96353
+https://www.cve.org/CVERecord?id=CVE-2026-96298
 
