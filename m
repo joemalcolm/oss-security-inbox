@@ -1,68 +1,46 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/22
-Message-ID: <57636a26-c758-4298-6529-25a974db84ca@apache.org>
-Date: Mon, 23 Nov 2026 18:08:54 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/29
+Message-ID: <27c86214-158a-8b69-b4c3-392e6f80c7c5@apache.org>
+Date: Mon, 23 Nov 2026 21:29:30 +0000
+From: Ian Maxon <imaxon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82444: Apache StormCrawler: Host-Only Cookies Sent to Any Host 
+Subject: CVE-2026-108368: Apache Texera: Missing authorization when the workflow compiling service resolves operator file paths 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Severity: important 
 
 Affected versions:
 
-- Apache StormCrawler (org.apache.stormcrawler:stormcrawler-core) 3.0.0 before 4.0.0
+- Apache Texera 1.1.0-incubating before 1.3.0-incubating
 
 Description:
 
-Description
+Missing authorization in the workflow compiling service of Apache
 
-`CookieConverter.getCookies` decides which stored cookies to attach to an outbound request. The
-applicability check is nested inside a test for the presence of a `Domain` attribute, so a cookie
-without one, which is the ordinary form of a session cookie, skips scoping entirely and is returned for
-whatever target URL was passed. RFC 6265 requires the opposite: a cookie with no `Domain` attribute is
-host-only and belongs to the host that set it.
+Texera allows a logged-in user to read the column names
 
-Two further defects sit in the same method. The domain comparison has no notion of a registrable
-domain, so a `Domain` value of `com` matches every host under it, and the comparison returns true when
-it throws, so a failure to evaluate the check admits the cookie. Neither the converter nor
-`MetadataTransfer`, which carries the stored cookie to outlinks, ever considers the host that issued
-it.
+of datasets they have not been given access to, and the header line of
 
-Cookie handling is opt-in: it requires `http.use.cookies` to be set to true, which is not the default,
-and the cookie key to be listed in `metadata.transfer`. The documented recipe does not work as written,
-because the `metadata.transfer` example in the internals documentation names `set-cookie` while the key
-present in metadata is `protocol.set-cookie` and the transfer matches key names exactly. Deployments
-affected are therefore those where an operator determined the correct key, enabled cookie handling and
-crawls an authenticated site whose pages link or redirect to other hosts. In that case the session
-cookie of the authenticated origin is sent to those hosts.
+files on the host that runs the service.
 
-Mitigation
 
-Upgrade to 4.0.0, where a cookie without a `Domain` attribute is sent only to the host that set it, a
-single-label domain is rejected and the domain check fails closed. Because the protocol does not yet
-record the host that issued a cookie, cookies without a `Domain` attribute are not sent at all until
-that host is recorded; operators relying on cookie transfer will notice this. The documentation error
-is corrected in the same release.
 
-Users who cannot upgrade immediately should confine an authenticated crawl to a topology whose URL
-filters keep it on the origin that issued the credentials, and should not rely on cookie scoping as a
-boundary. Rotating session credentials used for such crawls is advisable.
+This issue affects Apache Texera: from 1.1.0-incubating
 
-Credit
+before 1.3.0-incubating.
 
-Independently reported to the Apache StormCrawler PMC by n0mi1k, with a proof of concept.
 
-Also found by the ASF -- using Claude agents to study the security of open-source projects, validated
-and reported by Apache StormCrawler.
+
+Users are recommended to upgrade to version 1.3.0-incubating, which
+
+fixes the issue
 
 Credit:
 
 n0mi1k (finder)
-The ASF using Claude Agents (finder)
 
 References:
 
-https://stormcrawler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-82444
+https://texera.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-108368
 
