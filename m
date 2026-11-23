@@ -1,36 +1,68 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/37
-Message-ID: <4a9664df-02bb-c3c7-7a2b-a06a5287a57f@apache.org>
-Date: Mon, 23 Nov 2026 22:08:33 +0000
-From: Andy Seaborne <andy@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/22
+Message-ID: <57636a26-c758-4298-6529-25a974db84ca@apache.org>
+Date: Mon, 23 Nov 2026 18:08:54 +0000
+From: Richard Zowalla <rzo1@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124324: Apache Jena Fuseki: SERVICE bypasses localhost-only administration controls 
+Subject: CVE-2026-82444: Apache StormCrawler: Host-Only Cookies Sent to Any Host 
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Jena Fuseki through 6.2.0
+- Apache StormCrawler (org.apache.stormcrawler:stormcrawler-core) 3.0.0 before 4.0.0
 
 Description:
 
-A vulnerability in Apache Jena Fuseki allows SERVICE operations to bypass restrictions on administration operations.
+Description
 
+`CookieConverter.getCookies` decides which stored cookies to attach to an outbound request. The
+applicability check is nested inside a test for the presence of a `Domain` attribute, so a cookie
+without one, which is the ordinary form of a session cookie, skips scoping entirely and is returned for
+whatever target URL was passed. RFC 6265 requires the opposite: a cookie with no `Domain` attribute is
+host-only and belongs to the host that set it.
 
+Two further defects sit in the same method. The domain comparison has no notion of a registrable
+domain, so a `Domain` value of `com` matches every host under it, and the comparison returns true when
+it throws, so a failure to evaluate the check admits the cookie. Neither the converter nor
+`MetadataTransfer`, which carries the stored cookie to outlinks, ever considers the host that issued
+it.
 
-This issue affects Apache Jena Fuseki: from through 6.2.0.
+Cookie handling is opt-in: it requires `http.use.cookies` to be set to true, which is not the default,
+and the cookie key to be listed in `metadata.transfer`. The documented recipe does not work as written,
+because the `metadata.transfer` example in the internals documentation names `set-cookie` while the key
+present in metadata is `protocol.set-cookie` and the transfer matches key names exactly. Deployments
+affected are therefore those where an operator determined the correct key, enabled cookie handling and
+crawls an authenticated site whose pages link or redirect to other hosts. In that case the session
+cookie of the authenticated origin is sent to those hosts.
 
+Mitigation
 
+Upgrade to 4.0.0, where a cookie without a `Domain` attribute is sent only to the host that set it, a
+single-label domain is rejected and the domain check fails closed. Because the protocol does not yet
+record the host that issued a cookie, cookies without a `Domain` attribute are not sent at all until
+that host is recorded; operators relying on cookie transfer will notice this. The documentation error
+is corrected in the same release.
 
-Users are recommended to upgrade to version 6.3.0, which fixes the issue.
+Users who cannot upgrade immediately should confine an authenticated crawl to a topology whose URL
+filters keep it on the origin that issued the credentials, and should not rely on cookie scoping as a
+boundary. Rotating session credentials used for such crawls is advisable.
+
+Credit
+
+Independently reported to the Apache StormCrawler PMC by n0mi1k, with a proof of concept.
+
+Also found by the ASF -- using Claude agents to study the security of open-source projects, validated
+and reported by Apache StormCrawler.
 
 Credit:
 
-Abhishek Kushwaha (reporter)
+n0mi1k (finder)
+The ASF using Claude Agents (finder)
 
 References:
 
-https://jena.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-124324
+https://stormcrawler.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-82444
 
