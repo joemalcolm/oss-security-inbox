@@ -1,39 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/33
-Message-ID: <518c2c40-8615-eb92-c9e0-f5dc877bad52@apache.org>
-Date: Mon, 23 Nov 2026 22:05:05 +0000
-From: Andy Seaborne <andy@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/27
+Message-ID: <8c3af87a-69e4-86c0-bd49-de9df13712d5@apache.org>
+Date: Mon, 23 Nov 2026 21:28:05 +0000
+From: Ian Maxon <imaxon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-86156: Apache Jena Fuseki: Web requests using SPARQL Update can escape file restrictions for graph data 
+Subject: CVE-2026-96353: Apache Texera: Missing authorization in the project API 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Jena Fuseki through 6.2.0
+- Apache Texera 1.1.0-incubating before 1.3.0-incubating
 
 Description:
 
-Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal') can allow  SPARQL Update to access data from local server.
+Missing Authorization vulnerability in the project REST API of Apache Texera (incubating).
 
 
 
-This issue affects Apache Jena Fuseki through 6.2.0.
+The project API did not check that the caller owns, or has been granted access to, the project being accessed. Any authenticated user with an approved account (the REGULAR or ADMIN role; new accounts need administrator approval by default) could view, modify or delete other users' projects, change which workflows those projects contain, and see the e-mail addresses of a project's owner and collaborators. The project feature is hidden in the web UI by default, but the API was reachable regardless of that setting.
 
 
 
-Users are recommended to upgrade to version 6.3.0, which fixes the issue.
+This issue affects Apache Texera: from 1.1.0-incubating before 1.3.0-incubating.
+
+
+
+Users are recommended to upgrade to version 1.3.0-incubating, which fixes the issue by removing the deprecated project feature and its data.
+
+
+
+If you cannot upgrade immediately, configure the reverse proxy in front of Texera to reject every request whose path starts with /api/project, /api/public/project or /api/access/project, and every request whose path contains ';', which the Texera server ignores when routing. Respond with 403 or 404, not 401: from 1.2.0-incubating the web UI treats a 401 as an expired session, and the workflow pages request the project list when they load. Unless an administrator has enabled the project feature, this does not affect other functionality; those project-list requests are simply rejected. Make sure the Texera server is reachable only through that proxy.
+
+
+
+Blocking and upgrading do not undo access obtained earlier. Before upgrading, review the project, project_user_access and workflow_of_project tables, which remain empty unless someone has used the feature, and remove rows you do not expect; the upgrade deletes these tables. Do not copy project grants into workflow_user_access without checking each one.
 
 Credit:
 
-Kyle /EY of China (finder)
-MopMonk-AI (finder)
-Frédéric Pidancier (GAEL Systems) (finder)
-Huy Bùi (finder)
+n0mi1k (finder)
 
 References:
 
-https://jena.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-86156
+https://texera.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-96353
 
