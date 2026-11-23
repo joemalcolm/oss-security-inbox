@@ -1,36 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/25
-Message-ID: <96bf9321-2c83-bdcd-1288-e8ca4c5cfb94@apache.org>
-Date: Mon, 23 Nov 2026 21:26:14 +0000
-From: Ian Maxon <imaxon@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/18
+Message-ID: <d452a84c-0ff7-49b8-b3cd-592a5403b161@oracle.com>
+Date: Mon, 23 Nov 2026 10:09:24 -0800
+From: Alan Coopersmith <alan.coopersmith@...cle.com>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-96296: Apache Texera: The DELETE /api/quota/deleteCollection/{eid} endpoint does not require authentication, allowing an unauthenticated user to delete workflow execution records. 
+Subject: CPython [CVE-2026-107784] tarfile extraction filters accept drive-relative paths on Windows
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
-
-Affected versions:
-
-- Apache Texera 1.1.0-incubating before 1.3.0-incubating
-
-Description:
-
-An API which can allow a user to delete any workflow execution results is missing authentication. This means that any workflow result could be deleted by someone able to reach the Texera instance.
 
 
 
-This issue affects Apache Texera: from 1.1.0-incubating before 1.3.0-incubating.
+-------- Forwarded Message --------
+Subject: 	[Security-announce][CVE-2026-107784] tarfile extraction filters accept 
+drive-relative paths on Windows
+Date: 	Mon, 23 Nov 2026 12:40:09 +0000
+From: 	Stan Ulbrych via Security-announce <security-announce@...hon.org>
+Reply-To: 	security-sig@...hon.org
+To: 	security-announce@...hon.org
+CC: 	Stan Ulbrych <stanulbrych@...il.com>
 
+There is a MEDIUM severity vulnerability affecting CPython.
 
+On Windows, the tarfile "tar" and "data" extraction filters did not reject
+member names or link targets that have a drive but no root, such as "C:foo".
+When extracting to a relative destination, such a member was written to the
+current working directory of that drive instead of the destination, and a
+symbolic link with such a target pointed outside the destination.
+The filters now refuse these member names and link targets with
+AbsolutePathError and AbsoluteLinkError.
 
-Users are recommended to upgrade to version 1.3.0-incubating, which fixes the issue.
+Please see the linked CVE ID for the latest information on affected versions:
 
-Credit:
+* https://www.cve.org/CVERecord?id=CVE-2026-107784
+* https://github.com/python/cpython/pull/161334
 
-n0mi1k (finder)
-
-References:
-
-https://texera.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-96296
+_______________________________________________
+Security-announce mailing list -- security-announce@...hon.org
+https://mail.python.org/mailman3//lists/security-announce.python.org
 
