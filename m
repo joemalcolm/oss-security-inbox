@@ -1,30 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/14
-Message-ID: <87wlq33osa.fsf@jacob.g10code.de>
-Date: Mon, 23 Nov 2026 10:00:53 +0100
-From: Werner Koch <wk@...pg.org>
-To: Aaron Rainbolt <arraybolt3@...il.com>
-Cc: oss-security@...ts.openwall.com,  Sam James <sam@...too.org>,  Jiri Kucera <sanczes@...il.com>
-Subject: Re: Fwd: Re: [Announce] GnuPG Security Advisory for GPGME (T8557,CVE-2026-129975)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/11
+Message-ID: <d0c57edb-cc82-c726-632d-cb55026a7645@apache.org>
+Date: Mon, 23 Nov 2026 07:44:55 +0000
+From: Haonan Hou <haonan@...che.org>
+To: oss-security@...ts.openwall.com
+Subject: CVE-2026-60077: Apache IoTDB: Authenticated REST clients can bypass row-limit cap to triggerheap-exhaustion DoS 
 Content-Type: text/plain; charset=utf-8
 
-On Sun, 22 Nov 2026 14:50, Aaron Rainbolt said:
+Severity: moderate 
 
-> raw analysis results with others), but fixing issues whenever you want
-> without explicit consent is fine, and I didn't have to file an NDA to
-> use it. See https://scan.coverity.com/policy.
+Affected versions:
 
-That might be the case today but many years ago (~20 years) things were
-different and this is why I was glad that RedHat offered us to forward
-their findings
+- Apache IoTDB 0.13.0 before 2.0.12
+
+Description:
+
+Allocation of resources without limits or throttling vulnerability in Apache IoTDB. Authenticated REST clients can bypass row-limit cap to triggerheap-exhaustion DoS.
 
 
-Salam-Shalom,
 
-   Werner
+This issue affects Apache IoTDB: from 0.13.0 before 2.0.12.
 
--- 
-The pioneers of a warless world are the youth that
-refuse military service.             - A. Einstein
 
-Download attachment "openpgp-digital-signature.asc" of type "application/pgp-signature" (285 bytes)
+
+Users are recommended to upgrade to version 2.0.12, which fixes the issue.
+
+Credit:
+
+bugbunny.ai (finder)
+
+References:
+
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-60077
+
