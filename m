@@ -1,40 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/5
-Message-ID: <f50a5fe8-389a-3548-187f-ea74e83dffc6@apache.org>
-Date: Sun, 22 Nov 2026 21:09:36 +0000
-From: Steve Hay <stevehay@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/12
+Message-ID: <eab28fed-d691-5313-87bf-3daeb7dbf322@apache.org>
+Date: Mon, 23 Nov 2026 07:24:47 +0000
+From: Haonan Hou <haonan@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-116043: Apache Perl: NULL-pointer dereference (worker crash) in per-request $/ save 
+Subject: CVE-2026-60078: Apache IoTDB: Authenticated Grafana clients can bypass row-limit cap to trigger heap-exhaustion DoS 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Perl 1.99_01 through 2.0.13
+- Apache IoTDB 0.13.0 through 2.0.11
 
 Description:
 
-NULL pointer dereference, Out-of-bounds read vulnerability in Apache Perl.
+Allocation of resources without limits or throttling vulnerability in Apache IoTDB. Authenticated Grafana clients can bypass row-limit cap to trigger heap-exhaustion DoS.
 
 
 
-This issue affects Apache Perl: from 1.99_01 through 2.0.13.
+This issue affects Apache IoTDB: from 0.13.0 through 2.0.11.
 
 
 
-Also fixes an out-of-bounds read in per-request $/ save/restore for which CVE-2026-116021 (now rejected) had previously been assigned.
-
-
-
-Users are recommended to upgrade to version 2.0.14, which fixes the issue.
+Users are recommended to upgrade to version 2.0.12, which fixes the issue.
 
 Credit:
 
-Satoru Yano (finder)
+Ho1aAs (GitHub: @HolaAsuka) (finder)
 
 References:
 
-https://perl.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-116043
+https://iotdb.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-60078
 
