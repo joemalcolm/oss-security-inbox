@@ -1,70 +1,48 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/24
-Message-ID: <cd834ba8-b989-2a8c-4f0c-4c9ed7d6f3c2@apache.org>
-Date: Mon, 23 Nov 2026 18:09:53 +0000
-From: Richard Zowalla <rzo1@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/28
+Message-ID: <c1135041-c1c6-5750-764f-b208c340e99c@apache.org>
+Date: Mon, 23 Nov 2026 21:28:34 +0000
+From: Ian Maxon <imaxon@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-82446: Apache StormCrawler: Server-Side Request Forgery and Cross-Origin Credential Disclosure via robots.txt Redirect Handling 
+Subject: CVE-2026-96354: Apache Texera: Missing authorization when adding public projects 
 Content-Type: text/plain; charset=utf-8
 
 Severity: moderate 
 
 Affected versions:
 
-- Apache StormCrawler (org.apache.stormcrawler:stormcrawler-core) 3.0.0 before 4.0.0
+- Apache Texera 1.1.0-incubating before 1.3.0-incubating
 
 Description:
 
-Description
+Missing Authorization vulnerability in the public project REST API of Apache Texera (incubating).
 
-When StormCrawler fetches a host's `/robots.txt` and receives a redirect, `HttpRobotRulesParser`
-resolves the `Location` header and re-fetches the target for up to five hops. The loop checks neither
-the scheme, the host nor the port of the resolved target, and it is not governed by
-`http.allow.redirects`, which only affects the page fetch. A crawled site can therefore point the
-robots.txt fetch at any address reachable from the fetcher worker, including loopback interfaces,
-private ranges and cloud metadata endpoints. Every crawled URL triggers a robots.txt fetch on a cache
-miss, so no unusual configuration is required to reach the loop.
 
-The fetched body is only parsed as robots rules and is not returned to the caller, so the read itself
-is blind. The more direct impact is on credentials: the okhttp protocol applies its configured request
-headers, including the `Authorization` header built from `http.basicauth.user` and
-`http.basicauth.password` and anything in `http.custom.headers`, to every request it makes. Because
-StormCrawler follows the redirect itself and issues a new request, okhttp's own removal of the
-`Authorization` header across a host change does not apply, and the operator's crawl credentials are
-delivered to the host the redirect names.
 
-The connection-time IP filter, `http.filter.ipaddress.include` and `http.filter.ipaddress.exclude`, is
-installed as an okhttp network interceptor on the same client and does apply to these hops when it is
-configured. It ships with no rules, which is why the path is reachable in a default configuration. URL
-filtering never applies, because the robots.txt fetch does not pass through the outlink filter chain.
+The public project API did not check that a project had been made public before granting the caller read access to it. Any authenticated user with an approved account (the REGULAR or ADMIN role; new accounts need administrator approval by default) could give themselves lasting read access to other users' private projects and to the private workflows in them, including their version and execution history. Only deployments in which users have created projects are affected; the project feature is hidden in the web UI by default.
 
-Mitigation
 
-Upgrade to 4.0.0, where a robots.txt redirect is followed only when the target uses http or https and
-shares scheme, host and port with the URL it was reached from. Deployments that legitimately serve
-robots.txt through a cross-host redirect can restore the previous behaviour with
-`http.robots.redirect.crosshost.allow`.
 
-Users who cannot upgrade immediately should set `http.filter.ipaddress.exclude` to cover loopback,
-private, link-local and CGNAT ranges, which is enforced after DNS resolution and therefore also on
-redirect hops. Operators who configure `http.basicauth.*` or `http.custom.headers` for a crawl should
-assume those credentials may have been sent to third-party hosts and rotate them, and should scope
-credentials by running a separate topology per origin.
+This issue affects Apache Texera: from 1.1.0-incubating before 1.3.0-incubating.
 
-Credit
 
-Independently reported to the Apache StormCrawler PMC by n0mi1k, with a proof of concept.
 
-Also found by the ASF -- using Claude agents to study the security of open-source projects, validated
-and reported by Apache StormCrawler.
+Users are recommended to upgrade to version 1.3.0-incubating, which fixes the issue by removing the deprecated project feature and its data.
+
+
+
+If you cannot upgrade immediately, configure the reverse proxy in front of Texera to reject every request whose path starts with /api/project, /api/public/project or /api/access/project, and every request whose path contains ';', which the Texera server ignores when routing. Respond with 403 or 404, not 401: from 1.2.0-incubating the web UI treats a 401 as an expired session, and the workflow pages request the project list when they load. Unless an administrator has enabled the project feature, this does not affect other functionality; those project-list requests are simply rejected. Make sure the Texera server is reachable only through that proxy.
+
+
+
+Blocking and upgrading do not undo access obtained earlier. Before upgrading, review the project_user_access table, which remains empty unless someone has used the feature: treat any READ grant on a project that is not listed in public_project, and that the project's owner did not give, as suspect. The upgrade deletes this table. Removing a grant does not remove copies the user may already have made of the workflows.
 
 Credit:
 
 n0mi1k (finder)
-The ASF using Claude Agents (finder)
 
 References:
 
-https://stormcrawler.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-82446
+https://texera.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-96354
 
