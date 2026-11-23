@@ -1,41 +1,40 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/38
-Message-ID: <CAO85k6X4vMvFOwZ+EV28GvYCtuOx8HjVzQBM=yQ8VOfNJ-QhHA@mail.gmail.com>
-Date: Mon, 23 Nov 2026 14:31:20 -0800
-From: xiangfu@...che.org
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/23/20
+Message-ID: <65025e31-7fa0-0d8e-d14f-783bd77425fb@apache.org>
+Date: Mon, 23 Nov 2026 18:33:33 +0000
+From: Ali Risheh <aicam@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-134858: Apache Pinot: Controller local file disclosure during URI ingestion
+Subject: CVE-2026-112788: Apache Texera: Missing authentication on the Python virtual environment endpoints in non-Kubernetes deployments 
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate
+Severity: low 
 
 Affected versions:
 
-- Apache Pinot 0.7.1 before 1.6.0
+- Apache Texera 1.1.0-incubating before 1.3.0-incubating
 
 Description:
 
-In Apache Pinot 0.7.1 through 1.5.1, a caller who can submit URI
-ingestion jobs can select local files readable by the controller
-process. If the file can be ingested using the destination table’s
-schema and input format, users with query access to that table can
-read its contents.
+Missing Authentication for Critical Function in Apache Texera (incubating).
 
-Upgrade to Apache Pinot 1.6.0 and keep
-controller.ingestFromURI.allowLocalFileSystem at its default value of
-false on every controller. Until you can upgrade, block the URI
-ingestion endpoint if it is unused or restrict it to trusted
-operators.
 
-This issue is being tracked as ZDI-CAN-28625.
+
+The Python virtual environment (PVE) management endpoints of a computing unit are not authenticated by the application itself. In the local JVM and single-node Docker Compose deployments, which place no authenticating gateway in front of the services, these endpoints are reachable without credentials. The Kubernetes deployment gates them at the gateway, so only the Kubernetes deployment provides the full security model described in SECURITY.md.
+
+
+
+This issue affects Apache Texera (incubating): from 1.1.0 through 1.2.0.
+
+
+
+Users are recommended to use the Kubernetes deployment, which enforces the full security model, and to upgrade to 1.3.0-incubating, which documents that the local JVM and single-node Docker Compose deployments do not provide the full security model and should only be used by trusted users.
 
 Credit:
 
-pl4tyz working with TrendAI Zero Day Initiative (reporter)
+Aleksandar Djordjevic (finder)
 
 References:
 
-https://github.com/apache/pinot/pull/18660
-https://github.com/apache/pinot/pull/19238
-https://pinot.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-134858
+https://texera.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-112788
+
