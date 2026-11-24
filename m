@@ -1,38 +1,45 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/11
-Message-ID: <e79bbf5c-91ef-d049-fa7f-b1d66e1555c5@apache.org>
-Date: Tue, 24 Nov 2026 10:02:29 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/6
+Message-ID: <64ea43d3-c800-4069-89a0-4190cb7d8595@pipping.org>
+Date: Tue, 24 Nov 2026 11:34:05 +0100
+From: Sebastian Pipping <sebastian@...ping.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-124615: Apache Karaf: feature:requirement-add / feature:requirement-remove command ACL bypass allows a viewer to install and run arbitrary code 
+Cc: Sam James <sam@...too.org>
+Subject: Re: libexpat 2.11.0 fixes three vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Hello Sam,
 
-Affected versions:
 
-- Apache Karaf through 4.4.12
+On 11/24/26 00:35, Sam James wrote:
+> Why Clang >= 20? Clang has supported this flag since forever.
 
-Description:
+at
+https://releases.llvm.org/20.1.0/tools/clang/docs/ReleaseNotes.html
+it reads:
 
-The shell command ACL for the feature scope (etc/org.apache.karaf.command.acl.feature.cfg) restricts feature:install, feature:uninstall, feature:start and feature:stop to the admin role, but had no entry for feature:requirement-add or feature:requirement-remove.
+   Clang now emits distinct type-based alias analysis tags for
+   incompatible pointers by default, enabling more powerful alias
+   analysis when accessing pointer types. This change may silently change
+   code behavior for code containing strict-aliasing violations.
 
-The provisioning resolver turns a requirement into the same install/start (or uninstall) action as feature:install / feature:uninstall: a bundle: requirement causes an arbitrary bundle to be downloaded and started, and a feature: requirement installs that feature. Because the two commands had no ACL, a user authenticated with only the viewer (and ssh) role could invoke them and cause Apache Karaf to download, install and start an attacker-chosen bundle, which then runs with the full authority of the Karaf process — thereby bypassing the admin-only authorization enforced on feature:install and bundle:install.
 
-This is the same class of issue as the feature:repo-add -i / feature:repo-remove -u bypass, on sibling commands not covered by that earlier fix.Mitigation:Upgrade to Apache Karaf 4.4.12 or 4.5.0 (or later), which restrict feature:requirement-add and feature:requirement-remove to the admin role.
+> Note that -Wstrict-aliasing=1 is the most aggressive level [0].
 
-As an interim workaround on affected versions, add the following two lines to etc/org.apache.karaf.command.acl.feature.cfg; the change is picked up at runtime without a restart:
+It also says "least accurate".
 
-requirement-add = admin
 
-requirement-remove = admin
+> Anyway,
+> in terms of detection, Clang has TypeSanitizer (-fsanitize=type) but it
+> has some issues still. Someone has proposed it for GCC now too.
+> 
+> [0] https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstrict-aliasing
 
-Credit:
+I'm in the process of adding Clang's TypeSanitizer to CI.
 
-a01066622184@...il.com (reporter)
+Best
 
-References:
 
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-124615
+
+Sebastian
 
