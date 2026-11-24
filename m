@@ -1,38 +1,72 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/10
-Message-ID: <faccea92-9894-b0f7-8369-8b79b3f42029@apache.org>
-Date: Tue, 24 Nov 2026 09:48:03 +0000
-From: Jürg Billeter <juergbi@...che.org>
-To: oss-security@...ts.openwall.com
-Subject: CVE-2026-111600: Apache BuildStream: symlink following via plugin API 
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/7
+Message-ID: <87qzga8o26.fsf@gentoo.org>
+Date: Tue, 24 Nov 2026 11:29:53 +0000
+From: Sam James <sam@...too.org>
+To: Sebastian Pipping <sebastian@...ping.org>
+Cc: oss-security@...ts.openwall.com
+Subject: Re: libexpat 2.11.0 fixes three vulnerabilities
 Content-Type: text/plain; charset=utf-8
 
-Severity: moderate 
+Sebastian Pipping <sebastian@...ping.org> writes:
 
-Affected versions:
+> Hello Sam,
+>
+>
+> On 11/24/26 00:35, Sam James wrote:
+>> Why Clang >= 20? Clang has supported this flag since forever.
+>
+> at
+> https://releases.llvm.org/20.1.0/tools/clang/docs/ReleaseNotes.html
+> it reads:
+>
+>   Clang now emits distinct type-based alias analysis tags for
+>   incompatible pointers by default, enabling more powerful alias
+>   analysis when accessing pointer types. This change may silently change
+>   code behavior for code containing strict-aliasing violations.
 
-- Apache BuildStream through 2.8.1
+The next part of that same paragraph says:
+    The new default behavior can be disabled using -fno-pointer-tbaa.
 
-Description:
+Clang has performed optimisations of this type for a long time, it just
+does so more aggressively now.
 
-UNIX symbolic link (symlink) following vulnerability in Apache BuildStream allows source plugins to inadvertently read or write files on the host, with the privileges of the user running BuildStream, via symlinks from malicious or compromised source archives or respositories, as part of source fetching.
+If you want to gate the behaviour on >= 20, you should use
+-fno-pointer-tbaa.
 
-The impact of this issue is mitigated by:
+But if you're not confident the codebase is TBAA-safe, you should just
+use -fno-strict-aliasing unconditionally where the compiler supports it.
 
-  *  BuildStream projects should only use trusted sources in their elements as otherwise the build output can also not be trusted
-  *  None of the source plugins in the buildstream, buildstream-plugins or buildstream-plugins-community repositories use the vulnerable `open_file` method
+>
+>
+>> Note that -Wstrict-aliasing=1 is the most aggressive level [0].
+>
+> It also says "least accurate".
+
+Yes, but the way you mentioned it made me think "it's [even]
+-Wstrict-alisaing=3" clean, as if it's the toughest level. Of course you
+get false positives if you crank up the sensitivity.
+
+>
+>
+>> Anyway,
+>> in terms of detection, Clang has TypeSanitizer (-fsanitize=type) but it
+>> has some issues still. Someone has proposed it for GCC now too.
+>> [0]
+>> https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstrict-aliasing
+>
+> I'm in the process of adding Clang's TypeSanitizer to CI.
+>
+
+Excellent.
 
 
-This issue affects Apache BuildStream: through 2.8.1.
+> Best
+>
+>
+>
+> Sebastian
 
-Users are recommended to upgrade to version 2.8.2, which fixes the issue.
+sam
 
-Credit:
-
-CyberLeo (reporter)
-
-References:
-
-https://buildstream.apache.org
-https://www.cve.org/CVERecord?id=CVE-2026-111600
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
