@@ -1,69 +1,73 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/16
-Message-ID: <20261124172942.GA10740@openwall.com>
-Date: Tue, 24 Nov 2026 18:29:43 +0100
-From: Solar Designer <solar@...nwall.com>
-To: Alejandro Colomar <alx+shadow@...nel.org>
-Cc: oss-security@...ts.openwall.com, serge@...lyn.com, ipedrosa@...hat.com, Dickson Wu <dickson.wu@...tik.com>
-Subject: Re: Re: [PATCH v7 0/2] shadow: Security fix for newgidmap(1)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/13
+Message-ID: <CADk+mPD=o5gW0mtK8fK-9M69UtG83r+fuVDSf_7v84-X1p0SMg@mail.gmail.com>
+Date: Tue, 24 Nov 2026 08:37:15 -0800
+From: rgerhards@...scon.com
+To: oss-security@...ts.openwall.com
+Subject: rsyslog: omdtls name/fingerprint modes do not verify DTLS server identity (CVE-2026-132145)
 Content-Type: text/plain; charset=utf-8
 
-On Sun, Nov 22, 2026 at 10:22:56PM +0100, Alejandro Colomar wrote:
-> I've released publicly shadow-4.20.4 a moment ago.  Below are the
-> details about the security issues (from the previous email, to
-> linux-distros@).
-> 
-> The release is available at
-> <https://github.com/shadow-maint/shadow/releases/tag/4.20.4>.
+Hello,
 
-Thanks!  Looks like this is CVE-2026-135901:
+rsyslog has published GHSA-85fj-w7cw-38fv (CVE-2026-132145) for its
+optional omdtls output module. It was pre-notified to the distros list
+on 2026-11-22.
 
-https://bugzilla.redhat.com/show_bug.cgi?id=2583156
+Advisory: https://github.com/rsyslog/rsyslog/security/advisories/GHSA-85fj-w7cw-38fv
+Fix: https://github.com/rsyslog/rsyslog/pull/8065
 
-Quoting from there:
+Summary
 
-> CVE-2026-135901 shadow-utils: shadow-utils: newgidmap and newuidmap
-> improperly validate file descriptor location, allowing local file
-> corruption via bind mount
-> 
-> OSIDB Bzimport 2026-11-24 11:34:55 UTC
-> 
-> The newgidmap and newuidmap helper utilities accept a directory file
-> descriptor identifying a target process's /proc/<pid>/ directory, and
-> validate that this descriptor refers to the procfs filesystem by
-> comparing device numbers (st_dev/st_rdev) against a known procfs path.
-> After this check, the utilities open a file (for example "setgroups") by
-> name relative to that directory descriptor and write privileged uid/gid
-> mapping data to it.
-> 
-> An unprivileged local user can defeat this validation using Linux user
-> and mount namespaces: by bind-mounting an arbitrary, attacker-chosen
-> file over the expected child path inside a procfs directory they hold a
-> descriptor to, the device-number check (which only inspects the
-> directory itself) still passes, while the subsequent open-by-name
-> resolves through the bind mount to the attacker's chosen file instead of
-> the intended procfs file. This redirects the helper's privileged write,
-> resulting in the first five bytes of the attacker-chosen file being
-> overwritten with the fixed content "deny\n".
-> 
-> This was reported publicly, with a working proof of concept
-> demonstrating the primitive against a SUID-root build of newgidmap, and
-> fixed upstream in shadow 4.20.4 by using openat2(2) with RESOLVE_NO_XDEV
-> for path resolution and by removing the affected "fd:N" argument form
-> entirely.
+omdtls offers tls.authmode="name" and tls.authmode="fingerprint" for
+DTLS receiver authentication. In affected versions both modes validate
+the receiver certificate chain but do not bind the certificate to the
+expected receiver name or fingerprint. An attacker who can redirect
+outbound DTLS traffic to a receiver with a different-identity
+certificate accepted by the configured CA trust set may receive the
+forwarded logs.
 
-I guess "reported publicly" refers to:
+Preconditions
 
-> > > Report, affected lines, a suggested fix (fstat the opened setgroups
-> > > FD, or openat2 with RESOLVE_NO_XDEV) and the PoC are here:
-> > > 
-> > > <https://gist.github.com/DicksonWu654/cdad661068d6a50da475aac57a9f07f2>
-> > > 
-> > > Happy to test a fix or answer questions whenever it's useful.
-> > > 
-> > > Best,
-> > > Dickson
+An operator must explicitly configure omdtls with one of these
+authentication modes, and the attacker needs traffic redirection or
+on-path control plus a certificate accepted by the configured or
+inherited CA trust set. An untrusted certificate is rejected. This is
+not a default-installation issue. tls.authmode="certvalid" is
+chain-only by design and outside this finding.
 
-which didn't appear to draw any attention before the release.
+Affected versions
 
-Alexander
+The defect entered with omdtls. The first confirmed affected upstream
+stable release is v8.2402.0; releases through v8.2610.0 are affected.
+Fixed in: 2026-11-24 daily stable.
+
+Fix
+
+The fix keeps certificate-chain validation and adds receiver-identity
+enforcement before logs are sent. In name mode the certificate is
+compared with the configured target DNS name or IP address, or with an
+explicit tls.permittedpeer value. Fingerprint mode requires a complete
+SHA-256 certificate pin in tls.permittedpeer. A missing or malformed
+pin fails at configuration load, and an identity or fingerprint
+mismatch rejects the connection. Operators whose network target
+differs from the certificate identity need to set tls.permittedpeer
+explicitly after updating.
+
+Workaround
+
+Until a fixed build is deployed, restricting the CA trust set to the
+intended receiver reduces the opportunity to present another trusted
+certificate, but does not replace identity verification.
+
+Severity
+
+Medium, CVSS 3.1 5.9 (CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N).
+
+Credits
+
+We thank Arthur Chan, David Korczynski and Adam Korcz (Ada Logics) for
+reporting and helping analyze this issue.
+
+Regards,
+Rainer Gerhards
+rsyslog project
