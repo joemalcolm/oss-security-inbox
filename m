@@ -1,29 +1,103 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/17
-Message-ID: <CADk+mPDF2+AXo0Asu9qguvg9Z4zNQuqagKQjx2hDBO7JPToJvw@mail.gmail.com>
-Date: Tue, 24 Nov 2026 09:32:38 -0800
-From: rgerhards@...scon.com
-To: oss-security@...ts.openwall.com
-Subject: Re: rsyslog: omdtls name/fingerprint modes do not verify DTLS server identity (CVE-2026-132145)
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/19
+Message-ID: <awYEyfAObP6d5HK9@devuan>
+Date: Tue, 24 Nov 2026 22:47:23 +0100
+From: Alejandro Colomar <alx+shadow@...nel.org>
+To: Solar Designer <solar@...nwall.com>
+Cc: oss-security@...ts.openwall.com, serge@...lyn.com, ipedrosa@...hat.com,  Dickson Wu <dickson.wu@...tik.com>
+Subject: Re: Re: [PATCH v7 0/2] shadow: Security fix for newgidmap(1)
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+Hi Alexander,
 
-Follow-up to the rsyslog omdtls announcement (GHSA-85fj-w7cw-38fv,
-CVE-2026-132145): the fix has been merged.
+> Date: 2026-11-24 18:29:43+0100
+> From: Solar Designer <solar@...nwall.com>
+>
+> On Sun, Nov 22, 2026 at 10:22:56PM +0100, Alejandro Colomar wrote:
+> > I've released publicly shadow-4.20.4 a moment ago.  Below are the
+> > details about the security issues (from the previous email, to
+> > linux-distros@).
+> > 
+> > The release is available at
+> > <https://github.com/shadow-maint/shadow/releases/tag/4.20.4>.
+> 
+> Thanks!  Looks like this is CVE-2026-135901:
+> 
+> https://bugzilla.redhat.com/show_bug.cgi?id=2583156
 
-Commit: https://github.com/rsyslog/rsyslog/commit/be4ff24ea1c6f362bca0e45366a205aeaba88eef
-Pull request: https://github.com/rsyslog/rsyslog/pull/8065
-Advisory: https://github.com/rsyslog/rsyslog/security/advisories/GHSA-85fj-w7cw-38fv
+Thanks!
 
-The fix is contained in the 2026-11-24 daily stable build and will be
-part of the next scheduled stable release. The advisory now lists
-"2026-11-24 daily stable" as the patched version.
+> 
+> Quoting from there:
+> 
+> > CVE-2026-135901 shadow-utils: shadow-utils: newgidmap and newuidmap
+> > improperly validate file descriptor location, allowing local file
+> > corruption via bind mount
+> > 
+> > OSIDB Bzimport 2026-11-24 11:34:55 UTC
+> > 
+> > The newgidmap and newuidmap helper utilities accept a directory file
+> > descriptor identifying a target process's /proc/<pid>/ directory, and
+> > validate that this descriptor refers to the procfs filesystem by
+> > comparing device numbers (st_dev/st_rdev) against a known procfs path.
+> > After this check, the utilities open a file (for example "setgroups") by
+> > name relative to that directory descriptor and write privileged uid/gid
+> > mapping data to it.
+> > 
+> > An unprivileged local user can defeat this validation using Linux user
+> > and mount namespaces: by bind-mounting an arbitrary, attacker-chosen
+> > file over the expected child path inside a procfs directory they hold a
+> > descriptor to, the device-number check (which only inspects the
+> > directory itself) still passes, while the subsequent open-by-name
+> > resolves through the bind mount to the attacker's chosen file instead of
+> > the intended procfs file. This redirects the helper's privileged write,
+> > resulting in the first five bytes of the attacker-chosen file being
+> > overwritten with the fixed content "deny\n".
+> > 
+> > This was reported publicly, with a working proof of concept
+> > demonstrating the primitive against a SUID-root build of newgidmap, and
+> > fixed upstream in shadow 4.20.4 by using openat2(2) with RESOLVE_NO_XDEV
+> > for path resolution and by removing the affected "fd:N" argument form
+> > entirely.
+> 
+> I guess "reported publicly" refers to:
 
-After updating, operators whose network target differs from the
-certificate identity need to set tls.permittedpeer explicitly;
-fingerprint mode requires a complete SHA-256 pin in tls.permittedpeer.
+I guess the same.
 
-Regards,
-Rainer Gerhards
-rsyslog project
+> 
+> > > > Report, affected lines, a suggested fix (fstat the opened setgroups
+> > > > FD, or openat2 with RESOLVE_NO_XDEV) and the PoC are here:
+> > > > 
+> > > > <https://gist.github.com/DicksonWu654/cdad661068d6a50da475aac57a9f07f2>
+> > > > 
+> > > > Happy to test a fix or answer questions whenever it's useful.
+> > > > 
+> > > > Best,
+> > > > Dickson
+> 
+> which didn't appear to draw any attention before the release.
+
+Yup; I was a bit confused by the report coming encrypted but having
+a link to a public github page with the report.  We kept it embargoed
+because
+
+1)  The issue wasn't too critical, so even if some people might have
+    found that, I don't think they could do much harm.
+
+2)  There were some chances that nobody had found that link.  Hopefully,
+    the reporter didn't share that link with other people.
+
+3)  If we went public before having a fix, we'd have given that link
+    more publicity.
+
+
+Have a lovely night!
+Alex
+
+> 
+> Alexander
+
+-- 
+<https://www.alejandro-colomar.es>
+
+Download attachment "signature.asc" of type "application/pgp-signature" (834 bytes)
