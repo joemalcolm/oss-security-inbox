@@ -1,38 +1,38 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/5
-Message-ID: <e6d73d03-e325-f1c9-2568-942a1b9a1b80@apache.org>
-Date: Tue, 24 Nov 2026 08:23:05 +0000
-From: Jean-Baptiste Onofré <jbonofre@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/10
+Message-ID: <faccea92-9894-b0f7-8369-8b79b3f42029@apache.org>
+Date: Tue, 24 Nov 2026 09:48:03 +0000
+From: Jürg Billeter <juergbi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-129959: Apache Karaf: SFTP SCP file transfer on the SSH port bypasses the command ACL entirely 
+Subject: CVE-2026-111600: Apache BuildStream: symlink following via plugin API 
 Content-Type: text/plain; charset=utf-8
 
-Severity: important 
+Severity: moderate 
 
 Affected versions:
 
-- Apache Karaf through 4.4.12
+- Apache BuildStream through 2.8.1
 
 Description:
 
-When sftpEnabled=true (the default configuration in etc/org.apache.karaf.shell.cfg), the SSH server exposes the karaf.base directory tree through the MINA SSHD SFTP subsystem and SCP command factory without verifying the authenticated user's roles beyond the initial sshRole login check. Consequently, an authenticated user with only low-privileged roles (such as viewer and ssh) can read sensitive configuration and key files (including etc/users.properties and etc/host.key) or write arbitrary bundles/configurations into monitored directories (such as deploy/ or etc/), leading to privilege escalation and arbitrary code execution.
+UNIX symbolic link (symlink) following vulnerability in Apache BuildStream allows source plugins to inadvertently read or write files on the host, with the privileges of the user running BuildStream, via symlinks from malicious or compromised source archives or respositories, as part of source fetching.
+
+The impact of this issue is mitigated by:
+
+  *  BuildStream projects should only use trusted sources in their elements as otherwise the build output can also not be trusted
+  *  None of the source plugins in the buildstream, buildstream-plugins or buildstream-plugins-community repositories use the vulnerable `open_file` method
 
 
-Apache Karaf 4.4.13 and 4.5.0 introduce the sftpRole configuration property in org.apache.karaf.shell (defaulting to admin) and enforce role-based access control on SFTP subsystem creation, SCP command execution, and virtual filesystem access.
+This issue affects Apache BuildStream: through 2.8.1.
 
-Mitigation / WorkaroundUsers are recommended to upgrade to Apache Karaf 4.4.13 or 4.5.0.
-
-
-
-
-On earlier versions where SFTP/SCP access is not required, set sftpEnabled=false in etc/org.apache.karaf.shell.cfg and restart the SSH server bundle (or Karaf instance).
+Users are recommended to upgrade to version 2.8.2, which fixes the issue.
 
 Credit:
 
-"wict0rious ." <wict0rious@...look.com> (reporter)
+CyberLeo (reporter)
 
 References:
 
-https://karaf.apache.org/
-https://www.cve.org/CVERecord?id=CVE-2026-129959
+https://buildstream.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-111600
 
