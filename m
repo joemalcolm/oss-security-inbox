@@ -1,47 +1,36 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/2
-Message-ID: <87h5h79l50.fsf@gentoo.org>
-Date: Mon, 23 Nov 2026 23:35:23 +0000
-From: Sam James <sam@...too.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/24/9
+Message-ID: <d00523bf-30e8-5487-d3d8-644a5a50d4ed@apache.org>
+Date: Tue, 24 Nov 2026 09:47:13 +0000
+From: Jürg Billeter <juergbi@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: libexpat 2.11.0 fixes three vulnerabilities
+Subject: CVE-2026-104813: Apache BuildStream: path traversal via unvalidated CAS Directory 
 Content-Type: text/plain; charset=utf-8
 
-Sebastian Pipping <sebastian@...ping.org> writes:
+Severity: moderate 
 
-> [...]
->   #1495  Restore and document `-fno-strict-aliasing` for security
->            with both GCC and Clang >=20.
+Affected versions:
 
-Why Clang >= 20? Clang has supported this flag since forever.
+- Apache BuildStream through 2.8.1
 
->            libexpat continues to be `-Wstrict-aliasing=3` clean and
->            to reject violations via CI but there are multiple known
->            strict aliasing violations within libexpat that despite
->            `-Wstrict-aliasing=3` are not detected by GCC and which
+Description:
 
-Note that -Wstrict-aliasing=1 is the most aggressive level [0]. Anyway,
-in terms of detection, Clang has TypeSanitizer (-fsanitize=type) but it
-has some issues still. Someone has proposed it for GCC now too.
+Improper limitation of a pathname to a restricted directory ('path traversal') vulnerability in Apache BuildStream allows malicious or compromised artifact or execution servers to write files on the host, with the privileges of the user running BuildStream, as part of `bst artifact checkout`.
 
-[0] https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wstrict-aliasing
+The impact of this issue is mitigated by:
 
->            are hard to impossible to resolve without a mess. These and
+  *  BuildStream projects should only use trusted servers for remote cache and remote execution as otherwise the build output can also not be trusted
 
-Why are they so hard to resolve here exactly? In general, just memcpy
-and move on.
 
->            potentially other cases run the risk of miscompilation(!)
->            with `-O2/-O3/Os` without explicit `-fno-strict-aliasing`.
->            Hence `-fno-strict-aliasing` is brought back to both build
->            systems and is recommended to everyone embedding libexpat
->            in particular (but not only) to avoid surprises from
->            potential miscompilation. If curious, for the 2016 article
->            by John Regehr that motivated this move please see:
->            https://blog.regehr.org/archives/1307 .
->
-> [...]
+This issue affects Apache BuildStream: through 2.8.1.
+Users are recommended to upgrade to version 2.8.2, which fixes the issue.
 
-sam
+Credit:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
+MopMonk AI (finder)
+
+References:
+
+https://buildstream.apache.org
+https://www.cve.org/CVERecord?id=CVE-2026-104813
+
