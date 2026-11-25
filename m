@@ -1,56 +1,196 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/25/5
-Message-ID: <CADOAh9dsBwOsqbHNpPUWikkAXx8Yq5PjuP_SoCk0AqRVmRJGYA@mail.gmail.com>
-Date: Wed, 25 Nov 2026 14:39:19 +0530
-From: VMware PSIRT <vmware.psirt@...adcom.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/25/11
+Message-ID: <1aefbdd7-c645-4954-b942-35cf66ea3811@cpansec.org>
+Date: Wed, 25 Nov 2026 22:31:07 +0000
+From: Robert Rothenberg <rrwo@...nsec.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-123917 - Denial-of-service vulnerability in open-vm-tools
+Subject: Crypt-JWT for Perl (4 CVEs)
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-123917: open-vm-tools contains a denial-of-service vulnerability
-in VGAuth service. The severity of this issue is in the Moderate severity
-range with a maximum CVSSv3 base score of 5.5
-(CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H). A malicious local actor
-with non-administrative privileges on a guest VM may exploit this issue to
-crash the VGAuth service resulting in a denial-of-service condition.
+CVE-2018-25445
+   Crypt::JWT versions before 0.024 for Perl skip issuer, subject,
+   audience and JWT ID checks when the claim is absent or the option is
+   a plain string
 
-We would like to thank G'iyosiddin Muxammadiyev for reporting this issue to
-us.
+CVE-2026-8748
+   Crypt::JWT versions before 0.037_1 for Perl compare HMAC signatures
+   and JWE authentication tags in non-constant time
 
-The following patch provided can be used to apply the security fix to
-previous open-vm-tools releases.
+CVE-2026-136795
+   Crypt::JWT versions before 0.037_1 for Perl allow memory exhaustion
+   via unbounded inflation of zip DEF payloads
 
-For all open-vm-tools releases 11.0.0 through 13.1.0
-CVE-2026-123917-VGAuth-updates.patch
+CVE-2026-136796
+   Crypt::JWT versions before 0.037_1 for Perl allow CPU exhaustion via
+   an unbounded PBES2 iteration count
 
-Prerequisite for releases 11.0.0 through 12.5.0
 
-For the releases listed below, the CVE-2025-22247(
-https://github.com/vmware/open-vm-tools/tree/CVE-2025-22247.patch) security
-fix must be applied first, and then the patch above.
+========================================================================
+CVE-2018-25445                                       CPAN Security Group
+========================================================================
 
-For releases 12.5.0, 12.4.5, 12.4.0, 12.3.5, 12.3.0, apply
-https://github.com/vmware/open-vm-tools/blob/CVE-2025-22247.patch/CVE-2025-22247-1230-1250-VGAuth-updates.patch
+         CVE ID:  CVE-2018-25445
 
-For releases 12.2.5, 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5,
-11.3.0, 11.2.5, 11.2.0, 11.1.5, 11.1.0, 11.0.5, 11.0.0, apply
-https://github.com/vmware/open-vm-tools/blob/CVE-2025-22247.patch/CVE-2025-22247-1100-1225-VGAuth-updates.patch
+   Distribution:  Crypt-JWT
+       Versions:  before 0.024
+       MetaCPAN:  https://metacpan.org/dist/Crypt-JWT
+       VCS Repo:  https://github.com/DCIT/perl-Crypt-JWT
 
-Releases 12.5.2 and later (12.5.2, 12.5.4, 13.0.0, 13.0.5, 13.0.10, 13.1.0)
-already contain CVE-2025-22247 and need only the patch above.
 
-The patches have been tested against the above open-vm-tools releases. Each
-applies cleanly with:
+Crypt::JWT versions before 0.024 for Perl skip issuer, subject,
+audience and JWT ID checks when the claim is absent or the option is a
+plain string
 
-git am        for a git repository.
-patch -p2     in the top directory of an open-vm-tools source tree.
-==============================================================
+Description
+-----------
+Crypt::JWT versions before 0.024 for Perl skip issuer, subject,
+audience and JWT ID checks when the claim is absent or the option is a
+plain string.
 
-Kind Regards,
+decode_jwt runs the verify_iss, verify_sub, verify_aud and verify_jti
+checks only when the token carries the claim, and honours an option
+only as a Regexp or CODE reference. Any other value, such as verify_aud
+=> 'myapp', is ignored.
 
-Praveen Singh | Broadcom PSIRT
+An application that relies on these checks accepts a validly signed
+token meant for a different issuer, subject or audience.
 
-VMware Cloud Foundation Division
+Problem types
+-------------
+- CWE-636 Not Failing Securely
 
-Email: vmware.psirt@...adcom.com
+Solutions
+---------
+Upgrade to Crypt-JWT 0.024 or later.
+
+References
+----------
+https://github.com/DCIT/perl-Crypt-JWT/commit/b0578979b012fd5ce57be2038a3cda1b3e65ae97.patch
+https://metacpan.org/release/MIK/Crypt-JWT-0.024/changes
+
+
+========================================================================
+CVE-2026-8748                                        CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-8748
+
+   Distribution:  Crypt-JWT
+       Versions:  before 0.037_1
+       MetaCPAN:  https://metacpan.org/dist/Crypt-JWT
+       VCS Repo:  https://github.com/DCIT/perl-Crypt-JWT
+
+
+Crypt::JWT versions before 0.037_1 for Perl compare HMAC signatures and
+JWE authentication tags in non-constant time
+
+Description
+-----------
+Crypt::JWT versions before 0.037_1 for Perl compare HMAC signatures and
+JWE authentication tags in non-constant time.
+
+decode_jwt compares HS256, HS384 and HS512 signatures, and the
+authentication tag of A128CBC-HS256, A192CBC-HS384 and A256CBC-HS512
+encrypted tokens, against the computed value with Perl's eq operator.
+Its run time depends on the number of matching leading bytes.
+
+An attacker who can submit many candidate tokens and measure the timing
+precisely enough may recover the expected signature or tag byte by byte
+and forge a token that verifies.
+
+Problem types
+-------------
+- CWE-208 Observable Timing Discrepancy
+
+Solutions
+---------
+Upgrade to Crypt-JWT 0.038 or later.
+
+References
+----------
+https://github.com/DCIT/perl-Crypt-JWT/commit/0dfc0af5cc1f28b799720fa12a5dcaa3f31fd095.patch
+https://metacpan.org/release/MIK/Crypt-JWT-0.038/changes
+
+
+========================================================================
+CVE-2026-136795                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-136795
+
+   Distribution:  Crypt-JWT
+       Versions:  before 0.037_1
+       MetaCPAN:  https://metacpan.org/dist/Crypt-JWT
+       VCS Repo:  https://github.com/DCIT/perl-Crypt-JWT
+
+
+Crypt::JWT versions before 0.037_1 for Perl allow memory exhaustion via
+unbounded inflation of zip DEF payloads
+
+Description
+-----------
+Crypt::JWT versions before 0.037_1 for Perl allow memory exhaustion via
+unbounded inflation of zip DEF payloads.
+
+When a token header sets "zip" to "DEF", decode_jwt inflates the
+payload with no limit on the output size. A signed token is inflated
+after its signature verifies. An encrypted token is inflated after
+decryption, and with RSA-OAEP or ECDH-ES key management anyone who
+holds the recipient's public key can produce a token that decrypts.
+
+Problem types
+-------------
+- CWE-409 Improper Handling of Highly Compressed Data (Data
+   Amplification)
+
+Solutions
+---------
+Upgrade to Crypt-JWT 0.038 or later.
+
+References
+----------
+https://github.com/DCIT/perl-Crypt-JWT/commit/13057ef8f51ddde66f1013e4eab2e0664d69d284.patch
+https://github.com/DCIT/perl-Crypt-JWT/commit/18b20fed11ae5d72c8ad298fb0d9f023e47ec953.patch
+https://metacpan.org/release/MIK/Crypt-JWT-0.038/changes
+
+
+========================================================================
+CVE-2026-136796                                      CPAN Security Group
+========================================================================
+
+         CVE ID:  CVE-2026-136796
+
+   Distribution:  Crypt-JWT
+       Versions:  before 0.037_1
+       MetaCPAN:  https://metacpan.org/dist/Crypt-JWT
+       VCS Repo:  https://github.com/DCIT/perl-Crypt-JWT
+
+
+Crypt::JWT versions before 0.037_1 for Perl allow CPU exhaustion via an
+unbounded PBES2 iteration count
+
+Description
+-----------
+Crypt::JWT versions before 0.037_1 for Perl allow CPU exhaustion via an
+unbounded PBES2 iteration count.
+
+For a token using a PBES2 key management algorithm, decode_jwt passes
+the p2c header parameter to PBKDF2 as the iteration count without a
+range check, and derives the key before any integrity check. Unless
+accepted_alg rules it out, a token can select PBES2 whenever decode_jwt
+is given a symmetric key.
+
+Problem types
+-------------
+- CWE-606 Unchecked Input for Loop Condition
+
+Solutions
+---------
+Upgrade to Crypt-JWT 0.038 or later.
+
+References
+----------
+https://github.com/DCIT/perl-Crypt-JWT/commit/13057ef8f51ddde66f1013e4eab2e0664d69d284.patch
+https://github.com/DCIT/perl-Crypt-JWT/commit/18b20fed11ae5d72c8ad298fb0d9f023e47ec953.patch
+https://metacpan.org/release/MIK/Crypt-JWT-0.038/changes
 
