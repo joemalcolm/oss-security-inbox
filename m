@@ -1,50 +1,51 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/25/12
-Message-ID: <46c86135-2ab5-4371-85ee-1a6430573d21@cpansec.org>
-Date: Wed, 25 Nov 2026 22:36:14 +0000
-From: Robert Rothenberg <rrwo@...nsec.org>
-To: cve-announce@...urity.metacpan.org, oss-security@...ts.openwall.com
-Subject: CVE-2026-135092: PDF::API2 versions before 2.049 for Perl allow unbounded recursion via circular cross-reference chains in readxrtr
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/25/3
+Message-ID: <CAAwz41TW8T2nRj-8Gq+W0n=9JGbabXz3Yi8WAEywX4-k3j37uw@mail.gmail.com>
+Date: Wed, 25 Nov 2026 10:52:54 +0400
+From: Norbert Pócs <norbertp@...nssl.org>
+To: Alan Coopersmith <alan.coopersmith@...cle.com>
+Cc: oss-security@...ts.openwall.com, openssl-users <openssl-users@...nssl.org>
+Subject: Re: OpenSSL: 4 Low severity fixes merged publicly: QUIC, X.509 (CRL processing) and TLS (DANE)
 Content-Type: text/plain; charset=utf-8
 
-========================================================================
-CVE-2026-135092                                      CPAN Security Group
-========================================================================
+On Tue, Nov 24, 2026 at 11:18 PM Alan Coopersmith <
+alan.coopersmith@...cle.com> wrote:
 
-         CVE ID:  CVE-2026-135092
+> On 11/24/26 03:25, Norbert Pócs wrote:
+> > OpenSSL Security Advisory [24th November 2026]
+> > ==============================================
+> >
+> > The issues listed below have been fixed in the public openssl/openssl
+> > repository on GitHub. Releases containing these fixes are scheduled
+> > for 1st December 2026.
+>
+> I don't see CVE-2026-121481 in this list, though it was published last
+> week:
+>     https://www.cve.org/CVERecord?id=CVE-2026-121481
 
-   Distribution:  PDF-API2
-       Versions:  before 2.049
-       MetaCPAN:  https://metacpan.org/dist/PDF-API2
-       VCS Repo:  https://github.com/ssimms/pdfapi2
+
+>
+> Is that because the pull request is not yet merged?
+>     https://github.com/openssl/openssl/pull/33652
 
 
-PDF::API2 versions before 2.049 for Perl allow unbounded recursion via
-circular cross-reference chains in readxrtr
+Yes, exactly. We announce only what was merged since the previous weeks
+digest. CVE-2026-121481 is still under review.
 
-Description
------------
-PDF::API2 versions before 2.049 for Perl allow unbounded recursion via
-circular cross-reference chains in readxrtr.
 
-When a PDF is opened, readxrtr reads each cross-reference table and
-calls itself on the offset in the trailer's /Prev entry. Nothing
-records which offsets it has already read, so a /Prev entry pointing
-back to an earlier table, or to its own, makes it recurse without end.
+>
+>
+> (I know there was some public disagreement on severity level, with CISA
+> first
+>   giving it a CVSS 3.1 score of 9.8, before later dropping it to 5.9, while
+>   https://tldrcve.com/openssl-encodeblock/ was suggesting it was low
+> severity.)
+>
+> --
+>          -Alan Coopersmith-                 alan.coopersmith@...cle.com
+>           Oracle Solaris Engineering - https://blogs.oracle.com/solaris
 
-An attacker who supplies a crafted PDF can cause a denial of service in
-any application that opens it.
 
-Problem types
--------------
-- CWE-674 Uncontrolled Recursion
-
-Solutions
----------
-Upgrade to PDF-API2 2.049 or later.
-
-References
-----------
-https://github.com/ssimms/pdfapi2/commit/70a5ab29638bd92205ecc5186ca8728609f0f706.patch
-https://metacpan.org/release/SSIMMS/PDF-API2-2.049/changes
+--
+Norbert
 
