@@ -1,42 +1,52 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/25/6
-Message-ID: <CADOAh9deMMAcd2GdaQ-+BZpaxni+s5hv2Xny3g+pso3auOviUQ@mail.gmail.com>
-Date: Wed, 25 Nov 2026 14:40:17 +0530
-From: VMware PSIRT <vmware.psirt@...adcom.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/25/9
+Message-ID: <20261125172638.73c0a05b@hboeck.de>
+Date: Wed, 25 Nov 2026 17:26:38 +0100
+From: Hanno Böck <hanno@...eck.de>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-123918 - Denial-of-service vulnerability in open-vm-tools
+Subject: Slow Ubuntu security response times
 Content-Type: text/plain; charset=utf-8
 
-CVE-2026-123918: open-vm-tools contains a denial-of-service vulnerability
-in VGAuth service. The severity of this issue is in the Moderate severity
-range with a maximum CVSSv3 base score of 5.5
-(CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H). A malicious local actor
-with non-administrative privileges on a guest VM may exploit this issue to
-exhaust the memory of the VGAuth service, resulting in a denial-of-service
-condition.
+Hello,
 
-We would like to thank Lian for reporting this issue to us.
+Lately, I'm observing that Ubuntu's response to severe security flaws
+is concerning.
 
-The following patches can be used to apply the security fix to previous
-open-vm-tools releases.
+On November 16th, details about a remote memory corruption called
+NoisyTCP (CVE-2026-99288) in the Linux kernel's TCP stack were
+published: https://www.openwall.com/lists/oss-security/2026/11/15/2
+Today, nine days later, Ubuntu still has not published a fix yet:
+https://ubuntu.com/security/CVE-2026-99288
+Other distros had a fix already available when the details were
+published.
 
-For releases 13.1.0, 13.0.10, 13.0.5, 13.0.0, 12.5.0, 12.4.5, 12.4.0,
-12.3.5, 12.3.0, 12.2.5, 12.2.0, 12.1.5, 12.1.0, 12.0.5, 12.0.0, 11.3.5,
-11.3.0
-CVE-2026-123918-1130-1310-VGAuth-updates.patch
+Likewise, a KVM host escape (CVE-2026-99312) affecting AMD
+virtualization published on Nov 18th has no fix yet either [3]:
+https://ubuntu.com/security/CVE-2026-99312
 
-For releases 11.2.5, 11.2.0, 11.1.5, 11.1.0, 11.0.5, 11.0.0
-CVE-2026-123918-1100-1125-VGAuth-updates.patch
+Ubuntu has been slow in patching another remote TCP corruption
+(CVE-2026-98432) lately, where it took multiple weeks until a fix was
+available. See also: https://chalmovsky.com/posts/wtf-ubuntu
+Recent news indicates that this is might be exploited in the wild:
+https://www.greynoise.io/blog/check-point-security-management-servers-intrusion-campaign
 
-The patches have been tested against the above open-vm-tools releases. Each
-applies cleanly with:
 
-git am        for a git repository.
-patch -p2     in the top directory of an open-vm-tools source tree.
-==============================================================
+I think everyone understands that these times aren't easy for security
+teams. Nevertheless, remote corruption vulnerabilities in the Linux
+kernel are the kind of thing where I expect updates to be available
+within hours, not days or weeks.
 
-Kind Regards,
-Praveen Singh | Broadcom PSIRT
-VMware Cloud Foundation Division
-Email: vmware.psirt@...adcom.com
+On a recent Ubuntu LTS system, the kernel version is 7.0.0-44. This
+seems to indicate that Ubuntu is not relying on longterm supported
+kernels from kernel.org, but is instead backporting patches to an old
+kernel version. On a Debian stable system, the kernel version is
+6.12.118+deb13, indicating that it's based on a very recent longterm
+kernel from kernel.org. I would consider the backporting strategy for
+the kernel to be hardly viable and probably everyone should base their
+Linux kernels on longterm releases supported by the Linux kernel
+developers.
 
+-- 
+Hanno Böck - Independent security researcher
+https://itsec.hboeck.de/
+https://badkeys.info/
