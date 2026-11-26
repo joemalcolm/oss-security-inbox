@@ -1,50 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/27/8
-Message-ID: <awleJmUnVkfJaJKB@t430s.bluhm.invalid>
-Date: Fri, 27 Nov 2026 11:40:42 +0100
-From: Alexander Bluhm <alexander.bluhm@....net>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/27/2
+Message-ID: <bc39f2f3-893f-6e55-955a-c400d3faf335@apache.org>
+Date: Thu, 26 Nov 2026 21:25:13 +0000
+From: Lenny Primak <lprimak@...che.org>
 To: oss-security@...ts.openwall.com
-Subject: Re: CVE-2026-122093: Strong::Random versions through 0.96 for Perl allow every later rand output to be predicted from three earlier ones
+Subject: CVE-2026-137686: Apache Shiro: Authentication bypass in ActiveDirectoryRealm via empty username (incomplete fix for CVE-2014-0074) 
 Content-Type: text/plain; charset=utf-8
 
-On Thu, Nov 26, 2026 at 11:38:51AM +0000, John Haxby wrote:
->  
-> 
-> > On 26 Nov 2026, at 08:36, Jakub Wilk <jwilk@...lk.net> wrote:
-> > 
-> > * Robert Rothenberg <rrwo@...nsec.org>, 2026-11-25 00:32:
-> >> Workarounds
-> >> -----------
-> >> Replace Strong::Random with a cryptographically secure source such as Crypt::URandom or Crypt::SysRandom.
-> > 
-> > There's also RAND_bytes() in Net::SSLeay, which is more likely to be already installed on your system than the two above (but also much more heavyweight, so YMMV).
-> > 
-> > -- 
-> > Jakub Wilk
-> 
-> Or just open /dev/urandom and read stuff from it :)
+Severity: 
+    CVSS 4.0: 6.3 (medium) CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N
 
-Is UNIX only.  Does not work after chroot(2).
+Affected versions:
 
-> Or, and I don't know the perl incantation, use getrandom(2) which works even in a container where there's no /dev to speak of.
+- Apache Shiro (org.apache.shiro:shiro-core) before 3.0.2
 
-Is Linux only.
+Description:
 
-> macOS has getentropy(2) and /dev/urandom.
+The fix for  CVE-2014-0074 https://shiro.apache.org/security-reports.html#cve_2014_0074  was incomplete for ActiveDirectoryRealm, which still accepted an empty username and password as an anonymous LDAP bind. This allowed an unauthenticated user to log in with an empty principal.
+This issue affects all Apache Shiro versions through 3.0.1, only when ActiveDirectoryRealm is used without principalSuffix and the directory server allows anonymous binds.
 
-Yet another one.
+Mitigation: Upgrade to version 3.0.2 or later, which fixes the issue.
+Alternatively, set principalSuffix on the realm, or disable anonymous binds on the directory server.
 
-In OpenBSD we believe that our arc4random(3) in libc is the best
-random source a userland program can use.  As OpenBSD ports maintainer
-I try to patch all the *::Random modules to that, but there are too
-many of them to catch all.
+Credit:
 
-What would help the Perl ecosystem, would be one and only one of
-these *::Random modules in Core.  Then every platform maintainer
-can patch it to the platform's best way.  And Perl applications can
-migrate to this API without the need to choose between good, bad,
-and ugly random sources.
+Sungho Park (@gigio1023) (finder)
+Lenny Primak <lenny@...wlogix.com> (remediation developer)
 
-bluhm
+References:
 
-Download attachment "signature.asc" of type "application/pgp-signature" (871 bytes)
+https://shiro.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-137686
+
