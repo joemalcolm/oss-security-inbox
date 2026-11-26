@@ -1,334 +1,118 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/26/4
-Message-ID: <5e8aad86-0e3b-4865-930c-13bdcebb76b8@powerdns.com>
-Date: Thu, 26 Nov 2026 14:06:42 +0100
-From: Miod Vallat <miod.vallat@...erdns.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/26/5
+Message-ID: <87pkvrtwhp.fsf@gentoo.org>
+Date: Thu, 26 Nov 2026 15:58:58 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: PowerDNS Security Advisory 2026-14: Multiple issues
+Subject: Fwd: [exim-announce] Exim Security Release - 4.100.2
 Content-Type: text/plain; charset=utf-8
 
-Incomplete domain name sanitization during Bind autosecondary zone transfer
----------------------------------------------------------------------------
 
-   * CVE: CVE-2026-123757
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-06-22T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.18,
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and 5.1.6
-   * Severity: Low
-   * Impact: Denial of Service
-   * Exploit: This problem can be triggered by an attacker sending
-     crafted notify packets, but only if the Bind backend is used and
-     the Authoritative server operates in autosecondary mode.
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version or disable autosecondary mode,
-     or limit bind-autoprimaries to trusted addresses only
-   * CWE: CWE-94
-   * CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:H/A:H
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 514
+-------------------- Start of forwarded message --------------------
+Date: Wed, 25 Nov 2026 13:04:55 +0000
+To: Exim Announcements <exim-announce@...ts.exim.org>,
+ exim-users@...ts.exim.org
+Subject: [exim-announce] Exim Security Release - 4.100.2
+From: Bernard Quatermass via Exim-announce <exim-announce@...ts.exim.org>
+Cc: Bernard Quatermass <bernardq@...m.org>
 
-An attacker can send a notify request that causes the root zone to be
-added as a secondary domain to be added to the bind backend, but causes
-said backend to update its configuration to an invalid one, leading to
-the backend no longer able to run on the next restart, requiring manual
-operation to fix it.
 
-The general case of this problem was addressed by SA-2026-05, but the
-root zone was not handled correctly. This is now fixed.
+Dear Exim users,
 
-CVSS Score: 7.4
+The Exim maintainers are releasing a security fix for one security issue.
 
-The remedy is: upgrade to a patched version, or disable autosecondary
-operation, if the Bind backend is used, or limit bind-autoprimaries to
-trusted addresses only.
 
-Race condition in forward notification handling
------------------------------------------------
+  * GCVE-25-2026-11-82-1 - Fix an OOB write resulting from header decode
 
-   * CVE: CVE-2026-123758
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-04-11T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.18,
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and 5.1.6
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit:
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, or disable forward-notify.
-   * CWE: CWE-364
-   * CVSS:3.1/AV:N/AC:H/PR:H/UI:N/S:U/C:N/I:N/A:H
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 568
 
-A race condition in the handling of the forward notification requests
-queue can lead to a crash if too many UDP notify packets for a given
-zone are received in a short time frame.
+Identifier: EXIM-Security-2026-11-82.1 (GCVE-25-2026-11-82-1)
+Area: SMTP reception
+Severity: Medium
+Credit: The unnamed and uncredited authors whose works
+were ingested as the training corpus
 
-CVSS Score: 4.4
+A remote attacker can cause a write outside an allocated area,
+followed by an expansion operation done with root privilege.
 
-The remedy is: upgrade to a patched version, or disable forward-notify.
 
-Insufficient input validation of internal webserver
----------------------------------------------------
 
-   * CVE: CVE-2026-123756
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-22T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.18,
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and 5.1.6
-   * Severity: Low
-   * Impact: Denial of Service
-   * Exploit: This problem can be triggered by an attacker sending
-     crafted HTTP queries to the internal webserver
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version or only open the internal
-     webserver to trusted clients
-   * CWE: CWE-400
-   * CVSS: 3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:L
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 580
-   * External ID: YWH-PGM6095-355, YWH-PGM6095-412
-   * External Reporter: Sel, lazarux0x1337 and onevilx
+Downloads
+---------
 
-An attacker can cause a denial of service by sending crafted HTTP
-queries to the internal webserver. The webserver is not enabled by
-default and is protected by an ACL.
+The new version is available from the usual locations:
 
-CVSS Score: 4.3
+- https://ftp.exim.org/pub/exim/exim4/
+- https://code.exim.org/exim/exim (branch master, tag exim-4.100.2)
 
-The remedy is: upgrade to a patched version or only open the internal
-webserver to trusted clients.
+The release tag exim-4.100.2, signed by
 
-We would like to thank Sel, lazarux0x1337 and onevilx for bringing this
-issue to our attention.
+*  key ID 0xBCE58C8CE41F32DF
+     Email: jgh@...m.org
 
-Catalog zones incorrectly accept the root zone as a member
-----------------------------------------------------------
 
-   * CVE: CVE-2026-123759
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-22T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server 4.7.0 up to and including
-     4.9.18, 5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and
-     5.1.6, and versions earlier than 4.7.0
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: Malicious provider can add a root zone as member and cause
-     provisioning of the root zone from an untrusted source
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, or do not use catalog zones
-   * CWE: CWE-284
-   * CVSS: 3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 581
+SIZE(00-sha256sums.txt)= 1833
+SIZE(00-sha512sums.txt)= 2985
+SIZE(00-sizes.txt)= 762
+SIZE(exim-4.100.2.tar.bz2) = 2184818
+SIZE(exim-4.100.2.tar.gz) = 2751594
+SIZE(exim-4.100.2.tar.xz) = 2008056
+SIZE(exim-html-4.100.2.tar.bz2) = 653151
+SIZE(exim-html-4.100.2.tar.gz) = 904605
+SIZE(exim-html-4.100.2.tar.xz) = 640656
+SIZE(exim-info-4.100.2.tar.bz2) = 485263
+SIZE(exim-info-4.100.2.tar.gz) = 653785
+SIZE(exim-info-4.100.2.tar.xz) = 487092
+SIZE(exim-pdf-4.100.2.tar.bz2) = 2219535
+SIZE(exim-pdf-4.100.2.tar.gz) = 2250820
+SIZE(exim-pdf-4.100.2.tar.xz) = 2183624
+SIZE(exim-postscript-4.100.2.tar.bz2) = 1172353
+SIZE(exim-postscript-4.100.2.tar.gz) = 1572710
+SIZE(exim-postscript-4.100.2.tar.xz) = 1161292
+SIZE(exim-texinfo-4.100.2.tar.bz2) = 459021
+SIZE(exim-texinfo-4.100.2.tar.gz) = 614517
+SIZE(exim-texinfo-4.100.2.tar.xz) = 462156
 
-A catalog zone provider can add a root zone as member and cause
-PowerDNS to provision it from the given source.
+SHA2-256(00-sha256sums.txt)= 68eaecac6fabb5076f5eb146af29869a22c825599d69aa44a9f8309b90570d1d
+SHA2-256(00-sha512sums.txt)= 0a35277e585efda050f9f009d57b9467738399f7123213871f9f7e749e523817
+SHA2-256(00-sizes.txt)= 3864102ee1ea39c18575359798a494297557e43040249a48e50c5915c6e992d7
+SHA2-256(exim-4.100.2.tar.bz2) = 574146be26bf0a1daade749cdc50f4227ab6d230fc716659c4b07f0db22d3271
+SHA2-256(exim-4.100.2.tar.gz) = 4e8006ee06ab6e2443fc6af0edfdfa03811a5fa4bf8f58b84622b91b170e1482
+SHA2-256(exim-4.100.2.tar.xz) = 04c9958bf15e7e3d518fb55f8b343cba4789447212bc699a9be2b1d11c1016f6
+SHA2-256(exim-html-4.100.2.tar.bz2) = 90a44bd4ba4328b56a56661269773cf59cfc290c5ada6b76686010717d8a019d
+SHA2-256(exim-html-4.100.2.tar.gz) = e0cbed8603bca65ed92a56d7c526ff99528955931f2b30eceaadc0a92dabd6e2
+SHA2-256(exim-html-4.100.2.tar.xz) = 4f7578bc53e199f5820de404747e4b2c8929985852ed90181094df0cd2c3a188
+SHA2-256(exim-info-4.100.2.tar.bz2) = 912df6fa77612290248c55cd5506958d9bd4a78fab8238c207a737ebd23933d8
+SHA2-256(exim-info-4.100.2.tar.gz) = 2aa38c43f14ffed4e5a35988a6bb120f60e3fb4d5c79e40e029921552defcec1
+SHA2-256(exim-info-4.100.2.tar.xz) = f343b77e8938caadd16d1b1072b5a9c5437a97bc90892941f3d695965198cdd6
+SHA2-256(exim-pdf-4.100.2.tar.bz2) = df82acf5b69cec3a9a30aa5e1b05ddb179797dc7879363606a1a7983e3942325
+SHA2-256(exim-pdf-4.100.2.tar.gz) = 4bdf7c540a7b24525cc407ed1abafe861a267b2cb4dd140987bf0dd60f8906e2
+SHA2-256(exim-pdf-4.100.2.tar.xz) = 7831d262a4ee811c0cbbb61502f50ad6e6b4e1033de3c215eab1eb0e09b9959b
+SHA2-256(exim-postscript-4.100.2.tar.bz2) = 09ccd3e1a320d1e378eb7f4bd6d4b5168b86254577659efb7280175de16f1ae6
+SHA2-256(exim-postscript-4.100.2.tar.gz) = d194d33c765e945afd849714b9a4c7a7fd36b70f2b89cdd76757157a25be0b91
+SHA2-256(exim-postscript-4.100.2.tar.xz) = fecb8bbe023f66fe4c02de8a03d57331af60380e684e9600126de6d31ca219b4
+SHA2-256(exim-texinfo-4.100.2.tar.bz2) = e8191618e06516a7862e929ef77099922df7979832c942205908d79624dbe4fd
+SHA2-256(exim-texinfo-4.100.2.tar.gz) = 6bb6e290928d6431a13255e75fd38423f4bcf7646d5cd62b0c90cad1b5cbf228
+SHA2-256(exim-texinfo-4.100.2.tar.xz) = 5c3a0b89060785574859fe999073f10920942f577d2dde84d252a484d3ad5183
 
-CVSS Score: 4.8
 
-The remedy is: upgrade to a patched version, or do not use catalog
-zones.
+-- 
+Bernard Quatermass
 
-Logic flaw in LMDB backend can lead to an unresponsive server
--------------------------------------------------------------
 
-   * CVE: CVE-2026-123760
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-22T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server 5.1.0 to 5.1.5
-   * Not affected: PowerDNS Authoritative Server prior to 5.1.0, and
-     5.1.6
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: When using the LMDB backend, performing zone rectification
-     when the number of Empty Non-Terminal entries is larger than the
-     max-ent-entries setting triggers a logic bug and causes the
-     PowerDNS process to spin with the LMDB database locked.
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, use a different backend than
-     LMDB, or make sure not to have more empty non-terminals than
-     max-ent-entries
-   * CWE: CWE-400
-   * CVSS: 3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H
-   * Last affected: 5.1.5
-   * First fixed: 5.1.6
-   * Internal ID: 587
 
-When using the LMDB backend, performing zone rectification when the
-number of Empty Non-Terminal entries is larger than the max-ent-entries
-setting triggers a logic bug and causes the PowerDNS process to spin
-with the LMDB database locked.
+Download attachment "OpenPGP_signature.asc" of type "application/pgp-signature" (665 bytes)
 
-CVSS Score: 6.5
 
-The remedy is: upgrade to a patched version, use a different backend
-than LMDB, or make sure not to have more empty non-terminals than
-max-ent-entries.
+-- 
+## subscription configuration (requires account):
+##   https://lists.exim.org/mailman3/postorius/lists/exim-announce.lists.exim.org/
+## unsubscribe (doesn't require an account):
+##   exim-announce-unsubscribe@...ts.exim.org
+## Exim details at https://www.exim.org/
+## Please use the Wiki with this list - https://code.exim.org/exim/wiki/wiki
 
-Multiple defects in Views processing
-------------------------------------
 
-   * CVE: CVE-2026-123761
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-22T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server 5.x up to and including
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server prior to 5.0, as well
-     as 5.0.9 and 5.1.6
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: Various logic errors in view processing can cause
-     incorrect cached results to be returned
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, disable packet cache or do
-     not use the Views feature
-   * CWE: CWE-349
-   * CVSS: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:L
-   * Last affected: 5.0.8,5.1.5
-   * First fixed: 5.0.9,5.1.6
-   * Internal ID: 588
+-------------------- End of forwarded message --------------------
 
-Various logic errors in view processing can cause incorrect cached
-results to be returned.
 
-CVSS Score: 8.2
-
-The remedy is: upgrade to a patched version, disable packet cache or do
-not use the Views feature.
-
-Catalog zone update operation may misbehave in multi-backend configurations
----------------------------------------------------------------------------
-
-   * CVE: CVE-2026-123762
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-22T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server 4.7.0 up to and including
-     4.9.18, 5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and
-     5.1.6, and versions earlier than 4.7.0
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: A catalog zone update introducing a new zone which already
-     exists, but in a different backend than the one storing the catalog
-     zone, will cause a duplicate zone to be created in that backend,
-     and (depending on the backend load order) may completely hide the
-     existing zone.
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, or do not use catalog zones
-   * CWE: CWE-284
-   * CVSS: 3.1/AV:N/AC:L/PR:H/UI:N/S:C/C:N/I:H/A:L
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 589
-
-A catalog zone update introducing a new zone which already exists, but
-in a different backend than the one storing the catalog zone, will
-cause a duplicate zone to be created in that backend, and (depending on
-the backend load order) may completely hide the existing zone.
-
-CVSS Score: 7.6
-
-The remedy is: upgrade to a patched version, or do not use catalog
-zones.
-
-Injection vulnerabilities in Bind backend
------------------------------------------
-
-   * CVE: CVE-2026-123764
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-21T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.18,
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and 5.1.6
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: Incorrect sanitization of received data during zone AXFR
-     to Bind backend can cause wrong or invalid data to be serialized
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, or do not allow AXFR of zones
-     served by the Bind backend
-   * CWE: CWE-93
-   * CVSS: 3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:L/A:N
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 593, 597
-
-Incorrect sanitization of received data during zone AXFR to Bind
-backend can cause wrong or invalid data to be serialized.
-
-CVSS Score: 7.5
-
-The remedy is: upgrade to a patched version, or do not allow AXFR of
-zones served by the Bind backend.
-
-AXFR of obsolete record types can corrupt zones in the Bind backend
--------------------------------------------------------------------
-
-   * CVE: CVE-2026-124727
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-21T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.18,
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and 5.1.6
-   * Severity: Medium
-   * Impact: Denial of Service
-   * Exploit: Incorrect handling of obsolete record types during zone
-     AXFR to Bind backend will cause the zone to fail to load afterwards
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version, or do not allow AXFR of zones
-     served by the Bind backend
-   * CWE: CWE-229
-   * CVSS: 3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:H
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 594
-
-Incorrect handling of obsolete record types during zone AXFR to Bind
-backend will cause the zone to fail to load afterwards, requiring
-manual intervention to edit the zone file.
-
-CVSS Score: 6.5
-
-The remedy is: upgrade to a patched version, or do not allow AXFR of
-zones served by the Bind backend.
-
-TSIG operation logic flaws
---------------------------
-
-   * CVE: CVE-2026-124728
-   * Date: 2026-11-12T00:00:00+01:00
-   * Discovery date: 2026-09-21T00:00:00+01:00
-   * Affects: PowerDNS Authoritative Server up to and including 4.9.18,
-     5.0.8 and 5.1.5
-   * Not affected: PowerDNS Authoritative Server 4.9.19, 5.0.9 and 5.1.6
-   * Severity: High
-   * Impact: Denial of Service
-   * Exploit: Incomplete GSS negotiation, as well as TKEY context
-     deletion while a pending operation will need to be signed with that
-     key, can lead to a crash
-   * Risk of system compromise: None
-   * Solution: Upgrade to patched version
-   * CWE: CWE-400
-   * CVSS: 3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H
-   * Last affected: 4.9.18,5.0.8,5.1.5
-   * First fixed: 4.9.19,5.0.9,5.1.6
-   * Internal ID: 596
-
-Incomplete GSS negotiation, as well as TKEY context deletion while a
-pending operation will need to be signed with that key, can lead to a
-crash.
-
-CVSS Score: 7.5
-
-The remedy is: upgrade to a patched version.
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
