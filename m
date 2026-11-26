@@ -1,104 +1,110 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/26/7
-Message-ID: <CADk+mPBobf-eL+ebfy-sDnvuywSZ84ND44ZfV-MH5hSpRf-Kqw@mail.gmail.com>
-Date: Thu, 26 Nov 2026 08:54:03 -0800
-From: rgerhards@...scon.com
-To: oss-security@...ts.openwall.com
-Subject: librelp: 2 security advisories published 2026-11-26
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/26/6
+Message-Id: <E1xWc6r-00000007cGK-1LiG@xenbits.xenproject.org>
+Date: Thu, 26 Nov 2026 16:14:09 +0000
+From: Xen.org security team <security@....org>
+To: xen-announce@...ts.xen.org, xen-devel@...ts.xen.org, xen-users@...ts.xen.org, oss-security@...ts.openwall.com
+CC: Xen.org security team <security-team-members@....org>
+Subject: Xen Security Advisory 535 v1 (CVE-2026-119781,CVE-2026-119782,CVE-2026-119783) - x86: Incorrect ordering of page-freeing and p2m flush
 Content-Type: text/plain; charset=utf-8
 
-Hello,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-librelp has published the following security advisory(ies).
+ Xen Security Advisory CVE-2026-119781,CVE-2026-119782,CVE-2026-119783 / XSA-535
 
-Fix: https://github.com/rsyslog/librelp/commit/87a447e3f656d3e4d6e5f9d1f0e72a16527d342d
+         x86: Incorrect ordering of page-freeing and p2m flush
 
-GHSA-28c2-q5pf-2qm3 (CVE-2026-132888): GnuTLS certvalid authentication
-mode accepts any certificate
-Advisory: https://github.com/rsyslog/librelp/security/advisories/GHSA-28c2-q5pf-2qm3
+ISSUE DESCRIPTION
+=================
 
-### Summary
-When librelp is built with GnuTLS and a RELP connection uses TLS with
-the authentication mode `certvalid`, the peer certificate is not
-validated at all. Any certificate is accepted, including self-signed
-certificates and certificates from an unrelated CA.
+For HVM and PVH guests using HAP, Xen defers the TLB flush that follows
+a p2m change until the p2m lock is released, so that several changes
+done under the same locked region issue a single flush.
 
-### Impact
-Affected are systems that use RELP over TLS with
-`tls.authmode="certvalid"` and the GnuTLS driver (the default TLS
-library of rsyslog's imrelp and omrelp).
-- On a RELP server (rsyslog `imrelp`), any host that can reach the
-listener can connect and inject log messages that look like they come
-from a trusted sender.
-- On a RELP client (rsyslog `omrelp`), an attacker who can intercept
-the connection can pose as the log server and receive the forwarded
-logs.
+Some paths that remove a page from the p2m however drop the last
+reference to the page before that flush is done.  The page is then
+freed, and can be reused, while stale TLB entries still allow the guest
+to access it.
 
-Configurations with `fingerprint` or `name` authentication, without
-TLS, or with the OpenSSL driver are not affected. Affected versions:
-1.2.18 up to and including 1.13.0.
+IMPACT
+======
 
-### Patches
-Fixed in librelp 1.14.0. Update librelp and restart rsyslog.
+A guest can retain access to memory it no longer owns.  This can lead
+to privilege escalation, Denial of Service (DoS) affecting the entire
+host, and information leaks.
 
-### Workarounds
-- Switch to `tls.authmode="fingerprint"` or `tls.authmode="name"` with
-permitted peers; both verify the certificate.
-- Or use the OpenSSL driver (module parameter `tls.tlslib="openssl"`
-of imrelp/omrelp).
-- Restrict access to the RELP port (often 2514/tcp) with a firewall to
-known senders. This does not stop spoofing from within the allowed
-range.
+VULNERABLE SYSTEMS
+==================
 
-### Credits
-- s4cr00t (Alipay Security Team), finder (reported to Red Hat)
-- Rainer Gerhards, remediation developer
+Xen versions 4.7 and onwards are vulnerable.  Xen versions 4.6 and
+older are not vulnerable.
 
-### References
-- https://access.redhat.com/security/cve/CVE-2026-132888
-- Fix: rsyslog/librelp PR #306 and #308
-- Release: https://github.com/rsyslog/librelp/releases/tag/v1.14.0
+Only x86 systems are vulnerable.  Arm systems are not vulnerable.
 
-Affected: librelp >= 1.2.18, < 1.14.0
-Severity: High, CVSS 3.1 7.5 (CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N)
+On Intel hardware all vulnerable versions are affected.  On AMD
+hardware only Xen versions 4.22 and onwards are affected.
 
-GHSA-v49f-8x9x-3gwh (CVE-2026-132889): Corrupted TLS record terminates
-the host process (GnuTLS)
-Advisory: https://github.com/rsyslog/librelp/security/advisories/GHSA-v49f-8x9x-3gwh
+Only HVM and PVH guests using HAP can leverage the vulnerability.
 
-### Summary
-With the GnuTLS driver, librelp terminated the whole process when
-receiving a TLS record failed after the handshake, instead of closing
-only the affected connection.
+MITIGATION
+==========
 
-### Impact
-A peer that completes the TLS handshake can stop rsyslog (and every
-other application using librelp in the same process) by sending one
-corrupted record. Log reception stops until the service is restarted.
-Affected are librelp 1.4.0 to 1.10.0 built with GnuTLS and used with
-RELP over TLS.
+There is no known mitigation.
 
-### Patches
-Fixed in librelp 1.11.0 (released 2023-01-02). Current releases are
-not affected.
+CREDITS
+=======
 
-### Workarounds
-- Restrict access to the RELP port to trusted senders and require
-certificate authentication (`fingerprint` or `name`), so only known
-peers complete the handshake.
-- Run rsyslog under a service manager that restarts it automatically.
+This issue was discovered by Roger Pau Monné of AMD.
 
-### Credits
-- s4cr00t (Alipay Security Team), finder (reported to Red Hat)
-- Andre Lorbach, remediation developer
+RESOLUTION
+==========
 
-### References
-- https://access.redhat.com/security/cve/CVE-2026-132889
-- Fix: rsyslog/librelp commit cab8afd, issue #230
+Applying the appropriate set of attached patches resolves this issue.
 
-Affected: librelp >= 1.4.0, < 1.11.0
-Severity: Medium, CVSS 3.1 6.5 (CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H)
+Note that patches for released versions are generally prepared to
+apply to the stable branches, and may not apply cleanly to the most
+recent release tarball.  Downstreams are encouraged to update to the
+tip of the stable branch before applying these patches.
 
-Regards,
-the rsyslog security team
-(sent automatically by the rsyslog release system)
+xsa535/xsa535-?.patch           xen-unstable - Xen 4.19.x
+xsa535/xsa535-4.18-?.patch      Xen 4.18.x - Xen 4.17.x
+
+$ sha256sum xsa535*/*
+42083890ae0518a4aa8b786d291791bb449405044f47afdbd55a5fd2f1933dd4  xsa535/xsa535-1.patch
+cc0adac0222471f599c88f79109fd84d75849daf69b9f106102e28d2eb38ad14  xsa535/xsa535-2.patch
+9c1e52c6f4f3f97c081793bbf6d722ac94276195067265a3c415a7396a9b2714  xsa535/xsa535-3.patch
+a9a2a89bd14a33fc5096cff3edd1a89817c68d42f4d715823c9ca700b86c80f5  xsa535/xsa535-4.18-1.patch
+848a13e675915978b482f6023b7e063319f8ade582e3af7ae7f6eecca2794b44  xsa535/xsa535-4.18-2.patch
+0677d16bccb92336792bea455a793063bc3753391e00b59897e444a9c2126770  xsa535/xsa535-4.18-3.patch
+$
+
+NOTE REGARDING LACK OF EMBARGO
+==============================
+
+While the Xen Security Team was working on a fix, a 3rd party posted
+an incorrect fix for the same issue publicly.  That fix only changes
+the removal of foreign mappings, and does not resolve this issue.
+-----BEGIN PGP SIGNATURE-----
+
+iQFABAEBCAAqFiEEI+MiLBRfRHX6gGCng/4UyVfoK9kFAmsIWKMMHHBncEB4ZW4u
+b3JnAAoJEIP+FMlX6CvZglgH/3WrMR6rc+g1x5LGBiGB5xnLZqoezvtkqtASQsSE
+7Lf3wfkcCoJRHu+4b63cnqe6M5EbniC2xuUPFRle/lz7j7zw0iS7yC+BxKpG+V7O
+o76Alivp4JJB4gFSOvwTyU3ayrnPnsgP9K0jMm3dqHwUCDNSPZBZiY9tCNTvU39k
+TeUB5mvrPdy8HLgX31ej12gX17ORITPU3UK6l9xL2fB54/0nR5jqNPG4h8o5QQzJ
+do6HYM2LjS0YnHcoP5/dUhIzVs0hRaCjcnq4Xgbz5trHHB6FJhkeWk01Ny8whKBK
+z+ubbHK8+mnQtklpOmC0ukB7zCz3vRNywrmST9jqysSctH8=
+=FsFr
+-----END PGP SIGNATURE-----
+
+Download attachment "xsa535/xsa535-1.patch" of type "application/octet-stream" (2211 bytes)
+
+Download attachment "xsa535/xsa535-2.patch" of type "application/octet-stream" (3517 bytes)
+
+Download attachment "xsa535/xsa535-3.patch" of type "application/octet-stream" (3203 bytes)
+
+Download attachment "xsa535/xsa535-4.18-1.patch" of type "application/octet-stream" (2211 bytes)
+
+Download attachment "xsa535/xsa535-4.18-2.patch" of type "application/octet-stream" (3523 bytes)
+
+Download attachment "xsa535/xsa535-4.18-3.patch" of type "application/octet-stream" (3277 bytes)
