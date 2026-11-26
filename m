@@ -1,49 +1,34 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/27/4
-Message-ID: <CAKXLc7dYOOKObu7GY=FH8y2Bm77s=G4XW-=ee8yaqL51fgJBCw@mail.gmail.com>
-Date: Thu, 26 Nov 2026 12:47:21 +0100
-From: Kalin KOZHUHAROV <me.kalin@...il.com>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/27/1
+Message-ID: <a5a99027-6a8f-580c-a37a-5f92128fa991@apache.org>
+Date: Thu, 26 Nov 2026 14:53:03 +0000
+From: Vincent Beck <vincbeck@...che.org>
 To: oss-security@...ts.openwall.com
-Cc: cve-announce@...urity.metacpan.org
-Subject: Re: CVE-2026-122093: Strong::Random versions through 0.96 for Perl allow every later rand output to be predicted from three earlier ones
+Subject: CVE-2026-120353: Apache Airflow Standard provider, Apache Airflow CNCF Kubernetes provider, Apache Airflow Common SQL provider, Apache Airflow Common Ai provider: Code execution on the worker via Jinja in Dag run conf or task arguments passed to @task.bash and similar TaskFlow decorators 
 Content-Type: text/plain; charset=utf-8
 
-On Wed, Nov 25, 2026 at 1:48 AM Robert Rothenberg <rrwo@...nsec.org> wrote:
->
-> ========================================================================
-> CVE-2026-122093                                      CPAN Security Group
-> ========================================================================
->
->          CVE ID:  CVE-2026-122093
->
->    Distribution:  Strong-Random
->        Versions:  through 0.96
->        MetaCPAN:  https://metacpan.org/dist/Strong-Random
->
->
-> Strong::Random versions through 0.96 for Perl allow every later rand
-> output to be predicted from three earlier ones
->
-I see a lot of Perl (CPAN) CVEs lately, which is good on its own, but
-if there is some kind of centralized (semi-)automated approach, I
-think it will definitely help add some context to what the module in
-question is.
+Severity: important 
 
-For example, I see that Strong::Random has just been released, under
-"unknown license" (more of a proprietary, if "Commercial support by
-Author for Open Source!" counts as a license) and it's only documented
-use so far is another project from the same author (
-https://metacpan.org/dist/Crypter ). While this is definitely out of
-scope, just a 10-s look at Crypter shows it passes plain-text
-passwords as command arguments (aka
-https://cwe.mitre.org/data/definitions/214.html)...
+Affected versions:
 
-Anyway, the idea is that there are probably thousands of CPAM modules
-that are (yet) in this situation (not widely used), so it makes sense
-to add some statistics when such a CVE is mentioned on a ML like
-this/therse. And maybe just contact the author first/only anyway.
-Unless hurding large number of filed CVEs is becoming a new kind of
-cryptocurrency ;-)
+- Apache Airflow Standard provider 0.3.0 before 1.22.0
+- Apache Airflow CNCF Kubernetes provider 10.5.0 before 11.0.0
+- Apache Airflow Common SQL provider 1.32.0 before 3.0.0
+- Apache Airflow Common Ai provider 0.1.0 before 1.2.0
 
-Cheers,
-Kalin.
+Description:
+
+The Apache Airflow TaskFlow decorators @task.bash, @task.sql, @task.analytics, @task.kubernetes_cmd and the common.ai decorators (@task.llm, @task.agent, @task.llm_sql, @task.llm_branch, @task.llm_file_analysis, @task.llm_schema_compare) rendered Jinja templates a second time after the task runner had already rendered them, so any value copied into env, op_args, op_kwargs or the returned prompt, command or SQL was evaluated as a template on the worker. An attacker who can only trigger a Dag run (for example a user with trigger permission supplying run conf), or who controls text that a Dag passes into one of these decorators as an argument or prompt (for example a ticket or a downloaded document), could run arbitrary commands on the worker and read connection passwords and Variables, in any deployment that uses an affected decorator in a Dag that passes such input through env, parameters or prompt. Users are recommended to upgrade apache-airflow-providers-standard to 1.22.0, apache-airflow-providers-cncf-kubernetes to 11.0.0, apache-airflow-providers-common-sql to 3.0.0 and apache-airflow-providers-common-ai to 1.2.0 or later.
+
+Credit:
+
+Claude Security Scans (tool)
+Sonar (finder)
+Jarek Potiuk (remediation developer)
+
+References:
+
+https://github.com/apache/airflow/pull/76244
+https://airflow.apache.org/
+https://www.cve.org/CVERecord?id=CVE-2026-120353
+
