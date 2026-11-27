@@ -1,40 +1,37 @@
 X-Archive-Source: openwall-scrape
-X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/27/9
-Message-ID: <f9a7c22f-f3dc-afa8-65ac-4e0b3c18dd1a@apache.org>
-Date: Fri, 27 Nov 2026 13:32:52 +0000
-From: Arnout Engelen <engelen@...che.org>
+X-Archive-Source-URL: https://www.openwall.com/lists/oss-security/2026/11/27/10
+Message-ID: <87wlpys71v.fsf@gentoo.org>
+Date: Fri, 27 Nov 2026 14:06:04 +0000
+From: Sam James <sam@...too.org>
 To: oss-security@...ts.openwall.com
-Subject: CVE-2026-129817: Apache Submarine: API authentication can be bypassed 
+Subject: Fwd: Security vulnerabilities fixed in WeeChat 4.10.5
 Content-Type: text/plain; charset=utf-8
 
-Severity: critical 
 
-Affected versions:
+-------------------- Start of forwarded message --------------------
+Date: Thu, 26 Nov 2026 22:35:20 +0100
+From: Sébastien Helleu <flashcode@...shtux.org>
+To: weechat-security@...gnu.org
+Subject: Security vulnerabilities fixed in WeeChat 4.10.5
 
-- Apache Submarine: all versions
+Hi all,
 
-Description:
+Two security vulnerabilities have been fixed in WeeChat 4.10.5, which was
+released on November 26th, 2026:
 
-** UNSUPPORTED WHEN ASSIGNED ** Improper Authentication vulnerability in Apache Submarine.
+- WSA-2026-33: [IRC] Sender of IRC message removed with an incomplete WeeChat
+  color code in a message tag.
+- WSA-2026-34: [Xfer] Allocation of Resources Without Limits or Throttling
 
+For more information, see the security page:
+https://weechat.org/doc/weechat/security/
 
+-- 
+Sébastien Helleu
 
-This issue affects Apache Submarine: all versions. Authorization rules on the API can be bypassed.
+web: weechat.org / flashtux.org
+irc: FlashCode @ irc.libera.chat
 
+-------------------- End of forwarded message --------------------
 
-
-As this project is retired, we do not plan to release a version that fixes this issue. Users are recommended to find an alternative or restrict access to the instance to trusted users.
-
-
-
-NOTE: This vulnerability only affects products that are no longer supported by the maintainer.
-
-Credit:
-
-Gjoko Krstic (finder)
-
-References:
-
-https://attic.apache.org/projects/submarine.html
-https://www.cve.org/CVERecord?id=CVE-2026-129817
-
+Download attachment "signature.asc" of type "application/pgp-signature" (419 bytes)
